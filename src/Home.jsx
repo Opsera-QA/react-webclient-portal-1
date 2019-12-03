@@ -4,8 +4,8 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import { checkAuthentication } from './helpers';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 
 export default withAuth(class Home extends Component {
   constructor(props) {
@@ -43,12 +43,12 @@ export default withAuth(class Home extends Component {
       <div>
         {this.state.authenticated !== null &&
         <div>
-          <h1>PKCE Flow w/ Okta Hosted Login Page</h1>
+          <h1>Welcome to OpsERA w/ Okta Hosted Login Page</h1>
           {this.state.authenticated &&
             <div>
               <p>Welcome back, {this.state.userinfo.name}!</p>
               <p>
-                You have successfully authenticated against your Okta org, and have been redirected back to this application.  You now have an ID token and access token in local storage.
+                You have successfully authenticated against your Okta OpsERA Organization, and have been redirected back to this application.  You now have an ID token and access token in local storage.
                 Visit the <a href="/profile">My Profile</a> page to take a look inside the ID token.
               </p>
               <h3>Next Steps</h3>
@@ -62,19 +62,20 @@ export default withAuth(class Home extends Component {
           }
           {!this.state.authenticated &&
             <div>
-              <p>If you&lsquo;re viewing this page then you have successfully started this React application.</p>
-              <p>
+              <p>If you&lsquo;re viewing this page then you need to log in or sign up for OpsERA. Your portal to a more enjoyable DevOps workflow!</p>
+              {/* <p>
                 <span>This example shows you how to use the </span>
                 <a href="https://github.com/okta/okta-oidc-js/tree/master/packages/okta-react">Okta React Library</a>
                 <span> to add the </span>
                 <a href="https://developer.okta.com/docs/guides/implement-auth-code-pkce">PKCE Flow</a>
                 <span> to your application.</span>
-              </p>
+              </p> */}
               <p>
                 When you click the login button below, you will be redirected to the login page on your Okta org.
                 After you authenticate, you will be returned to this application with an ID token and access token.  These tokens will be stored in local storage and can be retrieved at a later time.
               </p>
-              <Button id="login-button" primary onClick={this.login}><FontAwesomeIcon icon={faCoffee} /> Login</Button>
+              <Button id="login-button" variant="success" className="mr-2" onClick={this.login}>Signup</Button>
+              <Button id="login-button" variant="outline-success" onClick={this.login}>Login</Button>
             </div>
           }
 

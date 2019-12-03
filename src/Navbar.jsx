@@ -54,11 +54,15 @@ export default withAuth(class Navigation extends Component {
           {this.state.authenticated === false && <Button variant="outline-success" onClick={this.login}>Login</Button>}
           {this.state.authenticated === true && <Nav>
             <NavDropdown title={this.state.userinfo.name} id="basic-nav-dropdown" alignRight>
-              {this.state.authenticated === true && <NavDropdown.Item href="/messages" id="messages-button">Messages</NavDropdown.Item>}
-              {this.state.authenticated === true && <NavDropdown.Item href="/profile" id="profile-button">Profile</NavDropdown.Item>}
-              {this.state.authenticated === true && <NavDropdown.Item href="" onClick={this.logout} id="logout-button">Logout</NavDropdown.Item>}
+              <NavDropdown.Item href="/messages" id="messages-button">Messages</NavDropdown.Item>
+              <NavDropdown.Item href="/profile" id="profile-button">Profile</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="/" id="profile-button">#Slack Channel</NavDropdown.Item>
+              <NavDropdown.Item href="/" id="profile-button">Knowledgebase</NavDropdown.Item>
+              <NavDropdown.Item href="/" id="profile-button">Request Help</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.4">About Us</NavDropdown.Item>
+              <NavDropdown.Item href="" onClick={this.logout} id="logout-button">Logout</NavDropdown.Item>
             </NavDropdown>
           </Nav>}
 
