@@ -1,0 +1,8 @@
+.nav-bar {
+  padding-top:5px;
+}
+
+.nav-bar .header-text {
+  font-size: 1.7rem;
+  margin-left:-3px;;
+}
