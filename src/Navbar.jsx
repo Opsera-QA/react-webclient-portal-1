@@ -1,10 +1,11 @@
 import { withAuth } from '@okta/okta-react';
 import React, { Component } from 'react';
 import {Navbar, Nav, NavDropdown, Button} from 'react-bootstrap'
+import { checkAuthentication } from './helpers';
 //import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 //import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 //import { fab } from '@fortawesome/free-brands-svg-icons' 
-import { checkAuthentication } from './helpers';
+
 import './navbar.css';
 
 export default withAuth(class Navigation extends Component {
@@ -35,7 +36,7 @@ export default withAuth(class Navigation extends Component {
   render() {
     return (
       <Navbar bg="dark" variant="dark" className="nav-bar">
-        <Navbar.Brand href="/">
+        <Navbar.Brand href="/" style={{minWidth:165}}>
           <img alt="OpsERA"
             src="/img/opsera_logo.png"
             width="40"
@@ -46,9 +47,9 @@ export default withAuth(class Navigation extends Component {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="/about/solutions">Solutions</Nav.Link>
-            <Nav.Link href="/about/pricing">Pricing</Nav.Link>
-            <Nav.Link href="/about">Contact Us</Nav.Link>
+            <Nav.Link href="/about/solutions" className="d-none d-sm-inline">Solutions</Nav.Link>
+            <Nav.Link href="/about/pricing" className="d-none d-sm-inline">Pricing</Nav.Link>
+            <Nav.Link href="/about" className="d-none d-sm-inline">Contact Us</Nav.Link>
           </Nav>
           {this.state.authenticated === false && <Button variant="success" className="mr-2">Sign Up</Button>}
           {this.state.authenticated === false && <Button variant="outline-success" onClick={this.login}>Login</Button>}
@@ -57,7 +58,7 @@ export default withAuth(class Navigation extends Component {
               <NavDropdown.Item href="/messages" id="messages-button">Messages</NavDropdown.Item>
               <NavDropdown.Item href="/profile" id="profile-button">Profile</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="/" id="profile-button">#Slack Channel</NavDropdown.Item>
+              <NavDropdown.Item href="/" id="profile-button">#SlackChannel</NavDropdown.Item>
               <NavDropdown.Item href="/" id="profile-button">Knowledgebase</NavDropdown.Item>
               <NavDropdown.Item href="/" id="profile-button">Request Help</NavDropdown.Item>
               <NavDropdown.Divider />

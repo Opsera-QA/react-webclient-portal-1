@@ -145,3 +145,17 @@ button.bg-primary:focus {
 a.text-primary:hover, a.text-primary:focus {
   color: #082954 !important;
 }
+
+
+.navbar-dark .navbar-nav .nav-link {
+  color: #fff;
+}
+
+.nav-link:hover .nav-link:active {
+  color:rgba(255,255,255,.5);
+}
+
+.dropdown-menu  .dropdown-item:hover {
+  color: #fff;
+  background-color: #343a4080;
+}

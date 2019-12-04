@@ -23,10 +23,10 @@ class App extends Component {
         <Security {...config.oidc}>
           <Navbar />          
           <div className="container-fluid row sidebar">
-            <div className="col-xl-2 col-md-3 col-12 bg-dark pt-4">
+            <div className="col-xl-2 col-md-2 col-12 bg-dark pt-4">
               <Sidebar /> 
             </div>
-            <div className="col-xl-8 col-md-9 col-12 pt-4">
+            <div className="col-xl-8 col-md-10 col-12 pt-4">
               <Container text>
                 <Route path="/" exact component={Home} />
                 <Route path="/about" exact component={About} />

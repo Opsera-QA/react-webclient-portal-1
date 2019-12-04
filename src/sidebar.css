@@ -1,1 +1,14 @@
 /* The side navigation menu */
+a.nav-link {
+  color: #fff
+}
+
+a.nav-link:hover {
+  color:rgba(255,255,255,.5);
+}
+
+.nav-link-header {
+  color: #fff;
+  font-size: 1.2em;
+  margin-top:5px;
+}
