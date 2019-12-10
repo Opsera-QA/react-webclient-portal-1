@@ -1,5 +1,8 @@
-const CLIENT_ID = "0oa226t996zcvjNhH357"; // process.env.CLIENT_ID || '{clientId}';
-const ISSUER = "https://dev-876492.okta.com/oauth2/default" // process.env.ISSUER || 'https://{yourOktaDomain}.com/oauth2/default';
+// Currently set to: OpsERA-ReactWebClient on https://dev-842100.oktapreview.com/login/login.htm
+//  Set as a SPA app, must have Authorization Code checked, but not Implicit
+
+const CLIENT_ID = "0oaou6bztkPJFnxaL0h7"; // process.env.CLIENT_ID || '{clientId}';
+const ISSUER = "https://dev-842100.oktapreview.com/oauth2/default" // process.env.ISSUER || 'https://{yourOktaDomain}.com/oauth2/default';
 const OKTA_TESTING_DISABLEHTTPSCHECK = process.env.OKTA_TESTING_DISABLEHTTPSCHECK || false;
 
 
