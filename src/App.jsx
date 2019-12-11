@@ -11,6 +11,7 @@ import Profile from './components/user/Profile';
 import About from './components/about/About';
 import Pricing from './components/about/Pricing';
 import Solutions from './components/about/Solutions';
+import Inventory from './components/inventory/Inventory';
 
 
 // THIS CLIENT WILL AUTHENTICATE WITH OKTA AND THEN NEEDS TO PASS TOKEN TO SERVICES (THAT"S PART 2)
@@ -35,6 +36,7 @@ class App extends Component {
                 <Route path="/implicit/callback" component={ImplicitCallback} />
                 <SecureRoute path="/messages" component={Messages} />
                 <SecureRoute path="/profile" component={Profile} />
+                <SecureRoute path="/inventory" component={Inventory} />
               </Container>
             </div>
           </div>

@@ -51,15 +51,17 @@ export default withAuth(class Home extends Component {
                   You have successfully authenticated against your Okta OpsERA Organization.  You now have an ID token and access token in local storage.
                 Visit the <a href="/profile">My Profile</a> page to take a look inside the ID token.
               </p>
-                <h3>Next Steps</h3>
-                <p>TODO: List out some of the first steps for a user.  What should they do first?  What should they check on their return.  This should be
-                  a place for intiial help, maybe some screenshots.
-              </p>
-                <p>This sample is designed to work with one of our resource server examples.  To see access token authentication in action, please download one of these resource server examples:</p>
+                <br/><br/><br/>
+                <h3>Jira Ticket OC-16 Work: Build out Dashboard as Inventory in this system</h3>
+                <p>Link to inventory view:  <a href="/inventory">Inventory</a></p>
+                
+              
+              
+                {/* <p>This sample is designed to work with one of our resource server examples.  To see access token authentication in action, please download one of these resource server examples:</p>
                 <ul>
                   {resourceServerExamples.map(example => <li key={example.url}><a href={example.url}>{example.label}</a></li>)}
                 </ul>
-                <p>Once you have downloaded and started the example resource server, you can visit the <a href="/messages">My Messages</a> page to see the authentication process in action.</p>
+                <p>Once you have downloaded and started the example resource server, you can visit the <a href="/messages">My Messages</a> page to see the authentication process in action.</p> */}
               </div>
             }
             {!this.state.authenticated &&
