@@ -81,12 +81,12 @@ export default withAuth(class Home extends Component {
                       <Form.Row>
                           <Form.Group as={Col} controlId="formGridEmail">
                             <Form.Label>First Name</Form.Label>
-                            <Form.Control type="email" placeholder="First name" />
+                            <Form.Control type="text" placeholder="" />
                           </Form.Group>
 
                           <Form.Group as={Col} controlId="formGridPassword">
                             <Form.Label>Last Name</Form.Label>
-                            <Form.Control type="password" placeholder="Last name" />
+                            <Form.Control type="text" placeholder="" />
                           </Form.Group>
                         </Form.Row>
 
@@ -94,25 +94,37 @@ export default withAuth(class Home extends Component {
                         <Form.Row>
                           <Form.Group as={Col} controlId="formGridEmail">
                             <Form.Label>Email</Form.Label>
-                            <Form.Control type="email" placeholder="Enter email" />
+                            <Form.Control type="email" placeholder="" />
                           </Form.Group>
 
                           <Form.Group as={Col} controlId="formGridPassword">
+                            <Form.Label>Company</Form.Label>
+                            <Form.Control type="text" placeholder="" />
+                          </Form.Group>
+                        </Form.Row>
+
+                        <Form.Row>
+                        <Form.Group as={Col} controlId="formGridPassword">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" placeholder="Password" />
+                            <Form.Control type="password" placeholder="" />
+                          </Form.Group>
+
+                          <Form.Group as={Col} controlId="formGridPassword">
+                            <Form.Label>Confirm Password</Form.Label>
+                            <Form.Control type="password" placeholder="" />
                           </Form.Group>
                         </Form.Row>
 
                         <Form.Group controlId="formGridAddress1">
                           <Form.Label>Street Address</Form.Label>
-                          <Form.Control placeholder="1234 Main St" />
+                          <Form.Control type="text" placeholder="" />
                         </Form.Group>
 
                       
                         <Form.Row>
                           <Form.Group as={Col} controlId="formGridCity">
                             <Form.Label>City</Form.Label>
-                            <Form.Control />
+                            <Form.Control type="text" placeholder="" />
                           </Form.Group>
 
                           <Form.Group as={Col} controlId="formGridState">
@@ -125,13 +137,13 @@ export default withAuth(class Home extends Component {
 
                           <Form.Group as={Col} controlId="formGridZip">
                             <Form.Label>Zip</Form.Label>
-                            <Form.Control />
+                            <Form.Control type="text" placeholder="" />
                           </Form.Group>
                         </Form.Row>
 
                         <Form.Group controlId="formGridAddress2">
                           <Form.Label>Subdomain Name</Form.Label>
-                          <Form.Control placeholder="xxx.opsera.io" />
+                          <Form.Control placeholder="" />
                         </Form.Group>
 
                         {/* <Form.Group id="formGridCheckbox">
