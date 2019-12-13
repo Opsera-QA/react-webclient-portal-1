@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react';
 import Container from 'react-bootstrap/Container'
+import { Provider } from "react-redux";
+import store from "./store";
 import config from './config';
 import Home from './Home';
 import Navbar from './Navbar';
@@ -20,28 +22,30 @@ import Inventory from './components/inventory/Inventory';
 class App extends Component {
   render() {
     return (
-      <Router>
-        <Security {...config.oidc}>
-          <Navbar />          
-          <div className="container-fluid row sidebar">
-            <div className="col-xl-2 col-md-2 col-12 bg-dark pt-4">
-              <Sidebar /> 
+      <Provider store={store}>
+        <Router>
+          <Security {...config.oidc}>
+            <Navbar />          
+            <div className="container-fluid row sidebar">
+              <div className="col-xl-2 col-md-2 col-12 bg-dark pt-4">
+                <Sidebar /> 
+              </div>
+              <div className="col-xl-8 col-md-10 col-12 pt-4">
+                <Container text>
+                  <Route path="/" exact component={Home} />
+                  <Route path="/about" exact component={About} />
+                  <Route path="/about/pricing" component={Pricing} />
+                  <Route path="/about/solutions" component={Solutions} />
+                  <Route path="/implicit/callback" component={ImplicitCallback} />
+                  <SecureRoute path="/messages" component={Messages} />
+                  <SecureRoute path="/profile" component={Profile} />
+                  <SecureRoute path="/inventory" component={Inventory} />
+                </Container>
+              </div>
             </div>
-            <div className="col-xl-8 col-md-10 col-12 pt-4">
-              <Container text>
-                <Route path="/" exact component={Home} />
-                <Route path="/about" exact component={About} />
-                <Route path="/about/pricing" component={Pricing} />
-                <Route path="/about/solutions" component={Solutions} />
-                <Route path="/implicit/callback" component={ImplicitCallback} />
-                <SecureRoute path="/messages" component={Messages} />
-                <SecureRoute path="/profile" component={Profile} />
-                <SecureRoute path="/inventory" component={Inventory} />
-              </Container>
-            </div>
-          </div>
-        </Security>
-      </Router>
+          </Security>
+        </Router>
+      </Provider>
     );
   }
 }

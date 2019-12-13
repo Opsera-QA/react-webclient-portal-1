@@ -19,3 +19,15 @@ export default {
     messagesUrl: 'http://localhost:8000/api/messages',
   },
 };
+
+// backend urls
+
+export const BACKENDURIJava = "https://serveropsera.com:9091/api"
+
+export const baseURL =
+  "http://ec2-3-17-157-88.us-east-2.compute.amazonaws.com:3000"
+
+export const oldURL =
+  "http://ec2-18-220-143-66.us-east-2.compute.amazonaws.com:3000"
+
+export const serverURL = `http://localhost:3000/`
