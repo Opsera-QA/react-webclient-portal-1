@@ -1,7 +1,9 @@
 /* The side navigation menu */
+
 a.nav-link-light {
   color: #fff;
   font-size:1.1em;
+  white-space: nowrap;
 }
 
 a.nav-link-light:hover {
