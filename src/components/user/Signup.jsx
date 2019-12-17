@@ -219,6 +219,11 @@ export default class Signup extends PureComponent {
     )
   }
 
+  cancelSignup = () => {
+    let path = `/`;
+    this.props.history.push(path);
+  }
+
     render() {
         const isEnabled = this.canBeSubmitted()
         return (
@@ -390,6 +395,8 @@ export default class Signup extends PureComponent {
                         <Form.Control.Feedback type="invalid">{this.state.domain.error}</Form.Control.Feedback>
                     </Form.Group>
                     <Button id="login-button" disabled={!isEnabled} variant="success" className="mr-2" type="submit">Sign Up</Button>
+
+                    <Button id="cancel-button" variant="outline-secondary" className="ml-2" type="button" onClick={this.cancelSignup}>Cancel</Button>
                     </Form>
                 </Card.Text>
                 </Card.Body>
