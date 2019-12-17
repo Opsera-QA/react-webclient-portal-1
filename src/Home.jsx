@@ -65,10 +65,7 @@ export default withAuth(class Home extends Component {
               <div style={{ marginTop: 25 }}>
                 
                 <div className="row">
-                  <div className="col-5 mx-auto col-md-5 order-md-2 d-none d-lg-inline">
-                    <img src="/img/opsera_logo_large.png" width="375" alt="" />
-                  </div>
-                  <div className="col-md-12 col-lg-7 order-md-1 text-center text-md-left pr-md-5">
+                  <div className="col-md-12 col-lg-7 text-center text-md-left pr-md-5">
                     <h1 class="mb-3 bd-text-purple-bright">OpsERA</h1>
                     <p class="lead">
                       Make DevOps a streamlined, managed experience, allowing developers to focus on what they enjoy doing most: writing code!
@@ -84,6 +81,10 @@ export default withAuth(class Home extends Component {
                         <Button variant="outline-success" className="btn-lg w-100 mb-3" onClick={this.login}>Log In</Button>
                       </div>
                     </div>
+                  </div>
+
+                  <div className="d-none d-lg-inline col-5 mx-auto">
+                    <img src="/img/opsera_logo_large.png" width="375" alt="" />
                   </div>
                 </div>
               </div>

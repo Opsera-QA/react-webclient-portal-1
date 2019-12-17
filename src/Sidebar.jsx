@@ -35,11 +35,11 @@ export default withAuth(class Sidebar extends Component {
         {this.state.authenticated && <Nav.Link className="nav-link-light" eventKey="link-2"><FontAwesomeIcon icon={faChartLine} fixedWidth /> Reporting</Nav.Link>}
         {this.state.authenticated && <Nav.Link className="nav-link-light" disabled eventKey="link-2"><FontAwesomeIcon icon={faTimes} fixedWidth /> Delete Tools</Nav.Link>}
 
-        {!this.state.authenticated && <Nav.Link className="nav-link-light" href="/about">Customers</Nav.Link>}      
+        {/* {!this.state.authenticated && <Nav.Link className="nav-link-light" href="/about">Customers</Nav.Link>}      
         {!this.state.authenticated && <Nav.Link className="nav-link-light" href="/about/solutions">Solutions</Nav.Link>}
         {!this.state.authenticated && <Nav.Link className="nav-link-light" href="/about/pricing">Services</Nav.Link>}
         {!this.state.authenticated && <Nav.Link className="nav-link-light" href="/about">Company</Nav.Link>}
-        {!this.state.authenticated && <Nav.Link className="nav-link-light" href="/about">Contact Us</Nav.Link>}
+        {!this.state.authenticated && <Nav.Link className="nav-link-light" href="/about">Contact Us</Nav.Link>} */}
       </Nav>
     );
   }
