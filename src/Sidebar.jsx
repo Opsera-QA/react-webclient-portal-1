@@ -23,7 +23,7 @@ export default withAuth(class Sidebar extends Component {
 
   render() {
     return (
-      <Nav defaultActiveKey="/home" className="flex-column sidebar">
+      <Nav defaultActiveKey="/home" className="d-flex flex-row flex-md-column sidebar">
         {this.state.authenticated && <div className="nav-link-header">Products</div>}
         {this.state.authenticated && <Nav.Link href="/home"><FontAwesomeIcon icon={faPlus} fixedWidth /> New Platform</Nav.Link>}
         {this.state.authenticated && <Nav.Link eventKey="link-1"><FontAwesomeIcon icon={faWrench} fixedWidth /> CI/CD Pipeline</Nav.Link>}
