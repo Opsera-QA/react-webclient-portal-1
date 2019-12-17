@@ -1,8 +1,10 @@
 
 import { withAuth } from '@okta/okta-react';
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { checkAuthentication } from './helpers';
 import Signup from './components/user/Signup';
+import { Button } from 'react-bootstrap';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 
@@ -21,6 +23,10 @@ export default withAuth(class Home extends Component {
     this.checkAuthentication();
   }
 
+  gotoSignUp = () => {
+    let path = `/signup`;
+    this.props.history.push(path);
+  }
 
   render() {
     return (
@@ -57,7 +63,7 @@ export default withAuth(class Home extends Component {
                     </p>
                     <div class="row mx-n2">
                       <div class="col-md px-2">
-                        <Button variant="success" className="btn-lg w-100 mb-3">Sign Up</Button>
+                        <Button variant="success" className="btn-lg w-100 mb-3" onClick={this.gotoSignUp}>Sign Up</Button>
                       </div>
                       <div class="col-md px-2">
                       <Button variant="outline-success" className="btn-lg w-100 mb-3" onClick={this.login}>Log In</Button>
@@ -68,9 +74,8 @@ export default withAuth(class Home extends Component {
 
                 {/* SIGNUP */}
 
-                <Signup />
+                {/* <Signup /> */}
 
-                {/* <Button id="login-button" variant="outline-success" onClick={this.login}>Login</Button> */}
               </div>
             }
 

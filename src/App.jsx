@@ -14,6 +14,7 @@ import About from './components/about/About';
 import Pricing from './components/about/Pricing';
 import Solutions from './components/about/Solutions';
 import Inventory from './components/inventory/Inventory';
+import Signup from './components/user/Signup';
 
 
 // THIS CLIENT WILL AUTHENTICATE WITH OKTA AND THEN NEEDS TO PASS TOKEN TO SERVICES (THAT"S PART 2)
@@ -33,6 +34,7 @@ class App extends Component {
               <div className="col-xl-10 col-md-10 col-12 pt-4">
                 <Container text>
                   <Route path="/" exact component={Home} />
+                  <Route path="/signup" exact component={Signup} />
                   <Route path="/about" exact component={About} />
                   <Route path="/about/pricing" component={Pricing} />
                   <Route path="/about/solutions" component={Solutions} />

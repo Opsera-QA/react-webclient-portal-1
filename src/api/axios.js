@@ -14,9 +14,6 @@ export const api2 = async ({
   baseURL = null,
 }) => {
   const token = JSON.parse(localStorage.getItem("okta-token-storage"))
-  if(token){
-    console.log(token.length)
-  }
   return await api(endpoint, {
     ...(baseURL ? {baseURL: ""} : {}),
     method,

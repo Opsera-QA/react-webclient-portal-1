@@ -64,7 +64,6 @@ export default class Signup extends PureComponent {
     var passwordProperty = password
     var confirmPasswordProperty = confirmPassword
 
-    console.log(password.value.length)
     if (password.value.length < 8) {
         passwordProperty.error = "password is too short."
         confirmPasswordProperty.error = "password is too short."
@@ -89,7 +88,7 @@ export default class Signup extends PureComponent {
   validateDomain = () => {
     const {domain} = this.state
     var domainProperty = domain
-    if (domain.value.length == 0) {
+    if (domain.value.length === 0) {
         domainProperty.error = "this field is required"
       this.setState({
           domain : domainProperty
@@ -224,10 +223,11 @@ export default class Signup extends PureComponent {
         const isEnabled = this.canBeSubmitted()
         return (
             <div>
-            { this.state.modal &&  <Alert variant="success" onClose={() => this.setState({modal:false})} dismissible>
-              <Alert.Heading>Signup Successfull!</Alert.Heading>
+            { this.state.modal &&  
+              <Alert variant="success" onClose={() => this.setState({modal:false})} dismissible>
+                <Alert.Heading>Signup Successfull!</Alert.Heading>
                 <p>
-                Registration was successful, please Sign In using your credentials.
+                    Registration was successful, please Sign In using your credentials.
                 </p>
               </Alert> 
             }
