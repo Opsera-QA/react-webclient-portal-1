@@ -58,11 +58,11 @@ export default withAuth(class Navigation extends Component {
               <NavDropdown.Item href="/messages" id="messages-button">Messages</NavDropdown.Item>
               <NavDropdown.Item href="/profile" id="profile-button">Profile</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="/" id="profile-button">#SlackChannel</NavDropdown.Item>
-              <NavDropdown.Item href="/" id="profile-button">Knowledgebase</NavDropdown.Item>
-              <NavDropdown.Item href="/" id="profile-button">Request Help</NavDropdown.Item>
+              <NavDropdown.Item href="/" id="slack-channel-button">#SlackChannel</NavDropdown.Item>
+              <NavDropdown.Item href="https://opsera.atlassian.net/wiki/x/kIA5" target="_blank" id="kb-button">KnowledgeBase</NavDropdown.Item>
+              <NavDropdown.Item href="/" id="request-help-button">Request Help</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">About Us</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.4">About OpsERA</NavDropdown.Item>
               <NavDropdown.Item href="" onClick={this.logout} id="logout-button">Logout</NavDropdown.Item>
             </NavDropdown>
           </Nav>}
