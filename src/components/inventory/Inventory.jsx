@@ -35,6 +35,7 @@ class Inventory extends PureComponent {
           <Form.Group>
             <Form.Control as="select" 
               inputRef={ el => this.inputEl=el }
+              disabled={ ( !loading && applications.length>0 ) ? false : true }
               onChange={this.handleDropdownChange} >
               <option>{loading ? "loading..." : "Select application"}</option>
               {!loading && (
@@ -48,7 +49,14 @@ class Inventory extends PureComponent {
           </Form.Group>
         </Form>
         </div>
-        {loading ? null : <App application={this.getApp()} />}
+        {( !loading && applications.length>0 ) ? 
+          <>
+            {loading ? null : <App application={this.getApp()} />}
+          </> : 
+          <div>
+            No current systems are configured for the system. Please add a new Platform in order to proceed.
+          </div>
+        }
       </div>
     )
   }
