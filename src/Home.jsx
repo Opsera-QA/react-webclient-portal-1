@@ -1,9 +1,8 @@
 
 import { withAuth } from '@okta/okta-react';
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
 import { checkAuthentication } from './helpers';
-import { Form, Col, Card } from 'react-bootstrap';
+import Signup from './components/user/Signup';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 
@@ -12,7 +11,6 @@ export default withAuth(class Home extends Component {
     super(props);
     this.state = { authenticated: null, userinfo: null };
     this.checkAuthentication = checkAuthentication.bind(this);
-    this.login = this.login.bind(this);
   }
 
   async componentDidMount() {
@@ -23,9 +21,6 @@ export default withAuth(class Home extends Component {
     this.checkAuthentication();
   }
 
-  async login() {
-    this.props.auth.login('/');
-  }
 
   render() {
     const resourceServerExamples = [
@@ -70,94 +65,7 @@ export default withAuth(class Home extends Component {
 
                 {/* SIGNUP */}
 
-                <Card style={{ marginTop: 25 }}>
-                  <Card.Header as="h5">New User Signup</Card.Header>
-                  <Card.Body>
-                    {/* <Card.Title>Special title treatment</Card.Title> */}
-                    <Card.Text>
-                      
-
-                      <Form>
-                      <Form.Row>
-                          <Form.Group as={Col} controlId="formGridEmail">
-                            <Form.Label>First Name</Form.Label>
-                            <Form.Control type="text" placeholder="" />
-                          </Form.Group>
-
-                          <Form.Group as={Col} controlId="formGridPassword">
-                            <Form.Label>Last Name</Form.Label>
-                            <Form.Control type="text" placeholder="" />
-                          </Form.Group>
-                        </Form.Row>
-
-
-                        <Form.Row>
-                          <Form.Group as={Col} controlId="formGridEmail">
-                            <Form.Label>Email</Form.Label>
-                            <Form.Control type="email" placeholder="" />
-                          </Form.Group>
-
-                          <Form.Group as={Col} controlId="formGridPassword">
-                            <Form.Label>Company</Form.Label>
-                            <Form.Control type="text" placeholder="" />
-                          </Form.Group>
-                        </Form.Row>
-
-                        <Form.Row>
-                        <Form.Group as={Col} controlId="formGridPassword">
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" placeholder="" />
-                          </Form.Group>
-
-                          <Form.Group as={Col} controlId="formGridPassword">
-                            <Form.Label>Confirm Password</Form.Label>
-                            <Form.Control type="password" placeholder="" />
-                          </Form.Group>
-                        </Form.Row>
-
-                        <Form.Group controlId="formGridAddress1">
-                          <Form.Label>Street Address</Form.Label>
-                          <Form.Control type="text" placeholder="" />
-                        </Form.Group>
-
-                      
-                        <Form.Row>
-                          <Form.Group as={Col} controlId="formGridCity">
-                            <Form.Label>City</Form.Label>
-                            <Form.Control type="text" placeholder="" />
-                          </Form.Group>
-
-                          <Form.Group as={Col} controlId="formGridState">
-                            <Form.Label>State</Form.Label>
-                            <Form.Control as="select">
-                              <option>Choose...</option>
-                              <option>...</option>
-                            </Form.Control>
-                          </Form.Group>
-
-                          <Form.Group as={Col} controlId="formGridZip">
-                            <Form.Label>Zip</Form.Label>
-                            <Form.Control type="text" placeholder="" />
-                          </Form.Group>
-                        </Form.Row>
-
-                        <Form.Group controlId="formGridAddress2">
-                          <Form.Label>Subdomain Name</Form.Label>
-                          <Form.Control placeholder="" />
-                        </Form.Group>
-
-                        {/* <Form.Group id="formGridCheckbox">
-                          <Form.Check type="checkbox" label="Check me out" />
-                        </Form.Group> */}
-
-                        <Button id="login-button" variant="success" className="mr-2" onClick={this.login}>Sign Up</Button>
-                      </Form>
-
-                    </Card.Text>
-                    
-                  </Card.Body>
-                </Card>
-
+                <Signup />
 
                 {/* <Button id="login-button" variant="outline-success" onClick={this.login}>Login</Button> */}
               </div>
