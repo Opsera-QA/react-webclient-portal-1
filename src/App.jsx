@@ -15,6 +15,7 @@ import Pricing from './components/about/Pricing';
 import Solutions from './components/about/Solutions';
 import Inventory from './components/inventory/Inventory';
 import Signup from './components/user/Signup';
+import ApiConnector from './components/api_connector/ApiConnector';
 
 
 // THIS CLIENT WILL AUTHENTICATE WITH OKTA AND THEN NEEDS TO PASS TOKEN TO SERVICES (THAT"S PART 2)
@@ -42,6 +43,7 @@ class App extends Component {
                   <SecureRoute path="/messages" component={Messages} />
                   <SecureRoute path="/profile" component={Profile} />
                   <SecureRoute path="/inventory" component={Inventory} />
+                  <SecureRoute path="/api_connector" component={ApiConnector} />
                 </Container>
               </div>
             </div>

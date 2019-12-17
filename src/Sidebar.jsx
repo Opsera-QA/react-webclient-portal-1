@@ -24,22 +24,22 @@ export default withAuth(class Sidebar extends Component {
   render() {
     return (
       <Nav defaultActiveKey="/" className="d-flex flex-row flex-md-column sidebar">
-        <Nav.Link href="/"><FontAwesomeIcon icon={faHome} fixedWidth /> Home</Nav.Link>
-        {this.state.authenticated && <Nav.Link href="/home"><FontAwesomeIcon icon={faPlus} fixedWidth /> New Platform</Nav.Link>}
-        {this.state.authenticated && <Nav.Link eventKey="link-1"><FontAwesomeIcon icon={faWrench} fixedWidth /> CI/CD Pipeline</Nav.Link>}
-        {this.state.authenticated && <Nav.Link eventKey="link-2"><FontAwesomeIcon icon={faChartLine} fixedWidth /> Analytics</Nav.Link>}
+        <Nav.Link className="nav-link-light" href="/"><FontAwesomeIcon icon={faHome} fixedWidth /> Home</Nav.Link>
+        {this.state.authenticated && <Nav.Link className="nav-link-light" href="/home"><FontAwesomeIcon icon={faPlus} fixedWidth /> New Platform</Nav.Link>}
+        {this.state.authenticated && <Nav.Link className="nav-link-light" eventKey="link-1"><FontAwesomeIcon icon={faWrench} fixedWidth /> CI/CD Pipeline</Nav.Link>}
+        {this.state.authenticated && <Nav.Link className="nav-link-light" eventKey="link-2"><FontAwesomeIcon icon={faChartLine} fixedWidth /> Analytics</Nav.Link>}
         
-        {this.state.authenticated && <Nav.Link href="/home" className="mt-3"><FontAwesomeIcon icon={faClipboardList} fixedWidth /> Inventory</Nav.Link>}
-        {this.state.authenticated && <Nav.Link eventKey="link-1"><FontAwesomeIcon icon={faLink} fixedWidth /> Connectors</Nav.Link>}
-        {this.state.authenticated && <Nav.Link eventKey="link-2"><FontAwesomeIcon icon={faEnvelope} fixedWidth /> Upgrades</Nav.Link>}
-        {this.state.authenticated && <Nav.Link eventKey="link-2"><FontAwesomeIcon icon={faChartLine} fixedWidth /> Reporting</Nav.Link>}
-        {this.state.authenticated && <Nav.Link eventKey="link-2"><FontAwesomeIcon icon={faTimes} fixedWidth /> Delete Tools</Nav.Link>}
+        {this.state.authenticated && <Nav.Link className="nav-link-light mt-3" href="/inventory"><FontAwesomeIcon icon={faClipboardList} fixedWidth /> Inventory</Nav.Link>}
+        {this.state.authenticated && <Nav.Link className="nav-link-light" href="/api_connector"><FontAwesomeIcon icon={faLink} fixedWidth /> Connectors</Nav.Link>}
+        {this.state.authenticated && <Nav.Link className="nav-link-light" eventKey="link-2"><FontAwesomeIcon icon={faEnvelope} fixedWidth /> Upgrades</Nav.Link>}
+        {this.state.authenticated && <Nav.Link className="nav-link-light" eventKey="link-2"><FontAwesomeIcon icon={faChartLine} fixedWidth /> Reporting</Nav.Link>}
+        {this.state.authenticated && <Nav.Link className="nav-link-light" eventKey="link-2"><FontAwesomeIcon icon={faTimes} fixedWidth /> Delete Tools</Nav.Link>}
 
-        {!this.state.authenticated && <Nav.Link href="/about">Customers</Nav.Link>}      
-        {!this.state.authenticated && <Nav.Link href="/about/solutions">Solutions</Nav.Link>}
-        {!this.state.authenticated && <Nav.Link href="/about/pricing">Services</Nav.Link>}
-        {!this.state.authenticated && <Nav.Link href="/about">Company</Nav.Link>}
-        {!this.state.authenticated && <Nav.Link href="/about">Contact Us</Nav.Link>}
+        {!this.state.authenticated && <Nav.Link className="nav-link-light" href="/about">Customers</Nav.Link>}      
+        {!this.state.authenticated && <Nav.Link className="nav-link-light" href="/about/solutions">Solutions</Nav.Link>}
+        {!this.state.authenticated && <Nav.Link className="nav-link-light" href="/about/pricing">Services</Nav.Link>}
+        {!this.state.authenticated && <Nav.Link className="nav-link-light" href="/about">Company</Nav.Link>}
+        {!this.state.authenticated && <Nav.Link className="nav-link-light" href="/about">Contact Us</Nav.Link>}
       </Nav>
     );
   }
