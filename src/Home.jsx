@@ -13,6 +13,7 @@ export default withAuth(class Home extends Component {
     super(props);
     this.state = { authenticated: null, userinfo: null };
     this.checkAuthentication = checkAuthentication.bind(this);
+    this.login = this.login.bind(this);
   }
 
   async componentDidMount() {
@@ -28,6 +29,10 @@ export default withAuth(class Home extends Component {
     this.props.history.push(path);
   }
 
+  async login() {
+    this.props.auth.login('/');
+  }
+
   render() {
     return (
       <div>
@@ -41,7 +46,7 @@ export default withAuth(class Home extends Component {
                   Visit the <a href="/profile">My Profile</a> page to take a look inside the ID token.
                 </p>
                 
-                <h3 style={{ marginTop: 25 }}>Features:</h3>
+                <h4 style={{ marginTop: 25 }}>Features:</h4>
                 <div><a href="/inventory">My Inventory</a></div>
     
               </div>
@@ -71,11 +76,6 @@ export default withAuth(class Home extends Component {
                     </div>
                   </div>
                 </div>
-
-                {/* SIGNUP */}
-
-                {/* <Signup /> */}
-
               </div>
             }
 
