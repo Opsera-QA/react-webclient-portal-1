@@ -47,7 +47,17 @@ export default withAuth(class Home extends Component {
                 </p>
                 
                 <h4 style={{ marginTop: 25 }}>Features:</h4>
-                <div><a href="/inventory">My Inventory</a></div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">
+                    <a class="" href="/inventory">My Inventory</a>
+                  </li>
+                  <li class="list-group-item">
+                    <a class="" href="#">Action 2</a>
+                  </li>
+                  <li class="list-group-item">
+                    <a class="" href="#">Action 3</a>
+                  </li>
+                </ul>
     
               </div>
             }
@@ -71,7 +81,7 @@ export default withAuth(class Home extends Component {
                         <Button variant="success" className="btn-lg w-100 mb-3" onClick={this.gotoSignUp}>Sign Up</Button>
                       </div>
                       <div class="col-md px-2">
-                      <Button variant="outline-success" className="btn-lg w-100 mb-3" onClick={this.login}>Log In</Button>
+                        <Button variant="outline-success" className="btn-lg w-100 mb-3" onClick={this.login}>Log In</Button>
                       </div>
                     </div>
                   </div>
