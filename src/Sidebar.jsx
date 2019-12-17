@@ -4,7 +4,7 @@ import { checkAuthentication } from './helpers';
 //import { checkAuthentication } from './helpers';
 import { Nav } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus, faWrench, faChartLine, faClipboardList, faLink, faEnvelope, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faWrench, faChartLine, faClipboardList, faLink, faEnvelope, faTimes, faHome } from '@fortawesome/free-solid-svg-icons'
 import './sidebar.css';
 
 export default withAuth(class Sidebar extends Component {
@@ -23,15 +23,14 @@ export default withAuth(class Sidebar extends Component {
 
   render() {
     return (
-      <Nav defaultActiveKey="/home" className="d-flex flex-row flex-md-column sidebar">
-        {this.state.authenticated && <div className="nav-link-header">Products</div>}
+      <Nav defaultActiveKey="/" className="d-flex flex-row flex-md-column sidebar">
+        <Nav.Link href="/"><FontAwesomeIcon icon={faHome} fixedWidth /> Home</Nav.Link>
         {this.state.authenticated && <Nav.Link href="/home"><FontAwesomeIcon icon={faPlus} fixedWidth /> New Platform</Nav.Link>}
         {this.state.authenticated && <Nav.Link eventKey="link-1"><FontAwesomeIcon icon={faWrench} fixedWidth /> CI/CD Pipeline</Nav.Link>}
         {this.state.authenticated && <Nav.Link eventKey="link-2"><FontAwesomeIcon icon={faChartLine} fixedWidth /> Analytics</Nav.Link>}
         
-        {this.state.authenticated && <div className="nav-link-header" style={{marginTop:15}}>Operations</div>}
-        {this.state.authenticated && <Nav.Link href="/home"><FontAwesomeIcon icon={faClipboardList} fixedWidth /> Inventory</Nav.Link>}
-        {this.state.authenticated && <Nav.Link eventKey="link-1"><FontAwesomeIcon icon={faLink} fixedWidth /> API Connectors</Nav.Link>}
+        {this.state.authenticated && <Nav.Link href="/home" className="mt-3"><FontAwesomeIcon icon={faClipboardList} fixedWidth /> Inventory</Nav.Link>}
+        {this.state.authenticated && <Nav.Link eventKey="link-1"><FontAwesomeIcon icon={faLink} fixedWidth /> Connectors</Nav.Link>}
         {this.state.authenticated && <Nav.Link eventKey="link-2"><FontAwesomeIcon icon={faEnvelope} fixedWidth /> Upgrades</Nav.Link>}
         {this.state.authenticated && <Nav.Link eventKey="link-2"><FontAwesomeIcon icon={faChartLine} fixedWidth /> Reporting</Nav.Link>}
         {this.state.authenticated && <Nav.Link eventKey="link-2"><FontAwesomeIcon icon={faTimes} fixedWidth /> Delete Tools</Nav.Link>}
