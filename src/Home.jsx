@@ -49,13 +49,13 @@ export default withAuth(class Home extends Component {
                 <h4 style={{ marginTop: 25 }}>Features:</h4>
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item">
-                    <a class="" href="/inventory">My Inventory</a>
+                    <a class="" href="/inventory">My Application Inventory</a>
                   </li>
                   <li class="list-group-item">
-                    <a class="" href="#">Action 2</a>
+                    <a class="" href="#">Reports and Dashboards</a>
                   </li>
                   <li class="list-group-item">
-                    <a class="" href="#">Action 3</a>
+                    <a class="" href="#">Upgrades and Maintenance</a>
                   </li>
                 </ul>
     
