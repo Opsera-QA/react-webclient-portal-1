@@ -142,7 +142,7 @@ export default class GitLab extends Component {
                                 onChange={this.handleChange}
                                 // isInvalid={this.state.jenkinsUrl.error}
                             />
-                            <small id="passwordHelpBlock" class="form-text text-muted">
+                            <small id="passwordHelpBlock" className="form-text text-muted">
                                 Jenkins container notes here.
                             </small>
                             {/* <Form.Control.Feedback type="invalid">{this.state.jenkinsUrl.error}</Form.Control.Feedback> */}
