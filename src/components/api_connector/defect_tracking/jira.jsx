@@ -181,14 +181,10 @@ export default class jira extends Component {
                         />
                         {/* <Form.Control.Feedback type="invalid">{this.state.projectName.error}</Form.Control.Feedback> */}
                     </Form.Group>
-                    
-                    <Form.Group>
-                        <Card.Header as="h5">Jenkins Credentials</Card.Header>
-                    </Form.Group>
-
-                    <Form.Row>
+                                
+                    <Form.Row className="pt-4">
                         <Form.Group as={Col} controlId="formGridJenkinsURL">
-                            <Form.Label>Jenkins URL</Form.Label>
+                            <Form.Label>Jenkins Container URL</Form.Label>
                             <Form.Control 
                                 type="text" 
                                 placeholder="" 
@@ -197,6 +193,9 @@ export default class jira extends Component {
                                 onChange={this.handleChange}
                                 // isInvalid={this.state.jenkinsUrl.error}
                             />
+                            <small id="passwordHelpBlock" class="form-text text-muted">
+                                Jenkins container notes here.
+                            </small>
                             {/* <Form.Control.Feedback type="invalid">{this.state.jenkinsUrl.error}</Form.Control.Feedback> */}
                         </Form.Group>
 
@@ -243,6 +242,7 @@ export default class jira extends Component {
                     </Form.Row>
 
                     <Button id="save-button" disabled={!isEnabled} variant="primary" className="mr-2" type="submit">Save</Button>
+                    <Button id="cancel-button" variant="outline-secondary" className="mr-2" type="button">Cancel</Button>
                     </Form>
                 </Card.Text>
                 </Card.Body>

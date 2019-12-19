@@ -28,7 +28,7 @@ class App extends Component {
         <Router>
           <Security {...config.oidc}>
             <Navbar />          
-            <div className="container-fluid" style={{ padding: 0}}>
+            <div className="container-fluid">
             <div className="flex-xl-nowrap row sidebar">
               <div className="col-xl-2 col-md-3 col-12 d-flex flex-column bg-dark pt-4">
                 <Sidebar /> 

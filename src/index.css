@@ -16,6 +16,10 @@ a {
   text-decoration: none;
 }
 
+.active {
+  font-weight:bold;
+  color: #343a40;
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",

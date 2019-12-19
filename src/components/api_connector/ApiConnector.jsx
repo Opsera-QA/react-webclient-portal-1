@@ -29,18 +29,30 @@ export default withAuth(class ApiConnector extends Component {
         <h3>API Connectors</h3>
         <p>Configure your API connections here for the supported systems.</p>
         
-        <ul class="nav">
-          <li class="nav-item">
-            <a class="nav-link active" href="#" onClick={()=>this.selectGithub()}>GitHub</a>
+        <ul className="nav">
+          <li className="nav-item">
+            <a className={"nav-link " + (this.state.selection === "Github" ? 'active' : '')} href="#/" onClick={()=>this.selectGithub()}>GitHub</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" onClick={()=>this.selectGitLab()}>GitLab</a>
+          <li className="nav-item">
+            <a className={"nav-link " + (this.state.selection === "GitLab" ? 'active' : '')} href="#/" onClick={()=>this.selectGitLab()}>GitLab</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" onClick={()=>this.selectJira()}>Jira</a>
+          <li className="nav-item">
+            <a className={"nav-link " + (this.state.selection === "Jira" ? 'active' : '')} href="#/" onClick={()=>this.selectJira()}>Jira</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+          <li className="nav-item">
+            <a className={"nav-link " + (this.state.selection === "ServiceNow" ? 'active' : '')} href="#/">ServiceNow</a>
+          </li>
+          <li className="nav-item">
+            <a className={"nav-link " + (this.state.selection === "OpenStack" ? 'active' : '')} href="#/">OpenStack</a>
+          </li>
+          <li className="nav-item">
+            <a className={"nav-link " + (this.state.selection === "Slack" ? 'active' : '')} href="#/">Slack</a>
+          </li>
+          <li className="nav-item">
+            <a className={"nav-link " + (this.state.selection === "Tableau" ? 'active' : '')} href="#/">Tableau</a>
+          </li>
+          <li className="nav-item">
+            <a className={"nav-link " + (this.state.selection === "Splunk" ? 'active' : '')} href="#/">Splunk</a>
           </li>
         </ul>
 
