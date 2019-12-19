@@ -44,7 +44,7 @@ class App extends Component {
                   <SecureRoute path="/messages" component={Messages} />
                   <SecureRoute path="/profile" component={Profile} />
                   <SecureRoute path="/inventory" component={Inventory} />
-                  <SecureRoute path="/api_connector" component={ApiConnector} />
+                  <SecureRoute path="/api_connector/:id?" component={ApiConnector} />
                 </Container>
               </div>
             </div>
