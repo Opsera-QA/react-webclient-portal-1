@@ -1,3 +1,5 @@
+//TODO:  This needs to have a Staging and PROD ENV variable check so we can store both in here.
+
 // Currently set to: OpsERA-ReactWebClient on https://dev-842100.oktapreview.com/login/login.htm
 //  Set as a SPA app, must have Authorization Code checked, but not Implicit
 
@@ -33,5 +35,5 @@ export const oldURL =
 export const serverURL = `http://localhost:3000/`
 
 // api connectors URL
-
+// TODO: OC-30: Plan to move this into the NodeJS API
 export const apiConnectorURL = `http://52.15.121.104:3040/api/`
