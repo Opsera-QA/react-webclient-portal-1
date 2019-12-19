@@ -44,14 +44,14 @@ class Inventory extends PureComponent {
             </Alert>
 
             <h6 className="mt-5">Select an option below to get started:</h6>
-            <div class="row mx-n2 mt-2">
-              <div class="col-md px-2">
+            <div className="row mx-n2 mt-2">
+              <div className="col-md px-2">
                 <Button variant="secondary" className="w-100 mb-3" onClick={this.setPlaceholder}>Register Platform</Button>
               </div>
-              <div class="col-md px-2">
+              <div className="col-md px-2">
                 <Button variant="outline-secondary" className="w-100 mb-3" onClick={this.setPlaceholder}>Action 2</Button>
               </div>
-              <div class="col-md px-2">
+              <div className="col-md px-2">
                 <Button variant="outline-secondary" className="w-100 mb-3" onClick={this.setPlaceholder}>Aciton 3</Button>
               </div>
             </div>
@@ -65,11 +65,11 @@ class Inventory extends PureComponent {
               hidden={ ( !loading && applications.length>0 ) ? false : true }
               onChange={this.handleDropdownChange} 
               style={{ marginTop: 25 }}>
-              <option>{loading ? "loading..." : "Select application"}</option>
+              <option value="" selected disabled>{loading ? "loading..." : "Select application"}</option>
               {!loading && (
                 <>
                   {applications.map(application => (
-                    <option value={application.name}>{application.name}</option>
+                    <option key={application.name} value={application.name}>{application.name}</option>
                   ))}
                 </>
               )}

@@ -1,10 +1,13 @@
 import axios from "axios"
 import {serverURL} from "../config"
+import store from "../store"
 
 const instance = axios.create({
   baseURL: serverURL,
   timeout: 10000,
 })
+
+// checks if the user is logged in or not and correspondingly adds authentication headers
 
 export const api2 = async ({
   method = "POST",
@@ -13,7 +16,7 @@ export const api2 = async ({
   body,
   baseURL = null,
 }) => {
-  const token = JSON.parse(localStorage.getItem("okta-token-storage"))
+  const {authentication} = store.getState()
   return await api(endpoint, {
     ...(baseURL ? {baseURL: ""} : {}),
     method,
@@ -21,7 +24,7 @@ export const api2 = async ({
     headers: {
       ...(withToken
         ? {
-            Authentication: `Bearer ${ token.length && token.accessToken.accessToken}`,
+            Authentication: `Bearer ${ authentication && authentication.accessToken}`,
           }
         : {}),
     },

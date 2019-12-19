@@ -58,6 +58,8 @@ export default class Signup extends PureComponent {
     }
   }
   
+  // password and confirm pass validation function 
+
   validatePassword = () => {
     const {password, confirmPassword} = this.state
     
@@ -85,6 +87,8 @@ export default class Signup extends PureComponent {
     return false
   }
   
+  // domain basic validation
+
   validateDomain = () => {
     const {domain} = this.state
     var domainProperty = domain
@@ -113,6 +117,8 @@ export default class Signup extends PureComponent {
     return false
   }
 
+  // Overall form validation function 
+
   validate = async () => {
     let hasErrors = false
     if (await this.validateEmail()) hasErrors = true
@@ -139,6 +145,8 @@ export default class Signup extends PureComponent {
     return hasErrors
   }
 
+  // Signup Function
+
   signup = async e => {
     e.preventDefault()
     this.setState({loading: true})
@@ -158,21 +166,36 @@ export default class Signup extends PureComponent {
           return acc
         }, {}),
       })
-      this.showAlert()
+      this.showSuccessAlert()
     } catch (error) {
-      alert("something went wrong, please try again later")
+      this.showErrorAlert()
     }
-
     this.setState({loading: false})
   }
 
-  
-  showAlert = () => {
+  // Success alert function 
+
+  showSuccessAlert = () => {
     this.setState({
       modal: true,
-      loading: false,
+      type: "success",
+      title:"Signup Successfull!",
+      message: "Registration was successful, please Sign In using your credentials."
     }, ()=>{this.resetForm()})
   }
+
+  // Error alert function 
+
+  showErrorAlert = () => {
+    this.setState({
+      modal: true,
+      type: "danger",
+      title:"Error!",
+      message:"something went wrong, please try again later"
+    })
+  }
+
+  // reset form function 
 
   resetForm = () => {
     this.setState({
@@ -189,6 +212,8 @@ export default class Signup extends PureComponent {
         state: {value: "", error: null},
     })
   }
+
+  // checks if all required fields are filled or not
 
   canBeSubmitted() {
     const {
@@ -229,12 +254,12 @@ export default class Signup extends PureComponent {
         return (
             <div>
             { this.state.modal &&  
-              <Alert variant="success" onClose={() => this.setState({modal:false})} dismissible>
-                <Alert.Heading>Signup Successfull!</Alert.Heading>
-                <p>
-                    Registration was successful, please Sign In using your credentials.
-                </p>
-              </Alert> 
+               <Alert variant={this.state.type} onClose={() => this.setState({modal:false, type:"", title:"" ,message: ""})} dismissible>
+               <Alert.Heading>{this.state.title}</Alert.Heading>
+               <p>
+                   {this.state.message}
+               </p>
+             </Alert> 
             }
             <Card style={{ marginTop: 25 }}>
                 <Card.Header as="h5">New User Signup</Card.Header>
@@ -360,9 +385,9 @@ export default class Signup extends PureComponent {
                                 isInvalid={this.state.state.error} 
                                 value={this.state.state.value}
                                 onChange={this.handleChange}>
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" disabled>Please select</option>
                                 {states.map(state => (
-                                    <option value={state.value}>{state.text}</option>
+                                    <option key={state.value} value={state.value}>{state.text}</option>
                                 ))}
                             </Form.Control>
                             <Form.Control.Feedback type="invalid">{this.state.state.error}</Form.Control.Feedback>

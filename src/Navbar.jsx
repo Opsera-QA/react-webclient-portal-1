@@ -30,6 +30,7 @@ export default withAuth(class Navigation extends Component {
   }
 
   async logout() {
+    localStorage.setItem("authentication", JSON.stringify({}))  // removing persisted user state.
     this.props.auth.logout('/');
   }
 

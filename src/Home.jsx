@@ -1,14 +1,14 @@
 
 import { withAuth } from '@okta/okta-react';
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 import { checkAuthentication } from './helpers';
-import Signup from './components/user/Signup';
 import { Button } from 'react-bootstrap';
+import {setOktaUser} from "./actions/thunk"
+import {connect} from "react-redux"
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 
-export default withAuth(class Home extends Component {
+class Home extends Component {
   constructor(props) {
     super(props);
     this.state = { authenticated: null, userinfo: null };
@@ -18,6 +18,18 @@ export default withAuth(class Home extends Component {
 
   async componentDidMount() {
     this.checkAuthentication();
+    const {auth, setOktaUser} = this.props
+    const [accessToken, user] = await Promise.all([
+      auth.getAccessToken(),
+      await auth.getUser(),
+    ])
+    // if user is authenticated then set that user details in local redux store
+    setOktaUser({
+      accessToken,
+      user,
+    })
+    // persist the store data
+    localStorage.setItem("authentication", JSON.stringify(this.props.user))
   }
 
   async componentDidUpdate() {
@@ -47,15 +59,15 @@ export default withAuth(class Home extends Component {
                 </p>
                 
                 <h4 style={{ marginTop: 25 }}>Features:</h4>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item">
-                    <a class="" href="/inventory">My Application Inventory</a>
+                <ul className="list-group list-group-flush">
+                  <li className="list-group-item">
+                    <a href="/inventory">My Application Inventory</a>
                   </li>
-                  <li class="list-group-item">
-                    <a class="" href="#">Reports and Dashboards</a>
+                  <li className="list-group-item">
+                    <a href="#">Reports and Dashboards</a>
                   </li>
-                  <li class="list-group-item">
-                    <a class="" href="#">Upgrades and Maintenance</a>
+                  <li className="list-group-item">
+                    <a href="#">Upgrades and Maintenance</a>
                   </li>
                 </ul>
     
@@ -66,18 +78,18 @@ export default withAuth(class Home extends Component {
                 
                 <div className="row">
                   <div className="col-md-12 col-lg-7 text-center text-md-left pr-md-5">
-                    <h1 class="mb-3 bd-text-purple-bright">OpsERA</h1>
-                    <p class="lead">
+                    <h1 className="mb-3 bd-text-purple-bright">OpsERA</h1>
+                    <p className="lead">
                       Make DevOps a streamlined, managed experience, allowing developers to focus on what they enjoy doing most: writing code!
                     </p>
-                    <p class="lead mb-4">
+                    <p className="lead mb-4">
                       OpsERA is an end to end DevOps Workflow Solution that can manage all of the tasks and resources for a team’s CI/CD Pipeline automatically, allowing for a single pane of glass view on the entire DevOps workflow including easy to use interfaces and advanced, consolidated error reporting and usage and optimization reporting.
                     </p>
-                    <div class="row mx-n2">
-                      <div class="col-md px-2">
+                    <div className="row mx-n2">
+                      <div className="col-md px-2">
                         <Button variant="success" className="btn-lg w-100 mb-3" onClick={this.gotoSignUp}>Sign Up</Button>
                       </div>
-                      <div class="col-md px-2">
+                      <div className="col-md px-2">
                         <Button variant="outline-success" className="btn-lg w-100 mb-3" onClick={this.login}>Log In</Button>
                       </div>
                     </div>
@@ -95,4 +107,15 @@ export default withAuth(class Home extends Component {
       </div>
     );
   }
-});
+}
+
+const mapStateToProps = state => ({
+  user: state.authentication
+})
+
+export default withAuth(
+  connect(
+    mapStateToProps,
+    {setOktaUser},
+  )(Home),
+)

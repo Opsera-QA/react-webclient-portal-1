@@ -31,3 +31,7 @@ export const oldURL =
   "http://ec2-18-220-143-66.us-east-2.compute.amazonaws.com:3000"
 
 export const serverURL = `http://localhost:3000/`
+
+// api connectors URL
+
+export const apiConnectorURL = `http://52.15.121.104:3040/api/`
