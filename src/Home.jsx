@@ -2,9 +2,10 @@
 import { withAuth } from '@okta/okta-react';
 import React, { Component } from 'react';
 import { checkAuthentication } from './helpers';
-import { Button, Card } from 'react-bootstrap';
-import { setOktaUser } from "./actions/thunk"
-import { connect } from "react-redux"
+import { Button } from 'react-bootstrap';
+import { setOktaUser } from './actions/thunk'
+import { connect } from 'react-redux'
+import FeaturesCards from './components/about/features';
 
 class Home extends Component {
   constructor(props) {
@@ -57,20 +58,7 @@ class Home extends Component {
                 </p>
 
 
-                <Card>
-                  <Card.Header>Getting Started</Card.Header>
-                  <Card.Body>
-                    <Card.Title>OpsERA offers multiple ways to work with your DevOps solution.  </Card.Title>
-                    <Card.Text>
-                    The OpsERA DevOps Product comes up with the best time to market solutions for all your technology 
-                    automation and workflow is seamless and optimized throughout your organization.  We deliver solutions 
-                    to automate build, deploy, security and testing with open source tools for your development team to 
-                    manage application upgrades effectively and in secured way. We also provide pragmatic solutions for 
-                    various cloud-based products using open source frameworks and we ensure that enterprise policies are met.
-                    </Card.Text>
-                    <Button variant="primary">Go somewhere</Button>
-                  </Card.Body>
-                </Card>
+                <FeaturesCards />
 
                 <h4 style={{ marginTop: 25 }}>Features:</h4>
                 <ul className="list-group list-group-flush">
