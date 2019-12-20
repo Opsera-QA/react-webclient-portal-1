@@ -45,7 +45,7 @@ class featuresCards extends React.Component {
               <Card.Subtitle className="mb-2 text-muted">Empower Your DevOps Team</Card.Subtitle>
               <Card.Text>
                 Leverage the full benefits of OpsERA by building DevOps pipelines with security and quality gates in just 10-15 minutes. Supports multi-stack,
-                multi-language and Hybrid Cloud solutions with support for Container deployments, Kubernetes clusters and Kubernetes with Helm.
+                multi-language and Hybrid Cloud solutions with support for Container deployments, Kubernetes clusters and/or with Helm.
                   </Card.Text>
               {/* <Button variant="primary" onClick={this.setPlaceholder}>Build a Pipeline</Button> */}
               <Card.Link href="/pipeline">Build Your Pipeline</Card.Link>
