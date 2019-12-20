@@ -5,8 +5,6 @@ import { checkAuthentication } from './helpers';
 import { Button } from 'react-bootstrap';
 import {setOktaUser} from "./actions/thunk"
 import {connect} from "react-redux"
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 
 class Home extends Component {
   constructor(props) {
