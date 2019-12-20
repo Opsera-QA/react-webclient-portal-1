@@ -4,11 +4,25 @@ import { withAuth } from '@okta/okta-react';
 import GitHub from './source_control/gitHub';
 import GitLab from './source_control/gitLab';
 import Jira from './defect_tracking/jira';
+import ServiceNow from './itsm/serviceNow';
+import OpenStack from './cloud_management/openStack';
+import Slack from './collaboration/slack';
+import Tableau from './analytics/tableau';
+import Splunk from './analytics/splunk';
 
 export default withAuth(class ApiConnector extends Component {
-  urlId = this.props.match.params.id ? this.props.match.params.id.toLowerCase(): "";
   state = {
-      selection: this.urlId
+      selection: ""
+    }
+
+    static getDerivedStateFromProps (nextProps, prevState) {
+      let selection = nextProps.match.params.id
+      if(nextProps.match.params.id === undefined){
+        selection = ""
+      }
+      return {
+        selection : selection
+      }
     }
 
   // TODO: Please make sure all selection values are lower case strings.
@@ -42,23 +56,28 @@ export default withAuth(class ApiConnector extends Component {
             <a className={"nav-link " + (this.state.selection === "servicenow" ? 'active' : '')} href="#/" onClick={()=>this.selectView("servicenow")}>ServiceNow</a>
           </li>
           <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "openstack" ? 'active' : '')} href="#/">OpenStack</a>
+            <a className={"nav-link " + (this.state.selection === "openstack" ? 'active' : '')} href="#/" onClick={()=>this.selectView("openstack")}>OpenStack</a>
           </li>
           <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "slack" ? 'active' : '')} href="#/">Slack</a>
+            <a className={"nav-link " + (this.state.selection === "slack" ? 'active' : '')} href="#/" onClick={()=>this.selectView("slack")}>Slack</a>
           </li>
           <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "tableau" ? 'active' : '')} href="#/">Tableau</a>
+            <a className={"nav-link " + (this.state.selection === "tableau" ? 'active' : '')} href="#/" onClick={()=>this.selectView("tableau")}>Tableau</a>
           </li>
           <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "splunk" ? 'active' : '')} href="#/">Splunk</a>
+            <a className={"nav-link " + (this.state.selection === "splunk" ? 'active' : '')} href="#/" onClick={()=>this.selectView("splunk")}>Splunk</a>
           </li>
         </ul>
 
         { this.state.selection === "github" && <GitHub/> }
         { this.state.selection === "gitlab" && <GitLab/> }
         { this.state.selection === "jira" && <Jira/> }
-        { this.state.selection === "" && 
+        { this.state.selection === "servicenow" && <ServiceNow/>}
+        { this.state.selection === "openstack" && <OpenStack/>}
+        { this.state.selection === "slack" && <Slack/>}
+        { this.state.selection === "tableau" && <Tableau/>}
+        { this.state.selection === "splunk" && <Splunk/>}
+        { this.state.selection === "" &&
           <div className="mt-5">
             Text displayed here is for when no option is selected.  If the user simply goes to the API Connector page, then show this text. 
             However If an above item is selected, hide this text and load the proper web compontent.  

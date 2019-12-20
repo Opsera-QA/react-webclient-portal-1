@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { Button, Form, Col, Card, Alert } from 'react-bootstrap';
 import axios from "axios"
 import {apiConnectorURL} from "../../../config"
+import { withRouter } from 'react-router-dom';
 
-export default class jira extends Component {
+export default withRouter ( class jira extends Component {
     state = {
         url: "",
         port: "",
@@ -92,6 +93,11 @@ export default class jira extends Component {
             projectName.length > 0
         )
     }
+
+    cancel = () => {
+        let path = `/api_connector`;
+        this.props.history.push(path);
+      }
 
     render() {
         const isEnabled = this.canBeSubmitted()
@@ -242,7 +248,7 @@ export default class jira extends Component {
                     </Form.Row>
 
                     <Button id="save-button" disabled={!isEnabled} variant="primary" className="mr-2" type="submit">Save</Button>
-                    <Button id="cancel-button" variant="outline-secondary" className="mr-2" type="button">Cancel</Button>
+                    <Button id="cancel-button" variant="outline-secondary" className="mr-2" type="button" onClick={this.cancel}>Cancel</Button>
                     </Form>
                 </Card.Text>
                 </Card.Body>
@@ -250,4 +256,4 @@ export default class jira extends Component {
             </div>
         )
     }
-}
+} )
