@@ -57,22 +57,7 @@ class Home extends Component {
                   Visit the <a href="/profile">My Profile</a> page to take a look inside the ID token.
                 </p>
 
-
                 <FeaturesCards />
-
-                <h4 style={{ marginTop: 25 }}>Features:</h4>
-                <ul className="list-group list-group-flush">
-                  <li className="list-group-item">
-                    <a href="/inventory">My Application Inventory</a>
-                  </li>
-                  <li className="list-group-item">
-                    <a href="#">Reports and Dashboards</a>
-                  </li>
-                  <li className="list-group-item">
-                    <a href="#">Upgrades and Maintenance</a>
-                  </li>
-                </ul>
-
               </div>
             }
             {!this.state.authenticated &&

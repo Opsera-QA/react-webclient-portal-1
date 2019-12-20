@@ -36,7 +36,7 @@ class featuresCards extends React.Component {
                 integration with various API connectors including Jira, ServiceNow, Github and Slack among many more.
                     </Card.Text>
               {/* <Button variant="primary" onClick={this.setPlaceholder}>Register Platform</Button> */}
-              <Card.Link href="#">Register a Platform Now</Card.Link>
+              <Card.Link href="/platform">Register a Platform Now</Card.Link>
             </Card.Body>
           </Card>
           <Card style={{ width: '18rem' }}>
@@ -48,7 +48,7 @@ class featuresCards extends React.Component {
                 multi-language and Hybrid Cloud solutions with support for Container deployments, Kubernetes clusters and Kubernetes with Helm.
                   </Card.Text>
               {/* <Button variant="primary" onClick={this.setPlaceholder}>Build a Pipeline</Button> */}
-              <Card.Link href="#">Build Your Pipeline</Card.Link>
+              <Card.Link href="/pipeline">Build Your Pipeline</Card.Link>
             </Card.Body>
           </Card>
           <Card style={{ width: '18rem' }}>
@@ -60,7 +60,7 @@ class featuresCards extends React.Component {
                 end to end visibility into your entire DevOps ecosystem.
                     </Card.Text>
               {/* <Button variant="primary" onClick={this.setPlaceholder}>Get Started</Button> */}
-              <Card.Link href="#">Learn More</Card.Link>
+              <Card.Link href="/reports">Reports and Analytics</Card.Link>
             </Card.Body>
           </Card>
         </CardGroup>
