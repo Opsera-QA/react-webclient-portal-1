@@ -16,15 +16,17 @@ import Solutions from './components/about/Solutions';
 import Inventory from './components/inventory/Inventory';
 import Signup from './components/user/Signup';
 import ApiConnector from './components/api_connector/ApiConnector';
-import AdminTools from './components/admin/AdminTools';
 import Pipeline from './components/pipeline/Pipeline'
 import Platform from './components/platform/Platform';
 import Reports from './components/reports/Reports';
 import Update from './components/update/Update';
 
+import AdminTools from './components/admin/AdminTools';
+import HealthCheck from './components/admin/HealthCheck';
+import DeleteTools from './components/admin/DeleteTools';
+import RegisteredUsers from './components/admin/RegisteredUsers';
+import ManageSystems from './components/admin/ManageSystems';
 
-// THIS CLIENT WILL AUTHENTICATE WITH OKTA AND THEN NEEDS TO PASS TOKEN TO SERVICES (THAT"S PART 2)
-// TODO: config.js has hardcoded Okta values for now
 
 class App extends Component {
   render() {
@@ -50,12 +52,16 @@ class App extends Component {
                   <SecureRoute path="/profile" component={Profile} />
                   <SecureRoute path="/inventory" component={Inventory} />
                   <SecureRoute path="/api_connector/:id?" component={ApiConnector} />
-
-                  <SecureRoute path="/admin" component={AdminTools} />
                   <SecureRoute path="/pipeline" component={Pipeline} />
                   <SecureRoute path="/platform" component={Platform} />
                   <SecureRoute path="/reports" component={Reports} />
                   <SecureRoute path="/update" component={Update} />
+
+                  <SecureRoute path="/admin" exact component={AdminTools} />
+                  <SecureRoute path="/admin/health" component={HealthCheck} />
+                  <SecureRoute path="/admin/delete" component={DeleteTools} />
+                  <SecureRoute path="/admin/manage_systems" component={ManageSystems} />
+                  <SecureRoute path="/admin/registered_users" component={RegisteredUsers} />
                 </Container>
               </div>
             </div>

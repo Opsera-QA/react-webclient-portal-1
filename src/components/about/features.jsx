@@ -11,7 +11,7 @@ class featuresCards extends React.Component {
   render() {
     return (
       <div>
-        <Card className="mt-5">
+        <Card className="mt-4">
           <Card.Header>Getting Started</Card.Header>
           <Card.Body>
             <Card.Title>OpsERA offers multiple ways to work with your DevOps solution.</Card.Title>
@@ -26,7 +26,7 @@ class featuresCards extends React.Component {
           </Card.Body>
         </Card>
 
-        <CardGroup className="mt-5">
+        <CardGroup className="mt-4">
           <Card style={{ width: '18rem' }}>
             <Card.Body>
               <Card.Title>Platforms</Card.Title>
