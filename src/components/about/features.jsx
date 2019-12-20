@@ -30,10 +30,10 @@ class featuresCards extends React.Component {
           <Card style={{ width: '18rem' }}>
             <Card.Body>
               <Card.Title>Platforms</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">Leveraging your existing solutions</Card.Subtitle>
+              <Card.Subtitle className="mb-2 text-muted">Your Choice of Tools!</Card.Subtitle>
               <Card.Text>
-                Enables DevOps teams to deploy their choice of existing tools in minutes. Native
-                integration with various API connectors including Jira, ServiceNow, Github and Slack among many more.
+                Leverage your existing systems in any way that meets your business needs.  Lifecycle Management and native
+                integration with various popular API connectors including Jira, ServiceNow, Github and Slack among many more.
                     </Card.Text>
               {/* <Button variant="primary" onClick={this.setPlaceholder}>Register Platform</Button> */}
               <Card.Link href="/platform">Register a Platform Now</Card.Link>
@@ -42,10 +42,10 @@ class featuresCards extends React.Component {
           <Card style={{ width: '18rem' }}>
             <Card.Body>
               <Card.Title>Pipeline</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">Empower Your DevOps Team</Card.Subtitle>
+              <Card.Subtitle className="mb-2 text-muted">Empower Your Teams</Card.Subtitle>
               <Card.Text>
                 Leverage the full benefits of OpsERA by building DevOps pipelines with security and quality gates in just 10-15 minutes. Supports multi-stack,
-                multi-language and Hybrid Cloud solutions with support for Container deployments, Kubernetes clusters and/or with Helm.
+                multi-language, multi-branch, RBAC, Jenkins pipelines and Hybrid Cloud solutions with support for Container deployments, Kubernetes clusters and/or with Helm.
                   </Card.Text>
               {/* <Button variant="primary" onClick={this.setPlaceholder}>Build a Pipeline</Button> */}
               <Card.Link href="/pipeline">Build Your Pipeline</Card.Link>
@@ -54,7 +54,7 @@ class featuresCards extends React.Component {
           <Card style={{ width: '18rem' }}>
             <Card.Body>
               <Card.Title>Analytics</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">End to end visibility</Card.Subtitle>
+              <Card.Subtitle className="mb-2 text-muted">End to End Visibility</Card.Subtitle>
               <Card.Text>
                 Provides near real time Intelligent dashboards and metrics for all builds including Testing, security and deploy providing
                 end to end visibility into your entire DevOps ecosystem.

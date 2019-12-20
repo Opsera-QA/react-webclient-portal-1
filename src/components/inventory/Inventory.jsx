@@ -4,7 +4,6 @@ import { connect } from "react-redux"
 import { Form, Table, Alert, Button, Card, CardGroup } from 'react-bootstrap';
 import { getApps } from "../../actions/thunk"
 import LoadingDialog from "../common/loading"
-import FeaturesCards from '../about/features';
 
 class Inventory extends PureComponent {
   state = {
@@ -46,7 +45,6 @@ class Inventory extends PureComponent {
                 No applications are currently configured for the system.
               </Alert>
 
-              <FeaturesCards />
             </div>
           }
 
