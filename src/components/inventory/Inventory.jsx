@@ -1,7 +1,7 @@
 import { withAuth } from '@okta/okta-react';
 import React, { PureComponent } from 'react';
 import { connect } from "react-redux"
-import { Form, Table, Alert, Button, Spinner } from 'react-bootstrap';
+import { Form, Table, Alert, Button, Card, CardGroup } from 'react-bootstrap';
 import { getApps } from "../../actions/thunk"
 import LoadingDialog from "../common/loading"
 
@@ -45,18 +45,59 @@ class Inventory extends PureComponent {
                 No applications are currently configured for the system.
               </Alert>
 
-              <h6 className="mt-5">Select an option below to get started:</h6>
-              <div className="row mx-n2 mt-2">
-                <div className="col-md px-2">
-                  <Button variant="secondary" className="w-100 mb-3" onClick={this.setPlaceholder}>Register Platform</Button>
-                </div>
-                <div className="col-md px-2">
-                  <Button variant="outline-secondary" className="w-100 mb-3" onClick={this.setPlaceholder}>Action 2</Button>
-                </div>
-                <div className="col-md px-2">
-                  <Button variant="outline-secondary" className="w-100 mb-3" onClick={this.setPlaceholder}>Aciton 3</Button>
-                </div>
-              </div>
+
+
+              <Card className="mt-5">
+                  <Card.Header>Getting Started</Card.Header>
+                  <Card.Body>
+                    <Card.Title>OpsERA offers multiple ways to work with your DevOps solution.  </Card.Title>
+                    <Card.Text>
+                      Configure your existing platforms for a single pane of glass management or leverage the full power of OpsERA's Pipeline by 
+                      building out your entire DevOps workflow using best in breed technology.
+                    </Card.Text>
+                    <Button variant="primary" onClick={this.setPlaceholder}>Get Started</Button>
+                  </Card.Body>
+                </Card>
+
+              <CardGroup className="mt-5">
+                <Card style={{ width: '18rem' }}>
+                  <Card.Body>
+                    <Card.Title>Platforms</Card.Title>
+                    <Card.Subtitle className="mb-2 text-muted">Leveraging your existing solutions</Card.Subtitle>
+                    <Card.Text>
+                    Enables DevOps teams to deploy their choice of existing tools in minutes. Native 
+                    integration with various API connectors including Jira, ServiceNow, Github and Slack among many more.
+                    </Card.Text>
+                    {/* <Button variant="primary" onClick={this.setPlaceholder}>Register Platform</Button> */}
+                    <Card.Link href="#">Register a Platform Now</Card.Link>
+                  </Card.Body>
+                </Card>
+                <Card style={{ width: '18rem' }}>
+                  <Card.Body>
+                    <Card.Title>Pipeline</Card.Title>
+                    <Card.Subtitle className="mb-2 text-muted">Empower Your DevOps Team</Card.Subtitle>
+                    <Card.Text>
+                      Leverage the full benfits of OpsERA by building DevOps pipelines with security and quality gates in just 10-15 minutes. Supports multi-stack, 
+                      multi-language and Hybrid Cloud solutions with support for Container deployments, Kubernetes clusters and Kubernetes with Helm.
+                  </Card.Text>
+                  {/* <Button variant="primary" onClick={this.setPlaceholder}>Build a Pipeline</Button> */}
+                  <Card.Link href="#">Build Your Pipeline</Card.Link>
+                  </Card.Body>
+                </Card>
+                <Card style={{ width: '18rem' }}>
+                  <Card.Body>
+                    <Card.Title>Analytics</Card.Title>
+                    <Card.Subtitle className="mb-2 text-muted">End to end visibility</Card.Subtitle>
+                    <Card.Text>
+                      Provides near real time Intelligent dashboards and metrics for all builds including Testing, security and deploy providing 
+                      end to end visibility into your entire DevOps ecosystem.
+                    </Card.Text>
+                    {/* <Button variant="primary" onClick={this.setPlaceholder}>Get Started</Button> */}
+                    <Card.Link href="#">Learn More</Card.Link>
+                  </Card.Body>
+                </Card>
+              </CardGroup>
+
             </div>
           }
 

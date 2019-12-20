@@ -32,7 +32,7 @@ export default withAuth(class Sidebar extends Component {
         {this.state.authenticated && <Nav.Link className="nav-link-light" href="/inventory"><FontAwesomeIcon icon={faClipboardList} fixedWidth /> Inventory</Nav.Link>}
         {this.state.authenticated && <Nav.Link className="nav-link-light" href="/api_connector"><FontAwesomeIcon icon={faLink} fixedWidth /> Connectors</Nav.Link>}
         {this.state.authenticated && <Nav.Link className="nav-link-light" eventKey="link-2"><FontAwesomeIcon icon={faEnvelope} fixedWidth /> Upgrades</Nav.Link>}
-        {this.state.authenticated && <Nav.Link className="nav-link-light" eventKey="link-2"><FontAwesomeIcon icon={faChartLine} fixedWidth /> Reporting</Nav.Link>}
+        {this.state.authenticated && <Nav.Link className="nav-link-light" eventKey="link-2"><FontAwesomeIcon icon={faChartLine} fixedWidth /> Analytics</Nav.Link>}
         {this.state.authenticated && <Nav.Link className="nav-link-light" disabled eventKey="link-2"><FontAwesomeIcon icon={faTimes} fixedWidth /> Delete Tools</Nav.Link>}
 
         {/* {!this.state.authenticated && <Nav.Link className="nav-link-light" href="/about">Customers</Nav.Link>}      
