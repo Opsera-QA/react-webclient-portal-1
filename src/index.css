@@ -70,3 +70,12 @@ code {
   }
 
 }
+
+/* reporting */
+
+.reporting__to-dashboard-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding-top: 30px;
+}
