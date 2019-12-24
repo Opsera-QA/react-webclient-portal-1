@@ -14,9 +14,7 @@ export default class Update extends Component {
       fetching: true,
       error: null,
       disabledIds: [],
-      apps: [],
-      messages: null,
-      test: 'test123'
+      messages: null
     };
   }
 

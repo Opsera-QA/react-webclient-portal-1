@@ -27,6 +27,8 @@ import DeleteTools from './components/admin/DeleteTools';
 import RegisteredUsers from './components/admin/RegisteredUsers';
 import ManageSystems from './components/admin/ManageSystems';
 
+import ApiConnectionDemo from './components/api_connector/ApiDemo';
+
 
 class App extends Component {
   render() {
@@ -54,7 +56,7 @@ class App extends Component {
                   <SecureRoute path="/api_connector/:id?" component={ApiConnector} />
                   <SecureRoute path="/pipeline" component={Pipeline} />
                   <SecureRoute path="/platform" component={Platform} />
-                  <SecureRoute path="/reports" component={Reports} />
+                  <SecureRoute path="/reports" exact component={Reports} />
                   <SecureRoute path="/update" component={Update} />
 
                   <SecureRoute path="/admin" exact component={AdminTools} />
@@ -62,6 +64,8 @@ class App extends Component {
                   <SecureRoute path="/admin/delete" component={DeleteTools} />
                   <SecureRoute path="/admin/manage_systems" component={ManageSystems} />
                   <SecureRoute path="/admin/registered_users" component={RegisteredUsers} />
+
+                  <SecureRoute path="/api_demo" component={ApiConnectionDemo} />
                 </Container>
               </div>
             </div>
