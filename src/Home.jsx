@@ -31,9 +31,9 @@ class Home extends Component {
     localStorage.setItem("authentication", JSON.stringify(this.props.user))
   }
 
-  async componentDidUpdate() {
-    this.checkAuthentication();
-  }
+  // async componentDidUpdate() {
+  //   this.checkAuthentication();
+  // }
 
   gotoSignUp = () => {
     let path = `/signup`;
