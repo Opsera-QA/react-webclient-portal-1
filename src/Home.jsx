@@ -3,8 +3,8 @@ import { withAuth } from '@okta/okta-react';
 import React, { Component } from 'react';
 import { checkAuthentication } from './helpers';
 import { Button } from 'react-bootstrap';
-import { setOktaUser } from './actions/thunk'
-import { connect } from 'react-redux'
+//import { setOktaUser } from './actions/thunk'
+//import { connect } from 'react-redux'
 import FeaturesCards from './components/about/features';
 
 class Home extends Component {
@@ -17,23 +17,11 @@ class Home extends Component {
 
   async componentDidMount() {
     this.checkAuthentication();
-    const { auth, setOktaUser } = this.props
-    const [accessToken, user] = await Promise.all([
-      auth.getAccessToken(),
-      await auth.getUser(),
-    ])
-    // if user is authenticated then set that user details in local redux store
-    setOktaUser({
-      accessToken,
-      user,
-    })
-    // persist the store data
-    localStorage.setItem("authentication", JSON.stringify(this.props.user))
   }
 
-  // async componentDidUpdate() {
-  //   this.checkAuthentication();
-  // }
+  async componentDidUpdate() {
+    this.checkAuthentication();
+  }
 
   gotoSignUp = () => {
     let path = `/signup`;
@@ -96,13 +84,4 @@ class Home extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  user: state.authentication
-})
-
-export default withAuth(
-  connect(
-    mapStateToProps,
-    { setOktaUser },
-  )(Home),
-)
+export default withAuth(Home)

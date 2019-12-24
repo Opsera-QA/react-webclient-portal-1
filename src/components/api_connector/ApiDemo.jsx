@@ -21,7 +21,7 @@ export default class Reports2 extends Component {
     let currentComponent = this;
     apiCall.get().then(function (response) {
       currentComponent.setState({
-        data: response,
+        data: response.data,
         error: false,
         messages: 'here we are!'
       });
@@ -46,6 +46,7 @@ export default class Reports2 extends Component {
       <div>
         <h2>API Test w/ Okta Authentication Token and Axios.js</h2>
         <div>Data: {JSON.stringify(data)}</div>
+        <div style={{marginTop: 10}}>Authorization Token: {data.authorization}</div>
         <div style={{marginTop: 10}}>MSG: {messages}</div>
         <div style={{marginTop: 10}}>Error: {error}</div>
       </div>

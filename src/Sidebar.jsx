@@ -7,6 +7,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faWrench, faChartLine, faClipboardList, faLink, faEnvelope, faDownload, faHome, faTools } from '@fortawesome/free-solid-svg-icons'
 import './sidebar.css';
 
+
+const BearerTokenContext = React.createContext();
+//this.props.auth.getAccessToken()
+
+
 export default withAuth(class Sidebar extends Component {
   constructor(props) {
     super(props);
