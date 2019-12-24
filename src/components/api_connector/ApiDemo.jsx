@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ApiService } from '../../api/apiService';
-
+import ErrorDialog from "../common/error";
 export default class Reports2 extends Component {
   constructor(props) {
     super(props);
@@ -45,6 +45,7 @@ export default class Reports2 extends Component {
     return (
       <div>
         <h2>API Test w/ Okta Authentication Token and Axios.js</h2>
+        { this.state.error ? <ErrorDialog errorMessage={messages} /> : null }
         <div>Data: {JSON.stringify(data)}</div>
         <div style={{marginTop: 10}}>Authorization Token: {data.authorization}</div>
         <div style={{marginTop: 10}}>MSG: {messages}</div>
