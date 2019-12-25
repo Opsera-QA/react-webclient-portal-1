@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { ApiService } from '../../api/apiService';
+import { ApiService } from '../../api/apiService';  //New API Service Function
 import ErrorDialog from "../common/error";
-import { AuthContext } from '../../contexts/AuthContext';
+import { AuthContext } from '../../contexts/AuthContext';  //REact Context API Code for User Authentication
 class ApiDemo extends Component {
-  static contextType = AuthContext;
-
+  static contextType = AuthContext;  //Registers the User Authentication context data in the component
+ 
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -15,8 +15,9 @@ class ApiDemo extends Component {
     };
   }
 
+  // This is where it may get optimized in the future but first call the getAccessToken and then call the API
   async componentDidMount() {
-    const { getAccessToken } = this.context;
+    const { getAccessToken } = this.context;  //this.context is where all data from the above AuthContext component resides.  It's like the state props design wise
     const accessToken = await getAccessToken();
     await this.getApiData(accessToken);
   }
