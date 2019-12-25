@@ -2,7 +2,13 @@ import { withAuth } from '@okta/okta-react';
 import React, { PureComponent } from 'react';
 import { connect } from "react-redux"
 import { Form, Table, Alert, Button, Card, CardGroup } from 'react-bootstrap';
-import { getApps } from "../../actions/thunk"
+
+// TODO: Update this to use the new APIDemo approach (already imported) and replace the getApps function
+// TODO: Add error handling similar to Update.jsx approach
+import { getApps } from "../../actions/thunk"  //REMOVE THIS AND THE FILE ALL TOGETHER FROM THE PROJECT
+import { ApiService } from '../../api/apiService';
+import ErrorDialog from "../common/error";
+
 import LoadingDialog from "../common/loading"
 
 class Inventory extends PureComponent {

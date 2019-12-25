@@ -7,27 +7,16 @@ async function checkAuthentication() {
   if (authenticated !== this.state.authenticated) {
     if (authenticated && !this.state.userinfo) {
       const userinfo = await this.props.auth.getUser();
-      const authtoken = await this.props.auth.getAccessToken();
-      this.setState({ authenticated, userinfo, authtoken });
+      
+      this.setState({ authenticated, userinfo });
     } else {
       this.setState({ authenticated });
     }
   }
 }
 
-// async function setAuthenticationState() {
-//   if (!this.state.authenticated) {
-//     if (this.context.authenticated) {
-//       const { authenticated, userinfo, authtoken } = this.context;
-//       this.setState({ authenticated, userinfo, authtoken });
-//     }
-//   }
-// }
-
 /* eslint-disable import/prefer-default-export */
 export { checkAuthentication };
-//export { setAuthenticationState };
-
 
 export function isLocalHost(hostname) {
   return !!(

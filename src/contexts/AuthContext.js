@@ -4,8 +4,6 @@ import { checkAuthentication } from '../helpers';
 
 export const AuthContext = createContext();
 
-//TODO: How to clear values after a logout event?
-
 class AuthContextProvider extends Component {
   constructor(props) {
     super(props);
@@ -23,6 +21,10 @@ class AuthContextProvider extends Component {
     return this.props.auth.login('/');
   }
 
+  getAccessToken = () => {
+    return this.props.auth.getAccessToken();
+  }
+
   async componentDidMount() {
     this.checkAuthentication();
   }
@@ -33,7 +35,7 @@ class AuthContextProvider extends Component {
 
   render() { 
     return ( 
-      <AuthContext.Provider value={{...this.state, logoutUserContext: this.logoutUserContext, loginUserContext: this.loginUserContext}}>
+      <AuthContext.Provider value={{...this.state, logoutUserContext: this.logoutUserContext, loginUserContext: this.loginUserContext, getAccessToken: this.getAccessToken}}>
         {this.props.children}
       </AuthContext.Provider>
      );

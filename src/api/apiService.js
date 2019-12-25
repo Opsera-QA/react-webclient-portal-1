@@ -6,17 +6,23 @@ const axiosInstance = axios.create({
   timeout: 10000,
 })
 
-axiosInstance.interceptors.request.use(function (config) {
-  const token = 'Bearer ' + '--ValueFromOktaTokenGoesHere--';
-  config.headers.Authorization =  token;
-  return config;
-});
+
+const setInterceptorToken = (authToken) => {
+  axiosInstance.interceptors.request.use(function (config) {
+    const token = 'Bearer ' + authToken;
+    config.headers.Authorization =  token;
+    return config;
+  },authToken);
+}
 
 export class ApiService {
-  constructor( url, params ) {
+  constructor( url, params, token ) {
     this.url = url
     this.params = params
+    setInterceptorToken(token);
   }
+
+  
 
   //TODO: Add paramater support
   get() {
