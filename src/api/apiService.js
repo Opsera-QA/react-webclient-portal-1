@@ -19,7 +19,7 @@ export class ApiService {
   constructor( url, params, token ) {
     this.url = url
     this.params = params
-    setInterceptorToken(token);
+    if (token) {setInterceptorToken(token);}
   }
 
   
