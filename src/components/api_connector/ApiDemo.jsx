@@ -33,11 +33,17 @@ class ApiDemo extends Component {
       });
     })
       .catch(function (error) {
+        let message = null;
+        if (error.response) {
+          message = `Status ${error.response.status}: ${error.response.data}`;
+        }
+        console.log(message ? `ERROR: ${message}` : `Error Reported: ${error}`);
+
         currentComponent.setState({
           error: true,
-          messages: 'Error reported accessing API.'
+          messages: message ? message : 'Error reported accessing API.'
         });
-        console.log(`Error Reported: ${error}`);
+        
       })
       .finally(function () {
         currentComponent.setState({ fetching: false });
