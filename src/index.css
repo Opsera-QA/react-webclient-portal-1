@@ -61,6 +61,10 @@ code {
   min-width: 125px;
 }
 
+.row-header-text {
+  font-size: 1.1em;
+}
+
 @media only screen and (max-width: 764px) {
   .sidebar {
     width: 100%;

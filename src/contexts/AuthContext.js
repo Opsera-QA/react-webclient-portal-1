@@ -9,7 +9,6 @@ class AuthContextProvider extends Component {
     super(props);
     this.state = { authenticated: null, userinfo: null };
     this.checkAuthentication = checkAuthentication.bind(this);
-    console.log(props)
   }
 
   logoutUserContext = () => {
