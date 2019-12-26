@@ -14,7 +14,6 @@ export default class Update extends Component {
       fetching: true,
       error: null,
       disabledIds: [],
-      apps: [],
       messages: null,
       test: 'test123'
     };
@@ -50,6 +49,7 @@ export default class Update extends Component {
   }
 
   handleButtonClick = async ({ applicationId, toolId }) => {
+    let currentComponent = this;
     this.setState(ps => ({
       disabledIds: [...ps.disabledIds, `${applicationId}${toolId}`],
     }))
@@ -59,10 +59,24 @@ export default class Update extends Component {
       endpoint: "tools/upgrade",
       body: { applicationId, toolId },
     })
+    .then(function (response) {
+      // <Alert variant="secondary">
+      //   Tool Submitted for upgrade, you will be notified completeness.
+      // </Alert>
+      console.log(response)
+    })
+    .catch(function (error) {
+      currentComponent.setState({ 
+        error: true,
+        messages: 'Error reported updating the tool.'
+      });
+      console.log(`Error Reported: ${error}`);
+    })
+    .finally(function () {
+      currentComponent.setState({ fetching: false });
+    });
 
-      (<Alert variant="secondary">
-        Tool Submitted for upgrade, you will be notified completeness.
-        </Alert>)
+     
   }
 
   loader = () => {
