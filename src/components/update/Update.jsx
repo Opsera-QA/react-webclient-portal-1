@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
-import { withAuth } from '@okta/okta-react';
-import { connect } from "react-redux";
 import { Alert, Button, Col, Row, Container } from 'react-bootstrap';
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
-import { api2 } from "../../api";
 
-export default class Update extends Component {
+import { api2 } from "../../api"; //TODO: REMOVE THIS
+
+import { AuthContext } from '../../contexts/AuthContext'; //New AuthContext State 
+import { ApiService } from '../../api/apiService';
+
+class Update extends Component {
+  static contextType = AuthContext;  //Import AuthContext values into Component
+
   constructor(props) {
     super(props);
     this.state = {
@@ -14,30 +18,29 @@ export default class Update extends Component {
       fetching: true,
       error: null,
       disabledIds: [],
-      messages: null,
-      test: 'test123'
+      messages: null
     };
   }
 
-  componentDidMount() {
-    this.getToolsList();
+  // Get the current token and then call the API call passing it
+  async componentDidMount() {
+    const { getAccessToken } = this.context;
+    const accessToken = await getAccessToken();
+    await this.getToolsList(accessToken);
   }
 
-  async getToolsList() {
+  async getToolsList(accessToken) {
+    const apiCall = new ApiService('tools/upgradable', {}, accessToken);
     let currentComponent = this;
-    await api2({
-      method: "GET",
-      endpoint: "/tools/upgradable",
-      })
-      .then(function (response) {
-        currentComponent.setState({ 
-          apps: response.apps,
-          error: false,
-          messages: null
-         });
-      })
+    apiCall.get().then(function (response) {
+      currentComponent.setState({
+        apps: response.apps,
+        error: false,
+        messages: 'API call was successful!'
+      });
+    })
       .catch(function (error) {
-        currentComponent.setState({ 
+        currentComponent.setState({
           error: true,
           messages: 'Error reported accessing list of upgradable tools.'
         });
@@ -165,3 +168,4 @@ function ToolView({
     </Row>
   )
 }
+export default Update;

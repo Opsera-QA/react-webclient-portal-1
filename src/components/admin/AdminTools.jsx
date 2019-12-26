@@ -2,7 +2,7 @@ import { withAuth } from '@okta/okta-react';
 import React, { Component } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faHeartbeat, faTimes, faUserCircle } from '@fortawesome/free-solid-svg-icons'
+import { faEdit, faHeartbeat, faTimes, faUserCircle, faLink } from '@fortawesome/free-solid-svg-icons'
 
 export default withAuth(class About extends Component {
 
@@ -24,6 +24,9 @@ export default withAuth(class About extends Component {
           </Col>
           <Col xs={12} md={6} lg={4} className="p-2">
             <a href="/admin/registered_users"><FontAwesomeIcon icon={faUserCircle} fixedWidth /> Registered Users</a>
+          </Col>
+          <Col xs={12} md={6} lg={4} className="p-2">
+            <a href="/api_demo"><FontAwesomeIcon icon={faLink} fixedWidth /> API Test</a>
           </Col>
         </Row>
 

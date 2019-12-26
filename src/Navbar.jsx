@@ -1,40 +1,34 @@
-import { withAuth } from '@okta/okta-react';
 import React, { Component } from 'react';
 import {Navbar, Nav, NavDropdown, Button} from 'react-bootstrap'
-import { checkAuthentication } from './helpers';
-//import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-//import { faCoffee } from '@fortawesome/free-solid-svg-icons'
-//import { fab } from '@fortawesome/free-brands-svg-icons' 
-
+import {AuthContext} from './contexts/AuthContext';
 import './navbar.css';
 
-export default withAuth(class Navigation extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { authenticated: null };
-    this.checkAuthentication = checkAuthentication.bind(this);
+class Navigation extends Component {
+  static contextType = AuthContext;
+
+  constructor(props, context) {
+    super(props, context);
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
   }
-
-  async componentDidMount() {
-    this.checkAuthentication();
-  }
-
-  async componentDidUpdate() {
-    this.checkAuthentication();
-  }
-
+  
   async login() {
-    this.props.auth.login('/');
+    const { loginUserContext } = this.context;
+    loginUserContext();
   }
 
   async logout() {
-    localStorage.setItem("authentication", JSON.stringify({}))  // removing persisted user state.
-    this.props.auth.logout('/');
+    const { logoutUserContext } = this.context;
+    logoutUserContext();
+  }
+
+  gotoSignUp = () => {
+    let path = `/signup`;
+    this.props.history.push(path);
   }
 
   render() {
+    const { authenticated, userinfo } = this.context;
     return (
       <Navbar bg="dark" variant="dark" className="nav-bar">
         <Navbar.Brand href="/" style={{minWidth:165}}>
@@ -52,10 +46,10 @@ export default withAuth(class Navigation extends Component {
             <Nav.Link href="/about/pricing" className="d-none d-sm-inline">Pricing</Nav.Link>
             <Nav.Link href="/about" className="d-none d-sm-inline">Contact Us</Nav.Link> */}
           </Nav>
-          {!this.state.authenticated && <Button variant="success" className="mr-2">Sign Up</Button>}
-          {!this.state.authenticated && <Button variant="outline-success" onClick={this.login}>Login</Button>}
-          {this.state.authenticated && <Nav>
-            <NavDropdown title={this.state.userinfo.name} id="basic-nav-dropdown" alignRight>
+          { !authenticated && <Button variant="success" className="mr-2" onClick={this.gotoSignUp}>Sign Up</Button>}
+          { !authenticated && <Button variant="outline-success" onClick={this.login}>Login</Button>}
+          { authenticated && <Nav>
+            <NavDropdown title={userinfo ? userinfo.name : 'Unknown User Name'} id="basic-nav-dropdown" alignRight>
               <NavDropdown.Item href="/messages" id="messages-button">Messages</NavDropdown.Item>
               <NavDropdown.Item href="/profile" id="profile-button">Profile</NavDropdown.Item>
               <NavDropdown.Divider />
@@ -72,4 +66,6 @@ export default withAuth(class Navigation extends Component {
       </Navbar>
     );
   }
-});
+};
+
+export default Navigation;
