@@ -19,10 +19,10 @@ class ApiDemo extends Component {
   async componentDidMount() {
     const { getAccessToken } = this.context;  //this.context is where all data from the above AuthContext component resides.  It's like the state props design wise
     const accessToken = await getAccessToken();
-    await this.getApiData(accessToken);
+    this.getApiData(accessToken);
   }
 
-  async getApiData(accessToken) {
+  getApiData(accessToken) {
     const apiCall = new ApiService('auth-demo', {}, accessToken);
     let currentComponent = this;
     apiCall.get().then(function (response) {
