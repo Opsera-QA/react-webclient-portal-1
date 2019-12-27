@@ -1,7 +1,6 @@
-
 import React, { PureComponent } from 'react';
-import { Form, Container, Alert, Row, Col } from 'react-bootstrap';
-
+import { Form, Alert, Row, Col } from 'react-bootstrap';
+import Moment from 'react-moment';
 import { AuthContext } from '../../contexts/AuthContext';  //REact Context API Code for User Authentication
 import { ApiService } from '../../api/apiService';
 import ErrorDialog from "../common/error";
@@ -28,7 +27,7 @@ class Inventory extends PureComponent {
   }
 
   getApiData(accessToken) {
-    const apiCall = new ApiService('applications', {}, accessToken); //initial endpoint doesn't require "/""
+    const apiCall = new ApiService('applications/demo', {}, accessToken); //this is a test, the PROD setting will just be "applications"
     let currentComponent = this;
     apiCall.get().then(function (response) {
       currentComponent.setState({
@@ -72,23 +71,20 @@ class Inventory extends PureComponent {
   }
 
   render() {
-    const { data, error, messages } = this.state
+    const { data, error, messages, fetching } = this.state
     console.log(data);
-    const loading = data == null
     return (
       <div>
         <h3>Inventory</h3>
         <p>All configured applications are available for viewing below.  Select the item you want to view from the list.</p>
         {error ? <ErrorDialog errorMessage={messages} /> : null}
+        {fetching && <LoadingDialog />}
         <div>
-          {(loading) && <LoadingDialog />}
-
-          {(!loading && data.length === 0) &&
+          {(!fetching && data.length === 0) &&
             <div className="mt-3">
               <Alert variant="secondary">
                 No applications are currently configured for the system.
               </Alert>
-
             </div>
           }
 
@@ -96,11 +92,11 @@ class Inventory extends PureComponent {
             <Form.Group>
               <Form.Control as="select"
                 inputRef={el => this.inputEl = el}
-                hidden={(!loading && data.length > 0) ? false : true}
+                hidden={(!fetching && data.length > 0) ? false : true}
                 onChange={this.handleDropdownChange}
                 style={{ marginTop: 25 }}>
-                <option value="" selected disabled>{loading ? "loading..." : "Select application"}</option>
-                {!loading && (
+                <option value="" selected disabled>{fetching ? "loading..." : "Select application"}</option>
+                {!fetching && (
                   <>
                     {data ? data.map(application => (
                       <option key={application.name} value={application.name}>{application.name}</option>
@@ -111,9 +107,9 @@ class Inventory extends PureComponent {
             </Form.Group>
           </Form>
         </div>
-        {(!loading && data.length > 0) &&
+        {(!fetching && data.length > 0) &&
           <>
-            {loading ? null : <App application={this.getApp()} />}
+            {fetching ? null : <App application={this.getApp()} />}
           </>
         }
       </div>
@@ -123,14 +119,9 @@ class Inventory extends PureComponent {
 
 function App({ application }) {
   if (!application)
-    return (
-      <div>
-        <p>choose application from above</p>
-      </div>
-    )
+    return (<div></div>)
 
   const { tools } = application
-
   if (tools.length === 0) {
     return (
       <div>
@@ -140,7 +131,7 @@ function App({ application }) {
   }
 
   return (
-    <div>
+    <div style={{marginTop: 25}}>
       {tools.map((tool, key) => (
         <ToolTable tool={tool} key={key} />
       ))}
@@ -149,30 +140,22 @@ function App({ application }) {
 }
 
 const ToolTable = ({ tool }) => {
-  const { name, toolStatus, toolURL } = tool
-  const active = toolStatus === "ACTIVE"
-
+  const { name, port, toolStatus, toolURL, versionNumber, installationDate, dnsName } = tool
   return (
-    <Container>
-      <Row style={{ marginTop: 10 }}>
-        <Col className="row-header-text">{name}</Col>
+    <div className="grid-striped">
+      <Row style={{ marginTop: 20 }}>
+        <Col lg={4} style={{fontWeight: 'bold'}}>{name}</Col>
+        <Col lg={2}>Port { port }</Col>
+        <Col lg={1}>{ toolStatus }</Col>
+        <Col lg={2}>{ versionNumber }</Col>
+        <Col lg={3}>Installed <Moment format="MM/DD/YYYY" date={installationDate} /></Col>
       </Row>
       <Row>
-        <Col>
-          {active ? (<div>URL: <a href={toolURL}>{toolURL}</a></div>) : ('Inactive Entry')}
-        </Col>
+        <Col lg={12}><a href={toolURL}>{toolURL}</a></Col>
+        <Col lg={12}>{dnsName}</Col>
       </Row>
-    </Container>
+    </div>
   )
 }
 
-const mapStateToProps = ({ applications }) => ({
-  applications,
-})
-
 export default Inventory;
-
-// export default withAuth(connect(
-//   mapStateToProps,
-//   { getApps },
-// )(Inventory))
