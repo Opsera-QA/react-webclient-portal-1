@@ -60,15 +60,33 @@ class ApiDemo extends Component {
       <div>
         <h2>API Test w/ Okta Authentication Token and Axios.js</h2>
         { error ? <ErrorDialog errorMessage={messages} /> : null }
-        <div>Data: {JSON.stringify(data)}</div>
-        <div style={{ marginTop: 10 }}>Authorization Token: {data ? data.authorization : ''}</div>
-        <div style={{ marginTop: 10 }}>MSG: {messages}</div>
-        <div style={{ marginTop: 10 }}>Error: {error}</div>
-        <div style={{ marginTop: 10 }}>AuthContext Data:
+
+        <div><strong>API Response Data Package:</strong><br />
+        <span className="text-muted">{JSON.stringify(data)}</span></div>
+        <h6 style={{marginTop: 20}}>Response Package Breakdown:<br />
+        <small className="text-muted">This is confirmation the data is returned from the server and an example of breaking it down 
+        into it's individual components.  The Response Token is not typically returned, however in this demo, the API Server is 
+        programmed to return it to confirm it was sent and received properly.</small></h6>
+        <p></p>
+        <div><i>Response Message Data:</i> {data ? data.message : ''}</div>
+        <div style={{ marginTop: 20 }}><i>Response Token:</i> <br />
+          <span className="code">{data ? data.authorization : ''}</span>
+          </div>
+        <div style={{ marginTop: 20 }}>Component getApiData() State Message: {messages}</div>
+        <div style={{ marginTop: 10 }}>Component getApiData() State Error: {error}</div>
+        { authenticated && <div style={{ marginTop: 20 }}>
+        <h6 style={{marginTop: 25}}>AuthContext Data:
+        <br />
+        <small className="text-muted">This confirms the React Context is working properly in the app returning User Properties from Okta.</small></h6>
           <AuthContext.Consumer>
-            {({ userinfo }) => <p>User Name: {userinfo ? userinfo.name : ''}</p>}
+            {({ userinfo }) => {
+              return(<div style={{margin:5}}>
+                <div>User Name: {userinfo ? `${userinfo.name}` : ''}<br />
+                Email: {userinfo ? `${userinfo.email}` : ''}<br />
+                Zone: {userinfo ? `${userinfo.zoneinfo}` : ''}</div>
+                </div>)}}
           </AuthContext.Consumer>
-        </div>
+        </div> }
       </div>
     );
   }
