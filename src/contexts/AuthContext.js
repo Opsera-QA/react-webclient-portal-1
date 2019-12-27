@@ -7,13 +7,12 @@ export const AuthContext = createContext();
 class AuthContextProvider extends Component {
   constructor(props) {
     super(props);
-    this.state = { authenticated: null, userinfo: null, authtoken: null };
+    this.state = { authenticated: null, userinfo: null };
     this.checkAuthentication = checkAuthentication.bind(this);
-    console.log(props)
   }
 
   logoutUserContext = () => {
-    this.setState({ authenticated: null, userinfo: null, authtoken: null });
+    this.setState({ authenticated: null, userinfo: null });
     return this.props.auth.logout('/');
   }
 

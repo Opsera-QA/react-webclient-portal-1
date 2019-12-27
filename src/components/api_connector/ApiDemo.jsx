@@ -15,14 +15,14 @@ class ApiDemo extends Component {
     };
   }
 
-  // This is where it may get optimized in the future but first call the getAccessToken and then call the API
+  // First call the getAccessToken and then call the API
   async componentDidMount() {
     const { getAccessToken } = this.context;  //this.context is where all data from the above AuthContext component resides.  It's like the state props design wise
     const accessToken = await getAccessToken();
-    await this.getApiData(accessToken);
+    this.getApiData(accessToken);
   }
 
-  async getApiData(accessToken) {
+  getApiData(accessToken) {
     const apiCall = new ApiService('auth-demo', {}, accessToken);
     let currentComponent = this;
     apiCall.get().then(function (response) {
@@ -33,11 +33,18 @@ class ApiDemo extends Component {
       });
     })
       .catch(function (error) {
+        let message = null;
+        if (error.response) {
+          message = `Status ${error.response.status}: ${
+            error.response.data.message ? error.response.data.message : JSON.stringify(error.response.data)}`;
+        }
+        console.log(message ? `ERROR: ${message}` : `Error Reported: ${error}`);
+
         currentComponent.setState({
           error: true,
-          messages: 'Error reported accessing API.'
+          messages: message ? message : 'Error reported accessing API.'
         });
-        console.log(`Error Reported: ${error}`);
+        
       })
       .finally(function () {
         currentComponent.setState({ fetching: false });
@@ -52,7 +59,7 @@ class ApiDemo extends Component {
     return (
       <div>
         <h2>API Test w/ Okta Authentication Token and Axios.js</h2>
-        {this.state.error ? <ErrorDialog errorMessage={messages} /> : null}
+        { error ? <ErrorDialog errorMessage={messages} /> : null }
         <div>Data: {JSON.stringify(data)}</div>
         <div style={{ marginTop: 10 }}>Authorization Token: {data ? data.authorization : ''}</div>
         <div style={{ marginTop: 10 }}>MSG: {messages}</div>

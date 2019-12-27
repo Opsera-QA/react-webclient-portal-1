@@ -1,34 +1,69 @@
-import { withAuth } from '@okta/okta-react';
 import React, { PureComponent } from 'react';
-import { connect } from "react-redux"
-import { Form, Table, Alert, Button, Card, CardGroup } from 'react-bootstrap';
-
-// TODO: Update this to use the new APIDemo approach (already imported) and replace the getApps function
-// TODO: Add error handling similar to Update.jsx approach
-import { getApps } from "../../actions/thunk"  //REMOVE THIS AND THE FILE ALL TOGETHER FROM THE PROJECT
+import { Form, Alert, Row, Col } from 'react-bootstrap';
+import Moment from 'react-moment';
+import { AuthContext } from '../../contexts/AuthContext';  //REact Context API Code for User Authentication
 import { ApiService } from '../../api/apiService';
 import ErrorDialog from "../common/error";
-
 import LoadingDialog from "../common/loading"
 
 class Inventory extends PureComponent {
-  state = {
-    key: ""
+  static contextType = AuthContext;  //Registers the User Authentication context data in the component
+
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      data: [],
+      fetching: true,
+      error: null,
+      messages: null
+    };
   }
 
-  componentDidMount() {
-    const { getApps } = this.props
-    getApps()
+  // First call the getAccessToken and then call the API
+  async componentDidMount() {
+    const { getAccessToken } = this.context;  //this.context is where all data from the above AuthContext component resides.  It's like the state props design wise
+    const accessToken = await getAccessToken();
+    this.getApiData(accessToken);
   }
+
+  getApiData(accessToken) {
+    const apiCall = new ApiService('applications/demo', {}, accessToken); //this is a test, the PROD setting will just be "applications"
+    let currentComponent = this;
+    apiCall.get().then(function (response) {
+      currentComponent.setState({
+        data: response.data,
+        error: false,
+        messages: 'API call was successful!'
+      });
+    })
+      .catch(function (error) {
+        let message = null;
+        if (error.response) {
+          message = `Status ${error.response.status}: ${
+            error.response.data.message ? error.response.data.message : JSON.stringify(error.response.data)}`;
+        }
+        console.log(message ? `ERROR: ${message}` : `Error Reported: ${error}`);
+
+        currentComponent.setState({
+          error: true,
+          messages: message ? message : 'Error reported accessing API.'
+        });
+
+      })
+      .finally(function () {
+        currentComponent.setState({ fetching: false });
+      });
+  }
+
 
   handleDropdownChange = (e) => {
     this.setState({ key: e.target.value })
   }
 
   getApp = () => {
-    const { applications } = this.props
-    const { key } = this.state
-    return applications.find(({ name }) => name === key)
+    console.log(this.state)
+    const { key, data } = this.state
+    return data.find(({ name }) => name === key)
   }
 
   setPlaceholder = () => {
@@ -36,21 +71,20 @@ class Inventory extends PureComponent {
   }
 
   render() {
-    const { applications } = this.props
-    const loading = applications == null
+    const { data, error, messages, fetching } = this.state
+    console.log(data);
     return (
       <div>
         <h3>Inventory</h3>
         <p>All configured applications are available for viewing below.  Select the item you want to view from the list.</p>
+        {error ? <ErrorDialog errorMessage={messages} /> : null}
+        {fetching && <LoadingDialog />}
         <div>
-          {(loading) && <LoadingDialog />}
-
-          {(!loading && applications.length === 0) &&
+          {(!fetching && data.length === 0) &&
             <div className="mt-3">
               <Alert variant="secondary">
                 No applications are currently configured for the system.
               </Alert>
-
             </div>
           }
 
@@ -58,24 +92,24 @@ class Inventory extends PureComponent {
             <Form.Group>
               <Form.Control as="select"
                 inputRef={el => this.inputEl = el}
-                hidden={(!loading && applications.length > 0) ? false : true}
+                hidden={(!fetching && data.length > 0) ? false : true}
                 onChange={this.handleDropdownChange}
                 style={{ marginTop: 25 }}>
-                <option value="" selected disabled>{loading ? "loading..." : "Select application"}</option>
-                {!loading && (
+                <option value="" selected disabled>{fetching ? "loading..." : "Select application"}</option>
+                {!fetching && (
                   <>
-                    {applications.map(application => (
+                    {data ? data.map(application => (
                       <option key={application.name} value={application.name}>{application.name}</option>
-                    ))}
+                    )) : ''}
                   </>
                 )}
               </Form.Control>
             </Form.Group>
           </Form>
         </div>
-        {(!loading && applications.length > 0) &&
+        {(!fetching && data.length > 0) &&
           <>
-            {loading ? null : <App application={this.getApp()} />}
+            {fetching ? null : <App application={this.getApp()} />}
           </>
         }
       </div>
@@ -85,14 +119,9 @@ class Inventory extends PureComponent {
 
 function App({ application }) {
   if (!application)
-    return (
-      <div>
-        <p>choose application from above</p>
-      </div>
-    )
+    return (<div></div>)
 
   const { tools } = application
-
   if (tools.length === 0) {
     return (
       <div>
@@ -102,7 +131,7 @@ function App({ application }) {
   }
 
   return (
-    <div>
+    <div style={{marginTop: 25}}>
       {tools.map((tool, key) => (
         <ToolTable tool={tool} key={key} />
       ))}
@@ -111,37 +140,22 @@ function App({ application }) {
 }
 
 const ToolTable = ({ tool }) => {
-  const { name, toolStatus, toolURL } = tool
-  const active = toolStatus === "ACTIVE"
-
+  const { name, port, toolStatus, toolURL, versionNumber, installationDate, dnsName } = tool
   return (
-    <Table responsive>
-      <thead>
-        <tr>
-          <th>
-            <tr>
-              {name}
-            </tr>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {active && (
-          <tr>
-            <td>URL</td>
-            <td><a href={toolURL}>{toolURL}</a></td>
-          </tr>
-        )}
-      </tbody>
-    </Table>
+    <div className="grid-striped">
+      <Row style={{ marginTop: 20 }}>
+        <Col lg={4} style={{fontWeight: 'bold'}}>{name}</Col>
+        <Col lg={2}>Port { port }</Col>
+        <Col lg={1}>{ toolStatus }</Col>
+        <Col lg={2}>{ versionNumber }</Col>
+        <Col lg={3}>Installed <Moment format="MM/DD/YYYY" date={installationDate} /></Col>
+      </Row>
+      <Row>
+        <Col lg={12}><a href={toolURL}>{toolURL}</a></Col>
+        <Col lg={12}>{dnsName}</Col>
+      </Row>
+    </div>
   )
 }
 
-const mapStateToProps = ({ applications }) => ({
-  applications,
-})
-
-export default withAuth(connect(
-  mapStateToProps,
-  { getApps },
-)(Inventory))
+export default Inventory;

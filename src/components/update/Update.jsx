@@ -123,7 +123,7 @@ class Update extends Component {
     return (
       <div>
         <h2>Upgrades</h2>
-        { this.state.error ? <ErrorDialog errorMessage={messages} /> : null }
+        { error ? <ErrorDialog errorMessage={messages} /> : null }
       
         <div className="upgrades__app-list" style={{}}>
           {this.loader()}
