@@ -6,6 +6,7 @@ import LoadingDialog from "../common/loading"
 import {api2} from "../../api"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import ErrorDialog from "../common/error";
 
 const TOOL_NAME = "ELK-Kibana"
 
@@ -15,7 +16,7 @@ export default class Reports extends PureComponent {
 
   async componentDidMount() {
     this.setState({loading: true})
-
+    let currentComponent = this;
     api2({
       method: "GET",
       endpoint: "/users/tools",
@@ -34,6 +35,16 @@ export default class Reports extends PureComponent {
         console.log("something went wrong..")
       }
     })
+    .catch(function (error) {
+      currentComponent.setState({
+        error: true,
+        messages: 'Error reported accessing API.'
+      });
+      console.log(`Error Reported: ${error}`);
+    })
+    .finally(function () {
+      currentComponent.setState({ fetching: false });
+    });
   }
 
   onClickButton = () => {
@@ -60,10 +71,11 @@ export default class Reports extends PureComponent {
   }
 
     render() {
-    const {tool, showIframe} = this.state
+    const {tool, showIframe, messages} = this.state
 
         return (
-            <Container>
+            <Container>  
+            {this.state.error ? <ErrorDialog errorMessage={messages} /> : <>
             <div className="reporting__to-dashboard-container">
               <h2>Reporting</h2>
               <Button disabled={this.state.url === ""} onClick={this.onClickButton}>
@@ -98,6 +110,8 @@ export default class Reports extends PureComponent {
             {showIframe && tool && tool.toolURL && (
               <div>{<iframe src={tool.toolURL} height="600" width="1160" />}</div>
             )}
+            </>
+            }
           </Container>
         )
     }

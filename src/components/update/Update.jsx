@@ -66,6 +66,10 @@ class Update extends Component {
       // <Alert variant="secondary">
       //   Tool Submitted for upgrade, you will be notified completeness.
       // </Alert>
+      currentComponent.setState({
+        error: false,
+        messages: 'Tool Submitted for upgrade, you will be notified completeness.'
+      });
       console.log(response)
     })
     .catch(function (error) {
