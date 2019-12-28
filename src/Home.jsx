@@ -1,8 +1,8 @@
-
 import React, { Component } from 'react';
 import { AuthContext } from './contexts/AuthContext';
 import { Button } from 'react-bootstrap';
 import FeaturesCards from './components/about/features';
+import LoadingDialog from "./components/common/loading"
 
 class Home extends Component {
   static contextType = AuthContext;
@@ -24,6 +24,7 @@ class Home extends Component {
 
   render() {
     const { authenticated, userinfo } = this.context;
+    
     return (
       <div>
         { authenticated &&
@@ -37,8 +38,10 @@ class Home extends Component {
             <FeaturesCards />
           </div>
         }
-
-        { !authenticated && <div style={{ marginTop: 25 }}>
+        
+        {typeof(authenticated) === "object" && !authenticated && <LoadingDialog />}
+        
+        { typeof(authenticated) === "boolean" && authenticated === false && <div style={{ marginTop: 25 }}>
           <div className="row">
             <div className="col-md-12 col-lg-7 text-center text-md-left pr-md-5">
               <h1 className="mb-3 bd-text-purple-bright">OpsERA</h1>

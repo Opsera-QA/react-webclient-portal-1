@@ -4,7 +4,7 @@ import Moment from 'react-moment';
 import { AuthContext } from '../../contexts/AuthContext';  //REact Context API Code for User Authentication
 import { ApiService } from '../../api/apiService';
 import ErrorDialog from "../common/error";
-import LoadingDialog from "../common/loading"
+import LoadingDialog from "../common/loading";
 
 class Inventory extends PureComponent {
   static contextType = AuthContext;  //Registers the User Authentication context data in the component
