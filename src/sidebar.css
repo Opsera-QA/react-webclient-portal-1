@@ -15,3 +15,7 @@ a.nav-link-light:hover {
   font-size: 1.2em;
   margin-top:5px;
 }
+
+a.nav-link-light.nav-link.active {
+  color: #ffc107;
+}
