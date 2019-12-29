@@ -1,12 +1,16 @@
-import { withAuth } from '@okta/okta-react';
 import React, { Component } from 'react';
+import { AuthContext } from './contexts/AuthContext';
 import { Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faHeartbeat, faTimes, faUserCircle, faLink } from '@fortawesome/free-solid-svg-icons'
 
-export default withAuth(class About extends Component {
+class AdminTools extends Component {
+  static contextType = AuthContext;
 
   render() {
+    const { authenticated, userinfo } = this.context;
+
+    //TODO: Only render this if user is an Admin (need Okta groups)
     return (
       <div>
         <h3>Administration Tools</h3>
@@ -26,6 +30,9 @@ export default withAuth(class About extends Component {
             <a href="/admin/registered_users"><FontAwesomeIcon icon={faUserCircle} fixedWidth /> Registered Users</a>
           </Col>
           <Col xs={12} md={6} lg={4} className="p-2">
+            <a href="/admin/registered_users"><FontAwesomeIcon icon={faUserCircle} fixedWidth /> Reports Registration</a>
+          </Col>
+          <Col xs={12} md={6} lg={4} className="p-2">
             <a href="/api_demo"><FontAwesomeIcon icon={faLink} fixedWidth /> API Test</a>
           </Col>
         </Row>
@@ -33,4 +40,6 @@ export default withAuth(class About extends Component {
       </div>
     )
   }
-})
+}
+
+export default AdminTools;
