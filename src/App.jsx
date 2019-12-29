@@ -28,6 +28,7 @@ import HealthCheck from './components/admin/HealthCheck';
 import DeleteTools from './components/admin/DeleteTools';
 import RegisteredUsers from './components/admin/RegisteredUsers';
 import ManageSystems from './components/admin/ManageSystems';
+import ReportsRegistration from './components/admin/analytics/ReportsRegistration';
 
 import ApiConnectionDemo from './components/api_connector/ApiDemo';
 
@@ -66,6 +67,7 @@ class App extends Component {
                       <SecureRoute path="/admin/delete" component={DeleteTools} />
                       <SecureRoute path="/admin/manage_systems" component={ManageSystems} />
                       <SecureRoute path="/admin/registered_users" component={RegisteredUsers} />
+                      <SecureRoute path="/admin/analytics/reports_registration" component={ReportsRegistration} />
 
                       <SecureRoute path="/api_demo" component={ApiConnectionDemo} />
                     </Container>
