@@ -28,7 +28,7 @@ class Navigation extends Component {
   }
 
   render() {
-    const { authenticated, userinfo } = this.context;
+    const { authenticated, userInfo } = this.context;
     return (
       <Navbar bg="dark" variant="dark" className="nav-bar">
         <Navbar.Brand href="/" style={{minWidth:165}}>
@@ -49,7 +49,7 @@ class Navigation extends Component {
           { !authenticated && <Button variant="success" className="mr-2" onClick={this.gotoSignUp}>Sign Up</Button>}
           { !authenticated && <Button variant="outline-success" onClick={this.login}>Login</Button>}
           { authenticated && <Nav>
-            <NavDropdown title={userinfo ? userinfo.name : 'Unknown User Name'} id="basic-nav-dropdown" alignRight>
+            <NavDropdown title={userInfo ? userInfo.name : 'Unknown User Name'} id="basic-nav-dropdown" alignRight>
               <NavDropdown.Item href="/messages" id="messages-button">Messages</NavDropdown.Item>
               <NavDropdown.Item href="/profile" id="profile-button">Profile</NavDropdown.Item>
               <NavDropdown.Divider />

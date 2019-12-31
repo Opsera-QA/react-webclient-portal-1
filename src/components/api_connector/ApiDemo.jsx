@@ -82,11 +82,11 @@ class ApiDemo extends Component {
         <br />
         <small className="text-muted">This confirms the React Context is working properly in the app returning User Properties from Okta.</small></h6>
           <AuthContext.Consumer>
-            {({ userinfo }) => {
+            {({ userInfo }) => {
               return(<div style={{margin:5}}>
-                <div>User Name: {userinfo ? `${userinfo.name}` : ''}<br />
-                Email: {userinfo ? `${userinfo.email}` : ''}<br />
-                Zone: {userinfo ? `${userinfo.zoneinfo}` : ''}</div>
+                <div>User Name: {userInfo ? `${userInfo.name}` : ''}<br />
+                Email: {userInfo ? `${userInfo.email}` : ''}<br />
+                Zone: {userInfo ? `${userInfo.zoneinfo}` : ''}</div>
                 </div>)}}
           </AuthContext.Consumer>
         </div> }

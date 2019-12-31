@@ -23,13 +23,13 @@ class Home extends Component {
   }
 
   render() {
-    const { authenticated, userinfo } = this.context;
+    const { authenticated, userInfo } = this.context;
     
     return (
       <div>
         { authenticated &&
           <div style={{ marginTop: 15 }}>
-            <h2>Welcome back, {userinfo ? userinfo.name : 'Unknown User Name'}!</h2>
+            <h2>Welcome back, {userInfo ? userInfo.name : 'Unknown User Name'}!</h2>
             <p>
               You have successfully logged in!  You now have an ID token and access token in local storage.
                   Visit the <a href="/profile">My Profile</a> page to take a look inside the ID token.
