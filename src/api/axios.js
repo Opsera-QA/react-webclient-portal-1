@@ -1,9 +1,9 @@
 import axios from "axios"
-import {serverURL} from "../config"
+import {apiServerUrl} from "../config"
 import store from "../store"
 
 const instance = axios.create({
-  baseURL: serverURL,
+  baseURL: apiServerUrl,
   timeout: 10000,
 })
 
