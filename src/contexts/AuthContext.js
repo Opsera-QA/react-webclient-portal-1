@@ -7,12 +7,12 @@ export const AuthContext = createContext();
 class AuthContextProvider extends Component {
   constructor(props) {
     super(props);
-    this.state = { authenticated: null, userinfo: null };
+    this.state = { authenticated: null, userInfo: null, sharedState: null };
     this.checkAuthentication = checkAuthentication.bind(this);
   }
 
   logoutUserContext = () => {
-    this.setState({ authenticated: null, userinfo: null });
+    this.setState({ authenticated: null, userInfo: null, sharedState: null });
     return this.props.auth.logout('/');
   }
 
@@ -22,6 +22,10 @@ class AuthContextProvider extends Component {
 
   getAccessToken = () => {
     return this.props.auth.getAccessToken();
+  }
+
+  setSharedState = (value) => {
+    this.setState({ sharedState: value});
   }
 
   async componentDidMount() {
@@ -34,7 +38,12 @@ class AuthContextProvider extends Component {
 
   render() { 
     return ( 
-      <AuthContext.Provider value={{...this.state, logoutUserContext: this.logoutUserContext, loginUserContext: this.loginUserContext, getAccessToken: this.getAccessToken}}>
+      <AuthContext.Provider value={{
+        ...this.state, 
+        logoutUserContext: this.logoutUserContext, 
+        loginUserContext: this.loginUserContext, 
+        getAccessToken: this.getAccessToken,
+        setSharedState: this.setSharedState}}>
         {this.props.children}
       </AuthContext.Provider>
      );

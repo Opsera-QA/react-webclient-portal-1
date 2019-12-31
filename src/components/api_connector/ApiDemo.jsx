@@ -17,9 +17,11 @@ class ApiDemo extends Component {
 
   // First call the getAccessToken and then call the API
   async componentDidMount() {
-    const { getAccessToken } = this.context;  //this.context is where all data from the above AuthContext component resides.  It's like the state props design wise
+    const { getAccessToken, setSharedState } = this.context;  //this.context is where all data from the above AuthContext component resides.  It's like the state props design wise
     const accessToken = await getAccessToken();
     this.getApiData(accessToken);
+
+    setSharedState({ "data1":"test", "data2":30, "data3":null });  //Demo of how to use sharedState in AuthContext for sharing data between subsets of components
   }
 
   getApiData(accessToken) {
@@ -54,8 +56,9 @@ class ApiDemo extends Component {
 
   render() {
     const { data, error, messages } = this.state
-    const { authenticated, userinfo } = this.context;
-    console.log(this.context)
+    const { authenticated, userInfo, sharedState } = this.context;
+    console.log(this.context);
+    console.log(sharedState); //  Use this share state temporarily among components
     return (
       <div>
         <h2>API Test w/ Okta Authentication Token and Axios.js</h2>

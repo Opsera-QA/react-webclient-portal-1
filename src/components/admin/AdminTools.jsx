@@ -8,7 +8,7 @@ class AdminTools extends Component {
   static contextType = AuthContext;
 
   render() {
-    const { authenticated, userinfo } = this.context;
+    const { authenticated, userInfo } = this.context;
 
     //TODO: Only render this if user is an Admin (need Okta groups)
     return (
