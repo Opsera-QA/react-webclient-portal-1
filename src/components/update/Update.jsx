@@ -30,7 +30,7 @@ class Update extends Component {
   }
 
   async getToolsList(accessToken) {
-    const apiCall = new ApiService('tools/upgradable', {}, accessToken);
+    const apiCall = new ApiService('/tools/upgradable', {}, accessToken);
     let currentComponent = this;
     apiCall.get().then(function (response) {
       currentComponent.setState({

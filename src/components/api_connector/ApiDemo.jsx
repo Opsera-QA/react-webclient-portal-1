@@ -25,7 +25,7 @@ class ApiDemo extends Component {
   }
 
   getApiData(accessToken) {
-    const apiCall = new ApiService('auth-demo', {}, accessToken);
+    const apiCall = new ApiService('/auth-demo', {}, accessToken);
     let currentComponent = this;
     apiCall.get().then(function (response) {
       currentComponent.setState({

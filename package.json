@@ -13,6 +13,7 @@
     "colors": "^1.4.0",
     "cross-env": "^6.0.3",
     "dotenv": "^8.2.0",
+    "env-cmd": "^10.0.1",
     "moment": "^2.24.0",
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.16",
@@ -27,7 +28,8 @@
   "scripts": {
     "start-linux-mac": "PORT=8080 react-scripts start",
     "start-windows": "set PORT=8080 && react-scripts start",
-    "build": "react-scripts build",
+    "build:staging": "env-cmd -f .env.staging react-scripts build",
+    "build:production": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

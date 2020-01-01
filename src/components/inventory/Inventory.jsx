@@ -27,7 +27,7 @@ class Inventory extends PureComponent {
   }
 
   getApiData(accessToken) {
-    const apiCall = new ApiService('applications/demo', {}, accessToken); //this is a test, the PROD setting will just be "applications"
+    const apiCall = new ApiService('/applications/demo', {}, accessToken); //this is a test, the PROD setting will just be "applications"
     let currentComponent = this;
     apiCall.get().then(function (response) {
       currentComponent.setState({
