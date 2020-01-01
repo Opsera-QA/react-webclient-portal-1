@@ -5,10 +5,10 @@
 async function checkAuthentication() {
   const authenticated = await this.props.auth.isAuthenticated();
   if (authenticated !== this.state.authenticated) {
-    if (authenticated && !this.state.userinfo) {
-      const userinfo = await this.props.auth.getUser();
+    if (authenticated && !this.state.userInfo) {
+      const userInfo = await this.props.auth.getUser();
       
-      this.setState({ authenticated, userinfo });
+      this.setState({ authenticated, userInfo });
     } else {
       this.setState({ authenticated });
     }
