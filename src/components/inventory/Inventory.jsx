@@ -15,7 +15,8 @@ class Inventory extends PureComponent {
       data: [],
       fetching: true,
       error: null,
-      messages: null
+      messages: null,
+      userId: '5cce9795742cbf2233fd813b'
     };
   }
 
@@ -26,8 +27,10 @@ class Inventory extends PureComponent {
     this.getApiData(accessToken);
   }
 
+
+  //TODO: Get user ID from Okta...
   getApiData(accessToken) {
-    const apiCall = new ApiService('/applications/demo', {}, accessToken); //this is a test, the PROD setting will just be "applications"
+    const apiCall = new ApiService('/applications', {uid: this.state.userId}, accessToken); //this is a test, the PROD setting will just be "applications"
     let currentComponent = this;
     apiCall.get().then(function (response) {
       currentComponent.setState({

@@ -21,10 +21,9 @@ export class ApiService {
     if (token) {setInterceptorToken(token);}
   }
 
-
-  //TODO: Add paramater support
   get() {
     var self = this;   
+    console.log(self.params);
     return axiosInstance({
       method: 'get',
       url: self.url,
@@ -33,7 +32,6 @@ export class ApiService {
     })
   }
 
-  //TODO: Add POST Method
   post() {
     var self = this;   
     return axiosInstance({

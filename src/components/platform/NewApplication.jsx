@@ -8,8 +8,8 @@ import RepositoryManagement from "./RepositoryManagement"
 import SAST from "./SAST"
 import Monitoring from "./Monitoring"
 import Confirmation from "./Confirmation"
-import {NewAppContext} from "./context"
-import {isAlphaNumeric} from "../../helpers"
+import { NewAppContext } from "./context"
+import { isAlphaNumeric } from "../../helpers"
 import { ApiService } from '../../api/apiService';
 import ErrorDialog from "../common/error";
 
@@ -21,10 +21,11 @@ class NewApplication extends React.PureComponent {
     appnameError: null,
     fetching: true,
     error: null,
-    messages: null
+    messages: null,
+    userId: '5cce9795742cbf2233fd813b'
   }
 
-  handleAppNameChange = ({target: {name, value}}) => {
+  handleAppNameChange = ({ target: { name, value } }) => {
     let error = null
     if (value.length > 10) error = "App Name has to be 10 chars or less"
     if (value.length > 1 && !isAlphaNumeric(value))
@@ -38,11 +39,11 @@ class NewApplication extends React.PureComponent {
 
   handleCreateClick = async (e) => {
     e.preventDefault()
-    const {token} = this.context
+    const { token } = this.context
     // console.log(token)
 
     if (this.state.appname.trim().length < 1) {
-      this.setState({appnameError: true})
+      this.setState({ appnameError: true })
       return
     }
 
@@ -50,74 +51,77 @@ class NewApplication extends React.PureComponent {
       checkingAppName: true,
     })
 
-      const apiCall = new ApiService('applications/check-exists', { name: this.state.appname }, token); //this is a test, the PROD setting will just be "applications"
-      let currentComponent = this;
-      const {data: applicationExists} = apiCall.get().then(function (response) {
+
+    //TODO: User ID needs to come from OKTA
+    const apiCall = new ApiService('/applications/check-exists', { uid: this.state.userId, app_name: this.state.appname }, token);
+    let currentComponent = this;
+    const { data: applicationExists } = apiCall.post()
+      .then(function (response) {
         currentComponent.setState({
           data: response.data,
           error: false,
           messages: 'API call was successful!'
         });
       })
-        .catch(function (error) {
-          let message = null;
-          if (error.response) {
-            message = `Status ${error.response.status}: ${
-              error.response.data.message ? error.response.data.message : JSON.stringify(error.response.data)}`;
-          }
-          console.log(message ? `ERROR: ${message}` : `Error Reported: ${error}`);
-  
-          currentComponent.setState({
-            error: true,
-            messages: message ? message : 'Error reported accessing API.'
-          });
-  
-        })
-        .finally(function () {
-          currentComponent.setState({ fetching: false });
+      .catch(function (error) {
+        let message = null;
+        if (error.response) {
+          message = `Status ${error.response.status}: ${
+            error.response.data.message ? error.response.data.message : JSON.stringify(error.response.data)}`;
+        }
+        console.log(message ? `ERROR: ${message}` : `Error Reported: ${error}`);
+
+        currentComponent.setState({
+          error: true,
+          messages: message ? message : 'Error reported accessing API.'
         });
 
-        if (!applicationExists) {
-          this.setState({
-            appnameError: false,
-            checkingAppName: false,
-          })
-          this.context.setState(ps => ({
-            ...ps,
-            appname: this.state.appname,
-          }))
-        } else {
-          this.setState({
-            appnameError: true,
-            checkingAppName: false,
-          })
-          // toast.error("Application Name already exists!")
-          alert("Application Name already exists!")
-        }
+      })
+      .finally(function () {
+        currentComponent.setState({ fetching: false });
+      });
+
+    if (!applicationExists) {
+      this.setState({
+        appnameError: false,
+        checkingAppName: false,
+      })
+      this.context.setState(ps => ({
+        ...ps,
+        appname: this.state.appname,
+      }))
+    } else {
+      this.setState({
+        appnameError: true,
+        checkingAppName: false,
+      })
+      // toast.error("Application Name already exists!")
+      alert("Application Name already exists!")
+    }
   }
 
   renderInput = () => {
-    const {appname, appnameError} = this.state
+    const { appname, appnameError } = this.state
     return (
-        <Form.Row>
-            <Form.Group controlId="formGridName">
-                <Form.Label>Application Name</Form.Label>
-                <Form.Control 
-                    type="text" 
-                    name="appname" placeholder="" 
-                    value={appname}
-                    onChange={this.handleAppNameChange}
-                    isInvalid={appnameError} 
-                />
-                <Form.Control.Feedback type="invalid">{appnameError}</Form.Control.Feedback>
-            </Form.Group>
-            </Form.Row>
+      <Form.Row>
+        <Form.Group controlId="formGridName">
+          <Form.Label>Application Name</Form.Label>
+          <Form.Control
+            type="text"
+            name="appname" placeholder=""
+            value={appname}
+            onChange={this.handleAppNameChange}
+            isInvalid={appnameError}
+          />
+          <Form.Control.Feedback type="invalid">{appnameError}</Form.Control.Feedback>
+        </Form.Group>
+      </Form.Row>
     )
   }
 
   render() {
-    const {checkingAppName, appnameError, appname, error, messages } = this.state
-    const {saving} = this.context
+    const { checkingAppName, appnameError, appname, error, messages } = this.state
+    const { saving } = this.context
     return (
       <Container className="NewApplication">
         <h2>New Platform</h2>
@@ -136,17 +140,17 @@ class NewApplication extends React.PureComponent {
         </Form>
         {appnameError === "false" && (
           <div>
-          <div className="newApp__cards-container">
-            <ConfigurationManagement />
-            <SAST />
-            <ContinousIntegration />
-            <LogManagement />
-            <RepositoryManagement />
-            <Monitoring />
-            <Confirmation />
+            <div className="newApp__cards-container">
+              <ConfigurationManagement />
+              <SAST />
+              <ContinousIntegration />
+              <LogManagement />
+              <RepositoryManagement />
+              <Monitoring />
+              <Confirmation />
+            </div>
           </div>
-        </div>
-         )}
+        )}
       </Container>
     )
   }
