@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { Alert, Button, Col, Row, Container } from 'react-bootstrap';
+import { Button, Col, Row, Container } from 'react-bootstrap';
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
-
-import { api2 } from "../../api"; //TODO: REMOVE THIS
 
 import { AuthContext } from '../../contexts/AuthContext'; //New AuthContext State 
 import { ApiService } from '../../api/apiService';
@@ -27,6 +25,9 @@ class Update extends Component {
     const { getAccessToken } = this.context;
     const accessToken = await getAccessToken();
     await this.getToolsList(accessToken);
+    this.setState({
+      token : accessToken
+    })
   }
 
   async getToolsList(accessToken) {
@@ -57,32 +58,23 @@ class Update extends Component {
       disabledIds: [...ps.disabledIds, `${applicationId}${toolId}`],
     }))
 
-    await api2({
-      method: "POST",
-      endpoint: "tools/upgrade",
-      body: { applicationId, toolId },
-    })
-    .then(function (response) {
-      // <Alert variant="secondary">
-      //   Tool Submitted for upgrade, you will be notified completeness.
-      // </Alert>
+    const apiCall = new ApiService('/tools/upgrade', { applicationId, toolId }, this.state.token);
+    apiCall.post().then(function (response) {
       currentComponent.setState({
         error: false,
         messages: 'Tool Submitted for upgrade, you will be notified completeness.'
       });
-      console.log(response)
     })
-    .catch(function (error) {
-      currentComponent.setState({ 
-        error: true,
-        messages: 'Error reported updating the tool.'
+      .catch(function (error) {
+        currentComponent.setState({
+          error: true,
+          messages: 'Error reported updating the tool.'
+        });
+        console.log(`Error Reported: ${error}`);
+      })
+      .finally(function () {
+        currentComponent.setState({ fetching: false });
       });
-      console.log(`Error Reported: ${error}`);
-    })
-    .finally(function () {
-      currentComponent.setState({ fetching: false });
-    });
-
      
   }
 

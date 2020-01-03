@@ -1,50 +1,50 @@
 import React, { PureComponent } from 'react'
-import { withAuth } from '@okta/okta-react'
-import { connect } from "react-redux"
-import { Alert,Form,Tooltip,OverlayTrigger, Button, Col, Row, Container } from 'react-bootstrap';
-import LoadingDialog from "../common/loading"
-import {api2} from "../../api"
+import { Form,Tooltip,OverlayTrigger, Button, Container } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import ErrorDialog from "../common/error";
 
+import { AuthContext } from '../../contexts/AuthContext'; //New AuthContext State 
+import { ApiService } from '../../api/apiService';
+
 const TOOL_NAME = "ELK-Kibana"
 
 export default class Reports extends PureComponent {
+  static contextType = AuthContext;  //Import AuthContext values into Component
     
   state = {tool: null, loading: null, showIframe: false}
 
   async componentDidMount() {
-    this.setState({loading: true})
-    let currentComponent = this;
-    api2({
-      method: "GET",
-      endpoint: "/users/tools",
-    }).then(({data: {tools: {tools}}}) => {
-      const tool = tools.find(tool => {
-        return tool.name === TOOL_NAME
-      })
+    const { getAccessToken } = this.context;
+    const accessToken = await getAccessToken();
+    await this.getToolsList(accessToken);
+  }
 
-      if (tool) {
-        this.setState({
-          tool,
-          loading: false,
+  async getToolsList(accessToken) {
+    const apiCall = new ApiService('/users/tools', {}, accessToken);
+    let currentComponent = this;
+      apiCall.get().then(function (response) {
+        const tool = response.tools.find(tool => {    //api not working timeout error hope this works!
+          return tool.name === TOOL_NAME
         })
-      } else {
-        // tool not found
-        console.log("something went wrong..")
-      }
+  
+        if (tool) {
+          this.setState({
+            tool,
+            loading: false,
+          }) 
+        }
     })
-    .catch(function (error) {
-      currentComponent.setState({
-        error: true,
-        messages: 'Error reported accessing API.'
+      .catch(function (error) {
+        currentComponent.setState({
+          error: true,
+          messages: 'Error reported accessing list of upgradable tools.'
+        });
+        console.log(`Error Reported: ${error}`);
+      })
+      .finally(function () {
+        currentComponent.setState({ fetching: false });
       });
-      console.log(`Error Reported: ${error}`);
-    })
-    .finally(function () {
-      currentComponent.setState({ fetching: false });
-    });
   }
 
   onClickButton = () => {
