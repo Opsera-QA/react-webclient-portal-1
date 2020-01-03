@@ -41,28 +41,28 @@ export default withAuth(class ApiConnector extends Component {
 
         <ul className="nav">
           <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "github" ? 'active' : '')} href="#/" onClick={() => this.selectView("github")}>GitHub</a>
+            <a className={"nav-link " + (this.state.selection === "github" ? 'nav-link-text-active' : 'nav-link-text')} onClick={() => this.selectView("github")}>GitHub</a>
           </li>
           <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "gitlab" ? 'active' : '')} href="#/" onClick={() => this.selectView("gitlab")}>GitLab</a>
+            <a className={"nav-link " + (this.state.selection === "gitlab" ? 'nav-link-text-active' : 'nav-link-text')} onClick={() => this.selectView("gitlab")}>GitLab</a>
           </li>
           <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "jira" ? 'active' : '')} href="#/" onClick={() => this.selectView("jira")}>Jira</a>
+            <a className={"nav-link " + (this.state.selection === "jira" ? 'nav-link-text-active' : 'nav-link-text')} onClick={() => this.selectView("jira")}>Jira</a>
           </li>
           <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "servicenow" ? 'active' : '')} href="#/" onClick={() => this.selectView("servicenow")}>ServiceNow</a>
+            <a className={"nav-link  " + (this.state.selection === "servicenow" ? 'nav-link-text-active' : 'nav-link-text')} onClick={() => this.selectView("servicenow")}>ServiceNow</a>
           </li>
           <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "openstack" ? 'active' : '')} href="#/" onClick={() => this.selectView("openstack")}>OpenStack</a>
+            <a className={"nav-link " + (this.state.selection === "openstack" ? 'nav-link-text-active' : 'nav-link-text')} onClick={() => this.selectView("openstack")}>OpenStack</a>
           </li>
           <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "slack" ? 'active' : '')} href="#/" onClick={() => this.selectView("slack")}>Slack</a>
+            <a className={"nav-link " + (this.state.selection === "slack" ? 'nav-link-text-active' : 'nav-link-text')} onClick={() => this.selectView("slack")}>Slack</a>
           </li>
           <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "tableau" ? 'active' : '')} href="#/" onClick={() => this.selectView("tableau")}>Tableau</a>
+            <a className={"nav-link " + (this.state.selection === "tableau" ? 'nav-link-text-active' : 'nav-link-text')} onClick={() => this.selectView("tableau")}>Tableau</a>
           </li>
           <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "splunk" ? 'active' : '')} href="#/" onClick={() => this.selectView("splunk")}>Splunk</a>
+            <a className={"nav-link " + (this.state.selection === "splunk" ? 'nav-link-text-active' : 'nav-link-text')} onClick={() => this.selectView("splunk")}>Splunk</a>
           </li>
         </ul>
 

@@ -29,6 +29,16 @@ a {
   font-size: .9rem;
 }
 
+.nav-link-text {
+  cursor: pointer;
+  color: #226196 !important;
+}
+
+.nav-link-text-active {
+  font-weight: bold;
+  color: #343a40 !important;
+}
+
 /* Absolute Center Spinner */
 .loading {
   position: fixed;
