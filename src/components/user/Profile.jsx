@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { withAuth } from '@okta/okta-react';
-import { Table } from 'react-bootstrap';
-//import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { checkAuthentication } from '../../helpers';
+import { Table } from 'react-bootstrap';
 
 export default withAuth(class Profile extends Component {
   constructor(props) {
     super(props);
-    this.state = { userinfo: null, ready: false };
+    this.state = { userInfo: null, ready: false };
     this.checkAuthentication = checkAuthentication.bind(this);
   }
 
@@ -22,8 +21,8 @@ export default withAuth(class Profile extends Component {
   }
 
   async applyClaims() {
-    if (this.state.userinfo && !this.state.claims) {
-      const claims = Object.entries(this.state.userinfo);
+    if (this.state.userInfo && !this.state.claims) {
+      const claims = Object.entries(this.state.userInfo);
       this.setState({ claims, ready: true });
     }
   }
