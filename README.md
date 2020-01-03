@@ -26,7 +26,7 @@ When running the App locally for development, it runs on http://localhost:8080.
 3. Build project: `npm run build`
 
 ### Apache Setup
-4. Remove existing contents of the current Build folder (common path: `/var/www/html`) 
+4. Remove existing contents of the current Build folder EXCEPT for `.htaccess` as that file MUST stay for the ReactApp to route properly. (common path: `/var/www/html`) 
 5. Copy contents of `/build` folder into the root web path for the server (common path: `/var/wwwhtml`)
 
 ### Tomcat Setup
