@@ -28,6 +28,10 @@ When running the App locally for development, it runs on http://localhost:8080.
 ### Apache Setup
 4. Remove existing contents of the current Build folder EXCEPT for `.htaccess` as that file MUST stay for the ReactApp to route properly. (common path: `/var/www/html`) 
 5. Copy contents of `/build` folder into the root web path for the server (common path: `/var/wwwhtml`)
+6. Making sure `.htaccess` is still in the `/var/www/html` folder, restart apache:
+```
+$ sudo service apache2 restart
+```
 
 ### Tomcat Setup
 4. Navigate to Tomcat WebAps folder: `/var/lib/apache-tomcat-<version>/webapps`
@@ -35,7 +39,9 @@ When running the App locally for development, it runs on http://localhost:8080.
 6. Make sure to copy `web.xml` into `/ROOT/WEB-INF`
 
 **To Start Tomcat Server**
-1. SSH to Instance
-2. `sudo su -`
-3. `cd /var/lib/apache-tomcat-<version>/bin`
-4. `./startup.sh`
+SSH to the Server Instance and run these commands:
+```
+$ sudo su -
+$ cd /var/lib/apache-tomcat-<version>/bin
+$ ./startup.sh
+```
