@@ -2,7 +2,11 @@ import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { Alert, Button, Modal, Table } from 'react-bootstrap';
 import { getApps } from "../../actions/thunk"
-import { api2 } from "../../api"
+
+import { AuthContext } from '../../contexts/AuthContext';  //REact Context API Code for User Authentication
+import { ApiService } from '../../api/apiService';
+import ErrorDialog from "../common/error";
+import LoadingDialog from "../common/loading";
 
 class Tools extends Component {
     state = {}
@@ -39,7 +43,19 @@ class Tools extends Component {
   }
   
   class toolTable extends React.PureComponent {
-    state = {confirm: false, tool: this.props.tool}
+    static contextType = AuthContext; 
+    constructor(props, context) {
+      super(props, context);
+      this.state = {
+        confirm: false, 
+        tool: this.props.tool,
+        fetching: false,
+        error: null,
+        messages: null,
+        application: null
+      }; 
+    }
+    
     handleDeletePress = () => this.setState({confirm: true})
     handleCancel = () => this.setState({confirm: false})
   
@@ -50,30 +66,55 @@ class Tools extends Component {
     }
   
     deleteTool = async tool => {
-      const {getApps} = this.props
-      this.setState({loading: true, tool: null})
-  
-      try {
-        await api2({
-          endpoint: "/tools",
-          method: "DELETE",
-          withToken: true,
-          body: {id: tool._id},
-        })
-        await getApps()
-      } catch (error) {
-        console.log(error)
-      }
-      this.setState({loading: false})
+      const { getAccessToken } = this.context;  //this.context is where all data from the above AuthContext component resides.  It's like the state props design wise
+      const accessToken = await getAccessToken();
+      this.delToolData(accessToken, tool);
+      
+    }
+
+    delToolData(accessToken,tool) { 
+      console.log(tool)
+    // this.setState({loading: true, tool: null})
+    const apiCall = new ApiService('/tools', {id: tool._id}, accessToken);
+    let currentComponent = this;
+    apiCall.delete().then(function (response) {
+      currentComponent.setState({
+        data: response.data,
+        error: false,
+        messages: 'Delete API call was successful!'
+      });
+    })
+      .catch(function (error) {
+        let message = null;
+        if (error.response) {
+          message = `Status ${error.response.status}: ${
+            error.response.data.message ? error.response.data.message : JSON.stringify(error.response.data)}`;
+        }
+        console.log(message ? `ERROR: ${message}` : `Error Reported: ${error}`);
+
+        currentComponent.setState({
+          error: true,
+          messages: message ? message : 'Error reported Deleting Tool.'
+        });
+
+      })
+      .finally(function () {
+        currentComponent.setState({ fetching: false });
+      });
+
     }
   
     render() {
       const {tool} = this.state
+      const { data, error, messages, fetching } = this.state
+      
       if (!tool) return null
   
       const {name, port} = tool
       return (
         <>
+      {error ? <ErrorDialog errorMessage={messages} /> : null}
+       
           <Table responsive>
             <thead>
                 <tr>

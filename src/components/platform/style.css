@@ -1,0 +1,84 @@
+.newApp__card {
+  padding: 20px !important;
+  /* padding: 20px; */
+}
+
+.newApp__cards-container {
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.newApp__cards-container > div {
+  margin-top: 20px;
+  margin-right: 20px;
+}
+
+.newApp__service-logo > img {
+  width: 50px;
+  height: 50px;
+}
+
+.newApp__service-logo {
+  margin-bottom: 20px;
+}
+
+.newApp__service-title {
+  margin-top: 7px;
+}
+
+.newApp__service-logo {
+  cursor: pointer;
+  width: 150px;
+  background-color: #fff;
+  height: 100px;
+  margin-right: 20px;
+  padding: 5px;
+  border: 1px solid #bbb;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* justify-content: center; */
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  border-radius: 5px;
+}
+
+.newApp__checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.newApp__checkbox-group > div {
+  padding: 10px;
+}
+
+.newApp__confirm {
+  margin: 20px;
+  text-align: center;
+}
+
+.newApp__confirm button {
+  margin: auto;
+}
+
+.newApp__checkbox-group > div {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.newApp__checkbox-group > div > div {
+  padding: 10px;
+}
+
+.newApp__service-logo--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.disabled,
+.disabled label {
+  cursor: not-allowed !important;
+}
