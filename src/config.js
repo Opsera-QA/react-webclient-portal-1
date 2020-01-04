@@ -1,11 +1,11 @@
 // This relies on the .env configuration files for Development, Staging and Production
 const CLIENT_ID = process.env.REACT_APP_OKTA_CLIENT_ID
-      ,  ISSUER = "https://dev-842100.oktapreview.com/oauth2/default" 
+      , ISSUER = process.env.REACT_APP_OKTA_ISSUER 
       , OKTA_TESTING_DISABLEHTTPSCHECK = process.env.OKTA_TESTING_DISABLEHTTPSCHECK || false
       , oktaRedirectUri = process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI;
 
 export const apiServerUrl = `https://${process.env.REACT_APP_OPSERA_API_HOST}`;
-console.log(process.env.REACT_APP_OPSERA_CLIENT_HOST)
+
 export default {
   oidc: {
     clientId: CLIENT_ID,

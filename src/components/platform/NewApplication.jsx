@@ -21,8 +21,7 @@ class NewApplication extends React.PureComponent {
     appnameError: null,
     fetching: true,
     error: null,
-    messages: null,
-    userId: '5cce9795742cbf2233fd813b'
+    messages: null
   }
 
   handleAppNameChange = ({ target: { name, value } }) => {
@@ -39,21 +38,24 @@ class NewApplication extends React.PureComponent {
 
   handleCreateClick = async (e) => {
     e.preventDefault()
-    const { token } = this.context
-    // console.log(token)
+    const { token, user } = this.context;
 
     if (this.state.appname.trim().length < 1) {
-      this.setState({ appnameError: true })
-      return
+      this.setState({ appnameError: true });
+      return;
     }
 
     this.setState({
       checkingAppName: true,
     })
 
+    let postData = { uid: user.sub, app_name: this.state.appname };
+    const apiCall = new ApiService(
+      '/applications/check-exists', 
+      {},
+      postData, 
+      token);
 
-    //TODO: User ID needs to come from OKTA
-    const apiCall = new ApiService('/applications/check-exists', { uid: this.state.userId, app_name: this.state.appname }, token);
     let currentComponent = this;
     const { data: applicationExists } = apiCall.post()
       .then(function (response) {

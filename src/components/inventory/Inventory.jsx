@@ -15,22 +15,23 @@ class Inventory extends PureComponent {
       data: [],
       fetching: true,
       error: null,
-      messages: null,
-      userId: '5cce9795742cbf2233fd813b'
+      messages: null
     };
   }
 
-  // First call the getAccessToken and then call the API
+  // First call the getAccessToken/userId and then call the API
   async componentDidMount() {
-    const { getAccessToken } = this.context;  //this.context is where all data from the above AuthContext component resides.  It's like the state props design wise
+    const { getAccessToken, getUserInfo } = this.context; 
     const accessToken = await getAccessToken();
-    this.getApiData(accessToken);
+    const userInfo = await getUserInfo();
+    this.getApiData(accessToken, userInfo);
   }
 
 
-  //TODO: Get user ID from Okta...
-  getApiData(accessToken) {
-    const apiCall = new ApiService('/applications', {uid: this.state.userId}, accessToken); //this is a test, the PROD setting will just be "applications"
+  getApiData(accessToken, userInfo) {
+    console.log(userInfo.sub) //current unique user ID
+    let urlParams = {uid: userInfo.sub};
+    const apiCall = new ApiService('/applications', urlParams, accessToken); 
     let currentComponent = this;
     apiCall.get().then(function (response) {
       currentComponent.setState({

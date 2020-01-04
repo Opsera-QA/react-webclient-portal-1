@@ -15,9 +15,10 @@ const setInterceptorToken = (authToken) => {
 }
 
 export class ApiService {
-  constructor( url, params, token ) {
+  constructor( url, params, data, token ) {
     this.url = url
     this.params = params
+    this.data = data //POST BODY Data JSON format
     if (token) {setInterceptorToken(token);}
   }
 
@@ -34,10 +35,12 @@ export class ApiService {
 
   post() {
     var self = this;   
+    console.log(self.data)
     return axiosInstance({
       method: 'post',
       url: self.url,
       params : self.params,
+      data : self.data,
       responseType: 'stream'
     })
   }

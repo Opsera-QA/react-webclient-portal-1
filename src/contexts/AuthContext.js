@@ -24,15 +24,23 @@ class AuthContextProvider extends Component {
     return this.props.auth.getAccessToken();
   }
 
+  getUserInfo = () => {
+    if (this.state.userInfo) {
+      return this.state.userInfo;
+    } else {
+      return this.props.auth.getUser();
+    }
+  }
+
   setSharedState = (value) => {
     this.setState({ sharedState: value});
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.checkAuthentication();
   }
-
-  async componentDidUpdate() {
+  
+  componentDidUpdate() {
     this.checkAuthentication();
   }
 
@@ -43,6 +51,7 @@ class AuthContextProvider extends Component {
         logoutUserContext: this.logoutUserContext, 
         loginUserContext: this.loginUserContext, 
         getAccessToken: this.getAccessToken,
+        getUserInfo: this.getUserInfo,
         setSharedState: this.setSharedState}}>
         {this.props.children}
       </AuthContext.Provider>

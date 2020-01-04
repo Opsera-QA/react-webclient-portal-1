@@ -1,6 +1,5 @@
 import React from "react"
-import {withRouter} from "react-router-dom"
-// import {api2} from "../../api"
+import { withRouter } from "react-router-dom"
 import { AuthContext } from '../../contexts/AuthContext';  //REact Context API Code for User Authentication
 import { ApiService } from '../../api/apiService';
 
@@ -11,27 +10,30 @@ class NewAppProvider extends React.Component {
 
   constructor(props, context) {
     super(props, context);
-    
-  this.state = {
-    open: false,
-    data: {},
-    appname: null,
-    saving: false,
-    token : ''
-  };
-}
 
-componentDidMount = async () => {
-  const { getAccessToken } = this.context;  //this.context is where all data from the above AuthContext component resides.  It's like the state props design wise
-  const accessToken = await getAccessToken();
-  this.setState({
-    token : accessToken
-  })
-}
+    this.state = {
+      open: false,
+      data: {},
+      appname: null,
+      saving: false,
+      token: '',
+      user: {}
+    };
+  }
+
+  componentDidMount = async () => {
+    const { getAccessToken, getUserInfo } = this.context;
+    const accessToken = await getAccessToken();
+    const userInfo = await getUserInfo();
+    this.setState({
+      token: accessToken,
+      user: userInfo
+    })
+  }
 
   handleCancel = () => {
-    const {service, data} = this.state
-    delete data[service]
+    const { service, data } = this.state;
+    delete data[service];
 
     this.setState({
       data,
@@ -40,7 +42,7 @@ componentDidMount = async () => {
   }
 
   handleSave = () => {
-    const {service, data} = this.state
+    const { service, data } = this.state
     if (!data[service]) data[service] = {}
 
     this.setState({
@@ -48,25 +50,20 @@ componentDidMount = async () => {
       data,
     })
   }
-  getAccessToken = async () =>{
-    const { getAccessToken } = this.context;  //this.context is where all data from the above AuthContext component resides.  It's like the state props design wise
-    const accessToken = await getAccessToken();
-    // console.log(accessToken)
-    return accessToken
-  }
 
   confirm = async () => {
-    const {appname: name, data, token} = this.state
+    const { appname: name, data, token, user } = this.state
+
     this.setState({
       saving: true,
     })
-    // const { getAccessToken } = this.context;  //this.context is where all data from the above AuthContext component resides.  It's like the state props design wise
-    // const accessToken = await getAccessToken();
-    // console.log(accessToken)
 
-    const apiCall = new ApiService('/applications', Object.assign({name}, data), token); //this is a test, the PROD setting will just be "applications"
+    //TODO: Passing user ID (okta.sub) but need to test this
+    const apiCall = new ApiService('/applications',
+      Object.assign({ name }, data, { uid: user.sub }), token);
     let currentComponent = this;
-    apiCall.post().then(function (response) {
+    apiCall.post()
+    .then(function (response) {
       currentComponent.setState({
         data: response.data,
         error: false,
@@ -102,7 +99,7 @@ componentDidMount = async () => {
   }
 
   // eslint-disable-next-line  no-unused-vars
-  handleChange = ({target: {name, value}}, service) => {
+  handleChange = ({ target: { name, value } }, service) => {
     const s = this.state.data[service] || {}
     s.port = value
     this.setState(ps => {
@@ -115,13 +112,13 @@ componentDidMount = async () => {
     })
   }
   isChecked = (service, name) => {
-    const {data} = this.state
+    const { data } = this.state
     return data[service] && data[service][name]
   }
 
   // eslint-disable-next-line  no-unused-vars
   handleCheckboxChanged = (service, name) => {
-    const {data} = this.state
+    const { data } = this.state
     data[service] = data[service] || {}
     data[service].decrypt = !data[service].decrypt
 
@@ -130,14 +127,13 @@ componentDidMount = async () => {
     })
   }
 
-  toggleModal = ({open}) => {
+  toggleModal = ({ open }) => {
     this.setState({
       open,
     })
   }
 
   render() {
-    console.log(this.state)
     return (
       <Ctx.Provider
         value={{
