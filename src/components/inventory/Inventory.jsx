@@ -23,6 +23,7 @@ class Inventory extends PureComponent {
   async componentDidMount() {
     const { getAccessToken, getUserInfo } = this.context; 
     const accessToken = await getAccessToken();
+    console.log(accessToken);
     const userInfo = await getUserInfo();
     this.getApiData(accessToken, userInfo);
   }

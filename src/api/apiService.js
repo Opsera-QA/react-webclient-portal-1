@@ -15,7 +15,7 @@ const setInterceptorToken = (authToken) => {
 }
 
 export class ApiService {
-  constructor( url, params, data, token ) {
+  constructor( url, params, token, data ) {
     this.url = url
     this.params = params
     this.data = data //POST BODY Data JSON format

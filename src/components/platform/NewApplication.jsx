@@ -52,9 +52,9 @@ class NewApplication extends React.PureComponent {
     let postData = { uid: user.sub, app_name: this.state.appname };
     const apiCall = new ApiService(
       '/applications/check-exists', 
-      {},
-      postData, 
-      token);
+      null, 
+      token,
+      postData);
 
     let currentComponent = this;
     const { data: applicationExists } = apiCall.post()

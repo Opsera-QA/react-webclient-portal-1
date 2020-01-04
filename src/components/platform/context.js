@@ -58,9 +58,8 @@ class NewAppProvider extends React.Component {
       saving: true,
     })
 
-    //TODO: Passing user ID (okta.sub) but need to test this
-    const apiCall = new ApiService('/applications',
-      Object.assign({ name }, data, { uid: user.sub }), token);
+    let postBody = Object.assign({ name }, data, { uid: user.sub });
+    const apiCall = new ApiService('/applications',null,token,postBody);
     let currentComponent = this;
     apiCall.post()
     .then(function (response) {
