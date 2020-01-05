@@ -1,14 +1,5 @@
 /* The side navigation menu */
 
-a.nav-link-light {
-  color: #fff;
-  font-size:1.1em;
-  white-space: nowrap;
-}
-
-a.nav-link-light:hover {
-  color:rgba(255,255,255,.5);
-}
 
 .nav-link-header {
   color: #fff;
@@ -17,5 +8,23 @@ a.nav-link-light:hover {
 }
 
 a.nav-link-light.nav-link.active {
+  color: #ffc107;
+}
+
+.nav-link {
+  display: block;
+  padding: .5rem 1rem;
+  color: #fff;
+  font-size:1.1em;
+  white-space: nowrap;
+}
+
+a.nav-link:hover {
+  color:rgba(255,255,255,.5);
+}
+
+.navbar-list a.chosen,
+.navbar-list a:hover {
+  /* border-bottom: 1px solid #F14B31; */
   color: #ffc107;
 }

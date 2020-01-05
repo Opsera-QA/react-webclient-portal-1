@@ -4,12 +4,13 @@ import { ApiService } from '../api/apiService';
 export const AuthContext = createContext();
 
 async function checkAuthentication() {
+  let curAuthenticatedState = this.state.authenticated;
   const authenticated = await this.props.auth.isAuthenticated();
   if (authenticated !== this.state.authenticated) {
     if (authenticated && !this.state.userInfo) {
       const userInfo = await this.props.auth.getUser();
       const accessToken = await this.props.auth.getAccessToken();
-      if (this.state.userInfo !== userInfo) { updateUserRecord(userInfo, accessToken); }
+      if (!curAuthenticatedState && userInfo) { updateUserRecord(userInfo, accessToken); }
       this.setState({ authenticated, userInfo });
     } else {
       this.setState({ authenticated });

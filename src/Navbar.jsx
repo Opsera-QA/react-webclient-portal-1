@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import {Navbar, Nav, NavDropdown, Button} from 'react-bootstrap'
 import {AuthContext} from './contexts/AuthContext';
 import './navbar.css';
@@ -50,8 +51,8 @@ class Navigation extends Component {
           { !authenticated && <Button variant="outline-success" onClick={this.login}>Login</Button>}
           { authenticated && <Nav>
             <NavDropdown title={userInfo ? userInfo.name : 'Unknown User Name'} id="basic-nav-dropdown" alignRight>
-              <NavDropdown.Item href="/messages" id="messages-button">Messages</NavDropdown.Item>
-              <NavDropdown.Item href="/profile" id="profile-button">Profile</NavDropdown.Item>
+              <NavDropdown.Item><Link to="/messages" id="messages-button" className="nav-drop-down-item">Messages</Link></NavDropdown.Item>
+              <NavDropdown.Item><Link to="/profile" id="profile-button" className="nav-drop-down-item">Profile</Link></NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="/" id="slack-channel-button">#SlackChannel</NavDropdown.Item>
               <NavDropdown.Item href="https://opsera.atlassian.net/wiki/x/kIA5" target="_blank" id="kb-button">KnowledgeBase</NavDropdown.Item>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter} from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { CardGroup, Card, Button } from 'react-bootstrap';
 
 class featuresCards extends React.Component {
@@ -38,7 +38,7 @@ class featuresCards extends React.Component {
                 integration with various popular API connectors including Jira, ServiceNow, Github and Slack among many more.
                     </Card.Text>
               {/* <Button variant="primary" onClick={this.setPlaceholder}>Register Platform</Button> */}
-              <Card.Link href="/platform">Register an Application Now</Card.Link>
+              <Link to="/platform">Register an Application Now</Link>
             </Card.Body>
           </Card>
           <Card style={{ width: '18rem' }}>
@@ -50,7 +50,7 @@ class featuresCards extends React.Component {
                 multi-language, multi-branch, RBAC, Jenkins pipelines and Hybrid Cloud solutions with support for Container deployments, Kubernetes clusters and/or with Helm.
                   </Card.Text>
               {/* <Button variant="primary" onClick={this.setPlaceholder}>Build a Pipeline</Button> */}
-              <Card.Link href="/pipeline">Build Your Pipeline</Card.Link>
+              <Link to="/pipeline">Build Your Pipeline</Link>
             </Card.Body>
           </Card>
           <Card style={{ width: '18rem' }}>
@@ -62,7 +62,7 @@ class featuresCards extends React.Component {
                 end to end visibility into your entire DevOps ecosystem.
                     </Card.Text>
               {/* <Button variant="primary" onClick={this.setPlaceholder}>Get Started</Button> */}
-              <Card.Link href="/reports">Reports and Analytics</Card.Link>
+              <Link to="/reports">Reports and Analytics</Link>
             </Card.Body>
           </Card>
         </CardGroup>

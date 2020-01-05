@@ -6,3 +6,17 @@
   font-size: 1.7rem;
   margin-left:-3px;;
 }
+
+.nav-drop-down-item {
+  color: #212529;
+  text-decoration: none;
+}
+
+a.nav-drop-down-item:hover {
+  color: #fff !important;
+  text-decoration: none;
+}
+
+.dropdown-menu {
+  font-size: .9em !important;
+}

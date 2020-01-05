@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
+import { Link } from 'react-router-dom';
 import { Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faHeartbeat, faTimes, faUserCircle, faLink, faChartBar } from '@fortawesome/free-solid-svg-icons';
@@ -18,22 +19,22 @@ class AdminTools extends Component {
 
         <Row className="m-5">
           <Col xs={12} md={6} lg={4} className="p-2">
-            <a href="/admin/health"><FontAwesomeIcon icon={faHeartbeat} fixedWidth /> System Health Check</a>
+            <Link to="/admin/health"><FontAwesomeIcon icon={faHeartbeat} fixedWidth /> System Health Check</Link>
           </Col>
           <Col xs={12} md={6} lg={4} className="p-2">
-            <a href="/admin/delete"><FontAwesomeIcon icon={faTimes} fixedWidth /> Delete Tools</a>
+            <Link to="/admin/delete"><FontAwesomeIcon icon={faTimes} fixedWidth /> Delete Tools</Link>
           </Col>
           <Col xs={12} md={6} lg={4} className="p-2">
-            <a href="/admin/manage_systems"><FontAwesomeIcon icon={faEdit} fixedWidth /> System Management</a>
+            <Link to="/admin/manage_systems"><FontAwesomeIcon icon={faEdit} fixedWidth /> System Management</Link>
           </Col>
           <Col xs={12} md={6} lg={4} className="p-2">
-            <a href="/admin/registered_users"><FontAwesomeIcon icon={faUserCircle} fixedWidth /> Registered Users</a>
+            <Link to="/admin/registered_users"><FontAwesomeIcon icon={faUserCircle} fixedWidth /> Registered Users</Link>
           </Col>
           <Col xs={12} md={6} lg={4} className="p-2">
-            <a href="/admin/analytics/reports_registration"><FontAwesomeIcon icon={faChartBar} fixedWidth /> Reports Registration</a>
+            <Link to="/admin/analytics/reports_registration"><FontAwesomeIcon icon={faChartBar} fixedWidth /> Reports Registration</Link>
           </Col>
           <Col xs={12} md={6} lg={4} className="p-2">
-            <a href="/api_demo"><FontAwesomeIcon icon={faLink} fixedWidth /> API Test</a>
+            <Link to="/api_demo"><FontAwesomeIcon icon={faLink} fixedWidth /> API Test</Link>
           </Col>
         </Row>
 

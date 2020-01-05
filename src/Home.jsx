@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { AuthContext } from './contexts/AuthContext';
 import { Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import FeaturesCards from './components/about/features';
 import LoadingDialog from "./components/common/loading"
 
@@ -32,7 +33,7 @@ class Home extends Component {
             <h2>Welcome back, {userInfo ? userInfo.name : 'Unknown User Name'}!</h2>
             <p>
               You have successfully logged in!  You now have an ID token and access token in local storage.
-                  Visit the <a href="/profile">My Profile</a> page to take a look inside the ID token.
+                  Visit the <Link to="/profile">My Profile</Link> page to take a look inside the ID token.
                 </p>
 
             <FeaturesCards />
