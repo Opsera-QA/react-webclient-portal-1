@@ -1,7 +1,6 @@
-import { withAuth } from '@okta/okta-react';
 import React, { Component } from 'react';
 
-export default withAuth(class About extends Component {
+class About extends Component {
 
   render () {
     return (
@@ -11,4 +10,6 @@ export default withAuth(class About extends Component {
       </div>
     )
   }
-})
+}
+
+export default About

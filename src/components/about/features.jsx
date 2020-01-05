@@ -24,6 +24,7 @@ class featuresCards extends React.Component {
                     </Card.Text>
             <Button variant="primary" onClick={() => this.gotoLink('inventory')}>View Inventory</Button>
             <Button variant="primary" className="ml-2" onClick={() => this.gotoLink('platform')}>Create Application</Button>
+            <Button variant="outline-primary" className="ml-2" onClick={() => this.gotoLink('pipeline')}>Build Pipeline</Button>
           </Card.Body>
         </Card>
 

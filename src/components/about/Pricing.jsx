@@ -1,14 +1,15 @@
-import { withAuth } from '@okta/okta-react';
 import React, { Component } from 'react';
 
-export default withAuth(class About extends Component {
+class Pricing extends Component {
 
   render () {
     return (
       <div>
-        <h3>Pricing</h3>
-        <div>Coming Soon.</div>
+        <h3>ABOUT US: Pricing</h3>
+        <div>This is a basic content area for some information about the organization and contacint us.</div>
       </div>
     )
   }
-})
+}
+
+export default Pricing
