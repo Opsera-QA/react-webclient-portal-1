@@ -5,6 +5,7 @@ import { AuthContext } from '../../contexts/AuthContext';  //REact Context API C
 import { ApiService } from '../../api/apiService';
 import ErrorDialog from "../common/error";
 import LoadingDialog from "../common/loading";
+import { handleError } from "../../helpers"
 
 class Inventory extends PureComponent {
   static contextType = AuthContext;  //Registers the User Authentication context data in the component
@@ -30,6 +31,10 @@ class Inventory extends PureComponent {
 
 
   getApiData(accessToken, userInfo) {
+
+    let message = handleError('test');
+    console.log(message)
+
     console.log(userInfo.sub) //current unique user ID
     let urlParams = { userid: userInfo.sub };
     const apiCall = new ApiService('/applications', urlParams, accessToken);
@@ -43,7 +48,7 @@ class Inventory extends PureComponent {
         });
       })
       .catch(function (error) {
-        let message = ApiService.handleError(error);
+        let message = handleError(error);
 
         currentComponent.setState({
           error: true,

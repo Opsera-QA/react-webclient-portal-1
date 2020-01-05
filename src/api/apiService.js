@@ -48,7 +48,6 @@ export class ApiService {
 
 
   //TODO: Add Delete Method
-
   delete() {
     var self = this;   
     return axiosInstance({
@@ -58,24 +57,5 @@ export class ApiService {
       // responseType: 'stream'
     })
   }
-
-
-  handleError(error) {
-    let errMessage = null;
-  
-    if (typeof(error) === "object"){ 
-      if (error.response) {
-        errMessage = `Status ${error.response.status}: ${
-          error.response.data.message ? error.response.data.message : JSON.stringify(error.response.data)}`;
-      } else {
-        errMessage = `Error Reported: ${JSON.stringify(error)}`;
-      }
-    } else {
-      errMessage = `Error Reported: ${error}`;
-    }
-    console.log(errMessage);
-    return errMessage;
-  }
-
 }
 

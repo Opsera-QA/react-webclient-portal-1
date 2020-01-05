@@ -16,3 +16,20 @@ export function validateEmail(email) {
   var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   return re.test(String(email).toLowerCase())
 }
+
+export function handleError(error) {
+  let errMessage = null;
+
+  if (typeof(error) === "object"){ 
+    if (error.response) {
+      errMessage = `Status ${error.response.status}: ${
+        error.response.data.message ? error.response.data.message : JSON.stringify(error.response.data)}`;
+    } else {
+      errMessage = `Error Reported: ${JSON.stringify(error)}`;
+    }
+  } else {
+    errMessage = `Error Reported: ${error}`;
+  }
+  console.log(errMessage);
+  return errMessage;
+}

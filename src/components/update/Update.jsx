@@ -114,7 +114,7 @@ class Update extends Component {
     const { error, messages } = this.state
     return (
       <div>
-        <h2>Upgrades</h2>
+        <h2>Updates</h2>
         { error ? <ErrorDialog errorMessage={messages} /> : null }
       
         <div className="upgrades__app-list" style={{}}>

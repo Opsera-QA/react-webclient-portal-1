@@ -11,6 +11,7 @@ import { NewAppContext } from "./context"
 import { isAlphaNumeric } from "../../helpers"
 import { ApiService } from '../../api/apiService'
 import ErrorDialog from "../common/error"
+import { handleError } from "../../helpers"
 
 class NewApplication extends React.PureComponent {
   static contextType = NewAppContext
@@ -39,7 +40,7 @@ class NewApplication extends React.PureComponent {
     e.preventDefault()
     const { token, user } = this.context;
     console.log("handling it!")
-    
+
     if (this.state.appname.trim().length < 1) {
       this.setState({ appnameError: true });
       return;
@@ -64,7 +65,7 @@ class NewApplication extends React.PureComponent {
         });
       })
       .catch(function (error) {
-        let message = ApiService.handleError(error);
+        let message = handleError(error);
         currentComponent.setState({
           error: true,
           messages: message ? message : 'Error reported accessing API.'
