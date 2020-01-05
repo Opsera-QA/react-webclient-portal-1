@@ -22,7 +22,8 @@ class featuresCards extends React.Component {
                       manage application upgrades effectively and in secured way. We also provide pragmatic solutions for
                       various cloud-based products using open source frameworks and we ensure that enterprise policies are met.
                     </Card.Text>
-            <Button variant="primary" onClick={() => this.gotoLink('inventory')}>View My Inventory</Button>
+            <Button variant="primary" onClick={() => this.gotoLink('inventory')}>View Inventory</Button>
+            <Button variant="primary" className="ml-2" onClick={() => this.gotoLink('platform')}>Create Application</Button>
           </Card.Body>
         </Card>
 
@@ -36,7 +37,7 @@ class featuresCards extends React.Component {
                 integration with various popular API connectors including Jira, ServiceNow, Github and Slack among many more.
                     </Card.Text>
               {/* <Button variant="primary" onClick={this.setPlaceholder}>Register Platform</Button> */}
-              <Card.Link href="/platform">Register a Platform Now</Card.Link>
+              <Card.Link href="/platform">Register an Application Now</Card.Link>
             </Card.Body>
           </Card>
           <Card style={{ width: '18rem' }}>

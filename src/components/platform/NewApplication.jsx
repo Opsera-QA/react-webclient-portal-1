@@ -108,7 +108,8 @@ class NewApplication extends React.PureComponent {
     const { saving } = this.context
     return (
       <Container className="NewApplication">
-        <h2>New Platform</h2>
+        <h3>Register New Application</h3>
+        <p>Create a new Application to leverage your existing systems in any way that meets your business needs</p>
         {error ? <ErrorDialog errorMessage={messages} /> : null}
         <Form loading={checkingAppName || saving}>
           {this.renderInput()}

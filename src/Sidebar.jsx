@@ -17,11 +17,11 @@ class Sidebar extends Component {
     return (
       <Nav defaultActiveKey="/" activeKey={location.pathname} className="d-flex flex-row flex-md-column sidebar">
         <Nav.Link className="nav-link-light" href="/"><FontAwesomeIcon icon={faHome} fixedWidth /> Home</Nav.Link>
-        { authenticated && <Nav.Link className="nav-link-light" href="/platform"><FontAwesomeIcon icon={faPlus} fixedWidth /> Platform</Nav.Link>}
+        {/* { authenticated && <Nav.Link className="nav-link-light" href="/platform"><FontAwesomeIcon icon={faPlus} fixedWidth /> Platform</Nav.Link>} */}
+        { authenticated && <Nav.Link className="nav-link-light" href="/inventory"><FontAwesomeIcon icon={faClipboardList} fixedWidth /> Inventory</Nav.Link>}
         { authenticated && <Nav.Link className="nav-link-light" href="/pipeline"><FontAwesomeIcon icon={faWrench} fixedWidth /> Pipeline</Nav.Link>}
         { authenticated && <Nav.Link className="nav-link-light" href="/reports"><FontAwesomeIcon icon={faChartLine} fixedWidth /> Analytics</Nav.Link>}
-        
-        { authenticated && <Nav.Link className="nav-link-light" href="/inventory"><FontAwesomeIcon icon={faClipboardList} fixedWidth /> Inventory</Nav.Link>}
+    
         { authenticated && <Nav.Link className="nav-link-light" href="/api_connector"><FontAwesomeIcon icon={faLink} fixedWidth /> Connectors</Nav.Link>}
         { authenticated && <Nav.Link className="nav-link-light" href="/update"><FontAwesomeIcon icon={faDownload} fixedWidth /> Updates</Nav.Link>}
         
