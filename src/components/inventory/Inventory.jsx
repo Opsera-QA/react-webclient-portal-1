@@ -21,7 +21,7 @@ class Inventory extends PureComponent {
 
   // First call the getAccessToken/userId and then call the API
   async componentDidMount() {
-    const { getAccessToken, getUserInfo } = this.context; 
+    const { getAccessToken, getUserInfo } = this.context;
     const accessToken = await getAccessToken();
     console.log(accessToken);
     const userInfo = await getUserInfo();
@@ -31,23 +31,19 @@ class Inventory extends PureComponent {
 
   getApiData(accessToken, userInfo) {
     console.log(userInfo.sub) //current unique user ID
-    let urlParams = {uid: userInfo.sub};
-    const apiCall = new ApiService('/applications', urlParams, accessToken); 
+    let urlParams = { userid: userInfo.sub };
+    const apiCall = new ApiService('/applications', urlParams, accessToken);
     let currentComponent = this;
-    apiCall.get().then(function (response) {
-      currentComponent.setState({
-        data: response.data,
-        error: false,
-        messages: 'API call was successful!'
-      });
-    })
+    apiCall.get()
+      .then(function (response) {
+        currentComponent.setState({
+          data: response.data,
+          error: false,
+          messages: 'API call was successful!'
+        });
+      })
       .catch(function (error) {
-        let message = null;
-        if (error.response) {
-          message = `Status ${error.response.status}: ${
-            error.response.data.message ? error.response.data.message : JSON.stringify(error.response.data)}`;
-        }
-        console.log(message ? `ERROR: ${message}` : `Error Reported: ${error}`);
+        let message = ApiService.handleError(error);
 
         currentComponent.setState({
           error: true,
@@ -136,7 +132,7 @@ function App({ application }) {
   }
 
   return (
-    <div style={{marginTop: 25}}>
+    <div style={{ marginTop: 25 }}>
       {tools.map((tool, key) => (
         <ToolTable tool={tool} key={key} />
       ))}
@@ -149,10 +145,10 @@ const ToolTable = ({ tool }) => {
   return (
     <div className="grid-striped">
       <Row style={{ marginTop: 20 }}>
-        <Col lg={4} style={{fontWeight: 'bold'}}>{name}</Col>
-        <Col lg={2}>Port { port }</Col>
-        <Col lg={1}>{ toolStatus }</Col>
-        <Col lg={2}>{ versionNumber }</Col>
+        <Col lg={4} style={{ fontWeight: 'bold' }}>{name}</Col>
+        <Col lg={2}>Port {port}</Col>
+        <Col lg={1}>{toolStatus}</Col>
+        <Col lg={2}>{versionNumber}</Col>
         <Col lg={3}>Installed <Moment format="MM/DD/YYYY" date={installationDate} /></Col>
       </Row>
       <Row>

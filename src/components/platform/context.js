@@ -57,18 +57,22 @@ class NewAppProvider extends React.Component {
     this.setState({
       saving: true,
     })
+    console.log(`saving app for user ${user.sub}`)
 
     let postBody = Object.assign({ name }, data, { uid: user.sub });
-    const apiCall = new ApiService('/applications',null,token,postBody);
     let currentComponent = this;
-    apiCall.post()
-    .then(function (response) {
-      currentComponent.setState({
-        data: response.data,
-        error: false,
-        messages: 'API call was successful!'
-      });
-    })
+    new ApiService(
+      '/applications/create',
+      null,
+      token,
+      postBody).post()
+      .then(function (response) {
+        currentComponent.setState({
+          data: response.data,
+          error: false,
+          messages: 'API call was successful!'
+        });
+      })
       .catch(function (error) {
         let message = null;
         if (error.response) {

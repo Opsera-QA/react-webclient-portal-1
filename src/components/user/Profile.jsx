@@ -1,7 +1,18 @@
 import React, { Component } from 'react';
 import { withAuth } from '@okta/okta-react';
-import { checkAuthentication } from '../../helpers';
 import { Table } from 'react-bootstrap';
+
+async function checkAuthentication() {
+  const authenticated = await this.props.auth.isAuthenticated();
+  if (authenticated !== this.state.authenticated) {
+    if (authenticated && !this.state.userInfo) {
+      const userInfo = await this.props.auth.getUser();
+      this.setState({ authenticated, userInfo });
+    } else {
+      this.setState({ authenticated });
+    }
+  }
+}
 
 export default withAuth(class Profile extends Component {
   constructor(props) {

@@ -1,6 +1,5 @@
 import React from "react"
-import { Form, Container, Button } from 'react-bootstrap';
-
+import { Form, Container, Button } from 'react-bootstrap'
 import ConfigurationManagement from "./ConfigurationManagement"
 import ContinousIntegration from "./ContinousIntegration"
 import LogManagement from "./LogManagement"
@@ -10,8 +9,8 @@ import Monitoring from "./Monitoring"
 import Confirmation from "./Confirmation"
 import { NewAppContext } from "./context"
 import { isAlphaNumeric } from "../../helpers"
-import { ApiService } from '../../api/apiService';
-import ErrorDialog from "../common/error";
+import { ApiService } from '../../api/apiService'
+import ErrorDialog from "../common/error"
 
 class NewApplication extends React.PureComponent {
   static contextType = NewAppContext
@@ -39,7 +38,8 @@ class NewApplication extends React.PureComponent {
   handleCreateClick = async (e) => {
     e.preventDefault()
     const { token, user } = this.context;
-
+    console.log("handling it!")
+    
     if (this.state.appname.trim().length < 1) {
       this.setState({ appnameError: true });
       return;
@@ -49,15 +49,13 @@ class NewApplication extends React.PureComponent {
       checkingAppName: true,
     })
 
-    let postData = { uid: user.sub, app_name: this.state.appname };
-    const apiCall = new ApiService(
-      '/applications/check-exists', 
-      null, 
-      token,
-      postData);
-
+    let postBody = { userid: user.sub, name: this.state.appname };
     let currentComponent = this;
-    const { data: applicationExists } = apiCall.post()
+    new ApiService(
+      '/applications/create',
+      null,
+      token,
+      postBody).post()
       .then(function (response) {
         currentComponent.setState({
           data: response.data,
@@ -66,40 +64,23 @@ class NewApplication extends React.PureComponent {
         });
       })
       .catch(function (error) {
-        let message = null;
-        if (error.response) {
-          message = `Status ${error.response.status}: ${
-            error.response.data.message ? error.response.data.message : JSON.stringify(error.response.data)}`;
-        }
-        console.log(message ? `ERROR: ${message}` : `Error Reported: ${error}`);
-
+        let message = ApiService.handleError(error);
         currentComponent.setState({
           error: true,
           messages: message ? message : 'Error reported accessing API.'
         });
-
       })
       .finally(function () {
         currentComponent.setState({ fetching: false });
+        currentComponent.setState({
+          appnameError: false,
+          checkingAppName: false,
+        })
+        currentComponent.context.setState(ps => ({
+          ...ps,
+          appname: currentComponent.state.appname,
+        }))
       });
-
-    if (!applicationExists) {
-      this.setState({
-        appnameError: false,
-        checkingAppName: false,
-      })
-      this.context.setState(ps => ({
-        ...ps,
-        appname: this.state.appname,
-      }))
-    } else {
-      this.setState({
-        appnameError: true,
-        checkingAppName: false,
-      })
-      // toast.error("Application Name already exists!")
-      alert("Application Name already exists!")
-    }
   }
 
   renderInput = () => {

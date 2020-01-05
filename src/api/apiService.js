@@ -35,7 +35,6 @@ export class ApiService {
 
   post() {
     var self = this;   
-    console.log(self.data)
     return axiosInstance({
       method: 'post',
       url: self.url,
@@ -58,6 +57,24 @@ export class ApiService {
       params: self.params,
       // responseType: 'stream'
     })
+  }
+
+
+  handleError(error) {
+    let errMessage = null;
+  
+    if (typeof(error) === "object"){ 
+      if (error.response) {
+        errMessage = `Status ${error.response.status}: ${
+          error.response.data.message ? error.response.data.message : JSON.stringify(error.response.data)}`;
+      } else {
+        errMessage = `Error Reported: ${JSON.stringify(error)}`;
+      }
+    } else {
+      errMessage = `Error Reported: ${error}`;
+    }
+    console.log(errMessage);
+    return errMessage;
   }
 
 }

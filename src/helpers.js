@@ -1,22 +1,3 @@
-/**
- * Helper function that watches the authenticate state, then applies it
- * as a boolean (authenticated) as well as attaches the userinfo data.
- */
-async function checkAuthentication() {
-  const authenticated = await this.props.auth.isAuthenticated();
-  if (authenticated !== this.state.authenticated) {
-    if (authenticated && !this.state.userInfo) {
-      const userInfo = await this.props.auth.getUser();
-      this.setState({ authenticated, userInfo });
-    } else {
-      this.setState({ authenticated });
-    }
-  }
-}
-
-/* eslint-disable import/prefer-default-export */
-export { checkAuthentication };
-
 export function isLocalHost(hostname) {
   return !!(
     hostname === "localhost" ||
@@ -35,4 +16,3 @@ export function validateEmail(email) {
   var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   return re.test(String(email).toLowerCase())
 }
-
