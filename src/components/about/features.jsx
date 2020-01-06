@@ -38,7 +38,7 @@ class featuresCards extends React.Component {
                 integration with various popular API connectors including Jira, ServiceNow, Github and Slack among many more.
                     </Card.Text>
               {/* <Button variant="primary" onClick={this.setPlaceholder}>Register Platform</Button> */}
-              <Link to="/platform">Register an Application Now</Link>
+              <Link to="/platform">Register an Application</Link>
             </Card.Body>
           </Card>
           <Card style={{ width: '18rem' }}>
