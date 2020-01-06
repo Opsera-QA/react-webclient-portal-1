@@ -1,11 +1,14 @@
 import React, { PureComponent } from 'react';
-import { Form, Alert, Row, Col } from 'react-bootstrap';
+import { Form, Alert, Row, Col, Button } from 'react-bootstrap';
 import Moment from 'react-moment';
 import { AuthContext } from '../../contexts/AuthContext';  //REact Context API Code for User Authentication
 import { ApiService } from '../../api/apiService';
 import ErrorDialog from "../common/error";
 import LoadingDialog from "../common/loading";
-import { handleError } from "../../helpers"
+import { handleError } from "../../helpers";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
 
 class Inventory extends PureComponent {
   static contextType = AuthContext;  //Registers the User Authentication context data in the component
@@ -29,6 +32,10 @@ class Inventory extends PureComponent {
     this.getApiData(accessToken, userInfo);
   }
 
+  gotoLink = (id) => {
+    let path = `/${id}`;
+    this.props.history.push(path);
+  }
 
   getApiData(accessToken, userInfo) {
 
@@ -83,7 +90,17 @@ class Inventory extends PureComponent {
       <div>
         <h3>Inventory</h3>
         <p>All configured applications are available for viewing below.  Select the item you want to view from the list.</p>
+
+        <div class="row">
+          <div class="col ml-auto">
+            <Button variant="primary" className="float-right" onClick={() => this.gotoLink('platform')}>
+              <FontAwesomeIcon icon={faPlus} fixedWidth /> Register Application
+            </Button>
+          </div>
+        </div>
+
         {error ? <ErrorDialog errorMessage={messages} /> : null}
+
         {fetching && <LoadingDialog />}
         <div>
           {(!fetching && data.length === 0) &&
