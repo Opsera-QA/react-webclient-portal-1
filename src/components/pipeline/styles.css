@@ -1,0 +1,34 @@
+.ReleaseManagementServices {
+    margin-top: 20px;
+  }
+  
+  .ReleaseManagementServices__qt--yes,
+  .ReleaseManagementServices__qt--no {
+    cursor: pointer;
+    padding: 2px 5px;
+  }
+  
+  .ReleaseManagementServices__qt--yes {
+    color: #43a047;
+  }
+  .ReleaseManagementServices__qt--no {
+    color: #e53935;
+  }
+  
+  .ReleaseManagementOtherServices {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .ReleaseManagementOtherServices .ui.card.newApp__card {
+    align-self: flex-start;
+    margin-right: 30px;
+  }
+  .ReleaseManagementOtherServices .ui.card.newApp__card > div {
+    display: flex;
+  }
+  
+  .red-background {
+    background-color: red !important;
+  }
+  
