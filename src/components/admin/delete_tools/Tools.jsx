@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { Alert, Button, Modal, Table } from 'react-bootstrap';
-import { getApps } from "../../actions/thunk"
+import { getApps } from "../../../actions/thunk"
 
-import { AuthContext } from '../../contexts/AuthContext';  //REact Context API Code for User Authentication
-import { ApiService } from '../../api/apiService';
-import ErrorDialog from "../common/error";
-import LoadingDialog from "../common/loading";
+import { AuthContext } from '../../../contexts/AuthContext';  //REact Context API Code for User Authentication
+import { ApiService } from '../../../api/apiService';
+import ErrorDialog from "../../common/error";
 
 class Tools extends Component {
     state = {}

@@ -25,9 +25,9 @@ import Update from './components/update/Update';
 
 import AdminTools from './components/admin/AdminTools';
 import HealthCheck from './components/admin/HealthCheck';
-import DeleteTools from './components/admin/DeleteTools';
+import DeleteTools from './components/admin/delete_tools/DeleteTools';
 import RegisteredUsers from './components/admin/RegisteredUsers';
-import ManageSystems from './components/admin/ManageSystems';
+import ManageSystems from './components/admin/manage_systems/ManageSystems';
 import ReportsRegistration from './components/admin/analytics/ReportsRegistration';
 
 import ApiConnectionDemo from './components/api_connector/ApiDemo';

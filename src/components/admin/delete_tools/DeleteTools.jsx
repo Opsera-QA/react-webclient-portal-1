@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react'
 import { Container, Form, Alert } from 'react-bootstrap';
-import { AuthContext } from '../../contexts/AuthContext';  //REact Context API Code for User Authentication
-import { ApiService } from '../../api/apiService';
-import ErrorDialog from "../common/error";
-import LoadingDialog from "../common/loading";
-import Tools from "./tools"
+import { AuthContext } from '../../../contexts/AuthContext';  //REact Context API Code for User Authentication
+import { ApiService } from '../../../api/apiService';
+import ErrorDialog from "../../common/error";
+import LoadingDialog from "../../common/loading";
+import Tools from "./Tools"
 
 class DeleteTools extends PureComponent {
   static contextType = AuthContext; 

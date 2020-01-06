@@ -37,7 +37,7 @@ class Confirmation extends React.PureComponent {
 
           <Form.Group controlId="formCheckboxJenkins">
             <Form.Check type="checkbox" label="Jenkins"
-                        checked={Boolean(data.Jenkins) != false}
+                        checked={Boolean(data.Jenkins) !== false}
                         onChange={() =>
                           setState(
                             ps => ({data: {...ps.data, Jenkins: undefined}}),
@@ -54,7 +54,7 @@ class Confirmation extends React.PureComponent {
   
           <Form.Group controlId="formCheckboxNagios">
             <Form.Check type="checkbox"  label="Nagios"
-                        checked={Boolean(data.Nagios) != false}
+                        checked={Boolean(data.Nagios) !== false}
                         onChange={() =>
                           setState(ps => ({data: {...ps.data, Nagios: undefined}}))
                         } />
@@ -62,7 +62,7 @@ class Confirmation extends React.PureComponent {
 
           <Form.Group controlId="formCheckboxElasticSearch">
             <Form.Check type="checkbox" label="ElasticSearch"
-                        checked={Boolean(data.ElasticSearch) != false}
+                        checked={Boolean(data.ElasticSearch) !== false}
                         onChange={() =>
                           setState(ps => ({
                             data: {...ps.data, ElasticSearch: undefined},
@@ -80,7 +80,7 @@ class Confirmation extends React.PureComponent {
 
           <Form.Group controlId="formCheckboxSonarQube">
               <Form.Check type="checkbox"  label="SonarQube"
-                          checked={Boolean(data.SonarQube) != false}
+                          checked={Boolean(data.SonarQube) !== false}
                           onChange={() =>
                             setState(ps => ({
                               data: {...ps.data, SonarQube: undefined},
