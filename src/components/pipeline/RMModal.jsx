@@ -1,10 +1,11 @@
-import React from "react"
+import React, {PureComponent} from "react"
 import { Modal, Form, Button } from 'react-bootstrap';
 import {RMContext} from "./RMContext"
 
-class RMModal extends React.PureComponent {
+class RMModal extends PureComponent {
   static contextType = RMContext
   handlecancel = () => {
+      console.log("cancel")
     const {handleModalCancel, service, category} = this.context
     handleModalCancel({service, category})
   }
@@ -33,11 +34,9 @@ class RMModal extends React.PureComponent {
   }
 
   isChecked = (service, name, val) => {
-      console.log(service + "+" + name + "+" + val)
     const {services} = this.context
     if (!services || !services[service] || !services[service][name])
       return false
-    console.log(services[service][name].includes(val));  
     return services[service][name].includes(val)
   }
 
@@ -62,9 +61,8 @@ class RMModal extends React.PureComponent {
     } = this.context
     return (
     
-    <Modal show={modalOpen} 
-    centered onClose={this.onClose} >
-      <Modal.Header >
+    <Modal show={modalOpen} centered onHide={this.onClose}>
+      <Modal.Header closeButton >
         <Modal.Title>{category}</Modal.Title></Modal.Header>
       <Modal.Body>
           <h3>{service}</h3>
@@ -73,7 +71,7 @@ class RMModal extends React.PureComponent {
                   <Form.Group controlId="formCheckboxDecrypt">
                   <Form.Check type="checkbox" label="Decrypt"
                     style={{marginRight: "10px"}}
-                    checked={this.isChecked(service, "decrypt")}
+                    checked={this.isChecked(service, "decrypt", "decrypt")}
                     onChange={() => handleServiceCheckBoxChange(service, "decrypt", "decrypt") }
                   />
                 </Form.Group>
@@ -86,7 +84,7 @@ class RMModal extends React.PureComponent {
                                 <>
                                 {values.map(val => (
                                     <Form.Group controlId={key}>
-                                        <Form.Check type="checkbox" key={val} label={val}
+                                        <Form.Check type="checkbox" key={val} label={val} 
                                             style={{marginRight: "10px"}}
                                             checked={this.isChecked(service, name, val)}
                                             onChange={() => handleServiceCheckBoxChange(service, name, val) }
@@ -107,7 +105,7 @@ class RMModal extends React.PureComponent {
                                         }
                                       }}
                                     placeholder={name}
-                                    name="domain"
+                                    name={`${service}//${key}`}
                                     value={
                                         services[service]
                                           ? services[service][key] || ""
@@ -127,7 +125,7 @@ class RMModal extends React.PureComponent {
       <Button
           color="red"
           inverted
-          onClick={() => this.handleCancel}
+          onClick={this.handlecancel}
         > Cancel
         </Button>
         <Button color="green" inverted onClick={this.handleSave}>

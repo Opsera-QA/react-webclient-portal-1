@@ -36,7 +36,7 @@ class CreationModal extends React.PureComponent {
     } = this.context
     return (
       <Modal show={open} aria-labelledby="contained-modal-title-vcenter"
-      centered onClose={this.handleCancel} >
+      centered onHide={this.handleCancel} >
         <Modal.Header  closeButton>
           <Modal.Title>{category}</Modal.Title></Modal.Header>
         <Modal.Body>

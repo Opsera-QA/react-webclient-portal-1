@@ -1,4 +1,4 @@
-import React, {createContext} from "react"
+import React, {createContext, Component} from "react"
 import {withRouter} from "react-router-dom"
 import {isAlphaNumeric} from "../../helpers"
 import { ApiService } from '../../api/apiService'
@@ -7,7 +7,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 let RMContext
 const {Consumer, Provider} = (RMContext = createContext({}))
 
-class rmProvider extends React.Component {
+class rmProvider extends Component {
   static contextType = AuthContext;  //Registers the User Authentication context data in the component
 
   constructor(props, context) {
@@ -64,7 +64,7 @@ class rmProvider extends React.Component {
     }
     this.setState({
       services,
-    },()=>{console.log(this.state)})
+    })
   }
 
   handleServiceChange = ({target}) => {
@@ -108,14 +108,13 @@ class rmProvider extends React.Component {
     })
 
     const { token, user } = this.context;
-    console.log("handling it!")
 
     if (this.state.appname.trim().length < 1) {
       this.setState({ appnameError: true });
       return;
     }
 
-    let postBody = {  name: this.state.appname };
+    let postBody = {  name: this.state.appname };   // TODO :: Add user id as part of body
     const {data: applicationExists} = new ApiService(
       '/applications/check-exists',
       null,
@@ -192,8 +191,11 @@ class rmProvider extends React.Component {
   }
 
   handleModalCancel = ({service}) => {
+    console.log("handle modal cancel")
     const {services} = this.state
     delete services[service]
+    
+    console.log(services)
     this.setState({
       services,
       modalOpen: false,
