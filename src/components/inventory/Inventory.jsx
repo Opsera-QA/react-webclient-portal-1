@@ -36,8 +36,7 @@ class Inventory extends PureComponent {
     const { getAccessToken, getUserInfo } = this.context;
     const accessToken = await getAccessToken();
     const userInfo = await getUserInfo();
-
-    let urlParams = { userid: userInfo.sub };
+    const urlParams = { userid: userInfo.sub };
     const apiCall = new ApiService('/applications', urlParams, accessToken);
     let currentComponent = this;
     apiCall.get()

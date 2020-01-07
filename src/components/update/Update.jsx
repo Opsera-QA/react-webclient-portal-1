@@ -28,8 +28,7 @@ class Update extends Component {
     const { getAccessToken, getUserInfo } = this.context;
     const accessToken = await getAccessToken();
     const userInfo = await getUserInfo();
-
-    let urlParams = { userid: userInfo.sub };
+    const urlParams = { userid: userInfo.sub };
     const apiCall = new ApiService('/tools/upgradable', urlParams, accessToken);
     let currentComponent = this;
     apiCall.get()
@@ -53,19 +52,22 @@ class Update extends Component {
       });
   }
 
+
   handleButtonClick = async ({ applicationId, toolId }) => {
     let currentComponent = this;
     this.setState(ps => ({
       disabledIds: [...ps.disabledIds, `${applicationId}${toolId}`],
     }))
 
-    const apiCall = new ApiService('/tools/upgrade', { applicationId, toolId }, this.state.token);
-    apiCall.post().then(function (response) {
-      currentComponent.setState({
-        error: false,
-        messages: 'Tool Submitted for upgrade, you will be notified completeness.'
-      });
-    })
+    //TODO: The token MAY not be required here because of the interceptor set in apiService, so test that
+    const apiCall = new ApiService('/tools/upgrade', null, null, { applicationId, toolId });
+    apiCall.post()
+      .then(function (response) {
+        currentComponent.setState({
+          error: false,
+          messages: 'Tool Submitted for upgrade, you will be notified completeness.'
+        });
+      })
       .catch(function (error) {
         currentComponent.setState({
           error: true,
@@ -106,7 +108,9 @@ class Update extends Component {
               i={i}
             />
           ))
-        }) : <div>No Apps Available</div>}
+        }) : <div className="col mx-auto">
+              <div class="text-center m-4">No Updates Required</div>
+            </div>}
       </Row>
     )
   }
