@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Button, Col, Row, Container } from 'react-bootstrap';
+import { Button, Col, Row } from 'react-bootstrap';
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
-
+import { handleError } from "../../helpers";
 import { AuthContext } from '../../contexts/AuthContext'; //New AuthContext State 
 import { ApiService } from '../../api/apiService';
 
@@ -20,32 +20,33 @@ class Update extends Component {
     };
   }
 
-  // Get the current token and then call the API call passing it
-  async componentDidMount() {
-    const { getAccessToken } = this.context;
-    const accessToken = await getAccessToken();
-    await this.getToolsList(accessToken);
-    this.setState({
-      token : accessToken
-    })
+  componentDidMount() {
+    this.getApiData();
   }
 
-  async getToolsList(accessToken) {
-    const apiCall = new ApiService('/tools/upgradable', {}, accessToken);
+  async getApiData() {
+    const { getAccessToken, getUserInfo } = this.context;
+    const accessToken = await getAccessToken();
+    const userInfo = await getUserInfo();
+
+    let urlParams = { userid: userInfo.sub };
+    const apiCall = new ApiService('/tools/upgradable', urlParams, accessToken);
     let currentComponent = this;
-    apiCall.get().then(function (response) {
-      currentComponent.setState({
-        apps: response.apps,
-        error: false,
-        messages: 'API call was successful!'
-      });
-    })
+    apiCall.get()
+      .then(function (response) {
+        currentComponent.setState({
+          apps: response.apps,
+          error: false,
+          messages: 'API call was successful!'
+        });
+      })
       .catch(function (error) {
+        let message = handleError(error);
+
         currentComponent.setState({
           error: true,
-          messages: 'Error reported accessing list of upgradable tools.'
+          messages: message ? message : 'Error reported accessing API.'
         });
-        console.log(`Error Reported: ${error}`);
       })
       .finally(function () {
         currentComponent.setState({ fetching: false });
@@ -75,7 +76,7 @@ class Update extends Component {
       .finally(function () {
         currentComponent.setState({ fetching: false });
       });
-     
+
   }
 
   loader = () => {
@@ -111,12 +112,15 @@ class Update extends Component {
   }
 
   render() {
-    const { error, messages } = this.state
+    const { error, messages, fetching } = this.state
     return (
       <div>
-        <h2>Updates</h2>
-        { error ? <ErrorDialog errorMessage={messages} /> : null }
-      
+        <h3>Updates</h3>
+        <p>Any available updates for tools currently registered will be listed below.</p>
+
+        {error ? <ErrorDialog errorMessage={messages} /> : null}
+        {fetching ? <LoadingDialog /> : null}
+
         <div className="upgrades__app-list" style={{}}>
           {this.loader()}
           {!error ?? this.messages()}

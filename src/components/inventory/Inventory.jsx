@@ -23,18 +23,8 @@ class Inventory extends PureComponent {
     };
   }
 
-  async componentDidMount() {
-    const { getAccessToken, getUserInfo } = this.context;
-    const accessToken = await getAccessToken();
-    const userInfo = await getUserInfo();
-    this.getApiData(accessToken, userInfo);
-  }
-
-  async componentDidUpdate() {
-    const { getAccessToken, getUserInfo } = this.context;
-    const accessToken = await getAccessToken();
-    const userInfo = await getUserInfo();
-    this.getApiData(accessToken, userInfo);
+  componentDidMount() {
+    this.getApiData();
   }
 
   gotoLink = (id) => {
@@ -42,12 +32,11 @@ class Inventory extends PureComponent {
     this.props.history.push(path);
   }
 
-  getApiData(accessToken, userInfo) {
+  async getApiData() {
+    const { getAccessToken, getUserInfo } = this.context;
+    const accessToken = await getAccessToken();
+    const userInfo = await getUserInfo();
 
-    let message = handleError('test');
-    console.log(message)
-
-    console.log(userInfo.sub) //current unique user ID
     let urlParams = { userid: userInfo.sub };
     const apiCall = new ApiService('/applications', urlParams, accessToken);
     let currentComponent = this;
