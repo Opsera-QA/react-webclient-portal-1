@@ -7,7 +7,7 @@ import ErrorDialog from "../common/error";
 import LoadingDialog from "../common/loading";
 import { handleError } from "../../helpers";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faWrench } from '@fortawesome/free-solid-svg-icons';
 
 
 class Inventory extends PureComponent {
@@ -98,8 +98,12 @@ class Inventory extends PureComponent {
 
         <div class="row">
           <div class="col ml-auto">
-            <Button variant="primary" className="float-right" onClick={() => this.gotoLink('platform')}>
+            <Button variant="outline-primary" className="float-right" size="sm" onClick={() => this.gotoLink('platform')}>
               <FontAwesomeIcon icon={faPlus} fixedWidth /> Register Application
+            </Button>
+
+            <Button variant="outline-primary" className="float-right mr-2" size="sm" onClick={() => this.gotoLink('pipeline')}>
+              <FontAwesomeIcon icon={faWrench} fixedWidth /> Configure Pipeline
             </Button>
           </div>
         </div>
