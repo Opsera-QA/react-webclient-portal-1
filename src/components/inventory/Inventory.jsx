@@ -23,11 +23,16 @@ class Inventory extends PureComponent {
     };
   }
 
-  // First call the getAccessToken/userId and then call the API
   async componentDidMount() {
     const { getAccessToken, getUserInfo } = this.context;
     const accessToken = await getAccessToken();
-    console.log(accessToken);
+    const userInfo = await getUserInfo();
+    this.getApiData(accessToken, userInfo);
+  }
+
+  async componentDidUpdate() {
+    const { getAccessToken, getUserInfo } = this.context;
+    const accessToken = await getAccessToken();
     const userInfo = await getUserInfo();
     this.getApiData(accessToken, userInfo);
   }
@@ -103,7 +108,7 @@ class Inventory extends PureComponent {
 
         {fetching && <LoadingDialog />}
         <div>
-          {(!fetching && data.length === 0) &&
+          {(!fetching && !error && data.length === 0) &&
             <div className="mt-3">
               <Alert variant="secondary">
                 No applications are currently configured for the system.
