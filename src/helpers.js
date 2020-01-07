@@ -24,6 +24,8 @@ export function handleError(error) {
     if (error.response) {
       errMessage = `Status ${error.response.status}: ${
         error.response.data.message ? error.response.data.message : JSON.stringify(error.response.data)}`;
+    } else if (error.message) { 
+      errMessage = `Message: ${error.message}`;
     } else {
       errMessage = `Error Reported: ${JSON.stringify(error)}`;
     }
