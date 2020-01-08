@@ -11,6 +11,7 @@ import { NewAppContext } from "./context"
 import { isAlphaNumeric } from "../../helpers"
 import { ApiService } from '../../api/apiService'
 import ErrorDialog from "../common/error"
+import SuccessDialog from "../common/success"
 import { handleError } from "../../helpers"
 
 class NewApplication extends React.PureComponent {
@@ -51,6 +52,7 @@ class NewApplication extends React.PureComponent {
     })
 
     let postBody = { userid: user.sub, name: this.state.appname };
+    console.log(postBody)
     let currentComponent = this;
     new ApiService(
       '/applications/create',
@@ -58,17 +60,20 @@ class NewApplication extends React.PureComponent {
       token,
       postBody).post()
       .then(function (response) {
+        console.log(response)
         currentComponent.setState({
           data: response.data,
           error: false,
-          messages: 'API call was successful!'
+          messages: 'Application is successfully created!',
+          status: "success"
         });
       })
       .catch(function (error) {
         let message = handleError(error);
         currentComponent.setState({
           error: true,
-          messages: message ? message : 'Error reported accessing API.'
+          messages: message ? message : 'Error reported accessing API.',
+          status: "failed"
         });
       })
       .finally(function () {
@@ -85,7 +90,7 @@ class NewApplication extends React.PureComponent {
   }
 
   renderInput = () => {
-    const { appname, appnameError } = this.state
+    const { appname, appnameError, status } = this.state
     return (
       <Form.Row>
         <Form.Group controlId="formGridName">
@@ -96,6 +101,7 @@ class NewApplication extends React.PureComponent {
             value={appname}
             onChange={this.handleAppNameChange}
             isInvalid={appnameError}
+            disabled ={status === "success" ? true : false}
           />
           <Form.Control.Feedback type="invalid">{appnameError}</Form.Control.Feedback>
         </Form.Group>
@@ -104,13 +110,14 @@ class NewApplication extends React.PureComponent {
   }
 
   render() {
-    const { checkingAppName, appnameError, appname, error, messages } = this.state
+    const { checkingAppName, appnameError, appname, error, messages, status } = this.state
     const { saving } = this.context
     return (
       <Container className="NewApplication">
         <h3>Register New Application</h3>
         <p>Create a new Application to leverage your existing systems in any way that meets your business needs</p>
         {error ? <ErrorDialog errorMessage={messages} /> : null}
+        {status === "success" ? <SuccessDialog successMessage={messages} /> : null }
         <Form loading={checkingAppName || saving}>
           {this.renderInput()}
           <Button
@@ -118,12 +125,12 @@ class NewApplication extends React.PureComponent {
             type="submit"
             onClick={this.handleCreateClick}
             loading={checkingAppName}
-            disabled={!!appnameError || !appname || !appname.length}
+            disabled={!!appnameError || !appname || !appname.length || status==="success" }
           >
             Create
           </Button>
         </Form>
-        {appnameError === "false" && (
+        {status === "success" && (
           <div>
             <div className="newApp__cards-container">
               <ConfigurationManagement />

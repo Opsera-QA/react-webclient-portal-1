@@ -20,13 +20,15 @@ class DeleteTools extends PureComponent {
   }
 
   async componentDidMount() {
-    const { getAccessToken } = this.context;  //this.context is where all data from the above AuthContext component resides.  It's like the state props design wise
+    const { getAccessToken, getUserInfo } = this.context;  //this.context is where all data from the above AuthContext component resides.  It's like the state props design wise
+    const userInfo = await getUserInfo();
+    const urlParams = { userid: userInfo.sub };
     const accessToken = await getAccessToken();
-    this.getApiData(accessToken);
+    this.getApiData(accessToken, urlParams);
   }
   
-  getApiData(accessToken) {
-    const apiCall = new ApiService('applications/demo', {}, accessToken);
+  getApiData(accessToken, urlParams) {
+    const apiCall = new ApiService('applications', urlParams, accessToken);
     let currentComponent = this;
     apiCall.get().then(function (response) {
       currentComponent.setState({

@@ -62,7 +62,7 @@ class NewAppProvider extends React.Component {
     let postBody = Object.assign({ name }, data, { uid: user.sub });
     let currentComponent = this;
     new ApiService(
-      '/applications/create',
+      '/applications/create/tools',
       null,
       token,
       postBody).post()
@@ -96,7 +96,7 @@ class NewAppProvider extends React.Component {
         saving: false,
       },
       () => {
-        this.props.history.push("/")
+        // this.props.history.push("/")   // uncomment after testing
       },
     )
   }
