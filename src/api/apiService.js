@@ -1,3 +1,4 @@
+/*global require */
 const axios = require("axios");
 const config = require("../config");
 
@@ -11,7 +12,7 @@ const setInterceptorToken = (authToken) => {
     const token = "Bearer " + authToken;
     config.headers.Authorization =  token;
     return config;
-  },authToken);
+  }, authToken);
 };
 
 export class ApiService {
