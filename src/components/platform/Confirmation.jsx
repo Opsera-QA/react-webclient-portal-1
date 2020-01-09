@@ -5,6 +5,14 @@ import {NewAppContext} from "./context"
 
 class Confirmation extends React.PureComponent {
   static contextType = NewAppContext
+
+  componentDidMount() {
+    const { setAppIdState } = this.context;
+    if(this.props.data._id){
+      setAppIdState(this.props.data._id)
+    }
+  }
+  
   render() {
     const {data, confirm, setState} = this.context
     return (

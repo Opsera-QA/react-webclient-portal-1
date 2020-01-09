@@ -15,6 +15,7 @@ class NewAppProvider extends React.Component {
       open: false,
       data: {},
       appname: null,
+      appid: '',
       saving: false,
       token: '',
       user: {}
@@ -52,14 +53,14 @@ class NewAppProvider extends React.Component {
   }
 
   confirm = async () => {
-    const { appname: name, data, token, user } = this.state
+    const { appname: name, data, token, user, appid : id } = this.state
 
     this.setState({
       saving: true,
     })
     console.log(`saving app for user ${user.sub}`)
 
-    let postBody = Object.assign({ name }, data, { uid: user.sub });
+    let postBody = Object.assign({ name }, {id} , {tools : data}, { uid: user.sub });
     let currentComponent = this;
     new ApiService(
       '/applications/create/tools',
@@ -99,6 +100,10 @@ class NewAppProvider extends React.Component {
         // this.props.history.push("/")   // uncomment after testing
       },
     )
+  }
+
+  setAppIdState = (value) => {
+    this.setState({ appid: value});
   }
 
   // eslint-disable-next-line  no-unused-vars
@@ -149,6 +154,7 @@ class NewAppProvider extends React.Component {
           handleServiceCheckBoxChange: this.handleServiceCheckBoxChange,
           handleCheckboxChanged: this.handleCheckboxChanged,
           handleChange: this.handleChange,
+          setAppIdState: this.setAppIdState,
           isChecked: this.isChecked
         }}
       >

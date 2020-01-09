@@ -139,7 +139,7 @@ class NewApplication extends React.PureComponent {
               <LogManagement />
               <RepositoryManagement />
               <Monitoring />
-              <Confirmation />
+              <Confirmation data = {this.state.data} />
             </div>
           </div>
         )}
