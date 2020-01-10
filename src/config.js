@@ -1,4 +1,3 @@
-/*global process */
 // This relies on the .env configuration files for Development, Staging and Production
 const CLIENT_ID = process.env.REACT_APP_OKTA_CLIENT_ID
   , ISSUER = process.env.REACT_APP_OKTA_ISSUER 
