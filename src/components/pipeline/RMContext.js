@@ -1,11 +1,12 @@
-import React, {createContext, Component} from "react"
-import {withRouter} from "react-router-dom"
-import {isAlphaNumeric} from "../../helpers"
-import { ApiService } from '../../api/apiService'
-import { AuthContext } from '../../contexts/AuthContext';
+/* eslint-disable react/prop-types */
+import React, {createContext, Component} from "react";
+import {withRouter} from "react-router-dom";
+import {isAlphaNumeric} from "../../helpers";
+import { ApiService } from "../../api/apiService";
+import { AuthContext } from "../../contexts/AuthContext";
 
-let RMContext
-const {Consumer, Provider} = (RMContext = createContext({}))
+let RMContext;
+const {Consumer, Provider} = (RMContext = createContext({}));
 
 class rmProvider extends Component {
   static contextType = AuthContext;  //Registers the User Authentication context data in the component
@@ -26,7 +27,7 @@ class rmProvider extends Component {
       category: "",
       service: "",
       saving: false,
-    }
+    };
   }
 
   componentDidMount = async () => {
@@ -36,39 +37,39 @@ class rmProvider extends Component {
     this.setState({
       token: accessToken,
       user: userInfo
-    })
+    });
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const {modalOpen, services, service} = this.state
-    const {modalOpen: pModalOpen} = prevState
+    const {modalOpen, services, service} = this.state;
+    const {modalOpen: pModalOpen} = prevState;
 
     if (modalOpen !== pModalOpen) {
       if (modalOpen) {
-        this.cached = services[service] || {}
+        this.cached = services[service] || {};
       } else {
-        this.cached = {}
+        this.cached = {};
       }
     }
   }
 
   // services
   handleServiceCheckBoxChange = (service, name, val) => {
-    const {services} = this.state
-    services[service] || (services[service] = {})
-    services[service][name] || (services[service][name] = [])
+    const {services} = this.state;
+    services[service] || (services[service] = {});
+    services[service][name] || (services[service][name] = []);
     if (services[service][name].includes(val)) {
-      services[service][name] = services[service][name].filter(x => x !== val)
+      services[service][name] = services[service][name].filter(x => x !== val);
     } else {
-      services[service][name].push(val)
+      services[service][name].push(val);
     }
     this.setState({
       services,
-    })
+    });
   }
 
   handleServiceChange = ({target}) => {
-    const [service, name] = target.name.split(`//`)
+    const [service, name] = target.name.split("//");
     this.setState(ps => {
       return {
         services: {
@@ -78,16 +79,16 @@ class rmProvider extends Component {
             [name]: target.value,
           },
         },
-      }
-    })
+      };
+    });
   }
 
   handleChange = ({target: {name, value}}) => {
-    let error = null
+    let error = null;
     if (name === "appname") {
-      if (value.length > 10) error = "App Name has to be 10 chars or less"
+      if (value.length > 10) error = "App Name has to be 10 chars or less";
       if (value.length > 1 && !isAlphaNumeric(value))
-        error = "App Name has to be alphanumeric"
+        error = "App Name has to be alphanumeric";
     }
 
     this.setState({
@@ -95,18 +96,20 @@ class rmProvider extends Component {
       qtShow: true,
       otherServicesShow: null,
       [name]: value,
-    })
+    });
   }
 
   handleCreateClick = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (this.state.appname.trim().length < 1)
-      return this.setState({appNameValid: false})
+      return this.setState({appNameValid: false});
 
     this.setState({
       checkingAppName: true,
-    })
+    });
 
+    //TODO: Fix the user issue, it's defined in context but not used
+    // eslint-disable-next-line no-unused-vars
     const { token, user } = this.context;
 
     if (this.state.appname.trim().length < 1) {
@@ -116,22 +119,22 @@ class rmProvider extends Component {
 
     let postBody = {  name: this.state.appname };   // TODO :: Add user id as part of body
     const {data: applicationExists} = new ApiService(
-      '/applications/check-exists',
+      "/applications/check-exists",
       null,
       token,
-      postBody).post()
+      postBody).post();
 
     if (!applicationExists) {
       this.setState({
         appNameValid: true,
         checkingAppName: false,
-      })
+      });
     } else {
       this.setState({
         appNameValid: false,
         checkingAppName: false,
-      })
-      alert("Application Name already exists!")
+      });
+      alert("Application Name already exists!");
     }
   }
 
@@ -139,67 +142,68 @@ class rmProvider extends Component {
     this.setState({
       qtShow: false,
       otherServicesShow: false,
-    })
+    });
   }
 
   handleYesClick = () => {
     this.setState({
       qtShow: false,
       otherServicesShow: true,
-    })
+    });
   }
 
   confirm = async () => {
-    const {appname: name, services: data, token} = this.state
+    const {appname: name, services: data, token} = this.state;
     this.setState({
       saving: true,
-    })
+    });
 
     let postBody = Object.assign({name}, data);
     new ApiService(
-      '/applications',
+      "/applications",
       null,
       token,
       postBody).post()
       .then(()=>{
-        alert("something went wrong, please try again later")
+        alert("something went wrong, please try again later");
       })
       .catch(() => {
-        alert("something went wrong, please try again later")
-      })
+        alert("something went wrong, please try again later");
+      });
 
     this.setState(
       {
         saving: false,
       },
       () => {
-        this.props.history.push("/")
+        // eslint-disable-next-line react/prop-types
+        this.props.history.push("/");
       },
-    )
+    );
   }
 
   handleModalSave = ({service}) => {
-    const {services} = this.state
+    const {services} = this.state;
     if (!services[service]) {
-      services[service] = {}
+      services[service] = {};
     }
-    services[service].saved = true
+    services[service].saved = true;
     this.setState({
       services,
       modalOpen: false,
-    })
+    });
   }
 
   handleModalCancel = ({service}) => {
-    console.log("handle modal cancel")
-    const {services} = this.state
-    delete services[service]
+    console.log("handle modal cancel");
+    const {services} = this.state;
+    delete services[service];
     
-    console.log(services)
+    console.log(services);
     this.setState({
       services,
       modalOpen: false,
-    })
+    });
   }
 
   serviceClick = ({service, category, fields}) => {
@@ -208,15 +212,15 @@ class rmProvider extends Component {
       category,
       modalOpen: true,
       fields,
-    })
+    });
   }
 
   checkBoxChange = (e, service) => {
-    const {services} = this.state
-    delete services[service]
+    const {services} = this.state;
+    delete services[service];
     this.setState({
       services,
-    })
+    });
   }
 
   render() {
@@ -239,10 +243,10 @@ class rmProvider extends Component {
       >
         {this.props.children}
       </Provider>
-    )
+    );
   }
 }
 
-const RMProvider = withRouter(rmProvider)
+const RMProvider = withRouter(rmProvider);
 
-export {RMContext, RMProvider, Consumer as RMConsumer}
+export {RMContext, RMProvider, Consumer as RMConsumer};

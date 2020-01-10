@@ -138,7 +138,7 @@ class Update extends Component {
 }
 
 
-Update.propTypes = {
+ToolView.propTypes = {
   handleButtonClick: PropTypes.func,
   disabledIds: PropTypes.array,
   app: PropTypes.shape({
@@ -152,8 +152,8 @@ Update.propTypes = {
   }
 };
 
-const ToolView = () => {
-  const {handleButtonClick, disabledIds, app, tool } = this.props;
+const ToolView = ({handleButtonClick, disabledIds, app, tool }) => {
+  //const {handleButtonClick, disabledIds, app, tool } = this.props;
   return (
     <Row>
       <Col>

@@ -1,6 +1,7 @@
-import React from "react"
-import { Container, Form, Button, Card } from 'react-bootstrap';
-import {RMContext} from "./RMContext"
+import React from "react";
+import { Form, Button, Card } from "react-bootstrap";
+import {RMContext} from "./RMContext";
+import PropTypes from "prop-types";
 
 class ReleaseManagementOtherServices extends React.PureComponent {
   static contextType = RMContext
@@ -17,14 +18,14 @@ class ReleaseManagementOtherServices extends React.PureComponent {
           <Monitoring />
         </div>
       </>
-    )
+    );
   }
 }
 
 class ConfigurationManagement extends React.PureComponent {
   static contextType = RMContext
   render() {
-    const {serviceClick} = this.context
+    const {serviceClick} = this.context;
     return (
       <Card className="newApp__card">
         <h3>Configuration Management</h3>
@@ -59,14 +60,14 @@ class ConfigurationManagement extends React.PureComponent {
           </div>
         </div>
       </Card>
-    )
+    );
   }
 }
 
 class ContinousIntegration extends React.PureComponent {
   static contextType = RMContext
   render() {
-    const {serviceClick} = this.context
+    const {serviceClick} = this.context;
     return (
       <Card className="newApp__card">
         <h3>Continous Integration</h3>
@@ -93,14 +94,14 @@ class ContinousIntegration extends React.PureComponent {
           </div>
         </div>
       </Card>
-    )
+    );
   }
 }
 
 class LogManagement extends React.PureComponent {
   static contextType = RMContext
   render() {
-    const {serviceClick} = this.context
+    const {serviceClick} = this.context;
     return (
       <Card className="newApp__card">
         <h3>Log Management</h3>
@@ -124,7 +125,7 @@ class LogManagement extends React.PureComponent {
           </div>
         </div>
       </Card>
-    )
+    );
   }
 }
 class RepositoryManagement extends React.PureComponent {
@@ -142,23 +143,31 @@ class RepositoryManagement extends React.PureComponent {
           <span className="newApp__service-title">Nexus</span>
         </div>
       </ServicesWrapper>
-    )
+    );
   }
 }
 
+
+//functional component w/ propTypes
+ServicesWrapper.propTypes = {
+  label: PropTypes.string,
+  children: PropTypes.string
+};
 function ServicesWrapper({label, children}) {
   return (
     <Card className="newApp__card">
       <h3>{label}</h3>
       <div>{children}</div>
     </Card>
-  )
+  );
 }
+
+
 
 class SASST extends React.PureComponent {
   static contextType = RMContext
   render() {
-    const {serviceClick} = this.context
+    const {serviceClick} = this.context;
     return (
       <ServicesWrapper label="SASST">
         <div
@@ -174,14 +183,14 @@ class SASST extends React.PureComponent {
           <span className="newApp__service-title">SonarQube</span>
         </div>
       </ServicesWrapper>
-    )
+    );
   }
 }
 
 class Monitoring extends React.PureComponent {
   static contextType = RMContext
   render() {
-    const {serviceClick} = this.context
+    const {serviceClick} = this.context;
     return (
       <ServicesWrapper label="Monitoring">
         <div
@@ -202,14 +211,14 @@ class Monitoring extends React.PureComponent {
           <span className="newApp__service-title">ZooKeeper</span>
         </div>
       </ServicesWrapper>
-    )
+    );
   }
 }
 
 export class Confirmation extends React.PureComponent {
   static contextType = RMContext
   render() {
-    const {services, checkBoxChange} = this.context
+    const {services, checkBoxChange} = this.context;
     return (
       <div className="newApp__card" style={{width: "100%"}}>
         <h3 style={{textAlign: "center"}}>
@@ -219,76 +228,76 @@ export class Confirmation extends React.PureComponent {
           <div>
 
             <Form.Group controlId="formCheckboxGitlabCI">
-                <Form.Check type="checkbox" label="GitlabCI"
-                            checked={!!services["GitlabCI"]}
-                            onChange={e => checkBoxChange(e, "GitlabCI")} />
+              <Form.Check type="checkbox" label="GitlabCI"
+                checked={!!services["GitlabCI"]}
+                onChange={e => checkBoxChange(e, "GitlabCI")} />
             </Form.Group>
 
 
             <Form.Group controlId="formCheckboxJenkinsPipeline">
-                <Form.Check type="checkbox" label="Jenkins Pipeline"
-                            checked={!!services["Jenkins Pipeline"]}
-                            onChange={e => checkBoxChange(e, "Jenkins Pipeline")} />
+              <Form.Check type="checkbox" label="Jenkins Pipeline"
+                checked={!!services["Jenkins Pipeline"]}
+                onChange={e => checkBoxChange(e, "Jenkins Pipeline")} />
             </Form.Group>
 
             <Form.Group controlId="formCheckboxChef">
-                <Form.Check type="checkbox" label="Chef" disabled />
+              <Form.Check type="checkbox" label="Chef" disabled />
             </Form.Group>
           </div>
           <div>
             
             <Form.Group controlId="formCheckboxAnsible">
-                <Form.Check type="checkbox" label="Ansible"
-                            checked={!!services["Ansible"]}
-                            onChange={e => checkBoxChange(e, "Ansible")} />
+              <Form.Check type="checkbox" label="Ansible"
+                checked={!!services["Ansible"]}
+                onChange={e => checkBoxChange(e, "Ansible")} />
             </Form.Group>
             <Form.Group controlId="formCheckboxZookeeper">
-                <Form.Check type="checkbox" label="Zookeeper" disabled />
+              <Form.Check type="checkbox" label="Zookeeper" disabled />
             </Form.Group>
 
-             <Form.Group controlId="formCheckboxJenkins">
-                <Form.Check type="checkbox" label="Jenkins"
-                            checked={!!services["Jenkins"]}
-                            onChange={e => checkBoxChange(e, "Jenkins")} />
+            <Form.Group controlId="formCheckboxJenkins">
+              <Form.Check type="checkbox" label="Jenkins"
+                checked={!!services["Jenkins"]}
+                onChange={e => checkBoxChange(e, "Jenkins")} />
             </Form.Group>
             <Form.Group controlId="formCheckboxTeamcity">
-                <Form.Check type="checkbox" label="Teamcity" disabled />
+              <Form.Check type="checkbox" label="Teamcity" disabled />
             </Form.Group>
 
           </div>
           <div>
             
             <Form.Group controlId="formCheckboxNagios">
-                <Form.Check type="checkbox" label="Nagios"
-                            checked={!!services["Nagios"]}
-                            onChange={e => checkBoxChange(e, "Nagios")} />
+              <Form.Check type="checkbox" label="Nagios"
+                checked={!!services["Nagios"]}
+                onChange={e => checkBoxChange(e, "Nagios")} />
             </Form.Group>
 
             <Form.Group controlId="formCheckboxElasticSearch">
-                <Form.Check type="checkbox" label="ElasticSearch"
-                            checked={!!services["ElasticSearch"]}
-                            onChange={e => checkBoxChange(e, "ElasticSearch")} />
+              <Form.Check type="checkbox" label="ElasticSearch"
+                checked={!!services["ElasticSearch"]}
+                onChange={e => checkBoxChange(e, "ElasticSearch")} />
             </Form.Group>
             
             <Form.Group controlId="formCheckboxLogstash">
-                <Form.Check type="checkbox" label="Logstash" disabled />
+              <Form.Check type="checkbox" label="Logstash" disabled />
             </Form.Group>
             <Form.Group controlId="formCheckboxArtifactory">
-                <Form.Check type="checkbox" label="Artifactory" disabled />
+              <Form.Check type="checkbox" label="Artifactory" disabled />
             </Form.Group>
           </div>
           <div>
             
             <Form.Group controlId="formCheckboxSonarQube">
-                <Form.Check type="checkbox" label="SonarQube"
-                            checked={!!services["SonarQube"]}
-                            onChange={e => checkBoxChange(e, "SonarQube")} />
+              <Form.Check type="checkbox" label="SonarQube"
+                checked={!!services["SonarQube"]}
+                onChange={e => checkBoxChange(e, "SonarQube")} />
             </Form.Group>
             <Form.Group controlId="formCheckboxNexus">
-                <Form.Check type="checkbox" label="Nexus" disabled />
+              <Form.Check type="checkbox" label="Nexus" disabled />
             </Form.Group>
             <Form.Group controlId="formCheckboxPuppet">
-                <Form.Check type="checkbox" label="Puppet" disabled />
+              <Form.Check type="checkbox" label="Puppet" disabled />
             </Form.Group>
           </div>
         </div>
@@ -298,8 +307,8 @@ export class Confirmation extends React.PureComponent {
           </Button>
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default ReleaseManagementOtherServices
+export default ReleaseManagementOtherServices;

@@ -1,9 +1,9 @@
-import React from "react"
-import {RMContext} from "./RMContext"
+import React from "react";
+import {RMContext} from "./RMContext";
 import ReleaseManagementOtherServices, {
   Confirmation,
-} from "./ReleaseManagementOtherServices"
-import { Form } from 'react-bootstrap';
+} from "./ReleaseManagementOtherServices";
+import { Form } from "react-bootstrap";
 
 const githubci = {
   category: "Release Management",
@@ -25,7 +25,7 @@ const githubci = {
       msg: "Provide a Runner name you configure in your Gitlab YML file",
     },
   ],
-}
+};
 const jenkinsPipelineNode = {
   category: "Release Management",
   service: "Jenkins Pipeline",
@@ -75,7 +75,7 @@ const jenkinsPipelineNode = {
     //   values: ["NodeJS", "Java"],
     // },
   ],
-}
+};
 
 // const jenkinsPipelineJava = {
 //   category: "Release Management",
@@ -132,7 +132,7 @@ class ReleaseManagementServices extends React.PureComponent {
   static contextType = RMContext
   state = {}
   render() {
-    const {serviceClick, saving} = this.context
+    const {serviceClick, saving} = this.context;
 
     return (
       <Form className="ReleaseManagementServices" loading={saving}>
@@ -174,22 +174,22 @@ class ReleaseManagementServices extends React.PureComponent {
             <span
               className="ReleaseManagementServices__qt--yes"
               onClick={this.context.handleYesClick}
-            >{`  Yes  `}</span>
-            {` / `}
+            >{"  Yes  "}</span>
+            {" / "}
             <span
               className="ReleaseManagementServices__qt--no"
               onClick={this.context.handleNoClick}
-            >{` No `}</span>
+            >{" No "}</span>
           </div>
         )}
         {this.context.initServicesValid === true &&
           this.context.otherServicesShow === true && (
-            <ReleaseManagementOtherServices />
-          )}
+          <ReleaseManagementOtherServices />
+        )}
         {this.context.otherServicesShow !== null && <Confirmation />}
       </Form>
-    )
+    );
   }
 }
 
-export default ReleaseManagementServices
+export default ReleaseManagementServices;
