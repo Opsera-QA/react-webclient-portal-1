@@ -7,7 +7,7 @@ import LoadingDialog from "../../common/loading";
 import Tools from "./Tools"
 
 class DeleteTools extends PureComponent {
-  static contextType = AuthContext; 
+  static contextType = AuthContext;
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -16,7 +16,7 @@ class DeleteTools extends PureComponent {
       error: null,
       messages: null,
       application: null
-    }; 
+    };
   }
 
   async componentDidMount() {
@@ -26,7 +26,7 @@ class DeleteTools extends PureComponent {
     const accessToken = await getAccessToken();
     this.getApiData(accessToken, urlParams);
   }
-  
+
   getApiData(accessToken, urlParams) {
     const apiCall = new ApiService('applications', urlParams, accessToken);
     let currentComponent = this;
@@ -58,7 +58,7 @@ class DeleteTools extends PureComponent {
 
 
   handleChangeValue = (e) => {
-    const {data} = this.state
+    const { data } = this.state
     const application = data.find(app => app.name === e.target.value)
     this.setState({
       application,
@@ -80,33 +80,33 @@ class DeleteTools extends PureComponent {
         <h2>Delete Tools</h2>
         {error ? <ErrorDialog errorMessage={messages} /> : null}
         {fetching && <LoadingDialog />}
-        
-          {(!fetching && data.length === 0) &&
-            <div className="mt-3">
-              <Alert variant="secondary">
-                No applications are currently configured for the system.
+
+        {(!fetching && data.length === 0) &&
+          <div className="mt-3">
+            <Alert variant="secondary">
+              No applications are currently configured for the system.
               </Alert>
-            </div>
-          }
+          </div>
+        }
         <Form>
-            <Form.Group>
-              <Form.Control as="select"
-                inputRef={el => this.inputEl = el}
-                hidden={(!fetching && data.length > 0) ? false : true}
-                onChange={this.handleChangeValue}
-                style={{ marginTop: 25 }}>
-                <option value="" selected disabled>{fetching ? "loading..." : "Select application"}</option>
-                {!fetching && (
-                  <>
-                    {data ? data.map(application => (
-                      <option key={application.name} value={application.name}>{application.name}</option>
-                    )): ''}
-                  </>
-                )}
-              </Form.Control>
-            </Form.Group>
-          </Form>
-        
+          <Form.Group>
+            <Form.Control as="select"
+              inputRef={el => this.inputEl = el}
+              hidden={(!fetching && data.length > 0) ? false : true}
+              onChange={this.handleChangeValue}
+              style={{ marginTop: 25 }}>
+              <option value="" selected disabled>{fetching ? "loading..." : "Select application"}</option>
+              {!fetching && (
+                <>
+                  {data ? data.map(application => (
+                    <option key={application.name} value={application.name}>{application.name}</option>
+                  )) : ''}
+                </>
+              )}
+            </Form.Control>
+          </Form.Group>
+        </Form>
+
         <Tools application={this.state.application} />
       </Container>
     )
