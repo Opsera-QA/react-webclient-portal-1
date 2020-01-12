@@ -36,20 +36,15 @@ class Update extends Component {
       .then(function (response) {
         currentComponent.setState({
           apps: response.apps,
-          error: false,
-          messages: "API call was successful!"
+          error: null,
+          fetching: false
         });
       })
       .catch(function (error) {
-        let message = handleError(error);
-
         currentComponent.setState({
-          error: true,
-          messages: message ? message : "Error reported accessing API."
+          error: error,
+          fetching: false
         });
-      })
-      .finally(function () {
-        currentComponent.setState({ fetching: false });
       });
   }
 
@@ -66,21 +61,18 @@ class Update extends Component {
       .then(function (response) {
         console.log(response);
         currentComponent.setState({
-          error: false,
-          messages: "Tool Submitted for upgrade, you will be notified completeness."
+          error: null,
+          messages: "Tool Submitted for upgrade, you will be notified completeness.",
+          fetching: false
         });
       })
       .catch(function (error) {
         currentComponent.setState({
-          error: true,
-          messages: "Error reported updating the tool."
+          error: error,
+          fetching: false
         });
         console.log(`Error Reported: ${error}`);
-      })
-      .finally(function () {
-        currentComponent.setState({ fetching: false });
       });
-
   }
 
   loader = () => {
@@ -118,13 +110,13 @@ class Update extends Component {
   }
 
   render() {
-    const { error, messages, fetching } = this.state;
+    const { error, fetching } = this.state;
     return (
       <div>
         <h3>Updates</h3>
         <p>Any available updates for tools currently registered will be listed below.</p>
 
-        {error ? <ErrorDialog errorMessage={messages} /> : null}
+        {error ? <ErrorDialog error={error} /> : null}
         {fetching ? <LoadingDialog /> : null}
 
         <div className="upgrades__app-list" style={{}}>

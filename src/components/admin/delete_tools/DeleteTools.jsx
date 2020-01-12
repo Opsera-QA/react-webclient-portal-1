@@ -1,10 +1,10 @@
-import React, { PureComponent } from 'react'
-import { Container, Form, Alert } from 'react-bootstrap';
-import { AuthContext } from '../../../contexts/AuthContext';  //REact Context API Code for User Authentication
-import { ApiService } from '../../../api/apiService';
+import React, { PureComponent } from "react";
+import { Container, Form, Alert } from "react-bootstrap";
+import { AuthContext } from "../../../contexts/AuthContext";  //REact Context API Code for User Authentication
+import { ApiService } from "../../../api/apiService";
 import ErrorDialog from "../../common/error";
 import LoadingDialog from "../../common/loading";
-import Tools from "./Tools"
+import Tools from "./Tools";
 
 class DeleteTools extends PureComponent {
   static contextType = AuthContext;
@@ -28,41 +28,30 @@ class DeleteTools extends PureComponent {
   }
 
   getApiData(accessToken, urlParams) {
-    const apiCall = new ApiService('applications', urlParams, accessToken);
+    const apiCall = new ApiService("applications", urlParams, accessToken);
     let currentComponent = this;
     apiCall.get().then(function (response) {
       currentComponent.setState({
         data: response.data,
-        error: false,
-        messages: 'API call was successful!'
+        error: null,
+        fetching: false
       });
     })
       .catch(function (error) {
-        let message = null;
-        if (error.response) {
-          message = `Status ${error.response.status}: ${
-            error.response.data.message ? error.response.data.message : JSON.stringify(error.response.data)}`;
-        }
-        console.log(message ? `ERROR: ${message}` : `Error Reported: ${error}`);
-
         currentComponent.setState({
-          error: true,
-          messages: message ? message : 'Error reported accessing API.'
+          error: error,
+          fetching: false
         });
-
-      })
-      .finally(function () {
-        currentComponent.setState({ fetching: false });
       });
   }
 
 
   handleChangeValue = (e) => {
-    const { data } = this.state
-    const application = data.find(app => app.name === e.target.value)
+    const { data } = this.state;
+    const application = data.find(app => app.name === e.target.value);
     this.setState({
       application,
-    })
+    });
   }
 
   getOptionsForApp = a => ({
@@ -72,20 +61,20 @@ class DeleteTools extends PureComponent {
   })
 
   render() {
-    const { data, error, messages, fetching } = this.state
-    console.log(data)
+    const { data, error, fetching } = this.state;
+    console.log(data);
 
     return (
       <Container className="DefaultDashboardPage">
         <h2>Delete Tools</h2>
-        {error ? <ErrorDialog errorMessage={messages} /> : null}
+        {error ? <ErrorDialog error={error} /> : null}
         {fetching && <LoadingDialog />}
 
         {(!fetching && data.length === 0) &&
           <div className="mt-3">
             <Alert variant="secondary">
               No applications are currently configured for the system.
-              </Alert>
+            </Alert>
           </div>
         }
         <Form>
@@ -100,7 +89,7 @@ class DeleteTools extends PureComponent {
                 <>
                   {data ? data.map(application => (
                     <option key={application.name} value={application.name}>{application.name}</option>
-                  )) : ''}
+                  )) : ""}
                 </>
               )}
             </Form.Control>
@@ -109,7 +98,7 @@ class DeleteTools extends PureComponent {
 
         <Tools application={this.state.application} />
       </Container>
-    )
+    );
   }
 }
 

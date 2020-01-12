@@ -1,36 +1,37 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react';
-import Container from 'react-bootstrap/Container';
-import { Provider } from 'react-redux';
+import React, { Component } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Security, SecureRoute, ImplicitCallback } from "@okta/okta-react";
+import Container from "react-bootstrap/Container";
+import { Provider } from "react-redux";
 import store from "./store"; // DO WE NEED THIS?
-import AuthContextProvider from './contexts/AuthContext';
+import AuthContextProvider from "./contexts/AuthContext";
 
-import config from './config';
-import Home from './Home';
-import Navbar from './Navbar';
-import Sidebar from './Sidebar';
-import Messages from './components/user/Messages';
-import Profile from './components/user/Profile';
-import About from './components/about/About';
-import Pricing from './components/about/Pricing';
-import Solutions from './components/about/Solutions';
-import Inventory from './components/inventory/Inventory';
-import Signup from './components/user/Signup';
-import ApiConnector from './components/api_connector/ApiConnector';
-import Pipeline from './components/pipeline/Pipeline';
-import Platform from './components/platform/Platform';
-import Reports from './components/reports/Reports';
-import Update from './components/update/Update';
+import config from "./config";
+import Home from "./Home";
+import Navbar from "./Navbar";
+import Sidebar from "./Sidebar";
+import Messages from "./components/user/Messages";
+import Profile from "./components/user/Profile";
+import About from "./components/about/About";
+import Pricing from "./components/about/Pricing";
+import Solutions from "./components/about/Solutions";
+import Inventory from "./components/inventory/Inventory";
+import Signup from "./components/user/Signup";
+import ApiConnector from "./components/api_connector/ApiConnector";
+import Pipeline from "./components/pipeline/Pipeline";
+import Platform from "./components/platform/Platform";
+import Reports from "./components/reports/Reports";
+import Analytics from "./components/analytics/Analytics";
+import Update from "./components/update/Update";
 
-import AdminTools from './components/admin/AdminTools';
-import HealthCheck from './components/admin/HealthCheck';
-import DeleteTools from './components/admin/delete_tools/DeleteTools';
-import RegisteredUsers from './components/admin/RegisteredUsers';
-import ManageSystems from './components/admin/manage_systems/ManageSystems';
-import ReportsRegistration from './components/admin/analytics/ReportsRegistration';
+import AdminTools from "./components/admin/AdminTools";
+import HealthCheck from "./components/admin/HealthCheck";
+import DeleteTools from "./components/admin/delete_tools/DeleteTools";
+import RegisteredUsers from "./components/admin/RegisteredUsers";
+import ManageSystems from "./components/admin/manage_systems/ManageSystems";
+import ReportsRegistration from "./components/admin/analytics/ReportsRegistration";
 
-import ApiConnectionDemo from './components/api_connector/ApiDemo';
+import ApiConnectionDemo from "./components/api_connector/ApiDemo";
 
 class App extends Component {
   render() {
@@ -59,6 +60,7 @@ class App extends Component {
                       <SecureRoute path="/api_connector/:id?" component={ApiConnector} />
                       <SecureRoute path="/pipeline" component={Pipeline} />
                       <SecureRoute path="/platform" component={Platform} />
+                      <SecureRoute path="/analytics" exact component={Analytics} />
                       <SecureRoute path="/reports" exact component={Reports} />
                       <SecureRoute path="/update" component={Update} />
 

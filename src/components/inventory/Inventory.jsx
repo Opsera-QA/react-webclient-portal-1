@@ -1,13 +1,13 @@
-import React, { PureComponent } from 'react';
-import { Form, Alert, Row, Col, Button } from 'react-bootstrap';
-import Moment from 'react-moment';
-import { AuthContext } from '../../contexts/AuthContext';  //REact Context API Code for User Authentication
-import { ApiService } from '../../api/apiService';
+import React, { PureComponent } from "react";
+import { Form, Alert, Row, Col, Button } from "react-bootstrap";
+import Moment from "react-moment";
+import { AuthContext } from "../../contexts/AuthContext";  //REact Context API Code for User Authentication
+import { ApiService } from "../../api/apiService";
 import ErrorDialog from "../common/error";
 import LoadingDialog from "../common/loading";
 import { handleError } from "../../helpers";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faWrench } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faWrench } from "@fortawesome/free-solid-svg-icons";
 
 
 class Inventory extends PureComponent {
@@ -37,66 +37,60 @@ class Inventory extends PureComponent {
     const accessToken = await getAccessToken();
     const userInfo = await getUserInfo();
     const urlParams = { userid: userInfo.sub };
-    const apiCall = new ApiService('/applications', urlParams, accessToken);
+    const apiCall = new ApiService("/applications", urlParams, accessToken);
     let currentComponent = this;
     apiCall.get()
       .then(function (response) {
         currentComponent.setState({
           data: response.data,
-          error: false,
-          messages: 'API call was successful!'
+          error: null,
+          fetching: false
         });
       })
       .catch(function (error) {
-        let message = handleError(error);
-
         currentComponent.setState({
-          error: true,
-          messages: message ? message : 'Error reported accessing API.'
+          error: error,
+          fetching: false
         });
-
-      })
-      .finally(function () {
-        currentComponent.setState({ fetching: false });
       });
   }
 
 
   handleDropdownChange = (e) => {
-    this.setState({ key: e.target.value })
+    this.setState({ key: e.target.value });
   }
 
   getApp = () => {
-    console.log(this.state)
-    const { key, data } = this.state
-    return data.find(({ name }) => name === key)
+    console.log(this.state);
+    const { key, data } = this.state;
+    return data.find(({ name }) => name === key);
   }
 
   setPlaceholder = () => {
-    alert('coming soon');
+    alert("coming soon");
   }
 
   render() {
-    const { data, error, messages, fetching } = this.state
+    const { data, error, fetching } = this.state;
     console.log(data);
     return (
       <div>
         <h3>Inventory</h3>
         <p>All configured applications are available for viewing below.  Select the item you want to view from the list.</p>
 
-        <div class="row">
-          <div class="col ml-auto">
-            <Button variant="outline-primary" className="float-right" size="sm" onClick={() => this.gotoLink('platform')}>
+        <div className="row">
+          <div className="col ml-auto">
+            <Button variant="outline-primary" className="float-right" size="sm" onClick={() => this.gotoLink("platform")}>
               <FontAwesomeIcon icon={faPlus} fixedWidth /> Register Application
             </Button>
 
-            <Button variant="outline-primary" className="float-right mr-2" size="sm" onClick={() => this.gotoLink('pipeline')}>
+            <Button variant="outline-primary" className="float-right mr-2" size="sm" onClick={() => this.gotoLink("pipeline")}>
               <FontAwesomeIcon icon={faWrench} fixedWidth /> Configure Pipeline
             </Button>
           </div>
         </div>
 
-        {error ? <ErrorDialog errorMessage={messages} /> : null}
+        {error ? <ErrorDialog error={error} /> : null}
 
         {fetching && <LoadingDialog />}
         <div>
@@ -120,7 +114,7 @@ class Inventory extends PureComponent {
                   <>
                     {data ? data.map(application => (
                       <option key={application.name} value={application.name}>{application.name}</option>
-                    )) : ''}
+                    )) : ""}
                   </>
                 )}
               </Form.Control>
@@ -133,21 +127,21 @@ class Inventory extends PureComponent {
           </>
         }
       </div>
-    )
+    );
   }
-};
+}
 
 function App({ application }) {
   if (!application)
-    return (<div></div>)
+    return (<div></div>);
 
-  const { tools } = application
+  const { tools } = application;
   if (tools.length === 0) {
     return (
       <div>
         <p>No tools for this application.</p>
       </div>
-    )
+    );
   }
 
   return (
@@ -156,15 +150,15 @@ function App({ application }) {
         <ToolTable tool={tool} key={key} />
       ))}
     </div>
-  )
+  );
 }
 
 const ToolTable = ({ tool }) => {
-  const { name, port, toolStatus, toolURL, versionNumber, installationDate, dnsName } = tool
+  const { name, port, toolStatus, toolURL, versionNumber, installationDate, dnsName } = tool;
   return (
     <div className="grid-striped">
       <Row style={{ marginTop: 20 }}>
-        <Col lg={4} style={{ fontWeight: 'bold' }}>{name}</Col>
+        <Col lg={4} style={{ fontWeight: "bold" }}>{name}</Col>
         <Col lg={2}>Port {port}</Col>
         <Col lg={1}>{toolStatus}</Col>
         <Col lg={2}>{versionNumber}</Col>
@@ -175,7 +169,7 @@ const ToolTable = ({ tool }) => {
         <Col lg={12}>{dnsName}</Col>
       </Row>
     </div>
-  )
-}
+  );
+};
 
 export default Inventory;

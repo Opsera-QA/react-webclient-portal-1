@@ -37,8 +37,7 @@ export default class Reports extends PureComponent {
     })
       .catch(function (error) {
         currentComponent.setState({
-          error: true,
-          messages: "Error reported accessing list of upgradable tools."
+          error: error,
         });
         console.log(`Error Reported: ${error}`);
       })
@@ -71,11 +70,11 @@ export default class Reports extends PureComponent {
   }
 
   render() {
-    const {tool, showIframe, messages} = this.state;
+    const {tool, showIframe, error} = this.state;
 
     return (
       <Container>  
-        {this.state.error ? <ErrorDialog errorMessage={messages} /> : <>
+        {this.state.error ? <ErrorDialog error={error} /> : <>
           <div className="reporting__to-dashboard-container">
             <h2>Reporting</h2>
             <Button disabled={this.state.url === ""} onClick={this.onClickButton}>

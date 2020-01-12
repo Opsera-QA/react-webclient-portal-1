@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { AuthContext } from '../../contexts/AuthContext';
-import { Link } from 'react-router-dom';
-import { Row, Col } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faHeartbeat, faTimes, faUserCircle, faLink, faChartBar } from '@fortawesome/free-solid-svg-icons';
+import React, { Component } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
+import { Link } from "react-router-dom";
+import { Row, Col } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faHeartbeat, faTimes, faUserCircle, faLink, faChartBar } from "@fortawesome/free-solid-svg-icons";
 
 class AdminTools extends Component {
   static contextType = AuthContext;
@@ -36,10 +36,13 @@ class AdminTools extends Component {
           <Col xs={12} md={6} lg={4} className="p-2">
             <Link to="/api_demo"><FontAwesomeIcon icon={faLink} fixedWidth /> API Test</Link>
           </Col>
+          <Col xs={12} md={6} lg={4} className="p-2">
+            <Link to="/reports"><FontAwesomeIcon icon={faLink} fixedWidth /> Reports</Link>
+          </Col>
         </Row>
 
       </div>
-    )
+    );
   }
 }
 
