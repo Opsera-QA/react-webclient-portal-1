@@ -4,6 +4,7 @@ import { AuthContext } from "../../contexts/AuthContext"; //New AuthContext Stat
 import { ApiService } from "../../api/apiService";
 import ErrorDialog from "../common/error";
 import WorkflowType from "./workflowType";
+import EnableTools from "./enableTools";
 
 /**
  * Demo of a React Function with hooks (to replace Class Components)
@@ -55,6 +56,7 @@ function Analytics({ tools }) {
       { state.error ? <ErrorDialog error={state.error} /> : null }
       <div className="p-2 mt-4">
         <WorkflowType />
+        <EnableTools />
       </div>
 
       <div style={{"color": "gray"}}>DATA: {state.data ? state.data[0].email : null}</div>
