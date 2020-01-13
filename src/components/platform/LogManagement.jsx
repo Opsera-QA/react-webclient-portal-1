@@ -1,21 +1,22 @@
 import React from "react"
-import {Card} from "react-bootstrap"
-import {NewAppContext} from "./context"
+import { Card } from "react-bootstrap"
+import { NewAppContext } from "./context"
 
 class LogManagement extends React.PureComponent {
   static contextType = NewAppContext
   render() {
-    const {setState} = this.context
+    const { setState } = this.context
+    const { tools } = this.props
     return (
       <div>
         <Card className="newApp__card">
           <h3>Log Management</h3>
           <div>
             <div
-              className="newApp__service-logo"
+              className={`newApp__service-logo ${tools.includes("ElasticSearch") ? "newApp__service-logo--alredy-installed" : ""}`}
               onClick={() =>
                 setState({
-                  open: true,
+                  open: !tools.includes("ElasticSearch"),
                   category: "Log Management",
                   service: "ElasticSearch",
                 })

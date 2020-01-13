@@ -1,29 +1,24 @@
 import React from "react"
-import {Card} from "react-bootstrap"
+import { Card } from "react-bootstrap"
 
-import {NewAppContext} from "./context"
+import { NewAppContext } from "./context"
 
 class ConfigurationManagement extends React.PureComponent {
   static contextType = NewAppContext
 
-  handleChange = ({target: {name, value}}) => {
-    this.setState({
-      [name]: value,
-    })
-  }
-
   render() {
-    const {setState} = this.context
+    const { setState } = this.context
+    const { tools } = this.props
     return (
       <div>
         <Card className="newApp__card">
           <h3>Configuration Management</h3>
           <div className="newApp__card-content">
             <div
-              className="newApp__service-logo"
+              className={`newApp__service-logo ${tools.includes("Ansible") ? "newApp__service-logo--alredy-installed" : ""}`}
               onClick={() =>
                 setState({
-                  open: true,
+                  open: !tools.includes("Ansible"),
                   category: "Configuration Management",
                   service: "Ansible",
                 })

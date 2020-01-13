@@ -53,14 +53,14 @@ class NewAppProvider extends React.Component {
   }
 
   confirm = async () => {
-    const { appname: name, data, token, user, appid : id } = this.state
+    const { appname: name, data, token, user, appid: id } = this.state
 
     this.setState({
       saving: true,
     })
     console.log(`saving app for user ${user.sub}`)
 
-    let postBody = Object.assign({ name }, {id} , {tools : data}, { uid: user.sub });
+    let postBody = Object.assign({ id }, { tools: data }, { uid: user.sub });
     let currentComponent = this;
     new ApiService(
       '/applications/create/tools',
@@ -103,7 +103,7 @@ class NewAppProvider extends React.Component {
   }
 
   setAppIdState = (value) => {
-    this.setState({ appid: value});
+    this.setState({ appid: value });
   }
 
   // eslint-disable-next-line  no-unused-vars

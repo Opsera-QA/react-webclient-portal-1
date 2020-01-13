@@ -1,21 +1,22 @@
 import React from "react"
-import {Card} from "react-bootstrap"
-import {NewAppContext} from "./context"
+import { Card } from "react-bootstrap"
+import { NewAppContext } from "./context"
 
 class ContinousIntegration extends React.PureComponent {
   static contextType = NewAppContext
   render() {
-    const {setState} = this.context
+    const { setState } = this.context
+    const { tools } = this.props
     return (
       <div>
         <Card className="newApp__card">
           <h3>Continous Integration</h3>
           <div>
             <div
-              className="newApp__service-logo"
+              className={`newApp__service-logo ${tools.includes("Jenkins") ? "newApp__service-logo--alredy-installed" : ""}`}
               onClick={() =>
                 setState({
-                  open: true,
+                  open: !tools.includes("Jenkins"),
                   category: "Continous Integration And Deployment",
                   service: "Jenkins",
                 })

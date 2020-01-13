@@ -13,6 +13,8 @@ import { ApiService } from "../../api/apiService";
 import ErrorDialog from "../common/error";
 import SuccessDialog from "../common/success";
 import { handleError } from "../../helpers";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faWrench } from "@fortawesome/free-solid-svg-icons";
 
 class NewApplication extends React.PureComponent {
   static contextType = NewAppContext
@@ -21,8 +23,12 @@ class NewApplication extends React.PureComponent {
     appname: "",
     appnameError: null,
     fetching: true,
+    data: {},
+    tools: [],
     error: null,
-    messages: null
+    messages: null,
+    fetching: true,
+    editTools: false
   }
 
   handleAppNameChange = ({ target: { name, value } }) => {
@@ -35,6 +41,58 @@ class NewApplication extends React.PureComponent {
       [name]: value,
       appnameError: error,
     });
+  }
+
+  editTools = () => {
+    this.setState(prevState => ({
+      editTools: !prevState.editTools,
+      error: null,
+      messages: null,
+      status: null,
+      data: null,
+      tools: []
+    }), () => {
+      if (this.state.editTools)
+        this.getApiData();
+    })
+  }
+
+  async getApiData() {
+    const { token, user } = this.context;
+    const urlParams = { userid: user.sub };
+    const apiCall = new ApiService("/applications", urlParams, token);
+    let currentComponent = this;
+    apiCall.get()
+      .then(function (response) {
+        currentComponent.setState({
+          dropdownData: response.data,
+          error: null,
+          fetching: false
+        });
+      })
+      .catch(function (error) {
+        currentComponent.setState({
+          error: error,
+          fetching: false
+        });
+      });
+  }
+
+
+  handleDropdownChange = (e) => {
+    this.setState({ key: e.target.value }, () => {
+      this.setSelectedApp()
+    });
+  }
+
+  setSelectedApp() {
+    const selectedApp = this.state.dropdownData.find(el => el._id === this.state.key)
+    let tools = selectedApp.tools.map(({ name }) => name)
+    this.setState({
+      data: selectedApp,
+      tools: tools,
+      status: "success"
+    })
   }
 
   handleCreateClick = async (e) => {
@@ -101,7 +159,7 @@ class NewApplication extends React.PureComponent {
             value={appname}
             onChange={this.handleAppNameChange}
             isInvalid={appnameError}
-            disabled ={status === "success" ? true : false}
+            disabled={status === "success" ? true : false}
           />
           <Form.Control.Feedback type="invalid">{appnameError}</Form.Control.Feedback>
         </Form.Group>
@@ -110,40 +168,71 @@ class NewApplication extends React.PureComponent {
   }
 
   render() {
-    const { checkingAppName, appnameError, appname, error, messages, status } = this.state;
+    const { checkingAppName, appnameError, appname, error, messages, status, editTools, data, dropdownData, fetching } = this.state;
     const { saving } = this.context;
     return (
-      <Container className="NewApplication">
-        <h3>Register New Application</h3>
-        <p>Create a new Application to leverage your existing systems in any way that meets your business needs</p>
-        {error ? <ErrorDialog error={error} /> : null}
-        {status === "success" ? <SuccessDialog successMessage={messages} /> : null }
-        <Form loading={checkingAppName || saving}>
-          {this.renderInput()}
-          <Button
-            primary
-            type="submit"
-            onClick={this.handleCreateClick}
-            loading={checkingAppName}
-            disabled={!!appnameError || !appname || !appname.length || status==="success" }
-          >
-            Create
-          </Button>
-        </Form>
-        {status === "success" && (
-          <div>
-            <div className="newApp__cards-container">
-              <ConfigurationManagement />
-              <SAST />
-              <ContinousIntegration />
-              <LogManagement />
-              <RepositoryManagement />
-              <Monitoring />
-              <Confirmation data = {this.state.data} />
+      <>
+        <Container className="NewApplication">
+          <h3>Register New Application</h3>
+          <div className="row">
+            <div className="col ml-auto">
+              <Button variant="outline-primary" className="float-right" size="sm" onClick={() => this.editTools()}>
+                <FontAwesomeIcon icon={faWrench} fixedWidth /> Edit Tools in Application
+                  </Button>
             </div>
           </div>
-        )}
-      </Container>
+          <p>Create a new Application to leverage your existing systems in any way that meets your business needs</p>
+          {error ? <ErrorDialog error={error} /> : null}
+          {status === "success" && messages ? <SuccessDialog successMessage={messages} /> : null}
+          {editTools && dropdownData ? (
+            <Form>
+              <Form.Group>
+                <Form.Control as="select"
+                  inputRef={el => this.inputEl = el}
+                  hidden={(!fetching && dropdownData.length > 0) ? false : true}
+                  onChange={this.handleDropdownChange}
+                  style={{ marginTop: 25 }}>
+                  <option value="" selected disabled>{fetching ? "loading..." : "Select application"}</option>
+                  {!fetching && (
+                    <>
+                      {dropdownData ? dropdownData.map(application => (
+                        <option key={application.name} value={application._id}>{application.name}</option>
+                      )) : ""}
+                    </>
+                  )}
+                </Form.Control>
+              </Form.Group>
+            </Form>
+          ) : (
+              <Form loading={checkingAppName || saving}>
+                {this.renderInput()}
+                <Button
+                  primary
+                  type="submit"
+                  onClick={this.handleCreateClick}
+                  loading={checkingAppName}
+                  disabled={!!appnameError || !appname || !appname.length || status === "success"}
+                >
+                  Create
+            </Button>
+              </Form>
+            )}
+
+          {status === "success" && (
+            <div>
+              <div className="newApp__cards-container">
+                <ConfigurationManagement app={this.state.data} tools={this.state.tools} />
+                <SAST app={this.state.data} tools={this.state.tools} />
+                <ContinousIntegration app={this.state.data} tools={this.state.tools} />
+                <LogManagement app={this.state.data} tools={this.state.tools} />
+                <RepositoryManagement app={this.state.data} tools={this.state.tools} />
+                <Monitoring app={this.state.data} tools={this.state.tools} />
+                <Confirmation app={this.state.data} tools={this.state.tools} />
+              </div>
+            </div>
+          )}
+        </Container>
+      </>
     );
   }
 }
