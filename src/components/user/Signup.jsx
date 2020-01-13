@@ -1,6 +1,5 @@
 import React, { PureComponent } from "react";
 import { Button, Form, Col, Card, Alert } from "react-bootstrap";
-//import {api2} from "../../api/";
 import { ApiService } from "../../api/apiService";
 import states from "./states";
 import {isAlphaNumeric, validateEmail} from "../../helpers";
@@ -251,6 +250,7 @@ export default class Signup extends PureComponent {
 
   cancelSignup = () => {
     let path = "/";
+    // eslint-disable-next-line react/prop-types
     this.props.history.push(path);
   }
 

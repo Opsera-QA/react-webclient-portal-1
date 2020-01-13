@@ -21,13 +21,13 @@ Four ".env" files are included in this project:
 When running the App locally for development, it runs on http://localhost:8080.
 
 ## Deployment:
-1. Check out or copy the Master branch to a temp server path or locally on a workstation or jumpserver. 
+1. Check out or copy the Master branch to a temp server path or locally on a workstation or jumpserver.  This can also be done from the dev workstation as it creates a new /build folder.
 2. Install or update dependencies at root of project file: `sudo npm update` (or `sudo npm install` on first setup)
-3. Build project: `npm run build`
+3. Build project: `npm run build:staging` or `npm run build:production`
 
 ### Apache Setup
 4. Remove existing contents of the current Build folder EXCEPT for `.htaccess` as that file MUST stay for the ReactApp to route properly. (common path: `/var/www/html`) 
-5. Copy contents of `/build` folder into the root web path for the server (common path: `/var/wwwhtml`)
+5. Copy contents of `/build` folder into the root web path for the server (common path: `/var/www/html`)
 6. Making sure `.htaccess` is still in the `/var/www/html` folder, restart apache:
 ```
 $ sudo service apache2 restart
