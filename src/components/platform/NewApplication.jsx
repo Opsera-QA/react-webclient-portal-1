@@ -14,7 +14,7 @@ import ErrorDialog from "../common/error";
 import SuccessDialog from "../common/success";
 import { handleError } from "../../helpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faWrench } from "@fortawesome/free-solid-svg-icons";
+import { faWrench } from "@fortawesome/free-solid-svg-icons";
 
 class NewApplication extends React.PureComponent {
   static contextType = NewAppContext
@@ -43,7 +43,9 @@ class NewApplication extends React.PureComponent {
     });
   }
 
-  editTools = () => {
+  editTools = async () => {
+    const { reset } = this.context
+    await reset();
     this.setState(prevState => ({
       editTools: !prevState.editTools,
       error: null,
@@ -52,8 +54,9 @@ class NewApplication extends React.PureComponent {
       data: null,
       tools: []
     }), () => {
-      if (this.state.editTools)
+      if (this.state.editTools) {
         this.getApiData();
+      }
     })
   }
 
@@ -86,7 +89,10 @@ class NewApplication extends React.PureComponent {
   }
 
   setSelectedApp() {
+    const { setAppDetails } = this.context;
+
     const selectedApp = this.state.dropdownData.find(el => el._id === this.state.key)
+    setAppDetails(selectedApp)
     let tools = selectedApp.tools.map(({ name }) => name)
     this.setState({
       data: selectedApp,
@@ -97,7 +103,7 @@ class NewApplication extends React.PureComponent {
 
   handleCreateClick = async (e) => {
     e.preventDefault();
-    const { token, user } = this.context;
+    const { token, user, setAppDetails } = this.context;
     console.log("handling it!");
 
     if (this.state.appname.trim().length < 1) {
@@ -118,7 +124,7 @@ class NewApplication extends React.PureComponent {
       token,
       postBody).post()
       .then(function (response) {
-        console.log(response);
+        setAppDetails(response.data)
         currentComponent.setState({
           data: response.data,
           error: null,
@@ -168,7 +174,7 @@ class NewApplication extends React.PureComponent {
   }
 
   render() {
-    const { checkingAppName, appnameError, appname, error, messages, status, editTools, data, dropdownData, fetching } = this.state;
+    const { checkingAppName, appnameError, appname, error, messages, status, editTools, dropdownData, fetching } = this.state;
     const { saving } = this.context;
     return (
       <>
@@ -177,14 +183,31 @@ class NewApplication extends React.PureComponent {
           <div className="row">
             <div className="col ml-auto">
               <Button variant="outline-primary" className="float-right" size="sm" onClick={() => this.editTools()}>
-                <FontAwesomeIcon icon={faWrench} fixedWidth /> Edit Tools in Application
-                  </Button>
+                <FontAwesomeIcon icon={faWrench} fixedWidth /> {!editTools ? (<>Edit Tools in Application</>) : (<>Add an Application</>)}
+              </Button>
             </div>
           </div>
           <p>Create a new Application to leverage your existing systems in any way that meets your business needs</p>
           {error ? <ErrorDialog error={error} /> : null}
-          {status === "success" && messages ? <SuccessDialog successMessage={messages} /> : null}
-          {editTools && dropdownData ? (
+          {status === "success" && messages ? <SuccessDialog successMessage={messages} /> : (
+            <>
+              {!editTools &&
+                <Form loading={checkingAppName || saving}>
+                  {this.renderInput()}
+                  <Button
+                    primary
+                    type="submit"
+                    onClick={this.handleCreateClick}
+                    loading={checkingAppName}
+                    disabled={!!appnameError || !appname || !appname.length || status === "success"}
+                  >
+                    Create
+                  </Button>
+                </Form>
+              }
+            </>
+          )}
+          {editTools && dropdownData && (
             <Form>
               <Form.Group>
                 <Form.Control as="select"
@@ -203,20 +226,7 @@ class NewApplication extends React.PureComponent {
                 </Form.Control>
               </Form.Group>
             </Form>
-          ) : (
-              <Form loading={checkingAppName || saving}>
-                {this.renderInput()}
-                <Button
-                  primary
-                  type="submit"
-                  onClick={this.handleCreateClick}
-                  loading={checkingAppName}
-                  disabled={!!appnameError || !appname || !appname.length || status === "success"}
-                >
-                  Create
-            </Button>
-              </Form>
-            )}
+          )}
 
           {status === "success" && (
             <div>

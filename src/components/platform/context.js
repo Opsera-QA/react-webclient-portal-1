@@ -22,13 +22,27 @@ class NewAppProvider extends React.Component {
     };
   }
 
-  componentDidMount = async () => {
+  componentDidMount = () => {
+    this.getToken();
+  }
+
+  getToken = async () => {
     const { getAccessToken, getUserInfo } = this.context;
     const accessToken = await getAccessToken();
     const userInfo = await getUserInfo();
     this.setState({
       token: accessToken,
       user: userInfo
+    })
+  }
+
+  reset = () => {
+    this.setState({
+      open: false,
+      data: {},
+      appname: null,
+      appid: '',
+      saving: false,
     })
   }
 
@@ -97,13 +111,17 @@ class NewAppProvider extends React.Component {
         saving: false,
       },
       () => {
-        // this.props.history.push("/")   // uncomment after testing
+        // this.props.history.push({
+        //   pathname: '/platform',
+        //   state: { edit: true }
+        // })
+        setTimeout(() => { this.props.history.push("/inventory") }, 2000);
       },
     )
   }
 
-  setAppIdState = (value) => {
-    this.setState({ appid: value });
+  setAppDetails = (app) => {
+    this.setState({ appid: app._id, appname: app.name, data: {} });
   }
 
   // eslint-disable-next-line  no-unused-vars
@@ -142,6 +160,7 @@ class NewAppProvider extends React.Component {
   }
 
   render() {
+    console.log(this.state)
     return (
       <Ctx.Provider
         value={{
@@ -154,8 +173,9 @@ class NewAppProvider extends React.Component {
           handleServiceCheckBoxChange: this.handleServiceCheckBoxChange,
           handleCheckboxChanged: this.handleCheckboxChanged,
           handleChange: this.handleChange,
-          setAppIdState: this.setAppIdState,
-          isChecked: this.isChecked
+          setAppDetails: this.setAppDetails,
+          isChecked: this.isChecked,
+          reset: this.reset
         }}
       >
         {this.props.children}

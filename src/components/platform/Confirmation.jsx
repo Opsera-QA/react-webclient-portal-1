@@ -6,114 +6,109 @@ import { NewAppContext } from "./context"
 class Confirmation extends React.PureComponent {
   static contextType = NewAppContext
 
-  componentDidMount() {
-    const { setAppIdState } = this.context;
-    const { app, tools } = this.props
-    if (app._id) {
-      setAppIdState(app._id)
-    }
-  }
-
   render() {
     const { data, confirm, setState } = this.context
     const { tools } = this.props
+    let isDisplayed = false
+    if (Object.keys(data).length > 0) {
+      isDisplayed = true;
+    }
     return (
-      <Card className="newApp__card">
-        <h3>Confirmation</h3>
-        <div className="newApp__checkbox-group">
-          <div>
-            <Form>
+      <>
+        {isDisplayed || tools.length > 0 ?
+          <Card className="newApp__card">
+            <h3>Confirmation</h3>
+            <div className="newApp__checkbox-group">
+              <div>
+                <Form>
 
-              <Form.Group controlId="formCheckboxChef">
-                <Form.Check type="checkbox" label="Chef" disabled />
-              </Form.Group>
+                  <div className="mb-4">
 
-              <Form.Group controlId="formCheckboxPuppet">
-                <Form.Check type="checkbox" label="Puppet" disabled />
-              </Form.Group>
+                    <Form.Check inline type="checkbox" label="Chef" disabled />
 
-              <Form.Group controlId="formCheckboxAnsible">
-                <Form.Check type="checkbox"
-                  disabled={tools.includes("Ansible")}
-                  label="Ansible"
-                  checked={Boolean(data.Ansible) !== false || tools.includes("Ansible")}
-                  onChange={() =>
-                    setState(ps => ({ data: { ...ps.data, Ansible: undefined } }))
-                  } />
-              </Form.Group>
+                    <Form.Check inline type="checkbox" label="Puppet" disabled />
 
-              <Form.Group controlId="formCheckboxZookeeper">
-                <Form.Check type="checkbox" label="Zookeeper" disabled />
-              </Form.Group>
+                    <Form.Check type="checkbox"
+                      inline
+                      disabled={tools.includes("Ansible")}
+                      label="Ansible"
+                      checked={Boolean(data.Ansible) !== false || tools.includes("Ansible")}
+                      onChange={() =>
+                        setState(ps => ({ data: { ...ps.data, Ansible: undefined } }))
+                      } />
 
-              <Form.Group controlId="formCheckboxJenkins">
-                <Form.Check type="checkbox" label="Jenkins"
-                  disabled={tools.includes("Jenkins")}
-                  checked={Boolean(data.Jenkins) !== false || tools.includes("Jenkins")}
-                  onChange={() =>
-                    setState(
-                      ps => ({ data: { ...ps.data, Jenkins: undefined } }),
-                      () => {
-                        delete data.Jenkins
-                      },
-                    )
-                  } />
-              </Form.Group>
+                    <Form.Check inline type="checkbox" label="Zookeeper" disabled />
 
-              <Form.Group controlId="formCheckboxTeamcity">
-                <Form.Check type="checkbox" label="Teamcity" disabled />
-              </Form.Group>
+                  </div>
 
-              <Form.Group controlId="formCheckboxNagios">
-                <Form.Check type="checkbox" label="Nagios"
-                  disabled={tools.includes("Nagios")}
-                  checked={Boolean(data.Nagios) !== false || tools.includes("Nagios")}
-                  onChange={() =>
-                    setState(ps => ({ data: { ...ps.data, Nagios: undefined } }))
-                  } />
-              </Form.Group>
+                  <div className="mb-4">
 
-              <Form.Group controlId="formCheckboxElasticSearch">
-                <Form.Check type="checkbox" label="ElasticSearch"
-                  disabled={tools.includes("ElasticSearch")}
-                  checked={Boolean(data.ElasticSearch) !== false || tools.includes("ElasticSearch")}
-                  onChange={() =>
-                    setState(ps => ({
-                      data: { ...ps.data, ElasticSearch: undefined },
-                    }))
-                  } />
-              </Form.Group>
+                    <Form.Check type="checkbox" label="Jenkins"
+                      inline
+                      disabled={tools.includes("Jenkins")}
+                      checked={Boolean(data.Jenkins) !== false || tools.includes("Jenkins")}
+                      onChange={() =>
+                        setState(
+                          ps => ({ data: { ...ps.data, Jenkins: undefined } }),
+                          () => {
+                            delete data.Jenkins
+                          },
+                        )
+                      } />
 
-              <Form.Group controlId="formCheckboxLogstash">
-                <Form.Check type="checkbox" label="Logstash" disabled />
-              </Form.Group>
+                    <Form.Check inline type="checkbox" label="Teamcity" disabled />
 
-              <Form.Group controlId="formCheckboxArtifactory">
-                <Form.Check type="checkbox" label="Artifactory" disabled />
-              </Form.Group>
+                    <Form.Check type="checkbox" label="Nagios"
+                      inline
+                      disabled={tools.includes("Nagios")}
+                      checked={Boolean(data.Nagios) !== false || tools.includes("Nagios")}
+                      onChange={() =>
+                        setState(ps => ({ data: { ...ps.data, Nagios: undefined } }))
+                      } />
 
-              <Form.Group controlId="formCheckboxSonarQube">
-                <Form.Check type="checkbox" label="SonarQube"
-                  disabled={tools.includes("SonarQube")}
-                  checked={Boolean(data.SonarQube) !== false || tools.includes("SonarQube")}
-                  onChange={() =>
-                    setState(ps => ({
-                      data: { ...ps.data, SonarQube: undefined },
-                    }))
-                  } />
-              </Form.Group>
+                    <Form.Check type="checkbox" label="ElasticSearch"
+                      disabled={tools.includes("ElasticSearch")}
+                      checked={Boolean(data.ElasticSearch) !== false || tools.includes("ElasticSearch")}
+                      onChange={() =>
+                        setState(ps => ({
+                          data: { ...ps.data, ElasticSearch: undefined },
+                        }))
+                      } />
 
-              <Form.Group controlId="formCheckboxNexus">
-                <Form.Check type="checkbox" label="Nexus" disabled />
-              </Form.Group>
+                  </div>
 
-              <Button primary onClick={confirm}>
-                Confirm
-            </Button>
-            </Form>
-          </div>
-        </div>
-      </Card>
+                  <div className="mb-4">
+
+                    <Form.Check inline type="checkbox" label="Logstash" disabled />
+
+                    <Form.Check inline type="checkbox" label="Artifactory" disabled />
+
+                    <Form.Check type="checkbox" label="SonarQube"
+                      inline
+                      disabled={tools.includes("SonarQube")}
+                      checked={Boolean(data.SonarQube) !== false || tools.includes("SonarQube")}
+                      onChange={() =>
+                        setState(ps => ({
+                          data: { ...ps.data, SonarQube: undefined },
+                        }))
+                      } />
+
+                    <Form.Check inline type="checkbox" label="Nexus" disabled />
+
+                  </div>
+
+                  <Button primary onClick={confirm}>
+                    Confirm
+                  </Button>
+                </Form>
+              </div>
+            </div>
+          </Card > : (
+            <></>
+          )
+        }
+
+      </>
     )
   }
 }
