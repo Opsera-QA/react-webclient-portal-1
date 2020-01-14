@@ -28,3 +28,11 @@ a.nav-link:hover {
   /* border-bottom: 1px solid #F14B31; */
   color: #ffc107;
 }
+
+.fixed-row-footer-bottom { 
+  position: fixed; 
+  bottom: 0;
+  width: 100%;
+  left: 15px;
+  background-color: #f2f2f2;
+}

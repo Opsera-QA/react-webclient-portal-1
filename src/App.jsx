@@ -75,6 +75,9 @@ class App extends Component {
                   </Container>
                 </div>
               </div>
+              <div className="row fixed-row-footer-bottom">
+                <div className="col text-center m-1" style={{ padding: 0, margin: 0, fontSize:".6em"}}>© OpsERA 2020</div>
+              </div>
             </div>
           </AuthContextProvider>
         </Security>
