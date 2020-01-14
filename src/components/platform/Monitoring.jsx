@@ -1,17 +1,19 @@
-import React from "react"
-import { Card } from "react-bootstrap"
-import { NewAppContext } from "./context"
+import React from "react";
+import PropTypes from "prop-types";
+import { Card } from "react-bootstrap";
+import { NewAppContext } from "./context";
 
 class Monitoring extends React.PureComponent {
   static contextType = NewAppContext
   render() {
-    const { setState } = this.context
-    const { tools } = this.props
+    const { setState } = this.context;
+    const { tools } = this.props;
     return (
-      <div>
-        <Card fluid className="newApp__card">
-          <h3>Monitoring</h3>
-          <div>
+      <Card style={{ minWidth: "16rem" }}>
+        <Card.Body className="text-center">
+          <Card.Title>Monitoring</Card.Title>
+          
+          <Card.Text>
             <div
               className={`newApp__service-logo ${tools.includes("Nagios") ? "newApp__service-logo--alredy-installed" : ""}`}
               onClick={() =>
@@ -39,11 +41,15 @@ class Monitoring extends React.PureComponent {
               <img src={require("./imgs/zookeeper.png")} />
               <span className="newApp__service-title">ZooKeeper</span>
             </div>
-          </div>
-        </Card>
-      </div>
-    )
+          </Card.Text>
+        </Card.Body>
+      </Card>
+    );
   }
 }
 
-export default Monitoring
+Monitoring.propTypes = {
+  tools: PropTypes.object
+};
+
+export default Monitoring;

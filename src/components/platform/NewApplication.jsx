@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Container, Button } from "react-bootstrap";
+import { Form, CardColumns, Button } from "react-bootstrap";
 import ConfigurationManagement from "./ConfigurationManagement";
 import ContinousIntegration from "./ContinousIntegration";
 import LogManagement from "./LogManagement";
@@ -27,7 +27,6 @@ class NewApplication extends React.PureComponent {
     tools: [],
     error: null,
     messages: null,
-    fetching: true,
     editTools: false
   }
 
@@ -44,7 +43,7 @@ class NewApplication extends React.PureComponent {
   }
 
   editTools = async () => {
-    const { reset } = this.context
+    const { reset } = this.context;
     await reset();
     this.setState(prevState => ({
       editTools: !prevState.editTools,
@@ -57,7 +56,7 @@ class NewApplication extends React.PureComponent {
       if (this.state.editTools) {
         this.getApiData();
       }
-    })
+    });
   }
 
   async getApiData() {
@@ -84,21 +83,21 @@ class NewApplication extends React.PureComponent {
 
   handleDropdownChange = (e) => {
     this.setState({ key: e.target.value }, () => {
-      this.setSelectedApp()
+      this.setSelectedApp();
     });
   }
 
   setSelectedApp() {
     const { setAppDetails } = this.context;
 
-    const selectedApp = this.state.dropdownData.find(el => el._id === this.state.key)
-    setAppDetails(selectedApp)
-    let tools = selectedApp.tools.map(({ name }) => name)
+    const selectedApp = this.state.dropdownData.find(el => el._id === this.state.key);
+    setAppDetails(selectedApp);
+    let tools = selectedApp.tools.map(({ name }) => name);
     this.setState({
       data: selectedApp,
       tools: tools,
       status: "success"
-    })
+    });
   }
 
   handleCreateClick = async (e) => {
@@ -124,7 +123,7 @@ class NewApplication extends React.PureComponent {
       token,
       postBody).post()
       .then(function (response) {
-        setAppDetails(response.data)
+        setAppDetails(response.data);
         currentComponent.setState({
           data: response.data,
           error: null,
@@ -178,9 +177,9 @@ class NewApplication extends React.PureComponent {
     const { saving } = this.context;
     return (
       <>
-        <Container className="NewApplication">
+        <div>
           <h3>Register New Application</h3>
-          <div className="row">
+          <div className="row mb-2">
             <div className="col ml-auto">
               <Button variant="outline-primary" className="float-right" size="sm" onClick={() => this.editTools()}>
                 <FontAwesomeIcon icon={faWrench} fixedWidth /> {!editTools ? (<>Edit Tools in Application</>) : (<>Add an Application</>)}
@@ -229,19 +228,20 @@ class NewApplication extends React.PureComponent {
           )}
 
           {status === "success" && (
-            <div>
-              <div className="newApp__cards-container">
+            <div className="mb-2">
+              <CardColumns>
                 <ConfigurationManagement app={this.state.data} tools={this.state.tools} />
                 <SAST app={this.state.data} tools={this.state.tools} />
                 <ContinousIntegration app={this.state.data} tools={this.state.tools} />
                 <LogManagement app={this.state.data} tools={this.state.tools} />
                 <RepositoryManagement app={this.state.data} tools={this.state.tools} />
-                <Monitoring app={this.state.data} tools={this.state.tools} />
-                <Confirmation app={this.state.data} tools={this.state.tools} />
-              </div>
+                <Monitoring app={this.state.data} tools={this.state.tools} />                
+              </CardColumns>
+
+              <Confirmation app={this.state.data} tools={this.state.tools} />
             </div>
           )}
-        </Container>
+        </div>
       </>
     );
   }

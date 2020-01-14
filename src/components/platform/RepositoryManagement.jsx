@@ -1,16 +1,17 @@
-import React from "react"
-import {Card} from "react-bootstrap"
-import {NewAppContext} from "./context"
+import React from "react";
+import {Card} from "react-bootstrap";
+import {NewAppContext} from "./context";
 
 class RepositoryManagement extends React.PureComponent {
   static contextType = NewAppContext
 
   render() {
     return (
-      <div>
-        <Card className="newApp__card">
-          <h3>Repository Management</h3>
-          <div>
+      <Card style={{ minWidth: "16rem" }}>
+        <Card.Body className="text-center">
+          <Card.Title>Repository Management</Card.Title>
+          
+          <Card.Text>
             <div className="newApp__service-logo newApp__service-logo--disabled">
               <img src={require("./imgs/artifactory.png")} />
               <span className="newApp__service-title">ArtiFactory</span>
@@ -20,11 +21,11 @@ class RepositoryManagement extends React.PureComponent {
               <img src={require("./imgs/nexus.png")} />
               <span className="newApp__service-title">Nexus</span>
             </div>
-          </div>
-        </Card>
-      </div>
-    )
+          </Card.Text>
+        </Card.Body>
+      </Card>
+    );
   }
 }
 
-export default RepositoryManagement
+export default RepositoryManagement;

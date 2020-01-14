@@ -1,25 +1,27 @@
-import React from "react"
-import { Card } from "react-bootstrap"
-import { NewAppContext } from "./context"
+import React from "react";
+import PropTypes from "prop-types";
+import { Card } from "react-bootstrap";
+import { NewAppContext } from "./context";
 
 class SAST extends React.PureComponent {
   static contextType = NewAppContext
   handleLogoClick = () => {
-    const { setState } = this.context
-    const { tools } = this.props
+    const { setState } = this.context;
+    const { tools } = this.props;
     setState({
       open: !tools.includes("SonarQube"),
       category: "SASST",
       service: "SonarQube",
-    })
+    });
   }
   render() {
-    const { tools } = this.props
+    const { tools } = this.props;
     return (
-      <div>
-        <Card fluid className="newApp__card">
-          <h3>SASST</h3>
-          <div>
+      <Card style={{ minWidth: "16rem" }}>
+        <Card.Body className="text-center">
+          <Card.Title>Code Quality Tools</Card.Title>
+          
+          <Card.Text>
             <div
               className={`newApp__service-logo ${tools.includes("SonarQube") ? "newApp__service-logo--alredy-installed" : ""}`}
               onClick={this.handleLogoClick}
@@ -27,11 +29,15 @@ class SAST extends React.PureComponent {
               <img src={require("./imgs/sonar.png")} />
               <span className="newApp__service-title">SonarQube</span>
             </div>
-          </div>
-        </Card>
-      </div>
-    )
+          </Card.Text>
+        </Card.Body>
+      </Card>
+    );
   }
 }
 
-export default SAST
+SAST.propTypes = {
+  tools: PropTypes.object
+};
+
+export default SAST;

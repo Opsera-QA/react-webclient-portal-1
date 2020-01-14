@@ -1,19 +1,21 @@
-import React from "react"
-import { Card } from "react-bootstrap"
+import React from "react";
+import PropTypes from "prop-types";
+import { Card } from "react-bootstrap";
 
-import { NewAppContext } from "./context"
+import { NewAppContext } from "./context";
 
 class ConfigurationManagement extends React.PureComponent {
   static contextType = NewAppContext
 
   render() {
-    const { setState } = this.context
-    const { tools } = this.props
+    const { setState } = this.context;
+    const { tools } = this.props;
     return (
-      <div>
-        <Card className="newApp__card">
-          <h3>Configuration Management</h3>
-          <div className="newApp__card-content">
+      <Card style={{ minWidth: "16rem" }}>
+        <Card.Body className="text-center">
+          <Card.Title>Configuration Management</Card.Title>
+          
+          <Card.Text>
             <div
               className={`newApp__service-logo ${tools.includes("Ansible") ? "newApp__service-logo--alredy-installed" : ""}`}
               onClick={() =>
@@ -32,7 +34,7 @@ class ConfigurationManagement extends React.PureComponent {
               className="newApp__service-logo newApp__service-logo--disabled"
               onClick={() =>
                 setState({
-                  // open: true,
+                // open: true,
                   category: "Configuration Management",
                   service: "Chef",
                 })
@@ -46,7 +48,7 @@ class ConfigurationManagement extends React.PureComponent {
               className="newApp__service-logo newApp__service-logo--disabled"
               onClick={() =>
                 setState({
-                  // open: true,
+                // open: true,
                   category: "Configuration Management",
                   service: "Puppet",
                 })
@@ -55,11 +57,15 @@ class ConfigurationManagement extends React.PureComponent {
               <img src={require("./imgs/puppet.png")} />
               <span className="newApp__service-title">Puppet</span>
             </div>
-          </div>
-        </Card>
-      </div>
-    )
+          </Card.Text>
+        </Card.Body>
+      </Card>
+    );
   }
 }
 
-export default ConfigurationManagement
+ConfigurationManagement.propTypes = {
+  tools: PropTypes.object
+};
+
+export default ConfigurationManagement;
