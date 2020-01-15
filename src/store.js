@@ -1,4 +1,4 @@
-import {createStore, applyMiddleware, compose} from "redux"
+/* import {createStore, applyMiddleware, compose} from "redux"
 import thunk from "redux-thunk"
 import reducer from "./reducers/index"
 
@@ -32,4 +32,4 @@ function loadState() {
     authentication
   }
 }
-export default store
+export default store */

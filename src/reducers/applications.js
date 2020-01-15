@@ -1,4 +1,4 @@
-import * as at from "../actions/actionTypes"
+/* import * as at from "../actions/actionTypes"
 const defaultState = null
 
 function applications(state = defaultState, action) {
@@ -12,3 +12,4 @@ function applications(state = defaultState, action) {
 }
 
 export default applications
+ */
