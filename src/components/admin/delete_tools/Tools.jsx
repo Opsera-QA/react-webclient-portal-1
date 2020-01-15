@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
+//import { connect } from "react-redux";
 import { Button, Modal, Table } from "react-bootstrap";
-import { getApps } from "../../../actions/thunk";
+//import { getApps } from "../../../actions/thunk";
 
 import { AuthContext } from "../../../contexts/AuthContext";  //REact Context API Code for User Authentication
 import { ApiService } from "../../../api/apiService";
@@ -41,7 +41,7 @@ class Tools extends Component {
     }
 }
   
-class toolTable extends React.PureComponent {
+class ToolTable extends React.PureComponent {
     static contextType = AuthContext; 
     constructor(props, context) {
       super(props, context);
@@ -148,10 +148,10 @@ class toolTable extends React.PureComponent {
     }
 }
   
-const ToolTable = connect(
-  null,
-  {getApps},
-)(toolTable);
+// const ToolTable = connect(
+//   null,
+//   {getApps},
+// )(toolTable);
   
 export default Tools;
   
