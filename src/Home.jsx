@@ -20,6 +20,7 @@ class Home extends Component {
 
   gotoSignUp = () => {
     let path = "/signup";
+    // eslint-disable-next-line react/prop-types
     this.props.history.push(path);
   }
 
