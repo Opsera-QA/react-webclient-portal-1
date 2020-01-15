@@ -105,7 +105,7 @@ class Inventory extends PureComponent {
           <Form>
             <Form.Group>
               <Form.Control as="select"
-                inputRef={el => this.inputEl = el}
+                // inputRef={el => this.inputEl = el}
                 hidden={(!fetching && data.length > 0) ? false : true}
                 onChange={this.handleDropdownChange}
                 style={{ marginTop: 25 }}>

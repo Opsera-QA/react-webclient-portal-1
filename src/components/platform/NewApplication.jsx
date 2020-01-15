@@ -210,7 +210,7 @@ class NewApplication extends React.PureComponent {
             <Form>
               <Form.Group>
                 <Form.Control as="select"
-                  inputRef={el => this.inputEl = el}
+                  // inputRef={el => this.inputEl = el}
                   hidden={(!fetching && dropdownData.length > 0) ? false : true}
                   onChange={this.handleDropdownChange}
                   style={{ marginTop: 25 }}>
