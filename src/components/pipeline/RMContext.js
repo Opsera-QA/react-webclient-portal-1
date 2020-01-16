@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
-import React, {createContext, Component} from "react";
-import {withRouter} from "react-router-dom";
-import {isAlphaNumeric} from "../../helpers";
+import React, { createContext, Component } from "react";
+import { withRouter } from "react-router-dom";
+import { isAlphaNumeric } from "../../helpers";
 import { ApiService } from "../../api/apiService";
 import { AuthContext } from "../../contexts/AuthContext";
 
 let RMContext;
-const {Consumer, Provider} = (RMContext = createContext({}));
+const { Consumer, Provider } = (RMContext = createContext({}));
 
 class rmProvider extends Component {
   static contextType = AuthContext;  //Registers the User Authentication context data in the component
@@ -41,8 +41,8 @@ class rmProvider extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const {modalOpen, services, service} = this.state;
-    const {modalOpen: pModalOpen} = prevState;
+    const { modalOpen, services, service } = this.state;
+    const { modalOpen: pModalOpen } = prevState;
 
     if (modalOpen !== pModalOpen) {
       if (modalOpen) {
@@ -55,7 +55,7 @@ class rmProvider extends Component {
 
   // services
   handleServiceCheckBoxChange = (service, name, val) => {
-    const {services} = this.state;
+    const { services } = this.state;
     services[service] || (services[service] = {});
     services[service][name] || (services[service][name] = []);
     if (services[service][name].includes(val)) {
@@ -68,7 +68,7 @@ class rmProvider extends Component {
     });
   }
 
-  handleServiceChange = ({target}) => {
+  handleServiceChange = ({ target }) => {
     const [service, name] = target.name.split("//");
     this.setState(ps => {
       return {
@@ -83,7 +83,7 @@ class rmProvider extends Component {
     });
   }
 
-  handleChange = ({target: {name, value}}) => {
+  handleChange = ({ target: { name, value } }) => {
     let error = null;
     if (name === "appname") {
       if (value.length > 10) error = "App Name has to be 10 chars or less";
@@ -102,7 +102,7 @@ class rmProvider extends Component {
   handleCreateClick = async (e) => {
     e.preventDefault();
     if (this.state.appname.trim().length < 1)
-      return this.setState({appNameValid: false});
+      return this.setState({ appNameValid: false });
 
     this.setState({
       checkingAppName: true,
@@ -110,32 +110,36 @@ class rmProvider extends Component {
 
     //TODO: Fix the user issue, it's defined in context but not used
     // eslint-disable-next-line no-unused-vars
-    const { token, user } = this.context;
+    const { token } = this.context;
+    const { user } = this.state;
 
     if (this.state.appname.trim().length < 1) {
       this.setState({ appnameError: true });
       return;
     }
 
-    let postBody = {  name: this.state.appname };   // TODO :: Add user id as part of body
-    const {data: applicationExists} = new ApiService(
+    let postBody = { name: this.state.appname, uid: user.sub };   // TODO :: Add user id as part of body
+    let currentComponent = this;
+    new ApiService(
       "/applications/check-exists",
       null,
       token,
-      postBody).post();
-
-    if (!applicationExists) {
-      this.setState({
-        appNameValid: true,
-        checkingAppName: false,
-      });
-    } else {
-      this.setState({
-        appNameValid: false,
-        checkingAppName: false,
-      });
-      alert("Application Name already exists!");
-    }
+      postBody).post()
+      .then(function (res) {
+        if (!res.data) {
+          currentComponent.setState({
+            appNameValid: true,
+            checkingAppName: false,
+          });
+        } else {
+          // console.log(applicationExists)
+          currentComponent.setState({
+            appNameValid: false,
+            checkingAppName: false,
+          });
+          alert("Application Name already exists!");
+        }
+      })
   }
 
   handleNoClick = () => {
@@ -153,18 +157,18 @@ class rmProvider extends Component {
   }
 
   confirm = async () => {
-    const {appname: name, services: data, token} = this.state;
+    const { appname: name, services: data, token } = this.state;
     this.setState({
       saving: true,
     });
 
-    let postBody = Object.assign({name}, data);
+    let postBody = Object.assign({ name }, data);
     new ApiService(
       "/applications",
       null,
       token,
       postBody).post()
-      .then(()=>{
+      .then(() => {
         alert("something went wrong, please try again later");
       })
       .catch(() => {
@@ -182,8 +186,8 @@ class rmProvider extends Component {
     );
   }
 
-  handleModalSave = ({service}) => {
-    const {services} = this.state;
+  handleModalSave = ({ service }) => {
+    const { services } = this.state;
     if (!services[service]) {
       services[service] = {};
     }
@@ -194,11 +198,11 @@ class rmProvider extends Component {
     });
   }
 
-  handleModalCancel = ({service}) => {
+  handleModalCancel = ({ service }) => {
     console.log("handle modal cancel");
-    const {services} = this.state;
+    const { services } = this.state;
     delete services[service];
-    
+
     console.log(services);
     this.setState({
       services,
@@ -206,7 +210,7 @@ class rmProvider extends Component {
     });
   }
 
-  serviceClick = ({service, category, fields}) => {
+  serviceClick = ({ service, category, fields }) => {
     this.setState({
       service,
       category,
@@ -216,7 +220,7 @@ class rmProvider extends Component {
   }
 
   checkBoxChange = (e, service) => {
-    const {services} = this.state;
+    const { services } = this.state;
     delete services[service];
     this.setState({
       services,
@@ -249,4 +253,4 @@ class rmProvider extends Component {
 
 const RMProvider = withRouter(rmProvider);
 
-export {RMContext, RMProvider, Consumer as RMConsumer};
+export { RMContext, RMProvider, Consumer as RMConsumer };

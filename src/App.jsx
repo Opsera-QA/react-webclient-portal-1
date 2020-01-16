@@ -18,7 +18,7 @@ import Solutions from "./components/about/Solutions";
 import Inventory from "./components/inventory/Inventory";
 import Signup from "./components/user/Signup";
 import ApiConnector from "./components/api_connector/ApiConnector";
-import Pipeline from "./components/pipeline/Pipeline";
+import Pipeline from "./components/pipeline/index";
 import Platform from "./components/platform/Platform";
 import Reports from "./components/reports/Reports";
 import Analytics from "./components/analytics/Analytics";

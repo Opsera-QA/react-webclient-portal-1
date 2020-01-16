@@ -1,6 +1,6 @@
 import React from "react";
 import ReleaseManagementServices from "./ReleaseManagementServices";
-import {RMContext, RMProvider} from "./RMContext";
+import { RMContext, RMProvider } from "./RMContext";
 import { Container, Form, Button } from "react-bootstrap";
 import RMModal from "./RMModal";
 import "./styles.css";
@@ -10,18 +10,8 @@ class Pipeline extends React.PureComponent {
   state = {}
 
   renderInput = () => {
-    const {appname, appnameError, handleChange} = this.context;
+    const { appname, appnameError, handleChange } = this.context;
     return (
-      // <Input
-      //   label="Application Name"
-      //   placeholder="Application Name"
-      //   autoComplete="off"
-      //   name="appname"
-      //   onChange={handleChange}
-      //   value={appname}
-      //   style={{maxWidth: "350px"}}
-      //   error={appnameError}
-      // />
       <Form.Row>
         <Form.Group controlId="formGridName">
           <Form.Label>Application Name</Form.Label>
@@ -38,7 +28,7 @@ class Pipeline extends React.PureComponent {
     );
   }
   render() {
-    const {checkingAppName, appnameError, appname} = this.context;
+    const { checkingAppName, appnameError, appname, handleCreateClick } = this.context;
     return (
       <Container className="NewApplication">
         <h2>CI/CD Pipeline</h2>
@@ -47,7 +37,7 @@ class Pipeline extends React.PureComponent {
           <Button
             primary
             type="submit"
-            onClick={this.context.handleCreateClick}
+            onClick={handleCreateClick}
             disabled={!!appnameError || !appname || !appname.length}
           >
             Create
@@ -60,13 +50,4 @@ class Pipeline extends React.PureComponent {
   }
 }
 
-
-/* TODO: Faseeh, please refactor this.  Let's not export something in this fashion.  
-I temporarily added ESLint ignore just so it would commit, but we want this to 
-be structured differently*/
-// eslint-disable-next-line react/display-name
-export default () => (
-  <RMProvider>
-    <Pipeline />
-  </RMProvider>
-);
+export default Pipeline;
