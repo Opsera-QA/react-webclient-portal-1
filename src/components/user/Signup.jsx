@@ -261,9 +261,7 @@ export default class Signup extends PureComponent {
         { this.state.modal &&  
                <Alert variant={this.state.type} onClose={() => this.setState({modal:false, type:"", title:"", message: ""})} dismissible>
                  <Alert.Heading>{this.state.title}</Alert.Heading>
-                 <p>
-                   {this.state.message}
-                 </p>
+                 {this.state.message}
                </Alert> 
         }
         <Form onSubmit={this.signup}>

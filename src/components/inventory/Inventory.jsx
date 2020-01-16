@@ -156,7 +156,7 @@ function App({ application }) {
 const ToolTable = ({ tool }) => {
   const { name, port, toolStatus, toolURL, versionNumber, installationDate, dnsName } = tool;
   return (
-    <div className="grid-striped">
+    <div className="grid-striped m-3">
       <Row style={{ marginTop: 20 }}>
         <Col lg={4} style={{ fontWeight: "bold" }}>{name}</Col>
         <Col lg={2}>Port {port}</Col>
