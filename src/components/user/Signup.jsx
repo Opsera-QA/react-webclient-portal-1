@@ -268,167 +268,163 @@ export default class Signup extends PureComponent {
           <Card style={{ marginTop: 25 }}>
             <Card.Header as="h5">New User Signup</Card.Header>
             <Card.Body>
-              {/* <Card.Title>Special title treatment</Card.Title> */}
-              <Card.Text>
-
               
-                <Form.Row>
-                  <Form.Group as={Col} controlId="formGridEmail">
-                    <Form.Label>First Name</Form.Label>
-                    <Form.Control 
-                      type="text" 
-                      name="firstName" placeholder="" 
-                      value={this.state.firstName.value}
-                      onChange={this.handleChange}
-                      isInvalid={this.state.firstName.error} 
-                    />
-                    <Form.Control.Feedback type="invalid">{this.state.firstName.error}</Form.Control.Feedback>
-                  </Form.Group>
+              <Form.Row>
+                <Form.Group as={Col} controlId="formGridEmail">
+                  <Form.Label>First Name</Form.Label>
+                  <Form.Control 
+                    type="text" 
+                    name="firstName" placeholder="" 
+                    value={this.state.firstName.value}
+                    onChange={this.handleChange}
+                    isInvalid={this.state.firstName.error} 
+                  />
+                  <Form.Control.Feedback type="invalid">{this.state.firstName.error}</Form.Control.Feedback>
+                </Form.Group>
 
-                  <Form.Group as={Col} controlId="formGridPassword">
-                    <Form.Label>Last Name</Form.Label>
-                    <Form.Control 
-                      type="text" 
-                      placeholder="" 
-                      name="lastName"
-                      value={this.state.lastName.value}
-                      onChange={this.handleChange}
-                      isInvalid={this.state.lastName.error} 
-                    />
-                    <Form.Control.Feedback type="invalid">{this.state.lastName.error}</Form.Control.Feedback>
-                  </Form.Group>
-                </Form.Row>
+                <Form.Group as={Col} controlId="formGridPassword">
+                  <Form.Label>Last Name</Form.Label>
+                  <Form.Control 
+                    type="text" 
+                    placeholder="" 
+                    name="lastName"
+                    value={this.state.lastName.value}
+                    onChange={this.handleChange}
+                    isInvalid={this.state.lastName.error} 
+                  />
+                  <Form.Control.Feedback type="invalid">{this.state.lastName.error}</Form.Control.Feedback>
+                </Form.Group>
+              </Form.Row>
 
-                <Form.Row>
-                  <Form.Group as={Col} controlId="formGridEmail">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control 
-                      type="email" 
-                      placeholder="" 
-                      name="email"
-                      value={this.state.email.value}
-                      onChange={this.handleChange}
-                      isInvalid={this.state.email.error}
-                    />
-                    <Form.Control.Feedback type="invalid">{this.state.email.error}</Form.Control.Feedback>
-                  </Form.Group>
+              <Form.Row>
+                <Form.Group as={Col} controlId="formGridEmail">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control 
+                    type="email" 
+                    placeholder="" 
+                    name="email"
+                    value={this.state.email.value}
+                    onChange={this.handleChange}
+                    isInvalid={this.state.email.error}
+                  />
+                  <Form.Control.Feedback type="invalid">{this.state.email.error}</Form.Control.Feedback>
+                </Form.Group>
 
-                  <Form.Group as={Col} controlId="formGridPassword">
-                    <Form.Label>Company</Form.Label>
-                    <Form.Control 
-                      type="text" 
-                      placeholder="" 
-                      name="organizationName"
-                      value={this.state.organizationName.value}
-                      onChange={this.handleChange} 
-                      isInvalid={this.state.organizationName.error}
-                    />
-                    <Form.Control.Feedback type="invalid">{this.state.organizationName.error}</Form.Control.Feedback>
-                  </Form.Group>
-                </Form.Row>
+                <Form.Group as={Col} controlId="formGridPassword">
+                  <Form.Label>Company</Form.Label>
+                  <Form.Control 
+                    type="text" 
+                    placeholder="" 
+                    name="organizationName"
+                    value={this.state.organizationName.value}
+                    onChange={this.handleChange} 
+                    isInvalid={this.state.organizationName.error}
+                  />
+                  <Form.Control.Feedback type="invalid">{this.state.organizationName.error}</Form.Control.Feedback>
+                </Form.Group>
+              </Form.Row>
 
-                <Form.Row>
-                  <Form.Group as={Col} controlId="formGridPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control 
-                      type="password" 
-                      placeholder="" 
-                      name="password"
-                      value={this.state.password.value}
-                      onChange={this.handleChange}
-                      isInvalid={this.state.password.error} 
-                    />
-                    <Form.Control.Feedback type="invalid">{this.state.password.error}</Form.Control.Feedback>
-                  </Form.Group>
+              <Form.Row>
+                <Form.Group as={Col} controlId="formGridPassword">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control 
+                    type="password" 
+                    placeholder="" 
+                    name="password"
+                    value={this.state.password.value}
+                    onChange={this.handleChange}
+                    isInvalid={this.state.password.error} 
+                  />
+                  <Form.Control.Feedback type="invalid">{this.state.password.error}</Form.Control.Feedback>
+                </Form.Group>
 
-                  <Form.Group as={Col} controlId="formGridPassword">
-                    <Form.Label>Confirm Password</Form.Label>
-                    <Form.Control 
-                      type="password" 
-                      placeholder="" 
-                      name="confirmPassword"
-                      value={this.state.confirmPassword.value}
-                      onChange={this.handleChange}
-                      isInvalid={this.state.confirmPassword.error} 
-                    />
-                    <Form.Control.Feedback type="invalid">{this.state.confirmPassword.error}</Form.Control.Feedback>
-                  </Form.Group>
-                </Form.Row>
+                <Form.Group as={Col} controlId="formGridPassword">
+                  <Form.Label>Confirm Password</Form.Label>
+                  <Form.Control 
+                    type="password" 
+                    placeholder="" 
+                    name="confirmPassword"
+                    value={this.state.confirmPassword.value}
+                    onChange={this.handleChange}
+                    isInvalid={this.state.confirmPassword.error} 
+                  />
+                  <Form.Control.Feedback type="invalid">{this.state.confirmPassword.error}</Form.Control.Feedback>
+                </Form.Group>
+              </Form.Row>
 
-                <Form.Group controlId="formGridAddress1">
-                  <Form.Label>Street Address</Form.Label>
+              <Form.Group controlId="formGridAddress1">
+                <Form.Label>Street Address</Form.Label>
+                <Form.Control 
+                  type="text" 
+                  placeholder=""  
+                  name="street"
+                  value={this.state.street.value}
+                  onChange={this.handleChange}
+                  isInvalid={this.state.street.error}
+                />
+                <Form.Control.Feedback type="invalid">{this.state.street.error}</Form.Control.Feedback>
+              </Form.Group>
+                    
+              <Form.Row>
+                <Form.Group as={Col} controlId="formGridCity">
+                  <Form.Label>City</Form.Label>
                   <Form.Control 
                     type="text" 
                     placeholder=""  
-                    name="street"
-                    value={this.state.street.value}
+                    name="city"
+                    value={this.state.city.value}
                     onChange={this.handleChange}
-                    isInvalid={this.state.street.error}
+                    isInvalid={this.state.city.error} 
                   />
-                  <Form.Control.Feedback type="invalid">{this.state.street.error}</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">{this.state.city.error}</Form.Control.Feedback>
                 </Form.Group>
-                    
-                <Form.Row>
-                  <Form.Group as={Col} controlId="formGridCity">
-                    <Form.Label>City</Form.Label>
-                    <Form.Control 
-                      type="text" 
-                      placeholder=""  
-                      name="city"
-                      value={this.state.city.value}
-                      onChange={this.handleChange}
-                      isInvalid={this.state.city.error} 
-                    />
-                    <Form.Control.Feedback type="invalid">{this.state.city.error}</Form.Control.Feedback>
-                  </Form.Group>
 
-                  <Form.Group as={Col} controlId="formGridState">
-                    <Form.Label>State</Form.Label>
-                    <Form.Control as="select"
-                      name="state"
-                      isInvalid={this.state.state.error} 
-                      value={this.state.state.value}
-                      onChange={this.handleChange}>
-                      <option value="" disabled>Please select</option>
-                      {states.map(state => (
-                        <option key={state.value} value={state.value}>{state.text}</option>
-                      ))}
-                    </Form.Control>
-                    <Form.Control.Feedback type="invalid">{this.state.state.error}</Form.Control.Feedback>
-                  </Form.Group>
+                <Form.Group as={Col} controlId="formGridState">
+                  <Form.Label>State</Form.Label>
+                  <Form.Control as="select"
+                    name="state"
+                    isInvalid={this.state.state.error} 
+                    value={this.state.state.value}
+                    onChange={this.handleChange}>
+                    <option value="" disabled>Please select</option>
+                    {states.map(state => (
+                      <option key={state.value} value={state.value}>{state.text}</option>
+                    ))}
+                  </Form.Control>
+                  <Form.Control.Feedback type="invalid">{this.state.state.error}</Form.Control.Feedback>
+                </Form.Group>
 
-                  <Form.Group as={Col} controlId="formGridZip">
-                    <Form.Label>Zip</Form.Label>
-                    <Form.Control 
-                      type="text" 
-                      placeholder=""  
-                      name="zip"
-                      value={this.state.zip.value}
-                      onChange={this.handleChange}
-                      isInvalid={this.state.zip.error} 
-                    />
-                    <Form.Control.Feedback type="invalid">{this.state.zip.error}</Form.Control.Feedback>
-                  </Form.Group>
-                </Form.Row>
-
-                <Form.Group controlId="formGridAddress2">
-                  <Form.Label>Subdomain Name</Form.Label>
-                  <Form.Control
+                <Form.Group as={Col} controlId="formGridZip">
+                  <Form.Label>Zip</Form.Label>
+                  <Form.Control 
                     type="text" 
-                    placeholder="" 
-                    name="domain"
-                    value={this.state.domain.value}
+                    placeholder=""  
+                    name="zip"
+                    value={this.state.zip.value}
                     onChange={this.handleChange}
-                    isInvalid={this.state.domain.error} 
+                    isInvalid={this.state.zip.error} 
                   />
-                  <Form.Control.Feedback type="invalid">{this.state.domain.error}</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">{this.state.zip.error}</Form.Control.Feedback>
                 </Form.Group>
-                <Button id="login-button" disabled={!isEnabled} variant="success" className="mr-2" type="submit">Sign Up</Button>
+              </Form.Row>
 
-                <Button id="cancel-button" variant="outline-secondary" className="ml-2" type="button" onClick={this.cancelSignup}>Cancel</Button>
-                <div className="mt-1 text-muted text-right">All fields are required.</div>
+              <Form.Group controlId="formGridAddress2">
+                <Form.Label>Subdomain Name</Form.Label>
+                <Form.Control
+                  type="text" 
+                  placeholder="" 
+                  name="domain"
+                  value={this.state.domain.value}
+                  onChange={this.handleChange}
+                  isInvalid={this.state.domain.error} 
+                />
+                <Form.Control.Feedback type="invalid">{this.state.domain.error}</Form.Control.Feedback>
+              </Form.Group>
+              <Button id="login-button" disabled={!isEnabled} variant="success" className="mr-2" type="submit">Sign Up</Button>
+
+              <Button id="cancel-button" variant="outline-secondary" className="ml-2" type="button" onClick={this.cancelSignup}>Cancel</Button>
+              <div className="mt-1 text-muted text-right">All fields are required.</div>
               
-              </Card.Text>
             </Card.Body>
           </Card>
         </Form>
