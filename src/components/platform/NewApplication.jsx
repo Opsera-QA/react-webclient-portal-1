@@ -66,6 +66,8 @@ class NewApplication extends React.PureComponent {
     let currentComponent = this;
     apiCall.get()
       .then(function (response) {
+        console.log(response.data);
+
         currentComponent.setState({
           dropdownData: response.data,
           error: null,
@@ -151,81 +153,78 @@ class NewApplication extends React.PureComponent {
         }));
       });
   }
-
-  renderInput = () => {
-    const { appname, appnameError, status } = this.state;
-    return (
-      <Form.Row>
-        <Form.Group controlId="formGridName">
-          <Form.Label>Application Name</Form.Label>
-          <Form.Control
-            type="text"
-            name="appname" placeholder=""
-            value={appname}
-            onChange={this.handleAppNameChange}
-            isInvalid={appnameError}
-            disabled={status === "success" ? true : false}
-          />
-          <Form.Control.Feedback type="invalid">{appnameError}</Form.Control.Feedback>
-        </Form.Group>
-      </Form.Row>
-    );
-  }
-
   render() {
     const { checkingAppName, appnameError, appname, error, messages, status, editTools, dropdownData, fetching } = this.state;
     const { saving } = this.context;
     return (
       <>
-        <div>
-          <h3>Register New Application</h3>
+        <div className="ml-3">
+          <h3>New Platform Creation</h3>
+          <p>Create a new Application to leverage your existing systems in any way that meets your business needs.</p>
           <div className="row mb-2">
-            <div className="col ml-auto">
-              <Button variant="outline-primary" className="float-right" size="sm" onClick={() => this.editTools()}>
-                <FontAwesomeIcon icon={faWrench} fixedWidth /> {!editTools ? (<>Edit Tools in Application</>) : (<>Add an Application</>)}
-              </Button>
-            </div>
-          </div>
-          <p>Create a new Application to leverage your existing systems in any way that meets your business needs</p>
-          {error ? <ErrorDialog error={error} /> : null}
-          {status === "success" && messages ? <SuccessDialog successMessage={messages} /> : (
-            <>
-              {!editTools &&
+            
+            {status !== "success" && !editTools ? 
+              <div className="col ml-auto">
                 <Form loading={checkingAppName || saving}>
-                  {this.renderInput()}
+                  <Form.Row>
+                    <Form.Group as="Col" controlId="formGridEmail">
+                      <Form.Label>Application Name</Form.Label>
+                      <Form.Control type="text" 
+                        placeholder="Application Name"
+                        name="appname"
+                        value={appname}
+                        onChange={this.handleAppNameChange}
+                        isInvalid={appnameError}
+                        disabled={status === "success" ? true : false} />
+                      <Form.Control.Feedback type="invalid">{appnameError}</Form.Control.Feedback>
+                    </Form.Group>
+                  </Form.Row>
                   <Button
                     variant="primary"
                     type="submit"
                     onClick={this.handleCreateClick}
                     loading={checkingAppName}
-                    disabled={!!appnameError || !appname || !appname.length || status === "success"}
-                  >
-                    Create
+                    disabled={!!appnameError || !appname || !appname.length || status === "success"}>
+                        Create
                   </Button>
                 </Form>
-              }
-            </>
-          )}
-          {editTools && dropdownData && (
-            <Form>
-              <Form.Group>
-                <Form.Control as="select"
-                  // inputRef={el => this.inputEl = el}
-                  hidden={(!fetching && dropdownData.length > 0) ? false : true}
-                  onChange={this.handleDropdownChange}
-                  style={{ marginTop: 25 }}>
-                  <option value="" selected disabled>{fetching ? "loading..." : "Select application"}</option>
-                  {!fetching && (
-                    <>
-                      {dropdownData ? dropdownData.map(application => (
-                        <option key={application.name} value={application._id}>{application.name}</option>
-                      )) : ""}
-                    </>
-                  )}
-                </Form.Control>
-              </Form.Group>
-            </Form>
-          )}
+              </div>
+              : null }
+
+            {editTools && dropdownData && (
+              <div className="col ml-auto">
+                <Form>
+                  <Form.Group>
+                    <Form.Control as="select"
+                      // inputRef={el => this.inputEl = el}
+                      hidden={(!fetching && dropdownData.length > 0) ? false : true}
+                      onChange={this.handleDropdownChange}
+                      style={{ marginTop: 25 }}>
+                      <option value="" selected disabled>{fetching ? "loading..." : "Select Application to Edit"}</option>
+                      {!fetching && (
+                        <>
+                          {dropdownData ? dropdownData.map(application => (
+                            <option key={application.name} value={application._id}>{application.name}</option>
+                          )) : ""}
+                        </>
+                      )}
+                    </Form.Control>
+                  </Form.Group>
+                </Form>
+              </div>
+            )}
+
+
+            <div className="col ml-auto pt-4">
+              <Button variant="outline-primary" className="float-right mt-1" size="sm" onClick={() => this.editTools()}>
+                <FontAwesomeIcon icon={faWrench} fixedWidth /> {!editTools ? (<>Edit Existing Applications</>) : (<>Add an Application</>)}
+              </Button>
+
+            </div>
+          </div>
+
+          {error ? <ErrorDialog error={error} /> : null}
+          {status === "success" && messages ? <SuccessDialog successMessage={messages} /> : null}
 
           {status === "success" && (
             <div className="mb-2">
