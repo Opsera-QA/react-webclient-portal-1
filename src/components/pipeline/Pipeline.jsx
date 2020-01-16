@@ -45,7 +45,7 @@ class Pipeline extends React.PureComponent {
         <Form loading={checkingAppName}>
           {this.renderInput()}
           <Button
-            primary
+            variant="primary"
             type="submit"
             onClick={this.context.handleCreateClick}
             disabled={!!appnameError || !appname || !appname.length}

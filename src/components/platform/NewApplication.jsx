@@ -194,7 +194,7 @@ class NewApplication extends React.PureComponent {
                 <Form loading={checkingAppName || saving}>
                   {this.renderInput()}
                   <Button
-                    primary
+                    variant="primary"
                     type="submit"
                     onClick={this.handleCreateClick}
                     loading={checkingAppName}

@@ -302,7 +302,7 @@ export class Confirmation extends React.PureComponent {
           </div>
         </div>
         <div className="newApp__confirm">
-          <Button primary onClick={this.context.confirm}>
+          <Button variant="primary" onClick={this.context.confirm}>
             Confirm
           </Button>
         </div>

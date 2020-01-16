@@ -153,7 +153,7 @@ const ToolView = ({handleButtonClick, disabledIds, app, tool }) => {
       </Col>
       <Col>
         <Button
-          primary
+          variant="primary"
           disabled={disabledIds.includes(`${app._id}${tool._id}`)}
           onClick={() => handleButtonClick()}
         >

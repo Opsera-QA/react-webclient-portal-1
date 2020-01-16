@@ -102,7 +102,7 @@ export default class Reports extends PureComponent {
               />
             </Form.Group>
               
-            <Button primary style={{marginBottom: "30px"}} type="submit"> 
+            <Button variant="primary" style={{marginBottom: "30px"}} type="submit"> 
                   Submit
             </Button>
           </Form>
