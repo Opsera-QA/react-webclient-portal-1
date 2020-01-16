@@ -80,7 +80,7 @@ class DeleteTools extends PureComponent {
         <Form>
           <Form.Group>
             <Form.Control as="select"
-              inputRef={el => this.inputEl = el}
+              //inputRef={el => this.inputEl = el}
               hidden={(!fetching && data.length > 0) ? false : true}
               onChange={this.handleChangeValue}
               style={{ marginTop: 25 }}>

@@ -1,8 +1,8 @@
-.newApp__card {
+/* .newApp__card {
   padding: 20px !important;
-  /* padding: 20px; */
-}
-
+  
+} */
+/* 
 .newApp__cards-container {
   margin-top: 30px;
   display: flex;
@@ -13,7 +13,7 @@
 .newApp__cards-container > div {
   margin-top: 20px;
   margin-right: 20px;
-}
+} */
 
 .newApp__service-logo > img {
   width: 50px;
@@ -24,16 +24,16 @@
   margin-bottom: 20px;
 }
 
-.newApp__service-title {
+/* .newApp__service-title {
   margin-top: 7px;
 }
-
+ */
 .newApp__service-logo {
   cursor: pointer;
   width: 150px;
   background-color: #fff;
   height: 100px;
-  margin-right: 20px;
+  /* margin-right: 20px; */
   padding: 5px;
   border: 1px solid #bbb;
   display: inline-flex;

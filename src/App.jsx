@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Security, SecureRoute, ImplicitCallback } from "@okta/okta-react";
-import Container from "react-bootstrap/Container";
-import { Provider } from "react-redux";
-import store from "./store"; // DO WE NEED THIS?
 import AuthContextProvider from "./contexts/AuthContext";
 
 import config from "./config";
@@ -36,50 +33,47 @@ import ApiConnectionDemo from "./components/api_connector/ApiDemo";
 class App extends Component {
   render() {
     return (
-      <Provider store={store}>
-        <Router>
-          <Security {...config.oidc}>
-            <AuthContextProvider>
-              <Navbar />
-              <div className="container-fluid">
-                <div className="flex-xl-nowrap row sidebar">
-                  <div className="col-xl-2 col-md-3 col-12 d-flex flex-column bg-dark pt-4">
-                    <Sidebar />
-                  </div>
-                  <div className="col-xl-8 col-md-9 col-12 pt-4">
-                    <Container text>
-                      <Route path="/" exact component={Home} />
-                      <Route path="/signup" exact component={Signup} />
-                      <Route path="/about" exact component={About} />
-                      <Route path="/about/pricing" component={Pricing} />
-                      <Route path="/about/solutions" component={Solutions} />
-                      <Route path="/implicit/callback" component={ImplicitCallback} />
-                      <SecureRoute path="/messages" component={Messages} />
-                      <SecureRoute path="/profile" component={Profile} />
-                      <SecureRoute path="/inventory" component={Inventory} />
-                      <SecureRoute path="/api_connector/:id?" component={ApiConnector} />
-                      <SecureRoute path="/pipeline" component={Pipeline} />
-                      <SecureRoute path="/platform" component={Platform} />
-                      <SecureRoute path="/analytics" exact component={Analytics} />
-                      <SecureRoute path="/reports" exact component={Reports} />
-                      <SecureRoute path="/update" component={Update} />
-
-                      <SecureRoute path="/admin" exact component={AdminTools} />
-                      <SecureRoute path="/admin/health" component={HealthCheck} />
-                      <SecureRoute path="/admin/delete" component={DeleteTools} />
-                      <SecureRoute path="/admin/manage_systems" component={ManageSystems} />
-                      <SecureRoute path="/admin/registered_users" component={RegisteredUsers} />
-                      <SecureRoute path="/admin/analytics/reports_registration" component={ReportsRegistration} />
-
-                      <SecureRoute path="/api_demo" component={ApiConnectionDemo} />
-                    </Container>
-                  </div>
+      <Router>
+        <Security {...config.oidc}>
+          <AuthContextProvider>
+            <Navbar />
+            <div className="container-fluid">
+              <div className="flex-xl-nowrap row sidebar">
+                <div className="col-xl-2 col-md-3 col-12 d-flex flex-column bg-dark pt-4">
+                  <Sidebar />
+                </div>
+                <div className="col-xl-8 col-md-9 col-12 pt-4">
+                  <Route path="/" exact component={Home} />
+                  <Route path="/signup" exact component={Signup} />
+                  <Route path="/about" exact component={About} />
+                  <Route path="/about/pricing" component={Pricing} />
+                  <Route path="/about/solutions" component={Solutions} />
+                  <Route path="/implicit/callback" component={ImplicitCallback} />
+                  <SecureRoute path="/messages" component={Messages} />
+                  <SecureRoute path="/profile" component={Profile} />
+                  <SecureRoute path="/inventory" component={Inventory} />
+                  <SecureRoute path="/api_connector/:id?" component={ApiConnector} />
+                  <SecureRoute path="/pipeline" component={Pipeline} />
+                  <SecureRoute path="/platform" component={Platform} />
+                  <SecureRoute path="/analytics" exact component={Analytics} />
+                  <SecureRoute path="/reports" exact component={Reports} />
+                  <SecureRoute path="/update" component={Update} />
+                  <SecureRoute path="/admin" exact component={AdminTools} />
+                  <SecureRoute path="/admin/health" component={HealthCheck} />
+                  <SecureRoute path="/admin/delete" component={DeleteTools} />
+                  <SecureRoute path="/admin/manage_systems" component={ManageSystems} />
+                  <SecureRoute path="/admin/registered_users" component={RegisteredUsers} />
+                  <SecureRoute path="/admin/analytics/reports_registration" component={ReportsRegistration} />
+                  <SecureRoute path="/api_demo" component={ApiConnectionDemo} />
                 </div>
               </div>
-            </AuthContextProvider>
-          </Security>
-        </Router>
-      </Provider>
+              <div className="row fixed-row-footer-bottom">
+                <div className="col text-center m-1" style={{ padding: 0, margin: 0, fontSize:".6em"}}>© OpsERA 2020</div>
+              </div>
+            </div>
+          </AuthContextProvider>
+        </Security>
+      </Router>
     );
   }
 }

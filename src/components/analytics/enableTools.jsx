@@ -30,20 +30,20 @@ function EnableTools() {
           <Card.Title>Supported Tools</Card.Title>
           <Card.Subtitle className="mb-2 text-muted">The following tools are currently supported with the Analytics 
           Platform.  Please select the tools you want to enable for Analytics.</Card.Subtitle>
-          <Card.Text>
-            <Form>
-              <div key="checkbox-enable-tools" className="mb-1 mt-2 p-2">
-                <Form.Check inline label="Jenkins" type="checkbox" id="checkbox-enable-tools-1" />
-                <Form.Check inline label="JUnit" type="checkbox" id="checkbox-enable-tools-2" />
-                <Form.Check inline label="JMeter" type="checkbox" id="checkbox-enable-tools-3" />
-                <Form.Check inline label="Sonar" type="checkbox" id="checkbox-enable-tools-4" />
-              </div>
+          
+          <Form>
+            <div key="checkbox-enable-tools" className="mb-1 mt-2 p-2">
+              <Form.Check inline label="Jenkins" type="checkbox" id="checkbox-enable-tools-1" />
+              <Form.Check inline label="JUnit" type="checkbox" id="checkbox-enable-tools-2" />
+              <Form.Check inline label="JMeter" type="checkbox" id="checkbox-enable-tools-3" />
+              <Form.Check inline label="Sonar" type="checkbox" id="checkbox-enable-tools-4" />
+            </div>
 
-              <div className="text-right">
-                <Button variant="outline-secondary">Save</Button>
-              </div>
-            </Form>
-          </Card.Text>
+            <div className="text-right">
+              <Button variant="outline-secondary">Save</Button>
+            </div>
+          </Form>
+          
         </Card.Body>
       </Card>
     </div>

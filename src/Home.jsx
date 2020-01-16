@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { AuthContext } from './contexts/AuthContext';
-import { Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import FeaturesCards from './components/about/features';
-import LoadingDialog from "./components/common/loading"
+import React, { Component } from "react";
+import { AuthContext } from "./contexts/AuthContext";
+import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import FeaturesCards from "./components/about/features";
+import LoadingDialog from "./components/common/loading";
 
 class Home extends Component {
   static contextType = AuthContext;
@@ -19,7 +19,8 @@ class Home extends Component {
   }
 
   gotoSignUp = () => {
-    let path = `/signup`;
+    let path = "/signup";
+    // eslint-disable-next-line react/prop-types
     this.props.history.push(path);
   }
 
@@ -30,11 +31,11 @@ class Home extends Component {
       <div>
         { authenticated &&
           <div style={{ marginTop: 15 }}>
-            <h2>Welcome back, {userInfo ? userInfo.name : 'Unknown User Name'}!</h2>
+            <h2>Welcome back, {userInfo ? userInfo.name : "Unknown User Name"}!</h2>
             <p>
               You have successfully logged in!  You now have an ID token and access token in local storage.
                   Visit the <Link to="/profile">My Profile</Link> page to take a look inside the ID token.
-                </p>
+            </p>
 
             <FeaturesCards />
           </div>
@@ -48,10 +49,10 @@ class Home extends Component {
               <h1 className="mb-3 bd-text-purple-bright">OpsERA</h1>
               <p className="lead">
                 Make DevOps a streamlined, managed experience, allowing developers to focus on what they enjoy doing most: writing code!
-                </p>
+              </p>
               <p className="lead mb-4">
                 OpsERA is an end to end DevOps Workflow Solution that can manage all of the tasks and resources for a team’s CI/CD Pipeline automatically, allowing for a single pane of glass view on the entire DevOps workflow including easy to use interfaces and advanced, consolidated error reporting and usage and optimization reporting.
-                </p>
+              </p>
               <div className="row mx-n2">
                 <div className="col-md px-2">
                   <Button variant="success" className="btn-lg w-100 mb-3" onClick={this.gotoSignUp}>Sign Up</Button>
@@ -67,7 +68,7 @@ class Home extends Component {
             </div>
           </div>
         </div>
-      }
+        }
 
       </div >
     );

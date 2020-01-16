@@ -138,7 +138,7 @@ export default class ManageSystems extends PureComponent {
               <Form>
                 <Form.Group>
                   <Form.Control as="select"
-                    inputRef={el => this.inputEl = el}
+                    //inputRef={el => this.inputEl = el}
                     onChange={this.handleUserChangeValue}
                     style={{ marginTop: 25 }}>
                     <option value="" selected disabled>{fetching ? "loading..." : "Select Users"}</option>
@@ -172,7 +172,7 @@ export default class ManageSystems extends PureComponent {
               <Form>
                 <Form.Group>
                   <Form.Control as="select"
-                    inputRef={el => this.inputEl = el}
+                    //inputRef={el => this.inputEl = el}
                     onChange={this.handleChangeValue}
                     style={{ marginTop: 25 }}>
                     <option value="" selected disabled>{fetching ? "loading..." : "Select application"}</option>

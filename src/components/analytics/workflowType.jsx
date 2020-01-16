@@ -30,26 +30,26 @@ function WorkflowType() {
           <Card.Title>Analytics Settings</Card.Title>
           <Card.Subtitle className="mb-2 text-muted">We offer analytics for Infrastructure and Pipeline.  
           Make your choice.</Card.Subtitle>
-          <Card.Text>
-            <Form>
-              <div key="inline-checkbox-workflow" className="mb-1 mt-2 p-2">
-                <Form.Check inline label="Infrastructure" type="checkbox" id="inline-checkbox-workflow-1" />
-                <Form.Check inline label="Pipeline" type="checkbox" id="inline-checkbox-workflow-2" />
-              </div>
+          
+          <Form>
+            <div key="inline-checkbox-workflow" className="mb-1 mt-2 p-2">
+              <Form.Check inline label="Infrastructure" type="checkbox" id="inline-checkbox-workflow-1" />
+              <Form.Check inline label="Pipeline" type="checkbox" id="inline-checkbox-workflow-2" />
+            </div>
 
-              <div className="mt-3 text-muted">Choose a data usage limit per day:</div>
-              <div key="inline-radio-data-limit" className="mt-1 p-2">
-                <Form.Check inline label="500 MB" type="radio" id="inline-radio-data-limit-1" />
-                <Form.Check inline label="1 GB" type="radio" id="inline-radio-data-limit-2" />
-                <Form.Check inline label="2 GB" type="radio" id="inline-radio-data-limit-3" />
-                <Form.Check inline label="3 GB" type="radio" id="inline-radio-data-limit-4" />
-              </div>
+            <div className="mt-3 text-muted">Choose a data usage limit per day:</div>
+            <div key="inline-radio-data-limit" className="mt-1 p-2">
+              <Form.Check inline label="500 MB" type="radio" id="inline-radio-data-limit-1" />
+              <Form.Check inline label="1 GB" type="radio" id="inline-radio-data-limit-2" />
+              <Form.Check inline label="2 GB" type="radio" id="inline-radio-data-limit-3" />
+              <Form.Check inline label="3 GB" type="radio" id="inline-radio-data-limit-4" />
+            </div>
 
-              <div className="text-right">
-                <Button variant="outline-secondary">Save</Button>
-              </div>
-            </Form>
-          </Card.Text>
+            <div className="text-right">
+              <Button variant="outline-secondary">Save</Button>
+            </div>
+          </Form>
+          
         </Card.Body>
       </Card>
     </div>

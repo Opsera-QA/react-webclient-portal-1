@@ -1,4 +1,4 @@
-import * as at from "../actions/actionTypes"
+/* import * as at from "../actions/actionTypes"
 
 const defaultState = {}
 
@@ -15,3 +15,4 @@ function auth(state = defaultState, action) {
 }
 
 export default auth
+ */

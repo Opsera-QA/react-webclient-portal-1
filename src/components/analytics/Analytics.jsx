@@ -19,35 +19,38 @@ function Analytics({ tools }) {
     {loaded: false, fetching: false, data: null, error: null, messages: null}
   );
 
-  useEffect(async() => {
+  useEffect(() => {
     setState({fetching: true});
-    const { getAccessToken } = contextType;
-    const accessToken = await getAccessToken();
-    
-    const apiCall = new ApiService("/users/tools", {}, accessToken);
-    apiCall.get()
-      .then(function (response) {
-      /* const tool = response.tools.find(tool => {    //api not working timeout error hope this works!
-        return tool.name === TOOL_NAME;
-      }); */
-        console.log(response);
-        
-        setState({
-          data: response.data,
-          fetching: false,
-          error: null,
-          loaded: true
-        }); 
-      })
-      .catch(function (error) {
-        setState({
-          fetching: false,
-          error: error,
-          messages: "Error reported accessing list of tools."
-        });
-        console.log(`Error Reported: ${error}`);
-      });
 
+    async function fetchData() {
+      const { getAccessToken } = contextType;
+      const accessToken = await getAccessToken();
+      
+      const apiCall = new ApiService("/users/tools", {}, accessToken);
+      apiCall.get()
+        .then(function (response) {
+        /* const tool = response.tools.find(tool => {    //api not working timeout error hope this works!
+          return tool.name === TOOL_NAME;
+        }); */
+          console.log(response);
+          
+          setState({
+            data: response.data,
+            fetching: false,
+            error: null,
+            loaded: true
+          }); 
+        })
+        .catch(function (error) {
+          setState({
+            fetching: false,
+            error: error,
+            messages: "Error reported accessing list of tools."
+          });
+          console.log(`Error Reported: ${error}`);
+        });
+    }
+    fetchData();
   }, [tools]); //tools in this form (and any other props) tells the useEffect hook to refresh/reload when those values change. (basically setting watchers)
   return (
     <div>
