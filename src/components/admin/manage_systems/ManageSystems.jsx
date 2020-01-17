@@ -112,10 +112,10 @@ export default class ManageSystems extends PureComponent {
         <Container>
           <h2>Manage Tools</h2>
           {error ? <ErrorDialog error={error} /> : null}
-          <Form loading={loading} style={{maxWidth: "500px"}}>
+          <Form loading={loading ? "true" : undefined} style={{maxWidth: "500px"}}>
             <SearchInput
               org={org}
-              loading={loading}
+              loading={loading ? "true" : undefined}
               orgSearch={this.orgSearch}
               handleChange={this.handleChange}
             />

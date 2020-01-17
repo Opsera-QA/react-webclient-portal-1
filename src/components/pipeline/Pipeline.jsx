@@ -1,7 +1,7 @@
 import React from "react";
 import ReleaseManagementServices from "./ReleaseManagementServices";
 import { RMContext, RMProvider } from "./RMContext";
-import { Container, Form, Button } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import RMModal from "./RMModal";
 import ErrorDialog from "../common/error";
 import SuccessDialog from "../common/success";
@@ -166,7 +166,7 @@ class Pipeline extends React.PureComponent {
           <div className="row mb-2">
             {status !== "success" && !editTools ?
               <div className="col ml-auto">
-                <Form loading={checkingAppName}>
+                <Form loading={checkingAppName ? "true" : undefined}>
                   {this.renderInput()}
                   <Button
                     variant="primary"

@@ -48,8 +48,9 @@ class RMModal extends PureComponent {
           <Modal.Title style={{ fontSize: "1.3em" }}>{category}</Modal.Title>
         </Modal.Header>
         <Modal.Body className="p-3 modal-body-text-block">
-          <div>This will register a new {service} instance.  Are you sure you want to proceed?</div>
-          <div className="text-muted mt-3">Settings:</div>
+          <div className="mb-3">This will register a new {service} instance.  In order to do so, connection 
+          details are needed below.</div>
+          
           <Form>
             {fields.length === 0 && (
               <Form.Group controlId="formCheckboxDecrypt">
@@ -112,7 +113,7 @@ class RMModal extends PureComponent {
           > Cancel
           </Button>
           <Button variant="primary" onClick={this.handleSave}>
-            Save
+            Connect
           </Button>
         </Modal.Footer>
       </Modal>
