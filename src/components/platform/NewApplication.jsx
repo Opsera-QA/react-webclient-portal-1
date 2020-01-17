@@ -235,7 +235,7 @@ class NewApplication extends React.PureComponent {
                 <ContinousIntegration app={this.state.data} tools={this.state.tools} />
                 <LogManagement app={this.state.data} tools={this.state.tools} />
                 <RepositoryManagement app={this.state.data} tools={this.state.tools} />
-                <Monitoring app={this.state.data} tools={this.state.tools} />                
+                <Monitoring app={this.state.data} tools={this.state.tools} />
               </CardColumns>
 
               <Confirmation app={this.state.data} tools={this.state.tools} />

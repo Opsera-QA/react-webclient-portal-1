@@ -1,6 +1,6 @@
 import React from "react";
-import { Form, Button, Card } from "react-bootstrap";
-import {RMContext} from "./RMContext";
+import { Form, Button, Card, CardColumns } from "react-bootstrap";
+import { RMContext } from "./RMContext";
 import PropTypes from "prop-types";
 
 class ReleaseManagementOtherServices extends React.PureComponent {
@@ -8,14 +8,16 @@ class ReleaseManagementOtherServices extends React.PureComponent {
   render() {
     return (
       <>
-        <h3>Extra Serivces</h3>
+        <h3 style={{ padding: '20px' }}>Additional Serivces</h3>
         <div className="ReleaseManagementOtherServices">
-          <ConfigurationManagement />
-          <SASST />
-          <ContinousIntegration />
-          <LogManagement />
-          <RepositoryManagement />
-          <Monitoring />
+          <CardColumns>
+            <ConfigurationManagement />
+            <SASST />
+            <ContinousIntegration />
+            <LogManagement />
+            <RepositoryManagement />
+            <Monitoring />
+          </CardColumns>
         </div>
       </>
     );
@@ -25,41 +27,38 @@ class ReleaseManagementOtherServices extends React.PureComponent {
 class ConfigurationManagement extends React.PureComponent {
   static contextType = RMContext
   render() {
-    const {serviceClick} = this.context;
+    const { serviceClick } = this.context;
     return (
-      <Card className="newApp__card">
-        <h3>Configuration Management</h3>
-        <div className="newApp__card-content">
-          <div
-            className="newApp__service-logo"
-            onClick={() =>
-              serviceClick({
-                service: "Ansible",
-                category: "Configuration Management",
-              })
-            }
-          >
-            <img src={require("../platform/imgs/ansible.png")} />
-            <span className="newApp__service-title">Ansible</span>
-          </div>
-
-          <div
-            className="newApp__service-logo newApp__service-logo--disabled"
-            onClick={() => {}}
-          >
-            <img src={require("../platform/imgs/chef.png")} />
-            <span className="newApp__service-title">Chef</span>
-          </div>
-
-          <div
-            className="newApp__service-logo newApp__service-logo--disabled"
-            onClick={() => {}}
-          >
-            <img src={require("../platform/imgs/puppet.png")} />
-            <span className="newApp__service-title">Puppet</span>
-          </div>
+      <ServicesWrapper label="Configuration Management">
+        <div
+          className="newApp__service-logo"
+          onClick={() =>
+            serviceClick({
+              service: "Ansible",
+              category: "Configuration Management",
+            })
+          }
+        >
+          <img src={require("../platform/imgs/ansible.png")} />
+          <span className="newApp__service-title">Ansible</span>
         </div>
-      </Card>
+
+        <div
+          className="newApp__service-logo newApp__service-logo--disabled"
+          onClick={() => { }}
+        >
+          <img src={require("../platform/imgs/chef.png")} />
+          <span className="newApp__service-title">Chef</span>
+        </div>
+
+        <div
+          className="newApp__service-logo newApp__service-logo--disabled"
+          onClick={() => { }}
+        >
+          <img src={require("../platform/imgs/puppet.png")} />
+          <span className="newApp__service-title">Puppet</span>
+        </div>
+      </ServicesWrapper>
     );
   }
 }
@@ -67,33 +66,30 @@ class ConfigurationManagement extends React.PureComponent {
 class ContinousIntegration extends React.PureComponent {
   static contextType = RMContext
   render() {
-    const {serviceClick} = this.context;
+    const { serviceClick } = this.context;
     return (
-      <Card className="newApp__card">
-        <h3>Continous Integration</h3>
-        <div>
-          <div
-            className="newApp__service-logo"
-            onClick={() =>
-              serviceClick({
-                service: "Jenkins",
-                category: "Continous Integration",
-              })
-            }
-          >
-            <img src={require("../platform/imgs/jenkins.png")} />
-            <span className="newApp__service-title">Jenkins</span>
-          </div>
-
-          <div
-            className="newApp__service-logo newApp__service-logo--disabled"
-            onClick={() => {}}
-          >
-            <img src={require("../platform/imgs/team-city.png")} />
-            <span className="newApp__service-title">Team City</span>
-          </div>
+      <ServicesWrapper label="Continous Integration">
+        <div
+          className="newApp__service-logo"
+          onClick={() =>
+            serviceClick({
+              service: "Jenkins",
+              category: "Continous Integration",
+            })
+          }
+        >
+          <img src={require("../platform/imgs/jenkins.png")} />
+          <span className="newApp__service-title">Jenkins</span>
         </div>
-      </Card>
+
+        <div
+          className="newApp__service-logo newApp__service-logo--disabled"
+          onClick={() => { }}
+        >
+          <img src={require("../platform/imgs/team-city.png")} />
+          <span className="newApp__service-title">Team City</span>
+        </div>
+      </ServicesWrapper>
     );
   }
 }
@@ -101,30 +97,28 @@ class ContinousIntegration extends React.PureComponent {
 class LogManagement extends React.PureComponent {
   static contextType = RMContext
   render() {
-    const {serviceClick} = this.context;
+    const { serviceClick } = this.context;
     return (
-      <Card className="newApp__card">
-        <h3>Log Management</h3>
-        <div>
-          <div
-            className="newApp__service-logo"
-            onClick={() =>
-              serviceClick({
-                category: "Log Management",
-                service: "ElasticSearch",
-              })
-            }
-          >
-            <img src={require("../platform/imgs/elastic-search.png")} />
-            <span className="newApp__service-title">ElasticSearch</span>
-          </div>
-
-          <div className="newApp__service-logo newApp__service-logo--disabled">
-            <img src={require("../platform/imgs/log-stash.png")} />
-            <span className="newApp__service-title">LogStash</span>
-          </div>
+      <ServicesWrapper label="Log Management">
+        <div
+          className="newApp__service-logo"
+          onClick={() =>
+            serviceClick({
+              category: "Log Management",
+              service: "ElasticSearch",
+            })
+          }
+        >
+          <img src={require("../platform/imgs/elastic-search.png")} />
+          <span className="newApp__service-title">ElasticSearch</span>
         </div>
-      </Card>
+
+        <div className="newApp__service-logo newApp__service-logo--disabled">
+          <img src={require("../platform/imgs/log-stash.png")} />
+          <span className="newApp__service-title">LogStash</span>
+        </div>
+      </ServicesWrapper>
+
     );
   }
 }
@@ -153,21 +147,23 @@ ServicesWrapper.propTypes = {
   label: PropTypes.string,
   children: PropTypes.string
 };
-function ServicesWrapper({label, children}) {
+
+function ServicesWrapper({ label, children }) {
   return (
-    <Card className="newApp__card">
-      <h3>{label}</h3>
-      <div>{children}</div>
+    <Card style={{ minWidth: "16rem" }}>
+      <Card.Body className="text-center">
+        <Card.Title>{label}</Card.Title>
+        {children}
+      </Card.Body>
     </Card>
   );
 }
 
 
-
 class SASST extends React.PureComponent {
   static contextType = RMContext
   render() {
-    const {serviceClick} = this.context;
+    const { serviceClick } = this.context;
     return (
       <ServicesWrapper label="SASST">
         <div
@@ -190,7 +186,7 @@ class SASST extends React.PureComponent {
 class Monitoring extends React.PureComponent {
   static contextType = RMContext
   render() {
-    const {serviceClick} = this.context;
+    const { serviceClick } = this.context;
     return (
       <ServicesWrapper label="Monitoring">
         <div
@@ -218,10 +214,10 @@ class Monitoring extends React.PureComponent {
 export class Confirmation extends React.PureComponent {
   static contextType = RMContext
   render() {
-    const {services, checkBoxChange} = this.context;
+    const { services, checkBoxChange } = this.context;
     return (
-      <div className="newApp__card" style={{width: "100%"}}>
-        <h3 style={{textAlign: "center"}}>
+      <div className="newApp__card" style={{ width: "100%" }}>
+        <h3 style={{ textAlign: "center" }}>
           Confirmation
         </h3>
         <div className="newApp__checkbox-group">
@@ -245,7 +241,7 @@ export class Confirmation extends React.PureComponent {
             </Form.Group>
           </div>
           <div>
-            
+
             <Form.Group controlId="formCheckboxAnsible">
               <Form.Check type="checkbox" label="Ansible"
                 checked={!!services["Ansible"]}
@@ -266,7 +262,7 @@ export class Confirmation extends React.PureComponent {
 
           </div>
           <div>
-            
+
             <Form.Group controlId="formCheckboxNagios">
               <Form.Check type="checkbox" label="Nagios"
                 checked={!!services["Nagios"]}
@@ -278,7 +274,7 @@ export class Confirmation extends React.PureComponent {
                 checked={!!services["ElasticSearch"]}
                 onChange={e => checkBoxChange(e, "ElasticSearch")} />
             </Form.Group>
-            
+
             <Form.Group controlId="formCheckboxLogstash">
               <Form.Check type="checkbox" label="Logstash" disabled />
             </Form.Group>
@@ -287,7 +283,7 @@ export class Confirmation extends React.PureComponent {
             </Form.Group>
           </div>
           <div>
-            
+
             <Form.Group controlId="formCheckboxSonarQube">
               <Form.Check type="checkbox" label="SonarQube"
                 checked={!!services["SonarQube"]}

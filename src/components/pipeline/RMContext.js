@@ -99,49 +99,6 @@ class rmProvider extends Component {
     });
   }
 
-  handleCreateClick = async (e) => {
-    e.preventDefault();
-    if (this.state.appname.trim().length < 1)
-      return this.setState({ appNameValid: false });
-
-    this.setState({
-      checkingAppName: true,
-    });
-
-    //TODO: Fix the user issue, it's defined in context but not used
-    // eslint-disable-next-line no-unused-vars
-    const { token } = this.context;
-    const { user } = this.state;
-
-    if (this.state.appname.trim().length < 1) {
-      this.setState({ appnameError: true });
-      return;
-    }
-
-    let postBody = { name: this.state.appname, uid: user.sub };   // TODO :: Add user id as part of body
-    let currentComponent = this;
-    new ApiService(
-      "/applications/check-exists",
-      null,
-      token,
-      postBody).post()
-      .then(function (res) {
-        if (!res.data) {
-          currentComponent.setState({
-            appNameValid: true,
-            checkingAppName: false,
-          });
-        } else {
-          // console.log(applicationExists)
-          currentComponent.setState({
-            appNameValid: false,
-            checkingAppName: false,
-          });
-          alert("Application Name already exists!");
-        }
-      })
-  }
-
   handleNoClick = () => {
     this.setState({
       qtShow: false,
@@ -156,24 +113,52 @@ class rmProvider extends Component {
     });
   }
 
+  setAppDetails = (app) => {
+    this.setState({ appid: app._id, appname: app.name, data: {} });
+  }
+
   confirm = async () => {
-    const { appname: name, services: data, token } = this.state;
+    console.log("confirm")
+    const { appname: name, services: data, token, user, appid: id } = this.state;
     this.setState({
       saving: true,
     });
 
-    let postBody = Object.assign({ name }, data);
+    // console.log(data)
+
+    let postBody = Object.assign({ id }, { tools: data }, { uid: user.sub });
+    console.log(postBody)
+    let currentComponent = this;
     new ApiService(
-      "/applications",
+      "/applications/create/tools",
       null,
       token,
       postBody).post()
-      .then(() => {
-        alert("something went wrong, please try again later");
+      .then(function (response) {
+        currentComponent.setState({
+          data: response.data,
+          error: false,
+          messages: 'API call was successful!'
+        });
       })
-      .catch(() => {
-        alert("something went wrong, please try again later");
+      .catch(function (error) {
+        let message = null;
+        if (error.response) {
+          message = `Status ${error.response.status}: ${
+            error.response.data.message ? error.response.data.message : JSON.stringify(error.response.data)}`;
+        }
+        console.log(message ? `ERROR: ${message}` : `Error Reported: ${error}`);
+
+        currentComponent.setState({
+          error: true,
+          messages: message ? message : 'Error reported accessing API.'
+        });
+
+      })
+      .finally(function () {
+        currentComponent.setState({ fetching: false });
       });
+
 
     this.setState(
       {
@@ -181,12 +166,13 @@ class rmProvider extends Component {
       },
       () => {
         // eslint-disable-next-line react/prop-types
-        this.props.history.push("/");
+        // this.props.history.push("/");
       },
     );
   }
 
   handleModalSave = ({ service }) => {
+    console.log("model save clickde")
     const { services } = this.state;
     if (!services[service]) {
       services[service] = {};
@@ -199,7 +185,7 @@ class rmProvider extends Component {
   }
 
   handleModalCancel = ({ service }) => {
-    console.log("handle modal cancel");
+    console.log("handle modal cancel " + service);
     const { services } = this.state;
     delete services[service];
 
@@ -228,6 +214,7 @@ class rmProvider extends Component {
   }
 
   render() {
+    console.log(this.state)
     return (
       <Provider
         value={{
@@ -242,6 +229,7 @@ class rmProvider extends Component {
           serviceClick: this.serviceClick,
           handleServiceChange: this.handleServiceChange,
           checkBoxChange: this.checkBoxChange,
+          setAppDetails: this.setAppDetails,
           handleServiceCheckBoxChange: this.handleServiceCheckBoxChange,
         }}
       >

@@ -1,9 +1,9 @@
 import React from "react";
-import {RMContext} from "./RMContext";
+import { RMContext } from "./RMContext";
 import ReleaseManagementOtherServices, {
   Confirmation,
 } from "./ReleaseManagementOtherServices";
-import { Form } from "react-bootstrap";
+import { Form, Card, CardColumns, CardGroup } from "react-bootstrap";
 
 const githubci = {
   category: "Release Management",
@@ -132,13 +132,13 @@ class ReleaseManagementServices extends React.PureComponent {
   static contextType = RMContext
   state = {}
   render() {
-    const {serviceClick, saving} = this.context;
+    const { serviceClick, saving } = this.context;
 
     return (
       <Form className="ReleaseManagementServices" loading={saving}>
-        <h3>Services</h3>
-        <div className="ReleaseManagementServices__init-services">
-          <div style={{display: "flex"}}>
+        <h3 style={{ padding: '10px' }}>Services</h3>
+        <Card style={{ minWidth: '16rem' }}>
+          <Card.Body className="text-center">
             <div
               className="newApp__service-logo"
               onClick={() => serviceClick(jenkinsPipelineNode)}
@@ -147,16 +147,6 @@ class ReleaseManagementServices extends React.PureComponent {
               <span className="newApp__service-title">Jenkins Pipeline</span>
             </div>
 
-            {/* <div
-              className="newApp__service-logo"
-              onClick={() => serviceClick(jenkinsPipelineJava)}
-            >
-              <img src={require("../NewApp/imgs/jenkins.png")} />
-              <span className="newApp__service-title">
-                Jenkins Pipeline Java
-              </span>
-            </div> */}
-
             <div
               className="newApp__service-logo"
               onClick={() => serviceClick(githubci)}
@@ -164,28 +154,30 @@ class ReleaseManagementServices extends React.PureComponent {
               <img src={require("../api_connector/imgs/gitlab.png")} />
               <span className="newApp__service-title">Gitlab CI</span>
             </div>
-          </div>
-        </div>
-        {this.context.initServicesValid === true && this.context.qtShow && (
-          <div className="ReleaseManagementServices__qt">
-            <span>
-              Do you want to configure more DevOps tools for your application?{" "}
-            </span>
-            <span
-              className="ReleaseManagementServices__qt--yes"
-              onClick={this.context.handleYesClick}
-            >{"  Yes  "}</span>
-            {" / "}
-            <span
-              className="ReleaseManagementServices__qt--no"
-              onClick={this.context.handleNoClick}
-            >{" No "}</span>
-          </div>
-        )}
+
+            {this.context.initServicesValid === true && this.context.qtShow && (
+              <div className="ReleaseManagementServices__qt">
+                <span>
+                  Do you want to configure more DevOps tools for your application?{" "}
+                </span>
+                <span
+                  className="ReleaseManagementServices__qt--yes"
+                  onClick={this.context.handleYesClick}
+                >{"  Yes  "}</span>
+                {" / "}
+                <span
+                  className="ReleaseManagementServices__qt--no"
+                  onClick={this.context.handleNoClick}
+                >{" No "}</span>
+              </div>
+            )}
+          </Card.Body>
+        </Card>
+
         {this.context.initServicesValid === true &&
           this.context.otherServicesShow === true && (
-          <ReleaseManagementOtherServices />
-        )}
+            <ReleaseManagementOtherServices />
+          )}
         {this.context.otherServicesShow !== null && <Confirmation />}
       </Form>
     );

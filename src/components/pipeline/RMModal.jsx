@@ -1,50 +1,31 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable no-unused-vars */
-import React, {PureComponent} from "react";
+import React, { PureComponent } from "react";
 import { Modal, Form, Button } from "react-bootstrap";
-import {RMContext} from "./RMContext";
+import { RMContext } from "./RMContext";
 
 class RMModal extends PureComponent {
   static contextType = RMContext
   handlecancel = () => {
     console.log("cancel");
-    const {handleModalCancel, service, category} = this.context;
-    handleModalCancel({service, category});
+    const { handleModalCancel, service, category } = this.context;
+    handleModalCancel({ service, category });
   }
   handleSave = () => {
-    const {handleModalSave, service, category} = this.context;
-    if (this.validate()) {
-      handleModalSave({service, category});
-    }
-  }
-
-  validate = () => {
-    const {service} = this.context;
-    if (!service.includes("Jenkins Pipeline")) {
-      return true;
-    }
-    const errors = [];
-    if (this.inputs.length > 0) {
-      this.inputs.forEach(input => {
-        if (input && input.value.length === 0) {
-          errors.push("");
-          input.parentNode.classList.add("error");
-        }
-      });
-    }
-    return errors.length === 0;
+    const { handleModalSave, service, category } = this.context;
+    handleModalSave({ service, category });
   }
 
   isChecked = (service, name, val) => {
-    const {services} = this.context;
+    const { services } = this.context;
     if (!services || !services[service] || !services[service][name])
       return false;
     return services[service][name].includes(val);
   }
 
   onClose = () => {
-    const {handleModalCancel, service, category} = this.context;
-    handleModalCancel({service, category});
+    const { handleModalCancel, service, category } = this.context;
+    handleModalCancel({ service, category });
   }
 
   componentDidMount() {
@@ -62,7 +43,7 @@ class RMModal extends PureComponent {
       fields = [],
     } = this.context;
     return (
-    
+
       <Modal show={modalOpen} centered onHide={this.onClose}>
         <Modal.Header closeButton >
           <Modal.Title>{category}</Modal.Title></Modal.Header>
@@ -72,55 +53,55 @@ class RMModal extends PureComponent {
             {fields.length === 0 && (
               <Form.Group controlId="formCheckboxDecrypt">
                 <Form.Check type="checkbox" label="Decrypt"
-                  style={{marginRight: "10px"}}
+                  style={{ marginRight: "10px" }}
                   checked={this.isChecked(service, "decrypt", "decrypt")}
-                  onChange={() => handleServiceCheckBoxChange(service, "decrypt", "decrypt") }
+                  onChange={() => handleServiceCheckBoxChange(service, "decrypt", "decrypt")}
                 />
               </Form.Group>
             )}
-            {fields.length > 0 && 
-                fields.map(
-                  (({name, type, password, values, msg = [], key, ...rest}) => {
-                    if(type === "checkbox") {
-                      return (
-                        <>
-                          {values.map(val => (
-                            <Form.Group controlId={key}>
-                              <Form.Check type="checkbox" key={val} label={val} 
-                                style={{marginRight: "10px"}}
-                                checked={this.isChecked(service, name, val)}
-                                onChange={() => handleServiceCheckBoxChange(service, name, val) }
-                              />
-                            </Form.Group>
-                          ))}
-                        </>
-                      );
-                    }
+            {fields.length > 0 &&
+              fields.map(
+                (({ name, type, password, values, msg = [], key, ...rest }) => {
+                  if (type === "checkbox") {
                     return (
-                      <Form.Group controlId={key}>
-                        <Form.Label> {name} {"   "}</Form.Label>
-                        <Form.Control
-                          type={password ? "password" : "text"}
-                          ref={el => {
-                            if (rest.required) {
-                              this.inputs.push(el);
-                            }
-                          }}
-                          placeholder={name}
-                          name={`${service}//${key}`}
-                          value={
-                            services[service]
-                              ? services[service][key] || ""
-                              : ""
-                          }
-                          onChange={handleServiceChange}
-                        />
-                      </Form.Group>
+                      <>
+                        {values.map(val => (
+                          <Form.Group controlId={key}>
+                            <Form.Check type="checkbox" key={val} label={val}
+                              style={{ marginRight: "10px" }}
+                              checked={this.isChecked(service, name, val)}
+                              onChange={() => handleServiceCheckBoxChange(service, name, val)}
+                            />
+                          </Form.Group>
+                        ))}
+                      </>
                     );
-                  })
-                )
+                  }
+                  return (
+                    <Form.Group controlId={key}>
+                      <Form.Label> {name} {"   "}</Form.Label>
+                      <Form.Control
+                        type={password ? "password" : "text"}
+                        ref={el => {
+                          if (rest.required) {
+                            this.inputs.push(el);
+                          }
+                        }}
+                        placeholder={name}
+                        name={`${service}//${key}`}
+                        value={
+                          services[service]
+                            ? services[service][key] || ""
+                            : ""
+                        }
+                        onChange={handleServiceChange}
+                      />
+                    </Form.Group>
+                  );
+                })
+              )
             }
-              
+
           </Form>
         </Modal.Body>
         <Modal.Footer>
@@ -131,7 +112,7 @@ class RMModal extends PureComponent {
           > Cancel
           </Button>
           <Button color="green" inverted onClick={this.handleSave}>
-           Save
+            Save
           </Button>
         </Modal.Footer>
       </Modal>
