@@ -73,6 +73,11 @@ a {
   font-size: 1.1em;
 }
 
+.col-header-text {
+  font-weight: bold;
+  font-size: larger;
+}
+
 .grid-striped .row:nth-of-type(odd) {
   background-color: rgba(0,0,0,.05);
 }
