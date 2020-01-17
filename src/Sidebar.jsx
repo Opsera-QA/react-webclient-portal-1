@@ -26,12 +26,14 @@ function Sidebar() {
     <div className="d-flex flex-row flex-md-column sidebar">
       <div className="navbar-list">
         <NavLink className="nav-link" activeClassName="chosen" exact to="/"><FontAwesomeIcon icon={faHome} fixedWidth /> Home</NavLink>
+
+        <div className="mt-3 side-nav-header-text">Products</div>
         {state.authenticated && <NavLink className="nav-link" activeClassName="chosen" to="/inventory"><FontAwesomeIcon icon={faClipboardList} fixedWidth /> Inventory</NavLink>}
         {state.authenticated && <NavLink className="nav-link" activeClassName="chosen" to="/platform"><FontAwesomeIcon icon={faPlus} fixedWidth /> New Platform</NavLink>}
         {state.authenticated && <NavLink className="nav-link" activeClassName="chosen" to="/pipeline"><FontAwesomeIcon icon={faStream} fixedWidth /> Pipelines</NavLink>}
         {state.authenticated && <NavLink className="nav-link" activeClassName="chosen" to="/analytics"><FontAwesomeIcon icon={faChartLine} fixedWidth /> Analytics</NavLink>}
-
-
+        
+        <div className="mt-3 side-nav-header-text">Operations</div>
         {state.authenticated && <NavLink className="nav-link" activeClassName="chosen" to="/api_connector"><FontAwesomeIcon icon={faLink} fixedWidth /> Connectors</NavLink>}
         {state.authenticated && <NavLink className="nav-link" activeClassName="chosen" to="/update"><FontAwesomeIcon icon={faDownload} fixedWidth /> Updates</NavLink>}
         {state.administrator && <NavLink className="nav-link" activeClassName="chosen" to="/admin"><FontAwesomeIcon icon={faTools} fixedWidth /> Admin Tools</NavLink>}

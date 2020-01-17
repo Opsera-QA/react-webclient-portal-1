@@ -29,6 +29,11 @@ a {
   font-size: .9rem;
 }
 
+.side-nav-header-text {
+  font-weight: bold;
+  color: #fff;
+}
+
 .nav-link-text {
   cursor: pointer;
   color: #226196 !important;
