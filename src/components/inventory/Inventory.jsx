@@ -73,7 +73,6 @@ class Inventory extends PureComponent {
 
   render() {
     const { data, error, fetching } = this.state;
-    console.log(data);
     return (
       <div>
         <h3>Inventory</h3>
