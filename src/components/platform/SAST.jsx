@@ -19,7 +19,7 @@ class SAST extends React.PureComponent {
     return (
       <Card style={{ minWidth: "16rem" }}>
         <Card.Body className="text-center">
-          <Card.Title>Code Quality Tools</Card.Title>
+          <Card.Title>Code Security</Card.Title>
           
           <Card.Text>
             <div

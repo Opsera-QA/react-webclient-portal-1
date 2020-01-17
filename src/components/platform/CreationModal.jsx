@@ -39,12 +39,12 @@ class CreationModal extends React.PureComponent {
         <Modal.Header  closeButton>
           <Modal.Title style={{ fontSize:"1.3em"}}>{service} Creation</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="p-3">
-          <div className="text-muted h6">Options:</div>
-          <Form>
+        <Modal.Body className="p-3 modal-body-text-block">
+          <div>This will register a new {service} instance.  Are you sure you want to proceed?</div>
+          <div className="text-muted mt-3">Settings:</div>
+          <Form className="p-2">
             <Form.Group controlId="formCheckboxDecrypt">
-              <Form.Check type="checkbox" label="Decrypt"
-                style={{marginRight: "10px"}}
+              <Form.Check type="checkbox" label="Store Instance Decrypted"
                 checked={isChecked(service, "decrypt")}
                 onChange={this.handleCheckBoxChange}
               />
@@ -57,7 +57,7 @@ class CreationModal extends React.PureComponent {
             onClick={() => this.handleCancel(service)}> Cancel
           </Button>
           <Button variant="primary" onClick={this.handleSave}>
-             Save
+             Confirm
           </Button>
         </Modal.Footer>
       </Modal>
