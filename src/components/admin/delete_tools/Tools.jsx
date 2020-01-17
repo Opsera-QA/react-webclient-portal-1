@@ -1,8 +1,7 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from "react";
-//import { connect } from "react-redux";
-import { Button, Modal, Table } from "react-bootstrap";
-//import { getApps } from "../../../actions/thunk";
-
+import { Button, Modal } from "react-bootstrap";
+import Moment from "react-moment";
 import { AuthContext } from "../../../contexts/AuthContext";  //REact Context API Code for User Authentication
 import { ApiService } from "../../../api/apiService";
 import ErrorDialog from "../../common/error";
@@ -21,7 +20,7 @@ class Tools extends Component {
         </div>
       );
 
-    const tools = application.tools.filter(tool => tool.toolStatus === "ACTIVE");
+    const tools = application.tools; //.filter(tool => tool.toolStatus === "ACTIVE");
 
     if (!tools || !tools.length) {
       return (
@@ -74,7 +73,7 @@ class ToolTable extends React.PureComponent {
   delToolData(accessToken, tool) {
     console.log(tool);
     // this.setState({loading: true, tool: null})
-    const apiCall = new ApiService("/tools", { id: tool._id }, accessToken);
+    const apiCall = new ApiService("/tools", null, accessToken, { id: tool._id });
     let currentComponent = this;
     apiCall.delete()
       .then(function (response) {
@@ -100,46 +99,35 @@ class ToolTable extends React.PureComponent {
 
     if (!tool) return null;
 
-    const { name, port } = tool;
+    const { name, port, toolStatus, installationDate, _id } = tool;
     return (
       <>
         {error ? <ErrorDialog error={error} /> : null}
-
-        <Table responsive>
-          <thead>
-            <tr>
-              <th>
-                <tr>
-                  {name}
-                </tr>
-              </th>
-              <th>
-                <tr>
-                  <Button variant="danger" onClick={this.handleDeletePress}>Delete</Button>
-                </tr>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>PORT</td>
-              <td>{port}</td>
-            </tr>
-          </tbody>
-        </Table>
+        <div className="p-2 mt-2">
+          <div className="row">
+            <div className="col-md col-header-text">{name}</div>
+            <div className="col-md">Port: {port}</div>
+            <div className="col-md">Status: {toolStatus}</div>
+            <div className="col-md">Install Date: <Moment format="MM/DD/YYYY" date={installationDate} /></div>
+            <div className="col-md"><Button variant="danger" onClick={this.handleDeletePress}>Delete</Button></div>
+          </div>
+          <div className="row">
+            <div className="col-md text-muted">ID: {_id}</div>
+          </div>
+        </div>
 
         <Modal show={this.state.confirm} onHide={this.handleCancel}>
           <Modal.Header closeButton>
             <Modal.Title>Confirm Delete?</Modal.Title>
           </Modal.Header>
-          <Modal.Body>Warning! Data cannot be recovered once Tool is deleted. Do you still want to proceed?</Modal.Body>
+          <Modal.Body>Warning! Data cannot be recovered once a tool is deleted. Do you still want to proceed?</Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={this.handleCancel}>
               Cancel
-              </Button>
+            </Button>
             <Button variant="danger" onClick={this.handleConfirm}>
-              Yes
-              </Button>
+              Delete
+            </Button>
           </Modal.Footer>
         </Modal>
 
@@ -147,10 +135,5 @@ class ToolTable extends React.PureComponent {
     );
   }
 }
-
-// const ToolTable = connect(
-//   null,
-//   {getApps},
-// )(toolTable);
 
 export default Tools;
