@@ -7,7 +7,6 @@ import { RMContext } from "./RMContext";
 class RMModal extends PureComponent {
   static contextType = RMContext
   handlecancel = () => {
-    console.log("cancel");
     const { handleModalCancel, service, category } = this.context;
     handleModalCancel({ service, category });
   }
@@ -46,13 +45,15 @@ class RMModal extends PureComponent {
 
       <Modal show={modalOpen} centered onHide={this.onClose}>
         <Modal.Header closeButton >
-          <Modal.Title>{category}</Modal.Title></Modal.Header>
-        <Modal.Body>
-          <h3>{service}</h3>
+          <Modal.Title style={{ fontSize: "1.3em" }}>{category}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="p-3 modal-body-text-block">
+          <div>This will register a new {service} instance.  Are you sure you want to proceed?</div>
+          <div className="text-muted mt-3">Settings:</div>
           <Form>
             {fields.length === 0 && (
               <Form.Group controlId="formCheckboxDecrypt">
-                <Form.Check type="checkbox" label="Decrypt"
+                <Form.Check type="checkbox" label="Store Instance Decrypted"
                   style={{ marginRight: "10px" }}
                   checked={this.isChecked(service, "decrypt", "decrypt")}
                   onChange={() => handleServiceCheckBoxChange(service, "decrypt", "decrypt")}
@@ -106,12 +107,11 @@ class RMModal extends PureComponent {
         </Modal.Body>
         <Modal.Footer>
           <Button
-            color="red"
-            inverted
+            variant="outline-secondary"
             onClick={this.handlecancel}
           > Cancel
           </Button>
-          <Button color="green" inverted onClick={this.handleSave}>
+          <Button variant="primary" onClick={this.handleSave}>
             Save
           </Button>
         </Modal.Footer>

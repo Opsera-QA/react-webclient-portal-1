@@ -133,23 +133,30 @@ class ReleaseManagementServices extends React.PureComponent {
   state = {}
   render() {
     const { serviceClick, saving } = this.context;
-
+    const { tools } = this.props;
     return (
       <Form className="ReleaseManagementServices" loading={saving}>
         <h3 style={{ padding: '10px' }}>Services</h3>
         <Card style={{ minWidth: '16rem' }}>
           <Card.Body className="text-center">
+            <Card.Title>Release Management</Card.Title>
             <div
-              className="newApp__service-logo"
-              onClick={() => serviceClick(jenkinsPipelineNode)}
+              className={`newApp__service-logo ${tools.includes("Jenkins Pipeline") ? "newApp__service-logo--alredy-installed" : ""}`}
+              onClick={() => {
+                !tools.includes("Jenkins Pipeline") &&
+                  serviceClick(jenkinsPipelineNode)
+              }}
             >
               <img src={require("../platform/imgs/jenkins.png")} />
               <span className="newApp__service-title">Jenkins Pipeline</span>
             </div>
 
             <div
-              className="newApp__service-logo"
-              onClick={() => serviceClick(githubci)}
+              className={`newApp__service-logo ${tools.includes("GitlabCI") ? "newApp__service-logo--alredy-installed" : ""}`}
+              onClick={() => {
+                !tools.includes("GitlabCI") &&
+                  serviceClick(githubci)
+              }}
             >
               <img src={require("../api_connector/imgs/gitlab.png")} />
               <span className="newApp__service-title">Gitlab CI</span>
@@ -176,9 +183,9 @@ class ReleaseManagementServices extends React.PureComponent {
 
         {this.context.initServicesValid === true &&
           this.context.otherServicesShow === true && (
-            <ReleaseManagementOtherServices />
+            <ReleaseManagementOtherServices app={this.props.app} tools={this.props.tools} />
           )}
-        {this.context.otherServicesShow !== null && <Confirmation />}
+        {this.context.otherServicesShow !== null && <Confirmation app={this.props.app} tools={this.props.tools} />}
       </Form>
     );
   }

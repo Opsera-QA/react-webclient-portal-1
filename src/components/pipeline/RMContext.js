@@ -53,6 +53,16 @@ class rmProvider extends Component {
     }
   }
 
+  reset = () => {
+    this.setState({
+      modalOpen: false,
+      services: {},
+      applicationId: null,
+      appname: "",
+      more: false,
+      saving: false,
+    })
+  }
   // services
   handleServiceCheckBoxChange = (service, name, val) => {
     const { services } = this.state;
@@ -114,20 +124,16 @@ class rmProvider extends Component {
   }
 
   setAppDetails = (app) => {
-    this.setState({ appid: app._id, appname: app.name, data: {} });
+    this.setState({ applicationId: app._id, appname: app.name, data: {} });
   }
 
   confirm = async () => {
-    console.log("confirm")
-    const { appname: name, services: data, token, user, appid: id } = this.state;
+    const { appname: name, services: data, token, user, applicationId: id } = this.state;
     this.setState({
       saving: true,
     });
 
-    // console.log(data)
-
     let postBody = Object.assign({ id }, { tools: data }, { uid: user.sub });
-    console.log(postBody)
     let currentComponent = this;
     new ApiService(
       "/applications/create/tools",
@@ -166,13 +172,12 @@ class rmProvider extends Component {
       },
       () => {
         // eslint-disable-next-line react/prop-types
-        // this.props.history.push("/");
+        setTimeout(() => { this.props.history.push("/inventory") }, 2000);
       },
     );
   }
 
   handleModalSave = ({ service }) => {
-    console.log("model save clickde")
     const { services } = this.state;
     if (!services[service]) {
       services[service] = {};
@@ -185,11 +190,9 @@ class rmProvider extends Component {
   }
 
   handleModalCancel = ({ service }) => {
-    console.log("handle modal cancel " + service);
     const { services } = this.state;
     delete services[service];
 
-    console.log(services);
     this.setState({
       services,
       modalOpen: false,
@@ -214,7 +217,6 @@ class rmProvider extends Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <Provider
         value={{
@@ -231,6 +233,7 @@ class rmProvider extends Component {
           checkBoxChange: this.checkBoxChange,
           setAppDetails: this.setAppDetails,
           handleServiceCheckBoxChange: this.handleServiceCheckBoxChange,
+          reset: this.reset
         }}
       >
         {this.props.children}

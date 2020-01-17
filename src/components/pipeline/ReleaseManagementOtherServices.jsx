@@ -11,12 +11,12 @@ class ReleaseManagementOtherServices extends React.PureComponent {
         <h3 style={{ padding: '20px' }}>Additional Serivces</h3>
         <div className="ReleaseManagementOtherServices">
           <CardColumns>
-            <ConfigurationManagement />
-            <SASST />
-            <ContinousIntegration />
-            <LogManagement />
-            <RepositoryManagement />
-            <Monitoring />
+            <ConfigurationManagement app={this.props.app} tools={this.props.tools} />
+            <SASST app={this.props.app} tools={this.props.tools} />
+            <ContinousIntegration app={this.props.app} tools={this.props.tools} />
+            <LogManagement app={this.props.app} tools={this.props.tools} />
+            <RepositoryManagement app={this.props.app} tools={this.props.tools} />
+            <Monitoring app={this.props.app} tools={this.props.tools} />
           </CardColumns>
         </div>
       </>
@@ -28,15 +28,20 @@ class ConfigurationManagement extends React.PureComponent {
   static contextType = RMContext
   render() {
     const { serviceClick } = this.context;
+    const { tools } = this.props;
+
     return (
       <ServicesWrapper label="Configuration Management">
         <div
-          className="newApp__service-logo"
-          onClick={() =>
-            serviceClick({
-              service: "Ansible",
-              category: "Configuration Management",
-            })
+          className={`newApp__service-logo ${tools.includes("Ansible") ? "newApp__service-logo--alredy-installed" : ""}`}
+          onClick={() => {
+            !tools.includes("Ansible") &&
+              serviceClick({
+                service: "Ansible",
+                category: "Configuration Management",
+              })
+          }
+
           }
         >
           <img src={require("../platform/imgs/ansible.png")} />
@@ -67,15 +72,18 @@ class ContinousIntegration extends React.PureComponent {
   static contextType = RMContext
   render() {
     const { serviceClick } = this.context;
+    const { tools } = this.props;
     return (
       <ServicesWrapper label="Continous Integration">
         <div
-          className="newApp__service-logo"
-          onClick={() =>
-            serviceClick({
-              service: "Jenkins",
-              category: "Continous Integration",
-            })
+          className={`newApp__service-logo ${tools.includes("Jenkins") ? "newApp__service-logo--alredy-installed" : ""}`}
+          onClick={() => {
+            !tools.includes("Jenkins") &&
+              serviceClick({
+                service: "Jenkins",
+                category: "Continous Integration",
+              })
+          }
           }
         >
           <img src={require("../platform/imgs/jenkins.png")} />
@@ -98,15 +106,18 @@ class LogManagement extends React.PureComponent {
   static contextType = RMContext
   render() {
     const { serviceClick } = this.context;
+    const { tools } = this.props;
     return (
       <ServicesWrapper label="Log Management">
         <div
-          className="newApp__service-logo"
-          onClick={() =>
-            serviceClick({
-              category: "Log Management",
-              service: "ElasticSearch",
-            })
+          className={`newApp__service-logo ${tools.includes("ElasticSearch") ? "newApp__service-logo--alredy-installed" : ""}`}
+          onClick={() => {
+            !tools.includes("ElasticSearch") &&
+              serviceClick({
+                category: "Log Management",
+                service: "ElasticSearch",
+              })
+          }
           }
         >
           <img src={require("../platform/imgs/elastic-search.png")} />
@@ -117,7 +128,7 @@ class LogManagement extends React.PureComponent {
           <img src={require("../platform/imgs/log-stash.png")} />
           <span className="newApp__service-title">LogStash</span>
         </div>
-      </ServicesWrapper>
+      </ServicesWrapper >
 
     );
   }
@@ -164,15 +175,18 @@ class SASST extends React.PureComponent {
   static contextType = RMContext
   render() {
     const { serviceClick } = this.context;
+    const { tools } = this.props;
     return (
       <ServicesWrapper label="SASST">
         <div
-          className="newApp__service-logo"
-          onClick={() =>
-            serviceClick({
-              category: "SASST",
-              service: "SonarQube",
-            })
+          className={`newApp__service-logo ${tools.includes("SonarQube") ? "newApp__service-logo--alredy-installed" : ""}`}
+          onClick={() => {
+            !tools.includes("SonarQube") &&
+              serviceClick({
+                category: "SASST",
+                service: "SonarQube",
+              })
+          }
           }
         >
           <img src={require("../platform/imgs/sonar.png")} />
@@ -187,15 +201,18 @@ class Monitoring extends React.PureComponent {
   static contextType = RMContext
   render() {
     const { serviceClick } = this.context;
+    const { tools } = this.props;
     return (
       <ServicesWrapper label="Monitoring">
         <div
-          className="newApp__service-logo"
-          onClick={() =>
-            serviceClick({
-              category: "Monitoring",
-              service: "Nagios",
-            })
+          className={`newApp__service-logo ${tools.includes("Nagios") ? "newApp__service-logo--alredy-installed" : ""}`}
+          onClick={() => {
+            !tools.includes("Nagios") &&
+              serviceClick({
+                category: "Monitoring",
+                service: "Nagios",
+              })
+          }
           }
         >
           <img src={require("../platform/imgs/nagios.png")} />
@@ -215,94 +232,75 @@ export class Confirmation extends React.PureComponent {
   static contextType = RMContext
   render() {
     const { services, checkBoxChange } = this.context;
+    const { tools } = this.props;
+    let isDisplayed = false;
+    if (Object.keys(services).length > 0) {
+      isDisplayed = true;
+    }
     return (
-      <div className="newApp__card" style={{ width: "100%" }}>
-        <h3 style={{ textAlign: "center" }}>
-          Confirmation
-        </h3>
-        <div className="newApp__checkbox-group">
-          <div>
+      <>
+        {isDisplayed || tools.length > 0 ?
+          <ServicesWrapper label="Confirm Tools Selection">
 
-            <Form.Group controlId="formCheckboxGitlabCI">
-              <Form.Check type="checkbox" label="GitlabCI"
-                checked={!!services["GitlabCI"]}
-                onChange={e => checkBoxChange(e, "GitlabCI")} />
-            </Form.Group>
+            <Form.Check type="checkbox" label="GitlabCI" inline className="p-2"
+              checked={!!services["GitlabCI"] || tools.includes("GitlabCI")}
+              disabled={tools.includes("GitlabCI")}
+              onChange={e => checkBoxChange(e, "GitlabCI")} />
 
+            <Form.Check type="checkbox" label="Jenkins Pipeline" inline className="p-2"
+              checked={!!services["Jenkins Pipeline"] || tools.includes("Jenkins Pipeline")}
+              disabled={tools.includes("Jenkins Pipeline")}
+              onChange={e => checkBoxChange(e, "Jenkins Pipeline")} />
 
-            <Form.Group controlId="formCheckboxJenkinsPipeline">
-              <Form.Check type="checkbox" label="Jenkins Pipeline"
-                checked={!!services["Jenkins Pipeline"]}
-                onChange={e => checkBoxChange(e, "Jenkins Pipeline")} />
-            </Form.Group>
+            <Form.Check type="checkbox" label="Chef" inline className="p-2" disabled />
 
-            <Form.Group controlId="formCheckboxChef">
-              <Form.Check type="checkbox" label="Chef" disabled />
-            </Form.Group>
-          </div>
-          <div>
+            <Form.Check type="checkbox" label="Ansible" inline className="p-2"
+              checked={!!services["Ansible"] || tools.includes("Ansible")}
+              disabled={tools.includes("Ansible")}
+              onChange={e => checkBoxChange(e, "Ansible")} />
 
-            <Form.Group controlId="formCheckboxAnsible">
-              <Form.Check type="checkbox" label="Ansible"
-                checked={!!services["Ansible"]}
-                onChange={e => checkBoxChange(e, "Ansible")} />
-            </Form.Group>
-            <Form.Group controlId="formCheckboxZookeeper">
-              <Form.Check type="checkbox" label="Zookeeper" disabled />
-            </Form.Group>
+            <Form.Check type="checkbox" label="Zookeeper" inline className="p-2" disabled />
 
-            <Form.Group controlId="formCheckboxJenkins">
-              <Form.Check type="checkbox" label="Jenkins"
-                checked={!!services["Jenkins"]}
-                onChange={e => checkBoxChange(e, "Jenkins")} />
-            </Form.Group>
-            <Form.Group controlId="formCheckboxTeamcity">
-              <Form.Check type="checkbox" label="Teamcity" disabled />
-            </Form.Group>
+            <Form.Check type="checkbox" label="Jenkins" inline className="p-2"
+              checked={!!services["Jenkins"] || tools.includes("Jenkins")}
+              disabled={tools.includes("Jenkins")}
+              onChange={e => checkBoxChange(e, "Jenkins")} />
 
-          </div>
-          <div>
+            <Form.Check type="checkbox" label="Teamcity" inline className="p-2" disabled />
 
-            <Form.Group controlId="formCheckboxNagios">
-              <Form.Check type="checkbox" label="Nagios"
-                checked={!!services["Nagios"]}
-                onChange={e => checkBoxChange(e, "Nagios")} />
-            </Form.Group>
+            <Form.Check type="checkbox" label="Nagios" inline className="p-2"
+              checked={!!services["Nagios"] || tools.includes("Nagios")}
+              disabled={tools.includes("Nagios")}
+              onChange={e => checkBoxChange(e, "Nagios")} />
 
-            <Form.Group controlId="formCheckboxElasticSearch">
-              <Form.Check type="checkbox" label="ElasticSearch"
-                checked={!!services["ElasticSearch"]}
-                onChange={e => checkBoxChange(e, "ElasticSearch")} />
-            </Form.Group>
+            <Form.Check type="checkbox" label="ElasticSearch" inline className="p-2"
+              checked={!!services["ElasticSearch"] || tools.includes("ElasticSearch")}
+              disabled={tools.includes("ElasticSearch")}
+              onChange={e => checkBoxChange(e, "ElasticSearch")} />
 
-            <Form.Group controlId="formCheckboxLogstash">
-              <Form.Check type="checkbox" label="Logstash" disabled />
-            </Form.Group>
-            <Form.Group controlId="formCheckboxArtifactory">
-              <Form.Check type="checkbox" label="Artifactory" disabled />
-            </Form.Group>
-          </div>
-          <div>
+            <Form.Check type="checkbox" label="Logstash" inline className="p-2" disabled />
 
-            <Form.Group controlId="formCheckboxSonarQube">
-              <Form.Check type="checkbox" label="SonarQube"
-                checked={!!services["SonarQube"]}
-                onChange={e => checkBoxChange(e, "SonarQube")} />
-            </Form.Group>
-            <Form.Group controlId="formCheckboxNexus">
-              <Form.Check type="checkbox" label="Nexus" disabled />
-            </Form.Group>
-            <Form.Group controlId="formCheckboxPuppet">
-              <Form.Check type="checkbox" label="Puppet" disabled />
-            </Form.Group>
-          </div>
-        </div>
-        <div className="newApp__confirm">
-          <Button variant="primary" onClick={this.context.confirm}>
-            Confirm
-          </Button>
-        </div>
-      </div>
+            <Form.Check type="checkbox" label="Artifactory" inline className="p-2" disabled />
+
+            <Form.Check type="checkbox" label="SonarQube" inline className="p-2"
+              checked={!!services["SonarQube"] || tools.includes("SonarQube")}
+              disabled={tools.includes("SonarQube")}
+              onChange={e => checkBoxChange(e, "SonarQube")} />
+
+            <Form.Check type="checkbox" label="Nexus" inline className="p-2" disabled />
+
+            <Form.Check type="checkbox" label="Puppet" inline className="p-2" disabled />
+
+            <div className="m-2 text-right">
+              <Button variant="outline-primary" onClick={this.context.confirm}>
+                Confirm
+              </Button>
+            </div>
+          </ServicesWrapper> : (
+            <></>
+          )
+        }
+      </>
     );
   }
 }

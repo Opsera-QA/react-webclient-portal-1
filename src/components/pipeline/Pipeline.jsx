@@ -8,6 +8,8 @@ import SuccessDialog from "../common/success";
 import { isAlphaNumeric, handleError } from "../../helpers";
 import { ApiService } from "../../api/apiService";
 import "./styles.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWrench } from "@fortawesome/free-solid-svg-icons";
 
 class Pipeline extends React.PureComponent {
   static contextType = RMContext
@@ -18,6 +20,7 @@ class Pipeline extends React.PureComponent {
     data: {},
     tools: [],
     error: null,
+    status: null,
     messages: null,
     editTools: false
   }
@@ -34,6 +37,65 @@ class Pipeline extends React.PureComponent {
     });
   }
 
+
+  editTools = async () => {
+    const { reset } = this.context;
+    await reset();
+    this.setState(prevState => ({
+      editTools: !prevState.editTools,
+      error: null,
+      messages: null,
+      status: null,
+      data: null,
+      tools: []
+    }), () => {
+      if (this.state.editTools) {
+        this.getApiData();
+      }
+    });
+  }
+
+  async getApiData() {
+    const { token, user } = this.context;
+    const urlParams = { userid: user.sub };
+    const apiCall = new ApiService("/applications", urlParams, token);
+    let currentComponent = this;
+    apiCall.get()
+      .then(function (response) {
+        currentComponent.setState({
+          dropdownData: response.data,
+          error: null,
+          fetching: false
+        });
+      })
+      .catch(function (error) {
+        currentComponent.setState({
+          error: error,
+          fetching: false
+        });
+      });
+  }
+
+
+  handleDropdownChange = (e) => {
+    this.setState({ key: e.target.value }, () => {
+      this.setSelectedApp();
+    });
+  }
+
+  setSelectedApp() {
+    const { setAppDetails } = this.context;
+
+    const selectedApp = this.state.dropdownData.find(el => el._id === this.state.key);
+    setAppDetails(selectedApp);
+    let tools = selectedApp.tools.map(({ name }) => name);
+    this.setState({
+      data: selectedApp,
+      tools: tools,
+      status: "success"
+    });
+  }
+
   createClick = async (e) => {
     e.preventDefault();
 
@@ -44,9 +106,7 @@ class Pipeline extends React.PureComponent {
     // eslint-disable-next-line no-unused-vars
     const { token, user, appname, setAppDetails } = this.context;
 
-    console.log("clicked2")
     let postBody = { userid: user.sub, name: appname };
-    console.log(postBody);
     let currentComponent = this;
     new ApiService(
       "/applications/create",
@@ -96,32 +156,72 @@ class Pipeline extends React.PureComponent {
   }
   render() {
     const { checkingAppName, appnameError, appname, handleCreateClick } = this.context;
-    const { error, messages, status, fetching } = this.state;
+    const { error, messages, status, fetching, editTools, dropdownData } = this.state;
 
     return (
-      <Container className="NewApplication">
-        <h2>CI/CD Pipeline</h2>
-        {error ? <ErrorDialog error={error} /> : null}
-        {status === "success" ? <SuccessDialog successMessage={messages} /> : (
-          <>
-            <Form loading={checkingAppName}>
-              {this.renderInput()}
-              <Button
-                variant="primary"
-                type="submit"
-                onClick={this.createClick}
-                disabled={!!appnameError || !appname || !appname.length}
-              >
-                Create
+      <>
+        <div className="ml-3">
+
+          <h3>CI/CD Pipeline</h3>
+          <div className="row mb-2">
+            {status !== "success" && !editTools ?
+              <div className="col ml-auto">
+                <Form loading={checkingAppName}>
+                  {this.renderInput()}
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    onClick={this.createClick}
+                    disabled={!!appnameError || !appname || !appname.length}
+                  >
+                    Create
+                  </Button>
+                </Form>
+              </div>
+              : null
+            }
+
+            {editTools && dropdownData && (
+              <div className="col ml-auto">
+                <Form>
+                  <Form.Group>
+                    <Form.Control as="select"
+                      hidden={(!fetching && dropdownData.length > 0) ? false : true}
+                      onChange={this.handleDropdownChange}
+                      style={{ marginTop: 25 }}>
+                      <option value="" selected disabled>{fetching ? "loading..." : "Select Application to Edit"}</option>
+                      {!fetching && (
+                        <>
+                          {dropdownData ? dropdownData.map(application => (
+                            <option key={application.name} value={application._id}>{application.name}</option>
+                          )) : ""}
+                        </>
+                      )}
+                    </Form.Control>
+                  </Form.Group>
+                </Form>
+              </div>
+            )}
+
+            <div className="col ml-auto pt-4">
+              <Button variant="outline-primary" className="float-right mt-1" size="sm" onClick={() => this.editTools()}>
+                <FontAwesomeIcon icon={faWrench} fixedWidth /> {!editTools ? (<>Edit Existing Applications</>) : (<>Add an Application</>)}
               </Button>
-            </Form>
-          </>
-        )}
 
+            </div>
 
-        {this.state.status === "success" && <ReleaseManagementServices />}
-        <RMModal />
-      </Container>
+          </div>
+
+          {error ? <ErrorDialog error={error} /> : null}
+          {status === "success" && messages ? <SuccessDialog successMessage={messages} /> : null}
+          {this.state.status === "success" && (
+            <div className="mb-2">
+              <ReleaseManagementServices app={this.state.data} tools={this.state.tools} />
+            </div>
+          )}
+          <RMModal />
+        </div>
+      </>
     );
   }
 }
