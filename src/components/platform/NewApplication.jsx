@@ -167,7 +167,7 @@ class NewApplication extends React.PureComponent {
               <div className="col ml-auto">
                 <Form loading={checkingAppName || saving}>
                   <Form.Row>
-                    <Form.Group as="Col" controlId="formGridEmail">
+                    <Form.Group controlId="formGridEmail">
                       <Form.Label>Application Name</Form.Label>
                       <Form.Control type="text" 
                         placeholder="Application Name"

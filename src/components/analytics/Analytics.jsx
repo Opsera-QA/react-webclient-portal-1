@@ -26,7 +26,9 @@ function Analytics({ tools }) {
       const { getAccessToken } = contextType;
       const accessToken = await getAccessToken();
       
-      const apiCall = new ApiService("/users/tools", {}, accessToken);
+      //THIS OBJECT CAN NOW BE PASSED TO ALL CHILDNRED PROPS FOR CALLS>  IT HAS TOKEN and is ready to use!!!
+      // That is how you do API calls to children wihtout needingt another context!
+      const apiCall = new ApiService("/users/tools", {}, accessToken);  
       apiCall.get()
         .then(function (response) {
         /* const tool = response.tools.find(tool => {    //api not working timeout error hope this works!
