@@ -166,7 +166,7 @@ class Pipeline extends React.PureComponent {
           <div className="row mb-2">
             {status !== "success" && !editTools ?
               <div className="col ml-auto">
-                <Form loading={checkingAppName}>
+                <Form loading={checkingAppName ? "true" : undefined}>
                   {this.renderInput()}
                   <Button
                     variant="primary"

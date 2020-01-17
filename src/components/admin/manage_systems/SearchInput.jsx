@@ -18,7 +18,7 @@ function SearchInput({org, loading, orgSearch, handleChange}) {
         </Form.Row>
       </Form>
       
-      <Button variant="primary" type="submit" loading={loading} onClick={orgSearch}>
+      <Button variant="primary" type="submit" loading={loading ? "true" : undefined} onClick={orgSearch}>
         Search
       </Button>
     </>

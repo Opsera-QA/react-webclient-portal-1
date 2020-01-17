@@ -165,7 +165,7 @@ class NewApplication extends React.PureComponent {
             
             {status !== "success" && !editTools ? 
               <div className="col ml-auto">
-                <Form loading={checkingAppName || saving}>
+                <Form loading={checkingAppName || saving ? "true" : undefined}>
                   <Form.Row>
                     <Form.Group controlId="formGridEmail">
                       <Form.Label>Application Name</Form.Label>
@@ -183,7 +183,7 @@ class NewApplication extends React.PureComponent {
                     variant="primary"
                     type="submit"
                     onClick={this.handleCreateClick}
-                    loading={checkingAppName}
+                    loading={checkingAppName ? "true" : undefined}
                     disabled={!!appnameError || !appname || !appname.length || status === "success"}>
                         Create
                   </Button>
