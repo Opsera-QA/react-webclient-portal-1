@@ -21,7 +21,8 @@ class Tools extends Component {
         </div>
       );
 
-    const tools = application.tools.filter(tool => tool.toolStatus === "ACTIVE");
+    // const tools = application.tools.filter(tool => tool.toolStatus === "ACTIVE");
+    const tools = application.tools;
 
     if (!tools || !tools.length) {
       return (
@@ -76,6 +77,7 @@ class ToolTable extends React.PureComponent {
     console.log(tool);
     // this.setState({loading: true, tool: null})
     const urlParams = { id: tool._id, userid: userInfo.sub };
+    console.log(urlParams)
     const apiCall = new ApiService("/tools", urlParams, accessToken);
     let currentComponent = this;
     apiCall.delete()
