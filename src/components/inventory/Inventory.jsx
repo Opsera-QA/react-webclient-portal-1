@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { PureComponent } from "react";
 import { Form, Alert, Row, Col, Button } from "react-bootstrap";
 import Moment from "react-moment";
@@ -138,7 +139,7 @@ function App({ application }) {
   const { tools } = application;
   if (tools.length === 0) {
     return (
-      <div>
+      <div className="m-4">
         <p>No tools for this application.</p>
       </div>
     );
@@ -154,20 +155,23 @@ function App({ application }) {
 }
 
 const ToolTable = ({ tool }) => {
-  const { name, port, toolStatus, toolURL, versionNumber, installationDate, dnsName } = tool;
+  const { _id, name, port, toolStatus, toolURL, versionNumber, installationDate, dnsName } = tool;
   return (
-    <div className="grid-striped m-3">
-      <Row style={{ marginTop: 20 }}>
-        <Col lg={4} style={{ fontWeight: "bold" }}>{name}</Col>
-        <Col lg={2}>Port {port}</Col>
-        <Col lg={1}>{toolStatus}</Col>
-        <Col lg={2}>{versionNumber}</Col>
-        <Col lg={3}>Installed <Moment format="MM/DD/YYYY" date={installationDate} /></Col>
-      </Row>
-      <Row>
-        <Col lg={12}><a href={toolURL}>{toolURL}</a></Col>
-        <Col lg={12}>{dnsName}</Col>
-      </Row>
+    <div className="p-2 mt-2">
+      <div className="row m-1">
+        <div className="col-md col-header-text">{name}</div>
+        <div className="col-md"><span className="text-muted">Port:</span> {port}</div>
+        <div className="col-md"><span className="text-muted">Version:</span> {versionNumber}</div>
+        <div className="col-md"><span className="text-muted">Install Date:</span> <Moment format="MM/DD/YYYY" date={installationDate} /></div>
+      </div>
+      <div className="row m-1">
+        <div className="col-md"><span className="text-muted">Status:</span> {toolStatus}</div>
+        <div className="col-md"><span className="text-muted">ID:</span> {_id}</div>
+      </div>
+      <div className="row m-1">
+        <div className="col-md"><span className="text-muted">URL:</span> {toolURL}</div>
+        <div className="col-md"><span className="text-muted">DNS:</span> {dnsName}</div>
+      </div>
     </div>
   );
 };

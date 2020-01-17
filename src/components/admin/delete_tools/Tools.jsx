@@ -104,15 +104,15 @@ class ToolTable extends React.PureComponent {
       <>
         {error ? <ErrorDialog error={error} /> : null}
         <div className="p-2 mt-2">
-          <div className="row">
+          <div className="row mt-1">
             <div className="col-md col-header-text">{name}</div>
-            <div className="col-md">Port: {port}</div>
-            <div className="col-md">Status: {toolStatus}</div>
-            <div className="col-md">Install Date: <Moment format="MM/DD/YYYY" date={installationDate} /></div>
-            <div className="col-md"><Button variant="danger" onClick={this.handleDeletePress}>Delete</Button></div>
+            <div className="col-md"><span className="text-muted">Installed On:</span> <Moment format="MM/DD/YYYY" date={installationDate} /></div>
+            <div className="col-md" style={{textAlign: "right"}}><Button variant="danger" onClick={this.handleDeletePress}>Delete</Button></div>
           </div>
           <div className="row">
-            <div className="col-md text-muted">ID: {_id}</div>
+            <div className="col-md"><span className="text-muted">Status:</span> {toolStatus}</div>
+            <div className="col-md"><span className="text-muted">ID:</span> {_id}</div>
+            <div className="col-md"><span className="text-muted">Port:</span> {port}</div>
           </div>
         </div>
 
