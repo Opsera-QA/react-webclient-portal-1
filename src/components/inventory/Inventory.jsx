@@ -114,7 +114,13 @@ class Inventory extends PureComponent {
                 {!fetching && (
                   <>
                     {data ? data.map(application => (
-                      <option key={application.name} value={application.name}>{application.name}</option>
+                      <>
+                        {
+                          application.tools.length > 0 && (
+                            <option key={application.name} value={application.name}>{application.name}</option>
+                          )
+                        }
+                      </>
                     )) : ""}
                   </>
                 )}
@@ -122,12 +128,13 @@ class Inventory extends PureComponent {
             </Form.Group>
           </Form>
         </div>
-        {(!fetching && data.length > 0) &&
+        {
+          (!fetching && data.length > 0) &&
           <>
             {fetching ? null : <App application={this.getApp()} />}
           </>
         }
-      </div>
+      </div >
     );
   }
 }
