@@ -80,11 +80,11 @@ class DeleteTools extends PureComponent {
         <Form>
           <Form.Group>
             <Form.Control as="select"
-              //inputRef={el => this.inputEl = el}
+              defaultValue=""
               hidden={(!fetching && data.length > 0) ? false : true}
               onChange={this.handleChangeValue}
               style={{ marginTop: 25 }}>
-              <option value="" selected disabled>{fetching ? "loading..." : "Select application"}</option>
+              <option value="" disabled>{fetching ? "loading..." : "Select application"}</option>
               {!fetching && (
                 <>
                   {data ? data.map(application => (
@@ -95,7 +95,7 @@ class DeleteTools extends PureComponent {
             </Form.Control>
           </Form.Group>
         </Form>
-
+        
         <Tools application={this.state.application} />
       </Container>
     );

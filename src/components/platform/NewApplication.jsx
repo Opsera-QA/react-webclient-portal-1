@@ -196,11 +196,11 @@ class NewApplication extends React.PureComponent {
                 <Form>
                   <Form.Group>
                     <Form.Control as="select"
-                      // inputRef={el => this.inputEl = el}
+                      defaultValue=""
                       hidden={(!fetching && dropdownData.length > 0) ? false : true}
                       onChange={this.handleDropdownChange}
                       style={{ marginTop: 25 }}>
-                      <option value="" selected disabled>{fetching ? "loading..." : "Select Application to Edit"}</option>
+                      <option value="" disabled>{fetching ? "loading..." : "Select Application to Edit"}</option>
                       {!fetching && (
                         <>
                           {dropdownData ? dropdownData.map(application => (
