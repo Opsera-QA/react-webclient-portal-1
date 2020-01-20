@@ -49,19 +49,19 @@ class ApiConnector extends Component {
             <a className={"nav-link " + (this.state.selection === "jira" ? "nav-link-text-active" : "nav-link-text")} onClick={() => this.selectView("jira")}>Jira</a>
           </li>
           <li className="nav-item">
-            <a className={"nav-link  " + (this.state.selection === "servicenow" ? "nav-link-text-active" : "nav-link-text")} onClick={() => this.selectView("servicenow")}>ServiceNow</a>
+            <a className={"nav-link disabled " + (this.state.selection === "servicenow" ? "nav-link-text-active" : "")} onClick={() => this.selectView("servicenow")}>ServiceNow</a>
           </li>
           <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "openstack" ? "nav-link-text-active" : "nav-link-text")} onClick={() => this.selectView("openstack")}>OpenStack</a>
+            <a className={"nav-link disabled " + (this.state.selection === "openstack" ? "nav-link-text-active" : "")} onClick={() => this.selectView("openstack")}>OpenStack</a>
           </li>
           <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "slack" ? "nav-link-text-active" : "nav-link-text")} onClick={() => this.selectView("slack")}>Slack</a>
+            <a className={"nav-link disabled " + (this.state.selection === "slack" ? "nav-link-text-active" : "")} onClick={() => this.selectView("slack")}>Slack</a>
           </li>
           <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "tableau" ? "nav-link-text-active" : "nav-link-text")} onClick={() => this.selectView("tableau")}>Tableau</a>
+            <a className={"nav-link disabled " + (this.state.selection === "tableau" ? "nav-link-text-active" : "")} onClick={() => this.selectView("tableau")}>Tableau</a>
           </li>
           <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "splunk" ? "nav-link-text-active" : "nav-link-text")} onClick={() => this.selectView("splunk")}>Splunk</a>
+            <a className={"nav-link disabled " + (this.state.selection === "splunk" ? "nav-link-text-active" : "")} onClick={() => this.selectView("splunk")}>Splunk</a>
           </li>
         </ul>
 
@@ -75,8 +75,7 @@ class ApiConnector extends Component {
         {this.state.selection === "splunk" && <Splunk />}
         {this.state.selection === "" &&
           <div className="mt-5">
-            OpsERA offers out of the box API connectors which allow you to to integrate your internal platforms and add them to the pipeline and analytics.  
-            
+            OpsERA offers out of the box API connectors which allow you to to integrate your internal platforms and add them to the pipeline and analytics.
           </div>
         }
 
