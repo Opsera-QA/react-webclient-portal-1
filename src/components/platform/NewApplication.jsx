@@ -32,7 +32,7 @@ class NewApplication extends React.PureComponent {
 
   handleAppNameChange = ({ target: { name, value } }) => {
     let error = null;
-    if (value.length > 10) error = "App Name has to be 10 chars or less";
+    if (value.length > 20) error = "App Name has to be 20 chars or less";
     if (value.length > 1 && !isAlphaNumeric(value))
       error = "App Name has to be alphanumeric";
 
@@ -162,14 +162,14 @@ class NewApplication extends React.PureComponent {
           <h3>New Platform Creation</h3>
           <p>Create a new Application to leverage your existing systems in any way that meets your business needs.</p>
           <div className="row mb-2">
-            
-            {status !== "success" && !editTools ? 
+
+            {status !== "success" && !editTools ?
               <div className="col ml-auto">
                 <Form loading={checkingAppName || saving ? "true" : undefined}>
                   <Form.Row>
                     <Form.Group controlId="formGridEmail">
                       <Form.Label>Application Name</Form.Label>
-                      <Form.Control type="text" 
+                      <Form.Control type="text"
                         placeholder="Application Name"
                         name="appname"
                         value={appname}
@@ -185,11 +185,11 @@ class NewApplication extends React.PureComponent {
                     onClick={this.handleCreateClick}
                     loading={checkingAppName ? "true" : undefined}
                     disabled={!!appnameError || !appname || !appname.length || status === "success"}>
-                        Create
+                    Create
                   </Button>
                 </Form>
               </div>
-              : null }
+              : null}
 
             {editTools && dropdownData && (
               <div className="col ml-auto">

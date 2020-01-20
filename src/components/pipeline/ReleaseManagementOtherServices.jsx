@@ -177,7 +177,7 @@ class SASST extends React.PureComponent {
     const { serviceClick } = this.context;
     const { tools } = this.props;
     return (
-      <ServicesWrapper label="SASST">
+      <ServicesWrapper label="Code Security">
         <div
           className={`newApp__service-logo ${tools.includes("SonarQube") ? "newApp__service-logo--alredy-installed" : ""}`}
           onClick={() => {

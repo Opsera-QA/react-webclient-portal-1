@@ -96,7 +96,7 @@ class rmProvider extends Component {
   handleChange = ({ target: { name, value } }) => {
     let error = null;
     if (name === "appname") {
-      if (value.length > 10) error = "App Name has to be 10 chars or less";
+      if (value.length > 20) error = "App Name has to be 20 chars or less";
       if (value.length > 1 && !isAlphaNumeric(value))
         error = "App Name has to be alphanumeric";
     }
@@ -177,6 +177,22 @@ class rmProvider extends Component {
     );
   }
 
+
+  validate = () => {
+    const { services } = this.state
+    if (!services["Jenkins Pipeline"]) {
+      return true
+    } else if (services["Jenkins Pipeline"].jenkins_password) {
+      if (services["Jenkins Pipeline"].jenkins_password.length > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
   handleModalSave = ({ service }) => {
     const { services } = this.state;
     if (!services[service]) {
@@ -217,6 +233,7 @@ class rmProvider extends Component {
   }
 
   render() {
+    console.log(this.state.services)
     return (
       <Provider
         value={{
@@ -233,7 +250,8 @@ class rmProvider extends Component {
           checkBoxChange: this.checkBoxChange,
           setAppDetails: this.setAppDetails,
           handleServiceCheckBoxChange: this.handleServiceCheckBoxChange,
-          reset: this.reset
+          reset: this.reset,
+          validate: this.validate
         }}
       >
         {this.props.children}

@@ -183,8 +183,8 @@ class ReleaseManagementServices extends React.PureComponent {
 
         {this.context.initServicesValid === true &&
           this.context.otherServicesShow === true && (
-          <ReleaseManagementOtherServices app={this.props.app} tools={this.props.tools} />
-        )}
+            <ReleaseManagementOtherServices app={this.props.app} tools={this.props.tools} />
+          )}
         {this.context.otherServicesShow !== null && <Confirmation app={this.props.app} tools={this.props.tools} />}
       </Form>
     );

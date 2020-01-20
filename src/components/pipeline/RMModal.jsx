@@ -1,18 +1,32 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable no-unused-vars */
 import React, { PureComponent } from "react";
-import { Modal, Form, Button } from "react-bootstrap";
+import { Modal, Form, Button, Alert } from "react-bootstrap";
 import { RMContext } from "./RMContext";
 
 class RMModal extends PureComponent {
   static contextType = RMContext
+  state = {
+    validationError: false
+  };
+
   handlecancel = () => {
     const { handleModalCancel, service, category } = this.context;
     handleModalCancel({ service, category });
   }
   handleSave = () => {
-    const { handleModalSave, service, category } = this.context;
-    handleModalSave({ service, category });
+    const { handleModalSave, service, category, validate } = this.context;
+    if (validate()) {
+      this.setState({
+        validationError: false
+      })
+      handleModalSave({ service, category })
+    } else {
+      this.setState({
+        validationError: true
+      })
+      console.log("validation failed")
+    }
   }
 
   isChecked = (service, name, val) => {
@@ -32,6 +46,7 @@ class RMModal extends PureComponent {
   }
 
   render() {
+    const { validationError } = this.state;
     const {
       modalOpen,
       category,
@@ -48,11 +63,12 @@ class RMModal extends PureComponent {
           <Modal.Title style={{ fontSize: "1.3em" }}>{category}</Modal.Title>
         </Modal.Header>
         <Modal.Body className="p-3 modal-body-text-block">
-          <div className="mb-3">This will register a new {service} instance.  In order to do so, connection 
-          details are needed below.</div>
-          
+          <div className="mb-3">This will register a new {service} instance. Are you sure you want to proceed?
+          {/* In order to do so, connection details are needed below. */}
+          </div>
+
           <Form>
-            {fields.length === 0 && (
+            {/* {fields.length === 0 && (
               <Form.Group controlId="formCheckboxDecrypt">
                 <Form.Check type="checkbox" label="Store Instance Decrypted"
                   style={{ marginRight: "10px" }}
@@ -60,10 +76,12 @@ class RMModal extends PureComponent {
                   onChange={() => handleServiceCheckBoxChange(service, "decrypt", "decrypt")}
                 />
               </Form.Group>
-            )}
+            )} */}
+
+            {validationError && (<Alert variant="danger">Jenkins Password is required.</Alert>)}
             {fields.length > 0 &&
               fields.map(
-                (({ name, type, password, values, msg = [], key, ...rest }) => {
+                (({ name, type, password, values, key }) => {
                   if (type === "checkbox") {
                     return (
                       <>
@@ -84,11 +102,7 @@ class RMModal extends PureComponent {
                       <Form.Label> {name} {"   "}</Form.Label>
                       <Form.Control
                         type={password ? "password" : "text"}
-                        ref={el => {
-                          if (rest.required) {
-                            this.inputs.push(el);
-                          }
-                        }}
+
                         placeholder={name}
                         name={`${service}//${key}`}
                         value={
@@ -113,7 +127,7 @@ class RMModal extends PureComponent {
           > Cancel
           </Button>
           <Button variant="primary" onClick={this.handleSave}>
-            Connect
+            Confirm
           </Button>
         </Modal.Footer>
       </Modal>
