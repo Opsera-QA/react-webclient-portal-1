@@ -38,6 +38,14 @@
             "always"
         ],
         "no-undef": "warn",
+        "object-curly-spacing": [
+            "error",
+            "always",
+            {
+                "arraysInObjects": true,
+                "objectsInObjects": true
+            }
+        ],
         "comma-spacing": [
             "error",
             {

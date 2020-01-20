@@ -1,12 +1,12 @@
-import React, {useReducer, useEffect} from "react";
+import React, { useReducer, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Alert } from "react-bootstrap";
 
 
-function ErrorDialog({error}) {
+function ErrorDialog({ error }) {
   const [state, setState] = useReducer(
-    (state, newState) => ({...state, ...newState}),
-    {message: null, detail: null}
+    (state, newState) => ({ ...state, ...newState }),
+    { message: null, detail: null }
   );
 
   if (error.response) {
@@ -22,7 +22,7 @@ function ErrorDialog({error}) {
   }, [error]);
 
   return (
-    <div className="mt-3 mb-3">
+    <div className="mt-1 mb-3">
       <Alert variant="danger">
         {state.message}
       </Alert>

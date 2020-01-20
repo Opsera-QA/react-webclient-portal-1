@@ -63,7 +63,7 @@ class featuresCards extends React.Component {
                 end to end visibility into your entire DevOps ecosystem.
               </Card.Text>
               {/* <Button variant="primary" onClick={this.setPlaceholder}>Get Started</Button> */}
-              <Link to="/reports">Reports and Analytics</Link>
+              <Link to="/analytics">Reports and Analytics</Link>
             </Card.Body>
           </Card>
         </CardGroup>
