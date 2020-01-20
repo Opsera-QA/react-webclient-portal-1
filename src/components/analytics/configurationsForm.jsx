@@ -1,35 +1,36 @@
 import React, {useReducer, useEffect} from "react";
 import PropTypes from "prop-types";
 import { Card, Form, Button } from "react-bootstrap";
+import LoadingDialog from "../common/loading";
 
-
-const settingObject = {
+const INITIAL_SETTINGS = {
   dataUsage: "500",
   active: false,
-  type: [],
-  enabledTools: [],
+  workflowType: {Infrastructure: false, Pipeline: false},
+  enabledTools: {Jenkins: true, JUnit: false, JMeter: true, Selenium: false, Sonar: false, Twistlock: false},
   enabledToolsOn: "",
   kibanaDashboardUrl: ""
 };
+const ANALYTICS_TYPES = ["Infrastructure", "Pipeline"];
+const TOOLS = [ "Jenkins", "JUnit", "JMeter", "Selenium", "Sonar", "Twistlock" ];
+const DATA_LIMITS = [{ Value: "500", Label: "500MB"}, {Value: "1000", Label: "1GB"}, {Value: "2000", Label: "2GB"}, {Value: "3000", Label: "3GB"}];
 
-const toolsCheckboxes = [ "Jenkins", "JUnit", "JMeter", "Selenium", "Sonar", "Twistlock" ];
 
 function ConfigurationsForm( { settings }) {
   //const contextType = useContext(AuthContext);
   const [state, setState] = useReducer(
     (state, newState) => ({...state, ...newState}),
-    { loaded: false, error: null, messages: null, data: settingObject}
+    { loading: false, error: null, messages: null, data: INITIAL_SETTINGS}
   );
   
   useEffect( () => {
-    //setState({fetching: true});
-    if (settings){
-      setState({data: {dataUsage: settings.dataUsage}});
-      setState({data: {active: settings.active}});
-      setState({data: {type: settings.type}});
-      setState({data: {enabledTools: settings.enabledTools}});
-      //setState({data: {enabledToolsOn: settings.enabledToolsOn}});
-      //setState({data: {kibanaDashboardUrl: settings.kibanaDashboardUrl}});
+    if (!settings) {
+      setState({...state, loading: true});  
+    } else {
+      setState({...state, loading: false});  
+      if ("active" in settings) {
+        setState({...state, data: settings});  
+      }
     }
   }, [settings]);
 
@@ -49,14 +50,24 @@ function ConfigurationsForm( { settings }) {
   }
 
   function handleCheckBoxChange(key, event) {
-    let s = state.data.enabledTools;
-    s[key]=event.target.checked;
-    setState({data: { ...state.data, enabledTools: s }});
-    console.log("enabledTools: ", state.data.enabledTools);
+    let itemId = event.target.id;
+    if (itemId.includes("TOOL-")) {
+      let s = state.data.enabledTools;
+      s[key]=event.target.checked;
+      setState({data: { ...state.data, enabledTools: s }});
+    } else { //"TYPE-"
+      let s = state.data.workflowType;
+      s[key]=event.target.checked;
+      setState({data: { ...state.data, workflowType: s }});
+    }
   }
 
+  const { data, loading } = state;
+  const { enabledTools } = data;
   return (
     <div>
+      {loading && <LoadingDialog />}
+
       <Card>
         <Card.Body>
           <Card.Title>Analytics Configuration</Card.Title>
@@ -67,53 +78,45 @@ function ConfigurationsForm( { settings }) {
           <Form>
             <div className="mt-3 text-muted">Workflow:</div>
             <div key="inline-checkbox-workflow" className="mb-1 mt-2 p-2">
-              <Form.Check inline label="Infrastructure" type="checkbox" id="inline-checkbox-workflow-1" />
-              <Form.Check inline label="Pipeline" type="checkbox" id="inline-checkbox-workflow-2" />
+              {
+                ANALYTICS_TYPES.map(item => (
+                  <Form.Check inline 
+                    type="checkbox" 
+                    label={item}
+                    id={`TYPE-${item}`}
+                    checked={data.workflowType ? data.workflowType[item] : false}
+                    onChange={handleCheckBoxChange.bind(this, item)}
+                    key={item} />
+                ))
+              }
             </div>
 
             <div className="mt-3 text-muted">Daily Data Limit:</div>
             <div key="radio-data-limit" className="mt-1 p-2">
-              {/* TODO: Refactor this like checkbox */}
-              <Form.Check inline label="500 MB" 
-                checked={state.data.dataUsage === "500"} 
-                onChange={handleOptionChange}
-                value="500" 
-                type="radio" 
-                id="radio-limit-500" />
-              <Form.Check inline label="1 GB" 
-                checked={state.data.dataUsage === "1000"} 
-                onChange={handleOptionChange} 
-                value="1000" 
-                type="radio" 
-                id="radio-limit-1000" />
-              <Form.Check inline label="2 GB" 
-                checked={state.data.dataUsage === "2000"} 
-                onChange={handleOptionChange} 
-                type="radio" 
-                value="2000" 
-                id="radio-limit-2000" />
-              <Form.Check inline label="3 GB" 
-                checked={state.data.dataUsage === "3000"} 
-                onChange={handleOptionChange} 
-                type="radio" 
-                value="3000" 
-                id="radio-limit-3000" />
+              {
+                DATA_LIMITS.map(item => (
+                  <Form.Check inline label={item.Label} 
+                    checked={state.data.dataUsage === item.Value} 
+                    onChange={handleOptionChange}
+                    value={item.Value} 
+                    type="radio" 
+                    id={`STORAGE-${item.Value}`}
+                    key={item.Value} />
+                ))
+              }
             </div>
 
             <div className="mt-3 text-muted">Tools:</div>
             <div key="checkbox-tools" className="mb-1 mt-2 p-2">
-              {/* TODO: Checked funciton isnt' working yet */}
               {
-                toolsCheckboxes.map(item => (
-                  <>
-                    <Form.Check inline 
-                      type="checkbox" 
-                      label={item}
-                      defaultChecked={state.data.enabledTools[item]}
-                      onChange={handleCheckBoxChange.bind(this, item)}
-                      key={item} />
-                    {/* {JSON.stringify(state.data.enabledTools.Jenkins.value)} */}
-                  </>
+                TOOLS.map(item => (
+                  <Form.Check inline 
+                    type="checkbox" 
+                    label={item}
+                    id={`TOOL-${item}`}
+                    checked={enabledTools ? enabledTools[item] : false}
+                    onChange={handleCheckBoxChange.bind(this, item)}
+                    key={item} />
                 ))
               }
             </div>
@@ -129,6 +132,7 @@ function ConfigurationsForm( { settings }) {
           </Form>          
         </Card.Body>
       </Card>
+      <div style={{"color": "gray"}}>DATA: {state ? JSON.stringify(state) : null}</div>
     </div>
   );
 }

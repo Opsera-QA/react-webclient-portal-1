@@ -30,15 +30,8 @@ function Analytics() {
         .then(function (response) {
           console.log(response);
 
-          //TODO: REMOVE TEST DATA
-          let test = {
-            dataUsage: "1000",
-            enabledTools: [{Jenkins: true, JUnit: false, JMeter: true, Selenium: false}],
-            active: false
-          };
-
           setState({
-            data: test, // response.data,
+            data: response.data,
             fetching: false,
             error: null,
             loaded: true
