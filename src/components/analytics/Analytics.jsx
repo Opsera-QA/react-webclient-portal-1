@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import { AuthContext } from "../../contexts/AuthContext"; //New AuthContext State 
 import { ApiService } from "../../api/apiService";
 import ErrorDialog from "../common/error";
-import WorkflowType from "./workflowType";
-import EnableTools from "./enableTools";
+import ConfigurationsForm from "./configurationsForm";
 
 /**
  * Demo of a React Function with hooks (to replace Class Components)
@@ -12,7 +11,7 @@ import EnableTools from "./enableTools";
  * @param {*} { tool }  Tools is a PROP passed into this React Component Function, not used initially but is there as a demo
  */
 
-function Analytics({ tools }) {
+function Analytics() {
   const contextType = useContext(AuthContext);
   const [state, setState] = useReducer(
     (state, newState) => ({...state, ...newState}),
@@ -26,18 +25,20 @@ function Analytics({ tools }) {
       const { getAccessToken } = contextType;
       const accessToken = await getAccessToken();
       
-      //THIS OBJECT CAN NOW BE PASSED TO ALL CHILDNRED PROPS FOR CALLS>  IT HAS TOKEN and is ready to use!!!
-      // That is how you do API calls to children wihtout needingt another context!
-      const apiCall = new ApiService("/users/tools", {}, accessToken);  
+      const apiCall = new ApiService("/analytics/settings", {}, accessToken);  
       apiCall.get()
         .then(function (response) {
-        /* const tool = response.tools.find(tool => {    //api not working timeout error hope this works!
-          return tool.name === TOOL_NAME;
-        }); */
           console.log(response);
-          
+
+          //TODO: REMOVE TEST DATA
+          let test = {
+            dataUsage: "1000",
+            enabledTools: [{Jenkins: true, JUnit: false, JMeter: true, Selenium: false}],
+            active: false
+          };
+
           setState({
-            data: response.data,
+            data: test, // response.data,
             fetching: false,
             error: null,
             loaded: true
@@ -53,18 +54,17 @@ function Analytics({ tools }) {
         });
     }
     fetchData();
-  }, [tools]); //tools in this form (and any other props) tells the useEffect hook to refresh/reload when those values change. (basically setting watchers)
+  }, []);
   return (
     <div>
       <h3>Analytics Dashboard</h3>
 
       { state.error ? <ErrorDialog error={state.error} /> : null }
       <div className="p-2 mt-4">
-        <WorkflowType />
-        <EnableTools />
+        <ConfigurationsForm settings={ state.data } />
       </div>
 
-      <div style={{"color": "gray"}}>DATA: {state.data ? state.data[0].email : null}</div>
+      <div style={{"color": "gray"}}>DATA: {state.data ? JSON.stringify(state.data) : null}</div>
     </div>
   );
 }

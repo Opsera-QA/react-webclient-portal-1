@@ -33,8 +33,7 @@ class Home extends Component {
           <div style={{ marginTop: 15 }}>
             <h2>Welcome back, {userInfo ? userInfo.name : "Unknown User Name"}!</h2>
             <p>
-              You have successfully logged in!  You now have an ID token and access token in local storage.
-                  Visit the <Link to="/profile">My Profile</Link> page to take a look inside the ID token.
+              You have successfully logged in!  Review the options below in order to get started.  
             </p>
 
             <FeaturesCards />
