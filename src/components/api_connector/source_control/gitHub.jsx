@@ -101,13 +101,13 @@ class GitHub extends PureComponent {
     );
   }
 
-  cancel = () => {
+  /* cancel = () => {
     let path = "/api_connector";
     this.props.history.push(path);
-  }
+  } */
 
   render() {
-    console.log(this.state)
+    console.log(this.state);
     const isEnabled = this.canBeSubmitted();
     return (
       <div>
@@ -175,7 +175,7 @@ class GitHub extends PureComponent {
                   />
                   <small id="passwordHelpBlock" className="form-text text-muted">
                     Jenkins container notes here.
-                    </small>
+                  </small>
                   {/* <Form.Control.Feedback type="invalid">{this.state.jenkinsUrl.error}</Form.Control.Feedback> */}
                 </Form.Group>
 
@@ -235,7 +235,7 @@ class GitHub extends PureComponent {
               </Form.Row>
 
               <Button id="save-button" disabled={!isEnabled} variant="primary" className="mr-2" type="submit">Connect</Button>
-              <Button id="cancel-button" variant="outline-secondary" className="mr-2" type="button" onClick={this.cancel}>Cancel</Button>
+              {/* <Button id="cancel-button" variant="outline-secondary" className="mr-2" type="button" onClick={this.cancel}>Cancel</Button> */}
             </Form>
 
           </Card.Body>

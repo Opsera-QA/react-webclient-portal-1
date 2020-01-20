@@ -97,10 +97,10 @@ class GitLab extends Component {
     );
   }
 
-  cancel = () => {
+  /* cancel = () => {
     let path = "/api_connector";
     this.props.history.push(path);
-  }
+  } */
 
   render() {
     const isEnabled = this.canBeSubmitted();
@@ -156,7 +156,7 @@ class GitLab extends Component {
                   />
                   <small id="passwordHelpBlock" className="form-text text-muted">
                     Jenkins container notes here.
-                    </small>
+                  </small>
                   {/* <Form.Control.Feedback type="invalid">{this.state.jenkinsUrl.error}</Form.Control.Feedback> */}
                 </Form.Group>
 
@@ -216,7 +216,7 @@ class GitLab extends Component {
               </Form.Row>
 
               <Button id="save-button" disabled={!isEnabled} variant="primary" className="mr-2" type="submit">Connect</Button>
-              <Button id="cancel-button" variant="outline-secondary" className="mr-2" type="button" onClick={this.cancel}>Cancel</Button>
+              {/* <Button id="cancel-button" variant="outline-secondary" className="mr-2" type="button" onClick={this.cancel}>Cancel</Button> */}
             </Form>
 
           </Card.Body>

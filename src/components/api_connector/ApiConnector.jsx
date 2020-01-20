@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-//import { generatePath } from "react-router";
 import GitHub from "./source_control/gitHub";
 import GitLab from "./source_control/gitLab";
 import Jira from "./defect_tracking/jira";
@@ -14,22 +13,10 @@ class ApiConnector extends Component {
     selection: ""
   }
 
-  /* static getDerivedStateFromProps(nextProps, prevState) {
-    let selection = nextProps.match.params.id;
-    if (nextProps.match.params.id === undefined) {
-      selection = "";
-    }
-    return {
-      selection: selection
-    };
-  } */
-
   selectView = (id) => {
     this.setState({
       selection: id
     });
-    /* const path = generatePath(this.props.match.path, { id });
-    this.props.history.replace(path); */
   }
 
   render() {
@@ -48,7 +35,7 @@ class ApiConnector extends Component {
           <li className="nav-item">
             <a className={"nav-link " + (this.state.selection === "jira" ? "nav-link-text-active" : "nav-link-text")} onClick={() => this.selectView("jira")}>Jira</a>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <a className={"nav-link disabled " + (this.state.selection === "servicenow" ? "nav-link-text-active" : "")} onClick={() => this.selectView("servicenow")}>ServiceNow</a>
           </li>
           <li className="nav-item">
@@ -62,7 +49,7 @@ class ApiConnector extends Component {
           </li>
           <li className="nav-item">
             <a className={"nav-link disabled " + (this.state.selection === "splunk" ? "nav-link-text-active" : "")} onClick={() => this.selectView("splunk")}>Splunk</a>
-          </li>
+          </li> */}
         </ul>
 
         {this.state.selection === "github" && <GitHub />}
