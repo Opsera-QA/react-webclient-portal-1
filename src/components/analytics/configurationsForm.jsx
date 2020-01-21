@@ -6,7 +6,7 @@ import ErrorDialog from "../common/error";
 import InfoDialog from "../common/info";
 import Modal from "../common/modal";
 import { ApiService } from "../../api/apiService";
-import Moment from "moment";
+import Moment from "react-moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faTools } from "@fortawesome/free-solid-svg-icons";
 
@@ -101,12 +101,12 @@ function ConfigurationsForm( { settings, token }) {
   }
 
 
-  const { data, loaded, messages, showModal, editEnabled } = state;
-  const { enabledTools, active, enabledToolsOn } = data;
+  const { data, loaded, messages, showModal, editEnabled, error } = state;
+  const { enabledTools, disabledToolsOn, active, enabledToolsOn } = data;
   return (
     <div>
       {!loaded && <LoadingDialog />}
-      { state.error && <ErrorDialog error={state.error} /> }
+      { error && <ErrorDialog error={error} /> }
       {!active && <InfoDialog message="Analytics are currently NOT enabled for this account." />}
 
       {showModal ? <Modal header="Confirm Deactivation" 
@@ -152,10 +152,11 @@ function ConfigurationsForm( { settings, token }) {
               </div>
 
               <div className="mt-3 text-muted">Tools:
-                { enabledToolsOn && 
+                { (enabledToolsOn && !disabledToolsOn) && 
                 <>
-                  <span className="italic">(Enabled on 
-                    <Moment format="MM/DD/YYYY" date={enabledToolsOn} />)</span>
+                  <span className="italic" style={{ fontSize: "smaller", paddingLeft:"10px" }}>(Enabled on&nbsp; 
+                    <Moment format="MM/DD/YYYY" date={enabledToolsOn} />)
+                  </span> 
                 </>
                 }
               </div>
