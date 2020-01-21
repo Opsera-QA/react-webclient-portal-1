@@ -7,6 +7,8 @@ import InfoDialog from "../common/info";
 import Modal from "../common/modal";
 import { ApiService } from "../../api/apiService";
 import Moment from "moment";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSave, faTools } from "@fortawesome/free-solid-svg-icons";
 
 const INITIAL_SETTINGS = {
   dataUsage: "500",
@@ -111,8 +113,8 @@ function ConfigurationsForm( { settings, token }) {
 
       <Card>
         <Card.Body>
-          <Card.Title>Analytics Configuration</Card.Title>
-          <Card.Subtitle className="mb-2 text-muted">Complete the configuration details below in order to enable analytics tools.  We offer analytics for Infrastructure and Pipeline workflows as well as many popular tools.</Card.Subtitle>
+          <Card.Title>Configuration Profile</Card.Title>
+          <Card.Subtitle className="mb-2 text-muted">Analytics configuration details are shown below for available tools.  We offer analytics for Infrastructure and Pipeline workflows as well as many popular tools.</Card.Subtitle>
           
           <Form>
             <fieldset disabled={editEnabled}>
@@ -173,8 +175,8 @@ function ConfigurationsForm( { settings, token }) {
                   { !active ? 
                     <Button variant="outline-primary" onClick={() => { updateProfile(); }}>Activate</Button> : 
                     (<>
-                      <Button variant="primary" className="mr-1" onClick={() => { updateProfile(); }}>Save</Button>
-                      <Button variant="outline-secondary" className="mr-3" onClick={() => { toggleEditing(); }}>Cancel</Button>
+                      <Button variant="outline-secondary" className="mr-1" onClick={() => { toggleEditing(); }}>Cancel</Button>
+                      <Button variant="primary" className="mr-3" onClick={() => { updateProfile(); }}><FontAwesomeIcon icon={faSave} fixedWidth /> Save</Button>
                       <Button variant="outline-danger" onClick={() => { confirmDeactivation(); }}>Deactivate</Button>
                     </>)}
                 </div> 
@@ -184,7 +186,7 @@ function ConfigurationsForm( { settings, token }) {
 
             { editEnabled &&
             <div className="text-right">
-              <Button variant="outline-primary" onClick={() => { toggleEditing(); }}>Edit Settings</Button>
+              <Button variant="outline-primary" onClick={() => { toggleEditing(); }}><FontAwesomeIcon icon={faTools} fixedWidth /> Edit Settings</Button>
             </div> 
             }
           </Form>          

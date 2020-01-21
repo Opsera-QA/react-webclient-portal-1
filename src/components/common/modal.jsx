@@ -1,6 +1,8 @@
 import React, { useReducer, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button, Modal } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 function CustomModalDialog({ header, message, button, handleHideModal }) {
   const [state, setState] = useReducer(
@@ -34,7 +36,8 @@ function CustomModalDialog({ header, message, button, handleHideModal }) {
           <Button variant="outline-secondary" onClick={() => handleClose()}>
             Close
           </Button>
-          <Button variant="outline-primary" onClick={() => handleConfirm()}>
+          <Button variant="primary" onClick={() => handleConfirm()}>
+            <FontAwesomeIcon icon={faCheck} fixedWidth /> 
             {button ? button : "Confirm"}
           </Button>
         </Modal.Footer>
