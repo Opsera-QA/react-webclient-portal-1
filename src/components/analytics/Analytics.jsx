@@ -49,10 +49,10 @@ function Analytics() {
     <div>
       <h3>Analytics Dashboard</h3>
 
-      { state.error && <ErrorDialog error={state.error} /> }
       { !state.loaded && <LoadingDialog />}
 
-      <div className="p-2 mt-4">
+      <div className="p-2 mt-1">
+        { state.error && <ErrorDialog error={state.error} /> }
         <ConfigurationsForm settings={ state.data } token={ state.token } />
       </div>
 

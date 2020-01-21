@@ -1,7 +1,7 @@
 import React, { useContext, useReducer, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import {Navbar, Nav, NavDropdown, Button} from "react-bootstrap";
-import {AuthContext} from "./contexts/AuthContext";
+import { Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
+import { AuthContext } from "./contexts/AuthContext";
 import "./navbar.css";
 
 
@@ -9,13 +9,13 @@ function HeaderNavBar() {
   const contextType = useContext(AuthContext);
   const history = useHistory();
   const [state, setState] = useReducer(
-    (state, newState) => ({...state, ...newState}),
-    {authenticated: false, administrator: false, userName: null}
+    (state, newState) => ({ ...state, ...newState }),
+    { authenticated: false, administrator: false, userName: null }
   );
 
   useEffect(() => {
-    const { authenticated, userInfo} = contextType;
-    setState({ authenticated: authenticated});
+    const { authenticated, userInfo } = contextType;
+    setState({ authenticated: authenticated });
     if (userInfo) {
       setState({ userName: userInfo.name });
     }
@@ -23,12 +23,12 @@ function HeaderNavBar() {
   }, [contextType]); 
 
   const login = function() {
-    const { loginUserContext} = contextType;
+    const { loginUserContext } = contextType;
     loginUserContext();
   };
 
   const logout = function() {
-    const { logoutUserContext} = contextType;
+    const { logoutUserContext } = contextType;
     logoutUserContext();
   };
 
@@ -38,7 +38,7 @@ function HeaderNavBar() {
 
   return (
     <Navbar bg="dark" variant="dark" className="nav-bar">
-      <Navbar.Brand href="/" style={{minWidth:165}}>
+      <Navbar.Brand href="/" style={{ minWidth:165 }}>
         <img alt="OpsERA"
           src="/img/opsera_logo.png"
           width="40"
