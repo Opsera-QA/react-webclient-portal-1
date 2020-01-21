@@ -24,6 +24,13 @@ a {
     monospace;
 }
 
+/* Utility Classes */
+.italic {
+  font-style: italic;
+}
+
+/* END Utility Classes */
+
 .sidebar {
   height: 100vh;
   font-size: .9rem;

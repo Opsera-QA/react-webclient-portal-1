@@ -97,7 +97,7 @@ function ConfigurationsForm( { settings, token }) {
 
 
   const { data, loaded, messages, showModal, editEnabled } = state;
-  const { enabledTools, active } = data;
+  const { enabledTools, active, enabledToolsOn } = data;
   return (
     <div>
       {!loaded && <LoadingDialog />}
@@ -147,10 +147,10 @@ function ConfigurationsForm( { settings, token }) {
               </div>
 
               <div className="mt-3 text-muted">Tools:
-                { state.data.enabledToolsOn && 
+                { enabledToolsOn && 
                 <>
                   <span className="italic">(Enabled on 
-                    <Moment format="MM/DD/YYYY" date={state.data.enabledToolsOn} /></span>)
+                    <Moment format="MM/DD/YYYY" date={enabledToolsOn} />)</span>
                 </>
                 }
               </div>
