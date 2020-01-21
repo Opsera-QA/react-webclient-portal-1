@@ -173,13 +173,9 @@ function ConfigurationsForm( { settings, token }) {
 
               { !editEnabled &&
                 <div className="text-right">
-                  { !active ? 
-                    <Button variant="outline-primary" onClick={() => { updateProfile(); }}>Activate</Button> : 
-                    (<>
-                      <Button variant="outline-secondary" className="mr-1" onClick={() => { toggleEditing(); }}>Cancel</Button>
-                      <Button variant="primary" className="mr-3" onClick={() => { updateProfile(); }}><FontAwesomeIcon icon={faSave} fixedWidth /> Save</Button>
-                      <Button variant="outline-danger" onClick={() => { confirmDeactivation(); }}>Deactivate</Button>
-                    </>)}
+                  <Button variant="outline-secondary" className="mr-1" onClick={() => { toggleEditing(); }}>Cancel</Button>
+                  <Button variant="primary" className="mr-3" onClick={() => { updateProfile(); }}><FontAwesomeIcon icon={faSave} fixedWidth /> Save</Button>
+                  <Button variant="outline-danger" onClick={() => { confirmDeactivation(); }}>Deactivate</Button>
                 </div> 
               }
                 
@@ -187,7 +183,10 @@ function ConfigurationsForm( { settings, token }) {
 
             { editEnabled &&
             <div className="text-right">
-              <Button variant="outline-primary" onClick={() => { toggleEditing(); }}><FontAwesomeIcon icon={faTools} fixedWidth /> Edit Settings</Button>
+              { !active ? 
+                <Button variant="primary" onClick={() => { updateProfile(); }}>Activate Analytics</Button> : 
+                <Button variant="outline-primary" onClick={() => { toggleEditing(); }}><FontAwesomeIcon icon={faTools} fixedWidth /> Edit Settings</Button>
+              }
             </div> 
             }
           </Form>          
