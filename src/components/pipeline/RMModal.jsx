@@ -12,6 +12,9 @@ class RMModal extends PureComponent {
 
   handlecancel = () => {
     const { handleModalCancel, service, category } = this.context;
+    this.setState({
+      validationError: false
+    })
     handleModalCancel({ service, category });
   }
   handleSave = () => {
@@ -38,6 +41,9 @@ class RMModal extends PureComponent {
 
   onClose = () => {
     const { handleModalCancel, service, category } = this.context;
+    this.setState({
+      validationError: false
+    })
     handleModalCancel({ service, category });
   }
 

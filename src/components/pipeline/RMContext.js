@@ -179,18 +179,28 @@ class rmProvider extends Component {
 
 
   validate = () => {
-    const { services } = this.state
-    if (!services["Jenkins Pipeline"]) {
-      return true
-    } else if (services["Jenkins Pipeline"].jenkins_password) {
-      if (services["Jenkins Pipeline"].jenkins_password.length > 0) {
-        return true;
+    console.log("validate")
+    const { services, service } = this.state
+    if (!service.includes("Jenkins Pipeline")) {
+      return false
+    } else {
+      if (!services["Jenkins Pipeline"]) {
+        return false
+      } else if (services["Jenkins Pipeline"].jenkins_password) {
+        if (services["Jenkins Pipeline"].jenkins_password === "") {
+          return false
+        } else if (services["Jenkins Pipeline"].jenkins_password.length > 0) {
+          return true
+        }
+        else {
+          return false;
+        }
       } else {
         return false;
       }
-    } else {
-      return false;
+
     }
+
   }
 
   handleModalSave = ({ service }) => {

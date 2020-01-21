@@ -24,8 +24,24 @@ const state = {
 export default class Signup extends PureComponent {
   state = state
 
-  handleChange = (e) => {
-    this.setState({ [e.target.name]: { "value": e.target.value, "error": null } });
+  handleChange = ({ target: { name, value } }) => {
+
+    let error = null;
+    if (name === "domain") {
+      if (value.length > 20) error = "Domain has to be 20 chars or less";
+      if (!isAlphaNumeric(value)) {
+        error = "no special chars are allowed";
+      }
+      if (value === "") {
+        error = "this field is required"
+      }
+    } else if (name === "password") {
+      if (value.length < 8) error = "password is too short.";
+    } else if (name === "email") {
+      if (!validateEmail(value)) error = "email is not valid.";
+    }
+
+    this.setState({ [name]: { "value": value, "error": error } });
   }
 
   validateEmail = async () => {

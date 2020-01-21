@@ -118,7 +118,7 @@ class GitLab extends Component {
             <Form onSubmit={this.handleSave}>
 
               <Form.Group controlId="formGridToken">
-                <Form.Label>Github Token</Form.Label>
+                <Form.Label>Gitlab Token</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder=""
