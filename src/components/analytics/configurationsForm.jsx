@@ -6,6 +6,7 @@ import ErrorDialog from "../common/error";
 import InfoDialog from "../common/info";
 import Modal from "../common/modal";
 import { ApiService } from "../../api/apiService";
+import Moment from "moment";
 
 const INITIAL_SETTINGS = {
   dataUsage: "500",
@@ -24,7 +25,7 @@ function ConfigurationsForm( { settings, token }) {
   //const contextType = useContext(AuthContext);
   const [state, setState] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
-    { loaded: true, showModal: false, error: null, messages: null, data: INITIAL_SETTINGS }
+    { loaded: true, showModal: false, editEnabled: false, error: null, messages: null, data: INITIAL_SETTINGS }
   );
   
   useEffect( () => {
@@ -32,6 +33,8 @@ function ConfigurationsForm( { settings, token }) {
       if ("active" in settings) {
         setState({ ...state, data: settings });  
       }
+    } else {
+      setState({ ...state, editEnabled: true });  
     }
   }, [settings]);
 
@@ -56,7 +59,6 @@ function ConfigurationsForm( { settings, token }) {
   }
 
   function postData() {
-    console.log("POSTING DATA TOP !");
     setState({ ...state, loaded: false });
     const body = state.data;
     const apiCall = new ApiService("/analytics/update", {}, token, body);  
@@ -89,8 +91,12 @@ function ConfigurationsForm( { settings, token }) {
     }
   }
 
+  function toggleEditing() {
+    setState({ ...state, editEnabled: !state.editEnabled });  
+  }
 
-  const { data, loaded, messages, showModal } = state;
+
+  const { data, loaded, messages, showModal, editEnabled } = state;
   const { enabledTools, active } = data;
   return (
     <div>
@@ -109,59 +115,78 @@ function ConfigurationsForm( { settings, token }) {
           <Card.Subtitle className="mb-2 text-muted">Complete the configuration details below in order to enable analytics tools.  We offer analytics for Infrastructure and Pipeline workflows as well as many popular tools.</Card.Subtitle>
           
           <Form>
-            <div className="mt-3 text-muted">Workflow:</div>
-            <div key="inline-checkbox-workflow" className="mb-1 mt-2 p-2">
-              {
-                ANALYTICS_TYPES.map(item => (
-                  <Form.Check inline 
-                    type="checkbox" 
-                    label={item}
-                    id={`TYPE-${item}`}
-                    checked={data.workflowType ? data.workflowType[item] : false}
-                    onChange={handleCheckBoxChange.bind(this, item)}
-                    key={item} />
-                ))
-              }
-            </div>
+            <fieldset disabled={editEnabled}>
+              <div className="mt-3 text-muted">Workflow:</div>
+              <div key="inline-checkbox-workflow" className="mb-1 mt-2 p-2">
+                {
+                  ANALYTICS_TYPES.map(item => (
+                    <Form.Check inline 
+                      type="checkbox" 
+                      label={item}
+                      id={`TYPE-${item}`}
+                      checked={data.workflowType ? data.workflowType[item] : false}
+                      onChange={handleCheckBoxChange.bind(this, item)}
+                      key={item} />
+                  ))
+                }
+              </div>
 
-            <div className="mt-3 text-muted">Daily Data Limit:</div>
-            <div key="radio-data-limit" className="mt-1 p-2">
-              {
-                DATA_LIMITS.map(item => (
-                  <Form.Check inline label={item.Label} 
-                    checked={state.data.dataUsage.toString() === item.Value.toString()} 
-                    onChange={handleOptionChange}
-                    value={item.Value.toString()} 
-                    type="radio" 
-                    id={`STORAGE-${item.Value}`}
-                    key={item.Value} />
-                ))
-              }
-            </div>
+              <div className="mt-3 text-muted">Daily Data Limit:</div>
+              <div key="radio-data-limit" className="mt-1 p-2">
+                {
+                  DATA_LIMITS.map(item => (
+                    <Form.Check inline label={item.Label} 
+                      checked={state.data.dataUsage.toString() === item.Value.toString()} 
+                      onChange={handleOptionChange}
+                      value={item.Value.toString()} 
+                      type="radio" 
+                      id={`STORAGE-${item.Value}`}
+                      key={item.Value} />
+                  ))
+                }
+              </div>
 
-            <div className="mt-3 text-muted">Tools:</div>
-            <div key="checkbox-tools" className="mb-1 mt-2 p-2">
-              {
-                TOOLS.map(item => (
-                  <Form.Check inline 
-                    type="checkbox" 
-                    label={item}
-                    id={`TOOL-${item}`}
-                    checked={enabledTools ? enabledTools[item] : false}
-                    onChange={handleCheckBoxChange.bind(this, item)}
-                    key={item} />
-                ))
-              }
-            </div>
+              <div className="mt-3 text-muted">Tools:
+                { state.data.enabledToolsOn && 
+                <>
+                  <span className="italic">(Enabled on 
+                    <Moment format="MM/DD/YYYY" date={state.data.enabledToolsOn} /></span>)
+                </>
+                }
+              </div>
+              <div key="checkbox-tools" className="mb-1 mt-2 p-2">
+                {
+                  TOOLS.map(item => (
+                    <Form.Check inline 
+                      type="checkbox" 
+                      label={item}
+                      id={`TOOL-${item}`}
+                      checked={enabledTools ? enabledTools[item] : false}
+                      onChange={handleCheckBoxChange.bind(this, item)}
+                      key={item} />
+                  ))
+                }
+              </div>
 
+              { !editEnabled &&
+                <div className="text-right">
+                  { !active ? 
+                    <Button variant="outline-primary" onClick={() => { updateProfile(); }}>Activate</Button> : 
+                    (<>
+                      <Button variant="primary" className="mr-1" onClick={() => { updateProfile(); }}>Save</Button>
+                      <Button variant="outline-secondary" className="mr-3" onClick={() => { toggleEditing(); }}>Cancel</Button>
+                      <Button variant="outline-danger" onClick={() => { confirmDeactivation(); }}>Deactivate</Button>
+                    </>)}
+                </div> 
+              }
+                
+            </fieldset>
+
+            { editEnabled &&
             <div className="text-right">
-              { !state.data.active ? 
-                <Button variant="outline-primary" onClick={() => { updateProfile(); }}>Activate</Button> : 
-                (<>
-                  <Button variant="outline-primary" className="mr-3" onClick={() => { updateProfile(); }}>Update</Button>
-                  <Button variant="outline-danger" onClick={() => { confirmDeactivation(); }}>Deactivate</Button>
-                </>)}
-            </div>
+              <Button variant="outline-primary" onClick={() => { toggleEditing(); }}>Edit Settings</Button>
+            </div> 
+            }
           </Form>          
         </Card.Body>
       </Card>
