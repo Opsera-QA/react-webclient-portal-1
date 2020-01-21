@@ -13,9 +13,11 @@ import { faSave, faTools } from "@fortawesome/free-solid-svg-icons";
 const INITIAL_SETTINGS = {
   dataUsage: "500",
   active: false,
-  workflowType: { Infrastructure: false, Pipeline: false },
+  workflowType: { Infrastructure: false, Pipeline: true },
   enabledTools: { Jenkins: true, JUnit: true, JMeter: true, Selenium: true, Sonar: true, Twistlock: true },
   enabledToolsOn: "",
+  updatedToolsOn: "",
+  disabledToolsOn: "",
   kibanaDashboardUrl: ""
 };
 const ANALYTICS_TYPES = ["Infrastructure", "Pipeline"];
