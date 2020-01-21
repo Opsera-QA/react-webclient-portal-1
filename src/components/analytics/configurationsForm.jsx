@@ -33,10 +33,10 @@ function ConfigurationsForm( { settings, token }) {
   useEffect( () => {
     if (settings) {
       if ("active" in settings) {
-        setState({ ...state, data: settings });  
+        setState({ data: settings });  
       }
     } else {
-      setState({ ...state, editEnabled: true });  
+      setState({ editEnabled: true });  
     }
   }, [settings]);
 
@@ -56,23 +56,24 @@ function ConfigurationsForm( { settings, token }) {
   function disableProfile() {
     let { data } = state;
     data.active = false;
-    setState({ ...state, data, showModal:false });    
+    setState({ data, showModal:false });    
     postData();
   }
 
   function postData() {
-    setState({ ...state, loaded: false });
+    setState({ loaded: false });
     const body = state.data;
     const apiCall = new ApiService("/analytics/update", {}, token, body);  
     apiCall.post()
       .then(function (response) {
         console.debug(response);
         //MAY WANT TO DO SOMETHING HERE
+        toggleEditing();
       })
       .catch(function (error) {
-        setState({ ...state, error: error }); 
+        setState({ error: error }); 
       }).finally(function () {
-        setState({ ...state, loaded: true }); 
+        setState({ loaded: true }); 
       });
   }
 
@@ -94,7 +95,7 @@ function ConfigurationsForm( { settings, token }) {
   }
 
   function toggleEditing() {
-    setState({ ...state, editEnabled: !state.editEnabled });  
+    setState({ editEnabled: !state.editEnabled });  
   }
 
 
