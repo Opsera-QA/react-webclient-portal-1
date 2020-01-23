@@ -29,6 +29,13 @@ a {
   font-style: italic;
 }
 
+.border-bottom {
+  border-width: 2px;
+  border-bottom-width:2px;
+  border-bottom-color:#343a40;
+  border-bottom-style: solid;
+}
+
 /* END Utility Classes */
 
 .sidebar {

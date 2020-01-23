@@ -1,12 +1,11 @@
 /* eslint-disable react/prop-types */
 import React, { PureComponent } from "react";
-import { Form, Alert, Row, Col, Button } from "react-bootstrap";
+import { Form, Alert, Button } from "react-bootstrap";
 import Moment from "react-moment";
 import { AuthContext } from "../../contexts/AuthContext";  //REact Context API Code for User Authentication
 import { ApiService } from "../../api/apiService";
 import ErrorDialog from "../common/error";
 import LoadingDialog from "../common/loading";
-import { handleError } from "../../helpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faStream } from "@fortawesome/free-solid-svg-icons";
 
@@ -80,7 +79,7 @@ class Inventory extends PureComponent {
 
         <div className="row">
           <div className="col ml-auto">
-            <Button variant="outline-primary" className="float-right" size="sm" onClick={() => this.gotoLink("platform")}>
+            <Button variant="outline-primary" className="float-right d-none" size="sm" onClick={() => this.gotoLink("platform")}>
               <FontAwesomeIcon icon={faPlus} fixedWidth /> New Platform
             </Button>
 
@@ -163,20 +162,22 @@ function App({ application }) {
 const ToolTable = ({ tool }) => {
   const { _id, name, port, toolStatus, toolURL, versionNumber, installationDate, dnsName } = tool;
   return (
-    <div className="p-2 mt-2">
+    <div className="p-2 mt-2 border-bottom">
       <div className="row m-1">
         <div className="col-md col-header-text">{name}</div>
         <div className="col-md"><span className="text-muted">Port:</span> {port}</div>
         <div className="col-md"><span className="text-muted">Version:</span> {versionNumber}</div>
-        <div className="col-md"><span className="text-muted">Install Date:</span> <Moment format="MM/DD/YYYY" date={installationDate} /></div>
       </div>
       <div className="row m-1">
         <div className="col-md"><span className="text-muted">Status:</span> {toolStatus}</div>
         <div className="col-md"><span className="text-muted">ID:</span> {_id}</div>
       </div>
       <div className="row m-1">
-        <div className="col-md"><span className="text-muted">URL:</span> {toolURL}</div>
+        <div className="col-md"><span className="text-muted">URL:</span> {toolURL}</div>        
+      </div>
+      <div className="row m-1">
         <div className="col-md"><span className="text-muted">DNS:</span> {dnsName}</div>
+        <div className="col-md"><span className="text-muted">Install Date:</span> <Moment format="MM/DD/YYYY" date={installationDate} /></div>
       </div>
     </div>
   );

@@ -160,7 +160,7 @@ function ConfigurationsForm( { settings, token }) {
                 </>
                 }
               </div>
-              <div key="checkbox-tools" className="mb-1 mt-2 p-2">
+              <div key="checkbox-tools" className="mb-1 mt-2 p-2 d-none">
                 {
                   TOOLS.map(item => (
                     <Form.Check inline 
@@ -172,6 +172,15 @@ function ConfigurationsForm( { settings, token }) {
                       key={item} />
                   ))
                 }
+              </div>
+
+              <div className="mb-1 mt-1 text-muted">
+                The following tools are currently supported with analytics:
+                
+                {
+                  TOOLS.map(item => (
+                    <span key={item} style={{ marginRight:"5px" }}>&nbsp;{item}&nbsp;</span>
+                  ))}
               </div>
 
               { !editEnabled &&
