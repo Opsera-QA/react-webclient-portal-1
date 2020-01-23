@@ -15,14 +15,16 @@ function ErrorDialog({ error }) {
     loginUserContext();
   };
 
-  if (error.response) {
-    error.message = `Status ${error.response.status}: `;
-    error.message += error.response.data.message ? error.response.data.message : JSON.stringify(error.response.data);
-  }
-
   useEffect( () => {
+    let messageBody  = "";
+    if (error.response) {
+      console.log("ERROR: ", error.response);
+      messageBody = `Status ${error.response.status}: `;
+      messageBody += error.response.data.message ? error.response.data.message : JSON.stringify(error.response.data);
+    }
+
     setState({
-      message: error.message ? error.message : error,
+      message: messageBody ? messageBody : error,
       detail: JSON.stringify(error),
       statusCode: error.response ? error.response.status : null
     });
