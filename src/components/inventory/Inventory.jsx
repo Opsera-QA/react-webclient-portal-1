@@ -170,6 +170,9 @@ const ToolTable = ({ tool }) => {
       </div>
       <div className="row m-1">
         <div className="col-md"><span className="text-muted">Status:</span> {toolStatus}</div>
+        <div className="col-md"><span className="text-muted">Install Date:</span> <Moment format="MM/DD/YYYY" date={installationDate} /></div>
+      </div>
+      <div className="row m-1">
         <div className="col-md"><span className="text-muted">ID:</span> {_id}</div>
       </div>
       <div className="row m-1">
@@ -177,7 +180,6 @@ const ToolTable = ({ tool }) => {
       </div>
       <div className="row m-1">
         <div className="col-md"><span className="text-muted">DNS:</span> {dnsName}</div>
-        <div className="col-md"><span className="text-muted">Install Date:</span> <Moment format="MM/DD/YYYY" date={installationDate} /></div>
       </div>
     </div>
   );
