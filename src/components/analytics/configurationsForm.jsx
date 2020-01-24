@@ -26,7 +26,6 @@ const DATA_LIMITS = [{ Value: "500", Label: "500MB" }, { Value: "1", Label: "1GB
 
 
 function ConfigurationsForm( { settings, token }) {
-  //const contextType = useContext(AuthContext);
   const [state, setState] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     { loaded: true, showModal: false, editEnabled: false, error: null, messages: null, data: INITIAL_SETTINGS }
@@ -174,8 +173,8 @@ function ConfigurationsForm( { settings, token }) {
                 }
               </div>
 
-              <div className="mb-1 mt-1 text-muted">
-                The following tools are currently supported with analytics:
+              <div className="mb-3 mt-1 text-muted">
+                <div>The following tools are currently supported with analytics:</div>
                 
                 {
                   TOOLS.map(item => (
