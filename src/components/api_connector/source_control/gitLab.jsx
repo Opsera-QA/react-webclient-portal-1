@@ -13,8 +13,8 @@ const state = {
   jPassword: "",
   jobName: "",
   modal: false,
-}
-const devState = {
+};
+/* const devState = {
   token: "3uuRjbxmsw6ynegSgx2_",
   repoName: "TestProject",
   jenkinsUrl: "https://sparuna.opsera.io/supptest/jenkinspipeline/job/release-pipeline/",
@@ -23,12 +23,12 @@ const devState = {
   jPassword: "admin",
   jobName: "release-pipeline",
   modal: false,
-}
+}; */
 
 class GitLab extends Component {
   static contextType = AuthContext;  //Registers the User Authentication context data in the component
 
-  state = devState;
+  state = state;
 
   handleChange = ({ target: { name, value } }) => {
     this.setState({
@@ -39,10 +39,8 @@ class GitLab extends Component {
   handleSave = async (e) => {
     e.preventDefault();
 
-    const { getAccessToken, getUserInfo } = this.context;
+    const { getAccessToken } = this.context;
     const accessToken = await getAccessToken();
-    const userInfo = await getUserInfo();
-    // const urlParams = { data: this.state, userid: userInfo.sub }    
     const urlParams = this.state;
     new ApiService(
       apiConnectorURL + "gitlab/createHook",
@@ -54,7 +52,7 @@ class GitLab extends Component {
         this.showSuccessAlert();
       })
       .catch(e => {
-        console.log(e)
+        console.log(e);
         this.showErrorAlert();
       });
 

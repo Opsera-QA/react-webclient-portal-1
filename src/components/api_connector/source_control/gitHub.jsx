@@ -14,8 +14,8 @@ const state = {
   jPassword: "",
   jobName: "",
   modal: false,
-}
-const devState = {
+};
+/* const devState = {
   username: "faseehOpsera",
   token: "daa54374d5ecb20337c7098e97b0c8bf1c398b00",
   repoName: "testapp",
@@ -25,7 +25,7 @@ const devState = {
   jPassword: "admin",
   jobName: "release-pipeline",
   modal: false,
-}
+} */
 
 class GitHub extends PureComponent {
   static contextType = AuthContext;  //Registers the User Authentication context data in the component
@@ -41,10 +41,8 @@ class GitHub extends PureComponent {
   handleSave = async (e) => {
     e.preventDefault();
 
-    const { getAccessToken, getUserInfo } = this.context;
+    const { getAccessToken } = this.context;
     const accessToken = await getAccessToken();
-    const userInfo = await getUserInfo();
-    // const urlParams = { data: this.state, userid: userInfo.sub };    
     const urlParams = this.state;
     new ApiService(
       apiConnectorURL + "github/createHook",
@@ -56,7 +54,7 @@ class GitHub extends PureComponent {
         this.showSuccessAlert();
       })
       .catch(e => {
-        console.log(e)
+        console.log(e);
         this.showErrorAlert();
       });
 
