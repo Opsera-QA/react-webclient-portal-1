@@ -30,7 +30,7 @@ const devState = {
 class GitHub extends PureComponent {
   static contextType = AuthContext;  //Registers the User Authentication context data in the component
 
-  state = devState
+  state = state
 
   handleChange = ({ target: { name, value } }) => {
     this.setState({
