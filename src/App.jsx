@@ -59,7 +59,6 @@ class App extends Component {
                   <SecureRoute path="/reports" exact component={Reports} />
                   <SecureRoute path="/update" component={Update} />
                   <SecureRoute path="/admin" exact component={AdminTools} />
-                  <SecureRoute path="/admin/health" component={HealthCheck} />
                   <SecureRoute path="/admin/delete" component={DeleteTools} />
                   <SecureRoute path="/admin/manage_systems" component={ManageSystems} />
                   <SecureRoute path="/admin/registered_users" component={RegisteredUsers} />
@@ -68,7 +67,7 @@ class App extends Component {
                 </div>
               </div>
               <div className="row fixed-row-footer-bottom">
-                <div className="col text-center m-1" style={{ padding: 0, margin: 0, fontSize:".6em"}}>© OpsERA 2020</div>
+                <div className="col text-center m-1" style={{ padding: 0, margin: 0, fontSize: ".6em" }}>© OpsERA 2020</div>
               </div>
             </div>
           </AuthContextProvider>

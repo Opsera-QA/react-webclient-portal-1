@@ -54,7 +54,7 @@ export class ApiService {
       method: "delete",
       url: self.url,
       params: self.params,
-      data : self.data,
+      data: self.data,
     });
   }
 }

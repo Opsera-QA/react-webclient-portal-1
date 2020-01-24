@@ -4,21 +4,36 @@ import { AuthContext } from "../../../contexts/AuthContext";  //REact Context AP
 import { ApiService } from "../../../api/apiService";
 import { apiConnectorURL } from "../../../config";
 
+const state = {
+  jiraUrl: "",
+  jiraPort: "",
+  jiraUserName: "",
+  jiraPassword: "",
+  jenkinUrl: "",
+  jenkinPort: "",
+  jenkinUserName: "",
+  jenkinPassword: "",
+  projectName: "",
+  modal: false,
+}
+
+const devState = {
+  jiraUrl: "",
+  jiraPort: "",
+  jiraUserName: "",
+  jiraPassword: "",
+  jenkinUrl: "",
+  jenkinPort: "",
+  jenkinUserName: "",
+  jenkinPassword: "",
+  projectName: "",
+  modal: false,
+}
+
 class Jira extends Component {
   static contextType = AuthContext;  //Registers the User Authentication context data in the component
 
-  state = {
-    url: "",
-    port: "",
-    username: "",
-    password: "",
-    jenkinsUrl: "",
-    jenkinsPort: "",
-    jenkinsUsername: "",
-    jenkinsPassword: "",
-    projectName: "",
-    modal: false,
-  }
+  state = devState
 
   handleChange = ({ target: { name, value } }) => {
     this.setState({
@@ -69,39 +84,39 @@ class Jira extends Component {
 
   resetForm = () => {
     this.setState({
-      url: "",
-      port: "",
-      username: "",
-      password: "",
-      jenkinsUrl: "",
-      jenkinsPort: "",
-      jenkinsUsername: "",
-      jenkinsPassword: "",
+      jiraUrl: "",
+      jiraPort: "",
+      jiraUserName: "",
+      jiraPassword: "",
+      jenkinUrl: "",
+      jenkinPort: "",
+      jenkinUserName: "",
+      jenkinPassword: "",
       projectName: "",
     });
   }
 
   canBeSubmitted() {
     const {
-      url,
-      port,
-      username,
-      password,
-      jenkinsUrl,
-      jenkinsPort,
-      jenkinsUsername,
-      jenkinsPassword,
+      jiraUrl,
+      jiraPort,
+      jiraUserName,
+      jiraPassword,
+      jenkinUrl,
+      jenkinPort,
+      jenkinUserName,
+      jenkinPassword,
       projectName,
     } = this.state;
     return (
-      url.length > 0 &&
-      port.length > 0 &&
-      username.length > 0 &&
-      password.length > 0 &&
-      jenkinsUrl.length > 0 &&
-      jenkinsPort.length > 0 &&
-      jenkinsUsername.length > 0 &&
-      jenkinsPassword.length > 0 &&
+      jiraUrl.length > 0 &&
+      jiraPort.length > 0 &&
+      jiraUserName.length > 0 &&
+      jiraPassword.length > 0 &&
+      jenkinUrl.length > 0 &&
+      jenkinPort.length > 0 &&
+      jenkinUserName.length > 0 &&
+      jenkinPassword.length > 0 &&
       projectName.length > 0
     );
   }
@@ -133,8 +148,8 @@ class Jira extends Component {
                   <Form.Control
                     type="text"
                     placeholder=""
-                    name="url"
-                    value={this.state.url}
+                    name="jiraUrl"
+                    value={this.state.jiraUrl}
                     onChange={this.handleChange}
                   // isInvalid={this.state.url.error}
                   />
@@ -146,8 +161,8 @@ class Jira extends Component {
                   <Form.Control
                     type="text"
                     placeholder=""
-                    name="port"
-                    value={this.state.port}
+                    name="jiraPort"
+                    value={this.state.jiraPort}
                     onChange={this.handleChange}
                   // isInvalid={this.state.port.error}
                   />
@@ -161,8 +176,8 @@ class Jira extends Component {
                   <Form.Control
                     type="text"
                     placeholder=""
-                    name="username"
-                    value={this.state.username}
+                    name="jiraUserName"
+                    value={this.state.jiraUserName}
                     onChange={this.handleChange}
                   // isInvalid={this.state.username.error} 
                   />
@@ -174,8 +189,8 @@ class Jira extends Component {
                   <Form.Control
                     type="password"
                     placeholder=""
-                    name="password"
-                    value={this.state.password.value}
+                    name="jiraPassword"
+                    value={this.state.jiraPassword}
                     onChange={this.handleChange}
                   // isInvalid={this.state.password.error} 
                   />
@@ -202,8 +217,8 @@ class Jira extends Component {
                   <Form.Control
                     type="text"
                     placeholder=""
-                    name="jenkinsUrl"
-                    value={this.state.jenkinsUrl}
+                    name="jenkinUrl"
+                    value={this.state.jenkinUrl}
                     onChange={this.handleChange}
                   // isInvalid={this.state.jenkinsUrl.error}
                   />
@@ -218,8 +233,8 @@ class Jira extends Component {
                   <Form.Control
                     type="text"
                     placeholder=""
-                    name="jenkinsPort"
-                    value={this.state.jenkinsPort}
+                    name="jenkinPort"
+                    value={this.state.jenkinPort}
                     onChange={this.handleChange}
                   // isInvalid={this.state.jenkinsPort.error}
                   />
@@ -233,8 +248,8 @@ class Jira extends Component {
                   <Form.Control
                     type="text"
                     placeholder=""
-                    name="jenkinsUsername"
-                    value={this.state.jenkinsUsername}
+                    name="jenkinUserName"
+                    value={this.state.jenkinUserName}
                     onChange={this.handleChange}
                   // isInvalid={this.state.jenkinsUsername.error} 
                   />
@@ -246,8 +261,8 @@ class Jira extends Component {
                   <Form.Control
                     type="password"
                     placeholder=""
-                    name="jenkinsPassword"
-                    value={this.state.jenkinsPassword}
+                    name="jenkinPassword"
+                    value={this.state.jenkinPassword}
                     onChange={this.handleChange}
                   // isInvalid={this.state.jenkinsPassword.error} 
                   />

@@ -18,9 +18,9 @@ class AdminTools extends Component {
         <div>Listed below are administration tools for the platform.</div>
 
         <Row className="m-5">
-          <Col xs={12} md={6} lg={4} className="p-2">
+          {/* <Col xs={12} md={6} lg={4} className="p-2">
             <Link to="/admin/health"><FontAwesomeIcon icon={faHeartbeat} fixedWidth /> System Health Check</Link>
-          </Col>
+          </Col> */}
           <Col xs={12} md={6} lg={4} className="p-2">
             <Link to="/admin/delete"><FontAwesomeIcon icon={faTimes} fixedWidth /> Delete Tools</Link>
           </Col>

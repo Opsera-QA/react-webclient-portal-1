@@ -4,19 +4,31 @@ import { AuthContext } from "../../../contexts/AuthContext";  //REact Context AP
 import { ApiService } from "../../../api/apiService";
 import { apiConnectorURL } from "../../../config";
 
+const state = {
+  token: "",
+  repoName: "",
+  jenkinsUrl: "",
+  jenkinsPort: "",
+  jUsername: "",
+  jPassword: "",
+  jobName: "",
+  modal: false,
+}
+const devState = {
+  token: "3uuRjbxmsw6ynegSgx2_",
+  repoName: "TestProject",
+  jenkinsUrl: "https://sparuna.opsera.io/supptest/jenkinspipeline/job/release-pipeline/",
+  jenkinsPort: "8080",
+  jUsername: "admin",
+  jPassword: "admin",
+  jobName: "release-pipeline",
+  modal: false,
+}
+
 class GitLab extends Component {
   static contextType = AuthContext;  //Registers the User Authentication context data in the component
 
-  state = {
-    token: "",
-    repo: "",
-    jenkinsUrl: "",
-    jenkinsPort: "",
-    jenkinsUsername: "",
-    jenkinsPassword: "",
-    job: "",
-    modal: false,
-  }
+  state = devState;
 
   handleChange = ({ target: { name, value } }) => {
     this.setState({
@@ -30,7 +42,8 @@ class GitLab extends Component {
     const { getAccessToken, getUserInfo } = this.context;
     const accessToken = await getAccessToken();
     const userInfo = await getUserInfo();
-    const urlParams = { data: this.state, userid: userInfo.sub };
+    // const urlParams = { data: this.state, userid: userInfo.sub }    
+    const urlParams = this.state;
     new ApiService(
       apiConnectorURL + "gitlab/createHook",
       null,
@@ -41,6 +54,7 @@ class GitLab extends Component {
         this.showSuccessAlert();
       })
       .catch(e => {
+        console.log(e)
         this.showErrorAlert();
       });
 
@@ -67,33 +81,33 @@ class GitLab extends Component {
   resetForm = () => {
     this.setState({
       token: "",
-      repo: "",
+      repoName: "",
       jenkinsUrl: "",
       jenkinsPort: "",
-      jenkinsUsername: "",
-      jenkinsPassword: "",
-      job: ""
+      jUsername: "",
+      jPassword: "",
+      jobName: ""
     });
   }
 
   canBeSubmitted() {
     const {
       token,
-      repo,
+      repoName,
       jenkinsUrl,
       jenkinsPort,
-      jenkinsUsername,
-      jenkinsPassword,
-      job,
+      jUsername,
+      jPassword,
+      jobName,
     } = this.state;
     return (
       token.length > 0 &&
-      repo.length > 0 &&
+      repoName.length > 0 &&
       jenkinsUrl.length > 0 &&
       jenkinsPort.length > 0 &&
-      jenkinsUsername.length > 0 &&
-      jenkinsPassword.length > 0 &&
-      job.length > 0
+      jUsername.length > 0 &&
+      jPassword.length > 0 &&
+      jobName.length > 0
     );
   }
 
@@ -135,8 +149,8 @@ class GitLab extends Component {
                 <Form.Control
                   type="text"
                   placeholder=""
-                  name="repo"
-                  value={this.state.repo}
+                  name="repoName"
+                  value={this.state.repoName}
                   onChange={this.handleChange}
                 // isInvalid={this.state.repo.error}
                 />
@@ -180,8 +194,8 @@ class GitLab extends Component {
                   <Form.Control
                     type="text"
                     placeholder=""
-                    name="jenkinsUsername"
-                    value={this.state.jenkinsUsername}
+                    name="jUsername"
+                    value={this.state.jUsername}
                     onChange={this.handleChange}
                   // isInvalid={this.state.jenkinsUsername.error} 
                   />
@@ -193,8 +207,8 @@ class GitLab extends Component {
                   <Form.Control
                     type="password"
                     placeholder=""
-                    name="jenkinsPassword"
-                    value={this.state.jenkinsPassword}
+                    name="jPassword"
+                    value={this.state.jPassword}
                     onChange={this.handleChange}
                   // isInvalid={this.state.jenkinsPassword.error} 
                   />
@@ -206,8 +220,8 @@ class GitLab extends Component {
                   <Form.Control
                     type="text"
                     placeholder=""
-                    name="job"
-                    value={this.state.job}
+                    name="jobName"
+                    value={this.state.jobName}
                     onChange={this.handleChange}
                   // isInvalid={this.state.token.error}
                   />
