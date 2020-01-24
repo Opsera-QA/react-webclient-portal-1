@@ -77,6 +77,8 @@ class Inventory extends PureComponent {
         <h3>Inventory</h3>
         <p>All configured applications and tools are available for viewing below.  Select the item you want to view from the list.</p>
 
+        {error ? <ErrorDialog error={error} /> : null}
+
         <div className="row">
           <div className="col ml-auto">
             <Button variant="outline-primary" className="float-right d-none" size="sm" onClick={() => this.gotoLink("platform")}>
@@ -88,8 +90,6 @@ class Inventory extends PureComponent {
             </Button>
           </div>
         </div>
-
-        {error ? <ErrorDialog error={error} /> : null}
 
         {fetching && <LoadingDialog />}
         <div>
