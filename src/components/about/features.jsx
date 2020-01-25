@@ -17,15 +17,16 @@ class featuresCards extends React.Component {
           <Card.Body>
             <Card.Title>OpsERA offers multiple ways to work with your DevOps solution.</Card.Title>
             <Card.Text>
-              The OpsERA DevOps Product comes up with the best time to market solutions for all your technology
-                      automation and workflow is seamless and optimized throughout your organization.  We deliver solutions
-                      to automate build, deploy, security and testing with open source tools for your development team to
-                      manage application upgrades effectively and in secured way. We also provide pragmatic solutions for
-                      various cloud-based products using open source frameworks and we ensure that enterprise policies are met.
+              The OpsERA DevOps Product offers the best time to market solutions for all of your technology
+                  automation and workflow needs enabling organizations to build optimized and efficient DevOps projects.  
+                  We deliver solutions to automate build, deploy, security and testing with open source tools for your development team to
+                  manage application upgrades effectively and in a secured way. We also provide pragmatic solutions for
+                  various cloud-based products using open source frameworks and we ensure that enterprise policies are met.
             </Card.Text>
-            <Button variant="primary" onClick={() => this.gotoLink("inventory")}>My Inventory</Button>
+            {/* <Button variant="primary" onClick={() => this.gotoLink("inventory")}>Application Inventory</Button> */}
             <Button variant="outline-primary" className="ml-2" onClick={() => this.gotoLink("platform")}>Platforms</Button>
             <Button variant="outline-primary" className="ml-2" onClick={() => this.gotoLink("pipeline")}>Pipelines</Button>
+            <Button variant="outline-primary" className="ml-2" onClick={() => this.gotoLink("analytics")}>Analytics</Button>
           </Card.Body>
         </Card>
 
@@ -39,7 +40,7 @@ class featuresCards extends React.Component {
                 integration with various popular API connectors including Jira, ServiceNow, Github and Slack among many more.
               </Card.Text>
               {/* <Button variant="primary" onClick={this.setPlaceholder}>Register Platform</Button> */}
-              <Link to="/platform">Register an Application</Link>
+              <Link to="/platform">Configure Existing Platforms</Link>
             </Card.Body>
           </Card>
           <Card style={{ width: "18rem" }}>
@@ -47,11 +48,14 @@ class featuresCards extends React.Component {
               <Card.Title>Pipeline</Card.Title>
               <Card.Subtitle className="mb-2 text-muted">Empower Your Teams</Card.Subtitle>
               <Card.Text>
-                Leverage the full benefits of OpsERA by building DevOps pipelines with security and quality gates in just 10-15 minutes. Supports multi-stack,
-                multi-language, multi-branch, RBAC, Jenkins pipelines and Hybrid Cloud solutions with support for Container deployments, Kubernetes clusters and/or with Helm.
+                Leverage the full benefits of OpsERA by building DevOps Pipeline Workflows in just 10-15 minutes.  
+                Support for configuring various pipelines for various workflows: QA, Staging, Production, Security, Compliance, or custom templates.
+                {/*  Support for multi-stack,
+                multi-language, multi-branch, RBAC, Jenkins pipelines and Hybrid Cloud solutions 
+                with support for Container deployments, Kubernetes clusters and/or with Helm. */}
               </Card.Text>
               {/* <Button variant="primary" onClick={this.setPlaceholder}>Build a Pipeline</Button> */}
-              <Link to="/pipeline">Build Your Pipeline</Link>
+              <Link to="/pipeline">Manage Your Pipelines</Link>
             </Card.Body>
           </Card>
           <Card style={{ width: "18rem" }}>
@@ -59,8 +63,8 @@ class featuresCards extends React.Component {
               <Card.Title>Analytics</Card.Title>
               <Card.Subtitle className="mb-2 text-muted">End to End Visibility</Card.Subtitle>
               <Card.Text>
-                Provides near real time Intelligent dashboards and metrics for all builds including Testing, security and deploy providing
-                end to end visibility into your entire DevOps ecosystem.
+                Provides near real time intelligent dashboards and metrics for an organization`s DevOps teams.  Statistics on successful workflows, errors, security reviews, 
+                scorecards and much more!
               </Card.Text>
               {/* <Button variant="primary" onClick={this.setPlaceholder}>Get Started</Button> */}
               <Link to="/analytics">Reports and Analytics</Link>

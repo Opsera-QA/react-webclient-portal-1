@@ -50,7 +50,9 @@ class Home extends Component {
                 Make DevOps a streamlined, managed experience, allowing developers to focus on what they enjoy doing most: writing code!
               </p>
               <p className="lead mb-4">
-                OpsERA is an end to end DevOps Workflow Solution that can manage all of the tasks and resources for a team’s CI/CD Pipeline automatically, allowing for a single pane of glass view on the entire DevOps workflow including easy to use interfaces and advanced, consolidated error reporting and usage and optimization reporting.
+                OpsERA is an end to end DevOps Workflow Solution that can manage all of the tasks and resources for an organization’s CI/CD Pipelines.  
+                This cutting edge solution automatically allows for a single pane of glass view over the entire organization’s DevOps workflows providing 
+                best practice recommendations, easy to use management interfaces, analytics as well as diagnostics, optimization and error reporting visibility.
               </p>
               <div className="row mx-n2">
                 <div className="col-md px-2">
