@@ -23,9 +23,9 @@ class ApiConnector extends Component {
     return (
       <div>
         <h3>API Connectors</h3>
-        <div>Configure your API connections here for the supported systems.</div>
+        <div>Configure connection information for various supported tools.</div>
 
-        <ul className="nav">
+        <ul className="nav mt-1">
           <li className="nav-item">
             <a className={"nav-link " + (this.state.selection === "github" ? "nav-link-text-active" : "nav-link-text")} onClick={() => this.selectView("github")}>GitHub</a>
           </li>
@@ -61,8 +61,8 @@ class ApiConnector extends Component {
         {this.state.selection === "tableau" && <Tableau />}
         {this.state.selection === "splunk" && <Splunk />}
         {this.state.selection === "" &&
-          <div className="mt-5">
-            OpsERA offers out of the box API connectors which allow you to to integrate your internal platforms and add them to the pipeline and analytics.
+          <div className="mt-2">
+            OpsERA offers out of the box API connectors which allow you to to integrate your internal platforms for inclusion in pipelines and platform configurations.
           </div>
         }
 

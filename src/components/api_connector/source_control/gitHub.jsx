@@ -130,7 +130,7 @@ class GitHub extends PureComponent {
             {this.state.message}
           </Alert>
         }
-        <Card style={{ marginTop: 25 }}>
+        <Card className="mt-3">
           <Card.Header as="h5">Github Credentials</Card.Header>
           <Card.Body>
             <Form onSubmit={this.handleSave}>
@@ -250,7 +250,7 @@ class GitHub extends PureComponent {
               <Button id="save-button" disabled={!isEnabled} variant="primary" className="mr-2" type="submit">Connect</Button>
               {/* <Button id="cancel-button" variant="outline-secondary" className="mr-2" type="button" onClick={this.cancel}>Cancel</Button> */}
             </Form>
-
+            <div className="text-muted mt-2 italic">Please Note: All fields are required for connectivity.</div>
           </Card.Body>
         </Card>
       </div>

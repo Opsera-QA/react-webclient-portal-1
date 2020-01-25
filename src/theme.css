@@ -53,7 +53,7 @@ button.bg-primary:focus {
 .btn-primary:hover {
   color: #fff;
   background-color: #093062;
-  border-color: #082954;
+  border-color: #495564;
 }
 
 .btn-primary:focus, .btn-primary.focus {
@@ -62,8 +62,9 @@ button.bg-primary:focus {
 
 .btn-primary.disabled, .btn-primary:disabled {
   color: #fff;
-  background-color: #0d4183;
-  border-color: #0d4183;
+  background-color: #5e82b1;
+  border-color: #90a8c5;
+  cursor: default;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
