@@ -60,7 +60,8 @@ function HeaderNavBar() {
             <NavDropdown.Item href="https://opsera.atlassian.net/wiki/x/kIA5" target="_blank" id="kb-button">KnowledgeBase</NavDropdown.Item>
             <NavDropdown.Item href="https://opsera.atlassian.net/wiki/x/AQBYAw" target="_blank" id="request-help-button">Request Help</NavDropdown.Item>
             <NavDropdown.Divider />
-            <Link to="/about" id="profile-button" className="dropdown-item nav-drop-down-item">About OpsERA</Link>
+            {/* <Link to="/about" id="profile-button" className="dropdown-item nav-drop-down-item">About OpsERA</Link> */}
+            <NavDropdown.Item href="https://opsera.io/" target="_blank" id="about-opsera">About OpsERA</NavDropdown.Item>
             <NavDropdown.Item href="" onClick={logout} id="logout-button">Logout</NavDropdown.Item>
           </NavDropdown>}
         </Nav>
