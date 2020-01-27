@@ -25,11 +25,11 @@ export default class RegisteredUsers extends PureComponent {
     async getApiData() {
         const { getAccessToken } = this.context;
         const accessToken = await getAccessToken();
-        const apiCall = new ApiService("/users/allusers", {}, accessToken);
+        const apiCall = new ApiService("/users/get-users", {}, accessToken);
         let currentComponent = this;
         apiCall.get()
             .then(function (response) {
-                console.log(response.data)
+                // console.log(response.data)
                 currentComponent.setState({
                     data: response.data,
                     error: null,
