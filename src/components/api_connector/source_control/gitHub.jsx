@@ -82,7 +82,7 @@ class GitHub extends PureComponent {
     this.setState({
       username: "",
       token: "",
-      repo: "",
+      repoName: "",
       jenkinsUrl: "",
       jenkinsPort: "",
       jUsername: "",
@@ -216,6 +216,8 @@ class GitHub extends PureComponent {
                     value={this.state.jUsername}
                     onChange={this.handleChange}
                   // isInvalid={this.state.jenkinsUsername.error} 
+                  // isInvalid={this.state.jenkinsUsername.error} 
+                  // isInvalid={this.state.jenkinsUsername.error} 
                   />
                   {/* <Form.Control.Feedback type="invalid">{this.state.jenkinsUsername.error}</Form.Control.Feedback> */}
                 </Form.Group>
@@ -228,6 +230,8 @@ class GitHub extends PureComponent {
                     name="jPassword"
                     value={this.state.jPassword}
                     onChange={this.handleChange}
+                  // isInvalid={this.state.jenkinsPassword.error} 
+                  // isInvalid={this.state.jenkinsPassword.error} 
                   // isInvalid={this.state.jenkinsPassword.error} 
                   />
                   {/* <Form.Control.Feedback type="invalid">{this.state.jenkinsPassword.error}</Form.Control.Feedback> */}

@@ -20,8 +20,8 @@ function Analytics() {
       const { getAccessToken } = contextType;
       const accessToken = await getAccessToken();
       setState({ token: accessToken });
-      
-      const apiCall = new ApiService("/analytics/settings", {}, accessToken);  
+
+      const apiCall = new ApiService("/analytics/settings", {}, accessToken);
       apiCall.get()
         .then(function (response) {
           console.log(response);
@@ -31,7 +31,7 @@ function Analytics() {
             fetching: false,
             error: null,
             loaded: true
-          }); 
+          });
         })
         .catch(function (error) {
           setState({
@@ -49,11 +49,11 @@ function Analytics() {
     <div>
       <h3>Analytics Dashboard</h3>
 
-      { !state.loaded && <LoadingDialog />}
+      {!state.loaded && <LoadingDialog />}
 
       <div className="p-2 mt-1">
-        { state.error && <ErrorDialog error={state.error} /> }
-        <ConfigurationsForm settings={ state.data } token={ state.token } />
+        {state.error && <ErrorDialog error={state.error} />}
+        <ConfigurationsForm settings={state.data} token={state.token} />
       </div>
 
     </div>

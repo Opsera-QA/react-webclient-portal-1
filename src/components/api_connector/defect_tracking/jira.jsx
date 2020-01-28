@@ -17,23 +17,24 @@ const state = {
   modal: false,
 };
 
-const devState = {
-  jiraUrl: "",
-  jiraPort: "",
-  jiraUserName: "",
-  jiraPassword: "",
-  jenkinUrl: "",
-  jenkinPort: "",
-  jenkinUserName: "",
-  jenkinPassword: "",
-  projectName: "",
-  modal: false,
-};
+// const devState = {
+//   jiraUrl: "https://opseratest.atlassian.net",
+//   jiraPort: "443",
+//   jiraUserName: "opsera@yopmail.com",
+//   jiraPassword: "opsera@yopmail.com",
+//   jenkinUrl: "https://sparuna.opsera.io/supptest/jenkinspipeline/job/release-pipeline/",
+//   jenkinPort: "8080",
+//   jenkinUserName: "admin",
+//   jenkinPassword: "admin",
+//   jobName: "release-pipeline",
+//   projectName: "testproj",
+//   modal: false,
+// };
 
 class Jira extends Component {
   static contextType = AuthContext;  //Registers the User Authentication context data in the component
 
-  state = devState
+  state = state
 
   handleChange = ({ target: { name, value } }) => {
     this.setState({
@@ -48,7 +49,9 @@ class Jira extends Component {
     const { getAccessToken, getUserInfo } = this.context;
     const accessToken = await getAccessToken();
     const userInfo = await getUserInfo();
-    const urlParams = { data: this.state, userid: userInfo.sub };
+    // const urlParams = { data: this.state, userid: userInfo.sub };
+
+    const urlParams = this.state;
     new ApiService(
       apiConnectorURL + "jira/trigger",
       null,

@@ -143,7 +143,7 @@ class GitLab extends Component {
               </Form.Group>
 
               <Form.Group controlId="formGridRepo">
-                <Form.Label>GitLab Repo Name</Form.Label>
+                <Form.Label>GitLab Repo Id</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder=""
