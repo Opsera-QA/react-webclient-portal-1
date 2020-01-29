@@ -20,38 +20,30 @@ Four ".env" files are included in this project:
 
 When running the App locally for development, it runs on http://localhost:8080.
 
+
+## Server Paths:
+* Staging Server: `/var/www/html`
+* Production Server: `/var/www/html`
+
+
 ## Deployment:
-1. Check out or copy the Master branch to a temp server path or locally on a workstation or jumpserver.  This can also be done from the dev workstation as it creates a new /build folder.
+1. Check out or copy the Master branch to a "build server" path (locally or on a jumpserver).  This can also be done from the dev workstation as it creates a new /build folder. For the interim time until TeamCity is deployed, the builds will be done on a dev workstation and the following steps will be performed:
 2. Install or update dependencies at root of project file: `sudo npm update` (or `sudo npm install` on first setup)
 3. Build project: `npm run build:staging` or `npm run build:production`
 
 ### Apache Setup
-4. Remove existing contents of the current Build folder EXCEPT for `.htaccess` as that file MUST stay for the ReactApp to route properly. (common path: `/var/www/html`) 
-5. Copy contents of `/build` folder into the root web path for the server (common path: `/var/www/html`)
-6. Making sure `.htaccess` is still in the `/var/www/html` folder, restart apache:
+4. Upload contents of local `/build` folder to `/var/www/release-builds/MM-DD-YYYY/` (Creating a new folder based on the Release Date of the build.  This ensures that we keep a copy of all released builds in the "client-build" folder in case of rollback requirements. These are never deleted.)
+4. Remove existing contents of the current `/var/www/html` folder EXCEPT for `.htaccess` as that file MUST stay for the ReactApp to route properly. 
+5. Copy contents of `/var/www/release-builds/MM-DD-YYYY/` folder into the root web path for the server (`/var/www/html`)
+```
+$ cd /var/www
+$ find ./html -mindepth 1 ! -regex '^./html/.htaccess\(/.*\)?' -delete
+$ cp -a /var/www/release-builds/MM-DD-YYYY/. html/
+```
+
+Note: React Apps generate URLs that are not real so the default response of the web server is to return a 404.  This `.htaccess` file tells the web server to instead route users to index.html (the default document for the React App.)
+
+Optional Apache Restart Command:
 ```
 $ sudo service apache2 restart
 ```
-
-### Tomcat Setup
-4. Upload contents of `/build` folder to `/home/ec2-user/client-build/MM-DD-YYYY/` (Creating a new folder based on the Release Date of the build.  This ensures that we keep a copy of all released builds in the "client-build" folder in case of rollback requirements. These are never deleted.)
-5. SSH to sever, perform: 
-6. Navigate to Tomcat WebAps folder: `/var/lib/apache-tomcat-8.5.35/webapps`
-7. Remove contents of `/ROOT` folder, leaving the `/WEB-INF` folder in place as you must preserve the `web.xml` file.  Then transfer new content into place: 
-```
-$ sudo su -
-$ cd /var/lib/apache-tomcat-8.5.35/webapps
-$ find ./ROOT -mindepth 1 ! -regex '^./ROOT/WEB-INF\(/.*\)?' -delete
-$ cp -a /home/ec2-user/client-build/MM-DD-YYYY/. ROOT/
-```
-8. Follow commands below to restart Tomcat:
-
-**To Start Tomcat Server**
-SSH to the Server Instance and run these commands:
-```
-$ sudo su -
-$ cd /var/lib/apache-tomcat-<version>/bin
-$ ./startup.sh
-```
-
-The `web.xml` in `/ROOT/WEB-INF` tells Apache/Tomcat how to handle React Apps.  React Apps generate URL's that are not real so the default response of the web server is to return a 404.  This web.xml tells the web server to instead route users to index.html (the default document for the React App.)
