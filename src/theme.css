@@ -67,6 +67,13 @@ button.bg-primary:focus {
   cursor: default;
 }
 
+.btn-success.disabled, .btn-success:disabled {
+  color: #fff;
+  background-color: #5e82b1;
+  border-color: #90a8c5;
+  cursor: default;
+}
+
 .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
   color: #fff;
   background-color: #082954;
