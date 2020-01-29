@@ -106,7 +106,7 @@ function ConfigurationsForm( { settings, token }) {
     <div>
       {!loaded && <LoadingDialog />}
       { error && <ErrorDialog error={error} /> }
-      {!active && <InfoDialog message="Analytics are currently NOT enabled for this account." />}
+      {/* {!active && <InfoDialog message="Analytics are currently NOT enabled for this account." />} */}
 
       {showModal ? <Modal header="Confirm Deactivation" 
         message={messages} 
@@ -119,7 +119,7 @@ function ConfigurationsForm( { settings, token }) {
           <Card.Subtitle className="mb-2 text-muted">Analytics configuration details are shown below for available tools.  We offer analytics for Infrastructure and Pipeline workflows as well as many popular tools.</Card.Subtitle>
           
           <Form>
-            <fieldset disabled={editEnabled}>
+            <fieldset>
               <div className="mt-3 text-muted">Workflow:</div>
               <div key="inline-checkbox-workflow" className="mb-1 mt-2 p-2">
                 {
@@ -182,24 +182,17 @@ function ConfigurationsForm( { settings, token }) {
                   ))}
               </div>
 
-              { !editEnabled &&
-                <div className="text-right">
-                  <Button variant="outline-secondary" className="mr-1" onClick={() => { toggleEditing(); }}>Cancel</Button>
-                  <Button variant="primary" className="mr-3" onClick={() => { updateProfile(); }}><FontAwesomeIcon icon={faSave} fixedWidth /> Save</Button>
-                  <Button variant="outline-danger" onClick={() => { confirmDeactivation(); }}>Deactivate</Button>
-                </div> 
-              }
+              <div className="text-right">
+                { !active ? 
+                  <Button variant="primary" onClick={() => { updateProfile(); }}>Activate Analytics</Button> : 
+                  <>
+                    <Button variant="primary" className="mr-3" onClick={() => { updateProfile(); }}><FontAwesomeIcon icon={faSave} fixedWidth /> Save Settings</Button>
+                    <Button variant="outline-danger" onClick={() => { confirmDeactivation(); }}>Deactivate Analytics</Button>
+                  </> }
+              </div> 
                 
             </fieldset>
 
-            { editEnabled &&
-            <div className="text-right">
-              { !active ? 
-                <Button variant="primary" onClick={() => { updateProfile(); }}>Activate Analytics</Button> : 
-                <Button variant="outline-primary" onClick={() => { toggleEditing(); }}><FontAwesomeIcon icon={faTools} fixedWidth /> Edit Settings</Button>
-              }
-            </div> 
-            }
           </Form>          
         </Card.Body>
       </Card>
