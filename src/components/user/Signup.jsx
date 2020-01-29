@@ -1,5 +1,7 @@
 import React, { PureComponent } from "react";
 import { Button, Form, Col, Card, Alert } from "react-bootstrap";
+import Modal from "../common/modal";
+import { AuthContext } from "../../contexts/AuthContext";
 import { ApiService } from "../../api/apiService";
 import states from "./states";
 import { isAlphaNumeric, validateEmail } from "../../helpers";
@@ -22,7 +24,18 @@ const state = {
 
 
 export default class Signup extends PureComponent {
+  static contextType = AuthContext;
   state = state
+
+  constructor(props, context) {
+    super(props, context);
+    this.login = this.login.bind(this);
+  }
+
+  async login() {
+    const { loginUserContext } = this.context;
+    loginUserContext();
+  }
 
   handleChange = ({ target: { name, value } }) => {
 
@@ -33,7 +46,7 @@ export default class Signup extends PureComponent {
         error = "no special chars are allowed";
       }
       if (value === "") {
-        error = "this field is required"
+        error = "this field is required";
       }
     } else if (name === "password") {
       if (value.length < 8) error = "password is too short.";
@@ -138,24 +151,24 @@ export default class Signup extends PureComponent {
     if (await this.validateEmail()) hasErrors = true;
     if (this.validatePassword()) hasErrors = true;
     if (this.validateDomain()) hasErrors = true
-      ;[
-        "firstName",
-        "lastName",
-        "organizationName",
-        "state",
-        "street",
-        "zip",
-        "city",
-      ].map(item => {
-        if (this.state[item].value.length <= 0) {
-          var itemProperty = this.state[item];
-          itemProperty.error = "This field is required";
-          hasErrors = true;
-          this.setState({
-            item: itemProperty
-          });
-        }
-      });
+    ;[
+      "firstName",
+      "lastName",
+      "organizationName",
+      "state",
+      "street",
+      "zip",
+      "city",
+    ].map(item => {
+      if (this.state[item].value.length <= 0) {
+        var itemProperty = this.state[item];
+        itemProperty.error = "This field is required";
+        hasErrors = true;
+        this.setState({
+          item: itemProperty
+        });
+      }
+    });
     return hasErrors;
   }
 
@@ -200,7 +213,7 @@ export default class Signup extends PureComponent {
       modal: true,
       type: "success",
       title: "Signup Successfull!",
-      message: "Registration was successful, please Sign In using your credentials."
+      message: "Registration was successful, please Login now using your new credentials."
     }, () => { this.resetForm(); });
   }
 
@@ -211,7 +224,7 @@ export default class Signup extends PureComponent {
       modal: true,
       type: "danger",
       title: "Error!",
-      message: "something went wrong, please try again later"
+      message: "Opps!  Something went wrong, please try again later"
     });
   }
 
@@ -274,11 +287,20 @@ export default class Signup extends PureComponent {
     const isEnabled = this.canBeSubmitted();
     return (
       <div>
+        
         {this.state.modal &&
-          <Alert variant={this.state.type} onClose={() => this.setState({ modal: false, type: "", title: "", message: "" })} dismissible>
-            <Alert.Heading>{this.state.title}</Alert.Heading>
-            {this.state.message}
-          </Alert>
+        <>
+          {this.state.type === "success" ? <Modal header="Success!" 
+            message={this.state.message} 
+            button="Log In"  
+            handleHideModal={this.login}/> : 
+        
+            <Alert variant={this.state.type} onClose={() => this.setState({ modal: false, type: "", title: "", message: "" })} dismissible>
+              <Alert.Heading>{this.state.title}</Alert.Heading>
+              {this.state.message}
+            </Alert>
+          }
+        </>
         }
         <Form onSubmit={this.signup}>
           <Card style={{ marginTop: 25 }}>
@@ -436,7 +458,10 @@ export default class Signup extends PureComponent {
                 />
                 <Form.Control.Feedback type="invalid">{this.state.domain.error}</Form.Control.Feedback>
               </Form.Group>
-              <Button id="login-button" disabled={!isEnabled} variant="success" className="mr-2" type="submit">Sign Up</Button>
+              { this.state.loading ?
+                <Button id="login-button" disabled={true} variant="outline-success" className="mr-2" type="button">Working...</Button> :
+                <Button id="login-button" disabled={!isEnabled} variant="success" className="mr-2" type="submit">Sign Up</Button>
+              }  
 
               <Button id="cancel-button" variant="outline-secondary" className="ml-2" type="button" onClick={this.cancelSignup}>Cancel</Button>
               <div className="mt-1 text-muted text-right">All fields are required.</div>
