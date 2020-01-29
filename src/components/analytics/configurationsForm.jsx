@@ -22,7 +22,7 @@ const INITIAL_SETTINGS = {
 };
 const ANALYTICS_TYPES = ["Infrastructure", "Pipeline"];
 const TOOLS = [ "Jenkins", "JUnit", "JMeter", "Selenium", "Sonar", "Twistlock" ];
-const DATA_LIMITS = [{ Value: "500", Label: "500MB" }, { Value: "1", Label: "1GB" }, { Value: "2", Label: "2GB" }, { Value: "3", Label: "3GB" }];
+const DATA_LIMITS = [{ Value: "0", Label: "Inactive" }, { Value: "500", Label: "500MB" }, { Value: "1", Label: "1GB" }, { Value: "2", Label: "2GB" }, { Value: "3", Label: "3GB" }];
 
 
 function ConfigurationsForm( { settings, token }) {
