@@ -66,58 +66,8 @@ class NewAppProvider extends React.Component {
     })
   }
 
-  confirm = async () => {
-    const { appname: name, data, token, user, appid: id } = this.state
-
-    this.setState({
-      saving: true,
-    })
-    console.log(`saving app for user ${user.sub}`)
-
-    let postBody = Object.assign({ id }, { tools: data }, { uid: user.sub });
-    let currentComponent = this;
-    new ApiService(
-      '/applications/create/tools',
-      null,
-      token,
-      postBody).post()
-      .then(function (response) {
-        currentComponent.setState({
-          data: response.data,
-          error: false,
-          messages: 'API call was successful!'
-        });
-      })
-      .catch(function (error) {
-        let message = null;
-        if (error.response) {
-          message = `Status ${error.response.status}: ${
-            error.response.data.message ? error.response.data.message : JSON.stringify(error.response.data)}`;
-        }
-        console.log(message ? `ERROR: ${message}` : `Error Reported: ${error}`);
-
-        currentComponent.setState({
-          error: true,
-          messages: message ? message : 'Error reported accessing API.'
-        });
-
-      })
-      .finally(function () {
-        currentComponent.setState({ fetching: false });
-      });
-
-    this.setState(
-      {
-        saving: false,
-      },
-      () => {
-        // this.props.history.push({
-        //   pathname: '/platform',
-        //   state: { edit: true }
-        // })
-        setTimeout(() => { this.props.history.push("/inventory") }, 2000);
-      },
-    )
+  gotoInventory = () => {
+    this.props.history.push("/inventory");
   }
 
   setAppDetails = (app) => {
@@ -165,7 +115,7 @@ class NewAppProvider extends React.Component {
       <Ctx.Provider
         value={{
           ...this.state,
-          confirm: this.confirm,
+          gotoInventory: this.gotoInventory,
           handleCancel: this.handleCancel,
           handleSave: this.handleSave,
           openModal: this.openModal,

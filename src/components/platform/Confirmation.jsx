@@ -9,7 +9,7 @@ class Confirmation extends React.PureComponent {
 
   render() {
     const { data, confirm, setState } = this.context;
-    const { tools } = this.props;
+    const { tools, handleSaveTools } = this.props;
     let isDisplayed = false;
     if (Object.keys(data).length > 0) {
       isDisplayed = true;
@@ -86,7 +86,7 @@ class Confirmation extends React.PureComponent {
                 <Form.Check inline type="checkbox" label="Nexus" className="p-2" disabled />
 
                 <div className="m-2 text-right">
-                  <Button variant="outline-primary" onClick={confirm}>
+                  <Button variant="outline-primary" onClick={handleSaveTools}>
                     Confirm
                     </Button>
                 </div>

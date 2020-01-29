@@ -35,7 +35,7 @@ class Update extends Component {
     apiCall.get()
       .then(function (response) {
         currentComponent.setState({
-          apps: response.apps,
+          apps: response.data,
           error: null,
           fetching: false
         });
@@ -49,14 +49,15 @@ class Update extends Component {
   }
 
 
-  handleButtonClick = async ({ applicationId, toolId }) => {
+  handleButtonClick = async (app, tool) => {
     let currentComponent = this;
     this.setState(ps => ({
-      disabledIds: [...ps.disabledIds, `${applicationId}${toolId}`],
+      disabledIds: [...ps.disabledIds, `${app._id}${tool._id}`],
     }));
 
     //TODO: The token MAY not be required here because of the interceptor set in apiService, so test that
-    const apiCall = new ApiService("/tools/upgrade", null, null, { applicationId, toolId });
+
+    const apiCall = new ApiService("/tools/upgrade", null, null, { applicationId: app._id, toolId: tool._id });
     apiCall.post()
       .then(function (response) {
         console.log(response);
@@ -89,6 +90,7 @@ class Update extends Component {
 
   toolList = () => {
     const { apps, disabledIds } = this.state;
+    console.log(apps)
     return (
       <Row>
         {apps ? apps.map(app => {
@@ -103,8 +105,8 @@ class Update extends Component {
             />
           ));
         }) : <div className="col mx-auto">
-          <div className="text-center m-4">No Updates Required</div>
-        </div>}
+            <div className="text-center m-4">No Updates Required</div>
+          </div>}
       </Row>
     );
   }
@@ -130,7 +132,7 @@ class Update extends Component {
 }
 
 
-const ToolView = ({handleButtonClick, disabledIds, app, tool }) => {
+const ToolView = ({ handleButtonClick, disabledIds, app, tool }) => {
   //const {handleButtonClick, disabledIds, app, tool } = this.props;
   return (
     <Row>
@@ -155,7 +157,7 @@ const ToolView = ({handleButtonClick, disabledIds, app, tool }) => {
         <Button
           variant="primary"
           disabled={disabledIds.includes(`${app._id}${tool._id}`)}
-          onClick={() => handleButtonClick()}
+          onClick={() => handleButtonClick(app, tool)}
         >
           Update
         </Button>
@@ -171,7 +173,7 @@ ToolView.propTypes = {
     _id: PropTypes.string,
     name: PropTypes.string
   },
-  tool:{
+  tool: {
     _id: PropTypes.string,
     name: PropTypes.string,
     versionNumber: PropTypes.string

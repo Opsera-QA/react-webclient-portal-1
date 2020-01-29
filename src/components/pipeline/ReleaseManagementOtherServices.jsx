@@ -230,9 +230,12 @@ class Monitoring extends React.PureComponent {
 
 export class Confirmation extends React.PureComponent {
   static contextType = RMContext
+  constructor(props) {
+    super(props)
+  }
   render() {
     const { services, checkBoxChange } = this.context;
-    const { tools } = this.props;
+    const { tools, handleCreateTools } = this.props;
     let isDisplayed = false;
     if (Object.keys(services).length > 0) {
       isDisplayed = true;
@@ -292,7 +295,7 @@ export class Confirmation extends React.PureComponent {
             <Form.Check type="checkbox" label="Puppet" inline className="p-2" disabled />
 
             <div className="m-2 text-right">
-              <Button variant="outline-primary" onClick={this.context.confirm}>
+              <Button variant="outline-primary" onClick={this.props.handleCreateTools}>
                 Confirm
               </Button>
             </div>

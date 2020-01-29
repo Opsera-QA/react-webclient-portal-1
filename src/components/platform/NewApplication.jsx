@@ -14,7 +14,7 @@ import ErrorDialog from "../common/error";
 import SuccessDialog from "../common/success";
 import { handleError } from "../../helpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faWrench } from "@fortawesome/free-solid-svg-icons";
+import { faWrench, faClipboardList } from "@fortawesome/free-solid-svg-icons";
 
 class NewApplication extends React.PureComponent {
   static contextType = NewAppContext
@@ -25,6 +25,7 @@ class NewApplication extends React.PureComponent {
     fetching: true,
     data: {},
     tools: [],
+    savingStatus: null,
     error: null,
     messages: null,
     editTools: false
@@ -50,6 +51,7 @@ class NewApplication extends React.PureComponent {
       error: null,
       messages: null,
       status: null,
+      savingStatus: null,
       data: null,
       tools: []
     }), () => {
@@ -153,9 +155,57 @@ class NewApplication extends React.PureComponent {
         }));
       });
   }
+
+  handleSaveTools = async () => {
+    const { appname: name, data, token, user, appid: id } = this.context
+
+    this.setState({
+      saving: true,
+    })
+    console.log(`saving app for user ${user.sub}`)
+
+    let postBody = Object.assign({ id }, { tools: data }, { uid: user.sub });
+    let currentComponent = this;
+    new ApiService(
+      '/applications/create/tools',
+      null,
+      token,
+      postBody).post()
+      .then(function (response) {
+        currentComponent.setState({
+          data: response.data,
+          savingStatus: "success",
+          error: false,
+          messages: 'Tools Saved Successfully.'
+        });
+      })
+      .catch(function (error) {
+        let message = null;
+        if (error.response) {
+          message = `Status ${error.response.status}: ${
+            error.response.data.message ? error.response.data.message : JSON.stringify(error.response.data)}`;
+        }
+        console.log(message ? `ERROR: ${message}` : `Error Reported: ${error}`);
+
+        currentComponent.setState({
+          error: true,
+          status: "failed",
+          messages: message ? message : 'Error reported accessing API.'
+        });
+
+      })
+      .finally(function () {
+        currentComponent.setState({ fetching: false });
+      });
+
+    this.setState({
+      saving: false,
+    })
+  }
+
   render() {
-    const { checkingAppName, appnameError, appname, error, messages, status, editTools, dropdownData, fetching } = this.state;
-    const { saving } = this.context;
+    const { checkingAppName, appnameError, appname, error, messages, status, editTools, dropdownData, fetching, savingStatus } = this.state;
+    const { saving, gotoInventory } = this.context;
     return (
       <>
         <div className="ml-3">
@@ -163,7 +213,7 @@ class NewApplication extends React.PureComponent {
           <p>Create a new Application to leverage your existing systems in any way that meets your business needs.</p>
           <div className="row mb-2">
 
-            {status !== "success" && !editTools ?
+            {status !== "success" && !editTools && savingStatus !== "success" ?
               <div className="col ml-auto">
                 <Form loading={checkingAppName || saving ? "true" : undefined}>
                   <Form.Row>
@@ -191,7 +241,7 @@ class NewApplication extends React.PureComponent {
               </div>
               : null}
 
-            {editTools && dropdownData && (
+            {editTools && dropdownData && savingStatus !== "success" && (
               <div className="col ml-auto">
                 <Form>
                   <Form.Group>
@@ -224,9 +274,14 @@ class NewApplication extends React.PureComponent {
           </div>
 
           {error ? <ErrorDialog error={error} /> : null}
-          {status === "success" && messages ? <SuccessDialog successMessage={messages} /> : null}
-
-          {status === "success" && (
+          {status === "success" && savingStatus === null && messages ? <SuccessDialog successMessage={messages} /> : null}
+          {savingStatus === "success" && messages ? <>
+            <SuccessDialog successMessage={messages} />
+            <Button variant="outline-primary" className="ml-2" onClick={gotoInventory}>
+              <FontAwesomeIcon icon={faClipboardList} fixedWidth /> Inventory
+            </Button>
+          </> : null}
+          {status === "success" && savingStatus === null && (
             <div className="mb-2">
               <CardColumns>
                 <ConfigurationManagement app={this.state.data} tools={this.state.tools} />
@@ -237,7 +292,7 @@ class NewApplication extends React.PureComponent {
                 <Monitoring app={this.state.data} tools={this.state.tools} />
               </CardColumns>
 
-              <Confirmation app={this.state.data} tools={this.state.tools} />
+              <Confirmation app={this.state.data} tools={this.state.tools} handleSaveTools={this.handleSaveTools} />
             </div>
           )}
         </div>

@@ -130,10 +130,13 @@ const jenkinsPipelineNode = {
 
 class ReleaseManagementServices extends React.PureComponent {
   static contextType = RMContext
-  state = {}
+  constructor(props) {
+    super(props);
+    this.state = {}
+  }
   render() {
     const { serviceClick, saving } = this.context;
-    const { tools } = this.props;
+    const { tools, handleCreateTools } = this.props;
     return (
       <Form className="ReleaseManagementServices" loading={saving ? "true" : undefined}>
         <h3 style={{ padding: "10px" }}>Services</h3>
@@ -185,7 +188,7 @@ class ReleaseManagementServices extends React.PureComponent {
           this.context.otherServicesShow === true && (
             <ReleaseManagementOtherServices app={this.props.app} tools={this.props.tools} />
           )}
-        {this.context.otherServicesShow !== null && <Confirmation app={this.props.app} tools={this.props.tools} />}
+        {this.context.otherServicesShow !== null && <Confirmation app={this.props.app} tools={this.props.tools} handleCreateTools={this.props.handleCreateTools} />}
       </Form>
     );
   }

@@ -127,56 +127,9 @@ class rmProvider extends Component {
     this.setState({ applicationId: app._id, appname: app.name, data: {} });
   }
 
-  confirm = async () => {
-    const { appname: name, services: data, token, user, applicationId: id } = this.state;
-    this.setState({
-      saving: true,
-    });
-
-    let postBody = Object.assign({ id }, { tools: data }, { uid: user.sub });
-    let currentComponent = this;
-    new ApiService(
-      "/applications/create/tools",
-      null,
-      token,
-      postBody).post()
-      .then(function (response) {
-        currentComponent.setState({
-          data: response.data,
-          error: false,
-          messages: 'API call was successful!'
-        });
-      })
-      .catch(function (error) {
-        let message = null;
-        if (error.response) {
-          message = `Status ${error.response.status}: ${
-            error.response.data.message ? error.response.data.message : JSON.stringify(error.response.data)}`;
-        }
-        console.log(message ? `ERROR: ${message}` : `Error Reported: ${error}`);
-
-        currentComponent.setState({
-          error: true,
-          messages: message ? message : 'Error reported accessing API.'
-        });
-
-      })
-      .finally(function () {
-        currentComponent.setState({ fetching: false });
-      });
-
-
-    this.setState(
-      {
-        saving: false,
-      },
-      () => {
-        // eslint-disable-next-line react/prop-types
-        setTimeout(() => { this.props.history.push("/inventory") }, 2000);
-      },
-    );
+  gotoInventory = () => {
+    this.props.history.push("/inventory");
   }
-
 
   validate = () => {
     const { services, service } = this.state
@@ -251,7 +204,7 @@ class rmProvider extends Component {
           handleChange: this.handleChange,
           handleNoClick: this.handleNoClick,
           handleYesClick: this.handleYesClick,
-          confirm: this.confirm,
+          gotoInventory: this.gotoInventory,
           handleModalSave: this.handleModalSave,
           handleModalCancel: this.handleModalCancel,
           serviceClick: this.serviceClick,

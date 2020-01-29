@@ -9,7 +9,7 @@ import { isAlphaNumeric, handleError } from "../../helpers";
 import { ApiService } from "../../api/apiService";
 import "./styles.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faWrench } from "@fortawesome/free-solid-svg-icons";
+import { faWrench, faClipboardList } from "@fortawesome/free-solid-svg-icons";
 
 class Pipeline extends React.PureComponent {
   static contextType = RMContext
@@ -20,6 +20,7 @@ class Pipeline extends React.PureComponent {
     data: {},
     tools: [],
     error: null,
+    savingStatus: null,
     status: null,
     messages: null,
     editTools: false
@@ -46,6 +47,7 @@ class Pipeline extends React.PureComponent {
       error: null,
       messages: null,
       status: null,
+      savingStatus: null,
       data: null,
       tools: []
     }), () => {
@@ -73,6 +75,55 @@ class Pipeline extends React.PureComponent {
           error: error,
           fetching: false
         });
+      });
+  }
+
+  handleCreateTools = async () => {
+    console.log("Handling creation of tools from pipeline component ")
+    const { appname: name, services: data, token, user, applicationId: id } = this.context;
+    this.setState({
+      saving: true,
+    });
+
+    let postBody = Object.assign({ id }, { tools: data }, { uid: user.sub });
+    console.log(postBody)
+    let currentComponent = this;
+    new ApiService(
+      "/applications/create/tools",
+      null,
+      token,
+      postBody).post()
+      .then(function (response) {
+        console.log(response)
+        currentComponent.setState({
+          data: response.data,
+          savingStatus: "success",
+          error: false,
+          messages: 'Tools Saved Successfully.'
+        });
+      })
+      .catch(function (error) {
+        let message = null;
+        if (error.response) {
+          message = `Status ${error.response.status}: ${
+            error.response.data.message ? error.response.data.message : JSON.stringify(error.response.data)}`;
+        }
+        console.log(message ? `ERROR: ${message}` : `Error Reported: ${error}`);
+
+        currentComponent.setState({
+          error: true,
+          status: "failed",
+          messages: message ? message : 'Error reported accessing API.'
+        });
+
+      })
+      .finally(function () {
+        currentComponent.setState({ fetching: false });
+      });
+
+    this.setState(
+      {
+        saving: false,
       });
   }
 
@@ -156,8 +207,8 @@ class Pipeline extends React.PureComponent {
     );
   }
   render() {
-    const { checkingAppName, appnameError, appname, handleCreateClick } = this.context;
-    const { error, messages, status, fetching, editTools, dropdownData } = this.state;
+    const { checkingAppName, appnameError, appname, gotoInventory } = this.context;
+    const { error, messages, status, fetching, editTools, dropdownData, savingStatus } = this.state;
 
     return (
       <>
@@ -165,7 +216,7 @@ class Pipeline extends React.PureComponent {
 
           <h3>CI/CD Pipeline</h3>
           <div className="row mb-2">
-            {status !== "success" && !editTools ?
+            {status !== "success" && !editTools && savingStatus !== "success" ?
               <div className="col ml-auto">
                 <Form loading={checkingAppName ? "true" : undefined}>
                   {this.renderInput()}
@@ -182,7 +233,7 @@ class Pipeline extends React.PureComponent {
               : null
             }
 
-            {editTools && dropdownData && (
+            {editTools && dropdownData && savingStatus !== "success" && (
               <div className="col ml-auto">
                 <Form>
                   <Form.Group>
@@ -215,10 +266,16 @@ class Pipeline extends React.PureComponent {
           </div>
 
           {error ? <ErrorDialog error={error} /> : null}
-          {status === "success" && messages ? <SuccessDialog successMessage={messages} /> : null}
-          {this.state.status === "success" && (
+          {status === "success" && savingStatus === null && messages ? <SuccessDialog successMessage={messages} /> : null}
+          {savingStatus === "success" && messages ? <>
+            <SuccessDialog successMessage={messages} />
+            <Button variant="outline-primary" className="ml-2" onClick={gotoInventory}>
+              <FontAwesomeIcon icon={faClipboardList} fixedWidth /> Inventory
+            </Button>
+          </> : null}
+          {status === "success" && savingStatus === null && (
             <div className="mb-2">
-              <ReleaseManagementServices app={this.state.data} tools={this.state.tools} />
+              <ReleaseManagementServices app={this.state.data} tools={this.state.tools} handleCreateTools={this.handleCreateTools} />
             </div>
           )}
           <RMModal />
