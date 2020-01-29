@@ -83,8 +83,9 @@ class Pipeline extends React.PureComponent {
     });
   }
 
-  setSelectedApp() {
-    const { setAppDetails } = this.context;
+  setSelectedApp = async () => {
+    const { setAppDetails, reset } = this.context;
+    await reset();
 
     const selectedApp = this.state.dropdownData.find(el => el._id === this.state.key);
     setAppDetails(selectedApp);

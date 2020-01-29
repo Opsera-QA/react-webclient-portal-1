@@ -179,10 +179,9 @@ class rmProvider extends Component {
 
 
   validate = () => {
-    console.log("validate")
     const { services, service } = this.state
     if (!service.includes("Jenkins Pipeline")) {
-      return false
+      return true
     } else {
       if (!services["Jenkins Pipeline"]) {
         return false
@@ -243,7 +242,7 @@ class rmProvider extends Component {
   }
 
   render() {
-    console.log(this.state.services)
+    // console.log(this.state.services)
     return (
       <Provider
         value={{
