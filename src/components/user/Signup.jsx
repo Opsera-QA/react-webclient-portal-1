@@ -61,19 +61,22 @@ export default class Signup extends PureComponent {
     const { email } = this.state;
     var emailProperty = email;
     if (!validateEmail(email.value)) {
-      emailProperty.error = "email is not valid";
+      emailProperty.error = "Email is not valid";
       this.setState({
         email: emailProperty
       });
       return true;
     }
+
     const apiCall = new ApiService("/users/check-email", {}, null, { email: email.value });
+    const currentComponent = this;
     await apiCall.post()
       .then(function (response) {
         console.debug(response);
         if (response.data) {
-          emailProperty.error = "email already exists";
-          this.setState({
+          emailProperty.error = "Email already exists in our system!  Try logging in with this email now.";
+          emailProperty.errorType = "warning";
+          currentComponent.setState({
             email: emailProperty
           });
           return true;
@@ -217,14 +220,24 @@ export default class Signup extends PureComponent {
     }, () => { this.resetForm(); });
   }
 
-  // Error alert function 
-
+  // Error error Alert Dialog
   showErrorAlert = () => {
+    let errorType = "danger";
+    let errorTitle = "Error";
+    let errorMessage = "Opps!  Something went wrong, please try again later";
+
+    //Look for a warning event on key data points: email
+    if (this.state.email.errorType) {
+      errorTitle = "Email Alert";
+      errorType = this.state.email.errorType;
+      errorMessage = this.state.email.error;
+    }
+
     this.setState({
       modal: true,
-      type: "danger",
-      title: "Error!",
-      message: "Opps!  Something went wrong, please try again later"
+      type: errorType,
+      title: errorTitle,
+      message: errorMessage
     });
   }
 
@@ -296,8 +309,7 @@ export default class Signup extends PureComponent {
             handleHideModal={this.login}/> : 
         
             <Alert variant={this.state.type} onClose={() => this.setState({ modal: false, type: "", title: "", message: "" })} dismissible>
-              <Alert.Heading>{this.state.title}</Alert.Heading>
-              {this.state.message}
+              {this.state.title}: {this.state.message}
             </Alert>
           }
         </>
