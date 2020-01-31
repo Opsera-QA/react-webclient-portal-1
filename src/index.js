@@ -1,3 +1,5 @@
+//import "react-app-polyfill/ie11";
+import "react-app-polyfill/stable";
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
@@ -5,6 +7,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./theme.css";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
+
+if (typeof window["TextEncoder"] !== "function") {
+  const TextEncodingPolyfill = require("text-encoding");
+  window["TextEncoder"] = TextEncodingPolyfill.TextEncoder;
+  window["TextDecoder"] = TextEncodingPolyfill.TextDecoder;
+}
+
 
 ReactDOM.render(<App />, document.getElementById("root"));
 
