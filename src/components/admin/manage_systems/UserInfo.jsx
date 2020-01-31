@@ -1,21 +1,19 @@
 import React from "react"
-import { Row, Col } from 'react-bootstrap';
 
-function UserInfo({user}) {
+function UserInfo({ user }) {
   return (
     <div className="grid-striped">
-      <Row style={{ marginTop: 20 }}>
-        <Col lg={4} style={{ fontWeight: 'bold' }}>User Info</Col>
-        <Col lg={2}>Phone</Col>
-        <Col lg={1}>Organization Name</Col>
-        <Col lg={2}>Domain</Col>
-      </Row>
-      <Row>
-        <Col lg={12}>{user.firstName} {user.lastName}</Col>
-        <Col lg={12}>{user.phone}</Col>
-        <Col lg={12}>{user.organizationName}</Col>
-        <Col lg={12}>{user.domain}</Col>
-      </Row>
+      <div className="p-2 mt-2">
+        <div className="row mt-1">
+          <div className="col-md col-header-text">User Info</div>
+        </div>
+        <div className="row">
+          <div className="col-md"><span className="text-muted">Name:</span> {user.firstName} {user.lastName}</div>
+          <div className="col-md"><span className="text-muted">Email:</span>{user.email}</div>
+          <div className="col-md"><span className="text-muted">organization Name:</span>{user.organizationName}</div>
+          <div className="col-md"><span className="text-muted">Domain:</span> {user.domain}</div>
+        </div>
+      </div>
     </div>
   )
 }

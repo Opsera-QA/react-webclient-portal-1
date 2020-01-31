@@ -7,14 +7,13 @@ import SearchInput from "./SearchInput";
 import ErrorDialog from "../../common/error";
 import Tools from "../delete_tools/Tools";
 
-
 const initState = {
   loading: false,
   applications: null,
   users: null,
   application: null,
   orgs: null,
-  org: "",
+  org: "mj31a",
   fetching: true,
   error: null,
   messages: null
@@ -27,35 +26,26 @@ export default class ManageSystems extends PureComponent {
     this.state = initState;
   }
 
-  componentDidMount() { }
-
-  handleUserChangeValue = (_, { value }) => {
+  handleUserChangeValue = (e) => {
     const { users } = this.state;
-    const user = users.find(user => user.email === value);
+    const user = users.find(user => user.email === e.target.value);
     this.setState({
       user,
       applications: user.applications || [],
+      application: null,
     });
   }
 
-  handleChangeValue = (_, { value }) => {
-    const { applications = [] } = this.state;
-    const application = applications.find(app => app.name === value);
+  handleChangeValue = (e) => {
+    this.setState({
+      fetching: true
+    })
+    const { applications } = this.state;
+    const application = applications.find(app => app.name === e.target.value);
     this.setState({
       application,
-    });
+    }, () => { this.setState({ fetching: false }) });
   }
-
-  getOptionsForApp = a => ({
-    value: a.name,
-    text: a.name,
-    key: a._id,
-  })
-
-  getOptionsFromUser = user => ({
-    value: user.email,
-    text: user.email,
-  })
 
   orgSearch = async (e) => {
     e.preventDefault();
@@ -71,7 +61,7 @@ export default class ManageSystems extends PureComponent {
       apiCall.get().then(function (response) {
         const users = response.data;              // TODO : verify this after api req is processed
         currentComponent.setState({
-          users: users.data,                      // users.data or users verify with api response
+          users: users,                      // users.data or users verify with api response
           error: null,
           fetching: false
         });
@@ -105,8 +95,8 @@ export default class ManageSystems extends PureComponent {
 
     this.setState(updater);
   }
+
   render() {
-    console.log(this.state)
     const { applications, application, users, loading, org, user, fetching, error } = this.state;
 
     return (
@@ -126,60 +116,50 @@ export default class ManageSystems extends PureComponent {
           )}
 
           {users && users.length > 0 && (
-            // <Form.Field>
-            //   <label>Users</label>
-            //   <Dropdown
-            //     fluid
-            //     selection
-            //     placeholder="Select Users"
-            //     onChange={this.handleUserChangeValue}
-            //     options={users.map(this.getOptionsFromUser)}
-            //   />
-            // </Form.Field>
             <Form>
               <Form.Group>
                 <Form.Control as="select"
                   defaultValue=""
+                  value={users === null ? "" : users.name}
                   onChange={this.handleUserChangeValue}
                   style={{ marginTop: 25 }}>
                   <option value="" disabled>{fetching ? "loading..." : "Select Users"}</option>
-                  {!fetching && (
-                    <>
-                      {users ? users.map(this.getOptionsFromUser) : ""}
-                    </>
-                  )}
+                  <>
+                    {users ? users.map((user, key) => (
+                      <option key={user.firstName} value={user.email}>{user.firstName}</option>
+                    )) : ""}
+                  </>
                 </Form.Control>
               </Form.Group>
             </Form>
           )}
 
-          {user && <UserInfo user={user} />}
+          {user && users && users.length > 0 && <UserInfo user={user} />}
 
           {applications && applications.length === 0 && (
             <p>No Applications to display for this user</p>
           )}
 
           {applications && applications.length > 0 && (
-            // <Form.Field>
-            //   <label>Application</label>
-            //   <Dropdown
-            //     fluid
-            //     selection
-            //     placeholder="Select Application"
-            //     onChange={this.handleChangeValue}
-            //     options={applications.map(this.getOptionsForApp)}
-            //   />
-            // </Form.Field>
             <Form>
               <Form.Group>
                 <Form.Control as="select"
                   defaultValue=""
+                  value={application === null ? "" : application.name}
                   onChange={this.handleChangeValue}
                   style={{ marginTop: 25 }}>
                   <option value="" disabled>{fetching ? "loading..." : "Select application"}</option>
                   {!fetching && (
                     <>
-                      {users ? users.map(this.getOptionsForApp) : ""}
+                      {applications ? applications.map((app, key) => (
+                        <>
+                          {
+                            app.tools.length > 0 && (
+                              <option key={app.name} value={app.name}>{app.name}</option>
+                            )
+                          }
+                        </>
+                      )) : ""}
                     </>
                   )}
                 </Form.Control>
@@ -188,7 +168,7 @@ export default class ManageSystems extends PureComponent {
           )}
         </Form>
 
-        {application && <Tools application={application} />}
+        {application && applications.length > 0 && <>{!fetching && <Tools application={application} />}</>}
       </Container>
     );
   }

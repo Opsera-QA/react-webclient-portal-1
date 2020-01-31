@@ -176,7 +176,7 @@ const ToolTable = ({ tool }) => {
         <div className="col-md"><span className="text-muted">ID:</span> {_id}</div>
       </div>
       <div className="row m-1">
-        <div className="col-md"><span className="text-muted">URL:</span> {toolURL}</div>        
+        <div className="col-md"><span className="text-muted">URL:</span> {toolURL}</div>
       </div>
       <div className="row m-1">
         <div className="col-md"><span className="text-muted">DNS:</span> {dnsName}</div>

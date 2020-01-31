@@ -45,7 +45,6 @@ class DeleteTools extends PureComponent {
       });
   }
 
-
   handleChangeValue = (e) => {
     const { data } = this.state;
     const application = data.find(app => app.name === e.target.value);
@@ -53,12 +52,6 @@ class DeleteTools extends PureComponent {
       application,
     });
   }
-
-  getOptionsForApp = a => ({
-    value: a.name,
-    text: a.name,
-    key: a._id,
-  })
 
   render() {
     const { data, error, fetching } = this.state;
@@ -95,7 +88,7 @@ class DeleteTools extends PureComponent {
             </Form.Control>
           </Form.Group>
         </Form>
-        
+
         <Tools application={this.state.application} />
       </Container>
     );

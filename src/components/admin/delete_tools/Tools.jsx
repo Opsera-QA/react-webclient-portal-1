@@ -93,14 +93,21 @@ class ToolTable extends React.PureComponent {
 
   }
 
+  isDisabled = (status) => {
+    if (status === "TERMINATED")
+      return true
+    else
+      return false
+  }
+
   render() {
     const { tool } = this.state;
     // eslint-disable-next-line no-unused-vars
     const { data, error, fetching } = this.state;
 
     if (!tool) return null;
-
-    const { name, port, toolStatus, installationDate, _id } = tool;
+    console.log(tool)
+    const { name, port, toolStatus, installationDate, _id, toolURL } = tool;
     return (
       <>
         {error ? <ErrorDialog error={error} /> : null}
@@ -108,12 +115,15 @@ class ToolTable extends React.PureComponent {
           <div className="row mt-1">
             <div className="col-md col-header-text">{name}</div>
             <div className="col-md"><span className="text-muted">Installed On:</span> <Moment format="MM/DD/YYYY" date={installationDate} /></div>
-            <div className="col-md" style={{ textAlign: "right" }}><Button variant="danger" onClick={this.handleDeletePress}>Delete</Button></div>
+            <div className="col-md" style={{ textAlign: "right" }}><Button disabled={this.isDisabled(tool.toolStatus)} variant="danger" onClick={this.handleDeletePress}>Delete</Button></div>
           </div>
           <div className="row">
             <div className="col-md"><span className="text-muted">Status:</span> {toolStatus}</div>
             <div className="col-md"><span className="text-muted">ID:</span> {_id}</div>
             <div className="col-md"><span className="text-muted">Port:</span> {port}</div>
+          </div>
+          <div className="row">
+            <div className="col-md"><span className="text-muted">URL:</span> {toolURL}</div>
           </div>
         </div>
 
