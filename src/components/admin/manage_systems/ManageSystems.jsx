@@ -13,7 +13,7 @@ const initState = {
   users: null,
   application: null,
   orgs: null,
-  org: "mj31a",
+  org: "",
   fetching: true,
   error: null,
   messages: null
