@@ -1,6 +1,4 @@
-import "core-js"; 
-//import "react-app-polyfill/ie11";
-//import "react-app-polyfill/stable";
+import "core-js";
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
@@ -9,14 +7,27 @@ import "./theme.css";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 
-if (typeof window["TextEncoder"] !== "function") {
-  const TextEncodingPolyfill = require("text-encoding");
-  window["TextEncoder"] = TextEncodingPolyfill.TextEncoder;
-  window["TextDecoder"] = TextEncodingPolyfill.TextDecoder;
+var browserNotSupported = (function (agent) {
+  switch (true) {
+  case agent.indexOf("edge") > -1: return "edge";
+  case agent.indexOf("edg") > -1: return false; //"chromium based edge (dev or canary)";
+  case agent.indexOf("opr") > -1 && !!window.opr: return false; // "opera";
+  case agent.indexOf("chrome") > -1 && !!window.chrome: return false; // "chrome";
+  case agent.indexOf("trident") > -1: return "ie";
+  case agent.indexOf("firefox") > -1: return false; // "firefox";
+  case agent.indexOf("safari") > -1: return false; // "safari";
+  default: return false;
+  }
+})(window.navigator.userAgent.toLowerCase());
+
+if (browserNotSupported) {
+  let uiMessage = "<div style='margin:25px; top: 150px; position: absolute;'>This portal is designed to use the latest, \
+  secure web technology and as such requires modern versions of Chrome, Firefox, Safari, Opera or the brand new Microsoft \
+  Chromium Edge browser (released January 2020).  Please return with one of those browsers to ensure a secure experience.</div>";
+  document.body.innerHTML = uiMessage;
+} else {
+  ReactDOM.render(<App />, document.getElementById("root"));
 }
-
-
-ReactDOM.render(<App />, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
