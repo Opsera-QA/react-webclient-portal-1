@@ -7,9 +7,16 @@ import "./theme.css";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 
+if (typeof window["TextEncoder"] !== "function") {
+  const TextEncodingPolyfill = require("text-encoding");
+  window["TextEncoder"] = TextEncodingPolyfill.TextEncoder;
+  window["TextDecoder"] = TextEncodingPolyfill.TextDecoder;
+}
+
+
 var browserNotSupported = (function (agent) {
   switch (true) {
-  case agent.indexOf("edge") > -1: return "edge";
+  case agent.indexOf("edge") > -1: return false; // "edge";
   case agent.indexOf("edg") > -1: return false; //"chromium based edge (dev or canary)";
   case agent.indexOf("opr") > -1 && !!window.opr: return false; // "opera";
   case agent.indexOf("chrome") > -1 && !!window.chrome: return false; // "chrome";
