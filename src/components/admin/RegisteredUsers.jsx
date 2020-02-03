@@ -46,6 +46,7 @@ export default class RegisteredUsers extends PureComponent {
 
     render() {
         const { data, error, fetching } = this.state;
+        console.log(data)
         return (
             <>
                 <h3 style={{ padding: "20px" }}>Registered Users</h3>
@@ -54,7 +55,7 @@ export default class RegisteredUsers extends PureComponent {
                 {fetching && <LoadingDialog />}
 
                 <Table responsive>
-                    <thead>
+                    {/* <thead>
                         <tr>
                             <th>First Name</th>
                             <th>Last Name</th>
@@ -64,18 +65,48 @@ export default class RegisteredUsers extends PureComponent {
                             <th>Domain</th>
                             <th>Created</th>
                         </tr>
-                    </thead>
+                    </thead> */}
                     <tbody>
                         {data.map(val => (
-                            <tr>
-                                <td>{val.firstName}</td>
-                                <td>{val.lastName}</td>
-                                <td>{val.email}</td>
-                                <td>{val.organizationName}</td>
-                                <td>{val.division}</td>
-                                <td>{val.domain}</td>
-                                <td><Moment format="MM/DD/YYYY" date={val.createdAt} /></td>
-                            </tr>
+                            <>
+                                <br></br>
+                                <tr>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <th>Organization</th>
+                                    <th>Division</th>
+                                    <th>Domain</th>
+                                    <th>Created</th>
+                                </tr>
+                                <tr>
+                                    <td>{val.firstName}</td>
+                                    <td>{val.lastName}</td>
+                                    <td>{val.email}</td>
+                                    <td>{val.organizationName}</td>
+                                    <td>{val.division}</td>
+                                    <td>{val.domain}</td>
+                                    <td><Moment format="MM/DD/YYYY" date={val.createdAt} /></td>
+                                </tr>
+                                {val.tools.length > 0 && (
+                                    <>
+                                        <tr>
+                                            <th>Tool Name</th>
+                                            <th>Status</th>
+                                            <th>Tool ID</th>
+
+                                        </tr>
+                                        {val.tools.map(tool => (
+                                            <tr>
+                                                <td>{tool.name}</td>
+                                                <td>{tool.toolStatus}</td>
+                                                <td>{tool._id}</td>
+                                            </tr>
+                                        ))}
+                                    </>
+                                )}
+                                <br></br>
+                            </>
                         ))}
                     </tbody>
                 </Table>
