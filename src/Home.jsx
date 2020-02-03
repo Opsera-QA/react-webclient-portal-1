@@ -75,7 +75,7 @@ class Home extends Component {
                 </div>
               </div>
             </Col>
-            <Col className="d-none d-xl-block text-center"><img src="/img/opsera_logo_large.png" width="375" alt="" /></Col>
+            <Col className="d-none d-xl-block text-center" md="auto"><img src="/img/opsera_logo_large.png" width="325" alt="" /></Col>
           </Row>
         </div>}
       </div>
