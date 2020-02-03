@@ -42,7 +42,7 @@ class App extends Component {
                 <div className="col-xl-2 col-md-3 col-12 d-flex flex-column bg-dark pt-4">
                   <Sidebar />
                 </div>
-                <div className="col-xl-8 col-md-9 col-12 pt-4">
+                <div className="col-xl-10 col-md-9 col-12 pt-4">
                   <Route path="/" exact component={Home} />
                   <Route path="/signup" exact component={Signup} />
                   <Route path="/about" exact component={About} />
