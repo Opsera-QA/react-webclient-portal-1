@@ -76,7 +76,7 @@ export default class RegisteredUsers extends PureComponent {
                     <td>{val.organizationName}</td>
                     <td>{val.division}</td>
                     <td>{val.domain}</td>
-                    <td>111<Moment format="MM/DD/YYYY" date={val.createdAt} /></td>
+                    <td><Moment format="MM/DD/YYYY" date={val.createdAt} /></td>
                   </tr>
                   {val.tools.length > 0 ? (
                     <tr>
