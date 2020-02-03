@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { AuthContext } from "./contexts/AuthContext";
 import { Row, Col, Button, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import FeaturesCards from "./components/about/features";
 import LoadingDialog from "./components/common/loading";
 
