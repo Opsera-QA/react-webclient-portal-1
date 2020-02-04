@@ -11,6 +11,9 @@
 # production
 /build
 
+# staging build
+/build-staging
+
 # misc
 .DS_Store
 # .env.local
