@@ -60,6 +60,9 @@ class DeleteTools extends PureComponent {
     return (
       <Container className="DefaultDashboardPage">
         <h2>Delete Tools</h2>
+        <div style={{ marginBottom: "10px" }}>This tool enables administrators to select a registered application, view the active tools and then delete them from the platform.  At this 
+          time the tool does not perform a complete end to end removal of all instances related to an application.  
+        </div>
         {error ? <ErrorDialog error={error} /> : null}
         {fetching && <LoadingDialog />}
 
