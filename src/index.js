@@ -8,6 +8,7 @@ import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 
 if (typeof window["TextEncoder"] !== "function") {
+  console.log("Using text-encoding shim");
   const TextEncodingPolyfill = require("text-encoding");
   window["TextEncoder"] = TextEncodingPolyfill.TextEncoder;
   window["TextDecoder"] = TextEncodingPolyfill.TextDecoder;
