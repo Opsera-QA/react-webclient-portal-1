@@ -78,7 +78,7 @@ export default class RegisteredUsers extends PureComponent {
                     <td>{val.domain}</td>
                     <td><Moment format="MM/DD/YYYY" date={val.createdAt} /></td>
                   </tr>
-                  {val.tools.length > 0 ? (
+                  {Object.keys(val.tools).length > 0 ? (
                     <tr>
                       <td colSpan="7" style={{ borderTop:0, paddingTop:0, marginTop:0, paddingBottom:"25px" }}>
                         {val.tools.map((tool, index) => (
