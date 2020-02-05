@@ -90,9 +90,9 @@ class Update extends Component {
 
   toolList = () => {
     const { apps, disabledIds } = this.state;
-    console.log(apps)
+    console.log(apps);
     return (
-      <Row>
+      <>
         {apps ? apps.map(app => {
           return app.tools.map((tool, i) => (
             <ToolView
@@ -105,9 +105,9 @@ class Update extends Component {
             />
           ));
         }) : <div className="col mx-auto">
-            <div className="text-center m-4">No Updates Required</div>
-          </div>}
-      </Row>
+          <div className="text-center m-4">No Updates Required</div>
+        </div>}
+      </>
     );
   }
 
@@ -135,34 +135,39 @@ class Update extends Component {
 const ToolView = ({ handleButtonClick, disabledIds, app, tool }) => {
   //const {handleButtonClick, disabledIds, app, tool } = this.props;
   return (
-    <Row>
-      <Col>
-        <h2 style={{ margin: 0 }}>{app.name}</h2>
-        <h3 style={{ margin: 0 }}>{tool.toolName}</h3>
-      </Col>
-      <Col>
-        <div>version number: {tool.versionNumber || "unknown"}</div>
-        {tool.name === "Jenkins" && (
-          <div style={{ fontWeight: "bold", color: "green" }}>
+
+    <div className="p-2 mt-2 border-bottom">
+      <div className="row m-1">
+        <div className="col-md col-header-text"><span className="text-muted">Application:</span> {app.name}</div>
+        <div className="col-md">{tool.toolName && (<><span className="text-muted">Tool:</span> {tool.toolName}</>)}</div>
+        <div className="col-md"><span className="text-muted">Version:</span> {tool.versionNumber || "unknown"}</div>
+      </div>
+      <div className="row m-1">
+        <div className="col-md">
+          {tool.name === "Jenkins" && (
+            <span style={{ fontWeight: "bold", color: "green" }}>
             New version available for upgrade: 2.152
-          </div>
-        )}
-        {tool.name === "Artifactory" && (
-          <div style={{ fontWeight: "bold", color: "green" }}>
+            </span>
+          )}
+          {tool.name === "Artifactory" && (
+            <span style={{ fontWeight: "bold", color: "green" }}>
             New version available for upgrade: 6.5
-          </div>
-        )}
-      </Col>
-      <Col>
-        <Button
-          variant="primary"
-          disabled={disabledIds.includes(`${app._id}${tool._id}`)}
-          onClick={() => handleButtonClick(app, tool)}
-        >
-          Update
-        </Button>
-      </Col>
-    </Row>
+            </span>
+          )}
+        </div>
+      </div>
+      <div className="row m-1">
+        <div className="col-md">
+          <Button
+            variant="primary"
+            className="m-2"
+            disabled={disabledIds.includes(`${app._id}${tool._id}`)}
+            onClick={() => handleButtonClick(app, tool)}>Upgrade Tool
+          </Button>
+        </div>
+        
+      </div>
+    </div>
   );
 };
 
