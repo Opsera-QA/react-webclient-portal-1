@@ -78,19 +78,25 @@ export default class RegisteredUsers extends PureComponent {
                     <td>{val.domain}</td>
                     <td><Moment format="MM/DD/YYYY" date={val.createdAt} /></td>
                   </tr>
-                  {Object.keys(val.tools).length > 0 ? (
-                    <tr>
-                      <td colSpan="7" style={{ borderTop:0, paddingTop:0, marginTop:0, paddingBottom:"25px" }}>
-                        {val.tools.map((tool, index) => (
-                          <Row key={index} style={{ marginLeft:"10px", fontSize:".9em" }}>
-                            <Col>{tool.name}</Col>
-                            <Col>{tool.toolStatus}</Col>
-                            <Col>{tool._id}</Col>
-                          </Row>
-                        ))}
-                      </td>
-                    </tr>
-                  ) : 
+
+                  {val.tools ? (
+                    Object.keys(val.tools).length > 0 ? (
+                      <tr>
+                        <td colSpan="7" style={{ borderTop:0, paddingTop:0, marginTop:0, paddingBottom:"25px" }}>
+                          {val.tools.map((tool, index) => (
+                            <Row key={index} style={{ marginLeft:"10px", fontSize:".9em" }}>
+                              <Col>{tool.name}</Col>
+                              <Col>{tool.toolStatus}</Col>
+                              <Col>{tool._id}</Col>
+                            </Row>
+                          ))}
+                        </td>
+                      </tr>
+                    ) : 
+                      <tr>
+                        <td colSpan="7" className="text-muted text-center" style={{ borderTop:0, paddingBottom:"25px" }}>No tools are associated with this user account!</td>
+                      </tr>
+                  ) :
                     <tr>
                       <td colSpan="7" className="text-muted text-center" style={{ borderTop:0, paddingBottom:"25px" }}>No tools are associated with this user account!</td>
                     </tr>
