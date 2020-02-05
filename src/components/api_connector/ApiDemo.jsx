@@ -59,7 +59,10 @@ class ApiDemo extends Component {
           <small className="text-muted">This is confirmation the data is returned from the server and an example of breaking it down 
         into their individual components.  The Response Token is not typically returned, however in this demo, the API Server is 
         programmed to return it to confirm it was sent and received properly.</small></h6>
-        <br /><br />
+        <br />
+        <div><i>OPSERA_API_SERVER_URL:</i> {process.env.REACT_APP_OPSERA_API_SERVER_URL}</div>
+        <div><i>REACT_APP_OPSERA_API_CONNECTORS_URL:</i> {process.env.REACT_APP_OPSERA_API_CONNECTORS_URL}</div>
+        <br />
         <div><i>Response Message Data:</i> {data ? data.message : ""}</div>
         <div style={{ marginTop: 20 }}><i>Response Token:</i> <br />
           <span className="code">{data ? data.authorization : ""}</span>
