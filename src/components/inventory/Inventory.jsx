@@ -7,7 +7,7 @@ import { ApiService } from "../../api/apiService";
 import ErrorDialog from "../common/error";
 import LoadingDialog from "../common/loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faStream } from "@fortawesome/free-solid-svg-icons";
+import { faProjectDiagram, faStream } from "@fortawesome/free-solid-svg-icons";
 
 
 class Inventory extends PureComponent {
@@ -81,8 +81,8 @@ class Inventory extends PureComponent {
 
         <div className="row">
           <div className="col ml-auto">
-            <Button variant="outline-primary" className="float-right d-none" size="sm" onClick={() => this.gotoLink("platform")}>
-              <FontAwesomeIcon icon={faPlus} fixedWidth /> New Platform
+            <Button variant="outline-primary" className="float-right" size="sm" onClick={() => this.gotoLink("platform")}>
+              <FontAwesomeIcon icon={faProjectDiagram} fixedWidth /> Platforms
             </Button>
 
             <Button variant="outline-primary" className="float-right mr-2" size="sm" onClick={() => this.gotoLink("pipeline")}>

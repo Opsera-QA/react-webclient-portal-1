@@ -3,7 +3,7 @@ import React, { useContext, useReducer, useEffect } from "react";
 import { AuthContext } from "./contexts/AuthContext";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStream, faChartLine, faClipboardList, faLink, faPlus, faDownload, faHome, faTools } from "@fortawesome/free-solid-svg-icons";
+import { faStream, faChartLine, faClipboardList, faLink, faProjectDiagram, faDownload, faHome, faTools } from "@fortawesome/free-solid-svg-icons";
 import "./sidebar.css";
 
 function Sidebar() {
@@ -30,7 +30,7 @@ function Sidebar() {
         <>
           <div className="mt-3 side-nav-header-text">Products</div>
           <NavLink className="nav-link" activeClassName="chosen" to="/inventory"><FontAwesomeIcon icon={faClipboardList} fixedWidth /> Inventory</NavLink>
-          <NavLink className="nav-link" activeClassName="chosen" to="/platform"><FontAwesomeIcon icon={faPlus} fixedWidth /> New Platform</NavLink>
+          <NavLink className="nav-link" activeClassName="chosen" to="/platform"><FontAwesomeIcon icon={faProjectDiagram} fixedWidth /> Platforms</NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/pipeline"><FontAwesomeIcon icon={faStream} fixedWidth /> Pipelines</NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/analytics"><FontAwesomeIcon icon={faChartLine} fixedWidth /> Analytics</NavLink>
         
