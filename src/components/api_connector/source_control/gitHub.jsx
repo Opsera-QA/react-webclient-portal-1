@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import { Button, Form, Col, Card, Alert } from "react-bootstrap";
-import { apiConnectorURL } from "../../../config";
+import { apiServerUrl } from "../../../config";
 import { AuthContext } from "../../../contexts/AuthContext";  //REact Context API Code for User Authentication
 import { ApiService } from "../../../api/apiService";
 
@@ -45,7 +45,7 @@ class GitHub extends PureComponent {
     const accessToken = await getAccessToken();
     const urlParams = this.state;
     new ApiService(
-      apiConnectorURL + "github/createHook",
+      apiServerUrl + "/github/createHook",
       null,
       accessToken,
       urlParams).post()

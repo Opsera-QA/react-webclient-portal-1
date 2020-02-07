@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button, Form, Col, Card, Alert } from "react-bootstrap";
-import { apiConnectorURL } from "../../../config";
+import { apiServerUrl } from "../../../config";
 import { AuthContext } from "../../../contexts/AuthContext";  //REact Context API Code for User Authentication
 import { ApiService } from "../../../api/apiService";
 
@@ -28,7 +28,7 @@ class ServiceNow extends Component {
     const userInfo = await getUserInfo();
     const urlParams = { data: this.state, userid: userInfo.sub };
     new ApiService(
-      apiConnectorURL + "",
+      apiServerUrl + "",
       null,
       accessToken,
       urlParams).post()

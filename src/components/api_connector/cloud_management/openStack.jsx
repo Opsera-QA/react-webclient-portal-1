@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, Form, Card, Alert } from "react-bootstrap";
 import { AuthContext } from "../../../contexts/AuthContext";  //REact Context API Code for User Authentication
 import { ApiService } from "../../../api/apiService";
-import { apiConnectorURL } from "../../../config";
+import { apiServerUrl } from "../../../config";
 
 class OpenStack extends Component {
   static contextType = AuthContext;  //Registers the User Authentication context data in the component
@@ -29,7 +29,7 @@ class OpenStack extends Component {
     const userInfo = await getUserInfo();
     const urlParams = { data: this.state, userid: userInfo.sub };
     new ApiService(
-      apiConnectorURL + "",
+      apiServerUrl + "",
       null,
       accessToken,
       urlParams).post()

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, Form, Col, Card, Alert } from "react-bootstrap";
 import { AuthContext } from "../../../contexts/AuthContext";  //REact Context API Code for User Authentication
 import { ApiService } from "../../../api/apiService";
-import { apiConnectorURL } from "../../../config";
+import { apiServerUrl } from "../../../config";
 
 const state = {
   jiraUrl: "",
@@ -53,7 +53,7 @@ class Jira extends Component {
 
     const urlParams = this.state;
     new ApiService(
-      apiConnectorURL + "jira/trigger",
+      apiServerUrl + "/jira/trigger",
       null,
       accessToken,
       urlParams).post()

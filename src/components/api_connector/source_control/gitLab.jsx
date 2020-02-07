@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, Form, Col, Card, Alert } from "react-bootstrap";
 import { AuthContext } from "../../../contexts/AuthContext";  //REact Context API Code for User Authentication
 import { ApiService } from "../../../api/apiService";
-import { apiConnectorURL } from "../../../config";
+import { apiServerUrl } from "../../../config";
 
 const state = {
   token: "",
@@ -43,7 +43,7 @@ class GitLab extends Component {
     const accessToken = await getAccessToken();
     const urlParams = this.state;
     new ApiService(
-      apiConnectorURL + "gitlab/createHook",
+      apiServerUrl + "/gitlab/createHook",
       null,
       accessToken,
       urlParams).post()

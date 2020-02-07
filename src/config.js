@@ -5,7 +5,7 @@ const CLIENT_ID = process.env.REACT_APP_OKTA_CLIENT_ID
   , oktaRedirectUri = process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI;
 
 export const apiServerUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
-export const apiConnectorURL = process.env.REACT_APP_OPSERA_API_CONNECTORS_URL;
+//export const apiConnectorURL = process.env.REACT_APP_OPSERA_API_CONNECTORS_URL;
 
 export default {
   oidc: {
