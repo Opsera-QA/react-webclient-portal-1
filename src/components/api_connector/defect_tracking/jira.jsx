@@ -53,7 +53,7 @@ class Jira extends Component {
 
     const urlParams = this.state;
     new ApiService(
-      apiServerUrl + "/jira/trigger",
+      apiServerUrl + "/connectors/jira/trigger",
       null,
       accessToken,
       urlParams).post()

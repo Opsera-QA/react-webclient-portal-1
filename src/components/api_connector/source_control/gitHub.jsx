@@ -15,17 +15,17 @@ const state = {
   jobName: "",
   modal: false,
 };
-/* const devState = {
-  username: "faseehOpsera",
-  token: "daa54374d5ecb20337c7098e97b0c8bf1c398b00",
-  repoName: "testapp",
-  jenkinsUrl: "https://sparuna.opsera.io/supptest/jenkinspipeline/job/release-pipeline/",
-  jenkinsPort: "8080",
-  jUsername: "admin",
-  jPassword: "admin",
-  jobName: "release-pipeline",
-  modal: false,
-} */
+// const devState = {
+//   username: "faseehOpsera",
+//   token: "daa54374d5ecb20337c7098e97b0c8bf1c398b00",
+//   repoName: "testapp",
+//   jenkinsUrl: "https://sparuna.opsera.io/supptest/jenkinspipeline/job/release-pipeline/",
+//   jenkinsPort: "8080",
+//   jUsername: "admin",
+//   jPassword: "admin",
+//   jobName: "release-pipeline",
+//   modal: false,
+// }
 
 class GitHub extends PureComponent {
   static contextType = AuthContext;  //Registers the User Authentication context data in the component
@@ -45,7 +45,7 @@ class GitHub extends PureComponent {
     const accessToken = await getAccessToken();
     const urlParams = this.state;
     new ApiService(
-      apiServerUrl + "/github/createHook",
+      apiServerUrl + "/connectors/github/createHook",
       null,
       accessToken,
       urlParams).post()

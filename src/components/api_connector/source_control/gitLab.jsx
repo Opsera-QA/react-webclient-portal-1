@@ -14,16 +14,16 @@ const state = {
   jobName: "",
   modal: false,
 };
-/* const devState = {
-  token: "3uuRjbxmsw6ynegSgx2_",
-  repoName: "TestProject",
-  jenkinsUrl: "https://sparuna.opsera.io/supptest/jenkinspipeline/job/release-pipeline/",
-  jenkinsPort: "8080",
-  jUsername: "admin",
-  jPassword: "admin",
-  jobName: "release-pipeline",
-  modal: false,
-}; */
+// const devState = {
+//   token: "3uuRjbxmsw6ynegSgx2_",
+//   repoName: "16454749",
+//   jenkinsUrl: "https://sparuna.opsera.io/supptest/jenkinspipeline/job/release-pipeline/",
+//   jenkinsPort: "8080",
+//   jUsername: "admin",
+//   jPassword: "admin",
+//   jobName: "release-pipeline",
+//   modal: false,
+// };
 
 class GitLab extends Component {
   static contextType = AuthContext;  //Registers the User Authentication context data in the component
@@ -43,7 +43,7 @@ class GitLab extends Component {
     const accessToken = await getAccessToken();
     const urlParams = this.state;
     new ApiService(
-      apiServerUrl + "/gitlab/createHook",
+      apiServerUrl + "/connectors/gitlab/createHook",
       null,
       accessToken,
       urlParams).post()
