@@ -59,10 +59,10 @@ class Home extends Component {
         {typeof(authenticated) === "object" && !authenticated && <LoadingDialog />}
         
         {typeof(authenticated) === "boolean" && authenticated === false && 
-        <div style={{ marginTop: 25 }}>
+        <div className="mt-3 w-75">
           <Row>
-            <Col>
-              <div>
+            <Col xl="9">
+              <div style={{ maxWidth: "725px" }}>
                 <h2 className="mb-3 bd-text-purple-bright">Welcome to OpsERA!</h2>
                 <div style={{ fontSize:"1.1rem" }}>
                   OpsERA’s vision is to enable and empower the developers, operations and release teams by giving the flexibility in selecting the various DevOps 
@@ -71,6 +71,17 @@ class Home extends Component {
                 <div style={{ fontSize:"1.1rem" }} className="mt-3">OpsERA provides out of the box monitoring dashboard, giving an end to end visibility of DevOps landscape metrics 
                 via an intelligent dashboard to improve the Agility, Operational excellence and help them to track security and compliance metrics.</div>
                 
+                
+                
+                <div className="row mx-n2 mt-4">
+                  <div className="col-md px-2">
+                    <Button variant="success" className="btn-lg w-100 mb-3" onClick={this.gotoSignUp}>Sign Up</Button>
+                  </div>
+                  <div className="col-md px-2">
+                    <Button variant="outline-success" className="btn-lg w-100 mb-3" onClick={this.login}>Log In</Button>
+                  </div>
+                </div>
+
                 <Card className="mt-4 mb-4">
                   <Card.Header>Key Features</Card.Header>
                   <Card.Body>
@@ -80,18 +91,9 @@ class Home extends Component {
                     <p><b>API connectors:</b> Offers out of the box API connectors to integrate with Source code repositories, bug tracking, ITSM and collaboration tools</p>
                   </Card.Body>
                 </Card>
-                
-                <div className="row mx-n2">
-                  <div className="col-md px-2">
-                    <Button variant="success" className="btn-lg w-100 mb-3" onClick={this.gotoSignUp}>Sign Up</Button>
-                  </div>
-                  <div className="col-md px-2">
-                    <Button variant="outline-success" className="btn-lg w-100 mb-3" onClick={this.login}>Log In</Button>
-                  </div>
-                </div>
               </div>
             </Col>
-            <Col className="d-none d-xl-block text-center" md="auto"><img src="/img/opsera_logo_large.png" width="325" alt="" /></Col>
+            <Col className="text-center" xl="3"><img src="/img/opsera_logo_large.png" width="325" alt="" className="d-none d-xl-block text-center" /></Col>
           </Row>
         </div>}
       </div>
