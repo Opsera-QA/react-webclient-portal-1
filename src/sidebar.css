@@ -1,27 +1,5 @@
 /* The side navigation menu */
 
-/* USE THIS COLOR ROR ICONS?  #3d7e9a */
-
-
-/* .side-nav-header-text {
-  font-weight: bold;
-  color: #fff;
-}
- */
-/* .nav-link-text {
-  cursor: pointer;
-  color: #226196 !important;
-}
-.nav-link-text a:hover {
-  color: #0073ff;
-}
-
-.nav-link-text-active {
-  font-weight: bold;
-  color: #343a40 !important;
-}
-
- */
 .sidebar-container {
   font-size: .9rem;
   box-shadow: none;
@@ -31,7 +9,6 @@
 .sidebar-menu .nav-link {
   padding-left: 0 !important;
 }
-
 
 /*  Appending FontAwesome Icon to class
 .sidebar-menu .nav-link::after {
@@ -57,7 +34,7 @@
   color: #686d75;
 }
 .sidebar-menu a:hover {
-  color: #0073ff;
+  color: #00a1e0;
 }
 
 

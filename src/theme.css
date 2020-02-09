@@ -3,6 +3,75 @@
 - Source Color: #0d4183
 ------------------------------------*/
 
+/*  Buttons  */
+
+.btn-primary {
+  color: #fff;
+  background-color: #226196;
+  border-color: #0d4183;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: #1a4e79;
+  border-color: #0d4183;
+}
+
+.btn-primary:focus, .btn-primary.focus {
+  box-shadow: 0 0 0 0.2rem #224b96;
+}
+
+.btn-primary.disabled, .btn-primary:disabled {
+  color: #fff;
+  background-color: #5e82b1;
+  border-color: #90a8c5;
+  cursor: default;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
+  color: #fff;
+  background-color: #226196;
+  border-color: #224b96;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus, .show > .btn-primary.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(13, 65, 131, 0.5);
+}
+
+.btn-outline-primary {
+  color: #0d4183;
+  background-color: transparent;
+  border-color: #4b6588;
+}
+
+.btn-outline-primary:hover {
+  color: #fff;
+  background-color: #226196;
+  border-color: #0d4183;
+}
+
+.btn-outline-primary:focus, .btn-outline-primary.focus {
+  box-shadow: 0 0 0 0.2rem rgba(13, 65, 131, 0.5);
+}
+
+.btn-outline-primary.disabled, .btn-outline-primary:disabled {
+  color: #0d4183;
+  background-color: transparent;
+  border-color: #90a8c5;
+  cursor: default;
+}
+
+.btn-outline-primary:not(:disabled):not(.disabled):active, .btn-outline-primary:not(:disabled):not(.disabled).active, .show > .btn-outline-primary.dropdown-toggle {
+  color: #fff;
+  background-color: #0d4183;
+  border-color: #0d4183;
+}
+
+.btn-outline-primary:not(:disabled):not(.disabled):active:focus, .btn-outline-primary:not(:disabled):not(.disabled).active:focus, .show > .btn-outline-primary.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(13, 65, 131, 0.5);
+}
+
+
 /*------------------------------------
 - COLOR primary
 ------------------------------------*/
@@ -44,28 +113,6 @@ button.bg-primary:focus {
   border-color: #0d4183 !important;
 }
 
-.btn-primary {
-  color: #fff;
-  background-color: #0d4183;
-  border-color: #0d4183;
-}
-
-.btn-primary:hover {
-  color: #fff;
-  background-color: #226196;
-  border-color: #224b96;
-}
-
-.btn-primary:focus, .btn-primary.focus {
-  box-shadow: 0 0 0 0.2rem #224b96;
-}
-
-.btn-primary.disabled, .btn-primary:disabled {
-  color: #fff;
-  background-color: #5e82b1;
-  border-color: #90a8c5;
-  cursor: default;
-}
 
 .btn-success.disabled, .btn-success:disabled {
   color: #fff;
@@ -74,48 +121,9 @@ button.bg-primary:focus {
   cursor: default;
 }
 
-.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
-  color: #fff;
-  background-color: #226196;
-  border-color: #224b96;
-}
 
-.btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus, .show > .btn-primary.dropdown-toggle:focus {
-  box-shadow: 0 0 0 0.2rem rgba(13, 65, 131, 0.5);
-}
 
-.btn-outline-primary {
-  color: #0d4183;
-  background-color: transparent;
-  border-color: #4b6588;
-}
 
-.btn-outline-primary:hover {
-  color: #fff;
-  background-color: #0d4183;
-  border-color: #0d4183;
-}
-
-.btn-outline-primary:focus, .btn-outline-primary.focus {
-  box-shadow: 0 0 0 0.2rem rgba(13, 65, 131, 0.5);
-}
-
-.btn-outline-primary.disabled, .btn-outline-primary:disabled {
-  color: #0d4183;
-  background-color: transparent;
-  border-color: #90a8c5;
-  cursor: default;
-}
-
-.btn-outline-primary:not(:disabled):not(.disabled):active, .btn-outline-primary:not(:disabled):not(.disabled).active, .show > .btn-outline-primary.dropdown-toggle {
-  color: #fff;
-  background-color: #0d4183;
-  border-color: #0d4183;
-}
-
-.btn-outline-primary:not(:disabled):not(.disabled):active:focus, .btn-outline-primary:not(:disabled):not(.disabled).active:focus, .show > .btn-outline-primary.dropdown-toggle:focus {
-  box-shadow: 0 0 0 0.2rem rgba(13, 65, 131, 0.5);
-}
 
 .list-group-item-primary {
   color: #010913;
@@ -164,4 +172,5 @@ a.text-primary:hover, a.text-primary:focus {
 
 .w-20 {
   width: 200px;
+  min-width: 160px;
 }

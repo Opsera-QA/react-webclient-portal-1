@@ -1,13 +1,12 @@
 
 import React, { useContext, useReducer, useEffect } from "react";
 import { AuthContext } from "./contexts/AuthContext";
-import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStream, faChartLine, faClipboardList, faLink, faProjectDiagram, faDownload, faHome, faTools } from "@fortawesome/free-solid-svg-icons";
 import "./sidebar.css";
 
-function Sidebar({ compressed }) {
+function Sidebar() {
   const contextType = useContext(AuthContext);
   const [state, setState] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
@@ -20,13 +19,8 @@ function Sidebar({ compressed }) {
     if (userInfo) {
       setState({ administrator: userInfo.Groups.includes("Admin") });
     }
-
-    if (compressed) {
-      setState({ compressed: compressed });
-      console.log("COMPRESSED: ", compressed);
-    }
-
-  }, [contextType, compressed]); 
+    
+  }, [contextType]); 
 
   return (
     <div className="sidebar-container sticky-top pb-5 pt-1 pl-1">
@@ -50,9 +44,5 @@ function Sidebar({ compressed }) {
     </div>
   );
 }
-
-Sidebar.propTypes = {
-  compressed: PropTypes.bool
-};
 
 export default Sidebar;

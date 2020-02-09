@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Security, SecureRoute, ImplicitCallback } from "@okta/okta-react";
 import AuthContextProvider from "./contexts/AuthContext";
+import { Button } from "react-bootstrap";
 
 import config from "./config";
 import Home from "./Home";
@@ -36,8 +37,16 @@ class App extends Component {
             <Navbar />
             <div className="container-fluid">
               <div className="d-flex flex-row">
+                <div className="d-block d-md-none pt-1 mr-2">
+                  {/* Button to toggle sideBar btwn: "d-none d-md-block" and simply "d-block" */}
+                  <Button variant="outline-primary">
+                    <span className="dark-blue-text"><i
+                      className="fas fa-bars fa-1x"></i></span>
+                  </Button>
+                </div>
+
                 <div className="w-20 pt-1 d-none d-md-block">
-                  <Sidebar compressed={false}/>
+                  <Sidebar />
                 </div>
                 
                 <div className="w-100 pt-4">
