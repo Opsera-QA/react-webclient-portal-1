@@ -47,7 +47,7 @@ function Analytics() {
   }, []);
   return (
     <div>
-      <h3>Analytics Dashboard</h3>
+      <h4>Analytics Dashboard</h4>
 
       {!state.loaded && <LoadingDialog />}
 

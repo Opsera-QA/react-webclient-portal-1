@@ -12,6 +12,13 @@
   text-decoration: none;
 }
 
+
+/* UserName Text Style */
+.navbar-nav .nav-link {
+  color: #fff !important;
+  font-size: 1.2em;
+}
+
 a.nav-drop-down-item:hover {
   color: #fff !important;
   text-decoration: none;

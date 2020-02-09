@@ -14,7 +14,7 @@ class AdminTools extends Component {
     //TODO: Only render this if user is an Admin (need Okta groups)
     return (
       <div>
-        <h3>Administration Tools</h3>
+        <h4>Administration Tools</h4>
         <div>Listed below are administration tools for the platform.</div>
 
         <Row className="m-5">

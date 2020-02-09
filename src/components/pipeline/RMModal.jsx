@@ -14,7 +14,7 @@ class RMModal extends PureComponent {
     const { handleModalCancel, service, category } = this.context;
     this.setState({
       validationError: false
-    })
+    });
     handleModalCancel({ service, category });
   }
   handleSave = () => {
@@ -22,13 +22,13 @@ class RMModal extends PureComponent {
     if (validate()) {
       this.setState({
         validationError: false
-      })
-      handleModalSave({ service, category })
+      });
+      handleModalSave({ service, category });
     } else {
       this.setState({
         validationError: true
-      })
-      console.log("validation failed")
+      });
+      console.log("validation failed");
     }
   }
 
@@ -43,7 +43,7 @@ class RMModal extends PureComponent {
     const { handleModalCancel, service, category } = this.context;
     this.setState({
       validationError: false
-    })
+    });
     handleModalCancel({ service, category });
   }
 
@@ -70,7 +70,7 @@ class RMModal extends PureComponent {
         </Modal.Header>
         <Modal.Body className="p-3 modal-body-text-block">
           <div className="mb-3">This will register a new {service} instance. Are you sure you want to proceed?
-          {/* In order to do so, connection details are needed below. */}
+            {/* In order to do so, connection details are needed below. */}
           </div>
 
           <Form>
@@ -132,7 +132,7 @@ class RMModal extends PureComponent {
             onClick={this.handlecancel}
           > Cancel
           </Button>
-          <Button variant="primary" onClick={this.handleSave}>
+          <Button variant="outline-primary" onClick={this.handleSave}>
             Confirm
           </Button>
         </Modal.Footer>

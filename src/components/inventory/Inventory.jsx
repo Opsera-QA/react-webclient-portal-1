@@ -74,7 +74,7 @@ class Inventory extends PureComponent {
     const { data, error, fetching } = this.state;
     return (
       <div>
-        <h3>Inventory</h3>
+        <h4>Inventory</h4>
         <p>All configured applications and tools are available for viewing below.  Select the item you want to view from the list.</p>
 
         {error ? <ErrorDialog error={error} /> : null}

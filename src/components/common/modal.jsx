@@ -36,7 +36,7 @@ function CustomModalDialog({ header, message, button, handleHideModal }) {
           <Button variant="outline-secondary" onClick={() => handleClose()}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => handleConfirm()}>
+          <Button variant="outline-primary" onClick={() => handleConfirm()}>
             <FontAwesomeIcon icon={faCheck} fixedWidth /> 
             {button ? button : "Confirm"}
           </Button>

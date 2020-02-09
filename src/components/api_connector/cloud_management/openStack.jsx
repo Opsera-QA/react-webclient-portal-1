@@ -128,7 +128,7 @@ class OpenStack extends Component {
 
 
 
-              <Button id="save-button" disabled variant="primary" className="mr-2" type="submit">Connect</Button>
+              <Button id="save-button" disabled variant="outline-primary" className="mr-2" type="submit">Connect</Button>
               <Button id="cancel-button" variant="outline-secondary" className="mr-2" type="button" onClick={this.cancel}>Cancel</Button>
             </Form>
           </Card.Body>

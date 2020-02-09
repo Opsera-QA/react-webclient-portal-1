@@ -79,14 +79,14 @@ class Pipeline extends React.PureComponent {
   }
 
   handleCreateTools = async () => {
-    console.log("Handling creation of tools from pipeline component ")
+    console.log("Handling creation of tools from pipeline component ");
     const { appname: name, services: data, token, user, applicationId: id } = this.context;
     this.setState({
       saving: true,
     });
 
     let postBody = Object.assign({ id }, { tools: data }, { uid: user.sub });
-    console.log(postBody)
+    console.log(postBody);
     let currentComponent = this;
     new ApiService(
       "/applications/create/tools",
@@ -94,12 +94,12 @@ class Pipeline extends React.PureComponent {
       token,
       postBody).post()
       .then(function (response) {
-        console.log(response)
+        console.log(response);
         currentComponent.setState({
           data: response.data,
           savingStatus: "success",
           error: false,
-          messages: 'Tools Saved Successfully.'
+          messages: "Tools Saved Successfully."
         });
       })
       .catch(function (error) {
@@ -113,7 +113,7 @@ class Pipeline extends React.PureComponent {
         currentComponent.setState({
           error: true,
           status: "failed",
-          messages: message ? message : 'Error reported accessing API.'
+          messages: message ? message : "Error reported accessing API."
         });
 
       })
@@ -214,14 +214,14 @@ class Pipeline extends React.PureComponent {
       <>
         <div className="ml-3">
 
-          <h3>CI/CD Pipeline</h3>
+          <h4>CI/CD Pipeline</h4>
           <div className="row mb-2">
             {status !== "success" && !editTools && savingStatus !== "success" ?
               <div className="col ml-auto">
                 <Form loading={checkingAppName ? "true" : undefined}>
                   {this.renderInput()}
                   <Button
-                    variant="primary"
+                    variant="outline-primary"
                     type="submit"
                     onClick={this.createClick}
                     disabled={!!appnameError || !appname || !appname.length}

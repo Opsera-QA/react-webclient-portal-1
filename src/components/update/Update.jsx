@@ -115,7 +115,7 @@ class Update extends Component {
     const { error, fetching } = this.state;
     return (
       <div>
-        <h3>Updates</h3>
+        <h4>Updates</h4>
         <p>Any available updates for tools currently registered will be listed below.</p>
 
         {error ? <ErrorDialog error={error} /> : null}
@@ -159,7 +159,7 @@ const ToolView = ({ handleButtonClick, disabledIds, app, tool }) => {
       <div className="row m-1">
         <div className="col-md">
           <Button
-            variant="primary"
+            variant="outline-primary"
             className="m-2"
             disabled={disabledIds.includes(`${app._id}${tool._id}`)}
             onClick={() => handleButtonClick(app, tool)}>Upgrade Tool

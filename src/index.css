@@ -1,12 +1,23 @@
+:root {
+  --height: calc(100% + 100px);
+  --font-family-sans-serif: "Avenir Next W01", "Lato", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
 html {
-  height: 100%;
-  min-height: 100%;
+  font-family: sans-serif;
+  line-height: 1.15;
   margin:0;
 }
 
 body {
   background-color: #fff;
-  font-family: 'Gotham Light', Arial, sans-serif;
+  color: #334152;
+  margin: 0;
+  font-family: "Avenir Next W01", "Lato", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1.5;
 }
 
 a {
@@ -14,9 +25,9 @@ a {
   text-decoration: none;
 }
 
-.active {
-  font-weight:bold;
-  color: #343a40;
+a:hover, .active {
+  color: #0073ff;
+  text-decoration: none;
 }
 
 .code {
@@ -38,25 +49,6 @@ a {
 
 /* END Utility Classes */
 
-.sidebar {
-  height: 100vh;
-  font-size: .9rem;
-}
-
-.side-nav-header-text {
-  font-weight: bold;
-  color: #fff;
-}
-
-.nav-link-text {
-  cursor: pointer;
-  color: #226196 !important;
-}
-
-.nav-link-text-active {
-  font-weight: bold;
-  color: #343a40 !important;
-}
 
 /* Absolute Center Spinner */
 .loading {
@@ -114,11 +106,11 @@ a {
     padding: 0;
   }
 
-  .container-fluid {
+/*   .container-fluid {
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
-
+ */
 }
 
 /* reporting */

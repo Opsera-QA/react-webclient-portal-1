@@ -56,7 +56,7 @@ class CreationModal extends React.PureComponent {
             variant="outline-secondary"
             onClick={() => this.handleCancel(service)}> Cancel
           </Button>
-          <Button variant="primary" onClick={this.handleSave}>
+          <Button variant="outline-primary" onClick={this.handleSave}>
             Confirm
           </Button>
         </Modal.Footer>

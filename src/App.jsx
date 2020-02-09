@@ -20,14 +20,11 @@ import Platform from "./components/platform/Platform";
 import Reports from "./components/reports/Reports";
 import Analytics from "./components/analytics/Analytics";
 import Update from "./components/update/Update";
-
 import AdminTools from "./components/admin/AdminTools";
-//import HealthCheck from "./components/admin/HealthCheck";
 import DeleteTools from "./components/admin/delete_tools/DeleteTools";
 import RegisteredUsers from "./components/admin/RegisteredUsers";
 import ManageSystems from "./components/admin/manage_systems/ManageSystems";
 import ReportsRegistration from "./components/admin/analytics/ReportsRegistration";
-
 import ApiConnectionDemo from "./components/api_connector/ApiDemo";
 
 class App extends Component {
@@ -38,11 +35,12 @@ class App extends Component {
           <AuthContextProvider>
             <Navbar />
             <div className="container-fluid">
-              <div className="flex-xl-nowrap row sidebar">
-                <div className="col-xl-2 col-md-3 col-12 d-flex flex-column bg-dark pt-4">
-                  <Sidebar />
+              <div className="d-flex flex-row">
+                <div className="w-20 pt-1 d-none d-md-block">
+                  <Sidebar compressed={false}/>
                 </div>
-                <div className="col-xl-10 col-md-9 col-12 pt-4">
+                
+                <div className="w-100 pt-4">
                   <Route path="/" exact component={Home} />
                   <Route path="/signup" exact component={Signup} />
                   <Route path="/about" exact component={About} />

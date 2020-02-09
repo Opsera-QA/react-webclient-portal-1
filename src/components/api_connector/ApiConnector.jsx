@@ -13,44 +13,38 @@ class ApiConnector extends Component {
     selection: ""
   }
 
-  selectView = (id) => {
+  handleClick = param => e => {
+    // param is the argument you passed to the function
+    // e is the event object that returned
+    e.preventDefault();
     this.setState({
-      selection: id
+      selection: param
     });
-  }
+  };
+
 
   render() {
     return (
       <div>
-        <h3>API Connectors</h3>
+        <h4>API Connectors</h4>
         <div>Configure connection information for various supported tools.</div>
 
-        <ul className="nav mt-1">
+
+        <ul className="nav nav-tabs mt-3">
           <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "github" ? "nav-link-text-active" : "nav-link-text")} onClick={() => this.selectView("github")}>GitHub</a>
+            <a className={"nav-link " + (this.state.selection === "github" ? "active" : "")} href="#" onClick={this.handleClick("github")}>GitHub</a>
           </li>
           <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "gitlab" ? "nav-link-text-active" : "nav-link-text")} onClick={() => this.selectView("gitlab")}>GitLab</a>
+            <a className={"nav-link " + (this.state.selection === "gitlab" ? "active" : "")} href="#" onClick={this.handleClick("gitlab")}>GitLab</a>
           </li>
           <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "jira" ? "nav-link-text-active" : "nav-link-text")} onClick={() => this.selectView("jira")}>Jira</a>
+            <a className={"nav-link " + (this.state.selection === "jira" ? "active" : "")} href="#" onClick={this.handleClick("jira")}>Jira</a>
           </li>
           {/* <li className="nav-item">
-            <a className={"nav-link disabled " + (this.state.selection === "servicenow" ? "nav-link-text-active" : "")} onClick={() => this.selectView("servicenow")}>ServiceNow</a>
-          </li>
-          <li className="nav-item">
-            <a className={"nav-link disabled " + (this.state.selection === "openstack" ? "nav-link-text-active" : "")} onClick={() => this.selectView("openstack")}>OpenStack</a>
-          </li>
-          <li className="nav-item">
-            <a className={"nav-link disabled " + (this.state.selection === "slack" ? "nav-link-text-active" : "")} onClick={() => this.selectView("slack")}>Slack</a>
-          </li>
-          <li className="nav-item">
-            <a className={"nav-link disabled " + (this.state.selection === "tableau" ? "nav-link-text-active" : "")} onClick={() => this.selectView("tableau")}>Tableau</a>
-          </li>
-          <li className="nav-item">
-            <a className={"nav-link disabled " + (this.state.selection === "splunk" ? "nav-link-text-active" : "")} onClick={() => this.selectView("splunk")}>Splunk</a>
+            <a className="nav-link disabled" href="#">Disabled</a>
           </li> */}
         </ul>
+
 
         {this.state.selection === "github" && <GitHub />}
         {this.state.selection === "gitlab" && <GitLab />}
@@ -61,7 +55,7 @@ class ApiConnector extends Component {
         {this.state.selection === "tableau" && <Tableau />}
         {this.state.selection === "splunk" && <Splunk />}
         {this.state.selection === "" &&
-          <div className="mt-2">
+          <div className="m-5">
             OpsERA offers out of the box API connectors which allow you to to integrate your internal platforms for inclusion in pipelines and platform configurations.
           </div>
         }

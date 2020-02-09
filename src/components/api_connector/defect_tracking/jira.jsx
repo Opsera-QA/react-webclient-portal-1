@@ -273,7 +273,7 @@ class Jira extends Component {
                 </Form.Group>
               </Form.Row>
 
-              <Button id="save-button" disabled={!isEnabled} variant="primary" className="mr-2" type="submit">Connect</Button>
+              <Button id="save-button" disabled={!isEnabled} variant="outline-primary" className="mr-2" type="submit">Connect</Button>
               {/* <Button id="cancel-button" variant="outline-secondary" className="mr-2" type="button" onClick={this.cancel}>Cancel</Button> */}
             </Form>
             <div className="text-muted mt-2 italic">Please Note: All fields are required for connectivity.</div>

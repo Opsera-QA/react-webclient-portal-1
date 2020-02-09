@@ -1,33 +1,65 @@
 /* The side navigation menu */
 
+/* USE THIS COLOR ROR ICONS?  #3d7e9a */
 
-.nav-link-header {
+
+/* .side-nav-header-text {
+  font-weight: bold;
   color: #fff;
-  font-size: 1.2em;
-  margin-top:5px;
+}
+ */
+/* .nav-link-text {
+  cursor: pointer;
+  color: #226196 !important;
+}
+.nav-link-text a:hover {
+  color: #0073ff;
 }
 
-a.nav-link-light.nav-link.active {
-  color: #ffc107;
+.nav-link-text-active {
+  font-weight: bold;
+  color: #343a40 !important;
+}
+
+ */
+.sidebar-container {
+  font-size: .9rem;
+  box-shadow: none;
+  border-right-width: 1px;
+}
+
+.sidebar-menu .nav-link {
+  padding-left: 0 !important;
+}
+
+
+/*  Appending FontAwesome Icon to class
+.sidebar-menu .nav-link::after {
+  font-family: "FontAwesome";
+  content: "\f105";
+} */
+
+.sub-header {
+  color: #226196;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  letter-spacing: 1px;
+}
+
+.sidebar-menu .menu-text {
+  margin-left:8px;
 }
 
 .nav-link {
-  display: block;
-  padding: .5rem 1rem;
-  color: #fff;
-  font-size:1.1em;
-  white-space: nowrap;
+  color: #226196;
+}
+.sidebar-menu a.chosen {
+  color: #686d75;
+}
+.sidebar-menu a:hover {
+  color: #0073ff;
 }
 
-a.nav-link:hover {
-  color:rgba(255,255,255,.5);
-}
-
-.navbar-list a.chosen,
-.navbar-list a:hover {
-  /* border-bottom: 1px solid #F14B31; */
-  color: #ffc107;
-}
 
 .fixed-row-footer-bottom { 
   position: fixed; 

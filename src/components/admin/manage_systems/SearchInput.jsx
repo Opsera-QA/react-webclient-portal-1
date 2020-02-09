@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
 
-function SearchInput({org, loading, orgSearch, handleChange}) {
+function SearchInput({ org, loading, orgSearch, handleChange }) {
   return (
     <>
       <Form onSubmit={orgSearch}>
@@ -18,7 +18,7 @@ function SearchInput({org, loading, orgSearch, handleChange}) {
         </Form.Row>
       </Form>
       
-      <Button variant="primary" type="submit" loading={loading ? "true" : undefined} onClick={orgSearch}>
+      <Button variant="outline-primary" type="submit" loading={loading ? "true" : undefined} onClick={orgSearch}>
         Search
       </Button>
     </>

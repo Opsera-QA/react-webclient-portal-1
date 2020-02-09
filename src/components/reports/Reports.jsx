@@ -12,7 +12,7 @@ const TOOL_NAME = "ELK-Kibana";
 export default class Reports extends PureComponent {
   static contextType = AuthContext;  //Import AuthContext values into Component
     
-  state = {tool: null, loading: null, showIframe: false}
+  state = { tool: null, loading: null, showIframe: false }
 
   async componentDidMount() {
     const { getAccessToken } = this.context;
@@ -47,12 +47,12 @@ export default class Reports extends PureComponent {
   }
 
   onClickButton = () => {
-    const {tool} = this.state;
+    const { tool } = this.state;
     tool.toolURL && window.open(tool.toolURL, "_blank");
   }
 
   handleSubmit = e => {
-    const {tool} = this.state;
+    const { tool } = this.state;
     e.preventDefault();
     if (!tool || !tool.toolURL) return;
     this.setState({
@@ -61,7 +61,7 @@ export default class Reports extends PureComponent {
   }
 
   getplaceHolderText = () => {
-    const {loading, tool} = this.state;
+    const { loading, tool } = this.state;
     if (loading === null) return "...";
     if (loading) return "please wait...";
     if (!tool || !tool.toolURL)
@@ -70,7 +70,7 @@ export default class Reports extends PureComponent {
   }
 
   render() {
-    const {tool, showIframe, error} = this.state;
+    const { tool, showIframe, error } = this.state;
 
     return (
       <Container>  
@@ -102,7 +102,7 @@ export default class Reports extends PureComponent {
               />
             </Form.Group>
               
-            <Button variant="primary" style={{marginBottom: "30px"}} type="submit"> 
+            <Button variant="outline-primary" style={{ marginBottom: "30px" }} type="submit"> 
                   Submit
             </Button>
           </Form>

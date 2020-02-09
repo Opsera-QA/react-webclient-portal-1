@@ -124,7 +124,7 @@ function ConfigurationsForm( { settings, token }) {
             { !active ? 
               <>
                 <div className="mt-4">
-                  <Button variant="primary" onClick={() => { updateProfile(); }}>Activate Analytics</Button>
+                  <Button variant="outline-primary" onClick={() => { updateProfile(); }}>Activate Analytics</Button>
                 </div>
               </> :
               <fieldset>
@@ -191,7 +191,7 @@ function ConfigurationsForm( { settings, token }) {
                 </div>
 
                 <div className="text-right">
-                  <Button variant="primary" className="mr-3" onClick={() => { updateProfile(); }}><FontAwesomeIcon icon={faSave} fixedWidth /> Save Settings</Button>
+                  <Button variant="outline-primary" className="mr-3" onClick={() => { updateProfile(); }}><FontAwesomeIcon icon={faSave} fixedWidth /> Save Settings</Button>
                   <Button variant="outline-danger" onClick={() => { confirmDeactivation(); }}>Deactivate Analytics</Button>
                 </div> 
                 

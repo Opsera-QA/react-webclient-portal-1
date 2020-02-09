@@ -157,17 +157,17 @@ class NewApplication extends React.PureComponent {
   }
 
   handleSaveTools = async () => {
-    const { appname: name, data, token, user, appid: id } = this.context
+    const { appname: name, data, token, user, appid: id } = this.context;
 
     this.setState({
       saving: true,
-    })
-    console.log(`saving app for user ${user.sub}`)
+    });
+    console.log(`saving app for user ${user.sub}`);
 
     let postBody = Object.assign({ id }, { tools: data }, { uid: user.sub });
     let currentComponent = this;
     new ApiService(
-      '/applications/create/tools',
+      "/applications/create/tools",
       null,
       token,
       postBody).post()
@@ -176,7 +176,7 @@ class NewApplication extends React.PureComponent {
           data: response.data,
           savingStatus: "success",
           error: false,
-          messages: 'Tools Saved Successfully.'
+          messages: "Tools Saved Successfully."
         });
       })
       .catch(function (error) {
@@ -190,7 +190,7 @@ class NewApplication extends React.PureComponent {
         currentComponent.setState({
           error: true,
           status: "failed",
-          messages: message ? message : 'Error reported accessing API.'
+          messages: message ? message : "Error reported accessing API."
         });
 
       })
@@ -200,7 +200,7 @@ class NewApplication extends React.PureComponent {
 
     this.setState({
       saving: false,
-    })
+    });
   }
 
   render() {
@@ -209,7 +209,7 @@ class NewApplication extends React.PureComponent {
     return (
       <>
         <div className="ml-3">
-          <h3>New Platform Creation</h3>
+          <h4>New Platform Creation</h4>
           <p>Create a new Application to leverage your existing systems in any way that meets your business needs.</p>
           <div className="row mb-2">
 
@@ -230,7 +230,7 @@ class NewApplication extends React.PureComponent {
                     </Form.Group>
                   </Form.Row>
                   <Button
-                    variant="primary"
+                    variant="outline-primary"
                     type="submit"
                     onClick={this.handleCreateClick}
                     loading={checkingAppName ? "true" : undefined}
