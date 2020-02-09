@@ -215,7 +215,7 @@ class NewApplication extends React.PureComponent {
     const { saving, gotoInventory } = this.context;
     return (
       <>
-        <div className="ml-3">
+        <div>
           <h4>Platforms</h4>
 
           <ul className="nav nav-tabs mt-3 mb-3">
