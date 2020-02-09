@@ -29,7 +29,33 @@ import ReportsRegistration from "./components/admin/analytics/ReportsRegistratio
 import ApiConnectionDemo from "./components/api_connector/ApiDemo";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hideSideBar: false
+    };
+  }
+  
+  componentDidMount() {
+    this.updateDimensions();
+    window.addEventListener("resize", this.updateDimensions.bind(this));
+  }
+
+  updateDimensions() {
+    if(window.innerWidth < 770) {
+      this.setState({ hideSideBar: true });
+    } 
+  }
+
+  handleToggleMenuClick = () => {
+    this.setState({
+      hideSideBar: !this.state.hideSideBar
+    });
+  }
+
   render() {
+    const { hideSideBar } = this.state;
+    
     return (
       <Router>
         <Security {...config.oidc}>
@@ -38,14 +64,13 @@ class App extends Component {
             <div className="container-fluid">
               <div className="d-flex flex-row">
                 <div className="d-block d-md-none pt-1 mr-2">
-                  {/* Button to toggle sideBar btwn: "d-none d-md-block" and simply "d-block" */}
-                  <Button variant="outline-primary">
+                  <Button variant="outline-primary" onClick={this.handleToggleMenuClick}>
                     <span className="dark-blue-text"><i
                       className="fas fa-bars fa-1x"></i></span>
                   </Button>
                 </div>
 
-                <div className="w-20 pt-1 d-none d-md-block">
+                <div className={"w-20 pt-1 " + (hideSideBar ? "d-none d-md-block" : "d-block")}>
                   <Sidebar />
                 </div>
                 
