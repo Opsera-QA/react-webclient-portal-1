@@ -76,12 +76,12 @@ class Update extends Component {
       });
   }
 
-  loader = () => {
+  /* loader = () => {
     const { fetching } = this.state;
     return fetching ? (
       <Button loading style={{ backgroundColor: "transparent" }} />
     ) : null;
-  }
+  } */
 
   messages = () => {
     const { fetching, apps } = this.state;
@@ -122,7 +122,7 @@ class Update extends Component {
         {fetching ? <LoadingDialog /> : null}
 
         <div className="upgrades__app-list" style={{}}>
-          {this.loader()}
+          {/* {this.loader()} */}
           {!error ?? this.messages()}
           {this.toolList()}
         </div>
@@ -174,14 +174,7 @@ const ToolView = ({ handleButtonClick, disabledIds, app, tool }) => {
 ToolView.propTypes = {
   handleButtonClick: PropTypes.func,
   disabledIds: PropTypes.array,
-  app: {
-    _id: PropTypes.string,
-    name: PropTypes.string
-  },
-  tool: {
-    _id: PropTypes.string,
-    name: PropTypes.string,
-    versionNumber: PropTypes.string
-  }
+  app: PropTypes.object,
+  tool: PropTypes.object,
 };
 export default Update;
