@@ -114,7 +114,7 @@ class Update extends Component {
   render() {
     const { error, fetching } = this.state;
     return (
-      <div>
+      <div className="mt-3 max-content-width">
         <h4>Updates</h4>
         <p>Any available updates for tools currently registered will be listed below.</p>
 

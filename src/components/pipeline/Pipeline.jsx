@@ -38,6 +38,12 @@ class Pipeline extends React.PureComponent {
     });
   }
 
+  handleTabClick = param => e => {
+    // param is the argument you passed to the function
+    // e is the event object that returned
+    e.preventDefault();
+    this.editTools();
+  };
 
   editTools = async () => {
     const { reset } = this.context;
@@ -212,10 +218,20 @@ class Pipeline extends React.PureComponent {
 
     return (
       <>
-        <div className="ml-3">
+        <div className="mt-3 max-content-width">
 
           <h4>CI/CD Pipeline</h4>
-          <div className="row mb-2">
+
+          <ul className="nav nav-tabs mt-3 mb-3">
+            <li className="nav-item">
+              <a className={"nav-link " + (!editTools ? "active" : "")} href="#" onClick={this.handleTabClick("new")}>Add New</a>
+            </li>
+            <li className="nav-item">
+              <a className={"nav-link " + (editTools ? "active" : "")} href="#" onClick={this.handleTabClick("edit")}>Edit Existing</a>
+            </li>
+          </ul>
+
+          <div className="row m-2">
             {status !== "success" && !editTools && savingStatus !== "success" ?
               <div className="col ml-auto">
                 <Form loading={checkingAppName ? "true" : undefined}>
@@ -255,13 +271,6 @@ class Pipeline extends React.PureComponent {
                 </Form>
               </div>
             )}
-
-            <div className="col ml-auto pt-4">
-              <Button variant="outline-primary" className="float-right mt-1" size="sm" onClick={() => this.editTools()}>
-                <FontAwesomeIcon icon={faWrench} fixedWidth /> {!editTools ? (<>Edit Existing Applications</>) : (<>Add an Application</>)}
-              </Button>
-
-            </div>
 
           </div>
 

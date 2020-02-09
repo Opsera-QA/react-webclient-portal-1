@@ -79,7 +79,7 @@ class Inventory extends PureComponent {
   render() {
     const { data, error, fetching } = this.state;
     return (
-      <div>
+      <div className="mt-3 max-content-width">
         <h4>Inventory</h4>
         <p>The OpsERA Inventory tool allows you to see all of the configured tools per application.  Please select either Pipeline or Platform and then select the application in order to view its tools and their current status.</p>
 

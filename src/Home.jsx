@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { AuthContext } from "./contexts/AuthContext";
 import { Row, Col, Button, Card } from "react-bootstrap";
 //import { Link } from "react-router-dom";
-import FeaturesCards from "./components/about/features";
+//import FeaturesCards from "./components/about/features";
 import LoadingDialog from "./components/common/loading";
 
 class Home extends Component {
@@ -30,13 +30,29 @@ class Home extends Component {
     return (
       <div>
         { authenticated &&
-          <div style={{ marginTop: 15 }}>
+          <div className="mt-3 max-content-width">
             <h2>Welcome back, {userInfo ? userInfo.name : "Unknown User Name"}!</h2>
             <p>
               You have successfully logged in!  Review the options below in order to get started.  
             </p>
 
-            <FeaturesCards />
+            <Card className="mt-4">
+              <Card.Header>Getting Started</Card.Header>
+              <Card.Body>
+                <Card.Title>OpsERA offers multiple ways to work with your DevOps solution.</Card.Title>
+                <Card.Text>
+              The OpsERA DevOps Product offers the best time to market solutions for all of your technology
+                  automation and workflow needs enabling organizations to build optimized and efficient DevOps projects.  
+                  We deliver solutions to automate build, deploy, security and testing with open source tools for your development team to
+                  manage application upgrades effectively and in a secured way. We also provide pragmatic solutions for
+                  various cloud-based products using open source frameworks and we ensure that enterprise policies are met.
+                </Card.Text>
+                {/* <Button variant="primary" onClick={() => this.gotoLink("inventory")}>Application Inventory</Button> */}
+                <Button variant="outline-primary" className="ml-2" onClick={() => this.gotoLink("platform")}>Platforms</Button>
+                <Button variant="outline-primary" className="ml-2" onClick={() => this.gotoLink("pipeline")}>Pipelines</Button>
+                <Button variant="outline-primary" className="ml-2" onClick={() => this.gotoLink("analytics")}>Analytics</Button>
+              </Card.Body>
+            </Card>
           </div>
         }
         

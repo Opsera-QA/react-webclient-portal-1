@@ -47,6 +47,10 @@ a:hover, .active {
   border-bottom-style: solid;
 }
 
+
+.max-content-width {
+  max-width: 900px;
+}
 /* END Utility Classes */
 
 
