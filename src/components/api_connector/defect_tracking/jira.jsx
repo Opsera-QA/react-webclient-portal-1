@@ -54,31 +54,31 @@ class Jira extends Component {
           let jenkinPort = "", jiraUrl = "", jiraPort = "", jiraUserName = "", jiraPassword = "", jenkinUrl = "", jenkinUserName = "", jenkinPassword = "", projectName = "";
 
           if (response.data[0].jenkinPort !== undefined) {
-            jenkinPort = response.data[0].jenkinPort
+            jenkinPort = response.data[0].jenkinPort;
           }
           if (response.data[0].jiraUrl !== undefined) {
-            jiraUrl = response.data[0].jiraUrl
+            jiraUrl = response.data[0].jiraUrl;
           }
           if (response.data[0].jiraPort !== undefined) {
-            jiraPort = response.data[0].jiraPort
+            jiraPort = response.data[0].jiraPort;
           }
           if (response.data[0].jiraUserName !== undefined) {
-            jiraUserName = response.data[0].jiraUserName
+            jiraUserName = response.data[0].jiraUserName;
           }
           if (response.data[0].jiraPassword !== undefined) {
-            jiraPassword = response.data[0].jiraPassword
+            jiraPassword = response.data[0].jiraPassword;
           }
           if (response.data[0].jenkinUrl !== undefined) {
-            jenkinUrl = response.data[0].jenkinUrl
+            jenkinUrl = response.data[0].jenkinUrl;
           }
           if (response.data[0].jenkinUserName !== undefined) {
-            jenkinUserName = response.data[0].jenkinUserName
+            jenkinUserName = response.data[0].jenkinUserName;
           }
           if (response.data[0].jenkinPassword !== undefined) {
-            jenkinPassword = response.data[0].jenkinPassword
+            jenkinPassword = response.data[0].jenkinPassword;
           }
           if (response.data[0].projectName !== undefined) {
-            projectName = response.data[0].projectName
+            projectName = response.data[0].projectName;
           }
 
           this.setState({
@@ -92,15 +92,15 @@ class Jira extends Component {
             jenkinPassword: jenkinPassword,
             projectName: projectName,
           }, () => {
-            console.log(this.state)
+            console.log(this.state);
             this.setState({
               update: true,
               fetching: false
-            })
-          })
+            });
+          });
         }
         else {
-          console.log("not data available ==> do nothing!")
+          console.log("not data available ==> do nothing!");
         }
 
       })
@@ -108,7 +108,7 @@ class Jira extends Component {
         console.log(e);
         this.setState({
           fetching: false
-        })
+        });
         this.showErrorAlert("Error Fetching data for API Connector. Contact Administrator for more details.");
       });
   }
@@ -229,9 +229,8 @@ class Jira extends Component {
     return (
       <div>
         {this.state.modal &&
-          <Alert variant={this.state.type} onClose={() => this.setState({ modal: false, type: "", title: "", message: "" })} dismissible>
-            <Alert.Heading>{this.state.title}</Alert.Heading>
-            {this.state.message}
+          <Alert className="mt-3" variant={this.state.type} onClose={() => this.setState({ modal: false, type: "", title: "", message: "" })} dismissible>
+            {this.state.title} {this.state.message}
           </Alert>
         }
         <Card className="mt-3">
@@ -292,7 +291,7 @@ class Jira extends Component {
                       name="jiraPassword"
                       value={this.state.jiraPassword}
                       onChange={this.handleChange}
-                    // isInvalid={this.state.password.error} 
+                      isInvalid={this.state.jiraPassword.length < 1}
                     />
                     {/* <Form.Control.Feedback type="invalid">{this.state.password.error}</Form.Control.Feedback> */}
                   </Form.Group>
@@ -324,7 +323,7 @@ class Jira extends Component {
                     />
                     <small id="passwordHelpBlock" className="form-text text-muted">
                       Jenkins container notes here.
-                </small>
+                    </small>
                     {/* <Form.Control.Feedback type="invalid">{this.state.jenkinsUrl.error}</Form.Control.Feedback> */}
                   </Form.Group>
 
@@ -364,18 +363,18 @@ class Jira extends Component {
                       name="jenkinPassword"
                       value={this.state.jenkinPassword}
                       onChange={this.handleChange}
-                    // isInvalid={this.state.jenkinsPassword.error} 
+                      isInvalid={this.state.jenkinPassword.length < 1}
                     />
                     {/* <Form.Control.Feedback type="invalid">{this.state.jenkinsPassword.error}</Form.Control.Feedback> */}
                   </Form.Group>
                 </Form.Row>
-
+                <div className="text-muted mt-2 mb-2 italic">Please Note: All fields are required for connectivity.</div>
                 <Button id="save-button" disabled={!isEnabled} variant="outline-primary" className="mr-2" type="submit">{update ? "Save Changes" : "Connect"}</Button>
                 {/* <Button id="cancel-button" variant="outline-secondary" className="mr-2" type="button" onClick={this.cancel}>Cancel</Button> */}
               </Form>
             }
 
-            <div className="text-muted mt-2 italic">Please Note: All fields are required for connectivity.</div>
+            
           </Card.Body>
         </Card>
       </div>

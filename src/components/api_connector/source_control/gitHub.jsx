@@ -50,28 +50,28 @@ class GitHub extends PureComponent {
           let jenkinsPort = "", username = "", token = "", repoName = "", jenkinsUrl = "", jUsername = "", jPassword = "", jobName = "";
 
           if (response.data[0].jenkinsPort !== undefined) {
-            jenkinsPort = response.data[0].jenkinsPort
+            jenkinsPort = response.data[0].jenkinsPort;
           }
           if (response.data[0].username !== undefined) {
-            username = response.data[0].username
+            username = response.data[0].username;
           }
           if (response.data[0].token !== undefined) {
-            token = response.data[0].token
+            token = response.data[0].token;
           }
           if (response.data[0].repoName !== undefined) {
-            repoName = response.data[0].repoName
+            repoName = response.data[0].repoName;
           }
           if (response.data[0].jenkinsUrl !== undefined) {
-            jenkinsUrl = response.data[0].jenkinsUrl
+            jenkinsUrl = response.data[0].jenkinsUrl;
           }
           if (response.data[0].jUsername !== undefined) {
-            jUsername = response.data[0].jUsername
+            jUsername = response.data[0].jUsername;
           }
           if (response.data[0].jPassword !== undefined) {
-            jPassword = response.data[0].jPassword
+            jPassword = response.data[0].jPassword;
           }
           if (response.data[0].jobName !== undefined) {
-            jobName = response.data[0].jobName
+            jobName = response.data[0].jobName;
           }
 
           this.setState({
@@ -84,15 +84,15 @@ class GitHub extends PureComponent {
             jPassword: jPassword,
             jobName: jobName
           }, () => {
-            console.log(this.state)
+            console.log(this.state);
             this.setState({
               update: true,
               fetching: false
-            })
-          })
+            });
+          });
         }
         else {
-          console.log("not data available ==> do nothing!")
+          console.log("not data available ==> do nothing!");
         }
 
       })
@@ -100,7 +100,7 @@ class GitHub extends PureComponent {
         console.log(e);
         this.setState({
           fetching: false
-        })
+        });
         this.showErrorAlert("Error Fetching data for API Connector. Contact Administrator for more details.");
       });
   }
@@ -215,9 +215,8 @@ class GitHub extends PureComponent {
     return (
       <div>
         {this.state.modal &&
-          <Alert variant={this.state.type} onClose={() => this.setState({ modal: false, type: "", title: "", message: "" })} dismissible>
-            <Alert.Heading>{this.state.title}</Alert.Heading>
-            {this.state.message}
+          <Alert className="mt-3" variant={this.state.type} onClose={() => this.setState({ modal: false, type: "", title: "", message: "" })} dismissible>
+            {this.state.title} {this.state.message}
           </Alert>
         }
         <Card className="mt-3">
@@ -281,7 +280,7 @@ class GitHub extends PureComponent {
                     />
                     <small id="passwordHelpBlock" className="form-text text-muted">
                       Jenkins container notes here.
-                 </small>
+                    </small>
                     {/* <Form.Control.Feedback type="invalid">{this.state.jenkinsUrl.error}</Form.Control.Feedback> */}
                   </Form.Group>
 
@@ -308,19 +307,6 @@ class GitHub extends PureComponent {
                       name="jUsername"
                       value={this.state.jUsername}
                       onChange={this.handleChange}
-                    // isInvalid={this.state.jenkinsUsername.error} 
-                    // isInvalid={this.state.jenkinsUsername.error} 
-                    // isInvalid={this.state.jenkinsUsername.error} 
-                    // isInvalid={this.state.jenkinsUsername.error} 
-                    // isInvalid={this.state.jenkinsUsername.error} 
-                    // isInvalid={this.state.jenkinsUsername.error} 
-                    // isInvalid={this.state.jenkinsUsername.error} 
-                    // isInvalid={this.state.jenkinsUsername.error} 
-                    // isInvalid={this.state.jenkinsUsername.error} 
-                    // isInvalid={this.state.jenkinsUsername.error} 
-                    // isInvalid={this.state.jenkinsUsername.error} 
-                    // isInvalid={this.state.jenkinsUsername.error} 
-                    // isInvalid={this.state.jenkinsUsername.error} 
                     />
                     {/* <Form.Control.Feedback type="invalid">{this.state.jenkinsUsername.error}</Form.Control.Feedback> */}
                   </Form.Group>
@@ -333,19 +319,7 @@ class GitHub extends PureComponent {
                       name="jPassword"
                       value={this.state.jPassword}
                       onChange={this.handleChange}
-                    // isInvalid={this.state.jenkinsPassword.error} 
-                    // isInvalid={this.state.jenkinsPassword.error} 
-                    // isInvalid={this.state.jenkinsPassword.error} 
-                    // isInvalid={this.state.jenkinsPassword.error} 
-                    // isInvalid={this.state.jenkinsPassword.error} 
-                    // isInvalid={this.state.jenkinsPassword.error} 
-                    // isInvalid={this.state.jenkinsPassword.error} 
-                    // isInvalid={this.state.jenkinsPassword.error} 
-                    // isInvalid={this.state.jenkinsPassword.error} 
-                    // isInvalid={this.state.jenkinsPassword.error} 
-                    // isInvalid={this.state.jenkinsPassword.error} 
-                    // isInvalid={this.state.jenkinsPassword.error} 
-                    // isInvalid={this.state.jenkinsPassword.error} 
+                      isInvalid={this.state.jPassword.length < 1}
                     />
                     {/* <Form.Control.Feedback type="invalid">{this.state.jenkinsPassword.error}</Form.Control.Feedback> */}
                   </Form.Group>
@@ -363,13 +337,13 @@ class GitHub extends PureComponent {
                     {/* <Form.Control.Feedback type="invalid">{this.state.token.error}</Form.Control.Feedback> */}
                   </Form.Group>
                 </Form.Row>
-
+                <div className="text-muted mt-2 mb-2 italic">Please Note: All fields are required for connectivity.</div>
                 <Button id="save-button" disabled={!isEnabled} variant="outline-primary" className="mr-2" type="submit">{update ? "Save Changes" : "Connect"}</Button>
                 {/* <Button id="cancel-button" variant="outline-secondary" className="mr-2" type="button" onClick={this.cancel}>Cancel</Button> */}
               </Form>
             }
 
-            <div className="text-muted mt-2 italic">Please Note: All fields are required for connectivity.</div>
+            
           </Card.Body>
         </Card>
       </div>
