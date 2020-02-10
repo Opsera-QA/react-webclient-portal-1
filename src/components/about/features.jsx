@@ -3,33 +3,9 @@ import { Link, withRouter } from "react-router-dom";
 import { CardGroup, Card, Button } from "react-bootstrap";
 
 class featuresCards extends React.Component {
-  gotoLink = (id) => {
-    let path = `/${id}`;
-    // eslint-disable-next-line react/prop-types
-    this.props.history.push(path);
-  }
-
   render() {
     return (
       <div>
-        <Card className="mt-4">
-          <Card.Header>Getting Started</Card.Header>
-          <Card.Body>
-            <Card.Title>OpsERA offers multiple ways to work with your DevOps solution.</Card.Title>
-            <Card.Text>
-              The OpsERA DevOps Product offers the best time to market solutions for all of your technology
-                  automation and workflow needs enabling organizations to build optimized and efficient DevOps projects.  
-                  We deliver solutions to automate build, deploy, security and testing with open source tools for your development team to
-                  manage application upgrades effectively and in a secured way. We also provide pragmatic solutions for
-                  various cloud-based products using open source frameworks and we ensure that enterprise policies are met.
-            </Card.Text>
-            {/* <Button variant="primary" onClick={() => this.gotoLink("inventory")}>Application Inventory</Button> */}
-            <Button variant="outline-primary" className="ml-2" onClick={() => this.gotoLink("platform")}>Platforms</Button>
-            <Button variant="outline-primary" className="ml-2" onClick={() => this.gotoLink("pipeline")}>Pipelines</Button>
-            <Button variant="outline-primary" className="ml-2" onClick={() => this.gotoLink("analytics")}>Analytics</Button>
-          </Card.Body>
-        </Card>
-
         <CardGroup className="mt-4">
           <Card style={{ width: "18rem" }}>
             <Card.Body>

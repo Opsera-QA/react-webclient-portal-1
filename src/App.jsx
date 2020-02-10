@@ -2,12 +2,10 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Security, SecureRoute, ImplicitCallback } from "@okta/okta-react";
 import AuthContextProvider from "./contexts/AuthContext";
-
-import config from "./config";
 import Home from "./Home";
+import Login from "./Login";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
-import Messages from "./components/user/Messages";
 import Profile from "./components/user/Profile";
 import About from "./components/about/About";
 import Pricing from "./components/about/Pricing";
@@ -27,27 +25,48 @@ import ManageSystems from "./components/admin/manage_systems/ManageSystems";
 import ReportsRegistration from "./components/admin/analytics/ReportsRegistration";
 import ApiConnectionDemo from "./components/api_connector/ApiDemo";
 
+const config = require("./config");
+
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hideSideBar: false
+    };
+  }
+  
+  componentDidMount() {
+    this.updateDimensions();
+    window.addEventListener("resize", this.updateDimensions.bind(this));
+  }
+
+  updateDimensions() {
+    if(window.innerWidth < 770) {
+      this.setState({ hideSideBar: true });
+    } 
+  }
+
+
   render() {
+    const { hideSideBar } = this.state;
     return (
       <Router>
-        <Security {...config.oidc}>
+        <Security {...config.okta_config}>
           <AuthContextProvider>
             <Navbar />
             <div className="container-fluid">
               <div className="d-flex flex-row">
-                <div className="w-20 pt-1 d-none d-md-block">
-                  <Sidebar compressed={false}/>
-                </div>
+                
+                <Sidebar hideView={hideSideBar} />                
                 
                 <div className="w-100 pt-4">
                   <Route path="/" exact component={Home} />
+                  <Route path="/login" exact component={Login} />
                   <Route path="/signup" exact component={Signup} />
                   <Route path="/about" exact component={About} />
                   <Route path="/about/pricing" component={Pricing} />
                   <Route path="/about/solutions" component={Solutions} />
                   <Route path="/implicit/callback" component={ImplicitCallback} />
-                  <SecureRoute path="/messages" component={Messages} />
                   <SecureRoute path="/profile" component={Profile} />
                   <SecureRoute path="/inventory" component={Inventory} />
                   <SecureRoute path="/api_connector/:id?" component={ApiConnector} />

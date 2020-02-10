@@ -43,6 +43,13 @@ class NewApplication extends React.PureComponent {
     });
   }
 
+  handleTabClick = param => e => {
+    // param is the argument you passed to the function
+    // e is the event object that returned
+    e.preventDefault();
+    this.editTools();
+  };
+
   editTools = async () => {
     const { reset } = this.context;
     await reset();
@@ -208,10 +215,20 @@ class NewApplication extends React.PureComponent {
     const { saving, gotoInventory } = this.context;
     return (
       <>
-        <div className="ml-3">
-          <h4>New Platform Creation</h4>
-          <p>Create a new Application to leverage your existing systems in any way that meets your business needs.</p>
-          <div className="row mb-2">
+        <div>
+          <h4>Platforms</h4>
+
+          <ul className="nav nav-tabs mt-3 mb-3">
+            <li className="nav-item">
+              <a className={"nav-link " + (!editTools ? "active" : "")} href="#" onClick={this.handleTabClick("new")}>Add New</a>
+            </li>
+            <li className="nav-item">
+              <a className={"nav-link " + (editTools ? "active" : "")} href="#" onClick={this.handleTabClick("edit")}>Edit Existing</a>
+            </li>
+          </ul>
+
+          
+          <div className="row m-2">
 
             {status !== "success" && !editTools && savingStatus !== "success" ?
               <div className="col ml-auto">
@@ -263,15 +280,8 @@ class NewApplication extends React.PureComponent {
                 </Form>
               </div>
             )}
-
-
-            <div className="col ml-auto pt-4">
-              <Button variant="outline-primary" className="float-right mt-1" size="sm" onClick={() => this.editTools()}>
-                <FontAwesomeIcon icon={faWrench} fixedWidth /> {!editTools ? (<>Edit Existing Applications</>) : (<>Add an Application</>)}
-              </Button>
-
-            </div>
           </div>
+          
 
           {error ? <ErrorDialog error={error} /> : null}
           {status === "success" && savingStatus === null && messages ? <SuccessDialog successMessage={messages} /> : null}

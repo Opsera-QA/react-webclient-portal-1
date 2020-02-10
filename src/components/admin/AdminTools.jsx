@@ -13,7 +13,7 @@ class AdminTools extends Component {
 
     //TODO: Only render this if user is an Admin (need Okta groups)
     return (
-      <div>
+      <div className="mt-3 max-content-width">
         <h4>Administration Tools</h4>
         <div>Listed below are administration tools for the platform.</div>
 

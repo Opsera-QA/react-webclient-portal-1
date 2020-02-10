@@ -46,7 +46,7 @@ function Analytics() {
     fetchData();
   }, []);
   return (
-    <div>
+    <div className="mt-3 max-content-width">
       <h4>Analytics Dashboard</h4>
 
       {!state.loaded && <LoadingDialog />}

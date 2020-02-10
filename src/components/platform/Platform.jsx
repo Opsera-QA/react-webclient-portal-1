@@ -9,10 +9,12 @@ import "./style.css";
 export default class Platform extends PureComponent {
   render() {
     return (
-      <NewAppProvider>
-        <CreationModal />
-        <NewApplication />
-      </NewAppProvider>
+      <div className="mt-3 max-content-width">
+        <NewAppProvider>
+          <CreationModal />
+          <NewApplication />
+        </NewAppProvider>
+      </div>
     );
   }
 }

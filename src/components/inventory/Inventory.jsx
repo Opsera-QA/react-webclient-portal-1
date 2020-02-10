@@ -1,13 +1,11 @@
 /* eslint-disable react/prop-types */
 import React, { PureComponent } from "react";
-import { Form, Alert, Button } from "react-bootstrap";
+import { Form, Alert } from "react-bootstrap";
 import Moment from "react-moment";
 import { AuthContext } from "../../contexts/AuthContext";  //REact Context API Code for User Authentication
 import { ApiService } from "../../api/apiService";
 import ErrorDialog from "../common/error";
 import LoadingDialog from "../common/loading";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faProjectDiagram, faStream } from "@fortawesome/free-solid-svg-icons";
 
 
 class Inventory extends PureComponent {
@@ -19,7 +17,8 @@ class Inventory extends PureComponent {
       data: [],
       fetching: true,
       error: null,
-      messages: null
+      messages: null,
+      selection: "platform"
     };
   }
 
@@ -27,10 +26,6 @@ class Inventory extends PureComponent {
     this.getApiData();
   }
 
-  gotoLink = (id) => {
-    let path = `/${id}`;
-    this.props.history.push(path);
-  }
 
   async getApiData() {
     const { getAccessToken, getUserInfo } = this.context;
@@ -56,6 +51,17 @@ class Inventory extends PureComponent {
   }
 
 
+  handleTabClick = param => e => {
+    // param is the argument you passed to the function
+    // e is the event object that returned
+    e.preventDefault();
+    this.setState({
+      selection: param
+    });
+
+    //TODO: Please filter the list of applications by the selected value: Pipeline or Platform
+  };
+
   handleDropdownChange = (e) => {
     this.setState({ key: e.target.value });
   }
@@ -73,23 +79,20 @@ class Inventory extends PureComponent {
   render() {
     const { data, error, fetching } = this.state;
     return (
-      <div>
+      <div className="mt-3 max-content-width">
         <h4>Inventory</h4>
-        <p>All configured applications and tools are available for viewing below.  Select the item you want to view from the list.</p>
+        <p>The OpsERA Inventory tool allows you to see all of the configured tools per application.  Please select either Pipeline or Platform and then select the application in order to view its tools and their current status.</p>
 
         {error ? <ErrorDialog error={error} /> : null}
 
-        <div className="row">
-          <div className="col ml-auto">
-            <Button variant="outline-primary" className="float-right" size="sm" onClick={() => this.gotoLink("platform")}>
-              <FontAwesomeIcon icon={faProjectDiagram} fixedWidth /> Platforms
-            </Button>
-
-            <Button variant="outline-primary" className="float-right mr-2" size="sm" onClick={() => this.gotoLink("pipeline")}>
-              <FontAwesomeIcon icon={faStream} fixedWidth /> Pipelines
-            </Button>
-          </div>
-        </div>
+        <ul className="nav nav-tabs mt-3">
+          <li className="nav-item">
+            <a className={"nav-link " + (this.state.selection === "platform" ? "active" : "")} href="#" onClick={this.handleTabClick("platform")}>Platform</a>
+          </li>
+          <li className="nav-item">
+            <a className={"nav-link " + (this.state.selection === "pipeline" ? "active" : "")} href="#" onClick={this.handleTabClick("pipeline")}>Pipeline</a>
+          </li>
+        </ul>
 
         {fetching && <LoadingDialog />}
         <div>
