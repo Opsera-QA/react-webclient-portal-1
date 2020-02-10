@@ -3,12 +3,10 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Security, SecureRoute, ImplicitCallback } from "@okta/okta-react";
 import AuthContextProvider from "./contexts/AuthContext";
 import { Button } from "react-bootstrap";
-
-import config from "./config";
 import Home from "./Home";
+import Login from "./Login";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
-import Messages from "./components/user/Messages";
 import Profile from "./components/user/Profile";
 import About from "./components/about/About";
 import Pricing from "./components/about/Pricing";
@@ -27,6 +25,8 @@ import RegisteredUsers from "./components/admin/RegisteredUsers";
 import ManageSystems from "./components/admin/manage_systems/ManageSystems";
 import ReportsRegistration from "./components/admin/analytics/ReportsRegistration";
 import ApiConnectionDemo from "./components/api_connector/ApiDemo";
+
+const config = require("./config");
 
 class App extends Component {
   constructor(props) {
@@ -55,10 +55,10 @@ class App extends Component {
 
   render() {
     const { hideSideBar } = this.state;
-    
+    console.log("okta:config", config.okta_config);
     return (
       <Router>
-        <Security {...config.oidc}>
+        <Security {...config.okta_config}>
           <AuthContextProvider>
             <Navbar />
             <div className="container-fluid">
@@ -76,12 +76,12 @@ class App extends Component {
                 
                 <div className="w-100 pt-4">
                   <Route path="/" exact component={Home} />
+                  <Route path="/login" exact component={Login} />
                   <Route path="/signup" exact component={Signup} />
                   <Route path="/about" exact component={About} />
                   <Route path="/about/pricing" component={Pricing} />
                   <Route path="/about/solutions" component={Solutions} />
                   <Route path="/implicit/callback" component={ImplicitCallback} />
-                  <SecureRoute path="/messages" component={Messages} />
                   <SecureRoute path="/profile" component={Profile} />
                   <SecureRoute path="/inventory" component={Inventory} />
                   <SecureRoute path="/api_connector/:id?" component={ApiConnector} />
