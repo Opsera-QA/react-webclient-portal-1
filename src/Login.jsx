@@ -2,7 +2,7 @@ import React from "react";
 import OktaAuth from "@okta/okta-auth-js";
 import { withAuth } from "@okta/okta-react";
 import PropTypes from "prop-types";
-import { Button } from "react-bootstrap";
+import { Button, Row, Col } from "react-bootstrap";
 
 
 class LoginForm extends React.Component {
@@ -90,10 +90,17 @@ class LoginForm extends React.Component {
               <div className="buttons-w">
                 <Button variant="success" className="w-100 mb-3" type="submit">Log In</Button>
                 
-                <div className="form-check-inline">
-                  <label className="form-check-label">
-                    <input className="form-check-input" type="checkbox" />Remember Me</label>
-                </div>
+                <Row>
+                  <Col>
+                    <div className="form-check-inline" style={{ margin:0 }}>
+                      <label className="form-check-label">
+                        <input className="form-check-input" type="checkbox" />Remember Me</label>
+                    </div>
+                  </Col>
+                  {/* <Col>
+                  </Col> */}
+                </Row>
+                
               </div>
             </form>
           </div>
