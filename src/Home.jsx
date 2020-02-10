@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { AuthContext } from "./contexts/AuthContext";
 import { Row, Col, Button, Card } from "react-bootstrap";
-//import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 //import FeaturesCards from "./components/about/features";
 import LoadingDialog from "./components/common/loading";
 
@@ -20,6 +20,12 @@ class Home extends Component {
 
   gotoSignUp = () => {
     let path = "/signup";
+    // eslint-disable-next-line react/prop-types
+    this.props.history.push(path);
+  }
+
+  gotoLink = (id) => {
+    let path = `/${id}`;
     // eslint-disable-next-line react/prop-types
     this.props.history.push(path);
   }
@@ -59,7 +65,7 @@ class Home extends Component {
         {typeof(authenticated) === "object" && !authenticated && <LoadingDialog />}
         
         {typeof(authenticated) === "boolean" && authenticated === false && 
-        <div className="mt-3 ml-4 w-75">
+        <div className="mt-3 ml-5 w-75">
           <Row>
             <Col xl="9">
               <div style={{ maxWidth: "725px" }}>
@@ -101,4 +107,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default withRouter(Home);

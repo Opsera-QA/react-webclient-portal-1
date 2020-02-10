@@ -88,7 +88,8 @@ class LoginForm extends React.Component {
                 <div className="pre-icon os-icon os-icon-fingerprint"></div>
               </div>
               <div className="buttons-w">
-                <Button variant="success" type="submit">Log In</Button>
+                <Button variant="success" className="w-100 mb-3" type="submit">Log In</Button>
+                
                 <div className="form-check-inline">
                   <label className="form-check-label">
                     <input className="form-check-input" type="checkbox" />Remember Me</label>

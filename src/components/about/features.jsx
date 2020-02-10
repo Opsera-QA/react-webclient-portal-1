@@ -3,12 +3,6 @@ import { Link, withRouter } from "react-router-dom";
 import { CardGroup, Card, Button } from "react-bootstrap";
 
 class featuresCards extends React.Component {
-  gotoLink = (id) => {
-    let path = `/${id}`;
-    // eslint-disable-next-line react/prop-types
-    this.props.history.push(path);
-  }
-
   render() {
     return (
       <div>
