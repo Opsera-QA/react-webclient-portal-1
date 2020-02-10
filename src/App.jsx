@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Security, SecureRoute, ImplicitCallback } from "@okta/okta-react";
 import AuthContextProvider from "./contexts/AuthContext";
-import { Button } from "react-bootstrap";
 import Home from "./Home";
 import Login from "./Login";
 import Navbar from "./Navbar";
@@ -47,15 +46,9 @@ class App extends Component {
     } 
   }
 
-  handleToggleMenuClick = () => {
-    this.setState({
-      hideSideBar: !this.state.hideSideBar
-    });
-  }
 
   render() {
     const { hideSideBar } = this.state;
-    console.log("okta:config", config.okta_config);
     return (
       <Router>
         <Security {...config.okta_config}>
@@ -63,16 +56,8 @@ class App extends Component {
             <Navbar />
             <div className="container-fluid">
               <div className="d-flex flex-row">
-                <div className="d-block d-md-none pt-1 mr-2">
-                  <Button variant="outline-primary" onClick={this.handleToggleMenuClick}>
-                    <span className="dark-blue-text"><i
-                      className="fas fa-bars fa-1x"></i></span>
-                  </Button>
-                </div>
-
-                <div className={"w-20 pt-1 " + (hideSideBar ? "d-none d-md-block" : "d-block")}>
-                  <Sidebar />
-                </div>
+                
+                <Sidebar hideView={hideSideBar} />                
                 
                 <div className="w-100 pt-4">
                   <Route path="/" exact component={Home} />

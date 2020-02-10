@@ -59,7 +59,7 @@ class Home extends Component {
         {typeof(authenticated) === "object" && !authenticated && <LoadingDialog />}
         
         {typeof(authenticated) === "boolean" && authenticated === false && 
-        <div className="mt-3 w-75">
+        <div className="mt-3 ml-4 w-75">
           <Row>
             <Col xl="9">
               <div style={{ maxWidth: "725px" }}>

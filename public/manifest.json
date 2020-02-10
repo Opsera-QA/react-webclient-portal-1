@@ -13,6 +13,11 @@
       "sizes": "500x500"
     },
     {
+      "src": "img/opsera_logo_125x125.png",
+      "type": "image/png",
+      "sizes": "125x125"
+    },
+    {
       "src": "img/opsera_logo.png",
       "type": "image/png",
       "sizes": "42x42"
