@@ -20,26 +20,30 @@ const state = {
   fetching: true
 };
 
-// const devState = {
-//   jiraUrl: "https://opseratest.atlassian.net",
-//   jiraPort: "443",
-//   jiraUserName: "opsera@yopmail.com",
-//   jiraPassword: "opsera@yopmail.com",
-//   jenkinUrl: "https://sparuna.opsera.io/supptest/jenkinspipeline/job/release-pipeline/",
-//   jenkinPort: "8080",
-//   jenkinUserName: "admin",
-//   jenkinPassword: "admin",
-//   jobName: "release-pipeline",
-//   projectName: "testproj",
-//   modal: false,
-// };
+const devState = {
+  jiraUrl: "https://opseratest.atlassian.net",
+  jiraPort: "443",
+  jiraUserName: "opsera@yopmail.com",
+  jiraPassword: "opsera@yopmail.com",
+  jenkinUrl: "https://sparuna.opsera.io/supptest/jenkinspipeline/job/release-pipeline/",
+  jenkinPort: "8080",
+  jenkinUserName: "admin",
+  jenkinPassword: "admin",
+  jobName: "release-pipeline",
+  projectName: "testproj",
+  modal: false,
+};
 
 class Jira extends Component {
   static contextType = AuthContext;  //Registers the User Authentication context data in the component
 
-  state = state
+  state = devState
 
-  componentDidMount = async () => {
+  componentDidMount() {
+    this.getData()
+  }
+
+  getData = async () => {
     const { getAccessToken } = this.context;
     const accessToken = await getAccessToken();
     const urlParams = this.state;
@@ -50,58 +54,69 @@ class Jira extends Component {
       urlParams).get()
       .then(response => {
         // console.log(Object.keys(response.data[0]).length);
-        if (Object.keys(response.data[0]).length > 0) {
-          let jenkinPort = "", jiraUrl = "", jiraPort = "", jiraUserName = "", jiraPassword = "", jenkinUrl = "", jenkinUserName = "", jenkinPassword = "", projectName = "";
+        if (response.data.length > 0) {
+          if (Object.keys(response.data[0]).length > 0) {
+            let jenkinPort = "", jiraUrl = "", jiraPort = "", jiraUserName = "", jiraPassword = "", jenkinUrl = "", jenkinUserName = "", jenkinPassword = "", projectName = "";
 
-          if (response.data[0].jenkinPort !== undefined) {
-            jenkinPort = response.data[0].jenkinPort;
-          }
-          if (response.data[0].jiraUrl !== undefined) {
-            jiraUrl = response.data[0].jiraUrl;
-          }
-          if (response.data[0].jiraPort !== undefined) {
-            jiraPort = response.data[0].jiraPort;
-          }
-          if (response.data[0].jiraUserName !== undefined) {
-            jiraUserName = response.data[0].jiraUserName;
-          }
-          if (response.data[0].jiraPassword !== undefined) {
-            jiraPassword = response.data[0].jiraPassword;
-          }
-          if (response.data[0].jenkinUrl !== undefined) {
-            jenkinUrl = response.data[0].jenkinUrl;
-          }
-          if (response.data[0].jenkinUserName !== undefined) {
-            jenkinUserName = response.data[0].jenkinUserName;
-          }
-          if (response.data[0].jenkinPassword !== undefined) {
-            jenkinPassword = response.data[0].jenkinPassword;
-          }
-          if (response.data[0].projectName !== undefined) {
-            projectName = response.data[0].projectName;
-          }
+            if (response.data[0].jenkinPort !== undefined) {
+              jenkinPort = response.data[0].jenkinPort;
+            }
+            if (response.data[0].jiraUrl !== undefined) {
+              jiraUrl = response.data[0].jiraUrl;
+            }
+            if (response.data[0].jiraPort !== undefined) {
+              jiraPort = response.data[0].jiraPort;
+            }
+            if (response.data[0].jiraUserName !== undefined) {
+              jiraUserName = response.data[0].jiraUserName;
+            }
+            if (response.data[0].jiraPassword !== undefined) {
+              jiraPassword = response.data[0].jiraPassword;
+            }
+            if (response.data[0].jenkinUrl !== undefined) {
+              jenkinUrl = response.data[0].jenkinUrl;
+            }
+            if (response.data[0].jenkinUserName !== undefined) {
+              jenkinUserName = response.data[0].jenkinUserName;
+            }
+            if (response.data[0].jenkinPassword !== undefined) {
+              jenkinPassword = response.data[0].jenkinPassword;
+            }
+            if (response.data[0].projectName !== undefined) {
+              projectName = response.data[0].projectName;
+            }
 
-          this.setState({
-            jiraUrl: jiraUrl,
-            jiraPort: jiraPort,
-            jiraUserName: jiraUserName,
-            jiraPassword: jiraPassword,
-            jenkinUrl: jenkinUrl,
-            jenkinPort: jenkinPort,
-            jenkinUserName: jenkinUserName,
-            jenkinPassword: jenkinPassword,
-            projectName: projectName,
-          }, () => {
-            console.log(this.state);
             this.setState({
-              update: true,
+              jiraUrl: jiraUrl,
+              jiraPort: jiraPort,
+              jiraUserName: jiraUserName,
+              jiraPassword: jiraPassword,
+              jenkinUrl: jenkinUrl,
+              jenkinPort: jenkinPort,
+              jenkinUserName: jenkinUserName,
+              jenkinPassword: jenkinPassword,
+              projectName: projectName,
+            }, () => {
+              console.log(this.state);
+              this.setState({
+                update: true,
+                fetching: false
+              });
+            });
+          }
+          else {
+            console.log("not data available ==> do nothing!");
+            this.setState({
               fetching: false
             });
+          }
+        } else {
+          console.log("not data available ==> do nothing!");
+          this.setState({
+            fetching: false
           });
         }
-        else {
-          console.log("not data available ==> do nothing!");
-        }
+
 
       })
       .catch(e => {
@@ -167,7 +182,9 @@ class Jira extends Component {
       type: "success",
       title: "Success!",
       message: message
-    }, () => { this.resetForm(); });
+    }, () => {
+      this.getData();
+    });
   }
 
   showErrorAlert = (message) => {
@@ -176,20 +193,6 @@ class Jira extends Component {
       type: "danger",
       title: "Error!",
       message: message
-    });
-  }
-
-  resetForm = () => {
-    this.setState({
-      jiraUrl: "",
-      jiraPort: "",
-      jiraUserName: "",
-      jiraPassword: "",
-      jenkinUrl: "",
-      jenkinPort: "",
-      jenkinUserName: "",
-      jenkinPassword: "",
-      projectName: "",
     });
   }
 
@@ -374,7 +377,7 @@ class Jira extends Component {
               </Form>
             }
 
-            
+
           </Card.Body>
         </Card>
       </div>

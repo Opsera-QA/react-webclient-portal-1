@@ -17,23 +17,27 @@ const state = {
   update: false,
   fetching: true
 };
-// const devState = {
-//   token: "3uuRjbxmsw6ynegSgx2_",
-//   repoName: "16454749",
-//   jenkinsUrl: "https://sparuna.opsera.io/supptest/jenkinspipeline/job/release-pipeline/",
-//   jenkinsPort: "8080",
-//   jUsername: "admin",
-//   jPassword: "admin",
-//   jobName: "release-pipeline",
-//   modal: false,
-// };
+const devState = {
+  token: "UZc-ZrQe3zdPKYoxzVmz",
+  repoName: "16558356",
+  jenkinsUrl: "https://sparuna.opsera.io/supptest/jenkinspipeline/job/release-pipeline/",
+  jenkinsPort: "8080",
+  jUsername: "admin",
+  jPassword: "admin",
+  jobName: "release-pipeline",
+  modal: false,
+};
 
 class GitLab extends Component {
   static contextType = AuthContext;  //Registers the User Authentication context data in the component
 
-  state = state;
+  state = devState;
 
-  componentDidMount = async () => {
+  componentDidMount() {
+    this.getData()
+  }
+
+  getData = async () => {
     const { getAccessToken } = this.context;
     const accessToken = await getAccessToken();
     const urlParams = this.state;
@@ -44,49 +48,60 @@ class GitLab extends Component {
       urlParams).get()
       .then(response => {
         // console.log(Object.keys(response.data[0]).length);
-        if (Object.keys(response.data[0]).length > 0) {
-          let jenkinsPort = "", token = "", repoName = "", jenkinsUrl = "", jUsername = "", jPassword = "", jobName = "";
+        if (response.data.length > 0) {
+          if (Object.keys(response.data[0]).length > 0) {
+            let jenkinsPort = "", token = "", repoName = "", jenkinsUrl = "", jUsername = "", jPassword = "", jobName = "";
 
-          if (response.data[0].jenkinsPort !== undefined) {
-            jenkinsPort = response.data[0].jenkinsPort;
-          }
-          if (response.data[0].token !== undefined) {
-            token = response.data[0].token;
-          }
-          if (response.data[0].projectName !== undefined) {
-            repoName = response.data[0].projectName;
-          }
-          if (response.data[0].jenkinsUrl !== undefined) {
-            jenkinsUrl = response.data[0].jenkinsUrl;
-          }
-          if (response.data[0].jUsername !== undefined) {
-            jUsername = response.data[0].jUsername;
-          }
-          if (response.data[0].jPassword !== undefined) {
-            jPassword = response.data[0].jPassword;
-          }
-          if (response.data[0].jobName !== undefined) {
-            jobName = response.data[0].jobName;
-          }
+            if (response.data[0].jenkinsPort !== undefined) {
+              jenkinsPort = response.data[0].jenkinsPort;
+            }
+            if (response.data[0].token !== undefined) {
+              token = response.data[0].token;
+            }
+            if (response.data[0].projectName !== undefined) {
+              repoName = response.data[0].projectName;
+            }
+            if (response.data[0].jenkinsUrl !== undefined) {
+              jenkinsUrl = response.data[0].jenkinsUrl;
+            }
+            if (response.data[0].jUsername !== undefined) {
+              jUsername = response.data[0].jUsername;
+            }
+            if (response.data[0].jPassword !== undefined) {
+              jPassword = response.data[0].jPassword;
+            }
+            if (response.data[0].jobName !== undefined) {
+              jobName = response.data[0].jobName;
+            }
 
-          this.setState({
-            token: token,
-            repoName: repoName,
-            jenkinsUrl: jenkinsUrl,
-            jenkinsPort: jenkinsPort,
-            jUsername: jUsername,
-            jPassword: jPassword,
-            jobName: jobName
-          }, () => {
-            console.log(this.state);
             this.setState({
-              update: true,
+              token: token,
+              repoName: repoName,
+              jenkinsUrl: jenkinsUrl,
+              jenkinsPort: jenkinsPort,
+              jUsername: jUsername,
+              jPassword: jPassword,
+              jobName: jobName
+            }, () => {
+              console.log(this.state);
+              this.setState({
+                update: true,
+                fetching: false
+              });
+            });
+          }
+          else {
+            console.log("not data available ==> do nothing!");
+            this.setState({
               fetching: false
             });
-          });
-        }
-        else {
+          }
+
+        } else {
           console.log("not data available ==> do nothing!");
+          this.setState({
+            fetching: false
+          });
         }
 
       })
@@ -148,7 +163,9 @@ class GitLab extends Component {
       type: "success",
       title: "Success!",
       message: message
-    }, () => { this.resetForm(); });
+    }, () => {
+      this.getData();
+    });
   }
 
   showErrorAlert = (message) => {
@@ -157,18 +174,6 @@ class GitLab extends Component {
       type: "danger",
       title: "Error!",
       message: message
-    });
-  }
-
-  resetForm = () => {
-    this.setState({
-      token: "",
-      repoName: "",
-      jenkinsUrl: "",
-      jenkinsPort: "",
-      jUsername: "",
-      jPassword: "",
-      jobName: ""
     });
   }
 
@@ -186,7 +191,7 @@ class GitLab extends Component {
       token.length > 0 &&
       repoName.length > 0 &&
       jenkinsUrl.length > 0 &&
-      jenkinsPort.length > 0 &&
+      // jenkinsPort.length > 0 &&
       jUsername.length > 0 &&
       jPassword.length > 0 &&
       jobName.length > 0
@@ -320,7 +325,7 @@ class GitLab extends Component {
               </Form>
             }
 
-            
+
           </Card.Body>
         </Card>
       </div>

@@ -18,24 +18,30 @@ const state = {
   update: false,
   fetching: true
 };
-// const devState = {
-//   username: "faseehOpsera",
-//   token: "daa54374d5ecb20337c7098e97b0c8bf1c398b00",
-//   repoName: "testapp",
-//   jenkinsUrl: "https://sparuna.opsera.io/supptest/jenkinspipeline/job/release-pipeline/",
-//   jenkinsPort: "8080",
-//   jUsername: "admin",
-//   jPassword: "admin",
-//   jobName: "release-pipeline",
-//   modal: false,
-// }
+const devState = {
+  username: "purushothaman-opsera",
+  token: "0b548e91903dafa1dcdb2ddc3ff5ba5aa7f0cfd3",
+  repoName: "test",
+  jenkinsUrl: "https://sparuna.opsera.io/supptest/jenkinspipeline/job/release-pipeline/",
+  jenkinsPort: "8080",
+  jUsername: "admin",
+  jPassword: "admin",
+  jobName: "release-pipeline",
+  modal: false,
+  update: false,
+  fetching: true
+}
 
 class GitHub extends PureComponent {
   static contextType = AuthContext;  //Registers the User Authentication context data in the component
 
-  state = state
+  state = devState
 
-  componentDidMount = async () => {
+  componentDidMount() {
+    this.getData()
+  }
+
+  getData = async () => {
     const { getAccessToken } = this.context;
     const accessToken = await getAccessToken();
     const urlParams = this.state;
@@ -45,54 +51,64 @@ class GitHub extends PureComponent {
       accessToken,
       urlParams).get()
       .then(response => {
-        console.log(response.data[0]);
-        if (Object.keys(response.data[0]).length > 0) {
-          let jenkinsPort = "", username = "", token = "", repoName = "", jenkinsUrl = "", jUsername = "", jPassword = "", jobName = "";
+        console.log(response.data);
+        if (response.data.length > 0) {
+          if (Object.keys(response.data[0]).length > 0) {
+            let jenkinsPort = "", username = "", token = "", repoName = "", jenkinsUrl = "", jUsername = "", jPassword = "", jobName = "";
 
-          if (response.data[0].jenkinsPort !== undefined) {
-            jenkinsPort = response.data[0].jenkinsPort;
-          }
-          if (response.data[0].username !== undefined) {
-            username = response.data[0].username;
-          }
-          if (response.data[0].token !== undefined) {
-            token = response.data[0].token;
-          }
-          if (response.data[0].repoName !== undefined) {
-            repoName = response.data[0].repoName;
-          }
-          if (response.data[0].jenkinsUrl !== undefined) {
-            jenkinsUrl = response.data[0].jenkinsUrl;
-          }
-          if (response.data[0].jUsername !== undefined) {
-            jUsername = response.data[0].jUsername;
-          }
-          if (response.data[0].jPassword !== undefined) {
-            jPassword = response.data[0].jPassword;
-          }
-          if (response.data[0].jobName !== undefined) {
-            jobName = response.data[0].jobName;
-          }
+            if (response.data[0].jenkinsPort !== undefined) {
+              jenkinsPort = response.data[0].jenkinsPort;
+            }
+            if (response.data[0].username !== undefined) {
+              username = response.data[0].username;
+            }
+            if (response.data[0].token !== undefined) {
+              token = response.data[0].token;
+            }
+            if (response.data[0].repoName !== undefined) {
+              repoName = response.data[0].repoName;
+            }
+            if (response.data[0].jenkinsUrl !== undefined) {
+              jenkinsUrl = response.data[0].jenkinsUrl;
+            }
+            if (response.data[0].jUsername !== undefined) {
+              jUsername = response.data[0].jUsername;
+            }
+            if (response.data[0].jPassword !== undefined) {
+              jPassword = response.data[0].jPassword;
+            }
+            if (response.data[0].jobName !== undefined) {
+              jobName = response.data[0].jobName;
+            }
 
-          this.setState({
-            username: username,
-            token: token,
-            repoName: repoName,
-            jenkinsUrl: jenkinsUrl,
-            jenkinsPort: jenkinsPort,
-            jUsername: jUsername,
-            jPassword: jPassword,
-            jobName: jobName
-          }, () => {
-            console.log(this.state);
             this.setState({
-              update: true,
+              username: username,
+              token: token,
+              repoName: repoName,
+              jenkinsUrl: jenkinsUrl,
+              jenkinsPort: jenkinsPort,
+              jUsername: jUsername,
+              jPassword: jPassword,
+              jobName: jobName
+            }, () => {
+              console.log(this.state);
+              this.setState({
+                update: true,
+                fetching: false
+              });
+            });
+          }
+          else {
+            console.log("not data available ==> do nothing!");
+            this.setState({
               fetching: false
             });
-          });
-        }
-        else {
+          }
+        } else {
           console.log("not data available ==> do nothing!");
+          this.setState({
+            fetching: false
+          });
         }
 
       })
@@ -155,7 +171,7 @@ class GitHub extends PureComponent {
       type: "success",
       title: "Success!",
       message: message
-    }, () => { this.resetForm(); });
+    }, () => { this.getData(); });
   }
 
   showErrorAlert = (message) => {
@@ -164,19 +180,6 @@ class GitHub extends PureComponent {
       type: "danger",
       title: "Error!",
       message: message
-    });
-  }
-
-  resetForm = () => {
-    this.setState({
-      username: "",
-      token: "",
-      repoName: "",
-      jenkinsUrl: "",
-      jenkinsPort: "",
-      jUsername: "",
-      jPassword: "",
-      jobName: "",
     });
   }
 
@@ -196,7 +199,7 @@ class GitHub extends PureComponent {
       token.length > 0 &&
       repoName.length > 0 &&
       jenkinsUrl.length > 0 &&
-      jenkinsPort.length > 0 &&
+      // jenkinsPort.length > 0 &&
       jUsername.length > 0 &&
       jPassword.length > 0 &&
       jobName.length > 0
@@ -343,7 +346,7 @@ class GitHub extends PureComponent {
               </Form>
             }
 
-            
+
           </Card.Body>
         </Card>
       </div>
