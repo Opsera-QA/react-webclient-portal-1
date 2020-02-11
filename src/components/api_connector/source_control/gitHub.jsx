@@ -30,15 +30,15 @@ const devState = {
   modal: false,
   update: false,
   fetching: true
-}
+};
 
 class GitHub extends PureComponent {
   static contextType = AuthContext;  //Registers the User Authentication context data in the component
 
-  state = devState
+  state = state
 
   componentDidMount() {
-    this.getData()
+    this.getData();
   }
 
   getData = async () => {

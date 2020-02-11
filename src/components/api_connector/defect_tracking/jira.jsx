@@ -37,10 +37,10 @@ const devState = {
 class Jira extends Component {
   static contextType = AuthContext;  //Registers the User Authentication context data in the component
 
-  state = devState
+  state = state
 
   componentDidMount() {
-    this.getData()
+    this.getData();
   }
 
   getData = async () => {
