@@ -136,9 +136,15 @@ class GitLab extends Component {
           console.log(response);
           this.showSuccessAlert("API Connector Updated Successfully!");
         })
-        .catch(e => {
-          console.log(e);
-          this.showErrorAlert("Error in Updating API Connector. Please check the credentials or contact Administrator for more details.");
+        .catch((e) => {
+          if (e.response.data) {
+            let errorData = e.response.data;
+            console.log(errorData)
+            this.showErrorAlert(" " + errorData.status_text + ", Please check the credentials.");
+
+          } else {
+            this.showErrorAlert("Error in creating API Connector. Please check the credentials or contact Administrator for more details.");
+          }
         });
     } else {
       new ApiService(
