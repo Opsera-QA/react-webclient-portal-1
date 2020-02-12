@@ -27,7 +27,7 @@ const INITIAL_SETTINGS = {
   sonarUrl: "",
   dbUrl: "",
   dbName: "",
-  allowData: "",
+  allowData: false,
 };
 const ANALYTICS_TYPES = ["Infrastructure", "Pipeline"];
 const TOOLS = [ "Jenkins", "JUnit", "JMeter", "Selenium", "Sonar", "Twistlock" ];
