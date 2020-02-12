@@ -21,7 +21,7 @@ const INITIAL_SETTINGS = {
   kibanaDashboardUrl: "",
   hitsIndex: 0,
   kibanaUrl: "",
-  elasticUrl: "18.188.83.134:9200",
+  elasticUrl: "",
   elasticIp: "",
   jenkinsUrl: "",
   sonarUrl: "",
