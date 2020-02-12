@@ -5,6 +5,25 @@
 
 /*  Buttons  */
 
+.btn-link {
+  font-weight: 400;
+  color: #226196;
+  text-decoration: none;
+}
+
+.btn-link:hover {
+  font-weight: 400;
+  color: #00a1e0;
+  text-decoration: none;
+}
+
+.btn-link:focus, .btn-link.focus {
+  font-weight: 400;
+  color: #226196;
+  text-decoration: none;
+}
+
+
 .btn-primary {
   color: #fff;
   background-color: #226196;
@@ -70,6 +89,16 @@
 .btn-outline-primary:not(:disabled):not(.disabled):active:focus, .btn-outline-primary:not(:disabled):not(.disabled).active:focus, .show > .btn-outline-primary.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(13, 65, 131, 0.5);
 }
+
+/* 
+  Card Customizations
+*/
+
+.accordion .card-header {
+  padding:0 0 0 5px;
+  background-color: #fff;
+}
+
 
 
 /*------------------------------------
