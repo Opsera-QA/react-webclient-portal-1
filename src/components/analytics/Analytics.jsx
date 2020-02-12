@@ -6,6 +6,7 @@ import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import ConfigurationsForm from "./configurationsForm";
 
+import "./charts/charts.css";
 import DemoBarChart from "./charts/demoBarChart";
 
 function Analytics() {
