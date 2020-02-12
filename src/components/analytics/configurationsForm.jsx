@@ -37,16 +37,14 @@ const DATA_LIMITS = [{ Value: "0", Label: "Inactive" }, { Value: "500", Label: "
 function ConfigurationsForm( { settings, token }) {
   const [state, setState] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
-    { loaded: true, showModal: false, editEnabled: false, error: null, messages: null, data: INITIAL_SETTINGS }
+    { loaded: true, showModal: false, error: null, messages: null, data: INITIAL_SETTINGS }
   );
   
   useEffect( () => {
     if (settings) {
       if ("active" in settings) {
         setState({ data: settings });  
-      }
-    } else {
-      setState({ editEnabled: true });  
+      } 
     }
   }, [settings]);
 
@@ -77,8 +75,6 @@ function ConfigurationsForm( { settings, token }) {
     apiCall.post()
       .then(function (response) {
         console.debug(response);
-        //MAY WANT TO DO SOMETHING HERE
-        toggleEditing();
       })
       .catch(function (error) {
         setState({ error: error }); 
@@ -104,13 +100,9 @@ function ConfigurationsForm( { settings, token }) {
     }
   }
 
-  function toggleEditing() {
-    setState({ editEnabled: !state.editEnabled });  
-  }
-
 
   const { data, loaded, messages, showModal, error } = state;
-  const { enabledTools, disabledToolsOn, active, enabledToolsOn } = data;
+  const { enabledTools, disabledToolsOn, active, enabledToolsOn } = data;  
   return (
     <div>
       {!loaded && <LoadingDialog />}
@@ -120,7 +112,8 @@ function ConfigurationsForm( { settings, token }) {
         message={messages} 
         button="Confirm"  
         handleHideModal={disableProfile}/> : null}
-      <Accordion defaultActiveKey={!active ? "0" : null}>
+      
+      <Accordion defaultActiveKey="0">
         <Card>
           <Card.Header>
             <Accordion.Toggle as={Button} variant="link" eventKey="0">
