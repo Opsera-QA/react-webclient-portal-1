@@ -18,7 +18,16 @@ const INITIAL_SETTINGS = {
   enabledToolsOn: "",
   updatedToolsOn: "",
   disabledToolsOn: "",
-  kibanaDashboardUrl: ""
+  kibanaDashboardUrl: "",
+  hitsIndex: 0,
+  kibanaUrl: "",
+  elasticUrl: "18.188.83.134:9200",
+  elasticIp: "",
+  jenkinsUrl: "",
+  sonarUrl: "",
+  dbUrl: "",
+  dbName: "",
+  allowData: "",
 };
 const ANALYTICS_TYPES = ["Infrastructure", "Pipeline"];
 const TOOLS = [ "Jenkins", "JUnit", "JMeter", "Selenium", "Sonar", "Twistlock" ];
