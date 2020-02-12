@@ -59,7 +59,7 @@ class App extends Component {
                 
                 <Sidebar hideView={hideSideBar} />                
                 
-                <div className="w-100 pt-4">
+                <div className="w-100 pt-4 pb-4">
                   <Route path="/" exact component={Home} />
                   <Route path="/login" exact component={Login} />
                   <Route path="/signup" exact component={Signup} />

@@ -7,6 +7,8 @@
     "@fortawesome/free-brands-svg-icons": "^5.12.1",
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
     "@fortawesome/react-fontawesome": "^0.1.7",
+    "@nivo/bar": "^0.61.1",
+    "@nivo/legends": "^0.61.1",
     "@okta/okta-auth-js": "^2.13.0",
     "@okta/okta-react": "^1.4.0",
     "axios": "^0.19.2",

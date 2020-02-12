@@ -6,6 +6,8 @@ import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import ConfigurationsForm from "./configurationsForm";
 
+import DemoBarChart from "./charts/demoBarChart";
+
 function Analytics() {
   const contextType = useContext(AuthContext);
   const [state, setState] = useReducer(
@@ -54,6 +56,10 @@ function Analytics() {
       <div className="p-2 mt-1">
         {state.error && <ErrorDialog error={state.error} />}
         <ConfigurationsForm settings={state.data} token={state.token} />
+      </div>
+
+      <div className="mt-3 mb-3 ml-2 mr-2 chart-header">
+        <DemoBarChart />
       </div>
 
     </div>
