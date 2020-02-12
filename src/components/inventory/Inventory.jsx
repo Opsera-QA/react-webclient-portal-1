@@ -56,7 +56,8 @@ class Inventory extends PureComponent {
     // e is the event object that returned
     e.preventDefault();
     this.setState({
-      selection: param
+      selection: param,
+      key: ""
     });
 
     //TODO: Please filter the list of applications by the selected value: Pipeline or Platform
@@ -67,17 +68,26 @@ class Inventory extends PureComponent {
   }
 
   getApp = () => {
-    console.log(this.state);
-    const { key, data } = this.state;
-    return data.find(({ name }) => name === key);
-  }
-
-  setPlaceholder = () => {
-    alert("coming soon");
+    console.log(this.state)
+    const { key, data, selection } = this.state;
+    const typeSelectedApps = data.filter((app) => { return app.type === selection })
+    console.log(key);
+    return typeSelectedApps.find(({ name }) => name === key);
   }
 
   render() {
-    const { data, error, fetching } = this.state;
+    const { data, error, fetching, selection } = this.state;
+    let typeSelectedApps = [];
+    // const typeSelectedApps = data.filter((app) => { return app.type === selection }) // right way of implementation
+
+    // TODO :::: Remove this later
+    if (selection === "platform") {
+      typeSelectedApps = data.filter((app) => { return app.type != "pipeline" });
+    } else if (selection === "pipeline") {
+      typeSelectedApps = data.filter((app) => { return app.type != "platform" });
+    }
+    // ::::::::::::::
+
     return (
       <div className="mt-3 max-content-width">
         <h4>Inventory</h4>
@@ -108,13 +118,14 @@ class Inventory extends PureComponent {
             <Form.Group>
               <Form.Control as="select"
                 defaultValue=""
+                value={this.state.key}
                 hidden={(!fetching && data.length > 0) ? false : true}
                 onChange={this.handleDropdownChange}
                 style={{ marginTop: 25 }}>
                 <option value="" disabled>{fetching ? "loading..." : "Select application"}</option>
                 {!fetching && (
                   <>
-                    {data ? data.map(application => (
+                    {typeSelectedApps ? typeSelectedApps.map(application => (
                       <>
                         {
                           application.tools.length > 0 && (
@@ -130,7 +141,7 @@ class Inventory extends PureComponent {
           </Form>
         </div>
         {
-          (!fetching && data.length > 0) &&
+          (!fetching && typeSelectedApps.length > 0) &&
           <>
             {fetching ? null : <App application={this.getApp()} />}
           </>

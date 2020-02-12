@@ -164,7 +164,7 @@ class Pipeline extends React.PureComponent {
     // eslint-disable-next-line no-unused-vars
     const { token, user, appname, setAppDetails } = this.context;
 
-    let postBody = { userid: user.sub, name: appname };
+    let postBody = { userid: user.sub, name: appname, type: "pipeline" };
     let currentComponent = this;
     new ApiService(
       "/applications/create",
@@ -216,6 +216,12 @@ class Pipeline extends React.PureComponent {
     const { checkingAppName, appnameError, appname, gotoInventory } = this.context;
     const { error, messages, status, fetching, editTools, dropdownData, savingStatus } = this.state;
 
+    let typeSelectedApps = [];
+    if (editTools && dropdownData) {
+      // typeSelectedApps = dropdownData.filter((app) => { return app.type === "pipeline" }) //right way of implementation
+      typeSelectedApps = dropdownData.filter((app) => { return app.type !== "platform" }) // just for now to inclue all apps and pipeline apps
+    }
+
     return (
       <>
         <div className="mt-3 max-content-width">
@@ -261,7 +267,7 @@ class Pipeline extends React.PureComponent {
                       <option value="" disabled>{fetching ? "loading..." : "Select Application to Edit"}</option>
                       {!fetching && (
                         <>
-                          {dropdownData ? dropdownData.map(application => (
+                          {typeSelectedApps ? typeSelectedApps.map(application => (
                             <option key={application.name} value={application._id}>{application.name}</option>
                           )) : ""}
                         </>

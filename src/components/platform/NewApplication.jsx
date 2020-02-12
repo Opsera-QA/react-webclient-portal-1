@@ -75,8 +75,7 @@ class NewApplication extends React.PureComponent {
     let currentComponent = this;
     apiCall.get()
       .then(function (response) {
-        console.log(response.data);
-
+        // console.log(response.data);
         currentComponent.setState({
           dropdownData: response.data,
           error: null,
@@ -125,7 +124,7 @@ class NewApplication extends React.PureComponent {
       checkingAppName: true,
     });
 
-    let postBody = { userid: user.sub, name: this.state.appname };
+    let postBody = { userid: user.sub, name: this.state.appname, type: "platform" };
     console.log(postBody);
     let currentComponent = this;
     new ApiService(
@@ -212,6 +211,11 @@ class NewApplication extends React.PureComponent {
 
   render() {
     const { checkingAppName, appnameError, appname, error, messages, status, editTools, dropdownData, fetching, savingStatus } = this.state;
+    let typeSelectedApps = [];
+    if (editTools && dropdownData) {
+      // typeSelectedApps = dropdownData.filter((app) => { return app.type === "platform" }) // right way of implementation
+      typeSelectedApps = dropdownData.filter((app) => { return app.type != "pipeline" }) // just for now to inclue all apps and pipeline apps
+    }
     const { saving, gotoInventory } = this.context;
     return (
       <>
@@ -227,7 +231,6 @@ class NewApplication extends React.PureComponent {
             </li>
           </ul>
 
-          
           <div className="row m-2">
 
             {status !== "success" && !editTools && savingStatus !== "success" ?
@@ -270,7 +273,7 @@ class NewApplication extends React.PureComponent {
                       <option value="" disabled>{fetching ? "loading..." : "Select Application to Edit"}</option>
                       {!fetching && (
                         <>
-                          {dropdownData ? dropdownData.map(application => (
+                          {typeSelectedApps ? typeSelectedApps.map(application => (
                             <option key={application.name} value={application._id}>{application.name}</option>
                           )) : ""}
                         </>
@@ -281,7 +284,7 @@ class NewApplication extends React.PureComponent {
               </div>
             )}
           </div>
-          
+
 
           {error ? <ErrorDialog error={error} /> : null}
           {status === "success" && savingStatus === null && messages ? <SuccessDialog successMessage={messages} /> : null}
