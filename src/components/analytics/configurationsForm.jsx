@@ -1,6 +1,6 @@
 import React, { useReducer, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Accordion, Card, Form, Button } from "react-bootstrap";
+import { Accordion, Card, Form, Button, Row, Col } from "react-bootstrap";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 //import InfoDialog from "../common/info";
@@ -14,7 +14,7 @@ const INITIAL_SETTINGS = {
   dataUsage: "500",
   active: false,
   workflowType: { Infrastructure: false, Pipeline: true },
-  enabledTools: { Jenkins: true, JUnit: true, JMeter: true, Selenium: true, Sonar: true, Twistlock: true },
+  enabledTools: [ "Jenkins", "JUnit", "JMeter", "Selenium", "Sonar", "Twistlock" ],
   enabledToolsOn: "",
   updatedToolsOn: "",
   disabledToolsOn: "",
@@ -28,16 +28,18 @@ const INITIAL_SETTINGS = {
   dbUrl: "",
   dbName: "",
   allowData: false,
+  defaultPersona: ""
 };
 const ANALYTICS_TYPES = ["Infrastructure", "Pipeline"];
 const TOOLS = [ "Jenkins", "JUnit", "JMeter", "Selenium", "Sonar", "Twistlock" ];
+const PERSONAS = [ { Value: "0", Label: "Developer" }, { Value: "1", Label: "Project Manager" }, { Value: "2", Label: "Stakeholder" }];
 const DATA_LIMITS = [{ Value: "0", Label: "Inactive" }, { Value: "500", Label: "500MB" }, { Value: "1", Label: "1GB" }, { Value: "2", Label: "2GB" }, { Value: "3", Label: "3GB" }];
 
 
 function ConfigurationsForm( { settings, token }) {
   const [state, setState] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
-    { loaded: true, showModal: false, error: null, messages: null, data: INITIAL_SETTINGS }
+    { loaded: true, showModal: false, error: null, messages: null, data: INITIAL_SETTINGS, editSettings: false }
   );
   
   useEffect( () => {
@@ -89,19 +91,38 @@ function ConfigurationsForm( { settings, token }) {
 
   function handleCheckBoxChange(key, event) {
     let itemId = event.target.id;
-    if (itemId.includes("TOOL-")) {
+    /* if (itemId.includes("TOOL-")) {
       let s = state.data.enabledTools;
       s[key]=event.target.checked;
       setState({ data: { ...state.data, enabledTools: s } });
-    } else { //"TYPE-"
+    } else  */
+    if (itemId.includes("WORKFLOW-TYPE-")) {
       let s = state.data.workflowType;
       s[key]=event.target.checked;
       setState({ data: { ...state.data, workflowType: s } });
     }
   }
 
+  function handleDropDownChange (event) {
+    //console.log(event.target);
+    //console.log(event.target.id);
+    
+    if (event.target.id.includes("PERSONA-SELECT")) {
+      setState({ data: { ...state.data, defaultPersona: event.target.value } });
+    } else if (event.target.id.includes("TOOL-SELECT")) {
+      let selected = [...event.target]
+        .filter(option => option.selected)
+        .map(option => option.value);
+      setState({ data: { ...state.data, enabledTools: selected } });
+    }
+  }
 
-  const { data, loaded, messages, showModal, error } = state;
+  function handleClickSettings(){
+    setState( { editSettings : !state.editSettings } );
+  }
+
+
+  const { data, loaded, messages, showModal, error, editSettings } = state;
   const { enabledTools, disabledToolsOn, active, enabledToolsOn } = data;  
   return (
     <div>
@@ -112,33 +133,43 @@ function ConfigurationsForm( { settings, token }) {
         message={messages} 
         button="Confirm"  
         handleHideModal={disableProfile}/> : null}
-      
-      <Accordion defaultActiveKey="0">
+
+      { !active ? 
         <Card>
-          <Card.Header>
-            <Accordion.Toggle as={Button} variant="link" eventKey="0">
-              <Button variant="link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"
-                style={{ padding: "0" }}>               
-                {/* <FontAwesomeIcon icon={faAngleDown} fixedWidth /> */}
-                <span className="h5">{ !active ? "Getting Started" : "Settings" }</span>
-              </Button>
+          <Card.Body>
+            <Card.Title>Getting Started</Card.Title>
+            <Card.Subtitle className="mb-2 text-muted">
+            Welcome to the OpsERA Analytics Portal!  Here you can enable analytics for our supported tools and dashboards and metrics around your system`s activities.  Simply click the \
+              Activate Analytics button below and then begin configuring your dashboards!</Card.Subtitle>
+            <div className="mt-4">
+              <Button variant="outline-primary" onClick={() => { updateProfile(); }}>Activate Analytics</Button>
+            </div>
+          </Card.Body>  
+        </Card>
+        :
+        <Accordion defaultActiveKey="1">
+          <Card>
+            <Accordion.Toggle as={Card.Header} eventKey="0" >
+              <Row className="card-header-clickable" onClick={() => { handleClickSettings(); }}>
+                <Col><span className="h5">Settings</span></Col>
+                <Col className="text-right">
+                  { (enabledToolsOn && !disabledToolsOn) && 
+                        <>
+                          <span className="italic pr-3" style={{ fontSize: "smaller" }}>(Enabled on&nbsp; 
+                            <Moment format="MM/DD/YYYY" date={enabledToolsOn} />)
+                          </span> 
+                        </>
+                  }
+                  <FontAwesomeIcon icon={faAngleDown} fixedWidth size="lg" rotation={editSettings ? 180 : null} /></Col>
+              </Row>
+              
             </Accordion.Toggle>
-          </Card.Header>
-          <Accordion.Collapse eventKey="0">
-            <Card.Body>
-              {/* <Card.Title>{ !active ? "Getting Started" : "Settings" }</Card.Title> */}
-              <Card.Subtitle className="mb-2 text-muted">
-                { !active ? "Welcome to the OpsERA Analytics Portal!  Here you can enable analytics for our supported tools and dashboards and metrics around your system's activities.  Simply click the \
-              Activate Analytics button below and then begin configuring your dashboards!" : 
-                  "Analytics configuration details are shown below for available tools.  We offer analytics for Infrastructure and Pipeline workflows as well as many popular tools."}</Card.Subtitle>
-          
-              <Form>
-                { !active ? 
-                  <>
-                    <div className="mt-4">
-                      <Button variant="outline-primary" onClick={() => { updateProfile(); }}>Activate Analytics</Button>
-                    </div>
-                  </> :
+            
+            <Accordion.Collapse eventKey="0">
+              <Card.Body>
+                <Card.Subtitle className="mb-2 text-muted">
+                  Analytics configuration details are shown below for available tools.  We offer analytics for Infrastructure and Pipeline workflows as well as many popular tools.</Card.Subtitle>
+                <Form>
                   <fieldset>
                     <div className="mt-3 text-muted">Workflow:</div>
                     <div key="inline-checkbox-workflow" className="mb-1 mt-2 p-2">
@@ -147,7 +178,7 @@ function ConfigurationsForm( { settings, token }) {
                           <Form.Check inline 
                             type="checkbox" 
                             label={item}
-                            id={`TYPE-${item}`}
+                            id={`WORKFLOW-TYPE-${item}`}
                             checked={data.workflowType ? data.workflowType[item] : false}
                             onChange={handleCheckBoxChange.bind(this, item)}
                             key={item} />
@@ -170,32 +201,39 @@ function ConfigurationsForm( { settings, token }) {
                       }
                     </div>
 
-                    <div className="mt-3 text-muted">Tools:
-                      { (enabledToolsOn && !disabledToolsOn) && 
-                <>
-                  <span className="italic" style={{ fontSize: "smaller", paddingLeft:"10px" }}>(Enabled on&nbsp; 
-                    <Moment format="MM/DD/YYYY" date={enabledToolsOn} />)
-                  </span> 
-                </>
-                      }
-                    </div>
-                    <div key="checkbox-tools" className="mb-1 mt-2 p-2 d-none">
-                      {
-                        TOOLS.map(item => (
-                          <Form.Check inline 
-                            type="checkbox" 
-                            label={item}
-                            id={`TOOL-${item}`}
-                            checked={enabledTools ? enabledTools[item] : false}
-                            onChange={handleCheckBoxChange.bind(this, item)}
-                            key={item} />
-                        ))
-                      }
+
+                    <div className="mt-3 text-muted">Default Persona:</div>
+                    <div key="checkbox-persona" className="mb-1 mt-2 p-2">
+                      <Form.Control as="select"
+                        name="defaultPersona"
+                        isInvalid={false}
+                        id="PERSONA-SELECT"
+                        value={data.defaultPersona}
+                        onChange={handleDropDownChange}>
+                        {/* <option value="" disabled>Please Select One</option> */}
+                        {PERSONAS.map(item => (
+                          <option key={item.Value} value={item.Value}>{item.Label}</option>
+                        ))}
+                      </Form.Control>
                     </div>
 
-                    <div className="mb-3 mt-1 text-muted">
+
+                    <div className="mt-3 text-muted">Tools:</div>
+                    <div key="checkbox-tools" className="mb-1 mt-2 p-2">
+                      <Form.Control as="select" multiple readOnly={false}
+                        name="toolsSelection"
+                        isInvalid={false}
+                        id="TOOL-SELECT"
+                        value={enabledTools}
+                        onChange={handleDropDownChange}>
+                        {TOOLS.map(item => (
+                          <option key={item} value={item}>{item}</option>
+                        ))}
+                      </Form.Control>
+                    </div>
+
+                    <div className="mb-3 mt-1 text-muted  d-none">
                       <div>The following tools are currently supported with analytics:</div>
-                
                       {
                         TOOLS.map(item => (
                           <span key={item} style={{ marginRight:"5px" }}>&nbsp;{item}&nbsp;</span>
@@ -207,13 +245,14 @@ function ConfigurationsForm( { settings, token }) {
                       <Button variant="outline-danger" onClick={() => { confirmDeactivation(); }}>Deactivate Analytics</Button>
                     </div> 
                 
-                  </fieldset>}
+                  </fieldset>
 
-              </Form>          
-            </Card.Body>
-          </Accordion.Collapse>
-        </Card>
-      </Accordion>
+                </Form>          
+              </Card.Body>
+            </Accordion.Collapse>
+          </Card>
+        </Accordion>}
+
     </div>
   );
 }

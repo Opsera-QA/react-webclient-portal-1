@@ -93,13 +93,9 @@
 /* 
   Card Customizations
 */
-
 .accordion .card-header {
-  padding:0 0 0 5px;
   background-color: #fff;
 }
-
-
 
 /*------------------------------------
 - COLOR primary

@@ -5,7 +5,7 @@ import { ApiService } from "../../api/apiService";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import ConfigurationsForm from "./configurationsForm";
-
+import "./analytics.css";
 import "./charts/charts.css";
 import DemoBarChart from "./charts/demoBarChart";
 
