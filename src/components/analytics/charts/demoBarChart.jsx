@@ -82,38 +82,36 @@ class Chart extends React.Component {
   render() {
     const { data, error, fetching } = this.state;
     return (
-      <div className="chart">
-        <ResponsiveBar
-          data={data}
-          keys={config.keys}
-          indexBy="country"
-          margin={config.margin}
-          padding={0.3}
-          colors={{ scheme: "yellow_green_blue" }}
-          borderColor={{ theme: "background" }}
-          colorBy="id"
-          defs={config.defs}
-          fill={config.fill}
-          axisTop={null}
-          axisRight={null}
-          axisBottom={config.axisBottom}
-          axisLeft={config.axisLeft}
-          labelSkipWidth={12}
-          labelSkipHeight={12}
-          labelTextColor="inherit:darker(1.6)"
-          animate={true}
-          motionStiffness={90}
-          motionDamping={15}
-          legends={config.legends}
-          theme={{
-            tooltip: {
-              container: {
-                fontSize: "12px",
-              },
+      <ResponsiveBar
+        data={data}
+        keys={config.keys}
+        indexBy="country"
+        margin={config.margin}
+        padding={0.3}
+        colors={{ scheme: "yellow_green_blue" }}
+        borderColor={{ theme: "background" }}
+        colorBy="id"
+        defs={config.defs}
+        fill={config.fill}
+        axisTop={null}
+        axisRight={null}
+        axisBottom={config.axisBottom}
+        axisLeft={config.axisLeft}
+        labelSkipWidth={12}
+        labelSkipHeight={12}
+        labelTextColor="inherit:darker(1.6)"
+        animate={true}
+        motionStiffness={90}
+        motionDamping={15}
+        legends={config.legends}
+        theme={{
+          tooltip: {
+            container: {
+              fontSize: "12px",
             },
-          }}
-        />
-      </div>
+          },
+        }}
+      />
     );
   }
 }

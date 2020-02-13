@@ -3,6 +3,8 @@ import { AuthContext } from "./contexts/AuthContext";
 import { Row, Col, Button, Card } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 //import FeaturesCards from "./components/about/features";
+import BuildCounts from "./components/dashboard/buildCounts";
+import DemoLineChart from "./components/analytics/charts/demoLineChart";
 import LoadingDialog from "./components/common/loading";
 
 class Home extends Component {
@@ -34,24 +36,21 @@ class Home extends Component {
     const { authenticated, userInfo } = this.context;
     
     return (
-      <div>
+      <div className="mb-3">
         { authenticated &&
-          <div className="mt-3 max-content-width">
+          <div className="mt-2 max-content-width mb-3">
             <h2>Welcome back, {userInfo ? userInfo.name : "Unknown User Name"}!</h2>
-            <p>
-              You have successfully logged in!  Review the options below in order to get started.  
-            </p>
-
-            <Card className="mt-4">
+            
+            <Card className="mt-3">
               <Card.Header>Getting Started</Card.Header>
               <Card.Body>
                 <Card.Title>OpsERA offers multiple ways to work with your DevOps solution.</Card.Title>
                 <Card.Text>
               The OpsERA DevOps Product offers the best time to market solutions for all of your technology
                   automation and workflow needs enabling organizations to build optimized and efficient DevOps projects.  
-                  We deliver solutions to automate build, deploy, security and testing with open source tools for your development team to
+                  {/* We deliver solutions to automate build, deploy, security and testing with open source tools for your development team to
                   manage application upgrades effectively and in a secured way. We also provide pragmatic solutions for
-                  various cloud-based products using open source frameworks and we ensure that enterprise policies are met.
+                  various cloud-based products using open source frameworks and we ensure that enterprise policies are met. */}
                 </Card.Text>
                 {/* <Button variant="primary" onClick={() => this.gotoLink("inventory")}>Application Inventory</Button> */}
                 <Button variant="outline-primary" className="ml-2" onClick={() => this.gotoLink("platform")}>Platforms</Button>
@@ -59,6 +58,20 @@ class Home extends Component {
                 <Button variant="outline-primary" className="ml-2" onClick={() => this.gotoLink("analytics")}>Analytics</Button>
               </Card.Body>
             </Card>
+
+            <Row className="mt-4">
+              <Col sm="3">
+                <BuildCounts />
+              </Col>
+              <Col className="chart m-1" style={{ height: "400px" }}>
+                <DemoLineChart />
+              </Col>
+            </Row>
+            
+            
+
+
+
           </div>
         }
         

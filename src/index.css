@@ -50,7 +50,7 @@ a:hover, .active {
 
 
 .max-content-width {
-  max-width: 900px;
+  max-width: 1000px;
 }
 /* END Utility Classes */
 
@@ -311,3 +311,30 @@ a:hover, .active {
   
 }
 /* End New Template Classes */
+
+
+/*  Start dashboard box modules */
+.element-box {
+  position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+}
+
+.box-metric {
+  font-size: 2.43rem;
+    font-weight: 500;
+    font-family: "Avenir Next W01", "Lato", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    letter-spacing: 1px;
+    line-height: 1.2;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+/*  End dashboard box modules */

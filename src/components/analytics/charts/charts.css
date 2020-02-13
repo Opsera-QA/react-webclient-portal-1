@@ -1,6 +1,5 @@
 .chart-header {
   background-color: #333a4026;
-  min-height: 52vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,18 +7,18 @@
   font-size: calc(10px + 2vmin);
   color: white;
   margin: 5px;
+  padding: 5px;
   background-clip: border-box;
   border: 1px solid rgba(0,0,0,.125);
   border-radius: .25rem;
 }
 
 .chart {
-  height:50vh;
-  width:98%;
   background: white;
-   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-     transition: 0.3s;
-    
+  /* box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); */
+  transition: 0.3s;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25rem;
  }
  
  .chart:hover {

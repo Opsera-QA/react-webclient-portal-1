@@ -62,17 +62,18 @@ function Analytics() {
         <ConfigurationsForm settings={state.data} token={state.token} />
       </div>
 
-      <div className="mt-3 mb-3 ml-2 mr-2 chart-header">
+      <div className="chart m-2" style={{ height: "400px" }}>
         <DemoBarChart />
       </div>
-      <div className="mt-3 mb-3 ml-2 mr-2 chart-header">
+      <div className="chart m-2" style={{ height: "400px" }}>
         <DemoLineChart />
       </div>
-      <div className="mt-3 mb-3 ml-2 mr-2 chart-header">
+      <div className="chart m-2" style={{ height: "400px" }}>
         <DemoPieChart />
       </div>
 
-      <div className="mt-3 mb-3 ml-2 mr-2">
+      {/* TODO Move this into a secondar "tabbed view" */}
+      <div className="m-2">
         <DemoLogView />
       </div>
 
