@@ -70,8 +70,18 @@ class Inventory extends PureComponent {
   getApp = () => {
     console.log(this.state)
     const { key, data, selection } = this.state;
-    const typeSelectedApps = data.filter((app) => { return app.type === selection })
-    console.log(key);
+
+    let typeSelectedApps = [];
+    // const typeSelectedApps = data.filter((app) => { return app.type === selection }) // Actual implementation
+
+    // TODO :::: Remove this later
+    if (selection === "platform") {
+      typeSelectedApps = data.filter((app) => { return app.type != "pipeline" });
+    } else if (selection === "pipeline") {
+      typeSelectedApps = data.filter((app) => { return app.type != "platform" });
+    }
+    // ::::::::::::::
+
     return typeSelectedApps.find(({ name }) => name === key);
   }
 
