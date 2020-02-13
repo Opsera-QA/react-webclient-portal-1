@@ -66,9 +66,6 @@ function Analytics() {
         <DemoBarChart />
       </div>
       <div className="mt-3 mb-3 ml-2 mr-2 chart-header">
-        <DemoBarChart />
-      </div>
-      <div className="mt-3 mb-3 ml-2 mr-2 chart-header">
         <DemoLineChart />
       </div>
       <div className="mt-3 mb-3 ml-2 mr-2 chart-header">
