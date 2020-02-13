@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { PureComponent } from "react";
+import React, { PureComponent, Fragment } from "react";
 import { Form, Alert } from "react-bootstrap";
 import Moment from "react-moment";
 import { AuthContext } from "../../contexts/AuthContext";  //REact Context API Code for User Authentication
@@ -25,7 +25,6 @@ class Inventory extends PureComponent {
   componentDidMount() {
     this.getApiData();
   }
-
 
   async getApiData() {
     const { getAccessToken, getUserInfo } = this.context;
@@ -68,7 +67,7 @@ class Inventory extends PureComponent {
   }
 
   getApp = () => {
-    console.log(this.state)
+    console.log(this.state);
     const { key, data, selection } = this.state;
 
     let typeSelectedApps = [];
@@ -76,9 +75,9 @@ class Inventory extends PureComponent {
 
     // TODO :::: Remove this later
     if (selection === "platform") {
-      typeSelectedApps = data.filter((app) => { return app.type != "pipeline" });
+      typeSelectedApps = data.filter((app) => { return app.type != "pipeline"; });
     } else if (selection === "pipeline") {
-      typeSelectedApps = data.filter((app) => { return app.type != "platform" });
+      typeSelectedApps = data.filter((app) => { return app.type != "platform"; });
     }
     // ::::::::::::::
 
@@ -92,9 +91,9 @@ class Inventory extends PureComponent {
 
     // TODO :::: Remove this later
     if (selection === "platform") {
-      typeSelectedApps = data.filter((app) => { return app.type != "pipeline" });
+      typeSelectedApps = data.filter((app) => { return app.type != "pipeline"; });
     } else if (selection === "pipeline") {
-      typeSelectedApps = data.filter((app) => { return app.type != "platform" });
+      typeSelectedApps = data.filter((app) => { return app.type != "platform"; });
     }
     // ::::::::::::::
 
@@ -136,13 +135,13 @@ class Inventory extends PureComponent {
                 {!fetching && (
                   <>
                     {typeSelectedApps ? typeSelectedApps.map(application => (
-                      <>
+                      <Fragment key={application.name}>
                         {
                           application.tools.length > 0 && (
                             <option key={application.name} value={application.name}>{application.name}</option>
                           )
                         }
-                      </>
+                      </Fragment>
                     )) : ""}
                   </>
                 )}
