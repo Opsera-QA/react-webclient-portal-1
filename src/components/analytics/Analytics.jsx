@@ -8,6 +8,7 @@ import ConfigurationsForm from "./configurationsForm";
 import "./analytics.css";
 import "./charts/charts.css";
 import DemoBarChart from "./charts/demoBarChart";
+import DemoLogView from "./logs/demoLogView";
 
 function Analytics() {
   const contextType = useContext(AuthContext);
@@ -61,6 +62,10 @@ function Analytics() {
 
       <div className="mt-3 mb-3 ml-2 mr-2 chart-header">
         <DemoBarChart />
+      </div>
+
+      <div className="mt-3 mb-3 ml-2 mr-2">
+        <DemoLogView />
       </div>
 
     </div>
