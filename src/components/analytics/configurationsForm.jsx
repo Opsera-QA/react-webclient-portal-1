@@ -9,6 +9,7 @@ import { ApiService } from "../../api/apiService";
 import Moment from "react-moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import Select from "react-select";
 
 const INITIAL_SETTINGS = {
   dataUsage: "500",
@@ -31,10 +32,16 @@ const INITIAL_SETTINGS = {
   defaultPersona: ""
 };
 const ANALYTICS_TYPES = ["Infrastructure", "Pipeline"];
-const TOOLS = [ "Jenkins", "JUnit", "JMeter", "Selenium", "Sonar", "Twistlock" ];
-const PERSONAS = [ { Value: "0", Label: "Developer" }, { Value: "1", Label: "Project Manager" }, { Value: "2", Label: "Stakeholder" }];
+const PERSONAS = [ { value: "0", label: "Developer" }, { value: "1", label: "Project Manager" }, { value: "2", label: "Stakeholder" }];
 const DATA_LIMITS = [{ Value: "0", Label: "Inactive" }, { Value: "500", Label: "500MB" }, { Value: "1", Label: "1GB" }, { Value: "2", Label: "2GB" }, { Value: "3", Label: "3GB" }];
-
+const TOOL_OPTIONS = [
+  { value: "Jenkins", label: "Jenkins" },
+  { value: "JUnit", label: "JUnit" },
+  { value: "JMeter", label: "JMeter" },
+  { value: "Selenium", label: "Selenium" },
+  { value: "Sonar", label: "Sonar" },
+  { value: "Twistlock", label: "Twistlock" }
+];
 
 function ConfigurationsForm( { settings, token }) {
   const [state, setState] = useReducer(
@@ -91,11 +98,6 @@ function ConfigurationsForm( { settings, token }) {
 
   function handleCheckBoxChange(key, event) {
     let itemId = event.target.id;
-    /* if (itemId.includes("TOOL-")) {
-      let s = state.data.enabledTools;
-      s[key]=event.target.checked;
-      setState({ data: { ...state.data, enabledTools: s } });
-    } else  */
     if (itemId.includes("WORKFLOW-TYPE-")) {
       let s = state.data.workflowType;
       s[key]=event.target.checked;
@@ -103,9 +105,9 @@ function ConfigurationsForm( { settings, token }) {
     }
   }
 
-  function handleDropDownChange (event) {
-    //console.log(event.target);
-    //console.log(event.target.id);
+  /* function handleDropDownChange (event) {
+    console.log(event.target);
+    console.log(event.target.id);
     
     if (event.target.id.includes("PERSONA-SELECT")) {
       setState({ data: { ...state.data, defaultPersona: event.target.value } });
@@ -115,6 +117,14 @@ function ConfigurationsForm( { settings, token }) {
         .map(option => option.value);
       setState({ data: { ...state.data, enabledTools: selected } });
     }
+  } */
+
+  function handleMultiSelectToolChange (selectedOption) {
+    setState({ data: { ...state.data, enabledTools: selectedOption.map(option => option.value) } });
+  }
+
+  function handleSelectPersonaChange (selectedOption) {
+    setState({ data: { ...state.data, defaultPersona: selectedOption.value } });
   }
 
   function handleClickSettings(){
@@ -171,6 +181,24 @@ function ConfigurationsForm( { settings, token }) {
                   Analytics configuration details are shown below for available tools.  We offer analytics for Infrastructure and Pipeline workflows as well as many popular tools.</Card.Subtitle>
                 <Form>
                   <fieldset>
+                    <div className="mt-3 text-muted">Tools:</div>
+                    <div key="checkbox-tools" className="mb-1 mt-2 p-2">
+
+                      <Select
+                        defaultValue={TOOL_OPTIONS.filter(e => enabledTools.indexOf(e.value) !== -1)}
+                        menuPortalTarget={document.body}
+                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                        isMulti
+                        isSearchable={true}
+                        isDisabled={true}
+                        name="TOOLS-SELECTION"
+                        onChange={handleMultiSelectToolChange}
+                        options={TOOL_OPTIONS}
+                        className="basic-multi-select"
+                        classNamePrefix="select"
+                      />
+                    </div>
+
                     <div className="mt-3 text-muted">Workflow:</div>
                     <div key="inline-checkbox-workflow" className="mb-1 mt-2 p-2">
                       {
@@ -201,43 +229,23 @@ function ConfigurationsForm( { settings, token }) {
                       }
                     </div>
 
-
                     <div className="mt-3 text-muted">Default Persona:</div>
                     <div key="checkbox-persona" className="mb-1 mt-2 p-2">
-                      <Form.Control as="select"
-                        name="defaultPersona"
-                        isInvalid={false}
-                        id="PERSONA-SELECT"
-                        value={data.defaultPersona}
-                        onChange={handleDropDownChange}>
-                        {/* <option value="" disabled>Please Select One</option> */}
-                        {PERSONAS.map(item => (
-                          <option key={item.Value} value={item.Value}>{item.Label}</option>
-                        ))}
-                      </Form.Control>
-                    </div>
-
-
-                    <div className="mt-3 text-muted">Tools:</div>
-                    <div key="checkbox-tools" className="mb-1 mt-2 p-2">
-                      <Form.Control as="select" multiple readOnly={false}
-                        name="toolsSelection"
-                        isInvalid={false}
-                        id="TOOL-SELECT"
-                        value={enabledTools}
-                        onChange={handleDropDownChange}>
-                        {TOOLS.map(item => (
-                          <option key={item} value={item}>{item}</option>
-                        ))}
-                      </Form.Control>
-                    </div>
-
-                    <div className="mb-3 mt-1 text-muted  d-none">
-                      <div>The following tools are currently supported with analytics:</div>
-                      {
-                        TOOLS.map(item => (
-                          <span key={item} style={{ marginRight:"5px" }}>&nbsp;{item}&nbsp;</span>
-                        ))}
+                    
+                      <Select
+                        className="basic-single"
+                        menuPortalTarget={document.body}
+                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                        classNamePrefix="select"
+                        defaultValue={PERSONAS.filter(e => data.defaultPersona.indexOf(e.value) !== -1)}
+                        isDisabled={false}
+                        isClearable={false}
+                        isSearchable={true}
+                        name="PERSONA-SELECT"
+                        options={PERSONAS}
+                        onChange={handleSelectPersonaChange}
+                      />
+        
                     </div>
 
                     <div className="text-right">
@@ -252,7 +260,6 @@ function ConfigurationsForm( { settings, token }) {
             </Accordion.Collapse>
           </Card>
         </Accordion>}
-
     </div>
   );
 }
