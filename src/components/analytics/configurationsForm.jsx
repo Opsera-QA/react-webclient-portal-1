@@ -51,13 +51,13 @@ function ConfigurationsForm( { settings, token }) {
   
   useEffect( () => {
     if (settings) {
-      console.log("settings here");
+      /* console.log("settings here");
       if (!settings.defaultPersona) {
         console.log("no settings.defaultPersona so add one");
         settings.defaultPersona = 0;
         console.log("settings;", settings);
       }
-
+ */
       if ("active" in settings) {
         setState({ data: settings });  
       } 
@@ -192,7 +192,7 @@ function ConfigurationsForm( { settings, token }) {
                     <div key="checkbox-tools" className="mb-1 mt-2 p-2">
 
                       <Select
-                        defaultValue={TOOL_OPTIONS.filter(e => enabledTools.indexOf(e.value) !== -1)}
+                        defaultValue={TOOL_OPTIONS.filter(e => enabledTools ? enabledTools.indexOf(e.value) !== -1 : TOOL_OPTIONS[0])}
                         menuPortalTarget={document.body}
                         styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                         isMulti
@@ -244,7 +244,7 @@ function ConfigurationsForm( { settings, token }) {
                         menuPortalTarget={document.body}
                         styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                         classNamePrefix="select"
-                        defaultValue={PERSONAS.filter(e => data.defaultPersona.indexOf(e.value) !== -1)}
+                        defaultValue={PERSONAS.filter(e => data.defaultPersona ? data.defaultPersona.indexOf(e.value) !== -1 : PERSONAS[0])}
                         isDisabled={false}
                         isClearable={false}
                         isSearchable={true}
