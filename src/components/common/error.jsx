@@ -17,12 +17,17 @@ function ErrorDialog({ error }) {
 
   useEffect( () => {
     let messageBody  = "";
-    if (error.response) {
-      messageBody = `Status ${error.response.status}: `;
-      messageBody += error.response.data.message ? error.response.data.message : JSON.stringify(error.response.data);
-    } else if (error.message) {
-      messageBody = error.message;
+    if (error) {
+      if (error.response) {
+        messageBody = `Status ${error.response.status}: `;
+        messageBody += error.response.data.message ? error.response.data.message : JSON.stringify(error.response.data);
+      } else if (error.message) {
+        messageBody = error.message;
+      }
+    } else {
+      error = "Undefined";
     }
+    
     console.log("ERROR", error);
     setState({
       message: messageBody ? messageBody : error,
@@ -47,7 +52,10 @@ function ErrorDialog({ error }) {
 }
 
 ErrorDialog.propTypes = {
-  error: PropTypes.object
+  error: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object
+  ]),
 };
 
 
