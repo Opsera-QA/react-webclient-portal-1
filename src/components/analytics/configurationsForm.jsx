@@ -51,6 +51,13 @@ function ConfigurationsForm( { settings, token }) {
   
   useEffect( () => {
     if (settings) {
+      console.log("settings here");
+      if (!settings.defaultPersona) {
+        console.log("no settings.defaultPersona so add one");
+        settings.defaultPersona = 0;
+        console.log("settings;", settings);
+      }
+
       if ("active" in settings) {
         setState({ data: settings });  
       } 
