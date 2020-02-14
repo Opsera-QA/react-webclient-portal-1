@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ApiService } from "../../api/apiService";
 import LoadingDialog from "../common/loading";
-//import ErrorDialog from "../common/error";
+import ErrorDialog from "../common/error";
 
 function BuildCounts() {
   const contextType = useContext(AuthContext);
@@ -37,8 +37,9 @@ function BuildCounts() {
 
   if(loading) {
     return (<LoadingDialog size="sm" />);
-  } 
-  else {
+  } else if (typeof data !== "object" || Object.keys(data).length == 0) {
+    return (<ErrorDialog error="Missing Data!" />);
+  } else {
     return (
       <div>
         <div className="element-box p-3 text-center">
