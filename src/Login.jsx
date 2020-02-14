@@ -3,6 +3,8 @@ import OktaAuth from "@okta/okta-auth-js";
 import { withAuth } from "@okta/okta-react";
 import PropTypes from "prop-types";
 import { Button, Row, Col } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 
 class LoginForm extends React.Component {
@@ -12,7 +14,8 @@ class LoginForm extends React.Component {
       sessionToken: null,
       error: null,
       username: "",
-      password: ""
+      password: "",
+      loading: false
     };
 
     this.oktaAuth = new OktaAuth({ url: process.env.REACT_APP_OKTA_BASEURL });
@@ -24,6 +27,7 @@ class LoginForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    this.setState({ loading: true });
     this.oktaAuth
       .signIn({
         username: this.state.username,
@@ -35,7 +39,7 @@ class LoginForm extends React.Component {
         })
       )
       .catch(err => {
-        this.setState({ error: err.message });
+        this.setState({ error: err.message, loading: false });
         console.log(err.statusCode + " error", err);
       });
   }
@@ -88,7 +92,9 @@ class LoginForm extends React.Component {
                 <div className="pre-icon os-icon os-icon-fingerprint"></div>
               </div>
               <div className="buttons-w">
-                <Button variant="success" className="w-100 mb-3" type="submit">Log In</Button>
+                <Button variant="success" className="w-100 mb-3" type="submit">
+                  { this.state.loading ? <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth />  : null }
+                  Log In</Button>
                 
                 <Row>
                   <Col>
