@@ -1,8 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { Spinner } from "react-bootstrap";
 
-class loadingDialog extends React.Component {
-  render() {
+function LoadingDialog({ size }) {
+  const [type, setType] = useState({});
+
+  useEffect( () => {
+    setType(type);
+  }, [size]);
+
+  
+  if (type === "sm") {
+    return (
+      <div className="text-center">
+        <Spinner as="span"
+          animation="grow"
+          size="sm"
+          role="status"
+          aria-hidden="true" /> 
+      </div>
+    );
+  } else {
     return (
       <div className="loading">
         <div className="loader">
@@ -15,6 +33,13 @@ class loadingDialog extends React.Component {
       </div>
     );
   }
+  
+
 }
 
-export default loadingDialog;
+LoadingDialog.propTypes = {
+  size: PropTypes.string
+};
+
+
+export default LoadingDialog;
