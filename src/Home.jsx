@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import { AuthContext } from "./contexts/AuthContext";
 import { Row, Col, Button, Card } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
-//import FeaturesCards from "./components/about/features";
+import LoadingDialog from "./components/common/loading";
 import BuildCounts from "./components/dashboard/buildCounts";
 import DemoLineChart from "./components/analytics/charts/demoLineChart";
-import LoadingDialog from "./components/common/loading";
+import DemoBarChart from "./components/analytics/charts/demoBarChart";
 
 class Home extends Component {
   static contextType = AuthContext;
@@ -26,39 +26,69 @@ class Home extends Component {
     this.props.history.push(path);
   }
 
-  gotoLink = (id) => {
-    let path = `/${id}`;
+  handleTabClick = param => e => {
+    // param is the argument you passed to the function
+    // e is the event object that returned
+    e.preventDefault();
+    
+    console.log("Nav To: ", param);
+    let path = `/${param}`;
     // eslint-disable-next-line react/prop-types
-    this.props.history.push(path);
-  }
+    //this.props.history.push(path);
+  };
 
   render() {
     const { authenticated, userInfo } = this.context;
     
     return (
-      <div className="mb-3">
+      <div className="mb-3 max-charting-width">
         { authenticated &&
-          <div className="mt-2 max-content-width mb-3">
-            <h2>Welcome back, {userInfo ? userInfo.name : "Unknown User Name"}!</h2>
+          <div className="mt-2 mb-3">
+            {/* <h3>Welcome back, {userInfo ? userInfo.name : "Unknown User Name"}!</h3> */}
             
-            <Card className="mt-3">
-              <Card.Header>Getting Started</Card.Header>
-              <Card.Body>
-                <Card.Title>OpsERA offers multiple ways to work with your DevOps solution.</Card.Title>
-                <Card.Text>
-              The OpsERA DevOps Product offers the best time to market solutions for all of your technology
-                  automation and workflow needs enabling organizations to build optimized and efficient DevOps projects.  
-                  {/* We deliver solutions to automate build, deploy, security and testing with open source tools for your development team to
-                  manage application upgrades effectively and in a secured way. We also provide pragmatic solutions for
-                  various cloud-based products using open source frameworks and we ensure that enterprise policies are met. */}
-                </Card.Text>
-                {/* <Button variant="primary" onClick={() => this.gotoLink("inventory")}>Application Inventory</Button> */}
-                <Button variant="outline-primary" className="ml-2" onClick={() => this.gotoLink("platform")}>Platforms</Button>
-                <Button variant="outline-primary" className="ml-2" onClick={() => this.gotoLink("pipeline")}>Pipelines</Button>
-                <Button variant="outline-primary" className="ml-2" onClick={() => this.gotoLink("analytics")}>Analytics</Button>
-              </Card.Body>
-            </Card>
+            <div className="max-content-width mt-3 mb-4">
+              <h4>My Dashboard</h4>
+              <p>OpsERA offers the best, easy to use solutions for deploying, monitoring and managing your entire automation and workflow 
+                pipelines, enabling organizations to build optimized and efficient DevOps based projects.</p>               
+            </div>
+            
+            {/*     <div className="mt-3 mb-3">
+              <Button variant="outline-primary" className="ml-2" onClick={() => this.gotoLink("platform")}>Pipeline</Button>
+              <Button variant="outline-primary" className="ml-2" onClick={() => this.gotoLink("pipeline")}>SecOps</Button>
+              <Button variant="outline-primary" className="ml-2" onClick={() => this.gotoLink("analytics")}>Logs</Button>
+              <Button variant="outline-primary" className="ml-2" onClick={() => this.gotoLink("analytics")}>Tools</Button>
+            </div> 
+            */}
+            <ul className="nav nav-pills ml-2 mb-2">
+              <li className="nav-item">
+                <a className="nav-link active" onClick={this.handleTabClick("platform")} href="#">Pipeline</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" onClick={this.handleTabClick("platform")} href="#">SecOps</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" onClick={this.handleTabClick("platform")} href="#">Logs</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link disabled" onClick={this.handleTabClick("platform")} href="#">Tools</a>
+              </li>
+            </ul>
+            
+            <div className="d-flex">
+              <div className="p-2" style={{ minWidth: "140px" }}>
+                <BuildCounts />
+              </div>
+              <div className="p-2 flex-grow-1">
+                <div className="chart mb-3" style={{ height: "300px" }}>
+                  <DemoLineChart />
+                </div>
+                <div className="chart" style={{ height: "300px" }}>
+                  <DemoBarChart />
+                </div>
+              </div>
+            </div>
 
+            {/* 
             <Row className="mt-4">
               <Col sm="3">
                 <BuildCounts />
@@ -67,7 +97,7 @@ class Home extends Component {
                 <DemoLineChart />
               </Col>
             </Row>
-            
+             */}
             
 
 

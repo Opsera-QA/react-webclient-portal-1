@@ -52,6 +52,11 @@ a:hover, .active {
 .max-content-width {
   max-width: 1000px;
 }
+
+.max-charting-width {
+  max-width: 80vw;
+  
+}
 /* END Utility Classes */
 
 
@@ -314,7 +319,23 @@ a:hover, .active {
 
 
 /*  Start dashboard box modules */
-.element-box {
+.metric-box {
+  min-width: 120px;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25rem;
+}
+
+.metric-box-subtext {
+  font-size:70%;
+  line-height: 1.5rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* .element-box {
   position: relative;
     display: flex;
     flex-direction: column;
@@ -324,7 +345,7 @@ a:hover, .active {
     background-clip: border-box;
     border: 1px solid rgba(0,0,0,.125);
     border-radius: .25rem;
-}
+} */
 
 .box-metric {
   font-size: 2.43rem;

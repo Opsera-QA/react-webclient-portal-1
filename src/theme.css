@@ -146,9 +146,11 @@ button.bg-primary:focus {
   cursor: default;
 }
 
-
-
-
+/* active*/
+.nav-pills .nav-item .active {
+  background-color:#226196;
+  color: white;
+}
 
 .list-group-item-primary {
   color: #010913;

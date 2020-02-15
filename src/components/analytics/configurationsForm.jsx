@@ -184,11 +184,9 @@ function ConfigurationsForm( { settings, token }) {
             
             <Accordion.Collapse eventKey="0">
               <Card.Body>
-                <Card.Subtitle className="mb-2 text-muted">
-                  Analytics configuration details are shown below for available tools.  We offer analytics for Infrastructure and Pipeline workflows as well as many popular tools.</Card.Subtitle>
                 <Form>
                   <fieldset>
-                    <div className="mt-3 text-muted">Tools:</div>
+                    <div className="mt-1 text-muted">Tools:</div>
                     <div key="checkbox-tools" className="mb-1 mt-2 p-2">
 
                       <Select

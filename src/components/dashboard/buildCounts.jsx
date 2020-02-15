@@ -41,47 +41,47 @@ function BuildCounts() {
     return (<ErrorDialog error="Missing Data!" />);
   } else {
     return (
-      <div>
-        <div className="element-box p-3 text-center">
+      <div className="d-flex flex-column mb-3">
+        <div className="metric-box p-3 text-center">
           <blockquote className="blockquote mb-0 ">
             <div className="box-metric">{data.successfulBuilds.data[0].key}</div>
             <footer className="blockquote">
-              <small className="text-muted">
+              <div className="metric-box-subtext text-muted">
               Successful Builds
-              </small>
+              </div>
             </footer>
           </blockquote>
-        </div>
-      
-        <div className="element-box p-3 mt-3 text-center">
+        </div>  
+        
+        <div className="metric-box p-3 mt-3 text-center">
           <blockquote className="blockquote mb-0 ">
             <div className="box-metric">{data.failedBuilds.data[0].key}</div>
             <footer className="blockquote">
-              <small className="text-muted">
+              <div className="metric-box-subtext text-muted">
             Failed Builds
-              </small>
+              </div>
             </footer>
           </blockquote>
         </div>
-
-        <div className="element-box p-3 mt-3 text-center">
+        
+        <div className="metric-box p-3 mt-3 text-center">
           <blockquote className="blockquote mb-0 ">
             <div className="box-metric">{data.successfulDeployments.data[0].key}</div>
             <footer className="blockquote">
-              <small className="text-muted">
+              <div className="metric-box-subtext text-muted">
             Successful Deployments
-              </small>
+              </div>
             </footer>
           </blockquote>
         </div>
 
-        <div className="element-box p-3 mt-3 text-center">
+        <div className="metric-box p-3 mt-3 text-center">
           <blockquote className="blockquote mb-0 ">
             <div className="box-metric">{data.failedDeployments.data[0].key}</div>
             <footer className="blockquote">
-              <small className="text-muted">
+              <div className="metric-box-subtext text-muted">
             Failed Deployments
-              </small>
+              </div>
             </footer>
           </blockquote>
         </div>
