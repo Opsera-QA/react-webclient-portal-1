@@ -6,7 +6,7 @@ function LoadingDialog({ size }) {
   const [type, setType] = useState({});
 
   useEffect( () => {
-    setType(type);
+    setType(size);
   }, [size]);
 
   

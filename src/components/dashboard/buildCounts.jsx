@@ -12,7 +12,7 @@ function BuildCounts() {
   
   const [hasError, setErrors] = useState(false);
   const [data, setData] = useState({});
-  const [loading, setLoading] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const getApiData = async () => {
     setLoading(true);

@@ -3,9 +3,10 @@ import { AuthContext } from "./contexts/AuthContext";
 import { Row, Col, Button, Card } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import LoadingDialog from "./components/common/loading";
-import BuildCounts from "./components/dashboard/buildCounts";
-import DemoLineChart from "./components/analytics/charts/demoLineChart";
-import DemoBarChart from "./components/analytics/charts/demoBarChart";
+import PipelineDashboard from "./components/dashboard/Pipeline";
+import SecOpsDashboard from "./components/dashboard/SecOps";
+import LogsDashboard from "./components/dashboard/Logs";
+import ToolsDashboard from "./components/dashboard/Tools";
 
 class Home extends Component {
   static contextType = AuthContext;
@@ -13,6 +14,9 @@ class Home extends Component {
   constructor(props, context) {
     super(props, context);
     this.login = this.login.bind(this);
+    this.state = {
+      selection: "pipeline"
+    };
   }
 
   async login() {
@@ -32,75 +36,54 @@ class Home extends Component {
     e.preventDefault();
     
     console.log("Nav To: ", param);
-    let path = `/${param}`;
-    // eslint-disable-next-line react/prop-types
-    //this.props.history.push(path);
+    this.setState({
+      selection: param
+    });
   };
 
   render() {
-    const { authenticated, userInfo } = this.context;
-    
+    const { authenticated } = this.context;
+    const { selection } = this.state;
     return (
       <div className="mb-3 max-charting-width">
         { authenticated &&
           <div className="mt-2 mb-3">
-            {/* <h3>Welcome back, {userInfo ? userInfo.name : "Unknown User Name"}!</h3> */}
             
             <div className="max-content-width mt-3 mb-4">
               <h4>My Dashboard</h4>
               <p>OpsERA offers the best, easy to use solutions for deploying, monitoring and managing your entire automation and workflow 
                 pipelines, enabling organizations to build optimized and efficient DevOps based projects.</p>               
             </div>
-            
-            {/*     <div className="mt-3 mb-3">
-              <Button variant="outline-primary" className="ml-2" onClick={() => this.gotoLink("platform")}>Pipeline</Button>
-              <Button variant="outline-primary" className="ml-2" onClick={() => this.gotoLink("pipeline")}>SecOps</Button>
-              <Button variant="outline-primary" className="ml-2" onClick={() => this.gotoLink("analytics")}>Logs</Button>
-              <Button variant="outline-primary" className="ml-2" onClick={() => this.gotoLink("analytics")}>Tools</Button>
-            </div> 
-            */}
+           
             <ul className="nav nav-pills ml-2 mb-2">
               <li className="nav-item">
-                <a className="nav-link active" onClick={this.handleTabClick("platform")} href="#">Pipeline</a>
+                <a className={"nav-link " + (selection === "pipeline" ? "active" : "")} onClick={this.handleTabClick("pipeline")} href="#">Pipeline</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" onClick={this.handleTabClick("platform")} href="#">SecOps</a>
+                <a className={"nav-link " + (selection === "secops" ? "active" : "")} onClick={this.handleTabClick("secops")} href="#">SecOps</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" onClick={this.handleTabClick("platform")} href="#">Logs</a>
+                <a className={"nav-link " + (selection === "logs" ? "active" : "")} onClick={this.handleTabClick("logs")} href="#">Logs</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link disabled" onClick={this.handleTabClick("platform")} href="#">Tools</a>
+                <a className={"nav-link disabled " + (selection === "tools" ? "active" : "")} onClick={this.handleTabClick("tools")} href="#">Tools</a>
               </li>
             </ul>
             
-            <div className="d-flex">
-              <div className="p-2" style={{ minWidth: "140px" }}>
-                <BuildCounts />
-              </div>
-              <div className="p-2 flex-grow-1">
-                <div className="chart mb-3" style={{ height: "300px" }}>
-                  <DemoLineChart />
-                </div>
-                <div className="chart" style={{ height: "300px" }}>
-                  <DemoBarChart />
-                </div>
-              </div>
-            </div>
-
-            {/* 
-            <Row className="mt-4">
-              <Col sm="3">
-                <BuildCounts />
-              </Col>
-              <Col className="chart m-1" style={{ height: "400px" }}>
-                <DemoLineChart />
-              </Col>
-            </Row>
-             */}
-            
-
-
+            {(() => {
+              switch (selection) {
+              case "pipeline":
+                return <PipelineDashboard />;
+              case "secops":
+                return <SecOpsDashboard />;
+              case "logs":
+                return <LogsDashboard />;
+              case "tools":
+                return <ToolsDashboard />;
+              default:
+                return null; //TODO: Wrie up some welcome thing in Features for this case
+              }
+            })()}
 
           </div>
         }
