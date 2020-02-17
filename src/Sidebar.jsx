@@ -5,21 +5,23 @@ import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStream, faChartLine, faClipboardList, faLink, faProjectDiagram, faDownload, faHome, faTools } from "@fortawesome/free-solid-svg-icons";
+import { faStream, faChartLine, faClipboardList, faLink, faBox, faDownload, faHome, faTools, faDraftingCompass } from "@fortawesome/free-solid-svg-icons";
 import "./sidebar.css";
 
 function Sidebar({ hideView }) {
   const contextType = useContext(AuthContext);
   const [state, setState] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
-    { authenticated: false, administrator: false, hideSideBar: hideView }
+    { authenticated: false, administrator: false, previewRole: false, hideSideBar: hideView }
   );
 
   useEffect(() => {
     const { authenticated, userInfo } = contextType;
     setState({ authenticated: authenticated });
+    console.log(userInfo);
     if (userInfo) {
       setState({ administrator: userInfo.Groups.includes("Admin") });
+      setState({ previewRole: userInfo.Groups.includes("Preview") });
     }
     setState({
       hideSideBar: hideView
@@ -52,12 +54,18 @@ function Sidebar({ hideView }) {
                 <div className="mt-3 mb-1 sub-header">Products</div>
                 <NavLink className="nav-link" activeClassName="chosen" exact to="/"><FontAwesomeIcon icon={faHome} fixedWidth /> <span className="menu-text">Dashboard</span><div className="caret"></div></NavLink>
                 <NavLink className="nav-link" activeClassName="chosen" to="/inventory"><FontAwesomeIcon icon={faClipboardList} fixedWidth /> <span className="menu-text">Inventory</span></NavLink>
-                <NavLink className="nav-link" activeClassName="chosen" to="/platform"><FontAwesomeIcon icon={faProjectDiagram} fixedWidth /> <span className="menu-text">Platforms</span></NavLink>
-                <NavLink className="nav-link" activeClassName="chosen" to="/pipeline"><FontAwesomeIcon icon={faStream} fixedWidth /> <span className="menu-text">Pipelines</span></NavLink>
+                <NavLink className="nav-link" activeClassName="chosen" to="/platform"><FontAwesomeIcon icon={faBox} fixedWidth /> <span className="menu-text">Platforms</span></NavLink>
+                
+                {state.previewRole ? (
+                  <NavLink className="nav-link" activeClassName="chosen" to="/workflow"><FontAwesomeIcon icon={faDraftingCompass} fixedWidth /> <span className="menu-text">Pipeline Beta</span></NavLink>
+                ) : (
+                  <NavLink className="nav-link" activeClassName="chosen" to="/pipeline"><FontAwesomeIcon icon={faStream} fixedWidth /> <span className="menu-text">Pipelines</span></NavLink>
+                )}
+
                 <NavLink className="nav-link" activeClassName="chosen" to="/analytics"><FontAwesomeIcon icon={faChartLine} fixedWidth /> <span className="menu-text">Analytics</span></NavLink>
         
                 <div className="mt-3 mb-1 sub-header">Operations</div>
-                <NavLink className="nav-link" activeClassName="chosen" to="/api_connector"><FontAwesomeIcon icon={faLink} fixedWidth /> <span className="menu-text">Connectors</span></NavLink>
+                <NavLink className="nav-link" activeClassName="chosen" to="/api_connector"><FontAwesomeIcon icon={faLink} fixedWidth /> <span className="menu-text">Tools</span></NavLink>
                 <NavLink className="nav-link" activeClassName="chosen" to="/update"><FontAwesomeIcon icon={faDownload} fixedWidth /> <span className="menu-text">Updates</span></NavLink>
                 {state.administrator && <NavLink className="nav-link" activeClassName="chosen" to="/admin"><FontAwesomeIcon icon={faTools} fixedWidth /> <span className="menu-text">Admin Tools</span></NavLink>}
               </div>
