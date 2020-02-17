@@ -1,9 +1,11 @@
-import React, { Component } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { AuthContext } from "./contexts/AuthContext";
 import { Row, Col, Button, Card } from "react-bootstrap";
-import { withRouter } from "react-router-dom";
+import { ApiService } from "./api/apiService";
 import Select from "react-select";
 import LoadingDialog from "./components/common/loading";
+import ErrorDialog from "./components/common/error";
 import PipelineDashboard from "./components/dashboard/Pipeline";
 import SecOpsDashboard from "./components/dashboard/SecOps";
 import LogsDashboard from "./components/dashboard/Logs";
@@ -11,53 +13,72 @@ import ToolsDashboard from "./components/dashboard/Tools";
 
 const PERSONAS = [ { value: "0", label: "Developer" }, { value: "1", label: "Security" }, { value: "2", label: "Operations" }, { value: "3", label: "VP of Engineering" }];
 
-class Home extends Component {
-  static contextType = AuthContext;
+function Home() {
+  const contextType = useContext(AuthContext);
+  const { authenticated } = contextType;
+  const history = useHistory();
 
-  constructor(props, context) {
-    super(props, context);
-    this.login = this.login.bind(this);
-    this.state = {
-      selection: "pipeline",
-      persona: "developer"
-    };
-  }
+  const [hasError, setErrors] = useState(false);
+  const [data, setData] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [selection, setSelection] = useState("pipeline");
+  const [persona, setPersona] = useState();
+  
 
-  async login() {
-    const { loginUserContext } = this.context;
-    loginUserContext();
-  }
-
-  gotoSignUp = () => {
-    let path = "/signup";
-    // eslint-disable-next-line react/prop-types
-    this.props.history.push(path);
-  }
-
-  handleTabClick = param => e => {
-    e.preventDefault();
+  const getApiData = async () => {
+    setLoading(true);
+    const { getAccessToken } = contextType;
+    const accessToken = await getAccessToken();
+    const apiCall = new ApiService("/analytics/settings", {}, accessToken);
     
-    console.log("Nav To: ", param);
-    this.setState({
-      selection: param
-    });
+    apiCall.get()
+      .then(res => {
+        console.log("res", res);
+        setData(res.data[0]);
+        setPersona(res.data[0].defaultPersona);
+        setLoading(false);
+      })
+      .catch(err => {
+        setErrors(err);
+        setLoading(false);
+      });
   };
 
-  handleSelectPersonaChange = (selectedOption) => {
-    console.log("Persona: ", selectedOption);
-    this.setState({
-      persona: selectedOption.value
-    });
-  }
+  useEffect( () => {
+    getApiData();
+  }, []);
 
-  render() {
-    const { authenticated } = this.context;
-    const { selection, persona } = this.state;
+
+  const login = () => {
+    const { loginUserContext } = contextType;
+    loginUserContext();
+  };
+
+  const gotoSignUp = () => {
+    history.push("/signup");
+  };
+
+  const handleTabClick = param => e => {
+    e.preventDefault();
+    console.log("Nav To: ", param);
+    setSelection(param);
+  };
+
+  const handleSelectPersonaChange = (selectedOption) => {
+    console.log("Persona: ", selectedOption);
+    setPersona(selectedOption.value);
+  };
+
+  if(loading) {
+    return (<LoadingDialog size="lg" />);
+  } else {
     return (
       <div className="mb-3 max-charting-width">
+        
         { authenticated &&
           <div className="mt-2 mb-3">
-            
+            { hasError && <ErrorDialog error={hasError} /> }
+
             <div className="max-content-width mt-3 mb-4">
               <h4>My Dashboard</h4>
               <p>OpsERA offers the best, easy to use solutions for deploying, monitoring and managing your entire automation and workflow 
@@ -68,16 +89,16 @@ class Home extends Component {
               <Col sm={8}>
                 <ul className="nav nav-pills ml-2 mb-2">
                   <li className="nav-item">
-                    <a className={"nav-link " + (selection === "pipeline" ? "active" : "")} onClick={this.handleTabClick("pipeline")} href="#">Pipeline</a>
+                    <a className={"nav-link " + (selection === "pipeline" ? "active" : "")} onClick={handleTabClick("pipeline")} href="#">Pipeline</a>
                   </li>
                   <li className="nav-item">
-                    <a className={"nav-link " + (selection === "secops" ? "active" : "")} onClick={this.handleTabClick("secops")} href="#">SecOps</a>
+                    <a className={"nav-link " + (selection === "secops" ? "active" : "")} onClick={handleTabClick("secops")} href="#">SecOps</a>
                   </li>
                   <li className="nav-item">
-                    <a className={"nav-link " + (selection === "logs" ? "active" : "")} onClick={this.handleTabClick("logs")} href="#">Logs</a>
+                    <a className={"nav-link " + (selection === "logs" ? "active" : "")} onClick={handleTabClick("logs")} href="#">Logs</a>
                   </li>
                   <li className="nav-item">
-                    <a className={"nav-link disabled " + (selection === "tools" ? "active" : "")} onClick={this.handleTabClick("tools")} href="#">Tools</a>
+                    <a className={"nav-link disabled " + (selection === "tools" ? "active" : "")} onClick={handleTabClick("tools")} href="#">Tools</a>
                   </li>
                 </ul></Col>
               <Col sm={4}>
@@ -86,13 +107,13 @@ class Home extends Component {
                   menuPortalTarget={document.body}
                   styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                   classNamePrefix="select"
-                  defaultValue={PERSONAS[0]}     /* {PERSONAS.filter(e => data.defaultPersona ? data.defaultPersona.indexOf(e.value) !== -1 : PERSONAS[0])} */
-                  isDisabled={true}
+                  defaultValue={persona ? PERSONAS[parseInt(persona)] : PERSONAS[0]}
+                  isDisabled={false}
                   isClearable={false}
                   isSearchable={true}
                   name="PERSONA-SELECT"
                   options={PERSONAS}
-                  onChange={this.handleSelectPersonaChange}
+                  onChange={handleSelectPersonaChange}
                 />
               </Col>
             </Row>
@@ -135,10 +156,10 @@ class Home extends Component {
                 
                 <div className="row mx-n2 mt-4">
                   <div className="col-md px-2">
-                    <Button variant="success" className="btn-lg w-100 mb-3" onClick={this.gotoSignUp}>Sign Up</Button>
+                    <Button variant="success" className="btn-lg w-100 mb-3" onClick={gotoSignUp}>Sign Up</Button>
                   </div>
                   <div className="col-md px-2">
-                    <Button variant="outline-success" className="btn-lg w-100 mb-3" onClick={this.login}>Log In</Button>
+                    <Button variant="outline-success" className="btn-lg w-100 mb-3" onClick={login}>Log In</Button>
                   </div>
                 </div>
 
@@ -157,8 +178,9 @@ class Home extends Component {
           </Row>
         </div>}
       </div>
+    
     );
   }
 }
 
-export default withRouter(Home);
+export default Home;
