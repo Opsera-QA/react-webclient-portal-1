@@ -30,8 +30,7 @@ function Analytics() {
       const apiCall = new ApiService("/analytics/settings", {}, accessToken);
       apiCall.get()
         .then(function (response) {
-          console.log(response);
-
+          //console.log(response);
           setState({
             data: response.data[0],
             fetching: false,

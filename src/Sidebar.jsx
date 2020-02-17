@@ -18,7 +18,6 @@ function Sidebar({ hideView }) {
   useEffect(() => {
     const { authenticated, userInfo } = contextType;
     setState({ authenticated: authenticated });
-    console.log(userInfo);
     if (userInfo) {
       setState({ administrator: userInfo.Groups.includes("Admin") });
       setState({ previewRole: userInfo.Groups.includes("Preview") });

@@ -51,13 +51,6 @@ function ConfigurationsForm( { settings, token }) {
   
   useEffect( () => {
     if (settings) {
-      /* console.log("settings here");
-      if (!settings.defaultPersona) {
-        console.log("no settings.defaultPersona so add one");
-        settings.defaultPersona = 0;
-        console.log("settings;", settings);
-      }
- */
       if ("active" in settings) {
         setState({ data: settings });  
       } 
@@ -127,7 +120,7 @@ function ConfigurationsForm( { settings, token }) {
   } */
 
   function handleMultiSelectToolChange (selectedOption) {
-    setState({ data: { ...state.data, enabledTools: selectedOption.map(option => option.value) } });
+    setState({ data: { ...state.data, enabledTools: selectedOption ? selectedOption.map(option => option.value): {} } });
   }
 
   function handleSelectPersonaChange (selectedOption) {
@@ -140,7 +133,7 @@ function ConfigurationsForm( { settings, token }) {
 
 
   const { data, loaded, messages, showModal, error, editSettings } = state;
-  const { enabledTools, disabledToolsOn, active, enabledToolsOn } = data;  
+  const { enabledTools, disabledToolsOn, active, enabledToolsOn, defaultPersona } = data;  
   return (
     <div>
       {!loaded && <LoadingDialog />}
@@ -190,7 +183,7 @@ function ConfigurationsForm( { settings, token }) {
                     <div key="checkbox-tools" className="mb-1 mt-2 p-2">
 
                       <Select
-                        defaultValue={TOOL_OPTIONS.filter(e => enabledTools ? enabledTools.indexOf(e.value) !== -1 : TOOL_OPTIONS[0])}
+                        defaultValue={enabledTools.length > 0 ? TOOL_OPTIONS.filter(e => enabledTools ? enabledTools.indexOf(e.value) !== -1 : TOOL_OPTIONS[0]): []}
                         menuPortalTarget={document.body}
                         styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                         isMulti
@@ -242,7 +235,7 @@ function ConfigurationsForm( { settings, token }) {
                         menuPortalTarget={document.body}
                         styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                         classNamePrefix="select"
-                        defaultValue={PERSONAS.filter(e => data.defaultPersona ? data.defaultPersona.indexOf(e.value) !== -1 : PERSONAS[0])}
+                        defaultValue={defaultPersona ? PERSONAS.filter(e => defaultPersona ? defaultPersona.indexOf(e.value) !== -1 : PERSONAS[0]) : PERSONAS[0]}
                         isDisabled={false}
                         isClearable={false}
                         isSearchable={true}
