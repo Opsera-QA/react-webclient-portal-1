@@ -9,7 +9,7 @@ import SecOpsDashboard from "./components/dashboard/SecOps";
 import LogsDashboard from "./components/dashboard/Logs";
 import ToolsDashboard from "./components/dashboard/Tools";
 
-const PERSONAS = [ { value: "0", label: "Developer" }, { value: "1", label: "Project Manager" }, { value: "2", label: "Stakeholder" }];
+const PERSONAS = [ { value: "0", label: "Developer" }, { value: "1", label: "Security" }, { value: "2", label: "Operations" }, { value: "3", label: "VP of Engineering" }];
 
 class Home extends Component {
   static contextType = AuthContext;

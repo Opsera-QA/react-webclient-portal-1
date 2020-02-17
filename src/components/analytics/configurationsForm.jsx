@@ -32,7 +32,7 @@ const INITIAL_SETTINGS = {
   defaultPersona: ""
 };
 const ANALYTICS_TYPES = ["Infrastructure", "Pipeline"];
-const PERSONAS = [ { value: "0", label: "Developer" }, { value: "1", label: "Project Manager" }, { value: "2", label: "Stakeholder" }];
+const PERSONAS = [ { value: "0", label: "Developer" }, { value: "1", label: "Security" }, { value: "2", label: "Operations" }, { value: "3", label: "VP of Engineering" }];
 const DATA_LIMITS = [{ Value: "0", Label: "Inactive" }, { Value: "500", Label: "500MB" }, { Value: "1", Label: "1GB" }, { Value: "2", Label: "2GB" }, { Value: "3", Label: "3GB" }];
 const TOOL_OPTIONS = [
   { value: "Jenkins", label: "Jenkins" },
