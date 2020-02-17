@@ -3,6 +3,10 @@ import PropTypes from "prop-types";
 import { Alert } from "react-bootstrap";
 import { AuthContext } from "../../contexts/AuthContext";
 
+/**
+ * @param {*} { error } Is a string of either "sm" or "lg" with "sm" being just a centered icon, and large being full screen
+ * @returns
+ */
 function ErrorDialog({ error }) {
   const contextType = useContext(AuthContext);
   const [state, setState] = useReducer(
