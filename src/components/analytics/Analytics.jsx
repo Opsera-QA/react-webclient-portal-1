@@ -7,10 +7,16 @@ import ErrorDialog from "../common/error";
 import ConfigurationsForm from "./configurationsForm";
 import "./analytics.css";
 import "./charts/charts.css";
-import DemoBarChart from "./charts/demoBarChart";
+import BuildsByUserBarChart from "./charts/buildsByUserBarChart";
+import AvgBuildDurationBarChart from "./charts/avgBuildDurationBarChart";
+import AvgBuildsByUserBarChart from "./charts/avgBuildsByUserBarChart";
 import DemoLogView from "./logs/demoLogView";
-import DemoLineChart from "./charts/demoLineChart";
-import DemoPieChart from "./charts/demoPieChart";
+import SonarMaintainabilityLineChart from "./charts/sonarMaintainabilityLineChart";
+import SonarCodeSmellsLineChart from "./charts/sonarCodeSmellsLineChart";
+import SonarCodeCategoriesPieChart from "./charts/sonarCodeCategoriesPieChart";
+import SonarCodeCategoriesPieChart2 from "./charts/sonarCodeCategoriesPieChart2";
+import TwistlockVulnerability from "./charts/twistlockVulnerabilityLineChart";
+
 
 function Analytics() {
   const contextType = useContext(AuthContext);
@@ -62,20 +68,44 @@ function Analytics() {
         <ConfigurationsForm settings={state.data} token={state.token} />
       </div>
 
+      <h5 style={{ "padding-left": "12px", "padding-top": "12px" }}><b>Pipeline - Builds By User</b></h5>
       <div className="chart m-2" style={{ height: "400px" }}>
-        <DemoBarChart />
+        <BuildsByUserBarChart />
       </div>
+      <h5 style={{ "padding-left": "12px", "padding-top": "12px" }}><b>Pipeline - Average Build Duration</b></h5>
       <div className="chart m-2" style={{ height: "400px" }}>
-        <DemoLineChart />
+        <AvgBuildDurationBarChart />
       </div>
+      <h5 style={{ "padding-left": "12px", "padding-top": "12px" }}><b>Pipeline - Average Build Duration by User</b></h5>
       <div className="chart m-2" style={{ height: "400px" }}>
-        <DemoPieChart />
+        <AvgBuildsByUserBarChart />
+      </div>
+      <h5 style={{ "padding-left": "12px", "padding-top": "12px" }}><b>Sonar - Maintainability Rating</b></h5>
+      <div className="chart m-2" style={{ height: "400px" }}>
+        <SonarMaintainabilityLineChart />
+      </div>
+      <h5 style={{ "padding-left": "12px", "padding-top": "12px" }}><b>Sonar - Code Smells</b></h5>
+      <div className="chart m-2" style={{ height: "400px" }}>
+        <SonarCodeSmellsLineChart />
+      </div>
+      <h5 style={{ "padding-left": "12px", "padding-top": "12px" }}><b>Sonar - Categories of Code Scanned</b></h5>
+      <h7 style={{ "padding-left": "12px", "padding-top": "12px" }}><b>QualityGate Status Keyword: OK</b></h7>
+      <div className="chart m-2" style={{ height: "400px" }}>
+        <SonarCodeCategoriesPieChart />
+      </div>
+      <h7 style={{ "padding-left": "12px", "padding-top": "12px" }}><b>QualityGate Status Keyword: No Value</b></h7>
+      <div className="chart m-2" style={{ height: "400px" }}>
+        <SonarCodeCategoriesPieChart2 />
+      </div>
+      <h5 style={{ "padding-left": "12px", "padding-top": "12px" }}><b>Twistlock - Vulnerability Status</b></h5>
+      <div className="chart m-2" style={{ height: "400px" }}>
+        <TwistlockVulnerability />
       </div>
 
       {/* TODO Move this into a secondar "tabbed view" */}
-      <div className="m-2">
+      {/* <div className="m-2">
         <DemoLogView />
-      </div>
+      </div> */}
 
     </div>
   );
