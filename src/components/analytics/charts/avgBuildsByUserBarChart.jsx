@@ -1,42 +1,15 @@
-/*  This is a sample bar chart using Nivo
-  https://nivo.rocks/bar
-
-  For this first version of our Analytics Project, we are going to follow the rule of having 1 JSX/React Component and one "<chartName>Config.js" 
-  file per chart.  The two files should be all that's required to render a particular chart including the API call, legend and other customizations.   
-  There will be a shared "charts.css" that will contain any customizations for all charts in this first release.  Use hyphenated class names for that syntax.
-  
-  Each file should be named in camelCase format under the /analytics/charts 
-  folder in the React project following this syntax:  <metric description><chart type><file type> (ie deploySuccessPieChart.jsx and deploySuccessPieChartConfig.js)  
-  
-  Each chart should contain ALL code necessary to render the chart, that means the UI components, legends, 
-  and API calls.  We do not want to be managing more than these two files for every chart when the number of charts we will support could get very large.  Future designs will 
-  review this architecture and if any concerns arise, please contact Todd.  Also, we use React Context (not redux) for managing the user authentication and state management.
-
-  This sample is in a React Class format, however React Functional Components are preferred.  The demo was simply done this way because of the Nivo documentation using that format.
-
-  Color Schemes are available at this link:
-  https://nivo.rocks/guides/colors
-  This sample is using the "yellow_green_blue" theme (as defined near line 92 on the chart below)
-
-*/
-
 import React from "react";
 //import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
-import { AuthContext } from "../../../contexts/AuthContext"; //New AuthContext State 
+import { AuthContext } from "../../../contexts/AuthContext"; 
 import { ApiService } from "../../../api/apiService";
-//import LoadingDialog from "../../common/loading";  //component currently used when calling APIs.  TODO: We may want to add a different one for charts that just works on the specific chart UI
-//import ErrorDialog from "../../common/error"; //EVER chart should have an Error Dialog supported.  This is the shared site one, but also may need to be updated to match our charting needs.
-
-
-//Temporarily importing test data here.  The axios API call to the NodeAPI will replace this
-import sampleData from "./demoData";
-
+import LoadingDialog from "../../common/loading"; 
+import ErrorDialog from "../../common/error"; 
 import config from "./avgBuildsByUserBarChartConfigs";
 import "./charts.css";
 
 class Chart extends React.Component {
-  static contextType = AuthContext;  //Registers the User Authentication context data in the component
+  static contextType = AuthContext; 
 
   constructor(props, context) {
     super(props, context);
@@ -50,8 +23,7 @@ class Chart extends React.Component {
   }
 
   componentDidMount() {
-    this.getApiData();  //TODO" API Sample included with token data, but needs to be flushed out.
-    // this.setState({ data: sampleData });
+    this.getApiData();  
   }
 
 
@@ -82,41 +54,49 @@ class Chart extends React.Component {
 
   render() {
     const { data, error, fetching } = this.state;
-    return (
-      <ResponsiveBar
-        data={data}
-        keys={config.keys}
-        indexBy="key"
-        margin={config.margin}
-        padding={0.3}
-        layout={"horizontal"}
-        colors={{ scheme: "spectral" }}
-        borderColor={{ theme: "background" }}
-        colorBy="id"
-        defs={config.defs}
-        fill={config.fill}
-        axisTop={null}
-        axisRight={null}
-        axisBottom={config.axisBottom}
-        axisLeft={config.axisLeft}
-        enableLabel={false}
-        borderRadius={5}
-        labelSkipWidth={12}
-        labelSkipHeight={12}
-        labelTextColor="inherit:darker(2)"
-        animate={true}
-        motionStiffness={90}
-        borderWidth={2}
-        motionDamping={15}
-        theme={{
-          tooltip: {
-            container: {
-              fontSize: "16px",
-            },
-          },
-        }}
-      />
-    );
+    if(fetching) {
+      return (<LoadingDialog size="sm" />);
+    } else if (typeof data !== "object" || Object.keys(data).length == 0 || error) {
+      return (<ErrorDialog error={error ? error : "Missing Data!"} />);
+    } else {
+      return (
+        <>
+          <div className="chart-label-text">Jenkins: Average Build Duration by User</div>
+          <ResponsiveBar
+            data={data}
+            keys={config.keys}
+            indexBy="key"
+            margin={config.margin}
+            padding={0.3}
+            layout={"horizontal"}
+            colors={{ scheme: "spectral" }}
+            borderColor={{ theme: "background" }}
+            colorBy="id"
+            defs={config.defs}
+            fill={config.fill}
+            axisTop={null}
+            axisRight={null}
+            axisBottom={config.axisBottom}
+            axisLeft={config.axisLeft}
+            enableLabel={false}
+            borderRadius={5}
+            labelSkipWidth={12}
+            labelSkipHeight={12}
+            labelTextColor="inherit:darker(2)"
+            animate={true}
+            motionStiffness={90}
+            borderWidth={2}
+            motionDamping={15}
+            theme={{
+              tooltip: {
+                container: {
+                  fontSize: "16px",
+                },
+              },
+            }}
+          />
+        </>
+      );}
   }
 }
 

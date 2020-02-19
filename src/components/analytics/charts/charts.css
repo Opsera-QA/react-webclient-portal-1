@@ -19,9 +19,16 @@
   transition: 0.3s;
   border: 1px solid rgba(0,0,0,.125);
   border-radius: .25rem;
+  padding-bottom: 20px;
  }
  
  .chart:hover {
    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
    color: #334152;
+ }
+
+ .chart-label-text {
+   position: relative;
+   top: 10px;
+   left: 15px;
  }

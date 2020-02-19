@@ -7,10 +7,9 @@ import ErrorDialog from "../common/error";
 import ConfigurationsForm from "./configurationsForm";
 import "./analytics.css";
 import "./charts/charts.css";
-import BuildsByUserBarChart from "./charts/buildsByUserBarChart";
-import AvgBuildDurationBarChart from "./charts/avgBuildDurationBarChart";
-import AvgBuildsByUserBarChart from "./charts/avgBuildsByUserBarChart";
-import DemoLogView from "./logs/demoLogView";
+
+
+//import DemoLogView from "./logs/demoLogView";
 import SonarMaintainabilityLineChart from "./charts/sonarMaintainabilityLineChart";
 import SonarCodeSmellsLineChart from "./charts/sonarCodeSmellsLineChart";
 import SonarCodeCategoriesPieChart from "./charts/sonarCodeCategoriesPieChart";
@@ -68,18 +67,6 @@ function Analytics() {
         <ConfigurationsForm settings={state.data} token={state.token} />
       </div>
 
-      <h5 style={{ "padding-left": "12px", "padding-top": "12px" }}><b>Pipeline - Builds By User</b></h5>
-      <div className="chart m-2" style={{ height: "400px" }}>
-        <BuildsByUserBarChart />
-      </div>
-      <h5 style={{ "padding-left": "12px", "padding-top": "12px" }}><b>Pipeline - Average Build Duration</b></h5>
-      <div className="chart m-2" style={{ height: "400px" }}>
-        <AvgBuildDurationBarChart />
-      </div>
-      <h5 style={{ "padding-left": "12px", "padding-top": "12px" }}><b>Pipeline - Average Build Duration by User</b></h5>
-      <div className="chart m-2" style={{ height: "400px" }}>
-        <AvgBuildsByUserBarChart />
-      </div>
       <h5 style={{ "padding-left": "12px", "padding-top": "12px" }}><b>Sonar - Maintainability Rating</b></h5>
       <div className="chart m-2" style={{ height: "400px" }}>
         <SonarMaintainabilityLineChart />

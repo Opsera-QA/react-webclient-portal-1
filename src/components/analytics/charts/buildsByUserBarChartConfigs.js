@@ -46,7 +46,7 @@ export default {
     "tickSize": 8,
     "tickPadding": 5,
     "tickRotation": 0,
-    "legend": "Users",
+    "legend": "Number of Builds",
     "legendPosition": "middle",
     "legendOffset": 50
   },
@@ -54,7 +54,7 @@ export default {
     "tickSize": 8,
     "tickPadding": 5,
     "tickRotation": 0,
-    "legend": "Number of Builds",
+    "legend": "Users",
     "legendPosition": "middle",
     "legendOffset": -75
   },
