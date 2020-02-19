@@ -328,8 +328,23 @@ a:hover, .active {
   border-radius: .25rem;
 }
 
+.metric-box-headertext {
+  font-size:80%;
+  font-weight: bold;
+  line-height: 1.5rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
 .metric-box-subtext {
   font-size:70%;
+  line-height: 1.5rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.metric-box-footertext {
+  font-size:50%;
   line-height: 1.5rem;
   word-wrap: break-word;
   overflow-wrap: break-word;

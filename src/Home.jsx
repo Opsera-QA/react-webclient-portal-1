@@ -108,7 +108,7 @@ function Home() {
                   styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                   classNamePrefix="select"
                   defaultValue={persona ? PERSONAS[parseInt(persona)] : PERSONAS[0]}
-                  isDisabled={false}
+                  isDisabled={true}
                   isClearable={false}
                   isSearchable={true}
                   name="PERSONA-SELECT"

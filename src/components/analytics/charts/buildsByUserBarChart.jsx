@@ -5,7 +5,6 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { ApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/loading";
 import ErrorDialog from "../../common/error"; 
-
 import config from "./buildsByUserBarChartConfigs";
 import "./charts.css";
 
@@ -58,7 +57,7 @@ class Chart extends React.Component {
     if(fetching) {
       return (<LoadingDialog size="sm" />);
     } else if (typeof data !== "object" || Object.keys(data).length == 0 || error) {
-      return (<ErrorDialog error={error ? error : "Missing Data!"} />);
+      return (<ErrorDialog  align="center" error={error ? error : "Missing Data!"} />);
     } else {
       return (
         <>

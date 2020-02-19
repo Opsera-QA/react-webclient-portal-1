@@ -157,7 +157,7 @@ function ConfigurationsForm( { settings, token }) {
           </Card.Body>  
         </Card>
         :
-        <Accordion defaultActiveKey="1">
+        <Accordion defaultActiveKey="0">
           <Card>
             <Accordion.Toggle as={Card.Header} eventKey="0" >
               <Row className="card-header-clickable" onClick={() => { handleClickSettings(); }}>

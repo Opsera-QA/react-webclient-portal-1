@@ -57,7 +57,7 @@ class Chart extends React.Component {
     if(fetching) {
       return (<LoadingDialog size="sm" />);
     } else if (typeof data !== "object" || Object.keys(data).length == 0 || error) {
-      return (<ErrorDialog error={error ? error : "Missing Data!"} />);
+      return (<ErrorDialog  align="center" error={error ? error : "Missing Data!"} />);
     } else {
       return (
         <>

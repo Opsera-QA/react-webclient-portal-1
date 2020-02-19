@@ -22,7 +22,7 @@ function PipelineDashboard( { personaView } ) {
   return (
     <>
       <div className="d-flex">
-        <div className="p-2" style={{ minWidth: "140px" }}>
+        <div className="p-2" style={{ minWidth: "160px" }}>
           <BuildCounts />
         </div>
         <div className="p-2 flex-grow-1">
@@ -30,23 +30,15 @@ function PipelineDashboard( { personaView } ) {
             <BuildsByUserBarChart />
           
           </div>
-          <div className="chart" style={{ height: "300px" }}>
+          <div className="chart mb-3" style={{ height: "300px" }}>
             <AvgBuildDurationBarChart />
           </div>
-        </div>
-      </div>
-      
-      <div className="d-flex">
-        <div className="p-2" style={{ minWidth: "140px" }}>
-          &nbsp;
-        </div>
-        <div className="p-2 flex-grow-1">
           <div className="chart mb-3" style={{ height: "300px" }}>
             <AvgBuildsByUserBarChart />
           </div>
         </div>
-        
       </div>
+      
     </>
   );
 }

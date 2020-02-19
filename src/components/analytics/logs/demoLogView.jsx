@@ -22,8 +22,9 @@ function DemoLogView({ system }) {
   }, [system]);
 
   return (
-    <div className="mt-1 mb-3" style={{ height: 500, width: 902 }}>
-      <LazyLog extraLines={1} enableSearch url={url} caseInsensitive />
+    <div className="mt-1 mb-3" style={{ height: 500, }}>
+      <LazyLog extraLines={1} enableSearch url={url} caseInsensitive 
+        style={{ backgroundColor: "#FFF", color: "#334152" }} />
     </div>
   );
 

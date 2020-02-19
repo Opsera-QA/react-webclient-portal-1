@@ -10,7 +10,7 @@ import ErrorDialog from "../common/error";
 function BuildCounts() {
   const contextType = useContext(AuthContext);
   
-  const [hasError, setErrors] = useState(false);
+  const [error, setErrors] = useState(false);
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
 
@@ -37,8 +37,8 @@ function BuildCounts() {
 
   if(loading) {
     return (<LoadingDialog size="sm" />);
-  } else if (typeof data !== "object" || Object.keys(data).length == 0) {
-    return (<ErrorDialog error="Missing Data!" />);
+  } else if (typeof data !== "object" || Object.keys(data).length == 0 || error) {
+    return (<ErrorDialog  error={error ? error : "Missing Data!"} />);
   } else {
     return (
       <div className="d-flex flex-column mb-3">
@@ -85,6 +85,7 @@ function BuildCounts() {
             </footer>
           </blockquote>
         </div>
+        <div className="metric-box-footertext text-muted">Source: Jenkins</div>
       </div>
     );
   }
