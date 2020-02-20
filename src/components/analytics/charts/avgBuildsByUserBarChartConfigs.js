@@ -46,7 +46,7 @@ export default {
     "tickSize": 8,
     "tickPadding": 5,
     "tickRotation": 0,
-    "legend": "Average Build Duration",
+    "legend": "Average Build Duration (Seconds)",
     "legendPosition": "middle",
     "legendOffset": 50
   },
