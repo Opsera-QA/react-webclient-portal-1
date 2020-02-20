@@ -44,6 +44,13 @@ function AvgBuildDurationBarChart( { data, persona } ) {
           motionStiffness={90}
           motionDamping={15}
           // legends={config.legends}
+          tooltip={({ indexValue, value, color }) => (
+            <div>
+              <strong style={{ color }}>
+              User: </strong> {indexValue}<br></br>
+              <strong style={{ color }}>  Average Duration: </strong> {value} minutes
+            </div>
+          )}
           theme={{
             tooltip: {
               container: {

@@ -44,6 +44,13 @@ function BuildsByUserBarChart( { data, persona } ) {
           motionStiffness={90}
           borderWidth={2}
           motionDamping={15}
+          tooltip={({ indexValue, value, color }) => (
+            <div>
+              <strong style={{ color }}>
+              User: </strong> {indexValue}<br></br>
+              <strong style={{ color }}>  No. of Builds: </strong> {value} Builds
+            </div>
+          )}
           theme={{
             tooltip: {
               container: {
