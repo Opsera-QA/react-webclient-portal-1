@@ -1,15 +1,15 @@
 import React from "react";
 //import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
-import { AuthContext } from "../../../contexts/AuthContext"; 
+import { AuthContext } from "../../../contexts/AuthContext";
 import { ApiService } from "../../../api/apiService";
-import LoadingDialog from "../../common/loading"; 
-import ErrorDialog from "../../common/error"; 
+import LoadingDialog from "../../common/loading";
+import ErrorDialog from "../../common/error";
 import config from "./avgBuildsByUserBarChartConfigs";
 import "./charts.css";
 
 class Chart extends React.Component {
-  static contextType = AuthContext; 
+  static contextType = AuthContext;
 
   constructor(props, context) {
     super(props, context);
@@ -23,7 +23,7 @@ class Chart extends React.Component {
   }
 
   componentDidMount() {
-    this.getApiData();  
+    this.getApiData();
   }
 
 
@@ -31,33 +31,35 @@ class Chart extends React.Component {
     const { getAccessToken, getUserInfo } = this.context;
     const accessToken = await getAccessToken();
     const userInfo = await getUserInfo();
-    const urlParams = { userid: userInfo.sub };
-    const apiCall = new ApiService("/analytics/dashboard/pipeline", urlParams, accessToken);
-    let currentComponent = this;
-    apiCall.get()
-      .then(function (response) {
-        currentComponent.setState({
-          data: response.data.data.avgBuildDurationByUser.data,
-          error: null,
-          fetching: false
+    if (userInfo) {
+      const urlParams = { userid: userInfo.sub };
+      const apiCall = new ApiService("/analytics/dashboard/pipeline", urlParams, accessToken);
+      let currentComponent = this;
+      apiCall.get()
+        .then(function (response) {
+          currentComponent.setState({
+            data: response.data.data.avgBuildDurationByUser.data,
+            error: null,
+            fetching: false
+          });
+        })
+        .catch(function (error) {
+          currentComponent.setState({
+            error: error,
+            fetching: false
+          });
         });
-      })
-      .catch(function (error) {
-        currentComponent.setState({
-          error: error,
-          fetching: false
-        });
-      });
-    console.log(this.data);
+      console.log(this.data);
+    }
   }
 
 
   render() {
     const { data, error, fetching } = this.state;
-    if(fetching) {
+    if (fetching) {
       return (<LoadingDialog size="sm" />);
     } else if (typeof data !== "object" || Object.keys(data).length == 0 || error) {
-      return (<ErrorDialog  align="center" error={error ? error : "Missing Data!"} />);
+      return (<ErrorDialog align="center" error={error ? error : "Missing Data!"} />);
     } else {
       return (
         <>
@@ -96,7 +98,8 @@ class Chart extends React.Component {
             }}
           />
         </>
-      );}
+      );
+    }
   }
 }
 
