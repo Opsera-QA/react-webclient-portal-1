@@ -1,4 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import PropTypes from "prop-types";
+import { AuthContext } from "../../contexts/AuthContext";
+import { ApiService } from "../../api/apiService";
+import LoadingDialog from "../common/loading";
+import ErrorDialog from "../common/error";
+
 import SecOpsCounts from "./secOpsCounts";
 import SonarMaintainabilityLineChart from "../analytics/charts/sonarMaintainabilityLineChart";
 import SonarCodeSmellsLineChart from "../analytics/charts/sonarCodeSmellsLineChart";
@@ -7,46 +13,75 @@ import SonarCodeCategoriesPieChart2 from "../analytics/charts/sonarCodeCategorie
 import TwistlockVulnerability from "../analytics/charts/twistlockVulnerabilityLineChart";
 
 
-function SecOpsDashboard( { personaView } ) {
+function SecOpsDashboard( { persona } ) {
+  const contextType = useContext(AuthContext);
+
+  const [error, setErrors] = useState(false);
+  const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
-  const [persona, setPersona] = useState(personaView);
+  
+  const getApiData = async () => {
+    setLoading(true);
+    const { getAccessToken } = contextType;
+    const accessToken = await getAccessToken();
+    const apiCall = new ApiService("/analytics/dashboard/secops", {}, accessToken);
+    
+    apiCall.get()
+      .then(res => {
+        setData(res.data.data);
+        setLoading(false);
+      })
+      .catch(err => {
+        setErrors(err);
+        setLoading(false);
+      });
+  };
 
   useEffect( () => {
-    setLoading(false);
-    console.log("Persona: ", persona);
-  }, [personaView]);
+    getApiData();
+  }, []);
 
-  return (
-    <>
-      <div className="d-flex">
-        <div className="p-2" style={{ minWidth: "180px" }}>
-          <SecOpsCounts />
-        </div>
-        <div className="p-2 flex-grow-1">
-          <div className="chart mb-3" style={{ height: "300px" }}>
-            <SonarMaintainabilityLineChart />
+
+  if(loading) {
+    return (<LoadingDialog size="lg" />);
+  } else if (typeof data !== "object" || Object.keys(data).length == 0 || error) {
+    return (<ErrorDialog  error={error ? error : "Missing Data!"} />);
+  } else {
+    return (
+      <>
+        <div className="d-flex">
+          <div className="p-2" style={{ minWidth: "180px" }}>
+            <SecOpsCounts data={data} persona={persona} />
+          </div>
+          <div className="p-2 flex-grow-1">
+            <div className="chart mb-3" style={{ height: "300px" }}>
+              <SonarMaintainabilityLineChart data={data} persona={persona} />
           
-          </div>
-          <div className="chart mb-3" style={{ height: "300px" }}>
-            <SonarCodeSmellsLineChart />
-          </div>
+            </div>
+            <div className="chart mb-3" style={{ height: "300px" }}>
+              <SonarCodeSmellsLineChart data={data} persona={persona} />
+            </div>
 
-          <div className="chart mb-3" style={{ height: "300px" }}>
-            <SonarCodeCategoriesPieChart />
-          </div>
+            <div className="chart mb-3" style={{ height: "300px" }}>
+              <SonarCodeCategoriesPieChart data={data} persona={persona} />
+            </div>
 
-          <div className="chart mb-3" style={{ height: "300px" }}>
-            <SonarCodeCategoriesPieChart2 />
-          </div>
+            <div className="chart mb-3" style={{ height: "300px" }}>
+              <SonarCodeCategoriesPieChart2 data={data} persona={persona} />
+            </div>
 
-          <div className="chart mb-3" style={{ height: "300px" }}>
-            <TwistlockVulnerability />
+            <div className="chart mb-3" style={{ height: "300px" }}>
+              <TwistlockVulnerability data={data} persona={persona} />
+            </div>
           </div>
         </div>
-      </div>
       
-    </>
-  );
+      </>
+    );}
 }
+
+SecOpsDashboard.propTypes = {
+  persona: PropTypes.string
+};
 
 export default SecOpsDashboard;

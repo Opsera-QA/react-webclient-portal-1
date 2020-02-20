@@ -33,7 +33,6 @@ function Home() {
     
     apiCall.get()
       .then(res => {
-        console.log("res", res);
         setData(res.data[0]);
         setPersona(res.data[0].defaultPersona);
         setLoading(false);
@@ -108,7 +107,7 @@ function Home() {
                   styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                   classNamePrefix="select"
                   defaultValue={persona ? PERSONAS[parseInt(persona)] : PERSONAS[0]}
-                  isDisabled={true}
+                  isDisabled={false}
                   isClearable={false}
                   isSearchable={true}
                   name="PERSONA-SELECT"
@@ -122,13 +121,13 @@ function Home() {
             {(() => {
               switch (selection) {
               case "pipeline":
-                return <PipelineDashboard personaView={persona} />;
+                return <PipelineDashboard persona={persona} />;
               case "secops":
-                return <SecOpsDashboard personaView={persona} />;
+                return <SecOpsDashboard persona={persona} />;
               case "logs":
-                return <LogsDashboard personaView={persona} />;
+                return <LogsDashboard persona={persona} />;
               case "tools":
-                return <ToolsDashboard personaView={persona} />;
+                return <ToolsDashboard persona={persona} />;
               default:
                 return null; 
               }
