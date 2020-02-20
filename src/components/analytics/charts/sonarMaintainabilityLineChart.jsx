@@ -20,7 +20,7 @@ function MaintainabilityLineChart( { data, persona } ) {
         <div className="chart-label-text">Sonar: Maintainability Rating</div>
         <ResponsiveLine
           data={result}
-          margin={{ top: 50, right: 110, bottom: 50, left: 80 }}
+          margin={{ top: 40, right: 110, bottom: 70, left: 100 }}
           xScale={{ type: "point" }}
           yScale={{ type: "linear", min: "auto", max: "auto", stacked: true, reverse: false }}
           axisTop={null}

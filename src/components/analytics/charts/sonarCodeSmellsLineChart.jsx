@@ -20,7 +20,7 @@ function CodeSmellLineChart( { data, persona } ) {
         <div className="chart-label-text">Sonar: Code Smells</div>
         <ResponsiveLine
           data={result}
-          margin={{ top: 50, right: 110, bottom: 65, left: 80 }}
+          margin={{ top: 50, right: 110, bottom: 65, left: 100 }}
           xScale={{ type: "point" }}
           yScale={{ type: "linear", min: "auto", max: "auto", stacked: true, reverse: false }}
           axisTop={null}
