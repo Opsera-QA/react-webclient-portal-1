@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { ResponsiveLine } from "@nivo/line";
 import ErrorDialog from "../../common/error";
-import config from "./avgBuildsByUserBarChartConfigs";
+import config from "./sonarMaintainabilityLineChartConfigs";
 import "./charts.css";
 
 

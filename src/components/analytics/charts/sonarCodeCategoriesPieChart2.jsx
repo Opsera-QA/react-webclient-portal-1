@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { ResponsivePie } from "@nivo/pie";
 import ErrorDialog from "../../common/error";
-import config from "./avgBuildsByUserBarChartConfigs";
+import config from "./sonarCodeCategoriesPieChartConfigs";
 import "./charts.css";
 
 

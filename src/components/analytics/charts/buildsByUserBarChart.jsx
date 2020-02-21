@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
 import ErrorDialog from "../../common/error";
-import config from "./avgBuildsByUserBarChartConfigs";
+import config from "./buildsByUserBarChartConfigs";
 import "./charts.css";
 
 
