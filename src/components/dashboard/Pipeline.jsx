@@ -14,7 +14,7 @@ function PipelineDashboard( { persona } ) {
   const contextType = useContext(AuthContext);
 
   const [error, setErrors] = useState(false);
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   
   const getApiData = async () => {
@@ -37,7 +37,6 @@ function PipelineDashboard( { persona } ) {
   useEffect( () => {
     getApiData();
   }, []);
-
 
   if(loading) {
     return (<LoadingDialog size="lg" />);

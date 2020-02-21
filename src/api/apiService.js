@@ -24,7 +24,7 @@ export class ApiService {
 
   get() {
     var self = this;
-    console.log(self.params);
+    console.log(self.url);
     return axiosInstance({
       method: "get",
       url: self.url,
