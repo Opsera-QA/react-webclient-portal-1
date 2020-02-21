@@ -25,7 +25,8 @@ function BuildCounts( { data, persona } ) {
         
         <div className="metric-box p-3 mt-3 text-center">
           <blockquote className="blockquote mb-0 ">
-            <div className="box-metric">{data.failedBuilds.data[0]}</div>
+            <div className={"box-metric " + (data.failedBuilds.data[0] > 0 ? "red" : null)}>
+              {data.failedBuilds.data[0]}</div>
             <footer className="blockquote">
               <div className="metric-box-subtext text-muted">
             Failed Builds
@@ -47,7 +48,8 @@ function BuildCounts( { data, persona } ) {
 
         <div className="metric-box p-3 mt-3 text-center">
           <blockquote className="blockquote mb-0 ">
-            <div className="box-metric">{data.failedDeployments.data[0]}</div>
+            <div className={"box-metric " + (data.failedDeployments.data[0] > 0 ? "red" : null)}>
+              {data.failedDeployments.data[0]}</div>
             <footer className="blockquote">
               <div className="metric-box-subtext text-muted">
             Failed Deployments

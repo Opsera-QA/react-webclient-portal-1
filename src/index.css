@@ -4,6 +4,22 @@
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
+.red {
+  color: red;
+}
+
+.yellow {
+color: #ecb557;
+}
+
+.green {
+color: green;
+}
+
+.opsera-blue {
+  color: #384b70;
+}
+
 html {
   font-family: sans-serif;
   line-height: 1.15;
