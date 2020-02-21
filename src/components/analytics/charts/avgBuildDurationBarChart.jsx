@@ -15,7 +15,6 @@ function AvgBuildDurationBarChart( { data, persona } ) {
     return (<ErrorDialog  error="Missing Data!" />);
   } else {
     const result = data.avgBuildDuration.data;
-    console.log(result);
     return (
       <>
         <div className="chart-label-text">Jenkins: Average Build Duration</div>

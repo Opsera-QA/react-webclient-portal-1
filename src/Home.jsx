@@ -20,13 +20,11 @@ function Home() {
 
   const [hasError, setErrors] = useState(false);
   const [data, setData] = useState({});
-  const [loading, setLoading] = useState(false);
   const [selection, setSelection] = useState("pipeline");
   const [persona, setPersona] = useState();
   
 
   const getApiData = async () => {
-    setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
     const apiCall = new ApiService("/analytics/settings", {}, accessToken);
@@ -35,17 +33,14 @@ function Home() {
       .then(res => {
         setData(res.data[0]);
         setPersona(res.data[0].defaultPersona);
-        setLoading(false);
       })
       .catch(err => {
         setErrors(err);
-        setLoading(false);
       });
   };
 
   useEffect( () => {
     getApiData();
-    console.log("call'n the number");
   }, []);
 
 
@@ -67,9 +62,7 @@ function Home() {
     setPersona(selectedOption.value);
   };
 
-  if (loading) {
-    return (<LoadingDialog size="lg" />);
-  } else if (typeof(authenticated) === "boolean" && authenticated === false) {
+  if (typeof(authenticated) === "boolean" && authenticated === false) {
     return (
       <div className="mt-3 ml-5 w-75">
         <Row>
