@@ -9,10 +9,10 @@ import ErrorDialog from "../common/error";
 import AvgBuildDurationBarChart from "../analytics/charts/avgBuildDurationBarChart";
 import BuildsByUserBarChart from "../analytics/charts/buildsByUserBarChart";
 import AvgBuildsByUserBarChart from "../analytics/charts/avgBuildsByUserBarChart";
+import ActivityLogView from "../analytics/logs/activityLogView";
 
 function PipelineDashboard( { persona } ) {
   const contextType = useContext(AuthContext);
-
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -60,6 +60,10 @@ function PipelineDashboard( { persona } ) {
               <AvgBuildsByUserBarChart data={data} persona={persona} />
             </div>
           </div>
+        </div>
+
+        <div>
+          <ActivityLogView persona={persona} />
         </div>
       </>
     );}
