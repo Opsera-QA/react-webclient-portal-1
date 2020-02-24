@@ -5,6 +5,7 @@ import { Row, Col, Button, Card } from "react-bootstrap";
 import { ApiService } from "./api/apiService";
 import Select from "react-select";
 import LoadingDialog from "./components/common/loading";
+import InfoDialog from "./components/common/info";
 import ErrorDialog from "./components/common/error";
 import PipelineDashboard from "./components/dashboard/Pipeline";
 import SecOpsDashboard from "./components/dashboard/SecOps";
@@ -104,6 +105,7 @@ function Home() {
     );
   } 
   else if (authenticated) {
+    console.log("test", data.length);
     return (
       <div className="mb-3 max-charting-width">
         
@@ -116,6 +118,8 @@ function Home() {
                 pipelines, enabling organizations to build optimized and efficient DevOps based projects.</p>               
           </div>
            
+          { data.length == 0 && <InfoDialog message="Your Analytics Profile has not been enabled for this account.  Please go to the Analytics page on the left menu and enable your settings in order to use the Dashboards." /> }
+
           <Row>
             <Col sm={8}>
               <ul className="nav nav-pills ml-2 mb-2">
