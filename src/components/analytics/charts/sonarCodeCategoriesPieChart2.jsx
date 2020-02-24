@@ -50,7 +50,7 @@ function CodeCategoriesPieChart2( { data, persona } ) {
   }
 }
 CodeCategoriesPieChart2.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.object,
   persona: PropTypes.string
 };
 

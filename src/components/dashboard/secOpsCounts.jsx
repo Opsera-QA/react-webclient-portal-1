@@ -63,7 +63,7 @@ function SecOpsDashboard( { data, persona } ) {
 }
 
 SecOpsDashboard.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.object,
   persona: PropTypes.string
 };
 

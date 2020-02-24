@@ -25,8 +25,8 @@ function PipelineDashboard( { persona } ) {
     
     apiCall.get()
       .then(res => {
-        let dataObject = res && res.data ? res.data.data : [];
-        setData([dataObject]);
+        let dataObject = res && res.data ? res.data.data[0] : [];
+        setData(dataObject);
         setLoading(false);
       })
       .catch(err => {

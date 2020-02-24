@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import ErrorDialog from "../common/error";
 
 function BuildCounts( { data, persona } ) {
- 
+  console.log(data);
   if (typeof data !== "object" || Object.keys(data).length == 0) {
     return (<ErrorDialog  error="Missing Data!" />);
   } else {
@@ -62,7 +62,7 @@ function BuildCounts( { data, persona } ) {
 }
 
 BuildCounts.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.object,
   persona: PropTypes.string
 };
 

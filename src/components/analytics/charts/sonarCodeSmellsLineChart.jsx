@@ -44,7 +44,7 @@ function CodeSmellLineChart( { data, persona } ) {
   }
 }
 CodeSmellLineChart.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.object,
   persona: PropTypes.string
 };
 

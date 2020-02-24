@@ -60,7 +60,7 @@ function AvgBuildsByUserBarChart( { data, persona } ) {
 }
 
 AvgBuildsByUserBarChart.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.object,
   persona: PropTypes.string
 };
 

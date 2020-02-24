@@ -60,7 +60,7 @@ function BuildsByUserBarChart( { data, persona } ) {
   }
 }
 BuildsByUserBarChart.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.object,
   persona: PropTypes.string
 };
 

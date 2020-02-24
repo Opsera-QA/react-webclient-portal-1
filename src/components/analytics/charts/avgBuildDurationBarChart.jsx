@@ -61,7 +61,7 @@ function AvgBuildDurationBarChart( { data, persona } ) {
 }
 
 AvgBuildDurationBarChart.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.object,
   persona: PropTypes.string
 };
 

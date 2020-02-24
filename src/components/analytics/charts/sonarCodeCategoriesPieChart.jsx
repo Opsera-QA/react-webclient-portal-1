@@ -51,7 +51,7 @@ function CodeCategoriesPieChart( { data, persona } ) {
   }
 }
 CodeCategoriesPieChart.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.object,
   persona: PropTypes.string
 };
 
