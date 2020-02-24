@@ -31,10 +31,21 @@ function CodeSmellLineChart( { data, persona } ) {
           pointLabelYOffset={-12}
           useMesh={true}
           lineWidth={3.5}
+          tooltip={({ point, color }) => (
+            <div style={{
+              background: "white",
+              padding: "9px 12px",
+              border: "1px solid #ccc",
+            }}>
+              <strong style={{ color }}>
+              Timestamp: </strong> {point.data.x}<br></br>
+              <strong style={{ color }}>  Code Smells: </strong> {point.data.y}
+            </div>
+          )}
           theme={{
             tooltip: {
               container: {
-                fontSize: "12px",
+                fontSize: "16px",
               },
             },
           }}
