@@ -56,13 +56,8 @@ function SecOpsDashboard( { persona } ) {
           </div>
           <div className="p-2 flex-grow-1">
             <div className="chart mb-3" style={{ height: "300px" }}>
-              <SonarMaintainabilityLineChart data={data} persona={persona} />
-          
+              <TwistlockVulnerability data={data} persona={persona} />
             </div>
-            <div className="chart mb-3" style={{ height: "300px" }}>
-              <SonarCodeSmellsLineChart data={data} persona={persona} />
-            </div>
-
             <div className="chart mb-3" style={{ height: "300px" }}>
               <SonarCodeCategoriesPieChart data={data} persona={persona} />
             </div>
@@ -72,8 +67,14 @@ function SecOpsDashboard( { persona } ) {
             </div>
 
             <div className="chart mb-3" style={{ height: "300px" }}>
-              <TwistlockVulnerability data={data} persona={persona} />
+              <SonarMaintainabilityLineChart data={data} persona={persona} />
+          
             </div>
+            <div className="chart mb-3" style={{ height: "300px" }}>
+              <SonarCodeSmellsLineChart data={data} persona={persona} />
+            </div>
+
+
           </div>
         </div>
       

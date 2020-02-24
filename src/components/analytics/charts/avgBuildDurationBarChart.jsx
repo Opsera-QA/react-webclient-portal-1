@@ -50,7 +50,7 @@ function AvgBuildDurationBarChart( { data, persona } ) {
           theme={{
             tooltip: {
               container: {
-                fontSize: "12px",
+                fontSize: "16px",
               },
             },
           }}

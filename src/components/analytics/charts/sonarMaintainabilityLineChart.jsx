@@ -31,10 +31,21 @@ function MaintainabilityLineChart( { data, persona } ) {
           useMesh={true}
           lineWidth={3.5}
           colors={{ scheme: "category10" }}
+          tooltip={({ point, color }) => (
+            <div style={{
+              background: "white",
+              padding: "9px 12px",
+              border: "1px solid #ccc",
+            }}>
+              <strong style={{ color }}>
+              Timestamp: </strong> {point.data.x}<br></br>
+              <strong style={{ color }}>  QualityGate Value: </strong> {point.data.y}
+            </div>
+          )}
           theme={{
             tooltip: {
               container: {
-                fontSize: "12px",
+                fontSize: "16px",
               },
             },
           }}
