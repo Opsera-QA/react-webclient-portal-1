@@ -3,15 +3,11 @@ import PropTypes from "prop-types";
 import ErrorDialog from "../common/error";
 
 function SecOpsDashboard( { data, persona } ) {
-  useEffect( () => {
-  
-  }, [data]);
-  
 
   if (typeof data !== "object" || Object.keys(data).length == 0) {
     return (<ErrorDialog  error="Missing Data!" />);
   } else {
-    console.log("data", data);
+    const { twistlockHighVulnerabilities, twistlockMidVulnerabilities, twistlockLowVulnerabilities, sonarBugs } = data;
     return (
       <div className="d-flex flex-column mb-3">
         <div className="metric-box p-3 text-center">
@@ -19,8 +15,8 @@ function SecOpsDashboard( { data, persona } ) {
             <div className="metric-box-headertext text-muted mb-3">
               Vulnerabilities
             </div>
-            <div className={"box-metric " + (data.twistlockHighVulnerabilities.data[0] > 0 ? "red" : null)}>
-              {data.twistlockHighVulnerabilities.data[0]}</div>
+            <div className={"box-metric " + (twistlockHighVulnerabilities && twistlockHighVulnerabilities.data[0] > 0 ? "red" : null)}>
+              {twistlockHighVulnerabilities ? twistlockHighVulnerabilities.data[0] : null}</div>
             <footer className="blockquote">
               <div className="metric-box-subtext text-muted">
               High Severity
@@ -29,8 +25,8 @@ function SecOpsDashboard( { data, persona } ) {
           </blockquote>
 
           <blockquote className="blockquote mb-0 mt-4">
-            <div className={"box-metric " + (data.twistlockMidVulnerabilities.data[0] > 0 ? "yellow" : null)}>
-              {data.twistlockMidVulnerabilities.data[0]}</div>
+            <div className={"box-metric " + (twistlockMidVulnerabilities && twistlockMidVulnerabilities.data[0] > 0 ? "yellow" : null)}>
+              {twistlockMidVulnerabilities ? twistlockMidVulnerabilities.data[0] : null}</div>
             <footer className="blockquote">
               <div className="metric-box-subtext text-muted">
               Medium Severity
@@ -39,7 +35,7 @@ function SecOpsDashboard( { data, persona } ) {
           </blockquote>
         
           <blockquote className="blockquote mb-0 mt-4">
-            <div className="box-metric">{data.twistlockLowVulnerabilities.data[0]}</div>
+            <div className="box-metric">{twistlockLowVulnerabilities ? twistlockLowVulnerabilities.data[0] : null}</div>
             <footer className="blockquote">
               <div className="metric-box-subtext text-muted">
               Low Severity
@@ -51,7 +47,7 @@ function SecOpsDashboard( { data, persona } ) {
 
         <div className="metric-box p-3 mt-4 text-center">
           <blockquote className="blockquote mb-0 ">
-            <div className="box-metric">{data.sonarBugs.data[0]}</div>
+            <div className="box-metric">{sonarBugs ? sonarBugs.data[0] : null}</div>
             <footer className="blockquote">
               <div className="metric-box-subtext text-muted">
             Bugs
@@ -67,7 +63,7 @@ function SecOpsDashboard( { data, persona } ) {
 }
 
 SecOpsDashboard.propTypes = {
-  data: PropTypes.object,
+  data: PropTypes.array,
   persona: PropTypes.string
 };
 

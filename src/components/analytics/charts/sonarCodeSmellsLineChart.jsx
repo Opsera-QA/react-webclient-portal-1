@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { ResponsiveLine } from "@nivo/line";
 import ErrorDialog from "../../common/error";
@@ -7,19 +7,16 @@ import "./charts.css";
 
 
 function CodeSmellLineChart( { data, persona } ) {
-  useEffect( () => {
-    
-  }, [data]);
   
   if (typeof data !== "object" || Object.keys(data).length == 0) {
     return (<ErrorDialog  error="Missing Data!" />);
   } else {
-    const result = data.sonarCodeSmells.data;
+    const { sonarCodeSmells }  =  data;
     return (
       <>
         <div className="chart-label-text">Sonar: Code Smells</div>
         <ResponsiveLine
-          data={result}
+          data={sonarCodeSmells ? sonarCodeSmells.data : []}
           margin={{ top: 50, right: 110, bottom: 65, left: 100 }}
           xScale={{ type: "point" }}
           yScale={{ type: "linear", min: "auto", max: "auto", stacked: true, reverse: false }}
@@ -47,7 +44,7 @@ function CodeSmellLineChart( { data, persona } ) {
   }
 }
 CodeSmellLineChart.propTypes = {
-  data: PropTypes.object,
+  data: PropTypes.array,
   persona: PropTypes.string
 };
 

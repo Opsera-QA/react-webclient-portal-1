@@ -3,18 +3,16 @@ import PropTypes from "prop-types";
 import ErrorDialog from "../common/error";
 
 function BuildCounts( { data, persona } ) {
-  useEffect( () => {
-   
-  }, [data, persona]);
  
   if (typeof data !== "object" || Object.keys(data).length == 0) {
     return (<ErrorDialog  error="Missing Data!" />);
   } else {
+    const { successfulBuilds, failedBuilds, successfulDeployments, failedDeployments } = data;
     return (
       <div className="d-flex flex-column mb-3">
         <div className="metric-box p-3 text-center">
           <blockquote className="blockquote mb-0 ">
-            <div className="box-metric">{data.successfulBuilds.data[0]}</div>
+            <div className="box-metric">{successfulBuilds ? successfulBuilds.data[0] : null}</div>
             <footer className="blockquote">
               <div className="metric-box-subtext text-muted">
               Successful Builds
@@ -25,8 +23,8 @@ function BuildCounts( { data, persona } ) {
         
         <div className="metric-box p-3 mt-3 text-center">
           <blockquote className="blockquote mb-0 ">
-            <div className={"box-metric " + (data.failedBuilds.data[0] > 0 ? "red" : null)}>
-              {data.failedBuilds.data[0]}</div>
+            <div className={"box-metric " + (failedBuilds && failedBuilds.data[0] > 0 ? "red" : null)}>
+              {failedBuilds ? failedBuilds.data[0] : null}</div>
             <footer className="blockquote">
               <div className="metric-box-subtext text-muted">
             Failed Builds
@@ -37,7 +35,7 @@ function BuildCounts( { data, persona } ) {
         
         <div className="metric-box p-3 mt-3 text-center">
           <blockquote className="blockquote mb-0 ">
-            <div className="box-metric">{data.successfulDeployments.data[0]}</div>
+            <div className="box-metric">{successfulDeployments ? successfulDeployments.data[0] : null}</div>
             <footer className="blockquote">
               <div className="metric-box-subtext text-muted">
             Successful Deployments
@@ -48,8 +46,8 @@ function BuildCounts( { data, persona } ) {
 
         <div className="metric-box p-3 mt-3 text-center">
           <blockquote className="blockquote mb-0 ">
-            <div className={"box-metric " + (data.failedDeployments.data[0] > 0 ? "red" : null)}>
-              {data.failedDeployments.data[0]}</div>
+            <div className={"box-metric " + (failedDeployments && failedDeployments.data[0] > 0 ? "red" : null)}>
+              {failedDeployments ? failedDeployments.data[0] : null}</div>
             <footer className="blockquote">
               <div className="metric-box-subtext text-muted">
             Failed Deployments
@@ -64,7 +62,7 @@ function BuildCounts( { data, persona } ) {
 }
 
 BuildCounts.propTypes = {
-  data: PropTypes.object,
+  data: PropTypes.array,
   persona: PropTypes.string
 };
 

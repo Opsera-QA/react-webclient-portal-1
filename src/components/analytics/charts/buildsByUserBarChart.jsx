@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
 import ErrorDialog from "../../common/error";
@@ -7,20 +7,16 @@ import "./charts.css";
 
 
 function BuildsByUserBarChart( { data, persona } ) {
-  useEffect( () => {
-    
-  }, [data]);
-
 
   if (typeof data !== "object" || Object.keys(data).length == 0) {
     return (<ErrorDialog  error="Missing Data!" />);
   } else {
-    const result = data.buildsByUser.data;
+    const { buildsByUser }  =  data;
     return (
       <>
         <div className="chart-label-text">Jenkins: Builds by User</div>
         <ResponsiveBar
-          data={result}
+          data={buildsByUser ? buildsByUser.data : []}
           keys={config.keys}
           indexBy="key"
           margin={config.margin}
@@ -64,7 +60,7 @@ function BuildsByUserBarChart( { data, persona } ) {
   }
 }
 BuildsByUserBarChart.propTypes = {
-  data: PropTypes.object,
+  data: PropTypes.array,
   persona: PropTypes.string
 };
 

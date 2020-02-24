@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
 import ErrorDialog from "../../common/error";
@@ -6,19 +6,16 @@ import config from "./avgBuildsByUserBarChartConfigs";
 import "./charts.css";
 
 function AvgBuildsByUserBarChart( { data, persona } ) {
-  useEffect( () => {
-    
-  }, [data]);
   
   if (typeof data !== "object" || Object.keys(data).length == 0) {
     return (<ErrorDialog  error="Missing Data!" />);
   } else {
-    const result = data.avgBuildDurationByUser.data;
+    const { avgBuildDurationByUser }  =  data;
     return (
       <>
         <div className="chart-label-text">Jenkins: Average Build Duration by User</div>
         <ResponsiveBar
-          data={result}
+          data={avgBuildDurationByUser ? avgBuildDurationByUser.data : []}
           keys={config.keys}
           indexBy="key"
           margin={config.margin}
@@ -63,7 +60,7 @@ function AvgBuildsByUserBarChart( { data, persona } ) {
 }
 
 AvgBuildsByUserBarChart.propTypes = {
-  data: PropTypes.object,
+  data: PropTypes.array,
   persona: PropTypes.string
 };
 

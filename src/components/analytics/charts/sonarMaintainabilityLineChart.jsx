@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { ResponsiveLine } from "@nivo/line";
 import ErrorDialog from "../../common/error";
@@ -7,19 +7,16 @@ import "./charts.css";
 
 
 function MaintainabilityLineChart( { data, persona } ) {
-  useEffect( () => {
-    
-  }, [data]);
 
   if (typeof data !== "object" || Object.keys(data).length == 0) {
     return (<ErrorDialog  error="Missing Data!" />);
   } else {
-    const result = data.sonarMaintainability.data;
+    const { sonarMaintainability }  =  data;
     return (
       <>
         <div className="chart-label-text">Sonar: Maintainability Rating</div>
         <ResponsiveLine
-          data={result}
+          data={sonarMaintainability ? sonarMaintainability.data : []}
           margin={{ top: 40, right: 110, bottom: 70, left: 100 }}
           xScale={{ type: "point" }}
           yScale={{ type: "linear", min: "auto", max: "auto", stacked: true, reverse: false }}
@@ -47,7 +44,7 @@ function MaintainabilityLineChart( { data, persona } ) {
   }
 }
 MaintainabilityLineChart.propTypes = {
-  data: PropTypes.object,
+  data: PropTypes.array,
   persona: PropTypes.string
 };
 

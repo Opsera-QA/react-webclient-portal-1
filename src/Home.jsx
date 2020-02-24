@@ -19,7 +19,7 @@ function Home() {
   const history = useHistory();
 
   const [hasError, setErrors] = useState(false);
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
   const [selection, setSelection] = useState("pipeline");
   const [persona, setPersona] = useState();
   
@@ -31,8 +31,10 @@ function Home() {
     
     apiCall.get()
       .then(res => {
-        setData(res.data[0]);
-        setPersona(res.data[0].defaultPersona);
+        setData(res.data.length > 0 ? res.data[0] : []);
+        if (res.data.length > 0) {
+          setPersona(res.data[0].defaultPersona);
+        }
       })
       .catch(err => {
         setErrors(err);

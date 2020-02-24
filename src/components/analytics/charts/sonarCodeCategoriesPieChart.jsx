@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { ResponsivePie } from "@nivo/pie";
 import ErrorDialog from "../../common/error";
@@ -7,19 +7,17 @@ import "./charts.css";
 
 
 function CodeCategoriesPieChart( { data, persona } ) {
-  useEffect( () => {
-    
-  }, [data]);
-
+  
   if (typeof data !== "object" || Object.keys(data).length == 0) {
     return (<ErrorDialog  error="Missing Data!" />);
   } else {
-    const result = data.sonarCodeCategoriesNO_VALUE.data;
+    
+    const { sonarCodeCategoriesNO_VALUE }  =  data;
     return (
       <>
         <div className="chart-label-text">Sonar: Code Categories</div>
         <ResponsivePie
-          data={result}
+          data={sonarCodeCategoriesNO_VALUE ? sonarCodeCategoriesNO_VALUE.data : []}
           margin={{ top: 40, right: 230, bottom: 80, left: 80 }}
           innerRadius={0.5}
           padAngle={0.7}
@@ -53,7 +51,7 @@ function CodeCategoriesPieChart( { data, persona } ) {
   }
 }
 CodeCategoriesPieChart.propTypes = {
-  data: PropTypes.object,
+  data: PropTypes.array,
   persona: PropTypes.string
 };
 

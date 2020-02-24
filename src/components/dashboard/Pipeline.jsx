@@ -25,7 +25,8 @@ function PipelineDashboard( { persona } ) {
     
     apiCall.get()
       .then(res => {
-        setData(res.data.data);
+        let dataObject = res && res.data ? res.data.data : [];
+        setData([dataObject]);
         setLoading(false);
       })
       .catch(err => {
@@ -59,7 +60,7 @@ function PipelineDashboard( { persona } ) {
             <div className="chart mb-3" style={{ height: "300px" }}>
               <AvgBuildsByUserBarChart data={data} persona={persona} />
             </div>
-          </div>
+          </div> 
         </div>
 
         <div>

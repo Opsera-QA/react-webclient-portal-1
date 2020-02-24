@@ -17,7 +17,7 @@ function SecOpsDashboard( { persona } ) {
   const contextType = useContext(AuthContext);
 
   const [error, setErrors] = useState(false);
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   
   const getApiData = async () => {
@@ -28,7 +28,8 @@ function SecOpsDashboard( { persona } ) {
     
     apiCall.get()
       .then(res => {
-        setData(res.data.data);
+        let dataObject = res && res.data ? res.data.data : [];
+        setData([dataObject]);
         setLoading(false);
       })
       .catch(err => {
