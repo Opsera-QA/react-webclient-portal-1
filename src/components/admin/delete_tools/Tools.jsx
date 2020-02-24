@@ -95,9 +95,9 @@ class ToolTable extends React.PureComponent {
 
   isDisabled = (status) => {
     if (status === "TERMINATED")
-      return true
+      return true;
     else
-      return false
+      return false;
   }
 
   render() {
@@ -106,7 +106,7 @@ class ToolTable extends React.PureComponent {
     const { data, error, fetching } = this.state;
 
     if (!tool) return null;
-    console.log(tool)
+    console.log(tool);
     const { name, port, toolStatus, installationDate, _id, toolURL } = tool;
     return (
       <>
