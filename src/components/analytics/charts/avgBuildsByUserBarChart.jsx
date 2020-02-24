@@ -5,13 +5,13 @@ import ErrorDialog from "../../common/error";
 import config from "./avgBuildsByUserBarChartConfigs";
 import "./charts.css";
 
-function AvgBuildsByUserBarChart( { data, persona } ) {
-  useEffect( () => {
-    
+function AvgBuildsByUserBarChart({ data, persona }) {
+  useEffect(() => {
+
   }, [data]);
-  
+
   if (typeof data !== "object" || Object.keys(data).length == 0) {
-    return (<ErrorDialog  error="Missing Data!" />);
+    return (<ErrorDialog error="Missing Data!" />);
   } else {
     const result = data.avgBuildDurationByUser.data;
     return (
@@ -45,14 +45,14 @@ function AvgBuildsByUserBarChart( { data, persona } ) {
           tooltip={({ indexValue, value, color }) => (
             <div>
               <strong style={{ color }}>
-              User: </strong> {indexValue}<br></br>
+                User: </strong> {indexValue}<br></br>
               <strong style={{ color }}>  No. of Builds: </strong> {value} Builds
             </div>
           )}
           theme={{
             tooltip: {
               container: {
-                fontSize: "16px",
+                fontSize: "12px",
               },
             },
           }}

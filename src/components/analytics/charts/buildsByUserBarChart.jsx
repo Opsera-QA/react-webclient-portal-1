@@ -6,14 +6,14 @@ import config from "./buildsByUserBarChartConfigs";
 import "./charts.css";
 
 
-function BuildsByUserBarChart( { data, persona } ) {
-  useEffect( () => {
-    
+function BuildsByUserBarChart({ data, persona }) {
+  useEffect(() => {
+
   }, [data]);
 
 
   if (typeof data !== "object" || Object.keys(data).length == 0) {
-    return (<ErrorDialog  error="Missing Data!" />);
+    return (<ErrorDialog error="Missing Data!" />);
   } else {
     const result = data.buildsByUser.data;
     return (
@@ -47,14 +47,14 @@ function BuildsByUserBarChart( { data, persona } ) {
           tooltip={({ indexValue, value, color }) => (
             <div>
               <strong style={{ color }}>
-              User: </strong> {indexValue}<br></br>
+                User: </strong> {indexValue}<br></br>
               <strong style={{ color }}>  No. of Builds: </strong> {value} Builds
             </div>
           )}
           theme={{
             tooltip: {
               container: {
-                fontSize: "16px",
+                fontSize: "12px",
               },
             },
           }}

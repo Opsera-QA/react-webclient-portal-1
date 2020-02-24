@@ -35,16 +35,16 @@ class App extends Component {
       hideSideBar: false
     };
   }
-  
+
   componentDidMount() {
     this.updateDimensions();
     window.addEventListener("resize", this.updateDimensions.bind(this));
   }
 
   updateDimensions() {
-    if(window.innerWidth < 770) {
+    if (window.innerWidth < 770) {
       this.setState({ hideSideBar: true });
-    } 
+    }
   }
 
 
@@ -57,9 +57,9 @@ class App extends Component {
             <Navbar />
             <div className="container-fluid">
               <div className="d-flex flex-row">
-                
-                <Sidebar hideView={hideSideBar} />                
-                
+
+                <Sidebar hideView={hideSideBar} />
+
                 <div className="w-100 pt-4 pb-4">
                   <Route path="/" exact component={Home} />
                   <Route path="/login" exact component={Login} />
