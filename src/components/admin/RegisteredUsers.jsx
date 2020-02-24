@@ -68,7 +68,6 @@ export default class RegisteredUsers extends PureComponent {
     let currentComponent = this;
     apiCall.get()
       .then(function (response) {
-        // console.log(response.data)
         currentComponent.setState({
           data: response.data,
           error: null,
