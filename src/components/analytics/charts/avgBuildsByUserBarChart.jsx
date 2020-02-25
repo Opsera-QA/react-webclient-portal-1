@@ -43,7 +43,7 @@ function AvgBuildsByUserBarChart( { data, persona } ) {
             <div>
               <strong style={{ color }}>
                 User: </strong> {indexValue}<br></br>
-              <strong style={{ color }}>  No. of Builds: </strong> {value} Builds
+              <strong style={{ color }}>  Duration: </strong> {value} Seconds
             </div>
           )}
           theme={{

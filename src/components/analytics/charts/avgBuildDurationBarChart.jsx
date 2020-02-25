@@ -43,7 +43,7 @@ function AvgBuildDurationBarChart( { data, persona } ) {
           tooltip={({ indexValue, value, color }) => (
             <div>
               <strong style={{ color }}>
-              User: </strong> {indexValue}<br></br>
+              Build Number: </strong> {indexValue}<br></br>
               <strong style={{ color }}>  Average Duration: </strong> {value} minutes
             </div>
           )}
