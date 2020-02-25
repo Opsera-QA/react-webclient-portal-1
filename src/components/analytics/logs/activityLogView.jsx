@@ -61,14 +61,13 @@ const MapActivityData = (props) => {
         <Alert key={idx} variant={type}>
           <div className="row">
             <div className="col">{item.message}</div>
-            <div className="col text-right"><Moment format="dddd, MMMM Do YYYY, h:mm:ss a" date={item["@timestamp"]} /></div>
+            <div className="col text-right"><Moment format="dddd, MMMM Do YYYY, h:mm:ss a" date={item["timestamp"]} /></div>
           </div>
           <div className="row">
-            <div className="col">{item["data.projectName"]}</div>
-            <div className="col">Version: {item["@version"]}</div>
-            <div className="col">Build: {item["data.buildNum"]}</div>
+            <div className="col">{item["data_projectName"]}</div>
+            <div className="col">Version: {item["version"]}</div>
+            <div className="col">Build: {item["data_buildNum"]}</div>
           </div>
-          <div className="text-muted mt-2">{JSON.stringify(item)}</div>
         </Alert>
       ))}
     </>
