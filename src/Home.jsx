@@ -105,7 +105,6 @@ function Home() {
     );
   } 
   else if (authenticated) {
-    console.log("test", data.length);
     return (
       <div className="mb-3 max-charting-width">
         
