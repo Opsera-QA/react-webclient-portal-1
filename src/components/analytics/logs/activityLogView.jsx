@@ -23,7 +23,7 @@ function ActivityLogView( { persona } ) {
     
     apiCall.get()
       .then(res => {
-        setData(res.data.data);
+        setData(res.data);
         setLoading(false);
       })
       .catch(err => {
@@ -41,9 +41,10 @@ function ActivityLogView( { persona } ) {
   } else if (typeof data !== "object" || Object.keys(data).length == 0 || error) {
     return (<ErrorDialog  error={error ? error : "Missing Data!"} />);
   } else {
+    console.log("data", data);
     return (
       <>
-        <MapActivityData data={data.buildSuccess.data} type="success" />
+        <MapActivityData data={data} type="success" />
     
       </>
     );
