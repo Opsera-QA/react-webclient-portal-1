@@ -56,7 +56,7 @@ const MapActivityData = (props) => {
   const { data, type } = props;
   return (
     <>
-      <div className="activity-label-text mb-2">Successful Build Activity Logs</div>
+      <div className="activity-label-text mb-2">Pipeline Activity Logs</div>
       { data.map((item, idx) => (
         <Alert key={idx} variant={type}>
           <div className="row">

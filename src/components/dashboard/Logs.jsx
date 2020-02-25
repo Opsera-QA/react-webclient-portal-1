@@ -1,22 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import ActivityLogView from "../analytics/logs/activityLogView";
 
-function LogsDashboard() {
+function LogsDashboard( { persona } ) {
   const [loading, setLoading] = useState(false);
 
-  useEffect( () => {
-    setLoading(false);
-  }, []);
-
   return (
-    <div style={{ height: "540px" }}>
-      <div className="row h-100">
-        <div className="col-sm-12 my-auto text-center">
-          <div className="h6">Logs Dashboard Coming Soon</div>
-        </div>
-      </div>
+    <div className="mt-4">
+      <ActivityLogView persona={persona}  />
     </div>
-    
   );
 }
+
+LogsDashboard.propTypes = {
+  persona: PropTypes.string
+};
 
 export default LogsDashboard;
