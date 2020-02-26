@@ -10,17 +10,22 @@ import "./logs.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
 
-function ActivityLogView( { persona } ) {
+function ActivityLogView( { persona, searchQuery, filterType } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  
+
   const getApiData = async () => {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiCall = new ApiService("/analytics/dashboard/pipeline/activity", {}, accessToken);
+    const urlParams = {
+      search: searchQuery,
+      filter: filterType
+    };
+    
+    const apiCall = new ApiService("/analytics/dashboard/pipeline/activity", urlParams, accessToken);
     
     apiCall.get()
       .then(res => {
@@ -34,8 +39,11 @@ function ActivityLogView( { persona } ) {
   };
 
   useEffect( () => {
+    console.log("Persona uE ", persona);
+    console.log("Query uE ", searchQuery);
+    console.log("Filter uE ", filterType);
     getApiData();
-  }, []);
+  }, [searchQuery, filterType]);
 
   if(loading) {
     return (<LoadingDialog size="sm" />);
@@ -43,10 +51,13 @@ function ActivityLogView( { persona } ) {
     return (<ErrorDialog  error={error ? error : "Missing Data!"} />);
   } else {
     console.log("data", data);
+    console.log("query", searchQuery);
+    console.log("persona", persona);
+    console.log("filterType", filterType);
     return (
       <>
         <MapActivityData data={data} type="success" />
-    
+        
       </>
     );
   }
@@ -61,7 +72,7 @@ const MapActivityData = (props) => {
   const { data, type } = props;
   return (
     <>
-      <div className="activity-label-text mb-2">Pipeline Activity Logs</div>
+      <div className="activity-label-text mb-2">Activity Logs</div>
       { data.map((item, idx) => (
         <Alert key={idx} variant={type}>
           <div className="row">
@@ -85,7 +96,9 @@ MapActivityData.propTypes = {
 };
 
 ActivityLogView.propTypes = {
-  persona: PropTypes.string
+  persona: PropTypes.string,
+  searchQuery: PropTypes.string,
+  filterType: PropTypes.string
 };
 
 export default ActivityLogView;

@@ -157,7 +157,7 @@ function ConfigurationsForm({ settings, token }) {
           </Card.Body>
         </Card>
         :
-        <Accordion defaultActiveKey="0">
+        <Accordion defaultActiveKey="1">
           <Card>
             <Accordion.Toggle as={Card.Header} eventKey="0" >
               <Row className="card-header-clickable" onClick={() => { handleClickSettings(); }}>
@@ -166,8 +166,8 @@ function ConfigurationsForm({ settings, token }) {
                   {(enabledToolsOn && !disabledToolsOn) &&
                     <>
                       <span className="italic pr-3" style={{ fontSize: "smaller" }}>(Enabled on&nbsp;
-                            <Moment format="MM/DD/YYYY" date={enabledToolsOn} />)
-                          </span>
+                        <Moment format="MM/DD/YYYY" date={enabledToolsOn} />)
+                      </span>
                     </>
                   }
                   <FontAwesomeIcon icon={faAngleDown} fixedWidth size="lg" rotation={editSettings ? 180 : null} /></Col>
