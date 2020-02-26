@@ -54,7 +54,7 @@ function ActivityLogView( { persona, searchQuery, filterType } ) {
     console.log("filterType", filterType);
     return (
       <>
-        <MapActivityData data={data} type="success" />
+        <MapActivityData data={data} type="secondary" />
         
       </>
     );

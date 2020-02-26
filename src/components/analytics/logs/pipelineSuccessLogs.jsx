@@ -10,7 +10,7 @@ import "./logs.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
 
-const FILTER = "pass";
+const FILTER = "success";
 
 function PipelineSuccessLogs( { persona, searchQuery, filterType } ) {
   const contextType = useContext(AuthContext);
