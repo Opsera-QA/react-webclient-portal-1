@@ -10,7 +10,9 @@ import "./logs.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
 
-function ActivityLogView( { persona, searchQuery, filterType } ) {
+const FILTER = "fail";
+
+function PipelineFailureLogs( { persona, searchQuery, filterType } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -22,7 +24,7 @@ function ActivityLogView( { persona, searchQuery, filterType } ) {
     const accessToken = await getAccessToken();
     const urlParams = {
       search: searchQuery,
-      filter: filterType
+      filter: FILTER
     };
     const apiCall = new ApiService("/analytics/dashboard/pipeline/activity", urlParams, accessToken);    
     apiCall.get()
@@ -37,9 +39,6 @@ function ActivityLogView( { persona, searchQuery, filterType } ) {
   };
 
   useEffect( () => {
-    console.log("Persona uE ", persona);
-    console.log("Query uE ", searchQuery);
-    console.log("Filter uE ", filterType);
     getApiData();
   }, [searchQuery, filterType]);
 
@@ -48,13 +47,10 @@ function ActivityLogView( { persona, searchQuery, filterType } ) {
   } else if (typeof data !== "object" || Object.keys(data).length == 0 || error) {
     return (<ErrorDialog  error={error ? error : "Missing Data!"} />);
   } else {
-    console.log("data", data);
-    console.log("query", searchQuery);
-    console.log("persona", persona);
-    console.log("filterType", filterType);
     return (
       <>
-        <MapActivityData data={data} type="success" />
+        <div className="activity-label-text mb-2">Build Failures</div>
+        <MapActivityData data={data} type="danger" />
         
       </>
     );
@@ -70,15 +66,15 @@ const MapActivityData = (props) => {
   const { data, type } = props;
   return (
     <>
-      <div className="activity-label-text mb-2">Activity Logs</div>
       { data.map((item, idx) => (
         <Alert key={idx} variant={type}>
           <div className="row">
-            <div className="col">{item.message}</div>
-            <div className="col text-right"><Moment format="dddd, MMMM Do YYYY, h:mm:ss a" date={item["timestamp"]} /></div>
+            <div className="col" style={{ fontWeight: "bold" }}>{item["data_projectName"]}: {item.message}</div>
           </div>
           <div className="row mt-1">
-            <div className="col">{item["data_projectName"]}</div>
+            <div className="col"><Moment format="dddd, MMMM Do YYYY, h:mm:ss a" date={item["timestamp"]} /></div>
+          </div>
+          <div className="row mt-2">
             <div className="col">Version: {item["version"]}</div>
             <div className="col">Build: {item["data_buildNum"]} <FontAwesomeIcon icon={faSearchPlus} size="xs" style={{ cursor: "pointer" }} /></div>
           </div>
@@ -93,11 +89,11 @@ MapActivityData.propTypes = {
   type: PropTypes.string
 };
 
-ActivityLogView.propTypes = {
+PipelineFailureLogs.propTypes = {
   persona: PropTypes.string,
   searchQuery: PropTypes.string,
   filterType: PropTypes.string
 };
 
-export default ActivityLogView;
+export default PipelineFailureLogs;
 
