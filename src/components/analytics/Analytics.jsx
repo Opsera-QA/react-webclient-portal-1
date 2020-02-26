@@ -76,6 +76,7 @@ function Analytics() {
         <ConfigurationsForm settings={data} token={token} />
       </div>
 
+      {(data) &&
       <div className="mt-1">
         <Form onSubmit={handleFormSubmit}>
           <div className="d-flex mt-3">
@@ -103,7 +104,7 @@ function Analytics() {
             </div>
           </div>
         </Form>
-      </div>
+      </div>}
 
       
       <div className="mt-3 p-2">

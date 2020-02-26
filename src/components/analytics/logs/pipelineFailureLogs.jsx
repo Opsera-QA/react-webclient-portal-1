@@ -44,8 +44,8 @@ function PipelineFailureLogs( { persona, searchQuery, filterType } ) {
 
   if(loading) {
     return (<LoadingDialog size="sm" />);
-  } else if (typeof data !== "object" || Object.keys(data).length == 0 || error) {
-    return (<ErrorDialog  error={error ? error : "Missing Data!"} />);
+  } else if (error) {
+    return (<ErrorDialog  error={error} />);
   } else {
     return (
       <>

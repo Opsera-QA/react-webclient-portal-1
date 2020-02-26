@@ -45,8 +45,8 @@ function ActivityLogView( { persona, searchQuery, filterType } ) {
 
   if(loading) {
     return (<LoadingDialog size="sm" />);
-  } else if (typeof data !== "object" || Object.keys(data).length == 0 || error) {
-    return (<ErrorDialog  error={error ? error : "Missing Data!"} />);
+  } else if (error) {
+    return (<ErrorDialog  error={error} />);
   } else {
     console.log("data", data);
     console.log("query", searchQuery);
@@ -70,7 +70,6 @@ const MapActivityData = (props) => {
   const { data, type } = props;
   return (
     <>
-      <div className="activity-label-text mb-2">Activity Logs</div>
       { data.map((item, idx) => (
         <Alert key={idx} variant={type}>
           <div className="row">
