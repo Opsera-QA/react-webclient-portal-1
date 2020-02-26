@@ -7,7 +7,8 @@ import ErrorDialog from "../../common/error";
 import { Alert } from "react-bootstrap";
 import Moment from "react-moment";
 import "./logs.css";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
 
 function ActivityLogView( { persona } ) {
   const contextType = useContext(AuthContext);
@@ -52,6 +53,10 @@ function ActivityLogView( { persona } ) {
 }
 
 
+//TODO: Make "Build number" clickable to zoom in on log views
+// New Node Service: Get log details
+// New Node Service: Get Recent Build summary (new kind)
+
 const MapActivityData = (props) => {
   const { data, type } = props;
   return (
@@ -63,10 +68,10 @@ const MapActivityData = (props) => {
             <div className="col">{item.message}</div>
             <div className="col text-right"><Moment format="dddd, MMMM Do YYYY, h:mm:ss a" date={item["timestamp"]} /></div>
           </div>
-          <div className="row">
+          <div className="row mt-1">
             <div className="col">{item["data_projectName"]}</div>
             <div className="col">Version: {item["version"]}</div>
-            <div className="col">Build: {item["data_buildNum"]}</div>
+            <div className="col">Build: {item["data_buildNum"]} <FontAwesomeIcon icon={faSearchPlus} size="xs" style={{ cursor: "pointer" }} /></div>
           </div>
         </Alert>
       ))}
