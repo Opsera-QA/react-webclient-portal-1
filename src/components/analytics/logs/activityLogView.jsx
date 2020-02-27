@@ -33,7 +33,7 @@ function ActivityLogView({ persona, searchQuery, filterType }) {
       
     setLoading(false);
     console.log("Results:", result);
-    setData(result.data.hits.hits);
+    setData(result ? result.data.hits.hits : []);
   };
 
   useEffect(() => {
@@ -52,7 +52,7 @@ function ActivityLogView({ persona, searchQuery, filterType }) {
   } else {
     return (
       <>
-        <MapActivityData data={data} search={searchQuery} type="secondary" />
+        <MapActivityData data={data} search={searchQuery} filter={filterType} type="secondary" />
       </>
     );
   }
@@ -62,7 +62,7 @@ function ActivityLogView({ persona, searchQuery, filterType }) {
 const MapActivityData = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
-  const { data, type, search } = props;
+  const { data, type, search, filter } = props;
 
   const handleClick = (param) => {
     setModalMessage(param);
@@ -80,14 +80,14 @@ const MapActivityData = (props) => {
         </div>
       </div>
     );
-  } else {
-    
+  } else if (filter === "pipeline") {
+    console.log("FILTER: ", filter);
     return (
       <>
         {data.map((item, idx) => (
           <Alert key={idx} variant={type}>
             <div className="row">
-              <div className="col">{item._index}: {item._source.message[0]}</div>
+              <div className="col">{item._index}: {item._source.message ? item._source.message[0] : null}</div>
               <div className="col text-right"><Moment format="dddd, MMMM Do YYYY, h:mm:ss a" date={item._source["@timestamp"]} /></div>
             </div>
             <div className="row mt-1">
@@ -107,9 +107,22 @@ const MapActivityData = (props) => {
         {showModal ? <Modal header="Log Details"
           message={JSON.stringify(modalMessage)}
           button="OK"
-          handleHideModal={() => setShowModal(false)} /> : null}
+          size="lg"
+          handleCancelModal={() => setShowModal(false)}
+          handleConfirmModal={() => setShowModal(false)} /> : null}
       </>
-    );}
+    );
+  } else {
+    return (
+      <>
+        {data.map((item, idx) => (
+          <Alert key={idx} variant="light">
+            {JSON.stringify(item)}
+          </Alert>
+        ))}
+      </>
+    );
+  } 
 };
 
 MapActivityData.propTypes = {

@@ -21,7 +21,7 @@ function Analytics() {
   const [token, setToken] = useState();
   const [searchTerm, setSearchTerm] = useState("");
   const [query, setQuery] = useState("");
-  const [filterType, setFilterType] = useState("");
+  const [filterType, setFilterType] = useState("pipeline");
 
   useEffect(() => {
     fetchData();
@@ -87,7 +87,7 @@ function Analytics() {
                   menuPortalTarget={document.body}
                   styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                   classNamePrefix="select"
-                  defaultValue={filterType ? FILTER[parseInt(filterType)] : FILTER[0]}
+                  defaultValue={filterType ? FILTER[FILTER.findIndex(x => x.value ===filterType)] : FILTER[0]}
                   isDisabled={false}
                   isClearable={false}
                   isSearchable={true}

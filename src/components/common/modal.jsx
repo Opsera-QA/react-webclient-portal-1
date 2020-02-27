@@ -4,7 +4,7 @@ import { Button, Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
-function CustomModalDialog({ header, message, button, handleConfirmModal, handleCancelModal }) {
+function CustomModalDialog({ header, message, button, size, handleConfirmModal, handleCancelModal }) {
   const [state, setState] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     { show: true }
@@ -26,12 +26,12 @@ function CustomModalDialog({ header, message, button, handleConfirmModal, handle
 
   return (
     <>
-      <Modal show={state.show} onHide={() => handleClose()}>
+      <Modal show={state.show} size={size} onHide={() => handleClose()}>
         <Modal.Header closeButton>
           <Modal.Title>{header}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {message}
+          <div style={{ overflowWrap: "break-word" }}>{message}</div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="outline-secondary" onClick={() => handleClose()}>
