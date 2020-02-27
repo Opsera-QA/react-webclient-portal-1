@@ -91,6 +91,7 @@ function ConfigurationsForm({ settings, token }) {
         setState({ loaded: true });
       });
   }
+  function handleCancel() { setState({ showModal: false }); }
 
   function handleOptionChange(changeEvent) {
     setState({ data: { ...state.data, dataUsage: changeEvent.target.value } });
@@ -142,7 +143,8 @@ function ConfigurationsForm({ settings, token }) {
       {showModal ? <Modal header="Confirm Deactivation"
         message={messages}
         button="Confirm"
-        handleHideModal={disableProfile} /> : null}
+        handleCancelModal={handleCancel}
+        handleConfirmModal={disableProfile} /> : null}
 
       {!active ?
         <Card>

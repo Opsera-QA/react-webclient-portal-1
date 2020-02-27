@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
 import React, { Component } from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import Moment from "react-moment";
 import { AuthContext } from "../../../contexts/AuthContext";  //REact Context API Code for User Authentication
 import { ApiService } from "../../../api/apiService";
 import ErrorDialog from "../../common/error";
+import Modal from "../../common/modal";
 
 class Tools extends Component {
   state = {}
@@ -111,6 +112,13 @@ class ToolTable extends React.PureComponent {
     return (
       <>
         {error ? <ErrorDialog error={error} /> : null}
+
+        {this.state.confirm ? <Modal header="Confirm Delete"
+          message="Warning! Data cannot be recovered once a tool is deleted. Do you still want to proceed?"
+          button="Confirm"
+          handleCancelModal={this.handleCancel}
+          handleConfirmModal={this.handleConfirm} /> : null}
+
         <div className="p-2 mt-2">
           <div className="row mt-1">
             <div className="col-md col-header-text">{name}</div>
@@ -127,7 +135,7 @@ class ToolTable extends React.PureComponent {
           </div>
         </div>
 
-        <Modal show={this.state.confirm} onHide={this.handleCancel}>
+        {/* <Modal show={this.state.confirm} onHide={this.handleCancel}>
           <Modal.Header closeButton>
             <Modal.Title>Confirm Delete?</Modal.Title>
           </Modal.Header>
@@ -140,7 +148,7 @@ class ToolTable extends React.PureComponent {
               Delete
             </Button>
           </Modal.Footer>
-        </Modal>
+        </Modal> */}
 
       </>
     );

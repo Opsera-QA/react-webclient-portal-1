@@ -4,7 +4,7 @@ import { Button, Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
-function CustomModalDialog({ header, message, button, handleHideModal }) {
+function CustomModalDialog({ header, message, button, handleConfirmModal, handleCancelModal }) {
   const [state, setState] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     { show: true }
@@ -16,16 +16,17 @@ function CustomModalDialog({ header, message, button, handleHideModal }) {
 
   const handleClose = () => {
     setState({ show: false });
+    handleCancelModal();
   };
-  
+
   const handleConfirm = () => {
     setState({ show: false });
-    handleHideModal();
+    handleConfirmModal();
   };
 
   return (
     <>
-      <Modal show={state.show}>
+      <Modal show={state.show} onHide={() => handleClose()}>
         <Modal.Header closeButton>
           <Modal.Title>{header}</Modal.Title>
         </Modal.Header>
@@ -37,7 +38,7 @@ function CustomModalDialog({ header, message, button, handleHideModal }) {
             Close
           </Button>
           <Button variant="outline-primary" onClick={() => handleConfirm()}>
-            <FontAwesomeIcon icon={faCheck} fixedWidth /> 
+            <FontAwesomeIcon icon={faCheck} fixedWidth />
             {button ? button : "Confirm"}
           </Button>
         </Modal.Footer>
@@ -50,7 +51,8 @@ CustomModalDialog.propTypes = {
   header: PropTypes.string,
   message: PropTypes.string,
   button: PropTypes.string,
-  handleHideModal: PropTypes.func.isRequired
+  handleConfirmModal: PropTypes.func.isRequired,
+  handleCancelModal: PropTypes.func.isRequired
 };
 
 export default CustomModalDialog;
