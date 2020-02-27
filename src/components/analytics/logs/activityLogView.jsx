@@ -10,7 +10,7 @@ import "./logs.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
 
-function ActivityLogView( { persona, searchQuery, filterType } ) {
+function ActivityLogView({ persona, searchQuery, filterType }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -24,7 +24,7 @@ function ActivityLogView( { persona, searchQuery, filterType } ) {
       search: searchQuery,
       filter: filterType
     };
-    const apiCall = new ApiService("/analytics/dashboard/pipeline/activity", urlParams, accessToken);    
+    const apiCall = new ApiService("/analytics/search", urlParams, accessToken);
     apiCall.get()
       .then(res => {
         setData(res.data);
@@ -36,17 +36,17 @@ function ActivityLogView( { persona, searchQuery, filterType } ) {
       });
   };
 
-  useEffect( () => {
+  useEffect(() => {
     console.log("Persona uE ", persona);
     console.log("Query uE ", searchQuery);
     console.log("Filter uE ", filterType);
     getApiData();
   }, [searchQuery, filterType]);
 
-  if(loading) {
+  if (loading) {
     return (<LoadingDialog size="sm" />);
   } else if (error) {
-    return (<ErrorDialog  error={error} />);
+    return (<ErrorDialog error={error} />);
   } else {
     console.log("data", data);
     console.log("query", searchQuery);
@@ -55,7 +55,6 @@ function ActivityLogView( { persona, searchQuery, filterType } ) {
     return (
       <>
         <MapActivityData data={data} type="secondary" />
-        
       </>
     );
   }
@@ -70,16 +69,16 @@ const MapActivityData = (props) => {
   const { data, type } = props;
   return (
     <>
-      { data.map((item, idx) => (
+      {data.map((item, idx) => (
         <Alert key={idx} variant={type}>
           <div className="row">
-            <div className="col">{item.message}</div>
-            <div className="col text-right"><Moment format="dddd, MMMM Do YYYY, h:mm:ss a" date={item["timestamp"]} /></div>
+            <div className="col">{item._source.message[0]}</div>
+            <div className="col text-right"><Moment format="dddd, MMMM Do YYYY, h:mm:ss a" date={item._source["@timestamp"]} /></div>
           </div>
           <div className="row mt-1">
-            <div className="col">{item["data_projectName"]}</div>
-            <div className="col">Version: {item["version"]}</div>
-            <div className="col">Build: {item["data_buildNum"]} <FontAwesomeIcon icon={faSearchPlus} size="xs" style={{ cursor: "pointer" }} /></div>
+            <div className="col">{item._source.data["projectName"]}</div>
+            <div className="col">Version: {item._source["@version"]}</div>
+            <div className="col">Build: {item._source.data["buildNum"]} <FontAwesomeIcon icon={faSearchPlus} size="xs" style={{ cursor: "pointer" }} /></div>
           </div>
         </Alert>
       ))}

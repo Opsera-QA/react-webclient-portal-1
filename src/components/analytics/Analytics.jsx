@@ -11,7 +11,7 @@ import "./charts/charts.css";
 import ActivityLogView from "../analytics/logs/activityLogView";
 import Select from "react-select";
 
-const FILTER = [ { value: "", label: "All Logs" }, { value: "pipeline", label: "Pipeline" }, { value: "1", label: "Security" }];
+const FILTER = [{ value: "", label: "All Logs" }, { value: "pipeline", label: "Pipeline" }, { value: "security", label: "Security" }];
 
 function Analytics() {
   const contextType = useContext(AuthContext);
@@ -22,14 +22,14 @@ function Analytics() {
   const [searchTerm, setSearchTerm] = useState("");
   const [query, setQuery] = useState("");
   const [filterType, setFilterType] = useState("");
-  
+
   useEffect(() => {
-    fetchData(); 
+    fetchData();
   }, [query]);
 
   const handleFormSubmit = e => {
     e.preventDefault();
-    setQuery(searchTerm);  
+    setQuery(searchTerm);
     console.log(filterType);
   };
 
@@ -66,49 +66,49 @@ function Analytics() {
   return (
     <div className="mt-3 max-content-width">
       {loading && <LoadingDialog />}
-      
+
       <h4>Analytics</h4>
-      <p>Access all available logging, reports and configurations around the OpsERA Analytics Platform.  
+      <p>Access all available logging, reports and configurations around the OpsERA Analytics Platform.
         Update your settings or configure your profile and logging tools in the settings below.</p>
-      
+
       <div className="p-2 mt-1">
         {error && <ErrorDialog error={error} />}
         <ConfigurationsForm settings={data} token={token} />
       </div>
 
       {(data) &&
-      <div className="mt-1">
-        <Form onSubmit={handleFormSubmit}>
-          <div className="d-flex mt-3">
-            <div className="p-2 flex-grow-1">          
-              <Form.Control placeholder="Search logs" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
+        <div className="mt-1">
+          <Form onSubmit={handleFormSubmit}>
+            <div className="d-flex mt-3">
+              <div className="p-2 flex-grow-1">
+                <Form.Control placeholder="Search logs" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
+              </div>
+              <div className="p-2 flex-grow-1">
+                <Select
+                  className="basic-single"
+                  menuPortalTarget={document.body}
+                  styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                  classNamePrefix="select"
+                  defaultValue={filterType ? FILTER[parseInt(filterType)] : FILTER[0]}
+                  isDisabled={false}
+                  isClearable={false}
+                  isSearchable={true}
+                  name="FILTER-SELECT"
+                  options={FILTER}
+                  onChange={handleSelectChange}
+                />
+              </div>
+              <div className="p-2">
+                <Button variant="primary" type="submit">Search</Button>
+                <Button variant="outline-secondary" className="ml-2" type="button" onClick={cancelSearchClicked}>Cancel</Button>
+              </div>
             </div>
-            <div className="p-2 flex-grow-1">
-              <Select
-                className="basic-single"
-                menuPortalTarget={document.body}
-                styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                classNamePrefix="select"
-                defaultValue={filterType ? FILTER[parseInt(filterType)] : FILTER[0]}
-                isDisabled={false}
-                isClearable={false}
-                isSearchable={true}
-                name="FILTER-SELECT"
-                options={FILTER}
-                onChange={handleSelectChange}
-              />
-            </div>
-            <div className="p-2">
-              <Button variant="primary" type="submit">Search</Button>
-              <Button variant="outline-secondary" className="ml-2" type="button" onClick={cancelSearchClicked}>Cancel</Button>
-            </div>
-          </div>
-        </Form>
-      </div>}
+          </Form>
+        </div>}
 
-      
+
       <div className="mt-3 p-2">
-        <ActivityLogView searchQuery={query} filterType={filterType}  />
+        <ActivityLogView searchQuery={query} filterType={filterType} />
       </div>
 
     </div>
