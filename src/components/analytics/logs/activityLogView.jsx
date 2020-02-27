@@ -6,6 +6,7 @@ import LoadingDialog from "../../common/loading";
 import ErrorDialog from "../../common/error";
 import { Alert } from "react-bootstrap";
 import Moment from "react-moment";
+import Modal from "../../common/modal";
 import "./logs.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
@@ -16,7 +17,7 @@ function ActivityLogView({ persona, searchQuery, filterType }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const getApiData = async () => {
+  const fetchData = async () => {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
@@ -25,65 +26,90 @@ function ActivityLogView({ persona, searchQuery, filterType }) {
       filter: filterType
     };
     const apiCall = new ApiService("/analytics/search", urlParams, accessToken);
-    apiCall.get()
-      .then(res => {
-        setData(res.data);
-        setLoading(false);
-      })
-      .catch(err => {
-        setErrors(err);
-        setLoading(false);
+    const result = await apiCall.get()
+      .catch(function (error) {
+        setErrors(error.toJSON());
       });
+      
+    setLoading(false);
+    console.log("Results:", result);
+    setData(result.data.hits.hits);
   };
 
   useEffect(() => {
-    console.log("Persona uE ", persona);
-    console.log("Query uE ", searchQuery);
-    console.log("Filter uE ", filterType);
-    getApiData();
+    if (searchQuery.length > 0) {
+      fetchData();
+    } else {
+      setData([]);
+    }
   }, [searchQuery, filterType]);
+
 
   if (loading) {
     return (<LoadingDialog size="sm" />);
   } else if (error) {
     return (<ErrorDialog error={error} />);
   } else {
-    console.log("data", data);
-    console.log("query", searchQuery);
-    console.log("persona", persona);
-    console.log("filterType", filterType);
     return (
       <>
-        <MapActivityData data={data} type="secondary" />
+        <MapActivityData data={data} search={searchQuery} type="secondary" />
       </>
     );
   }
 }
 
 
-//TODO: Make "Build number" clickable to zoom in on log views
-// New Node Service: Get log details
-// New Node Service: Get Recent Build summary (new kind)
-
 const MapActivityData = (props) => {
-  const { data, type } = props;
-  return (
-    <>
-      {data.map((item, idx) => (
-        <Alert key={idx} variant={type}>
-          <div className="row">
-            <div className="col">{item._source.message[0]}</div>
-            <div className="col text-right"><Moment format="dddd, MMMM Do YYYY, h:mm:ss a" date={item._source["@timestamp"]} /></div>
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState({});
+  const { data, type, search } = props;
+
+  const handleClick = (param) => {
+    setModalMessage(param);
+    setShowModal(true);
+  };
+  if (typeof data === "undefined" || data.length === 0) {
+    return (
+      <div style={{ height: "540px" }}>
+        <div className="row h-100">
+          <div className="col-sm-12 my-auto text-center">
+            {search ? 
+              <div className="h6">No Results found for {search}</div> :
+              <div className="h6">Enter a Search Term</div>}
           </div>
-          <div className="row mt-1">
-            <div className="col">{item._source.data["projectName"]}</div>
-            <div className="col">Version: {item._source["@version"]}</div>
-            <div className="col">Build: {item._source.data["buildNum"]} <FontAwesomeIcon icon={faSearchPlus} size="xs" style={{ cursor: "pointer" }} /></div>
-          </div>
-        </Alert>
-      ))}
-    </>
-  );
+        </div>
+      </div>
+    );
+  } else {
+    
+    return (
+      <>
+        {data.map((item, idx) => (
+          <Alert key={idx} variant={type}>
+            <div className="row">
+              <div className="col">{item._index}: {item._source.message[0]}</div>
+              <div className="col text-right"><Moment format="dddd, MMMM Do YYYY, h:mm:ss a" date={item._source["@timestamp"]} /></div>
+            </div>
+            <div className="row mt-1">
+              <div className="col">{item._source.data["projectName"]}</div>
+              <div className="col">Version: {item._source["@version"]}</div>
+              <div className="col">Build: {item._source.data["buildNum"]} 
+                <FontAwesomeIcon icon={faSearchPlus} 
+                  className="ml-1"
+                  size="xs" 
+                  style={{ cursor: "pointer" }} 
+                  onClick={() => { handleClick(item._source.data); }} /></div>
+              <div className="col text-right text-muted">{item._score}</div>
+            </div>
+          </Alert>
+        ))}
+
+        {showModal ? <Modal header="Log Details"
+          message={JSON.stringify(modalMessage)}
+          button="OK"
+          handleHideModal={() => setShowModal(false)} /> : null}
+      </>
+    );}
 };
 
 MapActivityData.propTypes = {

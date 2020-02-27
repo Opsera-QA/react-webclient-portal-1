@@ -11,7 +11,7 @@ import "./charts/charts.css";
 import ActivityLogView from "../analytics/logs/activityLogView";
 import Select from "react-select";
 
-const FILTER = [{ value: "", label: "All Logs" }, { value: "pipeline", label: "Pipeline" }, { value: "security", label: "Security" }];
+const FILTER = [{ value: "pipeline", label: "Pipeline" }, { value: "metricbeat", label: "MetricBeat" }, { value: "twistlock", label: "TwistLock" }];
 
 function Analytics() {
   const contextType = useContext(AuthContext);
@@ -29,8 +29,7 @@ function Analytics() {
 
   const handleFormSubmit = e => {
     e.preventDefault();
-    setQuery(searchTerm);
-    console.log(filterType);
+    setQuery(searchTerm);    
   };
 
   const cancelSearchClicked = e => {
@@ -52,7 +51,6 @@ function Analytics() {
     const apiCall = new ApiService("/analytics/settings", {}, accessToken);
     apiCall.get()
       .then(function (response) {
-        console.log(response.data[0]);
         setData(response.data[0]);
         setLoading(false);
       })
