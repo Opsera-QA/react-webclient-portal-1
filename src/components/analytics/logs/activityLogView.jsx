@@ -81,7 +81,6 @@ const MapActivityData = (props) => {
       </div>
     );
   } else if (filter === "pipeline") {
-    console.log("FILTER: ", filter);
     return (
       <>
         {data.map((item, idx) => (
