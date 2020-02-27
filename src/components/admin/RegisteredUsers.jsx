@@ -1,7 +1,8 @@
 import React, { PureComponent, Fragment } from "react";
-import { Table, Row, Col, Button, Modal } from "react-bootstrap";
+import { Table, Row, Col, Button } from "react-bootstrap";
 import ErrorDialog from "../common/error";
 import LoadingDialog from "../common/loading";
+import Modal from "../common/modal";
 import Moment from "react-moment";
 import { AuthContext } from "../../contexts/AuthContext";  //REact Context API Code for User Authentication
 import { ApiService } from "../../api/apiService";
@@ -92,6 +93,11 @@ export default class RegisteredUsers extends PureComponent {
         {error ? <ErrorDialog error={error} /> : null}
         {fetching && <LoadingDialog />}
 
+        {this.state.confirm ? <Modal header="Confirm Delete"
+          message="Warning! Data cannot be recovered once a User is deactivated. Do you still want to proceed?"
+          button="Confirm"
+          handleHideModal={this.handleConfirm} /> : null}
+
         <Table responsive>
           <thead>
             <tr>
@@ -144,7 +150,7 @@ export default class RegisteredUsers extends PureComponent {
                   </tr>
                 }
 
-
+                {/* 
                 <Modal show={this.state.confirm} onHide={this.handleCancel}>
                   <Modal.Header closeButton>
                     <Modal.Title>Confirm Delete?</Modal.Title>
@@ -158,7 +164,7 @@ export default class RegisteredUsers extends PureComponent {
                       Confirm
                     </Button>
                   </Modal.Footer>
-                </Modal>
+                </Modal> */}
 
               </Fragment>
             ))}
