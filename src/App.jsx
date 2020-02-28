@@ -47,7 +47,6 @@ class App extends Component {
     }
   }
 
-
   render() {
     const { hideSideBar } = this.state;
     return (

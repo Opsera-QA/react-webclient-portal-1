@@ -1,5 +1,6 @@
 import React, { useReducer, useEffect, Fragment, useContext } from "react";
 import { Table, Row, Col, Button } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import ErrorDialog from "../common/error";
 import LoadingDialog from "../common/loading";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -11,7 +12,8 @@ import { ApiService } from "../../api/apiService";
 function RegisteredUsers_Hooks() {
 
   const Auth = useContext(AuthContext);
-  console.log(Auth);
+  let history = useHistory();
+  // console.log(Auth);
 
   const [state, setState] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
@@ -19,6 +21,7 @@ function RegisteredUsers_Hooks() {
       data: [],
       confirm: false,
       delUserId: "",
+      administrator: false,
       fetching: true,
       error: null,
       messages: null
@@ -26,7 +29,23 @@ function RegisteredUsers_Hooks() {
   );
 
   useEffect(() => {
-    getApiData();
+    const { authenticated, getUserInfo } = Auth;
+    // function get the user data from okta and checks if the user is admin or not.
+    async function checkUserData() {
+      const userInfo = await getUserInfo();
+      setState({ authenticated: authenticated });
+      if (userInfo) {
+        setState({ administrator: userInfo.Groups.includes("Admin") });
+      }
+
+      if (!userInfo.Groups.includes("Admin")) {
+        //move out
+        history.push("/");
+      } else {
+        getApiData();
+      }
+    }
+    checkUserData();
   }, []);
 
   function handleDeletePress(userId) { setState({ confirm: true, delUserId: userId }); }
@@ -87,78 +106,83 @@ function RegisteredUsers_Hooks() {
       });
   }
 
-  const { data, error, fetching, confirm } = state;
+  const { data, error, fetching, confirm, administrator } = state;
 
   return (
-    <div>
-      <h3 style={{ padding: "20px" }}>Registered Users</h3>
+    <>
+      {
+        administrator &&
+        <div>
+          <h3 style={{ padding: "20px" }}>Registered Users</h3>
 
-      {error ? <ErrorDialog error={error} /> : null}
-      {fetching && <LoadingDialog />}
+          {error ? <ErrorDialog error={error} /> : null}
+          {fetching && <LoadingDialog />}
 
-      {confirm ? <Modal header="Confirm Deactivation"
-        message="Warning! Data cannot be recovered once a User is deactivated. Do you still want to proceed?"
-        button="Confirm"
-        handleCancelModal={handleCancel}
-        handleConfirmModal={handleConfirm} /> : null}
+          {confirm ? <Modal header="Confirm Deactivation"
+            message="Warning! Data cannot be recovered once a User is deactivated. Do you still want to proceed?"
+            button="Confirm"
+            handleCancelModal={handleCancel}
+            handleConfirmModal={handleConfirm} /> : null}
 
-      <Table responsive>
-        <thead>
-          <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Organization</th>
-            <th>Division</th>
-            <th>Domain</th>
-            <th>Created</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((val, key) => (
-            <Fragment key={key}>
+          <Table responsive>
+            <thead>
               <tr>
-                <td>{val.firstName}</td>
-                <td>{val.lastName}</td>
-                <td>{val.email}</td>
-                <td>{val.organizationName}</td>
-                <td>{val.division}</td>
-                <td>{val.domain}</td>
-                <td><Moment format="MM/DD/YYYY" date={val.createdAt} /></td>
-                <td>
-                  <Button variant="danger" onClick={() => { handleDeletePress(val._id); }} >Deactivate User</Button>
-                </td>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Organization</th>
+                <th>Division</th>
+                <th>Domain</th>
+                <th>Created</th>
+                <th>Actions</th>
               </tr>
-
-              {val.tools ? (
-                Object.keys(val.tools).length > 0 ? (
+            </thead>
+            <tbody>
+              {data.map((val, key) => (
+                <Fragment key={key}>
                   <tr>
-                    <td colSpan="7" style={{ borderTop: 0, paddingTop: 0, marginTop: 0, paddingBottom: "25px" }}>
-                      {val.tools.map((tool, index) => (
-                        <Row key={index} style={{ marginLeft: "10px", fontSize: ".9em" }}>
-                          <Col>{tool.name}</Col>
-                          <Col>{tool.toolStatus}</Col>
-                          <Col>{tool._id}</Col>
-                        </Row>
-                      ))}
+                    <td>{val.firstName}</td>
+                    <td>{val.lastName}</td>
+                    <td>{val.email}</td>
+                    <td>{val.organizationName}</td>
+                    <td>{val.division}</td>
+                    <td>{val.domain}</td>
+                    <td><Moment format="MM/DD/YYYY" date={val.createdAt} /></td>
+                    <td>
+                      <Button variant="danger" onClick={() => { handleDeletePress(val._id); }} >Deactivate User</Button>
                     </td>
                   </tr>
-                ) :
-                  <tr>
-                    <td colSpan="7" className="text-muted text-center" style={{ borderTop: 0, paddingBottom: "25px" }}>No tools are associated with this user account!</td>
-                  </tr>
-              ) :
-                <tr>
-                  <td colSpan="7" className="text-muted text-center" style={{ borderTop: 0, paddingBottom: "25px" }}>No tools are associated with this user account!</td>
-                </tr>
-              }
 
-            </Fragment>
-          ))}
-        </tbody>
-      </Table>
-    </div>
+                  {val.tools ? (
+                    Object.keys(val.tools).length > 0 ? (
+                      <tr>
+                        <td colSpan="7" style={{ borderTop: 0, paddingTop: 0, marginTop: 0, paddingBottom: "25px" }}>
+                          {val.tools.map((tool, index) => (
+                            <Row key={index} style={{ marginLeft: "10px", fontSize: ".9em" }}>
+                              <Col>{tool.name}</Col>
+                              <Col>{tool.toolStatus}</Col>
+                              <Col>{tool._id}</Col>
+                            </Row>
+                          ))}
+                        </td>
+                      </tr>
+                    ) :
+                      <tr>
+                        <td colSpan="7" className="text-muted text-center" style={{ borderTop: 0, paddingBottom: "25px" }}>No tools are associated with this user account!</td>
+                      </tr>
+                  ) :
+                    <tr>
+                      <td colSpan="7" className="text-muted text-center" style={{ borderTop: 0, paddingBottom: "25px" }}>No tools are associated with this user account!</td>
+                    </tr>
+                  }
+
+                </Fragment>
+              ))}
+            </tbody>
+          </Table>
+        </div>
+      }
+    </>
   );
 }
 
