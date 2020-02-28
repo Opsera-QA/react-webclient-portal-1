@@ -33,7 +33,7 @@ function ActivityLogView({ persona, searchQuery, filterType }) {
       
     setLoading(false);
     console.log("Results:", result);
-    setData((result.data && result.data.hits) ? result.data.hits.hits : []);
+    setData((result && result.data && result.data.hits) ? result.data.hits.hits : []);
   };
 
   useEffect(() => {
