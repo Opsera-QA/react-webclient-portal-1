@@ -49,7 +49,7 @@ function CustomModalDialog({ header, message, button, size, handleConfirmModal, 
 
 CustomModalDialog.propTypes = {
   header: PropTypes.string,
-  message: PropTypes.string,
+  message: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   button: PropTypes.string,
   handleConfirmModal: PropTypes.func.isRequired,
   handleCancelModal: PropTypes.func.isRequired

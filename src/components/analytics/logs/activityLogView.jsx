@@ -30,7 +30,7 @@ function ActivityLogView({ persona, searchQuery, filterType }) {
       .catch(function (error) {
         setErrors(error.toJSON());
       });
-      
+
     setLoading(false);
     console.log("Results:", result);
     setData((result && result.data && result.data.hits) ? result.data.hits.hits : []);
@@ -73,7 +73,7 @@ const MapActivityData = (props) => {
       <div style={{ height: "540px" }}>
         <div className="row h-100">
           <div className="col-sm-12 my-auto text-center">
-            {search ? 
+            {search ?
               <div className="h6">No Results found for {search}</div> :
               <div className="h6">Enter a Search Term</div>}
           </div>
@@ -92,11 +92,11 @@ const MapActivityData = (props) => {
             <div className="row mt-1">
               <div className="col">{item._source.data["projectName"]}</div>
               <div className="col">Version: {item._source["@version"]}</div>
-              <div className="col">Build: {item._source.data["buildNum"]} 
-                <FontAwesomeIcon icon={faSearchPlus} 
+              <div className="col">Build: {item._source.data["buildNum"]}
+                <FontAwesomeIcon icon={faSearchPlus}
                   className="ml-1"
-                  size="xs" 
-                  style={{ cursor: "pointer" }} 
+                  size="xs"
+                  style={{ cursor: "pointer" }}
                   onClick={() => { handleClick(item._source.data); }} /></div>
               <div className="col text-right text-muted">{item._score}</div>
             </div>
@@ -104,7 +104,7 @@ const MapActivityData = (props) => {
         ))}
 
         {showModal ? <Modal header="Log Details"
-          message={JSON.stringify(modalMessage)}
+          message={<pre>{JSON.stringify(modalMessage, null, 2)}</pre>}
           button="OK"
           size="lg"
           handleCancelModal={() => setShowModal(false)}
@@ -121,7 +121,7 @@ const MapActivityData = (props) => {
         ))}
       </>
     );
-  } 
+  }
 };
 
 MapActivityData.propTypes = {
