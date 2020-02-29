@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import ErrorDialog from "../common/error";
+import ErrorDialog from "../../common/error";
 
+// eslint-disable-next-line no-unused-vars
 function SecOpsDashboard( { data, persona } ) {
-
   if (typeof data !== "object" || Object.keys(data).length == 0) {
     return (<ErrorDialog  error="Missing Data!" />);
   } else {

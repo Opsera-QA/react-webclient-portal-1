@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import BuildCounts from "./buildCounts";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ApiService } from "../../api/apiService";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 
+import BuildCounts from "../analytics/metrics/buildCounts";
 import AvgBuildDurationBarChart from "../analytics/charts/avgBuildDurationBarChart";
 import BuildsByUserBarChart from "../analytics/charts/buildsByUserBarChart";
 import AvgBuildsByUserBarChart from "../analytics/charts/avgBuildsByUserBarChart";

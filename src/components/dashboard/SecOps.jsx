@@ -5,7 +5,7 @@ import { ApiService } from "../../api/apiService";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 
-import SecOpsCounts from "./secOpsCounts";
+import SecOpsCounts from "../analytics/metrics/secOpsCounts";
 import SonarMaintainabilityLineChart from "../analytics/charts/sonarMaintainabilityLineChart";
 import SonarCodeSmellsLineChart from "../analytics/charts/sonarCodeSmellsLineChart";
 import SonarCodeCategoriesPieChart from "../analytics/charts/sonarCodeCategoriesPieChart";
