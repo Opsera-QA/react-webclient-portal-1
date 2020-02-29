@@ -7,41 +7,63 @@ import { faEdit, faHeartbeat, faTimes, faUserCircle, faLink, faChartBar } from "
 
 class AdminTools extends Component {
   static contextType = AuthContext;
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      administrator: false
+    };
+  }
+
+  async componentDidMount() {
+    const { getUserInfo } = this.context;
+    const userInfo = await getUserInfo();
+    console.log(userInfo);
+    this.setState({ administrator: userInfo.Groups.includes("Admin") });
+    if (!userInfo.Groups.includes("Admin")) {
+      //move out
+      this.props.history.push("/");
+    } else {
+      //do nothing
+    }
+  }
 
   render() {
-    const { authenticated, userInfo } = this.context;
-
-    //TODO: Only render this if user is an Admin (need Okta groups)
+    const { administrator } = this.state;
     return (
-      <div className="mt-3 max-content-width">
-        <h4>Administration Tools</h4>
-        <div>Listed below are administration tools for the platform.</div>
+      <>
+        {
+          administrator &&
+          <div className="mt-3 max-content-width">
+            <h4>Administration Tools</h4>
+            <div>Listed below are administration tools for the platform.</div>
 
-        <Row className="m-5">
-          {/* <Col xs={12} md={6} lg={4} className="p-2">
-            <Link to="/admin/health"><FontAwesomeIcon icon={faHeartbeat} fixedWidth /> System Health Check</Link>
-          </Col> */}
-          <Col xs={12} md={6} lg={4} className="p-2">
-            <Link to="/admin/delete"><FontAwesomeIcon icon={faTimes} fixedWidth /> Delete Tools</Link>
-          </Col>
-          <Col xs={12} md={6} lg={4} className="p-2">
-            <Link to="/admin/manage_systems"><FontAwesomeIcon icon={faEdit} fixedWidth /> System Management</Link>
-          </Col>
-          <Col xs={12} md={6} lg={4} className="p-2">
-            <Link to="/admin/registered_users"><FontAwesomeIcon icon={faUserCircle} fixedWidth /> Registered Users</Link>
-          </Col>
-          <Col xs={12} md={6} lg={4} className="p-2">
-            <Link to="/admin/analytics/reports_registration"><FontAwesomeIcon icon={faChartBar} fixedWidth /> Reports Registration</Link>
-          </Col>
-          <Col xs={12} md={6} lg={4} className="p-2">
-            <Link to="/api_demo"><FontAwesomeIcon icon={faLink} fixedWidth /> API Test</Link>
-          </Col>
-          <Col xs={12} md={6} lg={4} className="p-2">
-            <Link to="/reports"><FontAwesomeIcon icon={faLink} fixedWidth /> Reports</Link>
-          </Col>
-        </Row>
+            <Row className="m-5">
+              {/* <Col xs={12} md={6} lg={4} className="p-2">
+               <Link to="/admin/health"><FontAwesomeIcon icon={faHeartbeat} fixedWidth /> System Health Check</Link>
+               </Col> */}
+              <Col xs={12} md={6} lg={4} className="p-2">
+                <Link to="/admin/delete"><FontAwesomeIcon icon={faTimes} fixedWidth /> Delete Tools</Link>
+              </Col>
+              <Col xs={12} md={6} lg={4} className="p-2">
+                <Link to="/admin/manage_systems"><FontAwesomeIcon icon={faEdit} fixedWidth /> System Management</Link>
+              </Col>
+              <Col xs={12} md={6} lg={4} className="p-2">
+                <Link to="/admin/registered_users"><FontAwesomeIcon icon={faUserCircle} fixedWidth /> Registered Users</Link>
+              </Col>
+              <Col xs={12} md={6} lg={4} className="p-2">
+                <Link to="/admin/analytics/reports_registration"><FontAwesomeIcon icon={faChartBar} fixedWidth /> Reports Registration</Link>
+              </Col>
+              <Col xs={12} md={6} lg={4} className="p-2">
+                <Link to="/api_demo"><FontAwesomeIcon icon={faLink} fixedWidth /> API Test</Link>
+              </Col>
+              <Col xs={12} md={6} lg={4} className="p-2">
+                <Link to="/reports"><FontAwesomeIcon icon={faLink} fixedWidth /> Reports</Link>
+              </Col>
+            </Row>
 
-      </div>
+          </div>
+        }
+      </>
     );
   }
 }

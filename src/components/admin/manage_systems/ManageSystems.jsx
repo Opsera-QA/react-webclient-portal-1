@@ -15,6 +15,7 @@ const initState = {
   orgs: null,
   org: "",
   fetching: true,
+  administrator: false,
   error: null,
   messages: null
 };
@@ -24,6 +25,19 @@ export default class ManageSystems extends PureComponent {
   constructor(props, context) {
     super(props, context);
     this.state = initState;
+  }
+
+  async componentDidMount() {
+    const { getUserInfo } = this.context;  //this.context is where all data from the above AuthContext component resides.  It's like the state props design wise
+    const userInfo = await getUserInfo();
+    this.setState({ administrator: userInfo.Groups.includes("Admin") });
+
+    if (!userInfo.Groups.includes("Admin")) {
+      //move out
+      this.props.history.push("/");
+    } else {
+      //do nothing
+    }
   }
 
   handleUserChangeValue = (e) => {
@@ -39,12 +53,12 @@ export default class ManageSystems extends PureComponent {
   handleChangeValue = (e) => {
     this.setState({
       fetching: true
-    })
+    });
     const { applications } = this.state;
     const application = applications.find(app => app.name === e.target.value);
     this.setState({
       application,
-    }, () => { this.setState({ fetching: false }) });
+    }, () => { this.setState({ fetching: false }); });
   }
 
   orgSearch = async (e) => {
@@ -97,79 +111,84 @@ export default class ManageSystems extends PureComponent {
   }
 
   render() {
-    const { applications, application, users, loading, org, user, fetching, error } = this.state;
+    const { applications, application, users, loading, org, user, fetching, error, administrator } = this.state;
 
     return (
-      <Container>
-        <h2>Manage Tools</h2>
-        {error ? <ErrorDialog error={error} /> : null}
-        <Form loading={loading ? "true" : undefined} style={{ maxWidth: "500px" }}>
-          <SearchInput
-            org={org}
-            loading={loading ? "true" : undefined}
-            orgSearch={this.orgSearch}
-            handleChange={this.handleChange}
-          />
+      <>
+        {
+          administrator &&
+          <Container>
+            <h2>Manage Tools</h2>
+            {error ? <ErrorDialog error={error} /> : null}
+            <Form loading={loading ? "true" : undefined} style={{ maxWidth: "500px" }}>
+              <SearchInput
+                org={org}
+                loading={loading ? "true" : undefined}
+                orgSearch={this.orgSearch}
+                handleChange={this.handleChange}
+              />
 
-          {users && users.length === 0 && (
-            <p>No Organiztion found that match this name</p>
-          )}
+              {users && users.length === 0 && (
+                <p>No Organiztion found that match this name</p>
+              )}
 
-          {users && users.length > 0 && (
-            <Form>
-              <Form.Group>
-                <Form.Control as="select"
-                  defaultValue=""
-                  value={users === null ? "" : users.name}
-                  onChange={this.handleUserChangeValue}
-                  style={{ marginTop: 25 }}>
-                  <option value="" disabled>{fetching ? "loading..." : "Select Users"}</option>
-                  <>
-                    {users ? users.map((user, key) => (
-                      <option key={user.firstName} value={user.email}>{user.firstName}</option>
-                    )) : ""}
-                  </>
-                </Form.Control>
-              </Form.Group>
-            </Form>
-          )}
+              {users && users.length > 0 && (
+                <Form>
+                  <Form.Group>
+                    <Form.Control as="select"
+                      defaultValue=""
+                      value={users === null ? "" : users.name}
+                      onChange={this.handleUserChangeValue}
+                      style={{ marginTop: 25 }}>
+                      <option value="" disabled>{fetching ? "loading..." : "Select Users"}</option>
+                      <>
+                        {users ? users.map((user, key) => (
+                          <option key={user.firstName} value={user.email}>{user.firstName}</option>
+                        )) : ""}
+                      </>
+                    </Form.Control>
+                  </Form.Group>
+                </Form>
+              )}
 
-          {user && users && users.length > 0 && <UserInfo user={user} />}
+              {user && users && users.length > 0 && <UserInfo user={user} />}
 
-          {applications && applications.length === 0 && (
-            <p>No Applications to display for this user</p>
-          )}
+              {applications && applications.length === 0 && (
+                <p>No Applications to display for this user</p>
+              )}
 
-          {applications && applications.length > 0 && (
-            <Form>
-              <Form.Group>
-                <Form.Control as="select"
-                  defaultValue=""
-                  value={application === null ? "" : application.name}
-                  onChange={this.handleChangeValue}
-                  style={{ marginTop: 25 }}>
-                  <option value="" disabled>{fetching ? "loading..." : "Select application"}</option>
-                  {!fetching && (
-                    <>
-                      {applications ? applications.map((app, key) => (
+              {applications && applications.length > 0 && (
+                <Form>
+                  <Form.Group>
+                    <Form.Control as="select"
+                      defaultValue=""
+                      value={application === null ? "" : application.name}
+                      onChange={this.handleChangeValue}
+                      style={{ marginTop: 25 }}>
+                      <option value="" disabled>{fetching ? "loading..." : "Select application"}</option>
+                      {!fetching && (
                         <>
-                          {
-                            app.tools.length > 0 && (
-                              <option key={app.name} value={app.name}>{app.name}</option>
-                            )
-                          }
+                          {applications ? applications.map((app, key) => (
+                            <>
+                              {
+                                app.tools.length > 0 && (
+                                  <option key={app.name} value={app.name}>{app.name}</option>
+                                )
+                              }
+                            </>
+                          )) : ""}
                         </>
-                      )) : ""}
-                    </>
-                  )}
-                </Form.Control>
-              </Form.Group>
+                      )}
+                    </Form.Control>
+                  </Form.Group>
+                </Form>
+              )}
             </Form>
-          )}
-        </Form>
 
-        {application && applications.length > 0 && <>{!fetching && <Tools application={application} />}</>}
-      </Container>
+            {application && applications.length > 0 && <>{!fetching && <Tools application={application} />}</>}
+          </Container>
+        }
+      </>
     );
   }
 }
