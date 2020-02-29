@@ -35,7 +35,7 @@ function DashboardHome() {
     setLoading(false);
     if (result.data.length > 0) {
       setPersona(result.data[0].defaultPersona);
-      //setData(result.data[0]);
+      setData(result.data[0]);
     }
   };
 
