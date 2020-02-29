@@ -9,7 +9,7 @@ import BuildCounts from "../analytics/metrics/buildCounts";
 import AvgBuildDurationBarChart from "../analytics/charts/avgBuildDurationBarChart";
 import BuildsByUserBarChart from "../analytics/charts/buildsByUserBarChart";
 import AvgBuildsByUserBarChart from "../analytics/charts/avgBuildsByUserBarChart";
-//import ActivityLogView from "../analytics/logs/activityLogView";
+
 
 function PipelineDashboard( { persona } ) {
   const contextType = useContext(AuthContext);
