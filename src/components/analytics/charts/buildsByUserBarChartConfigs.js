@@ -53,10 +53,10 @@ export default {
   axisLeft: {
     "tickSize": 8,
     "tickPadding": 5,
-    "tickRotation": 0,
+    "tickRotation": 40,
     "legend": "Users",
     "legendPosition": "middle",
-    "legendOffset": -75
+    "legendOffset": -90
   },
   legends: [
     {
