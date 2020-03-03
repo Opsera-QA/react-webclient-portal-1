@@ -71,7 +71,7 @@ class LoginForm extends React.Component {
               <a href="index.html"><img alt="" src="img/opsera_logo_125x125.png" /></a>
             </div>
             <h4 className="auth-header">
-          Login Form
+              Login Form
             </h4>
             <form onSubmit={this.handleSubmit}>
               {errorMessage}
@@ -93,12 +93,12 @@ class LoginForm extends React.Component {
               </div>
               <div className="buttons-w">
                 <Button variant="success" className="w-100 mb-3" type="submit">
-                  { this.state.loading ? <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth />  : null }
+                  {this.state.loading ? <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth /> : null}
                   Log In</Button>
-                
+
                 <Row>
                   <Col>
-                    <div className="form-check-inline" style={{ margin:0 }}>
+                    <div className="form-check-inline" style={{ margin: 0 }}>
                       <label className="form-check-label">
                         <input className="form-check-input" type="checkbox" />Remember Me</label>
                     </div>
@@ -106,7 +106,7 @@ class LoginForm extends React.Component {
                   {/* <Col>
                   </Col> */}
                 </Row>
-                
+
               </div>
             </form>
           </div>

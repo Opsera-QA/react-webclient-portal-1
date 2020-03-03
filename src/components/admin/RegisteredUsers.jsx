@@ -9,7 +9,7 @@ import Moment from "react-moment";
 import Modal from "../common/modal";
 import { ApiService } from "../../api/apiService";
 
-function RegisteredUsers_Hooks() {
+function RegisteredUsers() {
 
   const Auth = useContext(AuthContext);
   let history = useHistory();
@@ -187,4 +187,4 @@ function RegisteredUsers_Hooks() {
 }
 
 
-export default RegisteredUsers_Hooks;
+export default RegisteredUsers;

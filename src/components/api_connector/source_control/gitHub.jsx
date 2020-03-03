@@ -1,23 +1,10 @@
-import React, { PureComponent } from "react";
+import React, { useReducer, useEffect, useContext } from "react";
 import { Button, Form, Col, Card, Alert } from "react-bootstrap";
 import { apiServerUrl } from "../../../config";
 import { AuthContext } from "../../../contexts/AuthContext";  //REact Context API Code for User Authentication
 import { ApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/loading";
 
-const state = {
-  username: "",
-  token: "",
-  repoName: "",
-  jenkinsUrl: "",
-  jenkinsPort: "",
-  jUsername: "",
-  jPassword: "",
-  jobName: "",
-  modal: false,
-  update: false,
-  fetching: true
-};
 const devState = {
   username: "purushothaman-opsera",
   token: "0b548e91903dafa1dcdb2ddc3ff5ba5aa7f0cfd3",
@@ -32,27 +19,46 @@ const devState = {
   fetching: true
 };
 
-class GitHub extends PureComponent {
-  static contextType = AuthContext;  //Registers the User Authentication context data in the component
+function GitHub() {
 
-  state = state
+  const Auth = useContext(AuthContext);
 
-  componentDidMount() {
-    this.getData();
-  }
+  const [state, setState] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      username: "",
+      token: "",
+      repoName: "",
+      jenkinsUrl: "",
+      jenkinsPort: "",
+      jUsername: "",
+      jPassword: "",
+      jobName: "",
+      modal: false,
+      update: false,
+      fetching: true
+    }
+  );
 
-  getData = async () => {
-    const { getAccessToken } = this.context;
+  // component did mount use effect
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+
+  async function getData() {
+    const { getAccessToken } = Auth;
     const accessToken = await getAccessToken();
-    const urlParams = this.state;
+    const urlParams = state;
     new ApiService(
       apiServerUrl + "/connectors/github/settings",
       null,
       accessToken,
       urlParams).get()
       .then(response => {
-        console.log(response.data);
-        if (response.data.length > 0) {
+        // console.log(response.data);
+        if (response.data && response.data.length > 0) {
           if (Object.keys(response.data[0]).length > 0) {
             let jenkinsPort = "", username = "", token = "", repoName = "", jenkinsUrl = "", jUsername = "", jPassword = "", jobName = "";
 
@@ -81,7 +87,7 @@ class GitHub extends PureComponent {
               jobName = response.data[0].jobName;
             }
 
-            this.setState({
+            setState({
               username: username,
               token: token,
               repoName: repoName,
@@ -89,24 +95,20 @@ class GitHub extends PureComponent {
               jenkinsPort: jenkinsPort,
               jUsername: jUsername,
               jPassword: jPassword,
-              jobName: jobName
-            }, () => {
-              console.log(this.state);
-              this.setState({
-                update: true,
-                fetching: false
-              });
+              jobName: jobName,
+              update: true,
+              fetching: false
             });
           }
           else {
             console.log("not data available ==> do nothing!");
-            this.setState({
+            setState({
               fetching: false
             });
           }
         } else {
           console.log("not data available ==> do nothing!");
-          this.setState({
+          setState({
             fetching: false
           });
         }
@@ -114,26 +116,26 @@ class GitHub extends PureComponent {
       })
       .catch(e => {
         console.log(e);
-        this.setState({
+        setState({
           fetching: false
         });
-        this.showErrorAlert("Error Fetching data for API Connector. Contact Administrator for more details.");
+        showErrorAlert("Error Fetching data for API Connector. Contact Administrator for more details.");
       });
   }
 
-  handleChange = ({ target: { name, value } }) => {
-    this.setState({
+  const handleChange = ({ target: { name, value } }) => {
+    setState({
       [name]: value,
     });
-  }
+  };
 
-  handleSave = async (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
 
-    const { getAccessToken } = this.context;
+    const { getAccessToken } = Auth;
     const accessToken = await getAccessToken();
-    const urlParams = this.state;
-    if (this.state.update) {
+    const urlParams = state;
+    if (state.update) {
       new ApiService(
         apiServerUrl + "/connectors/github/update",
         null,
@@ -141,12 +143,12 @@ class GitHub extends PureComponent {
         urlParams).post()
         .then(response => {
           console.log(response);
-          this.showSuccessAlert("API Connector Updated Successfully!");
+          showSuccessAlert("API Connector Updated Successfully!");
         })
         .catch(e => {
           let errorData = e.response.data;
           console.log(errorData)
-          this.showErrorAlert(" " + errorData.status_text + ", Please check the credentials.");
+          showErrorAlert(" " + errorData.status_text + ", Please check the credentials.");
         });
     } else {
       new ApiService(
@@ -156,41 +158,42 @@ class GitHub extends PureComponent {
         urlParams).post()
         .then(response => {
           console.log(response);
-          this.showSuccessAlert("API Connector Created Successfully!");
+          showSuccessAlert("API Connector Created Successfully!");
         })
         .catch(e => {
           if (e.response.data) {
             let errorData = e.response.data;
             console.log(errorData)
-            this.showErrorAlert(" " + errorData.status_text + ", Please check the credentials.");
+            showErrorAlert(" " + errorData.status_text + ", Please check the credentials.");
 
           } else {
-            this.showErrorAlert("Error in creating API Connector. Please check the credentials or contact Administrator for more details.");
+            showErrorAlert("Error in creating API Connector. Please check the credentials or contact Administrator for more details.");
           }
         });
     }
 
-  }
+  };
 
-  showSuccessAlert = (message) => {
-    this.setState({
+  const showSuccessAlert = (message) => {
+    setState({
       modal: true,
       type: "success",
       title: "Success!",
       message: message
-    }, () => { this.getData(); });
-  }
+    });
+    getData();
+  };
 
-  showErrorAlert = (message) => {
-    this.setState({
+  const showErrorAlert = (message) => {
+    setState({
       modal: true,
       type: "danger",
       title: "Error!",
       message: message
     });
-  }
+  };
 
-  canBeSubmitted() {
+  function canBeSubmitted() {
     const {
       username,
       token,
@@ -200,7 +203,7 @@ class GitHub extends PureComponent {
       jUsername,
       jPassword,
       jobName,
-    } = this.state;
+    } = state;
     return (
       username.length > 0 &&
       token.length > 0 &&
@@ -213,152 +216,146 @@ class GitHub extends PureComponent {
     );
   }
 
-  /* cancel = () => {
-    let path = "/api_connector";
-    this.props.history.push(path);
-  } */
+  const { fetching, update } = state;
 
-  render() {
-    console.log(this.state);
-    const { fetching, update } = this.state;
-    const isEnabled = this.canBeSubmitted();
-    return (
-      <div>
-        {this.state.modal &&
-          <Alert className="mt-3" variant={this.state.type} onClose={() => this.setState({ modal: false, type: "", title: "", message: "" })} dismissible>
-            {this.state.title} {this.state.message}
-          </Alert>
-        }
-        <Card className="mt-3">
-          <Card.Header as="h5">Github Credentials</Card.Header>
-          <Card.Body>
+  const isEnabled = canBeSubmitted();
 
-            {fetching && <LoadingDialog />}
-            {!fetching &&
-              <Form onSubmit={this.handleSave}>
+  return (
+    <div>
+      {state.modal &&
+        <Alert className="mt-3" variant={state.type} onClose={() => setState({ modal: false, type: "", title: "", message: "" })} dismissible>
+          {state.title} {state.message}
+        </Alert>
+      }
+      <Card className="mt-3">
+        <Card.Header as="h5">Github Credentials</Card.Header>
+        <Card.Body>
 
-                <Form.Group controlId="formGridUsername">
-                  <Form.Label>Github Username</Form.Label>
+          {fetching && <LoadingDialog />}
+          {!fetching &&
+            <Form onSubmit={handleSave}>
+
+              <Form.Group controlId="formGridUsername">
+                <Form.Label>Github Username</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder=""
+                  name="username"
+                  value={state.username}
+                  onChange={handleChange}
+                // isInvalid={this.state.username.error}
+                />
+                {/* <Form.Control.Feedback type="invalid">{this.state.username.error}</Form.Control.Feedback> */}
+              </Form.Group>
+
+              <Form.Group controlId="formGridToken">
+                <Form.Label>Github Token</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder=""
+                  name="token"
+                  value={state.token}
+                  onChange={handleChange}
+                // isInvalid={this.state.token.error}
+                />
+                {/* <Form.Control.Feedback type="invalid">{this.state.token.error}</Form.Control.Feedback> */}
+              </Form.Group>
+
+              <Form.Group controlId="formGridRepo">
+                <Form.Label>Github Repo Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder=""
+                  name="repoName"
+                  value={state.repoName}
+                  onChange={handleChange}
+                // isInvalid={this.state.repo.error}
+                />
+                {/* <Form.Control.Feedback type="invalid">{this.state.repo.error}</Form.Control.Feedback> */}
+              </Form.Group>
+
+
+              <Form.Row className="pt-4">
+                <Form.Group as={Col} controlId="formGridJenkinsURL">
+                  <Form.Label>Jenkins Container URL</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder=""
-                    name="username"
-                    value={this.state.username}
-                    onChange={this.handleChange}
-                  // isInvalid={this.state.username.error}
+                    name="jenkinsUrl"
+                    value={state.jenkinsUrl}
+                    onChange={handleChange}
+                  // isInvalid={this.state.jenkinsUrl.error}
                   />
-                  {/* <Form.Control.Feedback type="invalid">{this.state.username.error}</Form.Control.Feedback> */}
+                  <small id="passwordHelpBlock" className="form-text text-muted">
+                    Jenkins container notes here.
+                  </small>
+                  {/* <Form.Control.Feedback type="invalid">{this.state.jenkinsUrl.error}</Form.Control.Feedback> */}
                 </Form.Group>
 
-                <Form.Group controlId="formGridToken">
-                  <Form.Label>Github Token</Form.Label>
+                <Form.Group as={Col} controlId="formGridJenkinsPort">
+                  <Form.Label>Jenkins Port</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder=""
-                    name="token"
-                    value={this.state.token}
-                    onChange={this.handleChange}
+                    name="jenkinsPort"
+                    value={state.jenkinsPort}
+                    onChange={handleChange}
+                  // isInvalid={this.state.jenkinsPort.error}
+                  />
+                  {/* <Form.Control.Feedback type="invalid">{this.state.jenkinsPort.error}</Form.Control.Feedback> */}
+                </Form.Group>
+              </Form.Row>
+
+              <Form.Row>
+                <Form.Group as={Col} controlId="formGridJenkinsUsername">
+                  <Form.Label>Jenkins Username</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder=""
+                    name="jUsername"
+                    value={state.jUsername}
+                    onChange={handleChange}
+                  />
+                  {/* <Form.Control.Feedback type="invalid">{this.state.jenkinsUsername.error}</Form.Control.Feedback> */}
+                </Form.Group>
+
+                <Form.Group as={Col} controlId="formGridJenkinsPassword">
+                  <Form.Label>Jenkins Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder=""
+                    name="jPassword"
+                    value={state.jPassword}
+                    onChange={handleChange}
+                    isInvalid={state.jPassword.length < 1}
+                  />
+                  {/* <Form.Control.Feedback type="invalid">{this.state.jenkinsPassword.error}</Form.Control.Feedback> */}
+                </Form.Group>
+
+                <Form.Group controlId="formGridJobName">
+                  <Form.Label>Job Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder=""
+                    name="jobName"
+                    value={state.jobName}
+                    onChange={handleChange}
                   // isInvalid={this.state.token.error}
                   />
                   {/* <Form.Control.Feedback type="invalid">{this.state.token.error}</Form.Control.Feedback> */}
                 </Form.Group>
-
-                <Form.Group controlId="formGridRepo">
-                  <Form.Label>Github Repo Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder=""
-                    name="repoName"
-                    value={this.state.repoName}
-                    onChange={this.handleChange}
-                  // isInvalid={this.state.repo.error}
-                  />
-                  {/* <Form.Control.Feedback type="invalid">{this.state.repo.error}</Form.Control.Feedback> */}
-                </Form.Group>
+              </Form.Row>
+              <div className="text-muted mt-2 mb-2 italic">Please Note: All fields are required for connectivity.</div>
+              <Button id="save-button" disabled={!isEnabled} variant="outline-primary" className="mr-2" type="submit">{update ? "Save Changes" : "Connect"}</Button>
+              {/* <Button id="cancel-button" variant="outline-secondary" className="mr-2" type="button" onClick={this.cancel}>Cancel</Button> */}
+            </Form>
+          }
 
 
-                <Form.Row className="pt-4">
-                  <Form.Group as={Col} controlId="formGridJenkinsURL">
-                    <Form.Label>Jenkins Container URL</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder=""
-                      name="jenkinsUrl"
-                      value={this.state.jenkinsUrl}
-                      onChange={this.handleChange}
-                    // isInvalid={this.state.jenkinsUrl.error}
-                    />
-                    <small id="passwordHelpBlock" className="form-text text-muted">
-                      Jenkins container notes here.
-                    </small>
-                    {/* <Form.Control.Feedback type="invalid">{this.state.jenkinsUrl.error}</Form.Control.Feedback> */}
-                  </Form.Group>
-
-                  <Form.Group as={Col} controlId="formGridJenkinsPort">
-                    <Form.Label>Jenkins Port</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder=""
-                      name="jenkinsPort"
-                      value={this.state.jenkinsPort}
-                      onChange={this.handleChange}
-                    // isInvalid={this.state.jenkinsPort.error}
-                    />
-                    {/* <Form.Control.Feedback type="invalid">{this.state.jenkinsPort.error}</Form.Control.Feedback> */}
-                  </Form.Group>
-                </Form.Row>
-
-                <Form.Row>
-                  <Form.Group as={Col} controlId="formGridJenkinsUsername">
-                    <Form.Label>Jenkins Username</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder=""
-                      name="jUsername"
-                      value={this.state.jUsername}
-                      onChange={this.handleChange}
-                    />
-                    {/* <Form.Control.Feedback type="invalid">{this.state.jenkinsUsername.error}</Form.Control.Feedback> */}
-                  </Form.Group>
-
-                  <Form.Group as={Col} controlId="formGridJenkinsPassword">
-                    <Form.Label>Jenkins Password</Form.Label>
-                    <Form.Control
-                      type="password"
-                      placeholder=""
-                      name="jPassword"
-                      value={this.state.jPassword}
-                      onChange={this.handleChange}
-                      isInvalid={this.state.jPassword.length < 1}
-                    />
-                    {/* <Form.Control.Feedback type="invalid">{this.state.jenkinsPassword.error}</Form.Control.Feedback> */}
-                  </Form.Group>
-
-                  <Form.Group controlId="formGridJobName">
-                    <Form.Label>Job Name</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder=""
-                      name="jobName"
-                      value={this.state.jobName}
-                      onChange={this.handleChange}
-                    // isInvalid={this.state.token.error}
-                    />
-                    {/* <Form.Control.Feedback type="invalid">{this.state.token.error}</Form.Control.Feedback> */}
-                  </Form.Group>
-                </Form.Row>
-                <div className="text-muted mt-2 mb-2 italic">Please Note: All fields are required for connectivity.</div>
-                <Button id="save-button" disabled={!isEnabled} variant="outline-primary" className="mr-2" type="submit">{update ? "Save Changes" : "Connect"}</Button>
-                {/* <Button id="cancel-button" variant="outline-secondary" className="mr-2" type="button" onClick={this.cancel}>Cancel</Button> */}
-              </Form>
-            }
-
-
-          </Card.Body>
-        </Card>
-      </div>
-    );
-  }
+        </Card.Body>
+      </Card>
+    </div>
+  );
 }
 
 export default GitHub;
