@@ -75,7 +75,7 @@ function Analytics() {
         currently configured logs repositories below.</p>
 
         {(Object.keys(data).length > 0) ? 
-          <div className="p-2 mt-1 text-right">
+          <div className="pr-2 mt-1 text-right">
             <Link to='/profile'><FontAwesomeIcon icon={faCog} fixedWidth size="lg" /></Link>
           </div> : 
           <div className="p-2 mt-1">
@@ -85,7 +85,7 @@ function Analytics() {
 
         {(Object.keys(data).length > 0) &&
       <>
-        <div className="mt-1">
+        <div>
           <Form onSubmit={handleFormSubmit}>
             <div className="d-flex mt-3">
               <div className="p-2 flex-grow-1">
