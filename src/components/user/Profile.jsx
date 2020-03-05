@@ -1,73 +1,90 @@
-import React, { Component } from 'react';
-import { withAuth } from '@okta/okta-react';
-import { Table } from 'react-bootstrap';
+import React, { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
+import { ApiService } from "../../api/apiService";
+import { Table, Card } from "react-bootstrap";
+import ConfigurationsForm from "../analytics/configurationsForm";
+import LoadingDialog from "../common/loading";
+import ErrorDialog from "../common/error";
 
-async function checkAuthentication() {
-  const authenticated = await this.props.auth.isAuthenticated();
-  if (authenticated !== this.state.authenticated) {
-    if (authenticated && !this.state.userInfo) {
-      const userInfo = await this.props.auth.getUser();
-      this.setState({ authenticated, userInfo });
-    } else {
-      this.setState({ authenticated });
+function Profile() {
+  const contextType = useContext(AuthContext);
+  const [error, setErrors] = useState();
+  const [data, setData] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [token, setToken] = useState();
+  const [claims, setClaims] = useState();
+    
+  useEffect(() => {
+    fetchData();
+  }, []); 
+
+  async function fetchData() {
+    setLoading(true);
+    const { getUserInfo, getAccessToken } = contextType;
+    const accessToken = await getAccessToken();
+    const userInfoResponse = await getUserInfo();
+    setToken(accessToken);
+    
+    const apiCall = new ApiService("/analytics/settings", {}, accessToken);
+    apiCall.get()
+      .then(function (response) {
+        setData(response.data[0]);
+        setLoading(false);  
+        applyClaims(userInfoResponse);      
+      })
+      .catch(function (error) {
+        setLoading(false);
+        setErrors(error);
+        console.log(`Error Reported: ${error}`);
+      });
+  }
+
+  async function applyClaims(user) {
+    if (user && !claims) {
+      const claims = Object.entries(user);
+      setClaims(claims);
     }
   }
+
+  return (
+    <div className="mt-3 max-content-width">
+      {loading && <LoadingDialog />}
+      {!loading && 
+      <>
+        <div className="max-content-width mt-3 mb-4">
+          <h4>My User Profile</h4>
+          <p>Review and manage your user profile information as well as platform settings from this page.  Please note, profile details are 
+              stored in your identify provider so some changes may not be possible from this portal at this time.</p>               
+        </div>
+
+        <h6>Analytics and Logging Settings</h6>  
+        <div className="p-2 mt-1">
+          {error && <ErrorDialog error={error} />}
+          <ConfigurationsForm settings={data} token={token} />
+        </div>
+
+        <h6 className="mt-4">My User Profile (powered by Okta)</h6>
+        <div className="p-2 mt-1">
+          <Card>
+            <Card.Body>            
+              <Table>
+                <tbody>
+                  {claims !== undefined && claims.map((claimEntry) => {
+                    const claimName = claimEntry[0];
+                    const claimValue = claimEntry[1];
+                    const claimId = `claim-${claimName}`;
+                    return <tr key={claimName}><td>{claimName}</td><td id={claimId}>{claimValue}</td></tr>;
+                  })}
+                </tbody>
+              </Table>
+            </Card.Body>        
+          </Card>
+        </div>
+      </>
+        
+      }
+    </div>
+  );
 }
 
-export default withAuth(class Profile extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { userInfo: null, ready: false };
-    this.checkAuthentication = checkAuthentication.bind(this);
-  }
-
-  async componentDidMount() {
-    await this.checkAuthentication();
-    this.applyClaims();
-  }
-
-  async componentDidUpdate() {
-    await this.checkAuthentication();
-    this.applyClaims();
-  }
-
-  async applyClaims() {
-    if (this.state.userInfo && !this.state.claims) {
-      const claims = Object.entries(this.state.userInfo);
-      this.setState({ claims, ready: true });
-    }
-  }
-
-  render() {
-    return (
-      <div>
-        {!this.state.ready && <p>Fetching user profile..</p>}
-        {this.state.ready &&
-        <div>
-          My User Profile (ID Token Claims)
-          <p>
-            Below is the information from your ID token which was obtained during the &nbsp;
-            <a href="https://developer.okta.com/docs/guides/implement-auth-code-pkce">PKCE Flow</a> and is now stored in local storage.
-          </p>
-          <p>This route is protected with the <code>&lt;SecureRoute&gt;</code> component, which will ensure that this page cannot be accessed until you have authenticated.</p>
-          <Table>
-            <thead>
-              <tr>
-                <th>Claim</th><th>Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.claims.map((claimEntry) => {
-                const claimName = claimEntry[0];
-                const claimValue = claimEntry[1];
-                const claimId = `claim-${claimName}`;
-                return <tr key={claimName}><td>{claimName}</td><td id={claimId}>{claimValue}</td></tr>;
-              })}
-            </tbody>
-          </Table>
-        </div>
-        }
-      </div>
-    );
-  }
-});
+export default Profile;

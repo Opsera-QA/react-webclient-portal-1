@@ -61,94 +61,97 @@ function DashboardHome() {
   return (
     <div className="mb-3 max-charting-width">
       { loading && <LoadingDialog size="lg" />}
-      <div className="mt-2 mb-3">
+      { !loading && 
+      <>
+        <div className="mt-2 mb-3">
         
-        <div className="max-content-width mt-3 mb-4">
-          <h4>My Dashboard</h4>
-          <p>OpsERA offers the best, easy to use solutions for deploying, monitoring and managing your entire automation and workflow 
+          <div className="max-content-width mt-3 mb-4">
+            <h4>My Dashboard</h4>
+            <p>OpsERA offers the best, easy to use solutions for deploying, monitoring and managing your entire automation and workflow 
                 pipelines, enabling organizations to build optimized and efficient DevOps based projects.</p>               
-        </div>
+          </div>
 
-        { hasError && <ErrorDialog error={hasError} className="mt-4 mb-4" /> }
+          { hasError && <ErrorDialog error={hasError} className="mt-4 mb-4" /> }
 
-        { data.length == 0 || data.elasticUrl.length == 0 ? <div style={{ height: "250px" }} className="max-content-module-width-50">
-          <div className="row h-100">
-            <div className="col-sm-12 my-auto">
-              <Alert variant="info">Your Analytics Profile has not been enabled for this account.  Please update your <Link to='/analytics'>Analytics 
+          { data.length == 0 || data.elasticUrl.length == 0 ? <div style={{ height: "250px" }} className="max-content-module-width-50">
+            <div className="row h-100">
+              <div className="col-sm-12 my-auto">
+                <Alert variant="info">Your Analytics Profile has not been enabled for this account.  Please update your <Link to='/profile'>Analytics 
                 Profile Settings</Link> on the left menu and enable your settings in order to use the Dashboards.</Alert>
-              <div className="text-muted mt-4">
-                <div className="mb-3">In order to take advantage of the robust analytics dashboards offered by OpsERA, the following configurations are necessary:</div>
-                <ul className="list-group">
-                  <li className="list-group-item d-flex justify-content-between align-items-center">
+                <div className="text-muted mt-4">
+                  <div className="mb-3">In order to take advantage of the robust analytics dashboards offered by OpsERA, the following configurations are necessary:</div>
+                  <ul className="list-group">
+                    <li className="list-group-item d-flex justify-content-between align-items-center">
                     Analytics must be enabled for your profile.
-                    {data.length == 0 ? 
-                      <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span> :
-                      <span className="badge badge-success badge-pill"><FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth /></span> }
-                  </li>
-                  <li className="list-group-item d-flex justify-content-between align-items-center">
+                      {data.length == 0 ? 
+                        <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span> :
+                        <span className="badge badge-success badge-pill"><FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth /></span> }
+                    </li>
+                    <li className="list-group-item d-flex justify-content-between align-items-center">
                     An OpsERA Analytics instance must be spun up and configured with your pipeline tools.
-                    {data.length == 0 || data.elasticIp.length == 0 ? 
-                      <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span> :
-                      <span className="badge badge-success badge-pill"><FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth /></span> }
-                  </li>
-                  <li className="list-group-item d-flex justify-content-between align-items-center">
+                      {data.length == 0 || data.elasticIp.length == 0 ? 
+                        <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span> :
+                        <span className="badge badge-success badge-pill"><FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth /></span> }
+                    </li>
+                    <li className="list-group-item d-flex justify-content-between align-items-center">
                     Builds must have been run in order to analytics to be collected.
-                    <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span>
-                  </li>
-                </ul>
+                      <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-        </div> :
+          </div> :
 
-          <Row>
-            <Col sm={8}>
-              <ul className="nav nav-pills ml-2 mb-2">
-                <li className="nav-item">
-                  <a className={"nav-link " + (selection === "pipeline" ? "active" : "")} onClick={handleTabClick("pipeline")} href="#">Pipeline</a>
-                </li>
-                <li className="nav-item">
-                  <a className={"nav-link " + (selection === "secops" ? "active" : "")} onClick={handleTabClick("secops")} href="#">SecOps</a>
-                </li>
-                <li className="nav-item">
-                  <a className={"nav-link " + (selection === "logs" ? "active" : "")} onClick={handleTabClick("logs")} href="#">Logs</a>
-                </li>
-                <li className="nav-item">
-                  <a className={"nav-link disabled " + (selection === "tools" ? "active" : "")} onClick={handleTabClick("tools")} href="#">Tools</a>
-                </li>
-              </ul></Col>
-            <Col sm={4}>
-              <Select
-                className="basic-single mr-2"
-                menuPortalTarget={document.body}
-                styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                classNamePrefix="select"
-                defaultValue={persona ? PERSONAS[parseInt(persona)] : PERSONAS[0]}
-                isDisabled={false}
-                isClearable={false}
-                isSearchable={true}
-                name="PERSONA-SELECT"
-                options={PERSONAS}
-                onChange={handleSelectPersonaChange}
-              />
-            </Col>
-          </Row>}
+            <Row>
+              <Col sm={8}>
+                <ul className="nav nav-pills ml-2 mb-2">
+                  <li className="nav-item">
+                    <a className={"nav-link " + (selection === "pipeline" ? "active" : "")} onClick={handleTabClick("pipeline")} href="#">Pipeline</a>
+                  </li>
+                  <li className="nav-item">
+                    <a className={"nav-link " + (selection === "secops" ? "active" : "")} onClick={handleTabClick("secops")} href="#">SecOps</a>
+                  </li>
+                  <li className="nav-item">
+                    <a className={"nav-link " + (selection === "logs" ? "active" : "")} onClick={handleTabClick("logs")} href="#">Logs</a>
+                  </li>
+                  <li className="nav-item">
+                    <a className={"nav-link disabled " + (selection === "tools" ? "active" : "")} onClick={handleTabClick("tools")} href="#">Tools</a>
+                  </li>
+                </ul></Col>
+              <Col sm={4}>
+                <Select
+                  className="basic-single mr-2"
+                  menuPortalTarget={document.body}
+                  styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                  classNamePrefix="select"
+                  defaultValue={persona ? PERSONAS[parseInt(persona)] : PERSONAS[0]}
+                  isDisabled={false}
+                  isClearable={false}
+                  isSearchable={true}
+                  name="PERSONA-SELECT"
+                  options={PERSONAS}
+                  onChange={handleSelectPersonaChange}
+                />
+              </Col>
+            </Row>}
             
-        {(() => {
-          switch (selection) {
-          case "pipeline":
-            return data.length == 0 || data.elasticUrl.length == 0 ? null : <PipelineDashboard persona={persona} />;
-          case "secops":
-            return <SecOpsDashboard persona={persona} />;
-          case "logs":
-            return <LogsDashboard persona={persona} />;
-          case "tools":
-            return <ToolsDashboard persona={persona} />;
-          default:
-            return null; 
-          }
-        })()}
-      </div>
+          {(() => {
+            switch (selection) {
+            case "pipeline":
+              return data.length == 0 || data.elasticUrl.length == 0 ? null : <PipelineDashboard persona={persona} />;
+            case "secops":
+              return <SecOpsDashboard persona={persona} />;
+            case "logs":
+              return <LogsDashboard persona={persona} />;
+            case "tools":
+              return <ToolsDashboard persona={persona} />;
+            default:
+              return null; 
+            }
+          })()}
+        </div>
+      </>}
     </div>
   );
   

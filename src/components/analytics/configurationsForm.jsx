@@ -163,7 +163,7 @@ function ConfigurationsForm({ settings, token }) {
           <Card>
             <Accordion.Toggle as={Card.Header} eventKey="0" >
               <Row className="card-header-clickable" onClick={() => { handleClickSettings(); }}>
-                <Col><span className="h5">Settings</span></Col>
+                <Col><span className="h6">Settings</span></Col>
                 <Col className="text-right">
                   {(enabledToolsOn && !disabledToolsOn) &&
                     <>

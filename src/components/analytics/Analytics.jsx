@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext"; //New AuthContext State 
 import { ApiService } from "../../api/apiService";
 import LoadingDialog from "../common/loading";
@@ -10,6 +11,8 @@ import "./analytics.css";
 import "./charts/charts.css";
 import ActivityLogView from "../analytics/logs/activityLogView";
 import Select from "react-select";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCog } from "@fortawesome/free-solid-svg-icons";
 
 const FILTER = [{ value: "pipeline", label: "Pipeline" }, { value: "metricbeat", label: "MetricBeat" }, { value: "twistlock", label: "TwistLock" }];
 
@@ -64,18 +67,23 @@ function Analytics() {
   return (
     <div className="mt-3 max-content-width">
       {loading && <LoadingDialog />}
-
-      <h4>Analytics and Logs</h4>
-      <p>OpsERA provides users with access to a vast repository of logging and analytics.  Access all available 
+      {!loading &&
+      <>
+        <h4>Analytics and Logs</h4>
+        <p>OpsERA provides users with access to a vast repository of logging and analytics.  Access all available 
          logging, reports and configurations around the OpsERA Analytics Platform or search your 
         currently configured logs repositories below.</p>
 
-      <div className="p-2 mt-1">
-        {error && <ErrorDialog error={error} />}
-        <ConfigurationsForm settings={data} token={token} />
-      </div>
+        {(Object.keys(data).length > 0) ? 
+          <div className="p-2 mt-1 text-right">
+            <Link to='/profile'><FontAwesomeIcon icon={faCog} fixedWidth size="lg" /></Link>
+          </div> : 
+          <div className="p-2 mt-1">
+            {error && <ErrorDialog error={error} />}
+            <ConfigurationsForm settings={data} token={token} />
+          </div>}
 
-      {(Object.keys(data).length > 0) &&
+        {(Object.keys(data).length > 0) &&
       <>
         <div className="mt-1">
           <Form onSubmit={handleFormSubmit}>
@@ -109,6 +117,7 @@ function Analytics() {
         <div className="mt-3 p-2">
           <ActivityLogView searchQuery={query} filterType={filterType} />
         </div>
+      </>}
       </>}
     </div>
   );
