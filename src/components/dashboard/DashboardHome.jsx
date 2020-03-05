@@ -33,7 +33,8 @@ function DashboardHome() {
       });
       
     setLoading(false);
-    if (result.data.length > 0) {
+    
+    if (result !== undefined && result.data.length > 0) {
       setPersona(result.data[0].defaultPersona);
       setData(result.data[0]);
     }
