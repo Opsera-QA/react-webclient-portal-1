@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStream, faSearchPlus, faClipboardList, faLink, faBox, faDownload, faHome, faTools, faDraftingCompass } from "@fortawesome/free-solid-svg-icons";
+import { faStream, faHistory, faClipboardList, faLink, faBox, faDownload, faHome, faTools, faDraftingCompass } from "@fortawesome/free-solid-svg-icons";
 import "./sidebar.css";
 
 function Sidebar({ hideView }) {
@@ -61,7 +61,7 @@ function Sidebar({ hideView }) {
                   <NavLink className="nav-link" activeClassName="chosen" to="/pipeline"><FontAwesomeIcon icon={faStream} fixedWidth /> <span className="menu-text">Pipelines</span></NavLink>
                 )}
 
-                <NavLink className="nav-link" activeClassName="chosen" to="/analytics"><FontAwesomeIcon icon={faSearchPlus} fixedWidth /> <span className="menu-text">Analytics</span></NavLink>
+                <NavLink className="nav-link" activeClassName="chosen" to="/analytics"><FontAwesomeIcon icon={faHistory} fixedWidth /> <span className="menu-text">Analytics</span></NavLink>
         
                 <div className="mt-3 mb-1 sub-header">Operations</div>
                 <NavLink className="nav-link" activeClassName="chosen" to="/api_connector"><FontAwesomeIcon icon={faLink} fixedWidth /> <span className="menu-text">Tools</span></NavLink>
