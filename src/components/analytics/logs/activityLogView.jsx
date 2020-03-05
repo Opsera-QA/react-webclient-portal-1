@@ -123,14 +123,18 @@ const MapActivityData = (props) => {
                   size="xs"
                   style={{ cursor: "pointer" }}
                   onClick={() => { handleClick(item); }} /></div>
-              <div className="col text-center"><b>Environment: </b>{item["Release Environment"]}</div>
+              {item["Release Environment"] ? 
+                <div className="col text-center"><b>Environment: </b>{item["Release Environment"]}</div> 
+                : "" }
               <div className="col text-right"><Moment format="dddd, MMMM Do YYYY, h:mm:ss a" date={item["time"]} /></div>
             </div>
             <div className="row mt-1">
               <div className="col"><b>Message: </b>{item["message"]}</div>
             </div>
             <div className="row mt-1">
-              <div className="col"><b>Git Commit ID: </b>{item["Git Commit ID"]}</div>
+              {item["Git Commit ID"] ? 
+                <div className="col"><b>Git Commit ID: </b>{item["Git Commit ID"]}</div> 
+                : ""}
               <div className="col text-right"><b>Tool: </b>{item["tool"]}</div>
             </div>
           </Alert>
