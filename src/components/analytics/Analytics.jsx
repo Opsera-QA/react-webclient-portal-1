@@ -65,9 +65,10 @@ function Analytics() {
     <div className="mt-3 max-content-width">
       {loading && <LoadingDialog />}
 
-      <h4>Analytics</h4>
-      <p>Access all available logging, reports and configurations around the OpsERA Analytics Platform.
-        Update your settings or configure your profile and logging tools in the settings below.</p>
+      <h4>Analytics and Logs</h4>
+      <p>OpsERA provides users with access to a vast repository of logging and analytics.  Access all available 
+         logging, reports and configurations around the OpsERA Analytics Platform or search your 
+        currently configured logs repositories below.</p>
 
       <div className="p-2 mt-1">
         {error && <ErrorDialog error={error} />}

@@ -70,7 +70,7 @@ const MapActivityData = (props) => {
   };
   if (typeof data === "undefined" || data.length === 0) {
     return (
-      <div style={{ height: "540px" }}>
+      <div style={{ height: "400px" }}>
         <div className="row h-100">
           <div className="col-sm-12 my-auto text-center">
             {search ?
