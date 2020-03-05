@@ -52,7 +52,7 @@ function Analytics() {
     apiCall.get()
       .then(function (response) {
         setData(response.data[0]);
-        setLoading(false);
+        setLoading(false);        
       })
       .catch(function (error) {
         setLoading(false);
@@ -74,7 +74,8 @@ function Analytics() {
         <ConfigurationsForm settings={data} token={token} />
       </div>
 
-      {(data) &&
+      {(Object.keys(data).length > 0) &&
+      <>
         <div className="mt-1">
           <Form onSubmit={handleFormSubmit}>
             <div className="d-flex mt-3">
@@ -102,13 +103,12 @@ function Analytics() {
               </div>
             </div>
           </Form>
-        </div>}
+        </div>
 
-
-      <div className="mt-3 p-2">
-        <ActivityLogView searchQuery={query} filterType={filterType} />
-      </div>
-
+        <div className="mt-3 p-2">
+          <ActivityLogView searchQuery={query} filterType={filterType} />
+        </div>
+      </>}
     </div>
   );
 }
