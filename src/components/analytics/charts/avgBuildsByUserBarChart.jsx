@@ -21,7 +21,7 @@ function AvgBuildsByUserBarChart( { data, persona } ) {
           margin={config.margin}
           padding={0.3}
           layout={"horizontal"}
-          colors={{ scheme: "spectral" }}
+          colors={{ scheme: "set2" }}
           borderColor={{ theme: "background" }}
           colorBy="id"
           defs={config.defs}
@@ -31,7 +31,7 @@ function AvgBuildsByUserBarChart( { data, persona } ) {
           axisBottom={config.axisBottom}
           axisLeft={config.axisLeft}
           enableLabel={false}
-          borderRadius={5}
+          borderRadius={0}
           labelSkipWidth={12}
           labelSkipHeight={12}
           labelTextColor="inherit:darker(2)"
@@ -39,11 +39,12 @@ function AvgBuildsByUserBarChart( { data, persona } ) {
           motionStiffness={90}
           borderWidth={2}
           motionDamping={15}
-          tooltip={({ indexValue, value, color }) => (
+          tooltip={({ indexValue, data, color }) => (
             <div>
               <strong style={{ color }}>
-                User: </strong> {indexValue}<br></br>
-              <strong style={{ color }}>  Duration: </strong> {value} Seconds
+                Build Tag: </strong> {indexValue}<br></br>
+              <strong style={{ color }}> Successful Builds: </strong> {data.success} <br></br>
+              <strong style={{ color }}> Failed Builds: </strong> {data.failure}
             </div>
           )}
           theme={{
