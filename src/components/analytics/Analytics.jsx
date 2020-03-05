@@ -74,7 +74,7 @@ function Analytics() {
          logging, reports and configurations around the OpsERA Analytics Platform or search your 
         currently configured logs repositories below.</p>
 
-        {(Object.keys(data).length > 0) ? 
+        {(data !== undefined && Object.keys(data).length > 0) ? 
           <div className="pr-2 mt-1 text-right">
             <Link to='/profile'><FontAwesomeIcon icon={faCog} fixedWidth size="lg" /></Link>
           </div> : 
@@ -83,7 +83,7 @@ function Analytics() {
             <ConfigurationsForm settings={data} token={token} />
           </div>}
 
-        {(Object.keys(data).length > 0) &&
+        {(data !== undefined && Object.keys(data).length > 0) &&
       <>
         <div>
           <Form onSubmit={handleFormSubmit}>
