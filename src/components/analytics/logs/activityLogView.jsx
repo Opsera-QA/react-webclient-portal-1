@@ -42,11 +42,11 @@ function ActivityLogView({ persona, searchQuery, filterType }) {
     } else {
       setData([]);
     }
-  }, [searchQuery, filterType]);
+  }, [filterType]);
 
 
   if (loading) {
-    return (<LoadingDialog size="sm" />);
+    return (<LoadingDialog size="sm" style={{ marginTop:"25px" }} />);
   } else if (error) {
     return (<ErrorDialog error={error} />);
   } else {
@@ -64,6 +64,8 @@ const MapActivityData = (props) => {
   const [modalMessage, setModalMessage] = useState({});
   const { data, type, search, filter } = props;
 
+  console.log(data);
+
   const handleClick = (param) => {
     setModalMessage(param);
     setShowModal(true);
@@ -80,7 +82,7 @@ const MapActivityData = (props) => {
         </div>
       </div>
     );
-  } else if (filter === "pipeline" && data[0]._source) {
+  } else if (filter === "pipeline") { // && data[0]._source
     return (
       <>
         {data.map((item, idx) => (
