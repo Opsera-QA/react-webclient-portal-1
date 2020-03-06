@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ApiService } from "../../api/apiService";
 import Select from "react-select";
@@ -36,11 +37,13 @@ function DashboardHome() {
       });
       
     setLoading(false);
-    
-    if (result !== undefined && result.data.length > 0) {
-      setPersona(result.data[0].defaultPersona);
-      setData(result.data[0]);
-      console.log(result);
+    console.log(result.data);
+    setData(result.data);
+
+    console.log(result.data.profile.length);
+
+    if (result.data !== undefined && result.data.profile.length > 0) {
+      setPersona(result.data.profile[0].defaultPersona);      
     }
   };
 
@@ -73,7 +76,7 @@ function DashboardHome() {
 
           { hasError && <ErrorDialog error={hasError} className="mt-4 mb-4" /> }
 
-          { data.length == 0 || data.elasticUrl.length == 0 ? <div style={{ height: "250px" }} className="max-content-module-width-50">
+          { data === undefined || data.length === 0 || data.esSearchApi === null ? <div style={{ height: "250px" }} className="max-content-module-width-50">
             <div className="row h-100">
               <div className="col-sm-12 my-auto">
                 <Alert variant="info">Your Analytics Profile has not been enabled for this account.  Please update your <Link to='/profile'>Analytics 
@@ -83,18 +86,18 @@ function DashboardHome() {
                   <ul className="list-group">
                     <li className="list-group-item d-flex justify-content-between align-items-center">
                     Analytics must be enabled for your profile.
-                      {data.length == 0 ? 
-                        <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span> :
-                        <span className="badge badge-success badge-pill"><FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth /></span> }
+                      {(typeof data.profile === "object" && data.profile.length > 0 ) ? 
+                        <span className="badge badge-success badge-pill"><FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth /></span>  :
+                        <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span> }
                     </li>
                     <li className="list-group-item d-flex justify-content-between align-items-center">
                     An OpsERA Analytics instance must be spun up and configured with your pipeline tools.
-                      {data.length == 0 || data.elasticIp.length == 0 ? 
+                      {data.esSearchApi === null ? 
                         <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span> :
                         <span className="badge badge-success badge-pill"><FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth /></span> }
                     </li>
                     <li className="list-group-item d-flex justify-content-between align-items-center">
-                    Builds must have been run in order to analytics to be collected.
+                      Pipeline activity must have occurred in order for the system to collect data for display.
                       <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span>
                     </li>
                   </ul>
@@ -102,59 +105,76 @@ function DashboardHome() {
               </div>
             </div>
           </div> :
-
-            <Row>
-              <Col sm={8}>
-                <ul className="nav nav-pills ml-2 mb-2">
-                  <li className="nav-item">
-                    <a className={"nav-link " + (selection === "pipeline" ? "active" : "")} onClick={handleTabClick("pipeline")} href="#">Pipeline</a>
-                  </li>
-                  <li className="nav-item">
-                    <a className={"nav-link " + (selection === "secops" ? "active" : "")} onClick={handleTabClick("secops")} href="#">SecOps</a>
-                  </li>
-                  <li className="nav-item">
-                    <a className={"nav-link " + (selection === "logs" ? "active" : "")} onClick={handleTabClick("logs")} href="#">Logs</a>
-                  </li>
-                  <li className="nav-item">
-                    <a className={"nav-link disabled " + (selection === "tools" ? "active" : "")} onClick={handleTabClick("tools")} href="#">Tools</a>
-                  </li>
-                </ul></Col>
-              <Col sm={4}>
-                <Select
-                  className="basic-single mr-2"
-                  menuPortalTarget={document.body}
-                  styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                  classNamePrefix="select"
-                  defaultValue={persona ? PERSONAS[parseInt(persona)] : PERSONAS[0]}
-                  isDisabled={false}
-                  isClearable={false}
-                  isSearchable={true}
-                  name="PERSONA-SELECT"
-                  options={PERSONAS}
-                  onChange={handleSelectPersonaChange}
-                />
-              </Col>
-            </Row>}
+            <>
+              <Row>
+                <Col sm={8}>
+                  <ul className="nav nav-pills ml-2 mb-2">
+                    <li className="nav-item">
+                      <a className={"nav-link " + (selection === "pipeline" ? "active" : "")} onClick={handleTabClick("pipeline")} href="#">Pipeline</a>
+                    </li>
+                    <li className="nav-item">
+                      <a className={"nav-link " + (selection === "secops" ? "active" : "")} onClick={handleTabClick("secops")} href="#">SecOps</a>
+                    </li>
+                    <li className="nav-item">
+                      <a className={"nav-link " + (selection === "logs" ? "active" : "")} onClick={handleTabClick("logs")} href="#">Logs</a>
+                    </li>
+                    <li className="nav-item">
+                      <a className={"nav-link disabled " + (selection === "tools" ? "active" : "")} onClick={handleTabClick("tools")} href="#">Tools</a>
+                    </li>
+                  </ul></Col>
+                <Col sm={4}>
+                  <Select
+                    className="basic-single mr-2"
+                    menuPortalTarget={document.body}
+                    styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                    classNamePrefix="select"
+                    defaultValue={persona ? PERSONAS[parseInt(persona)] : PERSONAS[0]}
+                    isDisabled={false}
+                    isClearable={false}
+                    isSearchable={true}
+                    name="PERSONA-SELECT"
+                    options={PERSONAS}
+                    onChange={handleSelectPersonaChange}
+                  />
+                </Col>
+              </Row>
             
-          {(() => {
-            switch (selection) {
-            case "pipeline":
-              return data.length == 0 || data.elasticUrl.length == 0 ? null : <PipelineDashboard persona={persona} />;
-            case "secops":
-              return <SecOpsDashboard persona={persona} />;
-            case "logs":
-              return <LogsDashboard persona={persona} />;
-            case "tools":
-              return <ToolsDashboard persona={persona} />;
-            default:
-              return null; 
-            }
-          })()}
+              <DashboardView selection={selection} persona={persona} />
+            </>
+          }
+            
+
         </div>
       </>}
     </div>
   );
   
 }
+
+function DashboardView({ selection, persona }) {
+  useEffect(() => {
+  }, [selection, persona]);
+
+  if (selection) {
+    switch (selection) {
+    case "pipeline":
+      return <PipelineDashboard persona={persona} />;
+    case "secops":
+      return <SecOpsDashboard persona={persona} />;
+    case "logs":
+      return <LogsDashboard persona={persona} />;
+    case "tools":
+      return <ToolsDashboard persona={persona} />;
+    default:
+      return null; 
+    }
+  }
+  
+}
+
+DashboardView.propTypes = {
+  selection: PropTypes.string,
+  persona: PropTypes.string
+};
 
 export default DashboardHome;

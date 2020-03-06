@@ -27,8 +27,8 @@ function Profile() {
     
     const apiCall = new ApiService("/analytics/settings", {}, accessToken);
     apiCall.get()
-      .then(function (response) {
-        setData(response.data[0]);
+      .then(function (result) {
+        setData(result.data.profile[0]);
         setLoading(false);  
         applyClaims(userInfoResponse);      
       })

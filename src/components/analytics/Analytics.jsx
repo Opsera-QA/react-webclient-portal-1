@@ -6,7 +6,7 @@ import { ApiService } from "../../api/apiService";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import ConfigurationsForm from "./configurationsForm";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Alert } from "react-bootstrap";
 import "./analytics.css";
 import "./charts/charts.css";
 import ActivityLogView from "../analytics/logs/activityLogView";
@@ -52,8 +52,8 @@ function Analytics() {
 
     const apiCall = new ApiService("/analytics/settings", {}, accessToken);
     apiCall.get()
-      .then(function (response) {
-        setData(response.data[0]);
+      .then(function (result) {
+        setData(result.data);
         setLoading(false);        
       })
       .catch(function (error) {
@@ -73,50 +73,64 @@ function Analytics() {
          logging, reports and configurations around the OpsERA Analytics Platform or search your 
         currently configured logs repositories below.</p>
 
-        {(data !== undefined && Object.keys(data).length > 0) ? 
-          <div className="pr-2 mt-1 text-right">
-            <Link to='/profile'><FontAwesomeIcon icon={faCog} fixedWidth size="lg" /></Link>
-          </div> : 
+        {data == undefined ? 
           <div className="p-2 mt-1">
             {error && <ErrorDialog error={error} />}
             <ConfigurationsForm settings={data} token={token} />
-          </div>}
+          </div>
+          :
+          data.esSearchApi !== null ?
+            <>
+              <div className="pr-2 mt-1 text-right">
+                <Link to='/profile'><FontAwesomeIcon icon={faCog} fixedWidth size="lg" /></Link>
+              </div> 
 
-        {(data !== undefined && Object.keys(data).length > 0) &&
-      <>
-        <div>
-          <Form onSubmit={handleFormSubmit}>
-            <div className="d-flex mt-3">
-              <div className="p-2 flex-grow-1">
-                <Form.Control placeholder="Search logs" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
+              <div>
+                <Form onSubmit={handleFormSubmit}>
+                  <div className="d-flex mt-3">
+                    <div className="p-2 flex-grow-1">
+                      <Form.Control placeholder="Search logs" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
+                    </div>
+                    <div className="p-2 flex-grow-1">
+                      <Select
+                        className="basic-single"
+                        menuPortalTarget={document.body}
+                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                        classNamePrefix="select"
+                        defaultValue={filterType ? FILTER[FILTER.findIndex(x => x.value ===filterType)] : FILTER[0]}
+                        isDisabled={false}
+                        isClearable={false}
+                        isSearchable={true}
+                        name="FILTER-SELECT"
+                        options={FILTER}
+                        onChange={handleSelectChange}
+                      />
+                    </div>
+                    <div className="p-2">
+                      <Button variant="primary" type="submit">Search</Button>
+                      <Button variant="outline-secondary" className="ml-2" type="button" onClick={cancelSearchClicked}>Cancel</Button>
+                    </div>
+                  </div>
+                </Form>
               </div>
-              <div className="p-2 flex-grow-1">
-                <Select
-                  className="basic-single"
-                  menuPortalTarget={document.body}
-                  styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                  classNamePrefix="select"
-                  defaultValue={filterType ? FILTER[FILTER.findIndex(x => x.value ===filterType)] : FILTER[0]}
-                  isDisabled={false}
-                  isClearable={false}
-                  isSearchable={true}
-                  name="FILTER-SELECT"
-                  options={FILTER}
-                  onChange={handleSelectChange}
-                />
-              </div>
-              <div className="p-2">
-                <Button variant="primary" type="submit">Search</Button>
-                <Button variant="outline-secondary" className="ml-2" type="button" onClick={cancelSearchClicked}>Cancel</Button>
-              </div>
-            </div>
-          </Form>
-        </div>
 
-        <div className="mt-3 p-2">
-          <ActivityLogView searchQuery={query} filterType={filterType} />
-        </div>
-      </>}
+              <div className="mt-3 p-2">
+                <ActivityLogView searchQuery={query} filterType={filterType} />
+              </div>
+            </>
+            :
+            <div style={{ height: "200px" }}>
+              <div className="row h-100">
+                <div className="col-sm-12 my-auto text-center">
+                  <Alert variant="info">
+                    An OpsERA Analytics instance must be spun up and configured with your pipeline tools in order to leverage these features.
+                  </Alert>
+                </div>
+              </div>
+            </div>          
+        }
+
+      
       </>}
     </div>
   );
