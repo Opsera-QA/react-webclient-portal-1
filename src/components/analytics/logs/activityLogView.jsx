@@ -80,7 +80,7 @@ const MapActivityData = (props) => {
         </div>
       </div>
     );
-  } else if (filter === "pipeline") {
+  } else if (filter === "pipeline" && data[0]._source) {
     return (
       <>
         {data.map((item, idx) => (
@@ -111,7 +111,48 @@ const MapActivityData = (props) => {
           handleConfirmModal={() => setShowModal(false)} /> : null}
       </>
     );
-  } else {
+  } else if (filter === "blueprint") {
+    return (
+      <>
+        {data.map((item, idx) => (
+          <Alert key={idx} variant={type}>
+            <div className="row">
+              <div className="col text-left"><b>Build: </b>{item["build_number"]}
+                <FontAwesomeIcon icon={faSearchPlus}
+                  className="ml-1"
+                  size="xs"
+                  style={{ cursor: "pointer" }}
+                  onClick= {() => { handleClick(item); }} /></div>
+              {item["Release Environment"] ? 
+                <div className="col text-center"><b>Environment: </b>{item["Release Environment"]}</div> 
+                : "" }
+              <div className="col text-right"><Moment format="dddd, MMMM Do YYYY, h:mm:ss a" date={item["time"]} /></div>
+            </div>
+            <div className="row mt-1">
+              <div className="col"><b>Message: </b>{item["message"]}</div>
+            </div>
+            <div className="row mt-1">
+              {item["Git Commit ID"] ? 
+                <div className="col"><b>Git Commit ID: </b>{item["Git Commit ID"]}</div> 
+                : ""}
+              {item["status"] ? 
+                <div className="col text-center"><b>Status: </b>{item["status"]}</div> 
+                : ""}
+              <div className="col text-right"><b>Tool: </b>{item["tool"]}</div>
+            </div>
+          </Alert>
+        ))}
+
+        {showModal ? <Modal header="Log Details"
+          message={<pre>{JSON.stringify(modalMessage, null, 2)}</pre>}
+          button="OK"
+          size="lg"
+          handleCancelModal={() => setShowModal(false)}
+          handleConfirmModal={() => setShowModal(false)} /> : null}
+      </>
+    );
+  }
+  else {
     return (
       <>
         {data.map((item, idx) => (

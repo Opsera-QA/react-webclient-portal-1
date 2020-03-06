@@ -51,9 +51,10 @@ export default {
     "legendOffset": 50
   },
   axisLeft: {
+    "format": d => d.substring(0, 6),
     "tickSize": 8,
     "tickPadding": 5,
-    "tickRotation": 40,
+    "tickRotation": 0,
     "legend": "Users",
     "legendPosition": "middle",
     "legendOffset": -90

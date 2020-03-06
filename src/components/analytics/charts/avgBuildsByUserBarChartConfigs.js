@@ -1,6 +1,7 @@
 export default {
   keys: [
-    "value"
+    "Successful",
+    "Failed"
   ],
   margin: {
     "top": 50,
@@ -46,15 +47,16 @@ export default {
     "tickSize": 8,
     "tickPadding": 5,
     "tickRotation": 0,
-    "legend": "Average Build Duration (Seconds)",
+    "legend": "Number of Builds",
     "legendPosition": "middle",
     "legendOffset": 50
   },
   axisLeft: {
+    "format": d => d.substring(0, 12),
     "tickSize": 8,
     "tickPadding": 5,
-    "tickRotation": 40,
-    "legend": "Users",
+    "tickRotation": 0,
+    "legend": "Build Tag",
     "legendPosition": "middle",
     "legendOffset": -90
   },
