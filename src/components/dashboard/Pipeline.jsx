@@ -62,10 +62,6 @@ function PipelineDashboard( { persona } ) {
             </div>
           </div> 
         </div>
-
-        {/* <div>
-          <ActivityLogView persona={persona} />
-        </div> */}
       </>
     );}
 }
