@@ -39,12 +39,11 @@ function AvgBuildsByUserBarChart( { data, persona } ) {
           motionStiffness={90}
           borderWidth={2}
           motionDamping={15}
-          tooltip={({ indexValue, data, color }) => (
+          tooltip={({ indexValue, color, value, id }) => (
             <div>
               <strong style={{ color }}>
                 Build Tag: </strong> {indexValue}<br></br>
-              <strong style={{ color }}> Successful Builds: </strong> {data.success} <br></br>
-              <strong style={{ color }}> Failed Builds: </strong> {data.failure}
+              <strong style={{ color }}> {id} Builds: </strong> {value}
             </div>
           )}
           theme={{

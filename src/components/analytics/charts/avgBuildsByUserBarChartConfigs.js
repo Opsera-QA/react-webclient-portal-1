@@ -1,7 +1,7 @@
 export default {
   keys: [
-    "success",
-    "failure"
+    "Successful",
+    "Failed"
   ],
   margin: {
     "top": 50,
@@ -52,9 +52,10 @@ export default {
     "legendOffset": 50
   },
   axisLeft: {
+    "format": d => d.substring(0, 12),
     "tickSize": 8,
     "tickPadding": 5,
-    "tickRotation": 40,
+    "tickRotation": 0,
     "legend": "Users",
     "legendPosition": "middle",
     "legendOffset": -90
