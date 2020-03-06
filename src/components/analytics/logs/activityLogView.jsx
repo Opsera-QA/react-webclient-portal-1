@@ -122,7 +122,7 @@ const MapActivityData = (props) => {
                   className="ml-1"
                   size="xs"
                   style={{ cursor: "pointer" }}
-                  onClick={() => { handleClick(item); }} /></div>
+                  onClick= {() => { handleClick(item); }} /></div>
               {item["Release Environment"] ? 
                 <div className="col text-center"><b>Environment: </b>{item["Release Environment"]}</div> 
                 : "" }
