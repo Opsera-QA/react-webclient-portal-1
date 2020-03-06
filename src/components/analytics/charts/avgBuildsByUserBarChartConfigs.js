@@ -47,7 +47,7 @@ export default {
     "tickSize": 8,
     "tickPadding": 5,
     "tickRotation": 0,
-    "legend": "Average Build Duration (Seconds)",
+    "legend": "Number of Builds",
     "legendPosition": "middle",
     "legendOffset": 50
   },
@@ -56,7 +56,7 @@ export default {
     "tickSize": 8,
     "tickPadding": 5,
     "tickRotation": 0,
-    "legend": "Users",
+    "legend": "Build Tag",
     "legendPosition": "middle",
     "legendOffset": -90
   },
