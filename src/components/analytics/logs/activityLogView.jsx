@@ -46,7 +46,14 @@ function ActivityLogView({ persona, searchQuery, filterType }) {
 
 
   if (loading) {
-    return (<LoadingDialog size="sm" style={{ marginTop:"25px" }} />);
+    return (
+      <div style={{ height: "300px" }}>
+        <div className="row h-100">
+          <div className="col-sm-12 my-auto text-center">
+            <LoadingDialog size="sm" />
+          </div>
+        </div>
+      </div>);
   } else if (error) {
     return (<ErrorDialog error={error} />);
   } else {
@@ -63,8 +70,6 @@ const MapActivityData = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
   const { data, type, search, filter } = props;
-
-  console.log(data);
 
   const handleClick = (param) => {
     setModalMessage(param);

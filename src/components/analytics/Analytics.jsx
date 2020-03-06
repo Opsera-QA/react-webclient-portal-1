@@ -65,7 +65,7 @@ function Analytics() {
 
   return (
     <div className="mt-3 max-content-width">
-      {loading && <LoadingDialog />}
+      {/* {loading && <LoadingDialog />} */}
       {!loading &&
       <>
         <h4>Analytics and Logs</h4>
