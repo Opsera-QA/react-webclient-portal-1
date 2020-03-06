@@ -135,6 +135,9 @@ const MapActivityData = (props) => {
               {item["Git Commit ID"] ? 
                 <div className="col"><b>Git Commit ID: </b>{item["Git Commit ID"]}</div> 
                 : ""}
+              {item["status"] ? 
+                <div className="col text-center"><b>Status: </b>{item["status"]}</div> 
+                : ""}
               <div className="col text-right"><b>Tool: </b>{item["tool"]}</div>
             </div>
           </Alert>
