@@ -7,6 +7,7 @@ import { AuthContext } from "../../contexts/AuthContext"; //New AuthContext Stat
 import { ApiService } from "../../api/apiService";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
+import InfoDialog from "../common/info";
 import "./workflows.css";
 
 
@@ -52,7 +53,9 @@ function MyPipelines() {
         {loading ? <LoadingDialog size="sm" /> :
           <>
             <div className="mt-3 max-content-width">
-              <ItemSummaries data={data} />
+              {data.length > 0 ?
+                <ItemSummaries data={data} /> :
+                <InfoDialog message="No Pipelines Found" />}
             </div>
           </>
         }
