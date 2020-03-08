@@ -96,14 +96,7 @@ function SearchLogs ( ) {
           </Form>
         </div>
 
-        {loading && 
-          <div style={{ height: "300px" }}>
-            <div className="row h-100">
-              <div className="col-sm-12 my-auto text-center">
-                <LoadingDialog size="sm" />
-              </div>
-            </div>
-          </div>}
+        {loading && <LoadingDialog size="sm" />}
 
 
         <MapLogData data={data} type={filterType} />
