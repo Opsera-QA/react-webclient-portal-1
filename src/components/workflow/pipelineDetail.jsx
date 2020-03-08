@@ -1,17 +1,18 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { Card } from "react-bootstrap";
+import { Card, Row, Col } from "react-bootstrap";
 //import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext"; //New AuthContext State 
 import { ApiService } from "../../api/apiService";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import InfoDialog from "../common/info";
+import Moment from "react-moment";
 import "./workflows.css";
 
 //TODO: How do I get the ID value for the pipeline lookup?
-function PipelineDetail() {
+function PipelineDetail({ id }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
   const [data, setData] = useState([]);
@@ -25,6 +26,7 @@ function PipelineDetail() {
 
   useEffect(() => {    
     fetchData();
+    console.log("what up?");
   }, []);
 
   async function fetchData() {
@@ -32,11 +34,11 @@ function PipelineDetail() {
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
 
-    const apiCall = new ApiService("/pipelines", {}, accessToken);
+    const apiCall = new ApiService(`/pipelines/${id}`, {}, accessToken);
     apiCall.get()
       .then(function (result) {
         console.log(result);
-        setData(result.data);
+        setData(result.data[0]);
         setLoading(false);        
       })
       .catch(function (error) {
@@ -77,14 +79,36 @@ const ItemSummaryDetail = (props) => {
 
   return (
     <>
-      {data.length > 0 ? 
+      {data !== undefined ? 
         <Card className="mb-3">
           <Card.Body>
             <Card.Title>{data.name}</Card.Title>
             <Card.Subtitle className="mb-2 text-muted">{data.project}</Card.Subtitle>
             <Card.Text>
               {data.description}
+              
             </Card.Text>
+            <Row className="mt-3">
+              <Col><span className="text-muted mr-1">ID:</span> {data._id}</Col>
+              <Col><span className="text-muted mr-1">Owner:</span> {data.owner}</Col>                
+            </Row>
+            <Row className="mt-2">
+              <Col><span className="text-muted mr-1">Organization:</span> {data.organizationName}</Col>
+              <Col><span className="text-muted mr-1">Created On:</span>  <Moment format="MMM Do YYYY, h:mm:ss a" date={data.createdAt} /></Col>
+            </Row>
+            <Row className="mt-2">
+              <Col><span className="text-muted mr-1">Tags:</span> 
+                {data.tags.map((item, idx) => (<span key={idx}>{item}, </span>))}</Col>
+            </Row>
+            <Row className="mt-3">
+              <Col><span className="text-muted mr-1">Source:</span> <span className="upper-case-first">{data.workflow.source.name}</span></Col>
+              <Col><span className="text-muted mr-1">Repository:</span> {data.workflow.source.repository}</Col>
+              <Col><span className="text-muted mr-1">Branch:</span> {data.workflow.source.branch}</Col>
+            </Row>
+            <Row className="mt-3">
+              <Col><span className="text-muted mr-1">Tools:</span> 
+                {data.workflow.plan.map((item, idx) => (<span key={idx} className="upper-case-first mr-1">{item.tool.name}, </span>))}</Col>
+            </Row>
           </Card.Body>
         </Card> : null}
 
@@ -130,16 +154,20 @@ const PipelineActivity = (props) => {
   );
 };
 
+PipelineDetail.propTypes = {
+  id: PropTypes.string
+};
+
 ItemSummaryDetail.propTypes = {
-  data: PropTypes.array
+  data: PropTypes.object
 };
 
 PipelineWorkflow.propTypes = {
-  data: PropTypes.array
+  data: PropTypes.object
 };
 
 PipelineActivity.propTypes = {
-  data: PropTypes.array
+  data: PropTypes.object
 };
 
 export default PipelineDetail;
