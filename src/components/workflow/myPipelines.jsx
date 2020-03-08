@@ -79,8 +79,11 @@ const ItemSummaries = (props) => {
             <Card.Text>
               {item.description}
             </Card.Text>
-            <Link to={location => `/workflow/${item._id}`} className="card-link">View Details</Link>
-            <Link to='/workflow' className="card-link">Link 2</Link>
+            <Link to={location => `/workflow/${item._id}`} className="card-link">Details</Link>
+            <Link to='/workflow' className="card-link disabled">Edit</Link>
+            <Link to='/workflow' className="card-link disabled">Run</Link>
+            <Link to='/workflow' className="card-link disabled">Pause</Link>
+            <Link to='/workflow' className="card-link disabled">Disable</Link>
           </Card.Body>
         </Card>)) : null}
 

@@ -14,6 +14,20 @@ const setInterceptorToken = (authToken) => {
   }, authToken);
 };
 
+
+export function axiosApiService (token) {
+  setInterceptorToken(token);
+  return axiosInstance;
+}
+
+export function axiosApiServiceMultiGet (token, urls) {
+  setInterceptorToken(token);
+  const requests = urls.map(URL => axiosInstance.get(URL).catch(err => null));
+  return axios.all(requests);
+}
+
+
+
 export class ApiService {
   constructor(url, params, token, data) {
     this.url = url;

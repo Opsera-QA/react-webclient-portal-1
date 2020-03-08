@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Card, Row, Col } from "react-bootstrap";
 //import { useHistory } from "react-router-dom";
-import { AuthContext } from "../../contexts/AuthContext"; //New AuthContext State 
-import { ApiService } from "../../api/apiService";
+import { AuthContext } from "../../contexts/AuthContext"; 
+import { axiosApiServiceMultiGet } from "../../api/apiService";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import InfoDialog from "../common/info";
@@ -15,38 +15,36 @@ import "./workflows.css";
 function PipelineDetail({ id }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
   
-  // let history = useHistory();
-  // const handleClick = param => e => {
-  //   e.preventDefault();
-  //   history.push(`/${param}`);
-  // };
-
   useEffect(() => {    
     fetchData();
-    console.log("what up?");
   }, []);
 
   async function fetchData() {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-
-    const apiCall = new ApiService(`/pipelines/${id}`, {}, accessToken);
-    apiCall.get()
-      .then(function (result) {
-        console.log(result);
-        setData(result.data[0]);
-        setLoading(false);        
-      })
-      .catch(function (error) {
-        setLoading(false);
-        setErrors(error);
-        console.log(`Error Reported: ${error}`);
+    const apiUrls = [ `/pipelines/${id}`, `/pipelines/${id}/activity` ];   
+    try {
+      const [pipeline, activity] = await axiosApiServiceMultiGet(accessToken, apiUrls);
+      setData({
+        pipeline: pipeline && pipeline.data[0],
+        activity: activity && activity.data
       });
+      setLoading(false);  
+      console.log("pipeline", pipeline);      
+      console.log("activity", activity);
+    }
+    catch (err) {
+      console.log(err.message);
+      setLoading(false);
+      setErrors(err.message);
+    }
   }
+
+  
   if (error) {
     return (<ErrorDialog error={error} />);
   } else {
@@ -58,7 +56,8 @@ function PipelineDetail({ id }) {
               {data.length == 0 ?
                 <InfoDialog message="No Pipeline details found.  Please ensure you have access to view the requested pipeline." /> : 
                 <>
-                  <ItemSummaryDetail data={data} /> 
+                
+                  <ItemSummaryDetail data={data.pipeline} /> 
                   <PipelineWorkflow data={data} /> 
                   <PipelineActivity data={data} /> 
                 </>
@@ -75,8 +74,6 @@ function PipelineDetail({ id }) {
 
 const ItemSummaryDetail = (props) => {
   const { data } = props;
-  console.log(data);
-
   return (
     <>
       {data !== undefined ? 
