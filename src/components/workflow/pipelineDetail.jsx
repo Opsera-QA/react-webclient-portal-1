@@ -89,21 +89,21 @@ const ItemSummaryDetail = (props) => {
               
             </Card.Text>
             <Row className="mt-3">
-              <Col><span className="text-muted mr-1">ID:</span> {data._id}</Col>
-              <Col><span className="text-muted mr-1">Owner:</span> {data.owner}</Col>                
+              <Col lg><span className="text-muted mr-1">ID:</span> {data._id}</Col>
+              <Col lg><span className="text-muted mr-1">Owner:</span> {data.owner}</Col>                
             </Row>
             <Row className="mt-2">
-              <Col><span className="text-muted mr-1">Organization:</span> {data.organizationName}</Col>
-              <Col><span className="text-muted mr-1">Created On:</span>  <Moment format="MMM Do YYYY, h:mm:ss a" date={data.createdAt} /></Col>
+              <Col lg><span className="text-muted mr-1">Organization:</span> {data.organizationName}</Col>
+              <Col lg><span className="text-muted mr-1">Created On:</span>  <Moment format="MMM Do YYYY, h:mm:ss a" date={data.createdAt} /></Col>
             </Row>
             <Row className="mt-2">
               <Col><span className="text-muted mr-1">Tags:</span> 
                 {data.tags.map((item, idx) => (<span key={idx}>{item}, </span>))}</Col>
             </Row>
             <Row className="mt-3">
-              <Col><span className="text-muted mr-1">Source:</span> <span className="upper-case-first">{data.workflow.source.name}</span></Col>
-              <Col><span className="text-muted mr-1">Repository:</span> {data.workflow.source.repository}</Col>
-              <Col><span className="text-muted mr-1">Branch:</span> {data.workflow.source.branch}</Col>
+              <Col md><span className="text-muted mr-1">Source:</span> <span className="upper-case-first">{data.workflow.source.name}</span></Col>
+              <Col md><span className="text-muted mr-1">Repository:</span> {data.workflow.source.repository}</Col>
+              <Col md><span className="text-muted mr-1">Branch:</span> {data.workflow.source.branch}</Col>
             </Row>
             <Row className="mt-3">
               <Col><span className="text-muted mr-1">Tools:</span> 
