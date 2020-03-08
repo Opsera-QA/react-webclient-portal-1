@@ -12,17 +12,15 @@ function LoadingDialog({ size }) {
   
   if (type === "sm") {
     return (
-      <div style={{ minHeight: "150px" }}>
-        <div className="row h-100">
-          <div className="col-sm-12 my-auto text-center">
-            <Spinner as="span"
-              animation="grow"
-              size="sm"
-              role="status"
-              aria-hidden="true" /> 
-          </div>
+      <div className="row" style={{ height:"250px" }}>
+        <div className="col-sm-12 my-auto text-center">
+          <Spinner as="span"
+            animation="grow"
+            size="sm"
+            role="status"
+            aria-hidden="true" /> 
         </div>
-      </div>
+      </div>     
     );
   } else {
     return (
