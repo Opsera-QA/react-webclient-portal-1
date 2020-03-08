@@ -10,8 +10,8 @@ import ErrorDialog from "../common/error";
 import InfoDialog from "../common/info";
 import "./workflows.css";
 
-
-function MyPipelines() {
+//TODO: How do I get the ID value for the pipeline lookup?
+function PipelineDetail() {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
   const [data, setData] = useState([]);
@@ -53,9 +53,15 @@ function MyPipelines() {
         {loading ? <LoadingDialog size="sm" /> :
           <>
             <div className="mt-3 max-content-width">
-              {data.length > 0 ?
-                <ItemSummaries data={data} /> :
-                <InfoDialog message="No Pipelines Found" />}
+              {data.length == 0 ?
+                <InfoDialog message="No Pipeline details found.  Please ensure you have access to view the requested pipeline." /> : 
+                <>
+                  <ItemSummaryDetail data={data} /> 
+                  <PipelineWorkflow data={data} /> 
+                  <PipelineActivity data={data} /> 
+                </>
+              }
+                
             </div>
           </>
         }
@@ -65,32 +71,75 @@ function MyPipelines() {
 }
 
 
-const ItemSummaries = (props) => {
+const ItemSummaryDetail = (props) => {
   const { data } = props;
   console.log(data);
 
   return (
     <>
-      {data.length > 0 ? data.map((item, idx) => (
-        <Card key={idx} className="mb-3">
+      {data.length > 0 ? 
+        <Card className="mb-3">
           <Card.Body>
-            <Card.Title>{item.name}</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">{item.project}</Card.Subtitle>
+            <Card.Title>{data.name}</Card.Title>
+            <Card.Subtitle className="mb-2 text-muted">{data.project}</Card.Subtitle>
             <Card.Text>
-              {item.description}
+              {data.description}
             </Card.Text>
-            <Link to={location => `workflow/${item._id}`} className="card-link">View Details</Link>
-            <Link to='/workflow' className="card-link">Link 2</Link>
           </Card.Body>
-        </Card>)) : null}
+        </Card> : null}
 
     </>
     
   );
 };
 
-ItemSummaries.propTypes = {
+
+
+const PipelineWorkflow = (props) => {
+  const { data } = props;
+  console.log(data);
+
+  return (
+    <>
+      {data.length > 0 ? 
+        <>
+          <div>Pipeline UI workflow display here</div>
+        </>
+        : null}
+
+    </>
+    
+  );
+};
+
+
+const PipelineActivity = (props) => {
+  const { data } = props;
+  console.log(data);
+
+  return (
+    <>
+      {data.length > 0 ? 
+        <>
+          <div>Pipeline activity/status details ehre</div>
+        </>
+        : null}
+
+    </>
+    
+  );
+};
+
+ItemSummaryDetail.propTypes = {
   data: PropTypes.array
 };
 
-export default MyPipelines;
+PipelineWorkflow.propTypes = {
+  data: PropTypes.array
+};
+
+PipelineActivity.propTypes = {
+  data: PropTypes.array
+};
+
+export default PipelineDetail;
