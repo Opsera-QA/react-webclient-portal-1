@@ -60,7 +60,6 @@ function PipelineDetail({ id }) {
                 <>
                 
                   <ItemSummaryDetail data={data.pipeline} /> 
-                  {/* <PipelineWorkflow data={data} />  */}
                   <PipelineActivity data={data.activity} /> 
                 </>
               }
@@ -117,25 +116,6 @@ const ItemSummaryDetail = (props) => {
 };
 
 
-
-const PipelineWorkflow = (props) => {
-  const { data } = props;
-  console.log(data);
-
-  return (
-    <>
-      {data !== undefined ?
-        <>
-          <div>Pipeline UI workflow display here</div>
-        </>
-        : null}
-
-    </>
-    
-  );
-};
-
-
 const PipelineActivity = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
@@ -168,15 +148,16 @@ const PipelineActivity = (props) => {
               {data.map((item, idx) => (
                 <tr key={idx} >
                   <td>{item["plan_id"]}</td>
-                  <td className="force-text-wrap">{item["task"]} 
+                  <td className="force-text-wrap">{item["task"]}</td> 
+                  <td className="upper-case-first">{item["system"]}</td>
+                  <td className="force-text-wrap">{item["summary"]}</td>
+                  <td className="force-text-wrap">{item["detail"]} 
                     <FontAwesomeIcon icon={faSearchPlus}
                       className="ml-1"
                       size="xs"
                       style={{ cursor: "pointer" }}
-                      onClick= {() => { handleClick(item); }} /></td> 
-                  <td className="upper-case-first">{item["system"]}</td>
-                  <td className="force-text-wrap">{item["summary"]}</td>
-                  <td className="force-text-wrap">{item["detail"]}</td>
+                      onClick= {() => { handleClick(item); }} />
+                  </td>
                   <td className="upper-case-all">{item["status"]}</td>
                   <td><Moment format="MMM Do YYYY, h:mm:ss a" date={item["createdAt"]} /></td>   
                 </tr>
@@ -203,10 +184,6 @@ PipelineDetail.propTypes = {
 };
 
 ItemSummaryDetail.propTypes = {
-  data: PropTypes.object
-};
-
-PipelineWorkflow.propTypes = {
   data: PropTypes.object
 };
 

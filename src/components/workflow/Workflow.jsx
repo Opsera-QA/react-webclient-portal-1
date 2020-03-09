@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import MyPipelines from "./myPipelines";
 import PipelineDetail from "./pipelineDetail";
+import PipelineWorkflow from "./pipelineWorkflow";
 import "./workflows.css";
 
 function Workflow() {
@@ -24,6 +25,18 @@ function Workflow() {
     setSelection(param);
   };
 
+  const setPillClass = (item, selection) => {
+    if (selection === "myPipelines") {
+      return "disabled";
+    }
+
+    if (selection === item) {
+      return "active";
+    } else {
+      return "";
+    }
+  };
+
   return (
     <div className="mt-3 max-content-width">
       <h4>Pipelines</h4>
@@ -36,12 +49,19 @@ function Workflow() {
         </li>
         
         <li className="nav-item">
-          <Link className={"nav-link " + (selection === "pipelineDetail" ? "active" : "disabled")} 
+          <Link className={"nav-link " + setPillClass("pipelineDetail", selection)} 
             to={location => `/workflow/${itemId}`} onClick={handleTabClick("pipelineDetail")}>Details</Link>
         </li>
+
+        <li className="nav-item">
+          <Link className={"nav-link " + setPillClass("workflowView", selection)} 
+            to={location => `/workflow/${itemId}`} onClick={handleTabClick("workflowView")}>Workflow</Link>
+        </li>
+        
       </ul>
 
-      {itemId.length > 0 ? <PipelineDetail id={itemId} /> : null } 
+      {itemId.length > 0 && selection === "pipelineDetail" ? <PipelineDetail id={itemId} /> : null } 
+      {itemId.length > 0 && selection === "workflowView" ? <PipelineWorkflow id={itemId} /> : null } 
       {itemId.length === 0 ? <MyPipelines /> : null }
              
     </div>
