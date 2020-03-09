@@ -1,17 +1,19 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import { Card, Row, Col } from "react-bootstrap";
-//import { useHistory } from "react-router-dom";
+//import { Link } from "react-router-dom";
+import { Card, Row, Col, Table } from "react-bootstrap";
+import Modal from "../common/modal";
 import { AuthContext } from "../../contexts/AuthContext"; 
 import { axiosApiServiceMultiGet } from "../../api/apiService";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import InfoDialog from "../common/info";
 import Moment from "react-moment";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
 import "./workflows.css";
 
-//TODO: How do I get the ID value for the pipeline lookup?
+
 function PipelineDetail({ id }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
@@ -58,8 +60,8 @@ function PipelineDetail({ id }) {
                 <>
                 
                   <ItemSummaryDetail data={data.pipeline} /> 
-                  <PipelineWorkflow data={data} /> 
-                  <PipelineActivity data={data} /> 
+                  {/* <PipelineWorkflow data={data} />  */}
+                  <PipelineActivity data={data.activity} /> 
                 </>
               }
                 
@@ -122,7 +124,7 @@ const PipelineWorkflow = (props) => {
 
   return (
     <>
-      {data.length > 0 ? 
+      {data !== undefined ?
         <>
           <div>Pipeline UI workflow display here</div>
         </>
@@ -135,14 +137,61 @@ const PipelineWorkflow = (props) => {
 
 
 const PipelineActivity = (props) => {
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState({});
   const { data } = props;
+  
+  const handleClick = (param) => {
+    setModalMessage(param);
+    setShowModal(true);
+  };
+
   console.log(data);
 
   return (
     <>
-      {data.length > 0 ? 
+      {data !== undefined && data !== null ?
         <>
-          <div>Pipeline activity/status details ehre</div>
+          <div className="h6 mt-4">Activity Log</div>
+          <Table striped bordered hover className="table-sm" style={{ fontSize:"small" }}>
+            <thead>
+              <tr>
+                <th style={{ width: "15%" }}>Plan</th>
+                <th style={{ width: "10%" }}>Task</th>
+                <th style={{ width: "10%" }}>Tool</th>
+                <th style={{ width: "20%" }}>Summary</th>
+                <th style={{ width: "30%" }}>Detail</th>
+                <th style={{ width: "5%" }}>Status</th>
+                <th style={{ width: "10%" }}>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+            
+              {data.map((item, idx) => (
+                <tr key={idx} >
+                  <td>{item["plan_id"]}</td>
+                  <td className="force-text-wrap">{item["task"]} 
+                    <FontAwesomeIcon icon={faSearchPlus}
+                      className="ml-1"
+                      size="xs"
+                      style={{ cursor: "pointer" }}
+                      onClick= {() => { handleClick(item); }} /></td> 
+                  <td className="upper-case-first">{item["system"]}</td>
+                  <td className="force-text-wrap">{item["summary"]}</td>
+                  <td className="force-text-wrap">{item["detail"]}</td>
+                  <td className="upper-case-all">{item["status"]}</td>
+                  <td><Moment format="MMM Do YYYY, h:mm:ss a" date={item["createdAt"]} /></td>   
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+
+          {showModal ? <Modal header="Log Details"
+            message={<pre>{JSON.stringify(modalMessage, null, 2)}</pre>}
+            button="OK"
+            size="lg"
+            handleCancelModal={() => setShowModal(false)}
+            handleConfirmModal={() => setShowModal(false)} /> : null}
         </>
         : null}
 
@@ -164,7 +213,7 @@ PipelineWorkflow.propTypes = {
 };
 
 PipelineActivity.propTypes = {
-  data: PropTypes.object
+  data: PropTypes.array
 };
 
 export default PipelineDetail;
