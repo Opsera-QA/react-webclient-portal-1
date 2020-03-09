@@ -146,8 +146,6 @@ const PipelineActivity = (props) => {
     setShowModal(true);
   };
 
-  console.log(data);
-
   return (
     <>
       {data !== undefined && data !== null ?
