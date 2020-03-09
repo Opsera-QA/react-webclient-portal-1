@@ -5,28 +5,28 @@ import { ApiService } from "../../../api/apiService";
 import { apiServerUrl } from "../../../config";
 import LoadingDialog from "../../common/loading";
 
-const state = {
-  token: "",
-  repoName: "",
-  jenkinsUrl: "",
-  jenkinsPort: "",
-  jUsername: "",
-  jPassword: "",
-  jobName: "",
-  modal: false,
-  update: false,
-  fetching: true
-};
-const devState = {
-  token: "UZc-ZrQe3zdPKYoxzVmz",
-  repoName: "16558356",
-  jenkinsUrl: "https://sparuna.opsera.io/supptest/jenkinspipeline/job/release-pipeline/",
-  jenkinsPort: "8080",
-  jUsername: "admin",
-  jPassword: "admin",
-  jobName: "release-pipeline",
-  modal: false,
-};
+// const state = {
+//   token: "",
+//   repoName: "",
+//   jenkinsUrl: "",
+//   jenkinsPort: "",
+//   jUsername: "",
+//   jPassword: "",
+//   jobName: "",
+//   modal: false,
+//   update: false,
+//   fetching: true
+// };
+// const devState = {
+//   token: "UZc-ZrQe3zdPKYoxzVmz",
+//   repoName: "16558356",
+//   jenkinsUrl: "https://sparuna.opsera.io/supptest/jenkinspipeline/job/release-pipeline/",
+//   jenkinsPort: "8080",
+//   jUsername: "admin",
+//   jPassword: "admin",
+//   jobName: "release-pipeline",
+//   modal: false,
+// };
 
 function GitLab() {
 
@@ -201,7 +201,7 @@ function GitLab() {
       token,
       repoName,
       jenkinsUrl,
-      jenkinsPort,
+      // jenkinsPort,
       jUsername,
       jPassword,
       jobName,

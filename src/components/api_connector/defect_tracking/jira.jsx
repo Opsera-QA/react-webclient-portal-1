@@ -5,19 +5,19 @@ import { ApiService } from "../../../api/apiService";
 import { apiServerUrl } from "../../../config";
 import LoadingDialog from "../../common/loading";
 
-const devState = {
-  jiraUrl: "https://opseratest.atlassian.net",
-  jiraPort: "443",
-  jiraUserName: "opsera@yopmail.com",
-  jiraPassword: "opsera@yopmail.com",
-  jenkinUrl: "https://sparuna.opsera.io/supptest/jenkinspipeline/job/release-pipeline/",
-  jenkinPort: "8080",
-  jenkinUserName: "admin",
-  jenkinPassword: "admin",
-  jobName: "release-pipeline",
-  projectName: "testproj",
-  modal: false,
-};
+// const devState = {
+//   jiraUrl: "https://opseratest.atlassian.net",
+//   jiraPort: "443",
+//   jiraUserName: "opsera@yopmail.com",
+//   jiraPassword: "opsera@yopmail.com",
+//   jenkinUrl: "https://sparuna.opsera.io/supptest/jenkinspipeline/job/release-pipeline/",
+//   jenkinPort: "8080",
+//   jenkinUserName: "admin",
+//   jenkinPassword: "admin",
+//   jobName: "release-pipeline",
+//   projectName: "testproj",
+//   modal: false,
+// };
 
 function Jira() {
 
@@ -137,7 +137,7 @@ function Jira() {
 
     const { getAccessToken, getUserInfo } = Auth;
     const accessToken = await getAccessToken();
-    const userInfo = await getUserInfo();
+    // const userInfo = await getUserInfo();
     // const urlParams = { data: this.state, userid: userInfo.sub };
 
     const urlParams = state;
