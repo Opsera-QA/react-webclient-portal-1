@@ -13,7 +13,7 @@ function AvgBuildsByUserBarChart( { data, persona } ) {
     const { avgBuildDurationByUser }  =  data;
     return (
       <>
-        <div className="chart-label-text">Jenkins: Build Status by Build Tag</div>
+        <div className="chart-label-text">Jenkins: Build Status by Job Name</div>
         <ResponsiveBar
           data={avgBuildDurationByUser ? avgBuildDurationByUser.data : []}
           keys={config.keys}
