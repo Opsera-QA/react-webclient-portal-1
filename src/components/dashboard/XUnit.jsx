@@ -21,7 +21,7 @@ function XUnitDashboard( { persona } ) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiCall = new ApiService("/analytics/dashboard/pipeline", {}, accessToken);
+    const apiCall = new ApiService("/analytics/dashboard/xunit", {}, accessToken);
     
     apiCall.get()
       .then(res => {
@@ -59,8 +59,7 @@ function XUnitDashboard( { persona } ) {
             </div>
           </div> 
         </div>
-
-        <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
+        {data.xunitTable.data ? <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
           <thead>
             <tr>
               <th style={{ width: "20%" }}>Build ID</th>
@@ -98,7 +97,7 @@ function XUnitDashboard( { persona } ) {
             })
             }
           </tbody>
-        </Table>
+        </Table> : "" }
       </>
     );}
 }
