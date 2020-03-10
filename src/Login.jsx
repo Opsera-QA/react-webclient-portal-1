@@ -5,11 +5,13 @@ import PropTypes from "prop-types";
 import { Button, Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { AuthContext } from "./contexts/AuthContext"; 
 
 
 class LoginForm extends React.Component {
-  constructor(props) {
-    super(props);
+  static contextType = AuthContext;
+  constructor(props, context) {
+    super(props, context);
     this.state = {
       sessionToken: null,
       error: null,
@@ -25,6 +27,14 @@ class LoginForm extends React.Component {
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
   }
 
+  componentDidMount = async() => {
+    const { getUserInfo } = this.context;  //this.context is where all data from the above AuthContext component resides.  It's like the state props design wise
+    const userInfo = await getUserInfo();
+    if(userInfo != undefined) {
+      this.props.history.goBack();
+    }
+  }
+  
   handleSubmit(e) {
     e.preventDefault();
     this.setState({ loading: true });
