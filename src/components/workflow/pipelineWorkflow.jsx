@@ -1,15 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-//import { Card, Row, Col, Table } from "react-bootstrap";
-//import Modal from "../common/modal";
 import { AuthContext } from "../../contexts/AuthContext"; 
-import { axiosApiServiceMultiGet } from "../../api/apiService";
+import { axiosApiService } from "../../api/apiService";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import InfoDialog from "../common/info";
-// import Moment from "react-moment";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-//import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
 import "./workflows.css";
 
 
@@ -27,16 +22,11 @@ function PipelineWorkflow({ id }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrls = [ `/pipelines/${id}`, `/pipelines/${id}/activity` ];   
+    const apiUrl = `/pipelines/${id}`;   
     try {
-      const [pipeline, activity] = await axiosApiServiceMultiGet(accessToken, apiUrls);
-      setData({
-        pipeline: pipeline && pipeline.data[0],
-        activity: activity && activity.data
-      });
-      setLoading(false);  
-      console.log("pipeline", pipeline);      
-      console.log("activity", activity);
+      const pipeline = await axiosApiService(accessToken).get(apiUrl);
+      setData(pipeline && pipeline.data[0]);
+      setLoading(false);    
     }
     catch (err) {
       console.log(err.message);
