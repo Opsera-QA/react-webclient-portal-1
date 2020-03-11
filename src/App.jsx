@@ -25,6 +25,8 @@ import ManageSystems from "./components/admin/manage_systems/ManageSystems";
 import ReportsRegistration from "./components/admin/analytics/ReportsRegistration";
 import ApiConnectionDemo from "./components/api_connector/ApiDemo";
 import Workflow from "./components/workflow/Workflow";
+import SystemStatus from "./components/admin/status/SystemStatus";
+import CustomerSystemStatus from "./components/admin/status/CustomerSystemStatus";
 
 const config = require("./config");
 
@@ -80,6 +82,8 @@ class App extends Component {
                   <SecureRoute path="/admin/delete" component={DeleteTools} />
                   <SecureRoute path="/admin/manage_systems" component={ManageSystems} />
                   <SecureRoute path="/admin/registered_users" component={RegisteredUsers} />
+                  <SecureRoute path="/admin/systemstatus" component={SystemStatus} />
+                  <SecureRoute path="/admin/customerstatus" component={CustomerSystemStatus} />
                   <SecureRoute path="/admin/analytics/reports_registration" component={ReportsRegistration} />
                   <SecureRoute path="/api_demo" component={ApiConnectionDemo} />
                 </div>
