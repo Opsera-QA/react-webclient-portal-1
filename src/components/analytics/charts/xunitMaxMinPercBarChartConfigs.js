@@ -1,7 +1,7 @@
 export default {
   keys: [
-    "Max",
     "Min",
+    "Max",
     "Median",
     "95th Percentile"
   ],
@@ -49,7 +49,7 @@ export default {
     "tickSize": 5,
     "tickPadding": 5,
     "tickRotation": 0,
-    "legend": "Build Number",
+    "legend": "Time (seconds)",
     "legendPosition": "middle",
     "legendOffset": 32
   },
@@ -57,7 +57,7 @@ export default {
     "tickSize": 5,
     "tickPadding": 5,
     "tickRotation": 0,
-    "legend": "Average Build Duration (Minutes)",
+    "legend": "Test Case Metrics per Build Number",
     "legendPosition": "middle",
     "legendOffset": -65
   },

@@ -6,12 +6,12 @@ import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import { Table }  from "react-bootstrap";
 
-import XUnitCounts from "../analytics/metrics/xunitCounts";
+import TestingCounts from "../analytics/metrics/testingCounts";
 import XUnitMaxMinPercBarChart from "../analytics/charts/xunitMaxMinPercBarChart";
 import XUnitTestDurationBarChart from "../analytics/charts/xunitTestDurationBarChart";
 
 
-function XUnitDashboard( { persona } ) {
+function TestingDashboard( { persona } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -21,7 +21,7 @@ function XUnitDashboard( { persona } ) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiCall = new ApiService("/analytics/dashboard/xunit", {}, accessToken);
+    const apiCall = new ApiService("/analytics/dashboard/testing", {}, accessToken);
     
     apiCall.get()
       .then(res => {
@@ -48,7 +48,7 @@ function XUnitDashboard( { persona } ) {
       <>
         <div className="d-flex">
           <div className="p-2" style={{ minWidth: "160px" }}>
-            <XUnitCounts data={data} persona={persona} />
+            <TestingCounts data={data} persona={persona} />
           </div>
           <div className="p-2 flex-grow-1">
             <div className="chart mb-3" style={{ height: "300px" }}>
@@ -62,19 +62,19 @@ function XUnitDashboard( { persona } ) {
         {data.xunitTable.data ? <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
           <thead>
             <tr>
-              <th style={{ width: "20%" }}>Build ID</th>
-              <th style={{ width: "20%" }}>Max</th>
-              <th style={{ width: "20%" }}>Min</th>
-              <th style={{ width: "20%" }}>Median</th>
-              <th style={{ width: "20%" }}>95th Percentile</th>
-              <th style={{ width: "20%" }}>Total Duration</th>
-              <th style={{ width: "20%" }}>Total Test Cases</th>
-              <th style={{ width: "20%" }}>Executed Test Cases</th>
-              <th style={{ width: "20%" }}>Passed</th>
-              <th style={{ width: "20%" }}>Error</th>
-              <th style={{ width: "20%" }}>Failed</th>
-              <th style={{ width: "20%" }}>Not Runnable</th>
-              <th style={{ width: "20%" }}>Warning</th>
+              <th style={{ width: "5%" }}>Build ID</th>
+              <th style={{ width: "5%" }}>Max</th>
+              <th style={{ width: "5%" }}>Min</th>
+              <th style={{ width: "5%" }}>Median</th>
+              <th style={{ width: "5%" }}>95th Percentile</th>
+              <th style={{ width: "5%" }}>Total Duration</th>
+              <th style={{ width: "5%" }}>Total Test Cases</th>
+              <th style={{ width: "5%" }}>Executed Test Cases</th>
+              <th style={{ width: "5%" }}>Passed</th>
+              <th style={{ width: "5%" }}>Error</th>
+              <th style={{ width: "5%" }}>Failed</th>
+              <th style={{ width: "5%" }}>Not Runnable</th>
+              <th style={{ width: "5%" }}>Warning</th>
             </tr>
           </thead>
           <tbody>
@@ -102,9 +102,9 @@ function XUnitDashboard( { persona } ) {
     );}
 }
 
-XUnitDashboard.propTypes = {
+TestingDashboard.propTypes = {
   persona: PropTypes.string
 };
 
 
-export default XUnitDashboard;
+export default TestingDashboard;

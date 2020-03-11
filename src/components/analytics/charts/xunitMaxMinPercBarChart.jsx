@@ -22,8 +22,8 @@ function XUnitMaxMinPercBarChart( { data, persona } ) {
           layout="horizontal"
           indexBy="buildId"
           margin={config.margin}
-          padding={0.3}
-          colors={{ scheme: "category10" }}
+          padding={0.1}
+          colors={{ scheme: "set1" }}
           borderColor={{ theme: "background" }}
           colorBy="id"
           defs={config.defs}
@@ -33,7 +33,7 @@ function XUnitMaxMinPercBarChart( { data, persona } ) {
           axisBottom={config.axisBottom}
           axisLeft={config.axisLeft}
           enableLabel={false}
-          borderRadius={5}
+          borderRadius={0}
           labelSkipWidth={12}
           labelSkipHeight={12}
           labelTextColor="inherit:darker(2)"
@@ -45,7 +45,7 @@ function XUnitMaxMinPercBarChart( { data, persona } ) {
             <div>
               <strong style={{ color }}>
               Build Number: </strong> {indexValue}<br></br>
-              <strong style={{ color }}>  {id} Test Case Duration: </strong> {value} seconds
+              <strong style={{ color }}>  {id} Test Case Duration: </strong> {(value > 1) ? value : value/10} seconds
             </div>
           )}
           theme={{

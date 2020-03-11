@@ -9,7 +9,7 @@ import { Row, Col, Alert } from "react-bootstrap";
 import ErrorDialog from "../../components/common/error";
 import PipelineDashboard from "../../components/dashboard/Pipeline";
 import SecOpsDashboard from "../../components/dashboard/SecOps";
-import XUnitDashboard from "../../components/dashboard/XUnit";
+import TestingDashboard from "../../components/dashboard/Testing";
 import LogsDashboard from "../../components/dashboard/Logs";
 import ToolsDashboard from "../../components/dashboard/Tools";
 import LoadingDialog from "../../components/common/loading";
@@ -117,7 +117,7 @@ function DashboardHome() {
                       <a className={"nav-link " + (selection === "secops" ? "active" : "")} onClick={handleTabClick("secops")} href="#">SecOps</a>
                     </li>
                     <li className="nav-item">
-                      <a className={"nav-link " + (selection === "xunit" ? "active" : "")} onClick={handleTabClick("xunit")} href="#">XUnit</a>
+                      <a className={"nav-link " + (selection === "testing" ? "active" : "")} onClick={handleTabClick("testing")} href="#">Testing</a>
                     </li>
                     <li className="nav-item">
                       <a className={"nav-link " + (selection === "logs" ? "active" : "")} onClick={handleTabClick("logs")} href="#">Logs</a>
@@ -165,8 +165,8 @@ function DashboardView({ selection, persona }) {
       return <PipelineDashboard persona={persona} />;
     case "secops":
       return <SecOpsDashboard persona={persona} />;
-    case "xunit":
-      return <XUnitDashboard persona={persona} />;
+    case "testing":
+      return <TestingDashboard persona={persona} />;
     case "logs":
       return <LogsDashboard persona={persona} />;
     case "tools":
