@@ -10,7 +10,6 @@ import AvgBuildDurationBarChart from "../analytics/charts/avgBuildDurationBarCha
 import BuildsByUserBarChart from "../analytics/charts/buildsByUserBarChart";
 import AvgBuildsByUserBarChart from "../analytics/charts/avgBuildsByUserBarChart";
 
-
 function PipelineDashboard( { persona } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);

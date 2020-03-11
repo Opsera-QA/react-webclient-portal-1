@@ -9,6 +9,7 @@ import { Row, Col, Alert } from "react-bootstrap";
 import ErrorDialog from "../../components/common/error";
 import PipelineDashboard from "../../components/dashboard/Pipeline";
 import SecOpsDashboard from "../../components/dashboard/SecOps";
+import TestingDashboard from "../../components/dashboard/Testing";
 import LogsDashboard from "../../components/dashboard/Logs";
 import ToolsDashboard from "../../components/dashboard/Tools";
 import LoadingDialog from "../../components/common/loading";
@@ -116,6 +117,9 @@ function DashboardHome() {
                       <a className={"nav-link " + (selection === "secops" ? "active" : "")} onClick={handleTabClick("secops")} href="#">SecOps</a>
                     </li>
                     <li className="nav-item">
+                      <a className={"nav-link " + (selection === "testing" ? "active" : "")} onClick={handleTabClick("testing")} href="#">Testing</a>
+                    </li>
+                    <li className="nav-item">
                       <a className={"nav-link " + (selection === "logs" ? "active" : "")} onClick={handleTabClick("logs")} href="#">Logs</a>
                     </li>
                     <li className="nav-item">
@@ -161,6 +165,8 @@ function DashboardView({ selection, persona }) {
       return <PipelineDashboard persona={persona} />;
     case "secops":
       return <SecOpsDashboard persona={persona} />;
+    case "testing":
+      return <TestingDashboard persona={persona} />;
     case "logs":
       return <LogsDashboard persona={persona} />;
     case "tools":
