@@ -8,7 +8,7 @@ import ErrorDialog from "../common/error";
 import BuildCounts from "../analytics/metrics/buildCounts";
 import AvgBuildDurationBarChart from "../analytics/charts/avgBuildDurationBarChart";
 import BuildsByUserBarChart from "../analytics/charts/buildsByUserBarChart";
-import AvgBuildsByUserBarChart from "../analytics/charts/avgBuildsByUserBarChart";
+import AvgBuildsByUserBarChart from "../analytics/charts/jenkinsStatusByJobNameBarChart";
 
 function PipelineDashboard( { persona } ) {
   const contextType = useContext(AuthContext);
