@@ -8,8 +8,8 @@ import ErrorDialog from "../common/error";
 import SecOpsCounts from "../analytics/metrics/secOpsCounts";
 import SonarMaintainabilityLineChart from "../analytics/charts/sonarMaintainabilityLineChart";
 import SonarCodeSmellsLineChart from "../analytics/charts/sonarCodeSmellsLineChart";
-import SonarCodeCategoriesPieChart from "../analytics/charts/sonarCodeCategoriesPieChart";
-import SonarCodeCategoriesPieChart2 from "../analytics/charts/sonarCodeCategoriesPieChart2";
+import SonarCodeCategoriesNO_VALUEPieChart from "../analytics/charts/sonarCodeCategoriesNO_VALUEPieChart";
+import SonarCodeCategoriesOKPieChart from "../analytics/charts/sonarCodeCategoriesOKPieChart";
 import TwistlockVulnerability from "../analytics/charts/twistlockVulnerabilityLineChart";
 
 
@@ -59,11 +59,11 @@ function SecOpsDashboard( { persona } ) {
               <TwistlockVulnerability data={data} persona={persona} />
             </div>
             <div className="chart mb-3" style={{ height: "300px" }}>
-              <SonarCodeCategoriesPieChart data={data} persona={persona} />
+              <SonarCodeCategoriesNO_VALUEPieChart data={data} persona={persona} />
             </div>
 
             <div className="chart mb-3" style={{ height: "300px" }}>
-              <SonarCodeCategoriesPieChart2 data={data} persona={persona} />
+              <SonarCodeCategoriesOKPieChart data={data} persona={persona} />
             </div>
 
             <div className="chart mb-3" style={{ height: "300px" }}>

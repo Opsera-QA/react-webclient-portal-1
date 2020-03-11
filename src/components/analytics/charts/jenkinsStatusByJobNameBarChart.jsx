@@ -5,7 +5,7 @@ import ErrorDialog from "../../common/error";
 import config from "./jenkinsStatusByJobNameBarChartConfigs";
 import "./charts.css";
 
-function AvgBuildsByUserBarChart( { data, persona } ) {
+function JenkinsStatusByJobNameBarChar( { data, persona } ) {
   
   if (typeof data !== "object" || Object.keys(data).length == 0) {
     return (<ErrorDialog error="Missing Data!" />);
@@ -59,9 +59,9 @@ function AvgBuildsByUserBarChart( { data, persona } ) {
   }
 }
 
-AvgBuildsByUserBarChart.propTypes = {
+JenkinsStatusByJobNameBarChar.propTypes = {
   data: PropTypes.object,
   persona: PropTypes.string
 };
 
-export default AvgBuildsByUserBarChart;
+export default JenkinsStatusByJobNameBarChar;
