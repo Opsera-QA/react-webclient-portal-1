@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
 import ErrorDialog from "../../common/error";
-import config from "./avgBuildsByUserBarChartConfigs";
+import config from "./jenkinsStatusByJobNameBarChartConfigs";
 import "./charts.css";
 
 function AvgBuildsByUserBarChart( { data, persona } ) {
@@ -10,12 +10,12 @@ function AvgBuildsByUserBarChart( { data, persona } ) {
   if (typeof data !== "object" || Object.keys(data).length == 0) {
     return (<ErrorDialog error="Missing Data!" />);
   } else {
-    const { avgBuildDurationByUser }  =  data;
+    const { jenkinsStatusByJobName }  =  data;
     return (
       <>
         <div className="chart-label-text">Jenkins: Build Status by Job Name</div>
         <ResponsiveBar
-          data={avgBuildDurationByUser ? avgBuildDurationByUser.data : []}
+          data={jenkinsStatusByJobName ? jenkinsStatusByJobName.data : []}
           keys={config.keys}
           indexBy="key"
           margin={config.margin}
