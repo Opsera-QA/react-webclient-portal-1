@@ -1,11 +1,19 @@
 import React, { useContext, useState, useEffect } from "react";
+//import ReactDOM from "react-dom";
+import styled from "@emotion/styled";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../contexts/AuthContext"; 
 import { axiosApiService } from "../../api/apiService";
+import { Row, Col } from "react-bootstrap";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import InfoDialog from "../common/info";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearchPlus, faBars, faPause, faBan, faPlay, faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import Modal from "../common/modal";
 import "./workflows.css";
+
 
 
 function PipelineWorkflow({ id }) {
@@ -25,7 +33,7 @@ function PipelineWorkflow({ id }) {
     const apiUrl = `/pipelines/${id}`;   
     try {
       const pipeline = await axiosApiService(accessToken).get(apiUrl);
-      setData(pipeline && pipeline.data[0]);
+      setData(pipeline && pipeline.data[0].workflow);
       setLoading(false);    
     }
     catch (err) {
@@ -47,10 +55,7 @@ function PipelineWorkflow({ id }) {
               {data.length == 0 ?
                 <InfoDialog message="No Pipeline details found.  Please ensure you have access to view the requested pipeline." /> : 
                 <>
-                
-                  
-                  <PipelineWorkflowDetail data={data} /> 
-                  
+                  {data !== undefined ? <PipelineWorkflowDetail data={data} /> : null}
                 </>
               }
                 
@@ -63,66 +68,216 @@ function PipelineWorkflow({ id }) {
 }
 
 
-// const ItemSummaryDetail = (props) => {
-//   const { data } = props;
-//   return (
-//     <>
-//       {data !== undefined ? 
-//         <Card className="mb-3">
-//           <Card.Body>
-//             <Card.Title>{data.name}</Card.Title>
-//             <Card.Subtitle className="mb-2 text-muted">{data.project}</Card.Subtitle>
-//             <Card.Text>
-//               {data.description}
-              
-//             </Card.Text>
-//             <Row className="mt-2">
-//               <Col lg className="py-1"><span className="text-muted mr-1">ID:</span> {data._id}</Col>
-//               <Col lg className="py-1"><span className="text-muted mr-1">Owner:</span> {data.owner}</Col>                
-//             </Row>
-//             <Row>
-//               <Col lg className="py-1"><span className="text-muted mr-1">Organization:</span> {data.organizationName}</Col>
-//               <Col lg className="py-1"><span className="text-muted mr-1">Created On:</span>  <Moment format="MMM Do YYYY, h:mm:ss a" date={data.createdAt} /></Col>
-//             </Row>
-//             <Row>
-//               <Col className="py-1"><span className="text-muted mr-1">Tags:</span> 
-//                 {data.tags.map((item, idx) => (<span key={idx}>{item}, </span>))}</Col>
-//             </Row>
-//             <Row>
-//               <Col md className="py-1"><span className="text-muted mr-1">Source:</span> <span className="upper-case-first">{data.workflow.source.name}</span></Col>
-//               <Col md className="py-1"><span className="text-muted mr-1">Repository:</span> {data.workflow.source.repository}</Col>
-//               <Col md className="py-1"><span className="text-muted mr-1">Branch:</span> {data.workflow.source.branch}</Col>
-//             </Row>
-//             <Row>
-//               <Col className="py-1"><span className="text-muted mr-1">Tools:</span> 
-//                 {data.workflow.plan.map((item, idx) => (<span key={idx} className="upper-case-first mr-1">{item.tool.name}, </span>))}</Col>
-//             </Row>
-//           </Card.Body>
-//         </Card> : null}
 
-//     </>
-    
-//   );
-// };
+const grid = 8;
+const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
 
+  return result;
+};
+
+const QuoteItem = styled.div`
+  max-width: 450px;
+  background-color: #fff;
+  color: #334152;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25rem;
+  margin-bottom: ${grid}px;
+  padding: ${grid}px;
+`;
 
 
 const PipelineWorkflowDetail = (props) => {
   const { data } = props;
   console.log(data);
+  const [state, setState] = useState({ items: [] });
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState({});
+
+  const handleViewClick = (param) => {
+    setModalMessage(param);
+    setShowModal(true);
+  };
+
+  const handleClick = (param) => {
+    alert("coming soon");
+  };
+
+  function onDragEnd(result) {
+    if (!result.destination) {
+      return;
+    }
+
+    if (result.destination.index === result.source.index) {
+      return;
+    }
+
+    console.log("result.source.index: ", result.source.index);
+    console.log("result.destination.index", result.destination.index);
+    console.log("result: ", result);
+    const items = reorder(
+      state.items,
+      result.source.index,
+      result.destination.index
+    );
+
+    //TODO: right now it's just changing the order in the array.  Need to make it update the step value.
+
+    setState({ items });
+  }
+
+  useEffect(() => {    
+    if (data.plan !== undefined) {
+      setState({ items: data.plan });
+    }
+    
+  }, [data]);
 
   return (
     <>
-      {data !== undefined ?
+      {data.source === undefined ? <LoadingDialog size="sm" /> :
         <>
-          <div>Pipeline UI workflow display here</div>
-        </>
-        : null}
+          <div className="workflow-module-container">
+            <Row>
+              <Col>Source Repository</Col>
+              <Col></Col>
+            </Row>
+            <Row>
+              <Col className="text-muted upper-case-first">{data.source.name} 
+                <FontAwesomeIcon icon={faSearchPlus}
+                  className="ml-1"
+                  size="xs"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => { handleViewClick(data.source); }} /></Col>
+            </Row>
+            <Row>
+              <Col className="text-right pt-1">
+                <FontAwesomeIcon icon={faPause}
+                  className="ml-1"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => { handleClick(data.source.toolsConfiguration_id); }} />
+                <FontAwesomeIcon icon={faBan}
+                  className="ml-2"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => { handleClick(data.source.toolsConfiguration_id); }} />
+                <FontAwesomeIcon icon={faPlay}
+                  className="ml-2"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => { handleClick(data.source.toolsConfiguration_id); }} />
+              </Col>
+            </Row>
+            
+          </div>
+          <div className="text-center workflow-module-container-arrow py-1">
+            <FontAwesomeIcon icon={faChevronDown} size="lg" className="nav-blue"/>            
+          </div>
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId="list">
+              {provided => (
+                <div className="workflow-parent-module-container" ref={provided.innerRef} {...provided.droppableProps}>
+                  <ItemList items={state.items} />
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
 
+          <div className="workflow-module-container py-4 text-center h5">
+            END
+          </div>
+
+          {showModal ? <Modal header="Log Details"
+            message={<pre>{JSON.stringify(modalMessage, null, 2)}</pre>}
+            button="OK"
+            size="lg"
+            handleCancelModal={() => setShowModal(false)}
+            handleConfirmModal={() => setShowModal(false)} /> : null}
+        </>
+      }
     </>
-    
   );
 };
+
+const ItemList = React.memo(function ItemList({ items }) {
+  return items.map((item: object, index: number) => (
+    <Item item={item} index={index} key={item._id} />
+  ));
+});
+
+function Item({ item, index }) {
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState({});
+
+  const handleViewClick = (param) => {
+    setModalMessage(param);
+    setShowModal(true);
+  };
+
+  const handleClick = (param) => {
+    alert("coming soon");
+  };
+
+  return (
+    <>
+      <Draggable draggableId={item._id} index={index}>
+        {provided => (
+          <QuoteItem
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+          >
+      
+            <Row>
+              <Col>{item.name}</Col>
+              <Col className="text-right" style={{ fontSize:"small" }}>
+                <FontAwesomeIcon icon={faBars}
+                  className="ml-1"
+                  size="xs"
+                  style={{ cursor: "pointer" }} /></Col>
+            </Row>
+            <Row>
+              <Col className="text-muted upper-case-first">{item.tool.name} 
+                <FontAwesomeIcon icon={faSearchPlus}
+                  className="ml-1"
+                  size="xs"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => { handleViewClick(item); }} /></Col>
+            </Row>
+            <Row>
+              <Col className="text-right pt-1">
+                <FontAwesomeIcon icon={faPause}
+                  className="ml-1"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => { handleClick(item._id); }} />
+                <FontAwesomeIcon icon={faBan}
+                  className="ml-2"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => { handleClick(item._id); }} />
+                <FontAwesomeIcon icon={faPlay}
+                  className="ml-2"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => { handleClick(item._id); }} />
+              </Col>
+            </Row>
+          </QuoteItem>
+        )}
+      </Draggable>
+
+      <div className="text-center workflow-module-container-arrow py-1">
+        <FontAwesomeIcon icon={faChevronDown} size="lg"/>            
+      </div>
+
+      {showModal ? <Modal header="Log Details"
+        message={<pre>{JSON.stringify(modalMessage, null, 2)}</pre>}
+        button="OK"
+        size="lg"
+        handleCancelModal={() => setShowModal(false)}
+        handleConfirmModal={() => setShowModal(false)} /> : null}
+    </>
+  );
+}
 
 
 PipelineWorkflow.propTypes = {
@@ -133,10 +288,13 @@ PipelineWorkflowDetail.propTypes = {
   data: PropTypes.object
 };
 
-// ItemSummaryDetail.propTypes = {
-//   data: PropTypes.object
-// };
+Item.propTypes = {
+  item: PropTypes.object,
+  index: PropTypes.number
+};
 
-
+ItemList.propTypes = {
+  item: PropTypes.object
+};
 
 export default PipelineWorkflow;
