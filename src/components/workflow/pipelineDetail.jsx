@@ -134,9 +134,10 @@ const PipelineActivity = (props) => {
           <Table striped bordered hover className="table-sm" style={{ fontSize:"small" }}>
             <thead>
               <tr>
-                <th style={{ width: "15%" }}>Plan</th>
+                <th style={{ width: "10%" }}>Plan</th>
                 <th style={{ width: "10%" }}>Task</th>
                 <th style={{ width: "10%" }}>Tool</th>
+                <th style={{ width: "5%" }}>Build</th>
                 <th style={{ width: "20%" }}>Summary</th>
                 <th style={{ width: "30%" }}>Detail</th>
                 <th style={{ width: "5%" }}>Status</th>
@@ -147,9 +148,10 @@ const PipelineActivity = (props) => {
             
               {data.map((item, idx) => (
                 <tr key={idx} >
-                  <td>{item["plan_id"]}</td>
+                  <td className="force-text-wrap">{item["plan_id"]}</td>
                   <td className="force-text-wrap">{item["task"]}</td> 
                   <td className="upper-case-first">{item["system"]}</td>
+                  <td>{item["build_number"]}</td>
                   <td className="force-text-wrap">{item["summary"]}</td>
                   <td className="force-text-wrap">{item["detail"]} 
                     <FontAwesomeIcon icon={faSearchPlus}
@@ -159,7 +161,7 @@ const PipelineActivity = (props) => {
                       onClick= {() => { handleClick(item); }} />
                   </td>
                   <td className="upper-case-all">{item["status"]}</td>
-                  <td><Moment format="MMM Do YYYY, h:mm:ss a" date={item["createdAt"]} /></td>   
+                  <td><Moment format="MM/DD/YYYY, h:mm:ss a" date={item["createdAt"]} /></td>   
                 </tr>
               ))}
             </tbody>
