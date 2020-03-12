@@ -9,7 +9,7 @@ import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import InfoDialog from "../common/info";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faBars, faPause, faBan, faPlay, faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faCog, faBars, faPause, faBan, faPlay, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Modal from "../common/modal";
 import "./workflows.css";
@@ -216,7 +216,7 @@ function Item({ item, index }) {
               <Col>{item.name}</Col>
               <Col className="text-right" style={{ fontSize:"small" }}>
                 <FontAwesomeIcon icon={faBars}
-                  className="ml-1"
+                  className="ml-2"
                   size="xs"
                   style={{ cursor: "pointer" }} /></Col>
             </Row>
@@ -230,8 +230,12 @@ function Item({ item, index }) {
             </Row>
             <Row>
               <Col className="text-right pt-1">
+                <FontAwesomeIcon icon={faCog}
+                  style={{ cursor: "pointer" }}
+                  className="text-muted mr-1"
+                  onClick={() => { handleClick(item); }} />
                 <FontAwesomeIcon icon={faPause}
-                  className="ml-1"
+                  className="ml-2"
                   style={{ cursor: "pointer" }}
                   onClick={() => { handleClick(item._id); }} />
                 <FontAwesomeIcon icon={faBan}
@@ -263,7 +267,7 @@ function Item({ item, index }) {
 }
 
 
-
+// TODO: This could use Context API to share data from the Item component.
 function EditItem({ item }) {
   
   return (
