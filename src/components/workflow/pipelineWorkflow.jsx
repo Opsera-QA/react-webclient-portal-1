@@ -142,7 +142,7 @@ const PipelineWorkflowDetail = (props) => {
           <div className="workflow-module-container">
             <Row>
               <Col>Source Repository</Col>
-              <Col></Col>
+              <Col>{data.source.repository} / {data.source.branch}</Col>
             </Row>
             <Row>
               <Col className="text-muted upper-case-first">{data.source.name} 
@@ -152,23 +152,6 @@ const PipelineWorkflowDetail = (props) => {
                   style={{ cursor: "pointer" }}
                   onClick={() => { handleViewClick(data.source); }} /></Col>
             </Row>
-            <Row>
-              <Col className="text-right pt-1">
-                <FontAwesomeIcon icon={faPause}
-                  className="ml-1"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => { handleClick(data.source.toolsConfiguration_id); }} />
-                <FontAwesomeIcon icon={faBan}
-                  className="ml-2"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => { handleClick(data.source.toolsConfiguration_id); }} />
-                <FontAwesomeIcon icon={faPlay}
-                  className="ml-2"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => { handleClick(data.source.toolsConfiguration_id); }} />
-              </Col>
-            </Row>
-            
           </div>
           <div className="text-center workflow-module-container-arrow py-1">
             <FontAwesomeIcon icon={faChevronDown} size="lg" className="nav-blue"/>            
@@ -184,8 +167,8 @@ const PipelineWorkflowDetail = (props) => {
             </Droppable>
           </DragDropContext>
 
-          <div className="workflow-module-container py-4 text-center h5">
-            END
+          <div className="workflow-module-container py-2 text-center h5">
+            End of Workflow
           </div>
 
           {showModal ? <Modal header="Log Details"
@@ -280,6 +263,22 @@ function Item({ item, index }) {
 }
 
 
+
+function EditItem({ item }) {
+  
+  return (
+    <>
+      <div id="pipeline-sidebar" className="item-edit-sidebar">
+        <a href="#">About</a>
+        <a href="#">Services</a>
+        <a href="#">Clients</a>
+        <a href="#">Contact</a>
+      </div>
+    </>
+  );
+}
+
+
 PipelineWorkflow.propTypes = {
   id: PropTypes.string
 };
@@ -294,6 +293,10 @@ Item.propTypes = {
 };
 
 ItemList.propTypes = {
+  item: PropTypes.object
+};
+
+EditItem.propTypes = {
   item: PropTypes.object
 };
 
