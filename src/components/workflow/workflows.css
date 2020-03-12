@@ -5,11 +5,11 @@
   border-radius: .25rem;
   margin-bottom: 8px;
   padding: 8px;
-  max-width: 450px;
+  max-width: 400px;
 }
 
 .workflow-module-container {
-  max-width: 450px;
+  max-width: 400px;
   background-color: #fff;
   color: #334152;
   border: 1px solid rgba(0,0,0,.125);
@@ -19,22 +19,21 @@
 }
 
 .workflow-module-container-arrow {
-  max-width: 450px;
+  max-width: 400px;
   /* opacity: 0; */
   /* background-color: #2262968a; */
   color: #fff;
 }
 
 
-/* 
+/*  
 .item-edit-sidebar {
-  height: 250px;
+  min-height: 450px;
   width: 350px;
   position: fixed;
   z-index: 1;
-  top: 150px;
+  top: 250px;
   right: 0;
-  background-color: #2262968a;
   overflow-x: hidden;
   border: 1px solid rgba(0,0,0,.125);
   border-radius: .25rem;
@@ -52,4 +51,4 @@
 
 .item-edit-sidebar a:hover {
   color: #f1f1f1;
-} */
+}  */
