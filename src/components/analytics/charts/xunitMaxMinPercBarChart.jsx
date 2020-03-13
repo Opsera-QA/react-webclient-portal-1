@@ -9,7 +9,7 @@ import "./charts.css";
 function XUnitMaxMinPercBarChart( { data, persona } ) {
   
   if (typeof data !== "object" || Object.keys(data).length == 0) {
-    return (<ErrorDialog  error="Missing Data!" />);
+    return (<ErrorDialog  error="No Data Present in the ES!" />);
   } else {
     const { xunitMaxMinPerc }  =  data;
     return (
