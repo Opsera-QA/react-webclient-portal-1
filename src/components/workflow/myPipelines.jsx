@@ -80,7 +80,6 @@ const ItemSummaries = (props) => {
               {item.description}
             </Card.Text>
             <Link to={location => `/workflow/${item._id}`} className="card-link">Details</Link>
-            <Link to='/workflow' className="card-link disabled">Edit</Link>
             <Link to='/workflow' className="card-link disabled">Run</Link>
             <Link to='/workflow' className="card-link disabled">Pause</Link>
             <Link to='/workflow' className="card-link disabled">Disable</Link>
