@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import MyPipelines from "./myPipelines";
 import PipelineDetail from "./pipelineDetail";
 import PipelineWorkflow from "./pipelineWorkflow";
+import WorkflowCatalog from "./workflowCatalog";
 import "./workflows.css";
 
 function Workflow() {
@@ -12,8 +13,16 @@ function Workflow() {
     
   useEffect( () => {
     if (typeof id === "string") {
-      setItemId(id.match(/^[0-9a-fA-F]{24}$/) ? id : "");
-      setSelection("pipelineDetail");
+      if (id.match(/^[0-9a-fA-F]{24}$/)) {
+        setItemId(id);  
+        setSelection("pipelineDetail");
+      } else if (id.toLowerCase() === "catalog") {
+        setItemId("");
+        setSelection("catalog");
+      } else {
+        setItemId("");
+        setSelection("myPipelines");
+      }
     } else {
       setItemId("");
       setSelection("myPipelines");
@@ -26,7 +35,7 @@ function Workflow() {
   };
 
   const setPillClass = (item, selection) => {
-    if (selection === "myPipelines") {
+    if (selection === "myPipelines" || selection === "catalog") {
       return "disabled";
     }
 
@@ -43,6 +52,10 @@ function Workflow() {
       <p>Configure your <b>C</b>ontinuous <b>I</b>ntegration and <b>C</b>ontinuous <b>D</b>elivery pipeline workflows below.</p>
       
       <ul className="nav nav-pills mb-2">
+        <li className="nav-item">
+          <Link className={"nav-link " + (selection === "catalog" ? "active" : "")} 
+            to="/workflow/catalog" onClick={handleTabClick("catalog")}>Catalog</Link>
+        </li>
         <li className="nav-item">
           <Link className={"nav-link " + (selection === "myPipelines" ? "active" : "")} 
             to="/workflow" onClick={handleTabClick("myPipelines")}>My Pipelines</Link>
@@ -62,7 +75,8 @@ function Workflow() {
 
       {itemId.length > 0 && selection === "pipelineDetail" ? <PipelineDetail id={itemId} /> : null } 
       {itemId.length > 0 && selection === "workflowView" ? <PipelineWorkflow id={itemId} /> : null } 
-      {itemId.length === 0 ? <MyPipelines /> : null }
+      {itemId.length === 0 && selection === "catalog" ? <WorkflowCatalog id={itemId} /> : null } 
+      {itemId.length === 0 && selection === "myPipelines" ? <MyPipelines /> : null }
              
     </div>
   );
