@@ -134,9 +134,9 @@ const MapLogData = (props) => {
               <th style={{ width: "20%" }}>Project</th>
               <th style={{ width: "45%" }}>Entry</th>
               <th style={{ width: "20%" }}>Date</th>
-              <th className="text-center" style={{ width: "5%" }}>Version</th>
-              <th className="text-center" style={{ width: "5%" }}>Build</th>
-              <th className="text-center" style={{ width: "5%" }}>Score</th>
+              <th className="text-center" style={{ width: "5%" }}>Build Number</th>
+              <th className="text-center" style={{ width: "5%" }}>Source Host</th>
+              <th className="text-center" style={{ width: "5%" }}>Source</th>
             </tr>
           </thead>
           <tbody>
@@ -150,10 +150,10 @@ const MapLogData = (props) => {
                     size="xs"
                     style={{ cursor: "pointer" }}
                     onClick={() => { handleClick(item._source.data); }} /></td> 
-                <td><Moment format="MMM Do YYYY, h:mm:ss a" date={item._source["@timestamp"]} /></td>                
-                <td className="text-center">{item._source["@version"]}</td>
-                <td className="text-center">{item._source.data["buildNum"]}</td>
-                <td className="text-muted text-center">{Math.ceil(item._score)}</td>
+                <td><Moment format="MMM Do YYYY, h:mm:ss a" date={item._source["@timestamp"]} /></td>          
+                <td className="text-center">{item._source.data["buildNum"]}</td>      
+                <td className="text-center">{item._source["source_host"]}</td>
+                <td className="text-muted text-center">{(item._source["source"])}</td>
               </tr>
             ))}
           </tbody>
