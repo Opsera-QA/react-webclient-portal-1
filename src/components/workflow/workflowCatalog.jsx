@@ -106,19 +106,16 @@ const ItemSummaries = (props) => {
           <Card key={idx} className="mb-3">
             <Card.Body>
               <Card.Title className="h6">{item.name}</Card.Title>
-              <Card.Text className="mb-2 text-muted">{item.description}</Card.Text>
+              <Card.Text className="mb-2">{item.description}</Card.Text>
               
               {/* <Row className="mt-2">
                 <Col lg className="text-muted">Tags: {item.tags.map((item, idx) => (<span key={idx}>{item}, </span>))}</Col>
               </Row> */}
-              <Row className="mt-2">
-                <Col lg className="text-muted"><small>
-                  {item.plan.map((item, idx) => (<span key={idx} className="upper-case-first mr-1">{item.tool.name}, </span>))}</small></Col>
+              <Row className="mt-4">
+                <Col lg className=""><span className="text-muted">Supported Tools: </span>
+                  {buildToolList(item.plan).map((item, idx) => (<span key={idx} className="upper-case-first mr-1">{item} </span>))}</Col>
               </Row>
 
-              <Row className="mt-2">
-                <Col lg className="text-muted"><small className="text-muted">ID: {item._id}</small></Col>
-              </Row>
               <Row className="mt-2">
                 <Col lg className="text-muted"><small className="text-muted">Last updated on <Moment format="MMM Do YYYY" date={item.updatedAt} /></small></Col>
               </Row>
@@ -136,6 +133,14 @@ const ItemSummaries = (props) => {
     
   );
 };
+
+
+const buildToolList = (array) => {
+  let tools = [];
+  array.map((item) => {tools.push(item.tool.name);});
+  return tools.filter((a, b) => tools.indexOf(a) === b);
+};
+
 
 WorkflowCatalog.propTypes = {
   data: PropTypes.array
