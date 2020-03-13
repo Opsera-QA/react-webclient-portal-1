@@ -101,7 +101,7 @@ const MapActivityData = (props) => {
         ))}
 
         {showModal ? <Modal header="Log Details"
-          message={JSON.stringify(modalMessage)}
+          message={<pre>{JSON.stringify(modalMessage, null, 2)}</pre>}
           button="OK"
           size="lg"
           handleCancelModal={() => setShowModal(false)}

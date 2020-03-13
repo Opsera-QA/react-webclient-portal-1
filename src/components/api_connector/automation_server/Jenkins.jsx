@@ -41,55 +41,45 @@ function Jenkins() {
       urlParams).get()
       .then(response => {
         console.log(response.data);
-        // if (response.data && response.data.length > 0) {
-        //   if (Object.keys(response.data[0]).length > 0) {
-        //     let jenkinsPort = "", username = "", token = "", repoName = "", jenkinsUrl = "", jUserId = "", jAuthToken = "", jobName = "";
+        if (response.data && response.data.length > 0) {
+          if (Object.keys(response.data[0]).length > 0) {
 
-        //     if (response.data[0].jenkinsPort !== undefined) {
-        //       jenkinsPort = response.data[0].jenkinsPort;
-        //     }
-        //     if (response.data[0].username !== undefined) {
-        //       username = response.data[0].username;
-        //     }
-        //     if (response.data[0].token !== undefined) {
-        //       token = response.data[0].token;
-        //     }
-        //     if (response.data[0].repoName !== undefined) {
-        //       repoName = response.data[0].repoName;
-        //     }
-        //     if (response.data[0].jenkinsUrl !== undefined) {
-        //       jenkinsUrl = response.data[0].jenkinsUrl;
-        //     }
-        //     if (response.data[0].jUserId !== undefined) {
-        //       jUserId = response.data[0].jUserId;
-        //     }
-        //     if (response.data[0].jAuthToken !== undefined) {
-        //       jAuthToken = response.data[0].jAuthToken;
-        //     }
-        //     if (response.data[0].jobName !== undefined) {
-        //       jobName = response.data[0].jobName;
-        //     }
+            let jenkinsUrl = "", jUserId = "", jAuthToken = "", jobName = "";
 
-        //     setState({
-        //        jenkinsUrl: "",
-        //        jenkinsPort: "",
-        //        jUserId: "",
-        //        jAuthToken: "",
-        //        jobName: "",
-        //     });
-        //   }
-        //   else {
-        //     console.log("not data available ==> do nothing!");
-        //     setState({
-        //       fetching: false
-        //     });
-        //   }
-        // } else {
-        //   console.log("not data available ==> do nothing!");
-        //   setState({
-        //     fetching: false
-        //   });
-        // }
+            if (response.data[0].jenkinsUrl !== undefined) {
+              jenkinsUrl = response.data[0].jenkinsUrl;
+            }
+            if (response.data[0].jUserId !== undefined) {
+              jUserId = response.data[0].jUserId;
+            }
+            if (response.data[0].jAuthToken !== undefined) {
+              jAuthToken = response.data[0].jAuthToken;
+            }
+            if (response.data[0].jobName !== undefined) {
+              jobName = response.data[0].jobName;
+            }
+
+            setState({
+              jenkinsUrl: jenkinsUrl,
+              jUserId: jUserId,
+              jAuthToken: jAuthToken,
+              jobName: jobName,
+              update: true,
+              fetching: false
+            });
+          }
+          else {
+            console.log("not data available ==> do nothing!");
+            setState({
+              fetching: false
+            });
+          }
+        } else {
+          console.log("not data available ==> do nothing!");
+          setState({
+            fetching: false
+          });
+        }
 
       })
       .catch(e => {
@@ -176,14 +166,12 @@ function Jenkins() {
   function canBeSubmitted() {
     const {
       jenkinsUrl,
-      jenkinsPort,
       jUserId,
       jAuthToken,
       jobName,
     } = state;
     return (
       jenkinsUrl.length > 0 &&
-      // jenkinsPort.length > 0 &&
       jUserId.length > 0 &&
       jAuthToken.length > 0 &&
       jobName.length > 0
@@ -209,37 +197,21 @@ function Jenkins() {
           {!fetching &&
             <Form onSubmit={handleSave}>
 
-              
-              <Form.Row className="pt-4">
-                <Form.Group as={Col} controlId="formGridJenkinsURL">
-                  <Form.Label>Jenkins Container URL</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder=""
-                    name="jenkinsUrl"
-                    value={state.jenkinsUrl}
-                    onChange={handleChange}
+              <Form.Group controlId="formGridJenkinsURL">
+                <Form.Label>Jenkins Container URL</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder=""
+                  name="jenkinsUrl"
+                  value={state.jenkinsUrl}
+                  onChange={handleChange}
                   // isInvalid={this.state.jenkinsUrl.error}
-                  />
-                  <small id="passwordHelpBlock" className="form-text text-muted">
+                />
+                <small id="passwordHelpBlock" className="form-text text-muted">
                     Jenkins container notes here.
-                  </small>
-                  {/* <Form.Control.Feedback type="invalid">{this.state.jenkinsUrl.error}</Form.Control.Feedback> */}
-                </Form.Group>
-
-                <Form.Group as={Col} controlId="formGridJenkinsPort">
-                  <Form.Label>Jenkins Port</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder=""
-                    name="jenkinsPort"
-                    value={state.jenkinsPort}
-                    onChange={handleChange}
-                  // isInvalid={this.state.jenkinsPort.error}
-                  />
-                  {/* <Form.Control.Feedback type="invalid">{this.state.jenkinsPort.error}</Form.Control.Feedback> */}
-                </Form.Group>
-              </Form.Row>
+                </small>
+                {/* <Form.Control.Feedback type="invalid">{this.state.jenkinsUrl.error}</Form.Control.Feedback> */}
+              </Form.Group>
 
               <Form.Row>
                 <Form.Group as={Col} controlId="formGridJenkinsUsername">
