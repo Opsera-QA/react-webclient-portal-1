@@ -112,7 +112,7 @@ const ItemSummaries = (props) => {
       const result = await axiosApiService(accessToken).post(apiUrl, params);
       
       let newPipelineId = result.data !== undefined ? result.data._id : false;
-      console.log(newPipelineId);
+      
       if (newPipelineId) {
         history.push(`/workflow/${newPipelineId}`);
       }
@@ -144,7 +144,7 @@ const ItemSummaries = (props) => {
               </Row>
 
               <Row className="mt-2">
-                <Col lg className="text-muted"><small className="text-muted">Last updated on <Moment format="MMM Do YYYY" date={item.updatedAt} /></small></Col>
+                <Col lg><small className="text-muted">Last updated on <Moment format="MMM Do YYYY" date={item.updatedAt} /></small></Col>
               </Row>
 
             </Card.Body>

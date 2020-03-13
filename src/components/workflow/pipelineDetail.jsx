@@ -98,11 +98,12 @@ const ItemSummaryDetail = (props) => {
               <Col className="py-1"><span className="text-muted mr-1">Tags:</span> 
                 {data.tags.map((item, idx) => (<span key={idx}>{item}, </span>))}</Col>
             </Row>
-            <Row>
-              <Col md className="py-1"><span className="text-muted mr-1">Source:</span> <span className="upper-case-first">{data.workflow.source.name}</span></Col>
-              <Col md className="py-1"><span className="text-muted mr-1">Repository:</span> {data.workflow.source.repository}</Col>
-              <Col md className="py-1"><span className="text-muted mr-1">Branch:</span> {data.workflow.source.branch}</Col>
-            </Row>
+            { data.workflow.source !== undefined ?
+              <Row>
+                <Col md className="py-1"><span className="text-muted mr-1">Source:</span> <span className="upper-case-first">{data.workflow.source.name}</span></Col>
+                <Col md className="py-1"><span className="text-muted mr-1">Repository:</span> {data.workflow.source.repository}</Col>
+                <Col md className="py-1"><span className="text-muted mr-1">Branch:</span> {data.workflow.source.branch}</Col>
+              </Row> : null}
             <Row>
               <Col className="py-1"><span className="text-muted mr-1">Tools:</span> 
                 {buildToolList(data.workflow.plan).map((item, idx) => (<span key={idx} className="upper-case-first mr-1">{item} </span>))}</Col> 
