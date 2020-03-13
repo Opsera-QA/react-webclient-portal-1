@@ -174,7 +174,7 @@ const PipelineActivity = (props) => {
             handleCancelModal={() => setShowModal(false)}
             handleConfirmModal={() => setShowModal(false)} /> : null}
         </>
-        : null}
+        : <InfoDialog message="No pipeline activity data currently available.  Logs will get populated once the workflow starts running." />}
 
     </>
     

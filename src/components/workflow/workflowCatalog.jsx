@@ -2,9 +2,9 @@ import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { CardDeck, Card, Row, Col, Button } from "react-bootstrap";
-//import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext"; //New AuthContext State 
-import { ApiService } from "../../api/apiService";
+import { axiosApiService } from "../../api/apiService";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import InfoDialog from "../common/info";
@@ -43,19 +43,19 @@ function WorkflowCatalog() {
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
 
-    const apiCall = new ApiService("/pipelines/workflows", {}, accessToken);
-    apiCall.get()
-      .then(function (result) {
-        console.log(result);
-        setData(result.data);
-        setLoading(false);        
-      })
-      .catch(function (error) {
-        setLoading(false);
-        setErrors(error);
-        console.log(`Error Reported: ${error}`);
-      });
+    const apiUrl = "/pipelines/workflows";   
+    try {
+      const result = await axiosApiService(accessToken).get(apiUrl);
+      setData(result.data);
+      setLoading(false);    
+    }
+    catch (err) {
+      console.log(err.message);
+      setLoading(false);
+      setErrors(err.message);
+    }
   }
+
   if (error) {
     return (<ErrorDialog error={error} />);
   } else {
@@ -87,8 +87,11 @@ function WorkflowCatalog() {
 
 const ItemSummaries = (props) => {
   const { data, parentCallback } = props;
-  console.log(data);
-
+  const contextType = useContext(AuthContext);
+  const [error, setErrors] = useState();
+  const [loading, setLoading] = useState(false);
+  let history = useHistory();
+  
   const handleDetailsClick = param => e => {
     e.preventDefault();
     parentCallback(param);    
@@ -96,11 +99,35 @@ const ItemSummaries = (props) => {
 
   const handleAddClick = param => e => {
     e.preventDefault();
-    alert("add item: ", param);
+    postData(param._id);
   };
+
+  async function postData(templateId) {
+    setLoading(true);
+    const { getAccessToken } = contextType;
+    const accessToken = await getAccessToken();
+    const apiUrl = `/pipelines/deploy/${templateId}`;   
+    const params = {};
+    try {
+      const result = await axiosApiService(accessToken).post(apiUrl, params);
+      
+      let newPipelineId = result.data !== undefined ? result.data._id : false;
+      console.log(newPipelineId);
+      if (newPipelineId) {
+        history.push(`/workflow/${newPipelineId}`);
+      }
+      setLoading(false);    
+    }
+    catch (err) {
+      console.log(err.message);
+      setLoading(false);
+      setErrors(err.message);
+    }
+  }
 
   return (
     <>
+      {loading ? <LoadingDialog size="lg" /> : null}
       <CardDeck>
         {data !== undefined ? data.map((item, idx) => (
           <Card key={idx} className="mb-3">
