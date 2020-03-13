@@ -8,7 +8,7 @@ import "./charts.css";
 function JenkinsStatusByJobNameBarChar( { data, persona } ) {
   
   if (typeof data !== "object" || Object.keys(data).length == 0) {
-    return (<ErrorDialog error="Missing Data!" />);
+    return (<ErrorDialog error="No Data Present in the ES!" />);
   } else {
     const { jenkinsStatusByJobName }  =  data;
     return (

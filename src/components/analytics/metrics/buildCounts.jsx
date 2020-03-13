@@ -5,7 +5,7 @@ import ErrorDialog from "../../common/error";
 // eslint-disable-next-line no-unused-vars
 function BuildCounts( { data, persona } ) {
   if (typeof data !== "object" || Object.keys(data).length == 0) {
-    return (<ErrorDialog  error="Missing Data!" />);
+    return (<ErrorDialog  error="No Data Present in the ES!" />);
   } else {
     const { jenkinsBuildSuccess, jenkinsBuildFailure, jenkinsDeploySuccess, jenkinsDeployFailure, codeshipBuildSuccess, codeshipBuildFailure, codeshipBuildStopped } = data;
     return (

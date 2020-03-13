@@ -9,7 +9,7 @@ import "./charts.css";
 function JenkinsBuildDurationBarChart( { data, persona } ) {
   
   if (typeof data !== "object" || Object.keys(data).length == 0) {
-    return (<ErrorDialog  error="Missing Data!" />);
+    return (<ErrorDialog  error="No Data Present in the ES!" />);
   } else {
     const { jenkinsBuildDuration }  =  data;
     return (

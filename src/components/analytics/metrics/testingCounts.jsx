@@ -5,7 +5,7 @@ import ErrorDialog from "../../common/error";
 // eslint-disable-next-line no-unused-vars
 function TestingCounts( { data, persona } ) {
   if (typeof data !== "object" || Object.keys(data).length == 0) {
-    return (<ErrorDialog  error="Missing Data!" />);
+    return (<ErrorDialog  error="No Data Present in the ES!" />);
   } else {
     const { xunitExecuted, xunitSkipped, xunitPassed, xunitFailed, xunitError, xunitNotRunnable, xunitWarning } = data;
     return (
