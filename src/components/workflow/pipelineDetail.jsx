@@ -105,7 +105,7 @@ const ItemSummaryDetail = (props) => {
             </Row>
             <Row>
               <Col className="py-1"><span className="text-muted mr-1">Tools:</span> 
-                {data.workflow.plan.map((item, idx) => (<span key={idx} className="upper-case-first mr-1">{item.tool.name}, </span>))}</Col>
+                {buildToolList(data.workflow.plan).map((item, idx) => (<span key={idx} className="upper-case-first mr-1">{item} </span>))}</Col> 
             </Row>
           </Card.Body>
         </Card> : null}
@@ -180,6 +180,14 @@ const PipelineActivity = (props) => {
     
   );
 };
+
+
+const buildToolList = (array) => {
+  let tools = [];
+  array.map((item) => {tools.push(item.tool.name);});
+  return tools.filter((a, b) => tools.indexOf(a) === b);
+};
+
 
 PipelineDetail.propTypes = {
   id: PropTypes.string

@@ -30,13 +30,18 @@ function Sidebar({ hideView }) {
   async function checkAuthentication ()  {
     setLoading(true);
     const { getUserInfo, authenticated } = contextType;
-    const userInfoResponse = await getUserInfo();
-    setAuthenticated(authenticated);
+    try {
+      const userInfoResponse = await getUserInfo();
+      setAuthenticated(authenticated);
     
-    if (userInfoResponse !== undefined && Object.keys(userInfoResponse).length > 0) {
-      setUserInfo(userInfoResponse);
-      setAdministrator(userInfoResponse.Groups.includes("Admin"));
-      setPreviewRole(userInfoResponse.Groups.includes("Preview"));      
+      if (userInfoResponse !== undefined && Object.keys(userInfoResponse).length > 0) {
+        setUserInfo(userInfoResponse);
+        setAdministrator(userInfoResponse.Groups.includes("Admin"));
+        setPreviewRole(userInfoResponse.Groups.includes("Preview"));      
+      }
+    }
+    catch (err) {
+      console.log("Error occured getting user authentication status.", err);
     }
     setLoading(false);
   }
