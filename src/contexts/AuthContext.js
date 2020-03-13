@@ -1,6 +1,6 @@
-import React, { createContext, Component } from 'react';
-import { withAuth } from '@okta/okta-react';
-import { ApiService } from '../api/apiService';
+import React, { createContext, Component } from "react";
+import { withAuth } from "@okta/okta-react";
+import { ApiService } from "../api/apiService";
 export const AuthContext = createContext();
 
 async function checkAuthentication() {
@@ -23,11 +23,11 @@ function updateUserRecord(userInfo, accessToken) {
     let userRecord = {
       "system": "okta",
       "user_data": userInfo
-    }
-    const apiCall = new ApiService('/users/save', null, accessToken, userRecord);
+    };
+    const apiCall = new ApiService("/users/save", null, accessToken, userRecord);
     apiCall.post()
-    .then(function (response) {console.log("user record updates success")})
-    .catch(function (error) {console.log("error on saving user record silently.")})
+      .then(function (response) {console.log("user record updates success");})
+      .catch(function (error) {console.log("error on saving user record silently.");});
   }
 }
 
@@ -40,11 +40,11 @@ class AuthContextProvider extends Component {
 
   logoutUserContext = () => {
     this.setState({ authenticated: null, userInfo: null, sharedState: null });
-    return this.props.auth.logout('/');
+    return this.props.auth.logout("/");
   }
 
   loginUserContext = () => {
-    return this.props.auth.login('/');
+    return this.props.auth.login("/");
   }
 
   getAccessToken = () => {
@@ -60,7 +60,7 @@ class AuthContextProvider extends Component {
   }
 
   setSharedState = (value) => {
-    this.setState({ sharedState: value});
+    this.setState({ sharedState: value });
   }
 
   componentDidMount() {
@@ -79,10 +79,10 @@ class AuthContextProvider extends Component {
         loginUserContext: this.loginUserContext, 
         getAccessToken: this.getAccessToken,
         getUserInfo: this.getUserInfo,
-        setSharedState: this.setSharedState}}>
+        setSharedState: this.setSharedState }}>
         {this.props.children}
       </AuthContext.Provider>
-     );
+    );
   }
 }
  

@@ -12,7 +12,7 @@ import JUnit from "./testing/jUnit";
 import JMeter from "./testing/jMeter";
 import Selenium from "./testing/selenium";
 import Twistlock from "./container_scan/twistlock";
-import Jenkins from "./automation_server/Jenkins";
+import JenkinsForm from "./automation_server/jenkinsForm";
 
 class ApiConnector extends Component {
   state = {
@@ -76,7 +76,7 @@ class ApiConnector extends Component {
         {this.state.selection === "gitlab" && <GitLab />}
         {this.state.selection === "jira" && <Jira />}
 
-        {this.state.selection === "jenkins" && <Jenkins />}
+        {this.state.selection === "jenkins" && <JenkinsForm />}
         {this.state.selection === "sonar" && <Sonar />}
         {this.state.selection === "junit" && <JUnit />}
         {this.state.selection === "jMeter" && <JMeter />}
