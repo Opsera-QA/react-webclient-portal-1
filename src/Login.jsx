@@ -28,10 +28,15 @@ class LoginForm extends React.Component {
   }
 
   componentDidMount = async() => {
-    const { getUserInfo } = this.context;  //this.context is where all data from the above AuthContext component resides.  It's like the state props design wise
-    const userInfo = await getUserInfo();
-    if(userInfo != undefined) {
-      this.props.history.goBack();
+    const { getUserInfo } = this.context;
+    try {
+      const userInfo = await getUserInfo();
+      if(userInfo != undefined) {
+        this.props.history.goBack();
+      }
+    }
+    catch (err) {
+      console.log("Error occured getting user authentication status.", err);
     }
   }
   
