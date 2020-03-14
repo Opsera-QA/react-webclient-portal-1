@@ -4,7 +4,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { ApiService } from "../../api/apiService";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
-
+import InfoDialog from "../common/info";
 import BuildCounts from "../analytics/metrics/buildCounts";
 import JenkinsBuildDurationBarChart from "../analytics/charts/jenkinsBuildDurationBarChart";
 import JenkinsBuildsByUserBarChart from "../analytics/charts/jenkinsBuildsByUserBarChart";
@@ -40,8 +40,10 @@ function PipelineDashboard( { persona } ) {
 
   if(loading) {
     return (<LoadingDialog size="lg" />);
-  } else if (typeof data !== "object" || Object.keys(data).length == 0 || error) {
-    return (<ErrorDialog  error={error ? error : "No Data Present in the ES!"} />);
+  } else if (error) {
+    return (<ErrorDialog  error={error} />);
+  } else if (data === undefined || Object.keys(data).length == 0) {
+    return (<InfoDialog  message="No log activity has been captured for this dashboard yet." />);
   } else {
     return (
       <>
