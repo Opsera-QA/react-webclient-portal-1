@@ -2,21 +2,22 @@ import React from "react";
 import PropTypes from "prop-types";
 import { ResponsivePie } from "@nivo/pie";
 import ErrorDialog from "../../common/error";
-import config from "./sonarCodeCategoriesPieChartConfigs";
+import config from "./sonarCodeCategoriesNO_VALUEPieChartConfigs";
 import "./charts.css";
 
 
-function CodeCategoriesPieChart2( { data, persona } ) {
+function CodeCategoriesPieChart( { data, persona } ) {
   
   if (typeof data !== "object" || Object.keys(data).length == 0) {
-    return (<ErrorDialog  error="Missing Data!" />);
+    return (<ErrorDialog  error="No Data Present in the ES!" />);
   } else {
-    const { sonarCodeCategories_OK }  =  data;
+    
+    const { sonarCodeCategoriesNO_VALUE }  =  data;
     return (
       <>
-        <div className="chart-label-text">Sonar: Code Categories (Keyword = No Value)</div>
+        <div className="chart-label-text">Sonar: Code Categories (Keyword = OK)</div>
         <ResponsivePie
-          data={sonarCodeCategories_OK ? sonarCodeCategories_OK.data : []}
+          data={sonarCodeCategoriesNO_VALUE ? sonarCodeCategoriesNO_VALUE.data : []}
           margin={{ top: 40, right: 230, bottom: 80, left: 80 }}
           innerRadius={0.5}
           padAngle={0.7}
@@ -49,10 +50,9 @@ function CodeCategoriesPieChart2( { data, persona } ) {
     );
   }
 }
-CodeCategoriesPieChart2.propTypes = {
+CodeCategoriesPieChart.propTypes = {
   data: PropTypes.object,
   persona: PropTypes.string
 };
 
-export default CodeCategoriesPieChart2;
-
+export default CodeCategoriesPieChart;

@@ -6,9 +6,9 @@ import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 
 import BuildCounts from "../analytics/metrics/buildCounts";
-import AvgBuildDurationBarChart from "../analytics/charts/avgBuildDurationBarChart";
-import BuildsByUserBarChart from "../analytics/charts/buildsByUserBarChart";
-import AvgBuildsByUserBarChart from "../analytics/charts/avgBuildsByUserBarChart";
+import JenkinsBuildDurationBarChart from "../analytics/charts/jenkinsBuildDurationBarChart";
+import JenkinsBuildsByUserBarChart from "../analytics/charts/jenkinsBuildsByUserBarChart";
+import JenkinsStatusByJobNameBarChar from "../analytics/charts/jenkinsStatusByJobNameBarChart";
 
 function PipelineDashboard( { persona } ) {
   const contextType = useContext(AuthContext);
@@ -41,7 +41,7 @@ function PipelineDashboard( { persona } ) {
   if(loading) {
     return (<LoadingDialog size="lg" />);
   } else if (typeof data !== "object" || Object.keys(data).length == 0 || error) {
-    return (<ErrorDialog  error={error ? error : "Missing Data!"} />);
+    return (<ErrorDialog  error={error ? error : "No Data Present in the ES!"} />);
   } else {
     return (
       <>
@@ -51,13 +51,13 @@ function PipelineDashboard( { persona } ) {
           </div>
           <div className="p-2 flex-grow-1">
             <div className="chart mb-3" style={{ height: "300px" }}>
-              <BuildsByUserBarChart data={data} persona={persona} />
+              <JenkinsBuildsByUserBarChart data={data} persona={persona} />
             </div>
             <div className="chart mb-3" style={{ height: "300px" }}>
-              <AvgBuildDurationBarChart data={data} persona={persona} />
+              <JenkinsBuildDurationBarChart data={data} persona={persona} />
             </div>
             <div className="chart mb-3" style={{ height: "300px" }}>
-              <AvgBuildsByUserBarChart data={data} persona={persona} />
+              <JenkinsStatusByJobNameBarChar data={data} persona={persona} />
             </div>
           </div> 
         </div>

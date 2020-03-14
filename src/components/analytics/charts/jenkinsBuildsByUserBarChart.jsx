@@ -2,21 +2,21 @@ import React from "react";
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
 import ErrorDialog from "../../common/error";
-import config from "./buildsByUserBarChartConfigs";
+import config from "./jenkinsBuildsByUserBarChartConfigs";
 import "./charts.css";
 
 
-function BuildsByUserBarChart( { data, persona } ) {
+function JenkinsBuildsByUserBarChart( { data, persona } ) {
 
   if (typeof data !== "object" || Object.keys(data).length == 0) {
-    return (<ErrorDialog error="Missing Data!" />);
+    return (<ErrorDialog error="No Data Present in the ES!" />);
   } else {
-    const { buildsByUser }  =  data;
+    const { jenkinsBuildsByUser }  =  data;
     return (
       <>
         <div className="chart-label-text">Jenkins: Builds by User</div>
         <ResponsiveBar
-          data={buildsByUser ? buildsByUser.data : []}
+          data={jenkinsBuildsByUser ? jenkinsBuildsByUser.data : []}
           keys={config.keys}
           indexBy="key"
           margin={config.margin}
@@ -59,9 +59,9 @@ function BuildsByUserBarChart( { data, persona } ) {
     );
   }
 }
-BuildsByUserBarChart.propTypes = {
+JenkinsBuildsByUserBarChart.propTypes = {
   data: PropTypes.object,
   persona: PropTypes.string
 };
 
-export default BuildsByUserBarChart;
+export default JenkinsBuildsByUserBarChart;

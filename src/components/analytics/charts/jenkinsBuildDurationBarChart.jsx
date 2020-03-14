@@ -2,21 +2,21 @@ import React from "react";
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
 import ErrorDialog from "../../common/error";
-import config from "./avgBuildDurationBarChartConfigs";
+import config from "./jenkinsBuildDurationBarChartConfigs";
 import "./charts.css";
 
 
-function AvgBuildDurationBarChart( { data, persona } ) {
+function JenkinsBuildDurationBarChart( { data, persona } ) {
   
   if (typeof data !== "object" || Object.keys(data).length == 0) {
-    return (<ErrorDialog  error="Missing Data!" />);
+    return (<ErrorDialog  error="No Data Present in the ES!" />);
   } else {
-    const { avgBuildDuration }  =  data;
+    const { jenkinsBuildDuration }  =  data;
     return (
       <>
         <div className="chart-label-text">Jenkins: Average Build Duration</div>
         <ResponsiveBar
-          data={avgBuildDuration ? avgBuildDuration.data : []}
+          data={jenkinsBuildDuration ? jenkinsBuildDuration.data : []}
           keys={config.keys}
           layout="vertical"
           indexBy="key"
@@ -60,10 +60,10 @@ function AvgBuildDurationBarChart( { data, persona } ) {
   }
 }
 
-AvgBuildDurationBarChart.propTypes = {
+JenkinsBuildDurationBarChart.propTypes = {
   data: PropTypes.object,
   persona: PropTypes.string
 };
 
-export default AvgBuildDurationBarChart;
+export default JenkinsBuildDurationBarChart;
 
