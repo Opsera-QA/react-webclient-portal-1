@@ -41,9 +41,8 @@ function PipelineWorkflow({ id }) {
     }
   }
 
-  const callbackFunctionDetail = (item) => {
-    console.log("item: ", item);
-    setEditItem(item);    
+  const callbackFunctionDetail = (param) => {
+    setEditItem(param);    
   };
 
   const callbackFunctionEditor = () => {

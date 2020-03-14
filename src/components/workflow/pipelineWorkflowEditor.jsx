@@ -5,16 +5,21 @@ import { axiosApiService } from "../../api/apiService";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import InfoDialog from "../common/info";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import SourceRepositoryConfig from "./forms/sourceRepository";
+import ToolConfigurationSelect from "./forms/toolConfigurationSelect";
+ 
 
 
-
-const PipelineWorkflowEditor = ({ data, tool, parentCallback }) => {
+const PipelineWorkflowEditor = ({ data, parentCallback }) => {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
   const [loading, setLoading] = useState(false);
+
+  console.log(data);
+
 
   useEffect(() => {    
     //fetchData();
@@ -40,15 +45,15 @@ const PipelineWorkflowEditor = ({ data, tool, parentCallback }) => {
   // }
 
   
-  const handleSaveClick = (param) => {
-    //save actions here
-    parentCallback(param);
-  };
 
   const handleCloseClick = (param) => {
     parentCallback(param);
   };
 
+  const callbackFunction = (param) => {
+    //save actions here, then call parentCallback to refresh scope
+    parentCallback(param);  
+  };
 
   if (error) {
     return (<ErrorDialog error={error} />);
@@ -57,9 +62,10 @@ const PipelineWorkflowEditor = ({ data, tool, parentCallback }) => {
       <>
         {loading ? <LoadingDialog size="sm" /> :
           <>
-            <Row>
-              <Col sm={8}><h5>Edit Form</h5></Col>
-              <Col sm={4} className="text-right">
+            <Row className="mb-2">
+              <Col sm={10}><h5>
+                {data.type === "source" ? "Source Repository Configuration" : "Tool Configuration"}</h5></Col>
+              <Col sm={2} className="text-right">
                 <FontAwesomeIcon 
                   icon={faTimes} 
                   className="mr-1"
@@ -68,26 +74,10 @@ const PipelineWorkflowEditor = ({ data, tool, parentCallback }) => {
               </Col>
             </Row>
             
-            <Form>
-              <Form.Group controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" />
-                <Form.Text className="text-muted">
-                  We'll never share your email with anyone else.
-                </Form.Text>
-              </Form.Group>
-
-              <Form.Group controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" />
-              </Form.Group>
-              <Form.Group controlId="formBasicCheckbox">
-                <Form.Check type="checkbox" label="Check me out" />
-              </Form.Group>
-              <Button variant="primary" type="button" onClick={() => { handleSaveClick(); }}>
-                Submit
-              </Button>
-            </Form>
+            {data.type === "source" ? 
+              <SourceRepositoryConfig data={data} parentCallback={callbackFunction} /> : 
+              <ToolConfigurationSelect data={data} parentCallback={callbackFunction} />  } 
+              
 
             <div className="text-muted"><small>{JSON.stringify(data)}</small></div>
  
@@ -100,7 +90,6 @@ const PipelineWorkflowEditor = ({ data, tool, parentCallback }) => {
 
 PipelineWorkflowEditor.propTypes = {
   data: PropTypes.object,
-  tool: PropTypes.string,
   parentCallback: PropTypes.func
 };
 

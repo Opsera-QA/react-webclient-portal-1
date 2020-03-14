@@ -81,11 +81,12 @@ const PipelineWorkflowDetail = (props) => {
   }, [data]);
 
   const callbackFunction = (item) => {
+    item.id = data._id;
     parentCallback(item);
   };
 
-  const handleEditClick = (param) => {
-    parentCallback(param);
+  const handleEditClick = (type, item) => {
+    parentCallback({ id: data._id, type: type, item: item });
   };
 
   return (
@@ -114,7 +115,7 @@ const PipelineWorkflowDetail = (props) => {
                   <FontAwesomeIcon icon={faCog}
                     style={{ cursor: "pointer" }}
                     className="text-muted mr-1"
-                    onClick={() => { handleEditClick(data); }} />
+                    onClick={() => { handleEditClick("source", data.workflow.source); }} />
                   {data.workflow.source.repository ? <>
                     <FontAwesomeIcon icon={faPause}
                       className="ml-2"
@@ -167,11 +168,11 @@ const PipelineWorkflowDetail = (props) => {
 
 
 const ItemList = React.memo(function ItemList({ items, parentCallback }) {
-  const callbackFunction = (item) => {
-    parentCallback(item);
+  const callbackFunction = (param) => {
+    parentCallback(param);
   };
 
-  return items.map((item: object, index: number) => (
+  return items.map((item, index) => (
     <Item item={item} index={index} key={item._id} 
       parentCallback = {callbackFunction} />
   ));
@@ -188,8 +189,8 @@ const Item = ({ item, index, parentCallback }) => {
     setShowModal(true);
   };
 
-  const handleEditClick = (param) => {
-    parentCallback(param);
+  const handleEditClick = (type, item) => {
+    parentCallback({ type: type, item: item });
   };
 
   const handleClick = (param) => {
@@ -227,7 +228,7 @@ const Item = ({ item, index, parentCallback }) => {
                 <FontAwesomeIcon icon={faCog}
                   style={{ cursor: "pointer" }}
                   className="text-muted mr-1"
-                  onClick={() => { handleEditClick(item); }} />
+                  onClick={() => { handleEditClick("tool", item); }} />
                 <FontAwesomeIcon icon={faPause}
                   className="ml-2"
                   style={{ cursor: "pointer" }}
@@ -261,22 +262,6 @@ const Item = ({ item, index, parentCallback }) => {
 };
 
 
-// TODO: This could use Context API to share data from the Item component.
-function EditItem({ item }) {
-  
-  return (
-    <>
-      <div id="pipeline-sidebar" className="item-edit-sidebar">
-        <a href="#">About</a>
-        <a href="#">Services</a>
-        <a href="#">Clients</a>
-        <a href="#">Contact</a>
-      </div>
-    </>
-  );
-}
-
-
 
 
 PipelineWorkflowDetail.propTypes = {
@@ -295,8 +280,5 @@ ItemList.propTypes = {
   parentCallback: PropTypes.func
 };
 
-EditItem.propTypes = {
-  item: PropTypes.object
-};
 
 export default PipelineWorkflowDetail;
