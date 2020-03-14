@@ -2,10 +2,12 @@ import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../contexts/AuthContext"; 
 import { axiosApiService } from "../../api/apiService";
+import { Row, Col } from "react-bootstrap";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import InfoDialog from "../common/info";
 import PipelineWorkflowDetail from "./pipelineWorkflowDetail";
+import PipelineWorkflowEditor from "./pipelineWorkflowEditor";
 import "./workflows.css";
 
 
@@ -15,6 +17,7 @@ function PipelineWorkflow({ id }) {
   const [error, setErrors] = useState();
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
+  const [editItem, setEditItem] = useState();
   
   
   useEffect(() => {    
@@ -38,6 +41,14 @@ function PipelineWorkflow({ id }) {
     }
   }
 
+  const callbackFunctionDetail = (item) => {
+    console.log("item: ", item);
+    setEditItem(item);    
+  };
+
+  const callbackFunctionEditor = () => {
+    setEditItem();    
+  };
   
   if (error) {
     return (<ErrorDialog error={error} />);
@@ -46,12 +57,22 @@ function PipelineWorkflow({ id }) {
       <>
         {loading ? <LoadingDialog size="sm" /> :
           <>
-            <div className="mt-3 max-content-width">
+            <div className="mt-3">
               {data.length == 0 ?
                 <InfoDialog message="No Pipeline details found.  Please ensure you have access to view the requested pipeline." /> : 
                 <>
                   
-                  {data !== undefined ? <PipelineWorkflowDetail data={data} /> : null}
+                  {data !== undefined ?
+                    <Row>
+                      <Col>
+                        <PipelineWorkflowDetail data={data} parentCallback={callbackFunctionDetail} /></Col>
+                      <Col md="auto"></Col>
+                      {editItem !== undefined ?
+                        <Col xs lg="4" className="workflow-editor-panel p-3">
+                          <PipelineWorkflowEditor data={editItem} parentCallback={callbackFunctionEditor} /></Col>: null}
+                    </Row>
+                    
+                    : null}
                   
                 </>
               }

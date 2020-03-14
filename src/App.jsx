@@ -73,7 +73,7 @@ class App extends Component {
                   <SecureRoute path="/inventory" component={Inventory} />
                   <SecureRoute path="/api_connector/:id?" component={ApiConnector} />
                   <SecureRoute path="/pipeline" component={Pipeline} />
-                  <SecureRoute path="/workflow/:id?" component={Workflow} />
+                  <SecureRoute path="/workflow/:id?/:view?" component={Workflow} />
                   <SecureRoute path="/platform" component={Platform} />
                   <SecureRoute path="/analytics" exact component={Analytics} />
                   <SecureRoute path="/reports" exact component={Reports} />

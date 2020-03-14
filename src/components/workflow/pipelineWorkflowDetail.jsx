@@ -35,7 +35,7 @@ const QuoteItem = styled.div`
 
 
 const PipelineWorkflowDetail = (props) => {
-  const { data } = props;
+  const { data, parentCallback } = props;
   console.log(data);
   const [state, setState] = useState({ items: [] });
   const [showModal, setShowModal] = useState(false);
@@ -81,8 +81,7 @@ const PipelineWorkflowDetail = (props) => {
   }, [data]);
 
   const callbackFunction = (item) => {
-    console.log("item: ", item);
-    alert("coming soon, adding a right side edit UI");
+    parentCallback(item);
   };
 
   return (
@@ -133,6 +132,8 @@ const PipelineWorkflowDetail = (props) => {
   );
 };
 
+
+
 const ItemList = React.memo(function ItemList({ items, parentCallback }) {
   const callbackFunction = (item) => {
     parentCallback(item);
@@ -144,7 +145,9 @@ const ItemList = React.memo(function ItemList({ items, parentCallback }) {
   ));
 });
 
-function Item({ item, index, parentCallback }) {
+
+
+const Item = ({ item, index, parentCallback }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
 
@@ -223,7 +226,7 @@ function Item({ item, index, parentCallback }) {
         handleConfirmModal={() => setShowModal(false)} /> : null}
     </>
   );
-}
+};
 
 
 // TODO: This could use Context API to share data from the Item component.
@@ -245,7 +248,8 @@ function EditItem({ item }) {
 
 
 PipelineWorkflowDetail.propTypes = {
-  data: PropTypes.object
+  data: PropTypes.object,
+  parentCallback: PropTypes.func
 };
 
 Item.propTypes = {
