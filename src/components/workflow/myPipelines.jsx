@@ -110,8 +110,10 @@ const ItemSummaries = (props) => {
         <Card key={idx} className="mb-3">
           <Card.Body>
             <Card.Title>{item.name}</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">{item.project}</Card.Subtitle>
-            <Card.Text>
+            <Card.Subtitle className="mb-2 text-muted">
+              Product: {item.project}<br/>
+              <small>Pipeline: {item._id}</small></Card.Subtitle>
+            <Card.Text className="pt-1">
               {item.description}
               <br/><small className="text-muted">Created on <Moment format="MMM Do YYYY" date={item.createdAt} /></small>
             </Card.Text>

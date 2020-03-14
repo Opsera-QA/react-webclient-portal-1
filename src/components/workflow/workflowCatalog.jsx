@@ -132,7 +132,7 @@ const ItemSummaries = (props) => {
         {data !== undefined ? data.map((item, idx) => (
           <Card key={idx} className="mb-3">
             <Card.Body>
-              <Card.Title className="h6">{item.name}</Card.Title>
+              <Card.Title>{item.name}</Card.Title>
               <Card.Text className="mb-2">{item.description}</Card.Text>
               
               {/* <Row className="mt-2">
