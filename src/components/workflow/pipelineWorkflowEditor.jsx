@@ -13,46 +13,48 @@ import ToolConfigurationSelect from "./forms/toolConfigurationSelect";
  
 
 
-const PipelineWorkflowEditor = ({ data, parentCallback }) => {
+const PipelineWorkflowEditor = ({ editItem, data, parentCallback }) => {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
   const [loading, setLoading] = useState(false);
 
-  console.log(data);
-
-
-  useEffect(() => {    
-    //fetchData();
-  }, []);
-
-  //fetch tools info based on what's passed to form
-  // async function fetchData() {
-  //   setLoading(true);
-  //   const { getAccessToken } = contextType;
-  //   const accessToken = await getAccessToken();
-
-  //   const apiUrl = "/pipelines/workflows";   
-  //   try {
-  //     const result = await axiosApiService(accessToken).get(apiUrl);
-  //     setData(result.data);
-  //     setLoading(false);    
-  //   }
-  //   catch (err) {
-  //     console.log(err.message);
-  //     setLoading(false);
-  //     setErrors(err.message);
-  //   }
-  // }
+  async function postData(param) {
+    console.log("SAVING: ", param);
+    console.log("Data: ", data);
+    console.log("editItem: ", editItem);
+    setLoading(true);
+    const { getAccessToken } = contextType;
+    const accessToken = await getAccessToken();
+    const apiUrl = `/pipelines/${data._id}/update`;   
+    try {
+      await axiosApiService(accessToken).post(apiUrl, param);
+      setLoading(false);    
+    }
+    catch (err) {
+      console.log(err.message);
+      setLoading(false);
+      setErrors(err.message);
+    }
+  }
 
   
-
   const handleCloseClick = (param) => {
     parentCallback(param);
   };
 
-  const callbackFunction = (param) => {
+  const callbackFunctionTools = (param) => {
     //save actions here, then call parentCallback to refresh scope
+    console.log("param", param);
     parentCallback(param);  
+  };
+
+  const callbackFunctionSource = async (item) => {
+    const update = data;
+    update.workflow.source.name = item.name;
+    update.workflow.source.repository = item.repository;
+    update.workflow.source.branch = item.branch;
+    await postData(update);
+    parentCallback(update);  
   };
 
   if (error) {
@@ -64,7 +66,7 @@ const PipelineWorkflowEditor = ({ data, parentCallback }) => {
           <>
             <Row className="mb-2">
               <Col sm={10}><h5>
-                {data.type === "source" ? "Source Repository Configuration" : "Tool Configuration"}</h5></Col>
+                {editItem.type === "source" ? "Source Repository Configuration" : "Tool Configuration"}</h5></Col>
               <Col sm={2} className="text-right">
                 <FontAwesomeIcon 
                   icon={faTimes} 
@@ -74,12 +76,13 @@ const PipelineWorkflowEditor = ({ data, parentCallback }) => {
               </Col>
             </Row>
             
-            {data.type === "source" ? 
-              <SourceRepositoryConfig data={data} parentCallback={callbackFunction} /> : 
-              <ToolConfigurationSelect data={data} parentCallback={callbackFunction} />  } 
+            {editItem.type === "source" ? 
+              <SourceRepositoryConfig data={data} parentCallback={callbackFunctionSource} /> : 
+              <ToolConfigurationSelect data={data} parentCallback={callbackFunctionTools} />  } 
               
 
             <div className="text-muted"><small>{JSON.stringify(data)}</small></div>
+            <div className="text-muted"><small>{JSON.stringify(editItem)}</small></div>
  
           </>}
       </>
@@ -89,6 +92,7 @@ const PipelineWorkflowEditor = ({ data, parentCallback }) => {
 
 
 PipelineWorkflowEditor.propTypes = {
+  editItem: PropTypes.object,
   data: PropTypes.object,
   parentCallback: PropTypes.func
 };

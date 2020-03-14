@@ -36,7 +36,6 @@ const QuoteItem = styled.div`
 
 const PipelineWorkflowDetail = (props) => {
   const { data, parentCallback } = props;
-  console.log(data);
   const [state, setState] = useState({ items: [] });
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
@@ -80,13 +79,14 @@ const PipelineWorkflowDetail = (props) => {
     
   }, [data]);
 
+
   const callbackFunction = (item) => {
     item.id = data._id;
     parentCallback(item);
   };
 
-  const handleEditClick = (type, item) => {
-    parentCallback({ id: data._id, type: type, item: item });
+  const handleSourceEditClick = () => {
+    parentCallback({ id: data._id, type: "source", item_id: "" });
   };
 
   return (
@@ -96,26 +96,24 @@ const PipelineWorkflowDetail = (props) => {
           <div className="workflow-container ml-4 px-3" style={{ maxWidth: "500px" }}>
             <div className="h6 p-2 text-center">{data.name} Workflow</div>
             <div className="workflow-module-container workflow-module-container-width mx-auto">
-              <Row>
-                <Col>Source Repository</Col>
-                <Col>{data.workflow.source.repository}</Col>
-                <Col>{data.workflow.source.branch}</Col>
-              </Row>
+              <div>Source Repository: {data.workflow.source.repository}</div>
               {data.workflow.source.name ? 
-                <Row>
-                  <Col className="text-muted upper-case-first">{data.workflow.source.name} 
+                <>
+                  <div className="mt-1 upper-case-first"><span className="text-muted pr-1">Branch:</span> {data.workflow.source.branch}</div>
+                  <div className="mt-1 upper-case-first"><span className="text-muted pr-1">Platform:</span> {data.workflow.source.name} 
                     <FontAwesomeIcon icon={faSearchPlus}
                       className="ml-1"
                       size="xs"
                       style={{ cursor: "pointer" }}
-                      onClick={() => { handleViewClick(data.workflow.source); }} /></Col>
-                </Row> : null}
+                      onClick={() => { handleViewClick(data.workflow.source); }} /></div>
+                </>: null}
+               
               <Row>
                 <Col className="text-right pt-1">
                   <FontAwesomeIcon icon={faCog}
                     style={{ cursor: "pointer" }}
                     className="text-muted mr-1"
-                    onClick={() => { handleEditClick("source", data.workflow.source); }} />
+                    onClick={() => { handleSourceEditClick(); }} />
                   {data.workflow.source.repository ? <>
                     <FontAwesomeIcon icon={faPause}
                       className="ml-2"
@@ -189,8 +187,8 @@ const Item = ({ item, index, parentCallback }) => {
     setShowModal(true);
   };
 
-  const handleEditClick = (type, item) => {
-    parentCallback({ type: type, item: item });
+  const handleEditClick = (type, itemId) => {
+    parentCallback({ type: type, item_id: itemId });
   };
 
   const handleClick = (param) => {
@@ -228,7 +226,7 @@ const Item = ({ item, index, parentCallback }) => {
                 <FontAwesomeIcon icon={faCog}
                   style={{ cursor: "pointer" }}
                   className="text-muted mr-1"
-                  onClick={() => { handleEditClick("tool", item); }} />
+                  onClick={() => { handleEditClick("tool", item._id); }} />
                 <FontAwesomeIcon icon={faPause}
                   className="ml-2"
                   style={{ cursor: "pointer" }}

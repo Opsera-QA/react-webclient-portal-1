@@ -42,6 +42,7 @@ function PipelineWorkflow({ id }) {
   }
 
   const callbackFunctionDetail = (param) => {
+    console.log("HERE", param);
     setEditItem(param);    
   };
 
@@ -68,7 +69,7 @@ function PipelineWorkflow({ id }) {
                       <Col md="auto"></Col>
                       {editItem !== undefined ?
                         <Col xs lg="4" className="workflow-editor-panel p-3">
-                          <PipelineWorkflowEditor data={editItem} parentCallback={callbackFunctionEditor} /></Col>: null}
+                          <PipelineWorkflowEditor editItem={editItem} data={data} parentCallback={callbackFunctionEditor} /></Col>: null}
                     </Row>
                     
                     : null}

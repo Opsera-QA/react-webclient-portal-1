@@ -1,35 +1,70 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
+import Select from "react-select";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSave } from "@fortawesome/free-solid-svg-icons";
+
+
+const PLATFORM_OPTIONS = [
+  { value: "", label: "Select One", isDisabled: "yes" },
+  { value: "gitlab", label: "GitLab" },
+  { value: "github", label: "GitHub" }
+];
+
 
 function ToolConfigurationSelect( { data, parentCallback }) {
+  const { source } = data.workflow;
+  const [platform, setPlatform] = useState(source.name);
+  const [repository, setRepository] = useState(source.repository ? source.repository : "");
+  const [branch, setBranch] = useState(source.branch ? source.branch : "");
   
+  //TODO: get configurations based on tool type "use that ?filter option in API"
+  //TODO: This should be passed the tool type and use that to define the UI
 
 
-  const callbackFunction = (item) => {
-    // pass updated data object to parent object for POST operation
+  const handleSelectChange = (selectedOption) => {
+    setPlatform(selectedOption.value);    
+  };
+
+  const callbackFunction = () => {
+    const item = {
+      name: platform,
+      repository: repository,
+      branch: branch
+    };
     parentCallback(item);
   };
 
   return (
     <Form>
-      <Form.Group controlId="formBasicEmail">
-        <Form.Label>Jenkins Select! address</Form.Label>
-        <Form.Control type="email" placeholder="Enter email" />
-        <Form.Text className="text-muted">
-                  We'll never share your email with anyone else.
+      
+      <Form.Group controlId="toolSelect">
+        <Form.Text className="text-muted mb-2 mt-1">
+          Select the tool configuration from the dropdown below.  In order to add a tool to a step, it must be supported 
+          by that step and must be configured in the <Link to="/api_connector">Tools Interface</Link>.
         </Form.Text>
+        <Form.Label>Configuration</Form.Label>
+        <Select
+          className="basic-single mr-2"
+          menuPortalTarget={document.body}
+          styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+          classNamePrefix="select"
+          defaultValue={platform ? PLATFORM_OPTIONS[PLATFORM_OPTIONS.findIndex(x => x.value ===platform)] : PLATFORM_OPTIONS[0]}
+          isDisabled={false}
+          isClearable={false}
+          isSearchable={true}
+          name="PLATFORM-SELECT"
+          options={PLATFORM_OPTIONS}
+          onChange={handleSelectChange}
+        />
       </Form.Group>
 
-      <Form.Group controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" />
-      </Form.Group>
-      <Form.Group controlId="formBasicCheckbox">
-        <Form.Check type="checkbox" label="Check me out" />
-      </Form.Group>
-      <Button variant="primary" type="button" onClick={() => { callbackFunction(); }}>
-                Submit
+      <Button variant="primary" type="button" 
+        onClick={() => { callbackFunction(); }} 
+        disabled={repository.length == 0 || branch.length == 0 || platform.length == 0}>
+        <FontAwesomeIcon icon={faSave} className="mr-1"/> Save
       </Button>
     </Form>
   );
