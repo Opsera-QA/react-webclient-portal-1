@@ -32,7 +32,7 @@ class LoginForm extends React.Component {
     try {
       const userInfo = await getUserInfo();
       if(userInfo != undefined) {
-        this.props.history.goBack();
+        //this.props.history.goBack();
       }
     }
     catch (err) {
