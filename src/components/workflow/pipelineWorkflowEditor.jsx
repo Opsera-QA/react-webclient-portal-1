@@ -44,17 +44,17 @@ const PipelineWorkflowEditor = ({ editItem, data, parentCallback }) => {
 
   const callbackFunctionTools = (param) => {
     //save actions here, then call parentCallback to refresh scope
+    // Follow example in callbackFunctionSource, updating individual propertes in the existing data object
     console.log("param", param);
     parentCallback(param);  
   };
 
   const callbackFunctionSource = async (item) => {
-    const update = data;
-    update.workflow.source.name = item.name;
-    update.workflow.source.repository = item.repository;
-    update.workflow.source.branch = item.branch;
-    await postData(update);
-    parentCallback(update);  
+    data.workflow.source.name = item.name;
+    data.workflow.source.repository = item.repository;
+    data.workflow.source.branch = item.branch;
+    await postData(data);
+    parentCallback(data);  
   };
 
   if (error) {
