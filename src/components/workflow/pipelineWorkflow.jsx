@@ -31,7 +31,7 @@ function PipelineWorkflow({ id }) {
     const apiUrl = `/pipelines/${id}`;   
     try {
       const pipeline = await axiosApiService(accessToken).get(apiUrl);
-      setData(pipeline && pipeline.data[0].workflow);
+      setData(pipeline && pipeline.data[0]);
       setLoading(false);    
     }
     catch (err) {

@@ -1,15 +1,28 @@
 /* Custom CSS for workflows here */
-.workflow-parent-module-container {
+
+.workflow-container {
+  background-color: #f4f5f7;
+  border: 1px solid #f4f5f7ce;
+  border-radius: .25rem;
+
+}
+
+
+/* .workflow-parent-module-container {
   background-color: #2262968a;
   border: 1px solid rgba(0,0,0,.125);
   border-radius: .25rem;
   margin-bottom: 8px;
   padding: 8px;
   max-width: 450px;
+} */
+
+.workflow-module-container-width {
+  max-width: 450px;
 }
 
 .workflow-module-container {
-  max-width: 450px;
+  
   background-color: #fff;
   color: #334152;
   border: 1px solid rgba(0,0,0,.125);
@@ -18,12 +31,6 @@
   padding: 8px;
 }
 
-.workflow-module-container-arrow {
-  max-width: 450px;
-  /* opacity: 0; */
-  /* background-color: #2262968a; */
-  color: #fff;
-}
 
 .workflow-editor-panel {
   border-top: 1px solid rgba(0,0,0,.125);

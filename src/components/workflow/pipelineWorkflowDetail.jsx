@@ -74,8 +74,8 @@ const PipelineWorkflowDetail = (props) => {
   }
 
   useEffect(() => {    
-    if (data.plan !== undefined) {
-      setState({ items: data.plan });
+    if (data.workflow !== undefined) {
+      setState({ items: data.workflow.plan });
     }
     
   }, [data]);
@@ -84,42 +84,74 @@ const PipelineWorkflowDetail = (props) => {
     parentCallback(item);
   };
 
+  const handleEditClick = (param) => {
+    parentCallback(param);
+  };
+
   return (
     <>
-      {data.source === undefined ? <LoadingDialog size="sm" /> :
+      {data.workflow === undefined ? <LoadingDialog size="sm" /> :
         <>
-          <div className="workflow-module-container">
-            <Row>
-              <Col>Source Repository</Col>
-              <Col>{data.source.repository} / {data.source.branch}</Col>
-            </Row>
-            <Row>
-              <Col className="text-muted upper-case-first">{data.source.name} 
-                <FontAwesomeIcon icon={faSearchPlus}
-                  className="ml-1"
-                  size="xs"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => { handleViewClick(data.source); }} /></Col>
-            </Row>
-          </div>
-          <div className="text-center workflow-module-container-arrow py-1">
-            <FontAwesomeIcon icon={faChevronDown} size="lg" className="nav-blue"/>            
-          </div>
-          <DragDropContext onDragEnd={onDragEnd}>
-            <Droppable droppableId="list">
-              {provided => (
-                <div className="workflow-parent-module-container" ref={provided.innerRef} {...provided.droppableProps}>
-                  <ItemList items={state.items} parentCallback = {callbackFunction} />
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-          </DragDropContext>
+          <div className="workflow-container ml-4 px-3" style={{ maxWidth: "500px" }}>
+            <div className="h6 p-2 text-center">{data.name} Workflow</div>
+            <div className="workflow-module-container workflow-module-container-width mx-auto">
+              <Row>
+                <Col>Source Repository</Col>
+                <Col>{data.workflow.source.repository}</Col>
+                <Col>{data.workflow.source.branch}</Col>
+              </Row>
+              {data.workflow.source.name ? 
+                <Row>
+                  <Col className="text-muted upper-case-first">{data.workflow.source.name} 
+                    <FontAwesomeIcon icon={faSearchPlus}
+                      className="ml-1"
+                      size="xs"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => { handleViewClick(data.workflow.source); }} /></Col>
+                </Row> : null}
+              <Row>
+                <Col className="text-right pt-1">
+                  <FontAwesomeIcon icon={faCog}
+                    style={{ cursor: "pointer" }}
+                    className="text-muted mr-1"
+                    onClick={() => { handleEditClick(data); }} />
+                  {data.workflow.source.repository ? <>
+                    <FontAwesomeIcon icon={faPause}
+                      className="ml-2"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => { handleClick(data); }} />
+                    <FontAwesomeIcon icon={faBan}
+                      className="ml-2"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => { handleClick(data); }} />
+                    <FontAwesomeIcon icon={faPlay}
+                      className="ml-2"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => { handleClick(data); }} /> 
+                  </>: null}
+                </Col>
+              </Row>
+            </div>
+            <div className="text-center workflow-module-container-width py-1 mx-auto">
+              <FontAwesomeIcon icon={faChevronDown} size="lg" className="nav-blue"/>            
+            </div>
+            <div className="workflow-module-container-width mx-auto">
+              <DragDropContext onDragEnd={onDragEnd}>
+                <Droppable droppableId="list">
+                  {provided => (
+                    <div ref={provided.innerRef} {...provided.droppableProps}>
+                      <ItemList items={state.items} parentCallback = {callbackFunction} />
+                      {provided.placeholder}
+                    </div>
+                  )}
+                </Droppable>
+              </DragDropContext>
+            </div>
 
-          <div className="workflow-module-container py-2 text-center h5">
+            <div className="workflow-module-container workflow-module-container-width py-2 text-center mx-auto h5">
             End of Workflow
+            </div>
           </div>
-
           {showModal ? <Modal header="Log Details"
             message={<pre>{JSON.stringify(modalMessage, null, 2)}</pre>}
             button="OK"
@@ -214,8 +246,8 @@ const Item = ({ item, index, parentCallback }) => {
         )}
       </Draggable>
 
-      <div className="text-center workflow-module-container-arrow py-1">
-        <FontAwesomeIcon icon={faChevronDown} size="lg"/>            
+      <div className="text-center py-1">
+        <FontAwesomeIcon icon={faChevronDown} size="lg" className="nav-blue"/>            
       </div>
 
       {showModal ? <Modal header="Log Details"
