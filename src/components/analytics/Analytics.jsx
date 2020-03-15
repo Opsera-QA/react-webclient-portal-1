@@ -33,7 +33,6 @@ function Analytics() {
     const apiCall = new ApiService("/analytics/settings", {}, accessToken);
     apiCall.get()
       .then(function (result) {
-        console.log(result.data);
         setData(result.data);
         setLoading(false);        
       })

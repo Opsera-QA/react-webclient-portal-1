@@ -5,7 +5,6 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { ApiService } from "../../api/apiService";
 import Select from "react-select";
 import { Row, Col, Alert } from "react-bootstrap";
-//import InfoDialog from "../../components/common/info";
 import ErrorDialog from "../../components/common/error";
 import PipelineDashboard from "../../components/dashboard/Pipeline";
 import SecOpsDashboard from "../../components/dashboard/SecOps";
@@ -38,10 +37,7 @@ function DashboardHome() {
       });
       
     setLoading(false);
-    console.log(result.data);
     setData(result.data);
-
-    console.log(result.data.profile.length);
 
     if (result.data !== undefined && result.data.profile.length > 0) {
       setPersona(result.data.profile[0].defaultPersona);      
