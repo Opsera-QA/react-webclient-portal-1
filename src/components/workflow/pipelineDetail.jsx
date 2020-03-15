@@ -189,7 +189,7 @@ const PipelineActivity = (props) => {
           <Table striped bordered hover className="table-sm" style={{ fontSize:"small" }}>
             <thead>
               <tr>
-                <th style={{ width: "10%" }}>Plan</th>
+                <th style={{ width: "10%" }}>Step</th>
                 <th style={{ width: "10%" }}>Task</th>
                 <th style={{ width: "10%" }}>Tool</th>
                 <th style={{ width: "5%" }}>Build</th>
@@ -203,9 +203,9 @@ const PipelineActivity = (props) => {
             
               {data.map((item, idx) => (
                 <tr key={idx} >
-                  <td className="force-text-wrap">{item["plan_id"]}</td>
-                  <td className="force-text-wrap">{item["task"]}</td> 
-                  <td className="upper-case-first">{item["system"]}</td>
+                  <td className="force-text-wrap text-center">{item["step"]}</td>
+                  <td>{item["task"]}</td> 
+                  <td className="upper-case-first">{item["tool_identifier"]}</td>
                   <td>{item["build_number"]}</td>
                   <td className="force-text-wrap">{item["summary"]}</td>
                   <td className="force-text-wrap">{item["detail"]} 
