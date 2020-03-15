@@ -42,7 +42,6 @@ function PipelineWorkflow({ id }) {
   }
 
   const callbackFunctionDetail = (param) => {
-    console.log("HERE", param);
     setEditItem(param);    
   };
 

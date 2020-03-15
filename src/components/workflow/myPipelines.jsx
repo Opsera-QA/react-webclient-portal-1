@@ -60,7 +60,7 @@ function MyPipelines() {
             <div className="mt-3 max-content-width">
               {data.length > 0 ?
                 <ItemSummaries data={data} parentCallback = {callbackFunction} /> :
-                <InfoDialog message="No Pipelines Found" />}
+                <InfoDialog message="No Pipelines Found.  Please go to Catalog and select a pipeline template in order to proceed." />}
             </div>
           </>
         }

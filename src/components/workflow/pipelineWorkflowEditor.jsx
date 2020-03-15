@@ -1,10 +1,9 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../contexts/AuthContext"; 
 import { axiosApiService } from "../../api/apiService";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
-import InfoDialog from "../common/info";
 import { Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
@@ -19,9 +18,6 @@ const PipelineWorkflowEditor = ({ editItem, data, parentCallback }) => {
   const [loading, setLoading] = useState(false);
 
   async function postData(param) {
-    console.log("SAVING: ", param);
-    console.log("Data: ", data);
-    console.log("editItem: ", editItem);
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
@@ -42,17 +38,16 @@ const PipelineWorkflowEditor = ({ editItem, data, parentCallback }) => {
     parentCallback(param);
   };
 
-  const callbackFunctionTools = (param) => {
-    //save actions here, then call parentCallback to refresh scope
-    // Follow example in callbackFunctionSource, updating individual propertes in the existing data object
-    console.log("param", param);
-    parentCallback(param);  
+  const callbackFunctionTools = async (plan) => {
+    data.workflow.plan = plan;
+    await postData(data);
+    parentCallback(data);  
   };
 
-  const callbackFunctionSource = async (item) => {
-    data.workflow.source.name = item.name;
-    data.workflow.source.repository = item.repository;
-    data.workflow.source.branch = item.branch;
+  const callbackFunctionSource = async (source) => {
+    data.workflow.source.name = source.name;
+    data.workflow.source.repository = source.repository;
+    data.workflow.source.branch = source.branch;
     await postData(data);
     parentCallback(data);  
   };
@@ -78,7 +73,7 @@ const PipelineWorkflowEditor = ({ editItem, data, parentCallback }) => {
             
             {editItem.type === "source" ? 
               <SourceRepositoryConfig data={data} parentCallback={callbackFunctionSource} /> : 
-              <ToolConfigurationSelect data={data} parentCallback={callbackFunctionTools} />  } 
+              <ToolConfigurationSelect data={data} editItem={editItem} parentCallback={callbackFunctionTools} />  } 
               
 
             <div className="text-muted"><small>{JSON.stringify(data)}</small></div>

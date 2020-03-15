@@ -187,8 +187,8 @@ const Item = ({ item, index, parentCallback }) => {
     setShowModal(true);
   };
 
-  const handleEditClick = (type, itemId) => {
-    parentCallback({ type: type, item_id: itemId });
+  const handleEditClick = (type, name, itemId) => {
+    parentCallback({ type: type, tool_name: name, step_id: itemId });
   };
 
   const handleClick = (param) => {
@@ -214,7 +214,7 @@ const Item = ({ item, index, parentCallback }) => {
                   style={{ cursor: "pointer" }} /></Col>
             </Row>
             <Row>
-              <Col className="text-muted upper-case-first">{item.tool.name} 
+              <Col className="text-muted upper-case-first">{item.tool.tool_identifier} 
                 <FontAwesomeIcon icon={faSearchPlus}
                   className="ml-1"
                   size="xs"
@@ -226,7 +226,7 @@ const Item = ({ item, index, parentCallback }) => {
                 <FontAwesomeIcon icon={faCog}
                   style={{ cursor: "pointer" }}
                   className="text-muted mr-1"
-                  onClick={() => { handleEditClick("tool", item._id); }} />
+                  onClick={() => { handleEditClick("tool", item.tool.tool_identifier, item._id); }} />
                 <FontAwesomeIcon icon={faPause}
                   className="ml-2"
                   style={{ cursor: "pointer" }}
