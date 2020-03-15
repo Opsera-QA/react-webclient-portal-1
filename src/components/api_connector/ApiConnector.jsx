@@ -16,7 +16,7 @@ import JenkinsForm from "./automation_server/jenkinsForm";
 
 class ApiConnector extends Component {
   state = {
-    selection: ""
+    selection: "jenkins"
   }
 
   handleClick = param => e => {
@@ -32,8 +32,8 @@ class ApiConnector extends Component {
   render() {
     return (
       <div className="mt-3 max-content-width">
-        <h4>API Connectors</h4>
-        <div>Configure connection information for various supported tools.</div>
+        <h4>Tool Configurations</h4>
+        <div>Configure connection information for various platform and pipeline supported tools.</div>
 
 
         <ul className="nav nav-tabs mt-3">

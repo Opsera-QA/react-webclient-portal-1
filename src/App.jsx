@@ -71,7 +71,7 @@ class App extends Component {
                   <Route path="/implicit/callback" component={ImplicitCallback} />
                   <SecureRoute path="/profile" component={Profile} />
                   <SecureRoute path="/inventory" component={Inventory} />
-                  <SecureRoute path="/api_connector/:id?" component={ApiConnector} />
+                  <SecureRoute path="/tools/:id?" component={ApiConnector} />
                   <SecureRoute path="/pipeline" component={Pipeline} />
                   <SecureRoute path="/workflow/:id?/:view?" component={Workflow} />
                   <SecureRoute path="/platform" component={Platform} />

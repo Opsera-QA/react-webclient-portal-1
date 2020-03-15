@@ -74,7 +74,7 @@ function Sidebar({ hideView }) {
                 <NavLink className="nav-link" activeClassName="chosen" to="/analytics"><FontAwesomeIcon icon={faHistory} fixedWidth /> <span className="menu-text">Analytics</span></NavLink>
         
                 <div className="mt-3 mb-1 sub-header">Operations</div>
-                <NavLink className="nav-link" activeClassName="chosen" to="/api_connector"><FontAwesomeIcon icon={faLink} fixedWidth /> <span className="menu-text">Tools</span></NavLink>
+                <NavLink className="nav-link" activeClassName="chosen" to="/tools"><FontAwesomeIcon icon={faLink} fixedWidth /> <span className="menu-text">Tools</span></NavLink>
                 <NavLink className="nav-link" activeClassName="chosen" to="/update"><FontAwesomeIcon icon={faDownload} fixedWidth /> <span className="menu-text">Updates</span></NavLink>
                 {administrator && <NavLink className="nav-link" activeClassName="chosen" to="/admin"><FontAwesomeIcon icon={faTools} fixedWidth /> <span className="menu-text">Admin Tools</span></NavLink>}
               </div>
