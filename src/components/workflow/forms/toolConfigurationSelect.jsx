@@ -63,7 +63,7 @@ function ToolConfigurationSelect( { data, parentCallback }) {
 
       <Button variant="primary" type="button" 
         onClick={() => { callbackFunction(); }} 
-        disabled={repository.length == 0 || branch.length == 0 || platform.length == 0}>
+        disabled={true}>
         <FontAwesomeIcon icon={faSave} className="mr-1"/> Save
       </Button>
     </Form>
