@@ -239,7 +239,7 @@ const PipelineActivity = (props) => {
 
 const buildToolList = (array) => {
   let tools = [];
-  array.map((item) => {tools.push(item.tool.name);});
+  array.map((item) => {tools.push(item.tool.tool_identifier);});
   return tools.filter((a, b) => tools.indexOf(a) === b);
 };
 
