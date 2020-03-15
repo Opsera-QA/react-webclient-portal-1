@@ -272,7 +272,7 @@ function JenkinsForm() {
                   onChange={handleChange}
                   isInvalid={state.description.length > 1000}
                 />
-                <Form.Control.Feedback type="invalid">Descriprion has to be 1000 chars or less</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">Description has to be 1000 characters or less</Form.Control.Feedback>
               </Form.Group>
 
               <Form.Row className="pt-4">
@@ -286,9 +286,9 @@ function JenkinsForm() {
                     onChange={handleChange}
                   // isInvalid={this.state.jenkinsUrl.error}
                   />
-                  <small id="passwordHelpBlock" className="form-text text-muted">
+                  {/* <small id="passwordHelpBlock" className="form-text text-muted">
                     Jenkins container notes here.
-                  </small>
+                  </small> */}
                   {/* <Form.Control.Feedback type="invalid">{this.state.jenkinsUrl.error}</Form.Control.Feedback> */}
                 </Form.Group>
 
@@ -346,9 +346,9 @@ function JenkinsForm() {
                 </Form.Group>
               </Form.Row>
               
-              <div className="text-muted mt-2 mb-2 italic">Please Note: All * fields are required for connectivity.</div>
-              <Button id="save-button" disabled={!isEnabled} variant="outline-primary" className="mr-2" type="submit">{update ? "Save Changes" : "Connect"}</Button>
-              {/* <Button id="cancel-button" variant="outline-secondary" className="mr-2" type="button" onClick={this.cancel}>Cancel</Button> */}
+              
+              <Button id="save-button" disabled={!isEnabled} variant="outline-primary" className="mr-2 mt-3" type="submit">{update ? "Save Changes" : "Connect"}</Button>
+              <div className="text-muted mt-3 mb-2 italic">* Required Fields</div>
             </Form>
           }
 
