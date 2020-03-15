@@ -183,7 +183,7 @@ const PipelineActivity = (props) => {
 
   return (
     <>
-      {data !== undefined && data !== null ?
+      {data !== undefined && data.length > 0 ?
         <>
           <div className="h6 mt-4">Activity Log</div>
           <Table striped bordered hover className="table-sm" style={{ fontSize:"small" }}>
@@ -229,7 +229,7 @@ const PipelineActivity = (props) => {
             handleCancelModal={() => setShowModal(false)}
             handleConfirmModal={() => setShowModal(false)} /> : null}
         </>
-        : <InfoDialog message="No pipeline activity data currently available.  Logs will get populated once the workflow starts running." />}
+        : <InfoDialog message="No pipeline activity data is currently available.  Logs will start getting populated once the pipeline starts running." />}
 
     </>
     
