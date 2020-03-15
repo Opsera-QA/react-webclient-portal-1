@@ -33,6 +33,7 @@ function Analytics() {
     const apiCall = new ApiService("/analytics/settings", {}, accessToken);
     apiCall.get()
       .then(function (result) {
+        console.log(result.data);
         setData(result.data);
         setLoading(false);        
       })
@@ -53,7 +54,7 @@ function Analytics() {
          logging, reports and configurations around the OpsERA Analytics Platform or search your 
         currently configured logs repositories below.</p>
         </div>
-        {data == undefined ? 
+        {(typeof data.profile === "object" && data.profile.length === 0 ) ? 
           <div className="p-2 mt-1 max-content-width">
             {error && <ErrorDialog error={error} />}
             <ConfigurationsForm settings={data} token={token} />

@@ -64,7 +64,7 @@ function DashboardHome() {
  
   return (
     <div className="mb-3 max-charting-width">
-      { loading && <LoadingDialog size="lg" />}
+      { loading || data === undefined && <LoadingDialog size="lg" />}
       { !loading && 
       <>
         <div className="mt-2 mb-3">
@@ -77,35 +77,36 @@ function DashboardHome() {
 
           { hasError && <ErrorDialog error={hasError} className="mt-4 mb-4" /> }
 
-          { data === undefined || data.length === 0 || data.esSearchApi === null ? <div style={{ height: "250px" }} className="max-content-module-width-50">
-            <div className="row h-100">
-              <div className="col-sm-12 my-auto">
-                <Alert variant="info">Your Analytics Profile has not been enabled for this account.  Please update your <Link to='/profile'>Analytics 
+          { data.profile === undefined || data.profile.length === 0 || data.esSearchApi === null ? 
+            <div style={{ height: "250px" }} className="max-content-module-width-50">
+              <div className="row h-100">
+                <div className="col-sm-12 my-auto">
+                  <Alert variant="info">Your Analytics Profile has not been enabled for this account.  Please update your <Link to='/profile'>Analytics 
                 Profile Settings</Link> on the left menu and enable your settings in order to use the Dashboards.</Alert>
-                <div className="text-muted mt-4">
-                  <div className="mb-3">In order to take advantage of the robust analytics dashboards offered by OpsERA, the following configurations are necessary:</div>
-                  <ul className="list-group">
-                    <li className="list-group-item d-flex justify-content-between align-items-center">
+                  <div className="text-muted mt-4">
+                    <div className="mb-3">In order to take advantage of the robust analytics dashboards offered by OpsERA, the following configurations are necessary:</div>
+                    <ul className="list-group">
+                      <li className="list-group-item d-flex justify-content-between align-items-center">
                     Analytics must be enabled for your profile.
-                      {(typeof data.profile === "object" && data.profile.length > 0 ) ? 
-                        <span className="badge badge-success badge-pill"><FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth /></span>  :
-                        <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span> }
-                    </li>
-                    <li className="list-group-item d-flex justify-content-between align-items-center">
+                        {(typeof data.profile === "object" && data.profile.length > 0 ) ? 
+                          <span className="badge badge-success badge-pill"><FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth /></span>  :
+                          <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span> }
+                      </li>
+                      <li className="list-group-item d-flex justify-content-between align-items-center">
                     An OpsERA Analytics instance must be spun up and configured with your pipeline tools.
-                      {data.esSearchApi === null ? 
-                        <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span> :
-                        <span className="badge badge-success badge-pill"><FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth /></span> }
-                    </li>
-                    <li className="list-group-item d-flex justify-content-between align-items-center">
+                        {data.esSearchApi === null ? 
+                          <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span> :
+                          <span className="badge badge-success badge-pill"><FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth /></span> }
+                      </li>
+                      <li className="list-group-item d-flex justify-content-between align-items-center">
                       Pipeline activity must have occurred in order for the system to collect data for display.
-                      <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span>
-                    </li>
-                  </ul>
+                        <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div> :
+            </div> :
             <>
               <Row>
                 <Col sm={8}>
