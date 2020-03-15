@@ -33,7 +33,6 @@ const PipelineWorkflowEditor = ({ editItem, data, parentCallback }) => {
     }
   }
 
-  
   const handleCloseClick = (param) => {
     parentCallback(param);
   };
@@ -74,10 +73,6 @@ const PipelineWorkflowEditor = ({ editItem, data, parentCallback }) => {
             {editItem.type === "source" ? 
               <SourceRepositoryConfig data={data} parentCallback={callbackFunctionSource} /> : 
               <ToolConfigurationSelect data={data} editItem={editItem} parentCallback={callbackFunctionTools} />  } 
-              
-
-            <div className="text-muted"><small>{JSON.stringify(data)}</small></div>
-            <div className="text-muted"><small>{JSON.stringify(editItem)}</small></div>
  
           </>}
       </>

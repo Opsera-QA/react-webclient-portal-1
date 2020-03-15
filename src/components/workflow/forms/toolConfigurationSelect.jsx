@@ -10,30 +10,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 
 
-
-// TODO: Preselect value if user has it saved already.
-//TODO: Test and remove debug code
-
 function ToolConfigurationSelect( { data, editItem, parentCallback }) {
   const contextType = useContext(AuthContext);
   const { plan } = data.workflow;
   const [loading, setLoading] = useState(false);
   const [tools, setTools] = useState([]);
   const [error, setErrors] = useState();
-  const [toolOptions, setToolOptions] = useState([{ value: "", label: "Select One", isDisabled: "yes" }]);
-  const [toolConfigSelect, setToolConfigSelect] = useState(); //default value should come from data PROP
-  
+  const [toolOptions, setToolOptions] = useState([]);
+  const [toolConfigSelect, setToolConfigSelect] = useState();
   
   useEffect(() => {    
-    console.log("DATA: ", data);    
-    setTools([{ value: "", label: "Select One", isDisabled: "yes" }]);
     fetchToolConfigOptions(editItem.tool_name);
   }, [editItem]);
 
   const handleSelectChange = (selectedOption) => {
     setToolConfigSelect(selectedOption.value);   
   };
-
 
   const fetchToolConfigOptions = async (toolName) => {
     const { getAccessToken } = contextType;
@@ -47,6 +39,7 @@ function ToolConfigurationSelect( { data, editItem, parentCallback }) {
       let options = result.data.map(function (tool) {
         return { value: tool._id, label: tool.name };
       });
+      options.unshift({ value: "", label: "Select One", isDisabled: "yes" });
       setToolOptions(options);
     }
     catch (err) {
@@ -54,29 +47,18 @@ function ToolConfigurationSelect( { data, editItem, parentCallback }) {
       setLoading(false);
       setErrors(err.message);
     } 
-     
   };
 
+  const getToolOptionByConfigId = () => {
+    let toolConfigurationId = plan[plan.findIndex(x => x._id === editItem.step_id)].tool.configuration_id;
+    return toolConfigurationId;
+  };
 
-  //Build data object being returned to parent controller for saving.  Can just be the individual step
   const callbackFunction = () => {
-    console.log("toolConfig: ", toolConfigSelect);
-    console.log("Edit Item: ", editItem); //
-    //get array index of plan matching this step in data object
     let stepArrayIndex = plan.findIndex(x => x._id === editItem.step_id); 
     let toolConfigArrayIndex = tools.findIndex(x => x._id === toolConfigSelect); 
-
-    console.log("array index of step: ", stepArrayIndex);
-    console.log("Step to update: ", plan[stepArrayIndex]);
-    
-    console.log("array index of tool: ", toolConfigArrayIndex);
-
-    console.log("Tool Configuration Object to save: ", tools[toolConfigArrayIndex]);
-
+    plan[stepArrayIndex].tool.configuration_id = tools[toolConfigArrayIndex]._id;
     plan[stepArrayIndex].tool.configuration = tools[toolConfigArrayIndex].configuration;
-
-    console.log("Updated Plan: ", plan);
-
     parentCallback(plan);
   };
 
@@ -96,8 +78,9 @@ function ToolConfigurationSelect( { data, editItem, parentCallback }) {
           menuPortalTarget={document.body}
           styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
           classNamePrefix="select"
-          //defaultValue={platform ? PLATFORM_OPTIONS[PLATFORM_OPTIONS.findIndex(x => x.value ===platform)] : PLATFORM_OPTIONS[0]}
-          defaultValue={toolOptions[0]}  //TODO: Fix this!
+          value={toolOptions.find(op => {
+            return op.value === getToolOptionByConfigId();
+          })}
           isLoading={loading}
           isDisabled={false}
           isClearable={false}

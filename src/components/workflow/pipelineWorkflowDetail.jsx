@@ -1,12 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import PropTypes from "prop-types";
-// import { AuthContext } from "../../contexts/AuthContext"; 
-// import { axiosApiService } from "../../api/apiService";
+import { useLocation } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import LoadingDialog from "../common/loading";
-// import ErrorDialog from "../common/error";
-//import InfoDialog from "../common/info";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus, faCog, faBars, faPause, faBan, faPlay, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
@@ -81,6 +78,7 @@ const PipelineWorkflowDetail = (props) => {
 
 
   const callbackFunction = (item) => {
+    window.scrollTo(0, 0);
     item.id = data._id;
     parentCallback(item);
   };
