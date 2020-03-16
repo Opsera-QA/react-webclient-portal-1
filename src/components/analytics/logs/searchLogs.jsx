@@ -126,6 +126,7 @@ const MapLogData = (props) => {
     setShowModal(true);
   };
   if (type === "pipeline" && data.length > 0) { 
+    console.log(data);
     return (
       <>
         <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
