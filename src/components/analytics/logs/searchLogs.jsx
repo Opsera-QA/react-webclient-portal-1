@@ -144,7 +144,7 @@ const MapLogData = (props) => {
             
             {data.map((item, idx) => (
               <tr key={idx} >
-                <td className="force-text-wrap">{typeof(item._source.data.projectName) !== "undefined" ? item._source.data.projectName : null}</td>
+                <td className="force-text-wrap">{typeof(item._source.data) !== "undefined" ? item._source.data.projectName : null}</td>
                 <td className="force-text-wrap">{item._index}: {item._source.message ? item._source.message[0] : null}
                   <FontAwesomeIcon icon={faSearchPlus}
                     className="ml-1"
