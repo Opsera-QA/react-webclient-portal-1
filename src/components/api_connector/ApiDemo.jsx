@@ -9,6 +9,7 @@ class ApiDemo extends Component {
     super(props, context);
     this.state = {
       data: [],
+      user: [],
       fetching: true,
       error: null,
       messages: null
@@ -20,6 +21,7 @@ class ApiDemo extends Component {
     const { getAccessToken, setSharedState } = this.context;  //this.context is where all data from the above AuthContext component resides.  It's like the state props design wise
     const accessToken = await getAccessToken();
     this.getApiData(accessToken);
+    this.getUserData(accessToken);
 
     setSharedState({ "data1":"test", "data2":30, "data3":null });  //Demo of how to use sharedState in AuthContext for sharing data between subsets of components
   }
@@ -43,8 +45,27 @@ class ApiDemo extends Component {
   }
 
 
+  getUserData(accessToken) {
+    const apiCall = new ApiService("/users", {}, accessToken);
+    let currentComponent = this;
+    apiCall.get().then(function (response) {
+      currentComponent.setState({
+        user: response.data,
+        error: null,
+        fetching: false
+      });
+    })
+      .catch(function (error) {
+        currentComponent.setState({
+          error: error,
+          fetching: false
+        }); 
+      });
+  }
+
+
   render() {
-    const { data, error, messages } = this.state;
+    const { data, user, error, messages } = this.state;
     const { authenticated, sharedState } = this.context;
     console.log(this.context);
     console.log(sharedState); //  Use this share state temporarily among components
@@ -80,7 +101,7 @@ class ApiDemo extends Component {
               return(<div style={{ margin:5 }}>
                 <div>
                   User Name: {userInfo ? `${userInfo.name}` : ""}<br />
-                  User ID: {userInfo ? `${userInfo.id}` : ""}<br />
+                  User ID: {user ? `${user._id}` : ""}<br />
                   Email: {userInfo ? `${userInfo.email}` : ""}<br />
                   Zone: {userInfo ? `${userInfo.zoneinfo}` : ""}</div>
               </div>);}}
