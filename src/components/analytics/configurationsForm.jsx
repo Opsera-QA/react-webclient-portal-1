@@ -19,6 +19,7 @@ const INITIAL_SETTINGS = {
   enabledToolsOn: "",
   updatedToolsOn: "",
   disabledToolsOn: "",
+  query_configuration: {},
   kibanaDashboardUrl: "",
   hitsIndex: 0,
   kibanaUrl: "",
@@ -36,7 +37,9 @@ const PERSONAS = [{ value: "0", label: "Developer" }, { value: "1", label: "Secu
 const DATA_LIMITS = [{ Value: "0", Label: "Inactive" }, { Value: "500", Label: "500MB" }, { Value: "1", Label: "1GB" }, { Value: "2", Label: "2GB" }, { Value: "3", Label: "3GB" }];
 const TOOL_OPTIONS = [
   { value: "Jenkins", label: "Jenkins" },
+  { value: "Codeship", label: "Codeship" },
   { value: "JUnit", label: "JUnit" },
+  { value: "Xunit", label: "Xunit" },
   { value: "JMeter", label: "JMeter" },
   { value: "Selenium", label: "Selenium" },
   { value: "Sonar", label: "Sonar" },
