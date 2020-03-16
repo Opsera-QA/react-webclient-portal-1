@@ -37,11 +37,13 @@ function DashboardHome() {
       });
       
     setLoading(false);
-    setData(result.data);
-
-    if (result.data !== undefined && result.data.profile.length > 0) {
-      setPersona(result.data.profile[0].defaultPersona);      
+    if (typeof(result) !== "undefined") {
+      setData(result.data);
+      if (result.data !== undefined && result.data.profile.length > 0) {
+        setPersona(result.data.profile[0].defaultPersona);      
+      }
     }
+    
   };
 
   useEffect( () => {
@@ -90,7 +92,7 @@ function DashboardHome() {
                       </li>
                       <li className="list-group-item d-flex justify-content-between align-items-center">
                     An OpsERA Analytics instance must be spun up and configured with your pipeline tools.
-                        {data.esSearchApi === null ? 
+                        {data.esSearchApi === undefined || data.esSearchApi === null ? 
                           <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span> :
                           <span className="badge badge-success badge-pill"><FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth /></span> }
                       </li>
