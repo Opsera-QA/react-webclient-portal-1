@@ -50,7 +50,7 @@ function PipelineSuccessLogs( { persona, searchQuery, filterType } ) {
   } else {
     return (
       <>
-        <div className="activity-label-text mb-2">Recent Successful Builds</div>
+        <div className="activity-label-text mb-2">Successful Deployments</div>
         <MapActivityData data={data} type="success" />
         
       </>
