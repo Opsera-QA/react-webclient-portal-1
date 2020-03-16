@@ -150,10 +150,10 @@ const MapLogData = (props) => {
                     size="xs"
                     style={{ cursor: "pointer" }}
                     onClick={() => { handleClick(item._source.data); }} /></td> 
-                <td><Moment format="MMM Do YYYY, h:mm:ss a" date={item._source["@timestamp"]} /></td>          
-                <td className="text-center">{item._source.data["buildNum"]}</td>      
-                <td className="text-center">{item._source["source_host"]}</td>
-                <td className="text-muted text-center">{(item._source["source"])}</td>
+                <td><Moment format="MMM Do YYYY, h:mm:ss a" date={typeof(item._source["@timestamp"]) !== "undefined" ? item._source["@timestamp"] : null} /></td>          
+                <td className="text-center">{typeof(item._source.data["buildNum"]) !== "undefined" ? item._source.data["buildNum"] : null}</td>      
+                <td className="text-center">{typeof(item._source["source_host"]) !== "undefined" ? item._source["source_host"] : null}</td>
+                <td className="text-muted text-center">{typeof(item._source["source"]) !== "undefined" ? item._source["source"] : null}</td>
               </tr>
             ))}
           </tbody>
