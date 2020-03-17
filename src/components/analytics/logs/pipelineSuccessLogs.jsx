@@ -50,7 +50,7 @@ function PipelineSuccessLogs( { persona, searchQuery, filterType } ) {
   } else {
     return (
       <>
-        <div className="activity-label-text mb-2">Successful Deployments</div>
+        <div className="activity-label-text mb-2">Successful Builds</div>
         <MapActivityData data={data} type="success" />
         
       </>
@@ -84,13 +84,13 @@ const MapActivityData = (props) => {
         { data.map((item, idx) => (
           <Alert key={idx} variant={type}>
             <div className="row">
-              <div className="col" style={{ fontWeight: "bold" }}>{item["data_projectName"]}: {item.message}</div>
+              <div className="col" style={{ fontWeight: "bold" }}>{item["data_projectName"]}: {item.data_result}</div>
             </div>
             <div className="row mt-1">
               <div className="col"><Moment format="dddd, MMMM Do YYYY, h:mm:ss a" date={item["timestamp"]} /></div>
             </div>
             <div className="row mt-2">
-              <div className="col">Version: {item["version"]}</div>
+              {/* <div className="col">Version: {item["version"]}</div> */}
               <div className="col">Build: {item["data_buildNum"]} 
                 <FontAwesomeIcon icon={faSearchPlus} size="xs" 
                   className="ml-1" 
