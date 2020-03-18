@@ -60,10 +60,10 @@ class AdminTools extends Component {
                 <Link to="/reports"><FontAwesomeIcon icon={faLink} fixedWidth /> Reports</Link>
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/systemstatus"><FontAwesomeIcon icon={faLink} fixedWidth /> System Status</Link>
+                <Link to="/admin/systemstatus"><FontAwesomeIcon icon={faHeartbeat} fixedWidth /> System Status</Link>
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/customerstatus"><FontAwesomeIcon icon={faLink} fixedWidth /> Customer System Status</Link>
+                <Link to="/admin/customerstatus"><FontAwesomeIcon icon={faHeartbeat} fixedWidth /> Customer System Status</Link>
               </Col>
             </Row>
 

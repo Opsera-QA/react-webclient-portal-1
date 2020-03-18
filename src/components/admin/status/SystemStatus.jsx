@@ -1,8 +1,8 @@
 import React, { useReducer, useEffect, useContext } from "react";
-import { Table, Row, Col } from "react-bootstrap";
+import { Table, Row, Col, Alert, ListGroup } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthContext";
-import ErrorDialog from "../../common/error";
+import { ApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/loading";
 
 const Status = ({ color }) =>  <svg height="20" width="20"><circle cx="10" cy="10" r="10" fill={color} /></svg>;
@@ -16,6 +16,9 @@ function SystemStatus() {
     (state, newState) => ({ ...state, ...newState }),
     { 
       administrator: false,
+      data: [],
+      modal: false,
+      fetching: true
     }
   );
 
@@ -34,110 +37,122 @@ function SystemStatus() {
         history.push("/");
       } else {
         // add any api calls if needed
+        getStatus();
       }
     }
     checkUserData();
   }, []);
 
+  async function getStatus() {
+    const { getAccessToken } = Auth;
+    const accessToken = await getAccessToken();
+    const urlParams = state;
+    new ApiService(
+      "/tools/status/",
+      null,
+      accessToken,
+      urlParams).get()
+      .then(response => {
+        console.log(response.data.message);
+        setState({ 
+          data: response.data.message,
+          fetching: false
+        });
+      })
+      .catch = (e) => {
+        console.log(e);
+        setState({
+          fetching: false
+        });
+        showErrorAlert("Error Fetching Status. Contact Administrator for more details.");
+      };
+  }
+
+  const showErrorAlert = (message) => {
+    setState({
+      modal: true,
+      type: "danger",
+      title: "Error!",
+      message: message
+    });
+  };
+  
+  function chunks(arr, size) {
+    if (!Array.isArray(arr)) {
+      throw new TypeError("Input should be Array");
+    }
+  
+    if (typeof size !== "number") {
+      throw new TypeError("Size should be a Number");
+    }
+  
+    var result = [];
+    for (var i = 0; i < arr.length; i += size) {
+      result.push(arr.slice(i, size + i));
+    }
+  
+    return result;
+  }
+
+  const StatusData = chunks(state.data, 4);
+  console.log(StatusData);
+
+  const { fetching } = state;
+
   return (
     <div className="mt-3 max-content-width">
       <h4>System Status</h4>
       <div>Listed below are system tools for Opsera.</div>
-      <Row>
-        <Col sm={6}></Col>
-        <Col sm={6}>
-          <Row>
-            <Col md="auto"><Status color="#28C940" /> Available</Col>
-            <Col md="auto"><Status color="#ffbf00" /> Something went wrong</Col>
-            <Col md="auto"><Status color="#FF0000" /> Unavailable</Col>
-          </Row>
-        </Col>
-      </Row>
-      <Row className="m-5">
-        <Table >
-          <tbody>
-            <tr>
-              <td> 
+      {state.modal &&
+        <Alert className="mt-3" variant={state.type} onClose={() => setState({ modal: false, type: "", title: "", message: "" })} dismissible>
+          {state.title} {state.message}
+        </Alert>
+      }
+      {fetching && <LoadingDialog />}
+      {!fetching &&
+          <>
+            <Row>
+              <Col sm={6}></Col>
+              <Col sm={6}>
                 <Row>
-                  <Col md="auto"><Status color="#28C940" /></Col>
-                  <Col>System</Col>
+                  <Col md="auto"><Status color="#28C940" /> Available</Col>
+                  <Col md="auto"><Status color="#ffbf00" /> Something went wrong</Col>
+                  <Col md="auto"><Status color="#FF0000" /> Unavailable</Col>
                 </Row>
-              </td>
-              <td>
-                <Row>
-                  <Col md="auto"><Status color="#28C940" /></Col>
-                  <Col>Platform Database</Col>
-                </Row>
-              </td>
-              <td>
-                <Row>
-                  <Col md="auto"><Status color="#28C940" /></Col>
-                  <Col>Web Portal
-                  </Col>
-                </Row>
-              </td>
-              <td>
-                <Row>
-                  <Col md="auto"><Status color="#ffbf00" /></Col>
-                  <Col>API layer</Col>
-                </Row>
-              </td>
-            </tr>
-            <tr>
-              <td> 
-                <Row>
-                  <Col md="auto"><Status color="#28C940" /></Col>
-                  <Col>System</Col>
-                </Row>
-              </td>
-              <td>
-                <Row>
-                  <Col md="auto"><Status color="#FF0000" /></Col>
-                  <Col>System</Col>
-                </Row>
-              </td>
-              <td>
-                <Row>
-                  <Col md="auto"><Status color="#28C940" /></Col>
-                  <Col>System</Col>
-                </Row>
-              </td>
-              <td>
-                <Row>
-                  <Col md="auto"><Status color="#FF0000" /></Col>
-                  <Col>System</Col>
-                </Row>
-              </td>
-            </tr>
-            <tr>
-              <td> 
-                <Row>
-                  <Col md="auto"><Status color="#28C940" /></Col>
-                  <Col>System</Col>
-                </Row>
-              </td>
-              <td>
-                <Row>
-                  <Col md="auto"><Status color="#ffbf00" /></Col>
-                  <Col>System</Col>
-                </Row>
-              </td>
-              <td>
-                <Row>
-                  <Col md="auto"><Status color="#FF0000" /></Col>
-                  <Col>System</Col>
-                </Row>
-              </td>
-              <td>
-                <Row>
-                  <Col md="auto"><Status color="#28C940" /></Col>
-                  <Col>System</Col>
-                </Row>
-              </td>
-            </tr>
-          </tbody>
-        </Table>
-      </Row>
+              </Col>
+            </Row>
+            <Row className="m-5">
+
+              <Table >
+                <tbody>
+
+                  {
+                    StatusData.map((statusArray, key) => (
+                      <tr key={key}>
+                        {
+                          statusArray.map((status, key) => (
+                            <td  key={key}>
+                              <Row>
+                                <Col md="auto">
+                                  { status.instance[0].status && status.instance[0].status === "UP" &&  <Status color="#28C940" /> }
+                                  { status.instance[0].status && status.instance[0].status === "DOWN" &&  <Status color="#FF0000" /> }
+                                  { status.instance[0].status && status.instance[0].status != "UP" && status.instance[0].status != "DOWN" &&  <Status color="#ffbf00" /> }
+                                </Col>
+                                <Col className="stausText">{status.name.replace(/-/g, " ")}</Col>
+                              </Row>
+                            </td>
+                          ))
+                        }
+                      </tr>
+                    ))
+                  }
+
+                </tbody>
+              </Table>
+            </Row>
+          </> 
+      }
+      
     </div>
   );
 }

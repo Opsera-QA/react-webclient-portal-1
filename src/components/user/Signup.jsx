@@ -306,7 +306,8 @@ export default class Signup extends PureComponent {
           {this.state.type === "success" ? <Modal header="Success!" 
             message={this.state.message} 
             button="Log In"  
-            handleHideModal={this.login}/> : 
+            handleConfirmModal={this.login}
+            handleCancelModal={this.login}/> : 
         
             <Alert variant={this.state.type} onClose={() => this.setState({ modal: false, type: "", title: "", message: "" })} dismissible>
               {this.state.title}: {this.state.message}

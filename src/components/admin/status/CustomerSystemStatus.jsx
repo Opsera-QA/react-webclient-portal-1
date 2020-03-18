@@ -54,8 +54,10 @@ function CustomerSystemStatus() {
         </Col>
       </Row>
       <Row className="m-5">
-        <Table >
-          <tbody>
+
+        <h4>Coming soon!</h4>
+        {/*<Table >
+           <tbody>
             <tr>
               <td> 
                 <Row>
@@ -136,7 +138,7 @@ function CustomerSystemStatus() {
               </td>
             </tr>
           </tbody>
-        </Table>
+        </Table> */}
       </Row>
     </div>
   );
