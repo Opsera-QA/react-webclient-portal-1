@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Accordion, Card, Form, Button, Row, Col } from "react-bootstrap";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
-//import InfoDialog from "../common/info";
+import InfoDialog from "../common/info";
 import Modal from "../common/modal";
 import { ApiService } from "../../api/apiService";
 import Moment from "react-moment";
@@ -49,7 +49,7 @@ const TOOL_OPTIONS = [
 function ConfigurationsForm({ settings, token }) {
   const [state, setState] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
-    { loaded: true, showModal: false, error: null, messages: null, data: INITIAL_SETTINGS, editSettings: false }
+    { loaded: true, showModal: false, error: null, info: null, messages: null, data: INITIAL_SETTINGS, editSettings: false }
   );
 
   useEffect(() => {
@@ -81,12 +81,13 @@ function ConfigurationsForm({ settings, token }) {
   }
 
   function postData() {
-    setState({ loaded: false, error: null });
+    setState({ loaded: false, error: null, info: null });
     const body = state.data;
     const apiCall = new ApiService("/analytics/update", {}, token, body);
     apiCall.post()
       .then(function (response) {
         console.debug(response);
+        setState({ info : "Task was successful." });
       })
       .catch(function (error) {
         setState({ error: error });
@@ -136,12 +137,13 @@ function ConfigurationsForm({ settings, token }) {
   }
 
 
-  const { data, loaded, messages, showModal, error, editSettings } = state;
+  const { data, loaded, messages, showModal, error, info, editSettings } = state;
   const { enabledTools, disabledToolsOn, active, enabledToolsOn, defaultPersona } = data;
   return (
     <div>
       {!loaded && <LoadingDialog />}
       {error && <ErrorDialog error={error} />}
+      {info && <InfoDialog message={info} />}
 
       {showModal ? <Modal header="Confirm Deactivation"
         message={messages}
