@@ -21,9 +21,11 @@ function StepToolConfiguration( { data, editItem, parentCallback }) {
     return stepArrayIndex;
   };
 
-  const callbackFunction = (toolConfiguration) => {
+  const callbackFunction = (tool) => {
     let stepArrayIndex = getStepIndex(editItem.step_id); 
-    plan[stepArrayIndex].tool.configuration = toolConfiguration;
+    plan[stepArrayIndex].tool.configuration = tool.configuration;
+    plan[stepArrayIndex].tool.threshold = tool.threshold;
+    console.log(plan);
     parentCallback(plan);
   };
 
@@ -34,7 +36,7 @@ function StepToolConfiguration( { data, editItem, parentCallback }) {
           
       { typeof(stepTool) !== "undefined" ? 
         <div className="ml-1 mt-3">
-          {editItem.tool_name.toLowerCase() === "jenkins" ? <JenkinsConfiguration data={stepTool.configuration} parentCallback={callbackFunction} /> : null }
+          {editItem.tool_name.toLowerCase() === "jenkins" ? <JenkinsConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
         </div>
         : null }
 

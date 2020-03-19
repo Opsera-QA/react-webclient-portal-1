@@ -5,9 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 
 
-//data is JUST the tool.configuration object passed from parent component, that's returned through parent Callback
-// ONLY the configuration object will get changed.  Any other fields in the pipeline, or tool object are NOT to change.
+//data is JUST the tool object passed from parent component, that's returned through parent Callback
+// ONLY allow changing of the configuration and threshold properties of "tool"!
 function JenkinsStepConfiguration( { data, parentCallback }) {
+  const [threshold, setThreshold] = useState({});
   const [urlVal, setUrlVal] = useState("");
   const [portVal, setPortVal] = useState("");
   const [userIdVal, setUserIdVal] = useState("");
@@ -16,21 +17,30 @@ function JenkinsStepConfiguration( { data, parentCallback }) {
 
   useEffect(() => {
     if (typeof(data) !== "undefined") {
-      setUrlVal(data.jenkinsUrl);
-      setPortVal(data.jenkinsPort);
-      setUserIdVal(data.jUserId);
-      setAuthTokenVal(data.jAuthToken);
-      setJobVal(data.jobName);
+      let { configuration, threshold } = data;
+      if (typeof(configuration) !== "undefined") {
+        setUrlVal(configuration.jenkinsUrl);
+        setPortVal(configuration.jenkinsPort);
+        setUserIdVal(configuration.jUserId);
+        setAuthTokenVal(configuration.jAuthToken);
+        setJobVal(configuration.jobName);
+      }
+      if (typeof(threshold) !== "undefined") {
+        setThreshold(threshold);
+      }
     }
   }, [data]);
 
   const callbackFunction = () => {
     const item = {
-      jenkinsUrl: urlVal,
-      jenkinsPort: portVal,
-      jUserId: userIdVal,
-      jAuthToken: authTokenVal,
-      jobName: jobVal
+      configuration: {
+        jenkinsUrl: urlVal,
+        jenkinsPort: portVal,
+        jUserId: userIdVal,
+        jAuthToken: authTokenVal,
+        jobName: jobVal
+      },
+      threshold: threshold
     };
     parentCallback(item);
   };
