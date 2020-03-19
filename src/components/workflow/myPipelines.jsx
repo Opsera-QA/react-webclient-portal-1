@@ -21,11 +21,10 @@ function MyPipelines() {
   const [error, setErrors] = useState();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [callbackAction, setCallbackAction] = useState("");
-
+  
   useEffect(() => {    
     fetchData();
-  }, [callbackAction]);
+  }, []);
 
   async function fetchData() {
     setLoading(true);
@@ -47,7 +46,8 @@ function MyPipelines() {
   }
 
   const callbackFunction = (action) => {
-    setCallbackAction(action);
+    console.log("Action: ", action);
+    fetchData();    
   };
 
   if (error) {
@@ -58,7 +58,7 @@ function MyPipelines() {
         {loading ? <LoadingDialog size="sm" /> :
           <>
             <div className="mt-3 max-content-width">
-              {data.length > 0 ?
+              {typeof(data) !== "undefined" && data.length > 0 ?
                 <ItemSummaries data={data} parentCallback = {callbackFunction} /> :
                 <InfoDialog message="No Pipelines Found.  Please go to Catalog and select a pipeline template in order to proceed." />}
             </div>
@@ -74,7 +74,6 @@ const ItemSummaries = (props) => {
   const { data, parentCallback } = props;
   let history = useHistory();
   const contextType = useContext(AuthContext);
-  const [error, setErrors] = useState();
   const [loading, setLoading] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [modalDeleteId, setModalDeleteId] = useState(false);
@@ -86,11 +85,13 @@ const ItemSummaries = (props) => {
 
   const handleActionClick = (action, itemId) => e => {
     e.preventDefault();
+    console.log("Performing Action  ", action);
+    console.log("ID:  ", itemId);
     if (action === "delete") {
       setShowDeleteModal(true);
       setModalDeleteId(itemId);
     } else {
-      alert("coming soon");
+      console.log("coming soon");
     }
   };
 
@@ -98,8 +99,8 @@ const ItemSummaries = (props) => {
     setLoading(true);
     const { getAccessToken } = contextType;
     await PipelineActions.delete(pipelineId, getAccessToken);
-    parentCallback("delete");
     setLoading(false);
+    parentCallback("delete");
   }
 
 
@@ -121,11 +122,11 @@ const ItemSummaries = (props) => {
             <Button variant="primary" size="sm" className="mr-2 mt-2" onClick={handleDetailsClick(item._id)}>
               <FontAwesomeIcon icon={faSearch} className="mr-1"/>Details</Button>
 
-            <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" onClick={handleActionClick("run", item._id)}>
+            <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" disabled onClick={handleActionClick("run", item._id)}>
               <FontAwesomeIcon icon={faPlay} className="mr-1"/>Run</Button>
-            <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" onClick={handleActionClick("pause", item._id)}>
+            <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" disabled onClick={handleActionClick("pause", item._id)}>
               <FontAwesomeIcon icon={faPause} className="mr-1"/>Pause</Button>
-            <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" onClick={handleActionClick("disable", item._id)}>
+            <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" disabled onClick={handleActionClick("disable", item._id)}>
               <FontAwesomeIcon icon={faBan} className="mr-1"/>Suspend</Button>
             <Button variant="outline-danger" size="sm" className="mr-2 mt-2" onClick={handleActionClick("delete", item._id)}>
               <FontAwesomeIcon icon={faTrash} className="mr-1"/>Delete</Button>

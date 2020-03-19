@@ -98,6 +98,7 @@ const ItemSummaries = (props) => {
   };
 
   const handleAddClick = param => e => {
+    console.log("Adding: ", param);
     e.preventDefault();
     postData(param._id);
   };

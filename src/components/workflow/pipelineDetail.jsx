@@ -253,7 +253,10 @@ ItemSummaryDetail.propTypes = {
 };
 
 PipelineActivity.propTypes = {
-  data: PropTypes.array
+  data: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.array
+  ]),
 };
 
 export default PipelineDetail;

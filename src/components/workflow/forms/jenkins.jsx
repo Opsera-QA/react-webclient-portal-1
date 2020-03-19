@@ -8,7 +8,8 @@ import { faSave } from "@fortawesome/free-solid-svg-icons";
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
 function JenkinsStepConfiguration( { data, parentCallback }) {
-  const [threshold, setThreshold] = useState({});
+  const [thresholdVal, setThresholdValue] = useState("");
+  const [thresholdType, setThresholdType] = useState("");
   const [urlVal, setUrlVal] = useState("");
   const [portVal, setPortVal] = useState("");
   const [userIdVal, setUserIdVal] = useState("");
@@ -26,7 +27,8 @@ function JenkinsStepConfiguration( { data, parentCallback }) {
         setJobVal(configuration.jobName);
       }
       if (typeof(threshold) !== "undefined") {
-        setThreshold(threshold);
+        setThresholdType(threshold.type);
+        setThresholdValue(threshold.value);
       }
     }
   }, [data]);
@@ -40,11 +42,14 @@ function JenkinsStepConfiguration( { data, parentCallback }) {
         jAuthToken: authTokenVal,
         jobName: jobVal
       },
-      threshold: threshold
+      threshold: {
+        type: thresholdType,
+        value: thresholdVal
+      }
     };
     parentCallback(item);
   };
-
+  
   return (
     <Form>
       <Form.Group controlId="repoField">
@@ -67,10 +72,16 @@ function JenkinsStepConfiguration( { data, parentCallback }) {
         <Form.Label>Job Name</Form.Label>
         <Form.Control type="text" placeholder="" value={jobVal} onChange={e => setJobVal(e.target.value)} isInvalid={jobVal.length > 150} />
       </Form.Group>
+
+      {/* Leave the threshold form group as is for now, just read only for all forms */}
+      <Form.Group controlId="threshold">
+        <Form.Label>Step Success Threshold</Form.Label>
+        <Form.Control type="text" placeholder="" value={thresholdVal} onChange={e => setThresholdValue(e.target.value)} disabled={true} />
+      </Form.Group>
       
       <Button variant="primary" type="button" 
         onClick={() => { callbackFunction(); }} 
-        disabled={urlVal.length == 0 || userIdVal.length == 0 || authTokenVal.length == 0}>
+        disabled={(urlVal.length == 0 || userIdVal.length == 0 || authTokenVal.length == 0 || urlVal.length > 100 || portVal.length > 5 || userIdVal.length > 50 || authTokenVal.length > 500 || jobVal.length > 150)}>
         <FontAwesomeIcon icon={faSave} className="mr-1"/> Save
       </Button>
       <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
