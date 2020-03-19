@@ -8,7 +8,7 @@ import { Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import SourceRepositoryConfig from "./forms/sourceRepository";
-import ToolConfigurationSelect from "./forms/toolConfigurationSelect";
+import StepToolConfiguration from "./forms/stepToolConfiguration";
  
 
 
@@ -72,7 +72,8 @@ const PipelineWorkflowEditor = ({ editItem, data, parentCallback }) => {
             
             {editItem.type === "source" ? 
               <SourceRepositoryConfig data={data} parentCallback={callbackFunctionSource} /> : 
-              <ToolConfigurationSelect data={data} editItem={editItem} parentCallback={callbackFunctionTools} />  } 
+              // <ToolConfigurationSelect data={data} editItem={editItem} parentCallback={callbackFunctionTools} /> 
+              <StepToolConfiguration data={data} editItem={editItem} parentCallback={callbackFunctionTools} /> } 
  
           </>}
       </>

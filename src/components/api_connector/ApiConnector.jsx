@@ -16,7 +16,7 @@ import JenkinsForm from "./automation_server/jenkinsForm";
 
 class ApiConnector extends Component {
   state = {
-    selection: "jenkins"
+    selection: ""
   }
 
   handleClick = param => e => {
@@ -32,7 +32,7 @@ class ApiConnector extends Component {
   render() {
     return (
       <div className="mt-3 max-content-width">
-        <h4>Tool Configurations</h4>
+        <h4>Tools</h4>
         <div>Configure connection information for various platform and pipeline supported tools.</div>
 
 
@@ -46,11 +46,11 @@ class ApiConnector extends Component {
           <li className="nav-item">
             <a className={"nav-link " + (this.state.selection === "jira" ? "active" : "")} href="#" onClick={this.handleClick("jira")}>Jira</a>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <a className={"nav-link " + (this.state.selection === "jenkins" ? "active" : "")} href="#" onClick={this.handleClick("jenkins")}>Jenkins</a>
           </li>
           
-          {/* <li className="nav-item">
+          <li className="nav-item">
             <a className={"nav-link " + (this.state.selection === "sonar" ? "active" : "")} href="#" onClick={this.handleClick("sonar")}>Sonar</a>
           </li>
           <li className="nav-item">
@@ -89,8 +89,12 @@ class ApiConnector extends Component {
         {this.state.selection === "tableau" && <Tableau />}
         {this.state.selection === "splunk" && <Splunk />}
         {this.state.selection === "" &&
-          <div className="m-5">
-            OpsERA offers out of the box API connectors which allow you to to integrate your internal platforms for inclusion in pipelines and platform configurations.
+          <div className="mt-4 ml-1">
+            <div className="h5 mb-2">Help (coming soon!)</div>
+            OpsERA offers out of the box API connectors which allow you to to integrate your internal platforms for inclusion in pipelines and platform configurations. 
+            With the release of the new Pipeline (coming soon), tool configuration will occur per step in the new workflows.  Documentation and help around the tools and 
+            optional configuration information will be added here soon.
+
           </div>
         }
 
