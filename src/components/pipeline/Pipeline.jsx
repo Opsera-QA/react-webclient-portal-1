@@ -5,6 +5,7 @@ import { Form, Button } from "react-bootstrap";
 import RMModal from "./RMModal";
 import ErrorDialog from "../common/error";
 import SuccessDialog from "../common/success";
+import InfoDialog from "../common/info";
 import { isAlphaNumeric, handleError } from "../../helpers";
 import { ApiService } from "../../api/apiService";
 import "./styles.css";
@@ -185,7 +186,7 @@ class Pipeline extends React.PureComponent {
       .catch(function (error) {
         let message = null;
         if(error.response.data.errmsg.includes("duplicate key error")) {
-          message = "Application already exists";
+          message = "Application already exists.";
           currentComponent.setState({
             error: message,
             messages: message ? message : "Error reported accessing API.",
@@ -264,26 +265,33 @@ class Pipeline extends React.PureComponent {
             }
 
             {editTools && dropdownData && savingStatus !== "success" && (
-              <div className="col ml-auto">
-                <Form>
-                  <Form.Group>
-                    <Form.Control as="select"
-                      defaultValue=""
-                      hidden={(!fetching && dropdownData.length > 0) ? false : true}
-                      onChange={this.handleDropdownChange}
-                      style={{ marginTop: 25 }}>
-                      <option value="" disabled>{fetching ? "loading..." : "Select Application to Edit"}</option>
-                      {!fetching && (
-                        <>
-                          {typeSelectedApps ? typeSelectedApps.map(application => (
-                            <option key={application.name} value={application._id}>{application.name}</option>
-                          )) : ""}
-                        </>
-                      )}
-                    </Form.Control>
-                  </Form.Group>
-                </Form>
-              </div>
+              <>
+                {dropdownData.length > 0 ? (
+                  <div className="col ml-auto">
+                    <Form>
+                      <Form.Group>
+                        <Form.Control as="select"
+                          defaultValue=""
+                          hidden={(!fetching && dropdownData.length > 0) ? false : true}
+                          onChange={this.handleDropdownChange}
+                          style={{ marginTop: 25 }}>
+                          <option value="" disabled>{fetching ? "loading..." : "Select Application to Edit"}</option>
+                          {!fetching && (
+                            <>
+                              {typeSelectedApps ? typeSelectedApps.map(application => (
+                                <option key={application.name} value={application._id}>{application.name}</option>
+                              )) : ""}
+                            </>
+                          )}
+                        </Form.Control>
+                      </Form.Group>
+                    </Form>
+                  </div>
+                ) : (
+                  <InfoDialog message="No applications are saved yet. Please try adding a new application." />
+                )}
+               
+              </>
             )}
 
           </div>

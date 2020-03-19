@@ -6,6 +6,7 @@ import LogManagement from "./LogManagement";
 import RepositoryManagement from "./RepositoryManagement";
 import SAST from "./SAST";
 import Monitoring from "./Monitoring";
+import InfoDialog from "../common/info";
 import Confirmation from "./Confirmation";
 import { NewAppContext } from "./context";
 import { isAlphaNumeric } from "../../helpers";
@@ -144,7 +145,7 @@ class NewApplication extends React.PureComponent {
       .catch(function (error) {
         let message = null;
         if(error.response.data.errmsg.includes("duplicate key error")) {
-          message = "Application already exists";
+          message = "Application already exists.";
           currentComponent.setState({
             error: message,
             messages: message ? message : "Error reported accessing API.",
@@ -223,6 +224,7 @@ class NewApplication extends React.PureComponent {
     const { checkingAppName, appnameError, appname, error, messages, status, editTools, dropdownData, fetching, savingStatus } = this.state;
     let typeSelectedApps = [];
     if (editTools && dropdownData) {
+      console.log(dropdownData.length);
       // typeSelectedApps = dropdownData.filter((app) => { return app.type === "platform" }) // right way of implementation
       typeSelectedApps = dropdownData.filter((app) => { return app.type != "pipeline"; }); // just for now to inclue all apps and pipeline apps
     }
@@ -272,26 +274,33 @@ class NewApplication extends React.PureComponent {
               : null}
 
             {editTools && dropdownData && savingStatus !== "success" && (
-              <div className="col ml-auto">
-                <Form>
-                  <Form.Group>
-                    <Form.Control as="select"
-                      defaultValue=""
-                      hidden={(!fetching && dropdownData.length > 0) ? false : true}
-                      onChange={this.handleDropdownChange}
-                      style={{ marginTop: 25 }}>
-                      <option value="" disabled>{fetching ? "loading..." : "Select Application to Edit"}</option>
-                      {!fetching && (
-                        <>
-                          {typeSelectedApps ? typeSelectedApps.map(application => (
-                            <option key={application.name} value={application._id}>{application.name}</option>
-                          )) : ""}
-                        </>
-                      )}
-                    </Form.Control>
-                  </Form.Group>
-                </Form>
-              </div>
+              <>
+                {dropdownData.length > 0 ? (
+                  <div className="col ml-auto">
+                    <Form>
+                      <Form.Group>
+                        <Form.Control as="select"
+                          defaultValue=""
+                          hidden={(!fetching && dropdownData.length > 0) ? false : true}
+                          onChange={this.handleDropdownChange}
+                          style={{ marginTop: 25 }}>
+                          <option value="" disabled>{fetching ? "loading..." : "Select Application to Edit"}</option>
+                          {!fetching && (
+                            <>
+                              {typeSelectedApps ? typeSelectedApps.map(application => (
+                                <option key={application.name} value={application._id}>{application.name}</option>
+                              )) : ""}
+                            </>
+                          )}
+                        </Form.Control>
+                      </Form.Group>
+                    </Form>
+                  </div>
+                ) : (
+                  <InfoDialog message="No applications are saved yet. Please try adding a new application." />
+                )}
+                
+              </>
             )}
           </div>
 
