@@ -14,7 +14,7 @@ function JenkinsBuildDurationBarChart( { data, persona } ) {
     const { jenkinsBuildDuration }  =  data;
     return (
       <>
-        <div className="chart-label-text">Jenkins: Average Build Duration</div>
+        <div className="chart-label-text">Jenkins: Build Duration</div>
         <ResponsiveBar
           data={jenkinsBuildDuration ? jenkinsBuildDuration.data : []}
           keys={config.keys}
@@ -40,11 +40,11 @@ function JenkinsBuildDurationBarChart( { data, persona } ) {
           motionStiffness={90}
           motionDamping={15}
           // legends={config.legends}
-          tooltip={({ indexValue, value, color }) => (
+          tooltip={({ data, value, color }) => (
             <div>
-              <strong style={{ color }}>
-              Build Number: </strong> {indexValue}<br></br>
-              <strong style={{ color }}>  Average Duration: </strong> {value} minutes
+              <strong style={{ color }}>  Duration: </strong> {value} minutes <br></br>
+              <strong style={{ color }}>  Build Number: </strong> {data.buildNum} <br></br>
+              <strong style={{ color }}>  Job Name: </strong> {data.jobName} <br></br>
             </div>
           )}
           theme={{

@@ -43,6 +43,7 @@ export default {
     }
   ],
   axisBottom: {
+    "format": d => d.split("@")[0],
     "tickSize": 5,
     "tickPadding": 5,
     "tickRotation": 0,
@@ -54,7 +55,7 @@ export default {
     "tickSize": 5,
     "tickPadding": 5,
     "tickRotation": 0,
-    "legend": "Average Build Duration (Minutes)",
+    "legend": "Build Duration (Minutes)",
     "legendPosition": "middle",
     "legendOffset": -65
   },
