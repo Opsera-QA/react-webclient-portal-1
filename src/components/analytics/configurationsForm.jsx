@@ -87,7 +87,7 @@ function ConfigurationsForm({ settings, token }) {
     apiCall.post()
       .then(function (response) {
         console.debug(response);
-        setState({ info : "Task was successful." });
+        setState({ info : "Your analytics profile has been updated successfully." });
       })
       .catch(function (error) {
         setState({ error: error });
