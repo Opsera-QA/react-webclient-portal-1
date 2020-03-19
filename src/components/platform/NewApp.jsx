@@ -1,10 +1,10 @@
-import React from "react"
+import React from "react";
 
-import CreationModal from "./CreationModal"
-import NewApplication from "./NewApplication"
-import NewAppProvider from "./context"
+import CreationModal from "./CreationModal";
+import NewApplication from "./NewApplication";
+import NewAppProvider from "./context";
 
-import "./style.css"
+import "./style.css";
 
 class NewApp extends React.PureComponent {
   render() {
@@ -13,8 +13,8 @@ class NewApp extends React.PureComponent {
         <CreationModal />
         <NewApplication />
       </NewAppProvider>
-    )
+    );
   }
 }
 
-export default NewApp
+export default NewApp;

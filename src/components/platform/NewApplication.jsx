@@ -143,7 +143,7 @@ class NewApplication extends React.PureComponent {
       })
       .catch(function (error) {
         let message = null;
-        if(error.response.data.errmsg.includes("E11000 duplicate key error collection")) {
+        if(error.response.data.errmsg.includes("duplicate key error")) {
           message = "Application already exists";
           currentComponent.setState({
             error: message,
