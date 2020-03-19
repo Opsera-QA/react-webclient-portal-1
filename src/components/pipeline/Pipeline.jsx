@@ -183,14 +183,22 @@ class Pipeline extends React.PureComponent {
         });
       })
       .catch(function (error) {
-        let message = handleError(error);
-        currentComponent.setState({
-          appNameValid: false,
-          checkingAppName: false,
-          error: error,
-          messages: message ? message : "Error reported accessing API.",
-          status: "failed"
-        });
+        let message = null;
+        if(error.response.data.errmsg.includes("E11000 duplicate key error collection")) {
+          message = "Application already exists";
+          currentComponent.setState({
+            error: message,
+            messages: message ? message : "Error reported accessing API.",
+            status: "failed"
+          });
+        } else {
+          message = handleError(error);
+          currentComponent.setState({
+            error: error,
+            messages: message ? message : "Error reported accessing API.",
+            status: "failed"
+          });
+        }
       });
   }
 
@@ -219,7 +227,7 @@ class Pipeline extends React.PureComponent {
     let typeSelectedApps = [];
     if (editTools && dropdownData) {
       // typeSelectedApps = dropdownData.filter((app) => { return app.type === "pipeline" }) //right way of implementation
-      typeSelectedApps = dropdownData.filter((app) => { return app.type !== "platform" }) // just for now to inclue all apps and pipeline apps
+      typeSelectedApps = dropdownData.filter((app) => { return app.type !== "platform"; }); // just for now to inclue all apps and pipeline apps
     }
 
     return (
