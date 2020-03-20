@@ -11,9 +11,9 @@ async function checkAuthentication() {
       const userInfo = await this.props.auth.getUser();
       const accessToken = await this.props.auth.getAccessToken();
       if (!curAuthenticatedState && userInfo) { updateUserRecord(userInfo, accessToken); }
-      this.setState({ authenticated, userInfo });
+      this.setState({ authenticated, userInfo, loading: false });
     } else {
-      this.setState({ authenticated });
+      this.setState({ authenticated, loading: false });
     }
   }
 }
@@ -34,7 +34,7 @@ function updateUserRecord(userInfo, accessToken) {
 class AuthContextProvider extends Component {
   constructor(props) {
     super(props);
-    this.state = { authenticated: null, userInfo: null, sharedState: null };
+    this.state = { authenticated: null, userInfo: null, sharedState: null, loading: true };
     this.checkAuthentication = checkAuthentication.bind(this);
   }
 

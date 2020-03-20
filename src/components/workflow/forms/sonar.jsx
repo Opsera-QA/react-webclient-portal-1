@@ -7,7 +7,7 @@ import { faSave } from "@fortawesome/free-solid-svg-icons";
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
-function JenkinsStepConfiguration( { data, parentCallback }) {
+function SonarStepConfiguration( { data, parentCallback }) {
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
   const [urlVal, setUrlVal] = useState("");
@@ -15,6 +15,11 @@ function JenkinsStepConfiguration( { data, parentCallback }) {
   const [userIdVal, setUserIdVal] = useState("");
   const [authTokenVal, setAuthTokenVal] = useState("");
   const [jobVal, setJobVal] = useState("");
+  const [sonarUrl, setSonarUrl] = useState("");
+  const [sonarPort, setSonarPort] = useState("");
+  const [sonarUserId, setSonarUserId] = useState("");
+  const [sonarAuthToken, setSonarAuthToken] = useState("");
+  const [projectKey, setProjectKey] = useState("");
 
   useEffect(() => {
     if (typeof(data) !== "undefined") {
@@ -25,12 +30,22 @@ function JenkinsStepConfiguration( { data, parentCallback }) {
         setUserIdVal(configuration.jUserId);
         setAuthTokenVal(configuration.jAuthToken);
         setJobVal(configuration.jobName);
+        setSonarUrl(configuration.sonarUrl);
+        setSonarPort(configuration.sonarPort);
+        setSonarUserId(configuration.sonarUserId);
+        setSonarAuthToken(configuration.sonarAuthToken);
+        setProjectKey(configuration.projectKey);
       } else {
         setUrlVal("");
         setPortVal("");
         setUserIdVal("");
         setAuthTokenVal("");
         setJobVal("");
+        setSonarUrl("");
+        setSonarPort("");
+        setSonarUserId("");
+        setSonarAuthToken("");
+        setProjectKey("");
       }
       if (typeof(threshold) !== "undefined") {
         setThresholdType(threshold.type);
@@ -46,7 +61,12 @@ function JenkinsStepConfiguration( { data, parentCallback }) {
         jenkinsPort: portVal,
         jUserId: userIdVal,
         jAuthToken: authTokenVal,
-        jobName: jobVal
+        jobName: jobVal,
+        sonarUrl: sonarUrl,
+        sonarPort : sonarPort,
+        sonarUserId : sonarUserId,
+        sonarAuthToken : sonarAuthToken,
+        projectKey : projectKey
       },
       threshold: {
         type: thresholdType,
@@ -75,9 +95,31 @@ function JenkinsStepConfiguration( { data, parentCallback }) {
         <Form.Control type="text" placeholder="" value={authTokenVal} onChange={e => setAuthTokenVal(e.target.value)} isInvalid={authTokenVal.length > 500} />
       </Form.Group>
       <Form.Group controlId="branchField">
-        <Form.Label>Job Name</Form.Label>
+        <Form.Label>Job Name*</Form.Label>
         <Form.Control type="text" placeholder="" value={jobVal} onChange={e => setJobVal(e.target.value)} isInvalid={jobVal.length > 150} />
       </Form.Group>
+
+      <Form.Group controlId="branchField">
+        <Form.Label>Sonar Url*</Form.Label>
+        <Form.Control type="text" placeholder="" value={sonarUrl} onChange={e => setSonarUrl(e.target.value)} isInvalid={sonarUrl.length > 100} />
+      </Form.Group>
+      <Form.Group controlId="branchField">
+        <Form.Label>Sonar Port*</Form.Label>
+        <Form.Control type="text" placeholder="" value={sonarPort} onChange={e => setSonarPort(e.target.value)} isInvalid={sonarPort.length > 5} />
+      </Form.Group>
+      <Form.Group controlId="branchField">
+        <Form.Label>Sonar UserId*</Form.Label>
+        <Form.Control type="text" placeholder="" value={sonarUserId} onChange={e => setSonarUserId(e.target.value)} isInvalid={sonarUserId.length > 50} />
+      </Form.Group>
+      <Form.Group controlId="branchField">
+        <Form.Label>Sonar Auth Token*</Form.Label>
+        <Form.Control type="text" placeholder="" value={sonarAuthToken} onChange={e => setSonarAuthToken(e.target.value)} isInvalid={sonarAuthToken.length > 500} />
+      </Form.Group>
+      <Form.Group controlId="branchField">
+        <Form.Label>Project Key*</Form.Label>
+        <Form.Control type="text" placeholder="" value={projectKey} onChange={e => setProjectKey(e.target.value)} isInvalid={projectKey.length > 150} />
+      </Form.Group>
+
 
       {/* Leave the threshold form group as is for now, just read only for all forms */}
       <Form.Group controlId="threshold">
@@ -87,7 +129,7 @@ function JenkinsStepConfiguration( { data, parentCallback }) {
       
       <Button variant="primary" type="button" 
         onClick={() => { callbackFunction(); }} 
-        disabled={(urlVal.length == 0 || userIdVal.length == 0 || authTokenVal.length == 0 || urlVal.length > 100 || portVal.length > 5 || userIdVal.length > 50 || authTokenVal.length > 500 || jobVal.length > 150)}>
+        disabled={(urlVal.length == 0 || userIdVal.length == 0 || authTokenVal.length == 0 || urlVal.length > 100 || portVal.length > 5 || userIdVal.length > 50 || authTokenVal.length > 500 || jobVal.length > 150 || sonarUrl.length === 0 || sonarPort.length > 5 || sonarUserId.length == 0 || sonarAuthToken.length === 0 || projectKey.length === 0 )}>
         <FontAwesomeIcon icon={faSave} className="mr-1"/> Save
       </Button>
       <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
@@ -95,9 +137,9 @@ function JenkinsStepConfiguration( { data, parentCallback }) {
   );
 }
 
-JenkinsStepConfiguration.propTypes = {
+SonarStepConfiguration.propTypes = {
   data: PropTypes.object,
   parentCallback: PropTypes.func
 };
 
-export default JenkinsStepConfiguration;
+export default SonarStepConfiguration;
