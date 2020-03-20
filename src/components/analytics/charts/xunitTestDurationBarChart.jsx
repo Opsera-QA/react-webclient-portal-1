@@ -12,12 +12,14 @@ function XUnitTestDurationBarChart( { data, persona } ) {
     return (<ErrorDialog  error="No Data Present in the ES!" />);
   } else {
     const { xunitTestDuration }  =  data;
+    const { xunitTestNames } = data;
+    
     return (
       <>
         <div className="chart-label-text">X Unit: Maximum Test Durations</div>
         <ResponsiveBar
           data={xunitTestDuration ? xunitTestDuration.data : []}
-          keys={config.keys}
+          keys={xunitTestNames.data ? xunitTestNames.data : []}
           groupMode="stacked"
           layout="vertical"
           indexBy="buildId"

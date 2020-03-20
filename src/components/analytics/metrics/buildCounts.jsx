@@ -7,7 +7,7 @@ function BuildCounts( { data, persona } ) {
   if (typeof data !== "object" || Object.keys(data).length == 0) {
     return (<ErrorDialog  error="No Data Present in the ES!" />);
   } else {
-    const { jenkinsBuildSuccess, jenkinsBuildFailure, jenkinsDeploySuccess, jenkinsDeployFailure, codeshipBuildSuccess, codeshipBuildFailure, codeshipBuildStopped } = data;
+    const { jenkinsBuildSuccess, jenkinsBuildFailure, jenkinsBuildAborted, jenkinsDeploySuccess, jenkinsDeployFailure, codeshipBuildSuccess, codeshipBuildFailure, codeshipBuildStopped } = data;
     return (
       <div className="d-flex flex-column mb-3">
         <div className="metric-box p-3 text-center">
@@ -30,8 +30,19 @@ function BuildCounts( { data, persona } ) {
               </div>
             </footer>
           </blockquote>
+
+          <blockquote className="blockquote mb-0 ">
+            <div className={"box-metric " + (jenkinsBuildAborted && jenkinsBuildAborted.data[0] > 0 ? "red" : null)}>
+              {jenkinsBuildAborted ? jenkinsBuildAborted.data[0] : null}</div>
+            <footer className="blockquote">
+              <div className="metric-box-subtext text-muted">
+            Aborted Builds
+              </div>
+            </footer>
+          </blockquote>
         </div>
         <div className="metric-box-footertext text-muted">Source: Jenkins</div>
+        
         
         <div className="metric-box p-3 mt-3 text-center">
           <blockquote className="blockquote mb-0 ">

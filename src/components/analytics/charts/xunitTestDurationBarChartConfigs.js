@@ -1,11 +1,11 @@
 export default {
-  keys: [
-    "ProGaudi.MsgPack.Tests.ReadOnlySequence.MultipleSegments.ReadToken.DeepStack(depth: 100000)",
-    "ProGaudi.MsgPack.Tests.ReadOnlySequence.MultipleSegments.ReadToken.DeepStack(depth: 1000000)",
-    "ProGaudi.MsgPack.Tests.ReadOnlySequence.SingleSegment.ReadToken.DeepStack(depth: 100000)",
-    "ProGaudi.MsgPack.Tests.ReadOnlySequence.SingleSegment.ReadToken.DeepStack(depth: 1000000)",
-    "ProGaudi.MsgPack.Tests.Reader.ReadToken.DeepStack(depth: 1000000)"
-  ],
+  // keys: [
+  //   "ProGaudi.MsgPack.Tests.ReadOnlySequence.MultipleSegments.ReadToken.DeepStack(depth: 100000)",
+  //   "ProGaudi.MsgPack.Tests.ReadOnlySequence.MultipleSegments.ReadToken.DeepStack(depth: 1000000)",
+  //   "ProGaudi.MsgPack.Tests.ReadOnlySequence.SingleSegment.ReadToken.DeepStack(depth: 100000)",
+  //   "ProGaudi.MsgPack.Tests.ReadOnlySequence.SingleSegment.ReadToken.DeepStack(depth: 1000000)",
+  //   "ProGaudi.MsgPack.Tests.Reader.ReadToken.DeepStack(depth: 1000000)"
+  // ],
   margin: {
     "top": 50,
     "right": 130,

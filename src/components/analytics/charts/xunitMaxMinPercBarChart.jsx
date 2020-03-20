@@ -45,7 +45,7 @@ function XUnitMaxMinPercBarChart( { data, persona } ) {
             <div>
               <strong style={{ color }}>
               Build Number: </strong> {indexValue}<br></br>
-              <strong style={{ color }}>  {id} Test Case Duration: </strong> {(value > 1) ? value : value/10} seconds
+              <strong style={{ color }}>  {id} Test Case Duration: </strong> {value} seconds
             </div>
           )}
           theme={{
