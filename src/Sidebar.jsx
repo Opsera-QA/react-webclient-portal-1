@@ -10,7 +10,6 @@ import "./sidebar.css";
 
 function Sidebar({ hideView }) {
   const contextType = useContext(AuthContext);
-  const [loading, setLoading] = useState(false);
   const [userInfo, setUserInfo] = useState();
   const [administrator, setAdministrator] = useState(false);
   const [previewRole, setPreviewRole] = useState(false);
@@ -20,7 +19,7 @@ function Sidebar({ hideView }) {
 
   useEffect(() => {
     checkAuthentication();
-    setHideSideBar(hideView);
+    //setHideSideBar(hideView);  //temp disabling scaling hide sidebar to see if that's the UI issue. If not, its aroud authentication.
   }, [hideView, contextType]); 
 
   const handleToggleMenuClick = () => {
@@ -28,11 +27,11 @@ function Sidebar({ hideView }) {
   };
 
   async function checkAuthentication ()  {
-    setLoading(true);
     const { getUserInfo, authenticated } = contextType;
     try {
       const userInfoResponse = await getUserInfo();
       setAuthenticated(authenticated);
+      console.log("Authenticated: ", authenticated);
     
       if (userInfoResponse !== undefined && Object.keys(userInfoResponse).length > 0) {
         setUserInfo(userInfoResponse);
@@ -42,14 +41,13 @@ function Sidebar({ hideView }) {
     }
     catch (err) {
       console.log("Error occured getting user authentication status.", err);
-    }
-    setLoading(false);
+    }    
   }
 
 
   return (
     <>
-      {(!loading && userInfo !== undefined && authenticated) &&
+      {(userInfo !== undefined && authenticated) ?
         <>
           <div className="d-block d-md-none pt-1 mr-2">
             <Button variant="outline-primary" onClick={handleToggleMenuClick}>
@@ -78,6 +76,13 @@ function Sidebar({ hideView }) {
                 <NavLink className="nav-link" activeClassName="chosen" to="/update"><FontAwesomeIcon icon={faDownload} fixedWidth /> <span className="menu-text">Updates</span></NavLink>
                 {administrator && <NavLink className="nav-link" activeClassName="chosen" to="/admin"><FontAwesomeIcon icon={faTools} fixedWidth /> <span className="menu-text">Admin Tools</span></NavLink>}
               </div>
+            </div>
+          </div>
+        </> :
+        <>
+          <div className={"w-20 pt-1 " + (hideSideBar ? "d-none d-md-block" : "d-block")}>
+            <div className="sidebar-container sticky-top pb-5 pt-1 pl-1">
+              <div className="sidebar-menu"></div>
             </div>
           </div>
         </>
