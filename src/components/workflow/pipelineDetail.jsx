@@ -78,7 +78,8 @@ function PipelineDetail({ id }) {
 const ItemSummaryDetail = (props) => {
   const { data } = props;
   const contextType = useContext(AuthContext);
-  const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [modalDeleteId, setModalDeleteId] = useState(false);
   let history = useHistory();
@@ -86,6 +87,11 @@ const ItemSummaryDetail = (props) => {
   const handleEditClick = (param) => {
     //edit fields
     alert("editing names coming soon");
+  };
+
+  const handleViewClick = (param) => {
+    setModalMessage(param);
+    setShowModal(true);
   };
 
   const handleActionClick = (action, itemId) => e => {
@@ -106,11 +112,8 @@ const ItemSummaryDetail = (props) => {
 
   //let history = useHistory();
   async function deleteItem(pipelineId) {
-    setLoading(true);
     const { getAccessToken } = contextType;
     await PipelineActions.delete(pipelineId, getAccessToken);
-    setLoading(false);
-    
     history.push("/workflow");
   }
 
@@ -125,7 +128,14 @@ const ItemSummaryDetail = (props) => {
                 className="ml-2 text-muted"
                 size="xs" transform="shrink-6"
                 style={{ cursor: "pointer" }}
-                onClick= {() => { handleEditClick("name"); }} /></Card.Title>
+                onClick= {() => { handleEditClick("name"); }} />
+                
+              <FontAwesomeIcon icon={faSearchPlus}
+                className="mr-1 float-right text-muted"
+                size="xs"
+                style={{ cursor: "pointer" }}
+                onClick= {() => { handleViewClick(data); }} />
+            </Card.Title>
             <Card.Subtitle className="mb-2 text-muted">{data.project}</Card.Subtitle>
             <Card.Text>
               {data.description}
@@ -178,6 +188,13 @@ const ItemSummaryDetail = (props) => {
         handleCancelModal={() => setShowDeleteModal(false)}
         handleConfirmModal={() => deleteItem(modalDeleteId)} /> : null}
 
+      {showModal ? <Modal header="Pipeline Details"
+        message={<pre>{JSON.stringify(modalMessage, null, 2)}</pre>}
+        button="OK"
+        size="lg"
+        handleCancelModal={() => setShowModal(false)}
+        handleConfirmModal={() => setShowModal(false)} /> : null}
+
     </>
     
   );
@@ -202,8 +219,8 @@ const PipelineActivity = (props) => {
           <Table striped bordered hover className="table-sm" style={{ fontSize:"small" }}>
             <thead>
               <tr>
-                <th style={{ width: "20%" }}>Step</th>
                 <th style={{ width: "15%" }}>Action</th>
+                <th style={{ width: "20%" }}>Step</th>                
                 <th style={{ width: "15%" }}>Tool</th>
                 <th style={{ width: "15%" }}>Build</th>
                 <th style={{ width: "15%" }}>Status</th>
@@ -214,18 +231,17 @@ const PipelineActivity = (props) => {
             
               {data.map((item, idx) => (
                 <tr key={idx} >
-                  <td className="force-text-wrap">{item["step_id"]}</td>
                   <td className="upper-case-first">{item["action"]}</td> 
+                  <td className="force-text-wrap">{item["step_name"]}</td>                  
                   <td className="upper-case-first">{item["tool_identifier"]}</td>
                   <td>{item["build_number"]}</td>
-                  <td className="force-text-wrap upper-case-first">{item["status"] ? item["status"] : "unknown"} 
+                  <td className="force-text-wrap upper-case-first">{item["status"] ? item["status"] : "unknown"}</td>
+                  <td><Moment format="MM/DD/YYYY, h:mm:ss a" date={item["createdAt"]} /> 
                     <FontAwesomeIcon icon={faSearchPlus}
-                      className="ml-1"
+                      className="mr-1 mt-1 float-right"
                       size="xs"
                       style={{ cursor: "pointer" }}
-                      onClick= {() => { handleClick(item); }} />
-                  </td>
-                  <td><Moment format="MM/DD/YYYY, h:mm:ss a" date={item["createdAt"]} /></td>   
+                      onClick= {() => { handleClick(item); }} /></td>   
                 </tr>
               ))}
             </tbody>
