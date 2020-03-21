@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import { Card, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext"; //New AuthContext State 

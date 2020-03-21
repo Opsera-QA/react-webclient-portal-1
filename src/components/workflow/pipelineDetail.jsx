@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
 import { Card, Row, Col, Table, Button } from "react-bootstrap";
 import Modal from "../common/modal";
 import { AuthContext } from "../../contexts/AuthContext"; 
@@ -11,7 +12,7 @@ import InfoDialog from "../common/info";
 import Moment from "react-moment";
 import PipelineActions from "./actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faPencilAlt, faPause, faBan, faPlay, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faPencilAlt, faPause, faBan, faPlay, faTrash, faProjectDiagram } from "@fortawesome/free-solid-svg-icons";
 import "./workflows.css";
 
 
@@ -96,6 +97,12 @@ const ItemSummaryDetail = (props) => {
     }
   };
 
+  const handleDetailsClick = param => e => {
+    e.preventDefault();
+    history.push(`/workflow/${param}/model`);
+    
+  };
+
   //let history = useHistory();
   async function deleteItem(pipelineId) {
     setLoading(true);
@@ -109,7 +116,7 @@ const ItemSummaryDetail = (props) => {
 
   return (
     <>
-      {data !== undefined ? 
+      {typeof(data) !== "undefined" ? 
         <Card className="mb-3">
           <Card.Body>
             <Card.Title>{data.name} 
@@ -146,6 +153,14 @@ const ItemSummaryDetail = (props) => {
             </Row>
             <Row>
               <Col className="py-1">
+                <LinkContainer to={`/workflow/${data._id}/model`}>
+                  <Button variant="primary" size="sm" className="mr-2 mt-2">
+                    <FontAwesomeIcon icon={faProjectDiagram} className="mr-1"/>Workflow</Button>
+                </LinkContainer>
+                {/* 
+                <Button variant="primary" size="sm" className="mr-2 mt-2" onClick={handleDetailsClick(data._id)}>
+                  <FontAwesomeIcon icon={faProjectDiagram} className="mr-1"/>Workflow</Button> */}
+              
                 <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" onClick={handleActionClick("run", data._id)}>
                   <FontAwesomeIcon icon={faPlay} className="mr-1"/>Run</Button>
                 <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" onClick={handleActionClick("pause", data._id)}>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import MyPipelines from "./myPipelines";
 import PipelineDetail from "./pipelineDetail";
 import PipelineWorkflow from "./pipelineWorkflow";
@@ -10,6 +10,7 @@ function Workflow() {
   const { id, view } = useParams();
   const [itemId, setItemId] = useState({});
   const [selection, setSelection] = useState("myPipelines");
+  let location = useLocation();
     
   useEffect( () => {
     if (typeof id === "string") {
@@ -31,7 +32,7 @@ function Workflow() {
       setItemId("");
       setSelection("myPipelines");
     }
-  }, [id]);
+  }, [id, location]);
   
   const handleTabClick = param => e => {
     setSelection(param);
