@@ -86,12 +86,19 @@ const ItemSummaries = (props) => {
     e.preventDefault();
     console.log("Performing Action  ", action);
     console.log("ID:  ", itemId);
-    if (action === "delete") {
+
+    switch(action) {
+    case "delete":
       setShowDeleteModal(true);
       setModalDeleteId(itemId);
-    } else {
-      console.log("coming soon");
+      break;
+    case "run":
+      console.log("wire up run operation for entire pipeline");
+      break;
+    default:
+      alert("coming soon");
     }
+
   };
 
   async function deleteItem(pipelineId) {
@@ -121,14 +128,14 @@ const ItemSummaries = (props) => {
             <Button variant="primary" size="sm" className="mr-2 mt-2" onClick={handleDetailsClick(item._id)}>
               <FontAwesomeIcon icon={faSearch} className="mr-1"/>Details</Button>
 
-            <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" disabled onClick={handleActionClick("run", item._id)}>
+            <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" onClick={handleActionClick("run", item._id)}>
               <FontAwesomeIcon icon={faPlay} className="mr-1"/>Run</Button>
             <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" disabled onClick={handleActionClick("pause", item._id)}>
               <FontAwesomeIcon icon={faPause} className="mr-1"/>Pause</Button>
             <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" disabled onClick={handleActionClick("disable", item._id)}>
               <FontAwesomeIcon icon={faBan} className="mr-1"/>Suspend</Button>
             <Button variant="outline-danger" size="sm" className="mr-2 mt-2" onClick={handleActionClick("delete", item._id)}>
-              <FontAwesomeIcon icon={faTrash} className="mr-1"/>Delete</Button>
+              <FontAwesomeIcon icon={faTrash} className="fa-fw"/></Button>
 
           </Card.Body>
         </Card>)) : null}

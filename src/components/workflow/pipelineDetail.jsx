@@ -85,22 +85,23 @@ const ItemSummaryDetail = (props) => {
 
   const handleEditClick = (param) => {
     //edit fields
+    alert("editing names coming soon");
   };
 
   const handleActionClick = (action, itemId) => e => {
     e.preventDefault();
-    if (action === "delete") {
+    
+    switch(action) {
+    case "delete":
       setShowDeleteModal(true);
       setModalDeleteId(itemId);
-    } else {
+      break;
+    case "run":
+      console.log("wire up run operation for entire pipeline");
+      break;
+    default:
       alert("coming soon");
     }
-  };
-
-  const handleDetailsClick = param => e => {
-    e.preventDefault();
-    history.push(`/workflow/${param}/model`);
-    
   };
 
   //let history = useHistory();
@@ -157,18 +158,15 @@ const ItemSummaryDetail = (props) => {
                   <Button variant="primary" size="sm" className="mr-2 mt-2">
                     <FontAwesomeIcon icon={faProjectDiagram} className="mr-1"/>Workflow</Button>
                 </LinkContainer>
-                {/* 
-                <Button variant="primary" size="sm" className="mr-2 mt-2" onClick={handleDetailsClick(data._id)}>
-                  <FontAwesomeIcon icon={faProjectDiagram} className="mr-1"/>Workflow</Button> */}
-              
+                
                 <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" onClick={handleActionClick("run", data._id)}>
                   <FontAwesomeIcon icon={faPlay} className="mr-1"/>Run</Button>
-                <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" onClick={handleActionClick("pause", data._id)}>
+                <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" disabled onClick={handleActionClick("pause", data._id)}>
                   <FontAwesomeIcon icon={faPause} className="mr-1"/>Pause</Button>
-                <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" onClick={handleActionClick("disable", data._id)}>
+                <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" disabled onClick={handleActionClick("disable", data._id)}>
                   <FontAwesomeIcon icon={faBan} className="mr-1"/>Suspend</Button>
                 <Button variant="outline-danger" size="sm" className="mr-2 mt-2" onClick={handleActionClick("delete", data._id)}>
-                  <FontAwesomeIcon icon={faTrash} className="mr-1"/>Delete</Button>
+                  <FontAwesomeIcon icon={faTrash} className="fa-fw"/></Button>
               </Col>
             </Row>
           </Card.Body>
