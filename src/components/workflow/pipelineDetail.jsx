@@ -219,8 +219,9 @@ const PipelineActivity = (props) => {
           <Table striped bordered hover className="table-sm" style={{ fontSize:"small" }}>
             <thead>
               <tr>
-                <th style={{ width: "15%" }}>Action</th>
-                <th style={{ width: "20%" }}>Step</th>                
+                <th style={{ width: "10%" }}>Action</th>
+                <th style={{ width: "5%" }}>Step</th>  
+                <th style={{ width: "20%" }}>Task</th>                
                 <th style={{ width: "15%" }}>Tool</th>
                 <th style={{ width: "15%" }}>Build</th>
                 <th style={{ width: "15%" }}>Status</th>
@@ -232,6 +233,7 @@ const PipelineActivity = (props) => {
               {data.map((item, idx) => (
                 <tr key={idx} >
                   <td className="upper-case-first">{item["action"]}</td> 
+                  <td className="text-center">{item["step_index"] + 1}</td> 
                   <td className="force-text-wrap">{item["step_name"]}</td>                  
                   <td className="upper-case-first">{item["tool_identifier"]}</td>
                   <td>{item["build_number"]}</td>
