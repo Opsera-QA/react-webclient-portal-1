@@ -202,33 +202,29 @@ const PipelineActivity = (props) => {
           <Table striped bordered hover className="table-sm" style={{ fontSize:"small" }}>
             <thead>
               <tr>
-                <th style={{ width: "10%" }}>Step</th>
-                <th style={{ width: "10%" }}>Task</th>
-                <th style={{ width: "10%" }}>Tool</th>
-                <th style={{ width: "5%" }}>Build</th>
-                <th style={{ width: "20%" }}>Summary</th>
-                <th style={{ width: "30%" }}>Detail</th>
-                <th style={{ width: "5%" }}>Status</th>
-                <th style={{ width: "10%" }}>Date</th>
+                <th style={{ width: "20%" }}>Step</th>
+                <th style={{ width: "15%" }}>Action</th>
+                <th style={{ width: "15%" }}>Tool</th>
+                <th style={{ width: "15%" }}>Build</th>
+                <th style={{ width: "15%" }}>Status</th>
+                <th style={{ width: "20%" }}>Date</th>
               </tr>
             </thead>
             <tbody>
             
               {data.map((item, idx) => (
                 <tr key={idx} >
-                  <td className="force-text-wrap text-center">{item["step"]}</td>
-                  <td>{item["task"]}</td> 
+                  <td className="force-text-wrap">{item["step_id"]}</td>
+                  <td className="upper-case-first">{item["action"]}</td> 
                   <td className="upper-case-first">{item["tool_identifier"]}</td>
                   <td>{item["build_number"]}</td>
-                  <td className="force-text-wrap">{item["summary"]}</td>
-                  <td className="force-text-wrap">{item["detail"]} 
+                  <td className="force-text-wrap upper-case-first">{item["status"] ? item["status"] : "unknown"} 
                     <FontAwesomeIcon icon={faSearchPlus}
                       className="ml-1"
                       size="xs"
                       style={{ cursor: "pointer" }}
                       onClick= {() => { handleClick(item); }} />
                   </td>
-                  <td className="upper-case-all">{item["status"]}</td>
                   <td><Moment format="MM/DD/YYYY, h:mm:ss a" date={item["createdAt"]} /></td>   
                 </tr>
               ))}
