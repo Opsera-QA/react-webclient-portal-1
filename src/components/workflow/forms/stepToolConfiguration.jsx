@@ -17,7 +17,7 @@ function StepToolConfiguration( { data, editItem, parentCallback }) {
   useEffect(() => {
     let stepIndex = getStepIndex(editItem.step_id);
     setStepTool(plan[stepIndex].tool);
-  }, [editItem]);
+  }, [editItem, data]);
 
 
   const getStepIndex = (step_id) => {
@@ -30,10 +30,9 @@ function StepToolConfiguration( { data, editItem, parentCallback }) {
     let stepArrayIndex = getStepIndex(editItem.step_id); 
     plan[stepArrayIndex].tool.configuration = tool.configuration;
     plan[stepArrayIndex].tool.threshold = tool.threshold;
-    console.log(plan);
     parentCallback(plan);
   };
-  console.log(editItem);
+  
 
   return (
     <div>

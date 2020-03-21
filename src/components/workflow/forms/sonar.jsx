@@ -4,136 +4,130 @@ import { Form, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 
+//This must match the form below and the data object expected.  Each tools' data object is different
+const INITIAL_DATA = {
+  jenkinsUrl: "",
+  jenkinsPort: "",
+  jUserId: "",
+  jAuthToken: "",
+  jobName: "",
+  sonarUrl: "",
+  sonarPort : "",
+  sonarUserId : "",
+  sonarAuthToken : "",
+  projectKey : ""
+};
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
 function SonarStepConfiguration( { data, parentCallback }) {
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
-  const [urlVal, setUrlVal] = useState("");
-  const [portVal, setPortVal] = useState("");
-  const [userIdVal, setUserIdVal] = useState("");
-  const [authTokenVal, setAuthTokenVal] = useState("");
-  const [jobVal, setJobVal] = useState("");
-  const [sonarUrl, setSonarUrl] = useState("");
-  const [sonarPort, setSonarPort] = useState("");
-  const [sonarUserId, setSonarUserId] = useState("");
-  const [sonarAuthToken, setSonarAuthToken] = useState("");
-  const [projectKey, setProjectKey] = useState("");
+  const [formData, setFormData] = useState(INITIAL_DATA);
+  const [formMessage, setFormMessage] = useState("");
 
   useEffect(() => {
     if (typeof(data) !== "undefined") {
       let { configuration, threshold } = data;
       if (typeof(configuration) !== "undefined") {
-        setUrlVal(configuration.jenkinsUrl);
-        setPortVal(configuration.jenkinsPort);
-        setUserIdVal(configuration.jUserId);
-        setAuthTokenVal(configuration.jAuthToken);
-        setJobVal(configuration.jobName);
-        setSonarUrl(configuration.sonarUrl);
-        setSonarPort(configuration.sonarPort);
-        setSonarUserId(configuration.sonarUserId);
-        setSonarAuthToken(configuration.sonarAuthToken);
-        setProjectKey(configuration.projectKey);
-      } else {
-        setUrlVal("");
-        setPortVal("");
-        setUserIdVal("");
-        setAuthTokenVal("");
-        setJobVal("");
-        setSonarUrl("");
-        setSonarPort("");
-        setSonarUserId("");
-        setSonarAuthToken("");
-        setProjectKey("");
-      }
+        setFormData(configuration);
+      } 
       if (typeof(threshold) !== "undefined") {
         setThresholdType(threshold.type);
         setThresholdValue(threshold.value);
       }
+    } else {
+      setFormData(INITIAL_DATA);
     }
+    
   }, [data]);
 
   const callbackFunction = () => {
-    const item = {
-      configuration: {
-        jenkinsUrl: urlVal,
-        jenkinsPort: portVal,
-        jUserId: userIdVal,
-        jAuthToken: authTokenVal,
-        jobName: jobVal,
-        sonarUrl: sonarUrl,
-        sonarPort : sonarPort,
-        sonarUserId : sonarUserId,
-        sonarAuthToken : sonarAuthToken,
-        projectKey : projectKey
-      },
-      threshold: {
-        type: thresholdType,
-        value: thresholdVal
-      }
-    };
-    parentCallback(item);
+    if (validateRequiredFields()) {
+      const item = {
+        configuration: formData,
+        threshold: {
+          type: thresholdType,
+          value: thresholdVal
+        }
+      };
+      parentCallback(item);
+    }
   };
+
+
+  const validateRequiredFields = () => {
+    let { jenkinsUrl, jUserId, jAuthToken, sonarUrl, sonarPort, sonarUserId, sonarAuthToken, projectKey } = formData;
+    if (jenkinsUrl.length === 0 || jUserId.length === 0 || jAuthToken.length === 0 || sonarUrl.length === 0 || sonarPort.length === 0 || sonarUserId.length === 0 || sonarAuthToken.length === 0 || projectKey.length === 0) {
+      setFormMessage("Required Fields Missing!");
+      return false;
+    } else {
+      setFormMessage("");
+      return true;
+    }
+  };
+
   
   return (
     <Form>
-      <Form.Group controlId="repoField">
+      { formMessage.length > 0 ? <p className="text-danger">{formMessage}</p> : null}
+
+      <Form.Group controlId="jenkinsUrl">
         <Form.Label>Jenkins Container URL*</Form.Label>
-        <Form.Control type="text" placeholder="" value={urlVal} onChange={e => setUrlVal(e.target.value)} isInvalid={urlVal.length > 100} />
+        <Form.Control maxLength="100" type="text" placeholder="" value={formData.jenkinsUrl || ""} onChange={e => setFormData({ ...formData, jenkinsUrl: e.target.value })} />
       </Form.Group>
-      <Form.Group controlId="branchField">
+      <Form.Group controlId="jenkinsPort">
         <Form.Label>Jenkins Port</Form.Label>
-        <Form.Control type="text" placeholder="" value={portVal} onChange={e => setPortVal(e.target.value)} isInvalid={portVal.length > 5} />
+        <Form.Control maxLength="5" type="text" placeholder="" value={formData.jenkinsPort || ""} onChange={e => setFormData({ ...formData, jenkinsPort: e.target.value })} />
       </Form.Group>
-      <Form.Group controlId="branchField">
+      <Form.Group controlId="jUserId">
         <Form.Label>Jenkins User ID*</Form.Label>
-        <Form.Control type="text" placeholder="" value={userIdVal} onChange={e => setUserIdVal(e.target.value)} isInvalid={userIdVal.length > 50} />
+        <Form.Control maxLength="50" type="text" placeholder="" value={formData.jUserId || ""} onChange={e => setFormData({ ...formData, jUserId: e.target.value })} />
       </Form.Group>
-      <Form.Group controlId="branchField">
+      <Form.Group controlId="jAuthToken">
         <Form.Label>Jenkins Token*</Form.Label>
-        <Form.Control type="text" placeholder="" value={authTokenVal} onChange={e => setAuthTokenVal(e.target.value)} isInvalid={authTokenVal.length > 500} />
+        <Form.Control maxLength="500" as="textarea" type="text" placeholder="" value={formData.jAuthToken || ""} onChange={e => setFormData({ ...formData, jAuthToken: e.target.value })} />
       </Form.Group>
-      <Form.Group controlId="branchField">
-        <Form.Label>Job Name*</Form.Label>
-        <Form.Control type="text" placeholder="" value={jobVal} onChange={e => setJobVal(e.target.value)} isInvalid={jobVal.length > 150} />
+      <Form.Group controlId="jobName">
+        <Form.Label>Job Name</Form.Label>
+        <Form.Control maxLength="150" type="text" placeholder="" value={formData.jobName || ""} onChange={e => setFormData({ ...formData, jobName: e.target.value })} />
       </Form.Group>
 
-      <Form.Group controlId="branchField">
+      <Form.Group controlId="sonarUrl">
         <Form.Label>Sonar Url*</Form.Label>
-        <Form.Control type="text" placeholder="" value={sonarUrl} onChange={e => setSonarUrl(e.target.value)} isInvalid={sonarUrl.length > 100} />
+        <Form.Control maxLength="100" type="text" placeholder="" value={formData.sonarUrl || ""} onChange={e => setFormData({ ...formData, sonarUrl: e.target.value })} />
       </Form.Group>
-      <Form.Group controlId="branchField">
+      <Form.Group controlId="sonarPort">
         <Form.Label>Sonar Port*</Form.Label>
-        <Form.Control type="text" placeholder="" value={sonarPort} onChange={e => setSonarPort(e.target.value)} isInvalid={sonarPort.length > 5} />
+        <Form.Control  maxLength="5" type="text" placeholder="" value={formData.sonarPort || ""} onChange={e => setFormData({ ...formData, sonarPort: e.target.value })} />
       </Form.Group>
-      <Form.Group controlId="branchField">
+      <Form.Group controlId="sonarUserId">
         <Form.Label>Sonar UserId*</Form.Label>
-        <Form.Control type="text" placeholder="" value={sonarUserId} onChange={e => setSonarUserId(e.target.value)} isInvalid={sonarUserId.length > 50} />
+        <Form.Control  maxLength="50" type="text" placeholder="" value={formData.sonarUserId || ""} onChange={e => setFormData({ ...formData, sonarUserId: e.target.value })} />
       </Form.Group>
-      <Form.Group controlId="branchField">
+      <Form.Group controlId="sonarAuthToken">
         <Form.Label>Sonar Auth Token*</Form.Label>
-        <Form.Control type="text" placeholder="" value={sonarAuthToken} onChange={e => setSonarAuthToken(e.target.value)} isInvalid={sonarAuthToken.length > 500} />
+        <Form.Control maxLength="500" as="textarea" type="text" placeholder="" value={formData.sonarAuthToken || ""} onChange={e => setFormData({ ...formData, sonarAuthToken: e.target.value })} />
       </Form.Group>
-      <Form.Group controlId="branchField">
+      <Form.Group controlId="projectKey">
         <Form.Label>Project Key*</Form.Label>
-        <Form.Control type="text" placeholder="" value={projectKey} onChange={e => setProjectKey(e.target.value)} isInvalid={projectKey.length > 150} />
+        <Form.Control maxLength="150" type="text" placeholder="" value={formData.projectKey || ""} onChange={e => setFormData({ ...formData, projectKey: e.target.value })} />
       </Form.Group>
 
-
+      
       {/* Leave the threshold form group as is for now, just read only for all forms */}
       <Form.Group controlId="threshold">
         <Form.Label>Step Success Threshold</Form.Label>
-        <Form.Control type="text" placeholder="" value={thresholdVal} onChange={e => setThresholdValue(e.target.value)} disabled={true} />
+        <Form.Control type="text" placeholder="" value={thresholdVal || ""} onChange={e => setThresholdValue(e.target.value)} disabled={true} />
       </Form.Group>
       
       <Button variant="primary" type="button" 
-        onClick={() => { callbackFunction(); }} 
-        disabled={(urlVal.length == 0 || userIdVal.length == 0 || authTokenVal.length == 0 || urlVal.length > 100 || portVal.length > 5 || userIdVal.length > 50 || authTokenVal.length > 500 || jobVal.length > 150 || sonarUrl.length === 0 || sonarPort.length > 5 || sonarUserId.length == 0 || sonarAuthToken.length === 0 || projectKey.length === 0 )}>
+        onClick={() => { callbackFunction(); }}>
         <FontAwesomeIcon icon={faSave} className="mr-1"/> Save
-      </Button>
+      </Button> 
       <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
     </Form>
+        
   );
 }
 
@@ -143,3 +137,8 @@ SonarStepConfiguration.propTypes = {
 };
 
 export default SonarStepConfiguration;
+
+
+// disabled={
+
+// }
