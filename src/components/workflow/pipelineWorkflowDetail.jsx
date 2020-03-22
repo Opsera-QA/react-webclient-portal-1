@@ -1,7 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import PropTypes from "prop-types";
-import { useLocation } from "react-router-dom";
+import { axiosApiService } from "../../api/apiService";
+import { AuthContext } from "../../contexts/AuthContext"; 
 import { Row, Col } from "react-bootstrap";
 import LoadingDialog from "../common/loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -140,7 +141,7 @@ const PipelineWorkflowDetail = (props) => {
                 <Droppable droppableId="list">
                   {provided => (
                     <div ref={provided.innerRef} {...provided.droppableProps}>
-                      <ItemList items={state.items} lastStep={lastStep} parentCallback = {callbackFunction} />
+                      <ItemList items={state.items} lastStep={lastStep} pipelineId={data._id} parentCallback = {callbackFunction} />
                       {provided.placeholder}
                     </div>
                   )}
@@ -165,13 +166,13 @@ const PipelineWorkflowDetail = (props) => {
 
 
 
-const ItemList = React.memo(function ItemList({ items, lastStep, parentCallback }) {
+const ItemList = React.memo(function ItemList({ items, lastStep, pipelineId, parentCallback }) {
   const callbackFunction = (param) => {
     parentCallback(param);
   };
 
   return items.map((item, index) => (
-    <Item item={item} index={index} key={item._id} lastStep={lastStep}
+    <Item item={item} index={index} key={item._id} lastStep={lastStep} pipelineId={pipelineId} 
       parentCallback = {callbackFunction} />
   ));
 });
@@ -187,7 +188,13 @@ const QuoteItem = styled.div`
   padding: ${grid}px;
 `;
 
-const Item = ({ item, index, lastStep, parentCallback }) => {
+
+
+const Item = ({ item, index, lastStep, pipelineId, parentCallback }) => {
+  const contextType = useContext(AuthContext);
+  const [error, setErrors] = useState();
+  const [loading, setLoading] = useState(false);
+  
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
   const [currentStatus, setCurrentStatus] = useState({});
@@ -201,7 +208,6 @@ const Item = ({ item, index, lastStep, parentCallback }) => {
         setCurrentStatus(lastStep.running);
       }
       else if(typeof(lastStep.failed) !== "undefined" && lastStep.failed.step_id === item._id) {
-        console.log("HERE", lastStep.failed);
         setCurrentStatus(lastStep.failed);
       } else {
         setCurrentStatus({});
@@ -212,6 +218,24 @@ const Item = ({ item, index, lastStep, parentCallback }) => {
     
   }, [lastStep]);
 
+  
+  async function fetchActivityLogData(activityId) {
+    setLoading(true);
+    const { getAccessToken } = contextType;
+    const accessToken = await getAccessToken();
+    const apiUrl = `/pipelines/${pipelineId}/activity/`;   
+    const params = { id: activityId };
+    try {
+      const pipelineActivityLog = await axiosApiService(accessToken).get(apiUrl, params);
+      return pipelineActivityLog && pipelineActivityLog.data[0];      
+    }
+    catch (err) {
+      console.log(err.message);
+      setErrors(err.message);
+    }
+  }
+
+
   const handleViewClick = (param) => {
     setModalMessage(param);
     setShowModal(true);
@@ -219,6 +243,12 @@ const Item = ({ item, index, lastStep, parentCallback }) => {
 
   const handleEditClick = (type, name, itemId) => {
     parentCallback({ type: type, tool_name: name, step_id: itemId });
+  };
+
+  const handleViewActivityLogClick = async (param) => {
+    let activityLog = await fetchActivityLogData(param);
+    setModalMessage(activityLog);
+    setShowModal(true);
   };
 
   const handleClick = (param) => {
@@ -282,7 +312,12 @@ const Item = ({ item, index, lastStep, parentCallback }) => {
             { typeof(currentStatus) !== "undefined" && currentStatus.step_id === item._id ? 
               <>
                 <Row>
-                  <Col className="upper-case-first"><span className="text-muted">Status:</span> {currentStatus.status}</Col>
+                  <Col className="upper-case-first"><span className="text-muted">Status:</span> {currentStatus.status} 
+                    <FontAwesomeIcon icon={faSearchPlus}
+                      className="ml-1"
+                      size="xs"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => { handleViewActivityLogClick(currentStatus); }} /></Col>
                 </Row>
                 <Row>
                   <Col><span className="text-muted">On:</span> <Moment format="MMM Do YYYY, h:mm:ss a" date={currentStatus.updatedAt} /></Col>
