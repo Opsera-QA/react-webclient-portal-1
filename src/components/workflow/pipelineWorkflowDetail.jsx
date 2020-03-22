@@ -272,7 +272,7 @@ const Item = ({ item, index, lastStep, parentCallback }) => {
                   style={{ cursor: "pointer" }} /></Col>
             </Row>
             <Row>
-              <Col className="text-muted upper-case-first"><span className="text-muted">Tool:</span> {item.tool.tool_identifier} 
+              <Col className="upper-case-first"><span className="text-muted">Tool:</span> {item.tool.tool_identifier} 
                 <FontAwesomeIcon icon={faSearchPlus}
                   className="ml-1"
                   size="xs"
@@ -285,7 +285,7 @@ const Item = ({ item, index, lastStep, parentCallback }) => {
                   <Col className="upper-case-first"><span className="text-muted">Status:</span> {currentStatus.status}</Col>
                 </Row>
                 <Row>
-                  <Col><span className="text-muted">Completed:</span> <Moment format="MMM Do YYYY, h:mm:ss a" date={currentStatus.updatedAt} /></Col>
+                  <Col><span className="text-muted">On:</span> <Moment format="MMM Do YYYY, h:mm:ss a" date={currentStatus.updatedAt} /></Col>
                 </Row>
               </> : null}
             <Row>
