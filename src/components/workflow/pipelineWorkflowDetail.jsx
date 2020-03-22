@@ -190,6 +190,27 @@ const QuoteItem = styled.div`
 const Item = ({ item, index, lastStep, parentCallback }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
+  const [currentStatus, setCurrentStatus] = useState({});
+
+  useEffect(() => {    
+    if (typeof(lastStep) !== "undefined" && typeof(item) !== "undefined") {
+      if(typeof(lastStep.success) !== "undefined" && lastStep.success.step_id === item._id) {
+        setCurrentStatus(lastStep.success);
+      }
+      else if(typeof(lastStep.running) !== "undefined" && lastStep.running.step_id === item._id) {
+        setCurrentStatus(lastStep.running);
+      }
+      else if(typeof(lastStep.failed) !== "undefined" && lastStep.failed.step_id === item._id) {
+        console.log("HERE", lastStep.failed);
+        setCurrentStatus(lastStep.failed);
+      } else {
+        setCurrentStatus({});
+      }
+    } else {
+      setCurrentStatus({});
+    }
+    
+  }, [lastStep]);
 
   const handleViewClick = (param) => {
     setModalMessage(param);
@@ -204,8 +225,31 @@ const Item = ({ item, index, lastStep, parentCallback }) => {
     alert("coming soon");
   }; 
 
+  const setStepStatusStyle = (last_step, item_id) => {
+    let success = "#28a74533"; //green
+    let running = "#ffc1077a"; //yellow
+    let failed = "#dc354552"; //red
+    let inactive = "#fff"; //white
+
+    //is this step in either the last_step.succcess, failed or running object?
+    if (typeof(last_step) !== "undefined") {
+      if(typeof(last_step.success) !== "undefined" && last_step.success.step_id === item_id) {
+        return success;
+      }
+      else if(typeof(last_step.running) !== "undefined" && last_step.running.step_id === item_id) {
+        return running;
+      }
+      else if(typeof(last_step.failed) !== "undefined" && last_step.failed.step_id === item_id) {
+        return failed;
+      } else {
+        return inactive;
+      }
+    }
+
+  }; 
+
   const ItemStyle = {
-    backgroundColor: lastStep.step_id === item._id ? "#28a74533" : "#fff"
+    backgroundColor: setStepStatusStyle(lastStep, item._id) 
   };
   
   return (
@@ -235,13 +279,13 @@ const Item = ({ item, index, lastStep, parentCallback }) => {
                   style={{ cursor: "pointer" }}
                   onClick={() => { handleViewClick(item); }} /></Col>
             </Row>
-            { typeof(lastStep) !== "undefined" && lastStep.step_id === item._id ? 
+            { typeof(currentStatus) !== "undefined" && currentStatus.step_id === item._id ? 
               <>
                 <Row>
-                  <Col className="upper-case-first"><span className="text-muted">Status:</span> {lastStep.status}</Col>
+                  <Col className="upper-case-first"><span className="text-muted">Status:</span> {currentStatus.status}</Col>
                 </Row>
                 <Row>
-                  <Col><span className="text-muted">Completed:</span> <Moment format="MMM Do YYYY, h:mm:ss a" date={lastStep.updatedAt} /></Col>
+                  <Col><span className="text-muted">Completed:</span> <Moment format="MMM Do YYYY, h:mm:ss a" date={currentStatus.updatedAt} /></Col>
                 </Row>
               </> : null}
             <Row>
