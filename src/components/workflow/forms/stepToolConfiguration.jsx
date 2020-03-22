@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import JenkinsConfiguration from "./jenkins";
-import JunitXunitStepConfiguration from "./junitXunit";
+import JunitStepConfiguration from "./junit";
+import XunitStepConfiguration from "./xunit";
 import SonarStepConfiguration from "./sonar";
 import NPMStepConfiguration from "./npm";
 import CommandLineStepConfiguration from "./commandLine";
@@ -42,7 +43,8 @@ function StepToolConfiguration( { data, editItem, parentCallback }) {
       { typeof(stepTool) !== "undefined" ? 
         <div className="ml-1 mt-3">
           {editItem.tool_name.toLowerCase() === "jenkins" ? <JenkinsConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
-          {editItem.tool_name.toLowerCase() === "junit/xunit" ? <JunitXunitStepConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
+          {editItem.tool_name.toLowerCase() === "junit" ? <JunitStepConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
+          {editItem.tool_name.toLowerCase() === "xunit" ? <XunitStepConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
           {editItem.tool_name.toLowerCase() === "sonar" ? <SonarStepConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
           {editItem.tool_name.toLowerCase() === "command line" ? <CommandLineStepConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
           {editItem.tool_name.toLowerCase() === "npm" ? <NPMStepConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }

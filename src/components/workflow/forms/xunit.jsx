@@ -17,7 +17,7 @@ const INITIAL_DATA = {
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
-function JunitXunitStepConfiguration( { data, parentCallback }) {
+function XunitStepConfiguration( { data, parentCallback }) {
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
   const [formData, setFormData] = useState(INITIAL_DATA);
@@ -105,9 +105,9 @@ function JunitXunitStepConfiguration( { data, parentCallback }) {
   );
 }
 
-JunitXunitStepConfiguration.propTypes = {
+XunitStepConfiguration.propTypes = {
   data: PropTypes.object,
   parentCallback: PropTypes.func
 };
 
-export default JunitXunitStepConfiguration;
+export default XunitStepConfiguration;
