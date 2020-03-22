@@ -5,7 +5,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { Card, Row, Col, Table, Button } from "react-bootstrap";
 import Modal from "../common/modal";
 import { AuthContext } from "../../contexts/AuthContext"; 
-import { axiosApiServiceMultiGet } from "../../api/apiService";
+import { axiosApiServiceMultiGet, axiosApiService } from "../../api/apiService";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import InfoDialog from "../common/info";
@@ -78,6 +78,7 @@ function PipelineDetail({ id }) {
 const ItemSummaryDetail = (props) => {
   const { data } = props;
   const contextType = useContext(AuthContext);
+  const [error, setErrors] = useState();
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -115,6 +116,24 @@ const ItemSummaryDetail = (props) => {
     const { getAccessToken } = contextType;
     await PipelineActions.delete(pipelineId, getAccessToken);
     history.push("/workflow");
+  }
+
+  async function runPipeline(pipelineId) {
+    const { getAccessToken } = contextType;
+    const accessToken = await getAccessToken();
+    const apiUrl = `/pipelines/${pipelineId}/action/`;   
+    const postBody = {
+      "action": "run",
+      "stepId": ""
+    };
+    try {
+      const runResponse = await axiosApiService(accessToken).post(apiUrl, postBody);
+      console.log(runResponse);         
+    }
+    catch (err) {
+      console.log(err.message);
+      setErrors(err.message);
+    }
   }
 
 
@@ -169,8 +188,10 @@ const ItemSummaryDetail = (props) => {
                     <FontAwesomeIcon icon={faProjectDiagram} className="mr-1"/>Workflow</Button>
                 </LinkContainer>
                 
-                <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" onClick={handleActionClick("run", data._id)}>
-                  <FontAwesomeIcon icon={faPlay} className="mr-1"/>Run</Button>
+                <LinkContainer to={`/workflow/${data._id}/model`}>
+                  <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" onClick={() => runPipeline(data._id)}>
+                    <FontAwesomeIcon icon={faPlay} className="mr-1"/>Run</Button>
+                </LinkContainer>
                 <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" disabled onClick={handleActionClick("pause", data._id)}>
                   <FontAwesomeIcon icon={faPause} className="mr-1"/>Pause</Button>
                 <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" disabled onClick={handleActionClick("disable", data._id)}>

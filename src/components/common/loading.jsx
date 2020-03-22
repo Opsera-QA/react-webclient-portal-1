@@ -30,7 +30,7 @@ function LoadingDialog({ size }) {
             animation="grow"
             size="sm"
             role="status"
-            aria-hidden="true" /> Loading...
+            aria-hidden="true" />
         </div>
       </div>
     );
