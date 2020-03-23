@@ -266,8 +266,8 @@ const PipelineActivity = (props) => {
                 <th style={{ width: "10%" }}>Task</th>                
                 <th style={{ width: "10%" }}>Tool</th>
                 <th style={{ width: "5%" }}>Build</th>
-                <th style={{ width: "15%" }}>Status</th>
-                <th style={{ width: "30%" }}>Message</th>
+                <th style={{ width: "10%" }}>Status</th>
+                <th style={{ width: "35%" }}>Message</th>
                 <th style={{ width: "15%" }}>Date</th>
               </tr>
             </thead>
@@ -320,7 +320,8 @@ PipelineDetail.propTypes = {
 };
 
 ItemSummaryDetail.propTypes = {
-  data: PropTypes.object
+  data: PropTypes.object,
+  parentCallback: PropTypes.func
 };
 
 PipelineActivity.propTypes = {

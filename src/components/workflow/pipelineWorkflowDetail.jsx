@@ -7,10 +7,11 @@ import { Row, Col } from "react-bootstrap";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faCog, faBars, faPause, faBan, faPlay, faChevronDown, faSync } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faCog, faBars, faPause, faBan, faPlay, faChevronDown, faSync, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Modal from "../common/modal";
 import Moment from "react-moment";
+import PipelineActions from "./actions";
 import "./workflows.css";
 
 
@@ -75,6 +76,7 @@ const PipelineWorkflowDetail = (props) => {
   const handleRefreshClick = (pipelineId) => {
     //call gest status API
     fetchStatusData(pipelineId);
+    parentCallback();
   };
 
 
@@ -121,7 +123,6 @@ const PipelineWorkflowDetail = (props) => {
     setState({ items });
   }
 
-  
 
 
   const callbackFunction = (item) => {
@@ -245,7 +246,7 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback }) =
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
   const [loading, setLoading] = useState(false);
-  
+  const [showActionAlert, setShowActionAlert] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
   const [currentStatus, setCurrentStatus] = useState({});
@@ -271,7 +272,6 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback }) =
 
   
   async function fetchActivityLogData(activityId) {
-    setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
     const apiUrl = `/pipelines/${pipelineId}/activity/`;   
@@ -284,6 +284,25 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback }) =
       console.log(err.message);
       setErrors(err.message);
     }
+  }
+
+  async function runPipeline(pipelineId, stepId) {
+    setLoading(true);
+    const { getAccessToken } = contextType;
+    const postBody = {
+      "action": "run",
+      "stepId": stepId
+    };
+    const response = await PipelineActions.run(pipelineId, postBody, getAccessToken);
+    console.log(response);
+    if (typeof(response.error) !== "undefined") {
+      console.log(response.error);
+      setErrors(response.error);
+      setLoading(false);
+    } else {
+      setShowActionAlert(true);
+      setLoading(false);      
+    }   
   }
 
 
@@ -304,12 +323,14 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback }) =
 
   const handleRunClick = (stepId) => {
     //pipelineId
-    alert("coming soon");
+    runPipeline(pipelineId, stepId);
   }; 
 
   const handleClick = (param) => {
     alert("coming soon");
   }; 
+
+  
 
   const setStepStatusStyle = (last_step, item_id) => {
     let success = "#28a74533"; //green
@@ -340,6 +361,8 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback }) =
   
   return (
     <>
+      {loading ? <LoadingDialog size="lg" /> : null }
+      {error ? <ErrorDialog error={error} /> : null}
       <Draggable draggableId={item._id} index={index} > 
         {provided => (
           <QuoteItem
@@ -395,10 +418,15 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback }) =
                       className="ml-2" disabled
                       style={{ cursor: "pointer" }}
                       onClick={() => { handleClick(item._id); }} />
-                    <FontAwesomeIcon icon={faPlay}
-                      className="ml-2"
-                      style={{ cursor: "pointer" }}
-                      onClick={() => { handleRunClick(item._id); }} />
+                    
+                    {showActionAlert ? <FontAwesomeIcon icon={faSpinner} spin className="ml-2" />
+                      :
+                      <FontAwesomeIcon icon={faPlay}
+                        className="ml-2"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => { handleRunClick(item._id); }} /> }
+
+
                   </> : null}
               </Col>
             </Row>

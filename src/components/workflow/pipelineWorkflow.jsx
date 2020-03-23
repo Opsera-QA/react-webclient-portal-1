@@ -21,8 +21,24 @@ function PipelineWorkflow({ id }) {
   
   
   useEffect(() => {    
-    fetchData();
-  }, []);
+    const controller = new AbortController();
+    const runEffect = async () => {
+      try {
+        await fetchData();
+        
+      } catch (err) {
+        if (err.name === "AbortError") {
+          console.log("Request was canceled via controller.abort");
+          return;
+        }        
+      }
+    };
+    runEffect();
+
+    return () => {
+      controller.abort();
+    };
+  }, [setData]);
 
   async function fetchData() {
     setLoading(true);
@@ -30,9 +46,9 @@ function PipelineWorkflow({ id }) {
     const accessToken = await getAccessToken();
     const apiUrl = `/pipelines/${id}`;   
     try {
-      const pipeline = await axiosApiService(accessToken).get(apiUrl);
+      const pipeline = await axiosApiService(accessToken).get(apiUrl);      
       setData(pipeline && pipeline.data[0]);
-      setLoading(false);    
+      setLoading(false);
     }
     catch (err) {
       console.log(err.message);
@@ -41,8 +57,12 @@ function PipelineWorkflow({ id }) {
     }
   }
 
-  const callbackFunctionDetail = (param) => {
-    setEditItem(param);    
+  const callbackFunctionDetail = async (param) => {
+    if (param) {
+      setEditItem(param);   
+    } else {
+      await fetchData();      
+    }    
   };
 
   const callbackFunctionEditor = () => {
@@ -54,31 +74,23 @@ function PipelineWorkflow({ id }) {
   } else {
     return (
       <>
-        {loading ? <LoadingDialog size="sm" /> :
-          <>
-            <div className="mt-3">
-              {data.length == 0 ?
-                <InfoDialog message="No Pipeline details found.  Please ensure you have access to view the requested pipeline." /> : 
-                <>
-                  
-                  {data !== undefined ?
-                    <Row>
-                      <Col>
-                        <PipelineWorkflowDetail data={data} parentCallback={callbackFunctionDetail} /></Col>
-                      <Col md="auto"></Col>
-                      {editItem !== undefined ?
-                        <Col xs lg="4" className="workflow-editor-panel p-3">
-                          <PipelineWorkflowEditor editItem={editItem} data={data} parentCallback={callbackFunctionEditor} /></Col>: null}
-                    </Row>
-                    
-                    : null}
-                  
-                </>
-              }
+        {loading ? <LoadingDialog size="sm" /> : null }
+          
+        <div className="mt-3">
+          {data.length == 0 ?
+            <InfoDialog message="No Pipeline details found.  Please ensure you have access to view the requested pipeline." /> : null }
+                                  
+          {typeof(data) !== "undefined" ?
+            <Row>
+              <Col>
+                <PipelineWorkflowDetail data={data} parentCallback={callbackFunctionDetail} /></Col>
+              <Col md="auto"></Col>
+              {editItem !== undefined ?
+                <Col xs lg="4" className="workflow-editor-panel p-3">
+                  <PipelineWorkflowEditor editItem={editItem} data={data} parentCallback={callbackFunctionEditor} /></Col>: null}
+            </Row> : null}
                 
-            </div>
-          </>
-        }
+        </div> 
       </>
     );
   }
