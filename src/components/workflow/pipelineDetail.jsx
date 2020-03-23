@@ -142,7 +142,7 @@ const ItemSummaryDetail = (props) => {
   return (
     <>
       {error ? <ErrorDialog error={error} /> : null}
-      {typeof(data) !== "undefined" ? 
+      {typeof(data) !== "undefined" && data !== {} ? 
         <>
           <Card className="mb-3">
             <Card.Body>

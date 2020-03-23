@@ -65,6 +65,11 @@ const PipelineWorkflowDetail = (props) => {
       let stepArrayIndex = data.workflow.plan.findIndex(x => x._id.toString() === runningStepId); 
       nextStep = data.workflow.plan[stepArrayIndex + 1];
       console.log("NEXT: ", nextStep);
+    } else if (last_step && last_step.hasOwnProperty("success")) {
+      let lastSuccessStepId = typeof(last_step.success.step_id) !== "undefined" && last_step.success.step_id.length > 0 ? last_step.success.step_id : false;
+      let stepArrayIndex = data.workflow.plan.findIndex(x => x._id.toString() === lastSuccessStepId); 
+      nextStep = data.workflow.plan[stepArrayIndex + 1];
+      console.log("NEXT: ", nextStep);
     } else {
       nextStep = data.workflow.plan[0];
     }
