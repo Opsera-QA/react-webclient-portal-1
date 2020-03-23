@@ -59,11 +59,14 @@ const PipelineWorkflowDetail = (props) => {
   
   const calculateNextStep = (last_step) => {
     let nextStep = {};
-    if (last_step.hasOwnProperty("running")) {
+    
+    if (last_step && last_step.hasOwnProperty("running")) {
       let runningStepId = typeof(last_step.running.step_id) !== "undefined" && last_step.running.step_id.length > 0 ? last_step.running.step_id : false;
       let stepArrayIndex = data.workflow.plan.findIndex(x => x._id.toString() === runningStepId); 
       nextStep = data.workflow.plan[stepArrayIndex + 1];
       console.log("NEXT: ", nextStep);
+    } else {
+      nextStep = data.workflow.plan[0];
     }
     return nextStep;
   };
@@ -247,6 +250,7 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback }) =
   const [error, setErrors] = useState();
   const [loading, setLoading] = useState(false);
   const [showActionAlert, setShowActionAlert] = useState(false);
+  const [showCancelAlert, setShowCancelAlert] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
   const [currentStatus, setCurrentStatus] = useState({});
@@ -305,6 +309,24 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback }) =
     }   
   }
 
+  async function cancelPipelineStep(pipelineId, stepId) {
+    setLoading(true);
+    const { getAccessToken } = contextType;
+    const postBody = {
+      "action": "cancel",
+      "stepId": stepId
+    };
+    const response = await PipelineActions.run(pipelineId, postBody, getAccessToken);
+    console.log(response);
+    if (typeof(response.error) !== "undefined") {
+      console.log(response.error);
+      setErrors(response.error);
+      setLoading(false);
+    } else {
+      setShowCancelAlert(true);
+      setLoading(false);      
+    }   
+  }
 
   const handleViewClick = (param) => {
     setModalMessage(param);
@@ -322,9 +344,12 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback }) =
   };
 
   const handleRunClick = (stepId) => {
-    //pipelineId
     runPipeline(pipelineId, stepId);
-  }; 
+  };
+  
+  const handleCancelClick = (stepId) => {
+    cancelPipelineStep(pipelineId, stepId);
+  };
 
   const handleClick = (param) => {
     alert("coming soon");
@@ -410,14 +435,17 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback }) =
                   onClick={() => { handleEditClick("tool", item.tool.tool_identifier, item._id); }} />
                 { nextStep._id === item._id || currentStatus.step_id === item._id ?
                   <>
-                    <FontAwesomeIcon icon={faPause}
+                    {/* <FontAwesomeIcon icon={faPause}
                       className="ml-2" disabled
                       style={{ cursor: "pointer" }}
-                      onClick={() => { handleClick(item._id); }} />
-                    <FontAwesomeIcon icon={faBan}
-                      className="ml-2" disabled
-                      style={{ cursor: "pointer" }}
-                      onClick={() => { handleClick(item._id); }} />
+                      onClick={() => { handleClick(item._id); }} /> */}
+                    
+                    {showCancelAlert ? <FontAwesomeIcon icon={faSpinner} spin className="ml-2 mr-1" />
+                      :
+                      <FontAwesomeIcon icon={faBan}
+                        className="ml-2 mr-1" disabled
+                        style={{ cursor: "pointer" }}
+                        onClick={() => { handleCancelClick(item._id); }} /> }
                     
                     {showActionAlert ? <FontAwesomeIcon icon={faSpinner} spin className="ml-2" />
                       :
