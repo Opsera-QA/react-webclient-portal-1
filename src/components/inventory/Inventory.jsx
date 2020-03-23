@@ -193,7 +193,7 @@ const ToolTable = ({ tool }) => {
       </div>
       <div className="row m-1">
         <div className="col-md"><span className="text-muted">Status:</span> {toolStatus}</div>
-        <div className="col-md"><span className="text-muted">Install Date:</span> <Moment format="MM/DD/YYYY" date={installationDate} /></div>
+        <div className="col-md"><span className="text-muted">Install Date:</span> <Moment format="YYYY-MM-DD, hh:mm a" date={installationDate} /></div>
       </div>
       <div className="row m-1">
         <div className="col-md"><span className="text-muted">ID:</span> {_id}</div>

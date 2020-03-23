@@ -122,7 +122,7 @@ const ItemSummaries = (props) => {
               <small>Pipeline: {item._id}</small></Card.Subtitle>
             <Card.Text className="pt-1">
               {item.description}
-              <br/><small className="text-muted">Created on <Moment format="MMM Do YYYY" date={item.createdAt} /></small>
+              <br/><small className="text-muted">Created on <Moment format="YYYY-MM-DD, hh:mm a" date={item.createdAt} /></small>
             </Card.Text>
             
             <Button variant="primary" size="sm" className="mr-2 mt-2" onClick={handleDetailsClick(item._id)}>

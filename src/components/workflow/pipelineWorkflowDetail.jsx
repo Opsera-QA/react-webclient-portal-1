@@ -230,6 +230,7 @@ const ItemList = React.memo(function ItemList({ items, lastStep, nextStep, pipel
 });
 
 
+
 const QuoteItem = styled.div`
   max-width: 450px;
   background-color: #fff;
@@ -239,8 +240,6 @@ const QuoteItem = styled.div`
   margin-bottom: ${grid}px;
   padding: ${grid}px;
 `;
-
-
 
 const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback }) => {
   const contextType = useContext(AuthContext);
@@ -302,6 +301,11 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback }) =
     setModalMessage(activityLog);
     setShowModal(true);
   };
+
+  const handleRunClick = (stepId) => {
+    //pipelineId
+    alert("coming soon");
+  }; 
 
   const handleClick = (param) => {
     alert("coming soon");
@@ -372,7 +376,7 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback }) =
                       onClick={() => { handleViewActivityLogClick(currentStatus); }} /></Col>
                 </Row>
                 <Row>
-                  <Col><span className="text-muted">On:</span> <Moment format="MMM Do YYYY, h:mm:ss a" date={currentStatus.updatedAt} /></Col>
+                  <Col><span className="text-muted">On:</span> <Moment format="YYYY-MM-DD, hh:mm a" date={currentStatus.updatedAt} /></Col>
                 </Row>
               </> : null}
             <Row>
@@ -384,17 +388,17 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback }) =
                 { nextStep._id === item._id || currentStatus.step_id === item._id ?
                   <>
                     <FontAwesomeIcon icon={faPause}
-                      className="ml-2"
+                      className="ml-2" disabled
                       style={{ cursor: "pointer" }}
                       onClick={() => { handleClick(item._id); }} />
                     <FontAwesomeIcon icon={faBan}
-                      className="ml-2"
+                      className="ml-2" disabled
                       style={{ cursor: "pointer" }}
                       onClick={() => { handleClick(item._id); }} />
                     <FontAwesomeIcon icon={faPlay}
                       className="ml-2"
                       style={{ cursor: "pointer" }}
-                      onClick={() => { handleClick(item._id); }} />
+                      onClick={() => { handleRunClick(item._id); }} />
                   </> : null}
               </Col>
             </Row>

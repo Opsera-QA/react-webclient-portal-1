@@ -62,7 +62,7 @@ function ErrorDialog({ error, align, type }) {
     );
   } else {
     return (
-      <div className="mt-1 mb-3 max-content-module-width-50">
+      <div className="mt-1 mb-3"> 
         <Alert variant={variant}>
           {state.message}
           { statusCode === 401 &&
@@ -85,3 +85,5 @@ ErrorDialog.propTypes = {
 
 
 export default ErrorDialog;
+
+//max-content-module-width-50

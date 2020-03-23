@@ -147,7 +147,7 @@ function RegisteredUsers() {
                     <td>{val.organizationName}</td>
                     <td>{val.division}</td>
                     <td>{val.domain}</td>
-                    <td><Moment format="MM/DD/YYYY" date={val.createdAt} /></td>
+                    <td><Moment format="YYYY-MM-DD, hh:mm a" date={val.createdAt} /></td>
                     <td>
                       <Button variant="danger" onClick={() => { handleDeletePress(val._id); }} >Deactivate User</Button>
                     </td>

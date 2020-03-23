@@ -10,5 +10,14 @@ pipelineActions.delete = async (pipelineId, getAccessToken) => {
   return response;
 };
 
+pipelineActions.run = async (pipelineId, postBody, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/pipelines/${pipelineId}/action/`;   
+  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
+    .then((result) =>  {return result;})
+    .catch(error => {return { error };});
+  return response;
+};
+
 
 export default pipelineActions;

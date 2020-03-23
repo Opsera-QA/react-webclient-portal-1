@@ -151,7 +151,7 @@ const MapLogData = (props) => {
                     size="xs"
                     style={{ cursor: "pointer" }}
                     onClick={() => { handleClick(item._source.data); }} /></td> 
-                <td><Moment format="MMM Do YYYY, h:mm:ss a" date={typeof(item._source["@timestamp"]) !== "undefined" ? item._source["@timestamp"] : null} /></td>          
+                <td><Moment format="YYYY-MM-DD, hh:mm a" date={typeof(item._source["@timestamp"]) !== "undefined" ? item._source["@timestamp"] : null} /></td>          
                 <td className="text-center">{typeof(item._source.data) !== "undefined" ? item._source.data.buildNum : null}</td>      
                 <td className="text-center">{typeof(item._source["source_host"]) !== "undefined" ? item._source["source_host"] : null}</td>
                 <td className="text-muted text-center">{typeof(item._source["source"]) !== "undefined" ? item._source["source"] : null}</td>
@@ -194,7 +194,7 @@ const MapLogData = (props) => {
                     style={{ cursor: "pointer" }}
                     onClick= {() => { handleClick(item); }} /></td>
                 <td className="force-text-wrap upper-case-all">{item["Release Environment"]}</td> 
-                <td><Moment format="MMM Do YYYY, h:mm:ss a" date={item["time"]} /></td>                
+                <td><Moment format="YYYY-MM-DD, hh:mm a" date={item["time"]} /></td>                
                 <td className="upper-case-first">{item["tool"]}</td>
                 <td className="force-text-wrap">{item["message"]}</td>
                 <td className="force-text-wrap">{item["Git Commit ID"]}</td>

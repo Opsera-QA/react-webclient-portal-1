@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
-import { Card, Row, Col, Table, Button } from "react-bootstrap";
+import { Alert, Card, Row, Col, Table, Button } from "react-bootstrap";
 import Modal from "../common/modal";
 import { AuthContext } from "../../contexts/AuthContext"; 
 import { axiosApiServiceMultiGet, axiosApiService } from "../../api/apiService";
@@ -48,6 +48,9 @@ function PipelineDetail({ id }) {
     }
   }
 
+  const callbackFunction = () => {
+    fetchData();
+  };
   
   if (error) {
     return (<ErrorDialog error={error} />);
@@ -61,7 +64,7 @@ function PipelineDetail({ id }) {
                 <InfoDialog message="No Pipeline details found.  Please ensure you have access to view the requested pipeline." /> : 
                 <>
                 
-                  <ItemSummaryDetail data={data.pipeline} /> 
+                  <ItemSummaryDetail data={data.pipeline} parentCallback={callbackFunction}  /> 
                   <PipelineActivity data={data.activity} /> 
                 </>
               }
@@ -76,10 +79,11 @@ function PipelineDetail({ id }) {
 
 
 const ItemSummaryDetail = (props) => {
-  const { data } = props;
+  const { data, parentCallback } = props;
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
   const [showModal, setShowModal] = useState(false);
+  const [showActionAlert, setShowActionAlert] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [modalDeleteId, setModalDeleteId] = useState(false);
@@ -120,88 +124,105 @@ const ItemSummaryDetail = (props) => {
 
   async function runPipeline(pipelineId) {
     const { getAccessToken } = contextType;
-    const accessToken = await getAccessToken();
-    const apiUrl = `/pipelines/${pipelineId}/action/`;   
     const postBody = {
       "action": "run",
       "stepId": ""
     };
-    try {
-      const runResponse = await axiosApiService(accessToken).post(apiUrl, postBody);
-      console.log(runResponse);         
-    }
-    catch (err) {
-      console.log(err.message);
-      setErrors(err.message);
-    }
+    const response = await PipelineActions.run(pipelineId, postBody, getAccessToken);
+    console.log(response);
+    if (typeof(response.error) !== "undefined") {
+      console.log(response.error);
+      setErrors(response.error);
+    } else {
+      setShowActionAlert(true);      
+    }   
   }
 
 
   return (
     <>
+      {error ? <ErrorDialog error={error} /> : null}
       {typeof(data) !== "undefined" ? 
-        <Card className="mb-3">
-          <Card.Body>
-            <Card.Title>{data.name} 
-              <FontAwesomeIcon icon={faPencilAlt}
-                className="ml-2 text-muted"
-                size="xs" transform="shrink-6"
-                style={{ cursor: "pointer" }}
-                onClick= {() => { handleEditClick("name"); }} />
+        <>
+          <Card className="mb-3">
+            <Card.Body>
+              <Card.Title>{data.name} 
+                <FontAwesomeIcon icon={faPencilAlt}
+                  className="ml-2 text-muted"
+                  size="xs" transform="shrink-6"
+                  style={{ cursor: "pointer" }}
+                  onClick= {() => { handleEditClick("name"); }} />
                 
-              <FontAwesomeIcon icon={faSearchPlus}
-                className="mr-1 float-right text-muted"
-                size="xs"
-                style={{ cursor: "pointer" }}
-                onClick= {() => { handleViewClick(data); }} />
-            </Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">{data.project}</Card.Subtitle>
-            <Card.Text>
-              {data.description}
-            </Card.Text>
-            <Row className="mt-2">
-              <Col lg className="py-1"><span className="text-muted mr-1">ID:</span> {data._id}</Col>
-              <Col lg className="py-1"><span className="text-muted mr-1">Owner:</span> {data.owner}</Col>                
-            </Row>
-            <Row>
-              <Col lg className="py-1"><span className="text-muted mr-1">Organization:</span> {data.organizationName}</Col>
-              <Col lg className="py-1"><span className="text-muted mr-1">Created On:</span>  <Moment format="MMM Do YYYY, h:mm:ss a" date={data.createdAt} /></Col>
-            </Row>
-            <Row>
-              <Col className="py-1"><span className="text-muted mr-1">Tags:</span> 
-                {data.tags.map((item, idx) => (<span key={idx}>{item}, </span>))}</Col>
-            </Row>
-            { data.workflow.source !== undefined ?
+                <FontAwesomeIcon icon={faSearchPlus}
+                  className="mr-1 float-right text-muted"
+                  size="xs"
+                  style={{ cursor: "pointer" }}
+                  onClick= {() => { handleViewClick(data); }} />
+              </Card.Title>
+              <Card.Subtitle className="mb-2 text-muted">{data.project}</Card.Subtitle>
+              <Card.Text>
+                {data.description}
+              </Card.Text>
+              <Row className="mt-2">
+                <Col lg className="py-1"><span className="text-muted mr-1">ID:</span> {data._id}</Col>
+                <Col lg className="py-1"><span className="text-muted mr-1">Owner:</span> {data.owner}</Col>                
+              </Row>
               <Row>
-                <Col md className="py-1"><span className="text-muted mr-1">Source:</span> <span className="upper-case-first">{data.workflow.source.name}</span></Col>
-                <Col md className="py-1"><span className="text-muted mr-1">Repository:</span> {data.workflow.source.repository}</Col>
-                <Col md className="py-1"><span className="text-muted mr-1">Branch:</span> {data.workflow.source.branch}</Col>
-              </Row> : null}
-            <Row>
-              <Col className="py-1"><span className="text-muted mr-1">Tools:</span> 
-                {buildToolList(data.workflow.plan).map((item, idx) => (<span key={idx} className="upper-case-first mr-1">{item} </span>))}</Col> 
-            </Row>
-            <Row>
-              <Col className="py-1">
-                <LinkContainer to={`/workflow/${data._id}/model`}>
-                  <Button variant="primary" size="sm" className="mr-2 mt-2">
-                    <FontAwesomeIcon icon={faProjectDiagram} className="mr-1"/>Workflow</Button>
-                </LinkContainer>
+                <Col lg className="py-1"><span className="text-muted mr-1">Organization:</span> {data.organizationName}</Col>
+                <Col lg className="py-1"><span className="text-muted mr-1">Created On:</span>  <Moment format="YYYY-MM-DD, hh:mm a" date={data.createdAt} /></Col>
+              </Row>
+              <Row>
+                <Col className="py-1"><span className="text-muted mr-1">Tags:</span> 
+                  {data.tags.map((item, idx) => (<span key={idx}>{item}, </span>))}</Col>
+              </Row>
+              { data.workflow.source !== undefined ?
+                <Row>
+                  <Col md className="py-1"><span className="text-muted mr-1">Source:</span> <span className="upper-case-first">{data.workflow.source.name}</span></Col>
+                  <Col md className="py-1"><span className="text-muted mr-1">Repository:</span> {data.workflow.source.repository}</Col>
+                  <Col md className="py-1"><span className="text-muted mr-1">Branch:</span> {data.workflow.source.branch}</Col>
+                </Row> : null}
+              <Row>
+                <Col className="py-1"><span className="text-muted mr-1">Tools:</span> 
+                  {buildToolList(data.workflow.plan).map((item, idx) => (<span key={idx} className="upper-case-first mr-1">{item} </span>))}</Col> 
+              </Row>
+              <Row>
+                <Col className="py-1">
+                  <LinkContainer to={`/workflow/${data._id}/model`}>
+                    <Button variant="primary" size="sm" className="mr-2 mt-2">
+                      <FontAwesomeIcon icon={faProjectDiagram} className="mr-1"/>View Workflow</Button>
+                  </LinkContainer>
                 
-                <LinkContainer to={`/workflow/${data._id}/model`}>
                   <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" onClick={() => runPipeline(data._id)}>
-                    <FontAwesomeIcon icon={faPlay} className="mr-1"/>Run</Button>
-                </LinkContainer>
-                <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" disabled onClick={handleActionClick("pause", data._id)}>
-                  <FontAwesomeIcon icon={faPause} className="mr-1"/>Pause</Button>
-                <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" disabled onClick={handleActionClick("disable", data._id)}>
-                  <FontAwesomeIcon icon={faBan} className="mr-1"/>Suspend</Button>
-                <Button variant="outline-danger" size="sm" className="mr-2 mt-2" onClick={handleActionClick("delete", data._id)}>
-                  <FontAwesomeIcon icon={faTrash} className="fa-fw"/></Button>
-              </Col>
-            </Row>
-          </Card.Body>
-        </Card> : null}
+                    <FontAwesomeIcon icon={faPlay} className="mr-1"/>Run Pipeline</Button>
+                  
+                  <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" disabled onClick={handleActionClick("pause", data._id)}>
+                    <FontAwesomeIcon icon={faPause} className="mr-1"/>Pause</Button>
+                  <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" disabled onClick={handleActionClick("disable", data._id)}>
+                    <FontAwesomeIcon icon={faBan} className="mr-1"/>Suspend</Button>
+                  <Button variant="outline-danger" size="sm" className="mr-2 mt-2" onClick={handleActionClick("delete", data._id)}>
+                    <FontAwesomeIcon icon={faTrash} className="fa-fw"/></Button>
+                </Col>
+              </Row>
+            </Card.Body>
+          </Card>
+
+          <Alert show={showActionAlert} variant="success">
+            <Alert.Heading>Starting Pipeline</Alert.Heading>
+            <p>
+            The {data.name} workflow has been started.  This will take some time to run.  View the status and activity in the Pipeline Workflow view.
+            </p>
+            <hr />
+            <div className="d-flex justify-content-end">
+              {/* <LinkContainer to={`/workflow/${data._id}/model`}>  */}
+              <Button onClick={() => {setShowActionAlert(false); parentCallback();}} variant="outline-success">
+                  Continue
+              </Button>
+              {/* </LinkContainer> */}
+            </div>
+          </Alert>
+        
+        </>
+        : null}
 
       {showDeleteModal ? <Modal header="Confirm Pipeline Delete"
         message="Warning! Data cannot be recovered once this pipeline is deleted. Do you still want to proceed?"
@@ -242,11 +263,12 @@ const PipelineActivity = (props) => {
               <tr>
                 <th style={{ width: "10%" }}>Action</th>
                 <th style={{ width: "5%" }}>Step</th>  
-                <th style={{ width: "20%" }}>Task</th>                
-                <th style={{ width: "15%" }}>Tool</th>
-                <th style={{ width: "15%" }}>Build</th>
+                <th style={{ width: "10%" }}>Task</th>                
+                <th style={{ width: "10%" }}>Tool</th>
+                <th style={{ width: "5%" }}>Build</th>
                 <th style={{ width: "15%" }}>Status</th>
-                <th style={{ width: "20%" }}>Date</th>
+                <th style={{ width: "30%" }}>Message</th>
+                <th style={{ width: "15%" }}>Date</th>
               </tr>
             </thead>
             <tbody>
@@ -259,12 +281,13 @@ const PipelineActivity = (props) => {
                   <td className="upper-case-first">{item["tool_identifier"]}</td>
                   <td>{item["build_number"]}</td>
                   <td className="force-text-wrap upper-case-first">{item["status"] ? item["status"] : "unknown"}</td>
-                  <td><Moment format="MM/DD/YYYY, h:mm:ss a" date={item["createdAt"]} /> 
+                  <td className="force-text-wrap upper-case-first">{item["message"] ? item["message"] : ""} 
                     <FontAwesomeIcon icon={faSearchPlus}
                       className="mr-1 mt-1 float-right"
                       size="xs"
                       style={{ cursor: "pointer" }}
-                      onClick= {() => { handleClick(item); }} /></td>   
+                      onClick= {() => { handleClick(item); }} /></td>
+                  <td><Moment format="YYYY-MM-DD, hh:mm a" date={item["createdAt"]} /> </td>   
                 </tr>
               ))}
             </tbody>

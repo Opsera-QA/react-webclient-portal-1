@@ -145,7 +145,7 @@ const ItemSummaries = (props) => {
               </Row>
 
               <Row className="mt-2">
-                <Col lg><small className="text-muted">Last updated on <Moment format="MMM Do YYYY" date={item.updatedAt} /></small></Col>
+                <Col lg><small className="text-muted">Last updated on <Moment format="YYYY-MM-DD, hh:mm a" date={item.updatedAt} /></small></Col>
               </Row>
 
             </Card.Body>

@@ -87,7 +87,7 @@ const MapActivityData = (props) => {
               <div className="col" style={{ fontWeight: "bold" }}>{item["data_projectName"]}: {item.data_result}</div>
             </div>
             <div className="row mt-1">
-              <div className="col"><Moment format="dddd, MMMM Do YYYY, h:mm:ss a" date={item["timestamp"]} /></div>
+              <div className="col"><Moment format="YYYY-MM-DD, hh:mm a" date={item["timestamp"]} /></div>
             </div>
             <div className="row mt-2">
               {/* <div className="col">Version: {item["version"]}</div> */}

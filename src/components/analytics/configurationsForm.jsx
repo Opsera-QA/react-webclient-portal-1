@@ -173,7 +173,7 @@ function ConfigurationsForm({ settings, token }) {
                   {(enabledToolsOn && !disabledToolsOn) &&
                     <>
                       <span className="italic pr-3" style={{ fontSize: "smaller" }}>(Enabled on&nbsp;
-                        <Moment format="MM/DD/YYYY" date={enabledToolsOn} />)
+                        <Moment format="YYYY-MM-DD, hh:mm a" date={enabledToolsOn} />)
                       </span>
                     </>
                   }
