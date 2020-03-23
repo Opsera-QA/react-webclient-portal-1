@@ -74,12 +74,9 @@ function PipelineWorkflow({ id }) {
   } else {
     return (
       <>
-        {loading ? <LoadingDialog size="sm" /> : null }
+        {loading ? <LoadingDialog size="lg" /> : null }
           
         <div className="mt-3">
-          {data.length == 0 ?
-            <InfoDialog message="No Pipeline details found.  Please ensure you have access to view the requested pipeline." /> : null }
-                                  
           {typeof(data) !== "undefined" ?
             <Row>
               <Col>
@@ -89,6 +86,10 @@ function PipelineWorkflow({ id }) {
                 <Col xs lg="4" className="workflow-editor-panel p-3">
                   <PipelineWorkflowEditor editItem={editItem} data={data} parentCallback={callbackFunctionEditor} /></Col>: null}
             </Row> : null}
+
+          {data.length == 0 ?
+            <InfoDialog message="No Pipeline details found.  Please ensure you have access to view the requested pipeline." /> : null }
+          
                 
         </div> 
       </>

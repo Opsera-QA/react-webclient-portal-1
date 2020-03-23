@@ -3,11 +3,11 @@ import styled from "@emotion/styled";
 import PropTypes from "prop-types";
 import { axiosApiService } from "../../api/apiService";
 import { AuthContext } from "../../contexts/AuthContext"; 
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faCog, faBars, faPause, faBan, faPlay, faChevronDown, faSync, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faCog, faBars, faPause, faBan, faPlay, faChevronDown, faSync, faSpinner, faForward } from "@fortawesome/free-solid-svg-icons";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Modal from "../common/modal";
 import Moment from "react-moment";
@@ -46,6 +46,8 @@ const PipelineWorkflowDetail = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
 
+  const [showPipelineDataModal, setShowPipelineDataModal] = useState(false);
+
 
   useEffect(() => {    
     if (data.workflow !== undefined) {
@@ -54,7 +56,7 @@ const PipelineWorkflowDetail = (props) => {
       setNextStep(calculateNextStep(data.workflow.last_step));
     }
     console.log(data);
-  }, [data]);
+  }, [data, loading]);
 
   
   const calculateNextStep = (last_step) => {
@@ -81,18 +83,27 @@ const PipelineWorkflowDetail = (props) => {
     setShowModal(true);
   };
 
-  const handleRefreshClick = (pipelineId) => {
+  const handleRefreshClick = async (pipelineId, stepNext) => {
     //call gest status API
-    fetchStatusData(pipelineId);
+    await fetchStatusData(pipelineId, stepNext);
+    parentCallback();
+  };
+
+  const handleRunPipelineClick = async (pipelineId) => {
+    //call gest status API
+    await runPipeline(pipelineId);
     parentCallback();
   };
 
 
-  async function fetchStatusData(pipelineId) {
+  async function fetchStatusData(pipelineId, stepNext) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = `/pipelines/${pipelineId}/status`;   
+    let apiUrl = `/pipelines/${pipelineId}/status`;
+    if (stepNext) {
+      apiUrl = apiUrl + "?run=true";
+    }   
     
     try {
       const pipelineActivityLog = await axiosApiService(accessToken).get(apiUrl);
@@ -104,6 +115,26 @@ const PipelineWorkflowDetail = (props) => {
       setErrors(err.message);
       setLoading(false);
     }
+  }
+
+  async function runPipeline(pipelineId) {
+    const { getAccessToken } = contextType;
+    const postBody = {
+      "action": "run",
+      "stepId": ""
+    };
+    const response = await PipelineActions.run(pipelineId, postBody, getAccessToken);
+    console.log(response);
+    if (typeof(response.error) !== "undefined") {
+      console.log(response.error);
+      setErrors(response.error);
+    } else {
+      //setShowActionAlert(true);      
+      //TODO: Add some UI response to this action
+      // switch icon to spinner
+      // set timer for 5 seconds
+      // refresh data
+    }   
   }
 
 
@@ -131,7 +162,9 @@ const PipelineWorkflowDetail = (props) => {
     setState({ items });
   }
 
-
+  const handleViewPipelineClick = (param) => {
+    setShowPipelineDataModal(param);
+  };
 
   const callbackFunction = (item) => {
     window.scrollTo(0, 0);
@@ -150,13 +183,25 @@ const PipelineWorkflowDetail = (props) => {
       {typeof(data.workflow) !== "undefined" && data.workflow.hasOwnProperty("source") ? 
         <>
           <div className="workflow-container ml-4 px-3" style={{ maxWidth: "500px" }}>
-            <div className="h6 p-2 text-center">{data.name} Workflow 
-              <FontAwesomeIcon icon={faSync}
-                className="ml-1 float-right"
-                size="xs"
+            <div className="h6 p-2 text-center">{data.name} Workflow
+              <FontAwesomeIcon icon={faSearchPlus}
+                className="mr-1 mt-1 float-right text-muted"
+                size="sm"
                 style={{ cursor: "pointer" }}
-                onClick={() => { handleRefreshClick(data._id); }} />
+                onClick= {() => { handleViewPipelineClick(data); }} />
             </div>
+            <div className="py-2 mb-1 text-right">
+              <Button variant="primary" size="sm" className="mr-2" onClick={() => { handleRunPipelineClick(data._id); }}>
+                <FontAwesomeIcon icon={faPlay} className="mr-1"/>Start Pipeline</Button>
+
+              <Button variant="outline-dark" size="sm" className="mr-2" onClick={() => { handleRefreshClick(data._id); }}>
+                <FontAwesomeIcon icon={faSync} className="mr-1"/>Update Status</Button>
+
+              <Button variant="outline-dark" size="sm" className="mr-2" onClick={() => { handleRefreshClick(data._id, true); }}>
+                <FontAwesomeIcon icon={faForward} className="mr-1"/>Next Step</Button>
+
+            </div>
+
             <div className="workflow-module-container workflow-module-container-width mx-auto">
               <div>Source Repository: {data.workflow.source.repository}</div>
               {data.workflow.source.name ? 
@@ -201,7 +246,9 @@ const PipelineWorkflowDetail = (props) => {
                 <Droppable droppableId="list">
                   {provided => (
                     <div ref={provided.innerRef} {...provided.droppableProps}>
-                      <ItemList items={state.items} lastStep={lastStep} nextStep={nextStep} pipelineId={data._id} parentCallback = {callbackFunction} />
+                      <ItemList items={state.items} lastStep={lastStep} 
+                        nextStep={nextStep} pipelineId={data._id} 
+                        parentCallback={callbackFunction} fetchStatusCallback={fetchStatusData} />
                       {provided.placeholder}
                     </div>
                   )}
@@ -220,13 +267,21 @@ const PipelineWorkflowDetail = (props) => {
             handleCancelModal={() => setShowModal(false)}
             handleConfirmModal={() => setShowModal(false)} /> : null}
         </> : null }
+
+      {showPipelineDataModal ? <Modal header="Pipeline Details"
+        message={<pre>{JSON.stringify(showPipelineDataModal, null, 2)}</pre>}
+        button="OK"
+        size="lg"
+        handleCancelModal={() => setShowPipelineDataModal(false)}
+        handleConfirmModal={() => setShowPipelineDataModal(false)} /> : null}
+
     </>
   );
 };
 
 
 
-const ItemList = React.memo(function ItemList({ items, lastStep, nextStep, pipelineId, parentCallback }) {
+const ItemList = React.memo(function ItemList({ items, lastStep, nextStep, pipelineId, parentCallback, fetchStatusCallback }) {
   const callbackFunction = (param) => {
     parentCallback(param);
   };
@@ -234,7 +289,7 @@ const ItemList = React.memo(function ItemList({ items, lastStep, nextStep, pipel
   return items.map((item, index) => (
     <Item item={item} index={index} key={item._id} 
       lastStep={lastStep} pipelineId={pipelineId} nextStep={nextStep} 
-      parentCallback = {callbackFunction} />
+      parentCallback={callbackFunction} fetchStatusCallback={fetchStatusCallback} />
   ));
 });
 
@@ -250,7 +305,7 @@ const QuoteItem = styled.div`
   padding: ${grid}px;
 `;
 
-const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback }) => {
+const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fetchStatusCallback }) => {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
   const [loading, setLoading] = useState(false);
@@ -348,12 +403,18 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback }) =
     setShowModal(true);
   };
 
-  const handleRunClick = (stepId) => {
-    runPipeline(pipelineId, stepId);
+  const handleRunClick = async (stepId) => {
+    await runPipeline(pipelineId, stepId);
+
+    //TODO THIS NEEDS TO TRIGGER REFRESH OF UI!
+    await fetchStatusCallback(pipelineId);
   };
   
-  const handleCancelClick = (stepId) => {
-    cancelPipelineStep(pipelineId, stepId);
+  const handleCancelClick = async (stepId) => {
+    await cancelPipelineStep(pipelineId, stepId);
+    
+    //TODO THIS NEEDS TO TRIGGER REFRESH OF UI!
+    await fetchStatusCallback(pipelineId);
   };
 
   const handleClick = (param) => {
@@ -438,29 +499,32 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback }) =
                   style={{ cursor: "pointer" }}
                   className="text-muted mr-1"
                   onClick={() => { handleEditClick("tool", item.tool.tool_identifier, item._id); }} />
-                { nextStep._id === item._id || currentStatus.step_id === item._id ?
+                
+                { currentStatus.step_id === item._id ? 
                   <>
                     {/* <FontAwesomeIcon icon={faPause}
-                      className="ml-2" disabled
-                      style={{ cursor: "pointer" }}
-                      onClick={() => { handleClick(item._id); }} /> */}
-                    
+                    className="ml-2" disabled
+                    style={{ cursor: "pointer" }}
+                    onClick={() => { handleClick(item._id); }} /> */}
                     {showCancelAlert ? <FontAwesomeIcon icon={faSpinner} spin className="ml-2 mr-1" />
                       :
                       <FontAwesomeIcon icon={faBan}
                         className="ml-2 mr-1" disabled
                         style={{ cursor: "pointer" }}
                         onClick={() => { handleCancelClick(item._id); }} /> }
-                    
+                  </> : null 
+                }
+                
+                { nextStep._id === item._id ?
+                  <>
                     {showActionAlert ? <FontAwesomeIcon icon={faSpinner} spin className="ml-2" />
                       :
                       <FontAwesomeIcon icon={faPlay}
                         className="ml-2"
                         style={{ cursor: "pointer" }}
                         onClick={() => { handleRunClick(item._id); }} /> }
-
-
-                  </> : null}
+                  </> : null
+                }
               </Col>
             </Row>
             
@@ -497,7 +561,8 @@ Item.propTypes = {
   lastStep: PropTypes.object,
   nextStep: PropTypes.object,
   pipelineId: PropTypes.string,
-  parentCallback: PropTypes.func
+  parentCallback: PropTypes.func,
+  fetchStatusCallback: PropTypes.func
 };
 
 ItemList.propTypes = {
@@ -505,7 +570,8 @@ ItemList.propTypes = {
   lastStep: PropTypes.object,
   nextStep: PropTypes.object,
   pipelineId: PropTypes.string,
-  parentCallback: PropTypes.func
+  parentCallback: PropTypes.func,
+  fetchStatusCallback: PropTypes.func
 };
 
 
