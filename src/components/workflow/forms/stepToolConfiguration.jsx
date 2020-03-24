@@ -42,6 +42,7 @@ function StepToolConfiguration( { data, editItem, parentCallback }) {
 
   return (
     <div>
+      <h6 className="upper-case-first ml-1">{typeof(stepTool) !== "undefined" ? stepTool.tool_identifier : null}</h6>
       <div className="text-muted m-1">Tools require configuration for individual workflow steps.  Please complete the fields below in order to 
       configure this pipeline. More help on tool configurations is available <Link to="/tools">here</Link>.</div>
           
