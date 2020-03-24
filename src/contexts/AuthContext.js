@@ -5,36 +5,43 @@ export const AuthContext = createContext();
 
 async function checkAuthentication() {
   let curAuthenticatedState = this.state.authenticated;
+  let ssoUserRecord = {};
   const authenticated = await this.props.auth.isAuthenticated();
   if (authenticated !== this.state.authenticated) {
     if (authenticated && !this.state.userInfo) {
       const userInfo = await this.props.auth.getUser();
       const accessToken = await this.props.auth.getAccessToken();
-      if (!curAuthenticatedState && userInfo) { updateUserRecord(userInfo, accessToken); }
-      this.setState({ authenticated, userInfo, loading: false });
+      if (!curAuthenticatedState && userInfo) { 
+        ssoUserRecord = await updateUserRecord(userInfo, accessToken); 
+      }
+      this.setState({ authenticated, userInfo, loading: false, ssoUserRecord });      
     } else {
       this.setState({ authenticated, loading: false });
     }
   }
 }
 
-function updateUserRecord(userInfo, accessToken) {
+async function updateUserRecord(userInfo, accessToken) {
   if (userInfo && accessToken) {
     let userRecord = {
       "system": "okta",
       "user_data": userInfo
     };
     const apiCall = new ApiService("/users/save", null, accessToken, userRecord);
-    apiCall.post()
-      .then(function (response) {console.log("user record updates success");})
+    const ssoUserRecord = apiCall.post()
+      .then(function (response) {
+        return response.data;        
+      })
       .catch(function (error) {console.log("error on saving user record silently.");});
+    return ssoUserRecord;
   }
 }
+
 
 class AuthContextProvider extends Component {
   constructor(props) {
     super(props);
-    this.state = { authenticated: null, userInfo: null, sharedState: null, loading: true };
+    this.state = { authenticated: null, userInfo: null, sharedState: null, loading: true, ssoUserRecord: null };
     this.checkAuthentication = checkAuthentication.bind(this);
   }
 
@@ -59,6 +66,22 @@ class AuthContextProvider extends Component {
     }
   }
 
+  getUserSsoUsersRecord = async () => {
+    if (this.state.ssoUserRecord) {
+      return this.state.ssoUserRecord;
+    } else {
+      const accessToken = await this.props.auth.getAccessToken();
+      const apiCall = new ApiService("/users", null, accessToken);
+      const ssoUserRecord = apiCall.get()
+        .then(function (response) {
+          return response.data;        
+        })
+        .catch(function (error) {console.log("error on user record lookup in context.");});
+      return ssoUserRecord;
+    }
+  }
+  
+
   setSharedState = (value) => {
     this.setState({ sharedState: value });
   }
@@ -79,6 +102,7 @@ class AuthContextProvider extends Component {
         loginUserContext: this.loginUserContext, 
         getAccessToken: this.getAccessToken,
         getUserInfo: this.getUserInfo,
+        getUserSsoUsersRecord: this.getUserSsoUsersRecord,
         setSharedState: this.setSharedState }}>
         {this.props.children}
       </AuthContext.Provider>
