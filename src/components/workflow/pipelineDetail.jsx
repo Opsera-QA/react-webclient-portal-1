@@ -105,18 +105,14 @@ function PipelineDetail({ id }) {
     return (<ErrorDialog error={error} />);
   }  else if (loading) {
     return (<LoadingDialog size="lg" />);
+  }  else if (!loading && data.length == 0) {
+    return ( <InfoDialog message="No Pipeline details found.  Please ensure you have access to view the requested pipeline." />);
   } else {
     return (
       <>
         <div className="mt-3 max-content-width">
-          {data.length == 0 ?
-            <InfoDialog message="No Pipeline details found.  Please ensure you have access to view the requested pipeline." /> : 
-            <>                
-              <ItemSummaryDetail data={data.pipeline} parentCallback={callbackFunction} role={role} stepStatus={stepStatus}  /> 
-              <PipelineActivity data={data.activity} /> 
-            </>
-          }
-                
+          <ItemSummaryDetail data={data.pipeline} parentCallback={callbackFunction} role={role} stepStatus={stepStatus}  /> 
+          <PipelineActivity data={data.activity} />               
         </div>
           
       </>
