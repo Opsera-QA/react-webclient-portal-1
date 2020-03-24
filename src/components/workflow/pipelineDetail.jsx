@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
-import { Alert, Card, Row, Col, Table, Button } from "react-bootstrap";
+import { Alert, Card, Row, Col, Table, Button, Form } from "react-bootstrap";
 import Modal from "../common/modal";
 import { AuthContext } from "../../contexts/AuthContext"; 
 import { axiosApiServiceMultiGet, axiosApiService } from "../../api/apiService";
@@ -12,7 +12,7 @@ import InfoDialog from "../common/info";
 import Moment from "react-moment";
 import PipelineActions from "./actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faPencilAlt, faPause, faBan, faPlay, faTrash, faProjectDiagram } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faPencilAlt, faPause, faBan, faPlay, faTrash, faProjectDiagram, faSave } from "@fortawesome/free-solid-svg-icons";
 import "./workflows.css";
 
 
@@ -20,6 +20,8 @@ function PipelineDetail({ id }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
   const [data, setData] = useState({});
+  const [role, setRole] = useState("");
+  const [stepStatus, setStepStatus] = useState({});
   const [loading, setLoading] = useState(false);
   
   useEffect(() => {    
@@ -28,8 +30,9 @@ function PipelineDetail({ id }) {
 
   async function fetchData() {
     setLoading(true);
-    const { getAccessToken } = contextType;
+    const { getAccessToken, getUserSsoUsersRecord } = contextType;
     const accessToken = await getAccessToken();
+    const ssoUsersRecord = await getUserSsoUsersRecord();
     const apiUrls = [ `/pipelines/${id}`, `/pipelines/${id}/activity` ];   
     try {
       const [pipeline, activity] = await axiosApiServiceMultiGet(accessToken, apiUrls);
@@ -37,6 +40,7 @@ function PipelineDetail({ id }) {
         pipeline: pipeline && pipeline.data[0],
         activity: activity && activity.data
       });
+      setPipelineAttributes(pipeline && pipeline.data[0], ssoUsersRecord._id);
       setLoading(false);  
       console.log("pipeline", pipeline);      
       console.log("activity", activity);
@@ -47,6 +51,24 @@ function PipelineDetail({ id }) {
       setErrors(err.message);
     }
   }
+
+
+  const setPipelineAttributes = (pipeline, ssoUsersId) => {
+    if (typeof(pipeline.roles) !== "undefined") {
+      let adminRoleIndex = pipeline.roles.findIndex(x => x.role === "administrator"); 
+      if (pipeline.roles[adminRoleIndex].user === ssoUsersId) {
+        setRole(pipeline.roles[adminRoleIndex].role);
+      }
+    }
+    
+    if (typeof(pipeline.workflow) !== "undefined") {
+      if (typeof(pipeline.workflow.last_step) !== "undefined") {
+        console.log("Last Step: ", pipeline.workflow.last_step);
+        setStepStatus(pipeline.workflow.last_step);
+      }
+    }
+  };
+
 
   const callbackFunction = () => {
     fetchData();
@@ -64,7 +86,7 @@ function PipelineDetail({ id }) {
                 <InfoDialog message="No Pipeline details found.  Please ensure you have access to view the requested pipeline." /> : 
                 <>
                 
-                  <ItemSummaryDetail data={data.pipeline} parentCallback={callbackFunction}  /> 
+                  <ItemSummaryDetail data={data.pipeline} parentCallback={callbackFunction} role={role} stepStatus={stepStatus}  /> 
                   <PipelineActivity data={data.activity} /> 
                 </>
               }
@@ -79,7 +101,7 @@ function PipelineDetail({ id }) {
 
 
 const ItemSummaryDetail = (props) => {
-  const { data, parentCallback } = props;
+  const { data, role, stepStatus, parentCallback } = props;
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
   const [showModal, setShowModal] = useState(false);
@@ -87,6 +109,9 @@ const ItemSummaryDetail = (props) => {
   const [modalMessage, setModalMessage] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [modalDeleteId, setModalDeleteId] = useState(false);
+  const [editTitle, setEditTitle] = useState(false);
+  const [formData, setFormData] = useState({ name: "" });
+
   let history = useHistory();
 
   const handleEditClick = (param) => {
@@ -97,6 +122,28 @@ const ItemSummaryDetail = (props) => {
   const handleViewClick = (param) => {
     setModalMessage(param);
     setShowModal(true);
+  };
+
+  const handleSaveTitleClick = async (pipelineId, title) => {
+    console.log(title);
+    if (title.length > 0) {
+      data.name = title;
+      const { getAccessToken } = contextType;
+      const postBody = {
+        "name": title
+      };
+      
+      const response = await PipelineActions.save(pipelineId, postBody, getAccessToken);
+      console.log(response);
+      if (typeof(response.error) !== "undefined") {
+        console.log(response.error);
+        setErrors(response.error);
+      } else {
+        setEditTitle(false);  
+      }  
+    } else {
+      setEditTitle(false);  
+    }
   };
 
   const handleActionClick = (action, itemId) => e => {
@@ -146,18 +193,38 @@ const ItemSummaryDetail = (props) => {
         <>
           <Card className="mb-3">
             <Card.Body>
-              <Card.Title>{data.name} 
-                <FontAwesomeIcon icon={faPencilAlt}
-                  className="ml-2 text-muted"
-                  size="xs" transform="shrink-6"
-                  style={{ cursor: "pointer" }}
-                  onClick= {() => { handleEditClick("name"); }} />
+              <Card.Title>
+                { editTitle ? 
+                  <>
+                    <Row>
+                      <Col sm={11}>
+                        <Form.Control maxLength="500" type="text" placeholder="" value={formData.name || ""} 
+                          onChange={e => setFormData({ ...formData, name: e.target.value })} /></Col>
+                      <Col sm={1} className="my-auto">
+                        <FontAwesomeIcon icon={faSave}
+                          className="text-muted"
+                          size="sm"
+                          style={{ cursor: "pointer" }}
+                          onClick= {() => { handleSaveTitleClick(data._id, formData.name); }} /></Col>
+                    </Row>                    
+                  </> 
+                  :
+                  <>
+                    {data.name} 
+                    {role === "administrator" ? 
+                      <FontAwesomeIcon icon={faPencilAlt}
+                        className="ml-2 text-muted"
+                        size="xs" transform="shrink-6"
+                        style={{ cursor: "pointer" }}
+                        onClick= {() => { setEditTitle(true); setFormData({ name: data.name }); }} /> : null }
+                    <FontAwesomeIcon icon={faSearchPlus}
+                      className="mr-1 float-right text-muted"
+                      size="xs"
+                      style={{ cursor: "pointer" }}
+                      onClick= {() => { handleViewClick(data); }} />
+                  </> 
+                }
                 
-                <FontAwesomeIcon icon={faSearchPlus}
-                  className="mr-1 float-right text-muted"
-                  size="xs"
-                  style={{ cursor: "pointer" }}
-                  onClick= {() => { handleViewClick(data); }} />
               </Card.Title>
               <Card.Subtitle className="mb-2 text-muted">{data.project}</Card.Subtitle>
               <Card.Text>
@@ -321,6 +388,8 @@ PipelineDetail.propTypes = {
 
 ItemSummaryDetail.propTypes = {
   data: PropTypes.object,
+  role: PropTypes.string,
+  stepStatus: PropTypes.object,
   parentCallback: PropTypes.func
 };
 
