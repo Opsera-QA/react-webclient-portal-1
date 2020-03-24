@@ -103,11 +103,11 @@ function PipelineDetail({ id }) {
   
   if (error) {
     return (<ErrorDialog error={error} />);
+  }  else if (loading) {
+    return (<LoadingDialog size="lg" />);
   } else {
     return (
       <>
-        {loading ? <LoadingDialog size="lg" /> : null }
-
         <div className="mt-3 max-content-width">
           {data.length == 0 ?
             <InfoDialog message="No Pipeline details found.  Please ensure you have access to view the requested pipeline." /> : 

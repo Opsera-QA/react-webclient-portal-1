@@ -45,7 +45,7 @@ const PipelineWorkflowDetail = (props) => {
   const [nextStep, setNextStep] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
-
+  const [workflowStatus, setWorkflowStatus] = useState(false);
   const [showPipelineDataModal, setShowPipelineDataModal] = useState(false);
 
 
@@ -54,6 +54,8 @@ const PipelineWorkflowDetail = (props) => {
       setState({ items: data.workflow.plan });
       setLastStep(data.workflow.last_step);
       setNextStep(calculateNextStep(data.workflow.last_step));
+      setWorkflowStatus(typeof(data.workflow.last_step) !== "undefined" && typeof(data.workflow.last_step.running) !== "undefined" && data.workflow.last_step.running.step_id.length > 0 ? "running" : false);
+      
     }
     console.log(data);
   }, [data, loading]);
@@ -89,9 +91,9 @@ const PipelineWorkflowDetail = (props) => {
     parentCallback();
   };
 
-  const handleRunPipelineClick = async (pipelineId) => {
+  const handleRunPipelineClick = async (pipelineId, nextStepId) => {
     //call gest status API
-    await runPipeline(pipelineId);
+    await runPipeline(pipelineId, nextStepId);
     parentCallback();
   };
 
@@ -109,6 +111,7 @@ const PipelineWorkflowDetail = (props) => {
       const pipelineActivityLog = await axiosApiService(accessToken).get(apiUrl);
       console.log(pipelineActivityLog);
       setLoading(false);
+      parentCallback();
     }
     catch (err) {
       console.log(err.message);
@@ -117,23 +120,20 @@ const PipelineWorkflowDetail = (props) => {
     }
   }
 
-  async function runPipeline(pipelineId) {
+  async function runPipeline(pipelineId, nextStepId) {
     const { getAccessToken } = contextType;
     const postBody = {
       "action": "run",
-      "stepId": ""
+      "stepId": nextStepId ? nextStepId : ""
     };
+    console.log("POST OPERATION: ", postBody);
     const response = await PipelineActions.run(pipelineId, postBody, getAccessToken);
     console.log(response);
     if (typeof(response.error) !== "undefined") {
       console.log(response.error);
       setErrors(response.error);
     } else {
-      //setShowActionAlert(true);      
-      //TODO: Add some UI response to this action
-      // switch icon to spinner
-      // set timer for 5 seconds
-      // refresh data
+      parentCallback();
     }   
   }
 
@@ -191,14 +191,26 @@ const PipelineWorkflowDetail = (props) => {
                 onClick= {() => { handleViewPipelineClick(data); }} />
             </div>
             <div className="py-2 mb-1 text-right">
-              <Button variant="primary" size="sm" className="mr-2" onClick={() => { handleRunPipelineClick(data._id); }}>
-                <FontAwesomeIcon icon={faPlay} className="mr-1"/>Start Pipeline</Button>
-
-              <Button variant="outline-dark" size="sm" className="mr-2" onClick={() => { handleRefreshClick(data._id); }}>
+              
+              <Button variant="warning" size="sm" className="mr-2" onClick={() => { handleRefreshClick(data._id); }}>
                 <FontAwesomeIcon icon={faSync} className="mr-1"/>Update Status</Button>
 
-              <Button variant="outline-dark" size="sm" className="mr-2" onClick={() => { handleRefreshClick(data._id, true); }}>
-                <FontAwesomeIcon icon={faForward} className="mr-1"/>Next Step</Button>
+              {workflowStatus === "running" ? 
+                <Button variant="outline-dark" size="sm" className="mr-2" disabled>
+                  <FontAwesomeIcon icon={faSpinner} spin className="mr-1"/>Pipeline Running</Button>
+                :
+                <>
+                  { nextStep === data.workflow.plan[0] ?
+                    <Button variant="primary" size="sm" className="mr-2" onClick={() => { handleRunPipelineClick(data._id); }}>
+                      <FontAwesomeIcon icon={faPlay} className="mr-1"/>Start Pipeline</Button>
+                    :
+                    <Button variant="primary" size="sm" className="mr-2" onClick={() => { handleRunPipelineClick(data._id, nextStep._id); }}>
+                      <FontAwesomeIcon icon={faForward} className="mr-1"/>Next Step</Button>
+                  }
+                </>
+              }
+              
+              
 
             </div>
 
