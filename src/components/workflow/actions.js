@@ -37,5 +37,14 @@ pipelineActions.save = async (pipelineId, postBody, getAccessToken) => {
   return response;
 };
 
+pipelineActions.get = async (pipelineId, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/pipelines/${pipelineId}`;   
+  const response = await axiosApiService(accessToken).get(apiUrl)
+    .then((result) =>  {return result;})
+    .catch(error => {return { error };});
+  return response;
+};
+
 
 export default pipelineActions;

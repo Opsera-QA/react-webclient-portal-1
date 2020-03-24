@@ -18,14 +18,14 @@ function PipelineWorkflow({ id }) {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
   const [editItem, setEditItem] = useState();
-  
+  const [reload, setReload] = useState(true);
   
   useEffect(() => {    
     const controller = new AbortController();
     const runEffect = async () => {
       try {
         await fetchData();
-        
+        setReload(false);
       } catch (err) {
         if (err.name === "AbortError") {
           console.log("Request was canceled via controller.abort");
@@ -38,7 +38,7 @@ function PipelineWorkflow({ id }) {
     return () => {
       controller.abort();
     };
-  }, [setData]);
+  }, [setData, reload]);
 
   async function fetchData() {
     setLoading(true);
@@ -61,6 +61,7 @@ function PipelineWorkflow({ id }) {
     if (param) {
       setEditItem(param);   
     } else {
+      setReload(true);
       await fetchData();      
     }    
   };
