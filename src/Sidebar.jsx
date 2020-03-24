@@ -36,7 +36,7 @@ function Sidebar({ hideView }) {
       if (userInfoResponse !== undefined && Object.keys(userInfoResponse).length > 0) {
         setUserInfo(userInfoResponse);
         setAdministrator(userInfoResponse.Groups.includes("Admin"));
-        setPreviewRole(userInfoResponse.Groups.includes("Preview"));      
+        setPreviewRole(userInfoResponse.email.includes("@opsera.io"));      
       }
     }
     catch (err) {
