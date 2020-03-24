@@ -12,7 +12,7 @@ import InfoDialog from "../common/info";
 import Moment from "react-moment";
 import PipelineActions from "./actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faPencilAlt, faPause, faBan, faPlay, faTrash, faProjectDiagram, faSave, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faPencilAlt, faPause, faBan, faPlay, faTrash, faProjectDiagram, faSave, faSpinner, faTimes } from "@fortawesome/free-solid-svg-icons";
 import "./workflows.css";
 
 
@@ -274,7 +274,13 @@ const ItemSummaryDetail = (props) => {
                           className="text-muted"
                           size="sm"
                           style={{ cursor: "pointer" }}
-                          onClick= {() => { handleSaveTitleClick(data._id, formData.name); }} /></Col>
+                          onClick= {() => { handleSaveTitleClick(data._id, formData.name); }} />
+                        <FontAwesomeIcon icon={faTimes}
+                          className="text-muted ml-3"
+                          size="sm"
+                          style={{ cursor: "pointer" }}
+                          onClick= {() => { setEditTitle(false); }} />
+                      </Col>
                     </Row>                    
                   </> 
                   :
