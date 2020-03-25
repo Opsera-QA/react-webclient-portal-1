@@ -91,7 +91,11 @@ const PipelineWorkflowDetail = (props) => {
     parentCallback();
   };
 
-  const handleRunPipelineClick = async (pipelineId, nextStepId) => {
+  const handleRunPipelineClick = async (pipelineId, nextStep) => {
+    let nextStepId = "";
+    if (nextStep !== undefined) {
+      nextStepId = nextStep.hasOwnProperty("_id") ? nextStep._id : "";
+    }
     //call gest status API
     await runPipeline(pipelineId, nextStepId);
     parentCallback();
@@ -200,11 +204,11 @@ const PipelineWorkflowDetail = (props) => {
                   <FontAwesomeIcon icon={faSpinner} spin className="mr-1"/>Pipeline Running</Button>
                 :
                 <>
-                  { nextStep === data.workflow.plan[0] ?
+                  { nextStep === undefined || nextStep === data.workflow.plan[0] ?
                     <Button variant="primary" size="sm" className="mr-2" onClick={() => { handleRunPipelineClick(data._id); }}>
                       <FontAwesomeIcon icon={faPlay} className="mr-1"/>Start Pipeline</Button>
                     :
-                    <Button variant="primary" size="sm" className="mr-2" onClick={() => { handleRunPipelineClick(data._id, nextStep._id); }}>
+                    <Button variant="primary" size="sm" className="mr-2" onClick={() => { handleRunPipelineClick(data._id, nextStep); }}>
                       <FontAwesomeIcon icon={faForward} className="mr-1"/>Next Step</Button>
                   }
                 </>
@@ -527,7 +531,7 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
                   </> : null 
                 }
                 
-                { nextStep._id === item._id ?
+                { nextStep !== undefined && nextStep._id === item._id ?
                   <>
                     {showActionAlert ? <FontAwesomeIcon icon={faSpinner} spin className="ml-2" />
                       :
