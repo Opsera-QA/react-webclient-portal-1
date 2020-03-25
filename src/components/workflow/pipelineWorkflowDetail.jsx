@@ -7,7 +7,7 @@ import { Row, Col, Button } from "react-bootstrap";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faCog, faBars, faPause, faBan, faPlay, faChevronDown, faSync, faSpinner, faForward } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faCog, faBars, faPause, faBan, faPlay, faChevronDown, faSync, faSpinner, faForward, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Modal from "../common/modal";
 import Moment from "react-moment";
@@ -330,22 +330,28 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
   const [currentStatus, setCurrentStatus] = useState({});
+  const [itemState, setItemState] = useState(false);
 
   useEffect(() => {    
     if (typeof(lastStep) !== "undefined" && typeof(item) !== "undefined") {
       if(typeof(lastStep.success) !== "undefined" && lastStep.success.step_id === item._id) {
         setCurrentStatus(lastStep.success);
+        setItemState("completed");
       }
       else if(typeof(lastStep.running) !== "undefined" && lastStep.running.step_id === item._id) {
         setCurrentStatus(lastStep.running);
+        setItemState("running");
       }
       else if(typeof(lastStep.failed) !== "undefined" && lastStep.failed.step_id === item._id) {
         setCurrentStatus(lastStep.failed);
+        setItemState("failed");
       } else {
         setCurrentStatus({});
+        setItemState("");
       }
     } else {
       setCurrentStatus({});
+      setItemState("");
     }
     
   }, [lastStep]);
@@ -423,7 +429,7 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
     await runPipeline(pipelineId, stepId);
 
     //TODO THIS NEEDS TO TRIGGER REFRESH OF UI!
-    await fetchStatusCallback(pipelineId);
+    await fetchStatusCallback(pipelineId, stepId);
   };
   
   const handleCancelClick = async (stepId) => {
@@ -515,31 +521,24 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
                   style={{ cursor: "pointer" }}
                   className="text-muted mr-1"
                   onClick={() => { handleEditClick("tool", item.tool.tool_identifier, item._id); }} />
-                
-                { currentStatus.step_id === item._id ? 
+
+                {itemState === "completed" ? <FontAwesomeIcon icon={faCheck} className="ml-2 mr-1" /> : null }
+                {itemState === "running" ? 
                   <>
-                    {/* <FontAwesomeIcon icon={faPause}
-                    className="ml-2" disabled
-                    style={{ cursor: "pointer" }}
-                    onClick={() => { handleClick(item._id); }} /> */}
-                    {showCancelAlert ? <FontAwesomeIcon icon={faSpinner} spin className="ml-2 mr-1" />
-                      :
-                      <FontAwesomeIcon icon={faBan}
-                        className="ml-2 mr-1" disabled
-                        style={{ cursor: "pointer" }}
-                        onClick={() => { handleCancelClick(item._id); }} /> }
-                  </> : null 
-                }
+                    <FontAwesomeIcon icon={faBan}
+                      className="ml-2 mr-1"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => { handleCancelClick(item._id); }} />
+                    <FontAwesomeIcon icon={faSpinner} spin className="ml-2 mr-1" />
+                  </> : null }
                 
                 { nextStep !== undefined && nextStep._id === item._id ?
-                  <>
-                    {showActionAlert ? <FontAwesomeIcon icon={faSpinner} spin className="ml-2" />
-                      :
-                      <FontAwesomeIcon icon={faPlay}
-                        className="ml-2"
-                        style={{ cursor: "pointer" }}
-                        onClick={() => { handleRunClick(item._id); }} /> }
-                  </> : null
+                  
+                  <FontAwesomeIcon icon={faPlay}
+                    className="ml-2"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => { handleRunClick(item._id); }} /> 
+                  : null
                 }
               </Col>
             </Row>
