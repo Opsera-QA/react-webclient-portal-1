@@ -422,7 +422,7 @@ const PipelineActivity = (props) => {
                   <td className="text-center">{item["step_index"] + 1}</td> 
                   <td>{item["step_name"]}</td>                  
                   <td className="upper-case-first">{item["tool_identifier"]}</td>
-                  <td>{item["build_number"]}</td>
+                  <td className="text-center">{item["build_number"]}</td>
                   <td className="upper-case-first">{item["status"] ? item["status"] : "unknown"}</td>
                   <td>{item["message"] ? item["message"] : ""} 
                     <FontAwesomeIcon icon={faSearchPlus}
