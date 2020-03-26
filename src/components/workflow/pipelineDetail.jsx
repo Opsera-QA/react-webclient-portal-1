@@ -424,7 +424,7 @@ const PipelineActivity = (props) => {
                   <td className="upper-case-first">{item["tool_identifier"]}</td>
                   <td>{item["build_number"]}</td>
                   <td className="force-text-wrap upper-case-first">{item["status"] ? item["status"] : "unknown"}</td>
-                  <td className="force-text-wrap upper-case-first">{item["message"] ? item["message"] : ""} 
+                  <td className="force-text-wrap">{item["message"] ? item["message"] : ""} 
                     <FontAwesomeIcon icon={faSearchPlus}
                       className="mr-1 mt-1 float-right"
                       size="xs"
