@@ -13,6 +13,7 @@ import AwsDeployStepConfiguration from "./aws-deploy";
 import JmeterStepConfiguration from "./jmeter";
 import SeleniumStepConfiguration from "./selenium";
 import TwistlockStepConfiguration from "./twistlock";
+import S3StepConfiguration from "./S3";
 
 
 
@@ -60,6 +61,7 @@ function StepToolConfiguration( { data, editItem, parentCallback }) {
           {editItem.tool_name.toLowerCase() === "twistlock" ? <TwistlockStepConfiguration data={stepTool} parentCallback={callbackFunction} />: null }
           {editItem.tool_name.toLowerCase() === "aws-deploy" ? <AwsDeployStepConfiguration  data={stepTool} parentCallback={callbackFunction} /> : null }
           {editItem.tool_name.toLowerCase() === "gcp-deploy" ? <GcpDeployStepConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
+          {editItem.tool_name.toLowerCase() === "s3" ? <S3StepConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
         </div>
         : null }
 
