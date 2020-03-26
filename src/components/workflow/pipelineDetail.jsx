@@ -420,11 +420,11 @@ const PipelineActivity = (props) => {
                 <tr key={idx} >
                   <td className="upper-case-first">{item["action"]}</td> 
                   <td className="text-center">{item["step_index"] + 1}</td> 
-                  <td className="force-text-wrap">{item["step_name"]}</td>                  
+                  <td>{item["step_name"]}</td>                  
                   <td className="upper-case-first">{item["tool_identifier"]}</td>
                   <td>{item["build_number"]}</td>
-                  <td className="force-text-wrap upper-case-first">{item["status"] ? item["status"] : "unknown"}</td>
-                  <td className="force-text-wrap">{item["message"] ? item["message"] : ""} 
+                  <td className="upper-case-first">{item["status"] ? item["status"] : "unknown"}</td>
+                  <td>{item["message"] ? item["message"] : ""} 
                     <FontAwesomeIcon icon={faSearchPlus}
                       className="mr-1 mt-1 float-right"
                       size="xs"
