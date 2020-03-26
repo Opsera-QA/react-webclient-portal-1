@@ -65,9 +65,8 @@ function Sidebar({ hideView }) {
                 <NavLink className="nav-link" activeClassName="chosen" to="/inventory"><FontAwesomeIcon icon={faClipboardList} fixedWidth /> <span className="menu-text">Inventory</span></NavLink>
                 <NavLink className="nav-link" activeClassName="chosen" to="/platform"><FontAwesomeIcon icon={faBox} fixedWidth /> <span className="menu-text">Platforms</span></NavLink>
                 
-                {previewRole &&
-                  <NavLink className="nav-link" activeClassName="chosen" to="/workflow"><FontAwesomeIcon icon={faDraftingCompass} fixedWidth /> <span className="menu-text">Pipeline Beta</span></NavLink>
-                }
+                <NavLink className="nav-link" activeClassName="chosen" to="/workflow"><FontAwesomeIcon icon={faDraftingCompass} fixedWidth /> <span className="menu-text">Pipeline Beta</span></NavLink>
+                
                 <NavLink className="nav-link" activeClassName="chosen" to="/pipeline"><FontAwesomeIcon icon={faStream} fixedWidth /> <span className="menu-text">Pipelines</span></NavLink>
                 <NavLink className="nav-link" activeClassName="chosen" to="/analytics"><FontAwesomeIcon icon={faHistory} fixedWidth /> <span className="menu-text">Analytics</span></NavLink>
         
