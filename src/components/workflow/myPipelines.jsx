@@ -1,17 +1,18 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, Alert } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import { AuthContext } from "../../contexts/AuthContext"; //New AuthContext State 
+import { LinkContainer } from "react-router-bootstrap";
+import { AuthContext } from "../../contexts/AuthContext"; 
 import { ApiService } from "../../api/apiService";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
-import InfoDialog from "../common/info";
+//import InfoDialog from "../common/info";
 import Moment from "react-moment";
 import Modal from "../common/modal";
 import PipelineActions from "./actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPause, faBan, faPlay, faSearch, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPause, faBan, faPlay, faList, faSearch, faTrash } from "@fortawesome/free-solid-svg-icons";
 import "./workflows.css";
 
 
@@ -59,7 +60,25 @@ function MyPipelines() {
             <div className="mt-3 max-content-width">
               {typeof(data) !== "undefined" && data.length > 0 ?
                 <ItemSummaries data={data} parentCallback = {callbackFunction} /> :
-                <InfoDialog message="No Pipelines Found.  Please go to Catalog and select a pipeline template in order to proceed." />}
+                <>
+                  <div className="mt-5">
+                    <Alert variant="secondary">
+                      <Alert.Heading>Welcome to the new OpsERA Pipelines!</Alert.Heading>
+                      <p>
+                      This technology will enable you to leverage OpsERA's expertise in building and managing DevSecOPS workflows as well as 
+                      building custom pipelines to meet your individual needs.  At this time you do not have any pipelines configured.  Please visit 
+                      the Catalog in order to add a workflow template to your pipeline.
+                      </p>
+                      <hr />
+                      <div className="d-flex justify-content-end">
+                        <LinkContainer to={"/workflow/catalog"}>
+                          <Button variant="primary" size="sm" className="mr-2 mt-2">
+                            <FontAwesomeIcon icon={faList} className="mr-1"/>Choose A Catalog Item</Button>
+                        </LinkContainer>
+                      </div>
+                    </Alert>
+                  </div>
+                </>  }
             </div>
           </>
         }
