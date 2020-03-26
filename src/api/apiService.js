@@ -3,7 +3,7 @@ const config = require("../config");
 
 const axiosInstance = axios.create({
   baseURL: config.apiServerUrl,
-  timeout: 50000,
+  timeout: 20000,
 });
 
 const setInterceptorToken = (authToken) => {
