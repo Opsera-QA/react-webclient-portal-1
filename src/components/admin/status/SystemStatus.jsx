@@ -53,11 +53,19 @@ function SystemStatus() {
       accessToken,
       urlParams).get()
       .then(response => {
+        console.log(response);
         console.log(response.data.message);
-        setState({ 
-          data: response.data.message,
-          fetching: false
-        });
+        if(response.data.status === 200) {
+          setState({ 
+            data: response.data.message,
+            fetching: false
+          });
+        } else {
+          setState({
+            fetching: false
+          });
+          showErrorAlert("Error Fetching Status. Contact Administrator for more details.");  
+        }
       })
       .catch = (e) => {
         console.log(e);
@@ -109,7 +117,7 @@ function SystemStatus() {
         </Alert>
       }
       {fetching && <LoadingDialog />}
-      {!fetching &&
+      {!fetching && !state.modal && state.data.length > 0 &&
           <>
             <Row>
               <Col sm={6}></Col>
