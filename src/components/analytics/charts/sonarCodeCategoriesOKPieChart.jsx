@@ -14,7 +14,7 @@ function CodeCategoriesPieChart2( { data, persona } ) {
     const { sonarCodeCategoriesOK }  =  data;
     return (
       <>
-        <div className="chart-label-text">Sonar: Code Categories (Keyword = No Value)</div>
+        <div className="chart-label-text">Sonar: Code Categories (Keyword = OK)</div>
         <ResponsivePie
           data={sonarCodeCategoriesOK ? sonarCodeCategoriesOK.data : []}
           margin={{ top: 40, right: 230, bottom: 80, left: 80 }}
@@ -22,7 +22,7 @@ function CodeCategoriesPieChart2( { data, persona } ) {
           padAngle={0.7}
           cornerRadius={3}
           borderWidth={1}
-          radialLabelsSkipAngle={10}
+          radialLabelsSkipAngle={45}
           radialLabelsTextXOffset={6}
           radialLabelsTextColor="#333333"
           radialLabelsLinkOffset={0}

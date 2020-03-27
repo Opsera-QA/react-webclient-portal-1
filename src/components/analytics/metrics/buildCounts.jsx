@@ -12,7 +12,7 @@ function BuildCounts( { data, persona } ) {
       <div className="d-flex flex-column mb-3">
         <div className="metric-box p-3 text-center">
           <blockquote className="blockquote mb-0 ">
-            <div className="box-metric">{jenkinsBuildSuccess ? jenkinsBuildSuccess.data[0] : null}</div>
+            <div className="box-metric">{jenkinsBuildSuccess && Object.keys(jenkinsBuildSuccess.data[0]).length > 0 ? Object.values(jenkinsBuildSuccess.data[0]) : null}</div>
             <footer className="blockquote">
               <div className="metric-box-subtext text-muted">
               Successful Builds
@@ -22,8 +22,8 @@ function BuildCounts( { data, persona } ) {
         
         
           <blockquote className="blockquote mb-0 ">
-            <div className={"box-metric " + (jenkinsBuildFailure && jenkinsBuildFailure.data[0] > 0 ? "red" : null)}>
-              {jenkinsBuildFailure ? jenkinsBuildFailure.data[0] : null}</div>
+            <div className={"box-metric " + (jenkinsBuildFailure && Object.keys(jenkinsBuildFailure.data[0]).length > 0 ? "red" : null)}>
+              {jenkinsBuildFailure && Object.keys(jenkinsBuildFailure.data[0]).length > 0 ? Object.values(jenkinsBuildFailure.data[0]) : null}</div>
             <footer className="blockquote">
               <div className="metric-box-subtext text-muted">
             Failed Builds
@@ -32,8 +32,8 @@ function BuildCounts( { data, persona } ) {
           </blockquote>
 
           <blockquote className="blockquote mb-0 ">
-            <div className={"box-metric " + (jenkinsBuildAborted && jenkinsBuildAborted.data[0] > 0 ? "red" : null)}>
-              {jenkinsBuildAborted ? jenkinsBuildAborted.data[0] : null}</div>
+            <div className={"box-metric " + (jenkinsBuildAborted && Object.keys(jenkinsBuildAborted.data[0]).length > 0 ? "red" : null)}>
+              {jenkinsBuildAborted && Object.keys(jenkinsBuildAborted.data[0]).length > 0 ? Object.values(jenkinsBuildAborted.data[0]) : null}</div>
             <footer className="blockquote">
               <div className="metric-box-subtext text-muted">
             Aborted Builds
@@ -46,7 +46,7 @@ function BuildCounts( { data, persona } ) {
         
         <div className="metric-box p-3 mt-3 text-center">
           <blockquote className="blockquote mb-0 ">
-            <div className="box-metric">{jenkinsDeploySuccess ? jenkinsDeploySuccess.data[0] : null}</div>
+            <div className="box-metric">{jenkinsDeploySuccess && Object.keys(jenkinsDeploySuccess.data[0]).length > 0 ? Object.values(jenkinsDeploySuccess.data[0]) : null}</div>
             <footer className="blockquote">
               <div className="metric-box-subtext text-muted">
             Successful Deployments
@@ -55,8 +55,8 @@ function BuildCounts( { data, persona } ) {
           </blockquote>
 
           <blockquote className="blockquote mb-0 ">
-            <div className={"box-metric " + (jenkinsDeployFailure && jenkinsDeployFailure.data[0] > 0 ? "red" : null)}>
-              {jenkinsDeployFailure ? jenkinsDeployFailure.data[0] : null}</div>
+            <div className={"box-metric " + (jenkinsDeployFailure && Object.keys(jenkinsDeployFailure.data[0]).length > 0 ? "red" : null)}>
+              {jenkinsDeployFailure && Object.keys(jenkinsDeployFailure.data[0]).length > 0 ? Object.values(jenkinsDeployFailure.data[0]) : null}</div>
             <footer className="blockquote">
               <div className="metric-box-subtext text-muted">
             Failed Deployments
@@ -66,12 +66,12 @@ function BuildCounts( { data, persona } ) {
         </div>
         <div className="metric-box-footertext text-muted">Source: Jenkins</div>
 
-        {codeshipBuildSuccess ? 
+        {codeshipBuildSuccess && Object.keys(codeshipBuildSuccess.data[0]).length > 0 ? 
           <div className="d-flex flex-column mt-3 mb-3">
             <div className="metric-box p-3 text-center">
               {codeshipBuildSuccess ?
                 <blockquote className="blockquote mb-0 ">
-                  <div className="box-metric">{codeshipBuildSuccess ? codeshipBuildSuccess.data[0] : null}</div>
+                  <div className="box-metric">{codeshipBuildSuccess && Object.keys(codeshipBuildSuccess.data[0]).length > 0 ? Object.values(codeshipBuildSuccess.data[0]) : null}</div>
                   <footer className="blockquote">
                     <div className="metric-box-subtext text-muted">
             Codeship Success
@@ -82,10 +82,10 @@ function BuildCounts( { data, persona } ) {
                 : ""
               }
 
-              {codeshipBuildFailure ?
+              {codeshipBuildFailure && Object.keys(codeshipBuildFailure.data[0]).length > 0 ?
                 <blockquote className="blockquote mb-0 ">
-                  <div className={"box-metric " + (codeshipBuildFailure && codeshipBuildFailure.data[0] > 0 ? "red" : null)}>
-                    {codeshipBuildFailure ? codeshipBuildFailure.data[0] : null}</div>
+                  <div className={"box-metric " + (codeshipBuildFailure && Object.keys(codeshipBuildFailure.data[0]).length > 0 ? "red" : null)}>
+                    {codeshipBuildFailure && Object.keys(codeshipBuildFailure.data[0]).length > 0 ? Object.values(codeshipBuildFailure.data[0]) : null}</div>
                   <footer className="blockquote">
                     <div className="metric-box-subtext text-muted">
             Codeship Failed
@@ -96,10 +96,10 @@ function BuildCounts( { data, persona } ) {
                 : ""
               } 
         
-              {codeshipBuildStopped ?
+              {codeshipBuildStopped && Object.keys(codeshipBuildStopped.data[0]).length > 0 ?
                 <blockquote className="blockquote mb-0 ">
-                  <div className={"box-metric " + (codeshipBuildStopped && codeshipBuildStopped.data[0] > 0 ? "red" : null)}>
-                    {codeshipBuildStopped ? codeshipBuildStopped.data[0] : null}</div>
+                  <div className={"box-metric " + (codeshipBuildStopped && Object.keys(codeshipBuildStopped.data[0]).length > 0 ? "red" : null)}>
+                    {codeshipBuildStopped && Object.keys(codeshipBuildStopped.data[0]).length > 0 ? Object.values(codeshipBuildStopped.data[0]) : null}</div>
                   <footer className="blockquote">
                     <div className="metric-box-subtext text-muted">
             Codeship Stopped
