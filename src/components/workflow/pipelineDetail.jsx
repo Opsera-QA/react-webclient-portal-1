@@ -121,6 +121,12 @@ function PipelineDetail({ id }) {
 }
 
 
+const INITIAL_FORM_DATA = {
+  name: "",
+  project: { name: "", project_id: "" },
+  description: ""
+};
+
 const ItemSummaryDetail = (props) => {
   const { data, role, stepStatus, parentCallback } = props;
   const contextType = useContext(AuthContext);
@@ -132,7 +138,9 @@ const ItemSummaryDetail = (props) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [modalDeleteId, setModalDeleteId] = useState(false);
   const [editTitle, setEditTitle] = useState(false);
-  const [formData, setFormData] = useState({ name: "" });
+  const [editDescription, setEditDescription] = useState(false);
+  const [editProject, setEditProject] = useState(false);
+  const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [workflowStatus, setWorkflowStatus] = useState(false);
   const [runningStepId, setRunningStepId] = useState("");
 
@@ -160,25 +168,49 @@ const ItemSummaryDetail = (props) => {
     setShowModal(true);
   };
 
-  const handleSaveTitleClick = async (pipelineId, title) => {
-    console.log(title);
-    if (title.length > 0) {
-      data.name = title;
+  const handleSavePropertyClick = async (pipelineId, value, type) => {
+    console.log(value);
+
+    if (Object.keys(value).length > 0 && type.length > 0) {
       const { getAccessToken } = contextType;
-      const postBody = {
-        "name": title
-      };
+      let postBody = {};
       
-      const response = await PipelineActions.save(pipelineId, postBody, getAccessToken);
-      console.log(response);
-      if (typeof(response.error) !== "undefined") {
-        console.log(response.error);
-        setErrors(response.error);
-      } else {
-        setEditTitle(false);  
-      }  
+      if (type === "name") {
+        data.name = value.name;        
+        postBody = {
+          "name": value.name
+        };
+        setEditTitle(false);
+      } else if (type === "project") {
+        data.project.name = value.project.name;
+        postBody = {
+          "project": { 
+            "name": value.project.name,
+            "project_id": ""
+          }
+        };
+        setEditProject(false);
+      } else if (type === "description") {
+        data.description = value.description;
+        postBody = {
+          "description": value.description
+        };
+        setEditDescription(false);
+      }
+      
+      if (Object.keys(postBody).length > 0 ) {
+        const response = await PipelineActions.save(pipelineId, postBody, getAccessToken);
+        console.log(response);
+        if (typeof(response.error) !== "undefined") {
+          console.log(response.error);
+          setErrors(response.error);
+        } else {
+          setFormData(INITIAL_FORM_DATA);          
+
+        }  
+      }
     } else {
-      setEditTitle(false);  
+      console.log("Missing value or type for edit field");
     }
   };
 
@@ -270,7 +302,7 @@ const ItemSummaryDetail = (props) => {
                           className="text-muted"
                           size="sm"
                           style={{ cursor: "pointer" }}
-                          onClick= {() => { handleSaveTitleClick(data._id, formData.name); }} />
+                          onClick= {() => { handleSavePropertyClick(data._id, formData, "name"); }} />
                         <FontAwesomeIcon icon={faTimes}
                           className="text-muted ml-3"
                           size="sm"
@@ -287,7 +319,7 @@ const ItemSummaryDetail = (props) => {
                         className="ml-2 text-muted"
                         size="xs" transform="shrink-6"
                         style={{ cursor: "pointer" }}
-                        onClick= {() => { setEditTitle(true); setFormData({ name: data.name }); }} /> : null }
+                        onClick= {() => { setEditTitle(true); setFormData({ ...formData, name: data.name }); }} /> : null }
                     <FontAwesomeIcon icon={faSearchPlus}
                       className="mr-1 float-right text-muted"
                       size="xs"
@@ -297,11 +329,77 @@ const ItemSummaryDetail = (props) => {
                 }
                 
               </Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">{data.project}</Card.Subtitle>
-              <Card.Text>
-                {data.description}
-              </Card.Text>
-              <Row className="mt-2">
+              <Card.Subtitle className="mb-2 text-muted">
+                { editDescription ? 
+                  <>
+                    <Row className="my-2">
+                      <Col sm={11}>
+                        <Form.Control maxLength="2000" as="textarea" type="text" placeholder="" value={formData.description || ""} 
+                          onChange={e => setFormData({ ...formData, description: e.target.value })} /></Col>
+                      <Col sm={1} className="my-auto">
+                        <FontAwesomeIcon icon={faSave}
+                          className="text-muted"
+                          size="sm"
+                          style={{ cursor: "pointer" }}
+                          onClick= {() => { handleSavePropertyClick(data._id, formData, "description"); }} />
+                        <FontAwesomeIcon icon={faTimes}
+                          className="text-muted ml-3"
+                          size="sm"
+                          style={{ cursor: "pointer" }}
+                          onClick= {() => { setEditDescription(false); }} />
+                      </Col>
+                    </Row>                    
+                  </> 
+                  :
+                  <>
+                    {data.description} 
+                    {role === "administrator" ? 
+                      <FontAwesomeIcon icon={faPencilAlt}
+                        className="ml-2 text-muted"
+                        size="xs" transform="shrink-5"
+                        style={{ cursor: "pointer" }}
+                        onClick= {() => { setEditDescription(true); setFormData({ ...formData, description: data.description }); }} /> : null }                    
+                  </> 
+                }
+              </Card.Subtitle>
+              
+              <Row className="mt-3">
+                <Col>
+                  { editProject ? 
+                    <>
+                      <Row className="my-2">
+                        <Col sm={11}>
+                          <Form.Control maxLength="150" type="text" placeholder="Project Name" value={formData.project.name || ""} 
+                            onChange={e => setFormData({ ...formData, project: { name: e.target.value } })} /></Col>
+                        <Col sm={1} className="my-auto">
+                          <FontAwesomeIcon icon={faSave}
+                            className="text-muted"
+                            size="sm"
+                            style={{ cursor: "pointer" }}
+                            onClick= {() => { handleSavePropertyClick(data._id, formData, "project"); }} />
+                          <FontAwesomeIcon icon={faTimes}
+                            className="text-muted ml-3"
+                            size="sm"
+                            style={{ cursor: "pointer" }}
+                            onClick= {() => { setEditProject(false); }} />
+                        </Col>
+                      </Row>                    
+                    </> 
+                    :
+                    <>
+                      <span className="text-muted">Project: </span> {data.project !== undefined && data.project.hasOwnProperty("name") ? <>{data.project.name}</> : <span className="text-muted font-italic">untitled</span> }                    
+                      {role === "administrator" ? 
+                        <FontAwesomeIcon icon={faPencilAlt}
+                          className="ml-2 text-muted"
+                          size="xs" transform="shrink-6"
+                          style={{ cursor: "pointer" }}
+                          onClick= {() => { setEditProject(true); setFormData({ ...formData, project: { name: data.project !== undefined && data.project.hasOwnProperty("name") ? data.project.name : "" } }); }} /> : null }                  
+                    </>  }
+                </Col>
+              </Row>
+
+
+              <Row>
                 <Col lg className="py-1"><span className="text-muted mr-1">ID:</span> {data._id}</Col>
                 <Col lg className="py-1"><span className="text-muted mr-1">Owner:</span> {data.owner}</Col>                
               </Row>
