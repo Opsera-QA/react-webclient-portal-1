@@ -15,7 +15,7 @@ function CodeCategoriesPieChart( { data, persona } ) {
     const { sonarCodeCategoriesNO_VALUE }  =  data;
     return (
       <>
-        <div className="chart-label-text">Sonar: Code Categories (Keyword = OK)</div>
+        <div className="chart-label-text">Sonar: Code Categories (Keyword = No Value)</div>
         <ResponsivePie
           data={sonarCodeCategoriesNO_VALUE ? sonarCodeCategoriesNO_VALUE.data : []}
           margin={{ top: 40, right: 230, bottom: 80, left: 80 }}

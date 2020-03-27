@@ -44,12 +44,14 @@ function SecOpsDashboard( { persona } ) {
 
 
   if(loading) {
+    console.log(Object.values(data));
     return (<LoadingDialog size="lg" />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
-  } else if (data === undefined || Object.keys(data).length == 0) {
+  } else if (data === undefined || Object.keys(data).length == 0 || Object.values(data).every(element => Object.keys(element.data[0]).length === 0)) {
     return (<InfoDialog  message="No log activity has been captured for this dashboard yet." />);
   } else {
+    console.log(Object.values(data));
     return (
       <>
         <div className="d-flex">
@@ -57,9 +59,9 @@ function SecOpsDashboard( { persona } ) {
             <SecOpsCounts data={data} persona={persona} />
           </div>
           <div className="p-2 flex-grow-1">
-            <div className="chart mb-3" style={{ height: "300px" }}>
+            {Object.keys(data.twistlockVulStatusHigh.data[0]).length > 0 ? <div className="chart mb-3" style={{ height: "300px" }}>
               <TwistlockVulnerability data={data} persona={persona} />
-            </div>
+            </div> : ""}
             <div className="chart mb-3" style={{ height: "300px" }}>
               <SonarCodeCategoriesNO_VALUEPieChart data={data} persona={persona} />
             </div>
@@ -72,9 +74,9 @@ function SecOpsDashboard( { persona } ) {
               <SonarMaintainabilityLineChart data={data} persona={persona} />
           
             </div>
-            <div className="chart mb-3" style={{ height: "300px" }}>
+            {data.sonarCodeSmells.data[0].data.length > 0 ? <div className="chart mb-3" style={{ height: "300px" }}>
               <SonarCodeSmellsLineChart data={data} persona={persona} />
-            </div>
+            </div> : ""}
 
 
           </div>
