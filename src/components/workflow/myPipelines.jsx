@@ -12,7 +12,7 @@ import Moment from "react-moment";
 import Modal from "../common/modal";
 import PipelineActions from "./actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPause, faBan, faPlay, faList, faSearch, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPause, faBan, faPlay, faList, faSearch, faTrash, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import "./workflows.css";
 
 
@@ -128,21 +128,34 @@ const ItemSummaries = (props) => {
     parentCallback("delete");
   }
 
-
+  
   return (
     <>
       {loading ? <LoadingDialog size="lg" /> : null}
-      {data.length > 0 ? data.map((item, idx) => (
+      {data.length > 0 ? data.map((item, idx) => (        
         <Card key={idx} className="mb-3">
           <Card.Body>
             <Card.Title>{item.name}</Card.Title>
             <Card.Subtitle className="mb-2 text-muted">
-              Product: {item.project}<br/>
               <small>Pipeline: {item._id}</small></Card.Subtitle>
             <Card.Text className="pt-1">
               {item.description}
               <br/><small className="text-muted">Created on <Moment format="YYYY-MM-DD, hh:mm a" date={item.createdAt} /></small>
             </Card.Text>
+            
+            { item.workflow.hasOwnProperty("last_step") ? 
+              <>
+                { item.workflow.last_step.hasOwnProperty("running") ? 
+                  <div className="mb-2 text-success"><FontAwesomeIcon icon={faSpinner} spin className="mr-1"/>Pipeline Currently Running</div> : 
+                  <>
+                    { item.workflow.last_step.hasOwnProperty("failed") ? 
+                      <div className="mb-2 text-danger">Step failure occurred at <Moment format="YYYY-MM-DD, hh:mm a" date={item.workflow.last_step.failed["updatedAt"]} /></div> : null }
+
+                    { item.workflow.last_step.hasOwnProperty("success") ? 
+                      <div className="mb-2 text-muted">Last Activity: <Moment format="YYYY-MM-DD, hh:mm a" date={item.workflow.last_step.success["updatedAt"]} /></div> : null }
+                  </> }
+                
+              </>: null}
             
             <Button variant="primary" size="sm" className="mr-2 mt-2" onClick={handleDetailsClick(item._id)}>
               <FontAwesomeIcon icon={faSearch} className="mr-1"/> View Pipeline </Button>
