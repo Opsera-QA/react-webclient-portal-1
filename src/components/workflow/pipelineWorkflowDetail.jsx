@@ -85,11 +85,11 @@ const PipelineWorkflowDetail = (props) => {
     setShowModal(true);
   };
 
-  const handleRefreshClick = async (pipelineId, stepNext) => {
-    //call gest status API
-    await fetchStatusData(pipelineId, stepNext);
-    parentCallback();
-  };
+  // const handleRefreshClick = async (pipelineId, stepNext) => {
+  //   //call gest status API
+  //   await fetchStatusData(pipelineId, stepNext);
+  //   parentCallback();
+  // };
 
   const handleRunPipelineClick = async (pipelineId, nextStep) => {
     let nextStepId = "";
@@ -99,7 +99,12 @@ const PipelineWorkflowDetail = (props) => {
     //call gest status API
     await runPipeline(pipelineId, nextStepId);
     parentCallback();
+    setWorkflowStatus("running");
+    
+    setTimeout(() => {console.log("Triggering delayed refresh"); parentCallback();}, 10000);
   };
+
+  
 
 
   async function fetchStatusData(pipelineId, stepNext) {
@@ -182,7 +187,7 @@ const PipelineWorkflowDetail = (props) => {
 
   return (
     <>
-      {loading ? <LoadingDialog size="lg" /> : null}
+      {/* {loading ? <LoadingDialog size="lg" /> : null} */}
       {error ? <ErrorDialog error={error} /> : null}
       {typeof(data.workflow) !== "undefined" && data.workflow.hasOwnProperty("source") ? 
         <>
@@ -196,21 +201,29 @@ const PipelineWorkflowDetail = (props) => {
             </div>
             <div className="py-2 mb-1 text-right">
               
-              <Button variant="warning" size="sm" className="mr-2" onClick={() => { handleRefreshClick(data._id); }}>
-                <FontAwesomeIcon icon={faSync} className="mr-1"/>Update Status</Button>
+              {/* <Button variant="warning" size="sm" className="mr-2" onClick={() => { handleRefreshClick(data._id); }}>
+                <FontAwesomeIcon icon={faSync} className="mr-1"/>Update Status</Button> */}
 
               {workflowStatus === "running" ? 
-                <Button variant="outline-dark" size="sm" className="mr-2" disabled>
-                  <FontAwesomeIcon icon={faSpinner} spin className="mr-1"/>Pipeline Running</Button>
+                <>
+                  <Button variant="outline-dark" size="sm" className="mr-2" disabled>
+                    <FontAwesomeIcon icon={faSpinner} spin className="mr-1"/>Pipeline Running</Button>
+                  <Button variant="outline-warning" size="sm" className="mr-2" onClick={() => { parentCallback(); }}>
+                    <FontAwesomeIcon icon={faSync} className="fa-fw"/></Button>
+                </>
                 :
                 <>
                   { nextStep === undefined || nextStep === data.workflow.plan[0] ?
                     <Button variant="primary" size="sm" className="mr-2" onClick={() => { handleRunPipelineClick(data._id); }}>
                       <FontAwesomeIcon icon={faPlay} className="mr-1"/>Start Pipeline</Button>
                     :
-                    <Button variant="primary" size="sm" className="mr-2" onClick={() => { handleRunPipelineClick(data._id, nextStep); }}>
-                      <FontAwesomeIcon icon={faForward} className="mr-1"/>Next Step</Button>
-                  }
+                    <>
+                      <Button variant="primary" size="sm" className="mr-2" onClick={() => { handleRunPipelineClick(data._id, nextStep); }}>
+                        <FontAwesomeIcon icon={faForward} className="mr-1"/>Next Step</Button>
+
+                      <Button variant="outline-warning" size="sm" className="mr-2" onClick={() => { parentCallback(); }}>
+                        <FontAwesomeIcon icon={faSync} className="fa-fw"/></Button>
+                    </>}
                 </>
               }
               
