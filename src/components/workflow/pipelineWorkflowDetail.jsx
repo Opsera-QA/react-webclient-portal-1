@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import PropTypes from "prop-types";
 import { axiosApiService } from "../../api/apiService";
 import { AuthContext } from "../../contexts/AuthContext"; 
+import socketIOClient from "socket.io-client";
 import { Row, Col, Button } from "react-bootstrap";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
@@ -48,19 +49,58 @@ const PipelineWorkflowDetail = (props) => {
   const [workflowStatus, setWorkflowStatus] = useState(false);
   const [showPipelineDataModal, setShowPipelineDataModal] = useState(false);
 
+  const [ioResponse, setIoResponse] = useState({});
+  const endPointUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
+  
 
   useEffect(() => {    
     if (data.workflow !== undefined) {
       setState({ items: data.workflow.plan });
       setLastStep(data.workflow.last_step);
       setNextStep(calculateNextStep(data.workflow.last_step));
-      setWorkflowStatus(typeof(data.workflow.last_step) !== "undefined" && typeof(data.workflow.last_step.running) !== "undefined" && data.workflow.last_step.running.step_id.length > 0 ? "running" : false);
-      
+
+      if (data !== undefined && data.workflow.last_step !== undefined) {
+        setWorkflowStatus(data.workflow.last_step.hasOwnProperty("running") && Object.keys(data.workflow.last_step.running.step_id).length > 0 ? "running" : false);
+      } else {
+        setWorkflowStatus(false);        
+      }      
     }
     console.log(data);
-  }, [data, loading]);
+
+    //subscribe
+    if (workflowStatus === "running") {
+      subscribeToTimer();
+    } 
+    
+
+  }, [data]);
 
   
+  //SociketIO
+  const subscribeToTimer = () => {
+    //TODO:  LOOK INTO TAKING THIS DATA AND VALIDATING IT AND INSERTING IT INTO THE EXISTING DATA.WORKFLOW.LAST_STEP.  THAT COULD WORK!
+    const socket = socketIOClient(endPointUrl, { query: "pipelineId=" + data._id });
+    socket.emit("subscribeToPipelineActivity", 1000);
+    socket.on("subscribeToPipelineActivity", dataObj => {
+      if (typeof(dataObj) !== "undefined" && Object.keys(dataObj).length > 0) {
+        data.workflow.last_step = dataObj;
+        setLastStep(dataObj);
+      }
+
+      //if dataObj does not have anything running, unsubscribe
+      if (Object.keys(dataObj.running).length == 0) {
+        //unsubscribe!
+        console.log("SIGNING OUT!");
+        setWorkflowStatus(false);        
+        socket.close();
+      }
+
+      setIoResponse(dataObj);
+    });
+
+  };
+
+
   const calculateNextStep = (last_step) => {
     let nextStep = {};
     
@@ -85,11 +125,11 @@ const PipelineWorkflowDetail = (props) => {
     setShowModal(true);
   };
 
-  // const handleRefreshClick = async (pipelineId, stepNext) => {
-  //   //call gest status API
-  //   await fetchStatusData(pipelineId, stepNext);
-  //   parentCallback();
-  // };
+  const handleRefreshClick = async (pipelineId, stepNext) => {
+    //call gest status API
+    await fetchStatusData(pipelineId, stepNext);
+    parentCallback();
+  };
 
   const handleRunPipelineClick = async (pipelineId, nextStep) => {
     let nextStepId = "";
@@ -100,8 +140,8 @@ const PipelineWorkflowDetail = (props) => {
     await runPipeline(pipelineId, nextStepId);
     parentCallback();
     setWorkflowStatus("running");
-    
-    setTimeout(() => {console.log("Triggering delayed refresh"); parentCallback();}, 10000);
+    subscribeToTimer();
+    //setTimeout(() => {console.log("Triggering delayed refresh"); parentCallback();}, 10000);
   };
 
   
@@ -188,6 +228,13 @@ const PipelineWorkflowDetail = (props) => {
   return (
     <>
       {/* {loading ? <LoadingDialog size="lg" /> : null} */}
+      SocketIO Response:
+
+      {/* {ioResponse.map((item, index) => ( */}
+
+      <div >{JSON.stringify(ioResponse)}</div>
+      {/* ))} */}
+
       {error ? <ErrorDialog error={error} /> : null}
       {typeof(data.workflow) !== "undefined" && data.workflow.hasOwnProperty("source") ? 
         <>
@@ -208,7 +255,7 @@ const PipelineWorkflowDetail = (props) => {
                 <>
                   <Button variant="outline-dark" size="sm" className="mr-2" disabled>
                     <FontAwesomeIcon icon={faSpinner} spin className="mr-1"/>Pipeline Running</Button>
-                  <Button variant="outline-warning" size="sm" className="mr-2" onClick={() => { parentCallback(); }}>
+                  <Button variant="outline-warning" size="sm" className="mr-2" onClick={() => { handleRefreshClick(data._id); }}>
                     <FontAwesomeIcon icon={faSync} className="fa-fw"/></Button>
                 </>
                 :
