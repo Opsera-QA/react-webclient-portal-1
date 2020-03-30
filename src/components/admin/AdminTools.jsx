@@ -3,7 +3,9 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { Link } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faHeartbeat, faTimes, faUserCircle, faLink, faChartBar } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faHeartbeat, faTimes, faUserCircle, faLink, faChartBar, faColumns } from "@fortawesome/free-solid-svg-icons";
+
+const apiServerUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
 
 class AdminTools extends Component {
   static contextType = AuthContext;
@@ -64,6 +66,9 @@ class AdminTools extends Component {
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
                 <Link to="/admin/customerstatus"><FontAwesomeIcon icon={faHeartbeat} fixedWidth /> Customer System Status</Link>
+              </Col>
+              <Col xs={12} md={6} lg={4} className="p-2">
+                <a href={ apiServerUrl + "/tasks" } target="_blank"><FontAwesomeIcon icon={faColumns} fixedWidth /> Tasks Dashboard</a>
               </Col>
             </Row>
 
