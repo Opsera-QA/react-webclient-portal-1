@@ -48,8 +48,6 @@ const PipelineWorkflowDetail = (props) => {
   const [modalMessage, setModalMessage] = useState({});
   const [workflowStatus, setWorkflowStatus] = useState(false);
   const [showPipelineDataModal, setShowPipelineDataModal] = useState(false);
-
-  const [ioResponse, setIoResponse] = useState({});
   const endPointUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
   
 
@@ -76,9 +74,8 @@ const PipelineWorkflowDetail = (props) => {
   }, [data]);
 
   
-  //SociketIO
+  //SociketIO: TODO Review code
   const subscribeToTimer = () => {
-    //TODO:  LOOK INTO TAKING THIS DATA AND VALIDATING IT AND INSERTING IT INTO THE EXISTING DATA.WORKFLOW.LAST_STEP.  THAT COULD WORK!
     const socket = socketIOClient(endPointUrl, { query: "pipelineId=" + data._id });
     socket.emit("subscribeToPipelineActivity", 1000);
     socket.on("subscribeToPipelineActivity", dataObj => {
@@ -95,15 +92,14 @@ const PipelineWorkflowDetail = (props) => {
         socket.close();
       }
 
-      setIoResponse(dataObj);
+      console.log("Update from Websocket: ", dataObj);
     });
 
   };
 
 
   const calculateNextStep = (last_step) => {
-    let nextStep = {};
-    
+    let nextStep = {};    
     if (last_step && last_step.hasOwnProperty("running")) {
       let runningStepId = typeof(last_step.running.step_id) !== "undefined" && last_step.running.step_id.length > 0 ? last_step.running.step_id : false;
       let stepArrayIndex = data.workflow.plan.findIndex(x => x._id.toString() === runningStepId); 
@@ -120,10 +116,12 @@ const PipelineWorkflowDetail = (props) => {
     return nextStep;
   };
 
+
   const handleViewClick = (param) => {
     setModalMessage(param);
     setShowModal(true);
   };
+
 
   const handleRefreshClick = async (pipelineId, stepNext) => {
     //call gest status API
@@ -131,6 +129,7 @@ const PipelineWorkflowDetail = (props) => {
     parentCallback();
   };
 
+  
   const handleRunPipelineClick = async (pipelineId, nextStep) => {
     let nextStepId = "";
     if (nextStep !== undefined) {
@@ -143,8 +142,6 @@ const PipelineWorkflowDetail = (props) => {
     subscribeToTimer();
     //setTimeout(() => {console.log("Triggering delayed refresh"); parentCallback();}, 10000);
   };
-
-  
 
 
   async function fetchStatusData(pipelineId, stepNext) {
@@ -169,6 +166,7 @@ const PipelineWorkflowDetail = (props) => {
     }
   }
 
+
   async function runPipeline(pipelineId, nextStepId) {
     const { getAccessToken } = contextType;
     const postBody = {
@@ -185,7 +183,6 @@ const PipelineWorkflowDetail = (props) => {
       parentCallback();
     }   
   }
-
 
 
   function onDragEnd(result) {
@@ -211,9 +208,11 @@ const PipelineWorkflowDetail = (props) => {
     setState({ items });
   }
 
+
   const handleViewPipelineClick = (param) => {
     setShowPipelineDataModal(param);
   };
+
 
   const callbackFunction = (item) => {
     window.scrollTo(0, 0);
@@ -221,20 +220,14 @@ const PipelineWorkflowDetail = (props) => {
     parentCallback(item);
   };
 
+
   const handleSourceEditClick = () => {
     parentCallback({ id: data._id, type: "source", item_id: "" });
   };
 
+
   return (
-    <>
-      {/* {loading ? <LoadingDialog size="lg" /> : null} */}
-      SocketIO Response:
-
-      {/* {ioResponse.map((item, index) => ( */}
-
-      <div >{JSON.stringify(ioResponse)}</div>
-      {/* ))} */}
-
+    <>      
       {error ? <ErrorDialog error={error} /> : null}
       {typeof(data.workflow) !== "undefined" && data.workflow.hasOwnProperty("source") ? 
         <>
