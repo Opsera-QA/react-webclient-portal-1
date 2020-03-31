@@ -261,10 +261,13 @@ const PipelineWorkflowDetail = (props) => {
                 :
                 <>
                   { nextStep === undefined || nextStep === data.workflow.plan[0] ?
-                    <Button variant="primary" size="sm" className="mr-2" onClick={() => { handleRunPipelineClick(data._id); }}>
+                    <Button variant="success" size="sm" className="mr-2" onClick={() => { handleRunPipelineClick(data._id); }}>
                       <FontAwesomeIcon icon={faPlay} className="mr-1"/>Start Pipeline</Button>
                     :
                     <>
+                      <Button variant="success" size="sm" className="mr-2" onClick={() => { handleRunPipelineClick(data._id); }}>
+                        <FontAwesomeIcon icon={faPlay} className="mr-1"/>Continue Pipeline</Button>
+
                       <Button variant="primary" size="sm" className="mr-2" onClick={() => { handleRunPipelineClick(data._id, nextStep); }}>
                         <FontAwesomeIcon icon={faForward} className="mr-1"/>Next Step</Button>
 
