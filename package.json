@@ -40,6 +40,7 @@
     "start-windows": "set PORT=8080 && react-scripts start",
     "build:staging": "env-cmd -f .env.staging react-scripts build && mv build build-staging",
     "build:production": "react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
