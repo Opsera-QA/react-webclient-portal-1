@@ -8,7 +8,7 @@ import { Row, Col, Button } from "react-bootstrap";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faCog, faBars, faPause, faBan, faPlay, faChevronDown, faSync, faSpinner, faForward, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faCog, faBars, faPause, faBan, faPlay, faChevronDown, faSync, faSpinner, faForward, faCheck, faStopCircle } from "@fortawesome/free-solid-svg-icons";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Modal from "../common/modal";
 import Moment from "react-moment";
@@ -66,9 +66,9 @@ const PipelineWorkflowDetail = (props) => {
     console.log(data);
 
     //subscribe
-    if (workflowStatus === "running") {
-      subscribeToTimer();
-    } 
+    //if (workflowStatus === "running") {
+    subscribeToTimer();
+    //} 
     
 
   }, [data]);
@@ -79,22 +79,25 @@ const PipelineWorkflowDetail = (props) => {
     const socket = socketIOClient(endPointUrl, { query: "pipelineId=" + data._id });
     socket.emit("subscribeToPipelineActivity", 1000);
     socket.on("subscribeToPipelineActivity", dataObj => {
+      
+      setWorkflowStatus("running");
+
       if (typeof(dataObj) !== "undefined" && Object.keys(dataObj).length > 0) {
         data.workflow.last_step = dataObj;
         setLastStep(dataObj);
       }
 
+      //do a compare of several updates.  if they don't chnage, maybe then end connection?
       //if dataObj does not have anything running, unsubscribe
-      if (Object.keys(dataObj.running).length == 0) {
+      /*       if (Object.keys(dataObj.running).length == 0) {
         //unsubscribe!
         console.log("SIGNING OUT!");
         setWorkflowStatus(false);        
         socket.close();
       }
-
+ */
       console.log("Update from Websocket: ", dataObj);
     });
-
   };
 
 
@@ -116,19 +119,16 @@ const PipelineWorkflowDetail = (props) => {
     return nextStep;
   };
 
-
   const handleViewClick = (param) => {
     setModalMessage(param);
     setShowModal(true);
   };
-
 
   const handleRefreshClick = async (pipelineId, stepNext) => {
     //call gest status API
     await fetchStatusData(pipelineId, stepNext);
     parentCallback();
   };
-
   
   const handleRunPipelineClick = async (pipelineId, nextStep) => {
     let nextStepId = "";
@@ -136,13 +136,16 @@ const PipelineWorkflowDetail = (props) => {
       nextStepId = nextStep.hasOwnProperty("_id") ? nextStep._id : "";
     }
     //call gest status API
-    await runPipeline(pipelineId, nextStepId);
-    parentCallback();
+    if (nextStepId.length > 0) {
+      await runPipelineAction(pipelineId, nextStepId, "run");
+    } else {
+      await runPipeline(pipelineId);
+    }
+    //parentCallback();
     setWorkflowStatus("running");
     subscribeToTimer();
     //setTimeout(() => {console.log("Triggering delayed refresh"); parentCallback();}, 10000);
   };
-
 
   async function fetchStatusData(pipelineId, stepNext) {
     setLoading(true);
@@ -166,21 +169,35 @@ const PipelineWorkflowDetail = (props) => {
     }
   }
 
-
-  async function runPipeline(pipelineId, nextStepId) {
+  async function runPipelineAction(pipelineId, nextStepId, action) {
     const { getAccessToken } = contextType;
     const postBody = {
-      "action": "run",
+      "action": action,
       "stepId": nextStepId ? nextStepId : ""
     };
     console.log("POST OPERATION: ", postBody);
-    const response = await PipelineActions.run(pipelineId, postBody, getAccessToken);
+    const response = await PipelineActions.action(pipelineId, postBody, getAccessToken);
     console.log(response);
     if (typeof(response.error) !== "undefined") {
       console.log(response.error);
       setErrors(response.error);
     } else {
       parentCallback();
+    }   
+  }
+
+
+  async function runPipeline(pipelineId) {
+    const { getAccessToken } = contextType;
+    const postBody = {};
+    const response = await PipelineActions.run(pipelineId, postBody, getAccessToken);
+    console.log(response);
+    if (typeof(response.error) !== "undefined") {
+      console.log(response.error);
+      setErrors(response.error);
+    } else {
+      setWorkflowStatus("running");
+      subscribeToTimer();
     }   
   }
 
@@ -248,6 +265,8 @@ const PipelineWorkflowDetail = (props) => {
                 <>
                   <Button variant="outline-dark" size="sm" className="mr-2" disabled>
                     <FontAwesomeIcon icon={faSpinner} spin className="mr-1"/>Pipeline Running</Button>
+                  <Button variant="outline-danger" size="sm" className="mr-2" onClick={() => { handleRefreshClick(data._id); }}>
+                    <FontAwesomeIcon icon={faStopCircle} className="fa-fw"/>Stop Pipeline</Button>
                   <Button variant="outline-warning" size="sm" className="mr-2" onClick={() => { handleRefreshClick(data._id); }}>
                     <FontAwesomeIcon icon={faSync} className="fa-fw"/></Button>
                 </>
@@ -319,7 +338,7 @@ const PipelineWorkflowDetail = (props) => {
                   {provided => (
                     <div ref={provided.innerRef} {...provided.droppableProps}>
                       <ItemList items={state.items} lastStep={lastStep} 
-                        nextStep={nextStep} pipelineId={data._id} 
+                        nextStep={nextStep} pipelineId={data._id} parentCallbackPipelineAction={runPipelineAction}  
                         parentCallback={callbackFunction} fetchStatusCallback={fetchStatusData} />
                       {provided.placeholder}
                     </div>
@@ -353,14 +372,14 @@ const PipelineWorkflowDetail = (props) => {
 
 
 
-const ItemList = React.memo(function ItemList({ items, lastStep, nextStep, pipelineId, parentCallback, fetchStatusCallback }) {
+const ItemList = React.memo(function ItemList({ items, lastStep, nextStep, pipelineId, parentCallback, fetchStatusCallback, parentCallbackPipelineAction }) {
   const callbackFunction = (param) => {
     parentCallback(param);
   };
 
   return items.map((item, index) => (
     <Item item={item} index={index} key={item._id} 
-      lastStep={lastStep} pipelineId={pipelineId} nextStep={nextStep} 
+      lastStep={lastStep} pipelineId={pipelineId} nextStep={nextStep}  parentCallbackPipelineAction={parentCallbackPipelineAction} 
       parentCallback={callbackFunction} fetchStatusCallback={fetchStatusCallback} />
   ));
 });
@@ -377,7 +396,7 @@ const QuoteItem = styled.div`
   padding: ${grid}px;
 `;
 
-const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fetchStatusCallback }) => {
+const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fetchStatusCallback, parentCallbackPipelineAction }) => {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
   const [loading, setLoading] = useState(false);
@@ -428,44 +447,6 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
     }
   }
 
-  async function runPipeline(pipelineId, stepId) {
-    setLoading(true);
-    const { getAccessToken } = contextType;
-    const postBody = {
-      "action": "run",
-      "stepId": stepId
-    };
-    const response = await PipelineActions.run(pipelineId, postBody, getAccessToken);
-    console.log(response);
-    if (typeof(response.error) !== "undefined") {
-      console.log(response.error);
-      setErrors(response.error);
-      setLoading(false);
-    } else {
-      setShowActionAlert(true);
-      setLoading(false);      
-    }   
-  }
-
-  async function cancelPipelineStep(pipelineId, stepId) {
-    setLoading(true);
-    const { getAccessToken } = contextType;
-    const postBody = {
-      "action": "cancel",
-      "stepId": stepId
-    };
-    const response = await PipelineActions.run(pipelineId, postBody, getAccessToken);
-    console.log(response);
-    if (typeof(response.error) !== "undefined") {
-      console.log(response.error);
-      setErrors(response.error);
-      setLoading(false);
-    } else {
-      setShowCancelAlert(true);
-      setLoading(false);      
-    }   
-  }
-
   const handleViewClick = (param) => {
     setModalMessage(param);
     setShowModal(true);
@@ -482,14 +463,14 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
   };
 
   const handleRunClick = async (stepId) => {
-    await runPipeline(pipelineId, stepId);
+    await parentCallbackPipelineAction(pipelineId, stepId, "run");
 
     //TODO THIS NEEDS TO TRIGGER REFRESH OF UI!
     await fetchStatusCallback(pipelineId, stepId);
   };
   
   const handleCancelClick = async (stepId) => {
-    await cancelPipelineStep(pipelineId, stepId);
+    await parentCallbackPipelineAction(pipelineId, stepId, "cancel");
     
     //TODO THIS NEEDS TO TRIGGER REFRESH OF UI!
     await fetchStatusCallback(pipelineId);
@@ -633,7 +614,8 @@ Item.propTypes = {
   nextStep: PropTypes.object,
   pipelineId: PropTypes.string,
   parentCallback: PropTypes.func,
-  fetchStatusCallback: PropTypes.func
+  fetchStatusCallback: PropTypes.func,
+  parentCallbackPipelineAction: PropTypes.func
 };
 
 ItemList.propTypes = {
@@ -642,7 +624,8 @@ ItemList.propTypes = {
   nextStep: PropTypes.object,
   pipelineId: PropTypes.string,
   parentCallback: PropTypes.func,
-  fetchStatusCallback: PropTypes.func
+  fetchStatusCallback: PropTypes.func,
+  parentCallbackPipelineAction: PropTypes.func
 };
 
 
