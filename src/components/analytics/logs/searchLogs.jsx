@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { ApiService } from "../../../api/apiService";
@@ -9,8 +9,9 @@ import Moment from "react-moment";
 import Modal from "../../common/modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
-import Select from "react-select";
 import "./logs.css";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
 
 
 const FILTER = [{ value: "pipeline", label: "Pipeline" }, { value: "metricbeat", label: "MetricBeat" }, { value: "twistlock", label: "TwistLock" }, { value: "blueprint", label: "Build Blueprint" }];
@@ -22,16 +23,23 @@ function SearchLogs ( ) {
   const [loading, setLoading] = useState(false);
   const [noResults, setNoResults] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [filterOptions, setFilters] = useState([]);
   const [filterType, setFilterType] = useState("pipeline");
+  const [customFilter, setCustomFilter] = useState([]);
+  const [filterLoading, setFilterLoading] = useState(false);
+  const [manualCache, setManualCaching] = useState(false);
+  const animatedComponents = makeAnimated();
+
 
   const handleFormSubmit = e => {
     e.preventDefault();
-    setData([]);    
-    fetchData(searchTerm, filterType);    
+    setData([]); 
+    fetchData(searchTerm, filterType, customFilter);    
   };
 
   const cancelSearchClicked = e => {
     e.preventDefault();
+    setCustomFilter([]);
     setData([]);
     setSearchTerm("");
   };
@@ -39,62 +47,203 @@ function SearchLogs ( ) {
   const handleSelectChange = (selectedOption) => {
     setData([]);
     setFilterType(selectedOption.value);
+    setFilters([]);
+    setCustomFilter([]);
+    setManualCaching(false);
+    fetchFilterData();
   };
 
-  const fetchData = async (search, filter) => {
+  const customFilterSelectionChange = (selectedOption) => {
+    if (selectedOption && filterOptions.length > 0) {
+      let optionsArray = [];
+      if (filterType === "blueprint") {
+        optionsArray.push(selectedOption.value);
+        setCustomFilter(optionsArray);
+      }
+      else {
+        for (let item in selectedOption) {
+          for (let filterGroup in filterOptions) {
+            for (let innerItem in filterOptions[filterGroup].options) {
+              if (filterOptions[filterGroup].options[innerItem].value === selectedOption[item].value) {
+                optionsArray.push({
+                  group: filterOptions[filterGroup].label,
+                  value: selectedOption[item].value
+                });
+              }
+            }
+          }
+        }
+        setCustomFilter(optionsArray);
+      }
+      setData([]);
+    }
+
+  };
+
+  const fetchData = async (search, filter, customFilter) => {
+    console.log(customFilter);
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
     const urlParams = {
       search: search,
-      filter: filter
+      filter: filter,
+      customFilter: customFilter
     };
     const apiCall = new ApiService("/analytics/search", urlParams, accessToken);
-    const result = await apiCall.get()
+    let result = await apiCall.get()
       .catch(function (error) {
+        // setData([]);
         setErrors(error.toJSON());
       });
-    
     let searchResults = result.data.hasOwnProperty("hits") && result.data.hits.hasOwnProperty("hits") ? result.data.hits.hits : [];
     setNoResults(searchResults.length === 0);
     setData(searchResults);
     setLoading(false);
   };
 
-  
+  const fetchFilterData = async () => {
+    setFilterLoading(true);
+    const { getAccessToken } = contextType;
+    const accessToken = await getAccessToken();
+    const apiCall = new ApiService("/analytics/search/filter", {}, accessToken);
+    if (!manualCache) {
+      await apiCall.get()
+        .then(res => {
+          if (filterType === "blueprint") {
+            let slicedFilters = res.data.hits.hits[0].options;
+            res.data.hasOwnProperty("hits") && res.data.hits.hasOwnProperty("hits") ? setFilters(slicedFilters) : setFilters([]);
+          } else {
+            res.data.hasOwnProperty("hits") && res.data.hits.hasOwnProperty("hits") ? setFilters(res.data.hits.hits) : setFilters([]);
+          }
+          setManualCaching(true);
+          setFilterLoading(false);
+        })
+        .catch(err => {
+          setErrors(err);
+          setFilterLoading(false);
+        });
+    } else {
+      setFilterLoading(false);
+    }
+  };
+
   if (error) {
     return (<ErrorDialog error={error} />);
   } else {
     return (
       <>
-        <div className="max-content-width">
-          <Form onSubmit={handleFormSubmit}>
-            <div className="d-flex mt-3">
-              <div className="p-2 flex-grow-1">
-                <Form.Control placeholder="Search logs" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
-              </div>
-              <div className="p-2 flex-grow-1">
-                <Select
-                  className="basic-single"
-                  menuPortalTarget={document.body}
-                  styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                  classNamePrefix="select"
-                  defaultValue={filterType ? FILTER[FILTER.findIndex(x => x.value ===filterType)] : FILTER[0]}
-                  isDisabled={false}
-                  isClearable={false}
-                  isSearchable={true}
-                  name="FILTER-SELECT"
-                  options={FILTER}
-                  onChange={handleSelectChange}
-                />
-              </div>
-              <div className="p-2">
-                <Button variant="primary" type="submit">Search</Button>
-                <Button variant="outline-secondary" className="ml-2" type="button" onClick={cancelSearchClicked}>Cancel</Button>
-              </div>
+
+        {
+          (filterType === "blueprint") ? 
+            <div className="max-content-width">
+              <Form onSubmit={handleFormSubmit}>
+                <div className="d-flex mt">
+                  <div className="p-2 flex-grow-1">
+                    <Form.Control placeholder="Enter Build Number" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
+                  </div>
+                  <div className="p-2 flex-grow-1">
+                    <Select
+                      className="basic-single"
+                      menuPortalTarget={document.body}
+                      classNamePrefix="select"
+                      defaultValue={filterType ? FILTER[FILTER.findIndex(x => x.value ===filterType)] : FILTER[0]}
+                      isDisabled={false}
+                      isClearable={false}
+                      isSearchable={true}
+                      name="FILTER-SELECT"
+                      options={FILTER}
+                      onChange={handleSelectChange}
+                    />
+                  </div>
+                  <div className="p-2">
+                    <Button variant="primary" type="submit">Search</Button>
+                    <Button variant="outline-secondary" className="ml-2" type="button" onClick={cancelSearchClicked}>Cancel</Button>
+                  </div>
+                </div>
+                <div className="d-flex mt">
+                  <div className="p-2 flex-grow-1">
+                    <Select
+                      cacheOptions
+                      className="basic-multi-select disabled"
+                      classNamePrefix="select"
+                      placeholder={"Select Job Name"}
+                      styles={{
+                        multiValue: base => ({
+                          ...base,
+                          border: "2px dotted",
+                        }),
+                      }}
+                      components={animatedComponents}
+                      onMenuOpen= {fetchFilterData}
+                      menuPortalTarget={document.body}
+                      isLoading={filterLoading}
+                      isClearable={true}
+                      isSearchable={true}
+                      name="CUSTOM-FILTERS"
+                      options={filterOptions}
+                      onChange={customFilterSelectionChange}
+                    />
+                  </div>
+                </div>
+              </Form>
             </div>
-          </Form>
-        </div>
+            :
+            <div className="max-content-width">
+              <Form onSubmit={handleFormSubmit}>
+                <div className="d-flex mt">
+                  <div className="p-2 flex-grow-1">
+                    <Form.Control placeholder="Search logs" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
+                  </div>
+                  <div className="p-2 flex-grow-1">
+                    <Select
+                      className="basic-single"
+                      menuPortalTarget={document.body}
+                      classNamePrefix="select"
+                      defaultValue={filterType ? FILTER[FILTER.findIndex(x => x.value ===filterType)] : FILTER[0]}
+                      isDisabled={false}
+                      isClearable={false}
+                      isSearchable={true}
+                      name="FILTER-SELECT"
+                      options={FILTER}
+                      onChange={handleSelectChange}
+                    />
+                  </div>
+                  <div className="p-2">
+                    <Button variant="primary" type="submit">Search</Button>
+                    <Button variant="outline-secondary" className="ml-2" type="button" onClick={cancelSearchClicked}>Cancel</Button>
+                  </div>
+                </div>
+                <div className="d-flex mt">
+                  <div className="p-2 flex-grow-1">
+                    <Select
+                      cacheOptions
+                      className="basic-multi-select disabled"
+                      classNamePrefix="select"
+                      isMulti
+                      placeholder={"Filters"}
+                      styles={{
+                        multiValue: base => ({
+                          ...base,
+                          border: "2px dotted",
+                        }),
+                      }}
+                      components={animatedComponents}
+                      onMenuOpen= {fetchFilterData}
+                      menuPortalTarget={document.body}
+                      isLoading={filterLoading}
+                      isClearable={true}
+                      isSearchable={true}
+                      name="CUSTOM-FILTERS"
+                      options={filterOptions}
+                      onChange={customFilterSelectionChange}
+                    />
+                  </div>
+                </div>
+              </Form>
+            </div>
+        }
+
 
         {loading && <LoadingDialog size="sm" />}
 
@@ -233,4 +382,3 @@ MapLogData.propTypes = {
 
 
 export default SearchLogs;
-
