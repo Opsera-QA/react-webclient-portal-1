@@ -103,6 +103,7 @@ const PipelineWorkflowDetail = (props) => {
     });
   };
 
+  
   const calculateNextStep = (last_step) => {
     let nextStep = {};    
     if (last_step && last_step.hasOwnProperty("running")) {
@@ -121,10 +122,12 @@ const PipelineWorkflowDetail = (props) => {
     return nextStep;
   };
 
+
   const handleViewClick = (param) => {
     setModalMessage(param);
     setShowModal(true);
   };
+
 
   const handleRefreshClick = async (pipelineId, stepNext) => {
     await fetchStatusData(pipelineId, stepNext);
@@ -132,12 +135,14 @@ const PipelineWorkflowDetail = (props) => {
     subscribeToTimer();
   };
 
+
   const handleStopWorkflowClick = async (pipelineId, stepNext) => {
     //call gest status API
     await runPipelineAction(pipelineId, stepNext, "cancel");
     setWorkflowStatus(false);
   };
   
+
   const handleRunPipelineClick = async (pipelineId, nextStep) => {
     let nextStepId = "";
     if (nextStep !== undefined) {
@@ -154,6 +159,7 @@ const PipelineWorkflowDetail = (props) => {
     subscribeToTimer();
     //setTimeout(() => {console.log("Triggering delayed refresh"); parentCallback();}, 10000);
   };
+
 
   async function fetchStatusData(pipelineId, stepNext) {
     setLoading(true);
@@ -176,6 +182,7 @@ const PipelineWorkflowDetail = (props) => {
       setLoading(false);
     }
   }
+
 
   async function runPipelineAction(pipelineId, nextStepId, action) {
     const { getAccessToken } = contextType;
