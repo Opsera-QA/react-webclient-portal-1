@@ -49,7 +49,7 @@ const PipelineWorkflowDetail = (props) => {
   const [workflowStatus, setWorkflowStatus] = useState(false);
   const [showPipelineDataModal, setShowPipelineDataModal] = useState(false);
   const endPointUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
-  
+  const socket = socketIOClient(endPointUrl, { query: "pipelineId=" + data._id });  //probably need to call socket.close() in a few places
 
   useEffect(() => {    
     if (data.workflow !== undefined) {
@@ -67,7 +67,7 @@ const PipelineWorkflowDetail = (props) => {
 
     //subscribe
     //if (workflowStatus === "running") {
-    subscribeToTimer();
+    //subscribeToTimer();
     //} 
     
 
@@ -75,8 +75,7 @@ const PipelineWorkflowDetail = (props) => {
 
   
   //SociketIO: TODO Review code
-  const subscribeToTimer = () => {
-    const socket = socketIOClient(endPointUrl, { query: "pipelineId=" + data._id });
+  const subscribeToTimer = () => {    
     socket.emit("subscribeToPipelineActivity", 1000);
     socket.on("subscribeToPipelineActivity", dataObj => {
       
@@ -98,8 +97,11 @@ const PipelineWorkflowDetail = (props) => {
  */
       console.log("Update from Websocket: ", dataObj);
     });
-  };
 
+    socket.on("disconnect", () => {
+      setWorkflowStatus(false);
+    });
+  };
 
   const calculateNextStep = (last_step) => {
     let nextStep = {};    
@@ -125,9 +127,15 @@ const PipelineWorkflowDetail = (props) => {
   };
 
   const handleRefreshClick = async (pipelineId, stepNext) => {
-    //call gest status API
     await fetchStatusData(pipelineId, stepNext);
-    parentCallback();
+    //parentCallback();
+    subscribeToTimer();
+  };
+
+  const handleStopWorkflowClick = async (pipelineId, stepNext) => {
+    //call gest status API
+    await runPipelineAction(pipelineId, stepNext, "cancel");
+    setWorkflowStatus(false);
   };
   
   const handleRunPipelineClick = async (pipelineId, nextStep) => {
@@ -265,10 +273,10 @@ const PipelineWorkflowDetail = (props) => {
                 <>
                   <Button variant="outline-dark" size="sm" className="mr-2" disabled>
                     <FontAwesomeIcon icon={faSpinner} spin className="mr-1"/>Pipeline Running</Button>
-                  <Button variant="outline-danger" size="sm" className="mr-2" onClick={() => { handleRefreshClick(data._id); }}>
-                    <FontAwesomeIcon icon={faStopCircle} className="fa-fw"/>Stop Pipeline</Button>
-                  <Button variant="outline-warning" size="sm" className="mr-2" onClick={() => { handleRefreshClick(data._id); }}>
-                    <FontAwesomeIcon icon={faSync} className="fa-fw"/></Button>
+                  <Button variant="outline-danger" size="sm" className="mr-2" onClick={() => { handleStopWorkflowClick(data._id); }}>
+                    <FontAwesomeIcon icon={faStopCircle} className="mr-1"/>Stop Pipeline</Button>
+                  {/* <Button variant="outline-warning" size="sm" className="mr-2" onClick={() => { handleRefreshClick(data._id); }}>
+                    <FontAwesomeIcon icon={faSync} className="fa-fw"/></Button> */}
                 </>
                 :
                 <>
@@ -282,13 +290,12 @@ const PipelineWorkflowDetail = (props) => {
 
                       <Button variant="primary" size="sm" className="mr-2" onClick={() => { handleRunPipelineClick(data._id, nextStep); }}>
                         <FontAwesomeIcon icon={faForward} className="mr-1"/>Next Step</Button>
-
-                      <Button variant="outline-warning" size="sm" className="mr-2" onClick={() => { parentCallback(); }}>
-                        <FontAwesomeIcon icon={faSync} className="fa-fw"/></Button>
+                    
                     </>}
                 </>
               }
-              
+              <Button variant="outline-warning" size="sm" className="mr-2" onClick={() => { handleRefreshClick(data._id); }}>
+                <FontAwesomeIcon icon={faSync} className="fa-fw"/></Button>              
               
 
             </div>
