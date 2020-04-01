@@ -1,0 +1,16 @@
+docker stop opsera-react-app
+docker rm opsera-react-app
+docker image rm opsera-react-app
+
+#Build and docker image
+docker build -t opsera-react-app .
+
+#Test locally
+docker run -p 8000:80 --name opsera-react-app -d docker.ecr.aws/opsera-react-app
+
+
+Pushed to AWS.
+$(aws ecr get-login --no-include-email --region us-east-2)
+
+docker tag dev-logstash:latest 440953937617.dkr.ecr.us-east-2.amazonaws.com/dev-logstash:latest
+docker push 440953937617.dkr.ecr.us-east-2.amazonaws.com/dev-logstash:latest
