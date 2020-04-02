@@ -517,7 +517,7 @@ const PipelineActivity = (props) => {
               {data.map((item, idx) => (
                 <tr key={idx} >
                   <td className="upper-case-first">{item["action"]}</td> 
-                  <td className="text-center">{item["step_index"] + 1}</td> 
+                  <td className="text-center">{item["step_index"] !== null ? item["step_index"] + 1 : ""}</td> 
                   <td>{item["step_name"]}</td>                  
                   <td className="upper-case-first">{item["tool_identifier"]}</td>
                   <td className="text-center">{item["build_number"]}</td>
