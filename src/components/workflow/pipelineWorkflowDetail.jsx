@@ -76,7 +76,7 @@ const PipelineWorkflowDetail = (props) => {
       }  
       tmpDataObject = dataObj;
       
-      if (staleRefreshCount >= 50) {
+      if (staleRefreshCount >= 150) {
         console.log("closing connection");
         setWorkflowStatus(false);
         socket.close();
