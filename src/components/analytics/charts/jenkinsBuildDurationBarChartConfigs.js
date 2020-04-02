@@ -43,7 +43,7 @@ export default {
     }
   ],
   axisBottom: {
-    "format": d => d.split("@")[0],
+    "format": d => /\d+\.?\d*$/.exec(d),
     "tickSize": 5,
     "tickPadding": 5,
     "tickRotation": 0,
