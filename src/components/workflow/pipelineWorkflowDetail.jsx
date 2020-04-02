@@ -40,7 +40,7 @@ const PipelineWorkflowDetail = (props) => {
   const [workflowStatus, setWorkflowStatus] = useState(false);
   const [showPipelineDataModal, setShowPipelineDataModal] = useState(false);
   const endPointUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
-  const socket = socketIOClient(endPointUrl, { query: "pipelineId=" + data._id });  //probably need to call socket.close() in a few places
+  const socket = socketIOClient(endPointUrl, { query: "pipelineId=" + data._id }); 
 
   useEffect(() => {    
     if (data.workflow !== undefined) {
