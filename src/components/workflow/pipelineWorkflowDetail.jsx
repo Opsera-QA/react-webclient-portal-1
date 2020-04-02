@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import PropTypes from "prop-types";
+import _ from "lodash";
 import { axiosApiService } from "../../api/apiService";
 import { AuthContext } from "../../contexts/AuthContext"; 
 import socketIOClient from "socket.io-client";
@@ -8,7 +9,7 @@ import { Row, Col, Button } from "react-bootstrap";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faCog, faBars, faPause, faBan, faPlay, faChevronDown, faSync, faSpinner, faForward, faCheck, faStopCircle } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faCog, faBars, faPause, faBan, faPlay, faChevronDown, faSync, faSpinner, faForward, faCheck, faStopCircle, faHistory } from "@fortawesome/free-solid-svg-icons";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Modal from "../common/modal";
 import Moment from "react-moment";
@@ -63,39 +64,33 @@ const PipelineWorkflowDetail = (props) => {
         setWorkflowStatus(false);        
       }      
     }
-    console.log(data);
-
-    //subscribe
-    //if (workflowStatus === "running") {
-    //subscribeToTimer();
-    //} 
-    
 
   }, [data]);
 
-  
-  //SociketIO: TODO Review code
+
+  let tmpDataObject = {};
+  let staleRefreshCount = 0;
   const subscribeToTimer = () => {    
     socket.emit("subscribeToPipelineActivity", 1000);
     socket.on("subscribeToPipelineActivity", dataObj => {
+      console.log("Update from Websocket (staleRefreshCount: "+staleRefreshCount+"): ", dataObj);
+      if (_.isEqual(dataObj, tmpDataObject)) {
+        staleRefreshCount++;
+      }       
+      tmpDataObject = dataObj;
       
-      setWorkflowStatus("running");
-
+      if (staleRefreshCount >= 10) {
+        console.log("closing connection");
+        setWorkflowStatus(false);
+        socket.close();
+      } else {
+        setWorkflowStatus("running");
+      }
+           
       if (typeof(dataObj) !== "undefined" && Object.keys(dataObj).length > 0) {
         data.workflow.last_step = dataObj;
         setLastStep(dataObj);
       }
-
-      //do a compare of several updates.  if they don't chnage, maybe then end connection?
-      //if dataObj does not have anything running, unsubscribe
-      /*       if (Object.keys(dataObj.running).length == 0) {
-        //unsubscribe!
-        console.log("SIGNING OUT!");
-        setWorkflowStatus(false);        
-        socket.close();
-      }
- */
-      console.log("Update from Websocket: ", dataObj);
     });
 
     socket.on("disconnect", () => {
@@ -131,7 +126,6 @@ const PipelineWorkflowDetail = (props) => {
 
   const handleRefreshClick = async (pipelineId, stepNext) => {
     await fetchStatusData(pipelineId, stepNext);
-    //parentCallback();
     subscribeToTimer();
   };
 
@@ -143,21 +137,10 @@ const PipelineWorkflowDetail = (props) => {
   };
   
 
-  const handleRunPipelineClick = async (pipelineId, nextStep) => {
-    let nextStepId = "";
-    if (nextStep !== undefined) {
-      nextStepId = nextStep.hasOwnProperty("_id") ? nextStep._id : "";
-    }
-    //call gest status API
-    if (nextStepId.length > 0) {
-      await runPipelineAction(pipelineId, nextStepId, "run");
-    } else {
-      await runPipeline(pipelineId);
-    }
-    //parentCallback();
+  const handleRunPipelineClick = async (pipelineId, oneStep) => {
+    await runPipeline(pipelineId, oneStep);
     setWorkflowStatus("running");
-    subscribeToTimer();
-    //setTimeout(() => {console.log("Triggering delayed refresh"); parentCallback();}, 10000);
+    subscribeToTimer();  
   };
 
 
@@ -192,7 +175,7 @@ const PipelineWorkflowDetail = (props) => {
     };
     console.log("POST OPERATION: ", postBody);
     const response = await PipelineActions.action(pipelineId, postBody, getAccessToken);
-    console.log(response);
+    
     if (typeof(response.error) !== "undefined") {
       console.log(response.error);
       setErrors(response.error);
@@ -202,9 +185,11 @@ const PipelineWorkflowDetail = (props) => {
   }
 
 
-  async function runPipeline(pipelineId) {
+  async function runPipeline(pipelineId, oneStep) {
     const { getAccessToken } = contextType;
-    const postBody = {};
+    const postBody = {
+      "oneStep": oneStep
+    };
     const response = await PipelineActions.run(pipelineId, postBody, getAccessToken);
     console.log(response);
     if (typeof(response.error) !== "undefined") {
@@ -217,6 +202,25 @@ const PipelineWorkflowDetail = (props) => {
   }
 
 
+  const handleViewPipelineClick = (param) => {
+    setShowPipelineDataModal(param);
+  };
+
+
+  const callbackFunction = (item) => {
+    window.scrollTo(0, 0);
+    item.id = data._id;
+    parentCallback(item);
+  };
+
+
+  const handleSourceEditClick = () => {
+    parentCallback({ id: data._id, type: "source", item_id: "" });
+  };
+
+
+
+  //TODO: Drag/drop code
   function onDragEnd(result) {
     if (!result.destination) {
       return;
@@ -241,22 +245,6 @@ const PipelineWorkflowDetail = (props) => {
   }
 
 
-  const handleViewPipelineClick = (param) => {
-    setShowPipelineDataModal(param);
-  };
-
-
-  const callbackFunction = (item) => {
-    window.scrollTo(0, 0);
-    item.id = data._id;
-    parentCallback(item);
-  };
-
-
-  const handleSourceEditClick = () => {
-    parentCallback({ id: data._id, type: "source", item_id: "" });
-  };
-
 
   return (
     <>      
@@ -279,7 +267,7 @@ const PipelineWorkflowDetail = (props) => {
               {workflowStatus === "running" ? 
                 <>
                   <Button variant="outline-dark" size="sm" className="mr-2" disabled>
-                    <FontAwesomeIcon icon={faSpinner} spin className="mr-1"/>Pipeline Running</Button>
+                    <FontAwesomeIcon icon={faSpinner} spin className="mr-1"/> Running</Button>
                   <Button variant="outline-danger" size="sm" className="mr-2" onClick={() => { handleStopWorkflowClick(data._id); }}>
                     <FontAwesomeIcon icon={faStopCircle} className="mr-1"/>Stop Pipeline</Button>
                   {/* <Button variant="outline-warning" size="sm" className="mr-2" onClick={() => { handleRefreshClick(data._id); }}>
@@ -295,8 +283,11 @@ const PipelineWorkflowDetail = (props) => {
                       <Button variant="success" size="sm" className="mr-2" onClick={() => { handleRunPipelineClick(data._id); }}>
                         <FontAwesomeIcon icon={faPlay} className="mr-1"/>Continue Pipeline</Button>
 
-                      <Button variant="primary" size="sm" className="mr-2" onClick={() => { handleRunPipelineClick(data._id, nextStep); }}>
-                        <FontAwesomeIcon icon={faForward} className="mr-1"/>Next Step</Button>
+                      {/* <Button variant="primary" size="sm" className="mr-2" onClick={() => { handleRunPipelineClick(data._id, nextStep); }}>
+                        <FontAwesomeIcon icon={faForward} className="mr-1"/>Next Step</Button> */}
+
+                      <Button variant="outline-primary" size="sm" className="mr-2" onClick={() => { handleStopWorkflowClick(data._id); }}>
+                        <FontAwesomeIcon icon={faHistory} className="mr-1"/>Reset Pipeline</Button>
                     
                     </>}
                 </>
@@ -352,8 +343,8 @@ const PipelineWorkflowDetail = (props) => {
                   {provided => (
                     <div ref={provided.innerRef} {...provided.droppableProps}>
                       <ItemList items={state.items} lastStep={lastStep} 
-                        nextStep={nextStep} pipelineId={data._id} parentCallbackPipelineAction={runPipelineAction}  
-                        parentCallback={callbackFunction} fetchStatusCallback={fetchStatusData} />
+                        nextStep={nextStep} pipelineId={data._id} parentCallbackPipelineAction={handleRunPipelineClick}  
+                        parentCallback={callbackFunction} fetchStatusCallback={handleRefreshClick} />
                       {provided.placeholder}
                     </div>
                   )}
@@ -476,22 +467,19 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
     setShowModal(true);
   };
 
-  const handleRunClick = async (stepId) => {
-    await parentCallbackPipelineAction(pipelineId, stepId, "run");
-
-    //TODO THIS NEEDS TO TRIGGER REFRESH OF UI!
-    await fetchStatusCallback(pipelineId, stepId);
+  const handleOneStepRunClick = async () => {
+    await parentCallbackPipelineAction(pipelineId, true);
   };
   
   const handleCancelClick = async (stepId) => {
     await parentCallbackPipelineAction(pipelineId, stepId, "cancel");
     
     //TODO THIS NEEDS TO TRIGGER REFRESH OF UI!
-    await fetchStatusCallback(pipelineId);
+    //await fetchStatusCallback(pipelineId);
   };
 
-  const handleClick = (param) => {
-    alert("coming soon");
+  const handleRefreshClick = async () => {
+    await fetchStatusCallback(pipelineId);
   }; 
 
   
@@ -576,6 +564,11 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
                 {itemState === "completed" ? <FontAwesomeIcon icon={faCheck} className="ml-2 mr-1" /> : null }
                 {itemState === "running" ? 
                   <>
+                    <FontAwesomeIcon icon={faSync}
+                      className="ml-2"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => { handleRefreshClick(); }} /> 
+
                     <FontAwesomeIcon icon={faBan}
                       className="ml-2 mr-1"
                       style={{ cursor: "pointer" }}
@@ -584,11 +577,16 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
                   </> : null }
                 
                 { nextStep !== undefined && nextStep._id === item._id ?
-                  
-                  <FontAwesomeIcon icon={faPlay}
-                    className="ml-2"
-                    style={{ cursor: "pointer" }}
-                    onClick={() => { handleRunClick(item._id); }} /> 
+                  <>
+                    <FontAwesomeIcon icon={faSync}
+                      className="ml-2"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => { handleRefreshClick(); }} /> 
+                    <FontAwesomeIcon icon={faPlay}
+                      className="ml-2"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => { handleOneStepRunClick(); }} /> 
+                  </>
                   : null
                 }
               </Col>
