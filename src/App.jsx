@@ -17,6 +17,7 @@ import Pipeline from "./components/pipeline/index";
 import Platform from "./components/platform/Platform";
 import Reports from "./components/reports/Reports";
 import Analytics from "./components/analytics/Analytics";
+import Logs from "./components/logs/Logs";
 import Update from "./components/update/Update";
 import AdminTools from "./components/admin/AdminTools";
 import DeleteTools from "./components/admin/delete_tools/DeleteTools";
@@ -76,6 +77,7 @@ class App extends Component {
                   <SecureRoute path="/workflow/:id?/:view?" component={Workflow} />
                   <SecureRoute path="/platform" component={Platform} />
                   <SecureRoute path="/analytics" exact component={Analytics} />
+                  <SecureRoute path="/logs" exact component={Logs} />
                   <SecureRoute path="/reports" exact component={Reports} />
                   <SecureRoute path="/update" component={Update} />
                   <SecureRoute path="/admin" exact component={AdminTools} />

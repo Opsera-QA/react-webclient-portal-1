@@ -1,7 +1,6 @@
 import React, { useReducer, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Accordion, Card, Form, Button, Row, Col } from "react-bootstrap";
-import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import InfoDialog from "../common/info";
 import Modal from "../common/modal";
@@ -137,11 +136,10 @@ function ConfigurationsForm({ settings, token }) {
   }
 
 
-  const { data, loaded, messages, showModal, error, info, editSettings } = state;
+  const { data, messages, showModal, error, info, editSettings } = state;
   const { enabledTools, disabledToolsOn, active, enabledToolsOn, defaultPersona } = data;
   return (
     <div>
-      {!loaded && <LoadingDialog />}
       {error && <ErrorDialog error={error} />}
       {info && <InfoDialog message={info} />}
 
@@ -168,7 +166,7 @@ function ConfigurationsForm({ settings, token }) {
           <Card>
             <Accordion.Toggle as={Card.Header} eventKey="0" >
               <Row className="card-header-clickable" onClick={() => { handleClickSettings(); }}>
-                <Col><span className="h6">Settings</span></Col>
+                <Col><span className="h6">Analytics Settings</span></Col>
                 <Col className="text-right">
                   {(enabledToolsOn && !disabledToolsOn) &&
                     <>
