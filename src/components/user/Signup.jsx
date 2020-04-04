@@ -494,7 +494,7 @@ export default class Signup extends PureComponent {
               
               { this.state.loading ?
                 <Button id="login-button" disabled={true} variant="outline-success" className="mr-2" type="button">Working...</Button> :
-                <Button id="login-button" disabled={!isEnabled} variant="success" className="mr-2" type="submit">Sign Up</Button>
+                <Button id="login-button" disabled={!isEnabled} variant="success" className="mr-2" type="submit">Register Account</Button>
               }  
 
               <Button id="cancel-button" variant="outline-secondary" className="ml-2" type="button" onClick={this.cancelSignup}>Cancel</Button>
