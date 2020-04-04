@@ -141,8 +141,8 @@ button.bg-primary:focus {
 
 .btn-success.disabled, .btn-success:disabled {
   color: #fff;
-  background-color: #5e82b1;
-  border-color: #90a8c5;
+  background-color: #28a746bd;
+  border-color: #28a74650;
   cursor: default;
 }
 
