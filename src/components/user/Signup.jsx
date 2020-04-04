@@ -471,7 +471,7 @@ export default class Signup extends PureComponent {
                 </Form.Group>
               </Form.Row>
 
-              <Form.Group controlId="formGridAddress2">
+              <Form.Group controlId="formGridAddress2" className="mt-3 mb-3">
                 <Form.Label>New Resource Subdomain Name</Form.Label>
                 <Form.Control
                   type="text"
@@ -482,17 +482,16 @@ export default class Signup extends PureComponent {
                   onChange={this.handleChange}
                   isInvalid={this.state.domain.error}
                 />
-                <Form.Text className="text-muted">If new resources are created for this account, this will be the default sub-domain name used when building DNS records.</Form.Text>
+                <Form.Text className="text-muted">* When new resources are created for this account, this will be the default sub-domain name used when building DNS records. Either supply a subdomain name or check the box below to share an existing configuration in order to proceed.</Form.Text>
                 <Form.Control.Feedback type="invalid">{this.state.domain.error}</Form.Control.Feedback>
                 
-              </Form.Group>
-              <Form.Group controlId="formBasicCheckbox">
-                <Form.Check type="checkbox" label="Leverage existing or in house analytics platform. " 
+                <Form.Check type="checkbox" label="Share an existing or on-prem analytics platform."
+                  className="mt-2" 
                   checked={this.state.sharedStack} 
                   onChange={this.handleCheckBox} />
-                <Form.Text className="text-muted">* Either a Subdomain must be supplied OR this must be checked to proceed.</Form.Text>
+                <Form.Text className="text-muted"></Form.Text>
               </Form.Group>
-
+              
               { this.state.loading ?
                 <Button id="login-button" disabled={true} variant="outline-success" className="mr-2" type="button">Working...</Button> :
                 <Button id="login-button" disabled={!isEnabled} variant="success" className="mr-2" type="submit">Sign Up</Button>
