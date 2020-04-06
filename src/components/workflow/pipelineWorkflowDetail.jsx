@@ -82,7 +82,7 @@ const PipelineWorkflowDetail = (props) => {
         socket.close();
         setSocketRunning(false);
       } else {
-        let status = data.workflow.last_step.hasOwnProperty("status") ? data.workflow.last_step.status : false;
+        let status =  data.workflow.last_step !== undefined && data.workflow.last_step.hasOwnProperty("status") ? data.workflow.last_step.status : false;
         setWorkflowStatus(status);
       }
            
