@@ -310,7 +310,7 @@ export default class Signup extends PureComponent {
   render() {
     const isEnabled = this.canBeSubmitted();
     return (
-      <div>
+      <div className="max-content-module-width-50 ml-5">
         
         {this.state.modal &&
         <>
