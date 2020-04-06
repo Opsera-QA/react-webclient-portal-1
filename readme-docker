@@ -1,0 +1,14 @@
+docker stop opsera-reactapp
+docker rm opsera-reactapp
+docker image rm opsera-reactapp
+
+#Build and serve docker image
+docker build -t opsera-reactapp --build-arg build_env=staging  .
+
+#Test locally
+docker run -p 8000:80 --name opsera-reactapp -d opsera-reactapp
+
+#Push to AWS.
+aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 440953937617.dkr.ecr.us-east-2.amazonaws.com/opsera-reactapp
+docker tag opsera-reactapp:latest 440953937617.dkr.ecr.us-east-2.amazonaws.com/opsera-reactapp:latest
+docker push 440953937617.dkr.ecr.us-east-2.amazonaws.com/opsera-reactapp:latest
