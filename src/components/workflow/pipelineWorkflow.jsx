@@ -18,7 +18,9 @@ function PipelineWorkflow({ id }) {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
   const [editItem, setEditItem] = useState();
+  const [ssoUserId, setSsoUserId] = useState("");
   const [reload, setReload] = useState(true);
+  const [role, setRole] = useState("");
   
   useEffect(() => {    
     const controller = new AbortController();
@@ -42,12 +44,15 @@ function PipelineWorkflow({ id }) {
 
   async function fetchData() {
     setLoading(true);
-    const { getAccessToken } = contextType;
+    const { getAccessToken, getUserSsoUsersRecord } = contextType;
     const accessToken = await getAccessToken();
+    const ssoUsersRecord = await getUserSsoUsersRecord();
     const apiUrl = `/pipelines/${id}`;   
+    setSsoUserId(ssoUsersRecord._id.toString());
     try {
       const pipeline = await axiosApiService(accessToken).get(apiUrl);      
       setData(pipeline && pipeline.data[0]);
+      setPipelineAttributes(pipeline && pipeline.data[0], ssoUsersRecord._id);
       setLoading(false);
     }
     catch (err) {
@@ -56,6 +61,16 @@ function PipelineWorkflow({ id }) {
       setErrors(err.message);
     }
   }
+
+  const setPipelineAttributes = (pipeline, ssoUsersId) => {
+    if (typeof(pipeline.roles) !== "undefined") {
+      let adminRoleIndex = pipeline.roles.findIndex(x => x.role === "administrator"); 
+      if (pipeline.roles[adminRoleIndex].user === ssoUsersId) {
+        setRole(pipeline.roles[adminRoleIndex].role);
+      }
+    }
+    
+  };
 
   const callbackFunctionDetail = async (param) => {
     if (param) {
@@ -81,7 +96,7 @@ function PipelineWorkflow({ id }) {
           {typeof(data) !== "undefined" ?
             <Row>
               <Col>
-                <PipelineWorkflowDetail data={data} parentCallback={callbackFunctionDetail} /></Col>
+                <PipelineWorkflowDetail data={data} parentCallback={callbackFunctionDetail} role={role} /></Col>
               <Col md="auto"></Col>
               {editItem !== undefined ?
                 <Col xs lg="4" className="workflow-editor-panel p-3">

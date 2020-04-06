@@ -27,7 +27,7 @@ const reorder = (list, startIndex, endIndex) => {
 };
 
 const PipelineWorkflowDetail = (props) => {
-  const { data, parentCallback } = props;
+  const { data, parentCallback, role } = props;
   const [error, setErrors] = useState();
   const [loading, setLoading] = useState(false);
   const contextType = useContext(AuthContext);
@@ -268,7 +268,9 @@ const PipelineWorkflowDetail = (props) => {
                 <>
                   <Button variant="outline-dark" size="sm" className="mr-2" disabled>
                     <FontAwesomeIcon icon={faSpinner} spin className="mr-1"/> Running</Button>
-                  <Button variant="outline-danger" size="sm" className="mr-2" onClick={() => { handleStopWorkflowClick(data._id); }}>
+                  <Button variant="outline-danger" size="sm" className="mr-2" 
+                    onClick={() => { handleStopWorkflowClick(data._id); }}
+                    disabled={role !== "administrator"}>
                     <FontAwesomeIcon icon={faStopCircle} className="mr-1"/>Stop Pipeline</Button>
                   {/* <Button variant="outline-warning" size="sm" className="mr-2" onClick={() => { handleRefreshClick(data._id); }}>
                     <FontAwesomeIcon icon={faSync} className="fa-fw"/></Button> */}
@@ -276,17 +278,23 @@ const PipelineWorkflowDetail = (props) => {
                 :
                 <>
                   { nextStep === undefined || nextStep === data.workflow.plan[0] ?
-                    <Button variant="success" size="sm" className="mr-2" onClick={() => { handleRunPipelineClick(data._id); }}>
+                    <Button variant="success" size="sm" className="mr-2" 
+                      onClick={() => { handleRunPipelineClick(data._id); }}
+                      disabled={role !== "administrator"}>
                       <FontAwesomeIcon icon={faPlay} className="mr-1"/>Start Pipeline</Button>
                     :
                     <>
-                      <Button variant="success" size="sm" className="mr-2" onClick={() => { handleRunPipelineClick(data._id); }}>
+                      <Button variant="success" size="sm" className="mr-2" 
+                        onClick={() => { handleRunPipelineClick(data._id); }}
+                        disabled={role !== "administrator"}>
                         <FontAwesomeIcon icon={faPlay} className="mr-1"/>Continue Pipeline</Button>
 
                       {/* <Button variant="primary" size="sm" className="mr-2" onClick={() => { handleRunPipelineClick(data._id, nextStep); }}>
                         <FontAwesomeIcon icon={faForward} className="mr-1"/>Next Step</Button> */}
 
-                      <Button variant="outline-primary" size="sm" className="mr-2" onClick={() => { handleStopWorkflowClick(data._id); }}>
+                      <Button variant="outline-primary" size="sm" className="mr-2" 
+                        onClick={() => { handleStopWorkflowClick(data._id); }}
+                        disabled={role !== "administrator"}>
                         <FontAwesomeIcon icon={faHistory} className="mr-1"/>Reset Pipeline</Button>
                     
                     </>}
@@ -344,7 +352,7 @@ const PipelineWorkflowDetail = (props) => {
                     <div ref={provided.innerRef} {...provided.droppableProps}>
                       <ItemList items={state.items} lastStep={lastStep} 
                         nextStep={nextStep} pipelineId={data._id} parentCallbackPipelineAction={handleRunPipelineClick}  
-                        parentCallback={callbackFunction} fetchStatusCallback={handleRefreshClick} />
+                        parentCallback={callbackFunction} fetchStatusCallback={handleRefreshClick} role={role} />
                       {provided.placeholder}
                     </div>
                   )}
@@ -377,7 +385,7 @@ const PipelineWorkflowDetail = (props) => {
 
 
 
-const ItemList = React.memo(function ItemList({ items, lastStep, nextStep, pipelineId, parentCallback, fetchStatusCallback, parentCallbackPipelineAction }) {
+const ItemList = React.memo(function ItemList({ items, lastStep, nextStep, pipelineId, parentCallback, fetchStatusCallback, parentCallbackPipelineAction, role }) {
   const callbackFunction = (param) => {
     parentCallback(param);
   };
@@ -385,7 +393,7 @@ const ItemList = React.memo(function ItemList({ items, lastStep, nextStep, pipel
   return items.map((item, index) => (
     <Item item={item} index={index} key={item._id} 
       lastStep={lastStep} pipelineId={pipelineId} nextStep={nextStep}  parentCallbackPipelineAction={parentCallbackPipelineAction} 
-      parentCallback={callbackFunction} fetchStatusCallback={fetchStatusCallback} />
+      parentCallback={callbackFunction} fetchStatusCallback={fetchStatusCallback}  role={role} />
   ));
 });
 
@@ -401,7 +409,7 @@ const QuoteItem = styled.div`
   padding: ${grid}px;
 `;
 
-const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fetchStatusCallback, parentCallbackPipelineAction }) => {
+const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fetchStatusCallback, parentCallbackPipelineAction, role }) => {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
   const [loading, setLoading] = useState(false);
@@ -432,8 +440,7 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
     } else {
       setCurrentStatus({});
       setItemState("");
-    }
-    
+    }    
   }, [lastStep]);
 
   
@@ -571,7 +578,7 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
 
                     <FontAwesomeIcon icon={faBan}
                       className="ml-2 mr-1"
-                      style={{ cursor: "pointer" }}
+                      style={{ cursor: "pointer" }} 
                       onClick={() => { handleCancelClick(item._id); }} />
                     <FontAwesomeIcon icon={faSpinner} spin className="ml-2 mr-1" />
                   </> : null }
@@ -582,10 +589,10 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
                       className="ml-2"
                       style={{ cursor: "pointer" }}
                       onClick={() => { handleRefreshClick(); }} /> 
-                    <FontAwesomeIcon icon={faPlay}
+                    {role === "administrator" ? <FontAwesomeIcon icon={faPlay}
                       className="ml-2"
-                      style={{ cursor: "pointer" }}
-                      onClick={() => { handleOneStepRunClick(); }} /> 
+                      style={{ cursor: "pointer" }} 
+                      onClick={() => { handleOneStepRunClick(); }} /> : null }
                   </>
                   : null
                 }
@@ -616,7 +623,8 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
 
 PipelineWorkflowDetail.propTypes = {
   data: PropTypes.object,
-  parentCallback: PropTypes.func
+  parentCallback: PropTypes.func,
+  role: PropTypes.string
 };
 
 Item.propTypes = {
@@ -627,7 +635,8 @@ Item.propTypes = {
   pipelineId: PropTypes.string,
   parentCallback: PropTypes.func,
   fetchStatusCallback: PropTypes.func,
-  parentCallbackPipelineAction: PropTypes.func
+  parentCallbackPipelineAction: PropTypes.func,
+  role: PropTypes.string
 };
 
 ItemList.propTypes = {
@@ -637,7 +646,8 @@ ItemList.propTypes = {
   pipelineId: PropTypes.string,
   parentCallback: PropTypes.func,
   fetchStatusCallback: PropTypes.func,
-  parentCallbackPipelineAction: PropTypes.func
+  parentCallbackPipelineAction: PropTypes.func,
+  role: PropTypes.string
 };
 
 
