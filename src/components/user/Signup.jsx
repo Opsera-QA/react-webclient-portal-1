@@ -493,8 +493,8 @@ export default class Signup extends PureComponent {
               </Form.Group>
               
               { this.state.loading ?
-                <Button id="login-button" disabled={true} variant="outline-success" className="mr-2 w-100" type="button">Working...</Button> :
-                <Button id="login-button" disabled={!isEnabled} variant="success" className="mr-2 w-100" type="submit">Register Account</Button>
+                <Button id="login-button" disabled={true} variant="outline-success" className="mr-2 px-4" type="button">Working...</Button> :
+                <Button id="login-button" disabled={!isEnabled} variant="success" className="mr-2 px-4" type="submit">Register Account</Button>
               }  
 
               <Button id="cancel-button" variant="outline-secondary" className="ml-2" type="button" onClick={this.cancelSignup}>Cancel</Button>
