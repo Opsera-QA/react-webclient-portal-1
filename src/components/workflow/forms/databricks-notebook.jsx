@@ -25,6 +25,7 @@ function DatabricksNotebookConfiguration( { data, parentCallback }) {
   const [jsonEditorInvalid, setJsonEditorInvalid] = useState(false);
 
   useEffect(() => {
+    setFormData(INITIAL_DATA);
     if (typeof(data) !== "undefined") {
       let { configuration, threshold } = data;
       if (typeof(configuration) !== "undefined") {
@@ -34,9 +35,7 @@ function DatabricksNotebookConfiguration( { data, parentCallback }) {
         setThresholdType(threshold.type);
         setThresholdValue(threshold.value);
       }
-    } else {
-      setFormData(INITIAL_DATA);
-    }
+    } 
   }, [data]);
 
 
@@ -50,8 +49,7 @@ function DatabricksNotebookConfiguration( { data, parentCallback }) {
           value: thresholdVal
         }
       };
-      //parentCallback(item);
-      console.log(item);
+      parentCallback(item); 
     }
   };
 

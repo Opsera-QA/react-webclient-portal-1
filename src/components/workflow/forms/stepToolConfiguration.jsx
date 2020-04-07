@@ -19,7 +19,7 @@ import DatabricksNotebookConfiguration from "./databricks-notebook";
 
 function StepToolConfiguration( { data, editItem, parentCallback }) {
   const { plan } = data.workflow;
-  const [stepTool, setStepTool] = useState();
+  const [stepTool, setStepTool] = useState({});
   const [stepName, setStepName] = useState();
   
   useEffect(() => {
@@ -40,6 +40,7 @@ function StepToolConfiguration( { data, editItem, parentCallback }) {
     plan[stepArrayIndex].tool.configuration = tool.configuration;
     plan[stepArrayIndex].tool.threshold = tool.threshold;
     parentCallback(plan);
+    setStepTool({});
   };
   
 
