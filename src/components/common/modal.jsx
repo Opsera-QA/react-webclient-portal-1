@@ -3,15 +3,18 @@ import PropTypes from "prop-types";
 import { Button, Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import JSONInput from "react-json-editor-ajrm";
+import locale    from "react-json-editor-ajrm/locale/en";
 
-function CustomModalDialog({ header, message, button, size, handleConfirmModal, handleCancelModal }) {
+
+function CustomModalDialog({ header, message, button, size, handleConfirmModal, handleCancelModal, jsonView, jsonMessage }) {
   const [state, setState] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
-    { show: true }
+    { show: true, displayJson: false }
   );
 
   useEffect(() => {
-    setState({ show: true });
+    setState({ show: true, displayJson: jsonView === "true" });
   }, []);
 
   const handleClose = () => {
@@ -31,7 +34,21 @@ function CustomModalDialog({ header, message, button, size, handleConfirmModal, 
           <Modal.Title>{header}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div style={{ overflowWrap: "break-word" }}>{message}</div>
+          {
+            state.displayJson ? 
+              <div style={{ maxWidth: "750px", maxHeight: "100%", border: "1px solid #ced4da", borderRadius: ".25rem" }}>
+                <JSONInput
+                  placeholder={jsonMessage}
+                  theme="light_mitsuketa_tribute"
+                  locale={locale}
+                  viewOnly="true"
+                  confirmGood={false}
+                  width="750px"
+                />
+              </div> : 
+              <div style={{ overflowWrap: "break-word" }}>{message}</div>
+          }
+          
         </Modal.Body>
         <Modal.Footer>
           <Button variant="outline-secondary" onClick={() => handleClose()}>
@@ -52,7 +69,9 @@ CustomModalDialog.propTypes = {
   message: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   button: PropTypes.string,
   handleConfirmModal: PropTypes.func.isRequired,
-  handleCancelModal: PropTypes.func.isRequired
+  handleCancelModal: PropTypes.func.isRequired,
+  jsonView: PropTypes.string,
+  jsonMessage: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
 };
 
 export default CustomModalDialog;

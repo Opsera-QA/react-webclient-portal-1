@@ -502,7 +502,8 @@ const ItemSummaryDetail = (props) => {
         handleConfirmModal={() => deleteItem(modalDeleteId)} /> : null}
 
       {showModal ? <Modal header="Pipeline Details"
-        message={<pre>{JSON.stringify(modalMessage, null, 2)}</pre>}
+        jsonMessage={modalMessage}
+        jsonView="true"
         button="OK"
         size="lg"
         handleCancelModal={() => setShowModal(false)}
@@ -565,7 +566,8 @@ const PipelineActivity = (props) => {
           </Table>
 
           {showModal ? <Modal header="Log Details"
-            message={<pre>{JSON.stringify(modalMessage, null, 2)}</pre>}
+            jsonMessage={modalMessage}
+            jsonView="true"
             button="OK"
             size="lg"
             handleCancelModal={() => setShowModal(false)}

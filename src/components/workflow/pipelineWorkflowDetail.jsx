@@ -9,7 +9,7 @@ import { Row, Col, Button } from "react-bootstrap";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faCog, faBars, faPause, faBan, faPlay, faChevronDown, faSync, faSpinner, faForward, faCheck, faStopCircle, faHistory } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faCog, faBars, faArchive, faBan, faPlay, faChevronDown, faSync, faSpinner, faForward, faCheck, faStopCircle, faHistory } from "@fortawesome/free-solid-svg-icons";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Modal from "../common/modal";
 import Moment from "react-moment";
@@ -359,7 +359,8 @@ const PipelineWorkflowDetail = (props) => {
             </div>
           </div>
           {showModal ? <Modal header="Log Details"
-            message={<pre>{JSON.stringify(modalMessage, null, 2)}</pre>}
+            jsonMessage={modalMessage}
+            jsonView="true"
             button="OK"
             size="lg"
             handleCancelModal={() => setShowModal(false)}
@@ -367,7 +368,8 @@ const PipelineWorkflowDetail = (props) => {
         </> : null }
 
       {showPipelineDataModal ? <Modal header="Pipeline Details"
-        message={<pre>{JSON.stringify(showPipelineDataModal, null, 2)}</pre>}
+        jsonMessage={showPipelineDataModal}
+        jsonView="true"
         button="OK"
         size="lg"
         handleCancelModal={() => setShowPipelineDataModal(false)}
@@ -438,13 +440,15 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
   }, [lastStep]);
 
   
-  async function fetchActivityLogData(activityId) {
+  async function fetchActivityLogData(activityId, latest) {
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
     const apiUrl = `/pipelines/${pipelineId}/activity`;   
-    const params = { step_id: activityId, latest: true };
+    const params = { step_id: activityId, latest: latest };
+    console.log("PARPAMS: ", params);
     try {
       const pipelineActivityLog = await axiosApiService(accessToken).get(apiUrl, { params });
+      console.log(pipelineActivityLog);
       return pipelineActivityLog && pipelineActivityLog.data;      
     }
     catch (err) {
@@ -462,8 +466,8 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
     parentCallback({ type: type, tool_name: name, step_id: itemId });
   };
 
-  const handleViewActivityLogClick = async (param) => {
-    let activityLog = await fetchActivityLogData(param);
+  const handleViewActivityLogClick = async (param, latest) => {
+    let activityLog = await fetchActivityLogData(param, latest);
     setModalMessage(activityLog);
     setShowModal(true);
   };
@@ -537,7 +541,7 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
               <Col className="upper-case-first"><span className="text-muted">Tool:</span> {item.tool.tool_identifier} 
                 <FontAwesomeIcon icon={faSearchPlus}
                   className="ml-1"
-                  size="xs"
+                  size="sm"
                   style={{ cursor: "pointer" }}
                   onClick={() => { handleViewClick(item); }} /></Col>
             </Row>
@@ -549,10 +553,17 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
                     <span className="upper-case-first pr-1">{currentStatus.status}</span>
                      on <Moment format="YYYY-MM-DD, hh:mm a" date={currentStatus.updatedAt} />
                     <FontAwesomeIcon icon={faSearchPlus}
-                      className="ml-1"
-                      size="xs"
+                      className="ml-2"
+                      size="sm"
                       style={{ cursor: "pointer" }}
-                      onClick={() => { handleViewActivityLogClick(item._id); }} /></Col>
+                      onClick={() => { handleViewActivityLogClick(item._id, true); }} />
+                      
+                    <FontAwesomeIcon icon={faArchive}
+                      className="ml-2"
+                      size="sm"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => { handleViewActivityLogClick(item._id, false); }} />
+                  </Col>
                 </Row>
                
               </> : null}
@@ -606,7 +617,8 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
       </div>
 
       {showModal ? <Modal header="Log Details"
-        message={<pre>{JSON.stringify(modalMessage, null, 2)}</pre>}
+        jsonMessage={modalMessage}
+        jsonView="true"
         button="OK"
         size="lg"
         handleCancelModal={() => setShowModal(false)}
