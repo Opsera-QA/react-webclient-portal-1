@@ -447,11 +447,11 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
   async function fetchActivityLogData(activityId) {
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = `/pipelines/${pipelineId}/activity/`;   
-    const params = { id: activityId };
+    const apiUrl = `/pipelines/${pipelineId}/activity`;   
+    const params = { step_id: activityId, latest: true };
     try {
-      const pipelineActivityLog = await axiosApiService(accessToken).get(apiUrl, params);
-      return pipelineActivityLog && pipelineActivityLog.data[0];      
+      const pipelineActivityLog = await axiosApiService(accessToken).get(apiUrl, { params });
+      return pipelineActivityLog && pipelineActivityLog.data;      
     }
     catch (err) {
       console.log(err.message);
@@ -547,6 +547,9 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
                   style={{ cursor: "pointer" }}
                   onClick={() => { handleViewClick(item); }} /></Col>
             </Row>
+            <Row>
+              <Col className="upper-case-first text-muted">Step ID: {item._id}</Col>
+            </Row>
             { typeof(currentStatus) !== "undefined" && currentStatus.step_id === item._id ? 
               <>
                 <Row>
@@ -555,7 +558,7 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
                       className="ml-1"
                       size="xs"
                       style={{ cursor: "pointer" }}
-                      onClick={() => { handleViewActivityLogClick(currentStatus); }} /></Col>
+                      onClick={() => { handleViewActivityLogClick(item._id); }} /></Col>
                 </Row>
                 <Row>
                   <Col><span className="text-muted">On:</span> <Moment format="YYYY-MM-DD, hh:mm a" date={currentStatus.updatedAt} /></Col>
@@ -598,6 +601,7 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
                 }
               </Col>
             </Row>
+            
             
           </QuoteItem>
         )}
