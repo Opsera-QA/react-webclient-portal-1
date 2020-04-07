@@ -54,10 +54,12 @@ function CustomModalDialog({ header, message, button, size, handleConfirmModal, 
           <Button variant="outline-secondary" onClick={() => handleClose()}>
             Close
           </Button>
-          <Button variant="outline-primary" onClick={() => handleConfirm()}>
-            <FontAwesomeIcon icon={faCheck} fixedWidth />
-            {button ? button : "Confirm"}
-          </Button>
+          {
+            !state.displayJson ? 
+              <Button variant="outline-primary" onClick={() => handleConfirm()}>
+                <FontAwesomeIcon icon={faCheck} fixedWidth />
+                {button ? button : "Confirm"}
+              </Button> : null }
         </Modal.Footer>
       </Modal>
     </>
