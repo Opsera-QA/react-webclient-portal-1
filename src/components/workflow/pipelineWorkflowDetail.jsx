@@ -272,8 +272,6 @@ const PipelineWorkflowDetail = (props) => {
                     onClick={() => { handleStopWorkflowClick(data._id); }}
                     disabled={role !== "administrator"}>
                     <FontAwesomeIcon icon={faStopCircle} className="mr-1"/>Stop Pipeline</Button>
-                  {/* <Button variant="outline-warning" size="sm" className="mr-2" onClick={() => { handleRefreshClick(data._id); }}>
-                    <FontAwesomeIcon icon={faSync} className="fa-fw"/></Button> */}
                 </>
                 :
                 <>
@@ -289,15 +287,11 @@ const PipelineWorkflowDetail = (props) => {
                         disabled={role !== "administrator"}>
                         <FontAwesomeIcon icon={faPlay} className="mr-1"/>Continue Pipeline</Button>
 
-                      {/* <Button variant="primary" size="sm" className="mr-2" onClick={() => { handleRunPipelineClick(data._id, nextStep); }}>
-                        <FontAwesomeIcon icon={faForward} className="mr-1"/>Next Step</Button> */}
-
-                      <Button variant="outline-primary" size="sm" className="mr-2" 
-                        onClick={() => { handleStopWorkflowClick(data._id); }}
-                        disabled={role !== "administrator"}>
-                        <FontAwesomeIcon icon={faHistory} className="mr-1"/>Reset Pipeline</Button>
-                    
                     </>}
+                  <Button variant="outline-primary" size="sm" className="mr-2" 
+                    onClick={() => { handleStopWorkflowClick(data._id); }}
+                    disabled={role !== "administrator"}>
+                    <FontAwesomeIcon icon={faHistory} className="mr-1"/>Reset Pipeline</Button>
                 </>
               }
               <Button variant="outline-warning" size="sm" className="mr-2" onClick={() => { handleRefreshClick(data._id); }}>
@@ -532,7 +526,7 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
           >
             
             <Row>
-              <Col>{item.name}</Col>
+              <Col><span className="text-muted">Step:</span> {item.name}</Col>
               <Col className="text-right" style={{ fontSize:"small" }}>
                 <FontAwesomeIcon icon={faBars}
                   className="ml-2"
@@ -547,24 +541,27 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
                   style={{ cursor: "pointer" }}
                   onClick={() => { handleViewClick(item); }} /></Col>
             </Row>
-            <Row>
-              <Col className="upper-case-first text-muted">Step ID: {item._id}</Col>
-            </Row>
+            {/* <Row>
+              <Col className="upper-case-first text-muted">ID: {item._id}</Col>
+            </Row> */}
             { typeof(currentStatus) !== "undefined" && currentStatus.step_id === item._id ? 
               <>
                 <Row>
-                  <Col className="upper-case-first"><span className="text-muted">Status:</span> {currentStatus.status} 
+                  <Col><span className="text-muted pr-1">Status:</span> 
+                    <span className="upper-case-first pr-1">{currentStatus.status}</span>
+                     on <Moment format="YYYY-MM-DD, hh:mm a" date={currentStatus.updatedAt} />
                     <FontAwesomeIcon icon={faSearchPlus}
                       className="ml-1"
                       size="xs"
                       style={{ cursor: "pointer" }}
                       onClick={() => { handleViewActivityLogClick(item._id); }} /></Col>
                 </Row>
-                <Row>
-                  <Col><span className="text-muted">On:</span> <Moment format="YYYY-MM-DD, hh:mm a" date={currentStatus.updatedAt} /></Col>
-                </Row>
+                {/* <Row>
+                  <Col></Col>
+                </Row> */}
               </> : null}
-            <Row>
+            <Row className="mt-1">
+              <Col className="text-muted small">ID: {item._id}</Col>
               <Col className="text-right pt-1">
                 <FontAwesomeIcon icon={faCog}
                   style={{ cursor: "pointer" }}
