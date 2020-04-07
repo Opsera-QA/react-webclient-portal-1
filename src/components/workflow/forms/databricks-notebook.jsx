@@ -3,11 +3,13 @@ import PropTypes from "prop-types";
 import { Form, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
-
+import JSONInput from "react-json-editor-ajrm";
+import locale    from "react-json-editor-ajrm/locale/en";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
-  cellUrl: "",
+  endpointUrl: "",
+  dataPackage: {},
   authToken: ""
 };
 
@@ -19,6 +21,8 @@ function DatabricksNotebookConfiguration( { data, parentCallback }) {
   const [thresholdType, setThresholdType] = useState("");
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [formMessage, setFormMessage] = useState("");
+  const [jsonEditor, setJsonEditor] = useState({});
+  const [jsonEditorInvalid, setJsonEditorInvalid] = useState(false);
 
   useEffect(() => {
     if (typeof(data) !== "undefined") {
@@ -38,6 +42,7 @@ function DatabricksNotebookConfiguration( { data, parentCallback }) {
 
   const callbackFunction = () => {
     if (validateRequiredFields()) {
+      formData.dataPackage = JSON.parse(jsonEditor);
       const item = {
         configuration: formData,
         threshold: {
@@ -45,20 +50,30 @@ function DatabricksNotebookConfiguration( { data, parentCallback }) {
           value: thresholdVal
         }
       };
-      parentCallback(item);
+      //parentCallback(item);
+      console.log(item);
     }
   };
 
 
   const validateRequiredFields = () => {
-    let { buildScript } = formData;
-    if (buildScript.length === 0) {
+    let { endpointUrl, authToken, dataPackage } = formData;
+    if (endpointUrl.length === 0 || authToken.length === 0 || dataPackage.length === 0) {
       setFormMessage("Required Fields Missing!");
+      return false;
+    } else if (jsonEditorInvalid) { 
+      setFormMessage("Invalid JSON Data!");
       return false;
     } else {
       setFormMessage("");
       return true;
     }
+  };
+
+
+  const handleJsonInputUpdate = (e) => {
+    setJsonEditorInvalid(e.error);
+    setJsonEditor(e.json);
   };
   
   return (
@@ -66,16 +81,27 @@ function DatabricksNotebookConfiguration( { data, parentCallback }) {
       { formMessage.length > 0 ? <p className="text-danger">{formMessage}</p> : null}
 
       <Form.Group controlId="repoField">
-        <Form.Label>Notebook Cell URL*</Form.Label>
-        <Form.Control type="text" placeholder="" value={formData.cellUrl || ""} onChange={e => setFormData({ ...formData, cellUrl: e.target.value })} />
+        <Form.Label>Databricks Endpoint URL*</Form.Label>
+        <Form.Control type="text" placeholder="" value={formData.endpointUrl || ""} onChange={e => setFormData({ ...formData, endpointUrl: e.target.value })} />
       </Form.Group>
-     
+
       <Form.Group controlId="branchField">
         <Form.Label>Authorization Token*</Form.Label>
         <Form.Control maxLength="500" as="textarea" type="text" placeholder="" value={formData.authToken || ""} onChange={e => setFormData({ ...formData, authToken: e.target.value })} />
       </Form.Group>
 
-      <small className="form-text text-muted mt-2 text-left pb-2">Defined above should be the link to the Notebook cell to be executed by this step.  The authorization token may be optionally required.</small>
+      <div style={{ maxWidth: "580", maxHeight: "100%", border: "1px solid #ced4da", borderRadius: ".25rem" }}>
+        <JSONInput
+          placeholder={formData.dataPackage}
+          onChange={e => handleJsonInputUpdate(e) }
+          theme="light_mitsuketa_tribute"
+          locale={locale}
+          height="175px"
+        />
+      </div>
+
+
+      <small className="form-text text-muted mt-2 text-left pb-2">The JSON data above must be properly formatted and match the necessary job ID.</small>
      
       {/* Leave the threshold form group as is for now, just read only for all forms */}
       <div className="h6 mt-3">Success Threshold</div>
