@@ -541,9 +541,7 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
                   style={{ cursor: "pointer" }}
                   onClick={() => { handleViewClick(item); }} /></Col>
             </Row>
-            {/* <Row>
-              <Col className="upper-case-first text-muted">ID: {item._id}</Col>
-            </Row> */}
+           
             { typeof(currentStatus) !== "undefined" && currentStatus.step_id === item._id ? 
               <>
                 <Row>
@@ -556,9 +554,7 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
                       style={{ cursor: "pointer" }}
                       onClick={() => { handleViewActivityLogClick(item._id); }} /></Col>
                 </Row>
-                {/* <Row>
-                  <Col></Col>
-                </Row> */}
+               
               </> : null}
             <Row className="mt-1">
               <Col className="text-muted small">ID: {item._id}</Col>
