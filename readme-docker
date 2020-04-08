@@ -3,8 +3,8 @@ docker rm opsera-reactapp
 docker image rm opsera-reactapp
 
 #Build and serve docker image
-docker build -t opsera-reactapp --build-arg build_env=staging  .
-docker build -t opsera-reactapp --build-arg build_env=production  .
+docker build -t opsera-reactapp:staging --build-arg build_env=staging  .
+docker build -t opsera-reactapp:production --build-arg build_env=production  .
 
 
 #Test locally
