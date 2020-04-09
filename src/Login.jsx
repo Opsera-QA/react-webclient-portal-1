@@ -6,6 +6,7 @@ import { Button, Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "./contexts/AuthContext"; 
+import { axiosApiService } from "./api/apiService";
 
 
 class LoginForm extends React.Component {
@@ -17,7 +18,10 @@ class LoginForm extends React.Component {
       error: null,
       username: "",
       password: "",
-      loading: false
+      email: "",
+      loading: false,
+      resetPassword: false,
+      message: null
     };
 
     this.oktaAuth = new OktaAuth({ url: process.env.REACT_APP_OKTA_BASEURL });
@@ -25,6 +29,8 @@ class LoginForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.handleResetPasswordSubmit = this.handleResetPasswordSubmit.bind(this);
   }
 
   componentDidMount = async() => {
@@ -59,12 +65,37 @@ class LoginForm extends React.Component {
       });
   }
 
+  async handleResetPasswordSubmit(e) {
+    e.preventDefault();
+    this.setState({ loading: true });
+    const apiUrl = "/users/forgot-password";   
+    const params = { "email": this.state.email };
+    await axiosApiService().post(apiUrl, params)
+      .then(response => { 
+        console.log("response: ", response);
+        this.setState({ error: null, loading: false, resetPassword: false, message: response.data.message });
+      })
+      .catch(err => { 
+        console.log(err.response);
+        this.setState({ error: err.response.data.message, loading: false, message: null });
+      });
+  }
+
   handleUsernameChange(e) {
     this.setState({ username: e.target.value });
   }
 
+  handleEmailChange(e) {
+    this.setState({ email: e.target.value });
+  }
+
   handlePasswordChange(e) {
     this.setState({ password: e.target.value });
+  }
+
+  handleForgotPasswordClick(e) {
+    this.setState({ error: null, message: null });
+    this.setState({ resetPassword: e });
   }
 
   render() {
@@ -74,7 +105,11 @@ class LoginForm extends React.Component {
     }
 
     const errorMessage = this.state.error ? (
-      <div className="text-danger">{this.state.error}</div>
+      <div className="text-danger mb-2">{this.state.error}</div>
+    ) : null;
+
+    const successMessage = this.state.message ? (
+      <div className="text-success mb-2">{this.state.message}</div>
     ) : null;
 
     return (
@@ -85,51 +120,90 @@ class LoginForm extends React.Component {
             <div className="logo-w">
               <a href="index.html"><img alt="" src="img/opsera_logo_125x125.png" /></a>
             </div>
-            <h4 className="auth-header">
-              Login Form
-            </h4>
-            <form onSubmit={this.handleSubmit}>
-              {errorMessage}
-              <div className="form-group">
-                <label htmlFor="">Username</label>
-                <input className="form-control" placeholder="Enter your username" id="username"
-                  type="text"
-                  value={this.state.username}
-                  onChange={this.handleUsernameChange} />
-                <div className="pre-icon os-icon os-icon-user-male-circle"></div>
-              </div>
-              <div className="form-group">
-                <label htmlFor="">Password</label>
-                <input className="form-control" placeholder="Enter your password" id="password"
-                  type="password"
-                  value={this.state.password}
-                  onChange={this.handlePasswordChange} />
-                <div className="pre-icon os-icon os-icon-fingerprint"></div>
-              </div>
-              <div className="buttons-w">
-                <Button variant="success" className="w-100 mb-3" type="submit">
-                  {this.state.loading ? <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth /> : null}
-                  Log In</Button>
+            { this.state.resetPassword ? 
+              <>
+                <h4 className="auth-header">
+                 Reset Password
+                </h4>
+                <form onSubmit={this.handleResetPasswordSubmit}>
+                  {successMessage}
+                  {errorMessage}
+                  <div className="form-group">
+                    <label htmlFor="">Email Address</label>
+                    <input className="form-control" placeholder="Enter your email address" id="email"
+                      type="text"
+                      value={this.state.email}
+                      onChange={this.handleEmailChange} />
+                    <div className="pre-icon os-icon os-icon-user-male-circle"></div>
+                  </div>
 
-                <Row>
-                  <Col>
-                    <div className="form-check-inline" style={{ margin: 0 }}>
-                      <label className="form-check-label">
-                        <input className="form-check-input" type="checkbox" />Remember Me</label>
-                    </div>
-                  </Col>
-                  {/* <Col>
-                  </Col> */}
-                </Row>
+                  <div className="buttons-w">
+                    <Button variant="success" className="w-100 mb-3" type="submit" disabled={!this.state.email}>
+                      {this.state.loading ? <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth /> : null}
+                      Reset Password</Button>
 
-              </div>
-            </form>
+                    <Row>
+                      <Col>
+                        
+                      </Col>
+                      <Col className="text-right">
+                        <Button variant="link" size="sm" 
+                          onClick={() => { this.handleForgotPasswordClick(false); }}>Login Form</Button>
+                      </Col>
+                    </Row>
+                  </div>
+                </form>
+              </> : <>  
+                <h4 className="auth-header">
+                 Login Form
+                </h4>
+                <form onSubmit={this.handleSubmit}>
+                  {successMessage}
+                  {errorMessage}
+                  <div className="form-group">
+                    <label htmlFor="">Username</label>
+                    <input className="form-control" placeholder="Enter your username" id="username"
+                      type="text"
+                      value={this.state.username}
+                      onChange={this.handleUsernameChange} />
+                    <div className="pre-icon os-icon os-icon-user-male-circle"></div>
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="">Password</label>
+                    <input className="form-control" placeholder="Enter your password" id="password"
+                      type="password"
+                      value={this.state.password}
+                      onChange={this.handlePasswordChange} />
+                    <div className="pre-icon os-icon os-icon-fingerprint"></div>
+                  </div>
+                  <div className="buttons-w">
+                    <Button variant="success" className="w-100 mb-3" type="submit" disabled={!this.state.username || !this.state.password}>
+                      {this.state.loading ? <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth /> : null}
+                        Log In</Button>
+                    <Row>
+                      <Col className="pt-1">
+                        <div className="form-check-inline" style={{ margin: 0 }}>
+                          <label className="form-check-label">
+                            <input className="form-check-input" type="checkbox" />Remember Me</label>
+                        </div>
+                      </Col>
+                      <Col className="text-right">
+                        <Button variant="link" size="sm" 
+                          onClick={() => { this.handleForgotPasswordClick(true); }}>Forgot Password</Button>
+                      </Col>
+                    </Row>
+                  </div>
+                </form>
+              </>}
+
           </div>
         </div>
       </div>
     );
   }
 }
+
+
 
 LoginForm.propTypes = {
   auth: PropTypes.object

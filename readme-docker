@@ -16,6 +16,7 @@ docker run -p 8000:80 --name opsera-reactapp -d opsera-reactapp:staging
 #logs last 40 lines
 docker logs -f --tail 40 opsera-reactapp
 
+
 #Push to AWS.
 aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 440953937617.dkr.ecr.us-east-2.amazonaws.com/opsera-reactapp
 docker tag opsera-reactapp:latest 440953937617.dkr.ecr.us-east-2.amazonaws.com/opsera-reactapp:latest

@@ -2,17 +2,19 @@ import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
+import _ from "lodash";
 import { Alert, Card, Row, Col, Table, Button, Form } from "react-bootstrap";
 import Modal from "../common/modal";
 import { AuthContext } from "../../contexts/AuthContext"; 
 import { axiosApiServiceMultiGet, axiosApiService } from "../../api/apiService";
+import socketIOClient from "socket.io-client";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import InfoDialog from "../common/info";
 import Moment from "react-moment";
 import PipelineActions from "./actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faPencilAlt, faPause, faBan, faPlay, faTrash, faProjectDiagram, faSave, faSpinner, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faPencilAlt, faStopCircle, faSync, faPlay, faTrash, faProjectDiagram, faSave, faSpinner, faTimes } from "@fortawesome/free-solid-svg-icons";
 import "./workflows.css";
 
 
@@ -74,10 +76,6 @@ function PipelineDetail({ id }) {
 
 
   const setPipelineAttributes = (pipeline, ssoUsersId) => {
-    // console.log("SETTING PIPELINE ATTRIBUTES");
-    // setStepStatus({});
-    // setRole("");
-    
     if (typeof(pipeline.roles) !== "undefined") {
       let adminRoleIndex = pipeline.roles.findIndex(x => x.role === "administrator"); 
       if (pipeline.roles[adminRoleIndex].user === ssoUsersId) {
@@ -97,9 +95,9 @@ function PipelineDetail({ id }) {
 
 
   const callbackFunction = async () => {
-    setReload(true);
     await fetchData();
   };
+
   
   if (error) {
     return (<ErrorDialog error={error} />);
@@ -109,13 +107,10 @@ function PipelineDetail({ id }) {
     return ( <InfoDialog message="No Pipeline details found.  Please ensure you have access to view the requested pipeline." />);
   } else {
     return (
-      <>
-        <div className="mt-3 max-content-width">
-          <ItemSummaryDetail data={data.pipeline} parentCallback={callbackFunction} role={role} stepStatus={stepStatus}  /> 
-          <PipelineActivity data={data.activity} />               
-        </div>
-          
-      </>
+      <div className="mt-3 max-content-width">
+        {typeof(data.pipeline) !== "undefined" ? <ItemSummaryDetail data={data.pipeline} parentCallback={callbackFunction} role={role} stepStatus={stepStatus}  />  : null }
+        {typeof(data.activity) !== "undefined" ? <PipelineActivity data={data.activity} />  : null}
+      </div>         
     );
   }
 }
@@ -133,7 +128,7 @@ const ItemSummaryDetail = (props) => {
   const [error, setErrors] = useState();
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  //const [showActionAlert, setShowActionAlert] = useState(false);
+  const [socketRunning, setSocketRunning] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [modalDeleteId, setModalDeleteId] = useState(false);
@@ -142,31 +137,131 @@ const ItemSummaryDetail = (props) => {
   const [editProject, setEditProject] = useState(false);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [workflowStatus, setWorkflowStatus] = useState(false);
-  const [runningStepId, setRunningStepId] = useState("");
-
+  const [lastStep, setLastStep] = useState({});
+  const endPointUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
+  const socket = socketIOClient(endPointUrl, { query: "pipelineId=" + data._id }); 
   let history = useHistory();
   
   
   useEffect(() => {
-    if (typeof(stepStatus.running) !== "undefined") {
-      if (typeof(stepStatus.running.step_id) !== "undefined" && stepStatus.running.step_id.length > 0) { 
-        setWorkflowStatus("running");
-        setRunningStepId(stepStatus.running.step_id);
+    if (data.workflow !== undefined) {
+      if (data !== undefined && data.workflow.last_step !== undefined) {
+        let status = data.workflow.last_step.hasOwnProperty("status") ? data.workflow.last_step.status : false;
+        setWorkflowStatus(status);
+        if (status === "running" && !socketRunning) {
+          subscribeToTimer();
+        }
       } else {
-        setWorkflowStatus("");
-        setRunningStepId({});
-      }
-    } else {
-      setWorkflowStatus("");
-      setRunningStepId({});
+        setWorkflowStatus(false);        
+      }      
     }
-    
-  }, [stepStatus, data]);
+
+  }, [data]);
+
+
+  let tmpDataObject = {};
+  let staleRefreshCount = 0;
+  const subscribeToTimer = () => {    
+    setSocketRunning(true);
+    socket.emit("subscribeToPipelineActivity", 1000);
+    socket.on("subscribeToPipelineActivity", dataObj => {
+      console.log("Update from Websocket (staleRefreshCount: "+staleRefreshCount+"): ", dataObj);
+      if (_.isEqual(dataObj, tmpDataObject)) {
+        staleRefreshCount++;
+      } else {
+        staleRefreshCount = 0;
+      }  
+      tmpDataObject = dataObj;
+      
+      if (staleRefreshCount >= 150) {
+        console.log("closing connection");
+        setWorkflowStatus(false);
+        socket.close();
+        setSocketRunning(false);
+      } else {
+        let status = data.workflow.last_step.hasOwnProperty("status") ? data.workflow.last_step.status : false;
+        setWorkflowStatus(status);
+      }
+           
+      if (typeof(dataObj) !== "undefined" && Object.keys(dataObj).length > 0) {
+        data.workflow.last_step = dataObj;
+        setLastStep(dataObj);
+      }
+    });
+
+    socket.on("disconnect", () => {
+      setWorkflowStatus(false);
+      setSocketRunning(false);
+    });
+  };
+
 
   const handleViewClick = (param) => {
     setModalMessage(param);
     setShowModal(true);
   };
+
+
+  const handleRefreshClick = async () => {
+    await parentCallback();
+    //subscribeToTimer();
+  };
+
+
+  const handleDeleteClick = (itemId) => e => {
+    e.preventDefault();
+    setShowDeleteModal(true);
+    setModalDeleteId(itemId);    
+  };
+
+
+  const handleStopWorkflowClick = async (pipelineId) => {
+    await stopPipeline(pipelineId);
+    setWorkflowStatus(false);    
+  };
+ 
+  
+  const handleRunPipelineClick = async (pipelineId, oneStep) => {
+    await runPipeline(pipelineId, oneStep);
+    setWorkflowStatus("running");
+    subscribeToTimer();  
+  };
+  
+  
+  async function deleteItem(pipelineId) {
+    const { getAccessToken } = contextType;
+    await PipelineActions.delete(pipelineId, getAccessToken);
+    history.push("/workflow");
+  }
+
+  async function runPipeline(pipelineId) {
+    setLoading(true);
+    const { getAccessToken } = contextType;
+    const postBody = {};
+    const response = await PipelineActions.run(pipelineId, postBody, getAccessToken);
+    console.log(response);
+    if (typeof(response.error) !== "undefined") {
+      console.log(response.error);
+      setErrors(response.error);
+    }     
+  }
+
+  async function stopPipeline(pipelineId, stepId) {
+    setLoading(true);
+    const { getAccessToken } = contextType;
+    const postBody = {
+      "action": "cancel",
+      "stepId": stepId
+    };
+    const response = await PipelineActions.action(pipelineId, postBody, getAccessToken);
+    console.log(response);
+    if (typeof(response.error) !== "undefined") {
+      console.log(response.error);
+      setErrors(response.error);
+      setLoading(false);
+    }  
+  }
+
 
   const handleSavePropertyClick = async (pipelineId, value, type) => {
     console.log(value);
@@ -213,75 +308,6 @@ const ItemSummaryDetail = (props) => {
       console.log("Missing value or type for edit field");
     }
   };
-
-  const handleActionClick = (action, itemId) => e => {
-    e.preventDefault();
-    
-    switch(action) {
-    case "delete":
-      setShowDeleteModal(true);
-      setModalDeleteId(itemId);
-      break;
-    case "run":
-      console.log("wire up run operation for entire pipeline");
-      break;
-    default:
-      alert("coming soon");
-    }
-  };
-
-  const handleCancelClick = async (pipelineId, stepId) => {
-    await cancelPipelineStep(pipelineId, stepId);
-    // setWorkflowStatus(false);
-    // setRunningStepId("");
-    parentCallback();
-  };
-
-  //let history = useHistory();
-  async function deleteItem(pipelineId) {
-    const { getAccessToken } = contextType;
-    await PipelineActions.delete(pipelineId, getAccessToken);
-    history.push("/workflow");
-  }
-
-  async function runPipeline(pipelineId) {
-    setLoading(true);
-    const { getAccessToken } = contextType;
-    const postBody = {
-      "action": "run",
-      "stepId": ""
-    };
-    const response = await PipelineActions.run(pipelineId, postBody, getAccessToken);
-    console.log(response);
-    if (typeof(response.error) !== "undefined") {
-      console.log(response.error);
-      setErrors(response.error);
-    } else {
-      //setShowActionAlert(true);      
-      parentCallback();
-    }   
-    setLoading(false);
-  }
-
-  async function cancelPipelineStep(pipelineId, stepId) {
-    setLoading(true);
-    const { getAccessToken } = contextType;
-    const postBody = {
-      "action": "cancel",
-      "stepId": stepId
-    };
-    const response = await PipelineActions.run(pipelineId, postBody, getAccessToken);
-    console.log(response);
-    if (typeof(response.error) !== "undefined") {
-      console.log(response.error);
-      setErrors(response.error);
-      setLoading(false);
-    } else {
-      setLoading(false);
-      parentCallback();      
-    }   
-  }
-
 
   return (
     <>
@@ -429,20 +455,24 @@ const ItemSummaryDetail = (props) => {
                   </LinkContainer>
                 
                   {workflowStatus === "running" ? 
-                    <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" onClick={() => runPipeline(data._id)} disabled>
-                      <FontAwesomeIcon icon={faSpinner} spin className="mr-1"/>Pipeline Running</Button>
+                    <>
+                      <Button variant="outline-dark" size="sm" className="mr-2 mt-2" disabled>
+                        <FontAwesomeIcon icon={faSpinner} spin className="mr-1"/> Running</Button>
+
+                      <Button variant="outline-danger" size="sm" className="mr-2 mt-2" 
+                        onClick={() => { handleStopWorkflowClick(data._id); }} disabled={workflowStatus !== "running"}>
+                        <FontAwesomeIcon icon={faStopCircle} className="mr-1"/>Stop Pipeline</Button>
+                    </>
                     :
-                    <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" onClick={() => runPipeline(data._id)}>
-                      <FontAwesomeIcon icon={faPlay} className="mr-1"/>Run Pipeline</Button>
+                    <Button variant="success" size="sm" className="mr-2 mt-2" onClick={() => handleRunPipelineClick(data._id)}>
+                      <FontAwesomeIcon icon={faPlay} className="mr-1"/>Start Pipeline</Button>
                   }
-                  
-                  {/* <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" disabled onClick={handleActionClick("pause", data._id)}>
-                    <FontAwesomeIcon icon={faPause} className="mr-1"/>Pause</Button> */}
-                  <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" 
-                    onClick={() => { handleCancelClick(data._id, runningStepId); }} disabled={workflowStatus !== "running"} >
-                    <FontAwesomeIcon icon={faBan} className="mr-1"/>Cancel</Button>
+                 
+                  <Button variant="outline-warning" size="sm" className="mr-2 mt-2" onClick={() => { handleRefreshClick(data._id); }}>
+                    <FontAwesomeIcon icon={faSync} className="fa-fw"/></Button> 
+
                   {role === "administrator" ? 
-                    <Button variant="outline-danger" size="sm" className="mr-2 mt-2" onClick={handleActionClick("delete", data._id)}>
+                    <Button variant="outline-danger" size="sm" className="ml-2 mt-2" onClick={handleDeleteClick(data._id)}>
                       <FontAwesomeIcon icon={faTrash} className="fa-fw"/></Button> : null }
                 </Col>
               </Row>
@@ -472,7 +502,8 @@ const ItemSummaryDetail = (props) => {
         handleConfirmModal={() => deleteItem(modalDeleteId)} /> : null}
 
       {showModal ? <Modal header="Pipeline Details"
-        message={<pre>{JSON.stringify(modalMessage, null, 2)}</pre>}
+        jsonMessage={modalMessage}
+        jsonView="true"
         button="OK"
         size="lg"
         handleCancelModal={() => setShowModal(false)}
@@ -517,7 +548,7 @@ const PipelineActivity = (props) => {
               {data.map((item, idx) => (
                 <tr key={idx} >
                   <td className="upper-case-first">{item["action"]}</td> 
-                  <td className="text-center">{item["step_index"] + 1}</td> 
+                  <td className="text-center">{item["step_index"] !== null ? item["step_index"] + 1 : ""}</td> 
                   <td>{item["step_name"]}</td>                  
                   <td className="upper-case-first">{item["tool_identifier"]}</td>
                   <td className="text-center">{item["build_number"]}</td>
@@ -535,7 +566,8 @@ const PipelineActivity = (props) => {
           </Table>
 
           {showModal ? <Modal header="Log Details"
-            message={<pre>{JSON.stringify(modalMessage, null, 2)}</pre>}
+            jsonMessage={modalMessage}
+            jsonView="true"
             button="OK"
             size="lg"
             handleCancelModal={() => setShowModal(false)}

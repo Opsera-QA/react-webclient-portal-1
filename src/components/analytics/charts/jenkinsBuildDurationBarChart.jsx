@@ -19,7 +19,7 @@ function JenkinsBuildDurationBarChart( { data, persona } ) {
           data={jenkinsBuildDuration ? jenkinsBuildDuration.data : []}
           keys={config.keys}
           layout="vertical"
-          indexBy="buildNum"
+          indexBy="key"
           margin={config.margin}
           padding={0.3}
           colors={{ scheme: "category10" }}

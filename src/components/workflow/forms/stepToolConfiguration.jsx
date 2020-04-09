@@ -14,16 +14,18 @@ import JmeterStepConfiguration from "./jmeter";
 import SeleniumStepConfiguration from "./selenium";
 import TwistlockStepConfiguration from "./twistlock";
 import S3StepConfiguration from "./S3";
-
+import DatabricksNotebookConfiguration from "./databricks-notebook";
 
 
 function StepToolConfiguration( { data, editItem, parentCallback }) {
   const { plan } = data.workflow;
-  const [stepTool, setStepTool] = useState();
+  const [stepTool, setStepTool] = useState({});
+  const [stepName, setStepName] = useState();
   
   useEffect(() => {
     let stepIndex = getStepIndex(editItem.step_id);
     setStepTool(plan[stepIndex].tool);
+    setStepName(plan[stepIndex].name);
   }, [editItem, data]);
 
 
@@ -38,12 +40,14 @@ function StepToolConfiguration( { data, editItem, parentCallback }) {
     plan[stepArrayIndex].tool.configuration = tool.configuration;
     plan[stepArrayIndex].tool.threshold = tool.threshold;
     parentCallback(plan);
+    setStepTool({});
   };
   
 
   return (
     <div>
-      <h6 className="upper-case-first ml-1">{typeof(stepTool) !== "undefined" ? stepTool.tool_identifier : null}</h6>
+      <h6 className="upper-case-first ml-1">{typeof(stepName) !== "undefined" ? stepName + ": " : null}
+        {typeof(stepTool) !== "undefined" ? stepTool.tool_identifier : null}</h6>
       <div className="text-muted m-1">Tools require configuration for individual workflow steps.  Please complete the fields below in order to 
       configure this pipeline. More help on tool configurations is available <Link to="/tools">here</Link>.</div>
           
@@ -62,6 +66,7 @@ function StepToolConfiguration( { data, editItem, parentCallback }) {
           {editItem.tool_name.toLowerCase() === "aws-deploy" ? <AwsDeployStepConfiguration  data={stepTool} parentCallback={callbackFunction} /> : null }
           {editItem.tool_name.toLowerCase() === "gcp-deploy" ? <GcpDeployStepConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
           {editItem.tool_name.toLowerCase() === "s3" ? <S3StepConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
+          {editItem.tool_name.toLowerCase() === "databricks-notebook" ? <DatabricksNotebookConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
         </div>
         : null }
 

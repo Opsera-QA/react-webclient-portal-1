@@ -66,10 +66,7 @@ class AdminTools extends Component {
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
                 <Link to="/admin/customerstatus"><FontAwesomeIcon icon={faHeartbeat} fixedWidth /> Customer System Status</Link>
-              </Col>
-              <Col xs={12} md={6} lg={4} className="p-2">
-                <a href={ apiServerUrl + "/tasks" } target="_blank"><FontAwesomeIcon icon={faColumns} fixedWidth /> Tasks Dashboard</a>
-              </Col>
+              </Col>              
             </Row>
 
           </div>

@@ -1,12 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "../../../contexts/AuthContext";
-import { ApiService } from "../../../api/apiService";
-import LoadingDialog from "../../common/loading";
-import ErrorDialog from "../../common/error";
+import { AuthContext } from "../../contexts/AuthContext";
+import { ApiService } from "../../api/apiService";
+import LoadingDialog from "../common/loading";
+import ErrorDialog from "../common/error";
 import { Form, Button, Alert, Table } from "react-bootstrap";
 import Moment from "react-moment";
-import Modal from "../../common/modal";
+import Modal from "../common/modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
 import "./logs.css";

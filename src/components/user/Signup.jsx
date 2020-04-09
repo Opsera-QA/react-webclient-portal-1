@@ -20,6 +20,7 @@ const state = {
   state: { value: "", error: null },
   modal: false,
   loading: false,
+  sharedStack: false
 };
 
 
@@ -35,6 +36,12 @@ export default class Signup extends PureComponent {
   async login() {
     const { loginUserContext } = this.context;
     loginUserContext();
+  }
+
+  handleCheckBox = (e) => {
+    this.setState({
+      sharedStack: e.target.checked
+    });
   }
 
   handleChange = ({ target: { name, value } }) => {
@@ -153,13 +160,13 @@ export default class Signup extends PureComponent {
     let hasErrors = false;
     if (await this.validateEmail()) hasErrors = true;
     if (this.validatePassword()) hasErrors = true;
-    if (this.validateDomain()) hasErrors = true
-    ;[
+    //if (this.validateDomain()) hasErrors = true;
+    [
       "firstName",
       "lastName",
       "organizationName",
       "state",
-      "street",
+      //"street",
       "zip",
       "city",
     ].map(item => {
@@ -212,11 +219,14 @@ export default class Signup extends PureComponent {
   // Success alert function 
 
   showSuccessAlert = () => {
+
+    let message = this.state.sharedStack ? "Registration was successful.  Because you chose to use a shared analytics instance, your account will be configured to share an existing profile.  Please work with an OpsERA representative to complete this setup based on your company policies.  You may now login using your credentials." : "Registration was successful, please Login now using your new credentials.";
+
     this.setState({
       modal: true,
       type: "success",
       title: "Signup Successfull!",
-      message: "Registration was successful, please Login now using your new credentials."
+      message: message
     }, () => { this.resetForm(); });
   }
 
@@ -264,26 +274,27 @@ export default class Signup extends PureComponent {
   canBeSubmitted() {
     const {
       domain,
+      sharedStack,
       email,
       firstName,
       lastName,
       organizationName,
       password,
       confirmPassword,
-      street,
+      //street,
       zip,
       city,
       state,
     } = this.state;
     return (
-      domain.value.length > 0 &&
+      (domain.value.length > 0 || sharedStack) &&
       email.value.length > 0 &&
       firstName.value.length > 0 &&
       lastName.value.length > 0 &&
       organizationName.value.length > 0 &&
       password.value.length > 0 &&
       confirmPassword.value.length > 0 &&
-      street.value.length > 0 &&
+      //street.value.length > 0 &&
       zip.value.length > 0 &&
       city.value.length > 0 &&
       state.value.length > 0
@@ -299,7 +310,7 @@ export default class Signup extends PureComponent {
   render() {
     const isEnabled = this.canBeSubmitted();
     return (
-      <div>
+      <div className="max-content-module-width-50 ml-5">
         
         {this.state.modal &&
         <>
@@ -322,7 +333,7 @@ export default class Signup extends PureComponent {
 
               <Form.Row>
                 <Form.Group as={Col} controlId="formGridEmail">
-                  <Form.Label>First Name</Form.Label>
+                  <Form.Label>First Name*</Form.Label>
                   <Form.Control
                     type="text"
                     name="firstName" placeholder=""
@@ -334,7 +345,7 @@ export default class Signup extends PureComponent {
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="formGridPassword">
-                  <Form.Label>Last Name</Form.Label>
+                  <Form.Label>Last Name*</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder=""
@@ -349,7 +360,7 @@ export default class Signup extends PureComponent {
 
               <Form.Row>
                 <Form.Group as={Col} controlId="formGridEmail">
-                  <Form.Label>Email</Form.Label>
+                  <Form.Label>Email*</Form.Label>
                   <Form.Control
                     type="email"
                     placeholder=""
@@ -362,11 +373,12 @@ export default class Signup extends PureComponent {
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="formGridPassword">
-                  <Form.Label>Company</Form.Label>
+                  <Form.Label>Company*</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder=""
                     name="organizationName"
+                    maxLength="20"
                     value={this.state.organizationName.value}
                     onChange={this.handleChange}
                     isInvalid={this.state.organizationName.error}
@@ -377,7 +389,7 @@ export default class Signup extends PureComponent {
 
               <Form.Row>
                 <Form.Group as={Col} controlId="formGridPassword">
-                  <Form.Label>Password</Form.Label>
+                  <Form.Label>Password*</Form.Label>
                   <Form.Control
                     type="password"
                     placeholder=""
@@ -390,7 +402,7 @@ export default class Signup extends PureComponent {
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="formGridPassword">
-                  <Form.Label>Confirm Password</Form.Label>
+                  <Form.Label>Confirm Password*</Form.Label>
                   <Form.Control
                     type="password"
                     placeholder=""
@@ -418,7 +430,7 @@ export default class Signup extends PureComponent {
 
               <Form.Row>
                 <Form.Group as={Col} controlId="formGridCity">
-                  <Form.Label>City</Form.Label>
+                  <Form.Label>City*</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder=""
@@ -431,7 +443,7 @@ export default class Signup extends PureComponent {
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="formGridState">
-                  <Form.Label>State</Form.Label>
+                  <Form.Label>State*</Form.Label>
                   <Form.Control as="select"
                     name="state"
                     isInvalid={this.state.state.error}
@@ -446,7 +458,7 @@ export default class Signup extends PureComponent {
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="formGridZip">
-                  <Form.Label>Zip</Form.Label>
+                  <Form.Label>Zip*</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder=""
@@ -459,25 +471,34 @@ export default class Signup extends PureComponent {
                 </Form.Group>
               </Form.Row>
 
-              <Form.Group controlId="formGridAddress2">
-                <Form.Label>Subdomain Name</Form.Label>
+              <Form.Group controlId="formGridAddress2" className="mt-3 mb-3">
+                <Form.Label>New Resource Subdomain Name</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder=""
                   name="domain"
+                  disabled={this.state.sharedStack}
                   value={this.state.domain.value}
                   onChange={this.handleChange}
                   isInvalid={this.state.domain.error}
                 />
+                <Form.Text className="text-muted">* When new resources are created for this account, this will be the default sub-domain name used when building DNS records. Either supply a subdomain name or check the box below to share an existing configuration in order to proceed.</Form.Text>
                 <Form.Control.Feedback type="invalid">{this.state.domain.error}</Form.Control.Feedback>
+                
+                <Form.Check type="checkbox" label="Share an existing or on-prem analytics platform."
+                  className="mt-2" 
+                  checked={this.state.sharedStack} 
+                  onChange={this.handleCheckBox} />
+                <Form.Text className="text-muted"></Form.Text>
               </Form.Group>
+              
               { this.state.loading ?
-                <Button id="login-button" disabled={true} variant="outline-success" className="mr-2" type="button">Working...</Button> :
-                <Button id="login-button" disabled={!isEnabled} variant="success" className="mr-2" type="submit">Sign Up</Button>
+                <Button id="login-button" disabled={true} variant="outline-success" className="mr-2 px-4" type="button">Working...</Button> :
+                <Button id="login-button" disabled={!isEnabled} variant="success" className="mr-2 px-4" type="submit">Register Account</Button>
               }  
 
               <Button id="cancel-button" variant="outline-secondary" className="ml-2" type="button" onClick={this.cancelSignup}>Cancel</Button>
-              <div className="mt-1 text-muted text-right">All fields are required.</div>
+              <div className="mt-1 text-muted text-right">* Required Fields</div>
 
             </Card.Body>
           </Card>
