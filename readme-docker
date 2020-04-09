@@ -1,17 +1,21 @@
 docker stop opsera-reactapp
 docker rm opsera-reactapp
 docker image rm opsera-reactapp
+docker image rm opsera-reactapp:test
 docker image rm opsera-reactapp:staging
 docker image rm opsera-reactapp:production
 
-#Build and serve docker image
-
+#Production
 docker build -t opsera-reactapp:production --build-arg build_env=production  .
 docker run -p 8000:80 --name opsera-reactapp -d opsera-reactapp:production
 
-#Test locally
+#Staging
 docker build -t opsera-reactapp:staging --build-arg build_env=staging  .
 docker run -p 8000:80 --name opsera-reactapp -d opsera-reactapp:staging
+
+#Test
+docker build -t opsera-reactapp:test --build-arg build_env=test  .
+docker run -p 8000:80 --name opsera-reactapp -d opsera-reactapp:test
 
 #logs last 40 lines
 docker logs -f --tail 40 opsera-reactapp
