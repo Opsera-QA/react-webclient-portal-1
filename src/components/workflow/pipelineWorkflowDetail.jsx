@@ -530,7 +530,13 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
           >
             
             <Row>
-              <Col><span className="text-muted">Step:</span> {item.name}</Col>
+              <Col><span className="text-muted">Step:</span> {item.name}
+                <FontAwesomeIcon icon={faArchive}
+                  className="ml-2 text-muted"
+                  size="sm"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => { handleViewActivityLogClick(item._id, false); }} />
+              </Col>
               <Col className="text-right" style={{ fontSize:"small" }}>
                 <FontAwesomeIcon icon={faBars}
                   className="ml-2"
@@ -556,13 +562,7 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
                       className="ml-2"
                       size="sm"
                       style={{ cursor: "pointer" }}
-                      onClick={() => { handleViewActivityLogClick(item._id, true); }} />
-                      
-                    <FontAwesomeIcon icon={faArchive}
-                      className="ml-2"
-                      size="sm"
-                      style={{ cursor: "pointer" }}
-                      onClick={() => { handleViewActivityLogClick(item._id, false); }} />
+                      onClick={() => { handleViewActivityLogClick(item._id, true); }} />                    
                   </Col>
                 </Row>
                
