@@ -77,7 +77,7 @@ const PipelineWorkflowDetail = (props) => {
       tmpDataObject = dataObj;
       
       if (staleRefreshCount >= 150) {
-        console.log("closing connection");
+        console.log("closing connection due to stale data");
         setWorkflowStatus(false);
         socket.close();
         setSocketRunning(false);
@@ -140,7 +140,7 @@ const PipelineWorkflowDetail = (props) => {
   const handleRunPipelineClick = async (pipelineId, oneStep) => {
     await runPipeline(pipelineId, oneStep);
     setWorkflowStatus("running");
-    subscribeToTimer();  
+    setTimeout(subscribeToTimer(), 10000); // delay this by 5 seconds to allow time for services to spin up
   };
 
 
