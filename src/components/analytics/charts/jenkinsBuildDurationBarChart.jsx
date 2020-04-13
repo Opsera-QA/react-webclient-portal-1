@@ -9,7 +9,7 @@ import "./charts.css";
 function JenkinsBuildDurationBarChart( { data, persona } ) {
   const { jenkinsBuildDuration }  =  data;
 
-  if (typeof data !== "object" || Object.keys(data).length == 0 || jenkinsBuildDuration.status !== 200) {
+  if (typeof data !== "object" || Object.keys(data).length == 0 || Object.keys(jenkinsBuildDuration.data).length == 0 || jenkinsBuildDuration.status !== 200) {
     return (<ErrorDialog error="No Data is available for this chart at this time." />);
   } else {
     

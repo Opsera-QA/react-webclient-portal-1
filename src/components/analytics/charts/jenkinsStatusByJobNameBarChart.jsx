@@ -9,7 +9,7 @@ function JenkinsStatusByJobNameBarChar( { data, persona } ) {
   const { jenkinsStatusByJobName }  =  data;
 
 
-  if (typeof data !== "object" || Object.keys(data).length == 0 || jenkinsStatusByJobName.status !== 200) {
+  if (typeof data !== "object" || Object.keys(data).length == 0 || Object.keys(jenkinsStatusByJobName.data).length == 0 || jenkinsStatusByJobName.status !== 200) {
     return (<ErrorDialog error="No Data is available for this chart at this time." />);
   } else {
     
