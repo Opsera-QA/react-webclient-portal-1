@@ -164,18 +164,18 @@ function Analytics() {
               (<InfoDialog  message="No log activity has been captured for this dashboard yet." />)
               : 
               <>
-                <div className="max-content-width">
+                {/* <div className="max-content-width">
                   <Row className="mt-3 ">
                     <Col className="chart" style={{ height: "300px" }}><JenkinsBuildDurationBarChart data={pipelineData} persona="Developer" /></Col>
                     <Col md="auto">
-                      {/* empty space here */}
+                      
                     </Col>
                     <Col className="chart" style={{ height: "300px" }}><JenkinsStatusByJobNameBarChar data={pipelineData} persona="Developer" /></Col>
                   </Row>
                   <Row className="mt-4 ">
                     <Col className="chart" style={{ height: "300px" }}><JenkinsBuildsByUserBarChart data={pipelineData} persona="Developer" /></Col>
                     <Col md="auto">
-                      {/* empty space here */}
+                      
                     </Col>
                     <Col className="chart" style={{ height: "300px" }}><JenkinsBuildDurationBarChart data={pipelineData} persona="Developer" /></Col>
                   </Row>
@@ -195,14 +195,14 @@ function Analytics() {
             
                   </Col>
                   <Col md="auto">
-                    {/* empty space here */}
+                    
                   </Col>
   
                   <Col className="mt-4 text-center chart" style={{ height: "315px" }}>
                     <JenkinsStatusByJobNameBarChar className="chart" data={pipelineData} persona="Developer"/>
                   </Col>
   
-                </Row>
+                </Row> */}
               </>
             }
           </div>
