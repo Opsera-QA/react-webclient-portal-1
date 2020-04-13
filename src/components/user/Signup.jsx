@@ -482,14 +482,16 @@ export default class Signup extends PureComponent {
                   onChange={this.handleChange}
                   isInvalid={this.state.domain.error}
                 />
-                <Form.Text className="text-muted">* When new resources are created for this account, this will be the default sub-domain name used when building DNS records. Either supply a subdomain name or check the box below to share an existing configuration in order to proceed.</Form.Text>
+                <Form.Text className="text-muted">* When new resources are created for this account, this will be the default sub-domain name used when building DNS records. 
+                  {/* Either supply a subdomain name or check the box below to share an existing configuration in order to proceed. */}
+                </Form.Text>
                 <Form.Control.Feedback type="invalid">{this.state.domain.error}</Form.Control.Feedback>
                 
-                <Form.Check type="checkbox" label="Share an existing or on-prem analytics platform."
+                {/* <Form.Check type="checkbox" label="Share an existing or on-prem analytics platform."
                   className="mt-2" 
                   checked={this.state.sharedStack} 
                   onChange={this.handleCheckBox} />
-                <Form.Text className="text-muted"></Form.Text>
+                <Form.Text className="text-muted"></Form.Text> */}
               </Form.Group>
               
               { this.state.loading ?
