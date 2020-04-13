@@ -122,7 +122,18 @@ function Analytics() {
   }
 
   if (loading || Object.keys(pipelineData).length == 0) {
-    return (<LoadingDialog size="lg" />);
+    // return (<LoadingDialog size="lg" />);
+    // TEMPORARY: NOT ACTUAL LOADING DIALOG
+    return (<div className="mt-3">
+      <div className="max-content-width">
+        <h4>Analytics</h4>
+        <p>OpsERA provides users with access to a vast repository of logging and analytics.  Access all available 
+     logging, reports and configurations around the OpsERA Analytics Platform or search your 
+    currently configured logs repositories below.</p>
+      </div>
+      <div className="p-2 mt-1 max-content-width mb-2">
+        <ConfigurationsForm settings={profileData} token={token} />
+      </div></div>);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
   // } else if (data === undefined || Object.keys(data).length == 0 || Object.values(data).every(element => Object.keys(element.data[0]).length === 0)) {
@@ -148,8 +159,9 @@ function Analytics() {
   
           <div className="p-2">
   
-            { (loading) ? 
-              (<LoadingDialog size="lg" />)
+            { (loading || pipelineData === undefined || Object.keys(pipelineData).length == 0 || Object.values(pipelineData).every(element => Object.keys(element.data[0]).length === 0)) ? 
+              // (<LoadingDialog size="lg" />)
+              (<InfoDialog  message="No log activity has been captured for this dashboard yet." />)
               : 
               <>
                 <div className="max-content-width">
