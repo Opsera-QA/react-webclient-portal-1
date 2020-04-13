@@ -38,6 +38,8 @@ function PipelineDashboard( { persona } ) {
     getApiData();
   }, []);
 
+  console.log("Rendering Pipeline Charts");
+
   if(loading) {
     return (<LoadingDialog size="lg" />);
   } else if (error) {
