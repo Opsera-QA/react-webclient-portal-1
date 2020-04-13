@@ -7,11 +7,11 @@ import { faSave } from "@fortawesome/free-solid-svg-icons";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
-  jenkinsUrl: "",
-  jenkinsPort: "",
-  jUserId: "",
-  jAuthToken: "",
-  jobName: ""
+  apiURL: "",
+  apiToken: "",
+  buildTypeId: "",
+  apiUsername: "", 
+  apiPassword: ""
 };
 
 
@@ -54,8 +54,8 @@ function TeamCityStepConfiguration( { data, parentCallback }) {
 
 
   const validateRequiredFields = () => {
-    let { jenkinsUrl, jUserId, jAuthToken } = formData;
-    if (jenkinsUrl.length === 0 || jUserId.length === 0 || jAuthToken.length === 0) {
+    let { apiURL, apiToken, buildTypeId } = formData;
+    if (apiURL.length === 0 || apiToken.length === 0 || buildTypeId.length === 0) {
       setFormMessage("Required Fields Missing!");
       return false;
     } else {
@@ -69,24 +69,21 @@ function TeamCityStepConfiguration( { data, parentCallback }) {
       { formMessage.length > 0 ? <p className="text-danger">{formMessage}</p> : null}
 
       <Form.Group controlId="repoField">
-        <Form.Label>Jenkins Container URL*</Form.Label>
-        <Form.Control maxLength="100" type="text" placeholder="" value={formData.jenkinsUrl || ""} onChange={e => setFormData({ ...formData, jenkinsUrl: e.target.value })} />
+        <Form.Label>TeamCity URL*</Form.Label>
+        <Form.Control maxLength="100" type="text" placeholder="" value={formData.apiURL || ""} onChange={e => setFormData({ ...formData, apiURL: e.target.value })} />
       </Form.Group>
-      <Form.Group controlId="branchField">
-        <Form.Label>Jenkins Port</Form.Label>
-        <Form.Control maxLength="5" type="text" placeholder="" value={formData.jenkinsPort || ""} onChange={e => setFormData({ ...formData, jenkinsPort: e.target.value })} />
-      </Form.Group>
-      <Form.Group controlId="branchField">
+      {/* <Form.Group controlId="branchField">
         <Form.Label>Jenkins User ID*</Form.Label>
         <Form.Control maxLength="50" type="text" placeholder="" value={formData.jUserId || ""} onChange={e => setFormData({ ...formData, jUserId: e.target.value })} />
+      </Form.Group> */}
+      <Form.Group controlId="branchField">
+        <Form.Label>TeamCity Token*</Form.Label>
+        <Form.Control maxLength="500" as="textarea" type="text" placeholder="" value={formData.apiToken || ""} onChange={e => setFormData({ ...formData, apiToken: e.target.value })} />
       </Form.Group>
       <Form.Group controlId="branchField">
-        <Form.Label>Jenkins Token*</Form.Label>
-        <Form.Control maxLength="500" as="textarea" type="text" placeholder="" value={formData.jAuthToken || ""} onChange={e => setFormData({ ...formData, jAuthToken: e.target.value })} />
-      </Form.Group>
-      <Form.Group controlId="branchField">
-        <Form.Label>Job Name</Form.Label>
-        <Form.Control maxLength="150" type="text" placeholder="" value={formData.jobName || ""} onChange={e => setFormData({ ...formData, jobName: e.target.value })} />
+        <Form.Label>Build Step ID</Form.Label>
+        <Form.Control maxLength="150" type="text" placeholder="" value={formData.buildTypeId || ""} onChange={e => setFormData({ ...formData, buildTypeId: e.target.value })} />
+        <Form.Text className="text-muted">TeamCity Project Build Settings &#62; ID</Form.Text>
       </Form.Group>
 
       {/* Leave the threshold form group as is for now, just read only for all forms */}
