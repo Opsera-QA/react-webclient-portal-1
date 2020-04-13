@@ -72,7 +72,8 @@ function WorkflowCatalog() {
             </div>
 
             {showModal ? <Modal header="Template Details"
-              message={<pre>{JSON.stringify(modalMessage, null, 2)}</pre>}
+              jsonMessage={modalMessage}
+              jsonView="true"
               button="OK"
               size="lg"
               handleCancelModal={() => setShowModal(false)}
