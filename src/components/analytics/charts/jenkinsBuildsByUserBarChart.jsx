@@ -7,11 +7,12 @@ import "./charts.css";
 
 
 function JenkinsBuildsByUserBarChart( { data, persona } ) {
+  const { jenkinsBuildsByUser }  =  data; //need to pull this out at the top and validate the data before rendering decisions.
 
-  if (typeof data !== "object" || Object.keys(data).length == 0) {
-    return (<ErrorDialog error="No Data Present in the ES!" />);
-  } else {
-    const { jenkinsBuildsByUser }  =  data;
+  //This needs to be more intelligent than just checking for precense of data.  Node can return a status 400 error from ES, and that would fail this.
+  if (typeof data !== "object" || Object.keys(data).length == 0 || jenkinsBuildsByUser.status !== 200) {
+    return (<ErrorDialog error="No Data is available for this chart at this time." />);
+  } else {    
     return (
       <>
         <div className="chart-label-text">Jenkins: Builds by User</div>

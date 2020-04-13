@@ -6,11 +6,13 @@ import config from "./jenkinsStatusByJobNameBarChartConfigs";
 import "./charts.css";
 
 function JenkinsStatusByJobNameBarChar( { data, persona } ) {
-  
-  if (typeof data !== "object" || Object.keys(data).length == 0) {
-    return (<ErrorDialog error="No Data Present in the ES!" />);
+  const { jenkinsStatusByJobName }  =  data;
+
+
+  if (typeof data !== "object" || Object.keys(data).length == 0 || jenkinsStatusByJobName.status !== 200) {
+    return (<ErrorDialog error="No Data is available for this chart at this time." />);
   } else {
-    const { jenkinsStatusByJobName }  =  data;
+    
     return (
       <>
         <div className="chart-label-text">Jenkins: Build Status by Job Name</div>

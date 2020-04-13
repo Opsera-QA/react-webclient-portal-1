@@ -7,11 +7,12 @@ import "./charts.css";
 
 
 function JenkinsBuildDurationBarChart( { data, persona } ) {
-  
-  if (typeof data !== "object" || Object.keys(data).length == 0) {
-    return (<ErrorDialog  error="No Data Present in the ES!" />);
+  const { jenkinsBuildDuration }  =  data;
+
+  if (typeof data !== "object" || Object.keys(data).length == 0 || jenkinsBuildDuration.status !== 200) {
+    return (<ErrorDialog error="No Data is available for this chart at this time." />);
   } else {
-    const { jenkinsBuildDuration }  =  data;
+    
     return (
       <>
         <div className="chart-label-text">Jenkins: Build Duration</div>
