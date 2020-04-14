@@ -7,11 +7,12 @@ import "./charts.css";
 
 
 function XUnitMaxMinPercBarChart( { data, persona } ) {
+  const { xunitMaxMinPerc }  =  data;
+
   
-  if (typeof data !== "object" || Object.keys(data).length == 0) {
-    return (<ErrorDialog  error="No Data Present in the ES!" />);
+  if (typeof data !== "object" || Object.keys(data).length == 0 || xunitMaxMinPerc.status !== 200) {
+    return (<ErrorDialog error="No Data is available for this chart at this time." />);
   } else {
-    const { xunitMaxMinPerc }  =  data;
     return (
       <>
         <div className="chart-label-text">X Unit: Max/Min/Percentiles Test Duration</div>

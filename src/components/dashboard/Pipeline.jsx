@@ -8,7 +8,7 @@ import InfoDialog from "../common/info";
 import BuildCounts from "../analytics/metrics/buildCounts";
 import JenkinsBuildDurationBarChart from "../analytics/charts/jenkinsBuildDurationBarChart";
 import JenkinsBuildsByUserBarChart from "../analytics/charts/jenkinsBuildsByUserBarChart";
-import JenkinsStatusByJobNameBarChar from "../analytics/charts/jenkinsStatusByJobNameBarChart";
+import JenkinsStatusByJobNameBarChart from "../analytics/charts/jenkinsStatusByJobNameBarChart";
 
 function PipelineDashboard( { persona } ) {
   const contextType = useContext(AuthContext);
@@ -44,7 +44,8 @@ function PipelineDashboard( { persona } ) {
     return (<LoadingDialog size="lg" />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
-  } else if (data === undefined || Object.keys(data).length == 0 || Object.values(data).every(element => Object.keys(element.data[0]).length === 0)) {
+  } else if (data === undefined || Object.keys(data).length == 0 || Object.values(data).every(element => Object.keys(element.data[0]).length === 0)
+  || Object.values(data).every(element => element.status !== 200)) {
     return (<InfoDialog  message="No log activity has been captured for this dashboard yet." />);
   } else {
     return (
@@ -54,15 +55,15 @@ function PipelineDashboard( { persona } ) {
             <BuildCounts data={data} persona={persona} />
           </div>
           <div className="p-2 flex-grow-1">
-            <div className="chart mb-3" style={{ height: "300px" }}>
+            {Object.keys(data.jenkinsBuildsByUser.data[0]).length > 0 && data.jenkinsBuildsByUser.status === 200 ? <div className="chart mb-3" style={{ height: "300px" }}>
               <JenkinsBuildsByUserBarChart data={data} persona={persona} />
-            </div>
-            <div className="chart mb-3" style={{ height: "300px" }}>
+            </div> : ""}
+            {Object.keys(data.jenkinsBuildDuration.data[0]).length > 0 && data.jenkinsBuildDuration.status === 200 ? <div className="chart mb-3" style={{ height: "300px" }}>
               <JenkinsBuildDurationBarChart data={data} persona={persona} />
-            </div>
-            <div className="chart mb-3" style={{ height: "300px" }}>
-              <JenkinsStatusByJobNameBarChar data={data} persona={persona} />
-            </div>
+            </div> : ""}
+            {Object.keys(data.jenkinsStatusByJobName.data[0]).length > 0 && data.jenkinsStatusByJobName.status === 200 ? <div className="chart mb-3" style={{ height: "300px" }}>
+              <JenkinsStatusByJobNameBarChart data={data} persona={persona} />
+            </div> : ""}
           </div> 
         </div>
       </>

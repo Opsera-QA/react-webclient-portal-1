@@ -48,7 +48,8 @@ function SecOpsDashboard( { persona } ) {
     return (<LoadingDialog size="lg" />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
-  } else if (data === undefined || Object.keys(data).length == 0 || Object.values(data).every(element => Object.keys(element.data[0]).length === 0)) {
+  } else if (data === undefined || Object.keys(data).length == 0 || Object.values(data).every(element => Object.keys(element.data[0]).length === 0) 
+  || Object.values(data).every(element => element.status !== 200)) {
     return (<InfoDialog  message="No log activity has been captured for this dashboard yet." />);
   } else {
     console.log(Object.values(data));
@@ -59,22 +60,24 @@ function SecOpsDashboard( { persona } ) {
             <SecOpsCounts data={data} persona={persona} />
           </div>
           <div className="p-2 flex-grow-1">
-            {Object.keys(data.twistlockVulStatusHigh.data[0]).length > 0 ? <div className="chart mb-3" style={{ height: "300px" }}>
+
+            {Object.keys(data.twistlockVulStatusHigh.data[0]).length > 0 && data.twistlockVulStatusHigh.status === 200 ? <div className="chart mb-3" style={{ height: "300px" }}>
               <TwistlockVulnerability data={data} persona={persona} />
             </div> : ""}
-            <div className="chart mb-3" style={{ height: "300px" }}>
+
+            {Object.keys(data.sonarCodeCategoriesNO_VALUE.data[0]).length > 0 && data.sonarCodeCategoriesNO_VALUE.status === 200 ? <div className="chart mb-3" style={{ height: "300px" }}>
               <SonarCodeCategoriesNO_VALUEPieChart data={data} persona={persona} />
-            </div>
+            </div> : ""}
 
-            <div className="chart mb-3" style={{ height: "300px" }}>
+            {Object.keys(data.sonarCodeCategoriesOK.data[0]).length > 0 && data.sonarCodeCategoriesOK.status === 200 ? <div className="chart mb-3" style={{ height: "300px" }}>
               <SonarCodeCategoriesOKPieChart data={data} persona={persona} />
-            </div>
+            </div> : ""}
 
-            <div className="chart mb-3" style={{ height: "300px" }}>
+            {Object.keys(data.sonarMaintainability.data[0]).length > 0 && data.sonarMaintainability.status === 200 ? <div className="chart mb-3" style={{ height: "300px" }}>
               <SonarMaintainabilityLineChart data={data} persona={persona} />
-          
-            </div>
-            {data.sonarCodeSmells.data[0].data.length > 0 ? <div className="chart mb-3" style={{ height: "300px" }}>
+            </div> : ""}
+
+            {Object.keys(data.sonarCodeSmells.data[0]).length > 0 && data.sonarCodeSmells.status === 200 ? <div className="chart mb-3" style={{ height: "300px" }}>
               <SonarCodeSmellsLineChart data={data} persona={persona} />
             </div> : ""}
 

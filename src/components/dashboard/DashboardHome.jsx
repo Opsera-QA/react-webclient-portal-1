@@ -74,8 +74,8 @@ function DashboardHome() {
             </div>
 
             { hasError && <ErrorDialog error={hasError} className="max-content-width mt-4 mb-4" /> }
-
-            { data.profile === undefined || data.profile.length === 0 || data.esSearchApi === null ? 
+            {console.log(data)}
+            { data.profile === undefined || data.profile.length === 0 || data.esSearchApi === null || data.vault !== 200 || data.esSearchApi.status !== 200 ? 
               <div style={{ height: "250px" }} className="max-content-module-width-50">
                 <div className="row h-100">
                   <div className="col-sm-12 my-auto">
@@ -92,7 +92,13 @@ function DashboardHome() {
                         </li>
                         <li className="list-group-item d-flex justify-content-between align-items-center">
                     An OpsERA Analytics instance must be spun up and configured with your pipeline tools.
-                          {data.esSearchApi === undefined || data.esSearchApi === null ? 
+                          {data.esSearchApi === undefined || data.esSearchApi === null || data.esSearchApi.status !== 200 ? 
+                            <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span> :
+                            <span className="badge badge-success badge-pill"><FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth /></span> }
+                        </li>
+                        <li className="list-group-item d-flex justify-content-between align-items-center">
+                    OpsERA Analytics authentication information must be secured in Vault.
+                          {data.vault === undefined || data.vault !== 200 ? 
                             <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span> :
                             <span className="badge badge-success badge-pill"><FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth /></span> }
                         </li>

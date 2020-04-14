@@ -7,11 +7,12 @@ import "./charts.css";
 
 
 function MaintainabilityLineChart( { data, persona } ) {
+  const { sonarMaintainability }  =  data;
 
-  if (typeof data !== "object" || Object.keys(data).length == 0) {
-    return (<ErrorDialog  error="No Data Present in the ES!" />);
+
+  if (typeof data !== "object" || Object.keys(data).length == 0 || sonarMaintainability.status !== 200) {
+    return (<ErrorDialog error="No Data is available for this chart at this time." />);
   } else {
-    const { sonarMaintainability }  =  data;
     return (
       <>
         <div className="chart-label-text">Sonar: Maintainability Rating</div>

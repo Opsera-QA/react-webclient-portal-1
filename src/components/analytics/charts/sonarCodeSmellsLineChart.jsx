@@ -7,11 +7,11 @@ import "./charts.css";
 
 
 function CodeSmellLineChart( { data, persona } ) {
-  
-  if (typeof data !== "object" || Object.keys(data).length == 0) {
-    return (<ErrorDialog  error="No Data Present in the ES!" />);
+  const { sonarCodeSmells }  =  data;
+
+  if (typeof data !== "object" || Object.keys(data).length == 0 || sonarCodeSmells.status !== 200) {
+    return (<ErrorDialog error="No Data is available for this chart at this time." />);
   } else {
-    const { sonarCodeSmells }  =  data;
     return (
       <>
         <div className="chart-label-text">Sonar: Code Smells</div>

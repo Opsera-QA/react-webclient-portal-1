@@ -17,7 +17,7 @@ function SecOpsCounts( { data, persona } ) {
               Vulnerabilities
               </div>
               <div className={"box-metric " + (twistlockHighVulnerabilities && Object.keys(twistlockHighVulnerabilities.data[0]).length > 0 ? "red" : null)}>
-                {twistlockHighVulnerabilities && Object.keys(twistlockHighVulnerabilities.data[0]).length > 0 ? Object.values(twistlockHighVulnerabilities.data[0]) : null}</div>
+                {twistlockHighVulnerabilities && Object.keys(twistlockHighVulnerabilities.data[0]).length > 0 || twistlockHighVulnerabilities.status === 200 ? Object.values(twistlockHighVulnerabilities.data[0]) : null}</div>
               <footer className="blockquote">
                 <div className="metric-box-subtext text-muted">
               High Severity
@@ -27,7 +27,7 @@ function SecOpsCounts( { data, persona } ) {
 
             <blockquote className="blockquote mb-0 mt-4">
               <div className={"box-metric " + (twistlockMidVulnerabilities && Object.keys(twistlockMidVulnerabilities.data[0]).length > 0 ? "yellow" : null)}>
-                {twistlockMidVulnerabilities && Object.keys(twistlockMidVulnerabilities.data[0]).length > 0 ? Object.values(twistlockMidVulnerabilities.data[0]) : null}</div>
+                {twistlockMidVulnerabilities && Object.keys(twistlockMidVulnerabilities.data[0]).length > 0 || twistlockMidVulnerabilities.status === 200 ? Object.values(twistlockMidVulnerabilities.data[0]) : null}</div>
               <footer className="blockquote">
                 <div className="metric-box-subtext text-muted">
               Medium Severity
@@ -36,7 +36,7 @@ function SecOpsCounts( { data, persona } ) {
             </blockquote>
         
             <blockquote className="blockquote mb-0 mt-4">
-              <div className="box-metric">{twistlockLowVulnerabilities && Object.keys(twistlockLowVulnerabilities.data[0]).length > 0 ? Object.values(twistlockLowVulnerabilities.data[0]) : null}</div>
+              <div className="box-metric">{twistlockLowVulnerabilities && Object.keys(twistlockLowVulnerabilities.data[0]).length > 0 || twistlockLowVulnerabilities.status === 200 ? Object.values(twistlockLowVulnerabilities.data[0]) : null}</div>
               <footer className="blockquote">
                 <div className="metric-box-subtext text-muted">
               Low Severity
@@ -49,7 +49,7 @@ function SecOpsCounts( { data, persona } ) {
 
         <div className="metric-box p-3 mt-0 text-center">
           <blockquote className="blockquote mb-0 ">
-            <div className="box-metric">{sonarBugs && Object.keys(sonarBugs.data[0]) ? Object.values(sonarBugs.data[0]) : null}</div>
+            <div className="box-metric">{sonarBugs && Object.keys(sonarBugs.data[0]) || sonarBugs.status === 200 ? Object.values(sonarBugs.data[0]) : null}</div>
             <footer className="blockquote">
               <div className="metric-box-subtext text-muted">
             Bugs

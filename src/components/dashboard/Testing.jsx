@@ -44,7 +44,8 @@ function TestingDashboard( { persona } ) {
     return (<LoadingDialog size="lg" />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
-  } else if (data === undefined || Object.keys(data).length == 0 || Object.values(data).every(element => Object.keys(element.data[0]).length === 0)) {
+  } else if (data === undefined || Object.keys(data).length == 0 || Object.values(data).every(element => Object.keys(element.data[0]).length === 0) 
+  || Object.values(data).every(element => element.status !== 200)) {
     return (<InfoDialog  message="No log activity has been captured for this dashboard yet." />);
   } else {
     return (
@@ -54,15 +55,15 @@ function TestingDashboard( { persona } ) {
             <TestingCounts data={data} persona={persona} />
           </div>
           <div className="p-2 flex-grow-1">
-            <div className="chart mb-3" style={{ height: "300px" }}>
+            {Object.keys(data.xunitMaxMinPerc.data[0]).length > 0 && data.xunitMaxMinPerc.status === 200 ? <div className="chart mb-3" style={{ height: "300px" }}>
               <XUnitMaxMinPercBarChart data={data} persona={persona} />
-            </div>
-            <div className="chart mb-3" style={{ height: "300px" }}>
+            </div> : ""}
+            {Object.keys(data.xunitTestDuration.data[0]).length > 0 && data.xunitTestDuration.status === 200 ? <div className="chart mb-3" style={{ height: "300px" }}>
               <XUnitTestDurationBarChart data={data} persona={persona} />
-            </div>
+            </div> : ""}
           </div> 
         </div>
-        {data.xunitTable.data ? <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
+        {Object.keys(data.xunitTable.data[0]).length > 0 && data.xunitTable.status === 200 ? <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
           <thead>
             <tr>
               <th style={{ width: "5%" }}>Build ID</th>
