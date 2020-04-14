@@ -7,12 +7,14 @@ import "./charts.css";
 
 
 function XUnitTestDurationBarChart( { data, persona } ) {
+
+  const { xunitTestDuration }  =  data;
+  const { xunitTestNames } = data;
   
-  if (typeof data !== "object" || Object.keys(data).length == 0) {
-    return (<ErrorDialog  error="No Data Present in the ES!" />);
+  if (typeof data !== "object" || Object.keys(data).length == 0 || xunitTestDuration.status !== 200 || xunitTestNames.status !== 200) {
+    return (<ErrorDialog error="No Data is available for this chart at this time." />);
   } else {
-    const { xunitTestDuration }  =  data;
-    const { xunitTestNames } = data;
+
     
     return (
       <>

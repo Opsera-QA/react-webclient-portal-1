@@ -7,12 +7,12 @@ import "./charts.css";
 
 
 function CodeCategoriesPieChart( { data, persona } ) {
+  const { sonarCodeCategoriesNO_VALUE }  =  data;
   
-  if (typeof data !== "object" || Object.keys(data).length == 0) {
-    return (<ErrorDialog  error="No Data Present in the ES!" />);
+  if (typeof data !== "object" || Object.keys(data).length == 0 || sonarCodeCategoriesNO_VALUE.status !== 200) {
+    return (<ErrorDialog error="No Data is available for this chart at this time." />);
   } else {
     
-    const { sonarCodeCategoriesNO_VALUE }  =  data;
     return (
       <>
         <div className="chart-label-text">Sonar: Code Categories (Keyword = No Value)</div>
@@ -23,7 +23,7 @@ function CodeCategoriesPieChart( { data, persona } ) {
           padAngle={0.7}
           cornerRadius={3}
           borderWidth={1}
-          radialLabelsSkipAngle={10}
+          radialLabelsSkipAngle={45}
           radialLabelsTextXOffset={6}
           radialLabelsTextColor="#333333"
           radialLabelsLinkOffset={0}
