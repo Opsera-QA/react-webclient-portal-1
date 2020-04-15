@@ -71,7 +71,6 @@ const PipelineWorkflowDetail = (props) => {
     setSocketRunning(true);
     
     if (socket.socket === undefined ) {
-      console.log("Connecting?");
       socket.emit("subscribeToPipelineActivity", 1000);
       socket.on("subscribeToPipelineActivity", dataObj => {
         console.log("Update from Websocket (staleRefreshCount: "+staleRefreshCount+"): ", dataObj);
