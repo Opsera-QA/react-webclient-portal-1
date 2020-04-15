@@ -9,7 +9,7 @@ import { Row, Col, Button } from "react-bootstrap";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faCog, faBars, faArchive, faBan, faPlay, faChevronDown, faSync, faSpinner, faForward, faCheck, faStopCircle, faHistory } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faCog, faBars, faArchive, faCircleNotch, faPlay, faChevronDown, faSync, faSpinner, faForward, faCheck, faStopCircle, faHistory } from "@fortawesome/free-solid-svg-icons";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Modal from "../common/modal";
 import Moment from "react-moment";
@@ -65,32 +65,47 @@ const PipelineWorkflowDetail = (props) => {
   let tmpDataObject = {};
   let staleRefreshCount = 0;
   const subscribeToTimer = () => {    
+
+    console.log("Connected status before onConnect", socket.socket ? socket.socket.connected : socket.socket === undefined );
+
     setSocketRunning(true);
-    socket.emit("subscribeToPipelineActivity", 1000);
-    socket.on("subscribeToPipelineActivity", dataObj => {
-      console.log("Update from Websocket (staleRefreshCount: "+staleRefreshCount+"): ", dataObj);
-      if (_.isEqual(dataObj, tmpDataObject)) {
-        staleRefreshCount++;
-      } else {
-        staleRefreshCount = 0;
-      }  
-      tmpDataObject = dataObj;
-      
-      if (staleRefreshCount >= 150) {
-        console.log("closing connection due to stale data");
-        setWorkflowStatus(false);
-        socket.close();
-        setSocketRunning(false);
-      } else {
+    
+    if (socket.socket === undefined ) {
+      console.log("Connecting?");
+      socket.emit("subscribeToPipelineActivity", 1000);
+      socket.on("subscribeToPipelineActivity", dataObj => {
+        console.log("Update from Websocket (staleRefreshCount: "+staleRefreshCount+"): ", dataObj);
+        if (_.isEqual(dataObj, tmpDataObject)) {
+          staleRefreshCount++;
+        } else {
+          staleRefreshCount = 0;
+        }  
+        tmpDataObject = dataObj;
         let status =  data.workflow.last_step !== undefined && data.workflow.last_step.hasOwnProperty("status") ? data.workflow.last_step.status : false;
-        setWorkflowStatus(status);
-      }
+
+        if (staleRefreshCount >= 100) {
+          console.log("closing connection due to stale data");
+          setWorkflowStatus(false);
+          setSocketRunning(false);
+          socket.close();
+        } else {          
+          setWorkflowStatus(status);
+        }
            
-      if (typeof(dataObj) !== "undefined" && Object.keys(dataObj).length > 0) {
-        data.workflow.last_step = dataObj;
-        setLastStep(dataObj);
-      }
-    });
+        if (typeof(dataObj) !== "undefined" && Object.keys(dataObj).length > 0) {
+          data.workflow.last_step = dataObj;
+          setLastStep(dataObj);
+        }
+
+        if (staleRefreshCount > 5 && status === "stopped") {
+          console.log("closing connection due to stopped status");
+          setWorkflowStatus(false);
+          setSocketRunning(false);
+          socket.close();
+        }
+
+      });
+    }
 
     socket.on("disconnect", () => {
       setWorkflowStatus(false);
@@ -126,7 +141,7 @@ const PipelineWorkflowDetail = (props) => {
 
   const handleRefreshClick = async (pipelineId, stepNext) => {
     await fetchStatusData(pipelineId, stepNext);
-    subscribeToTimer();
+    setTimeout(subscribeToTimer(), 5000); // delay this by 5 seconds to allow time for services to spin up
   };
 
 
@@ -139,8 +154,7 @@ const PipelineWorkflowDetail = (props) => {
 
   const handleRunPipelineClick = async (pipelineId, oneStep) => {
     await runPipeline(pipelineId, oneStep);
-    setWorkflowStatus("running");
-    setTimeout(subscribeToTimer(), 10000); // delay this by 5 seconds to allow time for services to spin up
+    setWorkflowStatus("running");    
   };
 
 
@@ -175,13 +189,12 @@ const PipelineWorkflowDetail = (props) => {
     };
     console.log("POST OPERATION: ", postBody);
     const response = await PipelineActions.action(pipelineId, postBody, getAccessToken);
-    
+    setTimeout(subscribeToTimer(), 10000); // delay this by 5 seconds to allow time for services to spin up
+
     if (typeof(response.error) !== "undefined") {
       console.log(response.error);
       setErrors(response.error);
-    } else {
-      parentCallback();
-    }   
+    } 
   }
 
 
@@ -197,7 +210,7 @@ const PipelineWorkflowDetail = (props) => {
       setErrors(response.error);
     } else {
       setWorkflowStatus("running");
-      subscribeToTimer();
+      //subscribeToTimer();
     }   
   }
 
@@ -260,9 +273,6 @@ const PipelineWorkflowDetail = (props) => {
                 onClick= {() => { handleViewPipelineClick(data); }} />
             </div>
             <div className="py-2 mb-1 text-right">
-              
-              {/* <Button variant="warning" size="sm" className="mr-2" onClick={() => { handleRefreshClick(data._id); }}>
-                <FontAwesomeIcon icon={faSync} className="mr-1"/>Update Status</Button> */}
 
               {workflowStatus === "running" ? 
                 <>
@@ -318,21 +328,7 @@ const PipelineWorkflowDetail = (props) => {
                   <FontAwesomeIcon icon={faCog}
                     style={{ cursor: "pointer" }}
                     className="text-muted mr-1"
-                    onClick={() => { handleSourceEditClick(); }} />
-                  {/* {data.workflow.source.repository ? <>
-                    <FontAwesomeIcon icon={faPause}
-                      className="ml-2"
-                      style={{ cursor: "pointer" }}
-                      onClick={() => { handleClick(data); }} />
-                    <FontAwesomeIcon icon={faBan}
-                      className="ml-2"
-                      style={{ cursor: "pointer" }}
-                      onClick={() => { handleClick(data); }} />
-                    <FontAwesomeIcon icon={faPlay}
-                      className="ml-2"
-                      style={{ cursor: "pointer" }}
-                      onClick={() => { handleClick(data); }} /> 
-                  </>: null} */}
+                    onClick={() => { handleSourceEditClick(); }} />                  
                 </Col>
               </Row>
             </div>
@@ -475,20 +471,18 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
     }    
   };
 
+  /* 
   const handleOneStepRunClick = async () => {
     await parentCallbackPipelineAction(pipelineId, true);
   };
   
   const handleCancelClick = async (stepId) => {
-    await parentCallbackPipelineAction(pipelineId, stepId, "cancel");
-    
-    //TODO THIS NEEDS TO TRIGGER REFRESH OF UI!
-    //await fetchStatusCallback(pipelineId);
+    await parentCallbackPipelineAction(pipelineId, stepId, "cancel");    
   };
 
   const handleRefreshClick = async () => {
     await fetchStatusCallback(pipelineId);
-  }; 
+  };  */
 
   
 
@@ -577,35 +571,10 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
                   className="text-muted"
                   onClick={() => { handleEditClick("tool", item.tool.tool_identifier, item._id); }} />
 
-              
                 {itemState === "completed" ? <FontAwesomeIcon icon={faCheck} className="ml-2 mr-1" /> : null }
-                {itemState === "running" ? 
-                  <>
-                    <FontAwesomeIcon icon={faSync}
-                      className="ml-2"
-                      style={{ cursor: "pointer" }}
-                      onClick={() => { handleRefreshClick(); }} /> 
-
-                    <FontAwesomeIcon icon={faBan}
-                      className="ml-2 mr-1"
-                      style={{ cursor: "pointer" }} 
-                      onClick={() => { handleCancelClick(item._id); }} />
-                    <FontAwesomeIcon icon={faSpinner} spin className="ml-2 mr-1" />
-                  </> : null }
-                
-                { nextStep !== undefined && nextStep._id === item._id ?
-                  <>
-                    <FontAwesomeIcon icon={faSync}
-                      className="ml-2"
-                      style={{ cursor: "pointer" }}
-                      onClick={() => { handleRefreshClick(); }} /> 
-                    {role === "administrator" ? <FontAwesomeIcon icon={faPlay}
-                      className="ml-2"
-                      style={{ cursor: "pointer" }} 
-                      onClick={() => { handleOneStepRunClick(); }} /> : null }
-                  </>
-                  : null
-                }
+                {itemState === "running" ? <FontAwesomeIcon icon={faSpinner} spin className="ml-2 mr-1" /> : null }                  
+                {nextStep !== undefined && nextStep._id === item._id ? <FontAwesomeIcon icon={faCircleNotch} className="ml-2" /> : null }                  
+                 
               </Col>
             </Row>
             
