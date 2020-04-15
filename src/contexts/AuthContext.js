@@ -66,6 +66,12 @@ class AuthContextProvider extends Component {
     }
   }
 
+  getIsPreviewRole = async () => {
+    let userInfo = await this.getUserInfo();
+    console.log("userInfo");
+    return userInfo.Groups.includes("Preview");
+  }
+
   getUserSsoUsersRecord = async () => {
     if (this.state.ssoUserRecord) {
       return this.state.ssoUserRecord;
@@ -102,6 +108,7 @@ class AuthContextProvider extends Component {
         loginUserContext: this.loginUserContext, 
         getAccessToken: this.getAccessToken,
         getUserInfo: this.getUserInfo,
+        getIsPreviewRole: this.getIsPreviewRole,
         getUserSsoUsersRecord: this.getUserSsoUsersRecord,
         setSharedState: this.setSharedState }}>
         {this.props.children}

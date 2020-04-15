@@ -18,7 +18,12 @@ function PipelineDashboard( { persona } ) {
   
   const getApiData = async () => {
     setLoading(true);
-    const { getAccessToken } = contextType;
+    const { getAccessToken, getIsPreviewRole } = contextType;
+
+    //this returns true IF the Okta groups for user contains "Preview".  Please wrap display compontents in this.
+    const isPreviewRole = await getIsPreviewRole(); 
+    console.log("Is User Granted Preview Role? ", isPreviewRole);
+
     const accessToken = await getAccessToken();
     const apiCall = new ApiService("/analytics/dashboard/pipeline", {}, accessToken);
     
