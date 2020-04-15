@@ -145,7 +145,7 @@ function ConfigurationsForm({ settings, token }) {
         handleCancelModal={handleCancel}
         handleConfirmModal={disableProfile} /> : null}
 
-      {!active ?
+      {!active || (enabledToolsOn && enabledToolsOn.length === 0) ?
         <Card>
           <Card.Body>
             <Card.Title>Getting Started</Card.Title>
