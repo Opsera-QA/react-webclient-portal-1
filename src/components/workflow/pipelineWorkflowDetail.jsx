@@ -468,8 +468,11 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
 
   const handleViewActivityLogClick = async (param, latest) => {
     let activityLog = await fetchActivityLogData(param, latest);
-    setModalMessage(activityLog);
-    setShowModal(true);
+    
+    if (activityLog) {
+      setModalMessage(activityLog);
+      setShowModal(true);
+    }    
   };
 
   const handleOneStepRunClick = async () => {
