@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext"; //New AuthContext State 
 import { axiosApiService } from "../../api/apiService";
 import ErrorDialog from "../common/error";
 import LoadingDialog from "../common/loading";
 import ConfigurationsForm from "./configurationsForm";
 import { Row, Col, ListGroup } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCog } from "@fortawesome/free-solid-svg-icons";
+//import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+//import { faCog } from "@fortawesome/free-solid-svg-icons";
 import "./analytics.css";
 import "./charts/charts.css";
 
@@ -19,6 +19,8 @@ function Analytics() {
   const [data, setData] = useState({});
   const [loadingProfile, setLoadingProfile] = useState(false);
   const [token, setToken] = useState();
+  const [selection, setSelection] = useState("security");
+  const [previewRole, setPreviewRole] = useState(false);
   
   useEffect(() => {    
     const controller = new AbortController();
@@ -43,7 +45,15 @@ function Analytics() {
 
   async function fetchData() {
     setLoadingProfile(true);
-    const { getAccessToken } = contextType;
+    const { getAccessToken, getIsPreviewRole } = contextType;
+
+    //this returns true IF the Okta groups for user contains "Preview".  Please wrap display components in this.
+    const isPreviewRole = await getIsPreviewRole();
+    setPreviewRole(isPreviewRole); 
+    if (isPreviewRole) {
+      console.log("Enabling Preview Feature Toggle. ", isPreviewRole);     
+    }
+
     const accessToken = await getAccessToken();
     const apiUrl = "/analytics/settings";   
     setToken(accessToken);
@@ -66,6 +76,11 @@ function Analytics() {
     }
   }
 
+  const handleTabClick = param => e => {
+    e.preventDefault();
+    setSelection(param);
+  };
+
   return (
     <>
       {loadingProfile ? <LoadingDialog size="lg" /> : null }
@@ -82,12 +97,15 @@ function Analytics() {
           <ConfigurationsForm settings={data} token={token} />
         </div>
 
-        {/* <div className="p-2">
-          <div>
-              TODO: Add a new UI here in place of searches!  This should follow a UI that has the layout below:
-          </div>
+        { previewRole ?  //display work for new (v2) design
+          <>
+            <div className="p-2">
+              <div>
+          Please wire up the charts below based on the corresponding KPI.  All charts below should be self contained in terms of function. The 
+            API calls to get the data is inside the component so no addional data or logic should be stored in this JSX file.  
+              </div>
 
-          <Row className="mt-3">
+              {/* <Row className="mt-3">
             <Col>Layout the top 4 charts here that we show by default on dashboard</Col>
             <Col className="text-center">chart 2</Col>
           </Row>
@@ -95,36 +113,92 @@ function Analytics() {
           <Row className="mt-3">
             <Col className="text-center">chart 3</Col>
             <Col className="text-center">chart 4</Col>
-          </Row>
+          </Row> */}
 
-          <Row className="mt-3">
-            <Col xs lg="2" className="p-2">List of chart KPI's.  This list should match the KPI's in the release docs and 
-          clicking on one should load the related charts in the column to the right.  Please work with Todd 
-          on how we are going to flag a chart mapping to KPI.
+              <Row className="mt-3">
+                <Col xs lg="2" className="p-2">
 
-            <ListGroup>
-              <ListGroup.Item>Cras justo odio</ListGroup.Item>
-              <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-              <ListGroup.Item>Morbi leo risus</ListGroup.Item>
-              <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
-              <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
-            </ListGroup>
+                  <ListGroup>
+                    <ListGroup.Item className={"pointer " + (selection === "security" ? "active" : "")} onClick={handleTabClick("security")}>Security</ListGroup.Item>
+                    <ListGroup.Item className={"pointer " + (selection === "software_development" ? "active" : "")} onClick={handleTabClick("software_development")}>Software Development</ListGroup.Item>
+                    <ListGroup.Item className={"pointer " + (selection === "software_testing" ? "active" : "")} onClick={handleTabClick("software_testing")}>Software Testing</ListGroup.Item>
+                    <ListGroup.Item className={"pointer " + (selection === "service_operation" ? "active" : "")} onClick={handleTabClick("service_operation")}>Service Operation</ListGroup.Item>                
+                  </ListGroup>
           
-            </Col>
-            <Col md="auto">
-              {/* empty space here */}
-        {/* </Col>
-            <Col className="p-2 text-center">
-            chart content, listed vertically.  This area shows charts that match the selection on the left.
-            </Col>
-          </Row>
-        </div> */} 
-
+                </Col>
+                <Col md="auto">
+                  {/* empty space here */}
+                </Col>
+                <Col className="p-2 text-center">
+                  <ChartView selection={selection} persona={null} />
+                </Col>
+              </Row>
+            </div>
+          </> : null }
 
       </div>
     </>
   );
 }
+
+
+function ChartView({ selection, persona }) {
+  useEffect(() => {
+  }, [selection, persona]);
+
+  if (selection) {
+    switch (selection) {
+    case "security":
+      return (
+        <>
+          {/* Wire-up each chart component here, stacking them on top of each other.  Please wrap each individual chart in their own div with "m-2" class providing some margin around it */}
+          {/* 
+          <div className="m-2">
+            <PipelineDashboard persona={persona} />
+          </div> */}
+        </>);
+        
+    case "software_development":
+      return (
+        <>
+          {/* Wire-up each chart component here, stacking them on top of each other.  Please wrap each individual chart in their own div with "m-2" class providing some margin around it */}
+          {/* 
+          <div className="m-2">
+            <PipelineDashboard persona={persona} />
+          </div> */}
+        </>);
+        
+    case "software_testing":
+      return (
+        <>
+          {/* Wire-up each chart component here, stacking them on top of each other.  Please wrap each individual chart in their own div with "m-2" class providing some margin around it */}
+          {/* 
+          <div className="m-2">
+            <PipelineDashboard persona={persona} />
+          </div> */}
+        </>);
+
+    case "service_operation":
+      return (
+        <>
+          {/* Wire-up each chart component here, stacking them on top of each other.  Please wrap each individual chart in their own div with "m-2" class providing some margin around it */}
+          {/* 
+          <div className="m-2">
+            <PipelineDashboard persona={persona} />
+          </div> */}
+        </>);
+
+    default:
+      return null; 
+    }
+  }
+  
+}
+
+ChartView.propTypes = {
+  selection: PropTypes.string,
+  persona: PropTypes.string
+};
 
 
 export default Analytics;

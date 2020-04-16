@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "../../contexts/AuthContext";
-import { ApiService } from "../../api/apiService";
-import LoadingDialog from "../common/loading";
-import ErrorDialog from "../common/error";
-import InfoDialog from "../common/info";
-import BuildCounts from "../analytics/metrics/buildCounts";
-import JenkinsBuildDurationBarChart from "../analytics/charts/jenkinsBuildDurationBarChart";
-import JenkinsBuildsByUserBarChart from "../analytics/charts/jenkinsBuildsByUserBarChart";
-import JenkinsStatusByJobNameBarChart from "../analytics/charts/jenkinsStatusByJobNameBarChart";
+import { AuthContext } from "../../../contexts/AuthContext";
+import { ApiService } from "../../../api/apiService";
+import LoadingDialog from "../../common/loading";
+import ErrorDialog from "../../common/error";
+import InfoDialog from "../../common/info";
+import BuildCounts from "../../analytics/metrics/buildCounts";
+import JenkinsBuildDurationBarChart from "../../analytics/charts/jenkinsBuildDurationBarChart";
+import JenkinsBuildsByUserBarChart from "../../analytics/charts/jenkinsBuildsByUserBarChart";
+import JenkinsStatusByJobNameBarChart from "../../analytics/charts/jenkinsStatusByJobNameBarChart";
 
 function PipelineDashboard( { persona } ) {
   const contextType = useContext(AuthContext);
@@ -38,7 +38,7 @@ function PipelineDashboard( { persona } ) {
     getApiData();
   }, []);
 
-  console.log("Rendering Pipeline Charts");
+  console.log("Rendering Pipeline V2 Charts");
 
   if(loading) {
     return (<LoadingDialog size="lg" />);

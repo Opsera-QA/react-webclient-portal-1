@@ -24,6 +24,10 @@ color: green;
   color: #226196;
 }
 
+.pointer {
+  cursor: pointer
+}
+
 html {
   font-family: sans-serif;
   line-height: 1.15;

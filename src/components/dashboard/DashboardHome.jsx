@@ -10,10 +10,16 @@ import PipelineDashboard from "../../components/dashboard/Pipeline";
 import SecOpsDashboard from "../../components/dashboard/SecOps";
 import TestingDashboard from "../../components/dashboard/Testing";
 import LogsDashboard from "../../components/dashboard/Logs";
-import ToolsDashboard from "../../components/dashboard/Tools";
 import LoadingDialog from "../../components/common/loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faQuestion } from "@fortawesome/free-solid-svg-icons";
+
+import PipelineDashboard_v2 from "../../components/dashboard/v2/Pipeline";
+import SecOpsDashboard_v2 from "../../components/dashboard/v2/SecOps";
+import QualityDashboard from "../../components/dashboard/v2/Quality";
+import TestingDashboard_v2 from "../../components/dashboard/v2/Testing";
+import OperationsDashboard from "../../components/dashboard/v2/Operations";
+import PlanningDashboard from "../../components/dashboard/v2/Planning";
 
 const PERSONAS = [ { value: "0", label: "Developer" }, { value: "1", label: "Security" }, { value: "2", label: "Operations" }, { value: "3", label: "VP of Engineering" }];
 
@@ -24,11 +30,22 @@ function DashboardHome() {
   const [selection, setSelection] = useState("pipeline");
   const [persona, setPersona] = useState();
   const [loading, setLoading] = useState(false);
+  const [previewRole, setPreviewRole] = useState(false);
   
 
   const getApiData = async () => {
     setLoading(true);
-    const { getAccessToken } = contextType;
+    const { getAccessToken, getIsPreviewRole } = contextType;
+    
+    //this returns true IF the Okta groups for user contains "Preview".  Please wrap display components in this.
+    const isPreviewRole = await getIsPreviewRole();
+    setPreviewRole(isPreviewRole); 
+    if (isPreviewRole) {
+      console.log("Enabling Preview Feature Toggle. ", isPreviewRole);
+      setSelection("pipeline_v2");
+    }
+    
+
     const accessToken = await getAccessToken();
     const apiCall = new ApiService("/analytics/settings", {}, accessToken);
     const result = await apiCall.get()
@@ -113,24 +130,46 @@ function DashboardHome() {
               </div> :
               <>
                 <Row>
-                  <Col sm={8}>
-                    <ul className="nav nav-pills ml-2 mb-2">
-                      <li className="nav-item">
-                        <a className={"nav-link " + (selection === "pipeline" ? "active" : "")} onClick={handleTabClick("pipeline")} href="#">Pipeline</a>
-                      </li>
-                      <li className="nav-item">
-                        <a className={"nav-link " + (selection === "secops" ? "active" : "")} onClick={handleTabClick("secops")} href="#">SecOps</a>
-                      </li>
-                      <li className="nav-item">
-                        <a className={"nav-link " + (selection === "testing" ? "active" : "")} onClick={handleTabClick("testing")} href="#">Testing</a>
-                      </li>
-                      <li className="nav-item">
-                        <a className={"nav-link " + (selection === "logs" ? "active" : "")} onClick={handleTabClick("logs")} href="#">Logs</a>
-                      </li>
-                      <li className="nav-item">
-                        <a className={"nav-link disabled " + (selection === "tools" ? "active" : "")} onClick={handleTabClick("tools")} href="#">Tools</a>
-                      </li>
-                    </ul></Col>
+                  { previewRole ?  //display work for new (v2) design
+                    <Col sm={8}>
+                      <ul className="nav nav-pills ml-2 mb-2">
+                        <li className="nav-item">
+                          <a className={"nav-link " + (selection === "pipeline_v2" ? "active" : "")} onClick={handleTabClick("pipeline_v2")} href="#">Pipeline</a>
+                        </li>
+                        <li className="nav-item">
+                          <a className={"nav-link " + (selection === "secops_v2" ? "active" : "")} onClick={handleTabClick("secops_v2")} href="#">SecOps</a>
+                        </li>
+                        <li className="nav-item">
+                          <a className={"nav-link " + (selection === "quality_v2" ? "active" : "")} onClick={handleTabClick("quality_v2")} href="#">Quality</a>
+                        </li>
+                        <li className="nav-item">
+                          <a className={"nav-link " + (selection === "testing_v2" ? "active" : "")} onClick={handleTabClick("testing_v2")} href="#">Testing</a>
+                        </li>
+                        <li className="nav-item">
+                          <a className={"nav-link " + (selection === "operations_v2" ? "active" : "")} onClick={handleTabClick("operations_v2")} href="#">Operations</a>
+                        </li>
+                        <li className="nav-item">
+                          <a className={"nav-link " + (selection === "planning_v2" ? "active" : "")} onClick={handleTabClick("planning_v2")} href="#">Planning</a>
+                        </li>
+                      </ul>
+                    </Col> :
+                    <Col sm={8}>
+                      <ul className="nav nav-pills ml-2 mb-2">
+                        <li className="nav-item">
+                          <a className={"nav-link " + (selection === "pipeline" ? "active" : "")} onClick={handleTabClick("pipeline")} href="#">Pipeline</a>
+                        </li>
+                        <li className="nav-item">
+                          <a className={"nav-link " + (selection === "secops" ? "active" : "")} onClick={handleTabClick("secops")} href="#">SecOps</a>
+                        </li>
+                        <li className="nav-item">
+                          <a className={"nav-link " + (selection === "testing" ? "active" : "")} onClick={handleTabClick("testing")} href="#">Testing</a>
+                        </li>
+                        <li className="nav-item">
+                          <a className={"nav-link " + (selection === "logs" ? "active" : "")} onClick={handleTabClick("logs")} href="#">Logs</a>
+                        </li>                        
+                      </ul>
+                    </Col>
+                  }
                   <Col sm={4}>
                     <Select
                       className="basic-single mr-2"
@@ -174,8 +213,18 @@ function DashboardView({ selection, persona }) {
       return <TestingDashboard persona={persona} />;
     case "logs":
       return <LogsDashboard persona={persona} />;
-    case "tools":
-      return <ToolsDashboard persona={persona} />;
+    case "pipeline_v2":
+      return <PipelineDashboard_v2 persona={persona} />;
+    case "secops_v2":
+      return <SecOpsDashboard_v2 persona={persona} />;
+    case "quality_v2":
+      return <QualityDashboard persona={persona} />;
+    case "testing_v2":
+      return <TestingDashboard_v2 persona={persona} />;
+    case "operations_v2":
+      return <OperationsDashboard persona={persona} />;
+    case "planning_v2":
+      return <PlanningDashboard persona={persona} />;
     default:
       return null; 
     }
