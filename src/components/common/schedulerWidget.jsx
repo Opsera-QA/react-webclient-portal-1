@@ -17,7 +17,7 @@ const SELECT_FREQUENCIES = [
 function SchedulerWidget ({ date, frequency, setEditSchedule, setSchedule }) {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedFrequency, setSelectedFrequency] = useState("once");
-  let minDate = Moment().startOf("hour").toDate();
+  let minDate = Moment().add(1, "hour").startOf("hour").toDate();
   Moment.locale("en");
   momentLocalizer();
 
@@ -33,12 +33,10 @@ function SchedulerWidget ({ date, frequency, setEditSchedule, setSchedule }) {
 
 
   const handleDateChange = (val) => {
-    console.log("ELEMENT: ", val);
     setSelectedDate(val);    
   };
 
   const handleFrequencyChange = (val) => {
-    console.log("ELEMENT: ", val);
     setSelectedFrequency(val);    
   };
 

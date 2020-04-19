@@ -241,9 +241,7 @@ const PipelineItemDetail = (props) => {
 
   const handleSetSchedule = async (schedule) => {
     console.log("SCHEDULE DATA", schedule);
-    //data.workflow.schedule = schedule;
     handleSavePropertyClick(data._id, schedule, "schedule");
-    //todo wire up save operation here
     setEditSchedule(false);
   };
 
@@ -403,9 +401,9 @@ const PipelineItemDetail = (props) => {
                   </> : 
 
                   <Col className="py-1"><span className="text-muted mr-1">Schedule:</span> 
-                    {data.workflow.schedule && !editSchedule ? 
+                    {data.workflow.schedule && data.workflow.schedule.start_date !== null && !editSchedule ? 
                       <>
-                        <span className="ml-2">Run on: <Moment format="YYYY-MM-DD, hh:mm a" date={data.workflow.schedule.start_date} /></span>
+                        <span className="ml-1">Run next on: <Moment format="YYYY-MM-DD, hh:mm a" date={data.workflow.schedule.start_date} /></span>
                         <span className="ml-2">Frequency: {data.workflow.schedule ? data.workflow.schedule.frequency : "undefined"}</span> 
                       </> : null }
 
