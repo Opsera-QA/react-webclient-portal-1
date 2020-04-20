@@ -9,6 +9,7 @@ import ConfigurationsForm from "./configurationsForm";
 import { Row, Col, ListGroup } from "react-bootstrap";
 //import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 //import { faCog } from "@fortawesome/free-solid-svg-icons";
+import ReliabilityMetricsCharts from "./metrics/reliability/ReliabilityMetricsCharts";
 import "./analytics.css";
 import "./charts/charts.css";
 
@@ -156,6 +157,7 @@ function ChartView({ selection, persona }) {
           <div className="m-2">
             <PipelineDashboard persona={persona} />
           </div> */}
+          <ReliabilityMetricsCharts />
         </>);
         
     case "software_development":
