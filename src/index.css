@@ -4,6 +4,11 @@
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
+.failure-text {
+  color: red;
+  font-weight: bold;
+}
+
 .red {
   color: red;
 }
@@ -138,6 +143,12 @@ a:hover, .active {
 
 .loader {
   min-width: 125px;
+}
+
+.list-item-container {
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25rem;
+  padding: 1em;
 }
 
 .row-header-text {

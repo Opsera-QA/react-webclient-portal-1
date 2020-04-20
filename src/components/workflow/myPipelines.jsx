@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Card, Button, Alert } from "react-bootstrap";
+import { Row, Col, Button, Alert } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { AuthContext } from "../../contexts/AuthContext"; 
@@ -132,37 +132,44 @@ const ItemSummaries = (props) => {
     <>
       {loading ? <LoadingDialog size="lg" /> : null}
       {data.length > 0 ? data.map((item, idx) => (        
-        <Card key={idx} className="mb-3">
-          <Card.Body>
-            <Card.Title>{item.name}</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">
-              <small>Pipeline: {item._id}</small></Card.Subtitle>
-            <Card.Text className="pt-1">
-              {item.description}
-              <br/><small className="text-muted">Created on <Moment format="YYYY-MM-DD, hh:mm a" date={item.createdAt} /></small>
-            </Card.Text>
-            
-            { item.workflow.hasOwnProperty("last_step") ? 
-              <>
+        <div className="list-item-container my-3" key={idx}> 
+          <Row className="row-content-spacing">
+            <Col className="h5">{item.name}</Col>
+            <Col sm={1}><Button variant="outline-danger" size="sm" className="mr-2" onClick={handleActionClick("delete", item._id)}>
+              <FontAwesomeIcon icon={faTrash} className="fa-fw"/></Button></Col>
+          </Row>
+
+          <Row className="row-content-spacing">
+            <Col>{item.description}</Col>
+          </Row>
+          
+          <Row className="row-content-spacing">
+            <Col><span className="text-muted">Created on: </span> <Moment format="YYYY-MM-DD, hh:mm a" date={item.createdAt} /></Col>
+            <Col><span className="text-muted">Last Activity on: </span> <Moment format="YYYY-MM-DD, hh:mm a" date={item.updatedAt} /></Col>
+          </Row>
+          
+          { item.workflow.hasOwnProperty("last_step") ? 
+            <Row className="row-content-spacing">
+              <Col><span className="text-muted">Current Status: </span> 
                 { item.workflow.last_step.hasOwnProperty("status") && item.workflow.last_step.status === "running" ? 
-                  <div className="mb-2 text-success"><FontAwesomeIcon icon={faSpinner} spin className="mr-1"/>Pipeline Currently Running</div> : 
-                  <>
-                    { item.workflow.last_step.hasOwnProperty("failed") ? 
-                      <div className="mb-2 text-danger">Step failure occurred at <Moment format="YYYY-MM-DD, hh:mm a" date={item.workflow.last_step.failed["updatedAt"]} /></div> : null }
+                  <span className="green">Pipeline Running</span> : 
+                  <span>Pipeline Idle</span>
+                }
+              
+              </Col>
+              { item.workflow.last_step.hasOwnProperty("failed") ? 
+                <Col className="failure-text">Last Failure on: <Moment format="YYYY-MM-DD, hh:mm a" date={item.workflow.last_step.failed.updatedAt} /></Col> : null }
+              
+              { item.workflow.last_step.hasOwnProperty("success") ? 
+                <Col className="green">Last Successful on : <Moment format="YYYY-MM-DD, hh:mm a" date={item.workflow.last_step.success.updatedAt} /></Col> : null }
+            </Row> : null }
 
-                    { item.workflow.last_step.hasOwnProperty("success") ? 
-                      <div className="mb-2 text-muted">Last Activity: <Moment format="YYYY-MM-DD, hh:mm a" date={item.workflow.last_step.success["updatedAt"]} /></div> : null }
-                  </> }
-                
-              </>: null}
-            
-            <Button variant="primary" size="sm" className="mr-2 mt-2" onClick={handleDetailsClick(item._id)}>
-              <FontAwesomeIcon icon={faSearch} className="mr-1"/> View Pipeline </Button>
-            <Button variant="outline-danger" size="sm" className="ml-2 mt-2" onClick={handleActionClick("delete", item._id)}>
-              <FontAwesomeIcon icon={faTrash} className="fa-fw"/></Button>
 
-          </Card.Body>
-        </Card>)) : null}
+          <Button variant="primary" size="sm" className="mr-2 mt-3" onClick={handleDetailsClick(item._id)}>
+            <FontAwesomeIcon icon={faSearch} className="mr-1"/> View Pipeline </Button>
+        </div>
+        
+      )) : null}
 
 
       {showDeleteModal ? <Modal header="Confirm Pipeline Delete"
