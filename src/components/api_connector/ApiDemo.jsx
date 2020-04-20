@@ -46,7 +46,7 @@ function ApiDemo() {
     const { getAccessToken, authenticated } = contextType;
     const accessToken = await getAccessToken();
     setAuthenticated(authenticated);
-    const apiUrls = [ "/auth-demo", "/users", "/analytics/settings", "/tools" ];   
+    const apiUrls = [ "/auth-demo", "/users", "/analytics/settings", "/users/tools" ];   
     try {
       const [authDemo, userProfile, analyticsProfile, tools ] = await axiosApiServiceMultiGet(accessToken, apiUrls);
       setAuthData(authDemo.data);
