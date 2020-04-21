@@ -14,6 +14,8 @@ import "./analytics.css";
 import "./charts/charts.css";
 import SonarLinesToCoverBarChart from "./charts/sonarLinesToCoverBarChart";
 import SonarCodeCoverageBarChart from "./charts/sonarCodeCoverageBarChart";
+import DeploymentFrequencyLineChart from "./charts/deploymentFrequencyLineChart.jsx";
+
 
 
 function Analytics() {
@@ -170,6 +172,9 @@ function ChartView({ previewRole, token, selection, persona }) {
           <div className="m-2">
             <PipelineDashboard persona={persona} />
           </div> */}
+          <div className="chart mb-3" style={{ height: "300px" }}>
+            <DeploymentFrequencyLineChart />
+          </div>
         </>);
         
     case "software_testing":
