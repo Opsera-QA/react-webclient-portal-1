@@ -12,6 +12,8 @@ import { Row, Col, ListGroup } from "react-bootstrap";
 import ReliabilityMetricsCharts from "./metrics/reliability/ReliabilityMetricsCharts";
 import "./analytics.css";
 import "./charts/charts.css";
+import SonarLinesToCoverBarChart from "./charts/sonarLinesToCoverBarChart";
+import SonarCodeCoverageBarChart from "./charts/sonarCodeCoverageBarChart";
 import DeploymentFrequencyLineChart from "./charts/deploymentFrequencyLineChart.jsx";
 
 
@@ -133,7 +135,7 @@ function Analytics() {
                   {/* empty space here */}
                 </Col>
                 <Col className="p-2 text-center">
-                  <ChartView selection={selection} persona={null} />
+                  <ChartView previewRole={previewRole} token={token} selection={selection} persona={null} />
                 </Col>
               </Row>
             </div>
@@ -145,7 +147,7 @@ function Analytics() {
 }
 
 
-function ChartView({ selection, persona }) {
+function ChartView({ previewRole, token, selection, persona }) {
   useEffect(() => {
   }, [selection, persona]);
 
@@ -179,10 +181,17 @@ function ChartView({ selection, persona }) {
       return (
         <>
           {/* Wire-up each chart component here, stacking them on top of each other.  Please wrap each individual chart in their own div with "m-2" class providing some margin around it */}
-          {/* 
-          <div className="m-2">
-            <PipelineDashboard persona={persona} />
-          </div> */}
+          {previewRole ? <div className="m-2">
+            <div className="chart mb-3" style={{ height: "300px" }}>
+              <SonarLinesToCoverBarChart token={token} persona={persona} />
+            </div>
+          </div> : ""}
+
+          {previewRole ? <div className="m-2">
+            <div className="chart mb-3" style={{ height: "300px" }}>
+              <SonarCodeCoverageBarChart token={token} persona={persona} />
+            </div> 
+          </div> : ""}
         </>);
 
     case "service_operation":
