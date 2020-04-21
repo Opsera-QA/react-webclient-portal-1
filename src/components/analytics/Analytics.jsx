@@ -173,7 +173,7 @@ function ChartView({ previewRole, token, selection, persona }) {
             <PipelineDashboard persona={persona} />
           </div> */}
           <div className="chart mb-3" style={{ height: "300px" }}>
-            <DeploymentFrequencyLineChart />
+            <DeploymentFrequencyLineChart persona={persona}/>
           </div>
         </>);
         
