@@ -38,7 +38,7 @@ function PipelineDashboard( { persona } ) {
     getApiData();
   }, []);
 
-  console.log("Rendering Pipeline V2 Charts");
+  console.log("Rendering Pipeline V2 Charts for persona", persona);
 
   if(loading) {
     return (<LoadingDialog size="lg" />);

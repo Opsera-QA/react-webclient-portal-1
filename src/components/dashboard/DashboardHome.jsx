@@ -171,19 +171,20 @@ function DashboardHome() {
                     </Col>
                   }
                   <Col sm={4}>
-                    <Select
-                      className="basic-single mr-2"
-                      menuPortalTarget={document.body}
-                      styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                      classNamePrefix="select"
-                      defaultValue={persona ? PERSONAS[parseInt(persona)] : PERSONAS[0]}
-                      isDisabled={true}
-                      isClearable={false}
-                      isSearchable={true}
-                      name="PERSONA-SELECT"
-                      options={PERSONAS}
-                      onChange={handleSelectPersonaChange}
-                    />
+                    { previewRole ?  //display work for new (v2) design
+                      <Select
+                        className="basic-single mr-2"
+                        menuPortalTarget={document.body}
+                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                        classNamePrefix="select"
+                        defaultValue={persona ? PERSONAS[parseInt(persona)] : PERSONAS[0]}
+                        isDisabled={true}
+                        isClearable={false}
+                        isSearchable={true}
+                        name="PERSONA-SELECT"
+                        options={PERSONAS}
+                        onChange={handleSelectPersonaChange}
+                      /> : null }
                   </Col>
                 </Row>
             
