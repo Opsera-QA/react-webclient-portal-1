@@ -7,11 +7,11 @@ import { faSave } from "@fortawesome/free-solid-svg-icons";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
-  apiURL: "",
-  apiToken: "",
-  buildTypeId: "",
-  apiUsername: "", 
-  apiPassword: ""
+  teamcityApiURL: "",
+  teamcityToken: "",
+  teamcityBuildTypeId: "",
+  teamcityUsername: "", 
+  teamcityPassword: ""
 };
 
 
@@ -54,8 +54,8 @@ function TeamCityStepConfiguration( { data, parentCallback }) {
 
 
   const validateRequiredFields = () => {
-    let { apiURL, apiToken, buildTypeId } = formData;
-    if (apiURL.length === 0 || apiToken.length === 0 || buildTypeId.length === 0) {
+    let { teamcityApiURL, teamcityToken, teamcityBuildTypeId } = formData;
+    if (teamcityApiURL.length === 0 || teamcityToken.length === 0 || teamcityBuildTypeId.length === 0) {
       setFormMessage("Required Fields Missing!");
       return false;
     } else {
@@ -70,7 +70,7 @@ function TeamCityStepConfiguration( { data, parentCallback }) {
 
       <Form.Group controlId="repoField">
         <Form.Label>TeamCity URL*</Form.Label>
-        <Form.Control maxLength="100" type="text" placeholder="" value={formData.apiURL || ""} onChange={e => setFormData({ ...formData, apiURL: e.target.value })} />
+        <Form.Control maxLength="100" type="text" placeholder="" value={formData.teamcityApiURL || ""} onChange={e => setFormData({ ...formData, teamcityApiURL: e.target.value })} />
       </Form.Group>
       {/* <Form.Group controlId="branchField">
         <Form.Label>Jenkins User ID*</Form.Label>
@@ -78,11 +78,11 @@ function TeamCityStepConfiguration( { data, parentCallback }) {
       </Form.Group> */}
       <Form.Group controlId="branchField">
         <Form.Label>TeamCity Token*</Form.Label>
-        <Form.Control maxLength="500" as="textarea" type="text" placeholder="" value={formData.apiToken || ""} onChange={e => setFormData({ ...formData, apiToken: e.target.value })} />
+        <Form.Control maxLength="500" as="textarea" type="text" placeholder="" value={formData.teamcityToken || ""} onChange={e => setFormData({ ...formData, teamcityToken: e.target.value })} />
       </Form.Group>
       <Form.Group controlId="branchField">
         <Form.Label>Build Step ID</Form.Label>
-        <Form.Control maxLength="150" type="text" placeholder="" value={formData.buildTypeId || ""} onChange={e => setFormData({ ...formData, buildTypeId: e.target.value })} />
+        <Form.Control maxLength="150" type="text" placeholder="" value={formData.teamcityBuildTypeId || ""} onChange={e => setFormData({ ...formData, teamcityBuildTypeId: e.target.value })} />
         <Form.Text className="text-muted">TeamCity Project Build Settings &#62; ID</Form.Text>
       </Form.Group>
 
