@@ -17,11 +17,11 @@ function SonarCodeCoverageBarChart( { token, persona } ) {
   
   const getApiData = async () => {
     setLoading(true);
-    const apiCall = new ApiService("/analytics/dashboard/secops", {}, token);
+    const apiCall = new ApiService("/analytics/data", { "filter": { "data": [{ "metric": "bar", "request": "sonarCodeCoverage" }] } }, token);
     
     apiCall.get()
       .then(res => {
-        let dataObject = res && res.data ? res.data.data[0] : [];
+        let dataObject = res && res.data ? res.data.data[0].sonarCodeCoverage : [];
         setData(dataObject);
         setLoading(false);
       })
@@ -34,20 +34,18 @@ function SonarCodeCoverageBarChart( { token, persona } ) {
   useEffect( () => {
     getApiData();
   }, []);
-  
   if (loading) {
     return (<LoadingDialog size="lg" />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
-  } else if (typeof data !== "object" || Object.keys(data).length == 0) {
+  } else if (typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) {
     return (<ErrorDialog  error="No Data Present in the ES!" />);
   } else {
-    const { sonarCodeCoverage }  =  data;
     return (
       <>
         <div className="chart-label-text">Sonar: Code Coverage</div>
         <ResponsiveBar
-          data={sonarCodeCoverage ? sonarCodeCoverage.data : []}
+          data={data ? data.data : []}
           keys={[
             "coverage",
             "line_coverage"

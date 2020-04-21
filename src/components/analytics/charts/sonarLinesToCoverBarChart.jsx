@@ -21,7 +21,7 @@ function SonarLinesToCoverBarChart( { token, persona } ) {
     
     apiCall.get()
       .then(res => {
-        let dataObject = res && res.data ? res.data.data[0] : [];
+        let dataObject = res && res.data ? res.data.data[0].sonarCodeCoverage : [];
         setData(dataObject);
         setLoading(false);
       })
@@ -34,20 +34,18 @@ function SonarLinesToCoverBarChart( { token, persona } ) {
   useEffect( () => {
     getApiData();
   }, []);
-  
   if(loading) {
     return (<LoadingDialog size="lg" />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
-  } else if (typeof data !== "object" || Object.keys(data).length == 0) {
+  } else if (typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) {
     return (<ErrorDialog  error="No Data Present in the ES!" />);
   } else {
-    const { sonarCodeCoverage }  =  data;
     return (
       <>
         <div className="chart-label-text">Sonar: Lines to Cover</div>
         <ResponsiveBar
-          data={sonarCodeCoverage ? sonarCodeCoverage.data : []}
+          data={data ? data.data : []}
           keys={[
             "uncovered_lines",
             "line_coverage"
@@ -74,7 +72,7 @@ function SonarLinesToCoverBarChart( { token, persona } ) {
           animate={true}
           motionStiffness={90}
           motionDamping={15}
-          legends={config.legends}
+          // legends={config.legends}
           tooltip={({ indexValue, value, id, color }) => (
             <div>
               <strong style={{ color }}>
