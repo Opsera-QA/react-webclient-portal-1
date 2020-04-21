@@ -35,7 +35,7 @@ function SonarCodeCoverageBarChart( { token, persona } ) {
     getApiData();
   }, []);
   if (loading) {
-    return (<LoadingDialog size="lg" />);
+    return (<LoadingDialog size="sm" />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
   } else if (typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) {
