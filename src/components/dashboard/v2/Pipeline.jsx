@@ -66,9 +66,9 @@ function PipelineDashboard( { persona } ) {
             {Object.keys(data.jenkinsStatusByJobName.data[0]).length > 0 && data.jenkinsStatusByJobName.status === 200 ? <div className="chart mb-3" style={{ height: "300px" }}>
               <JenkinsStatusByJobNameBarChart data={data} persona={persona} />
             </div> : ""}
-            <div className="chart mb-3" style={{ height: "300px" }}>
+            {/* <div className="chart mb-3" style={{ height: "300px" }}>
               <DeploymentFrequencyLineChart persona={persona}/>
-            </div>
+            </div> */}
           </div> 
         </div>
       </>
