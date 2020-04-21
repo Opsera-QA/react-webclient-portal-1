@@ -164,6 +164,12 @@ const ItemSummaries = (props) => {
                 <Col className="green">Last Successful on : <Moment format="YYYY-MM-DD, hh:mm a" date={item.workflow.last_step.success.updatedAt} /></Col> : null }
             </Row> : null }
 
+          { item.workflow.schedule !== undefined && item.workflow.schedule.start_date !== null ?
+            <Row className="row-content-spacing">
+              <Col><span className="text-muted">Next Scheduled Run: </span> 
+                <Moment format="YYYY-MM-DD, hh:mm a" date={item.workflow.schedule.start_date} />
+              </Col>
+            </Row> : null}
 
           <Button variant="primary" size="sm" className="mr-2 mt-3" onClick={handleDetailsClick(item._id)}>
             <FontAwesomeIcon icon={faSearch} className="mr-1"/> View Pipeline </Button>
@@ -171,7 +177,7 @@ const ItemSummaries = (props) => {
         
       )) : null}
 
-
+    
       {showDeleteModal ? <Modal header="Confirm Pipeline Delete"
         message="Warning! Data cannot be recovered once this pipeline is deleted. Do you still want to proceed?"
         button="Confirm"
