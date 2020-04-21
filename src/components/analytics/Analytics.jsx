@@ -12,6 +12,8 @@ import { Row, Col, ListGroup } from "react-bootstrap";
 import ReliabilityMetricsCharts from "./metrics/reliability/ReliabilityMetricsCharts";
 import "./analytics.css";
 import "./charts/charts.css";
+import DeploymentFrequencyLineChart from "./charts/deploymentFrequencyLineChart.jsx";
+
 
 
 function Analytics() {
@@ -168,6 +170,9 @@ function ChartView({ selection, persona }) {
           <div className="m-2">
             <PipelineDashboard persona={persona} />
           </div> */}
+          <div className="chart mb-3" style={{ height: "300px" }}>
+            <DeploymentFrequencyLineChart />
+          </div>
         </>);
         
     case "software_testing":
