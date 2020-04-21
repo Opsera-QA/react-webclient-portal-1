@@ -1,18 +1,21 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ApiService } from "../../api/apiService";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
-import { Form, Button, Alert, Table } from "react-bootstrap";
+import { Form, Button, Alert, Table, Overlay, Popover } from "react-bootstrap";
 import Moment from "react-moment";
 import Modal from "../common/modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faCalendar } from "@fortawesome/free-solid-svg-icons";
 import "./logs.css";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
-
+import "react-date-range/dist/styles.css"; 
+import "react-date-range/dist/theme/default.css"; 
+import { DateRangePicker } from "react-date-range";
+const moment = require("moment");
 
 const FILTER = [{ value: "pipeline", label: "Pipeline" }, { value: "metricbeat", label: "MetricBeat" }, { value: "twistlock", label: "TwistLock" }, { value: "blueprint", label: "Build Blueprint" }];
 
@@ -29,19 +32,40 @@ function SearchLogs ( ) {
   const [filterLoading, setFilterLoading] = useState(false);
   const [manualCache, setManualCaching] = useState(false);
   const animatedComponents = makeAnimated();
+  const [calenderActivation, setCalenderActivation] = useState(false);
+  const [date, setDate] = useState([
+    {
+      startDate: new Date(),
+      endDate: moment(new Date(), "YYYY-MM-DD").add(7, "days"),
+      key: "selection"
+    }
+  ]);
+  const [calendar, setCalendar] = useState(false);
+  const [target, setTarget] = useState(null);
+  const ref = useRef(null);
 
 
   const handleFormSubmit = e => {
     e.preventDefault();
-    setData([]); 
-    fetchData(searchTerm, filterType, customFilter);    
+    setData([]);  
+    let startDate = moment(date[0].startDate, "YYYY-MM-DD").format("YYYY-MM-DD");
+    let endDate = moment(date[0].endDate, "YYYY-MM-DD").format("YYYY-MM-DD");
+    if (startDate === endDate) {
+      endDate = 0;
+    }
+    if (calenderActivation === false ){
+      startDate = 0;
+      endDate = 0;
+    }
+    fetchData(searchTerm, filterType, customFilter, startDate, endDate);    
   };
 
   const cancelSearchClicked = e => {
     e.preventDefault();
-    setCustomFilter([]);
+    // setCustomFilter([]);
     setData([]);
     setSearchTerm("");
+    setCalenderActivation(false);
   };
 
   const handleSelectChange = (selectedOption) => {
@@ -77,18 +101,24 @@ function SearchLogs ( ) {
       }
       setData([]);
     }
-
+    if (selectedOption === null) {
+      setCustomFilter(selectedOption);
+    }
   };
 
-  const fetchData = async (search, filter, customFilter) => {
-    console.log(customFilter);
+  const fetchData = async (search, filter, customFilter, startDate, endDate) => {
+    let jsonToPost = {};
+    jsonToPost.index = filter;
+    jsonToPost.customFilter = customFilter;
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
     const urlParams = {
       search: search,
-      filter: filter,
-      customFilter: customFilter
+      date: (startDate !== 0 && endDate === 0) ? startDate : undefined,
+      start: (startDate !== 0 && endDate !== 0) ? startDate : undefined,
+      end: (startDate !== 0 && endDate !== 0) ? endDate : undefined,
+      filter: jsonToPost
     };
     const apiCall = new ApiService("/analytics/search", urlParams, accessToken);
     let result = await apiCall.get()
@@ -96,7 +126,10 @@ function SearchLogs ( ) {
         // setData([]);
         setErrors(error.toJSON());
       });
-    let searchResults = result.data.hasOwnProperty("hits") && result.data.hits.hasOwnProperty("hits") ? result.data.hits.hits : [];
+    let searchResults = [];
+    if (result) {
+      searchResults = result.data.hasOwnProperty("hits") && result.data.hits.hasOwnProperty("hits") ? result.data.hits.hits : [];
+    }
     setNoResults(searchResults.length === 0);
     setData(searchResults);
     setLoading(false);
@@ -126,6 +159,12 @@ function SearchLogs ( ) {
     } else {
       setFilterLoading(false);
     }
+  };
+
+  const toggleCalendar = event => {
+    setCalenderActivation(true);
+    setCalendar(!calendar);
+    setTarget(event.target);
   };
 
   if (error) {
@@ -185,7 +224,35 @@ function SearchLogs ( ) {
                       onChange={customFilterSelectionChange}
                     />
                   </div>
+                  <div ref={ref} className="p-2">
+                    <Button variant="outline-secondary" type="button" onClick={toggleCalendar}><FontAwesomeIcon icon={faCalendar} className="fa-fw"/></Button>
+                    <Overlay
+                      show={calendar}
+                      target={target}
+                      placement="bottom"
+                      container={ref.current}
+                      containerPadding={20}
+                      closeOnEscape={true}
+                    >
+                      <Popover id="popover-contained"  className="max-content-width">
+                        <Popover.Title as="h3">Filter By Date</Popover.Title>
+
+                        <Popover.Content>
+                          <DateRangePicker
+                            onChange={item => setDate([item.selection])}
+                            showSelectionPreview={true}
+                            moveRangeOnFirstSelection={false}
+                            months={2}
+                            ranges={date}
+                            direction="horizontal"
+                          />
+                        </Popover.Content>
+                      </Popover>
+                    </Overlay>
+                  </div>
                 </div>
+
+
               </Form>
             </div>
             :
@@ -239,6 +306,30 @@ function SearchLogs ( ) {
                       onChange={customFilterSelectionChange}
                     />
                   </div>
+                  <div ref={ref} className="p-2">
+                    <Button variant="outline-secondary" type="button" onClick={toggleCalendar}><FontAwesomeIcon icon={faCalendar} className="fa-fw"/></Button>
+                    <Overlay
+                      show={calendar}
+                      target={target}
+                      placement="bottom"
+                      container={ref.current}
+                      containerPadding={20}
+                    >
+                      <Popover className="max-content-width">
+                        <Popover.Title as="h3">Filter By Date</Popover.Title>
+                        <Popover.Content>
+                          <DateRangePicker
+                            onChange={item => setDate([item.selection])}
+                            showSelectionPreview={true}
+                            moveRangeOnFirstSelection={false}
+                            months={2}
+                            ranges={date}
+                            direction="horizontal"
+                          />
+                        </Popover.Content>
+                      </Popover>
+                    </Overlay>
+                  </div>
                 </div>
               </Form>
             </div>
@@ -254,7 +345,7 @@ function SearchLogs ( ) {
           <div style={{ height: "400px" }}>
             <div className="row h-100">
               <div className="col-sm-12 my-auto text-center">
-                <div className="h6">No Results found for {searchTerm}</div>   
+                <div className="h6">No Results found</div>   
               </div>
             </div>
           </div> 
