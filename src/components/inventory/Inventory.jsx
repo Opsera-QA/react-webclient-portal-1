@@ -67,7 +67,7 @@ class Inventory extends PureComponent {
   }
 
   getApp = () => {
-    console.log(this.state);
+    //console.log(this.state);
     const { key, data, selection } = this.state;
 
     let typeSelectedApps = [];
