@@ -6,6 +6,7 @@ import Home from "./Home";
 import Login from "./Login";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
+import Dashboard from "./components/dashboard/DashboardHome";
 import Profile from "./components/user/Profile";
 import About from "./components/about/About";
 import Pricing from "./components/about/Pricing";
@@ -72,6 +73,7 @@ class App extends Component {
                   <Route path="/implicit/callback" component={ImplicitCallback} />
                   <SecureRoute path="/profile" component={Profile} />
                   <SecureRoute path="/inventory" component={Inventory} />
+                  <SecureRoute path="/dashboard" component={Dashboard} />
                   <SecureRoute path="/tools/:id?" component={ApiConnector} />
                   <SecureRoute path="/pipeline" component={Pipeline} />
                   <SecureRoute path="/workflow/:id?/:view?" component={Workflow} />

@@ -114,7 +114,7 @@ class LoginForm extends React.Component {
 
     return (
 
-      <div className="auth-wrapper">
+      <div className="auth-wrapper w-75">
         <div className="all-wrapper menu-side with-pattern">
           <div className="auth-box-w">
             <div className="logo-w">
