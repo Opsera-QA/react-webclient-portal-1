@@ -54,8 +54,8 @@ function TeamCityStepConfiguration( { data, parentCallback }) {
 
 
   const validateRequiredFields = () => {
-    let { teamcityApiURL, teamcityToken, teamcityBuildTypeId } = formData;
-    if (teamcityApiURL.length === 0 || teamcityToken.length === 0 || teamcityBuildTypeId.length === 0) {
+    let { teamcityApiURL, teamcityUsername, teamcityPassword, teamcityBuildTypeId } = formData;
+    if (teamcityApiURL.length === 0 || teamcityUsername.length === 0 || teamcityPassword.length === 0 || teamcityBuildTypeId.length === 0) {
       setFormMessage("Required Fields Missing!");
       return false;
     } else {
@@ -77,8 +77,12 @@ function TeamCityStepConfiguration( { data, parentCallback }) {
         <Form.Control maxLength="50" type="text" placeholder="" value={formData.jUserId || ""} onChange={e => setFormData({ ...formData, jUserId: e.target.value })} />
       </Form.Group> */}
       <Form.Group controlId="branchField">
-        <Form.Label>TeamCity Token*</Form.Label>
-        <Form.Control maxLength="500" as="textarea" type="text" placeholder="" value={formData.teamcityToken || ""} onChange={e => setFormData({ ...formData, teamcityToken: e.target.value })} />
+        <Form.Label>TeamCity Username*</Form.Label>
+        <Form.Control maxLength="100" type="text" placeholder="" value={formData.teamcityUsername || ""} onChange={e => setFormData({ ...formData, teamcityUsername: e.target.value })} />
+      </Form.Group>
+      <Form.Group controlId="branchField">
+        <Form.Label>TeamCity Password*</Form.Label>
+        <Form.Control maxLength="100" type="password" placeholder="" value={formData.teamcityPassword || ""} onChange={e => setFormData({ ...formData, teamcityPassword: e.target.value })} />
       </Form.Group>
       <Form.Group controlId="branchField">
         <Form.Label>Build Step ID</Form.Label>
