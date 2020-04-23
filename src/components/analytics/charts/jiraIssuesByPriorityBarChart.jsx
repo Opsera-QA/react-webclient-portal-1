@@ -1,4 +1,4 @@
-// Dashboard Planning tab, Persona Executives/Managers, Node Ticket AN-154
+// Dashboard Planning Tab, Persona Executives/Managers, Node Ticket AN-164
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../../contexts/AuthContext";
@@ -6,22 +6,22 @@ import { ResponsiveBar } from "@nivo/bar";
 import { ApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/loading";
 import ErrorDialog from "../../common/error";
-import config from "./jiraTicketsAssignedByUserBarChartConfigs";
+import config from "./jiraIssuesByPriorityBarChartConfigs";
 import "./charts.css";
 
 
-function JiraTicketsAssignedByUserBarChart( { token, persona } ) {
+function JiraIssuesByPriorityBarChart( { token, persona } ) {
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   
   const getApiData = async () => {
     setLoading(true);
-    const apiCall = new ApiService("/analytics/data", { "filter": { "data": [{ "metric": "bar", "request": "jiraTicketsAssignedByUser" }] } }, token);
+    const apiCall = new ApiService("/analytics/data", { "filter": { "data": [{ "metric": "bar", "request": "jiraIssuesByPriority" }] } }, token);
     
     apiCall.get()
       .then(res => {
-        let dataObject = res && res.data ? res.data.data[0].jiraTicketsAssignedByUser : [];
+        let dataObject = res && res.data ? res.data.data[0].jiraIssuesByPriority : [];
         setData(dataObject);
         setLoading(false);
       })
@@ -45,15 +45,15 @@ function JiraTicketsAssignedByUserBarChart( { token, persona } ) {
   } else {    
     return (
       <>
-        <div className="chart-label-text">Jira: Tickets Assigned by User</div>
+        <div className="chart-label-text">Jira: Issues By Project</div>
         <ResponsiveBar
           data={data ? data.data : []}
           keys={config.keys}
-          indexBy="user"
+          indexBy="project"
           margin={config.margin}
           padding={0.3}
           layout={"horizontal"}
-          colors={{ scheme: "dark2" }}
+          colors={({ id, data }) => data[`${id}_color`]}
           borderColor={{ theme: "background" }}
           colorBy="id"
           defs={config.defs}
@@ -65,18 +65,17 @@ function JiraTicketsAssignedByUserBarChart( { token, persona } ) {
           labelSkipWidth={12}
           labelSkipHeight={12}
           enableLabel={false}
-          borderRadius={5}
+          borderRadius={0}
           labelTextColor="inherit:darker(2)"
           animate={true}
           motionStiffness={90}
           borderWidth={2}
           motionDamping={15}
-          onClick={function(node){window.open("https://opsera.atlassian.net/people/" + node.data.jira_id + "/work");}}
-          tooltip={({ indexValue, value, data, color }) => (
+          tooltip={({ indexValue, value, id }) => (
             <div>
-              <strong style={{ color }}>  User: </strong> {indexValue}<br></br>
-              <strong style={{ color }}>  No. of Tickets: </strong> {value} Tickets<br></br>
-              <strong style={{ color }}>  Percentage: </strong> {data.percentage}%
+              <strong>  Project: </strong> {indexValue}<br></br>
+              <strong>  Issue Type: </strong> {id}<br></br>
+              <strong>  No. of Issues: </strong> {value}<br></br>
             </div>
           )}
           theme={{
@@ -91,9 +90,9 @@ function JiraTicketsAssignedByUserBarChart( { token, persona } ) {
     );
   }
 }
-JiraTicketsAssignedByUserBarChart.propTypes = {
+JiraIssuesByPriorityBarChart.propTypes = {
   data: PropTypes.object,
   persona: PropTypes.string
 };
 
-export default JiraTicketsAssignedByUserBarChart;
+export default JiraIssuesByPriorityBarChart;
