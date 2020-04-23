@@ -1,3 +1,7 @@
+// Ticket Number - AN 43 Deployment Frequency
+// Worked on By - Shrey Malhotra
+// Sprint - Analytics Mt. Rainier
+
 import PropTypes from "prop-types";
 import { ResponsiveLine } from "@nivo/line";
 import ErrorDialog from "../../common/error";

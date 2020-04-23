@@ -1,15 +1,33 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../../../contexts/AuthContext";
+import TimeToRestoreBarChart from "../../analytics/charts/timeToRestoreBarChart.jsx";
 
-function OperationsDashboard() {
+
+function OperationsDashboard({ persona }) {
+  const contextType = useContext(AuthContext);
+  const [token, setToken] = useState();
+  
+  const getApiData = async () => {
+    const { getAccessToken } = contextType;
+
+    const accessToken = await getAccessToken();
+    setToken(accessToken);
+    
+  };
+
+  useEffect( () => {
+    getApiData();
+  }, []);
   
   return (
-    <div style={{ height: "540px" }}>
-      <div className="row h-100">
-        <div className="col-sm-12 my-auto text-center">
-          <div className="h6">Operations Dashboard Coming Soon</div>
+    <>
+      <div className="p-2 flex-grow-1">
+        <div className="chart mb-3" style={{ height: "300px" }}>
+          <TimeToRestoreBarChart token={token} persona={persona}/>
         </div>
       </div>
-    </div>
+      
+    </>
   );
 }
 
