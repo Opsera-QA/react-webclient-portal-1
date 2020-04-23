@@ -10,7 +10,7 @@ import NewBugsCountLineChart from "../../charts/NewBugsCountLineChart";
 import ReliabilityRatingLineChart from "../../charts/ReliabilityRatingLineChart";
 import ReliabilityRemediationEffortLineChart from "../../charts/ReliabilityRemediationEffortLineChart";
 
-function ReliabilityMetricsCharts( { persona } ) {
+function ReliabilityMetricsView( { persona } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -75,9 +75,9 @@ function ReliabilityMetricsCharts( { persona } ) {
     );}
 }
 
-ReliabilityMetricsCharts.propTypes = {
+ReliabilityMetricsView.propTypes = {
   persona: PropTypes.string
 };
 
 
-export default ReliabilityMetricsCharts;
+export default ReliabilityMetricsView;

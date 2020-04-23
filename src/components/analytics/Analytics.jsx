@@ -7,7 +7,7 @@ import LoadingDialog from "../common/loading";
 import ConfigurationsForm from "./configurationsForm";
 import { Row, Col, ListGroup } from "react-bootstrap";
 import SummaryChartsView from "./views/summaryChartsView";
-import ReliabilityMetricsCharts from "./metrics/reliability/ReliabilityMetricsCharts";
+import ReliabilityMetricsCharts from "./views/reliability/ReliabilityMetricsView";
 import "./analytics.css";
 import "./charts/charts.css";
 import SonarLinesToCoverBarChart from "./charts/sonarLinesToCoverBarChart";
