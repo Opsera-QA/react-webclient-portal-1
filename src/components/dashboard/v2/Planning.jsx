@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 import JiraTicketsAssignedByUserBarChart from "../../analytics/charts/jiraTicketsAssignedByUserBarChart";
+import JiraIssuesByPriorityBarChart from "../../analytics/charts/jiraIssuesByPriorityBarChart";
 
 function PlanningDashboard( { persona } ){
+  
   const contextType = useContext(AuthContext);
   const [token, setToken] = useState();
   
@@ -23,6 +25,12 @@ function PlanningDashboard( { persona } ){
       <div className="p-2 flex-grow-1">
         <div className="chart mb-3" style={{ height: "300px" }}>
           <JiraTicketsAssignedByUserBarChart token={token} persona={persona} />
+        </div> 
+      </div>
+
+      <div className="p-2 flex-grow-1">
+        <div className="chart mb-3" style={{ height: "300px" }}>
+          <JiraIssuesByPriorityBarChart token={token} persona={persona} />
         </div> 
       </div>
       
