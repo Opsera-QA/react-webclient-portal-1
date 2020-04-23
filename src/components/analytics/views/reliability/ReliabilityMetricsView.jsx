@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../../../contexts/AuthContext";
-import { ApiService } from "../../../../api/apiService";
+import { axiosApiService } from "../../../../api/apiService";
 import LoadingDialog from "../../../common/loading";
 import ErrorDialog from "../../../common/error";
 import InfoDialog from "../../../common/info";
@@ -16,27 +16,44 @@ function ReliabilityMetricsView( { persona } ) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   
-  const getApiData = async () => {
+  useEffect(() => {    
+    const controller = new AbortController();
+    const runEffect = async () => {
+      try {
+        await fetchData();
+      } catch (err) {
+        if (err.name === "AbortError") {
+          console.log("Request was canceled via controller.abort");
+          return;
+        }        
+      }
+    };
+    runEffect();
+
+    return () => {
+      controller.abort();
+    };
+  }, []);
+
+
+  const fetchData = async () => {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiCall = new ApiService("/analytics/dashboard/reliability", {}, accessToken);
-    
-    apiCall.get()
-      .then(res => {
-        let dataObject = res && res.data ? res.data.data[0] : [];
-        setData(dataObject);
-        setLoading(false);
-      })
-      .catch(err => {
-        setErrors(err);
-        setLoading(false);
-      });
+    const apiUrl = "/analytics/dashboard/reliability";   
+    try {
+      const res = await axiosApiService(accessToken).get(apiUrl);
+      let dataObject = res && res.data ? res.data.data[0] : [];
+      setData(dataObject);
+      setLoading(false);
+    }
+    catch (err) {
+      console.log(err.message);
+      setLoading(false);
+      setErrors(err.message);
+    }
   };
 
-  useEffect( () => {
-    getApiData();
-  }, []);
 
   console.log("Rendering Reliability Charts");
   console.log(data);

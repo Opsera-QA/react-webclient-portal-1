@@ -9,7 +9,7 @@ import config from "./deploymentFrequencyLineChartConfigs";
 import "./charts.css";
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
-import { ApiService } from "../../../api/apiService";
+import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/loading";
 
 function MaintainabilityLineChart( { persona } ) {
@@ -18,38 +18,54 @@ function MaintainabilityLineChart( { persona } ) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const getApiData = async () => {
+
+  useEffect(() => {    
+    const controller = new AbortController();
+    const runEffect = async () => {
+      try {
+        await fetchData();
+      } catch (err) {
+        if (err.name === "AbortError") {
+          console.log("Request was canceled via controller.abort");
+          return;
+        }        
+      }
+    };
+    runEffect();
+
+    return () => {
+      controller.abort();
+    };
+  }, []);
+
+
+  const fetchData = async () => {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const urlParams = {
-      filter: {
-        data: [
-          { 
-            request: "successfulDeploymentFrequency",
-            metric: "stacked" 
-          }
-        ]
-      }
+    const apiUrl = "/analytics/data";   
+    const postBody = {
+      data: [
+        { 
+          request: "successfulDeploymentFrequency",
+          metric: "stacked" 
+        }
+      ]
     };
-    const apiCall = new ApiService("/analytics/data", urlParams, accessToken);
 
-    apiCall.get()
-      .then(res => {
-        console.log(res.data.data[0]);
-        let dataObject = res && res.data ? res.data.data[0].successfulDeploymentFrequency : [];
-        setData(dataObject);
-        setLoading(false);
-      })
-      .catch(err => {
-        setErrors(err);
-        setLoading(false);
-      });
+    try {
+      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
+      let dataObject = res && res.data ? res.data.data[0].successfulDeploymentFrequency : [];
+      setData(dataObject);
+      setLoading(false);
+    }
+    catch (err) {
+      console.log(err.message);
+      setLoading(false);
+      setErrors(err.message);
+    }
   };
 
-  useEffect( () => {
-    getApiData();
-  }, []);
 
   console.log("Rendering Dep Frequency Charts");
 

@@ -54,9 +54,7 @@ function SummaryChartsView({ persona }) {
       let dataObject = res && res.data ? res.data.data[0] : [];
       setData(dataObject);
 
-      //const { jenkinsBuildSuccess, jenkinsBuildFailure, jenkinsBuildAborted, jenkinsDeploySuccess, jenkinsDeployFailure, codeshipBuildSuccess, codeshipBuildFailure, codeshipBuildStopped } = data;
-
-
+      buildSummaryCounts(dataObject);
       let testData = [
         { name: "Successful Builds", value: "694", footer: "Jenkins", status: "success" },
         { name: "Failed Builds", value: "49", footer: "Jenkins", status: "danger" },
@@ -74,6 +72,15 @@ function SummaryChartsView({ persona }) {
       setLoading(false);
     }
   }
+
+  //TODO: This should be refactored at the service level and be it's own data response object.
+  const buildSummaryCounts = (data) => {
+    const { jenkinsBuildSuccess, jenkinsBuildFailure, jenkinsBuildAborted, jenkinsDeploySuccess, jenkinsDeployFailure, codeshipBuildSuccess, codeshipBuildFailure, codeshipBuildStopped } = data;
+
+
+
+    console.log("DUMMARY: ", data);
+  };
 
 
   if(loading) {
