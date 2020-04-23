@@ -8,7 +8,6 @@ import { faSave } from "@fortawesome/free-solid-svg-icons";
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
   teamcityApiURL: "",
-  teamcityToken: "",
   teamcityBuildTypeId: "",
   teamcityUsername: "", 
   teamcityPassword: ""
