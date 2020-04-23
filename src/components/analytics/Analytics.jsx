@@ -1,14 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-//import { Link } from "react-router-dom";
-import { AuthContext } from "../../contexts/AuthContext"; //New AuthContext State 
+import { AuthContext } from "../../contexts/AuthContext"; 
 import { axiosApiService } from "../../api/apiService";
 import ErrorDialog from "../common/error";
 import LoadingDialog from "../common/loading";
 import ConfigurationsForm from "./configurationsForm";
 import { Row, Col, ListGroup } from "react-bootstrap";
-//import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-//import { faCog } from "@fortawesome/free-solid-svg-icons";
+import SummaryChartsView from "./views/summaryChartsView";
 import ReliabilityMetricsCharts from "./metrics/reliability/ReliabilityMetricsCharts";
 import "./analytics.css";
 import "./charts/charts.css";
@@ -31,7 +29,6 @@ function Analytics() {
     const controller = new AbortController();
     const runEffect = async () => {
       try {
-        console.log("FETCHING DATA");
         await fetchData();        
       } catch (err) {
         if (err.name === "AbortError") {
@@ -106,19 +103,9 @@ function Analytics() {
           <>
             <div className="p-2">
               <div>
-          Please wire up the charts below based on the corresponding KPI.  All charts below should be self contained in terms of function. The 
-            API calls to get the data is inside the component so no addional data or logic should be stored in this JSX file.  
+                <SummaryChartsView />
               </div>
 
-              {/* <Row className="mt-3">
-            <Col>Layout the top 4 charts here that we show by default on dashboard</Col>
-            <Col className="text-center">chart 2</Col>
-          </Row>
-
-          <Row className="mt-3">
-            <Col className="text-center">chart 3</Col>
-            <Col className="text-center">chart 4</Col>
-          </Row> */}
 
               <Row className="mt-3">
                 <Col xs lg="2" className="p-2">
