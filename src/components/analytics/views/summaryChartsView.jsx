@@ -47,24 +47,62 @@ function SummaryChartsView({ persona }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/dashboard/pipeline";   
+    const apiUrl = "/analytics/data";   
+    const postBody = {
+      "data": [
+        {
+          "request": "jenkinsBuildSuccess",
+          "metric": "count"
+        },
+        {
+          "request": "jenkinsBuildFailure",
+          "metric": "count"
+        },
+        {
+          "request": "jenkinsBuildAborted",
+          "metric": "count"
+        },
+        {
+          "request": "jenkinsDeploySuccess",
+          "metric": "count"
+        },
+        {
+          "request": "jenkinsDeployFailure",
+          "metric": "count"
+        },
+        {
+          "request": "codeshipBuildSuccess",
+          "metric": "count"
+        },
+        {
+          "request": "codeshipBuildFailure",
+          "metric": "count"
+        },
+        {
+          "request": "codeshipBuildStopped",
+          "metric": "count"
+        },
+        {
+          "request": "jenkinsBuildsByUser",
+          "metric": "bar"
+        },
+        {
+          "request": "jenkinsBuildDuration",
+          "metric": "bar"
+        },
+        {
+          "request": "jenkinsStatusByJobName",
+          "metric": "bar"
+        }
+      ]
+    };
     
     try {
-      const res = await axiosApiService(accessToken).get(apiUrl);      
+      const res = await axiosApiService(accessToken).post(apiUrl, postBody);     
       let dataObject = res && res.data ? res.data.data[0] : [];
       setData(dataObject);
-
-      buildSummaryCounts(dataObject);
-      let testData = [
-        { name: "Successful Builds", value: "694", footer: "Jenkins", status: "success" },
-        { name: "Failed Builds", value: "49", footer: "Jenkins", status: "danger" },
-        { name: "Aborted Builds", value: "1", footer: "Jenkins", status: "success" },
-        { name: "Successful Deployments", value: "0", footer: "Jenkins", status: "warning" },
-        { name: "Failed Deployments", value: "96", footer: "Jenkins", status: "danger" },
-      ];
-      //build counts block
-      setCountBlockData(testData);
-
+      const countsData = buildSummaryCounts(dataObject);
+      setCountBlockData(countsData);
       setLoading(false);
     }
     catch (err) {
@@ -73,13 +111,39 @@ function SummaryChartsView({ persona }) {
     }
   }
 
-  //TODO: This should be refactored at the service level and be it's own data response object.
+  
   const buildSummaryCounts = (data) => {
     const { jenkinsBuildSuccess, jenkinsBuildFailure, jenkinsBuildAborted, jenkinsDeploySuccess, jenkinsDeployFailure, codeshipBuildSuccess, codeshipBuildFailure, codeshipBuildStopped } = data;
 
+    let summaryCountsData = [];    
 
+    if (jenkinsBuildSuccess.status === 200 && jenkinsBuildSuccess.data !== undefined) {
+      summaryCountsData.push({ name: "Successful Builds", value: jenkinsBuildSuccess.data[0].count, footer: jenkinsBuildSuccess.tool, status: "success" });
+    }
+    if (jenkinsBuildFailure.status === 200 && jenkinsBuildFailure.data !== undefined) {
+      summaryCountsData.push({ name: "Failed Builds", value: jenkinsBuildFailure.data[0].count, footer: jenkinsBuildFailure.tool, status: jenkinsBuildFailure.data[0].count > 0 ? "danger" : "success" });
+    }
+    if (jenkinsBuildAborted.status === 200 && jenkinsBuildAborted.data !== undefined) {
+      summaryCountsData.push({ name: "Aborted Builds", value: jenkinsBuildAborted.data[0].count, footer: jenkinsBuildAborted.tool, status: jenkinsBuildAborted.data[0].count > 0 ? "warning" : "success" });
+    }
+    if (jenkinsDeploySuccess.status === 200 && jenkinsDeploySuccess.data !== undefined) {
+      summaryCountsData.push({ name: "Successful Deployments", value: jenkinsDeploySuccess.data[0].count, footer: jenkinsDeploySuccess.tool, status: "success" });
+    }
+    if (jenkinsDeployFailure.status === 200 && jenkinsDeployFailure.data !== undefined) {
+      summaryCountsData.push({ name: "Failed Deployments", value: jenkinsDeployFailure.data[0].count, footer: jenkinsDeployFailure.tool, status: jenkinsDeployFailure.data[0].count > 0 ? "danger" : "success" });
+    }
+    if (codeshipBuildSuccess.status === 200 && codeshipBuildSuccess.data !== undefined) {
+      summaryCountsData.push({ name: "CodeShip Success", value: codeshipBuildSuccess.data[0].count, footer: codeshipBuildSuccess.tool, status: "success" });
+    }
+    if (codeshipBuildFailure.status === 200 && codeshipBuildFailure.data !== undefined) {
+      summaryCountsData.push({ name: "CodeShip Failed", value: codeshipBuildFailure.data[0].count, footer: codeshipBuildFailure.tool, status: codeshipBuildFailure.data[0].count > 0 ? "danger" : "success" });
+    }
+    if (codeshipBuildStopped.status === 200 && codeshipBuildStopped.data !== undefined) {
+      summaryCountsData.push({ name: "CodeShip Stopped", value: codeshipBuildStopped.data[0].count, footer: codeshipBuildStopped.tool, status: "success" });
+    }
 
-    console.log("DUMMARY: ", data);
+    
+    return summaryCountsData;
   };
 
 

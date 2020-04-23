@@ -122,7 +122,6 @@ function MaintainabilityLineChart( { persona } ) {
   }
 }
 MaintainabilityLineChart.propTypes = {
-  data: PropTypes.object,
   persona: PropTypes.string
 };
 

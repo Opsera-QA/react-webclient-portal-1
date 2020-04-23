@@ -3,37 +3,65 @@ import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { ResponsiveBar } from "@nivo/bar";
-import { ApiService } from "../../../api/apiService";
+import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/loading";
 import ErrorDialog from "../../common/error";
 import config from "./jiraIssuesByPriorityBarChartConfigs";
 import "./charts.css";
 
 
-function JiraIssuesByPriorityBarChart( { token, persona } ) {
+function JiraIssuesByPriorityBarChart( { persona } ) {
+  const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   
-  const getApiData = async () => {
-    setLoading(true);
-    const apiCall = new ApiService("/analytics/data", { "filter": { "data": [{ "metric": "bar", "request": "jiraIssuesByPriority" }] } }, token);
-    
-    apiCall.get()
-      .then(res => {
-        let dataObject = res && res.data ? res.data.data[0].jiraIssuesByPriority : [];
-        setData(dataObject);
-        setLoading(false);
-      })
-      .catch(err => {
-        setErrors(err);
-        setLoading(false);
-      });
-  };
+  useEffect(() => {    
+    const controller = new AbortController();
+    const runEffect = async () => {
+      try {
+        await fetchData();
+      } catch (err) {
+        if (err.name === "AbortError") {
+          console.log("Request was canceled via controller.abort");
+          return;
+        }        
+      }
+    };
+    runEffect();
 
-  useEffect( () => {
-    getApiData();
+    return () => {
+      controller.abort();
+    };
   }, []);
+
+
+  const fetchData = async () => {
+    setLoading(true);
+    const { getAccessToken } = contextType;
+    const accessToken = await getAccessToken();
+    const apiUrl = "/analytics/data";   
+    const postBody = {
+      data: [
+        { 
+          request: "jiraIssuesByPriority",
+          metric: "bar" 
+        }
+      ]
+    };
+
+    try {
+      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
+      let dataObject = res && res.data ? res.data.data[0].jiraIssuesByPriority : [];
+      setData(dataObject);
+      setLoading(false);
+    }
+    catch (err) {
+      console.log(err.message);
+      setLoading(false);
+      setErrors(err.message);
+    }
+  };
 
   //This needs to be more intelligent than just checking for precense of data.  Node can return a status 400 error from ES, and that would fail this.
   if(loading) {
@@ -41,7 +69,7 @@ function JiraIssuesByPriorityBarChart( { token, persona } ) {
   } else if (error) {
     return (<ErrorDialog  error={error} />);
   } else if (typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) {
-    return (<ErrorDialog  error="No Data Present in the ES!" />);
+    return (<ErrorDialog  error="No Data is available for this chart at this time." />);
   } else {    
     return (
       <>
@@ -91,7 +119,6 @@ function JiraIssuesByPriorityBarChart( { token, persona } ) {
   }
 }
 JiraIssuesByPriorityBarChart.propTypes = {
-  data: PropTypes.object,
   persona: PropTypes.string
 };
 

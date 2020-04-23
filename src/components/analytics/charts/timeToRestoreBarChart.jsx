@@ -2,11 +2,11 @@
 // Worked on By - Shrey Malhotra
 // Sprint - Analytics Mt. Rainier
 
-import React, { useState, useEffect, Fragment  } from "react";
+import React, { useState, useEffect, Fragment, useContext  } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { ResponsiveBar } from "@nivo/bar";
-import { ApiService } from "../../../api/apiService";
+import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/loading";
 import ErrorDialog from "../../common/error";
 import { line } from "d3-shape";
@@ -16,35 +16,60 @@ const lineColor = "rgba(200, 30, 15, 1)";
 const barColor = "#0095ff";
 
 
-
-
-
-
 function TimeToRestoreBarChart( { token, persona } ) {
+  const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   
-  const getApiData = async () => {
-    setLoading(true);
-    const apiCall = new ApiService("/analytics/data", { "filter": { "data": [{ "metric": "bar", "request": "timeToRestore" }] } }, token);
-    
-    apiCall.get()
-      .then(res => {
-        console.log(res.data.data);
-        let dataObject = res && res.data ? res.data.data[0].timeToRestore : [];
-        setData(dataObject);
-        setLoading(false);
-      })
-      .catch(err => {
-        setErrors(err);
-        setLoading(false);
-      });
-  };
+  useEffect(() => {    
+    const controller = new AbortController();
+    const runEffect = async () => {
+      try {
+        await fetchData();
+        
+      } catch (err) {
+        if (err.name === "AbortError") {
+          console.log("Request was canceled via controller.abort");
+          return;
+        }        
+      }
+    };
+    runEffect();
 
-  useEffect( () => {
-    getApiData();
+    return () => {
+      controller.abort();
+    };
   }, []);
+
+
+  async function fetchData() {
+    setLoading(true);
+    const { getAccessToken } = contextType;
+    const accessToken = await getAccessToken();
+    const apiUrl = "/analytics/data";   
+    const postBody = {
+      "data": [
+        {
+          "request": "timeToRestore",
+          "metric": "bar"
+        }
+      ]
+    };
+    
+    try {
+      const res = await axiosApiService(accessToken).post(apiUrl, postBody);     
+      let dataObject = res && res.data ? res.data.data[0].timeToRestore : [];
+      setData(dataObject);
+      setLoading(false);
+    }
+    catch (err) {
+      setErrors(err);
+      setLoading(false);
+    }
+  }
+
+
 
   const Line = ({ bars, xScale, yScale }) => {
     const lineGenerator = line()

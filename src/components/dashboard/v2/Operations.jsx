@@ -1,34 +1,29 @@
-import React, { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../../../contexts/AuthContext";
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 import TimeToRestoreBarChart from "../../analytics/charts/timeToRestoreBarChart.jsx";
 
 
 function OperationsDashboard({ persona }) {
-  const contextType = useContext(AuthContext);
-  const [token, setToken] = useState();
   
-  const getApiData = async () => {
-    const { getAccessToken } = contextType;
-
-    const accessToken = await getAccessToken();
-    setToken(accessToken);
-    
-  };
-
   useEffect( () => {
-    getApiData();
-  }, []);
+    console.log("Persona: ", persona);
+  }, [persona]);
   
   return (
     <>
       <div className="p-2 flex-grow-1">
         <div className="chart mb-3" style={{ height: "300px" }}>
-          <TimeToRestoreBarChart token={token} persona={persona}/>
+          <TimeToRestoreBarChart persona={persona}/>
         </div>
       </div>
       
     </>
   );
 }
+
+OperationsDashboard.propTypes = {
+  persona: PropTypes.string
+};
+
 
 export default OperationsDashboard;

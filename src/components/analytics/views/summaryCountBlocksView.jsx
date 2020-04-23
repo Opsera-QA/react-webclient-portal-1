@@ -1,5 +1,10 @@
-// This controls layout of the "count" blocks at the top of a dashboard layout
-// this accepts a data object with the necessary block values and is only for UI rendering
+/* This controls layout of the "count" blocks at the top of a dashboard layout
+ this accepts a data object with the necessary block values and is only for UI rendering
+
+Expecting data in this format:
+[{ name: "Successful Builds", value: "1" footer: "footer text", status: "success" }]
+
+ */
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 

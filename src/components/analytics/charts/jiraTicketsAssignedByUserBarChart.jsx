@@ -3,37 +3,67 @@ import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { ResponsiveBar } from "@nivo/bar";
-import { ApiService } from "../../../api/apiService";
+import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/loading";
 import ErrorDialog from "../../common/error";
 import config from "./jiraTicketsAssignedByUserBarChartConfigs";
 import "./charts.css";
 
 
-function JiraTicketsAssignedByUserBarChart( { token, persona } ) {
+function JiraTicketsAssignedByUserBarChart( { persona } ) {
+  const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  
-  const getApiData = async () => {
+
+
+  useEffect(() => {    
+    const controller = new AbortController();
+    const runEffect = async () => {
+      try {
+        await fetchData();
+      } catch (err) {
+        if (err.name === "AbortError") {
+          console.log("Request was canceled via controller.abort");
+          return;
+        }        
+      }
+    };
+    runEffect();
+
+    return () => {
+      controller.abort();
+    };
+  }, []);
+
+
+  const fetchData = async () => {
     setLoading(true);
-    const apiCall = new ApiService("/analytics/data", { "filter": { "data": [{ "metric": "bar", "request": "jiraTicketsAssignedByUser" }] } }, token);
-    
-    apiCall.get()
-      .then(res => {
-        let dataObject = res && res.data ? res.data.data[0].jiraTicketsAssignedByUser : [];
-        setData(dataObject);
-        setLoading(false);
-      })
-      .catch(err => {
-        setErrors(err);
-        setLoading(false);
-      });
+    const { getAccessToken } = contextType;
+    const accessToken = await getAccessToken();
+    const apiUrl = "/analytics/data";   
+    const postBody = {
+      data: [
+        { 
+          request: "jiraTicketsAssignedByUser",
+          metric: "bar" 
+        }
+      ]
+    };
+
+    try {
+      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
+      let dataObject = res && res.data ? res.data.data[0].jiraTicketsAssignedByUser : [];
+      setData(dataObject);
+      setLoading(false);
+    }
+    catch (err) {
+      console.log(err.message);
+      setLoading(false);
+      setErrors(err.message);
+    }
   };
 
-  useEffect( () => {
-    getApiData();
-  }, []);
 
   //This needs to be more intelligent than just checking for precense of data.  Node can return a status 400 error from ES, and that would fail this.
   if(loading) {
@@ -92,7 +122,6 @@ function JiraTicketsAssignedByUserBarChart( { token, persona } ) {
   }
 }
 JiraTicketsAssignedByUserBarChart.propTypes = {
-  data: PropTypes.object,
   persona: PropTypes.string
 };
 
