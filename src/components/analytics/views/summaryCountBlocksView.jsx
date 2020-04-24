@@ -35,7 +35,7 @@ function SummaryCountBlocksView( { data } ) {
             return <div key={ index } className="count-block m-2 w-100 text-center align-self-center h-100">
               <div className="count-block-primary-text">{item.value}</div>
               <div className={"count-block-subtext mt-2 "+ setStatusLevel(item.status)}>{item.name}</div>
-              <div className="count-block-footer w-100 text-muted">{item.footer}</div>
+              <div className="count-block-footer w-100 text-muted mb-1">{item.footer}</div>
             </div>;
           })}
 
