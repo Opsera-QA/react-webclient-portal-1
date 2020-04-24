@@ -1,45 +1,18 @@
 // Analytics Software Testing, Persona Manager/Developer/Executive, Node Ticket AN-147
-import React, { useState, useEffect, useContext } from "react";
+import React from "react";
+// { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "../../../contexts/AuthContext";
-import { ApiService } from "../../../api/apiService";
-import LoadingDialog from "../../common/loading";
-import InfoDialog from "../../common/info";
+// import { AuthContext } from "../../../contexts/AuthContext";
+// import { axiosApiService } from "../../../api/apiService";
+// import LoadingDialog from "../../common/loading";
 import { ResponsiveBar } from "@nivo/bar";
 import ErrorDialog from "../../common/error";
 import config from "./sonarCodeCoverageBarChartConfigs";
 import "./charts.css";
 
 
-function SonarCodeCoverageBarChart( { token, persona } ) {
-  const [error, setErrors] = useState(false);
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  
-  const getApiData = async () => {
-    setLoading(true);
-    const apiCall = new ApiService("/analytics/data", { "filter": { "data": [{ "metric": "bar", "request": "sonarCodeCoverage" }] } }, token);
-    
-    apiCall.get()
-      .then(res => {
-        let dataObject = res && res.data ? res.data.data[0].sonarCodeCoverage : [];
-        setData(dataObject);
-        setLoading(false);
-      })
-      .catch(err => {
-        setErrors(err);
-        setLoading(false);
-      });
-  };
-
-  useEffect( () => {
-    getApiData();
-  }, []);
-  if (loading) {
-    return (<LoadingDialog size="sm" />);
-  } else if (error) {
-    return (<ErrorDialog  error={error} />);
-  } else if (typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) {
+function SonarCodeCoverageBarChart( { data, persona } ) {
+  if (typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) {
     return (<ErrorDialog  error="No Data Present in the ES!" />);
   } else {
     return (

@@ -8,11 +8,11 @@ import ConfigurationsForm from "./configurationsForm";
 import { Row, Col, ListGroup } from "react-bootstrap";
 import SummaryChartsView from "./views/summaryChartsView";
 import ReliabilityMetricsCharts from "./views/reliability/ReliabilityMetricsView";
+import CodeCoverageMetricsView from "./views/sonarCodeCoverageView";
 import "./analytics.css";
 import "./charts/charts.css";
-import SonarLinesToCoverBarChart from "./charts/sonarLinesToCoverBarChart";
-import SonarCodeCoverageBarChart from "./charts/sonarCodeCoverageBarChart";
 import DeploymentFrequencyLineChart from "./charts/deploymentFrequencyLineChart.jsx";
+import JiraIssuesCreatedByDateLineChart from "./charts/jiraIssuesCreatedByDateLineChart.jsx";
 
 
 
@@ -162,23 +162,19 @@ function ChartView({ previewRole, token, selection, persona }) {
           <div className="chart mb-3" style={{ height: "300px" }}>
             <DeploymentFrequencyLineChart persona={persona}/>
           </div>
+
+          {previewRole ? <div className="m-2">
+            <div className="chart mb-3" style={{ height: "300px" }}>
+              <JiraIssuesCreatedByDateLineChart token={token} persona={persona} />
+            </div>
+          </div> : ""}
         </>);
         
     case "software_testing":
       return (
         <>
           {/* Wire-up each chart component here, stacking them on top of each other.  Please wrap each individual chart in their own div with "m-2" class providing some margin around it */}
-          {previewRole ? <div className="m-2">
-            <div className="chart mb-3" style={{ height: "300px" }}>
-              <SonarLinesToCoverBarChart token={token} persona={persona} />
-            </div>
-          </div> : ""}
-
-          {previewRole ? <div className="m-2">
-            <div className="chart mb-3" style={{ height: "300px" }}>
-              <SonarCodeCoverageBarChart token={token} persona={persona} />
-            </div> 
-          </div> : ""}
+          {previewRole ? <CodeCoverageMetricsView />: ""}
         </>);
 
     case "service_operation":
