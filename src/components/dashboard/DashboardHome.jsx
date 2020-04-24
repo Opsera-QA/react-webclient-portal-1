@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../contexts/AuthContext";
-import { ApiService } from "../../api/apiService";
+import { axiosApiService } from "../../api/apiService";
 import Select from "react-select";
 import { Row, Col, Alert } from "react-bootstrap";
 import ErrorDialog from "../../components/common/error";
@@ -21,7 +21,7 @@ import TestingDashboard_v2 from "../../components/dashboard/v2/Testing";
 import OperationsDashboard from "../../components/dashboard/v2/Operations";
 import PlanningDashboard from "../../components/dashboard/v2/Planning";
 
-const PERSONAS = [ { value: "0", label: "Developer" }, { value: "1", label: "Security" }, { value: "2", label: "Operations" }, { value: "3", label: "VP of Engineering" }];
+const PERSONAS = [ { value: "developer", label: "Developer" }, { value: "manager", label: "Manager" }, { value: "executive", label: "Executive" }];
 
 function DashboardHome() {
   const contextType = useContext(AuthContext);
@@ -32,11 +32,33 @@ function DashboardHome() {
   const [loading, setLoading] = useState(false);
   const [previewRole, setPreviewRole] = useState(false);
   
+  useEffect(() => {    
+    const controller = new AbortController();
+    const runEffect = async () => {
+      try {
+        await fetchData();
+        
+      } catch (err) {
+        if (err.name === "AbortError") {
+          console.log("Request was canceled via controller.abort");
+          return;
+        }        
+      }
+    };
+    runEffect();
 
-  const getApiData = async () => {
+    return () => {
+      controller.abort();
+    };
+  }, []);
+
+
+  async function fetchData() {
     setLoading(true);
     const { getAccessToken, getIsPreviewRole } = contextType;
-    
+    const accessToken = await getAccessToken();
+    const apiUrl = "/analytics/settings";   
+
     //this returns true IF the Okta groups for user contains "Preview".  Please wrap display components in this.
     const isPreviewRole = await getIsPreviewRole();
     setPreviewRole(isPreviewRole); 
@@ -44,28 +66,22 @@ function DashboardHome() {
       console.log("Enabling Preview Feature Toggle. ", isPreviewRole);
       setSelection("pipeline_v2");
     }
-    
 
-    const accessToken = await getAccessToken();
-    const apiCall = new ApiService("/analytics/settings", {}, accessToken);
-    const result = await apiCall.get()
-      .catch(function (error) {
-        setErrors(error.toJSON());
-      });
-      
-    setLoading(false);
-    if (typeof(result) !== "undefined") {
+    try {
+      const result = await axiosApiService(accessToken).get(apiUrl);     
       setData(result.data);
-      if (result.data !== undefined && result.data.profile.length > 0) {
-        setPersona(result.data.profile[0].defaultPersona);      
-      }
+      let dataObject = result.data && result.data.profile.length > 0 ? result.data.profile[0] : {};
+      let persona = dataObject.defaultPersona.length > 0 ? dataObject.defaultPersona : "developer";
+      setPersona(persona);    
+      setLoading(false);
     }
-    
-  };
+    catch (err) {
+      setErrors(err);
+      setLoading(false);
+    }
+  }
 
-  useEffect( () => {
-    getApiData();
-  }, []);
+
 
   const handleTabClick = param => e => {
     e.preventDefault();
@@ -177,8 +193,7 @@ function DashboardHome() {
                         menuPortalTarget={document.body}
                         styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                         classNamePrefix="select"
-                        defaultValue={persona ? PERSONAS[parseInt(persona)] : PERSONAS[0]}
-                        isDisabled={true}
+                        defaultValue={persona ?  PERSONAS.find(o => o.value === persona) : PERSONAS[0]}
                         isClearable={false}
                         isSearchable={true}
                         name="PERSONA-SELECT"

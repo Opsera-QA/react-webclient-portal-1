@@ -6,7 +6,7 @@ import ErrorDialog from "../common/error";
 import LoadingDialog from "../common/loading";
 import ConfigurationsForm from "./configurationsForm";
 import { Row, Col, ListGroup } from "react-bootstrap";
-import SummaryChartsView from "./views/summaryChartsView";
+import SummaryChartsView from "./views/pipeline/buildView_developer";
 import ReliabilityMetricsCharts from "./views/reliability/ReliabilityMetricsView";
 import CodeCoverageMetricsView from "./views/sonarCodeCoverageView";
 import "./analytics.css";

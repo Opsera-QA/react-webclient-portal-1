@@ -2,20 +2,20 @@
 
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "../../../contexts/AuthContext";
-import { axiosApiService } from "../../../api/apiService";
-import LoadingDialog from "../../common/loading";
-import ErrorDialog from "../../common/error";
-import InfoDialog from "../../common/info";
-import SummaryCountBlocksView from "./summaryCountBlocksView";
-import JenkinsBuildDurationBarChart from "../charts/jenkinsBuildDurationBarChart";
-import JenkinsBuildsByUserBarChart from "../charts/jenkinsBuildsByUserBarChart";
-import JenkinsStatusByJobNameBarChart from "../charts/jenkinsStatusByJobNameBarChart";
-import DeploymentFrequencyLineChart from "../charts/deploymentFrequencyLineChart.jsx";
+import { AuthContext } from "../../../../contexts/AuthContext";
+import { axiosApiService } from "../../../../api/apiService";
+import LoadingDialog from "../../../common/loading";
+import ErrorDialog from "../../../common/error";
+import InfoDialog from "../../../common/info";
+import SummaryCountBlocksView from "../summaryCountBlocksView";
+import JenkinsBuildDurationBarChart from "../../charts/jenkinsBuildDurationBarChart";
+import JenkinsBuildsByUserBarChart from "../../charts/jenkinsBuildsByUserBarChart";
+import JenkinsStatusByJobNameBarChart from "../../charts/jenkinsStatusByJobNameBarChart";
+import DeploymentFrequencyLineChart from "../../charts/deploymentFrequencyLineChart.jsx";
 
 
 
-function SummaryChartsView({ persona }) {
+function BuildView_Developer ({ persona }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -193,8 +193,8 @@ function SummaryChartsView({ persona }) {
 }
 
 
-SummaryChartsView.propTypes = {
+BuildView_Developer.propTypes = {
   persona: PropTypes.string
 };
 
-export default SummaryChartsView;
+export default BuildView_Developer;
