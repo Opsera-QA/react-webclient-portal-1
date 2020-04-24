@@ -41,7 +41,6 @@ const PipelineItemDetail = (props) => {
   const [workflowStatus, setWorkflowStatus] = useState(false);
   const [lastStep, setLastStep] = useState({});
   const endPointUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
-  const socket = socketIOClient(endPointUrl, { query: "pipelineId=" + data._id }); 
   let history = useHistory();
   
   
@@ -82,6 +81,8 @@ const PipelineItemDetail = (props) => {
   let tmpDataObject = {};
   let staleRefreshCount = 0;
   const subscribeToTimer = () => {    
+    const socket = socketIOClient(endPointUrl, { query: "pipelineId=" + data._id }); 
+
     setSocketRunning(true);
     socket.emit("subscribeToPipelineActivity", 1000);
     socket.on("subscribeToPipelineActivity", dataObj => {
@@ -112,6 +113,13 @@ const PipelineItemDetail = (props) => {
     socket.on("disconnect", () => {
       setWorkflowStatus(false);
       setSocketRunning(false);
+    });
+
+    socket.on("connect_error", function(err) {
+      console.log("Connection Error on Socket:", err);
+      setWorkflowStatus(false);
+      setSocketRunning(false);
+      socket.close();
     });
   };
 

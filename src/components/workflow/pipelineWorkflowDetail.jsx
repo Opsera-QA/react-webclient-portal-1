@@ -40,7 +40,7 @@ const PipelineWorkflowDetail = (props) => {
   const [workflowStatus, setWorkflowStatus] = useState(false);
   const [showPipelineDataModal, setShowPipelineDataModal] = useState(false);
   const endPointUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
-  const socket = socketIOClient(endPointUrl, { query: "pipelineId=" + data._id }); 
+   
 
   useEffect(() => {    
     if (data.workflow !== undefined) {
@@ -65,7 +65,7 @@ const PipelineWorkflowDetail = (props) => {
   let tmpDataObject = {};
   let staleRefreshCount = 0;
   const subscribeToTimer = () => {    
-
+    const socket = socketIOClient(endPointUrl, { query: "pipelineId=" + data._id });
     console.log("Connected status before onConnect", socket.socket ? socket.socket.connected : socket.socket === undefined );
 
     setSocketRunning(true);
@@ -109,6 +109,13 @@ const PipelineWorkflowDetail = (props) => {
     socket.on("disconnect", () => {
       setWorkflowStatus(false);
       setSocketRunning(false);
+    });
+
+    socket.on("connect_error", function(err) {
+      console.log("Connection Error on Socket:", err);
+      setWorkflowStatus(false);
+      setSocketRunning(false);
+      socket.close();
     });
   };
 
