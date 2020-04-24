@@ -1,30 +1,24 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import JiraTicketsAssignedByUserBarChart from "../../analytics/charts/jiraTicketsAssignedByUserBarChart";
-import JiraIssuesByPriorityBarChart from "../../analytics/charts/jiraIssuesByPriorityBarChart";
+import PlanningView_Developer from "../../analytics/views/planning/planningView_developer";
+import PlanningView_Manager from "../../analytics/views/planning/planningView_manager";
+import PlanningView_Executive from "../../analytics/views/planning/planningView_executive";
 
-function PlanningDashboard( { persona } ){
+function PlanningDashboard( { persona } ) {
   
-  useEffect( () => {
-    console.log("Persona: ", persona);
-  }, [persona]);
-  
-  return (
-    <>
-      <div className="p-2 flex-grow-1">
-        <div className="chart mb-3" style={{ height: "300px" }}>
-          <JiraTicketsAssignedByUserBarChart persona={persona} />
-        </div> 
-      </div>
+  switch (persona) {
+  case "developer":
+    return <PlanningView_Developer persona={persona} />;
 
-      <div className="p-2 flex-grow-1">
-        <div className="chart mb-3" style={{ height: "300px" }}>
-          <JiraIssuesByPriorityBarChart persona={persona} />
-        </div> 
-      </div>
-      
-    </>
-  );
+  case "manager":
+    return <PlanningView_Manager persona={persona} />;
+
+  case "executive":
+    return <PlanningView_Executive persona={persona} />;
+
+  default:
+    return <PlanningView_Developer persona={persona} />;
+  }  
 }
 
 
@@ -32,6 +26,4 @@ PlanningDashboard.propTypes = {
   persona: PropTypes.string
 };
 
-
 export default PlanningDashboard;
-

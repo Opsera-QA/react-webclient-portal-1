@@ -28,7 +28,7 @@ function SummaryCountBlocksView( { data } ) {
 
   return (
     <>
-      {data !== undefined ? 
+      {data !== undefined && data.length > 0 ? 
         <div className="d-flex align-content-stretch justify-content-center w-100 mb-3 count-container mt-3">
           
           {data.map(function(item, index){
