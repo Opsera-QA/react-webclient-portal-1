@@ -17,51 +17,53 @@ function SonarCodeCoverageBarChart( { data, persona } ) {
   } else {
     return (
       <>
-        <div className="chart-label-text">Sonar: Code Coverage</div>
-        <ResponsiveBar
-          data={data ? data.data : []}
-          keys={[
-            "coverage",
-            "line_coverage"
-          ]}
-          groupMode="stacked"
-          layout="vertical"
-          indexBy="buildNum"
-          margin={config.margin}
-          padding={0.1}
-          colors={{ scheme: "set1" }}
-          borderColor={{ theme: "background" }}
-          colorBy="id"
-          defs={config.defs}
-          fill={config.fill}
-          axisTop={null}
-          axisRight={null}
-          axisBottom={config.axisBottom}
-          axisLeft={config.axisLeft}
-          enableLabel={false}
-          borderRadius={0}
-          labelSkipWidth={12}
-          labelSkipHeight={12}
-          labelTextColor="inherit:darker(2)"
-          animate={true}
-          motionStiffness={90}
-          motionDamping={15}
-          legends={config.legends}
-          tooltip={({ indexValue, value, id, color }) => (
-            <div>
-              <strong style={{ color }}>
+        <div className="chart mb-3" style={{ height: "300px" }}>
+          <div className="chart-label-text">Sonar: Code Coverage</div>
+          <ResponsiveBar
+            data={data ? data.data : []}
+            keys={[
+              "coverage",
+              "line_coverage"
+            ]}
+            groupMode="stacked"
+            layout="vertical"
+            indexBy="buildNum"
+            margin={config.margin}
+            padding={0.1}
+            colors={{ scheme: "set1" }}
+            borderColor={{ theme: "background" }}
+            colorBy="id"
+            defs={config.defs}
+            fill={config.fill}
+            axisTop={null}
+            axisRight={null}
+            axisBottom={config.axisBottom}
+            axisLeft={config.axisLeft}
+            enableLabel={false}
+            borderRadius={0}
+            labelSkipWidth={12}
+            labelSkipHeight={12}
+            labelTextColor="inherit:darker(2)"
+            animate={true}
+            motionStiffness={90}
+            motionDamping={15}
+            legends={config.legends}
+            tooltip={({ indexValue, value, id, color }) => (
+              <div>
+                <strong style={{ color }}>
               Timestamp: </strong> {indexValue}<br></br>
-              <strong style={{ color }}>  {id}: </strong> {value}
-            </div>
-          )}
-          theme={{
-            tooltip: {
-              container: {
-                fontSize: "16px",
+                <strong style={{ color }}>  {id}: </strong> {value}
+              </div>
+            )}
+            theme={{
+              tooltip: {
+                container: {
+                  fontSize: "16px",
+                },
               },
-            },
-          }}
-        />
+            }}
+          />
+        </div>
       </>
     );
   }

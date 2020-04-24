@@ -75,14 +75,12 @@ function CodeCoverageMetricsView( { persona } ) {
     return (
       <>
         <div className="d-flex">
-          <div className="p-2 flex-grow-1">
-            <div className="chart mb-3" style={{ height: "300px" }}>
-              <SonarLinesToCoverBarChart data={data} persona={persona} />
-            </div>
-            <div className="chart mb-3" style={{ height: "300px" }}>
-              <SonarCodeCoverageBarChart data={data} persona={persona} />
-            </div>
-          </div> 
+          <div className="align-self-stretch p-2 w-100">
+            <SonarLinesToCoverBarChart data={data} persona={persona} />
+          </div>
+          <div className="align-self-stretch p-2 w-100">
+            <SonarCodeCoverageBarChart data={data} persona={persona} />
+          </div>
         </div>
       </>
     );}

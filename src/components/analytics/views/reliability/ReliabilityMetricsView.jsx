@@ -67,27 +67,25 @@ function ReliabilityMetricsView( { persona } ) {
   } else {
     return (
       <>
-        <div className="d-flex">
-          <div className="p-2 flex-grow-1">
-            <div className="chart mb-3" style={{ height: "300px" }}>
-              {/* bugs chart */}
-              <BugsCountLineChart data={data} persona={persona} />
-            </div>
-            <div className="chart mb-3" style={{ height: "300px" }}>
-              {/* new bugs chart */}
-              <NewBugsCountLineChart data={data} persona={persona} />
-            </div>
-            <div className="chart mb-3" style={{ height: "300px" }}>
-              {/* reliability_rating */}
-              <ReliabilityRatingLineChart data={data} persona={persona} />
-            </div>
-            <div className="chart mb-3" style={{ height: "300px" }}>
-              {/* reliability_remediation_effort */}
-              <ReliabilityRemediationEffortLineChart data={data} persona={persona} />
 
-            </div>
-          </div> 
+        <div className="d-flex">
+          <div className="align-self-stretch p-2 w-100">
+            <BugsCountLineChart data={data} persona={persona} />
+          </div>
+          <div className="align-self-stretch p-2 w-100">
+            <NewBugsCountLineChart data={data} persona={persona} />
+          </div>
         </div>
+
+        <div className="d-flex">
+          <div className="align-self-stretch p-2 w-100">
+            <ReliabilityRatingLineChart data={data} persona={persona} />
+          </div>
+          <div className="align-self-stretch p-2 w-100">
+            <ReliabilityRemediationEffortLineChart data={data} persona={persona} />
+          </div>
+        </div>
+
       </>
     );}
 }
