@@ -1,23 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
-import QualityView_Developer from "../../analytics/views/quality/qualityView_developer";
-import QualityView_Manager from "../../analytics/views/quality/qualityView_manager";
-import QualityView_Executive from "../../analytics/views/quality/qualityView_executive";
+import TestView_Developer from "../../analytics/views/quality/testView_developer";
+import TestView_Manager from "../../analytics/views/quality/testView_manager";
+import TestView_Executive from "../../analytics/views/quality/testView_executive";
 
 function QualityDashboard( { persona } ) {
   
   switch (persona) {
   case "developer":
-    return <QualityView_Developer persona={persona} />;
+    return <TestView_Developer persona={persona} />;
 
   case "manager":
-    return <QualityView_Manager persona={persona} />;
+    return <TestView_Manager persona={persona} />;
 
   case "executive":
-    return <QualityView_Executive persona={persona} />;
+    return <TestView_Executive persona={persona} />;
 
   default:
-    return <QualityView_Developer persona={persona} />;
+    return <TestView_Developer persona={persona} />;
   }  
 }
 
@@ -27,3 +27,6 @@ QualityDashboard.propTypes = {
 };
 
 export default QualityDashboard;
+
+
+

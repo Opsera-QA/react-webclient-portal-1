@@ -17,7 +17,6 @@ import { faCheckCircle, faQuestion } from "@fortawesome/free-solid-svg-icons";
 import PipelineDashboard_v2 from "../../components/dashboard/v2/Pipeline";
 import SecOpsDashboard_v2 from "../../components/dashboard/v2/SecOps";
 import QualityDashboard from "../../components/dashboard/v2/Quality";
-import TestingDashboard_v2 from "../../components/dashboard/v2/Testing";
 import OperationsDashboard from "../../components/dashboard/v2/Operations";
 import PlanningDashboard from "../../components/dashboard/v2/Planning";
 
@@ -153,20 +152,17 @@ function DashboardHome() {
                           <a className={"nav-link " + (selection === "pipeline_v2" ? "active" : "")} onClick={handleTabClick("pipeline_v2")} href="#">Pipeline</a>
                         </li>
                         <li className="nav-item">
+                          <a className={"nav-link " + (selection === "planning_v2" ? "active" : "")} onClick={handleTabClick("planning_v2")} href="#">Planning</a>
+                        </li>
+                        <li className="nav-item">
                           <a className={"nav-link " + (selection === "secops_v2" ? "active" : "")} onClick={handleTabClick("secops_v2")} href="#">SecOps</a>
                         </li>
                         <li className="nav-item">
                           <a className={"nav-link " + (selection === "quality_v2" ? "active" : "")} onClick={handleTabClick("quality_v2")} href="#">Quality</a>
                         </li>
                         <li className="nav-item">
-                          <a className={"nav-link " + (selection === "testing_v2" ? "active" : "")} onClick={handleTabClick("testing_v2")} href="#">Testing</a>
-                        </li>
-                        <li className="nav-item">
                           <a className={"nav-link " + (selection === "operations_v2" ? "active" : "")} onClick={handleTabClick("operations_v2")} href="#">Operations</a>
-                        </li>
-                        <li className="nav-item">
-                          <a className={"nav-link " + (selection === "planning_v2" ? "active" : "")} onClick={handleTabClick("planning_v2")} href="#">Planning</a>
-                        </li>
+                        </li>                        
                       </ul>
                     </Col> :
                     <Col sm={8}>
@@ -235,8 +231,6 @@ function DashboardView({ selection, persona }) {
       return <SecOpsDashboard_v2 persona={persona} />;
     case "quality_v2":
       return <QualityDashboard persona={persona} />;
-    case "testing_v2":
-      return <TestingDashboard_v2 persona={persona} />;
     case "operations_v2":
       return <OperationsDashboard persona={persona} />;
     case "planning_v2":
