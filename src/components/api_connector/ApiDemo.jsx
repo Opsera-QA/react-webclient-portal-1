@@ -4,6 +4,8 @@ import ErrorDialog from "../common/error";
 import LoadingDialog from "../common/loading";
 import { AuthContext } from "../../contexts/AuthContext"; 
 import Modal from "../common/modal";
+import JSONInput from "react-json-editor-ajrm";
+import locale    from "react-json-editor-ajrm/locale/en";
 
 
 function ApiDemo() {
@@ -75,8 +77,6 @@ function ApiDemo() {
         <h2>API Test w/ Okta Authentication Token and Axios.js</h2>
         { error ? <ErrorDialog error={error} /> : null }
       
-        <div><strong>API Response Data Package:</strong><br />
-          <span className="text-muted">{JSON.stringify(authData)}</span></div>
         <h6 style={{ marginTop: 20 }}>Response Package Breakdown:<br />
           <small className="text-muted">This is confirmation the data is returned from the server and an example of breaking it down 
       into their individual components.  The Response Token is not typically returned, however in this demo, the API Server is 
@@ -139,6 +139,20 @@ function ApiDemo() {
           <div>active: {JSON.stringify(analyticsProfile.active)}</div>
         </div> }
 
+
+        
+        <div style={{ width: "75vw", border: "1px solid #ced4da", borderRadius: ".25rem" }}>
+          <strong>API Response Data Package:</strong>
+          <JSONInput
+            placeholder={authData}
+            theme="light_mitsuketa_tribute"
+            locale={locale}
+            viewOnly="true"
+            confirmGood={false}
+            width="950px"
+          />
+        </div>
+        
 
         {showModal ? <Modal header="Log Details"
           jsonMessage={modalMessage}
