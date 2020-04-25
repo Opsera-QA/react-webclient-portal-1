@@ -13,8 +13,8 @@ import "./analytics.css";
 import "./charts/charts.css";
 import DeploymentFrequencyLineChart from "./charts/deploymentFrequencyLineChart.jsx";
 import JiraIssuesCreatedByDateLineChart from "./charts/jiraIssuesCreatedByDateLineChart.jsx";
-
-
+import DeploymentsStackedBarChart from "./charts/DeploymentsStackedBarChart";
+import CircleChart from "./charts/CircleChart";
 
 function Analytics() {
   const contextType = useContext(AuthContext);
@@ -145,7 +145,7 @@ function ChartView({ selection, persona }) {
       return (
         <>
           <div className="m-2">
-            <ReliabilityMetricsCharts />
+            <ReliabilityMetricsCharts persona={persona} />
           </div>          
         </>);
         
@@ -159,6 +159,14 @@ function ChartView({ selection, persona }) {
             </div>
             <div className="align-self-stretch p-2 w-100">
               <JiraIssuesCreatedByDateLineChart persona={persona} />
+            </div>
+          </div>
+          <div className="d-flex">
+            <div className="align-self-stretch p-2 w-100">
+              <DeploymentsStackedBarChart persona={persona} />
+            </div>
+            <div className="align-self-stretch p-2 w-100">
+              <CircleChart persona={persona} />
             </div>
           </div>
 

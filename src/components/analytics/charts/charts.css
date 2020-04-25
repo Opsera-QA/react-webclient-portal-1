@@ -115,3 +115,17 @@
 
 
 /*  End dashboard box modules */
+
+/* circle css for guage replacement */
+
+.circle {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  font-size: 20px;
+  color: #fff;
+  line-height: 200px;
+  text-align: center;
+  background: #000;
+  margin: 35px auto;
+}
