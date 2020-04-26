@@ -174,14 +174,10 @@ const PipelineItemDetail = (props) => {
     }     
   }
 
-  async function stopPipeline(pipelineId, stepId) {
+  async function stopPipeline(pipelineId) {
     setLoading(true);
     const { getAccessToken } = contextType;
-    const postBody = {
-      "action": "cancel",
-      "stepId": stepId
-    };
-    const response = await PipelineActions.action(pipelineId, postBody, getAccessToken);
+    const response = await PipelineActions.cancel(pipelineId, getAccessToken);
     console.log(response);
     if (typeof(response.error) !== "undefined") {
       console.log(response.error);

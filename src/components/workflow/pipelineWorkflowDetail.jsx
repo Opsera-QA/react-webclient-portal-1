@@ -151,10 +151,18 @@ const PipelineWorkflowDetail = (props) => {
   };
 
 
-  const handleStopWorkflowClick = async (pipelineId, stepNext) => {
-    //call gest status API
-    await runPipelineAction(pipelineId, stepNext, "cancel");
+  const handleStopWorkflowClick = async (pipelineId) => {
+    const { getAccessToken } = contextType;
+    const response = await PipelineActions.cancel(pipelineId, getAccessToken);
     setWorkflowStatus(false);
+    //setTimeout(subscribeToTimer(), 10000); // delay this by 5 seconds to allow time for services to spin up
+
+    if (typeof(response.error) !== "undefined") {
+      console.log(response.error);
+      setErrors(response.error);
+    } 
+
+    
   };
   
 
@@ -184,23 +192,6 @@ const PipelineWorkflowDetail = (props) => {
       setErrors(err.message);
       setLoading(false);
     }
-  }
-
-
-  async function runPipelineAction(pipelineId, nextStepId, action) {
-    const { getAccessToken } = contextType;
-    const postBody = {
-      "action": action,
-      "stepId": nextStepId ? nextStepId : ""
-    };
-    console.log("POST OPERATION: ", postBody);
-    const response = await PipelineActions.action(pipelineId, postBody, getAccessToken);
-    setTimeout(subscribeToTimer(), 10000); // delay this by 5 seconds to allow time for services to spin up
-
-    if (typeof(response.error) !== "undefined") {
-      console.log(response.error);
-      setErrors(response.error);
-    } 
   }
 
 
@@ -309,10 +300,13 @@ const PipelineWorkflowDetail = (props) => {
                         <FontAwesomeIcon icon={faPlay} className="mr-1"/>Continue Pipeline</Button>
 
                     </>}
-                  <Button variant="outline-primary" size="sm" className="mr-2" 
-                    onClick={() => { handleStopWorkflowClick(data._id); }}
-                    disabled={role !== "administrator"}>
-                    <FontAwesomeIcon icon={faHistory} className="mr-1"/>Reset Pipeline</Button>
+                  { data.workflow.last_step.hasOwnProperty("success") || 
+                    data.workflow.last_step.hasOwnProperty("running") || 
+                    data.workflow.last_step.hasOwnProperty("failed") ?
+                    <Button variant="outline-primary" size="sm" className="mr-2" 
+                      onClick={() => { handleStopWorkflowClick(data._id); }}
+                      disabled={role !== "administrator"}>
+                      <FontAwesomeIcon icon={faHistory} className="mr-1"/>Reset Pipeline</Button> : null}
                 </>
               }
               <Button variant="outline-warning" size="sm" className="mr-2" onClick={() => { handleRefreshClick(data._id); }}>
