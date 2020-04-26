@@ -44,9 +44,7 @@ const PipelineWorkflowEditor = ({ editItem, data, parentCallback }) => {
   };
 
   const callbackFunctionSource = async (source) => {
-    data.workflow.source.name = source.name;
-    data.workflow.source.repository = source.repository;
-    data.workflow.source.branch = source.branch;
+    data.workflow.source = source;
     await postData(data);
     parentCallback(data);  
   };

@@ -264,6 +264,11 @@ const PipelineWorkflowDetail = (props) => {
   }
 
 
+  const handleViewSourceActivityLog = () => {
+    //todo wire up viewing activity logs around the webhook responses!
+  };
+
+
 
   return (
     <>      
@@ -317,26 +322,43 @@ const PipelineWorkflowDetail = (props) => {
             </div>
 
             <div className="workflow-module-container workflow-module-container-width mx-auto">
-              <div>Source Repository: {data.workflow.source.repository}</div>
-              {data.workflow.source.name ? 
-                <>
-                  <div className="mt-1 upper-case-first"><span className="text-muted pr-1">Branch:</span> {data.workflow.source.branch}</div>
-                  <div className="mt-1 upper-case-first"><span className="text-muted pr-1">Platform:</span> {data.workflow.source.name} 
-                    <FontAwesomeIcon icon={faSearchPlus}
-                      className="ml-1"
-                      size="xs"
-                      style={{ cursor: "pointer" }}
-                      onClick={() => { handleViewClick(data.workflow.source); }} /></div>
-                </>: null}
-               
+
               <Row>
+                <Col><span className="text-muted">Project:</span> {data.workflow.source.name}</Col>               
+              </Row>
+              <Row className="mt-1 upper-case-first">
+                <Col><span className="text-muted">Service:</span> {data.workflow.source.service}</Col>               
+              </Row>
+
+              <Row className="mt-1">
+                <Col><span className="text-muted">Repository:</span> {data.workflow.source.repository}</Col>                               
+              </Row>
+              <Row className="mt-1">
+                <Col><span className="text-muted">Branch:</span> {data.workflow.source.branch}</Col>               
+              </Row>
+
+              <Row className="mt-1">
+                <Col className="text-muted small">Active Trigger: {data.workflow.source.trigger_active ? "Enabled": "Disabled"}</Col>
                 <Col className="text-right pt-1">
+                  <FontAwesomeIcon icon={faSearchPlus}
+                    className="text-muted mr-2"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => { handleViewClick(data.workflow.source); }} />
+
+                  <FontAwesomeIcon icon={faArchive}
+                    className="text-muted mr-2"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => { handleViewSourceActivityLog(); }} />
+
                   <FontAwesomeIcon icon={faCog}
                     style={{ cursor: "pointer" }}
-                    className="text-muted mr-1"
-                    onClick={() => { handleSourceEditClick(); }} />                  
+                    className="text-muted mr-2"
+                    onClick={() => { handleSourceEditClick(); }} />                            
+                 
                 </Col>
               </Row>
+
+
             </div>
             <div className="text-center workflow-module-container-width py-1 mx-auto">
               <FontAwesomeIcon icon={faChevronDown} size="lg" className="nav-blue"/>            
@@ -535,18 +557,17 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
             <Row>
               <Col><span className="text-muted">Step:</span> {item.name}</Col>
               <Col className="text-right" style={{ fontSize:"small" }}>
-                <FontAwesomeIcon icon={faBars}
+                {itemState === "completed" ? <FontAwesomeIcon icon={faCheck} className="text-muted mr-2" /> : null }
+                {itemState === "running" ? <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-2" /> : null }                  
+                {nextStep !== undefined && nextStep._id === item._id ? <FontAwesomeIcon icon={faCircleNotch} className="text-muted mr-2" /> : null }                  
+                
+                {/* <FontAwesomeIcon icon={faBars}
                   className="ml-2"
                   size="xs"
-                  style={{ cursor: "pointer" }} /></Col>
+                  style={{ cursor: "pointer" }} /> */}</Col>
             </Row>
             <Row>
-              <Col className="upper-case-first"><span className="text-muted">Tool:</span> {item.tool.tool_identifier} 
-                <FontAwesomeIcon icon={faSearchPlus}
-                  className="ml-1"
-                  size="sm"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => { handleViewClick(item); }} /></Col>
+              <Col className="upper-case-first"><span className="text-muted">Tool:</span> {item.tool.tool_identifier}</Col>
             </Row>
            
             { typeof(currentStatus) !== "undefined" && currentStatus.step_id === item._id ? 
@@ -567,6 +588,11 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
             <Row className="mt-1">
               <Col className="text-muted small">ID: {item._id}</Col>
               <Col className="text-right pt-1">
+                <FontAwesomeIcon icon={faSearchPlus}
+                  className="text-muted mr-2"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => { handleViewClick(item); }} />
+
                 <FontAwesomeIcon icon={faArchive}
                   className="text-muted mr-2"
                   style={{ cursor: "pointer" }}
@@ -574,12 +600,8 @@ const Item = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, fet
 
                 <FontAwesomeIcon icon={faCog}
                   style={{ cursor: "pointer" }}
-                  className="text-muted"
+                  className="text-muted mr-2"
                   onClick={() => { handleEditClick("tool", item.tool.tool_identifier, item._id); }} />
-
-                {itemState === "completed" ? <FontAwesomeIcon icon={faCheck} className="ml-2 mr-1" /> : null }
-                {itemState === "running" ? <FontAwesomeIcon icon={faSpinner} spin className="ml-2 mr-1" /> : null }                  
-                {nextStep !== undefined && nextStep._id === item._id ? <FontAwesomeIcon icon={faCircleNotch} className="ml-2" /> : null }                  
                  
               </Col>
             </Row>
