@@ -155,7 +155,7 @@ const PipelineWorkflowDetail = (props) => {
     const { getAccessToken } = contextType;
     const response = await PipelineActions.cancel(pipelineId, getAccessToken);
     setWorkflowStatus(false);
-    //setTimeout(subscribeToTimer(), 10000); // delay this by 5 seconds to allow time for services to spin up
+    await fetchStatusData(pipelineId);
 
     if (typeof(response.error) !== "undefined") {
       console.log(response.error);
