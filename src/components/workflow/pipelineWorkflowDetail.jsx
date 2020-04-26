@@ -300,9 +300,10 @@ const PipelineWorkflowDetail = (props) => {
                         <FontAwesomeIcon icon={faPlay} className="mr-1"/>Continue Pipeline</Button>
 
                     </>}
-                  { data.workflow.last_step.hasOwnProperty("success") || 
+                  { data.workflow.hasOwnProperty("last_step") && ( 
+                    data.workflow.last_step.hasOwnProperty("success") || 
                     data.workflow.last_step.hasOwnProperty("running") || 
-                    data.workflow.last_step.hasOwnProperty("failed") ?
+                    data.workflow.last_step.hasOwnProperty("failed")) ?
                     <Button variant="outline-primary" size="sm" className="mr-2" 
                       onClick={() => { handleStopWorkflowClick(data._id); }}
                       disabled={role !== "administrator"}>
