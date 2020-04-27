@@ -7,14 +7,14 @@ import DropdownList from "react-widgets/lib/DropdownList";
 import "react-widgets/dist/css/react-widgets.css";
 import { Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {  faSave, faTimes } from "@fortawesome/free-solid-svg-icons";
+import {  faSave, faTimes, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 
 const SELECT_FREQUENCIES = [
   "once", "daily", "weekly", "monthly"
 ];
 
-function SchedulerWidget ({ date, frequency, setEditSchedule, setSchedule }) {
+function SchedulerWidget ({ startDate, frequency, schedule, setEditSchedule, setSchedule }) {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedFrequency, setSelectedFrequency] = useState("once");
   let minDate = Moment().add(1, "hour").startOf("hour").toDate();
@@ -22,9 +22,9 @@ function SchedulerWidget ({ date, frequency, setEditSchedule, setSchedule }) {
   momentLocalizer();
 
   useEffect(() => {
-    console.log(typeof(date));
+    console.log(startDate);
     if (typeof(date) === "string") {
-      setSelectedDate(new Date(date));
+      setSelectedDate(new Date(startDate));
     }
     if (frequency.length > 0) {
       setSelectedFrequency(frequency);
@@ -45,6 +45,15 @@ function SchedulerWidget ({ date, frequency, setEditSchedule, setSchedule }) {
       start_date: selectedDate.toISOString(),
       end_date: null,
       frequency: selectedFrequency
+    };
+    setSchedule(schedule);
+  };
+
+  const handleDeleteClick = () => {
+    let schedule = {
+      start_date: null,
+      end_date: null,
+      frequency: ""
     };
     setSchedule(schedule);
   };
@@ -72,6 +81,9 @@ function SchedulerWidget ({ date, frequency, setEditSchedule, setSchedule }) {
         <FontAwesomeIcon icon={faSave}
           className="text-muted pointer"
           onClick= {() => { handleSaveClick(); }} />
+        { schedule !== null && schedule.start_date !== null ? <FontAwesomeIcon icon={faTrash}
+          className="text-muted ml-3 pointer"
+          onClick= {() => { handleDeleteClick(); }} /> : null }
         <FontAwesomeIcon icon={faTimes}
           className="text-muted ml-3 pointer"
           onClick= {() => { handleCancelClick(); }} />
@@ -81,11 +93,12 @@ function SchedulerWidget ({ date, frequency, setEditSchedule, setSchedule }) {
 }
 
 SchedulerWidget.propTypes = {
-  date: PropTypes.oneOfType([
+  startDate: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.instanceOf(Date)
   ]),
   frequency: PropTypes.string,
+  schedule: PropTypes.object,
   setEditSchedule: PropTypes.func,
   setSchedule: PropTypes.func
 };

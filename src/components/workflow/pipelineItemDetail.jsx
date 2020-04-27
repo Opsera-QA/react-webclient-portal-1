@@ -397,8 +397,9 @@ const PipelineItemDetail = (props) => {
                   <>
                     <Col xs={12} md={8}><span className="text-muted mr-1">Schedule:</span>
                       <SchedulerWidget 
-                        date={data.workflow.schedule ? data.workflow.schedule.start_date : new Date()} 
+                        startDate={data.workflow.schedule ? data.workflow.schedule.start_date : new Date()} 
                         frequency={data.workflow.schedule ? data.workflow.schedule.frequency : ""} 
+                        schedule={data.workflow.schedule ? data.workflow.schedule : null }
                         setEditSchedule={setEditSchedule} 
                         setSchedule={handleSetSchedule}></SchedulerWidget></Col> 
                     <Col xs={6} md={4}></Col>
