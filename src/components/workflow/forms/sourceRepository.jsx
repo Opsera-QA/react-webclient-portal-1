@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Form, Button } from "react-bootstrap";
-import Select from "react-select";
+import DropdownList from "react-widgets/lib/DropdownList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 
@@ -25,21 +25,15 @@ const INITIAL_DATA = {
 function SourceRepositoryConfig( { data, parentCallback }) {
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [formMessage, setFormMessage] = useState("");
-  const [service, setService] = useState("");
-  
+    
   useEffect(() => {
     if (data !== undefined) {
       let { workflow } = data;
       if (workflow.source !== undefined) {
         setFormData(workflow.source);
-        
-        if (workflow.source.service !== undefined) {
-          setService(workflow.source.service);
-        }
       }
     } else {
       setFormData(INITIAL_DATA);
-      setService("");
     }
   }, [data]);
 
@@ -77,7 +71,6 @@ function SourceRepositoryConfig( { data, parentCallback }) {
 
   const handleServiceChange = (selectedOption) => {
     setFormData({ ...formData, service: selectedOption.value });
-    //setService(selectedOption.value);    
   };
 
 
@@ -92,19 +85,14 @@ function SourceRepositoryConfig( { data, parentCallback }) {
 
       <Form.Group controlId="formBasicEmail">
         <Form.Label>Service</Form.Label>
-        <Select
-          className="basic-single mr-2"
-          menuPortalTarget={document.body}
-          styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-          classNamePrefix="select"
-          defaultValue={service ? SERVICE_OPTIONS[SERVICE_OPTIONS.findIndex(x => x.value ===service)] : SERVICE_OPTIONS[0]}
-          isDisabled={false}
-          isClearable={false}
-          isSearchable={true}
-          name="SERVICE-SELECT"
-          options={SERVICE_OPTIONS}
-          onChange={handleServiceChange}
-        />
+        {data.workflow.source !== undefined ?
+          <DropdownList
+            data={SERVICE_OPTIONS}
+            valueField='id'
+            textField='label'
+            defaultValue={data.workflow.source.service ? SERVICE_OPTIONS[SERVICE_OPTIONS.findIndex(x => x.value === data.workflow.source.service)] : SERVICE_OPTIONS[0]}
+            onChange={handleServiceChange}             
+          /> : null }
       </Form.Group>
 
       <Form.Group controlId="repoField">
@@ -120,7 +108,7 @@ function SourceRepositoryConfig( { data, parentCallback }) {
         <Form.Control maxLength="75" type="text" placeholder="Branch to watch" value={formData.key || ""} onChange={e => setFormData({ ...formData, key: e.target.value })} />
       </Form.Group> */}
       <Form.Group controlId="formBasicCheckbox">
-        <Form.Check type="checkbox" label="Enable Triggered Pipelines" checked={formData.trigger_active} onChange={() => setFormData({ ...formData, trigger_active: !formData.trigger_active })}  />        
+        <Form.Check type="checkbox" label="Enable Triggered Pipelines" checked={formData.trigger_active ? true : false} onChange={() => setFormData({ ...formData, trigger_active: !formData.trigger_active })}  />        
       </Form.Group>
       
       <Button variant="primary" type="button" 
