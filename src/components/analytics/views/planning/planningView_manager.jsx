@@ -9,6 +9,8 @@ import ErrorDialog from "../../../common/error";
 import SummaryCountBlocksView from "../summaryCountBlocksView";
 import JiraTicketsAssignedByUserBarChart from "../../charts/jiraTicketsAssignedByUserBarChart";
 import JiraIssuesByPriorityBarChart from "../../charts/jiraIssuesByPriorityBarChart";
+import JiraHealthBySprintBarChart from "../../charts/jiraHealthBySprintBarChart";
+
 
 
 
@@ -91,17 +93,17 @@ function PlanningView_Manager ({ persona }) {
         <SummaryCountBlocksView data={countBlockData} />
 
         <div className="d-flex">
-          <div className="align-self-stretch p-2 w-100" style={{ height: "300px" }}>
+          <div className="align-self-stretch p-2 w-100">
             <JiraTicketsAssignedByUserBarChart persona={persona} />
           </div>
-          <div className="align-self-stretch p-2 w-100" style={{ height: "300px" }}>
+          <div className="align-self-stretch p-2 w-100">
             <JiraIssuesByPriorityBarChart persona={persona} />
           </div>
         </div>
 
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
-            {/* Self Contained Chart Component 3 */}
+            <JiraHealthBySprintBarChart persona={persona} />
           </div>
           <div className="align-self-stretch p-2 w-100">
             {/* Self Contained Chart Component 4 */}

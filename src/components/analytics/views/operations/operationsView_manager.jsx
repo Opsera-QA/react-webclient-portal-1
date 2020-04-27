@@ -90,7 +90,7 @@ function OperationsView_Manager ({ persona }) {
         <SummaryCountBlocksView data={countBlockData} />
 
         <div className="d-flex">
-          <div className="align-self-stretch p-2 w-100" style={{ height: "300px" }}>
+          <div className="align-self-stretch p-2 w-100">
             <TimeToRestoreBarChart persona={persona}/>
           </div>
           <div className="align-self-stretch p-2 w-100">

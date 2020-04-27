@@ -71,49 +71,53 @@ function JiraIssuesByPriorityBarChart( { persona } ) {
   } else if (typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) {
     return (<ErrorDialog  error="No Data is available for this chart at this time." />);
   } else {    
+    console.log(data);
     return (
       <>
-        <div className="chart-label-text">Jira: Issues By Project</div>
-        <ResponsiveBar
-          data={data ? data.data : []}
-          keys={config.keys}
-          indexBy="project"
-          margin={config.margin}
-          padding={0.3}
-          layout={"horizontal"}
-          colors={({ id, data }) => data[`${id}_color`]}
-          borderColor={{ theme: "background" }}
-          colorBy="id"
-          defs={config.defs}
-          fill={config.fill}
-          axisTop={null}
-          axisRight={null}
-          axisBottom={config.axisBottom}
-          axisLeft={config.axisLeft}
-          labelSkipWidth={12}
-          labelSkipHeight={12}
-          enableLabel={false}
-          borderRadius={0}
-          labelTextColor="inherit:darker(2)"
-          animate={true}
-          motionStiffness={90}
-          borderWidth={2}
-          motionDamping={15}
-          tooltip={({ indexValue, value, id }) => (
-            <div>
-              <strong>  Project: </strong> {indexValue}<br></br>
-              <strong>  Issue Type: </strong> {id}<br></br>
-              <strong>  No. of Issues: </strong> {value}<br></br>
-            </div>
-          )}
-          theme={{
-            tooltip: {
-              container: {
-                fontSize: "16px",
+        <div className="chart mb-3" style={{ height: "300px" }}>
+
+          <div className="chart-label-text">Jira: Issues By Project</div>
+          <ResponsiveBar
+            data={data ? data.data : []}
+            keys={config.keys}
+            indexBy="project"
+            margin={config.margin}
+            padding={0.3}
+            layout={"horizontal"}
+            colors={({ id, data }) => data[`${id}_color`]}
+            borderColor={{ theme: "background" }}
+            colorBy="id"
+            defs={config.defs}
+            fill={config.fill}
+            axisTop={null}
+            axisRight={null}
+            axisBottom={config.axisBottom}
+            axisLeft={config.axisLeft}
+            labelSkipWidth={12}
+            labelSkipHeight={12}
+            enableLabel={false}
+            borderRadius={0}
+            labelTextColor="inherit:darker(2)"
+            animate={true}
+            motionStiffness={90}
+            borderWidth={2}
+            motionDamping={15}
+            tooltip={({ indexValue, value, id }) => (
+              <div>
+                <strong>  Project: </strong> {indexValue}<br></br>
+                <strong>  Issue Type: </strong> {id}<br></br>
+                <strong>  No. of Issues: </strong> {value}<br></br>
+              </div>
+            )}
+            theme={{
+              tooltip: {
+                container: {
+                  fontSize: "16px",
+                },
               },
-            },
-          }}
-        />
+            }}
+          />
+        </div>
       </>
     );
   }
