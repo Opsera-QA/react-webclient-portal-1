@@ -86,14 +86,14 @@ function ApiDemo() {
         <div><i>OPSERA_CLIENT_HOST:</i> {process.env.REACT_APP_OPSERA_CLIENT_HOST}</div>
         <div><i>OKTA_BASEURL:</i> {process.env.REACT_APP_OKTA_BASEURL}</div>
         <br />
-        <div><i>Response Message Data:</i> {authData ? authData.message : ""}</div>
+        {/* <div><i>Response Message Data:</i> {authData ? authData.message : ""}</div>
         <div style={{ marginTop: 20 }}><i>Response Token:</i> <br />
           <span className="code">{authData ? authData.authorization : ""}</span>
-        </div>
+        </div> */}
         {/* <div style={{ marginTop: 20 }}>Component getApiData() State Message: {JSON.stringify(messages)}</div> */}
       
         { user && <div className="mt-3 mb-2">
-          <p className="lead">User:</p>
+          <div className="lead">User:</div>
                 User Name: {user.firstName ? `${user.firstName} ${user.lastName}` : ""}<br />
                 User ID: {user ? `${user._id}` : ""}<br />
                 Email: {user ? `${user.email}` : ""}<br />
@@ -105,23 +105,8 @@ function ApiDemo() {
           
         </div> }
 
-        { tools !== undefined && tools.length > 0 && <div className="mt-3 mb-2">          
-          <p className="lead">Tools:</p>
-          {tools.map((item, idx) => (
-            <div key={idx} className="mb-2">
-              <div>instanceStatus: {JSON.stringify(item.instanceStatus)}</div>
-              <div>ID: {JSON.stringify(item._id)}</div>
-              <div>User: {JSON.stringify(item.user)}</div>
-
-              <div>Name: {JSON.stringify(item.name)}</div>
-              <div>Instance ID: {JSON.stringify(item.instanceId)}</div>
-              <div>DNS Name: {JSON.stringify(item.dnsName)}</div>
-            </div>
-          ))}
-        </div> }
-
-        { analyticsProfile !== undefined && <div className="mt-3 mb-5">          
-          <p className="lead">Analytics Profile:</p>
+        { analyticsProfile !== undefined && <div className="mb-2">          
+          <div className="lead mt-3">Analytics Profile:</div>
           <div>Enabled Tools: {JSON.stringify(analyticsProfile.enabledTools)}</div>
           <div>dataUsage: {JSON.stringify(analyticsProfile.dataUsage)}</div>
           <div>workflowType: {JSON.stringify(analyticsProfile.workflowType)}</div>
@@ -137,6 +122,23 @@ function ApiDemo() {
           <div>dashboardConfiguration: {JSON.stringify(analyticsProfile.dashboardConfiguration)}</div>
           <div>customerDB: {JSON.stringify(analyticsProfile.customerDB)}</div>
           <div>active: {JSON.stringify(analyticsProfile.active)}</div>
+        </div> }
+
+
+        { tools !== undefined && tools.length > 0 && <div className="mb-5">          
+          <div className="lead mt-3">Tools:</div>
+          <div className="text-muted">Tool entries from Platform MongoDB registered by microservices.</div>
+          {tools.map((item, idx) => (
+            <div key={idx} className="mb-2">
+              <div>instanceStatus: {JSON.stringify(item.instanceStatus)}</div>
+              <div>ID: {JSON.stringify(item._id)}</div>
+              <div>User: {JSON.stringify(item.user)}</div>
+
+              <div>Name: {JSON.stringify(item.name)}</div>
+              <div>Instance ID: {JSON.stringify(item.instanceId)}</div>
+              <div>DNS Name: {JSON.stringify(item.dnsName)}</div>
+            </div>
+          ))}
         </div> }
 
 
