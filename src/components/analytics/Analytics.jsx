@@ -15,6 +15,8 @@ import DeploymentFrequencyLineChart from "./charts/deploymentFrequencyLineChart.
 import JiraIssuesCreatedByDateLineChart from "./charts/jiraIssuesCreatedByDateLineChart.jsx";
 import DeploymentsStackedBarChart from "./charts/DeploymentsStackedBarChart";
 import CircleChart from "./charts/CircleChart";
+import JiraHealthBySprintBarChart from "./charts/jiraHealthBySprintBarChart";
+
 
 function Analytics() {
   const contextType = useContext(AuthContext);
@@ -169,7 +171,14 @@ function ChartView({ selection, persona }) {
               <CircleChart persona={persona} />
             </div>
           </div>
-
+          <div className="d-flex">
+            <div className="align-self-stretch p-2 w-100">
+              <JiraHealthBySprintBarChart persona={persona} />
+            </div>
+            <div className="align-self-stretch p-2 w-100">
+              {/* Self Contained Chart Component 4  */}
+            </div>
+          </div>
           
         </>);
         

@@ -109,48 +109,50 @@ function TimeToRestoreBarChart( { token, persona } ) {
   } else {    
     return (
       <>
-        <div className="chart-label-text">Time To Restore</div>
-        <ResponsiveBar
-          data={data ? data.data : []}
-          keys={config.keys}
-          indexBy="x"
-          margin={config.margin}
-          padding={0.3}
-          layout={"vertical"}
-          colors={[barColor]}
-          borderColor={{ theme: "background" }}
-          colorBy="id"
-          defs={config.defs}
-          fill={config.fill}
-          axisTop={null}
-          axisRight={null}
-          axisBottom={config.axisBottom}
-          axisLeft={config.axisLeft}
-          labelSkipWidth={12}
-          labelSkipHeight={12}
-          enableLabel={false}
-          borderRadius={5}
-          labelTextColor="inherit:darker(2)"
-          animate={true}
-          motionStiffness={90}
-          borderWidth={2}
-          layers={["grid", "axes", "bars", Line, "markers", "legends"]}
-          motionDamping={15}
-          tooltip={({ indexValue, value, data, color }) => (
-            <div>
-              <strong style={{ color }}>  Date: </strong> {indexValue}<br></br>
-              <strong style={{ color }}>  Downtime (seconds): </strong> {value} Seconds<br></br>
-              <strong style={{ color }}>  Domain: </strong> {data.domain}
-            </div>
-          )}
-          theme={{
-            tooltip: {
-              container: {
-                fontSize: "16px",
+        <div className="chart mb-3" style={{ height: "300px" }}>
+          <div className="chart-label-text">Time To Restore</div>
+          <ResponsiveBar
+            data={data ? data.data : []}
+            keys={config.keys}
+            indexBy="x"
+            margin={config.margin}
+            padding={0.3}
+            layout={"vertical"}
+            colors={[barColor]}
+            borderColor={{ theme: "background" }}
+            colorBy="id"
+            defs={config.defs}
+            fill={config.fill}
+            axisTop={null}
+            axisRight={null}
+            axisBottom={config.axisBottom}
+            axisLeft={config.axisLeft}
+            labelSkipWidth={12}
+            labelSkipHeight={12}
+            enableLabel={false}
+            borderRadius={5}
+            labelTextColor="inherit:darker(2)"
+            animate={true}
+            motionStiffness={90}
+            borderWidth={2}
+            layers={["grid", "axes", "bars", Line, "markers", "legends"]}
+            motionDamping={15}
+            tooltip={({ indexValue, value, data, color }) => (
+              <div>
+                <strong style={{ color }}>  Date: </strong> {indexValue}<br></br>
+                <strong style={{ color }}>  Downtime (seconds): </strong> {value} Seconds<br></br>
+                <strong style={{ color }}>  Domain: </strong> {data.domain}
+              </div>
+            )}
+            theme={{
+              tooltip: {
+                container: {
+                  fontSize: "16px",
+                },
               },
-            },
-          }}
-        />
+            }}
+          />
+        </div>
       </>
     );
   }
