@@ -10,6 +10,9 @@ import SummaryCountBlocksView from "../summaryCountBlocksView";
 import JiraTicketsAssignedByUserBarChart from "../../charts/jiraTicketsAssignedByUserBarChart";
 import JiraIssuesByPriorityBarChart from "../../charts/jiraIssuesByPriorityBarChart";
 import JiraHealthBySprintBarChart from "../../charts/jiraHealthBySprintBarChart";
+import JiraBurndownLineChart from "../../charts/jiraBurndownLineChart";
+
+
 
 
 
@@ -106,7 +109,7 @@ function PlanningView_Executive ({ persona }) {
             <JiraHealthBySprintBarChart persona={persona} />
           </div>
           <div className="align-self-stretch p-2 w-100">
-            {/* Self Contained Chart Component 4 */}
+            <JiraBurndownLineChart persona={persona} />
           </div>
         </div>
 
