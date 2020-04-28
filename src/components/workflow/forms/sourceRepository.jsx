@@ -5,7 +5,7 @@ import DropdownList from "react-widgets/lib/DropdownList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faCopy } from "@fortawesome/free-solid-svg-icons";
 
-
+//value maps to the tool_identifer string used for each tool
 const SERVICE_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
   { value: "gitlab", label: "GitLab" },

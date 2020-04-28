@@ -160,9 +160,7 @@ const PipelineWorkflowDetail = (props) => {
     if (typeof(response.error) !== "undefined") {
       console.log(response.error);
       setErrors(response.error);
-    } 
-
-    
+    }     
   };
   
 
@@ -212,6 +210,24 @@ const PipelineWorkflowDetail = (props) => {
   }
 
 
+  async function fetchPipelineActivityByTool(pipelineId, tool) {
+    const { getAccessToken } = contextType;
+    const accessToken = await getAccessToken();
+    let apiUrl = `/pipelines/${pipelineId}/activity`;
+    const params = { tool: tool };
+    
+    try {
+      const pipelineActivityLog = await axiosApiService(accessToken).get(apiUrl, { params });
+      console.log(pipelineActivityLog);     
+      return pipelineActivityLog;
+    }
+    catch (err) {
+      console.log(err.message);
+      return false;      
+    }
+  }
+
+
   const handleViewPipelineClick = (param) => {
     setShowPipelineDataModal(param);
   };
@@ -255,8 +271,16 @@ const PipelineWorkflowDetail = (props) => {
   }
 
 
-  const handleViewSourceActivityLog = () => {
-    //todo wire up viewing activity logs around the webhook responses!
+  const handleViewSourceActivityLog = async (pipelineId, tool) => {
+    //get activity data, filtered by tool!
+    setLoading(true);
+    const activityData = await fetchPipelineActivityByTool(pipelineId, tool);
+    setLoading(false);
+    if (activityData && activityData.data) {
+      setModalMessage(activityData.data);
+      setShowModal(true);
+    }
+    
   };
 
 
@@ -342,7 +366,7 @@ const PipelineWorkflowDetail = (props) => {
                   <FontAwesomeIcon icon={faArchive}
                     className="text-muted mr-2"
                     style={{ cursor: "pointer" }}
-                    onClick={() => { handleViewSourceActivityLog(); }} />
+                    onClick={() => { handleViewSourceActivityLog(data._id, data.workflow.source.service); }} />
 
                   <FontAwesomeIcon icon={faCog}
                     style={{ cursor: "pointer" }}
