@@ -317,14 +317,13 @@ const PipelineWorkflowDetail = (props) => {
             </div>
 
             <div className="workflow-module-container workflow-module-container-width mx-auto">
-
-              <Row>
+              <div>Source Code</div>
+              {data.workflow.source.name ? <Row>
                 <Col><span className="text-muted">Project:</span> {data.workflow.source.name}</Col>               
-              </Row>
+              </Row> : null }
               <Row className="mt-1 upper-case-first">
                 <Col><span className="text-muted">Service:</span> {data.workflow.source.service}</Col>               
               </Row>
-
               <Row className="mt-1">
                 <Col><span className="text-muted">Repository:</span> {data.workflow.source.repository}</Col>                               
               </Row>
@@ -333,7 +332,7 @@ const PipelineWorkflowDetail = (props) => {
               </Row>
 
               <Row className="mt-1">
-                <Col className="text-muted small">Active Trigger: {data.workflow.source.trigger_active ? "Enabled": "Disabled"}</Col>
+                <Col className="text-muted small">Event Based Trigger: {data.workflow.source.trigger_active ? "Enabled": "Disabled"}</Col>
                 <Col className="text-right pt-1">
                   <FontAwesomeIcon icon={faSearchPlus}
                     className="text-muted mr-2"
