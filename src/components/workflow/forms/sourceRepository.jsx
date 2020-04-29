@@ -152,7 +152,8 @@ function EventBasedTriggerDetails({ pipelineId }) {
         </InputGroup>
 
         <Form.Text className="text-muted">
-          Use the URL above to configure your Webhook in the source repository.  If a Secret Key/Token is required, ensure the settings above match your hook configuration.
+          Use the URL above to configure your Webhook in the source repository.  If a Secret Key/Token is required, ensure the settings above match your hook configuration.  Ensure 
+          Enable SSL is selected in your repo, only PUSH events are configured and for GitHub, make sure the Content Type is: application/json.
         </Form.Text>
       </Form.Group>
       { copySuccess ? <div className="green">Copied to Clipboard!</div> : <div className="py-2"></div> }
