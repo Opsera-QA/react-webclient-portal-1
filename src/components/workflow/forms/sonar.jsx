@@ -86,7 +86,7 @@ function SonarStepConfiguration( { data, parentCallback }) {
       </Form.Group>
       <Form.Group controlId="jAuthToken">
         <Form.Label>Jenkins Token*</Form.Label>
-        <Form.Control maxLength="500" as="textarea" type="text" placeholder="" value={formData.jAuthToken || ""} onChange={e => setFormData({ ...formData, jAuthToken: e.target.value })} />
+        <Form.Control maxLength="500" type="password" placeholder="" value={formData.jAuthToken || ""} onChange={e => setFormData({ ...formData, jAuthToken: e.target.value })} />
       </Form.Group>
       <Form.Group controlId="jobName">
         <Form.Label>Job Name</Form.Label>
@@ -107,7 +107,7 @@ function SonarStepConfiguration( { data, parentCallback }) {
       </Form.Group>
       <Form.Group controlId="sonarAuthToken">
         <Form.Label>Sonar Auth Token*</Form.Label>
-        <Form.Control maxLength="500" as="textarea" type="text" placeholder="" value={formData.sonarAuthToken || ""} onChange={e => setFormData({ ...formData, sonarAuthToken: e.target.value })} />
+        <Form.Control maxLength="500" type="password" placeholder="" value={formData.sonarAuthToken || ""} onChange={e => setFormData({ ...formData, sonarAuthToken: e.target.value })} />
       </Form.Group>
       <Form.Group controlId="projectKey">
         <Form.Label>Project Key*</Form.Label>

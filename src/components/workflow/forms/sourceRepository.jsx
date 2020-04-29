@@ -105,7 +105,7 @@ function SourceRepositoryConfig( { data, parentCallback }) {
       </Form.Group>
       <Form.Group controlId="securityKeyField">
         <Form.Label>Security Key/Token</Form.Label>
-        <Form.Control maxLength="75" type="text" placeholder="Optional security key/token from service" value={formData.key || ""} onChange={e => setFormData({ ...formData, key: e.target.value })} />
+        <Form.Control maxLength="75" type="password" placeholder="Optional security key/token from service" value={formData.key || ""} onChange={e => setFormData({ ...formData, key: e.target.value })} />
       </Form.Group>
       <Form.Group controlId="formBasicCheckbox" className="mt-1">
         <Form.Check type="checkbox" label="Enable Event Based Trigger" checked={formData.trigger_active ? true : false} onChange={() => setFormData({ ...formData, trigger_active: !formData.trigger_active })}  />        

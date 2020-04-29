@@ -84,7 +84,7 @@ function TwistlockStepConfiguration( { data, parentCallback }) {
       </Form.Group>
       <Form.Group controlId="branchField">
         <Form.Label>Jenkins Token*</Form.Label>
-        <Form.Control maxLength="500" as="textarea" type="text" placeholder="" value={formData.jAuthToken || ""} onChange={e => setFormData({ ...formData, jAuthToken: e.target.value })} />
+        <Form.Control maxLength="500" type="password" placeholder="" value={formData.jAuthToken || ""} onChange={e => setFormData({ ...formData, jAuthToken: e.target.value })} />
       </Form.Group>
       <Form.Group controlId="branchField">
         <Form.Label>Job Name</Form.Label>
