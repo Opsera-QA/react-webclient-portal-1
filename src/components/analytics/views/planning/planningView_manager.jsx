@@ -11,6 +11,8 @@ import JiraTicketsAssignedByUserBarChart from "../../charts/jiraTicketsAssignedB
 import JiraIssuesByPriorityBarChart from "../../charts/jiraIssuesByPriorityBarChart";
 import JiraHealthBySprintBarChart from "../../charts/jiraHealthBySprintBarChart";
 import JiraBurndownLineChart from "../../charts/jiraBurndownLineChart";
+import JiraVelocityBarChart from "../../charts/jiraVelocityBarChart";
+
 
 
 
@@ -114,8 +116,7 @@ function PlanningView_Manager ({ persona }) {
 
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
-            {/* Self Contained Chart Component 5 */}
-            
+            <JiraVelocityBarChart persona={persona} />
           </div>
           <div className="align-self-stretch p-2 w-100">
             {/* Self Contained Chart Component 6 */}
