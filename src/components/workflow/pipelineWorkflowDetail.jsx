@@ -345,15 +345,15 @@ const PipelineWorkflowDetail = (props) => {
               {data.workflow.source.name ? <Row>
                 <Col><span className="text-muted">Project:</span> {data.workflow.source.name}</Col>               
               </Row> : null }
-              <Row className="mt-1 upper-case-first">
+              {data.workflow.source.service ? <Row className="mt-1 upper-case-first">
                 <Col><span className="text-muted">Service:</span> {data.workflow.source.service}</Col>               
-              </Row>
-              <Row className="mt-1">
+              </Row> : null }
+              {data.workflow.source.repository ? <Row className="mt-1">
                 <Col><span className="text-muted">Repository:</span> {data.workflow.source.repository}</Col>                               
-              </Row>
-              <Row className="mt-1">
+              </Row> : null }
+              {data.workflow.source.branch ? <Row className="mt-1">
                 <Col><span className="text-muted">Branch:</span> {data.workflow.source.branch}</Col>               
-              </Row>
+              </Row> : null }
 
               <Row className="mt-1">
                 <Col className="text-muted small">Event Based Trigger: {data.workflow.source.trigger_active ? "Enabled": "Disabled"}</Col>
