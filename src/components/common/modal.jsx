@@ -36,7 +36,7 @@ function CustomModalDialog({ header, message, button, size, handleConfirmModal, 
         <Modal.Body>
           {
             state.displayJson ? 
-              <div style={{ maxWidth: "100vw", maxHeight: "100%", border: "1px solid #ced4da", borderRadius: ".25rem" }}>
+              <div style={{ maxWidth: "100vw", height: "60vh", border: "1px solid #ced4da", borderRadius: ".25rem" }}>
                 <JSONInput
                   placeholder={jsonMessage}
                   theme="light_mitsuketa_tribute"
@@ -44,6 +44,7 @@ function CustomModalDialog({ header, message, button, size, handleConfirmModal, 
                   viewOnly="true"
                   confirmGood={false}
                   width="750px"
+                  height="58vh"
                 />
               </div> : 
               <div style={{ overflowWrap: "break-word" }}>{message}</div>
