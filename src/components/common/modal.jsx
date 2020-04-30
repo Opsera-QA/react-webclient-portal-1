@@ -43,7 +43,7 @@ function CustomModalDialog({ header, message, button, size, handleConfirmModal, 
                   locale={locale}
                   viewOnly="true"
                   confirmGood={false}
-                  width="750px"
+                  width="60vw"
                   height="58vh"
                 />
               </div> : 
