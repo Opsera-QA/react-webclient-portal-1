@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { ApiService } from "../../../api/apiService";
+import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/loading";
 import ErrorDialog from "../../common/error";
 import { Alert } from "react-bootstrap";
@@ -13,35 +14,54 @@ import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
 
 const FILTER = "success";
 
-function PipelineSuccessLogs( { persona, searchQuery, filterType } ) {
+function PipelineSuccessLogs( { persona } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  
+  useEffect(() => {    
+    const controller = new AbortController();
+    const runEffect = async () => {
+      try {
+        await fetchData();
+      } catch (err) {
+        if (err.name === "AbortError") {
+          console.log("Request was canceled via controller.abort");
+          return;
+        }        
+      }
+    };
+    runEffect();
 
-  const getApiData = async () => {
+    return () => {
+      controller.abort();
+    };
+  }, []);
+
+
+  const fetchData = async () => {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const urlParams = {
-      search: searchQuery,
-      filter: FILTER
+    const apiUrl = "/analytics/activity";   
+    const postBody = {
+      requests: ["jenkinsBuildSuccess"]
     };
-    const apiCall = new ApiService("/analytics/dashboard/pipeline/activity", urlParams, accessToken);    
-    apiCall.get()
-      .then(res => {
-        setData(res.data);
-        setLoading(false);
-      })
-      .catch(err => {
-        setErrors(err);
-        setLoading(false);
-      });
-  };
 
-  useEffect( () => {
-    getApiData();
-  }, [searchQuery, filterType]);
+    try {
+      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
+      let dataObject = res && res.data ? res.data : [];
+      console.log(dataObject);
+      setData(dataObject);
+      setLoading(false);
+    }
+    catch (err) {
+      console.log(err.message);
+      setLoading(false);
+      setErrors(err.message);
+    }
+  };
 
   if(loading) {
     return (<LoadingDialog size="sm" />);
