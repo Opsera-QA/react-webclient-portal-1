@@ -16,6 +16,7 @@ import JiraIssuesCreatedByDateLineChart from "./charts/jiraIssuesCreatedByDateLi
 import DeploymentsStackedBarChart from "./charts/DeploymentsStackedBarChart";
 import CircleChart from "./charts/CircleChart";
 import JiraHealthBySprintBarChart from "./charts/jiraHealthBySprintBarChart";
+import SonarSecurityLineChart from "./charts/sonarSecurityLineChart";
 
 
 function Analytics() {
@@ -148,7 +149,10 @@ function ChartView({ selection, persona }) {
         <>
           <div className="m-2">
             <ReliabilityMetricsCharts persona={persona} />
-          </div>          
+          </div>      
+          <div className="m-2">
+            <SonarSecurityLineChart persona={persona} />
+          </div>   
         </>);
         
     case "software_development":
