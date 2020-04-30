@@ -132,11 +132,11 @@ const PipelineActivity = (props) => {
           <Table striped bordered hover className="table-sm" style={{ fontSize:"small" }}>
             <thead>
               <tr>
+                <th className="text-center" style={{ width: "5%" }}>Run</th>
                 <th style={{ width: "10%" }}>Action</th>
-                <th style={{ width: "5%" }}>Step</th>  
-                <th style={{ width: "10%" }}>Task</th>                
+                {/* <th className="text-center" style={{ width: "5%" }}>Step</th>   */}
+                <th style={{ width: "15%" }}>Task</th>                
                 <th style={{ width: "10%" }}>Tool</th>
-                <th style={{ width: "5%" }}>Build</th>
                 <th style={{ width: "10%" }}>Status</th>
                 <th style={{ width: "35%" }}>Message</th>
                 <th style={{ width: "15%" }}>Date</th>
@@ -146,11 +146,12 @@ const PipelineActivity = (props) => {
             
               {data.map((item, idx) => (
                 <tr key={idx} >
+                  <td className="text-center">{item["run_count"]}</td>
                   <td className="upper-case-first">{item["action"]}</td> 
-                  <td className="text-center">{item["step_index"] !== null ? item["step_index"] + 1 : ""}</td> 
+                  {/* <td className="text-center">{item["step_index"] !== null ? item["step_index"] + 1 : ""}</td>  */}
                   <td>{item["step_name"]}</td>                  
                   <td className="upper-case-first">{item["tool_identifier"]}</td>
-                  <td className="text-center">{item["build_number"]}</td>
+                  
                   <td className="upper-case-first">{item["status"] ? item["status"] : "unknown"}</td>
                   <td>{item["message"] ? item["message"] : ""} 
                     <FontAwesomeIcon icon={faSearchPlus}
