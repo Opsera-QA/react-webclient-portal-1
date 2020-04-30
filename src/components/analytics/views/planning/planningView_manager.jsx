@@ -23,12 +23,13 @@ function PlanningView_Manager ({ persona }) {
   const [error, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
   const [countBlockData, setCountBlockData] = useState([]);
+  const [data, setData] = useState([]);
   
   useEffect(() => {    
     const controller = new AbortController();
     const runEffect = async () => {
       try {
-        //await fetchData();
+        await fetchData();
         
       } catch (err) {
         if (err.name === "AbortError") {
@@ -49,11 +50,27 @@ function PlanningView_Manager ({ persona }) {
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
     const apiUrl = "/analytics/data";   
-    const postBody = {}; //wire up filter here for counts metrics only!
+    const postBody = {
+      "data": [
+        {
+          "request": "gitlabIssueOpen",
+          "metric": "count"
+        },
+        {
+          "request": "gitlabIssueClose",
+          "metric": "count"
+        },
+        {
+          "request": "gitlabIssueDifference",
+          "metric": "difference"
+        }
+      ]
+    };
     
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);     
-      let dataObject = res && res.data ? res.data.data[0] : [];      
+      let dataObject = res && res.data ? res.data.data[0] : [];
+      setData(dataObject);
       const countsData = buildSummaryCounts(dataObject);
       setCountBlockData(countsData);
       setLoading(false);
@@ -64,24 +81,22 @@ function PlanningView_Manager ({ persona }) {
     }
   }
 
+
   //wire up JUSt for counts block at top.  Data below is sample
   const buildSummaryCounts = (data) => {
-    const { twistlockHighVulnerabilities, twistlockMidVulnerabilities, twistlockLowVulnerabilities, sonarBugs } = data;
+    const { gitlabIssueOpen, gitlabIssueClose, gitlabIssueDifference } = data;
 
     let summaryCountsData = [];    
 
-    if (twistlockHighVulnerabilities.status === 200 && twistlockHighVulnerabilities.data !== undefined) {
-      summaryCountsData.push({ name: "High Vulnerabilities", value: twistlockHighVulnerabilities.data[0].count, footer: twistlockHighVulnerabilities.tool, status: twistlockHighVulnerabilities.data[0].count > 0 ? "danger" : "success" });
+    if (gitlabIssueOpen.status === 200 && gitlabIssueOpen.data !== undefined) {
+      summaryCountsData.push({ name: "Total Issues Created", value: gitlabIssueOpen.data[0].count, footer: "Gitlab", status: gitlabIssueOpen.data[0].count > 0 ? "danger" : "success" });
     }
-    if (twistlockMidVulnerabilities.status === 200 && twistlockMidVulnerabilities.data !== undefined) {
-      summaryCountsData.push({ name: "Medium Vulnerabilities", value: twistlockMidVulnerabilities.data[0].count, footer: twistlockMidVulnerabilities.tool, status: twistlockMidVulnerabilities.data[0].count > 0 ? "warning" : "success" });
+    if (gitlabIssueClose.status === 200 && gitlabIssueClose.data !== undefined) {
+      summaryCountsData.push({ name: "Issues Resolved", value: gitlabIssueClose.data[0].count, footer: "Gitlab", status : "success" });
     }
-    if (twistlockLowVulnerabilities.status === 200 && twistlockLowVulnerabilities.data !== undefined) {
-      summaryCountsData.push({ name: "Low Vulnerabilities", value: twistlockLowVulnerabilities.data[0].count, footer: twistlockLowVulnerabilities.tool, status: twistlockLowVulnerabilities.data[0].count > 5 ? "warning" : "success" });
+    if (gitlabIssueDifference.status === 200 && gitlabIssueDifference.data !== undefined) {
+      summaryCountsData.push({ name: "Average Resolution Time", value: gitlabIssueDifference.data[0].difference + " hrs", footer: "Gitlab", status: gitlabIssueDifference.data[0].difference > 5 ? "warning" : "success" });
     }
-    if (sonarBugs.status === 200 && sonarBugs.data !== undefined) {
-      summaryCountsData.push({ name: "Detected Bugs", value: sonarBugs.data[0], footer: sonarBugs.tool, status: twistlockLowVulnerabilities.data[0].count > 5 ? "warning" : "success" });
-    }   
     
     return summaryCountsData;
   };
