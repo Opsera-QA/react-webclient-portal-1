@@ -3,9 +3,9 @@ export default {
     "orient": "bottom",
     "tickSize": 5,
     "tickPadding": 5,
-    "tickRotation": 0,
+    "tickRotation": -20,
     "legend": "Timestamp",
-    "legendOffset": 36,
+    "legendOffset": 46,
     "legendPosition": "middle"
   },
   axisLeft: {
