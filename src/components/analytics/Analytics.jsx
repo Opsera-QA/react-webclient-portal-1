@@ -16,6 +16,11 @@ import JiraIssuesCreatedByDateLineChart from "./charts/jiraIssuesCreatedByDateLi
 import DeploymentsStackedBarChart from "./charts/DeploymentsStackedBarChart";
 import CircleChart from "./charts/CircleChart";
 import JiraHealthBySprintBarChart from "./charts/jiraHealthBySprintBarChart";
+import JMeterHitsLineChart from "./charts/jmeterHitsLineChart";
+import JMeterErrorsLineChart from "./charts/jmeterErrorsLineChart";
+import JMeterThroughputLineChart from "./charts/jmeterThroughputLineChart";
+import JMeterResponseTimeLineChart from "./charts/jmeterResponseTimeLineChart";
+import JMeterResultsTable from "./metrics/jmeterResultsTable";
 
 
 function Analytics() {
@@ -188,6 +193,20 @@ function ChartView({ selection, persona }) {
           <div className="m-2">
             <CodeCoverageMetricsView />
           </div>
+          <div className="align-self-stretch p-2 w-100">
+            <JMeterHitsLineChart persona={persona} />
+          </div>
+          <div className="align-self-stretch p-2 w-100">
+            <JMeterErrorsLineChart persona={persona} />
+          </div>
+          <div className="align-self-stretch p-2 w-100">
+            <JMeterThroughputLineChart persona={persona} />
+          </div>
+          <div className="align-self-stretch p-2 w-100">
+            <JMeterResponseTimeLineChart persona={persona} />
+          </div>
+
+          <JMeterResultsTable />
         </>);
 
     case "service_operation":
