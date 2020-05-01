@@ -75,13 +75,23 @@ function TestView_Developer ({ persona }) {
         {
           "request": "xunitWarning",
           "metric": "sum"
+        },
+        {
+          "request": "junitPassed",
+          "metric": "count"
+        },
+        {
+          "request": "junitFailed",
+          "metric": "count"
+        },
+        {
+          "request": "junitSkipped",
+          "metric": "count"
         }
-        
       ]
     };
-    
     try {
-      const res = await axiosApiService(accessToken).post(apiUrl, postBody);     
+      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res && res.data ? res.data.data[0] : [];
       setData(dataObject);
       const countsData = buildSummaryCounts(dataObject);
@@ -96,15 +106,15 @@ function TestView_Developer ({ persona }) {
 
   
   const buildSummaryCounts = (data) => {
-    const { xunitExecuted, xunitSkipped, xunitPassed, xunitFailed, xunitError, xunitWarning } = data;
+    const { xunitExecuted, xunitSkipped, xunitPassed, xunitFailed, xunitError, xunitWarning, junitPassed, junitFailed, junitSkipped  } = data;
     
     let summaryCountsData = [];    
     
     if (xunitExecuted.status === 200 && xunitExecuted.data !== undefined) {
       summaryCountsData.push({ name: "Tests Run", value: xunitExecuted.data[0], footer: xunitExecuted.tool, status: "success" });
     }
-    if (xunitPassed.status === 200 && xunitPassed.data !== undefined) {
-      summaryCountsData.push({ name: "Pass Percentage", value: xunitPassed.data[0] + "%", footer: xunitPassed.tool, status: "success" });
+    if (xunitPassed.status === 200 && xunitPassed.data !== undefined && xunitExecuted.status === 200 && xunitExecuted.data !== undefined) {
+      summaryCountsData.push({ name: "Pass Percentage", value: 100*xunitPassed.data[0]/xunitExecuted.data[0] + "%", footer: xunitPassed.tool, status: "success" });
     }
     if (xunitFailed.status === 200 && xunitFailed.data !== undefined) {
       summaryCountsData.push({ name: "Failed", value: xunitFailed.data[0], footer: xunitFailed.tool, status: xunitFailed.data[0].count > 0 ? "danger" : "success" });
@@ -118,7 +128,16 @@ function TestView_Developer ({ persona }) {
     if (xunitError.status === 200 && xunitError.data !== undefined) {
       summaryCountsData.push({ name: "Errors", value: xunitError.data[0], footer: xunitError.tool, status: xunitError.data[0].count > 0 ? "danger" : "success" });
     }
-    
+    if (junitPassed.status === 200 && junitPassed.data !== undefined) {
+      summaryCountsData.push({ name: "Passed", value: junitPassed.data[0].count, footer: junitPassed.tool, status:  "success" });
+    }
+    if (junitFailed.status === 200 && junitFailed.data !== undefined) {
+      summaryCountsData.push({ name: "Failed", value: junitFailed.data[0].count, footer: junitFailed.tool, status: junitFailed.data[0].count > 0 ? "danger" : "success" });
+    }
+    if (junitSkipped.status === 200 && junitSkipped.data !== undefined) {
+      summaryCountsData.push({ name: "Skipped", value: junitSkipped.data[0].count, footer: junitSkipped.tool, status: junitSkipped.data[0].count > 0 ? "warning" : "success" });
+    }
+
     return summaryCountsData;
   };
 
@@ -146,7 +165,7 @@ function TestView_Developer ({ persona }) {
           </div>
         </div>
 
-        
+
         <TestResultsTable />
       </>
     );}
