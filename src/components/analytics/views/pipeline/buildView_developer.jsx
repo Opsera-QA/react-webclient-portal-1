@@ -187,9 +187,7 @@ function BuildView_Developer ({ persona }) {
 
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
-            <div className="chart mb-3" style={{ height: "300px" }}>
-              <RecentBuildsTable persona={persona} />
-            </div>
+            <RecentBuildsTable persona={persona} />
           </div>
           <div className="align-self-stretch p-2 w-100">
             &nbsp;          

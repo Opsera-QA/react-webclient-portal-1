@@ -69,31 +69,35 @@ function RecentBuildsTable() {
       <>
         {data !== undefined && data.length > 0 ? 
           <>
-            <div className="chart-label-text">Jenkins: Recent Build Status</div>
-            <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
-              <thead>
-                <tr>
-                  <th style={{ width: "25%" }}>Project Name</th>
-                  <th style={{ width: "25%" }}>Build Number</th>
-                  <th style={{ width: "25%" }}>Completed At</th>
-                  <th style={{ width: "25%" }} className="text-center">Result</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.map(function (value, index) {
-                  let className = (value["data_result"] && value["data_result"].toLowerCase() === "success") ? "green" : "red";
-                  return <tr key = {index}>
-                    <td className={className}>{ (value["data_projectName"]) ? value["data_projectName"] : "Unknown" }</td>
-                    <td className={className}>{ (value["data_buildNum"]) ? value["data_buildNum"] : "Unknown" }</td>
-                    <td className={className}>{ (value["timestamp"]) ? <Moment format="YYYY-MM-DD, hh:mm a" date={value["timestamp"]} /> : "Unknown" }</td>
-                    <td className={"text-center " + className}>
-                      { (value["data_result"]) ? value["data_result"] : "Unknown"}
-                    </td>
-                  </tr>;
-                })
-                }
-              </tbody>
-            </Table> 
+            <div className="chart mb-3" style={{ height: "300px" }}>
+              <div className="chart-label-text">Jenkins: Recent Build Status</div>
+              <div className="px-2">
+                <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
+                  <thead>
+                    <tr>
+                      <th style={{ width: "25%" }}>Project Name</th>
+                      <th style={{ width: "25%" }}>Build Number</th>
+                      <th style={{ width: "25%" }}>Completed At</th>
+                      <th style={{ width: "25%" }} className="text-center">Result</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.map(function (value, index) {
+                      let className = (value["data_result"] && value["data_result"].toLowerCase() === "success") ? "green" : "red";
+                      return <tr key = {index}>
+                        <td className={className}>{ (value["data_projectName"]) ? value["data_projectName"] : "Unknown" }</td>
+                        <td className={className}>{ (value["data_buildNum"]) ? value["data_buildNum"] : "Unknown" }</td>
+                        <td className={className}>{ (value["timestamp"]) ? <Moment format="YYYY-MM-DD, hh:mm a" date={value["timestamp"]} /> : "Unknown" }</td>
+                        <td className={"text-center upper-case-first " + className}>
+                          { (value["data_result"]) ? value["data_result"].toLowerCase() : "Failed"}
+                        </td>
+                      </tr>;
+                    })
+                    }
+                  </tbody>
+                </Table>
+              </div>
+            </div>
           </>
           : null }
       </>
