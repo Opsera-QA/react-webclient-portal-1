@@ -199,7 +199,7 @@ const PipelineWorkflowDetail = (props) => {
       setErrors(response.error);
     } else {
       setWorkflowStatus("running");
-      //subscribeToTimer();
+      subscribeToTimer();
     }   
   }
 

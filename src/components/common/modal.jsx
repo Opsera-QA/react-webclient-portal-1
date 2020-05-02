@@ -35,7 +35,7 @@ function CustomModalDialog({ header, message, button, size, handleConfirmModal, 
           {
             displayJson ? 
               <>  
-                <ReactJson src={jsonMessage} />               
+                <ReactJson src={jsonMessage} displayDataTypes={false} />               
               </> : 
               <div style={{ overflowWrap: "break-word" }}>{message}</div>
           }
