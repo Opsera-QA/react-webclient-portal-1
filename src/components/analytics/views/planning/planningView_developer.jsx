@@ -12,6 +12,7 @@ import JiraIssuesByPriorityBarChart from "../../charts/jiraIssuesByPriorityBarCh
 import JiraHealthBySprintBarChart from "../../charts/jiraHealthBySprintBarChart";
 import JiraBurndownLineChart from "../../charts/jiraBurndownLineChart";
 import JiraVelocityBarChart from "../../charts/jiraVelocityBarChart";
+import JiraIssuesAssignedToMe from "../../metrics/jiraIssuesAssignedToMe";
 
 
 
@@ -134,7 +135,7 @@ function PlanningView_Developer ({ persona }) {
             <JiraVelocityBarChart persona={persona} />
           </div>
           <div className="align-self-stretch p-2 w-100">
-            {/* Self Contained Chart Component 6 */}
+            <JiraIssuesAssignedToMe />
           </div>
         </div>
       </>
