@@ -22,14 +22,12 @@ function PipelineDetail({ id }) {
   const [role, setRole] = useState("");
   const [stepStatus, setStepStatus] = useState({});
   const [loading, setLoading] = useState(false);
-  const [reload, setReload] = useState(true);
-  
+    
   useEffect(() => {    
     const controller = new AbortController();
     const runEffect = async () => {
       try {
-        await fetchData();
-        setReload(false);
+        await fetchData();        
       } catch (err) {
         if (err.name === "AbortError") {
           console.log("Request was canceled via controller.abort");
@@ -43,7 +41,7 @@ function PipelineDetail({ id }) {
     return () => {
       controller.abort();
     };
-  }, [reload]);
+  }, []);
 
 
 

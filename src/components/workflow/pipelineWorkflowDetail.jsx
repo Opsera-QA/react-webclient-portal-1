@@ -247,6 +247,7 @@ const PipelineWorkflowDetail = (props) => {
     if (tool) {
       const activityData = await fetchPipelineActivityByTool(pipelineId, tool, stepId);
       if (activityData && activityData.data) {
+        setModalHeader("Step Activity Log");
         setModalMessage(activityData.data);
         setShowModal(true);
       }    
