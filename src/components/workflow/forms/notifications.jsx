@@ -23,7 +23,7 @@ function StepNotificationConfiguration( { data, editItem, parentCallback }) {
   useEffect(() => {
     let stepIndex = getStepIndex(editItem.step_id);
     if (plan[stepIndex].notification[0] !== undefined) {
-      setFormData(plan[stepIndex].notification);
+      setFormData(plan[stepIndex].notification[0]);
     } else {
       setFormData(INITIAL_DATA);
     }
@@ -48,13 +48,11 @@ function StepNotificationConfiguration( { data, editItem, parentCallback }) {
     }
   };
 
-
   const getStepIndex = (step_id) => {
     let stepArrayIndex = plan.findIndex(x => x._id === step_id); 
     console.log(plan[stepArrayIndex]);
     return stepArrayIndex;
   };
-
 
   const validateRequiredFields = () => {
     console.log("formData ", formData);
@@ -72,7 +70,7 @@ function StepNotificationConfiguration( { data, editItem, parentCallback }) {
     <Form>
       <h6 className="upper-case-first">{typeof(stepName) !== "undefined" ? stepName + ": " : null}
         {typeof(stepTool) !== "undefined" ? stepTool.tool_identifier : null}</h6>
-      <div className="text-muted mt-1 mb-3">Each step in the workflow can be configured with notification triggers upon completion. For more help on notification configurations is available <Link to="/tools">here</Link>.</div>
+      <div className="text-muted mt-1 mb-3">Each step in the workflow can be configured with notification triggers upon completion. More help on notification configurations is available <Link to="/tools">here</Link>.</div>
 
       { formMessage.length > 0 ? <p className="text-danger">{formMessage}</p> : null}
       
