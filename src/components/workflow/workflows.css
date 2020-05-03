@@ -1,5 +1,9 @@
 /* Custom CSS for workflows here */
 
+.workflow-view {
+  min-height: 85vh;
+}
+
 .workflow-container {
   background-color: #f4f5f78a;
   border: 1px solid #f4f5f7ce;
@@ -34,7 +38,7 @@
   border-top: 1px solid rgba(0,0,0,.125);
   border-left: 1px solid rgba(0,0,0,.125);
   border-top-left-radius: .25rem;
-  
+  min-height: 85vh;
 }
 
 .workflow-step-failure {

@@ -47,19 +47,7 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, par
 
   const handleEditClick = (type, name, itemId) => {
     parentCallback({ type: type, tool_name: name, step_id: itemId });
-  };
-
-  const handleNotificationClick = (stepId, tool) => {
-    console.log("Configure Notification for Step: ", stepId);
-    console.log("Tool: ", tool);
-  };
-
-  const handleApprovalClick = (stepId, tool) => {
-    console.log("Configure Approval for Step: ", stepId);
-    console.log("Tool: ", tool);
-  };
-
-  
+  };  
 
   return (
     <>
@@ -116,7 +104,7 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, par
               <FontAwesomeIcon icon={faClipboardCheck}
                 style={{ cursor: "pointer" }}
                 className="text-muted mx-1" fixedWidth
-                onClick={() => { handleApprovalClick(item._id, item.tool.tool_identifier); }} />
+                onClick={() => { handleEditClick("approval", item.tool.tool_identifier, item._id); }} />
             </OverlayTrigger>
 
             <OverlayTrigger
@@ -126,7 +114,7 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, par
               <FontAwesomeIcon icon={faEnvelope}
                 style={{ cursor: "pointer" }}
                 className="text-muted mx-1" fixedWidth
-                onClick={() => { handleNotificationClick(item._id, item.tool.tool_identifier); }} />
+                onClick={() => { handleEditClick("notification", item.tool.tool_identifier, item._id); }} />
             </OverlayTrigger>
 
             <OverlayTrigger

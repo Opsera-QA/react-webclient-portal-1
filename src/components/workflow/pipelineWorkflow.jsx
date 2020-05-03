@@ -92,7 +92,7 @@ function PipelineWorkflow({ id }) {
       <>
         {loading ? <LoadingDialog size="lg" /> : null }
           
-        <div className="mt-3">
+        <div className="mt-3 workflow-view">
           {typeof(data) !== "undefined" ?
             <Row>
               <Col>

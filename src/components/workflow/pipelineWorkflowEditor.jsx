@@ -8,6 +8,7 @@ import { Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import SourceRepositoryConfig from "./forms/sourceRepository";
+import StepNotificationConfig from "./forms/notifications";
 import StepToolConfiguration from "./forms/stepToolConfiguration";
  
 
@@ -51,33 +52,72 @@ const PipelineWorkflowEditor = ({ editItem, data, parentCallback }) => {
 
   if (error) {
     return (<ErrorDialog error={error} />);
+  } else if (loading) {
+    return (<LoadingDialog size="sm" />);
   } else {
-    return (
-      <>
-        {loading ? <LoadingDialog size="sm" /> :
-          <>
-            <Row className="mb-2">
-              <Col sm={10}><h5>
-                {editItem.type === "source" ? "Source Repository Configuration" : "Tool Configuration"}</h5></Col>
-              <Col sm={2} className="text-right">
-                <FontAwesomeIcon 
-                  icon={faTimes} 
-                  className="mr-1"
-                  style={{ cursor:"pointer" }}
-                  onClick={() => { handleCloseClick(); }} />
-              </Col>
-            </Row>
-            
-            {editItem.type === "source" ? 
-              <SourceRepositoryConfig data={data} parentCallback={callbackFunctionSource} /> : 
-              // <ToolConfigurationSelect data={data} editItem={editItem} parentCallback={callbackFunctionTools} /> 
-              <StepToolConfiguration data={data} editItem={editItem} parentCallback={callbackFunctionTools} /> } 
- 
-          </>}
-      </>
-    );
+    
+    switch (editItem.type) {
+    case "source": 
+      return (
+        <>
+          <Row className="mb-2">
+            <Col sm={10}><h5>Source Repository Configuration</h5></Col>
+            <Col sm={2} className="text-right">
+              <FontAwesomeIcon 
+                icon={faTimes} 
+                className="mr-1"
+                style={{ cursor:"pointer" }}
+                onClick={() => { handleCloseClick(); }} />
+            </Col>
+          </Row>
+          <SourceRepositoryConfig data={data} parentCallback={callbackFunctionSource} />          
+        </>
+      );
+
+    case "notification":
+      return (
+        <>
+          <Row className="mb-2">
+            <Col sm={10}><h5>Step Completion Notification</h5></Col>
+            <Col sm={2} className="text-right">
+              <FontAwesomeIcon 
+                icon={faTimes} 
+                className="mr-1"
+                style={{ cursor:"pointer" }}
+                onClick={() => { handleCloseClick(); }} />
+            </Col>
+          </Row>
+          <StepNotificationConfig data={data} editItem={editItem} parentCallback={callbackFunctionTools} />          
+        </>
+      );
+
+    case "approval":
+      return (
+        <>
+          coming soon
+        </>
+      );
+
+    default: 
+      return (
+        <>
+          <Row className="mb-2">
+            <Col sm={10}><h5>Tool Configuration</h5></Col>
+            <Col sm={2} className="text-right">
+              <FontAwesomeIcon 
+                icon={faTimes} 
+                className="mr-1"
+                style={{ cursor:"pointer" }}
+                onClick={() => { handleCloseClick(); }} />
+            </Col>
+          </Row>            
+          <StepToolConfiguration data={data} editItem={editItem} parentCallback={callbackFunctionTools} /> 
+        </>
+      );
+    }
   }
 };
+
 
 
 PipelineWorkflowEditor.propTypes = {
