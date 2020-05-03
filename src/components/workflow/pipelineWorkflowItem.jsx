@@ -1,27 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import PropTypes from "prop-types";
-import { axiosApiService } from "../../api/apiService";
-import { AuthContext } from "../../contexts/AuthContext"; 
-import { Row, Col } from "react-bootstrap";
-import ErrorDialog from "../common/error";
+import { Row, Col, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faCog, faArchive, faCircleNotch, faChevronDown, faSpinner, faCheck } from "@fortawesome/free-solid-svg-icons";
-import { Draggable } from "react-beautiful-dnd";
+import { faSearchPlus, faCog, faArchive, faCircleNotch, faSpinner, faCheck, faEnvelope, faClipboardCheck } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../common/modal";
 import Moment from "react-moment";
 import "./workflows.css";
 
-const grid = 8;
-const QuoteItem = styled.div`
-max-width: 450px;
-background-color: #fff;
-color: #334152;
-border: 1px solid rgba(0,0,0,.125);
-border-radius: .25rem;
-margin-bottom: ${grid}px;
-padding: ${grid}px;
-`;
 
 const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, parentHandleViewSourceActivityLog }) => {
   const [showModal, setShowModal] = useState(false);
@@ -63,95 +49,98 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, par
     parentCallback({ type: type, tool_name: name, step_id: itemId });
   };
 
-  const setStepStatusStyle = (last_step, item_id) => {
-    let success = "#28a74533"; //green
-    let running = "#ffc1077a"; //yellow
-    let failed = "#dc354552"; //red
-    let inactive = "#fff"; //white
-
-    //is this step in either the last_step.succcess, failed or running object?
-    if (typeof(last_step) !== "undefined") {
-      if(typeof(last_step.success) !== "undefined" && last_step.success.step_id === item_id) {
-        return success;
-      }
-      else if(typeof(last_step.running) !== "undefined" && last_step.running.step_id === item_id) {
-        return running;
-      }
-      else if(typeof(last_step.failed) !== "undefined" && last_step.failed.step_id === item_id) {
-        return failed;
-      } else {
-        return inactive;
-      }
-    }
-
-  }; 
-
-  const ItemStyle = {
-    backgroundColor: setStepStatusStyle(lastStep, item._id) 
+  const handleNotificationClick = (stepId, tool) => {
+    console.log("Configure Notification for Step: ", stepId);
+    console.log("Tool: ", tool);
   };
+
+  const handleApprovalClick = (stepId, tool) => {
+    console.log("Configure Approval for Step: ", stepId);
+    console.log("Tool: ", tool);
+  };
+
+  
 
   return (
     <>
-      <Draggable draggableId={item._id} index={index} > 
-        {provided => (
-          <QuoteItem
-            ref={provided.innerRef}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-            style={ItemStyle}
-          >
-          
-            <Row>
-              <Col><span className="text-muted">Step:</span> {item.name}</Col>
-              <Col className="text-right" style={{ fontSize:"small" }}>
-                {itemState === "completed" ? <FontAwesomeIcon icon={faCheck} className="text-muted mr-2" /> : null }
-                {itemState === "running" ? <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-2" /> : null }                  
-                {nextStep !== undefined && nextStep._id === item._id ? <FontAwesomeIcon icon={faCircleNotch} className="text-muted mr-2" /> : null }                  
-              </Col>
-            </Row>
-            <Row>
-              <Col className="upper-case-first"><span className="text-muted">Tool:</span> {item.tool.tool_identifier}</Col>
-            </Row>
+      <div>
+        <Row>
+          <Col><span className="text-muted">Step:</span> {item.name}</Col>
+          <Col className="text-right" style={{ fontSize:"small" }}>
+            {itemState === "completed" ? <FontAwesomeIcon icon={faCheck} className="text-muted mr-2" /> : null }
+            {itemState === "running" ? <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-2" /> : null }                  
+            {nextStep !== undefined && nextStep._id === item._id ? <FontAwesomeIcon icon={faCircleNotch} className="text-muted mr-2" /> : null }                  
+          </Col>
+        </Row>
+        <Row>
+          <Col className="upper-case-first"><span className="text-muted">Tool:</span> {item.tool.tool_identifier}</Col>
+        </Row>
          
-            { typeof(currentStatus) !== "undefined" && currentStatus.step_id === item._id ? 
-              <>
-                <Row>
-                  <Col><span className="text-muted pr-1">Status:</span> 
-                    <span className="upper-case-first pr-1">{currentStatus.status}</span>
+        { typeof(currentStatus) !== "undefined" && currentStatus.step_id === item._id ? 
+          <>
+            <Row>
+              <Col><span className="text-muted pr-1">Status:</span> 
+                <span className="upper-case-first pr-1">{currentStatus.status}</span>
                    on <Moment format="YYYY-MM-DD, hh:mm a" date={currentStatus.updatedAt} />                                   
-                  </Col>
-                </Row>
-             
-              </> : null}
-            <Row className="mt-1">
-              <Col className="text-muted small">ID: {item._id}</Col>
-              <Col className="text-right pt-1">
-                <FontAwesomeIcon icon={faSearchPlus} //settings!
-                  className="text-muted mr-2"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => { handleViewClick(item, "Step Settings"); }} />
-
-                <FontAwesomeIcon icon={faArchive}
-                  className="text-muted mr-2"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => { parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id); }} />
-
-                <FontAwesomeIcon icon={faCog}
-                  style={{ cursor: "pointer" }}
-                  className="text-muted mr-2"
-                  onClick={() => { handleEditClick("tool", item.tool.tool_identifier, item._id); }} />
-               
               </Col>
             </Row>
-          
-          
-          </QuoteItem>
-        )}
-      </Draggable>
-    
+             
+          </> : null}
+        <Row className="mt-1">
+          <Col className="text-muted small">ID: {item._id}</Col>
+          <Col className="text-right pt-1 workflow-action-icons">
+            <OverlayTrigger
+              placement="top"
+              delay={{ show: 250, hide: 400 }}
+              overlay={renderTooltip({ message: "View Settings" })} >
+              <FontAwesomeIcon icon={faSearchPlus} //settings!
+                className="text-muted mx-1" fixedWidth
+                style={{ cursor: "pointer" }}
+                onClick={() => { handleViewClick(item, "Step Settings"); }} />
+            </OverlayTrigger>
 
-      <div className="text-center py-1">
-        <FontAwesomeIcon icon={faChevronDown} size="lg" className="nav-blue"/>            
+            <OverlayTrigger
+              placement="top"
+              delay={{ show: 250, hide: 400 }}
+              overlay={renderTooltip({ message: "View Step Activity Logs" })} >
+              <FontAwesomeIcon icon={faArchive}
+                className="text-muted mx-1" fixedWidth
+                style={{ cursor: "pointer" }}
+                onClick={() => { parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id); }} />
+            </OverlayTrigger>
+
+            <OverlayTrigger
+              placement="top"
+              delay={{ show: 250, hide: 400 }}
+              overlay={renderTooltip({ message: "Configure Step Approval" })} >
+              <FontAwesomeIcon icon={faClipboardCheck}
+                style={{ cursor: "pointer" }}
+                className="text-muted mx-1" fixedWidth
+                onClick={() => { handleApprovalClick(item._id, item.tool.tool_identifier); }} />
+            </OverlayTrigger>
+
+            <OverlayTrigger
+              placement="top"
+              delay={{ show: 250, hide: 400 }}
+              overlay={renderTooltip({ message: "Configure Step Notification Rules" })} >
+              <FontAwesomeIcon icon={faEnvelope}
+                style={{ cursor: "pointer" }}
+                className="text-muted mx-1" fixedWidth
+                onClick={() => { handleNotificationClick(item._id, item.tool.tool_identifier); }} />
+            </OverlayTrigger>
+
+            <OverlayTrigger
+              placement="top"
+              delay={{ show: 250, hide: 400 }}
+              overlay={renderTooltip({ message: "Configure Step Settings" })} >
+              <FontAwesomeIcon icon={faCog}
+                style={{ cursor: "pointer" }}
+                className="text-muted mx-1" fixedWidth
+                onClick={() => { handleEditClick("tool", item.tool.tool_identifier, item._id); }} />
+            </OverlayTrigger>
+          </Col>
+        </Row>
+     
       </div>
 
       {showModal ? <Modal header={modalHeader}
@@ -166,6 +155,15 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, par
 };
 
 
+function renderTooltip(props) {
+  const { message } = props;
+  return (
+    <Tooltip id="button-tooltip" {...props}>
+      {message}
+    </Tooltip>
+  );
+}
+
 PipelineWorkflowItem.propTypes = {
   item: PropTypes.object,
   index: PropTypes.number,
@@ -173,7 +171,8 @@ PipelineWorkflowItem.propTypes = {
   nextStep: PropTypes.object,
   pipelineId: PropTypes.string,
   parentCallback: PropTypes.func,
-  handleViewSourceActivityLog: PropTypes.func
+  handleViewSourceActivityLog: PropTypes.func,
+  parentHandleViewSourceActivityLog: PropTypes.func
 };
 
 export default PipelineWorkflowItem;

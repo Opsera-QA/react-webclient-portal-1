@@ -4,23 +4,15 @@ import _ from "lodash";
 import { axiosApiService } from "../../api/apiService";
 import { AuthContext } from "../../contexts/AuthContext"; 
 import socketIOClient from "socket.io-client";
-import { Row, Col, Button } from "react-bootstrap";
+import { SteppedLineTo } from "react-lineto";
+import { Row, Col, Button, Badge, OverlayTrigger, Tooltip } from "react-bootstrap";
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faCog, faArchive, faPlay, faChevronDown, faSync, faSpinner, faStopCircle, faHistory } from "@fortawesome/free-solid-svg-icons";
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import { faSearchPlus, faCog, faArchive, faPlay, faSync, faSpinner, faStopCircle, faHistory, faArrowAltCircleDown } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../common/modal";
 import PipelineActions from "./actions";
 import PipelineWorkflowItem from "./pipelineWorkflowItem";
 import "./workflows.css";
-
-
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-  return result;
-};
 
 const PipelineWorkflowDetail = (props) => {
   const { data, parentCallback, role } = props;
@@ -30,6 +22,7 @@ const PipelineWorkflowDetail = (props) => {
   const [state, setState] = useState({ items: [] });
   const [lastStep, setLastStep] = useState({});
   const [nextStep, setNextStep] = useState({});
+  const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [socketRunning, setSocketRunning] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
@@ -49,7 +42,7 @@ const PipelineWorkflowDetail = (props) => {
         setWorkflowStatus(status);
         if (status === "running" && !socketRunning) {
           subscribeToTimer();
-        }
+        }        
       } else {
         setWorkflowStatus(false);        
       }      
@@ -121,13 +114,15 @@ const PipelineWorkflowDetail = (props) => {
     if (last_step && last_step.hasOwnProperty("running")) {
       let runningStepId = typeof(last_step.running.step_id) !== "undefined" && last_step.running.step_id.length > 0 ? last_step.running.step_id : false;
       let stepArrayIndex = data.workflow.plan.findIndex(x => x._id.toString() === runningStepId); 
+      setCurrentStepIndex(stepArrayIndex);
       nextStep = data.workflow.plan[stepArrayIndex + 1];
-      console.log("NEXT: ", nextStep);
+     
     } else if (last_step && last_step.hasOwnProperty("success")) {
       let lastSuccessStepId = typeof(last_step.success.step_id) !== "undefined" && last_step.success.step_id.length > 0 ? last_step.success.step_id : false;
       let stepArrayIndex = data.workflow.plan.findIndex(x => x._id.toString() === lastSuccessStepId); 
+      setCurrentStepIndex(stepArrayIndex);
       nextStep = data.workflow.plan[stepArrayIndex + 1];
-      console.log("NEXT: ", nextStep);
+
     } else {
       nextStep = data.workflow.plan[0];
     }
@@ -199,7 +194,9 @@ const PipelineWorkflowDetail = (props) => {
       setErrors(response.error);
     } else {
       setWorkflowStatus("running");
-      subscribeToTimer();
+      setTimeout(function () {
+        subscribeToTimer();
+      }, 5000);      
     }   
   }
 
@@ -254,42 +251,17 @@ const PipelineWorkflowDetail = (props) => {
     }    
   };
 
-
-  //TODO: Drag/drop code NOT CURRENTLY USED
-  function onDragEnd(result) {
-    if (!result.destination) {
-      return;
-    }
-    if (result.destination.index === result.source.index) {
-      return;
-    }
-    console.log("result.source.index: ", result.source.index);
-    console.log("result.destination.index", result.destination.index);
-    console.log("result: ", result);
-    const items = reorder(
-      state.items,
-      result.source.index,
-      result.destination.index
-    );
-    //TODO: right now it's just changing the order in the array.  Need to make it update the step value.
-    setState({ items });
-  }
-
   return (
     <>      
       {error ? <ErrorDialog error={error} /> : null}
       {typeof(data.workflow) !== "undefined" && data.workflow.hasOwnProperty("source") ? 
         <>
-          <div className="workflow-container ml-4 px-3" style={{ maxWidth: "500px" }}>
-            <div className="h6 p-2 text-center">{data.name} Workflow
-              <FontAwesomeIcon icon={faSearchPlus}
-                className="mr-1 mt-1 float-right text-muted"
-                size="sm"
-                style={{ cursor: "pointer" }}
-                onClick= {() => { handleViewPipelineClick(data); }} />
-            </div>
-            <div className="py-2 mb-1 text-right">
 
+          <div className="ml-4 mb-4 w-100 max-content-module-width-50">           
+            <h5>{data.name}            
+              <Badge variant="secondary" pill className="ml-3 mb-1"> Steps: {currentStepIndex + 1} / {data.workflow ? data.workflow.plan.length : null }</Badge>
+            </h5>
+            <div className="my-3 text-right">
               {workflowStatus === "running" ? 
                 <>
                   <Button variant="outline-dark" size="sm" className="mr-2" disabled>
@@ -325,12 +297,22 @@ const PipelineWorkflowDetail = (props) => {
                 </>
               }
               <Button variant="outline-warning" size="sm" className="mr-2" onClick={() => { handleRefreshClick(data._id); }}>
-                <FontAwesomeIcon icon={faSync} className="fa-fw"/></Button>              
-              
-            </div>
+                <FontAwesomeIcon icon={faSync} className="fa-fw"/></Button>                            
+            </div>             
+          </div>
 
-            <div className="workflow-module-container workflow-module-container-width mx-auto">
-              <div>Source Code</div>
+          <div className="workflow-container ml-4 px-3 max-content-module-width-50">
+            <div className="p-2 mb-2">
+              <FontAwesomeIcon icon={faSearchPlus}
+                className="mr-1 mt-1 float-right text-muted"
+                style={{ cursor: "pointer" }}
+                onClick= {() => { handleViewPipelineClick(data); }} />
+            </div>
+            
+
+            <div className="source workflow-module-container workflow-module-container-width-sm">
+              <h6>Start of Workflow</h6>
+              {!data.workflow.source.service ? <div>Source Repository</div> : null }
               {data.workflow.source.name ? <Row>
                 <Col><span className="text-muted">Project:</span> {data.workflow.source.name}</Col>               
               </Row> : null }
@@ -345,49 +327,56 @@ const PipelineWorkflowDetail = (props) => {
               </Row> : null }
 
               <Row className="mt-1">
-                <Col className="text-muted small">Event Trigger: {data.workflow.source.trigger_active ? "Enabled": "Disabled"}</Col>
+                <Col className="text-muted small">Trigger: {data.workflow.source.trigger_active ? "Enabled": "Disabled"}</Col>
                 <Col className="text-right pt-1">
-                  <FontAwesomeIcon icon={faSearchPlus}
-                    className="text-muted mr-2"
-                    style={{ cursor: "pointer" }}
-                    onClick={() => { handleViewClick(data.workflow.source, "Step Settings"); }} />
+                  <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip({ message: "View Settings" })} >
+                    <FontAwesomeIcon icon={faSearchPlus}
+                      className="text-muted mr-2" fixedWidth
+                      style={{ cursor: "pointer" }}
+                      onClick={() => { handleViewClick(data.workflow.source, "Step Settings"); }} />
+                  </OverlayTrigger>
 
-                  <FontAwesomeIcon icon={faArchive}
-                    className="text-muted mr-2"
-                    style={{ cursor: "pointer" }}
-                    onClick={() => { handleViewSourceActivityLog(data._id, data.workflow.source.service); }} />
+                  <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip({ message: "View Source Activity Logs" })} >
+                    <FontAwesomeIcon icon={faArchive}
+                      className="text-muted mr-2" fixedWidth
+                      style={{ cursor: "pointer" }}
+                      onClick={() => { handleViewSourceActivityLog(data._id, data.workflow.source.service); }} />
+                  </OverlayTrigger>
 
-                  <FontAwesomeIcon icon={faCog}
-                    style={{ cursor: "pointer" }}
-                    className="text-muted mr-2"
-                    onClick={() => { handleSourceEditClick(); }} />                            
+                  <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip({ message: "Configure Source Repository" })} >
+                    <FontAwesomeIcon icon={faCog}
+                      style={{ cursor: "pointer" }}
+                      className="text-muted mr-2" fixedWidth
+                      onClick={() => { handleSourceEditClick(); }} />  
+                  </OverlayTrigger>                          
                  
                 </Col>
               </Row>
             </div>
-            <div className="text-center workflow-module-container-width py-1 mx-auto">
-              <FontAwesomeIcon icon={faChevronDown} size="lg" className="nav-blue"/>            
-            </div>
-            <div className="workflow-module-container-width mx-auto">
-              <DragDropContext onDragEnd={onDragEnd}>
-                <Droppable droppableId="list">
-                  {provided => (
-                    <div ref={provided.innerRef} {...provided.droppableProps}>
-                      <ItemList 
-                        items={state.items} 
-                        lastStep={lastStep} 
-                        nextStep={nextStep} 
-                        pipelineId={data._id} 
-                        parentCallback={callbackFunction} 
-                        parentHandleViewSourceActivityLog={handleViewSourceActivityLog} />
-                      {provided.placeholder}
-                    </div>
-                  )}
-                </Droppable>
-              </DragDropContext>
-            </div>
 
-            <div className="workflow-module-container workflow-module-container-width py-2 text-center mx-auto h5">
+            <div style={{ height: "40px" }}>&nbsp;</div>
+
+            <div className="step-items workflow-module-container-width mx-auto">
+              <ItemList 
+                items={state.items} 
+                lastStep={lastStep} 
+                nextStep={nextStep} 
+                pipelineId={data._id} 
+                parentCallback={callbackFunction} 
+                parentHandleViewSourceActivityLog={handleViewSourceActivityLog} />             
+            </div>
+            <SteppedLineTo from="source" to="step-items" orientation="v" borderColor="#226196" borderWidth={2} fromAnchor="bottom" toAnchor="top" />
+
+            <div className="workflow-module-container workflow-module-container-width-sm pt-2 mb-4 text-center mx-auto h6">
             End of Workflow
             </div>
           </div>
@@ -419,19 +408,55 @@ const ItemList = React.memo(function ItemList({ items, lastStep, nextStep, pipel
     parentCallback(param);
   };
 
+  const setStepStatusClass = (last_step, item_id) => {
+
+    if (typeof(last_step) !== "undefined") {
+      if(typeof(last_step.success) !== "undefined" && last_step.success.step_id === item_id) {
+        return "workflow-step-success step-"+item_id;
+      }
+      else if(typeof(last_step.running) !== "undefined" && last_step.running.step_id === item_id) {
+        return "workflow-step-running step-"+item_id;
+      }
+      else if(typeof(last_step.failed) !== "undefined" && last_step.failed.step_id === item_id) {
+        return "workflow-step-failure step-"+item_id;
+      } else {
+        return "step-"+item_id;
+      }
+    }
+  }; 
+
+
   return items.map((item, index) => (
-    <PipelineWorkflowItem 
-      item={item} 
-      index={index} 
-      key={item._id} 
-      lastStep={lastStep} 
-      pipelineId={pipelineId} 
-      nextStep={nextStep} 
-      parentCallback={callbackFunction} 
-      parentHandleViewSourceActivityLog={parentHandleViewSourceActivityLog} />
+    <div key={item._id}>
+      <div className={"workflow-module-container workflow-module-container-width mx-auto " + setStepStatusClass(lastStep, item._id)}>
+        <PipelineWorkflowItem 
+          item={item} 
+          index={index}          
+          lastStep={lastStep} 
+          pipelineId={pipelineId} 
+          nextStep={nextStep} 
+          parentCallback={callbackFunction} 
+          parentHandleViewSourceActivityLog={parentHandleViewSourceActivityLog} />
+      </div>
+      {/* <div className="text-center py-1">
+        <FontAwesomeIcon icon={faArrowAltCircleDown} size="lg" className="nav-blue"/>            
+      </div> */}
+      <div style={{ height: "30px" }} className={"step-"+ index}>&nbsp;</div>
+      
+      <SteppedLineTo from={"step-"+item._id} to={"step-"+ index} orientation="v" borderColor="#226196" borderWidth={2} fromAnchor="bottom" toAnchor="bottom" />
+
+    </div>
   ));
 });
 
+function renderTooltip(props) {
+  const { message } = props;
+  return (
+    <Tooltip id="button-tooltip" {...props}>
+      {message}
+    </Tooltip>
+  );
+}
 
 PipelineWorkflowDetail.propTypes = {
   data: PropTypes.object,
@@ -445,7 +470,7 @@ ItemList.propTypes = {
   nextStep: PropTypes.object,
   pipelineId: PropTypes.string,
   parentCallback: PropTypes.func,
-  handleViewSourceActivityLog: PropTypes.func
+  parentHandleViewSourceActivityLog: PropTypes.func
 };
 
 
