@@ -44,6 +44,13 @@ function MaintainabilityLineChart( { data, persona } ) {
             </div>
           )}
           theme={{
+            axis: {
+              ticks: {
+                text: {
+                  fontSize: "10px"
+                }
+              }
+            },
             tooltip: {
               container: {
                 fontSize: "16px",

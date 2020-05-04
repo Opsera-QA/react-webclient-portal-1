@@ -67,7 +67,8 @@ export default {
     {
       "anchor": "bottom-right",
       "direction": "column",
-      "translateY": 56,
+      "translateX": 150,
+      "translateY": 20,
       "itemWidth": 100,
       "itemHeight": 18,
       "itemTextColor": "#999",
