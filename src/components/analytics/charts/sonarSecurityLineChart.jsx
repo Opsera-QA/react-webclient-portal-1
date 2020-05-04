@@ -44,8 +44,9 @@ function SonarSecurityLineChart({persona}) {
     const postBody = {
       data: [
         {
-          request: "sonarVulnerabilities",
+          request: "sonarMeasures",
           metric: "line",
+          measure: "vulnerabilities"
 
         }
       ]
