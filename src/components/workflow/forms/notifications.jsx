@@ -27,6 +27,11 @@ const INITIAL_SLACK = {
   enabled: false
 };
 
+const INITIAL_APPROVAL = {
+  type: "approval",
+  enabled: false
+};
+
 
 function StepNotificationConfiguration( { data, editItem, parentCallback }) {
   let { plan } = data.workflow;
@@ -34,6 +39,7 @@ function StepNotificationConfiguration( { data, editItem, parentCallback }) {
   const [stepTool, setStepTool] = useState({});
   const [formDataEmail, setFormDataEmail] = useState(INITIAL_EMAIL);
   const [formDataSlack, setFormDataSlack] = useState(INITIAL_SLACK);
+  const [formDataApproval, setFormDataApproval] = useState(INITIAL_APPROVAL);
   const [formMessage, setFormMessage] = useState("");
 
   useEffect(() => {
@@ -41,6 +47,7 @@ function StepNotificationConfiguration( { data, editItem, parentCallback }) {
     if (plan[stepIndex].notification !== undefined) {
       let emailArrayIndex = plan[stepIndex].notification.findIndex(x => x.type === "email");
       let slackArrayIndex = plan[stepIndex].notification.findIndex(x => x.type === "slack");
+      let approvalArrayIndex = plan[stepIndex].notification.findIndex(x => x.type === "approval");
       if (emailArrayIndex >= 0) {
         setFormDataEmail(plan[stepIndex].notification[emailArrayIndex]);
       } else {
@@ -50,10 +57,16 @@ function StepNotificationConfiguration( { data, editItem, parentCallback }) {
         setFormDataSlack(plan[stepIndex].notification[slackArrayIndex]);
       } else {
         setFormDataSlack(INITIAL_SLACK);
-      }      
+      }  
+      if (approvalArrayIndex >= 0) {
+        setFormDataApproval(plan[stepIndex].notification[approvalArrayIndex]);
+      } else {
+        setFormDataApproval(INITIAL_APPROVAL);      
+      }    
     } else {
       setFormDataEmail(INITIAL_EMAIL);      
       setFormDataSlack(INITIAL_SLACK);
+      setFormDataApproval(INITIAL_APPROVAL);    
     }
     setStepTool(plan[stepIndex].tool);
     setStepName(plan[stepIndex].name);
@@ -63,13 +76,14 @@ function StepNotificationConfiguration( { data, editItem, parentCallback }) {
   const callbackFunction = () => {   
     if (validateRequiredFields()) {      
       let stepArrayIndex = getStepIndex(editItem.step_id); 
-      plan[stepArrayIndex].notification = [formDataEmail, formDataSlack];
+      plan[stepArrayIndex].notification = [formDataEmail, formDataSlack, formDataApproval];
       
       console.log("Does this work???", plan[stepArrayIndex].notification);
       
       //parentCallback(plan);
       //setFormDataEmail(INITIAL_EMAIL);      
       //setFormDataSlack(INITIAL_SLACK);
+      //setFormDataApproval(INITIAL_APPROVAL);
     }
   };
 
@@ -87,6 +101,12 @@ function StepNotificationConfiguration( { data, editItem, parentCallback }) {
         return false;
       }
     }
+    if (formDataApproval.enabled) {
+      if (!formDataEmail.enabled && !formDataSlack.enabled){
+        setFormMessage("Error: Cannot enable approval requirement for this step without Slack or email notification enabled!");
+        return false;
+      }
+    }
     return true;
   };
 
@@ -94,17 +114,11 @@ function StepNotificationConfiguration( { data, editItem, parentCallback }) {
     setFormDataEmail({ ...formDataEmail, event: selectedOption.value });    
   };
 
-  const handleSlackServiceChange = (selectedOption, type) => {
+  const handleSlackServiceChange = (selectedOption) => {
     setFormDataSlack({ ...formDataSlack, event: selectedOption.value });    
   };
-  
 
-  //TODO: Need to wire up switches to disable respective forms
-  //TODO: If user saves with switch turned off, clear out saved data (do it in callbackFunction)
-  //TODO: Restore validation function logic based on switch settings.  For now, just make sure if email is enabled, there is an address, add address validation
-
-
-
+   
   return (
     <Form>
       <h6 className="upper-case-first">{typeof(stepName) !== "undefined" ? stepName + ": " : null}
@@ -165,12 +179,12 @@ function StepNotificationConfiguration( { data, editItem, parentCallback }) {
       </div>
 
       <div className="my-4 pt-3">
-        <Form.Check disabled
+        <Form.Check 
           type="switch"
           id="approval-switch"
           label="Require Approval" 
-          /* checked={formDataEmail.enabled ? true : false}   
-          onChange={() => setFormDataEmail({ ...formDataEmail, enabled: !formDataEmail.enabled })}     */
+          checked={formDataApproval.enabled ? true : false}   
+          onChange={() => setFormDataApproval({ ...formDataApproval, enabled: !formDataApproval.enabled })}    
         />
         <small className="form-text text-muted mt-2">If this feature is enabled, the notifier listed above will need to approve the completion of this step before the pipeline can proceed.  WARNING: This will halt the pipeline workflow until a user responds.</small>
       </div>
