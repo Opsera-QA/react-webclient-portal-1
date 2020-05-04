@@ -91,13 +91,6 @@ const PipelineWorkflowEditor = ({ editItem, data, parentCallback }) => {
         </>
       );
 
-    case "approval":
-      return (
-        <>
-          coming soon
-        </>
-      );
-
     default: 
       return (
         <>

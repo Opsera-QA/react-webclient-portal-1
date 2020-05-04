@@ -16,13 +16,15 @@ const NOTIFICATION_OPTIONS = [
 const INITIAL_EMAIL = {
   type: "email",
   address: "",
-  event: "error"
+  event: "error",
+  enabled: false
 };
 
 const INITIAL_SLACK = {
   type: "slack",
-  channel: "",
-  event: "finished"
+  channel: "#opsera_pipeline",
+  event: "finished",
+  enabled: false
 };
 
 
@@ -36,13 +38,19 @@ function StepNotificationConfiguration( { data, editItem, parentCallback }) {
 
   useEffect(() => {
     let stepIndex = getStepIndex(editItem.step_id);
-    if (plan[stepIndex].notification[0] !== undefined) {
-
+    if (plan[stepIndex].notification !== undefined) {
       let emailArrayIndex = plan[stepIndex].notification.findIndex(x => x.type === "email");
       let slackArrayIndex = plan[stepIndex].notification.findIndex(x => x.type === "slack");
-
-      setFormDataEmail(plan[stepIndex].notification[emailArrayIndex]);
-      setFormDataSlack(plan[stepIndex].notification[slackArrayIndex]);
+      if (emailArrayIndex >= 0) {
+        setFormDataEmail(plan[stepIndex].notification[emailArrayIndex]);
+      } else {
+        setFormDataEmail(INITIAL_EMAIL);      
+      }
+      if (slackArrayIndex >= 0) {
+        setFormDataSlack(plan[stepIndex].notification[slackArrayIndex]);
+      } else {
+        setFormDataSlack(INITIAL_SLACK);
+      }      
     } else {
       setFormDataEmail(INITIAL_EMAIL);      
       setFormDataSlack(INITIAL_SLACK);
@@ -60,8 +68,8 @@ function StepNotificationConfiguration( { data, editItem, parentCallback }) {
       console.log("Does this work???", plan[stepArrayIndex].notification);
       
       //parentCallback(plan);
-      setFormDataEmail(INITIAL_EMAIL);      
-      setFormDataSlack(INITIAL_SLACK);
+      //setFormDataEmail(INITIAL_EMAIL);      
+      //setFormDataSlack(INITIAL_SLACK);
     }
   };
 
@@ -71,17 +79,15 @@ function StepNotificationConfiguration( { data, editItem, parentCallback }) {
     return stepArrayIndex;
   };
 
-  const validateRequiredFields = () => {
+  const validateRequiredFields = () => {    
+    setFormMessage("");
+    if (formDataEmail.enabled) {
+      if (formDataEmail.address.length === 0 || !emailIsValid(formDataEmail.address)) {
+        setFormMessage("Warning: Email address missing or invalid!");
+        return false;
+      }
+    }
     return true;
-    /* console.log("formData ", formData);
-    let { type, address } = formData;
-    if (type.length === 0 || address.length === 0) {
-      setFormMessage("Required Fields Missing!");
-      return false;
-    } else {
-      setFormMessage("");
-      return true;
-    } */
   };
 
   const handleEmailServiceChange = (selectedOption) => {
@@ -110,17 +116,20 @@ function StepNotificationConfiguration( { data, editItem, parentCallback }) {
         <Form.Check 
           type="switch"
           id="slack-switch"
-          label="Slack Notifications"
+          label="Slack Notifications" 
+          checked={formDataSlack.enabled ? true : false}   
+          onChange={() => setFormDataSlack({ ...formDataSlack, enabled: !formDataSlack.enabled })} 
         />
         <Form.Group controlId="repoField">
           <Form.Label>Slack Channel</Form.Label>
-          <Form.Control maxLength="50" type="text" placeholder="" value={formDataSlack.channel || ""} onChange={e => setFormDataSlack({ ...formDataSlack, channel: e.target.value })} />
+          <Form.Control maxLength="50" type="text" placeholder="" disabled value={formDataSlack.channel || ""} onChange={e => setFormDataSlack({ ...formDataSlack, channel: e.target.value })} />
         </Form.Group>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Notification Level</Form.Label>
           {formDataSlack.event !== undefined ?
             <DropdownList
-              data={NOTIFICATION_OPTIONS}
+              data={NOTIFICATION_OPTIONS} 
+              disabled={!formDataSlack.enabled} 
               valueField='id'
               textField='label'
               defaultValue={formDataSlack.event ? NOTIFICATION_OPTIONS[NOTIFICATION_OPTIONS.findIndex(x => x.value === formDataSlack.event)] : NOTIFICATION_OPTIONS[0]}
@@ -133,11 +142,13 @@ function StepNotificationConfiguration( { data, editItem, parentCallback }) {
         <Form.Check 
           type="switch"
           id="email-switch"
-          label="Email Notifications"        
+          label="Email Notifications" 
+          checked={formDataEmail.enabled ? true : false}   
+          onChange={() => setFormDataEmail({ ...formDataEmail, enabled: !formDataEmail.enabled })}    
         />
         <Form.Group controlId="branchField">
           <Form.Label>Email Address</Form.Label>
-          <Form.Control maxLength="100" type="text" placeholder="" value={formDataEmail.address || ""} onChange={e => setFormDataEmail({ ...formDataEmail, address: e.target.value })} />
+          <Form.Control maxLength="100" type="text" disabled={!formDataEmail.enabled} placeholder="" value={formDataEmail.address || ""} onChange={e => setFormDataEmail({ ...formDataEmail, address: e.target.value })} />
         </Form.Group>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Notification Level</Form.Label>
@@ -145,21 +156,40 @@ function StepNotificationConfiguration( { data, editItem, parentCallback }) {
             <DropdownList
               data={NOTIFICATION_OPTIONS}
               valueField='id'
+              disabled={!formDataEmail.enabled} 
               textField='label'
               defaultValue={formDataEmail.event ? NOTIFICATION_OPTIONS[NOTIFICATION_OPTIONS.findIndex(x => x.value === formDataEmail.event)] : NOTIFICATION_OPTIONS[0]}
               onChange={handleEmailServiceChange}             
             /> : null }
         </Form.Group>
       </div>
-      <Button variant="primary" type="button" disabled 
+
+      <div className="my-4 pt-3">
+        <Form.Check disabled
+          type="switch"
+          id="approval-switch"
+          label="Require Approval" 
+          /* checked={formDataEmail.enabled ? true : false}   
+          onChange={() => setFormDataEmail({ ...formDataEmail, enabled: !formDataEmail.enabled })}     */
+        />
+        <small className="form-text text-muted mt-2">If this feature is enabled, the notifier listed above will need to approve the completion of this step before the pipeline can proceed.  WARNING: This will halt the pipeline workflow until a user responds.</small>
+      </div>
+
+      <Button variant="primary" type="button"  
         onClick={() => { callbackFunction(); }}> 
         <FontAwesomeIcon icon={faSave} className="mr-1"/> Save
       </Button>
       
-      <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
+      {/* <small className="form-text text-muted mt-2 text-right">* Required Fields</small> */}
     </Form>
   );
 }
+
+
+const emailIsValid = (email) => {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+};
+
 
 StepNotificationConfiguration.propTypes = {
   data: PropTypes.object,

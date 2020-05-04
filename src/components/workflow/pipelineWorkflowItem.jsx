@@ -100,17 +100,7 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, par
             <OverlayTrigger
               placement="top"
               delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltip({ message: "Configure Step Approval" })} >
-              <FontAwesomeIcon icon={faClipboardCheck}
-                style={{ cursor: "pointer" }}
-                className="text-muted mx-1" fixedWidth
-                onClick={() => { handleEditClick("approval", item.tool.tool_identifier, item._id); }} />
-            </OverlayTrigger>
-
-            <OverlayTrigger
-              placement="top"
-              delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltip({ message: "Configure Step Notification Rules" })} >
+              overlay={renderTooltip({ message: "Configure Step Notification and Approval Rules" })} >
               <FontAwesomeIcon icon={faEnvelope}
                 style={{ cursor: "pointer" }}
                 className="text-muted mx-1" fixedWidth
