@@ -78,7 +78,7 @@ const PipelineWorkflowEditor = ({ editItem, data, parentCallback }) => {
       return (
         <>
           <Row className="mb-2">
-            <Col sm={10}><h5>Step Completion Notification</h5></Col>
+            <Col sm={10}><h5>Step Notification</h5></Col>
             <Col sm={2} className="text-right">
               <FontAwesomeIcon 
                 icon={faTimes} 
