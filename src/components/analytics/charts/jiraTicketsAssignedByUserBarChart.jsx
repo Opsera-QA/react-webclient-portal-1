@@ -71,7 +71,7 @@ function JiraTicketsAssignedByUserBarChart( { persona } ) {
   } else if (error) {
     return (<ErrorDialog  error={error} />);
   } else if (typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) {
-    return (<ErrorDialog  error="No Data Present in the ES!" />);
+    return (<ErrorDialog  error="No Data is available for this chart at this time." />);
   } else {    
     return (
       <>
