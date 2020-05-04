@@ -111,7 +111,7 @@ function DashboardHome() {
               <div style={{ height: "250px" }} className="max-content-module-width-50">
                 <div className="row h-100">
                   <div className="col-sm-12 my-auto">
-                    <Alert variant="info">Your Analytics configurations are incomplete.  Please review the details below in order to determine what needs to be done.</Alert>
+                    <Alert variant="warning">Your Analytics configurations are incomplete.  Please review the details below in order to determine what needs to be done.</Alert>
                     <div className="text-muted mt-4">
                       <div className="mb-3">In order to take advantage of the robust analytics dashboards offered by OpsERA, the following configurations are necessary:</div>
                       <ul className="list-group">
