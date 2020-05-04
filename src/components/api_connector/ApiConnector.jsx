@@ -46,6 +46,9 @@ class ApiConnector extends Component {
           <li className="nav-item">
             <a className={"nav-link " + (this.state.selection === "jira" ? "active" : "")} href="#" onClick={this.handleClick("jira")}>Jira</a>
           </li>
+          <li className="nav-item">
+            <a className={"nav-link " + (this.state.selection === "slack" ? "active" : "")} href="#" onClick={this.handleClick("slack")}>Slack</a>
+          </li>
           {/* <li className="nav-item">
             <a className={"nav-link " + (this.state.selection === "jenkins" ? "active" : "")} href="#" onClick={this.handleClick("jenkins")}>Jenkins</a>
           </li>
@@ -90,7 +93,7 @@ class ApiConnector extends Component {
         {this.state.selection === "splunk" && <Splunk />}
         {this.state.selection === "" &&
           <div className="mt-4 ml-1">
-            <div className="h5 mb-2">Help (coming soon!)</div>
+            <div className="h5 mb-2">Tools Assistance</div>
             OpsERA offers out of the box API connectors which allow you to to integrate your internal platforms for inclusion in pipelines and platform configurations. 
             With the release of the new Pipeline (coming soon), tool configuration will occur per step in the new workflows.  Documentation and help around the tools and 
             optional configuration information will be added here soon.
