@@ -12,6 +12,8 @@ import LoadingDialog from "../../common/loading";
 import ErrorDialog from "../../common/error";
 import config from "./jiraVelocityBarChartConfigs";
 import "./charts.css";
+import InfoDialog from "../../common/info";
+
 
 
 function JiraVelocityBarChart( { persona } ) {
@@ -72,8 +74,8 @@ function JiraVelocityBarChart( { persona } ) {
     return (<LoadingDialog size="sm" />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
-  } else if (typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) {
-    return (<ErrorDialog  error="No Data is available for this chart at this time." />);
+  // } else if (typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) {
+  //   return (<ErrorDialog  error="No Data is available for this chart at this time." />);
   } else {    
     console.log(data);
     return (
@@ -81,49 +83,55 @@ function JiraVelocityBarChart( { persona } ) {
         <div className="chart mb-3" style={{ height: "300px" }}>
 
           <div className="chart-label-text">Jira: Velocity Report</div>
-          <ResponsiveBar
-            data={data ? data.data : []}
-            keys={config.keys}
-            indexBy="key"
-            margin={config.margin}
-            padding={0.3}
-            layout={"vertical"}
-            groupMode={"grouped"}
-            colors={({ id, data }) => data[`${id}_color`]}
-            borderColor={{ theme: "background" }}
-            colorBy="id"
-            defs={config.defs}
-            fill={config.fill}
-            axisTop={null}
-            axisRight={null}
-            axisBottom={config.axisBottom}
-            axisLeft={config.axisLeft}
-            labelSkipWidth={12}
-            labelSkipHeight={12}
-            enableLabel={false}
-            borderRadius={0}
-            labelTextColor="inherit:darker(2)"
-            animate={true}
-            legends={config.legends}
-            motionStiffness={90}
-            borderWidth={2}
-            motionDamping={15}
-            tooltip={({ indexValue, value, id, data }) => (
-              <div>
-                <strong>  Sprint Name: </strong> {indexValue}<br></br>
-                <strong>  Issue State: </strong> {id}<br></br>
-                <strong>  No. of Issues: </strong> {value}<br></br>
-                <strong>  Percent Completed: </strong> {data.percent_completed}%<br></br>
-              </div>
-            )}
-            theme={{
-              tooltip: {
-                container: {
-                  fontSize: "16px",
+          {(typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) ?
+            <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
+              <InfoDialog message="No Data is available for this chart at this time." />
+            </div>
+            : 
+            <ResponsiveBar
+              data={data ? data.data : []}
+              keys={config.keys}
+              indexBy="key"
+              margin={config.margin}
+              padding={0.3}
+              layout={"vertical"}
+              groupMode={"grouped"}
+              colors={({ id, data }) => data[`${id}_color`]}
+              borderColor={{ theme: "background" }}
+              colorBy="id"
+              defs={config.defs}
+              fill={config.fill}
+              axisTop={null}
+              axisRight={null}
+              axisBottom={config.axisBottom}
+              axisLeft={config.axisLeft}
+              labelSkipWidth={12}
+              labelSkipHeight={12}
+              enableLabel={false}
+              borderRadius={0}
+              labelTextColor="inherit:darker(2)"
+              animate={true}
+              legends={config.legends}
+              motionStiffness={90}
+              borderWidth={2}
+              motionDamping={15}
+              tooltip={({ indexValue, value, id, data }) => (
+                <div>
+                  <strong>  Sprint Name: </strong> {indexValue}<br></br>
+                  <strong>  Issue State: </strong> {id}<br></br>
+                  <strong>  No. of Issues: </strong> {value}<br></br>
+                  <strong>  Percent Completed: </strong> {data.percent_completed}%<br></br>
+                </div>
+              )}
+              theme={{
+                tooltip: {
+                  container: {
+                    fontSize: "16px",
+                  },
                 },
-              },
-            }}
-          />
+              }}
+            />
+          }
         </div>
       </>
     );

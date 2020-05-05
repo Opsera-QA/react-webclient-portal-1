@@ -4,6 +4,7 @@ import { ResponsiveLine } from "@nivo/line";
 import ErrorDialog from "../../common/error";
 import config from "./sonarMaintainabilityLineChartConfigs";
 import "./charts.css";
+import InfoDialog from "../../common/info";
 
 
 function MaintainabilityLineChart( { data, persona } ) {

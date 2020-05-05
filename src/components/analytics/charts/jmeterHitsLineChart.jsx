@@ -12,6 +12,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/loading";
+import InfoDialog from "../../common/info";
+
 
 function JMeterHitsLineChart( { persona } ) {
   const contextType = useContext(AuthContext);
@@ -71,48 +73,54 @@ function JMeterHitsLineChart( { persona } ) {
     return (<LoadingDialog size="sm" />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
-  } else if (typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) {
-    return (<ErrorDialog error="No Data is available for this chart at this time." />);
+  // } else if (typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) {
+  //   return (<ErrorDialog error="No Data is available for this chart at this time." />);
   } else {
     return (
       <>
         <div className="chart mb-3" style={{ height: "300px" }}>
           <div className="chart-label-text">JMeter: Hits</div>
-          <ResponsiveLine
-            data={data ? data.data : []}
-            margin={{ top: 40, right: 110, bottom: 70, left: 100 }}
-            xScale={{ type: "point" }}
-            yScale={{ type: "linear", min: "auto", max: "auto", stacked: true, reverse: false }}
-            axisTop={null}
-            axisRight={null}
-            axisBottom={config.axisBottom}
-            axisLeft={config.axisLeft}
-            pointSize={10}
-            pointBorderWidth={8}
-            pointLabel="y"
-            pointLabelYOffset={-12}
-            useMesh={true}
-            lineWidth={3.5}
-            colors={{ scheme: "category10" }}
-            tooltip={({ point, color }) => (
-              <div style={{
-                background: "white",
-                padding: "9px 12px",
-                border: "1px solid #ccc",
-              }}>
-                <strong style={{ color }}>
+          {(typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) ?
+            <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
+              <InfoDialog message="No Data is available for this chart at this time." />
+            </div>
+            : 
+            <ResponsiveLine
+              data={data ? data.data : []}
+              margin={{ top: 40, right: 110, bottom: 70, left: 100 }}
+              xScale={{ type: "point" }}
+              yScale={{ type: "linear", min: "auto", max: "auto", stacked: true, reverse: false }}
+              axisTop={null}
+              axisRight={null}
+              axisBottom={config.axisBottom}
+              axisLeft={config.axisLeft}
+              pointSize={10}
+              pointBorderWidth={8}
+              pointLabel="y"
+              pointLabelYOffset={-12}
+              useMesh={true}
+              lineWidth={3.5}
+              colors={{ scheme: "category10" }}
+              tooltip={({ point, color }) => (
+                <div style={{
+                  background: "white",
+                  padding: "9px 12px",
+                  border: "1px solid #ccc",
+                }}>
+                  <strong style={{ color }}>
             Build ID: </strong> {point.data.x}<br></br>
-                <strong style={{ color }}>  Hits: </strong> {point.data.y}<br></br>
-              </div>
-            )}
-            theme={{
-              tooltip: {
-                container: {
-                  fontSize: "16px",
+                  <strong style={{ color }}>  Hits: </strong> {point.data.y}<br></br>
+                </div>
+              )}
+              theme={{
+                tooltip: {
+                  container: {
+                    fontSize: "16px",
+                  },
                 },
-              },
-            }}
-          />
+              }}
+            />
+          }
         </div>
       </>
     );

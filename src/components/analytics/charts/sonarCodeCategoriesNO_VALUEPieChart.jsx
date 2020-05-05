@@ -4,6 +4,8 @@ import { ResponsivePie } from "@nivo/pie";
 import ErrorDialog from "../../common/error";
 import config from "./sonarCodeCategoriesNO_VALUEPieChartConfigs";
 import "./charts.css";
+import InfoDialog from "../../common/info";
+
 
 
 function CodeCategoriesPieChart( { data, persona } ) {
