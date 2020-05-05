@@ -12,8 +12,15 @@ import "./charts.css";
 /**
  *
  * @param {sonarMeasure} param0
- * allowed sonarMeasure values
- * bugs, classes, code_smells, cognitive_complexity, comment_lines, complexity, confirmed_issues, coverage, duplicated_blocks
+ * allowed values
+ * "bugs", "classes", "code_smells", "cognitive_complexity", "comment_lines", "comment_lines_density", "complexity",
+  "confirmed_issues", "coverage", "duplicated_blocks", "duplicated_files", "duplicated_lines", "duplicated_lines_density",
+  "false_positive_issues", "files", "functions", "line_coverage", "lines", "lines_to_cover", "ncloc", "ncloc_language_distribution",
+  "open_issues", "reliability_rating", "reliability_remediation_effort", "reopened_issues", "security_rating", "security_remediation_effort",
+  "sqale_debt_ratio", "sqale_index", "sqale_rating", "statements", "uncovered_lines", "violations", "vulnerabilities",
+  "new_bugs", "new_code_smells", "new_lines_to_cover", "new_reliability_remediation_effort", "new_security_remediation_effort", "new_sqale_debt_ratio",
+  "new_technical_debt", "new_uncovered_conditions", "new_uncovered_lines", "new_violations", "new_vulnerabilities", "new_coverage",
+  "new_line_coverage", "skipped_tests", "test_errors", "test_execution_time", "test_failures", "test_success_density", "tests",
  */
 function SonarSecurityLineChart({ persona, sonarMeasure }) {
   const contextType = useContext(AuthContext);
@@ -63,7 +70,7 @@ function SonarSecurityLineChart({ persona, sonarMeasure }) {
       setLoading(false);
     }
     catch (err) {
-      console.log(err.message);
+      console.log(err);
       setLoading(false);
       setErrors(err.message);
     }
@@ -82,7 +89,7 @@ function SonarSecurityLineChart({ persona, sonarMeasure }) {
     return (
       <>
         <div className="chart mb-3" style={{ height: "300px" }}>
-          <div className="chart-label-text">Sonar: Security</div>
+          <div className="chart-label-text">Sonar: {sonarMeasure} </div>
           <ResponsiveLine
             data={data ? data.data : []}
             margin={{ top: 40, right: 110, bottom: 70, left: 100 }}
@@ -92,11 +99,10 @@ function SonarSecurityLineChart({ persona, sonarMeasure }) {
               "tickSize": 8,
               "tickPadding": 5,
               "tickRotation": 0,
-              "legend": "Sonar Measures : Vulnerability ",
+              "legend": "Sonar Measures",
               "legendPosition": "middle",
               "legendOffset": -90
             }}
-
 
             pointSize={10}
 
