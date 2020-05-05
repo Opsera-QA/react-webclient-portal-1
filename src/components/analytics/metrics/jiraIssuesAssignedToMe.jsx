@@ -64,15 +64,16 @@ function JiraIssuesAssignedToMe() {
   } else if (error) {
     return (<ErrorDialog  error={error} />);
   } else if (typeof data !== "object" || data.jiraTicketsAssignedToMe === undefined || data.jiraTicketsAssignedToMe.status !== 200) {
-    return (<InfoDialog  message="No log activity has been captured for this dashboard yet." />);
+    return (<ErrorDialog  error="No Data is available for this chart at this time." />);
   } else {
     return (
       <>
         {data !== undefined && data.jiraTicketsAssignedToMe.data.length > 0 ? 
-          <>
-            <div className="chart-label-text mt-0">Jira: Issues Assigned To Me</div>
+
+          <div className="chart mb-3 flex" style={{ height: "300px" }}>
+            <div className="chart-label-text">Jira: Issues Assigned To Me</div>
             <div className="px-2">
-              <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
+              <Table striped bordered hover className="mt-3 table-sm" style={{ fontSize:"small" }}>
                 <thead>
                   <tr>
                     <th style={{ width: "5%" }}>Ticket Number</th>
@@ -95,7 +96,7 @@ function JiraIssuesAssignedToMe() {
                 </tbody>
               </Table> 
             </div>
-          </>
+          </div>
           : null }
       </>
     );}

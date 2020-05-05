@@ -77,7 +77,7 @@ function JiraBurndownLineChart( { persona } ) {
   } else if (error) {
     return (<ErrorDialog  error={error} />);
   } else if (typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) {
-    return (<div style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}><ErrorDialog error="No Data is available for this chart at this time." /></div>);
+    return (<ErrorDialog  error="No Data is available for this chart at this time." />);
   } else {
     return (
       <>

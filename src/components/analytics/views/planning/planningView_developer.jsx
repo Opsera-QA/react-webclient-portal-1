@@ -98,8 +98,6 @@ function PlanningView_Developer ({ persona }) {
     
     return summaryCountsData;
   };
-  
-
 
   if(loading) {
     return (<LoadingDialog />);
@@ -135,7 +133,8 @@ function PlanningView_Developer ({ persona }) {
             <JiraVelocityBarChart persona={persona} />
           </div>
           <div className="align-self-stretch p-2 w-100">
-            <JiraIssuesAssignedToMe />
+ 
+            <JiraIssuesAssignedToMe persona={persona}/> 
           </div>
         </div>
       </>
