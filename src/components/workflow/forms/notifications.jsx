@@ -7,9 +7,9 @@ import { faSave } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
 
 const NOTIFICATION_OPTIONS = [
-  { value: "finished", label: "Completed", message: "You will receive notifications on this step's completion no matter what the status." },
-  { value: "error", label: "Error", message: "You will receive notifications on any errors in this step." },
-  { value: "all", label: "Watch", message: "You will receive notifications for any activity on this step." }
+  { value: "finished", label: "Step Completed", message: "You will receive notifications on this step's completion no matter what the status." },
+  { value: "error", label: "On Error", message: "You will receive notifications on any errors in this step." },
+  { value: "all", label: "All Activity", message: "You will receive notifications for any activity on this step." }
 ];
 
 const INITIAL_EMAIL = {
@@ -145,10 +145,10 @@ function StepNotificationConfiguration( { data, stepId, parentCallback }) {
           checked={formDataSlack.enabled ? true : false}   
           onChange={() => setFormDataSlack({ ...formDataSlack, enabled: !formDataSlack.enabled })} 
         />
-        <Form.Group controlId="repoField">
+        {/* <Form.Group controlId="repoField">
           <Form.Label>Slack Channel</Form.Label>
           <Form.Control maxLength="50" type="text" placeholder="" disabled value={formDataSlack.channel || ""} onChange={e => setFormDataSlack({ ...formDataSlack, channel: e.target.value })} />
-        </Form.Group>
+        </Form.Group> */}
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Notification Level</Form.Label>
           {renderForm ?
