@@ -165,7 +165,7 @@ function StepNotificationConfiguration( { data, stepId, parentCallback }) {
       
       <div className="my-4 pt-3">
         <Form.Check 
-          type="switch"
+          type="switch" disabled
           id="email-switch"
           label="Email Notifications" 
           checked={formDataEmail.enabled ? true : false}   
