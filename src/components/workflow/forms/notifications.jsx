@@ -58,8 +58,9 @@ function StepNotificationConfiguration( { data, stepId, parentCallback }) {
     };
     runEffect();
     return () => {
-      controller.abort();
       setRenderForm(false);
+      console.log("HAPPS");
+      controller.abort();      
     };
   }, [stepId]);
 
@@ -84,19 +85,16 @@ function StepNotificationConfiguration( { data, stepId, parentCallback }) {
       }    
     } 
     setStepTool(step.tool);
-    setStepName(step.name);    
+    setStepName(step.name);      
   };
+
 
 
   const callbackFunction = () => {   
     if (validateRequiredFields()) {      
       let stepArrayIndex = getStepIndex(stepId); 
       plan[stepArrayIndex].notification = [formDataEmail, formDataSlack, formDataApproval];
-      parentCallback(plan);
-      setFormDataEmail(INITIAL_EMAIL);      
-      setFormDataSlack(INITIAL_SLACK);
-      setFormDataApproval(INITIAL_APPROVAL);
-      setRenderForm(false);
+      parentCallback(plan);      
     }
   };
 

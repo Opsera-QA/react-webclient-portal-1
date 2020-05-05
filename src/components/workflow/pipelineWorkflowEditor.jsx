@@ -19,13 +19,11 @@ const PipelineWorkflowEditor = ({ editItem, data, parentCallback }) => {
   const [loading, setLoading] = useState(false);
   
   async function postData(param) {
-    setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
     const apiUrl = `/pipelines/${data._id}/update`;   
     try {
       await axiosApiService(accessToken).post(apiUrl, param);
-      setLoading(false);    
     }
     catch (err) {
       console.log(err.message);
@@ -39,6 +37,7 @@ const PipelineWorkflowEditor = ({ editItem, data, parentCallback }) => {
   };
 
   const callbackFunctionTools = async (plan) => {
+    setLoading(true);
     data.workflow.plan = plan;
     await postData(data);
     parentCallback(data);  

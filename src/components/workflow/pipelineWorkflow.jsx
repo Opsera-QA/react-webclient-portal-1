@@ -17,7 +17,7 @@ function PipelineWorkflow({ id }) {
   const [error, setErrors] = useState();
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
-  const [editItem, setEditItem] = useState();
+  const [editItem, setEditItem] = useState(false);
   const [ssoUserId, setSsoUserId] = useState("");
   const [reload, setReload] = useState(true);
   const [role, setRole] = useState("");
@@ -82,7 +82,7 @@ function PipelineWorkflow({ id }) {
   };
 
   const callbackFunctionEditor = () => {
-    setEditItem();    
+    setEditItem(false);    
   };
   
   if (error) {
@@ -98,7 +98,7 @@ function PipelineWorkflow({ id }) {
               <Col>
                 <PipelineWorkflowDetail data={data} parentCallback={callbackFunctionDetail} role={role} /></Col>
               <Col md="auto"></Col>
-              {editItem !== undefined ?
+              {editItem ?
                 <Col xs lg="4" className="workflow-editor-panel p-3">
                   <PipelineWorkflowEditor editItem={editItem} data={data} parentCallback={callbackFunctionEditor} /></Col>: null}
             </Row> : null}
