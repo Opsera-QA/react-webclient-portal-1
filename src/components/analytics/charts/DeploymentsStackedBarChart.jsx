@@ -12,6 +12,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/loading";
+import InfoDialog from "../../common/info";
+
 
 function DeploymentsStackedBarChart( { persona } ) {
   const contextType = useContext(AuthContext);
@@ -72,55 +74,61 @@ function DeploymentsStackedBarChart( { persona } ) {
     return (<LoadingDialog size="sm" />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
-  } else if (typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) {
-    return (<ErrorDialog error="No Data is available for this chart at this time." />);
+  // } else if (typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) {
+  //   return (<ErrorDialog error="No Data is available for this chart at this time." />);
   } else {
     
     return (
       <>
         <div className="chart mb-3" style={{ height: "300px" }}>
           <div className="chart-label-text">Jenkins: Deployments Graph</div>
-          <ResponsiveBar
-            data={data ? data.data : []}
-            keys={config.keys}
-            indexBy="buildTime"
-            margin={config.margin}
-            padding={0.3}
-            // layout={"horizontal"}
-            colors={{ scheme: "set2" }}
-            borderColor={{ theme: "background" }}
-            colorBy="id"
-            defs={config.defs}
-            fill={config.fill}
-            axisTop={null}
-            axisRight={null}
-            axisBottom={config.axisBottom}
-            axisLeft={config.axisLeft}
-            enableLabel={false}
-            borderRadius={0}
-            labelSkipWidth={12}
-            labelSkipHeight={12}
-            labelTextColor="inherit:darker(2)"
-            animate={true}
-            motionStiffness={90}
-            borderWidth={2}
-            motionDamping={15}
-            tooltip={({ indexValue, color, value, id, data }) => (
-              <div>
-                <strong style={{ color }}>
+          {(typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) ?
+            <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
+              <InfoDialog message="No Data is available for this chart at this time." />
+            </div>
+            : 
+            <ResponsiveBar
+              data={data ? data.data : []}
+              keys={config.keys}
+              indexBy="buildTime"
+              margin={config.margin}
+              padding={0.3}
+              // layout={"horizontal"}
+              colors={{ scheme: "set2" }}
+              borderColor={{ theme: "background" }}
+              colorBy="id"
+              defs={config.defs}
+              fill={config.fill}
+              axisTop={null}
+              axisRight={null}
+              axisBottom={config.axisBottom}
+              axisLeft={config.axisLeft}
+              enableLabel={false}
+              borderRadius={0}
+              labelSkipWidth={12}
+              labelSkipHeight={12}
+              labelTextColor="inherit:darker(2)"
+              animate={true}
+              motionStiffness={90}
+              borderWidth={2}
+              motionDamping={15}
+              tooltip={({ indexValue, color, value, id, data }) => (
+                <div>
+                  <strong style={{ color }}>
                 Build Time: </strong> {indexValue}<br></br>
-                <strong style={{ color }}> {id} Builds: </strong> {value}<br></br>
-                <strong> Failure Rate: </strong> {data.failureRate.toFixed(2)+"%"}
-              </div>
-            )}
-            theme={{
-              tooltip: {
-                container: {
-                  fontSize: "16px",
+                  <strong style={{ color }}> {id} Builds: </strong> {value}<br></br>
+                  <strong> Failure Rate: </strong> {data.failureRate.toFixed(2)+"%"}
+                </div>
+              )}
+              theme={{
+                tooltip: {
+                  container: {
+                    fontSize: "16px",
+                  },
                 },
-              },
-            }}
-          />
+              }}
+            />
+          }
         </div>
       </>
     );

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { ResponsiveScatterPlot } from "@nivo/scatterplot";
 import ErrorDialog from "../../common/error";
 import "./charts.css";
+import InfoDialog from "../../common/info";
 
 
 function SonarCodeCoverageScatterChart( { data, persona } ) {

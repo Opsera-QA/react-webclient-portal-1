@@ -4,6 +4,8 @@ import { ResponsiveBar } from "@nivo/bar";
 import ErrorDialog from "../../common/error";
 import config from "./xunitMaxMinPercBarChartConfigs";
 import "./charts.css";
+import InfoDialog from "../../common/info";
+
 
 
 function XUnitMaxMinPercBarChart( { data, persona } ) {

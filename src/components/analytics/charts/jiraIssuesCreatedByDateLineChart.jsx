@@ -8,6 +8,7 @@ import LoadingDialog from "../../common/loading";
 import ErrorDialog from "../../common/error";
 import config from "./deploymentFrequencyLineChartConfigs";
 import "./charts.css";
+import InfoDialog from "../../common/info";
 
 
 function JiraIssuesCreatedByDateLineChart( { persona } ) {
@@ -69,68 +70,74 @@ function JiraIssuesCreatedByDateLineChart( { persona } ) {
     return (<LoadingDialog size="sm" />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
-  } else if (typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) {
-    return (<ErrorDialog  error="No Data is available for this chart at this time." />);
+  // } else if (typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) {
+  //   return (<ErrorDialog  error="No Data is available for this chart at this time." />);
   } else {
     console.log(data.data);    
     return (
       <>
         <div className="chart mb-3" style={{ height: "300px" }}>
           <div className="chart-label-text">Jira: Issues Created vs. Resolved</div>
-          <ResponsiveLine
-            data={data ? data.data : []}
-            margin={{ top: 40, right: 110, bottom: 70, left: 100 }}
-            xScale={{
-              type: "time",
-              format: "%Y-%m-%d"
-            }}
-            xFormat="time:%Y-%m-%d"
-            yScale={{
-              type: "linear",
-              stacked: false,
-            }}
-            axisLeft={{
-              "tickSize": 8,
-              "tickPadding": 5,
-              "tickRotation": 0,
-              "legend": "Number of Issues",
-              "legendPosition": "middle",
-              "legendOffset": -90
-            }}
-            axisBottom={{
-              format: "%b %d",
-              tickValues: "every 2 days",
-              legend: "Date",
-              "legendPosition": "middle",
-              "legendOffset": 50
-            }}
-            pointSize={10}
-            pointBorderWidth={8}
-            pointLabel="y"
-            pointLabelYOffset={-12}
-            useMesh={true}
-            lineWidth={3.5}
-            legends={config.legends}
-            colors={d=> d.color}
-            // onClick={function(node){console.log(node.id);}}
-            tooltip={( node ) => (
-              <div style={{
-                background: "white",
-                padding: "9px 12px",
-                border: "1px solid #ccc",
-              }}>
-                <strong> Date: </strong> {node.point.data.xFormatted} <br></br>
-                <strong>  {node.point.serieId}: {node.point.data.yFormatted}  </strong>
-              </div>
-            )}
-            theme={{
-              tooltip: {
-                container: {
-                  fontSize: "16px",
+          {(typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) ?
+            <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
+              <InfoDialog message="No Data is available for this chart at this time." />
+            </div>
+            : 
+            <ResponsiveLine
+              data={data ? data.data : []}
+              margin={{ top: 40, right: 110, bottom: 70, left: 100 }}
+              xScale={{
+                type: "time",
+                format: "%Y-%m-%d"
+              }}
+              xFormat="time:%Y-%m-%d"
+              yScale={{
+                type: "linear",
+                stacked: false,
+              }}
+              axisLeft={{
+                "tickSize": 8,
+                "tickPadding": 5,
+                "tickRotation": 0,
+                "legend": "Number of Issues",
+                "legendPosition": "middle",
+                "legendOffset": -90
+              }}
+              axisBottom={{
+                format: "%b %d",
+                tickValues: "every 2 days",
+                legend: "Date",
+                "legendPosition": "middle",
+                "legendOffset": 50
+              }}
+              pointSize={10}
+              pointBorderWidth={8}
+              pointLabel="y"
+              pointLabelYOffset={-12}
+              useMesh={true}
+              lineWidth={3.5}
+              legends={config.legends}
+              colors={d=> d.color}
+              // onClick={function(node){console.log(node.id);}}
+              tooltip={( node ) => (
+                <div style={{
+                  background: "white",
+                  padding: "9px 12px",
+                  border: "1px solid #ccc",
+                }}>
+                  <strong> Date: </strong> {node.point.data.xFormatted} <br></br>
+                  <strong>  {node.point.serieId}: {node.point.data.yFormatted}  </strong>
+                </div>
+              )}
+              theme={{
+                tooltip: {
+                  container: {
+                    fontSize: "16px",
+                  },
                 },
-              },
-            }}
-          />
+              }}
+            />
+          }
         </div>
       </>
     );

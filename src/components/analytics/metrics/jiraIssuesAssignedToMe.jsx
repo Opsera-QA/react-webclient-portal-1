@@ -63,15 +63,19 @@ function JiraIssuesAssignedToMe() {
     return (<LoadingDialog size="sm" />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
-  } else if (typeof data !== "object" || data.jiraTicketsAssignedToMe === undefined || data.jiraTicketsAssignedToMe.status !== 200) {
-    return (<ErrorDialog  error="No Data is available for this chart at this time." />);
+  // } else if (typeof data !== "object" || data.jiraTicketsAssignedToMe === undefined || data.jiraTicketsAssignedToMe.status !== 200) {
+  //   return (<ErrorDialog  error="No Data is available for this chart at this time." />);
   } else {
     return (
       <>
-        {data !== undefined && data.jiraTicketsAssignedToMe.data.length > 0 ? 
 
-          <div className="chart mb-3 flex" style={{ height: "300px" }}>
-            <div className="chart-label-text">Jira: Issues Assigned To Me</div>
+        <div className="chart mb-3 flex" style={{ height: "300px" }}>
+          <div className="chart-label-text">Jira: Issues Assigned To Me</div>
+          { (typeof data !== "object" || data.jiraTicketsAssignedToMe === undefined || data.jiraTicketsAssignedToMe.status !== 200) ?
+            <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
+              <InfoDialog message="No Data is available for this chart at this time." />
+            </div>
+            :
             <div className="px-2">
               <Table striped bordered hover className="mt-3 table-sm" style={{ fontSize:"small" }}>
                 <thead>
@@ -96,8 +100,9 @@ function JiraIssuesAssignedToMe() {
                 </tbody>
               </Table> 
             </div>
-          </div>
-          : null }
+          }
+        </div>
+
       </>
     );}
 }

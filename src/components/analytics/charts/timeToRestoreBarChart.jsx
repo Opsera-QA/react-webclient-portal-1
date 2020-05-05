@@ -12,6 +12,7 @@ import ErrorDialog from "../../common/error";
 import { line } from "d3-shape";
 import config from "./timeToRestoreBarChartConfigs";
 import "./charts.css";
+import InfoDialog from "../../common/info";
 const lineColor = "rgba(200, 30, 15, 1)";
 const barColor = "#0095ff";
 
@@ -104,54 +105,60 @@ function TimeToRestoreBarChart( { token, persona } ) {
     return (<LoadingDialog size="sm" />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
-  } else if (typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200 || data.data.length === 0) {
-    return (<div style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}><ErrorDialog error="No Data is available for this chart at this time." /></div>);
+  // } else if (typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200 || data.data.length === 0) {
+  //   return (<div style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}><ErrorDialog error="No Data is available for this chart at this time." /></div>);
   } else {    
     return (
       <>
         <div className="chart mb-3" style={{ height: "300px" }}>
           <div className="chart-label-text">Time To Restore</div>
-          <ResponsiveBar
-            data={data ? data.data : []}
-            keys={config.keys}
-            indexBy="x"
-            margin={config.margin}
-            padding={0.3}
-            layout={"vertical"}
-            colors={[barColor]}
-            borderColor={{ theme: "background" }}
-            colorBy="id"
-            defs={config.defs}
-            fill={config.fill}
-            axisTop={null}
-            axisRight={null}
-            axisBottom={config.axisBottom}
-            axisLeft={config.axisLeft}
-            labelSkipWidth={12}
-            labelSkipHeight={12}
-            enableLabel={false}
-            borderRadius={5}
-            labelTextColor="inherit:darker(2)"
-            animate={true}
-            motionStiffness={90}
-            borderWidth={2}
-            layers={["grid", "axes", "bars", Line, "markers", "legends"]}
-            motionDamping={15}
-            tooltip={({ indexValue, value, data, color }) => (
-              <div>
-                <strong style={{ color }}>  Date: </strong> {indexValue}<br></br>
-                <strong style={{ color }}>  Downtime (seconds): </strong> {value} Seconds<br></br>
-                <strong style={{ color }}>  Domain: </strong> {data.domain}
-              </div>
-            )}
-            theme={{
-              tooltip: {
-                container: {
-                  fontSize: "16px",
+          {(typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200 || data.data.length === 0) ?
+            <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
+              <InfoDialog message="No Data is available for this chart at this time." />
+            </div>
+            : 
+            <ResponsiveBar
+              data={data ? data.data : []}
+              keys={config.keys}
+              indexBy="x"
+              margin={config.margin}
+              padding={0.3}
+              layout={"vertical"}
+              colors={[barColor]}
+              borderColor={{ theme: "background" }}
+              colorBy="id"
+              defs={config.defs}
+              fill={config.fill}
+              axisTop={null}
+              axisRight={null}
+              axisBottom={config.axisBottom}
+              axisLeft={config.axisLeft}
+              labelSkipWidth={12}
+              labelSkipHeight={12}
+              enableLabel={false}
+              borderRadius={5}
+              labelTextColor="inherit:darker(2)"
+              animate={true}
+              motionStiffness={90}
+              borderWidth={2}
+              layers={["grid", "axes", "bars", Line, "markers", "legends"]}
+              motionDamping={15}
+              tooltip={({ indexValue, value, data, color }) => (
+                <div>
+                  <strong style={{ color }}>  Date: </strong> {indexValue}<br></br>
+                  <strong style={{ color }}>  Downtime (seconds): </strong> {value} Seconds<br></br>
+                  <strong style={{ color }}>  Domain: </strong> {data.domain}
+                </div>
+              )}
+              theme={{
+                tooltip: {
+                  container: {
+                    fontSize: "16px",
+                  },
                 },
-              },
-            }}
-          />
+              }}
+            />
+          }
         </div>
       </>
     );
