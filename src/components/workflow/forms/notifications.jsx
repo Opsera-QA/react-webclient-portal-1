@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
 
-
 const NOTIFICATION_OPTIONS = [
   { value: "finished", label: "Completed", message: "You will receive notifications on this step's completion no matter what the status." },
   { value: "error", label: "Error", message: "You will receive notifications on any errors in this step." },
@@ -32,58 +31,72 @@ const INITIAL_APPROVAL = {
   enabled: false
 };
 
-
-function StepNotificationConfiguration( { data, editItem, parentCallback }) {
-  let { plan } = data.workflow;
+function StepNotificationConfiguration( { data, stepId, parentCallback }) {
+  const { plan } = data.workflow;
   const [stepName, setStepName] = useState();
   const [stepTool, setStepTool] = useState({});
   const [formDataEmail, setFormDataEmail] = useState(INITIAL_EMAIL);
   const [formDataSlack, setFormDataSlack] = useState(INITIAL_SLACK);
   const [formDataApproval, setFormDataApproval] = useState(INITIAL_APPROVAL);
   const [formMessage, setFormMessage] = useState("");
+  const [renderForm, setRenderForm] = useState(false);
 
-  useEffect(() => {
-    let stepIndex = getStepIndex(editItem.step_id);
-    if (plan[stepIndex].notification !== undefined) {
-      let emailArrayIndex = plan[stepIndex].notification.findIndex(x => x.type === "email");
-      let slackArrayIndex = plan[stepIndex].notification.findIndex(x => x.type === "slack");
-      let approvalArrayIndex = plan[stepIndex].notification.findIndex(x => x.type === "approval");
-      if (emailArrayIndex >= 0) {
-        setFormDataEmail(plan[stepIndex].notification[emailArrayIndex]);
-      } else {
-        setFormDataEmail(INITIAL_EMAIL);      
+
+  useEffect(() => {    
+    const controller = new AbortController();
+    const runEffect = async () => {
+      try {
+        const stepIndex = getStepIndex(stepId);
+        await loadFormData(plan[stepIndex]);        
+        setRenderForm(true);
+      } catch (err) {
+        if (err.name === "AbortError") {
+          console.log("Request was canceled via controller.abort");
+          return;
+        }        
       }
+    };
+    runEffect();
+    return () => {
+      controller.abort();
+      setRenderForm(false);
+    };
+  }, [stepId]);
+
+
+  const loadFormData = async (step) => {
+    setFormDataEmail(INITIAL_EMAIL);      
+    setFormDataSlack(INITIAL_SLACK);
+    setFormDataApproval(INITIAL_APPROVAL);   
+    
+    if (step.notification !== undefined) {
+      let emailArrayIndex = step.notification.findIndex(x => x.type === "email");
+      let slackArrayIndex = step.notification.findIndex(x => x.type === "slack");
+      let approvalArrayIndex = step.notification.findIndex(x => x.type === "approval");
+      if (emailArrayIndex >= 0) {
+        setFormDataEmail(step.notification[emailArrayIndex]);
+      } 
       if (slackArrayIndex >= 0) {
-        setFormDataSlack(plan[stepIndex].notification[slackArrayIndex]);
-      } else {
-        setFormDataSlack(INITIAL_SLACK);
+        setFormDataSlack(step.notification[slackArrayIndex]);
       }  
       if (approvalArrayIndex >= 0) {
-        setFormDataApproval(plan[stepIndex].notification[approvalArrayIndex]);
-      } else {
-        setFormDataApproval(INITIAL_APPROVAL);      
+        setFormDataApproval(step.notification[approvalArrayIndex]);
       }    
-    } else {
-      setFormDataEmail(INITIAL_EMAIL);      
-      setFormDataSlack(INITIAL_SLACK);
-      setFormDataApproval(INITIAL_APPROVAL);    
-    }
-    setStepTool(plan[stepIndex].tool);
-    setStepName(plan[stepIndex].name);
-  }, [editItem, data]);
+    } 
+    setStepTool(step.tool);
+    setStepName(step.name);    
+  };
 
 
   const callbackFunction = () => {   
     if (validateRequiredFields()) {      
-      let stepArrayIndex = getStepIndex(editItem.step_id); 
+      let stepArrayIndex = getStepIndex(stepId); 
       plan[stepArrayIndex].notification = [formDataEmail, formDataSlack, formDataApproval];
-      
-      console.log("Does this work???", plan[stepArrayIndex].notification);
-      
-      //parentCallback(plan);
-      //setFormDataEmail(INITIAL_EMAIL);      
-      //setFormDataSlack(INITIAL_SLACK);
-      //setFormDataApproval(INITIAL_APPROVAL);
+      parentCallback(plan);
+      setFormDataEmail(INITIAL_EMAIL);      
+      setFormDataSlack(INITIAL_SLACK);
+      setFormDataApproval(INITIAL_APPROVAL);
+      setRenderForm(false);
     }
   };
 
@@ -140,13 +153,13 @@ function StepNotificationConfiguration( { data, editItem, parentCallback }) {
         </Form.Group>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Notification Level</Form.Label>
-          {formDataSlack.event !== undefined ?
+          {renderForm ?
             <DropdownList
               data={NOTIFICATION_OPTIONS} 
               disabled={!formDataSlack.enabled} 
               valueField='id'
               textField='label'
-              defaultValue={formDataSlack.event ? NOTIFICATION_OPTIONS[NOTIFICATION_OPTIONS.findIndex(x => x.value === formDataSlack.event)] : NOTIFICATION_OPTIONS[0]}
+              defaultValue={NOTIFICATION_OPTIONS[NOTIFICATION_OPTIONS.findIndex(x => x.value === formDataSlack.event)]}
               onChange={handleSlackServiceChange}             
             /> : null }
         </Form.Group>
@@ -166,21 +179,21 @@ function StepNotificationConfiguration( { data, editItem, parentCallback }) {
         </Form.Group>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Notification Level</Form.Label>
-          {formDataEmail.event !== undefined ?
+          {renderForm ?
             <DropdownList
               data={NOTIFICATION_OPTIONS}
               valueField='id'
               disabled={!formDataEmail.enabled} 
               textField='label'
-              defaultValue={formDataEmail.event ? NOTIFICATION_OPTIONS[NOTIFICATION_OPTIONS.findIndex(x => x.value === formDataEmail.event)] : NOTIFICATION_OPTIONS[0]}
+              defaultValue={NOTIFICATION_OPTIONS[NOTIFICATION_OPTIONS.findIndex(x => x.value === formDataEmail.event)]}
               onChange={handleEmailServiceChange}             
             /> : null }
-        </Form.Group>
+        </Form.Group> 
       </div>
 
       <div className="my-4 pt-3">
         <Form.Check 
-          type="switch"
+          type="switch" disabled
           id="approval-switch"
           label="Require Approval" 
           checked={formDataApproval.enabled ? true : false}   
@@ -207,7 +220,7 @@ const emailIsValid = (email) => {
 
 StepNotificationConfiguration.propTypes = {
   data: PropTypes.object,
-  editItem: PropTypes.object,
+  stepId: PropTypes.string,
   parentCallback: PropTypes.func
 };
 

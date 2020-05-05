@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../contexts/AuthContext"; 
 import { axiosApiService } from "../../api/apiService";
@@ -17,7 +17,7 @@ const PipelineWorkflowEditor = ({ editItem, data, parentCallback }) => {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
   const [loading, setLoading] = useState(false);
-
+  
   async function postData(param) {
     setLoading(true);
     const { getAccessToken } = contextType;
@@ -87,7 +87,7 @@ const PipelineWorkflowEditor = ({ editItem, data, parentCallback }) => {
                 onClick={() => { handleCloseClick(); }} />
             </Col>
           </Row>
-          <StepNotificationConfig data={data} editItem={editItem} parentCallback={callbackFunctionTools} />          
+          <StepNotificationConfig data={data} stepId={editItem.step_id} parentCallback={callbackFunctionTools} />
         </>
       );
 
