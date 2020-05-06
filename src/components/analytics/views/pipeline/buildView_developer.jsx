@@ -189,9 +189,6 @@ function BuildView_Developer ({ persona }) {
           <div className="align-self-stretch p-2 w-100">
             <RecentBuildsTable persona={persona} />
           </div>
-          <div className="align-self-stretch p-2 w-100">
-            &nbsp;          
-          </div>
         </div>
 
       </>
