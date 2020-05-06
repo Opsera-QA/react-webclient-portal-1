@@ -75,20 +75,22 @@ function RecentBuildsTable() {
                 <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
                   <thead>
                     <tr>
-                      <th style={{ width: "25%" }}>Project Name</th>
-                      <th style={{ width: "25%" }}>Build Number</th>
-                      <th style={{ width: "25%" }}>Completed At</th>
-                      <th style={{ width: "25%" }} className="text-center">Result</th>
+                      <th style={{ width: "20%" }}>Project Name</th>
+                      <th style={{ width: "20%" }} className="text-center">Build Number</th>
+                      <th style={{ width: "20%" }} className="text-center">Completed At</th>
+                      <th style={{ width: "20%" }} className="text-center">Duration</th>
+                      <th style={{ width: "20%" }} className="text-center">Result</th>
                     </tr>
                   </thead>
                   <tbody>
                     {data.map(function (value, index) {
-                      let className = (value["data_result"] && value["data_result"].toLowerCase() === "success") ? "green" : "red";
+                      let className = (value["data_result"] && value["data_result"].toLowerCase() === "success") ? " green" : " red";
                       return <tr key = {index}>
                         <td className={className}>{ (value["data_projectName"]) ? value["data_projectName"] : "Unknown" }</td>
-                        <td className={className}>{ (value["data_buildNum"]) ? value["data_buildNum"] : "Unknown" }</td>
-                        <td className={className}>{ (value["timestamp"]) ? <Moment format="YYYY-MM-DD, hh:mm a" date={value["timestamp"]} /> : "Unknown" }</td>
-                        <td className={"text-center upper-case-first " + className}>
+                        <td className={"text-center" + className}>{ (value["data_buildNum"]) ? value["data_buildNum"] : "Unknown" }</td>
+                        <td className={"text-center" + className}>{ (value["timestamp"]) ? <Moment format="YYYY-MM-DD, hh:mm a" date={value["timestamp"]} /> : "Unknown" }</td>
+                        <td className={"text-center" + className}>{ (value["data_duration"]) ? value["data_duration"] : "0" } Seconds</td>
+                        <td className={"text-center upper-case-first" + className}>
                           { (value["data_result"]) ? value["data_result"].toLowerCase() : "Failed"}
                         </td>
                       </tr>;
