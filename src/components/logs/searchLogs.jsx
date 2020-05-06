@@ -375,10 +375,10 @@ const MapLogData = (props) => {
               <th style={{ width: "15%" }}>Job Name</th>
               <th style={{ width: "15%" }}>Project</th>
               <th style={{ width: "45%" }}>Entry</th>
-              <th style={{ width: "6.26%" }}>Date</th>
-              <th className="text-center" style={{ width: "6.26%" }}>Build Number</th>
-              <th className="text-center" style={{ width: "6.26%" }}>Source Host</th>
-              <th className="text-center" style={{ width: "6.26%" }}>Source</th>
+              <th style={{ width: "6.25%" }}>Date</th>
+              <th className="text-center" style={{ width: "6.25%" }}>Build Number</th>
+              <th className="text-center" style={{ width: "6.25%" }}>Source Host</th>
+              <th className="text-center" style={{ width: "6.25%" }}>Source</th>
             </tr>
           </thead>
           <tbody>
