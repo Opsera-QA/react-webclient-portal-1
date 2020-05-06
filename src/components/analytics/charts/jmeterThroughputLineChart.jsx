@@ -13,6 +13,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/loading";
 import InfoDialog from "../../common/info";
+import ModalLogs from "../../common/modalLogs";
 
 
 function JMeterThroughputLineChart( { persona } ) {
@@ -20,6 +21,7 @@ function JMeterThroughputLineChart( { persona } ) {
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {    
     const controller = new AbortController();
@@ -78,6 +80,8 @@ function JMeterThroughputLineChart( { persona } ) {
   } else {
     return (
       <>
+        <ModalLogs header="Throughput" size="lg" jsonMessage={data.data} dataType="line" show={showModal} setParentVisibility={setShowModal} />
+
         <div className="chart mb-3" style={{ height: "300px" }}>
           <div className="chart-label-text">JMeter: Throughput</div>
           {(typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) ?
@@ -87,6 +91,7 @@ function JMeterThroughputLineChart( { persona } ) {
             : 
             <ResponsiveLine
               data={data ? data.data : []}
+              onClick={() => setShowModal(true)}
               margin={{ top: 40, right: 110, bottom: 70, left: 100 }}
               xScale={{ type: "point" }}
               yScale={{ type: "linear", min: "auto", max: "auto", stacked: true, reverse: false }}

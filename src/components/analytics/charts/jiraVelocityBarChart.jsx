@@ -13,6 +13,7 @@ import ErrorDialog from "../../common/error";
 import config from "./jiraVelocityBarChartConfigs";
 import "./charts.css";
 import InfoDialog from "../../common/info";
+import ModalLogs from "../../common/modalLogs";
 
 
 
@@ -21,6 +22,7 @@ function JiraVelocityBarChart( { persona } ) {
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   
   useEffect(() => {    
     const controller = new AbortController();
@@ -80,6 +82,8 @@ function JiraVelocityBarChart( { persona } ) {
     console.log(data);
     return (
       <>
+        <ModalLogs header="Velocity Report" size="lg" jsonMessage={data.data} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
+
         <div className="chart mb-3" style={{ height: "300px" }}>
 
           <div className="chart-label-text">Jira: Velocity Report</div>
@@ -90,6 +94,7 @@ function JiraVelocityBarChart( { persona } ) {
             : 
             <ResponsiveBar
               data={data ? data.data : []}
+              onClick={() => setShowModal(true)}
               keys={config.keys}
               indexBy="key"
               margin={config.margin}

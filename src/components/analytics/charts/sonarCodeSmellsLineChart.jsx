@@ -1,23 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { ResponsiveLine } from "@nivo/line";
 import ErrorDialog from "../../common/error";
 import config from "./sonarCodeSmellsLineChartConfigs";
 import "./charts.css";
-import InfoDialog from "../../common/info";
+import ModalLogs from "../../common/modalLogs";
 
 
 function CodeSmellLineChart( { data, persona } ) {
   const { sonarCodeSmells }  =  data;
+  const [showModal, setShowModal] = useState(false);
 
   if (typeof data !== "object" || Object.keys(data).length == 0 || sonarCodeSmells.status !== 200) {
     return (<ErrorDialog error="No Data is available for this chart at this time." />);
   } else {
     return (
       <>
+        <ModalLogs header="Code Smells" size="lg" jsonMessage={sonarCodeSmells ? sonarCodeSmells.data : []} dataType="line" show={showModal} setParentVisibility={setShowModal} />
+
         <div className="chart-label-text">Sonar: Code Smells</div>
         <ResponsiveLine
           data={sonarCodeSmells ? sonarCodeSmells.data : []}
+          onClick={() => setShowModal(true)}
           margin={{ top: 50, right: 110, bottom: 65, left: 100 }}
           xScale={{ type: "point" }}
           yScale={{ type: "linear", min: "auto", max: "auto", stacked: true, reverse: false }}

@@ -9,6 +9,7 @@ import ErrorDialog from "../../common/error";
 import config from "./jiraTicketsAssignedByUserBarChartConfigs";
 import "./charts.css";
 import InfoDialog from "../../common/info";
+import ModalLogs from "../../common/modalLogs";
 
 
 
@@ -17,6 +18,7 @@ function JiraTicketsAssignedByUserBarChart( { persona } ) {
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
 
   useEffect(() => {    
@@ -77,6 +79,8 @@ function JiraTicketsAssignedByUserBarChart( { persona } ) {
   } else {    
     return (
       <>
+        <ModalLogs header="Tickets Assigned by User" size="lg" jsonMessage={data.data} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
+
         <div className="chart mb-3" style={{ height: "300px" }}>
 
           <div className="chart-label-text">Jira: Tickets Assigned by User</div>
@@ -87,6 +91,7 @@ function JiraTicketsAssignedByUserBarChart( { persona } ) {
             : 
             <ResponsiveBar
               data={data ? data.data : []}
+              onClick={() => setShowModal(true)}
               keys={config.keys}
               indexBy="user"
               margin={config.margin}

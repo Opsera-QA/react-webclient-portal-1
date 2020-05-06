@@ -13,6 +13,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/loading";
 import InfoDialog from "../../common/info";
+import ModalLogs from "../../common/modalLogs";
 
 
 function DeploymentsStackedBarChart( { persona } ) {
@@ -20,6 +21,7 @@ function DeploymentsStackedBarChart( { persona } ) {
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {    
     const controller = new AbortController();
@@ -80,6 +82,8 @@ function DeploymentsStackedBarChart( { persona } ) {
     
     return (
       <>
+        <ModalLogs header="Deployments Graph" size="lg" jsonMessage={data.data} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
+
         <div className="chart mb-3" style={{ height: "300px" }}>
           <div className="chart-label-text">Jenkins: Deployments Graph</div>
           {(typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) ?
@@ -89,6 +93,7 @@ function DeploymentsStackedBarChart( { persona } ) {
             : 
             <ResponsiveBar
               data={data ? data.data : []}
+              onClick={() => setShowModal(true)}
               keys={config.keys}
               indexBy="buildTime"
               margin={config.margin}

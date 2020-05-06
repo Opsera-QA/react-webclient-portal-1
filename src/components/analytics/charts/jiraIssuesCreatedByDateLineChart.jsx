@@ -9,6 +9,7 @@ import ErrorDialog from "../../common/error";
 import config from "./deploymentFrequencyLineChartConfigs";
 import "./charts.css";
 import InfoDialog from "../../common/info";
+import ModalLogs from "../../common/modalLogs";
 
 
 function JiraIssuesCreatedByDateLineChart( { persona } ) {
@@ -16,6 +17,7 @@ function JiraIssuesCreatedByDateLineChart( { persona } ) {
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   
   useEffect(() => {    
     const controller = new AbortController();
@@ -76,6 +78,8 @@ function JiraIssuesCreatedByDateLineChart( { persona } ) {
     console.log(data.data);    
     return (
       <>
+        <ModalLogs header="Issues Created vs. Resolved" size="lg" jsonMessage={data.data} dataType="line" show={showModal} setParentVisibility={setShowModal} />
+
         <div className="chart mb-3" style={{ height: "300px" }}>
           <div className="chart-label-text">Jira: Issues Created vs. Resolved</div>
           {(typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) ?
@@ -85,6 +89,7 @@ function JiraIssuesCreatedByDateLineChart( { persona } ) {
             : 
             <ResponsiveLine
               data={data ? data.data : []}
+              onClick={() => setShowModal(true)}
               margin={{ top: 40, right: 110, bottom: 70, left: 100 }}
               xScale={{
                 type: "time",

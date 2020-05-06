@@ -6,6 +6,7 @@ import { ResponsiveBar } from "@nivo/bar";
 import ErrorDialog from "../../common/error";
 import LoadingDialog from "../../common/loading";
 import InfoDialog from "../../common/info";
+import ModalLogs from "../../common/modalLogs";
 import config from "./xunitTestDurationBarChartConfigs";
 import "./charts.css";
 
@@ -15,6 +16,7 @@ function XUnitTestDurationBarChart( { persona } ) {
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   
 
   useEffect(() => {    
@@ -77,11 +79,14 @@ function XUnitTestDurationBarChart( { persona } ) {
   } else {
     return (
       <>
+        <ModalLogs header="Maximum Test Durations" size="lg" jsonMessage={data.xunitTestDuration !== undefined ? data.xunitTestDuration.data : []} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
+
         <div className="chart mb-3" style={{ height: "300px" }}>
           <div className="chart-label-text">X Unit: Maximum Test Durations</div>
           <ResponsiveBar
             data={data.xunitTestDuration !== undefined ? data.xunitTestDuration.data : []}
             keys={data.xunitTestNames !== undefined ? data.xunitTestNames.data : []}
+            onClick={() => setShowModal(true)}
             groupMode="stacked"
             layout="vertical"
             indexBy="buildId"

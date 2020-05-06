@@ -1,24 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { ResponsiveLine } from "@nivo/line";
 import ErrorDialog from "../../common/error";
 import config from "./sonarMaintainabilityLineChartConfigs";
 import "./charts.css";
-import InfoDialog from "../../common/info";
+import ModalLogs from "../../common/modalLogs";
 
 
 function MaintainabilityLineChart( { data, persona } ) {
   const { sonarMaintainability }  =  data;
-
+  const [showModal, setShowModal] = useState(false);
 
   if (typeof data !== "object" || Object.keys(data).length == 0 || sonarMaintainability.status !== 200) {
     return (<ErrorDialog error="No Data is available for this chart at this time." />);
   } else {
     return (
       <>
+        <ModalLogs header="Maintainability Rating" size="lg" jsonMessage={sonarMaintainability ? sonarMaintainability.data : []} dataType="line" show={showModal} setParentVisibility={setShowModal} />
+
         <div className="chart-label-text">Sonar: Maintainability Rating</div>
         <ResponsiveLine
           data={sonarMaintainability ? sonarMaintainability.data : []}
+          onClick={() => setShowModal(true)}
           margin={{ top: 40, right: 110, bottom: 70, left: 100 }}
           xScale={{ type: "point" }}
           yScale={{ type: "linear", min: "auto", max: "auto", stacked: true, reverse: false }}

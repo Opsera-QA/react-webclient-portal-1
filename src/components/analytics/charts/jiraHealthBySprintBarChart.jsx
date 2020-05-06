@@ -13,6 +13,7 @@ import ErrorDialog from "../../common/error";
 import config from "./jiraHealthBySprintConfigs";
 import "./charts.css";
 import InfoDialog from "../../common/info";
+import ModalLogs from "../../common/modalLogs";
 
 
 
@@ -21,6 +22,7 @@ function JiraHealthBySprintBarChart( { persona } ) {
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   
   useEffect(() => {    
     const controller = new AbortController();
@@ -78,6 +80,8 @@ function JiraHealthBySprintBarChart( { persona } ) {
   } else {    
     return (
       <>
+        <ModalLogs header="Health (Last 30 Days)" size="lg" jsonMessage={data.data} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
+
         <div className="chart mb-3" style={{ height: "300px" }}>
           <div className="chart-label-text">Jira: Health (Last 30 Days)</div>
           {(typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) ?
@@ -87,6 +91,7 @@ function JiraHealthBySprintBarChart( { persona } ) {
             : 
             <ResponsiveBar
               data={data ? data.data : []}
+              onClick={() => setShowModal(true)}
               keys={config.keys}
               indexBy="key"
               margin={config.margin}

@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState }  from "react";
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
 import ErrorDialog from "../../common/error";
 import config from "./jenkinsStatusByJobNameBarChartConfigs";
 import "./charts.css";
+import ModalLogs from "../../common/modalLogs";
 
 function JenkinsStatusByJobNameBarChar( { data, persona } ) {
   const { jenkinsStatusByJobName }  =  data;
 
+  const [showModal, setShowModal] = useState(false);
 
   if (typeof data !== "object" || Object.keys(data).length == 0 || jenkinsStatusByJobName.status !== 200) {
     return (<ErrorDialog error="No Data is available for this chart at this time." />);
@@ -15,11 +17,15 @@ function JenkinsStatusByJobNameBarChar( { data, persona } ) {
     
     return (
       <>
+      
+        <ModalLogs header="Build Status by Job Name" size="lg" jsonMessage={jenkinsStatusByJobName ? jenkinsStatusByJobName.data : []} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
+
         <div className="chart-label-text">Jenkins: Build Status by Job Name</div>
         <ResponsiveBar
           data={jenkinsStatusByJobName ? jenkinsStatusByJobName.data : []}
           keys={config.keys}
           indexBy="key"
+          onClick={() => setShowModal(true)}
           margin={config.margin}
           padding={0.3}
           layout={"horizontal"}

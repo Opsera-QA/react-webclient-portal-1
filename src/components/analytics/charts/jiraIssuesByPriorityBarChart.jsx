@@ -9,6 +9,7 @@ import ErrorDialog from "../../common/error";
 import config from "./jiraIssuesByPriorityBarChartConfigs";
 import "./charts.css";
 import InfoDialog from "../../common/info";
+import ModalLogs from "../../common/modalLogs";
 
 
 
@@ -17,6 +18,7 @@ function JiraIssuesByPriorityBarChart( { persona } ) {
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   
   useEffect(() => {    
     const controller = new AbortController();
@@ -76,6 +78,8 @@ function JiraIssuesByPriorityBarChart( { persona } ) {
     console.log(data);
     return (
       <>
+        <ModalLogs header="Issues By Project" size="lg" jsonMessage={data.data} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
+
         <div className="chart mb-3" style={{ height: "300px" }}>
 
           <div className="chart-label-text">Jira: Issues By Project</div>
@@ -86,6 +90,7 @@ function JiraIssuesByPriorityBarChart( { persona } ) {
             : 
             <ResponsiveBar
               data={data ? data.data : []}
+              onClick={() => setShowModal(true)}
               keys={config.keys}
               indexBy="project"
               margin={config.margin}
