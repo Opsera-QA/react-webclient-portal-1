@@ -2,6 +2,7 @@ import React, { useState, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ApiService } from "../../api/apiService";
+import { axiosApiService } from "../../api/apiService";
 import LoadingDialog from "../common/loading";
 import InfoDialog from "../common/info";
 import ErrorDialog from "../common/error";
@@ -18,9 +19,12 @@ import "react-date-range/dist/theme/default.css";
 import { DateRangePicker } from "react-date-range";
 const moment = require("moment");
 
-const FILTER = [{ value: "pipeline", label: "Pipeline" }, { value: "metricbeat", label: "MetricBeat" }, { value: "twistlock", label: "TwistLock" }, { value: "blueprint", label: "Build Blueprint" }];
-
-function SearchLogs ( ) {
+function SearchLogs ( { tools }) {
+  //const FILTER = [{ value: "pipeline", label: "Pipeline" }, { value: "metricbeat", label: "MetricBeat" }, { value: "twistlock", label: "TwistLock" }, { value: "blueprint", label: "Build Blueprint" }];
+  const FILTER = tools;
+  //console.log(Array.isArray(FILTER));
+  // console.log(FILTER);
+  //console.log(typeof FILTER2);
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -28,7 +32,7 @@ function SearchLogs ( ) {
   const [noResults, setNoResults] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOptions, setFilters] = useState([]);
-  const [filterType, setFilterType] = useState("pipeline");
+  const [filterType, setFilterType] = useState();
   const [customFilter, setCustomFilter] = useState([]);
   const [filterLoading, setFilterLoading] = useState(false);
   const [manualCache, setManualCaching] = useState(false);
