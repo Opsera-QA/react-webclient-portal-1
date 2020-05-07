@@ -1,13 +1,17 @@
-// Analytics Software Development Tab, Developer, Node Ticket AN-153
-import React, {useState, useEffect, useContext} from "react";
+// Analytics  Security Tab, Dashboard, Node Ticket AN-48 and AN-49 (persona : Developer/Manager/Executive)
+
+import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import {AuthContext} from "../../../contexts/AuthContext";
-import {ResponsiveLine} from "@nivo/line";
-import {axiosApiService} from "../../../api/apiService";
+import { AuthContext } from "../../../contexts/AuthContext";
+import { ResponsiveLine } from "@nivo/line";
+import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/loading";
 import ErrorDialog from "../../common/error";
 import config from "./deploymentFrequencyLineChartConfigs";
 import * as time from "d3-time";
+import InfoDialog from "../../common/info";
+import ModalLogs from "../../common/modalLogs";
+
 import "./charts.css";
 
 /**
@@ -23,11 +27,12 @@ import "./charts.css";
   "new_technical_debt", "new_uncovered_conditions", "new_uncovered_lines", "new_violations", "new_vulnerabilities", "new_coverage",
   "new_line_coverage", "skipped_tests", "test_errors", "test_execution_time", "test_failures", "test_success_density", "tests",
  */
-function SonarSecurityLineChart({persona, sonarMeasure}) {
+function SonarSecurityLineChart({ persona, sonarMeasure }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -50,7 +55,7 @@ function SonarSecurityLineChart({persona, sonarMeasure}) {
 
   const fetchData = async () => {
     setLoading(true);
-    const {getAccessToken} = contextType;
+    const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
     const apiUrl = "/analytics/data";
     const postBody = {
@@ -77,24 +82,36 @@ function SonarSecurityLineChart({persona, sonarMeasure}) {
     }
   };
 
+  const formatTitle = (str) => {
+    var i, frags = str.split("_");
+    for (i=0; i<frags.length; i++) {
+      frags[i] = frags[i].charAt(0).toUpperCase() + frags[i].slice(1);
+    }
+    return frags.join(" ");
+  };
+  
   //This needs to be more intelligent than just checking for precense of data.  Node can return a status 400 error from ES, and that would fail this.
   if (loading) {
     return (<LoadingDialog size="sm" />);
   } else if (error) {
     return (<ErrorDialog error={error} />);
-  } else if (typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) {
-    console.log(data);
-    return (<ErrorDialog error="No Data is available for this chart at this time." />);
   } else {
-    console.log(data.data);
-    if (data.data) {
-      return (
-        <>
-          <div className="chart mb-3" style={{height: "300px"}}>
-            <div className="chart-label-text">Sonar: {sonarMeasure} </div>
+   
+    return (
+      <>
+        <ModalLogs header={formatTitle(sonarMeasure)} size="lg" jsonMessage={data.data} dataType="line" show={showModal} setParentVisibility={setShowModal} />
 
+        <div className="chart mb-3" style={{ height: "300px" }}>
+          <div className="chart-label-text">Sonar: {formatTitle(sonarMeasure)}</div>
+          {(typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) ?
+            <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
+              <InfoDialog message="No Data is available for this chart at this time." />
+            </div>
+            :
             <ResponsiveLine
               data={data ? data.data : []}
+              onClick={() => setShowModal(true)}
+
               margin={{ top: 40, right: 110, bottom: 70, left: 100 }}
               yScale={{ type: "linear", min: "auto", max: "auto", stacked: true, reverse: false }}
 
@@ -165,13 +182,14 @@ function SonarSecurityLineChart({persona, sonarMeasure}) {
                 },
               }}
             />
-
-          </div>
-        </>
-      );
-    }
+          }
+        </div>
+      </>
+    );
   }
 }
+
+
 SonarSecurityLineChart.propTypes = {
   persona: PropTypes.string,
   sonarMeasure: PropTypes.string
