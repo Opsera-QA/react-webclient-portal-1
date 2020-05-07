@@ -372,18 +372,20 @@ const MapLogData = (props) => {
         <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
           <thead>
             <tr>
-              <th style={{ width: "20%" }}>Project</th>
+              <th style={{ width: "15%" }}>Job Name</th>
+              <th style={{ width: "15%" }}>Project</th>
               <th style={{ width: "45%" }}>Entry</th>
-              <th style={{ width: "20%" }}>Date</th>
-              <th className="text-center" style={{ width: "5%" }}>Build Number</th>
-              <th className="text-center" style={{ width: "5%" }}>Source Host</th>
-              <th className="text-center" style={{ width: "5%" }}>Source</th>
+              <th style={{ width: "6.25%" }}>Date</th>
+              <th className="text-center" style={{ width: "6.25%" }}>Build Number</th>
+              <th className="text-center" style={{ width: "6.25%" }}>Source Host</th>
+              <th className="text-center" style={{ width: "6.25%" }}>Source</th>
             </tr>
           </thead>
           <tbody>
             
             {data.map((item, idx) => (
               <tr key={idx} >
+                <td className="force-text-wrap">{typeof(item._source.data) !== "undefined" ? item._source.data.buildVariables.JOB_NAME : null}</td>
                 <td className="force-text-wrap">{typeof(item._source.data) !== "undefined" ? item._source.data.projectName : null}</td>
                 <td className="force-text-wrap">{item._index}: {item._source.message ? item._source.message[0] : null}
                   <FontAwesomeIcon icon={faSearchPlus}

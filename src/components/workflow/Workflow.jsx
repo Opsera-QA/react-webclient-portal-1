@@ -68,7 +68,7 @@ function Workflow() {
         
           <li className="nav-item">
             <Link className={"nav-link " + setPillClass("pipelineDetail", selection)} 
-              to={location => `/workflow/${itemId}`} onClick={handleTabClick("pipelineDetail")}>Details</Link>
+              to={location => `/workflow/${itemId}`} onClick={handleTabClick("pipelineDetail")}>Overview</Link>
           </li>
 
           <li className="nav-item">

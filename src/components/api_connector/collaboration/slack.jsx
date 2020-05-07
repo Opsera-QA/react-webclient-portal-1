@@ -1,141 +1,170 @@
-import React, { Component } from "react";
-import { Button, Form, Card, Alert } from "react-bootstrap";
+import React, { useReducer, useEffect, useContext } from "react";
+import { Button, Form, Col, Card, Alert } from "react-bootstrap";
 import { AuthContext } from "../../../contexts/AuthContext";  //REact Context API Code for User Authentication
 import { ApiService } from "../../../api/apiService";
 import { apiServerUrl } from "../../../config";
+import LoadingDialog from "../../common/loading";
 
-class Slack extends Component {
-  static contextType = AuthContext;  //Registers the User Authentication context data in the component
+function Slack() {
 
-  state = {
-    endpoint: "",
-    token: "",
-    modal: false,
+  const Auth = useContext(AuthContext);
+
+  const [state, setState] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      token: "",
+      modal: false,
+      update: false,
+      fetching: true
+    }
+  );
+
+  // component did mount use effect
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+
+  async function getData() {
+    const { getAccessToken } = Auth;
+    const accessToken = await getAccessToken();
+    const urlParams = state;
+    new ApiService(
+      apiServerUrl + "/connectors/slack/settings",
+      null,
+      accessToken,
+      urlParams).get()
+      .then(response => {
+        if (response.data ) {
+          let token = "";
+
+          if (response.data.SLACK_TOKEN_KEY !== undefined) {
+            token = response.data.SLACK_TOKEN_KEY;
+          }
+          setState({
+            token: token,
+            update: true,
+            fetching: false
+          });
+        } else {
+          console.log("not data available ==> do nothing!");
+          setState({
+            fetching: false
+          });
+        }
+
+      })
+      .catch(e => {
+        console.log(e);
+        setState({
+          fetching: false
+        });
+        showErrorAlert("Error Fetching data for API Connector. Contact Administrator for more details.");
+      });
   }
 
-  handleChange = ({ target: { name, value } }) => {
-    this.setState({
+  const handleChange = ({ target: { name, value } }) => {
+    setState({
       [name]: value,
     });
-  }
+  };
 
-
-  handleSave = async (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
-    // TODO :: change endpoint
 
-    const { getAccessToken, getUserInfo } = this.context;
+    const { getAccessToken } = Auth;
     const accessToken = await getAccessToken();
-    const userInfo = await getUserInfo();
-    const urlParams = { data: this.state, userid: userInfo.sub };
+    const urlParams = state;
+
     new ApiService(
-      apiServerUrl + "",
+      apiServerUrl + "/connectors/slack/update",
       null,
       accessToken,
       urlParams).post()
       .then(response => {
         console.log(response);
-        this.showSuccessAlert();
+        showSuccessAlert("Slack Endpoint Updated Successfully!");
       })
       .catch(e => {
-        this.showErrorAlert();
+        let errorData = e.response && e.response.data ? e.response.data.message : "Network Error!";
+        console.log(errorData);
+        showErrorAlert(" " + errorData +" " );
       });
 
-  }
+  };
 
-  showSuccessAlert = () => {
-    this.setState({
+  const showSuccessAlert = (message) => {
+    setState({
       modal: true,
       type: "success",
       title: "Success!",
-      message: "API Connector Created Successfully!"
-    }, () => { this.resetForm(); });
-  }
+      message: message
+    });
+    getData();
+  };
 
-  showErrorAlert = () => {
-    this.setState({
+  const showErrorAlert = (message) => {
+    setState({
       modal: true,
       type: "danger",
       title: "Error!",
-      message: "Error in creating API Connector. Please check the credentials or contact Administrator for more details."
+      message: message
     });
-  }
+  };
 
-  resetForm = () => {
-    this.setState({
-      endpoint: "",
-      token: "",
-    });
-  }
-
-  canBeSubmitted() {
+  function canBeSubmitted() {
     const {
-      endpoint,
       token,
-    } = this.state;
+    } = state;
     return (
-      endpoint.length > 0 &&
-      token.length > 0
+      token.length > 0 
     );
   }
 
-  cancel = () => {
-    let path = "/api_connector";
-    this.props.history.push(path);
-  }
+  const { fetching } = state;
 
-  render() {
-    const isEnabled = this.canBeSubmitted();
-    return (
-      <div>
-        {this.state.modal &&
-          <Alert variant={this.state.type} onClose={() => this.setState({ modal: false, type: "", title: "", message: "" })} dismissible>
-            <Alert.Heading>{this.state.title}</Alert.Heading>
-            {this.state.message}
-          </Alert>
-        }
-        <Card style={{ marginTop: 25 }}>
-          <Card.Header as="h5">Slack Credentials</Card.Header>
-          <Card.Body>
+  const isEnabled = canBeSubmitted();
 
-            <Form onSubmit={this.handleSave}>
+  return (
+    <div>
+      {state.modal &&
+        <Alert className="mt-3" variant={state.type} onClose={() => setState({ modal: false, type: "", title: "", message: "" })} dismissible>
+          {state.title} {state.message}
+        </Alert>
+      }
+      <Card className="mt-3">
+        <Card.Header as="h5">Slack Credentials</Card.Header>
+        <Card.Body>
 
-              <Form.Group controlId="formGridEndpoint">
-                <Form.Label>Endpoint</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder=""
-                  name="endpoint"
-                  value={this.state.endpoint}
-                  onChange={this.handleChange}
-                // isInvalid={this.state.url.error}
-                />
-                {/* <Form.Control.Feedback type="invalid">{this.state.url.error}</Form.Control.Feedback> */}
-              </Form.Group>
+          {fetching && <LoadingDialog />}
+          {!fetching &&
+            <Form onSubmit={handleSave}>
 
               <Form.Group controlId="formGridToken">
-                <Form.Label>Auth Token</Form.Label>
+                <Form.Label>Slack Token</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder=""
                   name="token"
-                  value={this.state.token}
-                  onChange={this.handleChange}
-                // isInvalid={this.state.port.error}
+                  value={state.token}
+                  onChange={handleChange}
+                // isInvalid={this.state.token.error}
                 />
-                {/* <Form.Control.Feedback type="invalid">{this.state.port.error}</Form.Control.Feedback> */}
+                {/* <Form.Control.Feedback type="invalid">{this.state.token.error}</Form.Control.Feedback> */}
               </Form.Group>
 
-
-
-              <Button id="save-button" disabled variant="outline-primary" className="mr-2" type="submit">Connect</Button>
-              <Button id="cancel-button" variant="outline-secondary" className="mr-2" type="button" onClick={this.cancel}>Cancel</Button>
+              <div className="text-muted mt-2 mb-2 italic">Please Note: All fields are required for connectivity.</div>
+              <Button id="save-button" disabled={!isEnabled} variant="outline-primary" className="mr-2" type="submit">Save Changes</Button>
+              {/* <Button id="cancel-button" variant="outline-secondary" className="mr-2" type="button" onClick={this.cancel}>Cancel</Button> */}
             </Form>
-          </Card.Body>
-        </Card>
-      </div>
-    );
-  }
+          }
+
+
+        </Card.Body>
+      </Card>
+    </div>
+  );
 }
 
 export default Slack;

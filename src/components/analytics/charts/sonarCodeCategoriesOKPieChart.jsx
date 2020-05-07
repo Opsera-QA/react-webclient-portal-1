@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { ResponsivePie } from "@nivo/pie";
 import ErrorDialog from "../../common/error";
 import config from "./sonarCodeCategoriesOKPieChartConfigs";
 import "./charts.css";
+import ModalLogs from "../../common/modalLogs";
 
 
 function CodeCategoriesPieChart2( { data, persona } ) {
   const { sonarCodeCategoriesOK }  =  data;
+  const [showModal, setShowModal] = useState(false);
   
   if (typeof data !== "object" || Object.keys(data).length == 0 || sonarCodeCategoriesOK.status !== 200) {
     return (<ErrorDialog error="No Data is available for this chart at this time." />);
@@ -15,11 +17,15 @@ function CodeCategoriesPieChart2( { data, persona } ) {
 
     return (
       <>
+      
+        <ModalLogs header="Code Categories (Keyword = OK)" size="lg" jsonMessage={sonarCodeCategoriesOK ? sonarCodeCategoriesOK.data : []} dataType="pie" show={showModal} setParentVisibility={setShowModal} />
+
         <div className="chart-label-text">Sonar: Code Categories (Keyword = OK)</div>
         <ResponsivePie
           data={sonarCodeCategoriesOK ? sonarCodeCategoriesOK.data : []}
           margin={{ top: 40, right: 230, bottom: 80, left: 80 }}
           innerRadius={0.5}
+          onClick={() => setShowModal(true)}
           padAngle={0.7}
           cornerRadius={3}
           borderWidth={1}

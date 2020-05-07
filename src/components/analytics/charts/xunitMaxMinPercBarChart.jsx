@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
 import ErrorDialog from "../../common/error";
 import config from "./xunitMaxMinPercBarChartConfigs";
 import "./charts.css";
+import ModalLogs from "../../common/modalLogs";
 
 
 function XUnitMaxMinPercBarChart( { data, persona } ) {
   const { xunitMaxMinPerc }  =  data;
+  const [showModal, setShowModal] = useState(false);
 
   
   if (typeof data !== "object" || Object.keys(data).length == 0 || xunitMaxMinPerc.status !== 200) {
@@ -15,9 +17,12 @@ function XUnitMaxMinPercBarChart( { data, persona } ) {
   } else {
     return (
       <>
+        <ModalLogs header="Max/Min/Percentiles Test Duration" size="lg" jsonMessage={xunitMaxMinPerc ? xunitMaxMinPerc.data : []} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
+
         <div className="chart-label-text">X Unit: Max/Min/Percentiles Test Duration</div>
         <ResponsiveBar
           data={xunitMaxMinPerc ? xunitMaxMinPerc.data : []}
+          onClick={() => setShowModal(true)}
           keys={config.keys}
           groupMode="grouped"
           layout="horizontal"

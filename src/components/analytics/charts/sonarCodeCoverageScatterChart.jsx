@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { ResponsiveScatterPlot } from "@nivo/scatterplot";
 import ErrorDialog from "../../common/error";
 import "./charts.css";
+import ModalLogs from "../../common/modalLogs";
 
 
 function SonarCodeCoverageScatterChart( { data, persona } ) {
+  const [showModal, setShowModal] = useState(false);
   
   if (typeof data !== "object" || Object.keys(data).length == 0) {
     return (<ErrorDialog  error="No Data Present in the ES!" />);
@@ -13,9 +15,12 @@ function SonarCodeCoverageScatterChart( { data, persona } ) {
     const { sonarCodeCoverage2 }  =  data;
     return (
       <>
+        <ModalLogs header="Code Coverage" size="lg" jsonMessage={sonarCodeCoverage2 ? sonarCodeCoverage2.data : []} dataType="scatterplot" show={showModal} setParentVisibility={setShowModal} />
+
         <div className="chart-label-text">Sonar: Code Coverage</div>
         <ResponsiveScatterPlot
           data={sonarCodeCoverage2 ? sonarCodeCoverage2.data : []}
+          onClick={() => setShowModal(true)}
           margin={{ top: 60, right: 140, bottom: 70, left: 90 }}
           xScale={{ type: "linear", min: 0, max: "auto" }}
           yScale={{ type: "linear", min: 0, max: "auto" }}

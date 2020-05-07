@@ -338,10 +338,10 @@ const PipelineItemDetail = (props) => {
                   { editProject ? 
                     <>
                       <Row className="my-2">
-                        <Col sm={11}>
+                        <Col sm={9}>
                           <Form.Control maxLength="150" type="text" placeholder="Project Name" value={formData.project.name || ""} 
                             onChange={e => setFormData({ ...formData, project: { name: e.target.value } })} /></Col>
-                        <Col sm={1} className="my-auto">
+                        <Col sm={3} className="my-auto">
                           <FontAwesomeIcon icon={faSave}
                             className="text-muted"
                             size="sm"
@@ -366,6 +366,7 @@ const PipelineItemDetail = (props) => {
                           onClick= {() => { setEditProject(true); setFormData({ ...formData, project: { name: data.project !== undefined && data.project.hasOwnProperty("name") ? data.project.name : "" } }); }} /> : null }                  
                     </>  }
                 </Col>
+                <Col lg className="py-1"><span className="text-muted mr-1">Runs:</span> {data.workflow.run_count || ""}</Col>
               </Row>
 
 
@@ -381,16 +382,17 @@ const PipelineItemDetail = (props) => {
                 <Col className="py-1"><span className="text-muted mr-1">Tags:</span> 
                   {data.tags.map((item, idx) => (<span key={idx}>{item}, </span>))}</Col>
               </Row>
-              { data.workflow.source !== undefined ?
-                <Row className="row-content-spacing">
-                  <Col md className="py-1"><span className="text-muted mr-1">Source:</span> <span className="upper-case-first">{data.workflow.source.name}</span></Col>
-                  <Col md className="py-1"><span className="text-muted mr-1">Repository:</span> {data.workflow.source.repository}</Col>
-                  <Col md className="py-1"><span className="text-muted mr-1">Branch:</span> {data.workflow.source.branch}</Col>
-                </Row> : null}
               <Row className="row-content-spacing">
                 <Col className="py-1"><span className="text-muted mr-1">Tools:</span> 
                   {_buildToolList(data.workflow.plan).map((item, idx) => (<span key={idx} className="upper-case-first mr-1">{item} </span>))}</Col> 
               </Row>
+
+              { data.workflow.source !== undefined ?
+                <Row className="row-content-spacing">
+                  <Col md className="py-1"><span className="text-muted mr-1">Source:</span> <span className="upper-case-first">{data.workflow.source.name}</span></Col>
+                  {data.workflow.source.repository ? <Col md className="py-1"><span className="text-muted mr-1">Repository:</span> {data.workflow.source.repository}</Col> : null}
+                  {data.workflow.source.branch ? <Col md className="py-1"><span className="text-muted mr-1">Branch:</span> {data.workflow.source.branch}</Col> : null}
+                </Row> : null}              
 
               <Row className="row-content-spacing">
                 { editSchedule ? 

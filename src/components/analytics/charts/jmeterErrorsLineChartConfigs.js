@@ -1,20 +1,22 @@
 export default {
   axisBottom: {
+    // "format": d => { var date = d.split(" "); return date[1]+" "+date[2]; },
     "orient": "bottom",
     "tickSize": 5,
     "tickPadding": 5,
-    "tickRotation": -20,
-    "legend": "Timestamp",
-    "legendOffset": 46,
+    "tickRotation": 0,
+    "legend": "Build Number",
+    "legendOffset": 36,
     "legendPosition": "middle"
   },
   axisLeft: {
     "orient": "left",
-    "tickSize": 5,
+    "tickSize": 5, 
+    "tickValues": 5,
     "tickPadding": 5,
     "tickRotation": 0,
-    "legend": "Number of Deployments",
-    "legendOffset": -40,
+    "legend": "Errors",
+    "legendOffset": -60,
     "legendPosition": "middle"
   },
   legends: [

@@ -9,9 +9,9 @@ import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import InfoDialog from "../common/info";
 import Moment from "react-moment";
-
+import ModalActivityLogs from "../common/modalActivityLogs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import "./workflows.css";
 
 
@@ -22,14 +22,12 @@ function PipelineDetail({ id }) {
   const [role, setRole] = useState("");
   const [stepStatus, setStepStatus] = useState({});
   const [loading, setLoading] = useState(false);
-  const [reload, setReload] = useState(true);
-  
+    
   useEffect(() => {    
     const controller = new AbortController();
     const runEffect = async () => {
       try {
-        await fetchData();
-        setReload(false);
+        await fetchData();        
       } catch (err) {
         if (err.name === "AbortError") {
           console.log("Request was canceled via controller.abort");
@@ -43,7 +41,7 @@ function PipelineDetail({ id }) {
     return () => {
       controller.abort();
     };
-  }, [reload]);
+  }, []);
 
 
 
@@ -116,11 +114,11 @@ function PipelineDetail({ id }) {
 
 const PipelineActivity = (props) => {
   const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState({});
+  const [modalData, setModalData] = useState({});
   const { data } = props;
   
-  const handleClick = (param) => {
-    setModalMessage(param);
+  const handleClick = (data) => {
+    setModalData(data);
     setShowModal(true);
   };
 
@@ -132,11 +130,10 @@ const PipelineActivity = (props) => {
           <Table striped bordered hover className="table-sm" style={{ fontSize:"small" }}>
             <thead>
               <tr>
+                <th className="text-center" style={{ width: "5%" }}>Run</th>
                 <th style={{ width: "10%" }}>Action</th>
-                <th style={{ width: "5%" }}>Step</th>  
-                <th style={{ width: "10%" }}>Task</th>                
+                <th style={{ width: "15%" }}>Task</th>                
                 <th style={{ width: "10%" }}>Tool</th>
-                <th style={{ width: "5%" }}>Build</th>
                 <th style={{ width: "10%" }}>Status</th>
                 <th style={{ width: "35%" }}>Message</th>
                 <th style={{ width: "15%" }}>Date</th>
@@ -146,12 +143,16 @@ const PipelineActivity = (props) => {
             
               {data.map((item, idx) => (
                 <tr key={idx} >
+                  <td className="text-center">{item["run_count"]}</td>
                   <td className="upper-case-first">{item["action"]}</td> 
-                  <td className="text-center">{item["step_index"] !== null ? item["step_index"] + 1 : ""}</td> 
+                  
                   <td>{item["step_name"]}</td>                  
                   <td className="upper-case-first">{item["tool_identifier"]}</td>
-                  <td className="text-center">{item["build_number"]}</td>
-                  <td className="upper-case-first">{item["status"] ? item["status"] : "unknown"}</td>
+                  
+                  <td className="upper-case-first">
+                    {item["status"] === "failure" || item["status"] === "failed" ? 
+                      <FontAwesomeIcon icon={faExclamationTriangle} className="mr-2 red" style={{ cursor: "pointer" }}  /> : null }
+                    {item["status"] ? item["status"] : "unknown"}</td>
                   <td>{item["message"] ? item["message"] : ""} 
                     <FontAwesomeIcon icon={faSearchPlus}
                       className="mr-1 mt-1 float-right"
@@ -163,14 +164,16 @@ const PipelineActivity = (props) => {
               ))}
             </tbody>
           </Table>
-
+          {/* 
           {showModal ? <Modal header="Log Details"
             jsonMessage={modalMessage}
             jsonView="true"
             button="OK"
             size="lg"
             handleCancelModal={() => setShowModal(false)}
-            handleConfirmModal={() => setShowModal(false)} /> : null}
+            handleConfirmModal={() => setShowModal(false)} /> : null} */}
+          <ModalActivityLogs header="Pipeline Activity Log" size="lg" jsonData={modalData} show={showModal} setParentVisibility={setShowModal} />
+
         </>
         : <InfoDialog message="No pipeline activity data is currently available.  Logs will start getting populated once the pipeline starts running." />}
 
@@ -179,38 +182,6 @@ const PipelineActivity = (props) => {
   );
 };
 
-
-
-/* 
-
-const DateRangePicker = ({ data, parentSavePropertyCallback }) => {
-  const [schedule, setSchedule] = useState(INITIAL_SCHEDULE);
-
-  useEffect(() => {
-    if (data.workflow.schedule !== undefined) {
-      setSchedule(data.workflow.schedule);
-    }
-  }, [data]);
-
-
-  const handleClick = (param) => {
-    parentSavePropertyCallback(); //TODO: Wire this up: const handleSavePropertyClick = async (pipelineId, value, type) 
-  };
-
-  return (
-    <>
-      {data !== undefined ?
-        <>
-          
-
-
-        </>
-        : null}
-    </>
-    
-  );
-};
- */
 
 
 
@@ -227,12 +198,5 @@ PipelineActivity.propTypes = {
   ]),
 };
 
-/* DateRangePicker.propTypes = {
-  parentSavePropertyCallback: PropTypes.func,
-  data: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.array
-  ]),
-}; */
 
 export default PipelineDetail;

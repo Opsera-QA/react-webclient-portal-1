@@ -1,6 +1,6 @@
 export default {
   axisBottom: {
-    "format": d => d.split("T")[0] + " " + d.split("T")[1].split(".")[0],
+    "format": d => d.split("T")[0],
     "orient": "bottom",
     "tickSize": 5,
     "tickPadding": 5,

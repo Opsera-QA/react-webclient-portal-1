@@ -1,12 +1,12 @@
 // Ticket Number - AN 47 Reliability
 // Worked on By - Syed Faseeh Uddin
 // Sprint - Analytics Mt. Rainier
-// Persona - All
+// Persona - Developer
 
 import PropTypes from "prop-types";
 import { ResponsiveLine } from "@nivo/line";
 import ErrorDialog from "../../common/error";
-import config from "./ReliabilityRatingLineChartConfigs";
+import config from "./jmeterThroughputLineChartConfigs";
 import "./charts.css";
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
@@ -16,7 +16,7 @@ import InfoDialog from "../../common/info";
 import ModalLogs from "../../common/modalLogs";
 
 
-function ReliabilityRatingLineChart( { persona } ) {
+function JMeterThroughputLineChart( { persona } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -44,6 +44,7 @@ function ReliabilityRatingLineChart( { persona } ) {
   }, []);
 
   const getApiData = async () => {
+    
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
@@ -51,7 +52,7 @@ function ReliabilityRatingLineChart( { persona } ) {
     const postBody = {
       data: [
         { 
-          request: "reliabilityRating",
+          request: "jmeterThroughput",
           metric: "line" 
         }
       ]
@@ -59,7 +60,7 @@ function ReliabilityRatingLineChart( { persona } ) {
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res.data.data[0].reliabilityRating : [];
+      let dataObject = res && res.data ? res.data.data[0].jmeterThroughput : [];
       setData(dataObject);
       setLoading(false);
     }
@@ -69,7 +70,7 @@ function ReliabilityRatingLineChart( { persona } ) {
       setErrors(err.message);
     }
   };
-  
+
   if(loading) {
     return (<LoadingDialog size="sm" />);
   } else if (error) {
@@ -79,10 +80,10 @@ function ReliabilityRatingLineChart( { persona } ) {
   } else {
     return (
       <>
-        <ModalLogs header="Reliability Rating" size="lg" jsonMessage={data.data} dataType="line" show={showModal} setParentVisibility={setShowModal} />
+        <ModalLogs header="Throughput" size="lg" jsonMessage={data.data} dataType="line" show={showModal} setParentVisibility={setShowModal} />
 
         <div className="chart mb-3" style={{ height: "300px" }}>
-          <div className="chart-label-text">Sonar: Reliability Rating</div>
+          <div className="chart-label-text">JMeter: Throughput</div>
           {(typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) ?
             <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
               <InfoDialog message="No Data is available for this chart at this time." />
@@ -112,9 +113,8 @@ function ReliabilityRatingLineChart( { persona } ) {
                   border: "1px solid #ccc",
                 }}>
                   <strong style={{ color }}>
-              Date: </strong> {new Date(point.data.x).toLocaleString()}<br></br>
-                  <strong style={{ color }}>  Rating: </strong> {point.data.y === 1 && <>A</>} {point.data.y === 2 && <>B</>} {point.data.y === 3 && <>C</>}  {point.data.y === 4 && <>D</>}  {point.data.y === 5 && <>E</>} <br></br>
-                  <strong style={{ color }}>  Build Number: </strong> {point.data.buildNumber}
+            Build ID: </strong> {point.data.x}<br></br>
+                  <strong style={{ color }}>  Throughput: </strong> {point.data.y}<br></br>
                 </div>
               )}
               theme={{
@@ -131,8 +131,8 @@ function ReliabilityRatingLineChart( { persona } ) {
     );
   }
 }
-ReliabilityRatingLineChart.propTypes = {
+JMeterThroughputLineChart.propTypes = {
   persona: PropTypes.string
 };
 
-export default ReliabilityRatingLineChart;
+export default JMeterThroughputLineChart;

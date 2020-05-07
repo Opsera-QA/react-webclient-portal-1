@@ -111,13 +111,12 @@ function DashboardHome() {
               <div style={{ height: "250px" }} className="max-content-module-width-50">
                 <div className="row h-100">
                   <div className="col-sm-12 my-auto">
-                    <Alert variant="info">Your Analytics Profile has not been enabled for this account.  Please update your <Link to='/profile'>Analytics 
-                Profile Settings</Link> on the left menu and enable your settings in order to use the Dashboards.</Alert>
+                    <Alert variant="warning">Your Analytics configurations are incomplete.  Please review the details below in order to determine what needs to be done.</Alert>
                     <div className="text-muted mt-4">
                       <div className="mb-3">In order to take advantage of the robust analytics dashboards offered by OpsERA, the following configurations are necessary:</div>
                       <ul className="list-group">
                         <li className="list-group-item d-flex justify-content-between align-items-center">
-                    Analytics must be enabled for your profile.
+                    Your Analytics account must be enabled for yourself or your organization.
                           {(typeof data.profile === "object" && data.profile.length > 0 ) ? 
                             <span className="badge badge-success badge-pill"><FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth /></span>  :
                             <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span> }
@@ -129,7 +128,7 @@ function DashboardHome() {
                             <span className="badge badge-success badge-pill"><FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth /></span> }
                         </li>
                         <li className="list-group-item d-flex justify-content-between align-items-center">
-                    OpsERA Analytics authentication information must be secured in Vault.
+                    OpsERA Analytics authentication information must be secured and available.
                           {data.vault === undefined || data.vault !== 200 ? 
                             <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span> :
                             <span className="badge badge-success badge-pill"><FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth /></span> }

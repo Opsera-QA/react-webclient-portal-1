@@ -1,51 +1,42 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button, Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
-import JSONInput from "react-json-editor-ajrm";
-import locale    from "react-json-editor-ajrm/locale/en";
+import ReactJson from "react-json-view";
 
 
 function CustomModalDialog({ header, message, button, size, handleConfirmModal, handleCancelModal, jsonView, jsonMessage }) {
-  const [state, setState] = useReducer(
-    (state, newState) => ({ ...state, ...newState }),
-    { show: true, displayJson: false }
-  );
-
+  const [show, setShow] = useState(true);
+  const [displayJson, setDisplayJson] = useState(false);
+  
   useEffect(() => {
-    setState({ show: true, displayJson: jsonView === "true" });
+    setShow(true);
+    setDisplayJson(jsonView === "true");
   }, []);
 
   const handleClose = () => {
-    setState({ show: false });
+    setShow(false);
     handleCancelModal();
   };
 
   const handleConfirm = () => {
-    setState({ show: false });
+    setShow(false);
     handleConfirmModal();
   };
 
   return (
     <>
-      <Modal show={state.show} size={size} onHide={() => handleClose()}>
+      <Modal show={show} size={size} onHide={() => handleClose()}>
         <Modal.Header closeButton>
           <Modal.Title>{header}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {
-            state.displayJson ? 
-              <div style={{ maxWidth: "750px", maxHeight: "100%", border: "1px solid #ced4da", borderRadius: ".25rem" }}>
-                <JSONInput
-                  placeholder={jsonMessage}
-                  theme="light_mitsuketa_tribute"
-                  locale={locale}
-                  viewOnly="true"
-                  confirmGood={false}
-                  width="750px"
-                />
-              </div> : 
+            displayJson ? 
+              <>  
+                <ReactJson src={jsonMessage} displayDataTypes={false} />               
+              </> : 
               <div style={{ overflowWrap: "break-word" }}>{message}</div>
           }
           
@@ -55,7 +46,7 @@ function CustomModalDialog({ header, message, button, size, handleConfirmModal, 
             Close
           </Button>
           {
-            !state.displayJson ? 
+            !displayJson ? 
               <Button variant="outline-primary" onClick={() => handleConfirm()}>
                 <FontAwesomeIcon icon={faCheck} fixedWidth />
                 {button ? button : "Confirm"}
@@ -66,10 +57,12 @@ function CustomModalDialog({ header, message, button, size, handleConfirmModal, 
   );
 }
 
+  
 CustomModalDialog.propTypes = {
   header: PropTypes.string,
   message: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   button: PropTypes.string,
+  size: PropTypes.string,
   handleConfirmModal: PropTypes.func.isRequired,
   handleCancelModal: PropTypes.func.isRequired,
   jsonView: PropTypes.string,
@@ -77,3 +70,5 @@ CustomModalDialog.propTypes = {
 };
 
 export default CustomModalDialog;
+
+

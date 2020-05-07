@@ -3,6 +3,11 @@
 - Source Color: #0d4183
 ------------------------------------*/
 
+.modal-lg {
+  max-width: 1200px !important;
+}
+
+
 /*  Buttons  */
 
 .btn-link {
