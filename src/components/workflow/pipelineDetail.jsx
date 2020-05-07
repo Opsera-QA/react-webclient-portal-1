@@ -146,7 +146,7 @@ const PipelineActivity = (props) => {
                   <td className="text-center">{item["run_count"]}</td>
                   <td className="upper-case-first">{item["action"]}</td> 
                   
-                  <td>{item["step_name"]}</td>                  
+                  <td className="upper-case-first">{item["step_name"]}</td>                  
                   <td className="upper-case-first">{item["tool_identifier"]}</td>
                   
                   <td className="upper-case-first">
@@ -154,24 +154,18 @@ const PipelineActivity = (props) => {
                       <FontAwesomeIcon icon={faExclamationTriangle} className="mr-2 red" style={{ cursor: "pointer" }}  /> : null }
                     {item["status"] ? item["status"] : "unknown"}</td>
                   <td>{item["message"] ? item["message"] : ""} 
-                    <FontAwesomeIcon icon={faSearchPlus}
-                      className="mr-1 mt-1 float-right"
-                      size="xs"
-                      style={{ cursor: "pointer" }}
-                      onClick= {() => { handleClick(item); }} /></td>
+                    { item["action"] !== "automation task" ? 
+                      <FontAwesomeIcon icon={faSearchPlus}
+                        className="mr-1 mt-1 float-right"
+                        size="xs"
+                        style={{ cursor: "pointer" }}
+                        onClick= {() => { handleClick(item); }} /> : null }</td>
                   <td><Moment format="YYYY-MM-DD, hh:mm a" date={item["createdAt"]} /> </td>   
                 </tr>
               ))}
             </tbody>
           </Table>
-          {/* 
-          {showModal ? <Modal header="Log Details"
-            jsonMessage={modalMessage}
-            jsonView="true"
-            button="OK"
-            size="lg"
-            handleCancelModal={() => setShowModal(false)}
-            handleConfirmModal={() => setShowModal(false)} /> : null} */}
+          
           <ModalActivityLogs header="Pipeline Activity Log" size="lg" jsonData={modalData} show={showModal} setParentVisibility={setShowModal} />
 
         </>
