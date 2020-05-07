@@ -1,9 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
-import styled from "@emotion/styled";
 import PropTypes from "prop-types";
 import { Row, Col, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faCog, faArchive, faCircleNotch, faSpinner, faCheck, faEnvelope, faClipboardCheck } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faCog, faArchive, faCircleNotch, faSpinner, faCheckCircle, faEnvelope, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../common/modal";
 import Moment from "react-moment";
 import "./workflows.css";
@@ -55,9 +54,28 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, par
         <Row>
           <Col><span className="text-muted">Step:</span> {item.name}</Col>
           <Col className="text-right" style={{ fontSize:"small" }}>
-            {itemState === "completed" ? <FontAwesomeIcon icon={faCheck} className="text-muted mr-2" /> : null }
-            {itemState === "running" ? <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-2" /> : null }                  
-            {nextStep !== undefined && nextStep._id === item._id ? <FontAwesomeIcon icon={faCircleNotch} className="text-muted mr-2" /> : null }                  
+            { currentStatus.status === "failed" || currentStatus.status === "failure" ? 
+              <OverlayTrigger
+                placement="top"
+                delay={{ show: 250, hide: 400 }}
+                overlay={renderTooltip({ message: "View Errors" })} >
+                <FontAwesomeIcon icon={faExclamationTriangle} className="mr-2 red" 
+                  style={{ cursor: "pointer" }} size="lg"
+                  onClick={() => { parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id); }} />
+              </OverlayTrigger> :
+              <>
+                {itemState === "completed" ? 
+                  <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip({ message: "View Log" })} >
+                    <FontAwesomeIcon icon={faCheckCircle} className="mr-2 green" 
+                      style={{ cursor: "pointer" }}  size="lg"
+                      onClick={() => { parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id); }} />
+                  </OverlayTrigger> : null }
+                {itemState === "running" ? <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-2" /> : null }                  
+                {nextStep !== undefined && nextStep._id === item._id ? <FontAwesomeIcon icon={faCircleNotch} className="text-muted mr-2" /> : null }
+              </> }                  
           </Col>
         </Row>
         <Row>

@@ -201,13 +201,14 @@ const PipelineWorkflowDetail = (props) => {
   }
 
 
-  async function fetchPipelineActivityByTool(pipelineId, tool, stepId) {
+  async function fetchPipelineActivityByTool(pipelineId, tool, stepId, activityId) {
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
     let apiUrl = `/pipelines/${pipelineId}/activity`;
     const params = { 
       tool: tool, 
-      step_id: stepId
+      step_id: stepId,
+      id: activityId
     };
     
     try {
@@ -239,10 +240,10 @@ const PipelineWorkflowDetail = (props) => {
   };
 
 
-  const handleViewSourceActivityLog = async (pipelineId, tool, stepId) => {
+  const handleViewSourceActivityLog = async (pipelineId, tool, stepId, activityId) => {
     //get activity data, filtered by tool!
     if (tool) {
-      const activityData = await fetchPipelineActivityByTool(pipelineId, tool, stepId);
+      const activityData = await fetchPipelineActivityByTool(pipelineId, tool, stepId, activityId);
       if (activityData && activityData.data) {
         setModalHeader("Step Activity Log");
         setModalMessage(activityData.data);
