@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ApiService } from "../../api/apiService";
 import LoadingDialog from "../common/loading";
+import InfoDialog from "../common/info";
 import ErrorDialog from "../common/error";
 import { Form, Button, Alert, Table, Overlay, Popover } from "react-bootstrap";
 import Moment from "react-moment";
@@ -33,6 +34,7 @@ function SearchLogs ( ) {
   const [manualCache, setManualCaching] = useState(false);
   const animatedComponents = makeAnimated();
   const [calenderActivation, setCalenderActivation] = useState(false);
+  const [submitted, submitClicked] = useState(false);
   const [date, setDate] = useState([
     {
       startDate: new Date(),
@@ -46,6 +48,7 @@ function SearchLogs ( ) {
 
 
   const handleFormSubmit = e => {
+    submitClicked(true);
     e.preventDefault();
     setData([]);  
     let startDate = moment(date[0].startDate, "YYYY-MM-DD").format("YYYY-MM-DD");
@@ -57,10 +60,16 @@ function SearchLogs ( ) {
       startDate = 0;
       endDate = 0;
     }
-    fetchData(searchTerm, filterType, customFilter, startDate, endDate);    
+    if (searchTerm) {
+      fetchData(searchTerm, filterType, customFilter, startDate, endDate);    
+    } else {
+      setLoading(false);
+      setData([]);
+    }
   };
 
   const cancelSearchClicked = e => {
+    submitClicked(false);
     e.preventDefault();
     // setCustomFilter([]);
     setData([]);
@@ -346,6 +355,15 @@ function SearchLogs ( ) {
             <div className="row h-100">
               <div className="col-sm-12 my-auto text-center">
                 <div className="h6">No Results found</div>   
+              </div>
+            </div>
+          </div> 
+        }
+        {(!loading && !searchTerm && submitted) && 
+          <div style={{ height: "400px" }}>
+            <div className="row h-100">
+              <div className="col-sm-12 my-auto text-center max-content-width">
+                <div className="h6"><InfoDialog  message="Input a search term in order to perform a log search." /></div>   
               </div>
             </div>
           </div> 
