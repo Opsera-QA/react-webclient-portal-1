@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Row, Col, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faCog, faArchive, faCircleNotch, faSpinner, faCheckCircle, faEnvelope, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faCog, faArchive, faBookmark, faSpinner, faCheckCircle, faEnvelope, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../common/modal";
 import Moment from "react-moment";
 import "./workflows.css";
@@ -73,8 +73,17 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, par
                       style={{ cursor: "pointer" }}  size="lg"
                       onClick={() => { parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id); }} />
                   </OverlayTrigger> : null }
-                {itemState === "running" ? <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-2" /> : null }                  
-                {nextStep !== undefined && nextStep._id === item._id ? <FontAwesomeIcon icon={faCircleNotch} className="text-muted mr-2" /> : null }
+                {itemState === "running" ?  <OverlayTrigger
+                  placement="top"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltip({ message: "View Log" })} >
+                  <FontAwesomeIcon icon={faSpinner} className="mr-2 green" 
+                    style={{ cursor: "pointer" }}  size="lg" spin
+                    onClick={() => { parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id); }} />
+                </OverlayTrigger> : null }  
+
+                {itemState !== "completed" && itemState !== "running"  && nextStep !== undefined && nextStep._id === item._id ? 
+                  <FontAwesomeIcon icon={faBookmark} className="nav-blue mr-2" /> : null }
               </> }                  
           </Col>
         </Row>

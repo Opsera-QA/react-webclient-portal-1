@@ -260,7 +260,7 @@ const PipelineWorkflowDetail = (props) => {
 
           <div className="ml-4 mb-4 w-100 max-content-module-width-50">           
             <h5>{data.name}            
-              <Badge variant="secondary" pill className="ml-3 mb-1"> Steps: {currentStepIndex + 1} / {data.workflow ? data.workflow.plan.length : null }</Badge>
+              {/* <Badge variant="secondary" pill className="ml-3 mb-1"> Steps: {currentStepIndex + 1} / {data.workflow ? data.workflow.plan.length : null }</Badge> */}
             </h5>
             <div className="my-3 text-right">
               {workflowStatus === "running" ? 

@@ -11,7 +11,7 @@ import InfoDialog from "../common/info";
 import Moment from "react-moment";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import "./workflows.css";
 
 
@@ -132,7 +132,6 @@ const PipelineActivity = (props) => {
               <tr>
                 <th className="text-center" style={{ width: "5%" }}>Run</th>
                 <th style={{ width: "10%" }}>Action</th>
-                {/* <th className="text-center" style={{ width: "5%" }}>Step</th>   */}
                 <th style={{ width: "15%" }}>Task</th>                
                 <th style={{ width: "10%" }}>Tool</th>
                 <th style={{ width: "10%" }}>Status</th>
@@ -150,7 +149,10 @@ const PipelineActivity = (props) => {
                   <td>{item["step_name"]}</td>                  
                   <td className="upper-case-first">{item["tool_identifier"]}</td>
                   
-                  <td className="upper-case-first">{item["status"] ? item["status"] : "unknown"}</td>
+                  <td className="upper-case-first">
+                    {item["status"] === "failure" || item["status"] === "failed" ? 
+                      <FontAwesomeIcon icon={faExclamationTriangle} className="mr-2 red" style={{ cursor: "pointer" }}  /> : null }
+                    {item["status"] ? item["status"] : "unknown"}</td>
                   <td>{item["message"] ? item["message"] : ""} 
                     <FontAwesomeIcon icon={faSearchPlus}
                       className="mr-1 mt-1 float-right"
@@ -180,38 +182,6 @@ const PipelineActivity = (props) => {
 
 
 
-/* 
-
-const DateRangePicker = ({ data, parentSavePropertyCallback }) => {
-  const [schedule, setSchedule] = useState(INITIAL_SCHEDULE);
-
-  useEffect(() => {
-    if (data.workflow.schedule !== undefined) {
-      setSchedule(data.workflow.schedule);
-    }
-  }, [data]);
-
-
-  const handleClick = (param) => {
-    parentSavePropertyCallback(); //TODO: Wire this up: const handleSavePropertyClick = async (pipelineId, value, type) 
-  };
-
-  return (
-    <>
-      {data !== undefined ?
-        <>
-          
-
-
-        </>
-        : null}
-    </>
-    
-  );
-};
- */
-
-
 
 
 PipelineDetail.propTypes = {
@@ -226,12 +196,5 @@ PipelineActivity.propTypes = {
   ]),
 };
 
-/* DateRangePicker.propTypes = {
-  parentSavePropertyCallback: PropTypes.func,
-  data: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.array
-  ]),
-}; */
 
 export default PipelineDetail;
