@@ -115,11 +115,6 @@ function SonarSecurityLineChart({ persona, sonarMeasure }) {
               margin={{ top: 40, right: 110, bottom: 70, left: 100 }}
               yScale={{ type: "linear", min: "auto", max: "auto", stacked: true, reverse: false }}
 
-              // axisLeft={{
-              //   legend: "linear scale",
-              //   legendOffset: 12,
-              // }}
-
               xScale={{
                 type: "time",
                 format: "%Y-%m-%dT%H:%M:%S.%LZ",
@@ -131,22 +126,6 @@ function SonarSecurityLineChart({ persona, sonarMeasure }) {
                 format: "%b %d",
                 legendOffset: -12,
               }}
-
-
-              // axisBottom={{
-              //   tickValues: "every 2 days",
-              //   legendOffset: -12,
-              // }}
-
-              // axisLeft={{
-              //   "tickSize": 8,
-              //   "tickPadding": 5,
-              //   "tickRotation": 0,
-              //   "legend": "Sonar Measures",
-              //   "legendPosition": "middle",
-              //   "legendOffset": -90
-              // }}
-
               pointSize={10}
 
               pointBorderWidth={8}
@@ -155,8 +134,6 @@ function SonarSecurityLineChart({ persona, sonarMeasure }) {
               useMesh={true}
               lineWidth={3.5}
               legends={config.legends}
-              // colors={d=> d.color}
-              // onClick={function(node){console.log(node.id);}}
               tooltip={(node) => (
                 <div style={{
                   background: "white",
