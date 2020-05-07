@@ -96,31 +96,32 @@ function DeploymentsStackedBarChart( { persona } ) {
               onClick={() => setShowModal(true)}
               keys={config.keys}
               indexBy="buildTime"
-              margin={config.margin}
+              margin={{ top: 40, right: 110, bottom: 70, left: 100 }}
+              xScale={{ type: "point" }}
+              yScale={{ type: "linear", min: "auto", max: "auto", stacked: false, reverse: false }}
+              axisTop={null}
+              axisRight={null}
+              enableLabel={false}
+              axisBottom={config.axisBottom}
+              axisLeft={config.axisLeft}
+              pointSize={10}
+              pointBorderWidth={8}
+              pointLabel="y"
+              pointLabelYOffset={-12}
+              useMesh={true}
+              lineWidth={3.5}
+              legends={config.legends}
               padding={0.3}
               // layout={"horizontal"}
-              colors={{ scheme: "set2" }}
+              colors={({ id, data }) => data[`${id}_color`]}
               borderColor={{ theme: "background" }}
               colorBy="id"
               defs={config.defs}
               fill={config.fill}
-              axisTop={null}
-              axisRight={null}
-              axisBottom={config.axisBottom}
-              axisLeft={config.axisLeft}
-              enableLabel={false}
-              borderRadius={0}
-              labelSkipWidth={12}
-              labelSkipHeight={12}
-              labelTextColor="inherit:darker(2)"
-              animate={true}
-              motionStiffness={90}
-              borderWidth={2}
-              motionDamping={15}
               tooltip={({ indexValue, color, value, id, data }) => (
                 <div>
                   <strong style={{ color }}>
-                Build Time: </strong> {indexValue}<br></br>
+              Build Time: </strong> {indexValue}<br></br>
                   <strong style={{ color }}> {id} Builds: </strong> {value}<br></br>
                   <strong> Failure Rate: </strong> {data.failureRate.toFixed(2)+"%"}
                 </div>
