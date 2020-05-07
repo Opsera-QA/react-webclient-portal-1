@@ -9,7 +9,7 @@ import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import InfoDialog from "../common/info";
 import Moment from "react-moment";
-
+import ModalActivityLogs from "../common/modalActivityLogs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import "./workflows.css";
@@ -114,11 +114,11 @@ function PipelineDetail({ id }) {
 
 const PipelineActivity = (props) => {
   const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState({});
+  const [modalData, setModalData] = useState({});
   const { data } = props;
   
-  const handleClick = (param) => {
-    setModalMessage(param);
+  const handleClick = (data) => {
+    setModalData(data);
     setShowModal(true);
   };
 
@@ -145,7 +145,7 @@ const PipelineActivity = (props) => {
                 <tr key={idx} >
                   <td className="text-center">{item["run_count"]}</td>
                   <td className="upper-case-first">{item["action"]}</td> 
-                  {/* <td className="text-center">{item["step_index"] !== null ? item["step_index"] + 1 : ""}</td>  */}
+                  
                   <td>{item["step_name"]}</td>                  
                   <td className="upper-case-first">{item["tool_identifier"]}</td>
                   
@@ -164,14 +164,16 @@ const PipelineActivity = (props) => {
               ))}
             </tbody>
           </Table>
-
+          {/* 
           {showModal ? <Modal header="Log Details"
             jsonMessage={modalMessage}
             jsonView="true"
             button="OK"
             size="lg"
             handleCancelModal={() => setShowModal(false)}
-            handleConfirmModal={() => setShowModal(false)} /> : null}
+            handleConfirmModal={() => setShowModal(false)} /> : null} */}
+          <ModalActivityLogs header="Pipeline Activity Log" size="lg" jsonData={modalData} show={showModal} setParentVisibility={setShowModal} />
+
         </>
         : <InfoDialog message="No pipeline activity data is currently available.  Logs will start getting populated once the pipeline starts running." />}
 

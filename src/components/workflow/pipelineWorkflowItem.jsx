@@ -82,7 +82,7 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, par
                     onClick={() => { parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id); }} />
                 </OverlayTrigger> : null }  
 
-                {itemState !== "completed" && itemState !== "running"  && nextStep !== undefined && nextStep._id === item._id ? 
+                {nextStep !== undefined && nextStep._id === item._id && itemState !== "running" ? 
                   <FontAwesomeIcon icon={faBookmark} className="nav-blue mr-2" /> : null }
               </> }                  
           </Col>
