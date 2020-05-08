@@ -484,10 +484,10 @@ const MapLogData = (props) => {
     return (
       <>
         {data.map((item, idx) => (
-          <Alert key={idx} >
+          <Alert key={idx} variant="secondary">
             <strong>Timestamp: <Moment format="YYYY-MM-DD, hh:mm a" date={typeof(item._source["@timestamp"]) !== "undefined" ? item._source["@timestamp"] : null}></Moment></strong>
             <br></br>        
-            <Highlight matchClass="react-highlighter-lightblue" search={/".*?":/}>{JSON.stringify(item, null, 2)}</Highlight>
+            <Highlight matchClass="react-highlighter-lightblue" search={/".*?":/}>{JSON.stringify(item, null, 2).substring(0, 1000)}</Highlight>
             <br></br>
             <FontAwesomeIcon icon={faSearchPlus}
               className="ml-1"
