@@ -38,9 +38,8 @@ function Slack() {
       .then(response => {
         if (response.data ) {
           let token = "";
-
-          if (response.data.SLACK_TOKEN_KEY !== undefined) {
-            token = response.data.SLACK_TOKEN_KEY;
+          if (response.data["slackToken"] !== undefined) {
+            token = response.data["slackToken"];
           }
           setState({
             token: token,
@@ -144,7 +143,7 @@ function Slack() {
               <Form.Group controlId="formGridToken">
                 <Form.Label>Slack Token</Form.Label>
                 <Form.Control
-                  type="password"
+                  type="text"
                   placeholder=""
                   name="token"
                   value={state.token}
