@@ -434,6 +434,7 @@ const MapLogData = (props) => {
   //     </>
   //   );
   // } else 
+
   if (type === "blueprint" && data.length > 0) {
     return (
       <>
@@ -491,7 +492,7 @@ const MapLogData = (props) => {
                 { (item._source.data) ? <strong className="ml-4">Build Number: {typeof(item._source.data.buildNum) !== "undefined" ? item._source.data.buildNum : "N/A"}</strong> : ""}
 
               </div>
-              <div className="row mb-1 ml-2" style={{ lineHeight: 2 }}>
+              <div className="row ml-2" style={{ lineHeight: 2 }}>
                 <Highlight matchClass="react-highlighter-lightgray" search={/".*?":/}>{JSON.stringify(item, null, 2).substring(0, 1000)}</Highlight>
               </div>
             </Alert>
