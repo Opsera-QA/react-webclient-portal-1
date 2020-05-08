@@ -14,3 +14,8 @@
   background-color: rgb(209, 236, 255);
   padding: 2px;
 }
+
+.react-highlighter-lightgray{
+  background-color: rgb(234, 236, 238 );
+  padding: 2px;
+}

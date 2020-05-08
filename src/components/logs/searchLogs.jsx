@@ -16,6 +16,8 @@ import makeAnimated from "react-select/animated";
 import "react-date-range/dist/styles.css"; 
 import "react-date-range/dist/theme/default.css"; 
 import { DateRangePicker } from "react-date-range";
+import ModalLogs from "../common/modalLogs";
+
 const Highlight = require("react-highlighter");
 const moment = require("moment");
 
@@ -213,7 +215,32 @@ function SearchLogs ( { tools }) {
                   <div className="p-2">
                     <Button variant="primary" type="submit">Search</Button>
                     <Button variant="outline-secondary" className="ml-2" type="button" onClick={cancelSearchClicked}>Cancel</Button>
+                    <Button variant="outline-secondary" className="ml-2" type="button" onClick={toggleCalendar}><FontAwesomeIcon icon={faCalendar} className="fa-fw"/></Button>
+                    <Overlay
+                      show={calendar}
+                      target={target}
+                      placement="bottom"
+                      container={ref.current}
+                      containerPadding={20}
+                      closeOnEscape={true}
+                    >
+                      <Popover id="popover-contained"  className="max-content-width">
+                        <Popover.Title as="h3">Filter By Date</Popover.Title>
+
+                        <Popover.Content>
+                          <DateRangePicker
+                            onChange={item => setDate([item.selection])}
+                            showSelectionPreview={true}
+                            moveRangeOnFirstSelection={false}
+                            months={2}
+                            ranges={date}
+                            direction="horizontal"
+                          />
+                        </Popover.Content>
+                      </Popover>
+                    </Overlay>
                   </div>
+                  
                 </div>
                 <div className="d-flex mt">
                   <div className="p-2 flex-grow-1">
@@ -238,32 +265,6 @@ function SearchLogs ( { tools }) {
                       options={filterOptions}
                       onChange={customFilterSelectionChange}
                     />
-                  </div>
-                  <div ref={ref} className="p-2">
-                    <Button variant="outline-secondary" type="button" onClick={toggleCalendar}><FontAwesomeIcon icon={faCalendar} className="fa-fw"/></Button>
-                    <Overlay
-                      show={calendar}
-                      target={target}
-                      placement="bottom"
-                      container={ref.current}
-                      containerPadding={20}
-                      closeOnEscape={true}
-                    >
-                      <Popover id="popover-contained"  className="max-content-width">
-                        <Popover.Title as="h3">Filter By Date</Popover.Title>
-
-                        <Popover.Content>
-                          <DateRangePicker
-                            onChange={item => setDate([item.selection])}
-                            showSelectionPreview={true}
-                            moveRangeOnFirstSelection={false}
-                            months={2}
-                            ranges={date}
-                            direction="horizontal"
-                          />
-                        </Popover.Content>
-                      </Popover>
-                    </Overlay>
                   </div>
                 </div>
 
@@ -294,9 +295,7 @@ function SearchLogs ( { tools }) {
                   <div className="p-2">
                     <Button variant="primary" type="submit">Search</Button>
                     <Button variant="outline-secondary" className="ml-2" type="button" onClick={cancelSearchClicked}>Cancel</Button>
-                  </div>
-                  <div ref={ref} className="p-2">
-                    <Button variant="outline-secondary" type="button" onClick={toggleCalendar}><FontAwesomeIcon icon={faCalendar} className="fa-fw"/></Button>
+                    <Button variant="outline-secondary" className="ml-2" type="button" onClick={toggleCalendar}><FontAwesomeIcon icon={faCalendar} className="fa-fw"/></Button>
                     <Overlay
                       show={calendar}
                       target={target}
@@ -471,12 +470,7 @@ const MapLogData = (props) => {
           </tbody>
         </Table>
 
-        {showModal ? <Modal header="Log Details"
-          message={<pre>{JSON.stringify(modalMessage, null, 2)}</pre>}
-          button="OK"
-          size="lg"
-          handleCancelModal={() => setShowModal(false)}
-          handleConfirmModal={() => setShowModal(false)} /> : null}
+        <ModalLogs header={"Build Number: " + modalMessage.build_number} size="lg" jsonMessage={modalMessage} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
       </>
     );
   }
@@ -484,25 +478,27 @@ const MapLogData = (props) => {
     return (
       <>
         {data.map((item, idx) => (
-          <Alert key={idx}>
-            <strong>Timestamp: <Moment format="YYYY-MM-DD, hh:mm a" date={typeof(item._source["@timestamp"]) !== "undefined" ? item._source["@timestamp"] : null}></Moment></strong>
-            <span className="ml-3"><FontAwesomeIcon icon={faSearchPlus}
-              className="ml-1"
-              size="m"
-              style={{ cursor: "pointer" }}
-              onClick= {() => { handleClick(item); }} />
-            </span>
-            <br></br>        
-            <Highlight matchClass="react-highlighter-lightblue" search={/".*?":/}>{JSON.stringify(item, null, 2).substring(0, 1000)}</Highlight>
-            <br></br>
-          </Alert>
+          <>
+            <Alert key={idx}>
+              <div className="row mb-3">
+                <FontAwesomeIcon icon={faSearchPlus}
+                  className="mt-1"
+                  size="m"
+                  style={{ cursor: "pointer", alignItems: "flex-end" }}
+                  onClick= {() => { handleClick(item); }} />
+                <strong className="ml-2"><Moment format="YYYY-MM-DD, hh:mm a" date={typeof(item._source["@timestamp"]) !== "undefined" ? item._source["@timestamp"] : null}></Moment></strong>
+                { (item._source.data) ? <strong className="ml-4">Job Name: {typeof(item._source.data.buildVariables) !== "undefined" ? item._source.data.buildVariables.JOB_NAME : "N/A"}</strong> : ""}
+                { (item._source.data) ? <strong className="ml-4">Build Number: {typeof(item._source.data.buildNum) !== "undefined" ? item._source.data.buildNum : "N/A"}</strong> : ""}
+
+              </div>
+              <div className="row mb-1 ml-2" style={{ lineHeight: 2 }}>
+                <Highlight matchClass="react-highlighter-lightgray" search={/".*?":/}>{JSON.stringify(item, null, 2).substring(0, 1000)}</Highlight>
+              </div>
+            </Alert>
+            <hr style={{ color: "#E5E7E9", backgroundColor: "#E5E7E9", borderColor : "#E5E7E9" }} />            
+          </>
         ))}
-        {showModal ? <Modal header="Log Details"
-          message={<pre>{JSON.stringify(modalMessage, null, 2)}</pre>}
-          button="OK"
-          size="lg"
-          handleCancelModal={() => setShowModal(false)}
-          handleConfirmModal={() => setShowModal(false)} /> : null}
+        <ModalLogs header={modalMessage._index} size="lg" jsonMessage={modalMessage} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
       </>
     );
   }
