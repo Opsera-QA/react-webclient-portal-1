@@ -295,32 +295,6 @@ function SearchLogs ( { tools }) {
                     <Button variant="primary" type="submit">Search</Button>
                     <Button variant="outline-secondary" className="ml-2" type="button" onClick={cancelSearchClicked}>Cancel</Button>
                   </div>
-                </div>
-                <div className="d-flex mt">
-                  <div className="p-2 flex-grow-1">
-                    <Select
-                      cacheOptions
-                      className="basic-multi-select disabled"
-                      classNamePrefix="select"
-                      isMulti
-                      placeholder={"Filters"}
-                      styles={{
-                        multiValue: base => ({
-                          ...base,
-                          border: "2px dotted",
-                        }),
-                      }}
-                      components={animatedComponents}
-                      onMenuOpen= {fetchFilterData}
-                      menuPortalTarget={document.body}
-                      isLoading={filterLoading}
-                      isClearable={true}
-                      isSearchable={true}
-                      name="CUSTOM-FILTERS"
-                      options={filterOptions}
-                      onChange={customFilterSelectionChange}
-                    />
-                  </div>
                   <div ref={ref} className="p-2">
                     <Button variant="outline-secondary" type="button" onClick={toggleCalendar}><FontAwesomeIcon icon={faCalendar} className="fa-fw"/></Button>
                     <Overlay
@@ -345,6 +319,32 @@ function SearchLogs ( { tools }) {
                       </Popover>
                     </Overlay>
                   </div>
+                </div>
+                <div className="d-flex mt">
+                  {filterType === "pipeline" || filterType === "blueprint" ? <div className="p-2 flex-grow-1">
+                    <Select
+                      cacheOptions
+                      className="basic-multi-select disabled"
+                      classNamePrefix="select"
+                      isMulti
+                      placeholder={"Filters"}
+                      styles={{
+                        multiValue: base => ({
+                          ...base,
+                          border: "2px dotted",
+                        }),
+                      }}
+                      components={animatedComponents}
+                      onMenuOpen= {fetchFilterData}
+                      menuPortalTarget={document.body}
+                      isLoading={filterLoading}
+                      isClearable={true}
+                      isSearchable={true}
+                      name="CUSTOM-FILTERS"
+                      options={filterOptions}
+                      onChange={customFilterSelectionChange}
+                    />
+                  </div> : ""}
                 </div>
               </Form>
             </div>
