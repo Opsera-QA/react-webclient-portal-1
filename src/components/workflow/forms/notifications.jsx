@@ -21,7 +21,7 @@ const INITIAL_EMAIL = {
 
 const INITIAL_SLACK = {
   type: "slack",
-  channel: "slack-testing",
+  channel: "",
   event: "finished",
   enabled: false
 };
@@ -116,6 +116,10 @@ function StepNotificationConfiguration( { data, stepId, parentCallback }) {
     if (formDataSlack.enabled) {
       if (formDataSlack.channel.charAt(0) === "#") {
         setFormMessage("Error: Please remove the pound symbol '#' from the Slack channel name.");
+        return false;
+      }
+      if (formDataSlack.channel.length === 0) {
+        setFormMessage("Warning: Slack channel value missing!");
         return false;
       }
     }

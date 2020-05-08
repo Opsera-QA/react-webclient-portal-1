@@ -65,6 +65,14 @@ a:hover, .active {
     monospace;
 }
 
+.header-text {
+  font-weight: 500;
+    line-height: 1.2;
+    font-size:1.1rem;
+    margin-bottom:.2rem;
+    margin-top:.5rem;
+}
+
 /* Utility Classes */
 .italic {
   font-style: italic;
