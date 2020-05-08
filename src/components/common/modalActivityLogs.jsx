@@ -46,8 +46,8 @@ function ModalActivityLogsDialog({ header, size, jsonData, show, setParentVisibi
           </Modal.Header>
           <Modal.Body>
             <div className="my-2">
-              <div className="float-right"><Moment format="YYYY-MM-DD, hh:mm a" date={jsonData.createdAt} /></div> {jsonData.step_name} for &nbsp;
-              <span className="upper-case-first">{jsonData.step_configuration ? jsonData.step_configuration.tool_identifier : null }</span></div>
+              <div className="float-right"><Moment format="YYYY-MM-DD, hh:mm a" date={jsonData.createdAt} /></div> 
+              <span className="upper-case-first">Step: {jsonData.step_name} <br/>Tool: {jsonData.step_configuration ? jsonData.step_configuration.tool_identifier : null }</span></div>
             <div className="console-text m-3">
               {jsonData.api_response}
             </div>            
