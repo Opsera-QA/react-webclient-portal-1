@@ -5,20 +5,6 @@ import { AuthContext } from "../../../contexts/AuthContext";  //REact Context AP
 import { ApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/loading";
 
-// const devState = {
-//   username: "purushothaman-opsera",
-//   token: "0b548e91903dafa1dcdb2ddc3ff5ba5aa7f0cfd3",
-//   repoName: "test",
-//   jenkinsUrl: "https://sparuna.opsera.io/supptest/jenkinspipeline/job/release-pipeline/",
-//   jenkinsPort: "8080",
-//   jUsername: "admin",
-//   jPassword: "admin",
-//   jobName: "release-pipeline",
-//   modal: false,
-//   update: false,
-//   fetching: true
-// };
-
 function Bitbucket() {
 
   const Auth = useContext(AuthContext);
@@ -28,12 +14,9 @@ function Bitbucket() {
     {
       username: "",
       token: "",
+      bitbucketServerUrl: "",
       repoName: "",
-      jenkinsUrl: "",
-      jenkinsPort: "",
-      jUsername: "",
-      jPassword: "",
-      jobName: "",
+      projectName: "",
       modal: false,
       update: false,
       fetching: true
@@ -52,7 +35,7 @@ function Bitbucket() {
     const accessToken = await getAccessToken();
     const urlParams = state;
     new ApiService(
-      apiServerUrl + "/connectors/github/settings",
+      apiServerUrl + "/connectors/bitbucket/settings",
       null,
       accessToken,
       urlParams).get()
@@ -60,11 +43,8 @@ function Bitbucket() {
         // console.log(response.data);
         if (response.data && response.data.length > 0) {
           if (Object.keys(response.data[0]).length > 0) {
-            let jenkinsPort = "", username = "", token = "", repoName = "", jenkinsUrl = "", jUsername = "", jPassword = "", jobName = "";
+            let username = "", token = "", repoName = "", bitbucketServerUrl = "", projectName = "";
 
-            if (response.data[0].jenkinsPort !== undefined) {
-              jenkinsPort = response.data[0].jenkinsPort;
-            }
             if (response.data[0].username !== undefined) {
               username = response.data[0].username;
             }
@@ -74,28 +54,19 @@ function Bitbucket() {
             if (response.data[0].repoName !== undefined) {
               repoName = response.data[0].repoName;
             }
-            if (response.data[0].jenkinsUrl !== undefined) {
-              jenkinsUrl = response.data[0].jenkinsUrl;
+            if (response.data[0].bitbucketServerUrl !== undefined) {
+              bitbucketServerUrl = response.data[0].bitbucketServerUrl;
             }
-            if (response.data[0].jUsername !== undefined) {
-              jUsername = response.data[0].jUsername;
-            }
-            if (response.data[0].jPassword !== undefined) {
-              jPassword = response.data[0].jPassword;
-            }
-            if (response.data[0].jobName !== undefined) {
-              jobName = response.data[0].jobName;
+            if (response.data[0].projectName !== undefined) {
+              projectName = response.data[0].projectName;
             }
 
             setState({
               username: username,
               token: token,
               repoName: repoName,
-              jenkinsUrl: jenkinsUrl,
-              jenkinsPort: jenkinsPort,
-              jUsername: jUsername,
-              jPassword: jPassword,
-              jobName: jobName,
+              bitbucketServerUrl: bitbucketServerUrl,
+              projectName: projectName,
               update: true,
               fetching: false
             });
@@ -137,7 +108,7 @@ function Bitbucket() {
     const urlParams = state;
     if (state.update) {
       new ApiService(
-        apiServerUrl + "/connectors/github/update",
+        apiServerUrl + "/connectors/bitbucket/update",
         null,
         accessToken,
         urlParams).post()
@@ -152,7 +123,7 @@ function Bitbucket() {
         });
     } else {
       new ApiService(
-        apiServerUrl + "/connectors/github/createHook",
+        apiServerUrl + "/connectors/bitbucket/createHook",
         null,
         accessToken,
         urlParams).post()
@@ -198,21 +169,15 @@ function Bitbucket() {
       username,
       token,
       repoName,
-      jenkinsUrl,
-      // jenkinsPort,
-      jUsername,
-      jPassword,
-      jobName,
+      bitbucketServerUrl,
+      projectName,
     } = state;
     return (
       username.length > 0 &&
       token.length > 0 &&
       repoName.length > 0 &&
-      jenkinsUrl.length > 0 &&
-      // jenkinsPort.length > 0 &&
-      jUsername.length > 0 &&
-      jPassword.length > 0 &&
-      jobName.length > 0
+      bitbucketServerUrl.length > 0 &&
+      projectName.length > 0
     );
   }
 
@@ -228,7 +193,7 @@ function Bitbucket() {
         </Alert>
       }
       <Card className="mt-3">
-        <Card.Header as="h5">BitBucket Credentials: TODO!</Card.Header>
+        <Card.Header as="h5">BitBucket Credentials</Card.Header>
         <Card.Body>
 
           {fetching && <LoadingDialog />}
@@ -236,7 +201,7 @@ function Bitbucket() {
             <Form onSubmit={handleSave}>
 
               <Form.Group controlId="formGridUsername">
-                <Form.Label>Github Username</Form.Label>
+                <Form.Label>Bitbucket Username</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder=""
@@ -249,9 +214,9 @@ function Bitbucket() {
               </Form.Group>
 
               <Form.Group controlId="formGridToken">
-                <Form.Label>Github Token</Form.Label>
+                <Form.Label>Bitbucket Token</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="password"
                   placeholder=""
                   name="token"
                   value={state.token}
@@ -261,84 +226,44 @@ function Bitbucket() {
                 {/* <Form.Control.Feedback type="invalid">{this.state.token.error}</Form.Control.Feedback> */}
               </Form.Group>
 
-              <Form.Group controlId="formGridRepo">
-                <Form.Label>Github Repo Name</Form.Label>
+              <Form.Group controlId="formGridJenkinsURL">
+                <Form.Label>Bitbucket Server Url</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder=""
-                  name="repoName"
-                  value={state.repoName}
+                  name="bitbucketServerUrl"
+                  value={state.bitbucketServerUrl}
                   onChange={handleChange}
-                // isInvalid={this.state.repo.error}
+                  // isInvalid={this.state.jenkinsUrl.error}
                 />
-                {/* <Form.Control.Feedback type="invalid">{this.state.repo.error}</Form.Control.Feedback> */}
+                {/* <small id="passwordHelpBlock" className="form-text text-muted">
+                    Jenkins container notes here.
+                </small> */}
+                {/* <Form.Control.Feedback type="invalid">{this.state.jenkinsUrl.error}</Form.Control.Feedback> */}
               </Form.Group>
 
-
               <Form.Row className="pt-4">
-                <Form.Group as={Col} controlId="formGridJenkinsURL">
-                  <Form.Label>Jenkins Container URL</Form.Label>
+               
+                <Form.Group as={Col} controlId="formGridRepo">
+                  <Form.Label>Bitbucket Repo Name</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder=""
-                    name="jenkinsUrl"
-                    value={state.jenkinsUrl}
+                    name="repoName"
+                    value={state.repoName}
                     onChange={handleChange}
-                  // isInvalid={this.state.jenkinsUrl.error}
+                    // isInvalid={this.state.repo.error}
                   />
-                  <small id="passwordHelpBlock" className="form-text text-muted">
-                    Jenkins container notes here.
-                  </small>
-                  {/* <Form.Control.Feedback type="invalid">{this.state.jenkinsUrl.error}</Form.Control.Feedback> */}
+                  {/* <Form.Control.Feedback type="invalid">{this.state.repo.error}</Form.Control.Feedback> */}
                 </Form.Group>
 
-                <Form.Group as={Col} controlId="formGridJenkinsPort">
-                  <Form.Label>Jenkins Port</Form.Label>
+                <Form.Group as={Col} controlId="formGridJobName">
+                  <Form.Label>Project Name</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder=""
-                    name="jenkinsPort"
-                    value={state.jenkinsPort}
-                    onChange={handleChange}
-                  // isInvalid={this.state.jenkinsPort.error}
-                  />
-                  {/* <Form.Control.Feedback type="invalid">{this.state.jenkinsPort.error}</Form.Control.Feedback> */}
-                </Form.Group>
-              </Form.Row>
-
-              <Form.Row>
-                <Form.Group as={Col} controlId="formGridJenkinsUsername">
-                  <Form.Label>Jenkins Username</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder=""
-                    name="jUsername"
-                    value={state.jUsername}
-                    onChange={handleChange}
-                  />
-                  {/* <Form.Control.Feedback type="invalid">{this.state.jenkinsUsername.error}</Form.Control.Feedback> */}
-                </Form.Group>
-
-                <Form.Group as={Col} controlId="formGridJenkinsPassword">
-                  <Form.Label>Jenkins Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder=""
-                    name="jPassword"
-                    value={state.jPassword}
-                    onChange={handleChange}
-                    isInvalid={state.jPassword.length < 1}
-                  />
-                  {/* <Form.Control.Feedback type="invalid">{this.state.jenkinsPassword.error}</Form.Control.Feedback> */}
-                </Form.Group>
-
-                <Form.Group controlId="formGridJobName">
-                  <Form.Label>Job Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder=""
-                    name="jobName"
-                    value={state.jobName}
+                    name="projectName"
+                    value={state.projectName}
                     onChange={handleChange}
                   // isInvalid={this.state.token.error}
                   />
