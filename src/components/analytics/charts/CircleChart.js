@@ -10,6 +10,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/loading";
+import InfoDialog from "../../common/info";
 
 function CircleChart( { persona } ) {
   const contextType = useContext(AuthContext);
@@ -70,19 +71,24 @@ function CircleChart( { persona } ) {
     return (<LoadingDialog size="sm" />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
-  } else if (typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) {
-    return (<div style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}><ErrorDialog error="No Data is available for this chart at this time." /></div>);
   } else {
     return (
       <>
         <div className="chart mb-3" style={{ height: "300px" }}>
           <div className="chart-label-text">Jenkins: Change Failure Rate</div>
-          <div className="circle" style={{ backgroundColor : data.data[0].failureRate>50 ? "#CB4335" : "#66C2A5" }} >{data.data[0].failureRate.toFixed(2)+"%"}</div>
+          {(typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200 || data.data.length == 0) ?
+            <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
+              <InfoDialog message="No Data is available for this chart at this time." />
+            </div>
+            : 
+            <div className="circle" style={{ backgroundColor : data.data && data.data[0].failureRate>50 ? "#CB4335" : "#66C2A5" }} >{data.data && data.data[0].failureRate.toFixed(2)+"%"}</div>
+          }
         </div>
       </>
     );
   }
 }
+
 CircleChart.propTypes = {
   persona: PropTypes.string
 };
