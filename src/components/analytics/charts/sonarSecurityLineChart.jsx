@@ -8,7 +8,6 @@ import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/loading";
 import ErrorDialog from "../../common/error";
 import config from "./deploymentFrequencyLineChartConfigs";
-import * as time from "d3-time";
 import InfoDialog from "../../common/info";
 import ModalLogs from "../../common/modalLogs";
 
@@ -61,17 +60,15 @@ function SonarSecurityLineChart({ persona, sonarMeasure }) {
     const postBody = {
       data: [
         {
-          request: "sonarMeasures",
+          request: "sonarMeasures-" + sonarMeasure,
           metric: "line",
-          measure: sonarMeasure
-
         }
       ]
     };
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res.data.data[0].sonarMeasures : [];
+      let dataObject = res && res.data ? res.data.data[0]["sonarMeasures-" + sonarMeasure] : [];
       setData(dataObject);
       setLoading(false);
     }
@@ -84,27 +81,27 @@ function SonarSecurityLineChart({ persona, sonarMeasure }) {
 
   const formatTitle = (str) => {
     var i, frags = str.split("_");
-    for (i=0; i<frags.length; i++) {
+    for (i = 0; i < frags.length; i++) {
       frags[i] = frags[i].charAt(0).toUpperCase() + frags[i].slice(1);
     }
     return frags.join(" ");
   };
-  
+
   //This needs to be more intelligent than just checking for precense of data.  Node can return a status 400 error from ES, and that would fail this.
   if (loading) {
     return (<LoadingDialog size="sm" />);
   } else if (error) {
     return (<ErrorDialog error={error} />);
   } else {
-   
+
     return (
       <>
-        <ModalLogs header={formatTitle(sonarMeasure)} size="lg" jsonMessage={data.data} dataType="line" show={showModal} setParentVisibility={setShowModal} />
+      <ModalLogs header={formatTitle(sonarMeasure)} size="lg" jsonMessage={data&& data.data && data.data} dataType="line" show={showModal} setParentVisibility={setShowModal} />
 
         <div className="chart mb-3" style={{ height: "300px" }}>
           <div className="chart-label-text">Sonar: {formatTitle(sonarMeasure)}</div>
           {(typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) ?
-            <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
+            <div className='max-content-width p-5 mt-5' style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
               <InfoDialog message="No Data is available for this chart at this time." />
             </div>
             :
