@@ -16,6 +16,7 @@ function Logs() {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
   const [data, setData] = useState({});
+  const [tools, setTools] = useState({});
   const [loadingProfile, setLoadingProfile] = useState(false);
   const [token, setToken] = useState();
   
@@ -48,9 +49,20 @@ function Logs() {
     const apiUrl = "/analytics/settings";   
     setToken(accessToken);
     try {
-      const profile = await axiosApiService(accessToken).get(apiUrl);      
+      const profile = await axiosApiService(accessToken).get(apiUrl);
+      const tools = await axiosApiService(accessToken).post("/analytics/data", {
+        "data": [
+          { 
+            "request": "listOfTools",
+            "metric": "tools" 
+          }
+        ]
+      });
+      const listOfTools = tools.data.data[0].listOfTools.data;
+      console.log(listOfTools);      
       console.log("Profile: ", profile);
       setData(profile && profile.data.profile[0]);
+      setTools(listOfTools);
       console.log(profile && profile.data.profile[0]);
 
       if (typeof(data.profile) === "object" && data.profile.length === 0) {
@@ -76,11 +88,11 @@ function Logs() {
         <h4>Logs</h4>
         <p>OpsERA provides users with access to a vast repository of logging with industry leading search and filtering capability.  Access all available 
          logging, reports and configurations around the OpsERA Analytics Platform or search your 
-        currently configured logs repositories below.</p>
+        currently configured logs repositories below. </p>
       </div>
         
-      <div>
-        <SearchLogs className="pr-2 mt-1" />
+      <div className="pr-2 mt-1">
+        <SearchLogs tools={tools} />
       </div>
             
     </> 

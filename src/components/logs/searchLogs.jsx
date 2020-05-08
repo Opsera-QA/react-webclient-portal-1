@@ -16,11 +16,17 @@ import makeAnimated from "react-select/animated";
 import "react-date-range/dist/styles.css"; 
 import "react-date-range/dist/theme/default.css"; 
 import { DateRangePicker } from "react-date-range";
+import ModalLogs from "../common/modalLogs";
+
+const Highlight = require("react-highlighter");
 const moment = require("moment");
 
-const FILTER = [{ value: "pipeline", label: "Pipeline" }, { value: "metricbeat", label: "MetricBeat" }, { value: "twistlock", label: "TwistLock" }, { value: "blueprint", label: "Build Blueprint" }];
-
-function SearchLogs ( ) {
+function SearchLogs ( { tools }) {
+  //const FILTER = [{ value: "pipeline", label: "Pipeline" }, { value: "metricbeat", label: "MetricBeat" }, { value: "twistlock", label: "TwistLock" }, { value: "blueprint", label: "Build Blueprint" }];
+  const FILTER = tools;
+  //console.log(Array.isArray(FILTER));
+  // console.log(FILTER);
+  //console.log(typeof FILTER2);
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -29,6 +35,7 @@ function SearchLogs ( ) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOptions, setFilters] = useState([]);
   const [filterType, setFilterType] = useState("pipeline");
+  console.log(filterType);
   const [customFilter, setCustomFilter] = useState([]);
   const [filterLoading, setFilterLoading] = useState(false);
   const [manualCache, setManualCaching] = useState(false);
@@ -139,6 +146,7 @@ function SearchLogs ( ) {
     if (result) {
       searchResults = result.data.hasOwnProperty("hits") && result.data.hits.hasOwnProperty("hits") ? result.data.hits.hits : [];
     }
+    console.log(searchResults);
     setNoResults(searchResults.length === 0);
     setData(searchResults);
     setLoading(false);
@@ -207,7 +215,32 @@ function SearchLogs ( ) {
                   <div className="p-2">
                     <Button variant="primary" type="submit">Search</Button>
                     <Button variant="outline-secondary" className="ml-2" type="button" onClick={cancelSearchClicked}>Cancel</Button>
+                    <Button variant="outline-secondary" className="ml-2" type="button" onClick={toggleCalendar}><FontAwesomeIcon icon={faCalendar} className="fa-fw"/></Button>
+                    <Overlay
+                      show={calendar}
+                      target={target}
+                      placement="bottom"
+                      container={ref.current}
+                      containerPadding={20}
+                      closeOnEscape={true}
+                    >
+                      <Popover id="popover-contained"  className="max-content-width">
+                        <Popover.Title as="h3">Filter By Date</Popover.Title>
+
+                        <Popover.Content>
+                          <DateRangePicker
+                            onChange={item => setDate([item.selection])}
+                            showSelectionPreview={true}
+                            moveRangeOnFirstSelection={false}
+                            months={2}
+                            ranges={date}
+                            direction="horizontal"
+                          />
+                        </Popover.Content>
+                      </Popover>
+                    </Overlay>
                   </div>
+                  
                 </div>
                 <div className="d-flex mt">
                   <div className="p-2 flex-grow-1">
@@ -233,32 +266,6 @@ function SearchLogs ( ) {
                       onChange={customFilterSelectionChange}
                     />
                   </div>
-                  <div ref={ref} className="p-2">
-                    <Button variant="outline-secondary" type="button" onClick={toggleCalendar}><FontAwesomeIcon icon={faCalendar} className="fa-fw"/></Button>
-                    <Overlay
-                      show={calendar}
-                      target={target}
-                      placement="bottom"
-                      container={ref.current}
-                      containerPadding={20}
-                      closeOnEscape={true}
-                    >
-                      <Popover id="popover-contained"  className="max-content-width">
-                        <Popover.Title as="h3">Filter By Date</Popover.Title>
-
-                        <Popover.Content>
-                          <DateRangePicker
-                            onChange={item => setDate([item.selection])}
-                            showSelectionPreview={true}
-                            moveRangeOnFirstSelection={false}
-                            months={2}
-                            ranges={date}
-                            direction="horizontal"
-                          />
-                        </Popover.Content>
-                      </Popover>
-                    </Overlay>
-                  </div>
                 </div>
 
 
@@ -276,7 +283,7 @@ function SearchLogs ( ) {
                       className="basic-single"
                       menuPortalTarget={document.body}
                       classNamePrefix="select"
-                      defaultValue={filterType ? FILTER[FILTER.findIndex(x => x.value ===filterType)] : FILTER[0]}
+                      defaultValue={filterType && Array.isArray(FILTER) ? FILTER[FILTER.findIndex(x => x.value ===filterType)] : { "value": "pipeline", "label": "Pipeline" }}
                       isDisabled={false}
                       isClearable={false}
                       isSearchable={true}
@@ -288,35 +295,7 @@ function SearchLogs ( ) {
                   <div className="p-2">
                     <Button variant="primary" type="submit">Search</Button>
                     <Button variant="outline-secondary" className="ml-2" type="button" onClick={cancelSearchClicked}>Cancel</Button>
-                  </div>
-                </div>
-                <div className="d-flex mt">
-                  <div className="p-2 flex-grow-1">
-                    <Select
-                      cacheOptions
-                      className="basic-multi-select disabled"
-                      classNamePrefix="select"
-                      isMulti
-                      placeholder={"Filters"}
-                      styles={{
-                        multiValue: base => ({
-                          ...base,
-                          border: "2px dotted",
-                        }),
-                      }}
-                      components={animatedComponents}
-                      onMenuOpen= {fetchFilterData}
-                      menuPortalTarget={document.body}
-                      isLoading={filterLoading}
-                      isClearable={true}
-                      isSearchable={true}
-                      name="CUSTOM-FILTERS"
-                      options={filterOptions}
-                      onChange={customFilterSelectionChange}
-                    />
-                  </div>
-                  <div ref={ref} className="p-2">
-                    <Button variant="outline-secondary" type="button" onClick={toggleCalendar}><FontAwesomeIcon icon={faCalendar} className="fa-fw"/></Button>
+                    <Button variant="outline-secondary" className="ml-2" type="button" onClick={toggleCalendar}><FontAwesomeIcon icon={faCalendar} className="fa-fw"/></Button>
                     <Overlay
                       show={calendar}
                       target={target}
@@ -339,6 +318,32 @@ function SearchLogs ( ) {
                       </Popover>
                     </Overlay>
                   </div>
+                </div>
+                <div className="d-flex mt">
+                  {filterType === "pipeline" || filterType === "blueprint" ? <div className="p-2 flex-grow-1">
+                    <Select
+                      cacheOptions
+                      className="basic-multi-select disabled"
+                      classNamePrefix="select"
+                      isMulti
+                      placeholder={"Filters"}
+                      styles={{
+                        multiValue: base => ({
+                          ...base,
+                          border: "2px dotted",
+                        }),
+                      }}
+                      components={animatedComponents}
+                      onMenuOpen= {fetchFilterData}
+                      menuPortalTarget={document.body}
+                      isLoading={filterLoading}
+                      isClearable={true}
+                      isSearchable={true}
+                      name="CUSTOM-FILTERS"
+                      options={filterOptions}
+                      onChange={customFilterSelectionChange}
+                    />
+                  </div> : ""}
                 </div>
               </Form>
             </div>
@@ -383,52 +388,54 @@ const MapLogData = (props) => {
     setModalMessage(param);
     setShowModal(true);
   };
-  if (type === "pipeline" && data.length > 0) { 
-    console.log(data);
-    return (
-      <>
-        <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
-          <thead>
-            <tr>
-              <th style={{ width: "15%" }}>Job Name</th>
-              <th style={{ width: "15%" }}>Project</th>
-              <th style={{ width: "45%" }}>Entry</th>
-              <th style={{ width: "6.25%" }}>Date</th>
-              <th className="text-center" style={{ width: "6.25%" }}>Build Number</th>
-              <th className="text-center" style={{ width: "6.25%" }}>Source Host</th>
-              <th className="text-center" style={{ width: "6.25%" }}>Source</th>
-            </tr>
-          </thead>
-          <tbody>
+  // if (type === "pipeline" && data.length > 0) { 
+  //   console.log(data);
+  //   return (
+  //     <>
+  //       <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
+  //         <thead>
+  //           <tr>
+  //             <th style={{ width: "15%" }}>Job Name</th>
+  //             <th style={{ width: "15%" }}>Project</th>
+  //             <th style={{ width: "45%" }}>Entry</th>
+  //             <th style={{ width: "6.25%" }}>Date</th>
+  //             <th className="text-center" style={{ width: "6.25%" }}>Build Number</th>
+  //             <th className="text-center" style={{ width: "6.25%" }}>Source Host</th>
+  //             <th className="text-center" style={{ width: "6.25%" }}>Source</th>
+  //           </tr>
+  //         </thead>
+  //         <tbody>
             
-            {data.map((item, idx) => (
-              <tr key={idx} >
-                <td className="force-text-wrap">{typeof(item._source.data) !== "undefined" ? item._source.data.buildVariables.JOB_NAME : null}</td>
-                <td className="force-text-wrap">{typeof(item._source.data) !== "undefined" ? item._source.data.projectName : null}</td>
-                <td className="force-text-wrap">{item._index}: {item._source.message ? item._source.message[0] : null}
-                  <FontAwesomeIcon icon={faSearchPlus}
-                    className="ml-1"
-                    size="xs"
-                    style={{ cursor: "pointer" }}
-                    onClick={() => { handleClick(item._source.data); }} /></td> 
-                <td><Moment format="YYYY-MM-DD, hh:mm a" date={typeof(item._source["@timestamp"]) !== "undefined" ? item._source["@timestamp"] : null} /></td>          
-                <td className="text-center">{typeof(item._source.data) !== "undefined" ? item._source.data.buildNum : null}</td>      
-                <td className="text-center">{typeof(item._source["source_host"]) !== "undefined" ? item._source["source_host"] : null}</td>
-                <td className="text-muted text-center">{typeof(item._source["source"]) !== "undefined" ? item._source["source"] : null}</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+  //           {data.map((item, idx) => (
+  //             <tr key={idx} >
+  //               <td className="force-text-wrap">{typeof(item._source.data) !== "undefined" ? item._source.data.buildVariables.JOB_NAME : null}</td>
+  //               <td className="force-text-wrap">{typeof(item._source.data) !== "undefined" ? item._source.data.projectName : null}</td>
+  //               <td className="force-text-wrap">{item._index}: {item._source.message ? item._source.message[0] : null}
+  //                 <FontAwesomeIcon icon={faSearchPlus}
+  //                   className="ml-1"
+  //                   size="xs"
+  //                   style={{ cursor: "pointer" }}
+  //                   onClick={() => { handleClick(item._source.data); }} /></td> 
+  //               <td><Moment format="YYYY-MM-DD, hh:mm a" date={typeof(item._source["@timestamp"]) !== "undefined" ? item._source["@timestamp"] : null} /></td>          
+  //               <td className="text-center">{typeof(item._source.data) !== "undefined" ? item._source.data.buildNum : null}</td>      
+  //               <td className="text-center">{typeof(item._source["source_host"]) !== "undefined" ? item._source["source_host"] : null}</td>
+  //               <td className="text-muted text-center">{typeof(item._source["source"]) !== "undefined" ? item._source["source"] : null}</td>
+  //             </tr>
+  //           ))}
+  //         </tbody>
+  //       </Table>
 
-        {showModal ? <Modal header="Log Details"
-          message={<pre>{JSON.stringify(modalMessage, null, 2)}</pre>}
-          button="OK"
-          size="lg"
-          handleCancelModal={() => setShowModal(false)}
-          handleConfirmModal={() => setShowModal(false)} /> : null}
-      </>
-    );
-  } else if (type === "blueprint" && data.length > 0) {
+  //       {showModal ? <Modal header="Log Details"
+  //         message={<pre>{JSON.stringify(modalMessage, null, 2)}</pre>}
+  //         button="OK"
+  //         size="lg"
+  //         handleCancelModal={() => setShowModal(false)}
+  //         handleConfirmModal={() => setShowModal(false)} /> : null}
+  //     </>
+  //   );
+  // } else 
+
+  if (type === "blueprint" && data.length > 0) {
     return (
       <>
         <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
@@ -464,12 +471,7 @@ const MapLogData = (props) => {
           </tbody>
         </Table>
 
-        {showModal ? <Modal header="Log Details"
-          message={<pre>{JSON.stringify(modalMessage, null, 2)}</pre>}
-          button="OK"
-          size="lg"
-          handleCancelModal={() => setShowModal(false)}
-          handleConfirmModal={() => setShowModal(false)} /> : null}
+        <ModalLogs header={"Build Number: " + modalMessage.build_number} size="lg" jsonMessage={modalMessage} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
       </>
     );
   }
@@ -477,10 +479,27 @@ const MapLogData = (props) => {
     return (
       <>
         {data.map((item, idx) => (
-          <Alert key={idx} variant="light">
-            {JSON.stringify(item)}
-          </Alert>
+          <>
+            <Alert key={idx}>
+              <div className="row mb-3">
+                <FontAwesomeIcon icon={faSearchPlus}
+                  className="mt-1"
+                  size="m"
+                  style={{ cursor: "pointer", alignItems: "flex-end" }}
+                  onClick= {() => { handleClick(item); }} />
+                <strong className="ml-2"><Moment format="YYYY-MM-DD, hh:mm a" date={typeof(item._source["@timestamp"]) !== "undefined" ? item._source["@timestamp"] : null}></Moment></strong>
+                { (item._source.data) ? <strong className="ml-4">Job Name: {typeof(item._source.data.buildVariables) !== "undefined" ? item._source.data.buildVariables.JOB_NAME : "N/A"}</strong> : ""}
+                { (item._source.data) ? <strong className="ml-4">Build Number: {typeof(item._source.data.buildNum) !== "undefined" ? item._source.data.buildNum : "N/A"}</strong> : ""}
+
+              </div>
+              <div className="row ml-2" style={{ lineHeight: 2 }}>
+                <Highlight matchClass="react-highlighter-lightgray" search={/".*?":/}>{JSON.stringify(item, null, 2).substring(0, 1000)}</Highlight>
+              </div>
+            </Alert>
+            <hr style={{ color: "#E5E7E9", backgroundColor: "#E5E7E9", borderColor : "#E5E7E9" }} />            
+          </>
         ))}
+        <ModalLogs header={modalMessage._index} size="lg" jsonMessage={modalMessage} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
       </>
     );
   }
