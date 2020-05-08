@@ -9,3 +9,8 @@
   box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.1);
   border-radius: 2px;
 }
+
+.react-highlighter-lightblue{
+  background-color: rgb(209, 236, 255);
+  padding: 2px;
+}

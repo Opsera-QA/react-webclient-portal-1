@@ -2,7 +2,6 @@ import React, { useState, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ApiService } from "../../api/apiService";
-import { axiosApiService } from "../../api/apiService";
 import LoadingDialog from "../common/loading";
 import InfoDialog from "../common/info";
 import ErrorDialog from "../common/error";
@@ -17,6 +16,7 @@ import makeAnimated from "react-select/animated";
 import "react-date-range/dist/styles.css"; 
 import "react-date-range/dist/theme/default.css"; 
 import { DateRangePicker } from "react-date-range";
+const Highlight = require("react-highlighter");
 const moment = require("moment");
 
 function SearchLogs ( { tools }) {
@@ -32,7 +32,8 @@ function SearchLogs ( { tools }) {
   const [noResults, setNoResults] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOptions, setFilters] = useState([]);
-  const [filterType, setFilterType] = useState();
+  const [filterType, setFilterType] = useState("pipeline");
+  console.log(filterType);
   const [customFilter, setCustomFilter] = useState([]);
   const [filterLoading, setFilterLoading] = useState(false);
   const [manualCache, setManualCaching] = useState(false);
@@ -143,6 +144,7 @@ function SearchLogs ( { tools }) {
     if (result) {
       searchResults = result.data.hasOwnProperty("hits") && result.data.hits.hasOwnProperty("hits") ? result.data.hits.hits : [];
     }
+    console.log(searchResults);
     setNoResults(searchResults.length === 0);
     setData(searchResults);
     setLoading(false);
@@ -280,7 +282,7 @@ function SearchLogs ( { tools }) {
                       className="basic-single"
                       menuPortalTarget={document.body}
                       classNamePrefix="select"
-                      defaultValue={filterType ? FILTER[FILTER.findIndex(x => x.value ===filterType)] : FILTER[0]}
+                      defaultValue={filterType && Array.isArray(FILTER) ? FILTER[FILTER.findIndex(x => x.value ===filterType)] : { "value": "pipeline", "label": "Pipeline" }}
                       isDisabled={false}
                       isClearable={false}
                       isSearchable={true}
@@ -387,52 +389,53 @@ const MapLogData = (props) => {
     setModalMessage(param);
     setShowModal(true);
   };
-  if (type === "pipeline" && data.length > 0) { 
-    console.log(data);
-    return (
-      <>
-        <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
-          <thead>
-            <tr>
-              <th style={{ width: "15%" }}>Job Name</th>
-              <th style={{ width: "15%" }}>Project</th>
-              <th style={{ width: "45%" }}>Entry</th>
-              <th style={{ width: "6.25%" }}>Date</th>
-              <th className="text-center" style={{ width: "6.25%" }}>Build Number</th>
-              <th className="text-center" style={{ width: "6.25%" }}>Source Host</th>
-              <th className="text-center" style={{ width: "6.25%" }}>Source</th>
-            </tr>
-          </thead>
-          <tbody>
+  // if (type === "pipeline" && data.length > 0) { 
+  //   console.log(data);
+  //   return (
+  //     <>
+  //       <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
+  //         <thead>
+  //           <tr>
+  //             <th style={{ width: "15%" }}>Job Name</th>
+  //             <th style={{ width: "15%" }}>Project</th>
+  //             <th style={{ width: "45%" }}>Entry</th>
+  //             <th style={{ width: "6.25%" }}>Date</th>
+  //             <th className="text-center" style={{ width: "6.25%" }}>Build Number</th>
+  //             <th className="text-center" style={{ width: "6.25%" }}>Source Host</th>
+  //             <th className="text-center" style={{ width: "6.25%" }}>Source</th>
+  //           </tr>
+  //         </thead>
+  //         <tbody>
             
-            {data.map((item, idx) => (
-              <tr key={idx} >
-                <td className="force-text-wrap">{typeof(item._source.data) !== "undefined" ? item._source.data.buildVariables.JOB_NAME : null}</td>
-                <td className="force-text-wrap">{typeof(item._source.data) !== "undefined" ? item._source.data.projectName : null}</td>
-                <td className="force-text-wrap">{item._index}: {item._source.message ? item._source.message[0] : null}
-                  <FontAwesomeIcon icon={faSearchPlus}
-                    className="ml-1"
-                    size="xs"
-                    style={{ cursor: "pointer" }}
-                    onClick={() => { handleClick(item._source.data); }} /></td> 
-                <td><Moment format="YYYY-MM-DD, hh:mm a" date={typeof(item._source["@timestamp"]) !== "undefined" ? item._source["@timestamp"] : null} /></td>          
-                <td className="text-center">{typeof(item._source.data) !== "undefined" ? item._source.data.buildNum : null}</td>      
-                <td className="text-center">{typeof(item._source["source_host"]) !== "undefined" ? item._source["source_host"] : null}</td>
-                <td className="text-muted text-center">{typeof(item._source["source"]) !== "undefined" ? item._source["source"] : null}</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+  //           {data.map((item, idx) => (
+  //             <tr key={idx} >
+  //               <td className="force-text-wrap">{typeof(item._source.data) !== "undefined" ? item._source.data.buildVariables.JOB_NAME : null}</td>
+  //               <td className="force-text-wrap">{typeof(item._source.data) !== "undefined" ? item._source.data.projectName : null}</td>
+  //               <td className="force-text-wrap">{item._index}: {item._source.message ? item._source.message[0] : null}
+  //                 <FontAwesomeIcon icon={faSearchPlus}
+  //                   className="ml-1"
+  //                   size="xs"
+  //                   style={{ cursor: "pointer" }}
+  //                   onClick={() => { handleClick(item._source.data); }} /></td> 
+  //               <td><Moment format="YYYY-MM-DD, hh:mm a" date={typeof(item._source["@timestamp"]) !== "undefined" ? item._source["@timestamp"] : null} /></td>          
+  //               <td className="text-center">{typeof(item._source.data) !== "undefined" ? item._source.data.buildNum : null}</td>      
+  //               <td className="text-center">{typeof(item._source["source_host"]) !== "undefined" ? item._source["source_host"] : null}</td>
+  //               <td className="text-muted text-center">{typeof(item._source["source"]) !== "undefined" ? item._source["source"] : null}</td>
+  //             </tr>
+  //           ))}
+  //         </tbody>
+  //       </Table>
 
-        {showModal ? <Modal header="Log Details"
-          message={<pre>{JSON.stringify(modalMessage, null, 2)}</pre>}
-          button="OK"
-          size="lg"
-          handleCancelModal={() => setShowModal(false)}
-          handleConfirmModal={() => setShowModal(false)} /> : null}
-      </>
-    );
-  } else if (type === "blueprint" && data.length > 0) {
+  //       {showModal ? <Modal header="Log Details"
+  //         message={<pre>{JSON.stringify(modalMessage, null, 2)}</pre>}
+  //         button="OK"
+  //         size="lg"
+  //         handleCancelModal={() => setShowModal(false)}
+  //         handleConfirmModal={() => setShowModal(false)} /> : null}
+  //     </>
+  //   );
+  // } else 
+  if (type === "blueprint" && data.length > 0) {
     return (
       <>
         <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
@@ -481,10 +484,24 @@ const MapLogData = (props) => {
     return (
       <>
         {data.map((item, idx) => (
-          <Alert key={idx} variant="light">
-            {JSON.stringify(item)}
+          <Alert key={idx} >
+            <strong>Timestamp: <Moment format="YYYY-MM-DD, hh:mm a" date={typeof(item._source["@timestamp"]) !== "undefined" ? item._source["@timestamp"] : null}></Moment></strong>
+            <br></br>        
+            <Highlight matchClass="react-highlighter-lightblue" search={/".*?":/}>{JSON.stringify(item, null, 2)}</Highlight>
+            <br></br>
+            <FontAwesomeIcon icon={faSearchPlus}
+              className="ml-1"
+              size="xs"
+              style={{ cursor: "pointer" }}
+              onClick= {() => { handleClick(item); }} />
           </Alert>
         ))}
+        {showModal ? <Modal header="Log Details"
+          message={<pre>{JSON.stringify(modalMessage, null, 2)}</pre>}
+          button="OK"
+          size="lg"
+          handleCancelModal={() => setShowModal(false)}
+          handleConfirmModal={() => setShowModal(false)} /> : null}
       </>
     );
   }
