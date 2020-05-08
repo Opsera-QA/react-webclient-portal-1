@@ -111,32 +111,50 @@ function TestView_Developer ({ persona }) {
     let summaryCountsData = [];    
     
     if (xunitExecuted.status === 200 && xunitExecuted.data !== undefined) {
-      summaryCountsData.push({ name: "Tests Run", value: xunitExecuted.data[0], footer: xunitExecuted.tool, status: "success" });
+      summaryCountsData.push({ name: "Tests Run", value: xunitExecuted.data[0], footer: "", status: "success" });
     }
-    if (xunitPassed.status === 200 && xunitPassed.data !== undefined && xunitExecuted.status === 200 && xunitExecuted.data !== undefined) {
-      summaryCountsData.push({ name: "Pass Percentage", value: 100*xunitPassed.data[0]/xunitExecuted.data[0] + "%", footer: xunitPassed.tool, status: "success" });
-    }
-    if (xunitFailed.status === 200 && xunitFailed.data !== undefined) {
-      summaryCountsData.push({ name: "Failed", value: xunitFailed.data[0], footer: xunitFailed.tool, status: xunitFailed.data[0].count > 0 ? "danger" : "success" });
-    }
-    if (xunitWarning.status === 200 && xunitWarning.data !== undefined) {
-      summaryCountsData.push({ name: "Warnings", value: xunitWarning.data[0], footer: xunitWarning.tool, status: xunitWarning.data[0].count > 5 ? "warning" : "success" });
-    }
-    if (xunitSkipped.status === 200 && xunitSkipped.data !== undefined) {
-      summaryCountsData.push({ name: "Skipped", value: xunitSkipped.data[0], footer: xunitSkipped.tool, status: xunitSkipped.data[0].count > 5 ? "warning" : "success" });
-    }
-    if (xunitError.status === 200 && xunitError.data !== undefined) {
-      summaryCountsData.push({ name: "Errors", value: xunitError.data[0], footer: xunitError.tool, status: xunitError.data[0].count > 0 ? "danger" : "success" });
-    }
+    
     if (junitPassed.status === 200 && junitPassed.data !== undefined) {
-      summaryCountsData.push({ name: "Passed", value: junitPassed.data[0].count, footer: junitPassed.tool, status:  "success" });
+      summaryCountsData.push({ name: "Passed", value: junitPassed.data[0].count, footer: "", status:  "success" });
     }
-    if (junitFailed.status === 200 && junitFailed.data !== undefined) {
-      summaryCountsData.push({ name: "Failed", value: junitFailed.data[0].count, footer: junitFailed.tool, status: junitFailed.data[0].count > 0 ? "danger" : "success" });
+    
+    if (xunitPassed.status === 200 && xunitPassed.data !== undefined && xunitExecuted.status === 200 && xunitExecuted.data !== undefined) {
+      summaryCountsData.push({ name: "Pass Percentage", value: 100*xunitPassed.data[0]/xunitExecuted.data[0] + "%", footer: "", status: "success" });
     }
-    if (junitSkipped.status === 200 && junitSkipped.data !== undefined) {
-      summaryCountsData.push({ name: "Skipped", value: junitSkipped.data[0].count, footer: junitSkipped.tool, status: junitSkipped.data[0].count > 0 ? "warning" : "success" });
+
+    if (xunitWarning.status === 200 && xunitWarning.data !== undefined && xunitWarning.data[0].count > 0) {
+      summaryCountsData.push({ name: "Warnings", value: xunitWarning.data[0], footer: "", status: xunitWarning.data[0].count > 5 ? "warning" : "success" });
+    }    
+    if (xunitError.status === 200 && xunitError.data !== undefined && xunitError.data[0].count > 0) {
+      summaryCountsData.push({ name: "Errors", value: xunitError.data[0], footer: "", status: xunitError.data[0].count > 0 ? "danger" : "success" });
     }
+    
+    let junitFailedCount = 0;
+    let xunitFailedCount = 0;
+    let failedCount = 0;
+    if (junitFailed.status === 200 && junitFailed.data !== undefined && typeof(junitFailed.data[0].count) === "number") {
+      junitFailedCount = junitFailed.data[0].count;      
+    }
+    if (xunitFailed.status === 200 && xunitFailed.data !== undefined && typeof(parseInt(xunitFailed.data[0])) === "number") {
+      xunitFailedCount = parseInt(xunitFailed.data[0]);      
+    }
+    failedCount = junitFailedCount + xunitFailedCount;
+    summaryCountsData.push({ name: "Failed", value: failedCount, footer: "", status: failedCount > 0 ? "danger" : "success" });
+
+
+
+    let junitSkippedCount = 0;
+    let xunitSkippedCount = 0;
+    let skippedCount = 0;
+    if (junitSkipped.status === 200 && junitSkipped.data !== undefined && typeof(junitSkipped.data[0].count) === "number") {
+      junitSkippedCount = junitSkipped.data[0].count;      
+    }
+    if (xunitSkipped.status === 200 && xunitSkipped.data !== undefined && typeof(parseInt(xunitSkipped.data[0])) === "number") {
+      xunitSkippedCount = parseInt(xunitSkipped.data[0]);      
+    }
+    skippedCount = junitSkippedCount + xunitSkippedCount;
+    summaryCountsData.push({ name: "Skipped", value: skippedCount, footer: "", status: skippedCount > 1 ? "warning" : "success" });
+
 
     return summaryCountsData;
   };
