@@ -21,7 +21,7 @@ const INITIAL_EMAIL = {
 
 const INITIAL_SLACK = {
   type: "slack",
-  channel: "#opsera_pipeline",
+  channel: "slack-testing",
   event: "finished",
   enabled: false
 };
@@ -145,10 +145,10 @@ function StepNotificationConfiguration( { data, stepId, parentCallback }) {
           checked={formDataSlack.enabled ? true : false}   
           onChange={() => setFormDataSlack({ ...formDataSlack, enabled: !formDataSlack.enabled })} 
         />
-        {/* <Form.Group controlId="repoField">
+        <Form.Group controlId="repoField">
           <Form.Label>Slack Channel</Form.Label>
           <Form.Control maxLength="50" type="text" placeholder="" disabled value={formDataSlack.channel || ""} onChange={e => setFormDataSlack({ ...formDataSlack, channel: e.target.value })} />
-        </Form.Group> */}
+        </Form.Group>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Notification Level</Form.Label>
           {renderForm ?
