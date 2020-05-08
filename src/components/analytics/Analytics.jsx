@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "../../contexts/AuthContext"; 
+import { AuthContext } from "../../contexts/AuthContext";
 import { axiosApiService } from "../../api/apiService";
 import ErrorDialog from "../common/error";
 import LoadingDialog from "../common/loading";
@@ -16,6 +16,7 @@ import JiraIssuesCreatedByDateLineChart from "./charts/jiraIssuesCreatedByDateLi
 import DeploymentsStackedBarChart from "./charts/DeploymentsStackedBarChart";
 import CircleChart from "./charts/CircleChart";
 import JiraHealthBySprintBarChart from "./charts/jiraHealthBySprintBarChart";
+import SonarSecurityLineChart from "./charts/sonarSecurityLineChart";
 import JMeterHitsLineChart from "./charts/jmeterHitsLineChart";
 import JMeterErrorsLineChart from "./charts/jmeterErrorsLineChart";
 import JMeterThroughputLineChart from "./charts/jmeterThroughputLineChart";
@@ -31,17 +32,17 @@ function Analytics() {
   const [token, setToken] = useState();
   const [selection, setSelection] = useState("pipeline");
   const [previewRole, setPreviewRole] = useState(false);
-  
-  useEffect(() => {    
+
+  useEffect(() => {
     const controller = new AbortController();
     const runEffect = async () => {
       try {
-        await fetchData();        
+        await fetchData();
       } catch (err) {
         if (err.name === "AbortError") {
           console.log("Request was canceled via controller.abort");
           return;
-        }        
+        }
       }
     };
     runEffect();
@@ -58,16 +59,16 @@ function Analytics() {
 
     //this returns true IF the Okta groups for user contains "Preview".  Please wrap display components in this.
     const isPreviewRole = await getIsPreviewRole();
-    setPreviewRole(isPreviewRole); 
+    setPreviewRole(isPreviewRole);
     if (isPreviewRole) {
-      console.log("Enabling Preview Feature Toggle. ", isPreviewRole);     
+      console.log("Enabling Preview Feature Toggle. ", isPreviewRole);
     }
 
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/settings";   
+    const apiUrl = "/analytics/settings";
     setToken(accessToken);
     try {
-      const profile = await axiosApiService(accessToken).get(apiUrl);      
+      const profile = await axiosApiService(accessToken).get(apiUrl);
       console.log("Profile: ", profile);
       setData(profile && profile.data.profile[0]);
       console.log(profile && profile.data.profile[0]);
@@ -98,8 +99,8 @@ function Analytics() {
       <div className="mt-3">
         <div className="max-content-width">
           <h4>Analytics</h4>
-          <p>OpsERA provides users with access to a vast repository of logging and analytics.  Access all available 
-         logging, reports and configurations around the OpsERA Analytics Platform or search your 
+          <p>OpsERA provides users with access to a vast repository of logging and analytics.  Access all available
+         logging, reports and configurations around the OpsERA Analytics Platform or search your
         currently configured logs repositories below.</p>
         </div>
         <div className="p-2 mt-1 max-content-width mb-4">
@@ -109,14 +110,14 @@ function Analytics() {
         { previewRole ?  //display work for new (v2) design
           <>
             <div className="p-2">
-             
+
               <div className="mt-3">
                 <ListGroup horizontal>
                   <ListGroup.Item className={"pointer " + (selection === "pipeline" ? "active" : "")} onClick={handleTabClick("pipeline")}>Pipeline</ListGroup.Item>
                   <ListGroup.Item className={"pointer " + (selection === "security" ? "active" : "")} onClick={handleTabClick("security")}>Security</ListGroup.Item>
                   <ListGroup.Item className={"pointer " + (selection === "software_development" ? "active" : "")} onClick={handleTabClick("software_development")}>Software Development</ListGroup.Item>
                   <ListGroup.Item className={"pointer " + (selection === "software_testing" ? "active" : "")} onClick={handleTabClick("software_testing")}>Software Testing</ListGroup.Item>
-                  <ListGroup.Item className={"pointer " + (selection === "service_operation" ? "active" : "")} onClick={handleTabClick("service_operation")}>Service Operation</ListGroup.Item>                
+                  <ListGroup.Item className={"pointer " + (selection === "service_operation" ? "active" : "")} onClick={handleTabClick("service_operation")}>Service Operation</ListGroup.Item>
                 </ListGroup>
               </div>
 
@@ -144,18 +145,31 @@ function ChartView({ selection, persona }) {
         <>
           <div className="m-2">
             <SummaryChartsView />
-          </div>          
+          </div>
         </>);
-          
-    
+
+
     case "security":
       return (
         <>
           <div className="m-2">
             <ReliabilityMetricsCharts persona={persona} />
-          </div>          
+          </div>
+          <div className="m-2">
+            <SonarSecurityLineChart persona={persona} sonarMeasure="vulnerabilities" />
+          </div>
+          <div className="m-2">
+            <SonarSecurityLineChart persona={persona} sonarMeasure="new_vulnerabilities" />
+          </div>
+          <div className="m-2">
+            <SonarSecurityLineChart persona={persona} sonarMeasure="code_smells" />
+          </div>
+          <div className="m-2">
+            <SonarSecurityLineChart persona={persona} sonarMeasure="new_technical_debt" />
+          </div>
+
         </>);
-        
+
     case "software_development":
       return (
         <>
@@ -184,9 +198,9 @@ function ChartView({ selection, persona }) {
               {/* Self Contained Chart Component 4  */}
             </div>
           </div>
-          
+
         </>);
-        
+
     case "software_testing":
       return (
         <>
@@ -213,14 +227,14 @@ function ChartView({ selection, persona }) {
       return (
         <>
           {/* Wire-up each chart component here, stacking them on top of each other.  Please wrap each individual chart in their own div with "m-2" class providing some margin around it */}
-          <div>NO CHARTS AVAILABLE YET</div>  
+          <div>NO CHARTS AVAILABLE YET</div>
         </>);
 
     default:
-      return null; 
+      return null;
     }
   }
-  
+
 }
 
 ChartView.propTypes = {
