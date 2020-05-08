@@ -51,7 +51,7 @@ function DeploymentsStackedBarChart( { persona } ) {
     const postBody = {
       data: [
         { 
-          request: "deployments",
+          request: "successfulDeploymentFrequency",
           metric: "stackedBar" 
         }
       ]
@@ -59,7 +59,7 @@ function DeploymentsStackedBarChart( { persona } ) {
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res.data.data[0].deployments : [];
+      let dataObject = res && res.data ? res.data.data[0].successfulDeploymentFrequency : [];
       setData(dataObject);
       setLoading(false);
     }
