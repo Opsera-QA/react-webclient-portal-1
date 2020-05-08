@@ -114,11 +114,16 @@ function JiraIssuesByPriorityBarChart( { persona } ) {
               motionStiffness={90}
               borderWidth={2}
               motionDamping={15}
-              tooltip={({ indexValue, value, id }) => (
+              tooltip={({ indexValue, value, id, data }) => (
                 <div>
                   <strong>  Project: </strong> {indexValue}<br></br>
                   <strong>  Issue Type: </strong> {id}<br></br>
-                  <strong>  No. of Issues: </strong> {value}<br></br>
+                  <strong>  No. of Lowest Priority Issues: </strong> {data[id + "-Lowest"]}<br></br>
+                  <strong>  No. of Low Priority Issues: </strong> {data[id + "-Low"]}<br></br>
+                  <strong>  No. of Medium Priority Issues: </strong> {data[id + "-Medium"]}<br></br>
+                  <strong>  No. of High Priority Issues: </strong> {data[id + "-High"]}<br></br>
+                  <strong>  No. of Highest Priority Issues: </strong> {data[id + "-Highest"]}<br></br>
+                  <strong>  No. of Blocker Issues: </strong> {data[id + "-Blocker"]}<br></br>
                 </div>
               )}
               theme={{
