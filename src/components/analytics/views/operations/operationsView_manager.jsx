@@ -86,7 +86,7 @@ function OperationsView_Manager ({ persona }) {
     return (<ErrorDialog  error={error} />);
   } else {
     return (
-      <> MANAGER VIEW
+      <>
         <SummaryCountBlocksView data={countBlockData} />
 
         <div className="d-flex">

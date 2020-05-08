@@ -86,7 +86,7 @@ function OperationsView_Executive ({ persona }) {
     return (<ErrorDialog  error={error} />);
   } else {
     return (
-      <> EXECUTIVE VIEW
+      <> 
         <SummaryCountBlocksView data={countBlockData} />
 
         <div className="d-flex">

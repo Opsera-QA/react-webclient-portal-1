@@ -156,7 +156,7 @@ function BuildView_Executive({ persona }) {
     return (<InfoDialog  message="No log activity has been captured for this dashboard yet." />);
   } else {
     return (
-      <>EXECUTIVE VIEW (DEMO):
+      <>
         <SummaryCountBlocksView data={countBlockData} />
 
         <div className="d-flex">

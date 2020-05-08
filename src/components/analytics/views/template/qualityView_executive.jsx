@@ -86,7 +86,7 @@ function QualityView_Executive ({ persona }) {
     return (<ErrorDialog  error={error} />);
   } else {
     return (
-      <> Quality Dashboard Coming Soon: Executive View
+      <> 
         <SummaryCountBlocksView data={countBlockData} />
 
         <div className="d-flex">

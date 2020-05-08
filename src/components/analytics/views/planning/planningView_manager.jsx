@@ -108,7 +108,7 @@ function PlanningView_Manager ({ persona }) {
     return (<ErrorDialog  error={error} />);
   } else {
     return (
-      <>MANAGER VIEW (DEMO)
+      <>
         <SummaryCountBlocksView data={countBlockData} />
 
         <div className="d-flex">

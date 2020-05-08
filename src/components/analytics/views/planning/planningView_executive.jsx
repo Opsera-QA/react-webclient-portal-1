@@ -94,7 +94,7 @@ function PlanningView_Executive ({ persona }) {
     return (<ErrorDialog  error={error} />);
   } else {
     return (
-      <> EXECUTIVE VIEW (DEMO)
+      <> 
         <SummaryCountBlocksView data={countBlockData} />
 
         <div className="d-flex">
