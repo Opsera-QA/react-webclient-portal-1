@@ -491,7 +491,7 @@ const MapLogData = (props) => {
             <br></br>
             <FontAwesomeIcon icon={faSearchPlus}
               className="ml-1"
-              size="xs"
+              size="m"
               style={{ cursor: "pointer" }}
               onClick= {() => { handleClick(item); }} />
           </Alert>
