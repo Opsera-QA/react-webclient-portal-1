@@ -70,7 +70,7 @@ const PipelineWorkflowDetail = (props) => {
         tmpDataObject = dataObj;
         let status =  data.workflow.last_step !== undefined && data.workflow.last_step.hasOwnProperty("status") ? data.workflow.last_step.status : false;
 
-        if (staleRefreshCount >= 100) {
+        if (staleRefreshCount >= 50) {
           console.log("closing connection due to stale data");
           setWorkflowStatus(false);
           setSocketRunning(false);

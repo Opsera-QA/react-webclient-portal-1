@@ -25,7 +25,7 @@ const INITIAL_FORM_DATA = {
 
 
 const PipelineItemDetail = (props) => {
-  const { data, role, stepStatus, parentCallback } = props;
+  const { data, role, stepStatus, parentCallback, parentCallbackRefreshActivity } = props;
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
   const [loading, setLoading] = useState(false);
@@ -95,14 +95,15 @@ const PipelineItemDetail = (props) => {
       }  
       tmpDataObject = dataObj;
       
-      if (staleRefreshCount >= 150) {
+      if (staleRefreshCount >= 50) {
         console.log("closing connection");
         setWorkflowStatus(false);
         socket.close();
         setSocketRunning(false);
       } else {
         let status = data.workflow.last_step.hasOwnProperty("status") ? data.workflow.last_step.status : false;
-        setWorkflowStatus(status);
+        setWorkflowStatus(status);       
+        parentCallbackRefreshActivity(); 
       }
            
       if (typeof(dataObj) !== "undefined" && Object.keys(dataObj).length > 0) {
@@ -475,7 +476,8 @@ PipelineItemDetail.propTypes = {
   data: PropTypes.object,
   role: PropTypes.string,
   stepStatus: PropTypes.object,
-  parentCallback: PropTypes.func
+  parentCallback: PropTypes.func,
+  parentCallbackRefreshActivity: PropTypes.func
 };
 
 

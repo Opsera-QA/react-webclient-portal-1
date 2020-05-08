@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Table } from "react-bootstrap";
 import Modal from "../common/modal";
 import { AuthContext } from "../../contexts/AuthContext"; 
-import { axiosApiServiceMultiGet } from "../../api/apiService";
+import { axiosApiServiceMultiGet, axiosApiService } from "../../api/apiService";
 import PipelineItemDetail from "./pipelineItemDetail";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
@@ -93,6 +93,18 @@ function PipelineDetail({ id }) {
     await fetchData();
   };
 
+  const callbackRefreshActivity = async () => {
+    const { getAccessToken } = contextType;
+    const accessToken = await getAccessToken();
+    const apiUrl = `/pipelines/${id}/activity`;
+    const activity = await axiosApiService(accessToken).get(apiUrl);      
+    setData({
+      ...data,
+      activity: activity && activity.data
+    });
+
+  };
+
   
   if (error) {
     return (<ErrorDialog error={error} />);
@@ -103,7 +115,7 @@ function PipelineDetail({ id }) {
   } else {
     return (
       <div className="mt-3 max-content-width">
-        {typeof(data.pipeline) !== "undefined" ? <PipelineItemDetail data={data.pipeline} parentCallback={callbackFunction} role={role} stepStatus={stepStatus}  />  : null }
+        {typeof(data.pipeline) !== "undefined" ? <PipelineItemDetail data={data.pipeline} parentCallback={callbackFunction} parentCallbackRefreshActivity={callbackRefreshActivity} role={role} stepStatus={stepStatus}  />  : null }
         {typeof(data.activity) !== "undefined" ? <PipelineActivity data={data.activity} />  : null}
       </div>         
     );
