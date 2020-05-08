@@ -147,7 +147,7 @@ function StepNotificationConfiguration( { data, stepId, parentCallback }) {
         />
         <Form.Group controlId="repoField">
           <Form.Label>Slack Channel</Form.Label>
-          <Form.Control maxLength="50" type="text" placeholder="" disabled value={formDataSlack.channel || ""} onChange={e => setFormDataSlack({ ...formDataSlack, channel: e.target.value })} />
+          <Form.Control maxLength="50" type="text" placeholder="" value={formDataSlack.channel || ""} onChange={e => setFormDataSlack({ ...formDataSlack, channel: e.target.value })} />
         </Form.Group>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Notification Level</Form.Label>
