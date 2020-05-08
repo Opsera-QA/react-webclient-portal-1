@@ -112,6 +112,14 @@ function StepNotificationConfiguration( { data, stepId, parentCallback }) {
         return false;
       }
     }
+    
+    if (formDataSlack.enabled) {
+      if (formDataSlack.channel.charAt(0) === "#") {
+        setFormMessage("Error: Please remove the pound symbol '#' from the Slack channel name.");
+        return false;
+      }
+    }
+
     if (formDataApproval.enabled) {
       if (!formDataEmail.enabled && !formDataSlack.enabled){
         setFormMessage("Error: Cannot enable approval requirement for this step without Slack or email notification enabled!");
@@ -147,7 +155,7 @@ function StepNotificationConfiguration( { data, stepId, parentCallback }) {
         />
         <Form.Group controlId="repoField">
           <Form.Label>Slack Channel</Form.Label>
-          <Form.Control maxLength="50" type="text" placeholder="" value={formDataSlack.channel || ""} onChange={e => setFormDataSlack({ ...formDataSlack, channel: e.target.value })} />
+          <Form.Control maxLength="50" type="text" disabled={!formDataSlack.enabled} placeholder="" value={formDataSlack.channel || ""} onChange={e => setFormDataSlack({ ...formDataSlack, channel: e.target.value })} />
         </Form.Group>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Notification Level</Form.Label>
