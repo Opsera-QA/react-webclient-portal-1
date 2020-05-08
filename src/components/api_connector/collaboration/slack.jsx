@@ -143,7 +143,7 @@ function Slack() {
               <Form.Group controlId="formGridToken">
                 <Form.Label>Slack Token</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="password"
                   placeholder=""
                   name="token"
                   value={state.token}
