@@ -115,7 +115,6 @@ function JiraTicketsAssignedByUserBarChart( { persona } ) {
               motionStiffness={90}
               borderWidth={2}
               motionDamping={15}
-              onClick={function(node){window.open("https://opsera.atlassian.net/people/" + node.data.jira_id + "/work");}}
               tooltip={({ indexValue, value, data, color }) => (
                 <div>
                   <strong style={{ color }}>  User: </strong> {indexValue}<br></br>
