@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import GitHub from "./source_control/gitHub";
 import GitLab from "./source_control/gitLab";
+import Bitbucket from "./source_control/bitbucket";
 import Jira from "./defect_tracking/jira";
 import ServiceNow from "./itsm/serviceNow";
 import OpenStack from "./cloud_management/openStack";
@@ -44,6 +45,9 @@ class ApiConnector extends Component {
             <a className={"nav-link " + (this.state.selection === "gitlab" ? "active" : "")} href="#" onClick={this.handleClick("gitlab")}>GitLab</a>
           </li>
           <li className="nav-item">
+            <a className={"nav-link " + (this.state.selection === "bitbucket" ? "active" : "")} href="#" onClick={this.handleClick("bitbucket")}>Bitbucket</a>
+          </li>
+          <li className="nav-item">
             <a className={"nav-link " + (this.state.selection === "jira" ? "active" : "")} href="#" onClick={this.handleClick("jira")}>Jira</a>
           </li>
           <li className="nav-item">
@@ -77,6 +81,7 @@ class ApiConnector extends Component {
 
         {this.state.selection === "github" && <GitHub />}
         {this.state.selection === "gitlab" && <GitLab />}
+        {this.state.selection === "bitbucket" && <Bitbucket />}
         {this.state.selection === "jira" && <Jira />}
 
         {this.state.selection === "jenkins" && <JenkinsForm />}

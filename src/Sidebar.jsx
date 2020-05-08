@@ -65,9 +65,9 @@ function Sidebar({ hideView }) {
                 <NavLink className="nav-link" activeClassName="chosen" exact to="/dashboard"><FontAwesomeIcon icon={faColumns} fixedWidth /> <span className="menu-text">Dashboard</span><div className="caret"></div></NavLink>                
                 <NavLink className="nav-link" activeClassName="chosen" to="/platform"><FontAwesomeIcon icon={faBox} fixedWidth /> <span className="menu-text">Platforms</span></NavLink>
                 
-                <NavLink className="nav-link" activeClassName="chosen" to="/workflow"><FontAwesomeIcon icon={faDraftingCompass} fixedWidth /> <span className="menu-text">Pipeline Beta</span></NavLink>
+                <NavLink className="nav-link" activeClassName="chosen" to="/workflow"><FontAwesomeIcon icon={faDraftingCompass} fixedWidth /> <span className="menu-text">Pipelines</span></NavLink>
                 
-                <NavLink className="nav-link" activeClassName="chosen" to="/pipeline"><FontAwesomeIcon icon={faStream} fixedWidth /> <span className="menu-text">Pipelines</span></NavLink>
+                {/* <NavLink className="nav-link" activeClassName="chosen" to="/pipeline"><FontAwesomeIcon icon={faStream} fixedWidth /> <span className="menu-text">Pipelines</span></NavLink> */}
                 <NavLink className="nav-link" activeClassName="chosen" to="/analytics"><FontAwesomeIcon icon={faChartBar} fixedWidth /> <span className="menu-text">Analytics</span></NavLink>
                 <NavLink className="nav-link" activeClassName="chosen" to="/logs"><FontAwesomeIcon icon={faArchive} fixedWidth /> <span className="menu-text">Logs</span></NavLink>
         

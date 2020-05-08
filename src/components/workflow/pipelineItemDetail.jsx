@@ -9,6 +9,7 @@ import { Card, Row, Col, Button, Form } from "react-bootstrap";
 import PipelineActions from "./actions";
 import Moment from "react-moment";
 import Modal from "../common/modal";
+import ModalActivityLogs from "../common/modalActivityLogs";
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus, faPencilAlt, faStopCircle, faSync, faPlay, faTrash, faProjectDiagram, faSave, faSpinner, faTimes } from "@fortawesome/free-solid-svg-icons";
@@ -463,15 +464,8 @@ const PipelineItemDetail = (props) => {
         button="Confirm"
         handleCancelModal={() => setShowDeleteModal(false)}
         handleConfirmModal={() => deleteItem(modalDeleteId)} /> : null}
-
-      {showModal ? <Modal header="Pipeline Details"
-        jsonMessage={modalMessage}
-        jsonView="true"
-        button="OK"
-        size="lg"
-        handleCancelModal={() => setShowModal(false)}
-        handleConfirmModal={() => setShowModal(false)} /> : null}
-
+     
+      <ModalActivityLogs header="Pipeline Details" size="lg" jsonData={modalMessage} show={showModal} setParentVisibility={setShowModal} />
     </>
     
   );

@@ -9,7 +9,7 @@ import { Row, Col, Button, Badge, OverlayTrigger, Tooltip } from "react-bootstra
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus, faCog, faArchive, faPlay, faSync, faSpinner, faStopCircle, faHistory, faArrowAltCircleDown } from "@fortawesome/free-solid-svg-icons";
-import Modal from "../common/modal";
+import ModalActivityLogs from "../common/modalActivityLogs";
 import PipelineActions from "./actions";
 import PipelineWorkflowItem from "./pipelineWorkflowItem";
 import "./workflows.css";
@@ -27,7 +27,6 @@ const PipelineWorkflowDetail = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
   const [workflowStatus, setWorkflowStatus] = useState(false);
-  const [showPipelineDataModal, setShowPipelineDataModal] = useState(false);
   const endPointUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
    
 
@@ -224,7 +223,9 @@ const PipelineWorkflowDetail = (props) => {
 
 
   const handleViewPipelineClick = (param) => {
-    setShowPipelineDataModal(param);
+    setModalHeader("Pipeline Details");
+    setModalMessage(param);
+    setShowModal(true);
   };
 
 
@@ -246,7 +247,7 @@ const PipelineWorkflowDetail = (props) => {
       const activityData = await fetchPipelineActivityByTool(pipelineId, tool, stepId, activityId);
       if (activityData && activityData.data) {
         setModalHeader("Step Activity Log");
-        setModalMessage(activityData.data);
+        setModalMessage(activityData.data[0]);
         setShowModal(true);
       }    
     }    
@@ -380,24 +381,10 @@ const PipelineWorkflowDetail = (props) => {
             <div className="workflow-module-container workflow-module-container-width-sm pt-2 mb-4 text-center mx-auto h6">
             End of Workflow
             </div>
-          </div>
-          {showModal ? <Modal header={modalHeader}
-            jsonMessage={modalMessage}
-            jsonView="true"
-            button="OK"
-            size="lg"
-            handleCancelModal={() => setShowModal(false)}
-            handleConfirmModal={() => setShowModal(false)} /> : null}
+          </div>          
+          
         </> : null }
-
-      {showPipelineDataModal ? <Modal header="Pipeline Details"
-        jsonMessage={showPipelineDataModal}
-        jsonView="true"
-        button="OK"
-        size="lg"
-        handleCancelModal={() => setShowPipelineDataModal(false)}
-        handleConfirmModal={() => setShowPipelineDataModal(false)} /> : null}
-
+      <ModalActivityLogs header={modalHeader} size="lg" jsonData={modalMessage} show={showModal} setParentVisibility={setShowModal} />
     </>
   );
 };

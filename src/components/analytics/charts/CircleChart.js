@@ -45,7 +45,7 @@ function CircleChart( { persona } ) {
     const postBody = {
       data: [
         { 
-          request: "deploymentsSuccessfull",
+          request: "jenkinsDeploySuccess",
           metric: "guage" 
         }
       ]
@@ -53,7 +53,7 @@ function CircleChart( { persona } ) {
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res.data.data[0].deploymentsSuccessfull : [];
+      let dataObject = res && res.data ? res.data.data[0].jenkinsDeploySuccess : [];
       setData(dataObject);
       setLoading(false);
     }

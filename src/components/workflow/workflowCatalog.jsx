@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import { CardDeck, Card, Row, Col, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext"; //New AuthContext State 
@@ -8,7 +7,7 @@ import { axiosApiService } from "../../api/apiService";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import InfoDialog from "../common/info";
-import Modal from "../common/modal";
+import ModalActivityLogs from "../common/modalActivityLogs";
 import Moment from "react-moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -24,11 +23,6 @@ function WorkflowCatalog() {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
   
-  // let history = useHistory();
-  // const handleClick = param => e => {
-  //   e.preventDefault();
-  //   history.push(`/${param}`);
-  // };
   const callbackFunction = (item) => {
     setModalMessage(item);
     setShowModal(true);
@@ -71,13 +65,7 @@ function WorkflowCatalog() {
                 <InfoDialog message="No Catalog Items Found" />}
             </div>
 
-            {showModal ? <Modal header="Template Details"
-              jsonMessage={modalMessage}
-              jsonView="true"
-              button="OK"
-              size="lg"
-              handleCancelModal={() => setShowModal(false)}
-              handleConfirmModal={() => setShowModal(false)} /> : null}
+            <ModalActivityLogs header="Template Details" size="lg" jsonData={modalMessage} show={showModal} setParentVisibility={setShowModal} />
           </>
         }
       </>

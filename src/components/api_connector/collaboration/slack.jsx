@@ -144,19 +144,18 @@ function Slack() {
               <Form.Group controlId="formGridToken">
                 <Form.Label>Slack Token</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="password"
                   placeholder=""
                   name="token"
                   value={state.token}
                   onChange={handleChange}
-                // isInvalid={this.state.token.error}
                 />
-                {/* <Form.Control.Feedback type="invalid">{this.state.token.error}</Form.Control.Feedback> */}
+            
               </Form.Group>
 
-              <div className="text-muted mt-2 mb-2 italic">Please Note: All fields are required for connectivity.</div>
+              <div className="text-muted mt-2 mb-4 italic">Please Note: The token above is associated with the Slack account which will be used for notifications.</div>
               <Button id="save-button" disabled={!isEnabled} variant="outline-primary" className="mr-2" type="submit">Save Changes</Button>
-              {/* <Button id="cancel-button" variant="outline-secondary" className="mr-2" type="button" onClick={this.cancel}>Cancel</Button> */}
+
             </Form>
           }
 

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Row, Col, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus, faCog, faArchive, faBookmark, faSpinner, faCheckCircle, faEnvelope, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
-import Modal from "../common/modal";
+import ModalActivityLogs from "../common/modalActivityLogs";
 import Moment from "react-moment";
 import "./workflows.css";
 
@@ -148,13 +148,7 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, par
      
       </div>
 
-      {showModal ? <Modal header={modalHeader}
-        jsonMessage={modalMessage}
-        jsonView="true"
-        button="OK"
-        size="lg"
-        handleCancelModal={() => setShowModal(false)}
-        handleConfirmModal={() => setShowModal(false)} /> : null}
+      <ModalActivityLogs header={modalHeader} size="lg" jsonData={modalMessage} show={showModal} setParentVisibility={setShowModal} />
     </>
   );
 };

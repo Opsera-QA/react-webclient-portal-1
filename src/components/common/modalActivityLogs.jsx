@@ -8,22 +8,32 @@ import ReactJson from "react-json-view";
 function ModalActivityLogsDialog({ header, size, jsonData, show, setParentVisibility }) {
   const [showModal, setShowModal] = useState(false);
   const [viewType, setViewType] = useState("log");
+  const [dataView, setDataView] = useState(jsonData);
   
   useEffect(() => {
-    console.log("show: ", show);
-    console.log("DATA", jsonData);
     setShowModal(show);
     if (jsonData !== undefined) {
-      setViewType(jsonData.action);
+      setViewType(jsonData.action);      
+      const new_obj = iterate(jsonData);      
+      setDataView(new_obj);
     }    
   }, [jsonData, show]);
 
-
-
   const handleClose = () => {
-    console.log("CLOSING!");
     setShowModal(false);
     setParentVisibility(false);
+  };
+
+  const iterate = (obj) => {
+    Object.keys(obj).forEach(key => {
+      if (key === "configuration") {
+        obj[key] = { data: "hidden" };
+      }
+      if (typeof obj[key] === "object" && obj[key] !== null) {
+        iterate(obj[key]);
+      }
+    });
+    return obj;
   };
 
 
@@ -32,7 +42,7 @@ function ModalActivityLogsDialog({ header, size, jsonData, show, setParentVisibi
       <>
         <Modal show={showModal} size={size} onHide={() => handleClose()}>
           <Modal.Header closeButton>
-            <Modal.Title>Console Ouptut</Modal.Title>
+            <Modal.Title>Console Output</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="my-2">
@@ -58,7 +68,7 @@ function ModalActivityLogsDialog({ header, size, jsonData, show, setParentVisibi
             <Modal.Title>{header}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <ReactJson src={jsonData} displayDataTypes={false} />               
+            <ReactJson src={dataView} displayDataTypes={false} />               
           </Modal.Body>
           <Modal.Footer>
             <Button variant="outline-secondary" onClick={() => handleClose()}>

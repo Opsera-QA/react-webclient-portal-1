@@ -46,16 +46,16 @@ export default {
     "orient": "bottom",
     "tickSize": 5,
     "tickPadding": 5,
-    "tickRotation": 0,
+    "tickRotation": -20,
     "legend": "Timestamp",
-    "legendOffset": 36,
+    "legendOffset": 46,
     "legendPosition": "middle"
   },
   axisLeft: {
     "tickSize": 5,
     "tickPadding": 5,
     "tickRotation": 0,
-    "legend": "Build Count",
+    "legend": "Deployment Count",
     "legendPosition": "middle",
     "legendOffset": -65
   },
