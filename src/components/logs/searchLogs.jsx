@@ -484,16 +484,17 @@ const MapLogData = (props) => {
     return (
       <>
         {data.map((item, idx) => (
-          <Alert key={idx} variant="secondary">
+          <Alert key={idx}>
             <strong>Timestamp: <Moment format="YYYY-MM-DD, hh:mm a" date={typeof(item._source["@timestamp"]) !== "undefined" ? item._source["@timestamp"] : null}></Moment></strong>
-            <br></br>        
-            <Highlight matchClass="react-highlighter-lightblue" search={/".*?":/}>{JSON.stringify(item, null, 2).substring(0, 1000)}</Highlight>
-            <br></br>
-            <FontAwesomeIcon icon={faSearchPlus}
+            <span className="ml-3"><FontAwesomeIcon icon={faSearchPlus}
               className="ml-1"
               size="m"
               style={{ cursor: "pointer" }}
               onClick= {() => { handleClick(item); }} />
+            </span>
+            <br></br>        
+            <Highlight matchClass="react-highlighter-lightblue" search={/".*?":/}>{JSON.stringify(item, null, 2).substring(0, 1000)}</Highlight>
+            <br></br>
           </Alert>
         ))}
         {showModal ? <Modal header="Log Details"
