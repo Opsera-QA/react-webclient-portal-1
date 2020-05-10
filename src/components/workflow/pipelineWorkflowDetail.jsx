@@ -5,7 +5,7 @@ import { axiosApiService } from "../../api/apiService";
 import { AuthContext } from "../../contexts/AuthContext"; 
 import socketIOClient from "socket.io-client";
 import { SteppedLineTo } from "react-lineto";
-import { Row, Col, Button, Badge, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus, faCog, faArchive, faPlay, faSync, faSpinner, faStopCircle, faHistory, faArrowAltCircleDown } from "@fortawesome/free-solid-svg-icons";
@@ -268,9 +268,9 @@ const PipelineWorkflowDetail = (props) => {
               <div className="my-3 text-right">
                 {workflowStatus === "running" ? 
                   <>
-                    <Button variant="outline-dark" size="sm" className="mr-2" disabled>
+                    <Button variant="outline-dark" className="mr-2" disabled>
                       <FontAwesomeIcon icon={faSpinner} spin className="mr-1"/> Running</Button>
-                    <Button variant="outline-danger" size="sm" className="mr-2" 
+                    <Button variant="outline-danger" className="mr-2" 
                       onClick={() => { handleStopWorkflowClick(data._id); }}
                       disabled={role !== "administrator"}>
                       <FontAwesomeIcon icon={faStopCircle} className="mr-1"/>Stop Pipeline</Button>
@@ -278,13 +278,13 @@ const PipelineWorkflowDetail = (props) => {
                   :
                   <>
                     { nextStep === undefined || nextStep === data.workflow.plan[0] ?
-                      <Button variant="success" size="sm" className="mr-2" 
+                      <Button variant="success" className="mr-2" 
                         onClick={() => { handleRunPipelineClick(data._id); }}
                         disabled={role !== "administrator"}>
                         <FontAwesomeIcon icon={faPlay} className="mr-1"/>Start Pipeline</Button>
                       :
                       <>
-                        <Button variant="success" size="sm" className="mr-2" 
+                        <Button variant="success" className="mr-2" 
                           onClick={() => { handleRunPipelineClick(data._id); }}
                           disabled={role !== "administrator"}>
                           <FontAwesomeIcon icon={faPlay} className="mr-1"/>Continue Pipeline</Button>
@@ -294,13 +294,13 @@ const PipelineWorkflowDetail = (props) => {
                       data.workflow.last_step.hasOwnProperty("success") || 
                     data.workflow.last_step.hasOwnProperty("running") || 
                     data.workflow.last_step.hasOwnProperty("failed")) ?
-                      <Button variant="outline-primary" size="sm" className="mr-2" 
+                      <Button variant="outline-primary" className="mr-2" 
                         onClick={() => { handleStopWorkflowClick(data._id); }}
                         disabled={role !== "administrator"}>
                         <FontAwesomeIcon icon={faHistory} className="mr-1"/>Reset Pipeline</Button> : null}
                   </>
                 }
-                <Button variant="outline-warning" size="sm" className="mr-2" onClick={() => { handleRefreshClick(data._id); }}>
+                <Button variant="outline-warning" className="mr-2" onClick={() => { handleRefreshClick(data._id); }}>
                   <FontAwesomeIcon icon={faSync} className="fa-fw"/></Button>                            
               </div> : null }          
           </div>
@@ -408,20 +408,21 @@ const ItemList = React.memo(function ItemList({ items, lastStep, nextStep, pipel
   };
 
   const setStepStatusClass = (last_step, item_id) => {
-
+    let classString = "step-"+item_id;
+    
     if (typeof(last_step) !== "undefined") {
       if(typeof(last_step.success) !== "undefined" && last_step.success.step_id === item_id) {
-        return "workflow-step-success step-"+item_id;
+        classString += " workflow-step-success";
       }
       else if(typeof(last_step.running) !== "undefined" && last_step.running.step_id === item_id) {
-        return "workflow-step-running step-"+item_id;
+        classString += " workflow-step-running";
       }
       else if(typeof(last_step.failed) !== "undefined" && last_step.failed.step_id === item_id) {
-        return "workflow-step-failure step-"+item_id;
-      } else {
-        return "step-"+item_id;
+        classString += " workflow-step-failure";
       }
     }
+
+    return classString;
   }; 
 
 

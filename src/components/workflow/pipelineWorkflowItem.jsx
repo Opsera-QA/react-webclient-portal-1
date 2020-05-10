@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Row, Col, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus, faCog, faArchive, faBookmark, faSpinner, faCheckCircle, faEnvelope, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import ModalActivityLogs from "../common/modalActivityLogs";
@@ -68,9 +68,9 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, par
       <div>
         <div className="d-flex flex-row">
           <div className="p-1"><span className="text-muted">Step:</span> {item.name}</div>
-          <div className="p-1 ml-auto">
+          <div className="p-1 ml-auto text-right">
             {stepConfigured ? 
-              <Col className="text-right" style={{ fontSize:"small" }}>
+              <>
                 { currentStatus.status === "failed" || currentStatus.status === "failure" ? 
                   <OverlayTrigger
                     placement="top"
@@ -102,7 +102,7 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, par
                     {nextStep !== undefined && nextStep._id === item._id && itemState !== "running" ? 
                       <FontAwesomeIcon icon={faBookmark} className="nav-blue mr-2" /> : null }
                   </> }                  
-              </Col> : null }
+              </> : null }
           </div>
           
         </div>
@@ -113,9 +113,9 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, par
 
         { typeof(currentStatus) !== "undefined" && currentStatus.step_id === item._id ? 
           <div className="d-flex">
-            <div className="p-1 upper-case-first"><span className="text-muted">Status:</span> <span className="upper-case-first pr-1">{currentStatus.status}</span>
+            <div className="p-1"><span className="text-muted">Status:</span> <span className="upper-case-first pr-1">{currentStatus.status}</span>
                    on <Moment format="YYYY-MM-DD, hh:mm a" date={currentStatus.updatedAt} /></div>
-            <div className="p-1">Flex item 2</div>     
+            {/* <div className="p-1">Flex item 2</div>      */}
           </div> : null}
 
 
