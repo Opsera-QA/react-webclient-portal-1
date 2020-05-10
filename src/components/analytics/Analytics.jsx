@@ -22,6 +22,7 @@ import JMeterErrorsLineChart from "./charts/jmeterErrorsLineChart";
 import JMeterThroughputLineChart from "./charts/jmeterThroughputLineChart";
 import JMeterResponseTimeLineChart from "./charts/jmeterResponseTimeLineChart";
 import JMeterResultsTable from "./metrics/jmeterResultsTable";
+import GitlabPlanCodeView from "./views/GitlabPlanCodeView";
 
 
 function Analytics() {
@@ -198,6 +199,7 @@ function ChartView({ selection, persona }) {
               {/* Self Contained Chart Component 4  */}
             </div>
           </div>
+          <GitlabPlanCodeView persona={persona} />
 
         </>);
 
