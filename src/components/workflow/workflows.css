@@ -20,7 +20,7 @@
 }
 
 .workflow-module-container-width {
-  max-width: 400px;
+  max-width: 420px;
 }
 
 .workflow-module-container {  
@@ -28,9 +28,9 @@
   color: #334152;
   border-style: solid;
   border-color: #6c757d;
-  border-width: 1px;
+  border-width: 2px;
   margin-bottom: 8px;
-  padding: 8px;
+  padding: 4px;
 }
 
 
@@ -43,17 +43,17 @@
 
 .workflow-step-failure {
   border-color: #ff0000;
-  border-width: 4px;
+  border-width: 2px;
 }
 
 .workflow-step-running {
   border-color: #28a745;
-  border-width: 4px;
+  border-width: 2px;
 }
 
 .workflow-step-success {
   border-color: #226196;
-  border-width: 4px;
+  border-width: 2px;
 }
 
 .workflow-action-icons {

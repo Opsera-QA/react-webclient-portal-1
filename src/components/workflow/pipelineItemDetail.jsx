@@ -12,7 +12,7 @@ import Modal from "../common/modal";
 import ModalActivityLogs from "../common/modalActivityLogs";
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faPencilAlt, faStopCircle, faSync, faPlay, faTrash, faProjectDiagram, faSave, faSpinner, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faPencilAlt, faStopCircle, faSync, faPlay, faTrash, faThLarge, faSave, faSpinner, faTimes, faCogs } from "@fortawesome/free-solid-svg-icons";
 import "./workflows.css";
 import SchedulerWidget from "../common/schedulerWidget";
 
@@ -28,7 +28,6 @@ const PipelineItemDetail = (props) => {
   const { data, role, stepStatus, parentCallback, parentCallbackRefreshActivity } = props;
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
-  const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [socketRunning, setSocketRunning] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
@@ -125,18 +124,15 @@ const PipelineItemDetail = (props) => {
     });
   };
 
-
   const handleViewClick = (param) => {
     setModalMessage(param);
     setShowModal(true);
   };
 
-
   const handleRefreshClick = async () => {
     await parentCallback();
     //subscribeToTimer();
   };
-
 
   const handleDeleteClick = (itemId) => e => {
     e.preventDefault();
@@ -144,19 +140,16 @@ const PipelineItemDetail = (props) => {
     setModalDeleteId(itemId);    
   };
 
-
   const handleStopWorkflowClick = async (pipelineId) => {
     await stopPipeline(pipelineId);
     setWorkflowStatus(false);    
   };
- 
   
   const handleRunPipelineClick = async (pipelineId, oneStep) => {
     await runPipeline(pipelineId, oneStep);
     setWorkflowStatus("running");
     subscribeToTimer();  
   };
-  
   
   async function deleteItem(pipelineId) {
     const { getAccessToken } = contextType;
@@ -165,7 +158,6 @@ const PipelineItemDetail = (props) => {
   }
 
   async function runPipeline(pipelineId) {
-    setLoading(true);
     const { getAccessToken } = contextType;
     const postBody = {};
     const response = await PipelineActions.run(pipelineId, postBody, getAccessToken);
@@ -177,14 +169,12 @@ const PipelineItemDetail = (props) => {
   }
 
   async function stopPipeline(pipelineId) {
-    setLoading(true);
     const { getAccessToken } = contextType;
     const response = await PipelineActions.cancel(pipelineId, getAccessToken);
     console.log(response);
     if (typeof(response.error) !== "undefined") {
       console.log(response.error);
       setErrors(response.error);
-      setLoading(false);
     }  
   }
 
@@ -428,32 +418,43 @@ const PipelineItemDetail = (props) => {
               </Row> 
 
 
-              <Row>
-                <Col className="py-3">
-                  <LinkContainer to={`/workflow/${data._id}/model`}>
-                    <Button variant="primary" size="sm" className="mr-2 mt-2">
-                      <FontAwesomeIcon icon={faProjectDiagram} className="mr-1"/>View Workflow</Button>
-                  </LinkContainer>
+              {_configuredToolsCount(data.workflow.plan) === 0 ?
+                <Row>
+                  <Col className="py-3">
+                    <LinkContainer to={`/workflow/${data._id}/model`}>
+                      <Button variant="success" className="mr-2 mt-2">
+                        <FontAwesomeIcon icon={faCogs} className="mr-1" fixedWidth/>Build Workflow</Button>
+                    </LinkContainer>
+                  </Col>
+                </Row>
+                :
+                <Row>
+                  <Col className="py-3">
+                    <LinkContainer to={`/workflow/${data._id}/model`}>
+                      <Button variant="primary" className="mr-2 mt-2">
+                        <FontAwesomeIcon icon={faThLarge} className="mr-1" fixedWidth/>View Workflow</Button>
+                    </LinkContainer>
                 
-                  {workflowStatus === "running" ? 
-                    <>
-                      <Button variant="outline-dark" size="sm" className="mr-2 mt-2" disabled>
-                        <FontAwesomeIcon icon={faSpinner} spin className="mr-1"/> Running</Button>
+                    {workflowStatus === "running" ? 
+                      <>
+                        <Button variant="outline-dark" className="mr-2 mt-2" disabled>
+                          <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> Running</Button>
 
-                      <Button variant="outline-danger" size="sm" className="mr-2 mt-2" 
-                        onClick={() => { handleStopWorkflowClick(data._id); }} disabled={workflowStatus !== "running"}>
-                        <FontAwesomeIcon icon={faStopCircle} className="mr-1"/>Stop Pipeline</Button>
-                    </>
-                    :
-                    <Button variant="success" size="sm" className="mr-2 mt-2" onClick={() => handleRunPipelineClick(data._id)}>
-                      <FontAwesomeIcon icon={faPlay} className="mr-1"/>Start Pipeline</Button>
-                  }
+                        <Button variant="outline-danger" className="mr-2 mt-2" 
+                          onClick={() => { handleStopWorkflowClick(data._id); }} disabled={workflowStatus !== "running"}>
+                          <FontAwesomeIcon icon={faStopCircle} className="mr-1" fixedWidth/>Reset Pipeline</Button>
+                      </>
+                      :
+                      <Button variant="success" className="mr-2 mt-2" onClick={() => handleRunPipelineClick(data._id)}>
+                        <FontAwesomeIcon icon={faPlay} className="mr-1" fixedWidth/>Start Pipeline</Button>
+                    }
                  
-                  <Button variant="outline-warning" size="sm" className="mr-2 mt-2" onClick={() => { handleRefreshClick(data._id); }}>
-                    <FontAwesomeIcon icon={faSync} className="fa-fw"/></Button> 
+                    <Button variant="outline-warning" className="mr-2 mt-2" onClick={() => { handleRefreshClick(data._id); }}>
+                      <FontAwesomeIcon icon={faSync} className="fa-fw" fixedWidth/></Button> 
 
-                </Col>
-              </Row>
+                  </Col>
+                </Row>
+              }
             </Card.Body>
           </Card>
 
@@ -481,11 +482,28 @@ PipelineItemDetail.propTypes = {
 };
 
 
+const _configuredToolsCount = (array) => {
+  let toolsCount = 0;
+  array.map((item) => {
+    if (item.tool !== undefined) {
+      if ((item.tool.tool_identifier !== undefined && item.tool.tool_identifier !== "") || item.tool.configuration !== undefined) {
+        toolsCount++;
+      }
+    }      
+  });  
+  return toolsCount; 
+};
 
 const _buildToolList = (array) => {
+  
   let tools = [];
-  array.map((item) => {tools.push(item.tool.tool_identifier);});
+  array.map((item) => {
+    if (item.tool !== undefined) {
+      tools.push(item.tool.tool_identifier);
+    }
+  });
   return tools.filter((a, b) => tools.indexOf(a) === b);
+  
 };
 
 export default PipelineItemDetail;

@@ -14,6 +14,7 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, par
   const [modalHeader, setModalHeader] = useState("");
   const [currentStatus, setCurrentStatus] = useState({});
   const [itemState, setItemState] = useState(false);
+  const [stepConfigured, setStepConfigured] = useState(false);
 
   useEffect(() => {    
     if (typeof(lastStep) !== "undefined" && typeof(item) !== "undefined") {
@@ -36,6 +37,17 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, par
       setCurrentStatus({});
       setItemState("");
     }    
+
+    if (item.tool !== undefined) {
+      if ((item.tool.tool_identifier !== undefined && item.tool.tool_identifier !== "") || item.tool.configuration !== undefined) {
+        setStepConfigured(true);
+      } else {
+        setStepConfigured(false);
+      }
+    } else {
+      setStepConfigured(false);
+    }
+
   }, [lastStep]);
 
   const handleViewClick = (data, header) => {
@@ -44,66 +56,77 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, par
     setShowModal(true);
   };
 
-  const handleEditClick = (type, name, itemId) => {
-    parentCallback({ type: type, tool_name: name, step_id: itemId });
+  const handleEditClick = (type, tool, itemId) => {
+    if (tool && tool.tool_identifier !== undefined) {
+      parentCallback({ type: type, tool_name: tool.tool_identifier, step_id: itemId });    
+    }
+      
   };  
 
   return (
     <>
       <div>
-        <Row>
-          <Col><span className="text-muted">Step:</span> {item.name}</Col>
-          <Col className="text-right" style={{ fontSize:"small" }}>
-            { currentStatus.status === "failed" || currentStatus.status === "failure" ? 
-              <OverlayTrigger
-                placement="top"
-                delay={{ show: 250, hide: 400 }}
-                overlay={renderTooltip({ message: "View Errors" })} >
-                <FontAwesomeIcon icon={faExclamationTriangle} className="mr-2 red" 
-                  style={{ cursor: "pointer" }} size="lg"
-                  onClick={() => { parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id); }} />
-              </OverlayTrigger> :
-              <>
-                {itemState === "completed" ? 
+        <div className="d-flex flex-row">
+          <div className="p-1"><span className="text-muted">Step:</span> {item.name}</div>
+          <div className="p-1 ml-auto">
+            {stepConfigured ? 
+              <Col className="text-right" style={{ fontSize:"small" }}>
+                { currentStatus.status === "failed" || currentStatus.status === "failure" ? 
                   <OverlayTrigger
                     placement="top"
                     delay={{ show: 250, hide: 400 }}
-                    overlay={renderTooltip({ message: "View Log" })} >
-                    <FontAwesomeIcon icon={faCheckCircle} className="mr-2 green" 
-                      style={{ cursor: "pointer" }}  size="lg"
+                    overlay={renderTooltip({ message: "View Errors" })} >
+                    <FontAwesomeIcon icon={faExclamationTriangle} className="mr-2 red" 
+                      style={{ cursor: "pointer" }} size="lg"
                       onClick={() => { parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id); }} />
-                  </OverlayTrigger> : null }
-                {itemState === "running" ?  <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "View Log" })} >
-                  <FontAwesomeIcon icon={faSpinner} className="mr-2 green" 
-                    style={{ cursor: "pointer" }}  size="lg" spin
-                    onClick={() => { parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id); }} />
-                </OverlayTrigger> : null }  
+                  </OverlayTrigger> :
+                  <>
+                    {itemState === "completed" ? 
+                      <OverlayTrigger
+                        placement="top"
+                        delay={{ show: 250, hide: 400 }}
+                        overlay={renderTooltip({ message: "View Log" })} >
+                        <FontAwesomeIcon icon={faCheckCircle} className="mr-2 green" 
+                          style={{ cursor: "pointer" }}  size="lg"
+                          onClick={() => { parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id); }} />
+                      </OverlayTrigger> : null }
+                    {itemState === "running" ?  <OverlayTrigger
+                      placement="top"
+                      delay={{ show: 250, hide: 400 }}
+                      overlay={renderTooltip({ message: "View Log" })} >
+                      <FontAwesomeIcon icon={faSpinner} className="mr-2 green" 
+                        style={{ cursor: "pointer" }}  size="lg" spin
+                        onClick={() => { parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id); }} />
+                    </OverlayTrigger> : null }  
 
-                {nextStep !== undefined && nextStep._id === item._id && itemState !== "running" ? 
-                  <FontAwesomeIcon icon={faBookmark} className="nav-blue mr-2" /> : null }
-              </> }                  
-          </Col>
-        </Row>
-        <Row>
-          <Col className="upper-case-first"><span className="text-muted">Tool:</span> {item.tool.tool_identifier}</Col>
-        </Row>
-         
+                    {nextStep !== undefined && nextStep._id === item._id && itemState !== "running" ? 
+                      <FontAwesomeIcon icon={faBookmark} className="nav-blue mr-2" /> : null }
+                  </> }                  
+              </Col> : null }
+          </div>
+          
+        </div>
+        <div className="d-flex">
+          <div className="p-1 upper-case-first"><span className="text-muted">Tool:</span> {item.tool !== undefined ? item.tool.tool_identifier : ""}</div>
+          {/* <div className="p-1"></div> */}
+        </div>
+
         { typeof(currentStatus) !== "undefined" && currentStatus.step_id === item._id ? 
-          <>
-            <Row>
-              <Col><span className="text-muted pr-1">Status:</span> 
-                <span className="upper-case-first pr-1">{currentStatus.status}</span>
-                   on <Moment format="YYYY-MM-DD, hh:mm a" date={currentStatus.updatedAt} />                                   
-              </Col>
-            </Row>
-             
-          </> : null}
-        <Row className="mt-1">
-          <Col className="text-muted small">ID: {item._id}</Col>
-          <Col className="text-right pt-1 workflow-action-icons">
+          <div className="d-flex">
+            <div className="p-1 upper-case-first"><span className="text-muted">Status:</span> <span className="upper-case-first pr-1">{currentStatus.status}</span>
+                   on <Moment format="YYYY-MM-DD, hh:mm a" date={currentStatus.updatedAt} /></div>
+            <div className="p-1">Flex item 2</div>     
+          </div> : null}
+
+
+        <div className="d-flex">
+          <div className="p-1"></div>
+        </div>
+
+        <div className="d-flex align-items-end flex-row">
+          <div className="p-1"><span className="text-muted small">ID: {item._id}</span></div>
+          <div className="p-2"></div>
+          <div className="ml-auto p-1 text-right">
             <OverlayTrigger
               placement="top"
               delay={{ show: 250, hide: 400 }}
@@ -131,7 +154,7 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, par
               <FontAwesomeIcon icon={faEnvelope}
                 style={{ cursor: "pointer" }}
                 className="text-muted mx-1" fixedWidth
-                onClick={() => { handleEditClick("notification", item.tool.tool_identifier, item._id); }} />
+                onClick={() => { handleEditClick("notification", item.tool, item._id); }} />
             </OverlayTrigger>
 
             <OverlayTrigger
@@ -141,11 +164,10 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, par
               <FontAwesomeIcon icon={faCog}
                 style={{ cursor: "pointer" }}
                 className="text-muted mx-1" fixedWidth
-                onClick={() => { handleEditClick("tool", item.tool.tool_identifier, item._id); }} />
-            </OverlayTrigger>
-          </Col>
-        </Row>
-     
+                onClick={() => { handleEditClick("tool", item.tool, item._id); }} />
+            </OverlayTrigger></div>
+        </div>
+
       </div>
 
       <ModalActivityLogs header={modalHeader} size="lg" jsonData={modalMessage} show={showModal} setParentVisibility={setShowModal} />

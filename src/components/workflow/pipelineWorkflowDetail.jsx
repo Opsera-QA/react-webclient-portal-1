@@ -263,44 +263,46 @@ const PipelineWorkflowDetail = (props) => {
             <h5>{data.name}            
               {/* <Badge variant="secondary" pill className="ml-3 mb-1"> Steps: {currentStepIndex + 1} / {data.workflow ? data.workflow.plan.length : null }</Badge> */}
             </h5>
-            <div className="my-3 text-right">
-              {workflowStatus === "running" ? 
-                <>
-                  <Button variant="outline-dark" size="sm" className="mr-2" disabled>
-                    <FontAwesomeIcon icon={faSpinner} spin className="mr-1"/> Running</Button>
-                  <Button variant="outline-danger" size="sm" className="mr-2" 
-                    onClick={() => { handleStopWorkflowClick(data._id); }}
-                    disabled={role !== "administrator"}>
-                    <FontAwesomeIcon icon={faStopCircle} className="mr-1"/>Stop Pipeline</Button>
-                </>
-                :
-                <>
-                  { nextStep === undefined || nextStep === data.workflow.plan[0] ?
-                    <Button variant="success" size="sm" className="mr-2" 
-                      onClick={() => { handleRunPipelineClick(data._id); }}
+
+            { _configuredToolsCount(data.workflow.plan) > 0 ?             
+              <div className="my-3 text-right">
+                {workflowStatus === "running" ? 
+                  <>
+                    <Button variant="outline-dark" size="sm" className="mr-2" disabled>
+                      <FontAwesomeIcon icon={faSpinner} spin className="mr-1"/> Running</Button>
+                    <Button variant="outline-danger" size="sm" className="mr-2" 
+                      onClick={() => { handleStopWorkflowClick(data._id); }}
                       disabled={role !== "administrator"}>
-                      <FontAwesomeIcon icon={faPlay} className="mr-1"/>Start Pipeline</Button>
-                    :
-                    <>
+                      <FontAwesomeIcon icon={faStopCircle} className="mr-1"/>Stop Pipeline</Button>
+                  </>
+                  :
+                  <>
+                    { nextStep === undefined || nextStep === data.workflow.plan[0] ?
                       <Button variant="success" size="sm" className="mr-2" 
                         onClick={() => { handleRunPipelineClick(data._id); }}
                         disabled={role !== "administrator"}>
-                        <FontAwesomeIcon icon={faPlay} className="mr-1"/>Continue Pipeline</Button>
+                        <FontAwesomeIcon icon={faPlay} className="mr-1"/>Start Pipeline</Button>
+                      :
+                      <>
+                        <Button variant="success" size="sm" className="mr-2" 
+                          onClick={() => { handleRunPipelineClick(data._id); }}
+                          disabled={role !== "administrator"}>
+                          <FontAwesomeIcon icon={faPlay} className="mr-1"/>Continue Pipeline</Button>
 
-                    </>}
-                  { data.workflow.hasOwnProperty("last_step") && ( 
-                    data.workflow.last_step.hasOwnProperty("success") || 
+                      </>}
+                    { data.workflow.hasOwnProperty("last_step") && ( 
+                      data.workflow.last_step.hasOwnProperty("success") || 
                     data.workflow.last_step.hasOwnProperty("running") || 
                     data.workflow.last_step.hasOwnProperty("failed")) ?
-                    <Button variant="outline-primary" size="sm" className="mr-2" 
-                      onClick={() => { handleStopWorkflowClick(data._id); }}
-                      disabled={role !== "administrator"}>
-                      <FontAwesomeIcon icon={faHistory} className="mr-1"/>Reset Pipeline</Button> : null}
-                </>
-              }
-              <Button variant="outline-warning" size="sm" className="mr-2" onClick={() => { handleRefreshClick(data._id); }}>
-                <FontAwesomeIcon icon={faSync} className="fa-fw"/></Button>                            
-            </div>             
+                      <Button variant="outline-primary" size="sm" className="mr-2" 
+                        onClick={() => { handleStopWorkflowClick(data._id); }}
+                        disabled={role !== "administrator"}>
+                        <FontAwesomeIcon icon={faHistory} className="mr-1"/>Reset Pipeline</Button> : null}
+                  </>
+                }
+                <Button variant="outline-warning" size="sm" className="mr-2" onClick={() => { handleRefreshClick(data._id); }}>
+                  <FontAwesomeIcon icon={faSync} className="fa-fw"/></Button>                            
+              </div> : null }          
           </div>
 
           <div className="workflow-container ml-4 px-3 max-content-module-width-50">
@@ -312,25 +314,35 @@ const PipelineWorkflowDetail = (props) => {
             </div>
             
 
-            <div className="source workflow-module-container workflow-module-container-width-sm">
+            <div className="source workflow-module-container workflow-module-container-width-sm p-2">
               <h6>Start of Workflow</h6>
               {!data.workflow.source.service ? <div>Source Repository</div> : null }
-              {data.workflow.source.name ? <Row>
-                <Col><span className="text-muted">Project:</span> {data.workflow.source.name}</Col>               
-              </Row> : null }
-              {data.workflow.source.service ? <Row className="mt-1 upper-case-first">
-                <Col><span className="text-muted">Service:</span> {data.workflow.source.service}</Col>               
-              </Row> : null }
-              {data.workflow.source.repository ? <Row className="mt-1">
-                <Col><span className="text-muted">Repository:</span> {data.workflow.source.repository}</Col>                               
-              </Row> : null }
-              {data.workflow.source.branch ? <Row className="mt-1">
-                <Col><span className="text-muted">Branch:</span> {data.workflow.source.branch}</Col>               
-              </Row> : null }
+              
+              {data.workflow.source.name ?
+                <div className="d-flex">
+                  <div className="p-1 upper-case-first"><span className="text-muted">Project:</span> {data.workflow.source.name}</div>            
+                </div> : null }
+              {data.workflow.source.service ? 
+                <div className="d-flex">
+                  <div className="p-1 upper-case-first"><span className="text-muted">Service:</span> {data.workflow.source.service}</div>            
+                </div> : null }
+              {data.workflow.source.repository ? 
+                <div className="d-flex">
+                  <div className="p-1 upper-case-first"><span className="text-muted">Repository:</span> {data.workflow.source.repository}</div>            
+                </div> : null }
+              {data.workflow.source.branch ? 
+                <div className="d-flex">
+                  <div className="p-1 upper-case-first"><span className="text-muted">Branch:</span> {data.workflow.source.branch}</div>            
+                </div> : null }
+              
+              <div className="d-flex">
+                <div className="p-1"></div>
+              </div>
 
-              <Row className="mt-1">
-                <Col className="text-muted small">Trigger: {data.workflow.source.trigger_active ? "Enabled": "Disabled"}</Col>
-                <Col className="text-right pt-1">
+              <div className="d-flex align-items-end flex-row">
+                <div className="text-left"><span className="text-muted small">Trigger: {data.workflow.source.trigger_active ? "Enabled": "Disabled"}</span></div>
+                <div className="p-2"></div>
+                <div className="ml-auto text-right">
                   <OverlayTrigger
                     placement="top"
                     delay={{ show: 250, hide: 400 }}
@@ -359,10 +371,9 @@ const PipelineWorkflowDetail = (props) => {
                       style={{ cursor: "pointer" }}
                       className="text-muted mr-2" fixedWidth
                       onClick={() => { handleSourceEditClick(); }} />  
-                  </OverlayTrigger>                          
-                 
-                </Col>
-              </Row>
+                  </OverlayTrigger> 
+                </div>
+              </div>
             </div>
 
             <div style={{ height: "40px" }}>&nbsp;</div>
@@ -436,6 +447,19 @@ const ItemList = React.memo(function ItemList({ items, lastStep, nextStep, pipel
     </div>
   ));
 });
+
+
+const _configuredToolsCount = (array) => {
+  let toolsCount = 0;
+  array.map((item) => {
+    if (item.tool !== undefined) {
+      if ((item.tool.tool_identifier !== undefined && item.tool.tool_identifier !== "") || item.tool.configuration !== undefined) {
+        toolsCount++;
+      }
+    }      
+  });  
+  return toolsCount; 
+};
 
 function renderTooltip(props) {
   const { message } = props;

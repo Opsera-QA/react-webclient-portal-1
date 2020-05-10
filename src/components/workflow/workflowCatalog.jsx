@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { CardDeck, Card, Row, Col, Button } from "react-bootstrap";
+import { Card, Row, Col, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext"; //New AuthContext State 
 import { axiosApiService } from "../../api/apiService";
@@ -118,34 +118,39 @@ const ItemSummaries = (props) => {
   return (
     <>
       {loading ? <LoadingDialog size="lg" /> : null}
-      <CardDeck>
+      <Row>
         {data !== undefined ? data.map((item, idx) => (
-          <Card key={idx} className="mb-3">
-            <Card.Body>
-              <Card.Title>{item.name}</Card.Title>
-              <Card.Text className="mb-2">{item.description}</Card.Text>
+          <Col sm={6} lg={4} key={idx} className="p-2">
+            <Card style={{ height:"100%" }}>
+              <Card.Body>
+                <Card.Title>{item.name}</Card.Title>
+                <Card.Text className="mb-2">{item.description}</Card.Text>
               
-              {/* <Row className="mt-2">
+                {/* <Row className="mt-2">
                 <Col lg className="text-muted">Tags: {item.tags.map((item, idx) => (<span key={idx}>{item}, </span>))}</Col>
               </Row> */}
-              <Row className="mt-4">
-                <Col lg className=""><span className="text-muted">Supported Tools: </span>
+                {/* <Row className="mt-4">
+                <Col lg className=""><span className="text-muted">Tools: </span>
                   {buildToolList(item.plan).map((item, idx) => (<span key={idx} className="upper-case-first mr-1">{item} </span>))}</Col>
-              </Row>
+              </Row> */}
 
-              <Row className="mt-2">
-                <Col lg><small className="text-muted">Last updated on <Moment format="YYYY-MM-DD, hh:mm a" date={item.updatedAt} /></small></Col>
-              </Row>
+                <Row className="mt-3">
+                  <Col lg><small className="text-muted">Last updated on <Moment format="YYYY-MM-DD" date={item.updatedAt} /></small></Col>
+                </Row>
+                <Row className="mb-2">
+                  <Col lg><small className="text-muted">Created on <Moment format="YYYY-MM-DD" date={item.createdAt} /></small></Col>
+                </Row>
 
-            </Card.Body>
-            <Card.Footer style={{ backgroundColor: "#fff" }}>
-              <Button variant="primary" size="sm" className="mr-2 mt-2" onClick={handleAddClick(item)}>
-                <FontAwesomeIcon icon={faPlus} className="mr-1"/>  Add</Button>
-              <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" onClick={handleDetailsClick(item)}>
-                <FontAwesomeIcon icon={faSearch} className="mr-1"/>Details</Button>
-            </Card.Footer>
-          </Card>)) : null}
-      </CardDeck>
+              </Card.Body>
+              <Card.Footer style={{ backgroundColor: "#fff" }}>
+                <Button variant="primary" size="sm" className="mr-2 mt-2" onClick={handleAddClick(item)}>
+                  <FontAwesomeIcon icon={faPlus} className="mr-1"/>  Add</Button>
+                <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" onClick={handleDetailsClick(item)}>
+                  <FontAwesomeIcon icon={faSearch} className="mr-1"/>Details</Button>
+              </Card.Footer>
+            </Card>
+          </Col>)) : null}
+      </Row>
     </>
     
   );
