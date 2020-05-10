@@ -48,9 +48,16 @@ function ModalActivityLogsDialog({ header, size, jsonData, show, setParentVisibi
             <div className="my-2">
               <div className="float-right"><Moment format="YYYY-MM-DD, hh:mm a" date={jsonData.createdAt} /></div> 
               <span className="upper-case-first">Step: {jsonData.step_name} <br/>Tool: {jsonData.step_configuration ? jsonData.step_configuration.tool_identifier : null }</span></div>
-            <div className="console-text m-3">
-              {jsonData.api_response}
-            </div>            
+            { typeof(jsonData.api_response) !== "object" ?
+              <div className="console-text m-3">
+                {jsonData.api_response}
+              </div> : <>
+                { jsonData.api_response.buildLog !== undefined ?
+                  <div className="console-text m-3">
+                    {jsonData.api_response.buildLog}
+                  </div> : 
+                  <ReactJson src={jsonData.api_response} displayDataTypes={false} /> }
+              </> }                       
           </Modal.Body>
           <Modal.Footer>
             <Button variant="outline-secondary" onClick={() => handleClose()}>
