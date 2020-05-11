@@ -7,7 +7,7 @@ import { ResponsiveLine } from "@nivo/line";
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/loading";
 import ErrorDialog from "../../common/error";
-import config from "./deploymentFrequencyLineChartConfigs";
+import config from "./sonarSecurityLineChartConfigs";
 import InfoDialog from "../../common/info";
 import ModalLogs from "../../common/modalLogs";
 
@@ -96,7 +96,7 @@ function SonarSecurityLineChart({ persona, sonarMeasure }) {
 
     return (
       <>
-      <ModalLogs header={formatTitle(sonarMeasure)} size="lg" jsonMessage={data&& data.data && data.data} dataType="line" show={showModal} setParentVisibility={setShowModal} />
+        <ModalLogs header={formatTitle(sonarMeasure)} size="lg" jsonMessage={data&& data.data && data.data} dataType="line" show={showModal} setParentVisibility={setShowModal} />
 
         <div className="chart mb-3" style={{ height: "300px" }}>
           <div className="chart-label-text">Sonar: {formatTitle(sonarMeasure)}</div>
@@ -109,7 +109,7 @@ function SonarSecurityLineChart({ persona, sonarMeasure }) {
               data={data ? data.data : []}
               onClick={() => setShowModal(true)}
 
-              margin={{ top: 40, right: 110, bottom: 70, left: 100 }}
+              margin={{ top: 40, right: 110, bottom: 70, left: 40 }}
               yScale={{ type: "linear", min: "auto", max: "auto", stacked: true, reverse: false }}
 
               xScale={{
@@ -119,10 +119,7 @@ function SonarSecurityLineChart({ persona, sonarMeasure }) {
               }}
 
               xFormat="time:%Y-%m-%dT%H:%M:%S.%LZ"
-              axisBottom={{
-                format: "%b %d",
-                legendOffset: -12,
-              }}
+              axisBottom={config.axisBottom}
               pointSize={10}
 
               pointBorderWidth={8}

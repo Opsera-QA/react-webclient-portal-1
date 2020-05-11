@@ -4,9 +4,9 @@ export default {
   ],
   margin: {
     "top": 50,
-    "right": 130,
+    "right": 110,
     "bottom": 50,
-    "left": 80
+    "left": 120
   },
   defs: [
     {
