@@ -1,12 +1,12 @@
 export default {
   axisBottom: {
-    "orient": "bottom",
-    "tickSize": 5,
-    "tickPadding": 5,
-    "tickRotation": -20,
-    "legend": "Timestamp",
-    "legendOffset": 53,
-    "legendPosition": "middle"
+    orient: "bottom",
+    tickSize: 5,
+    format: "%b %d",
+    tickPadding: 5,
+    tickRotation: -65,
+    legendOffset: 40,
+    legendPosition: "middle"
   },
   axisLeft: {
     "orient": "left",
@@ -14,7 +14,7 @@ export default {
     "tickPadding": 5,
     "tickRotation": 0,
     "legend": "Number of Pending Issues",
-    "legendOffset": -40,
+    "legendOffset": -75,
     "legendPosition": "middle"
   },
   legends: [

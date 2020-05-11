@@ -97,9 +97,14 @@ function JiraBurndownLineChart( { persona } ) {
             <ResponsiveLine
               data={data ? data.data : []}
               onClick={() => setShowModal(true)}
-              margin={{ top: 40, right: 110, bottom: 70, left: 100 }}
-              xScale={{ type: "point" }}
-              yScale={{ type: "linear", min: "auto", max: "auto", stacked: true, reverse: false }}
+              indexBy="date"
+              margin={{ top: 50, right: 130, bottom: 80, left: 100 }} 
+              xScale={{
+                type: "time",
+                format: "%Y-%m-%d",
+                precision: "day"
+              }}
+              yScale={{ type: "linear", min: 0, max: "auto", stacked: false }}
               curve="step"
               axisTop={null}
               axisRight={null}
@@ -112,15 +117,13 @@ function JiraBurndownLineChart( { persona } ) {
               useMesh={true}
               lineWidth={3.5}
               legends={config.legends}
-              colors={"#0095ff"}
+              colors={{ scheme: "category10" }}
               tooltip={({ point, color }) => (
                 <div style={{
                   background: "white",
                   padding: "9px 12px",
                   border: "1px solid #ccc",
                 }}>
-                  <strong style={{ color }}>
-              Timestamp: </strong> {point.data.x}<br></br>
                   <strong style={{ color }}>  Issues Remaining: </strong> {point.data.y}
                 </div>
               )}

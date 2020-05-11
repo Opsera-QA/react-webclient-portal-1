@@ -156,17 +156,22 @@ function ChartView({ selection, persona }) {
           <div className="m-2">
             <ReliabilityMetricsCharts persona={persona} />
           </div>
-          <div className="m-2">
-            <SonarSecurityLineChart persona={persona} sonarMeasure="vulnerabilities" />
+          
+          <div className="d-flex">
+            <div className="align-self-stretch p-2 w-100">
+              <SonarSecurityLineChart persona={persona} sonarMeasure="vulnerabilities" />
+            </div>
+            <div className="align-self-stretch p-2 w-100">
+              <SonarSecurityLineChart persona={persona} sonarMeasure="new_vulnerabilities" />
+            </div>
           </div>
-          <div className="m-2">
-            <SonarSecurityLineChart persona={persona} sonarMeasure="new_vulnerabilities" />
-          </div>
-          <div className="m-2">
-            <SonarSecurityLineChart persona={persona} sonarMeasure="code_smells" />
-          </div>
-          <div className="m-2">
-            <SonarSecurityLineChart persona={persona} sonarMeasure="new_technical_debt" />
+          <div className="d-flex">
+            <div className="align-self-stretch p-2 w-100">
+              <SonarSecurityLineChart persona={persona} sonarMeasure="code_smells" />
+            </div>
+            <div className="align-self-stretch p-2 w-100">
+              <SonarSecurityLineChart persona={persona} sonarMeasure="new_technical_debt" />
+            </div>
           </div>
 
         </>);

@@ -4,9 +4,9 @@ export default {
   ],
   margin: {
     "top": 50,
-    "right": 130,
+    "right": 110,
     "bottom": 80,
-    "left": 100
+    "left": 120
   },
   defs: [
     {
@@ -57,7 +57,7 @@ export default {
     "tickRotation": 0,
     "legend": "Users",
     "legendPosition": "middle",
-    "legendOffset": -90
+    "legendOffset": -100
   },
   legends: [
     {
