@@ -62,46 +62,48 @@ function RecentBuildsTable() {
     return (<LoadingDialog size="sm" />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
-  } else if (typeof data !== "object" || data === undefined || data.length < 1) {
-    return (<InfoDialog  message="No log activity has been captured for this dashboard yet." />);
+  // } else if (typeof data !== "object" || data === undefined || data.length < 1) {
+  //   return (<InfoDialog  message="No log activity has been captured for this dashboard yet." />);
   } else {
     return (
       <>
-        {data !== undefined && data.length > 0 ? 
-          <>
-            <div className="chart mb-3" style={{ height: "300px" }}>
-              <div className="chart-label-text">Jenkins: Recent Build Status</div>
-              <div className="px-2">
-                <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
-                  <thead>
-                    <tr>
-                      <th style={{ width: "20%" }}>Project Name</th>
-                      <th style={{ width: "20%" }} className="text-center">Build Number</th>
-                      <th style={{ width: "20%" }} className="text-center">Completed At</th>
-                      <th style={{ width: "20%" }} className="text-center">Duration</th>
-                      <th style={{ width: "20%" }} className="text-center">Result</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {data.map(function (value, index) {
-                      let className = (value["data_result"] && value["data_result"].toLowerCase() === "success") ? " green" : " red";
-                      return <tr key = {index}>
-                        <td className={className}>{ (value["data_projectName"]) ? value["data_projectName"] : "Unknown" }</td>
-                        <td className={"text-center" + className}>{ (value["data_buildNum"]) ? value["data_buildNum"] : "Unknown" }</td>
-                        <td className={"text-center" + className}>{ (value["timestamp"]) ? <Moment format="YYYY-MM-DD, hh:mm a" date={value["timestamp"]} /> : "Unknown" }</td>
-                        <td className={"text-center" + className}>{ (value["data_duration"]) ? value["data_duration"] : "0" } Seconds</td>
-                        <td className={"text-center upper-case-first" + className}>
-                          { (value["data_result"]) ? value["data_result"].toLowerCase() : "Failed"}
-                        </td>
-                      </tr>;
-                    })
-                    }
-                  </tbody>
-                </Table>
-              </div>
+        <div className="chart mb-3" style={{ height: "300px" }}>
+          <div className="chart-label-text">Jenkins: Recent Build Status</div>
+          {(typeof data !== "object" || data === undefined || data.length < 1) ?
+            <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
+              <InfoDialog message="No Data is available for this chart at this time." />
             </div>
-          </>
-          : null }
+            :
+            <div className="px-2">
+              <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
+                <thead>
+                  <tr>
+                    <th style={{ width: "20%" }}>Project Name</th>
+                    <th style={{ width: "20%" }} className="text-center">Build Number</th>
+                    <th style={{ width: "20%" }} className="text-center">Completed At</th>
+                    <th style={{ width: "20%" }} className="text-center">Duration</th>
+                    <th style={{ width: "20%" }} className="text-center">Result</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.map(function (value, index) {
+                    let className = (value["data_result"] && value["data_result"].toLowerCase() === "success") ? " green" : " red";
+                    return <tr key = {index}>
+                      <td className={className}>{ (value["data_projectName"]) ? value["data_projectName"] : "Unknown" }</td>
+                      <td className={"text-center" + className}>{ (value["data_buildNum"]) ? value["data_buildNum"] : "Unknown" }</td>
+                      <td className={"text-center" + className}>{ (value["timestamp"]) ? <Moment format="YYYY-MM-DD, hh:mm a" date={value["timestamp"]} /> : "Unknown" }</td>
+                      <td className={"text-center" + className}>{ (value["data_duration"]) ? value["data_duration"] : "0" } Seconds</td>
+                      <td className={"text-center upper-case-first" + className}>
+                        { (value["data_result"]) ? value["data_result"].toLowerCase() : "Failed"}
+                      </td>
+                    </tr>;
+                  })
+                  }
+                </tbody>
+              </Table>
+            </div>
+          }
+        </div>
       </>
     );}
 }

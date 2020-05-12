@@ -71,7 +71,7 @@ function DashboardHome() {
       const result = await axiosApiService(accessToken).get(apiUrl);     
       setData(result.data);
       let dataObject = result.data && result.data.profile.length > 0 ? result.data.profile[0] : {};
-      let persona = dataObject.defaultPersona.length > 0 ? dataObject.defaultPersona : "developer";
+      let persona = dataObject.defaultPersona ? (dataObject.defaultPersona.length > 0) ? dataObject.defaultPersona : "developer" : "developer";
       
       setIsEnabled(dataObject.active !== undefined ? dataObject.active : false);
       
