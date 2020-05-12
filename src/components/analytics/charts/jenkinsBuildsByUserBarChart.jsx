@@ -81,7 +81,7 @@ function JenkinsBuildsByUserBarChart( { persona } ) {
     return (
       <>
 
-        <ModalLogs header="Build Duration" size="lg" jsonMessage={data ? data.data : []} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
+        <ModalLogs header="Builds By User" size="lg" jsonMessage={data ? data.data : []} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
 
         <div className="chart mb-3" style={{ height: "300px" }}>
           <div className="chart-label-text">Jenkins: Builds by User</div>

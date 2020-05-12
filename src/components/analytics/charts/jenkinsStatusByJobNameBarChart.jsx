@@ -81,7 +81,7 @@ function JenkinsStatusByJobNameBarChar( { persona } ) {
     return (
       <>
       
-        <ModalLogs header="Build Duration" size="lg" jsonMessage={data ? data.data : []} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
+        <ModalLogs header="Build Status by Job Name" size="lg" jsonMessage={data ? data.data : []} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
 
         <div className="chart mb-3" style={{ height: "300px" }}>
           <div className="chart-label-text">Jenkins: Build Status by Job Name</div>
