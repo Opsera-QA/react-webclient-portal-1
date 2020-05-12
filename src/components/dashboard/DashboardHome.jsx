@@ -6,9 +6,9 @@ import { axiosApiService } from "../../api/apiService";
 import Select from "react-select";
 import { Row, Col, Alert } from "react-bootstrap";
 import ErrorDialog from "../../components/common/error";
-import PipelineDashboard from "../../components/dashboard/Pipeline";
-import SecOpsDashboard from "../../components/dashboard/SecOps";
-import TestingDashboard from "../../components/dashboard/Testing";
+// import PipelineDashboard from "../../components/dashboard/Pipeline";
+// import SecOpsDashboard from "../../components/dashboard/SecOps";
+// import TestingDashboard from "../../components/dashboard/Testing";
 import LogsDashboard from "../../components/dashboard/Logs";
 import LoadingDialog from "../../components/common/loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -29,7 +29,8 @@ function DashboardHome() {
   const [selection, setSelection] = useState("pipeline");
   const [persona, setPersona] = useState();
   const [loading, setLoading] = useState(false);
-  const [previewRole, setPreviewRole] = useState(false);
+  const [isEnabled, setIsEnabled] = useState(true);
+  //const [previewRole, setPreviewRole] = useState(false);
   
   useEffect(() => {    
     const controller = new AbortController();
@@ -54,23 +55,26 @@ function DashboardHome() {
 
   async function fetchData() {
     setLoading(true);
-    const { getAccessToken, getIsPreviewRole } = contextType;
+    const { getAccessToken } = contextType;  //getIsPreviewRole
     const accessToken = await getAccessToken();
     const apiUrl = "/analytics/settings";   
 
     //this returns true IF the Okta groups for user contains "Preview".  Please wrap display components in this.
-    const isPreviewRole = await getIsPreviewRole();
+    /* const isPreviewRole = await getIsPreviewRole();
     setPreviewRole(isPreviewRole); 
     if (isPreviewRole) {
       console.log("Enabling Preview Feature Toggle. ", isPreviewRole);
       setSelection("pipeline_v2");
-    }
+    } */
 
     try {
       const result = await axiosApiService(accessToken).get(apiUrl);     
       setData(result.data);
       let dataObject = result.data && result.data.profile.length > 0 ? result.data.profile[0] : {};
       let persona = dataObject.defaultPersona.length > 0 ? dataObject.defaultPersona : "developer";
+      
+      setIsEnabled(dataObject.active !== undefined ? dataObject.active : false);
+      
       setPersona(persona);    
       setLoading(false);
     }
@@ -107,7 +111,7 @@ function DashboardHome() {
 
             { hasError && <ErrorDialog error={hasError} className="max-content-width mt-4 mb-4" /> }
             {console.log(data)}
-            { data.profile === undefined || data.profile.length === 0 || data.esSearchApi === null || data.vault !== 200 || data.esSearchApi.status !== 200 ? 
+            { !isEnabled || data.esSearchApi === null || data.vault !== 200 || data.esSearchApi.status !== 200 ? 
               <div style={{ height: "250px" }} className="max-content-module-width-50">
                 <div className="row h-100">
                   <div className="col-sm-12 my-auto">
@@ -117,7 +121,7 @@ function DashboardHome() {
                       <ul className="list-group">
                         <li className="list-group-item d-flex justify-content-between align-items-center">
                     Your Analytics account must be enabled for yourself or your organization.
-                          {(typeof data.profile === "object" && data.profile.length > 0 ) ? 
+                          {isEnabled ? 
                             <span className="badge badge-success badge-pill"><FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth /></span>  :
                             <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span> }
                         </li>
@@ -144,57 +148,39 @@ function DashboardHome() {
               </div> :
               <>
                 <Row>
-                  { previewRole ?  //display work for new (v2) design
-                    <Col sm={8}>
-                      <ul className="nav nav-pills ml-2 mb-2">
-                        <li className="nav-item">
-                          <a className={"nav-link " + (selection === "pipeline_v2" ? "active" : "")} onClick={handleTabClick("pipeline_v2")} href="#">Pipeline</a>
-                        </li>
-                        <li className="nav-item">
-                          <a className={"nav-link " + (selection === "planning_v2" ? "active" : "")} onClick={handleTabClick("planning_v2")} href="#">Planning</a>
-                        </li>
-                        <li className="nav-item">
-                          <a className={"nav-link " + (selection === "secops_v2" ? "active" : "")} onClick={handleTabClick("secops_v2")} href="#">SecOps</a>
-                        </li>
-                        <li className="nav-item">
-                          <a className={"nav-link " + (selection === "quality_v2" ? "active" : "")} onClick={handleTabClick("quality_v2")} href="#">Quality</a>
-                        </li>
-                        <li className="nav-item">
-                          <a className={"nav-link " + (selection === "operations_v2" ? "active" : "")} onClick={handleTabClick("operations_v2")} href="#">Operations</a>
-                        </li>                        
-                      </ul>
-                    </Col> :
-                    <Col sm={8}>
-                      <ul className="nav nav-pills ml-2 mb-2">
-                        <li className="nav-item">
-                          <a className={"nav-link " + (selection === "pipeline" ? "active" : "")} onClick={handleTabClick("pipeline")} href="#">Pipeline</a>
-                        </li>
-                        <li className="nav-item">
-                          <a className={"nav-link " + (selection === "secops" ? "active" : "")} onClick={handleTabClick("secops")} href="#">SecOps</a>
-                        </li>
-                        <li className="nav-item">
-                          <a className={"nav-link " + (selection === "testing" ? "active" : "")} onClick={handleTabClick("testing")} href="#">Testing</a>
-                        </li>
-                        <li className="nav-item">
-                          <a className={"nav-link " + (selection === "logs" ? "active" : "")} onClick={handleTabClick("logs")} href="#">Logs</a>
-                        </li>                        
-                      </ul>
-                    </Col>
-                  }
-                  <Col sm={4}>
-                    { previewRole ?  //display work for new (v2) design
-                      <Select
-                        className="basic-single mr-2"
-                        menuPortalTarget={document.body}
-                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                        classNamePrefix="select"
-                        defaultValue={persona ?  PERSONAS.find(o => o.value === persona) : PERSONAS[0]}
-                        isClearable={false}
-                        isSearchable={true}
-                        name="PERSONA-SELECT"
-                        options={PERSONAS}
-                        onChange={handleSelectPersonaChange}
-                      /> : null }
+                  
+                  <Col sm={8}>
+                    <ul className="nav nav-pills ml-2 mb-2">
+                      <li className="nav-item">
+                        <a className={"nav-link " + (selection === "pipeline" ? "active" : "")} onClick={handleTabClick("pipeline")} href="#">Pipeline</a>
+                      </li>
+                      <li className="nav-item">
+                        <a className={"nav-link " + (selection === "planning_v2" ? "active" : "")} onClick={handleTabClick("planning_v2")} href="#">Planning</a>
+                      </li>
+                      <li className="nav-item">
+                        <a className={"nav-link " + (selection === "secops_v2" ? "active" : "")} onClick={handleTabClick("secops_v2")} href="#">SecOps</a>
+                      </li>
+                      <li className="nav-item">
+                        <a className={"nav-link " + (selection === "quality_v2" ? "active" : "")} onClick={handleTabClick("quality_v2")} href="#">Quality</a>
+                      </li>
+                      <li className="nav-item">
+                        <a className={"nav-link " + (selection === "operations_v2" ? "active" : "")} onClick={handleTabClick("operations_v2")} href="#">Operations</a>
+                      </li>                        
+                    </ul>
+                  </Col>
+                  <Col sm={4}>                    
+                    <Select
+                      className="basic-single mr-2"
+                      menuPortalTarget={document.body}
+                      styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                      classNamePrefix="select"
+                      defaultValue={persona ?  PERSONAS.find(o => o.value === persona) : PERSONAS[0]}
+                      isClearable={false}
+                      isSearchable={true}
+                      name="PERSONA-SELECT"
+                      options={PERSONAS}
+                      onChange={handleSelectPersonaChange}
+                    /> 
                   </Col>
                 </Row>
             
@@ -216,15 +202,9 @@ function DashboardView({ selection, persona }) {
 
   if (selection) {
     switch (selection) {
-    case "pipeline":
-      return <PipelineDashboard persona={persona} />;
-    case "secops":
-      return <SecOpsDashboard persona={persona} />;
-    case "testing":
-      return <TestingDashboard persona={persona} />;
     case "logs":
       return <LogsDashboard persona={persona} />;
-    case "pipeline_v2":
+    case "pipeline":
       return <PipelineDashboard_v2 persona={persona} />;
     case "secops_v2":
       return <SecOpsDashboard_v2 persona={persona} />;
