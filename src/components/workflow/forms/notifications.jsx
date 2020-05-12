@@ -58,8 +58,7 @@ function StepNotificationConfiguration( { data, stepId, parentCallback }) {
     };
     runEffect();
     return () => {
-      setRenderForm(false);
-      console.log("HAPPS");
+      setRenderForm(false);     
       controller.abort();      
     };
   }, [stepId]);

@@ -40,7 +40,7 @@ function WorkflowCatalog() {
     const apiUrl = "/pipelines/workflows";   
     try {
       const result = await axiosApiService(accessToken).get(apiUrl);
-      setData(result.data);
+      setData(result.data ? result.data : []);
       setLoading(false);    
     }
     catch (err) {
@@ -60,7 +60,8 @@ function WorkflowCatalog() {
             <div className="mt-3 max-content-width">
               <div className="mb-3 p-1">Listed below are workflow catalog options to choose from.  Each one contains specific tools and workflows for creating 
               your new pipeline.  After selecting a workflow to add to your pipeline, you will be able to customize it and add the proper tool configurations.</div>
-              {data !== undefined ?
+              
+              {data !== undefined && data.length > 0 ?
                 <ItemSummaries data={data} parentCallback = {callbackFunction}  /> :
                 <InfoDialog message="No Catalog Items Found" />}
             </div>
