@@ -120,7 +120,7 @@ function TestView_Manager ({ persona }) {
     }
     
     if (xunitPassed.status === 200 && xunitPassed.data !== undefined && xunitExecuted.status === 200 && xunitExecuted.data !== undefined) {
-      summaryCountsData.push({ name: "Pass Percentage", value: 100*xunitPassed.data[0]/xunitExecuted.data[0] + "%", footer: "", status: "success" });
+      summaryCountsData.push({ name: "Pass Percentage", value: Math.floor(100*100*xunitPassed.data[0]/xunitExecuted.data[0])/100 + "%", footer: "", status: "success" });
     }
 
     if (xunitWarning.status === 200 && xunitWarning.data !== undefined && xunitWarning.data[0].count > 0) {
