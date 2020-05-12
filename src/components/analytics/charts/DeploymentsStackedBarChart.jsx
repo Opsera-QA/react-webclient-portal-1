@@ -83,7 +83,6 @@ function DeploymentsStackedBarChart( { persona } ) {
     return (
       <>
         <ModalLogs header="Deployments Graph" size="lg" jsonMessage={data.data} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
-
         <div className="chart mb-3" style={{ height: "300px" }}>
           <div className="chart-label-text">Jenkins: Deployments Graph</div>
           {(typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) ?
