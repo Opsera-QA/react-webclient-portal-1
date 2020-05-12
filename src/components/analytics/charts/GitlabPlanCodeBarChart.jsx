@@ -31,7 +31,7 @@ function GitlabPlanCodeBarChart( { persona, data } ) {
         <ModalLogs header="Deployments Graph" size="lg" jsonMessage={data.graph} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
               
         <div className="chart mb-3" style={{ height: "300px" }}>
-          <div className="chart-label-text">Gitlab: Plan and Code Graph, Project: {data.projectDetails._source.project.name}</div>
+          <div className="chart-label-text">Gitlab: Plan and Code Graph, Project</div>
           {(typeof data.graph !== "object" || Object.keys(data.graph).length == 0) ?
             <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
               <InfoDialog message="No Data is available for this chart at this time." />

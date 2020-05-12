@@ -58,7 +58,9 @@ function Logs() {
           }
         ]
       });
-      const listOfTools = tools.data.data[0].listOfTools.data;
+      const dataPresent = tools ? tools.data : false;
+      const secondaryCheck = tools.data.data ? tools.data.data : false;
+      const listOfTools = (dataPresent && secondaryCheck) ? (tools.data.data[0].listOfTools) ? tools.data.data[0].listOfTools.data : [] : [];
       console.log(listOfTools);      
       console.log("Profile: ", profile);
       setData(profile && profile.data.profile[0]);

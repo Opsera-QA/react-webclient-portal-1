@@ -5,7 +5,7 @@ import { axiosApiService } from "../../api/apiService";
 import ErrorDialog from "../common/error";
 import LoadingDialog from "../common/loading";
 import ConfigurationsForm from "./configurationsForm";
-import { ListGroup } from "react-bootstrap";
+import { ListGroup, Alert } from "react-bootstrap";
 import SummaryChartsView from "./views/pipeline/buildView_developer";
 import ReliabilityMetricsCharts from "./views/reliability/ReliabilityMetricsView";
 import CodeCoverageMetricsView from "./views/sonarCodeCoverageView";
@@ -23,7 +23,8 @@ import JMeterThroughputLineChart from "./charts/jmeterThroughputLineChart";
 import JMeterResponseTimeLineChart from "./charts/jmeterResponseTimeLineChart";
 import JMeterResultsTable from "./metrics/jmeterResultsTable";
 import GitlabPlanCodeView from "./views/GitlabPlanCodeView";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheckCircle, faQuestion } from "@fortawesome/free-solid-svg-icons";
 
 function Analytics() {
   const contextType = useContext(AuthContext);
@@ -32,6 +33,9 @@ function Analytics() {
   const [loadingProfile, setLoadingProfile] = useState(false);
   const [token, setToken] = useState();
   const [selection, setSelection] = useState("pipeline");
+  const [profile, setProfile] = useState({});
+  const [isEnabled, setIsEnabled] = useState(true);
+
   //const [previewRole, setPreviewRole] = useState(false);
 
   useEffect(() => {
@@ -70,7 +74,10 @@ function Analytics() {
     setToken(accessToken);
     try {
       const profile = await axiosApiService(accessToken).get(apiUrl);
-      console.log("Profile: ", profile);
+      console.log("Profile: ", profile.data);
+      setProfile(profile.data);
+      setIsEnabled(profile.data.profile !== undefined && profile.data.profile.length > 0  ? profile.data.profile[0].active : false);
+
       setData(profile && profile.data.profile[0]);
       console.log(profile && profile.data.profile[0]);
 
@@ -92,44 +99,89 @@ function Analytics() {
     setSelection(param);
   };
 
-  return (
-    <>
-      {loadingProfile ? <LoadingDialog size="lg" /> : null }
-      {error ? <ErrorDialog error={error} /> : null}
+  if (loadingProfile) {
+    return (
+      <LoadingDialog size="lg" />
+    );
+  }
+  else if (error) {
+    return (
+      <ErrorDialog error={error}/>
+    );
+  } else {
+    return (
+      <>
+        {loadingProfile ? <LoadingDialog size="lg" /> : null }
+        {error ? <ErrorDialog error={error} /> : null}
+        { !isEnabled || profile.esSearchApi === null || profile.vault !== 200 || profile.esSearchApi.status !== 200 ? 
+          <div style={{ height: "250px" }} className="max-content-module-width-50 mt-4">
+            <div className="row h-100">
+              <div className="col-sm-12 my-auto">
+                <Alert variant="warning">Your Analytics configurations are incomplete.  Please review the details below in order to determine what needs to be done.</Alert>
+                <div className="text-muted mt-4">
+                  <div className="mb-3">In order to take advantage of the robust analytics dashboards offered by OpsERA, the following configurations are necessary:</div>
+                  <ul className="list-group">
+                    <li className="list-group-item d-flex justify-content-between align-items-center">
+                      Your Analytics account must be enabled for yourself or your organization.
+                      {isEnabled ? 
+                        <span className="badge badge-success badge-pill"><FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth /></span>  :
+                        <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span> }
+                    </li>
+                    <li className="list-group-item d-flex justify-content-between align-items-center">
+                      An OpsERA Analytics instance must be spun up and configured with your pipeline tools.
+                      {profile.esSearchApi === undefined || profile.esSearchApi === null || profile.esSearchApi.status !== 200 ? 
+                        <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span> :
+                        <span className="badge badge-success badge-pill"><FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth /></span> }
+                    </li>
+                    <li className="list-group-item d-flex justify-content-between align-items-center">
+                      OpsERA Analytics authentication information must be secured and available.
+                      {profile.vault === undefined || profile.vault !== 200 ? 
+                        <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span> :
+                        <span className="badge badge-success badge-pill"><FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth /></span> }
+                    </li>
+                    <li className="list-group-item d-flex justify-content-between align-items-center">
+                        Pipeline activity must have occurred in order for the system to collect data for display.
+                      <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div> :
+          <>
+            <div className="mt-3">
+              <div className="max-content-width">
+                <h4>Analytics</h4>
+                <p>OpsERA provides users with access to a vast repository of logging and analytics.  Access all available
+           logging, reports and configurations around the OpsERA Analytics Platform or search your
+          currently configured logs repositories below.</p>
+              </div>
+              <div className="p-2 mt-1 max-content-width mb-4">
+                <ConfigurationsForm settings={data} token={token} />
+              </div>
+  
+              <div className="p-2">
+  
+                <div className="mt-3">
+                  <ListGroup horizontal>
+                    <ListGroup.Item className={"pointer " + (selection === "pipeline" ? "active" : "")} onClick={handleTabClick("pipeline")}>Pipeline</ListGroup.Item>
+                    <ListGroup.Item className={"pointer " + (selection === "security" ? "active" : "")} onClick={handleTabClick("security")}>Security</ListGroup.Item>
+                    <ListGroup.Item className={"pointer " + (selection === "software_development" ? "active" : "")} onClick={handleTabClick("software_development")}>Software Development</ListGroup.Item>
+                    <ListGroup.Item className={"pointer " + (selection === "software_testing" ? "active" : "")} onClick={handleTabClick("software_testing")}>Software Testing</ListGroup.Item>
+                    <ListGroup.Item className={"pointer " + (selection === "service_operation" ? "active" : "")} onClick={handleTabClick("service_operation")}>Service Operation</ListGroup.Item>
+                  </ListGroup>
+                </div>
+                <div className="mt-3">
+                  <ChartView token={token} selection={selection} persona={null} />
+                </div>
+              </div>
+            </div>
+          </>
+        }
+      </>
+    );
+  }
 
-      <div className="mt-3">
-        <div className="max-content-width">
-          <h4>Analytics</h4>
-          <p>OpsERA provides users with access to a vast repository of logging and analytics.  Access all available
-         logging, reports and configurations around the OpsERA Analytics Platform or search your
-        currently configured logs repositories below.</p>
-        </div>
-        <div className="p-2 mt-1 max-content-width mb-4">
-          <ConfigurationsForm settings={data} token={token} />
-        </div>
-
-        <div className="p-2">
-
-          <div className="mt-3">
-            <ListGroup horizontal>
-              <ListGroup.Item className={"pointer " + (selection === "pipeline" ? "active" : "")} onClick={handleTabClick("pipeline")}>Pipeline</ListGroup.Item>
-              <ListGroup.Item className={"pointer " + (selection === "security" ? "active" : "")} onClick={handleTabClick("security")}>Security</ListGroup.Item>
-              <ListGroup.Item className={"pointer " + (selection === "software_development" ? "active" : "")} onClick={handleTabClick("software_development")}>Software Development</ListGroup.Item>
-              <ListGroup.Item className={"pointer " + (selection === "software_testing" ? "active" : "")} onClick={handleTabClick("software_testing")}>Software Testing</ListGroup.Item>
-              <ListGroup.Item className={"pointer " + (selection === "service_operation" ? "active" : "")} onClick={handleTabClick("service_operation")}>Service Operation</ListGroup.Item>
-            </ListGroup>
-          </div>
-
-          <div className="mt-3">
-            <ChartView token={token} selection={selection} persona={null} />
-          </div>
-
-        </div>
-          
-
-      </div>
-    </>
-  );
 }
 
 

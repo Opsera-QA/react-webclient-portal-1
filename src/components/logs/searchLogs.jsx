@@ -85,6 +85,7 @@ function SearchLogs ( { tools }) {
   };
 
   const handleSelectChange = (selectedOption) => {
+    submitClicked(false);
     setData([]);
     setFilterType(selectedOption.value);
     setFilters([]);
@@ -139,8 +140,8 @@ function SearchLogs ( { tools }) {
     const apiCall = new ApiService("/analytics/search", urlParams, accessToken);
     let result = await apiCall.get()
       .catch(function (error) {
-        // setData([]);
-        setErrors(error.toJSON());
+        setData([]);
+        // setErrors(error.toJSON());
       });
     let searchResults = [];
     if (result) {
@@ -170,7 +171,7 @@ function SearchLogs ( { tools }) {
           setFilterLoading(false);
         })
         .catch(err => {
-          setErrors(err);
+          setFilters([]);
           setFilterLoading(false);
         });
     } else {
