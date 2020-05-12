@@ -32,7 +32,7 @@ function Analytics() {
   const [loadingProfile, setLoadingProfile] = useState(false);
   const [token, setToken] = useState();
   const [selection, setSelection] = useState("pipeline");
-  const [previewRole, setPreviewRole] = useState(false);
+  //const [previewRole, setPreviewRole] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -56,14 +56,14 @@ function Analytics() {
 
   async function fetchData() {
     setLoadingProfile(true);
-    const { getAccessToken, getIsPreviewRole } = contextType;
+    const { getAccessToken } = contextType;  //getIsPreviewRole
 
     //this returns true IF the Okta groups for user contains "Preview".  Please wrap display components in this.
-    const isPreviewRole = await getIsPreviewRole();
+    /* const isPreviewRole = await getIsPreviewRole();
     setPreviewRole(isPreviewRole);
     if (isPreviewRole) {
       console.log("Enabling Preview Feature Toggle. ", isPreviewRole);
-    }
+    } */
 
     const accessToken = await getAccessToken();
     const apiUrl = "/analytics/settings";
@@ -108,26 +108,24 @@ function Analytics() {
           <ConfigurationsForm settings={data} token={token} />
         </div>
 
-        { previewRole ?  //display work for new (v2) design
-          <>
-            <div className="p-2">
+        <div className="p-2">
 
-              <div className="mt-3">
-                <ListGroup horizontal>
-                  <ListGroup.Item className={"pointer " + (selection === "pipeline" ? "active" : "")} onClick={handleTabClick("pipeline")}>Pipeline</ListGroup.Item>
-                  <ListGroup.Item className={"pointer " + (selection === "security" ? "active" : "")} onClick={handleTabClick("security")}>Security</ListGroup.Item>
-                  <ListGroup.Item className={"pointer " + (selection === "software_development" ? "active" : "")} onClick={handleTabClick("software_development")}>Software Development</ListGroup.Item>
-                  <ListGroup.Item className={"pointer " + (selection === "software_testing" ? "active" : "")} onClick={handleTabClick("software_testing")}>Software Testing</ListGroup.Item>
-                  <ListGroup.Item className={"pointer " + (selection === "service_operation" ? "active" : "")} onClick={handleTabClick("service_operation")}>Service Operation</ListGroup.Item>
-                </ListGroup>
-              </div>
+          <div className="mt-3">
+            <ListGroup horizontal>
+              <ListGroup.Item className={"pointer " + (selection === "pipeline" ? "active" : "")} onClick={handleTabClick("pipeline")}>Pipeline</ListGroup.Item>
+              <ListGroup.Item className={"pointer " + (selection === "security" ? "active" : "")} onClick={handleTabClick("security")}>Security</ListGroup.Item>
+              <ListGroup.Item className={"pointer " + (selection === "software_development" ? "active" : "")} onClick={handleTabClick("software_development")}>Software Development</ListGroup.Item>
+              <ListGroup.Item className={"pointer " + (selection === "software_testing" ? "active" : "")} onClick={handleTabClick("software_testing")}>Software Testing</ListGroup.Item>
+              <ListGroup.Item className={"pointer " + (selection === "service_operation" ? "active" : "")} onClick={handleTabClick("service_operation")}>Service Operation</ListGroup.Item>
+            </ListGroup>
+          </div>
 
-              <div className="mt-3">
-                <ChartView token={token} selection={selection} persona={null} />
-              </div>
+          <div className="mt-3">
+            <ChartView token={token} selection={selection} persona={null} />
+          </div>
 
-            </div>
-          </> : null }
+        </div>
+          
 
       </div>
     </>
@@ -156,17 +154,22 @@ function ChartView({ selection, persona }) {
           <div className="m-2">
             <ReliabilityMetricsCharts persona={persona} />
           </div>
-          <div className="m-2">
-            <SonarSecurityLineChart persona={persona} sonarMeasure="vulnerabilities" />
+          
+          <div className="d-flex">
+            <div className="align-self-stretch p-2 w-100">
+              <SonarSecurityLineChart persona={persona} sonarMeasure="vulnerabilities" />
+            </div>
+            <div className="align-self-stretch p-2 w-100">
+              <SonarSecurityLineChart persona={persona} sonarMeasure="new_vulnerabilities" />
+            </div>
           </div>
-          <div className="m-2">
-            <SonarSecurityLineChart persona={persona} sonarMeasure="new_vulnerabilities" />
-          </div>
-          <div className="m-2">
-            <SonarSecurityLineChart persona={persona} sonarMeasure="code_smells" />
-          </div>
-          <div className="m-2">
-            <SonarSecurityLineChart persona={persona} sonarMeasure="new_technical_debt" />
+          <div className="d-flex">
+            <div className="align-self-stretch p-2 w-100">
+              <SonarSecurityLineChart persona={persona} sonarMeasure="code_smells" />
+            </div>
+            <div className="align-self-stretch p-2 w-100">
+              <SonarSecurityLineChart persona={persona} sonarMeasure="new_technical_debt" />
+            </div>
           </div>
 
         </>);
