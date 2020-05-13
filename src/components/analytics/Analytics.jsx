@@ -254,7 +254,7 @@ function ChartView({ selection, persona }) {
               {/* Self Contained Chart Component 4  */}
             </div>
           </div>
-        //   <GitlabPlanCodeView persona={persona} />
+        {/* <GitlabPlanCodeView persona={persona} /> */}
 
         </>);
 
