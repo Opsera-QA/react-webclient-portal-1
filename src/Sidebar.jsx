@@ -17,10 +17,24 @@ function Sidebar({ hideView }) {
   const [authenticated, setAuthenticated] = useState(false);
 
 
-  useEffect(() => {
-    checkAuthentication();
-    //setHideSideBar(hideView);  //temp disabling scaling hide sidebar to see if that's the UI issue. If not, its aroud authentication.
-  }, [hideView, contextType]); 
+  useEffect(() => {    
+    const controller = new AbortController();
+    const runEffect = async () => {
+      try {
+        await checkAuthentication();                
+      } catch (err) {
+        if (err.name === "AbortError") {
+          console.log("Request was canceled via controller.abort");
+          return;
+        }        
+      }
+    };
+    runEffect();
+    return () => {     
+      controller.abort();      
+    };
+  }, [hideView, contextType]);
+
 
   const handleToggleMenuClick = () => {
     setHideSideBar(!hideSideBar);    
@@ -40,7 +54,7 @@ function Sidebar({ hideView }) {
       }
     }
     catch (err) {
-      console.log("Error occured getting user authentication status.", err);
+      console.log("Error occurred getting user authentication status.", err);
     }    
   }
 

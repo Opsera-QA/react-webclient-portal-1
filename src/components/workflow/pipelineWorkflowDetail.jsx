@@ -8,7 +8,7 @@ import { SteppedLineTo } from "react-lineto";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faCog, faArchive, faPlay, faSync, faSpinner, faStopCircle, faHistory, faArrowAltCircleDown } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faCog, faArchive, faPlay, faSync, faSpinner, faStopCircle, faHistory, faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 import ModalActivityLogs from "../common/modalActivityLogs";
 import PipelineActions from "./actions";
 import PipelineWorkflowItem from "./pipelineWorkflowItem";
@@ -17,6 +17,7 @@ import "./workflows.css";
 const PipelineWorkflowDetail = (props) => {
   const { data, parentCallback, role } = props;
   const [error, setErrors] = useState();
+  const [userInfo, setUserInfo] = useState();
   const [modalHeader, setModalHeader] = useState("");
   const contextType = useContext(AuthContext);
   const [state, setState] = useState({ items: [] });
@@ -27,17 +28,37 @@ const PipelineWorkflowDetail = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
   const [workflowStatus, setWorkflowStatus] = useState(false);
+  const [editWorkflow, setEditWorkflow] = useState(false);
   const endPointUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
    
 
   useEffect(() => {    
-    if (data.workflow !== undefined) {
-      setState({ items: data.workflow.plan });
-      setLastStep(data.workflow.last_step);
-      setNextStep(calculateNextStep(data.workflow.last_step));
+    const controller = new AbortController();
+    const runEffect = async () => {
+      try {
+        await checkAuthentication();
+        await loadFormData(data);                
+      } catch (err) {
+        if (err.name === "AbortError") {
+          console.log("Request was canceled via controller.abort");
+          return;
+        }        
+      }
+    };
+    runEffect();
+    return () => {     
+      controller.abort();      
+    };
+  }, [data]);
 
-      if (data !== undefined && data.workflow.last_step !== undefined) {
-        let status = data.workflow.last_step.hasOwnProperty("status") ? data.workflow.last_step.status : false;
+  const loadFormData = async (step) => {
+    if (step.workflow !== undefined) {
+      setState({ items: step.workflow.plan });
+      setLastStep(step.workflow.last_step);
+      setNextStep(calculateNextStep(step.workflow.last_step));
+
+      if (step !== undefined && step.workflow.last_step !== undefined) {
+        let status = step.workflow.last_step.hasOwnProperty("status") ? step.workflow.last_step.status : false;
         setWorkflowStatus(status);
         if (status === "running" && !socketRunning) {
           subscribeToTimer();
@@ -46,16 +67,27 @@ const PipelineWorkflowDetail = (props) => {
         setWorkflowStatus(false);        
       }      
     }
+  };
 
-  }, [data]);
+  async function checkAuthentication ()  {
+    const { getUserSsoUsersRecord } = contextType;
+    try {
+      const userInfoResponse = await getUserSsoUsersRecord();      
+      if (userInfoResponse !== undefined && Object.keys(userInfoResponse).length > 0) {
+        setUserInfo(userInfoResponse);            
+      }
+    }
+    catch (err) {
+      console.log("Error occurred getting user authentication status.", err);
+    }    
+  }
 
 
   let tmpDataObject = {};
-  let staleRefreshCount = 0;
+  let staleRefreshCount = 0;  
   const subscribeToTimer = () => {    
     const socket = socketIOClient(endPointUrl, { query: "pipelineId=" + data._id });
     console.log("Connected status before onConnect", socket.socket ? socket.socket.connected : socket.socket === undefined );
-
     setSocketRunning(true);
     
     if (socket.socket === undefined ) {
@@ -240,6 +272,10 @@ const PipelineWorkflowDetail = (props) => {
     parentCallback({ id: data._id, type: "source", item_id: "" });
   };
 
+  const handleEditWorkflowClick = () => {
+    setEditWorkflow(!editWorkflow);
+  };
+
 
   const handleViewSourceActivityLog = async (pipelineId, tool, stepId, activityId) => {
     //get activity data, filtered by tool!
@@ -306,12 +342,20 @@ const PipelineWorkflowDetail = (props) => {
           </div>
 
           <div className="workflow-container ml-4 px-3 max-content-module-width-50">
-            <div className="p-2 mb-2">
-              <FontAwesomeIcon icon={faSearchPlus}
-                className="mr-1 mt-1 float-right text-muted"
-                style={{ cursor: "pointer" }}
-                onClick= {() => { handleViewPipelineClick(data); }} />
-            </div>
+            { userInfo._id === data.owner ? 
+              <div className="p-2 mb-2 text-right">
+                <FontAwesomeIcon icon={faCog}
+                  className="mr-3 mt-1 text-muted"
+                  size="lg"
+                  style={{ cursor: "pointer" }}
+                  onClick= {() => { handleEditWorkflowClick(); }} />
+
+                <FontAwesomeIcon icon={faSearchPlus}
+                  className="mr-1 mt-1 text-muted"
+                  size="lg"
+                  style={{ cursor: "pointer" }}
+                  onClick= {() => { handleViewPipelineClick(data); }} />
+              </div> : null }
             
 
             <div className="source workflow-module-container workflow-module-container-width-sm p-2">
@@ -383,6 +427,7 @@ const PipelineWorkflowDetail = (props) => {
                 items={state.items} 
                 lastStep={lastStep} 
                 nextStep={nextStep} 
+                editWorkflow={editWorkflow}
                 pipelineId={data._id} 
                 parentCallback={callbackFunction} 
                 parentHandleViewSourceActivityLog={handleViewSourceActivityLog} />             
@@ -402,9 +447,15 @@ const PipelineWorkflowDetail = (props) => {
 
 
 
-const ItemList = React.memo(function ItemList({ items, lastStep, nextStep, pipelineId, parentCallback, parentHandleViewSourceActivityLog }) {
+const ItemList = React.memo(function ItemList({ items, lastStep, nextStep, editWorkflow, pipelineId, parentCallback, parentHandleViewSourceActivityLog }) {
   const callbackFunction = (param) => {
     parentCallback(param);
+  };
+
+  const handleAddStep = (itemId, index) => {
+    console.log("Prior Step ID: ", itemId);
+    console.log("Prior Step index: ", index);
+    //TODO: based on index value, add blank step template to the next index value (index+1)
   };
 
   const setStepStatusClass = (last_step, item_id) => {
@@ -438,12 +489,26 @@ const ItemList = React.memo(function ItemList({ items, lastStep, nextStep, pipel
           parentCallback={callbackFunction} 
           parentHandleViewSourceActivityLog={parentHandleViewSourceActivityLog} />
       </div>
-      {/* <div className="text-center py-1">
-        <FontAwesomeIcon icon={faArrowAltCircleDown} size="lg" className="nav-blue"/>            
-      </div> */}
-      <div style={{ height: "30px" }} className={"step-"+ index}>&nbsp;</div>
+
+      {editWorkflow ? <>
+        <div className={"text-center step-plus-"+ index}>        
+          <FontAwesomeIcon icon={faPlusSquare} 
+            size="lg" 
+            fixedWidth 
+            className="dark-grey"
+            style={{ cursor: "pointer" }}
+            onClick= {() => { handleAddStep(item._id, index); }} />
+        </div>
+        <SteppedLineTo from={"step-plus-"+index}to={"step-"+ index} delay={100} orientation="v" borderColor="#226196" borderWidth={2} fromAnchor="bottom" toAnchor="bottom" />
+        <div style={{ height: "25px" }} className={"step-"+ index}>&nbsp;</div>
+      </>:       
+        <>
+          <SteppedLineTo from={"step-"+item._id}to={"step-"+ index} delay={100} orientation="v" borderColor="#226196" borderWidth={2} fromAnchor="bottom" toAnchor="bottom" />
+          <div style={{ height: "50px" }} className={"step-"+ index}>&nbsp;</div>
+        </>
+      }
+
       
-      <SteppedLineTo from={"step-"+item._id} to={"step-"+ index} orientation="v" borderColor="#226196" borderWidth={2} fromAnchor="bottom" toAnchor="bottom" />
 
     </div>
   ));
@@ -481,6 +546,7 @@ ItemList.propTypes = {
   items: PropTypes.array,
   lastStep: PropTypes.object,
   nextStep: PropTypes.object,
+  editWorkflow: PropTypes.bool,
   pipelineId: PropTypes.string,
   parentCallback: PropTypes.func,
   parentHandleViewSourceActivityLog: PropTypes.func

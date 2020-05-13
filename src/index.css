@@ -29,6 +29,10 @@ color: green;
   color: #226196;
 }
 
+.dark-grey {
+  color: #6c757d;
+}
+
 .pointer {
   cursor: pointer
 }
