@@ -129,7 +129,7 @@ export default class ManageSystems extends PureComponent {
               />
 
               {users && users.length === 0 && (
-                <p>No Organiztion found that match this name</p>
+                <p>No organization found that match this name</p>
               )}
 
               {users && users.length > 0 && (

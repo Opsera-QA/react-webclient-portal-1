@@ -7,10 +7,10 @@ function SearchInput({ org, loading, orgSearch, handleChange }) {
       <Form onSubmit={orgSearch}>
         <Form.Row>
           <Form.Group controlId="formGridName">
-            <Form.Label>Organiztion Name</Form.Label>
+            <Form.Label>Organization Name</Form.Label>
             <Form.Control
               type="text"
-              name="org" placeholder="Organiztion Name"
+              name="org" placeholder="Organization Name"
               value={org}
               onChange={handleChange}
             />
