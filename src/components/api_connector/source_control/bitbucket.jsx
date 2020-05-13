@@ -203,7 +203,7 @@ function Bitbucket() {
               <Form.Group controlId="formGridUsername">
                 <Form.Label>Bitbucket Username</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="text" disabled
                   placeholder=""
                   name="username"
                   value={state.username}
@@ -216,7 +216,7 @@ function Bitbucket() {
               <Form.Group controlId="formGridToken">
                 <Form.Label>Bitbucket Token</Form.Label>
                 <Form.Control
-                  type="password"
+                  type="password" disabled
                   placeholder=""
                   name="token"
                   value={state.token}
@@ -229,7 +229,7 @@ function Bitbucket() {
               <Form.Group controlId="formGridJenkinsURL">
                 <Form.Label>Bitbucket Server Url</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="text" disabled
                   placeholder=""
                   name="bitbucketServerUrl"
                   value={state.bitbucketServerUrl}
@@ -247,7 +247,7 @@ function Bitbucket() {
                 <Form.Group as={Col} controlId="formGridRepo">
                   <Form.Label>Bitbucket Repo Name</Form.Label>
                   <Form.Control
-                    type="text"
+                    type="text" disabled
                     placeholder=""
                     name="repoName"
                     value={state.repoName}
@@ -260,7 +260,7 @@ function Bitbucket() {
                 <Form.Group as={Col} controlId="formGridJobName">
                   <Form.Label>Project Name</Form.Label>
                   <Form.Control
-                    type="text"
+                    type="text" disabled
                     placeholder=""
                     name="projectName"
                     value={state.projectName}
@@ -271,8 +271,8 @@ function Bitbucket() {
                 </Form.Group>
               </Form.Row>
               <div className="text-muted mt-2 mb-2 italic">Please Note: All fields are required for connectivity.</div>
-              <Button id="save-button" disabled={!isEnabled} variant="outline-primary" className="mr-2" type="submit">{update ? "Save Changes" : "Connect"}</Button>
-              {/* <Button id="cancel-button" variant="outline-secondary" className="mr-2" type="button" onClick={this.cancel}>Cancel</Button> */}
+              <Button id="save-button" disabled variant="outline-primary" className="mr-2" type="submit">{update ? "Save Changes" : "Connect"}</Button>
+              {/* disabled={!isEnabled} */}
             </Form>
           }
 
