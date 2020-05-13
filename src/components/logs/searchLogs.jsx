@@ -52,6 +52,8 @@ function SearchLogs ( { tools }) {
   const [calendar, setCalendar] = useState(false);
   const [target, setTarget] = useState(null);
   const ref = useRef(null);
+  const [sDate, setSDate] = useState("");
+  const [eDate, setEDate] = useState("");
 
 
   const handleFormSubmit = e => {
@@ -60,6 +62,7 @@ function SearchLogs ( { tools }) {
     setData([]);  
     let startDate = moment(date[0].startDate, "YYYY-MM-DD").format("YYYY-MM-DD");
     let endDate = moment(date[0].endDate, "YYYY-MM-DD").format("YYYY-MM-DD");
+    
     if (startDate === endDate) {
       endDate = 0;
     }
@@ -73,6 +76,12 @@ function SearchLogs ( { tools }) {
       setLoading(false);
       setData([]);
     }
+    if (endDate === 0) {
+      setEDate(startDate);
+    } else {
+      setEDate(endDate);
+    }
+    setSDate(startDate);
   };
 
   const cancelSearchClicked = e => {
@@ -82,6 +91,8 @@ function SearchLogs ( { tools }) {
     setData([]);
     setSearchTerm("");
     setCalenderActivation(false);
+    setEDate("");
+    setSDate("");
   };
 
   const handleSelectChange = (selectedOption) => {
@@ -214,9 +225,10 @@ function SearchLogs ( { tools }) {
                     />
                   </div>
                   <div className="p-2">
-                    <Button variant="primary" type="submit">Search</Button>
+                    <Button variant="outline-secondary" type="button" onClick={toggleCalendar}><FontAwesomeIcon icon={faCalendar} className="mr-1 fa-fw"/>{(calenderActivation && sDate || eDate) ? sDate + " - " + eDate : "Select Date Range"}</Button>
+                    <Button variant="primary" className="ml-2" type="submit">Search</Button>
                     <Button variant="outline-secondary" className="ml-2" type="button" onClick={cancelSearchClicked}>Cancel</Button>
-                    <Button variant="outline-secondary" className="ml-2" type="button" onClick={toggleCalendar}><FontAwesomeIcon icon={faCalendar} className="fa-fw"/></Button>
+                    
                     <Overlay
                       show={calendar}
                       target={target}
@@ -226,7 +238,7 @@ function SearchLogs ( { tools }) {
                       closeOnEscape={true}
                     >
                       <Popover id="popover-contained"  className="max-content-width">
-                        <Popover.Title as="h3">Filter By Date</Popover.Title>
+                        <Popover.Title><div style={{ display: "flex" }}>Filter By Date<Button variant="outline-secondary" size="sm" type="button" style={{ marginLeft: "auto" }} onClick={toggleCalendar}>X</Button></div></Popover.Title>
 
                         <Popover.Content>
                           <DateRangePicker
@@ -294,9 +306,9 @@ function SearchLogs ( { tools }) {
                     />
                   </div>
                   <div className="p-2">
-                    <Button variant="primary" type="submit">Search</Button>
+                    <Button variant="outline-secondary" type="button" onClick={toggleCalendar}><FontAwesomeIcon icon={faCalendar} className="mr-1 fa-fw"/>{(calenderActivation && sDate || eDate) ? sDate + " - " + eDate : "Select Date Range"}</Button>
+                    <Button variant="primary" className="ml-2" type="submit">Search</Button>
                     <Button variant="outline-secondary" className="ml-2" type="button" onClick={cancelSearchClicked}>Cancel</Button>
-                    <Button variant="outline-secondary" className="ml-2" type="button" onClick={toggleCalendar}><FontAwesomeIcon icon={faCalendar} className="fa-fw"/></Button>
                     <Overlay
                       show={calendar}
                       target={target}
@@ -305,7 +317,8 @@ function SearchLogs ( { tools }) {
                       containerPadding={20}
                     >
                       <Popover className="max-content-width">
-                        <Popover.Title as="h3">Filter By Date</Popover.Title>
+                        <Popover.Title><div style={{ display: "flex" }}>Filter By Date<Button variant="outline-secondary" size="sm" type="button" style={{ marginLeft: "auto" }} onClick={toggleCalendar}>X</Button></div>
+                        </Popover.Title>
                         <Popover.Content>
                           <DateRangePicker
                             onChange={item => setDate([item.selection])}

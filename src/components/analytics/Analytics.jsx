@@ -35,6 +35,8 @@ function Analytics() {
   const [selection, setSelection] = useState("pipeline");
   const [profile, setProfile] = useState({});
   const [isEnabled, setIsEnabled] = useState(true);
+  const [enabledOn, setEnabledOn] = useState(true);
+
 
   //const [previewRole, setPreviewRole] = useState(false);
 
@@ -77,6 +79,8 @@ function Analytics() {
       console.log("Profile: ", profile.data);
       setProfile(profile.data);
       setIsEnabled(profile.data.profile !== undefined && profile.data.profile.length > 0  ? profile.data.profile[0].active : false);
+      setEnabledOn((profile.data.profile[0].enabledToolsOn && profile.data.profile[0].enabledToolsOn.length !== 0) ? true : false);
+
 
       setData(profile && profile.data.profile[0]);
       console.log(profile && profile.data.profile[0]);
@@ -113,17 +117,26 @@ function Analytics() {
       <>
         {loadingProfile ? <LoadingDialog size="lg" /> : null }
         {error ? <ErrorDialog error={error} /> : null}
-        { !isEnabled || profile.esSearchApi === null || profile.vault !== 200 || profile.esSearchApi.status !== 200 ? 
-          <div style={{ height: "250px" }} className="max-content-module-width-50 mt-4">
+        { !isEnabled || !enabledOn || profile.esSearchApi === null || profile.vault !== 200 || profile.esSearchApi.status !== 200 ? 
+          <div style={{ height: "250px" }} className="max-content-module-width-50 mt-3">
+            <div className="max-content-width">
+              <h4>Analytics</h4>
+              <p>OpsERA provides users with access to a vast repository of logging and analytics.  Access all available
+           logging, reports and configurations around the OpsERA Analytics Platform or search your
+          currently configured logs repositories below.</p>
+            </div>
+            <div className="mt-1 max-content-width mb-4">
+              <ConfigurationsForm settings={data} token={token} />
+            </div>
             <div className="row h-100">
-              <div className="col-sm-12 my-auto">
+              <div className="col-sm-12 my-auto"> 
                 <Alert variant="warning">Your Analytics configurations are incomplete.  Please review the details below in order to determine what needs to be done.</Alert>
                 <div className="text-muted mt-4">
                   <div className="mb-3">In order to take advantage of the robust analytics dashboards offered by OpsERA, the following configurations are necessary:</div>
                   <ul className="list-group">
                     <li className="list-group-item d-flex justify-content-between align-items-center">
                       Your Analytics account must be enabled for yourself or your organization.
-                      {isEnabled ? 
+                      {enabledOn ? 
                         <span className="badge badge-success badge-pill"><FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth /></span>  :
                         <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span> }
                     </li>
@@ -254,14 +267,15 @@ function ChartView({ selection, persona }) {
               {/* Self Contained Chart Component 4  */}
             </div>
           </div>
-        {/* <GitlabPlanCodeView persona={persona} /> */}
+          {/* Commenting this out as part of phase 2 - will be pushed as part of phase 2 forward fixes */}
+          {/* <GitlabPlanCodeView persona={persona} /> */}
 
         </>);
 
     case "software_testing":
       return (
         <>
-           <div className="m-2">
+          <div className="m-2">
             <CodeCoverageMetricsView />
           </div>
           <div className="d-flex">
