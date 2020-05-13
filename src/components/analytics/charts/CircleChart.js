@@ -76,7 +76,7 @@ function CircleChart( { persona } ) {
       <>
         <div className="chart mb-3" style={{ height: "300px" }}>
           <div className="chart-label-text">Jenkins: Change Failure Rate</div>
-          {(typeof data.data !== "object" || Object.keys(data.data).length == 0 || data.status !== 200 || data.data.length == 0) ?
+          {(typeof data.data !== "object" || Object.keys(data.data).length == 0 || data.status !== 200 || data.data.length == 0 || typeof data.data[0].failureRate !== Number) ?
             <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
               <InfoDialog message="No Data is available for this chart at this time." />
             </div>
