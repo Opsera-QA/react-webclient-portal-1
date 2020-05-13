@@ -1,4 +1,5 @@
 //PP-97 Deploy Step form for AWS Elastic Beanstalk
+//https://opsera.atlassian.net/wiki/spaces/OPSERA/pages/283935120/Code-Deployer
 
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
@@ -9,46 +10,64 @@ import { faSave } from "@fortawesome/free-solid-svg-icons";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
-  userId: "",
-  sshkey: "",
-  serverip: "",
-  serverpath: "",
-  artifacts: ""
+  accessKey: "",
+  secretKey: "",
+  sshKey: "", //file stream to vaule
+  userName: "",
+  serverIp: "",
+  serverPath: "",
+  commands: "",
+  fileUpload: ""
 };
 
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
 function SshUploadDeploy( { data, parentCallback }) {
-  const [thresholdVal, setThresholdValue] = useState("");
-  const [thresholdType, setThresholdType] = useState("");
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [formMessage, setFormMessage] = useState("");
 
-  useEffect(() => {
-    if (typeof(data) !== "undefined") {
-      let { configuration, threshold } = data;
+
+  useEffect(() => {    
+    const controller = new AbortController();
+    const runEffect = async () => {
+      try {
+        await loadFormData(data);                
+      } catch (err) {
+        if (err.name === "AbortError") {
+          console.log("Request was canceled via controller.abort");
+          return;
+        }        
+      }
+    };
+    runEffect();
+    return () => {     
+      controller.abort();      
+    };
+  }, []);
+
+
+  const loadFormData = async (step) => {
+    if (typeof(step) !== "undefined") {
+      let { configuration } = step;
       if (typeof(configuration) !== "undefined") {
         setFormData(configuration);
-      }
-      if (typeof(threshold) !== "undefined") {
-        setThresholdType(threshold.type);
-        setThresholdValue(threshold.value);
-      }
+      }      
     } else {
       setFormData(INITIAL_DATA);
     }
-  }, [data]);
+  };
+
 
 
   const callbackFunction = () => {
     if (validateRequiredFields()) {
+    
+      //TODO: Node needs to know which fields to post to Vault
+      //TODO: Need to wire up streaming the file contents to vault...
+
       const item = {
-        configuration: formData,
-        threshold: {
-          type: thresholdType,
-          value: thresholdVal
-        }
+        configuration: formData
       };
       parentCallback(item);
     }
@@ -56,8 +75,12 @@ function SshUploadDeploy( { data, parentCallback }) {
 
 
   const validateRequiredFields = () => {
-    let { userId, sshkey, serverip, serverpath, artifacts } = formData;
-    if (userId.length === 0 || sshkey.length === 0 || serverip.length === 0 || serverpath.length === 0 || artifacts.length === 0) {
+    let { accessKey, secretKey, serverIp, serverPath, sshKey } = formData;
+    if (accessKey.length === 0 || 
+      secretKey.length === 0 || 
+      serverIp.length === 0 || 
+      serverPath.length === 0 || 
+      sshKey.length === 0) {
       setFormMessage("Required Fields Missing!");
       return false;
     } else {
@@ -66,40 +89,63 @@ function SshUploadDeploy( { data, parentCallback }) {
     }
   };
 
-
+  const handleFileUploadToggle = (value) => {
+    if (value === "SSH File Upload") {
+      setFormData({ ...formData, fileUpload: "" });
+    } else {
+      setFormData({ ...formData, fileUpload: "SSH File Upload" });
+    }
+  };
   
   return (
     <Form>
       { formMessage.length > 0 ? <p className="text-danger">{formMessage}</p> : null}
 
-      <Form.Group controlId="branchField">
-        <Form.Label>User ID*</Form.Label>
-        <Form.Control maxLength="50" type="text" placeholder="" value={formData.userId || ""} onChange={e => setFormData({ ...formData, userId: e.target.value })} />
+      <Form.Group controlId="accessKey">
+        <Form.Label>AWS Account Access Key*</Form.Label>
+        <Form.Control maxLength="256" type="text" placeholder="" value={formData.accessKey || ""} onChange={e => setFormData({ ...formData, accessKey: e.target.value })} />
       </Form.Group>
-      <Form.Group controlId="branchField">
-        <Form.Label>SSH Key*</Form.Label>
-        <Form.Control maxLength="500" type="password" placeholder="" value={formData.sshkey || ""} onChange={e => setFormData({ ...formData, sshkey: e.target.value })} />
-      </Form.Group>
-      <Form.Group controlId="branchField">
-        <Form.Label>Server IP Address</Form.Label>
-        <Form.Control maxLength="150" type="text" placeholder="" value={formData.serverip || ""} onChange={e => setFormData({ ...formData, serverip: e.target.value })} />
-      </Form.Group>
-      <Form.Group controlId="branchField">
-        <Form.Label>Server Path</Form.Label>
-        <Form.Control maxLength="250" type="text" placeholder="" value={formData.serverpath || ""} onChange={e => setFormData({ ...formData, serverpath: e.target.value })} />
+      <Form.Group controlId="secretKey">
+        <Form.Label>AWS Access Secret Key*</Form.Label>
+        <Form.Control maxLength="256" type="password" placeholder="" value={formData.secretKey || ""} onChange={e => setFormData({ ...formData, secretKey: e.target.value })} />
       </Form.Group>
       
-      <Form.Group controlId="repoField">
-        <Form.Label>Artifacts Details*</Form.Label>
-        <Form.Control maxLength="250" type="text" placeholder="" value={formData.artifacts || ""} onChange={e => setFormData({ ...formData, artifacts: e.target.value })} />
+      {/* TODO: Wire this up. */}
+      <Form.Group controlId="sshKey">
+        <Form.Label>SSH Key File*</Form.Label>
+        <Form.File id="sshKeyFile"  />  
+        <Form.Text className="text-muted">Attach the PEM/CER key file needed for accessing the EC2 instance</Form.Text>
       </Form.Group>
-      {/* <small className="form-text text-muted mt-2 text-left pb-2">specify SSH commands to run for step</small> */}
+      <Form.Group controlId="userName">
+        <Form.Label>User Name</Form.Label>
+        <Form.Control maxLength="150" type="text" placeholder="" value={formData.userName || ""} onChange={e => setFormData({ ...formData, userName: e.target.value })} />
+        <Form.Text className="text-muted">Username needed to access the EC2 instance</Form.Text>
+      </Form.Group>
+      
+      <Form.Group controlId="serverIp">
+        <Form.Label>Server IP Address</Form.Label>
+        <Form.Control maxLength="75" type="text" placeholder="" value={formData.serverIp || ""} onChange={e => setFormData({ ...formData, serverIp: e.target.value })} />
+      </Form.Group>
+      <Form.Group controlId="serverIp">
+        <Form.Label>Server Path</Form.Label>
+        <Form.Control maxLength="250" type="text" placeholder="" value={formData.serverIp || ""} onChange={e => setFormData({ ...formData, serverIp: e.target.value })} />
+        <Form.Text className="text-muted">Path where the deployment happens</Form.Text>
+      </Form.Group>
 
-      {/* Leave the threshold form group as is for now, just read only for all forms */}
-      {/* <Form.Group controlId="threshold">
-        <Form.Label>Step Success Threshold</Form.Label>
-        <Form.Control type="text" placeholder="" value={thresholdVal || ""} onChange={e => setThresholdValue(e.target.value)} disabled={true} />
-      </Form.Group> */}
+      <Form.Check 
+        type="switch"
+        id="ssh-file-upload"
+        label="File Upload Method" 
+        checked={formData.fileUpload === "SSH File Upload" ? true : false}   
+        onChange={() => handleFileUploadToggle(formData.fileUpload)} 
+      />
+
+      <Form.Group controlId="commands">
+        <Form.Label>SSH Commands*</Form.Label>
+        <Form.Control as="textarea" type="text" placeholder="" value={formData.commands || ""} onChange={e => setFormData({ ...formData, commands: e.target.value })} />
+      </Form.Group>
+      <small className="form-text text-muted mt-2 text-left pb-2">specify SSH commands to run for step</small>
+
       
       <Button variant="primary" type="button" 
         onClick={() => { callbackFunction(); }}> 

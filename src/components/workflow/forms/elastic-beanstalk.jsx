@@ -1,4 +1,5 @@
 //PP-95 Deploy Step form for AWS Elastic Beanstalk
+//https://opsera.atlassian.net/wiki/spaces/OPSERA/pages/283935120/Code-Deployer
 
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
@@ -44,10 +45,32 @@ function ElasticBeanstalkDeploy( { data, parentCallback }) {
   const [thresholdType, setThresholdType] = useState("");
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [formMessage, setFormMessage] = useState("");
+  const [renderForm, setRenderForm] = useState(false);
 
-  useEffect(() => {
-    if (typeof(data) !== "undefined") {
-      let { configuration, threshold } = data;
+  useEffect(() => {    
+    const controller = new AbortController();
+    const runEffect = async () => {
+      try {
+        await loadFormData(data);        
+        setRenderForm(true);
+      } catch (err) {
+        if (err.name === "AbortError") {
+          console.log("Request was canceled via controller.abort");
+          return;
+        }        
+      }
+    };
+    runEffect();
+    return () => {
+      setRenderForm(false);     
+      controller.abort();      
+    };
+  }, []);
+
+
+  const loadFormData = async (step) => {
+    if (typeof(step) !== "undefined") {
+      let { configuration, threshold } = step;
       if (typeof(configuration) !== "undefined") {
         setFormData(configuration);
       }
@@ -58,8 +81,9 @@ function ElasticBeanstalkDeploy( { data, parentCallback }) {
     } else {
       setFormData(INITIAL_DATA);
     }
-  }, [data]);
 
+  };
+  
 
   const callbackFunction = () => {
     if (validateRequiredFields()) {
@@ -93,6 +117,9 @@ function ElasticBeanstalkDeploy( { data, parentCallback }) {
   };
 
 
+  const handlePlatformChange = (selectedOption) => {
+    setFormData({ ...formData, platform: selectedOption.value });    
+  };
   
   return (
     <Form>
@@ -125,18 +152,18 @@ function ElasticBeanstalkDeploy( { data, parentCallback }) {
       <Form.Group controlId="port">
         <Form.Label>Application Port*</Form.Label>
         <Form.Control maxLength="10" type="text" placeholder="" value={formData.port || ""} onChange={e => setFormData({ ...formData, port: e.target.value })} />
-        <Form.Text className="text-muted">className="form-text text-muted mt-2 text-left pb-2">Port the application needs to run</Form.Text>
+        <Form.Text className="text-muted">Port the application needs to run</Form.Text>
       </Form.Group>
 
-      <Form.Group controlId="formBasicEmail">
-        <Form.Label>Service*</Form.Label>
-        {data.workflow.source !== undefined ?
+      <Form.Group controlId="platform">
+        <Form.Label>Platform*</Form.Label>
+        {renderForm ?
           <DropdownList
             data={PLATFORM_OPTIONS}
             valueField='id'
             textField='label'
-            defaultValue={data.workflow.source.service ? PLATFORM_OPTIONS[PLATFORM_OPTIONS.findIndex(x => x.value === data.workflow.source.service)] : PLATFORM_OPTIONS[0]}
-            onChange={handleServiceChange}             
+            defaultValue={data.configuration.platform ? PLATFORM_OPTIONS[PLATFORM_OPTIONS.findIndex(x => x.value === data.configuration.platform)] : PLATFORM_OPTIONS[0]}
+            onChange={handlePlatformChange}             
           /> : null }
       </Form.Group>
 
