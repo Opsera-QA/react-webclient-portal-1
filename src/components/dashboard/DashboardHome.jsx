@@ -30,6 +30,7 @@ function DashboardHome() {
   const [persona, setPersona] = useState();
   const [loading, setLoading] = useState(false);
   const [isEnabled, setIsEnabled] = useState(true);
+  const [enabledOn, setEnabledOn] = useState(true);
   //const [previewRole, setPreviewRole] = useState(false);
   
   useEffect(() => {    
@@ -74,7 +75,8 @@ function DashboardHome() {
       let persona = dataObject.defaultPersona ? (dataObject.defaultPersona.length > 0) ? dataObject.defaultPersona : "developer" : "developer";
       
       setIsEnabled(dataObject.active !== undefined ? dataObject.active : false);
-      
+      setEnabledOn((dataObject.enabledToolsOn && dataObject.enabledToolsOn.length !== 0) ? true : false);
+
       setPersona(persona);    
       setLoading(false);
     }
@@ -111,7 +113,7 @@ function DashboardHome() {
 
             { hasError && <ErrorDialog error={hasError} className="max-content-width mt-4 mb-4" /> }
             {console.log(data)}
-            { !isEnabled || data.esSearchApi === null || data.vault !== 200 || data.esSearchApi.status !== 200 ? 
+            { !isEnabled || !enabledOn || data.esSearchApi === null || data.vault !== 200 || data.esSearchApi.status !== 200 ? 
               <div style={{ height: "250px" }} className="max-content-module-width-50">
                 <div className="row h-100">
                   <div className="col-sm-12 my-auto">
@@ -121,7 +123,7 @@ function DashboardHome() {
                       <ul className="list-group">
                         <li className="list-group-item d-flex justify-content-between align-items-center">
                     Your Analytics account must be enabled for yourself or your organization.
-                          {isEnabled ? 
+                          {enabledOn ? 
                             <span className="badge badge-success badge-pill"><FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth /></span>  :
                             <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span> }
                         </li>
