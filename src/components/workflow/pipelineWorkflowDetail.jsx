@@ -8,7 +8,7 @@ import { SteppedLineTo } from "react-lineto";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faCog, faArchive, faPlay, faSync, faSpinner, faStopCircle, faHistory, faPlusSquare } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faCog, faArchive, faPlay, faSync, faSpinner, faStopCircle, faHistory, faPlusSquare, faSave, faTimes } from "@fortawesome/free-solid-svg-icons";
 import ModalActivityLogs from "../common/modalActivityLogs";
 import PipelineActions from "./actions";
 import PipelineWorkflowItem from "./pipelineWorkflowItem";
@@ -276,6 +276,23 @@ const PipelineWorkflowDetail = (props) => {
     setEditWorkflow(!editWorkflow);
   };
 
+  const handleSaveWorkflowEditsClick = () => {
+    //todo: wire up saving any changes to workflow?  Is this necessary?
+    // thinking the UI changes the plan array details and then this saves it.  TBD
+    console.log("saving plan: ", data.workflow.plan);
+    setEditWorkflow(!editWorkflow);
+  };
+
+  const handleCancelWorkflowEditsClick = () => {
+    //todo: wire up canceling any changes to workflow?  resest the plan data to what it was last?  
+    // maybe need to have the handleEditWorkflowClick cache a copy of data.workflow.plan so it can be reverted!!!
+    
+    console.log("revert plan: ", data.workflow.plan);
+    setEditWorkflow(!editWorkflow);
+  };
+
+
+
 
   const handleViewSourceActivityLog = async (pipelineId, tool, stepId, activityId) => {
     //get activity data, filtered by tool!
@@ -344,11 +361,25 @@ const PipelineWorkflowDetail = (props) => {
           <div className="workflow-container ml-4 px-3 max-content-module-width-50">
             { userInfo._id === data.owner ? 
               <div className="p-2 mb-2 text-right">
-                <FontAwesomeIcon icon={faCog}
-                  className="mr-3 mt-1 text-muted"
-                  size="lg"
-                  style={{ cursor: "pointer" }}
-                  onClick= {() => { handleEditWorkflowClick(); }} />
+                {editWorkflow ?
+                  <>
+                    <FontAwesomeIcon icon={faSave}
+                      className="mr-3 mt-1 green"
+                      size="lg"
+                      style={{ cursor: "pointer" }}
+                      onClick= {() => { handleSaveWorkflowEditsClick(); }} /> 
+                    <FontAwesomeIcon icon={faTimes}
+                      className="mr-3 mt-1 dark-grey"
+                      size="lg"
+                      style={{ cursor: "pointer" }}
+                      onClick= {() => { handleCancelWorkflowEditsClick(); }} /> 
+                  </>:
+                  <FontAwesomeIcon icon={faCog}
+                    className="mr-3 mt-1 text-muted"
+                    size="lg"
+                    style={{ cursor: "pointer" }}
+                    onClick= {() => { handleEditWorkflowClick(); }} />
+                }
 
                 <FontAwesomeIcon icon={faSearchPlus}
                   className="mr-1 mt-1 text-muted"
@@ -484,6 +515,7 @@ const ItemList = React.memo(function ItemList({ items, lastStep, nextStep, editW
           item={item} 
           index={index}          
           lastStep={lastStep} 
+          editWorkflow={editWorkflow} 
           pipelineId={pipelineId} 
           nextStep={nextStep} 
           parentCallback={callbackFunction} 

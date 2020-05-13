@@ -2,13 +2,13 @@ import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faCog, faArchive, faBookmark, faSpinner, faCheckCircle, faEnvelope, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faCog, faArchive, faBookmark, faSpinner, faCheckCircle, faEnvelope, faExclamationTriangle, faTrash } from "@fortawesome/free-solid-svg-icons";
 import ModalActivityLogs from "../common/modalActivityLogs";
 import Moment from "react-moment";
 import "./workflows.css";
 
 
-const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, parentCallback, parentHandleViewSourceActivityLog }) => {
+const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, editWorkflow, parentCallback, parentHandleViewSourceActivityLog }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
   const [modalHeader, setModalHeader] = useState("");
@@ -59,9 +59,14 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, par
   const handleEditClick = (type, tool, itemId) => {
     if (tool && tool.tool_identifier !== undefined) {
       parentCallback({ type: type, tool_name: tool.tool_identifier, step_id: itemId });    
-    }
-      
+    }      
   };  
+
+  const handleDeleteStepClick = (itemId, index) => {
+    console.log("This Step ID: ", itemId);
+    console.log("Hits Step index: ", index);
+    //TODO: based on index value, add blank step template to the next index value (index+1)
+  };
 
   return (
     <>
@@ -103,6 +108,18 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, par
                       <FontAwesomeIcon icon={faBookmark} className="nav-blue mr-2" /> : null }
                   </> }                  
               </> : null }
+
+
+            {editWorkflow ? <>
+              <OverlayTrigger
+                placement="top"
+                delay={{ show: 250, hide: 400 }}
+                overlay={renderTooltip({ message: "Delete Step" })} >
+                <FontAwesomeIcon icon={faTrash} className="mr-2 dark-grey" 
+                  style={{ cursor: "pointer" }}
+                  onClick={() => { handleDeleteStepClick(item._id, index); }} />
+              </OverlayTrigger>
+            </> : null }
           </div>
           
         </div>
@@ -127,45 +144,49 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, par
           <div className="p-1"><span className="text-muted small">ID: {item._id}</span></div>
           <div className="p-2"></div>
           <div className="ml-auto p-1 text-right">
-            <OverlayTrigger
-              placement="top"
-              delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltip({ message: "View Settings" })} >
-              <FontAwesomeIcon icon={faSearchPlus} //settings!
-                className="text-muted mx-1" fixedWidth
-                style={{ cursor: "pointer" }}
-                onClick={() => { handleViewClick(item, "Step Settings"); }} />
-            </OverlayTrigger>
+            {!editWorkflow ? 
+              <>
+                <OverlayTrigger
+                  placement="top"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltip({ message: "View Settings" })} >
+                  <FontAwesomeIcon icon={faSearchPlus} //settings!
+                    className="text-muted mx-1" fixedWidth
+                    style={{ cursor: "pointer" }}
+                    onClick={() => { handleViewClick(item, "Step Settings"); }} />
+                </OverlayTrigger>
 
-            <OverlayTrigger
-              placement="top"
-              delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltip({ message: "View Step Activity Logs" })} >
-              <FontAwesomeIcon icon={faArchive}
-                className="text-muted mx-1" fixedWidth
-                style={{ cursor: "pointer" }}
-                onClick={() => { parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id); }} />
-            </OverlayTrigger>
+                <OverlayTrigger
+                  placement="top"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltip({ message: "View Step Activity Logs" })} >
+                  <FontAwesomeIcon icon={faArchive}
+                    className="text-muted mx-1" fixedWidth
+                    style={{ cursor: "pointer" }}
+                    onClick={() => { parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id); }} />
+                </OverlayTrigger>
 
-            <OverlayTrigger
-              placement="top"
-              delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltip({ message: "Configure Step Notification and Approval Rules" })} >
-              <FontAwesomeIcon icon={faEnvelope}
-                style={{ cursor: "pointer" }}
-                className="text-muted mx-1" fixedWidth
-                onClick={() => { handleEditClick("notification", item.tool, item._id); }} />
-            </OverlayTrigger>
+                <OverlayTrigger
+                  placement="top"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltip({ message: "Configure Step Notification and Approval Rules" })} >
+                  <FontAwesomeIcon icon={faEnvelope}
+                    style={{ cursor: "pointer" }}
+                    className="text-muted mx-1" fixedWidth
+                    onClick={() => { handleEditClick("notification", item.tool, item._id); }} />
+                </OverlayTrigger>
 
-            <OverlayTrigger
-              placement="top"
-              delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltip({ message: "Configure Step Settings" })} >
-              <FontAwesomeIcon icon={faCog}
-                style={{ cursor: "pointer" }}
-                className="text-muted mx-1" fixedWidth
-                onClick={() => { handleEditClick("tool", item.tool, item._id); }} />
-            </OverlayTrigger></div>
+                <OverlayTrigger
+                  placement="top"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltip({ message: "Configure Step Settings" })} >
+                  <FontAwesomeIcon icon={faCog}
+                    style={{ cursor: "pointer" }}
+                    className="text-muted mx-1" fixedWidth
+                    onClick={() => { handleEditClick("tool", item.tool, item._id); }} />
+                </OverlayTrigger>
+              </> : null }
+          </div>
         </div>
 
       </div>
@@ -191,6 +212,7 @@ PipelineWorkflowItem.propTypes = {
   lastStep: PropTypes.object,
   nextStep: PropTypes.object,
   pipelineId: PropTypes.string,
+  editWorkflow: PropTypes.bool,
   parentCallback: PropTypes.func,
   handleViewSourceActivityLog: PropTypes.func,
   parentHandleViewSourceActivityLog: PropTypes.func
