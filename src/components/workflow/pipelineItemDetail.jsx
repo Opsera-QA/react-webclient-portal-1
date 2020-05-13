@@ -358,7 +358,7 @@ const PipelineItemDetail = (props) => {
                           onClick= {() => { setEditProject(true); setFormData({ ...formData, project: { name: data.project !== undefined && data.project.hasOwnProperty("name") ? data.project.name : "" } }); }} /> : null }                  
                     </>  }
                 </Col>
-                <Col lg className="py-1"><span className="text-muted mr-1">Runs:</span> {data.workflow.run_count || "0"}</Col>
+                <Col lg className="py-1"><span className="text-muted mr-1">Pipeline Run Count:</span> {data.workflow.run_count || "0"}</Col>
               </Row>
 
 
