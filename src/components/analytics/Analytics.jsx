@@ -79,7 +79,7 @@ function Analytics() {
       console.log("Profile: ", profile.data);
       setProfile(profile.data);
       setIsEnabled(profile.data.profile !== undefined && profile.data.profile.length > 0  ? profile.data.profile[0].active : false);
-      setEnabledOn((profile.data.profile[0].enabledToolsOn && profile.data.profile[0].enabledToolsOn.length !== 0) ? true : false);
+      setEnabledOn(profile.data.profile !== undefined && profile.data.profile.length > 0 ? (profile.data.profile[0].enabledToolsOn && profile.data.profile[0].enabledToolsOn.length !== 0) ? true : false : false);
 
 
       setData(profile && profile.data.profile[0]);
