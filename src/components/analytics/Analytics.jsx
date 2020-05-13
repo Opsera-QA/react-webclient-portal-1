@@ -254,29 +254,32 @@ function ChartView({ selection, persona }) {
               {/* Self Contained Chart Component 4  */}
             </div>
           </div>
-          <GitlabPlanCodeView persona={persona} />
+        //   <GitlabPlanCodeView persona={persona} />
 
         </>);
 
     case "software_testing":
       return (
         <>
-          <div className="m-2">
+           <div className="m-2">
             <CodeCoverageMetricsView />
           </div>
-          <div className="align-self-stretch p-2 w-100">
-            <JMeterHitsLineChart persona={persona} />
+          <div className="d-flex">
+            <div className="align-self-stretch p-2 w-100">
+              <JMeterHitsLineChart persona={persona} />
+            </div>
+            <div className="align-self-stretch p-2 w-100">
+              <JMeterErrorsLineChart persona={persona} />
+            </div>
           </div>
-          <div className="align-self-stretch p-2 w-100">
-            <JMeterErrorsLineChart persona={persona} />
+          <div className="d-flex">
+            <div className="align-self-stretch p-2 w-100">
+              <JMeterThroughputLineChart persona={persona} />
+            </div>
+            <div className="align-self-stretch p-2 w-100">
+              <JMeterResponseTimeLineChart persona={persona} />
+            </div>
           </div>
-          <div className="align-self-stretch p-2 w-100">
-            <JMeterThroughputLineChart persona={persona} />
-          </div>
-          <div className="align-self-stretch p-2 w-100">
-            <JMeterResponseTimeLineChart persona={persona} />
-          </div>
-
           <JMeterResultsTable />
         </>);
 
