@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus, faCog, faArchive, faPlay, faSync, faSpinner, faStopCircle, faHistory, faPlusSquare, faSave, faTimes } from "@fortawesome/free-solid-svg-icons";
 import ModalActivityLogs from "../common/modalActivityLogs";
 import PipelineActions from "./actions";
-import PipelineWorkflowItem from "./pipelineWorkflowItem";
+import PipelineWorkflowItemList from "./pipelineWorkflowItemList";
 import "./workflows.css";
 
 const PipelineWorkflowDetail = (props) => {
@@ -261,7 +261,7 @@ const PipelineWorkflowDetail = (props) => {
   };
 
 
-  const callbackFunction = (item) => {
+  const callbackFunctionEditItem = (item) => {
     window.scrollTo(0, 0);
     item.id = data._id;
     parentCallback(item);
@@ -286,9 +286,10 @@ const PipelineWorkflowDetail = (props) => {
   const handleCancelWorkflowEditsClick = () => {
     //todo: wire up canceling any changes to workflow?  resest the plan data to what it was last?  
     // maybe need to have the handleEditWorkflowClick cache a copy of data.workflow.plan so it can be reverted!!!
+    //saveCurrentItems
     
-    console.log("revert plan: ", data.workflow.plan);
     setEditWorkflow(!editWorkflow);
+    parentCallback(); //refreshes items (or updates if data passed so be careful)
   };
 
 
@@ -454,13 +455,15 @@ const PipelineWorkflowDetail = (props) => {
             <div style={{ height: "40px" }}>&nbsp;</div>
 
             <div className="step-items workflow-module-container-width mx-auto">
-              <ItemList 
+              <PipelineWorkflowItemList 
                 items={state.items} 
                 lastStep={lastStep} 
                 nextStep={nextStep} 
                 editWorkflow={editWorkflow}
                 pipelineId={data._id} 
-                parentCallback={callbackFunction} 
+                setStateItems={setState}
+                parentCallbackRefreshItems={parentCallback}
+                parentCallbackEditItem={callbackFunctionEditItem} 
                 parentHandleViewSourceActivityLog={handleViewSourceActivityLog} />             
             </div>
             <SteppedLineTo from="source" to="step-items" orientation="v" borderColor="#226196" borderWidth={2} fromAnchor="bottom" toAnchor="top" />
@@ -476,75 +479,6 @@ const PipelineWorkflowDetail = (props) => {
   );
 };
 
-
-
-const ItemList = React.memo(function ItemList({ items, lastStep, nextStep, editWorkflow, pipelineId, parentCallback, parentHandleViewSourceActivityLog }) {
-  const callbackFunction = (param) => {
-    parentCallback(param);
-  };
-
-  const handleAddStep = (itemId, index) => {
-    console.log("Prior Step ID: ", itemId);
-    console.log("Prior Step index: ", index);
-    //TODO: based on index value, add blank step template to the next index value (index+1)
-  };
-
-  const setStepStatusClass = (last_step, item_id) => {
-    let classString = "step-"+item_id;
-    
-    if (typeof(last_step) !== "undefined") {
-      if(typeof(last_step.success) !== "undefined" && last_step.success.step_id === item_id) {
-        classString += " workflow-step-success";
-      }
-      else if(typeof(last_step.running) !== "undefined" && last_step.running.step_id === item_id) {
-        classString += " workflow-step-running";
-      }
-      else if(typeof(last_step.failed) !== "undefined" && last_step.failed.step_id === item_id) {
-        classString += " workflow-step-failure";
-      }
-    }
-
-    return classString;
-  }; 
-
-
-  return items.map((item, index) => (
-    <div key={item._id}>
-      <div className={"workflow-module-container workflow-module-container-width mx-auto " + setStepStatusClass(lastStep, item._id)}>
-        <PipelineWorkflowItem 
-          item={item} 
-          index={index}          
-          lastStep={lastStep} 
-          editWorkflow={editWorkflow} 
-          pipelineId={pipelineId} 
-          nextStep={nextStep} 
-          parentCallback={callbackFunction} 
-          parentHandleViewSourceActivityLog={parentHandleViewSourceActivityLog} />
-      </div>
-
-      {editWorkflow ? <>
-        <div className={"text-center step-plus-"+ index}>        
-          <FontAwesomeIcon icon={faPlusSquare} 
-            size="lg" 
-            fixedWidth 
-            className="dark-grey"
-            style={{ cursor: "pointer" }}
-            onClick= {() => { handleAddStep(item._id, index); }} />
-        </div>
-        <SteppedLineTo from={"step-plus-"+index}to={"step-"+ index} delay={100} orientation="v" borderColor="#226196" borderWidth={2} fromAnchor="bottom" toAnchor="bottom" />
-        <div style={{ height: "25px" }} className={"step-"+ index}>&nbsp;</div>
-      </>:       
-        <>
-          <SteppedLineTo from={"step-"+item._id}to={"step-"+ index} delay={100} orientation="v" borderColor="#226196" borderWidth={2} fromAnchor="bottom" toAnchor="bottom" />
-          <div style={{ height: "50px" }} className={"step-"+ index}>&nbsp;</div>
-        </>
-      }
-
-      
-
-    </div>
-  ));
-});
 
 
 const _configuredToolsCount = (array) => {
@@ -574,15 +508,7 @@ PipelineWorkflowDetail.propTypes = {
   role: PropTypes.string
 };
 
-ItemList.propTypes = {
-  items: PropTypes.array,
-  lastStep: PropTypes.object,
-  nextStep: PropTypes.object,
-  editWorkflow: PropTypes.bool,
-  pipelineId: PropTypes.string,
-  parentCallback: PropTypes.func,
-  parentHandleViewSourceActivityLog: PropTypes.func
-};
+
 
 
 export default PipelineWorkflowDetail;

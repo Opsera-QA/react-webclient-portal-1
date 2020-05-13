@@ -48,7 +48,6 @@ const PipelineItemDetail = (props) => {
     const controller = new AbortController();
     const runEffect = async () => {
       try {
-        
         if (data.workflow !== undefined) {
           if (data.workflow.last_step !== undefined) {
             let status = data.workflow.last_step.hasOwnProperty("status") ? data.workflow.last_step.status : false;
@@ -60,8 +59,6 @@ const PipelineItemDetail = (props) => {
             setWorkflowStatus(false);        
           }       
         }
-
-
       } catch (err) {
         if (err.name === "AbortError") {
           console.log("Request was canceled via controller.abort");
@@ -69,9 +66,7 @@ const PipelineItemDetail = (props) => {
         }        
       }
     };
-
     runEffect();
-
     return () => {
       controller.abort();
     };
