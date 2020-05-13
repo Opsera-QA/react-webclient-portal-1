@@ -8,7 +8,9 @@ import LoadingDialog from "../../../common/loading";
 import ErrorDialog from "../../../common/error";
 import SummaryCountBlocksView from "../summaryCountBlocksView";
 import TimeToRestoreBarChart from "../../charts/timeToRestoreBarChart.jsx";
-
+import PipelineSuccessLogs from "../../logs/pipelineSuccessLogs";
+import PipelineFailureLogs from "../../logs/pipelineFailureLogs";
+import { Row, Col } from "react-bootstrap";
 
 function OperationsView_Developer ({ persona }) {
   const contextType = useContext(AuthContext);
@@ -88,6 +90,13 @@ function OperationsView_Developer ({ persona }) {
     return (
       <> 
         <SummaryCountBlocksView data={countBlockData} />
+        <div className="mt-3">
+          <Row>
+            <Col><PipelineSuccessLogs persona={persona}  /></Col>
+            <Col><PipelineFailureLogs persona={persona}  /></Col>
+          </Row>
+        
+        </div>
 
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
@@ -116,6 +125,7 @@ function OperationsView_Developer ({ persona }) {
             {/* Self Contained Chart Component 6 */}
           </div>
         </div>
+
       </>
     );}
 

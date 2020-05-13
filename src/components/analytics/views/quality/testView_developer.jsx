@@ -118,7 +118,8 @@ function TestView_Developer ({ persona }) {
       summaryCountsData.push({ name: "Passed", value: junitPassed.data[0].count, footer: "", status:  "success" });
     }
     
-    if (xunitPassed.status === 200 && xunitPassed.data !== undefined && xunitExecuted.status === 200 && xunitExecuted.data !== undefined) {
+    if (xunitPassed.status === 200 && xunitPassed.data !== undefined && xunitExecuted.status === 200 && xunitExecuted.data !== undefined 
+      && typeof(xunitPassed.data[0].count === "number" && typeof(xunitExecuted.data[0].count) === "number")) {
       summaryCountsData.push({ name: "Pass Percentage", value: Math.floor(100*100*xunitPassed.data[0]/xunitExecuted.data[0])/100 + "%", footer: "", status: "success" });
     }
 

@@ -287,7 +287,7 @@ function SearchLogs ( { tools }) {
                       defaultValue={filterType && Array.isArray(FILTER) ? FILTER[FILTER.findIndex(x => x.value ===filterType)] : { "value": "pipeline", "label": "Pipeline" }}
                       isDisabled={false}
                       isClearable={false}
-                      isSearchable={true}
+                      isSearchable={false}
                       name="FILTER-SELECT"
                       options={FILTER}
                       onChange={handleSelectChange}
