@@ -498,7 +498,7 @@ const MapLogData = (props) => {
               <div className="row mb-3">
                 <FontAwesomeIcon icon={faSearchPlus}
                   className="mt-1"
-                  size="m"
+                  size="sm"
                   style={{ cursor: "pointer", alignItems: "flex-end" }}
                   onClick= {() => { handleClick(item); }} />
                 <strong className="ml-2"><Moment format="YYYY-MM-DD, hh:mm a" date={typeof(item._source["@timestamp"]) !== "undefined" ? item._source["@timestamp"] : null}></Moment></strong>
