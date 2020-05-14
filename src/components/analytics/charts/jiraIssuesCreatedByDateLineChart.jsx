@@ -111,7 +111,7 @@ function JiraIssuesCreatedByDateLineChart( { persona } ) {
               axisBottom={{
                 format: "%b %d",
                 tickValues: "every 2 days",
-                legend: "Date",
+                "tickRotation": -65,
                 "legendPosition": "middle",
                 "legendOffset": 50
               }}

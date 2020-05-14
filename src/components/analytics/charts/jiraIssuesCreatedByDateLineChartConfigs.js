@@ -48,7 +48,7 @@ export default {
   axisBottom: {
     "tickSize": 8,
     "tickPadding": 5,
-    "tickRotation": 0,
+    "tickRotation": -65,
     "legend": "Number of Issues",
     "legendPosition": "middle",
     "legendOffset": 50
@@ -67,12 +67,12 @@ export default {
       "anchor": "bottom-right",
       "direction": "column",
       "justify": false,
-      "translateX": 120,
+      "translateX": 80,
       "translateY": 0,
       "itemsSpacing": 2,
       "itemWidth": 100,
       "itemHeight": 20,
-      "itemDirection": "left-to-right",
+      "itemDirection": "bottom-to-top",
       "itemOpacity": 0.85,
       "symbolSize": 20,
       "effects": [

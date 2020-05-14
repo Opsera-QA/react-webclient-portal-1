@@ -4,8 +4,7 @@ export default {
     "orient": "bottom",
     "tickSize": 5,
     "tickPadding": 5,
-    "tickRotation": 0,
-    "legend": "Date",
+    "tickRotation": -65,
     "legendOffset": 36,
     "legendPosition": "middle"
   },

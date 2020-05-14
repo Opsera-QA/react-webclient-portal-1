@@ -1,6 +1,6 @@
 export default {
   axisBottom: {
-    // "format": d => { var date = d.split(" "); return date[1]+" "+date[2]; },
+    "format": d => d.substring(0, 5),
     "orient": "bottom",
     "tickSize": 5,
     "tickPadding": 5,
