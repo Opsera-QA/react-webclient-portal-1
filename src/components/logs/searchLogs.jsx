@@ -194,6 +194,14 @@ function SearchLogs ( { tools }) {
     setCalenderActivation(true);
     setCalendar(!calendar);
     setTarget(event.target);
+    let startDate = moment(date[0].startDate, "YYYY-MM-DD").format("YYYY-MM-DD");
+    let endDate = moment(date[0].endDate, "YYYY-MM-DD").format("YYYY-MM-DD");
+    if (endDate === 0) {
+      setEDate(startDate);
+    } else {
+      setEDate(endDate);
+    }
+    setSDate(startDate);
   };
 
   if (error) {
@@ -225,9 +233,9 @@ function SearchLogs ( { tools }) {
                     />
                   </div>
                   <div className="p-2">
-                    <Button variant="outline-secondary" type="button" onClick={toggleCalendar}><FontAwesomeIcon icon={faCalendar} className="mr-1 fa-fw"/>{(calenderActivation && sDate || eDate) ? sDate + " - " + eDate : "Select Date Range"}</Button>
+                    <Button variant="outline-secondary" type="button" onClick={toggleCalendar}><FontAwesomeIcon icon={faCalendar} className="mr-1 fa-fw"/>{(calendar && sDate || eDate) ? sDate + " - " + eDate : "Select Date Range"}</Button>
                     <Button variant="primary" className="ml-2" type="submit">Search</Button>
-                    <Button variant="outline-secondary" className="ml-2" type="button" onClick={cancelSearchClicked}>Cancel</Button>
+                    <Button variant="outline-secondary" className="ml-2" type="button" onClick={cancelSearchClicked}>Clear</Button>
                     
                     <Overlay
                       show={calendar}
@@ -238,7 +246,7 @@ function SearchLogs ( { tools }) {
                       closeOnEscape={true}
                     >
                       <Popover id="popover-contained"  className="max-content-width">
-                        <Popover.Title><div style={{ display: "flex" }}>Filter By Date<Button variant="outline-secondary" size="sm" type="button" style={{ marginLeft: "auto" }} onClick={toggleCalendar}>X</Button></div></Popover.Title>
+                        <Popover.Title><div style={{ display: "flex" }}>Filter By Date<Button variant="outline-secondary" size="sm" type="button" style={{ marginLeft: "auto" }} onClick={() => setCalendar(false)}>X</Button></div></Popover.Title>
 
                         <Popover.Content>
                           <DateRangePicker
@@ -306,9 +314,9 @@ function SearchLogs ( { tools }) {
                     />
                   </div>
                   <div className="p-2">
-                    <Button variant="outline-secondary" type="button" onClick={toggleCalendar}><FontAwesomeIcon icon={faCalendar} className="mr-1 fa-fw"/>{(calenderActivation && sDate || eDate) ? sDate + " - " + eDate : "Select Date Range"}</Button>
+                    <Button variant="outline-secondary" type="button" onClick={toggleCalendar}><FontAwesomeIcon icon={faCalendar} className="mr-1 fa-fw"/>{(calendar && sDate || eDate) ? sDate + " - " + eDate : "Select Date Range"}</Button>
                     <Button variant="primary" className="ml-2" type="submit">Search</Button>
-                    <Button variant="outline-secondary" className="ml-2" type="button" onClick={cancelSearchClicked}>Cancel</Button>
+                    <Button variant="outline-secondary" className="ml-2" type="button" onClick={cancelSearchClicked}>Clear</Button>
                     <Overlay
                       show={calendar}
                       target={target}
@@ -317,7 +325,7 @@ function SearchLogs ( { tools }) {
                       containerPadding={20}
                     >
                       <Popover className="max-content-width">
-                        <Popover.Title><div style={{ display: "flex" }}>Filter By Date<Button variant="outline-secondary" size="sm" type="button" style={{ marginLeft: "auto" }} onClick={toggleCalendar}>X</Button></div>
+                        <Popover.Title><div style={{ display: "flex" }}>Filter By Date<Button variant="outline-secondary" size="sm" type="button" style={{ marginLeft: "auto" }} onClick={ () => setCalendar(false)}>X</Button></div>
                         </Popover.Title>
                         <Popover.Content>
                           <DateRangePicker
@@ -493,8 +501,8 @@ const MapLogData = (props) => {
     return (
       <>
         {data.map((item, idx) => (
-          <>
-            <Alert key={idx}>
+          <div key={idx}>
+            <Alert>
               <div className="row mb-3">
                 <FontAwesomeIcon icon={faSearchPlus}
                   className="mt-1"
@@ -511,7 +519,7 @@ const MapLogData = (props) => {
               </div>
             </Alert>
             <hr style={{ color: "#E5E7E9", backgroundColor: "#E5E7E9", borderColor : "#E5E7E9" }} />            
-          </>
+          </div>
         ))}
         <ModalLogs header={modalMessage._index} size="lg" jsonMessage={modalMessage} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
       </>
