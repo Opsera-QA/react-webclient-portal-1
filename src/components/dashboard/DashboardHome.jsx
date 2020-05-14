@@ -26,7 +26,7 @@ function DashboardHome() {
   const contextType = useContext(AuthContext);
   const [hasError, setErrors] = useState(false);
   const [data, setData] = useState([]);
-  const [selection, setSelection] = useState("planning");
+  const [selection, setSelection] = useState("pipeline");
   const [persona, setPersona] = useState();
   const [loading, setLoading] = useState(false);
   const [isEnabled, setIsEnabled] = useState(true);
@@ -154,10 +154,10 @@ function DashboardHome() {
                   <Col sm={8}>
                     <ul className="nav nav-pills ml-2 mb-2">
                       <li className="nav-item">
-                        <a className={"nav-link " + (selection === "planning" ? "active" : "")} onClick={handleTabClick("planning")} href="#">Planning</a>
+                        <a className={"nav-link " + (selection === "pipeline" ? "active" : "")} onClick={handleTabClick("pipeline")} href="#">Pipeline</a>
                       </li>
                       <li className="nav-item">
-                        <a className={"nav-link " + (selection === "pipeline" ? "active" : "")} onClick={handleTabClick("pipeline")} href="#">Pipeline</a>
+                        <a className={"nav-link " + (selection === "planning" ? "active" : "")} onClick={handleTabClick("planning")} href="#">Planning</a>
                       </li>
                       <li className="nav-item">
                         <a className={"nav-link " + (selection === "secops_v2" ? "active" : "")} onClick={handleTabClick("secops_v2")} href="#">SecOps</a>
