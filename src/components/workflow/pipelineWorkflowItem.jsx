@@ -14,6 +14,7 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
   const [modalHeader, setModalHeader] = useState("");
   const [currentStatus, setCurrentStatus] = useState({});
   const [itemState, setItemState] = useState(false);
+  const [stepConfigured, setStepConfigured] = useState(true);
   
 
   useEffect(() => {    
@@ -56,6 +57,16 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
       setCurrentStatus({});
       setItemState("");
     }    
+
+    if (item !== undefined) {
+      if (item.tool !== undefined && (typeof(item.tool.tool_identifier) === "string" && item.tool.tool_identifier.length > 0) && (item.type !== undefined && Object.keys(item.type[0]).length > 0)) {
+        setStepConfigured(true);
+      } else {
+        setStepConfigured(false);
+      }
+    } else {
+      setStepConfigured(false);
+    }    
   };
 
   const handleViewClick = (data, header) => {
@@ -67,23 +78,22 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
   const handleEditClick = (type, tool, itemId) => {
     if (tool && tool.tool_identifier !== undefined) {
       parentCallbackEditItem({ type: type, tool_name: tool.tool_identifier, step_id: itemId });    
-    }      
+    } else {
+      parentCallbackEditItem({ type: type, tool_name: "", step_id: itemId });    
+    }
   };  
 
   const handleDeleteStepClick = (itemId, index) => {
-    console.log("This Step ID: ", itemId);
-    console.log("Hits Step index: ", index);
-    //TODO: based on index value, add blank step template to the next index value (index+1)
-
     parentCallbackDeleteStep(itemId, index);
   };
+
 
   return (
     <>
       <div>
-        <div className="title-text-6 upper-case-first ml-1 mt-1 title-text-divider">{item.type[0] ? item.type[0] : "New Step"}        
+        <div className="title-text-6 upper-case-first ml-1 mt-1 title-text-divider">{item.type[0] ? item.type[0] : "Pipeline Step"}        
           <div className="float-right text-right">
-            {item.tool !== undefined ? 
+            {stepConfigured === true && editWorkflow === false ? 
               <>
                 { currentStatus.status === "failed" || currentStatus.status === "failure" ? 
                   <OverlayTrigger
@@ -116,14 +126,24 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
                     {nextStep !== undefined && nextStep._id === item._id && itemState !== "running" ? 
                       <FontAwesomeIcon icon={faBookmark} className="nav-blue mr-2" /> : null }
                   </> }                  
-              </> : null }
+              </> : 
+              <OverlayTrigger
+                placement="top"
+                delay={{ show: 250, hide: 400 }}
+                overlay={renderTooltip({ message: "Step Setup" })} >
+                <FontAwesomeIcon icon={faCog}
+                  style={{ cursor: "pointer" }}
+                  className="text-muted mx-1" fixedWidth
+                  onClick={() => { handleEditClick("step", item.tool, item._id); }} />
+              </OverlayTrigger>              
+            }
 
             {editWorkflow ? <>
               <OverlayTrigger
                 placement="top"
                 delay={{ show: 250, hide: 400 }}
                 overlay={renderTooltip({ message: "Delete Step" })} >
-                <FontAwesomeIcon icon={faTrash} className="mr-2 dark-grey" 
+                <FontAwesomeIcon icon={faTrash} className="mr-2 ml-1 dark-grey" 
                   style={{ cursor: "pointer" }}
                   onClick={() => { handleDeleteStepClick(item._id, index); }} />
               </OverlayTrigger>
@@ -146,7 +166,7 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
         { item.tool !== undefined && currentStatus.step_id === item._id ? 
           <div className="d-flex flex-row mb-1">
             <div className="pl-1 workflow-module-text-flex-basis text-muted">Status:</div>
-            <div className="pl-1 upper-case-first">{currentStatus.status}
+            <div className="pl-1">{currentStatus.status}&nbsp;
                    on <Moment format="YYYY-MM-DD, hh:mm a" date={currentStatus.updatedAt} /></div>
             <div className="flex-grow-1"></div>
           </div> : null}
@@ -156,7 +176,7 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
           <div className="p-1"></div>
         </div>
 
-        {item.tool !== undefined ? 
+        {stepConfigured === true ? 
           <div className="d-flex align-items-end flex-row">
             <div className="p-1"><span className="text-muted small">{item._id}</span></div>
             <div className="p-2"></div>

@@ -84,7 +84,7 @@ function TeamCityStepConfiguration( { data, parentCallback }) {
         <Form.Control maxLength="100" type="password" placeholder="" value={formData.teamcityPassword || ""} onChange={e => setFormData({ ...formData, teamcityPassword: e.target.value })} />
       </Form.Group>
       <Form.Group controlId="branchField">
-        <Form.Label>Build Step ID</Form.Label>
+        <Form.Label>Build Step ID*</Form.Label>
         <Form.Control maxLength="150" type="text" placeholder="" value={formData.teamcityBuildTypeId || ""} onChange={e => setFormData({ ...formData, teamcityBuildTypeId: e.target.value })} />
         <Form.Text className="text-muted">TeamCity Project Build Settings &#62; ID</Form.Text>
       </Form.Group>

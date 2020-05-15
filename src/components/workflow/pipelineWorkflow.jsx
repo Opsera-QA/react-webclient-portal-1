@@ -81,6 +81,12 @@ function PipelineWorkflow({ id }) {
     }    
   };
 
+  const callbackRefreshPipeline = async () => {
+    setEditItem(false);
+    setReload(true);
+    await fetchData();          
+  };
+
   const callbackFunctionEditor = () => {
     setEditItem(false);    
   };
@@ -96,11 +102,11 @@ function PipelineWorkflow({ id }) {
           {typeof(data) !== "undefined" ?
             <Row>
               <Col>
-                <PipelineWorkflowDetail data={data} parentCallback={callbackFunctionDetail} role={role} /></Col>
+                <PipelineWorkflowDetail data={data} editItemId={editItem.step_id} parentCallback={callbackFunctionDetail} role={role} /></Col>
               <Col md="auto"></Col>
               {editItem ?
                 <Col xs lg="4" className="workflow-editor-panel p-3">
-                  <PipelineWorkflowEditor editItem={editItem} data={data} parentCallback={callbackFunctionEditor} /></Col>: null}
+                  <PipelineWorkflowEditor editItem={editItem} data={data} parentCallback={callbackFunctionEditor} parentCallbackRefreshPipeline={callbackRefreshPipeline} /></Col>: null}
             </Row> : null}
 
           {data.length == 0 ?

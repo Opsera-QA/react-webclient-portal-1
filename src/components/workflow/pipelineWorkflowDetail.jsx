@@ -15,7 +15,7 @@ import PipelineWorkflowItemList from "./pipelineWorkflowItemList";
 import "./workflows.css";
 
 const PipelineWorkflowDetail = (props) => {
-  const { data, parentCallback, role } = props;
+  const { data, parentCallback, role, editItemId } = props;
   const [error, setErrors] = useState();
   const [userInfo, setUserInfo] = useState();
   const [modalHeader, setModalHeader] = useState("");
@@ -49,9 +49,10 @@ const PipelineWorkflowDetail = (props) => {
     return () => {     
       controller.abort();      
     };
-  }, [data]);
+  }, [data, editItemId]);
 
   const loadFormData = async (step) => {
+    setEditWorkflow(false);
     if (step.workflow !== undefined) {
       setState({ items: step.workflow.plan });
       setLastStep(step.workflow.last_step);
@@ -67,6 +68,10 @@ const PipelineWorkflowDetail = (props) => {
         setWorkflowStatus(false);        
       }      
     }
+
+    //todo: Wire up highligting the item that's edited basedon this value passed in from parent!
+    console.log("edit: ", editItemId);
+
   };
 
   async function checkAuthentication ()  {
@@ -508,7 +513,8 @@ function renderTooltip(props) {
 PipelineWorkflowDetail.propTypes = {
   data: PropTypes.object,
   parentCallback: PropTypes.func,
-  role: PropTypes.string
+  role: PropTypes.string,
+  editItemId: PropTypes.string
 };
 
 

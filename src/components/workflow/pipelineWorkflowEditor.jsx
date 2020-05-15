@@ -10,10 +10,10 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import SourceRepositoryConfig from "./forms/sourceRepository";
 import StepNotificationConfig from "./forms/notifications";
 import StepToolConfiguration from "./forms/stepToolConfiguration";
- 
+import StepConfiguration from "./forms/stepConfiguration";
 
 
-const PipelineWorkflowEditor = ({ editItem, data, parentCallback }) => {
+const PipelineWorkflowEditor = ({ editItem, data, parentCallback, parentCallbackRefreshPipeline }) => {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
   const [loading, setLoading] = useState(false);
@@ -37,10 +37,15 @@ const PipelineWorkflowEditor = ({ editItem, data, parentCallback }) => {
   };
 
   const callbackFunctionTools = async (plan) => {
-    setLoading(true);
     data.workflow.plan = plan;
     await postData(data);
     parentCallback(data);  
+  };
+
+  const callbackConfigureStep = async (plan) => {
+    data.workflow.plan = plan;
+    await postData(data);
+    parentCallbackRefreshPipeline();  
   };
 
   const callbackFunctionSource = async (source) => {
@@ -48,7 +53,7 @@ const PipelineWorkflowEditor = ({ editItem, data, parentCallback }) => {
     await postData(data);
     parentCallback(data);  
   };
-
+  
   if (error) {
     return (<ErrorDialog error={error} />);
   } else if (loading) {
@@ -90,6 +95,23 @@ const PipelineWorkflowEditor = ({ editItem, data, parentCallback }) => {
         </>
       );
 
+    case "step":
+      return (
+        <>
+          <Row className="mb-2">
+            <Col sm={10}><h5>Step Setup</h5></Col>
+            <Col sm={2} className="text-right">
+              <FontAwesomeIcon 
+                icon={faTimes} 
+                className="mr-1"
+                style={{ cursor:"pointer" }}
+                onClick={() => { handleCloseClick(); }} />
+            </Col>
+          </Row>            
+          <StepConfiguration data={data} stepId={editItem.step_id} parentCallback={callbackConfigureStep} /> 
+        </>
+      );
+
     default: 
       return (
         <>
@@ -115,7 +137,8 @@ const PipelineWorkflowEditor = ({ editItem, data, parentCallback }) => {
 PipelineWorkflowEditor.propTypes = {
   editItem: PropTypes.object,
   data: PropTypes.object,
-  parentCallback: PropTypes.func
+  parentCallback: PropTypes.func,
+  parentCallbackRefreshPipeline: PropTypes.func
 };
 
 export default PipelineWorkflowEditor;

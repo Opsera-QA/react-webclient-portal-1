@@ -15,6 +15,8 @@ import SeleniumStepConfiguration from "./selenium";
 import TwistlockStepConfiguration from "./twistlock";
 import S3StepConfiguration from "./S3";
 import DatabricksNotebookConfiguration from "./databricks-notebook";
+import SshUploadDeploy from "./ssh-upload";
+import ElasticBeanstalkDeploy from "./elastic-beanstalk";
 
 
 function StepToolConfiguration( { data, editItem, parentCallback }) {
@@ -67,6 +69,8 @@ function StepToolConfiguration( { data, editItem, parentCallback }) {
           {editItem.tool_name.toLowerCase() === "gcp-deploy" ? <GcpDeployStepConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
           {editItem.tool_name.toLowerCase() === "s3" ? <S3StepConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
           {editItem.tool_name.toLowerCase() === "databricks-notebook" ? <DatabricksNotebookConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
+          {editItem.tool_name.toLowerCase() === "ssh-upload" ? <SshUploadDeploy data={stepTool} parentCallback={callbackFunction} /> : null }
+          {editItem.tool_name.toLowerCase() === "elastic-beanstalk" ? <ElasticBeanstalkDeploy data={stepTool} parentCallback={callbackFunction} /> : null }
         </div>
         : null }
 
