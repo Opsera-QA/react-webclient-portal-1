@@ -81,8 +81,9 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
   return (
     <>
       <div>
+        <div className="title-text upper-case-first ml-1 mt-1 title-text-divider">{item.type[0] ? item.type[0] : "New Step"}</div>
         <div className="d-flex flex-row">
-          <div className="p-1"><span className="text-muted">Step:</span> {item.name}</div>
+          <div className="p-1"><span className="text-muted">Name:</span> {item.name}</div>
           <div className="p-1 ml-auto text-right">
             {item.tool !== undefined ? 
               <>

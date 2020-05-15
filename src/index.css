@@ -33,6 +33,10 @@ color: green;
   color: #6c757d;
 }
 
+.light-grey {
+  color: #c9cdd0;
+}
+
 .pointer {
   cursor: pointer
 }
@@ -67,6 +71,17 @@ a:hover, .active {
 .code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.title-text { 
+  font-weight: 500;
+  line-height: 1.2;
+  font-size: 1rem;
+  padding-bottom: .25rem
+}
+
+.title-text-divider {
+  border-bottom: 1px solid #c9cdd0;
 }
 
 .header-text {

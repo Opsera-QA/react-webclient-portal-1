@@ -93,7 +93,7 @@ function PipelineWorkflowItemList({ items, lastStep, nextStep, editWorkflow, pip
       </>:       
         <>
           <SteppedLineTo from={"step-"+item._id}to={"step-"+ index} delay={100} orientation="v" borderColor="#226196" borderWidth={2} fromAnchor="bottom" toAnchor="bottom" />
-          <div style={{ height: "50px" }} className={"step-"+ index}>&nbsp;</div>
+          <div style={{ height: "40px" }} className={"step-"+ index}>&nbsp;</div>
         </>
       }
     </div>

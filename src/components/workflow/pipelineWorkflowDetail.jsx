@@ -397,8 +397,8 @@ const PipelineWorkflowDetail = (props) => {
             
 
             <div className="source workflow-module-container workflow-module-container-width-sm p-2">
-              <h6>Start of Workflow</h6>
-              {!data.workflow.source.service ? <div>Source Repository</div> : null }
+              <div className="title-text title-text-divider">Start of Workflow</div>
+              {!data.workflow.source.service ? <div className="mt-1">Source Repository</div> : null }
               
               {data.workflow.source.name ?
                 <div className="d-flex">
