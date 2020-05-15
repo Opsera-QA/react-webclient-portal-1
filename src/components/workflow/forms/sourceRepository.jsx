@@ -142,7 +142,7 @@ function EventBasedTriggerDetails({ pipelineId }) {
   return (
     <div className="mt-2 mb-2">
       <Form.Group controlId="branchField">
-        <Form.Label>Webhook URL</Form.Label>
+        <Form.Label>Wesbhook URL</Form.Label>
         
         <InputGroup className="mb-3">
           <Form.Control maxLength="75" type="text" value={triggerUrl || ""} disabled={true} />

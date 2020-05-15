@@ -1,5 +1,5 @@
 // Analytics Software Development Tab, Developer, Node Ticket AN-153
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { ResponsiveLine } from "@nivo/line";
@@ -19,27 +19,7 @@ function JiraIssuesCreatedByDateLineChart( { persona } ) {
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   
-  useEffect(() => {    
-    const controller = new AbortController();
-    const runEffect = async () => {
-      try {
-        await fetchData();
-      } catch (err) {
-        if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
-          return;
-        }        
-      }
-    };
-    runEffect();
-
-    return () => {
-      controller.abort();
-    };
-  }, []);
-
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
@@ -65,14 +45,33 @@ function JiraIssuesCreatedByDateLineChart( { persona } ) {
       setLoading(false);
       setErrors(err.message);
     }
-  };
+  }, [contextType]);
+
+  useEffect(() => {    
+    const controller = new AbortController();
+    const runEffect = async () => {
+      try {
+        await fetchData();
+      } catch (err) {
+        if (err.name === "AbortError") {
+          console.log("Request was canceled via controller.abort");
+          return;
+        }        
+      }
+    };
+    runEffect();
+
+    return () => {
+      controller.abort();
+    };
+  }, [fetchData]);
 
   //This needs to be more intelligent than just checking for precense of data.  Node can return a status 400 error from ES, and that would fail this.
   if(loading) {
     return (<LoadingDialog size="sm" />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
-  // } else if (typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) {
+  // } else if (typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) {
   //   return (<ErrorDialog  error="No Data is available for this chart at this time." />);
   } else {
     console.log(data.data);    
@@ -82,7 +81,7 @@ function JiraIssuesCreatedByDateLineChart( { persona } ) {
 
         <div className="chart mb-3" style={{ height: "300px" }}>
           <div className="chart-label-text">Jira: Issues Created vs. Resolved</div>
-          {(typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) ?
+          {(typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) ?
             <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
               <InfoDialog message="No Data is available for this chart at this time." />
             </div>

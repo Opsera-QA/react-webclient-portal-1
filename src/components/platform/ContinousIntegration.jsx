@@ -24,7 +24,7 @@ class ContinousIntegration extends React.PureComponent {
                 })
               }
             >
-              <img src={require("./imgs/jenkins.png")} />
+              <img src={require("./imgs/jenkins.png")} alt="Jenkins" />
               <span className="newApp__service-title">Jenkins</span>
             </div>
 
@@ -38,7 +38,7 @@ class ContinousIntegration extends React.PureComponent {
                 })
               }
             >
-              <img src={require("./imgs/team-city.png")} />
+              <img src={require("./imgs/team-city.png")} alt="Team City"/>
               <span className="newApp__service-title">Team City</span>
             </div>
           </Card.Text>

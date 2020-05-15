@@ -12,7 +12,7 @@ function XUnitMaxMinPercBarChart( { data, persona } ) {
   const [showModal, setShowModal] = useState(false);
 
   
-  if (typeof data !== "object" || Object.keys(data).length == 0 || xunitMaxMinPerc.status !== 200) {
+  if (typeof data !== "object" || Object.keys(data).length === 0 || xunitMaxMinPerc.status !== 200) {
     return (<ErrorDialog error="No Data is available for this chart at this time." />);
   } else {
     return (

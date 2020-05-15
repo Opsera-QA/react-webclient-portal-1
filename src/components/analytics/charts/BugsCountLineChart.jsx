@@ -74,7 +74,7 @@ function BugsCountLineChart( { persona } ) {
     return (<LoadingDialog size="sm" />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
-  // } else if (typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) {
+  // } else if (typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) {
   //   return (<ErrorDialog error="No Data is available for this chart at this time." />);
   } else {
     return (
@@ -84,7 +84,7 @@ function BugsCountLineChart( { persona } ) {
 
         <div className="chart mb-3" style={{ height: "300px" }}>
           <div className="chart-label-text">Sonar: Bugs Count</div>
-          {(typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) ?
+          {(typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) ?
             <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
               <InfoDialog message="No Data is available for this chart at this time." />
             </div>

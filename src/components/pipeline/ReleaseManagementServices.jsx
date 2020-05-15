@@ -3,7 +3,7 @@ import { RMContext } from "./RMContext";
 import ReleaseManagementOtherServices, {
   Confirmation,
 } from "./ReleaseManagementOtherServices";
-import { Form, Card, CardColumns, CardGroup } from "react-bootstrap";
+import { Form, Card } from "react-bootstrap";
 
 const githubci = {
   category: "Release Management",
@@ -132,7 +132,7 @@ class ReleaseManagementServices extends React.PureComponent {
   static contextType = RMContext
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {};
   }
   render() {
     const { serviceClick, saving } = this.context;
@@ -150,7 +150,7 @@ class ReleaseManagementServices extends React.PureComponent {
                   serviceClick(jenkinsPipelineNode);
               }}
             >
-              <img src={require("../platform/imgs/jenkins.png")} />
+              <img src={require("../platform/imgs/jenkins.png")} alt="Jenkins Pipeline"/>
               <span className="newApp__service-title">Jenkins Pipeline</span>
             </div>
 
@@ -161,7 +161,7 @@ class ReleaseManagementServices extends React.PureComponent {
                   serviceClick(githubci);
               }}
             >
-              <img src={require("../api_connector/imgs/gitlab.png")} />
+              <img src={require("../api_connector/imgs/gitlab.png")} alt="Gitlab CI"/>
               <span className="newApp__service-title">Gitlab CI</span>
             </div>
 
@@ -186,8 +186,8 @@ class ReleaseManagementServices extends React.PureComponent {
 
         {this.context.initServicesValid === true &&
           this.context.otherServicesShow === true && (
-            <ReleaseManagementOtherServices app={this.props.app} tools={this.props.tools} />
-          )}
+          <ReleaseManagementOtherServices app={this.props.app} tools={this.props.tools} />
+        )}
         {this.context.otherServicesShow !== null && <Confirmation app={this.props.app} tools={this.props.tools} handleCreateTools={this.props.handleCreateTools} />}
       </Form>
     );

@@ -1,9 +1,8 @@
-import React from "react"
-import { withRouter } from "react-router-dom"
-import { AuthContext } from '../../contexts/AuthContext';  //REact Context API Code for User Authentication
-import { ApiService } from '../../api/apiService';
+import React from "react";
+import { withRouter } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthContext";  //REact Context API Code for User Authentication
 
-const Ctx = React.createContext()
+const Ctx = React.createContext();
 
 class NewAppProvider extends React.Component {
   static contextType = AuthContext;  //Registers the User Authentication context data in the component
@@ -15,9 +14,9 @@ class NewAppProvider extends React.Component {
       open: false,
       data: {},
       appname: null,
-      appid: '',
+      appid: "",
       saving: false,
-      token: '',
+      token: "",
       user: {}
     };
   }
@@ -33,7 +32,7 @@ class NewAppProvider extends React.Component {
     this.setState({
       token: accessToken,
       user: userInfo
-    })
+    });
   }
 
   reset = () => {
@@ -41,9 +40,9 @@ class NewAppProvider extends React.Component {
       open: false,
       data: {},
       appname: null,
-      appid: '',
+      appid: "",
       saving: false,
-    })
+    });
   }
 
   handleCancel = () => {
@@ -53,17 +52,17 @@ class NewAppProvider extends React.Component {
     this.setState({
       data,
       open: false,
-    })
+    });
   }
 
   handleSave = () => {
-    const { service, data } = this.state
-    if (!data[service]) data[service] = {}
+    const { service, data } = this.state;
+    if (!data[service]) data[service] = {};
 
     this.setState({
       open: false,
       data,
-    })
+    });
   }
 
   gotoInventory = () => {
@@ -76,41 +75,41 @@ class NewAppProvider extends React.Component {
 
   // eslint-disable-next-line  no-unused-vars
   handleChange = ({ target: { name, value } }, service) => {
-    const s = this.state.data[service] || {}
-    s.port = value
+    const s = this.state.data[service] || {};
+    s.port = value;
     this.setState(ps => {
       return {
         data: {
           ...ps.data,
           [service]: s,
         },
-      }
-    })
+      };
+    });
   }
   isChecked = (service, name) => {
-    const { data } = this.state
-    return data[service] && data[service][name]
+    const { data } = this.state;
+    return data[service] && data[service][name];
   }
 
   // eslint-disable-next-line  no-unused-vars
   handleCheckboxChanged = (service, name) => {
-    const { data } = this.state
-    data[service] = data[service] || {}
-    data[service].decrypt = !data[service].decrypt
+    const { data } = this.state;
+    data[service] = data[service] || {};
+    data[service].decrypt = !data[service].decrypt;
 
     this.setState({
       data,
-    })
+    });
   }
 
   toggleModal = ({ open }) => {
     this.setState({
       open,
-    })
+    });
   }
 
   render() {
-    console.log(this.state)
+    console.log(this.state);
     return (
       <Ctx.Provider
         value={{
@@ -130,9 +129,9 @@ class NewAppProvider extends React.Component {
       >
         {this.props.children}
       </Ctx.Provider>
-    )
+    );
   }
 }
 
-export const NewAppContext = Ctx
-export default withRouter(NewAppProvider)
+export const NewAppContext = Ctx;
+export default withRouter(NewAppProvider);

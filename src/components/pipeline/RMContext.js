@@ -2,7 +2,6 @@
 import React, { createContext, Component } from "react";
 import { withRouter } from "react-router-dom";
 import { isAlphaNumeric } from "../../helpers";
-import { ApiService } from "../../api/apiService";
 import { AuthContext } from "../../contexts/AuthContext";
 
 let RMContext;
@@ -61,7 +60,7 @@ class rmProvider extends Component {
       appname: "",
       more: false,
       saving: false,
-    })
+    });
   }
   // services
   handleServiceCheckBoxChange = (service, name, val) => {
@@ -132,17 +131,17 @@ class rmProvider extends Component {
   }
 
   validate = () => {
-    const { services, service } = this.state
+    const { services, service } = this.state;
     if (!service.includes("Jenkins Pipeline")) {
-      return true
+      return true;
     } else {
       if (!services["Jenkins Pipeline"]) {
-        return false
+        return false;
       } else if (services["Jenkins Pipeline"].jenkins_password) {
         if (services["Jenkins Pipeline"].jenkins_password === "") {
-          return false
+          return false;
         } else if (services["Jenkins Pipeline"].jenkins_password.length > 0) {
-          return true
+          return true;
         }
         else {
           return false;

@@ -8,7 +8,7 @@ class ReleaseManagementOtherServices extends React.PureComponent {
   render() {
     return (
       <>
-        <h3 style={{ padding: '20px' }}>Additional Serivces</h3>
+        <h3 style={{ padding: "20px" }}>Additional Serivces</h3>
         <div className="ReleaseManagementOtherServices">
           <CardColumns>
             <ConfigurationManagement app={this.props.app} tools={this.props.tools} />
@@ -39,12 +39,12 @@ class ConfigurationManagement extends React.PureComponent {
               serviceClick({
                 service: "Ansible",
                 category: "Configuration Management",
-              })
+              });
           }
 
           }
         >
-          <img src={require("../platform/imgs/ansible.png")} />
+          <img src={require("../platform/imgs/ansible.png")} alt="Ansible" />
           <span className="newApp__service-title">Ansible</span>
         </div>
 
@@ -52,7 +52,7 @@ class ConfigurationManagement extends React.PureComponent {
           className="newApp__service-logo newApp__service-logo--disabled"
           onClick={() => { }}
         >
-          <img src={require("../platform/imgs/chef.png")} />
+          <img src={require("../platform/imgs/chef.png")} alt="Chef" />
           <span className="newApp__service-title">Chef</span>
         </div>
 
@@ -60,7 +60,7 @@ class ConfigurationManagement extends React.PureComponent {
           className="newApp__service-logo newApp__service-logo--disabled"
           onClick={() => { }}
         >
-          <img src={require("../platform/imgs/puppet.png")} />
+          <img src={require("../platform/imgs/puppet.png")} alt="Puppet" />
           <span className="newApp__service-title">Puppet</span>
         </div>
       </ServicesWrapper>
@@ -82,11 +82,11 @@ class ContinousIntegration extends React.PureComponent {
               serviceClick({
                 service: "Jenkins",
                 category: "Continous Integration",
-              })
+              });
           }
           }
         >
-          <img src={require("../platform/imgs/jenkins.png")} />
+          <img src={require("../platform/imgs/jenkins.png")} alt="Jenkins" />
           <span className="newApp__service-title">Jenkins</span>
         </div>
 
@@ -94,7 +94,7 @@ class ContinousIntegration extends React.PureComponent {
           className="newApp__service-logo newApp__service-logo--disabled"
           onClick={() => { }}
         >
-          <img src={require("../platform/imgs/team-city.png")} />
+          <img src={require("../platform/imgs/team-city.png")} alt="Team City" />
           <span className="newApp__service-title">Team City</span>
         </div>
       </ServicesWrapper>
@@ -116,16 +116,16 @@ class LogManagement extends React.PureComponent {
               serviceClick({
                 category: "Log Management",
                 service: "ElasticSearch",
-              })
+              });
           }
           }
         >
-          <img src={require("../platform/imgs/elastic-search.png")} />
+          <img src={require("../platform/imgs/elastic-search.png")} alt="ElasticSearch" />
           <span className="newApp__service-title">ElasticSearch</span>
         </div>
 
         <div className="newApp__service-logo newApp__service-logo--disabled">
-          <img src={require("../platform/imgs/log-stash.png")} />
+          <img src={require("../platform/imgs/log-stash.png")} alt="LogStash" />
           <span className="newApp__service-title">LogStash</span>
         </div>
       </ServicesWrapper >
@@ -139,12 +139,12 @@ class RepositoryManagement extends React.PureComponent {
     return (
       <ServicesWrapper label="Repository Management">
         <div className="newApp__service-logo newApp__service-logo--disabled">
-          <img src={require("../platform/imgs/artifactory.png")} />
+          <img src={require("../platform/imgs/artifactory.png")} alt="Artifactory" />
           <span className="newApp__service-title">Artifactory</span>
         </div>
 
         <div className="newApp__service-logo newApp__service-logo--disabled">
-          <img src={require("../platform/imgs/nexus.png")} />
+          <img src={require("../platform/imgs/nexus.png")} alt="Nexus" />
           <span className="newApp__service-title">Nexus</span>
         </div>
       </ServicesWrapper>
@@ -185,11 +185,11 @@ class SASST extends React.PureComponent {
               serviceClick({
                 category: "SASST",
                 service: "SonarQube",
-              })
+              });
           }
           }
         >
-          <img src={require("../platform/imgs/sonar.png")} />
+          <img src={require("../platform/imgs/sonar.png")} alt="SonarQube" />
           <span className="newApp__service-title">SonarQube</span>
         </div>
       </ServicesWrapper>
@@ -211,16 +211,16 @@ class Monitoring extends React.PureComponent {
               serviceClick({
                 category: "Monitoring",
                 service: "Nagios",
-              })
+              });
           }
           }
         >
-          <img src={require("../platform/imgs/nagios.png")} />
+          <img src={require("../platform/imgs/nagios.png")} alt="Nagios" />
           <span className="newApp__service-title">Nagios</span>
         </div>
 
         <div className="newApp__service-logo newApp__service-logo--disabled">
-          <img src={require("../platform/imgs/zookeeper.png")} />
+          <img src={require("../platform/imgs/zookeeper.png")} alt="ZooKeeper" />
           <span className="newApp__service-title">ZooKeeper</span>
         </div>
       </ServicesWrapper>
@@ -230,9 +230,7 @@ class Monitoring extends React.PureComponent {
 
 export class Confirmation extends React.PureComponent {
   static contextType = RMContext
-  constructor(props) {
-    super(props)
-  }
+
   render() {
     const { services, checkBoxChange } = this.context;
     const { tools, handleCreateTools } = this.props;

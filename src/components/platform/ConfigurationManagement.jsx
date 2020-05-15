@@ -26,7 +26,7 @@ class ConfigurationManagement extends React.PureComponent {
                 })
               }
             >
-              <img src={require("./imgs/ansible.png")} />
+              <img src={require("./imgs/ansible.png")} alt="Ansible" />
               <span className="newApp__service-title">Ansible</span>
             </div>
 
@@ -40,7 +40,7 @@ class ConfigurationManagement extends React.PureComponent {
                 })
               }
             >
-              <img src={require("./imgs/chef.png")} />
+              <img src={require("./imgs/chef.png")} alt="Chef" />
               <span className="newApp__service-title">Chef</span>
             </div>
 
@@ -54,7 +54,7 @@ class ConfigurationManagement extends React.PureComponent {
                 })
               }
             >
-              <img src={require("./imgs/puppet.png")} />
+              <img src={require("./imgs/puppet.png")} alt="Puppet"/>
               <span className="newApp__service-title">Puppet</span>
             </div>
           </Card.Text>

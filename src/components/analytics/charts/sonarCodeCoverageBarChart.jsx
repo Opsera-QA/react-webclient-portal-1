@@ -14,7 +14,7 @@ import ModalLogs from "../../common/modalLogs";
 
 function SonarCodeCoverageBarChart( { data, persona } ) {
   const [showModal, setShowModal] = useState(false);
-  if (typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) {
+  if (typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) {
     return (<ErrorDialog  error="No Data Present in the ES!" />);
   } else {
     return (
