@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
@@ -18,28 +18,7 @@ function XUnitTestDurationBarChart( { persona } ) {
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   
-
-  useEffect(() => {    
-    const controller = new AbortController();
-    const runEffect = async () => {
-      try {
-        await fetchData();
-        
-      } catch (err) {
-        if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
-          return;
-        }        
-      }
-    };
-    runEffect();
-
-    return () => {
-      controller.abort();
-    };
-  }, []);
-
-  async function fetchData() {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
@@ -67,14 +46,34 @@ function XUnitTestDurationBarChart( { persona } ) {
       setErrors(err);
       setLoading(false);
     }
-  }
+  }, [contextType]);
+  
+  useEffect(() => {    
+    const controller = new AbortController();
+    const runEffect = async () => {
+      try {
+        await fetchData();
+        
+      } catch (err) {
+        if (err.name === "AbortError") {
+          console.log("Request was canceled via controller.abort");
+          return;
+        }        
+      }
+    };
+    runEffect();
+
+    return () => {
+      controller.abort();
+    };
+  }, [fetchData]);
 
 
   if(loading) {
     return (<LoadingDialog size="sm" />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
-  } else if (typeof data !== "object" || Object.keys(data).length == 0 || data.xunitTestDuration.status !== 200 || data.xunitTestNames.status !== 200) {
+  } else if (typeof data !== "object" || Object.keys(data).length === 0 || data.xunitTestDuration.status !== 200 || data.xunitTestNames.status !== 200) {
     return (<InfoDialog  message="No log activity has been captured for this dashboard yet." />);
   } else {
     return (

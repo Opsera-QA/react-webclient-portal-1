@@ -8,7 +8,7 @@ import { ResponsiveBar } from "@nivo/bar";
 import ErrorDialog from "../../common/error";
 import config from "./DeploymentsStackedBarChartConfigs";
 import "./charts.css";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/loading";
@@ -23,27 +23,7 @@ function DeploymentsStackedBarChart( { persona } ) {
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  useEffect(() => {    
-    const controller = new AbortController();
-    const runEffect = async () => {
-      try {
-        console.log("FETCHING DATA");
-        await getApiData();        
-      } catch (err) {
-        if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
-          return;
-        }        
-      }
-    };
-    runEffect();
-
-    return () => {
-      controller.abort();
-    };
-  }, []);
-
-  const getApiData = async () => {
+  const getApiData = useCallback(async () => {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
@@ -68,7 +48,27 @@ function DeploymentsStackedBarChart( { persona } ) {
       setLoading(false);
       setErrors(err.message);
     }
-  };
+  }, [contextType]);
+
+  useEffect(() => {    
+    const controller = new AbortController();
+    const runEffect = async () => {
+      try {
+        console.log("FETCHING DATA");
+        await getApiData();        
+      } catch (err) {
+        if (err.name === "AbortError") {
+          console.log("Request was canceled via controller.abort");
+          return;
+        }        
+      }
+    };
+    runEffect();
+
+    return () => {
+      controller.abort();
+    };
+  }, [getApiData]);
 
   console.log(data);
 
@@ -76,7 +76,7 @@ function DeploymentsStackedBarChart( { persona } ) {
     return (<LoadingDialog size="sm" />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
-  // } else if (typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) {
+  // } else if (typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) {
   //   return (<ErrorDialog error="No Data is available for this chart at this time." />);
   } else {
     
@@ -85,7 +85,7 @@ function DeploymentsStackedBarChart( { persona } ) {
         <ModalLogs header="Deployments Graph" size="lg" jsonMessage={data.data} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
         <div className="chart mb-3" style={{ height: "300px" }}>
           <div className="chart-label-text">Jenkins: Deployments Graph</div>
-          {(typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) ?
+          {(typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) ?
             <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
               <InfoDialog message="No Data is available for this chart at this time." />
             </div>

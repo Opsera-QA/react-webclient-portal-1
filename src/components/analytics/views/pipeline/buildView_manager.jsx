@@ -6,7 +6,6 @@ import { AuthContext } from "../../../../contexts/AuthContext";
 import { axiosApiService } from "../../../../api/apiService";
 import LoadingDialog from "../../../common/loading";
 import ErrorDialog from "../../../common/error";
-import InfoDialog from "../../../common/info";
 import SummaryCountBlocksView from "../summaryCountBlocksView";
 import JenkinsBuildDurationBarChart from "../../charts/jenkinsBuildDurationBarChart";
 import JenkinsBuildsByUserBarChart from "../../charts/jenkinsBuildsByUserBarChart";

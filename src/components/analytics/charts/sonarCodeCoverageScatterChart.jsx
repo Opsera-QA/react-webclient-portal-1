@@ -9,7 +9,7 @@ import ModalLogs from "../../common/modalLogs";
 function SonarCodeCoverageScatterChart( { data, persona } ) {
   const [showModal, setShowModal] = useState(false);
   
-  if (typeof data !== "object" || Object.keys(data).length == 0) {
+  if (typeof data !== "object" || Object.keys(data).length === 0) {
     return (<ErrorDialog  error="No Data Present in the ES!" />);
   } else {
     const { sonarCodeCoverage2 }  =  data;

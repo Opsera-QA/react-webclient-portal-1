@@ -1,6 +1,6 @@
 import React from "react";
-import {Card} from "react-bootstrap";
-import {NewAppContext} from "./context";
+import { Card } from "react-bootstrap";
+import { NewAppContext } from "./context";
 
 class RepositoryManagement extends React.PureComponent {
   static contextType = NewAppContext
@@ -13,12 +13,12 @@ class RepositoryManagement extends React.PureComponent {
           
           <Card.Text>
             <div className="newApp__service-logo newApp__service-logo--disabled">
-              <img src={require("./imgs/artifactory.png")} />
+              <img src={require("./imgs/artifactory.png")} alt="artifactory" />
               <span className="newApp__service-title">ArtiFactory</span>
             </div>
 
             <div className="newApp__service-logo newApp__service-logo--disabled">
-              <img src={require("./imgs/nexus.png")} />
+              <img src={require("./imgs/nexus.png")} alt="nexus"/>
               <span className="newApp__service-title">Nexus</span>
             </div>
           </Card.Text>

@@ -84,7 +84,6 @@ class Tableau extends Component {
   }
 
   render() {
-    const isEnabled = this.canBeSubmitted();
     return (
       <div>
         {this.state.modal &&

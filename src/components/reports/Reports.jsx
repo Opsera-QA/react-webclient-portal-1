@@ -107,7 +107,7 @@ export default class Reports extends PureComponent {
             </Button>
           </Form>
           {showIframe && tool && tool.toolURL && (
-            <div>{<iframe src={tool.toolURL} height="600" width="1160" />}</div>
+            <div>{<iframe src={tool.toolURL} height="600" width="1160" title="toolUrl" />}</div>
           )}
         </>
         }

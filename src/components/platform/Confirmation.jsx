@@ -8,7 +8,7 @@ class Confirmation extends React.PureComponent {
   static contextType = NewAppContext
 
   render() {
-    const { data, confirm, setState } = this.context;
+    const { data, setState } = this.context;
     const { tools, handleSaveTools } = this.props;
     let isDisplayed = false;
     if (Object.keys(data).length > 0) {
@@ -88,7 +88,7 @@ class Confirmation extends React.PureComponent {
                 <div className="m-2 text-right">
                   <Button variant="outline-primary" onClick={handleSaveTools}>
                     Confirm
-                    </Button>
+                  </Button>
                 </div>
               </Form>
             </Card.Body>

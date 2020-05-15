@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
 import { AuthContext } from "../../../contexts/AuthContext";
@@ -20,27 +20,7 @@ function JenkinsBuildDurationBarChart( { persona } ) {
   const [showModal, setShowModal] = useState(false);
 
 
-  useEffect(() => {    
-    const controller = new AbortController();
-    const runEffect = async () => {
-      try {
-        await fetchData();
-      } catch (err) {
-        if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
-          return;
-        }        
-      }
-    };
-    runEffect();
-
-    return () => {
-      controller.abort();
-    };
-  }, []);
-
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
@@ -65,8 +45,26 @@ function JenkinsBuildDurationBarChart( { persona } ) {
       setLoading(false);
       setErrors(err.message);
     }
-  };
+  }, [contextType]);
+  
+  useEffect(() => {    
+    const controller = new AbortController();
+    const runEffect = async () => {
+      try {
+        await fetchData();
+      } catch (err) {
+        if (err.name === "AbortError") {
+          console.log("Request was canceled via controller.abort");
+          return;
+        }        
+      }
+    };
+    runEffect();
 
+    return () => {
+      controller.abort();
+    };
+  }, [fetchData]);
 
   console.log("Rendering Dep Frequency Charts");
 
@@ -76,7 +74,7 @@ function JenkinsBuildDurationBarChart( { persona } ) {
     return (<LoadingDialog size="sm" />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
-  // } else if (typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) {
+  // } else if (typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) {
   //   return (<div style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}><ErrorDialog error="No Data is available for this chart at this time." /></div>);
   } else {
     return (
@@ -86,7 +84,7 @@ function JenkinsBuildDurationBarChart( { persona } ) {
 
         <div className="chart mb-3" style={{ height: "300px" }}>
           <div className="chart-label-text">Jenkins: Build Duration</div>
-          {(typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) ?
+          {(typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) ?
             <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
               <InfoDialog message="No Data is available for this chart at this time." />
             </div>

@@ -11,7 +11,7 @@ function CodeSmellLineChart( { data, persona } ) {
   const { sonarCodeSmells }  =  data;
   const [showModal, setShowModal] = useState(false);
 
-  if (typeof data !== "object" || Object.keys(data).length == 0 || sonarCodeSmells.status !== 200) {
+  if (typeof data !== "object" || Object.keys(data).length === 0 || sonarCodeSmells.status !== 200) {
     return (<ErrorDialog error="No Data is available for this chart at this time." />);
   } else {
     return (

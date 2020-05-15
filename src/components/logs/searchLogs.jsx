@@ -7,7 +7,6 @@ import InfoDialog from "../common/info";
 import ErrorDialog from "../common/error";
 import { Form, Button, Alert, Table, Overlay, Popover } from "react-bootstrap";
 import Moment from "react-moment";
-import Modal from "../common/modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus, faCalendar } from "@fortawesome/free-solid-svg-icons";
 import "./logs.css";

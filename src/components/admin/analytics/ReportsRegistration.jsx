@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCogs, faUserCog, faLink } from "@fortawesome/free-solid-svg-icons";
+import { faCogs, faUserCog } from "@fortawesome/free-solid-svg-icons";
 
 class AdminReportRegistration extends Component {
   static contextType = AuthContext;
