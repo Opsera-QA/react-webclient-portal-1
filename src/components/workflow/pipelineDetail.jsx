@@ -42,8 +42,6 @@ function PipelineDetail({ id }) {
     };
   }, []);
 
-
-
   async function fetchData() {
     setLoading(true);
     const { getAccessToken, getUserSsoUsersRecord } = contextType;
@@ -68,7 +66,6 @@ function PipelineDetail({ id }) {
     }
   }
 
-
   const setPipelineAttributes = (pipeline, ssoUsersId) => {
     if (typeof(pipeline.roles) !== "undefined") {
       let adminRoleIndex = pipeline.roles.findIndex(x => x.role === "administrator"); 
@@ -87,7 +84,6 @@ function PipelineDetail({ id }) {
     }
   };
 
-
   const callbackFunction = async () => {
     await fetchData();
   };
@@ -101,10 +97,9 @@ function PipelineDetail({ id }) {
       ...data,
       activity: activity && activity.data
     });
-
   };
 
-  
+
   if (error) {
     return (<ErrorDialog error={error} />);
   }  else if (loading) {

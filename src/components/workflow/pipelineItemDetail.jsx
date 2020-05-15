@@ -173,7 +173,6 @@ const PipelineItemDetail = (props) => {
     }  
   }
 
-
   const handleSavePropertyClick = async (pipelineId, value, type) => {
     console.log(value);
 
@@ -228,7 +227,6 @@ const PipelineItemDetail = (props) => {
       console.log("Missing value or type for edit field");
     }
   };
-
 
   const handleSetSchedule = async (schedule) => {
     console.log("SCHEDULE DATA", schedule);
