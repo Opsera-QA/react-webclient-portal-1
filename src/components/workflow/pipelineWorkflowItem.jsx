@@ -81,10 +81,8 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
   return (
     <>
       <div>
-        <div className="title-text upper-case-first ml-1 mt-1 title-text-divider">{item.type[0] ? item.type[0] : "New Step"}</div>
-        <div className="d-flex flex-row">
-          <div className="p-1"><span className="text-muted">Name:</span> {item.name}</div>
-          <div className="p-1 ml-auto text-right">
+        <div className="title-text upper-case-first ml-1 mt-1 title-text-divider">{item.type[0] ? item.type[0] : "New Step"}        
+          <div className="float-right text-right">
             {item.tool !== undefined ? 
               <>
                 { currentStatus.status === "failed" || currentStatus.status === "failure" ? 
@@ -93,7 +91,7 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
                     delay={{ show: 250, hide: 400 }}
                     overlay={renderTooltip({ message: "View Errors" })} >
                     <FontAwesomeIcon icon={faExclamationTriangle} className="mr-2 red" 
-                      style={{ cursor: "pointer" }} size="lg"
+                      style={{ cursor: "pointer" }} 
                       onClick={() => { parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id); }} />
                   </OverlayTrigger> :
                   <>
@@ -103,7 +101,7 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
                         delay={{ show: 250, hide: 400 }}
                         overlay={renderTooltip({ message: "View Log" })} >
                         <FontAwesomeIcon icon={faCheckCircle} className="mr-2 green" 
-                          style={{ cursor: "pointer" }}  size="lg"
+                          style={{ cursor: "pointer" }} 
                           onClick={() => { parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id); }} />
                       </OverlayTrigger> : null }
                     {itemState === "running" ?  <OverlayTrigger
@@ -111,7 +109,7 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
                       delay={{ show: 250, hide: 400 }}
                       overlay={renderTooltip({ message: "View Log" })} >
                       <FontAwesomeIcon icon={faSpinner} className="mr-2 green" 
-                        style={{ cursor: "pointer" }}  size="lg" spin
+                        style={{ cursor: "pointer" }} spin
                         onClick={() => { parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id); }} />
                     </OverlayTrigger> : null }  
 
@@ -119,7 +117,6 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
                       <FontAwesomeIcon icon={faBookmark} className="nav-blue mr-2" /> : null }
                   </> }                  
               </> : null }
-
 
             {editWorkflow ? <>
               <OverlayTrigger
@@ -132,30 +129,38 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
               </OverlayTrigger>
             </> : null }
           </div>
-          
         </div>
-        <div className="d-flex">
-          <div className="p-1 upper-case-first"><span className="text-muted">Tool:</span> {item.tool !== undefined ? item.tool.tool_identifier : ""}</div>
-          {/* <div className="p-1"></div> */}
+        
+        <div className="d-flex flex-row mb-1 mt-1">
+          <div className="pl-1 workflow-module-text-flex-basis text-muted">Name:</div>
+          <div className="pl-1">{item.name}</div>
+          <div className="flex-grow-1"></div>                  
+        </div>
+
+        <div className="d-flex flex-row mb-1">
+          <div className="pl-1 workflow-module-text-flex-basis text-muted">Tool:</div>
+          <div className="pl-1 upper-case-first">{item.tool !== undefined ? item.tool.tool_identifier : ""}</div>
+          <div className="flex-grow-1"></div>
         </div>
 
         { item.tool !== undefined && currentStatus.step_id === item._id ? 
-          <div className="d-flex">
-            <div className="p-1"><span className="text-muted">Status:</span> <span className="upper-case-first pr-1">{currentStatus.status}</span>
+          <div className="d-flex flex-row mb-1">
+            <div className="pl-1 workflow-module-text-flex-basis text-muted">Status:</div>
+            <div className="pl-1 upper-case-first">{currentStatus.status}
                    on <Moment format="YYYY-MM-DD, hh:mm a" date={currentStatus.updatedAt} /></div>
-            {/* <div className="p-1">Flex item 2</div>      */}
+            <div className="flex-grow-1"></div>
           </div> : null}
 
 
-        <div className="d-flex">
+        <div className="d-flex flex-row mb-1">
           <div className="p-1"></div>
         </div>
 
         {item.tool !== undefined ? 
           <div className="d-flex align-items-end flex-row">
-            <div className="p-1"><span className="text-muted small">ID: {item._id}</span></div>
+            <div className="p-1"><span className="text-muted small">{item._id}</span></div>
             <div className="p-2"></div>
-            <div className="ml-auto p-1 text-right">
+            <div className="flex-grow-1 p-1 text-right">
               {!editWorkflow ? 
                 <>
                   <OverlayTrigger
