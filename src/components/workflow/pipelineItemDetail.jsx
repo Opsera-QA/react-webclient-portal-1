@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../contexts/AuthContext";
 import socketIOClient from "socket.io-client";
-import _ from "lodash";
 import { useHistory } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { Card, Row, Col, Button, Form } from "react-bootstrap";
@@ -15,6 +14,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus, faPencilAlt, faStopCircle, faSync, faPlay, faTrash, faThLarge, faSave, faSpinner, faTimes, faCogs } from "@fortawesome/free-solid-svg-icons";
 import "./workflows.css";
 import SchedulerWidget from "../common/schedulerWidget";
+import isEqual from "lodash.isequal";
 
 
 const INITIAL_FORM_DATA = {
@@ -82,7 +82,7 @@ const PipelineItemDetail = (props) => {
     socket.emit("subscribeToPipelineActivity", 1000);
     socket.on("subscribeToPipelineActivity", dataObj => {
       console.log("Update from Websocket (staleRefreshCount: "+staleRefreshCount+"): ", dataObj);
-      if (_.isEqual(dataObj, tmpDataObject)) {
+      if (isEqual(dataObj, tmpDataObject)) {
         staleRefreshCount++;
       } else {
         staleRefreshCount = 0;

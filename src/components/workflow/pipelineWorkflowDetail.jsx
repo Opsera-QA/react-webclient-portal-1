@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import _ from "lodash";
 import { axiosApiService } from "../../api/apiService";
 import { AuthContext } from "../../contexts/AuthContext"; 
 import socketIOClient from "socket.io-client";
@@ -12,6 +11,7 @@ import { faSearchPlus, faCog, faArchive, faPlay, faSync, faSpinner, faStopCircle
 import ModalActivityLogs from "../common/modalActivityLogs";
 import PipelineActions from "./actions";
 import PipelineWorkflowItemList from "./pipelineWorkflowItemList";
+import isEqual from "lodash.isequal";
 import "./workflows.css";
 
 const PipelineWorkflowDetail = (props) => {
@@ -94,7 +94,7 @@ const PipelineWorkflowDetail = (props) => {
       socket.emit("subscribeToPipelineActivity", 1000);
       socket.on("subscribeToPipelineActivity", dataObj => {
         console.log("Update from Websocket (staleRefreshCount: "+staleRefreshCount+"): ", dataObj);
-        if (_.isEqual(dataObj, tmpDataObject)) {
+        if (isEqual(dataObj, tmpDataObject)) {
           staleRefreshCount++;
         } else {
           staleRefreshCount = 0;
