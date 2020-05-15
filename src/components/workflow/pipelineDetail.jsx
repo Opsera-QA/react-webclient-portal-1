@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Table } from "react-bootstrap";
-import Modal from "../common/modal";
 import { AuthContext } from "../../contexts/AuthContext"; 
 import { axiosApiServiceMultiGet, axiosApiService } from "../../api/apiService";
 import PipelineItemDetail from "./pipelineItemDetail";

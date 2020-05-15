@@ -268,6 +268,19 @@ const PipelineWorkflowDetail = (props) => {
   };
 
 
+  async function updatePipeline(pipeline) {
+    const { getAccessToken } = contextType;
+    const accessToken = await getAccessToken();
+    const apiUrl = `/pipelines/${data._id}/update`;   
+    try {
+      await axiosApiService(accessToken).post(apiUrl, pipeline);
+    }
+    catch (err) {
+      console.log(err.message);
+      setErrors(err.message);
+    }
+  }
+
   const handleSourceEditClick = () => {
     parentCallback({ id: data._id, type: "source", item_id: "" });
   };
@@ -276,24 +289,17 @@ const PipelineWorkflowDetail = (props) => {
     setEditWorkflow(!editWorkflow);
   };
 
-  const handleSaveWorkflowEditsClick = () => {
-    //todo: wire up saving any changes to workflow?  Is this necessary?
-    // thinking the UI changes the plan array details and then this saves it.  TBD
+  const handleSaveWorkflowEditsClick = async () => {
     console.log("saving plan: ", data.workflow.plan);
     setEditWorkflow(!editWorkflow);
+    await updatePipeline(data);  
+    parentCallback(); //refreshes items
   };
 
   const handleCancelWorkflowEditsClick = () => {
-    //todo: wire up canceling any changes to workflow?  resest the plan data to what it was last?  
-    // maybe need to have the handleEditWorkflowClick cache a copy of data.workflow.plan so it can be reverted!!!
-    //saveCurrentItems
-    
     setEditWorkflow(!editWorkflow);
-    parentCallback(); //refreshes items (or updates if data passed so be careful)
+    parentCallback(); //refreshes workflow object from DB
   };
-
-
-
 
   const handleViewSourceActivityLog = async (pipelineId, tool, stepId, activityId) => {
     //get activity data, filtered by tool!
