@@ -435,7 +435,7 @@ const PipelineItemDetail = (props) => {
 
                         <Button variant="outline-danger" className="mr-2 mt-2" 
                           onClick={() => { handleStopWorkflowClick(data._id); }} disabled={workflowStatus !== "running"}>
-                          <FontAwesomeIcon icon={faStopCircle} className="mr-1" fixedWidth/>Reset Pipeline</Button>
+                          <FontAwesomeIcon icon={faStopCircle} className="mr-1" fixedWidth/>Restart Pipeline</Button>
                       </>
                       :
                       <Button variant="success" className="mr-2 mt-2" onClick={() => handleRunPipelineClick(data._id)}>

@@ -318,19 +318,14 @@ const PipelineWorkflowDetail = (props) => {
       {error ? <ErrorDialog error={error} /> : null}
       {typeof(data.workflow) !== "undefined" && data.workflow.hasOwnProperty("source") ? 
         <>
-
-          <div className="ml-4 mb-4 w-100 max-content-module-width-50">           
-            <h5>{data.name}            
-              {/* <Badge variant="secondary" pill className="ml-3 mb-1"> Steps: {currentStepIndex + 1} / {data.workflow ? data.workflow.plan.length : null }</Badge> */}
-            </h5>
-
+          <div className="ml-3 mb-2 w-100 max-content-module-width-50">           
             { _configuredToolsCount(data.workflow.plan) > 0 ?             
-              <div className="my-3 text-right">
+              <div className="mb-1 text-right">
                 {workflowStatus === "running" ? 
                   <>
-                    <Button variant="outline-dark" className="mr-2" disabled>
+                    <Button variant="outline-dark" className="mr-2"  size="sm" disabled>
                       <FontAwesomeIcon icon={faSpinner} spin className="mr-1"/> Running</Button>
-                    <Button variant="outline-danger" className="mr-2" 
+                    <Button variant="outline-danger" className="mr-2"  size="sm" 
                       onClick={() => { handleStopWorkflowClick(data._id); }}
                       disabled={role !== "administrator"}>
                       <FontAwesomeIcon icon={faStopCircle} className="mr-1"/>Stop Pipeline</Button>
@@ -338,13 +333,13 @@ const PipelineWorkflowDetail = (props) => {
                   :
                   <>
                     { nextStep === undefined || nextStep === data.workflow.plan[0] ?
-                      <Button variant="success" className="mr-2" 
+                      <Button variant="success" className="mr-2" size="sm"
                         onClick={() => { handleRunPipelineClick(data._id); }}
                         disabled={role !== "administrator"}>
                         <FontAwesomeIcon icon={faPlay} className="mr-1"/>Start Pipeline</Button>
                       :
                       <>
-                        <Button variant="success" className="mr-2" 
+                        <Button variant="success" className="mr-2"  size="sm" 
                           onClick={() => { handleRunPipelineClick(data._id); }}
                           disabled={role !== "administrator"}>
                           <FontAwesomeIcon icon={faPlay} className="mr-1"/>Continue Pipeline</Button>
@@ -354,20 +349,22 @@ const PipelineWorkflowDetail = (props) => {
                       data.workflow.last_step.hasOwnProperty("success") || 
                     data.workflow.last_step.hasOwnProperty("running") || 
                     data.workflow.last_step.hasOwnProperty("failed")) ?
-                      <Button variant="outline-primary" className="mr-2" 
+                      <Button variant="outline-primary" className="mr-2"  size="sm" 
                         onClick={() => { handleStopWorkflowClick(data._id); }}
                         disabled={role !== "administrator"}>
-                        <FontAwesomeIcon icon={faHistory} className="mr-1"/>Reset Pipeline</Button> : null}
+                        <FontAwesomeIcon icon={faHistory} className="mr-1"/>Restart Pipeline</Button> : null}
                   </>
                 }
-                <Button variant="outline-warning" className="mr-2" onClick={() => { handleRefreshClick(data._id); }}>
+                <Button variant="outline-warning"  size="sm" onClick={() => { handleRefreshClick(data._id); }}>
                   <FontAwesomeIcon icon={faSync} className="fa-fw"/></Button>                            
-              </div> : null }          
+              </div> : null }     
+
+            <div className="title-text-5 mt-2">{data.name}</div>     
           </div>
 
-          <div className="workflow-container ml-4 px-3 max-content-module-width-50">
+          <div className="workflow-container ml-3 pl-2 max-content-module-width-50">
             { userInfo._id === data.owner ? 
-              <div className="p-2 mb-2 text-right">
+              <div className="pr-1 pt-1 text-right">
                 {editWorkflow ?
                   <>
                     <FontAwesomeIcon icon={faSave}
@@ -397,7 +394,7 @@ const PipelineWorkflowDetail = (props) => {
             
 
             <div className="source workflow-module-container workflow-module-container-width-sm p-2">
-              <div className="title-text title-text-divider">Start of Workflow</div>
+              <div className="title-text-6 title-text-divider">Start of Workflow</div>
               {!data.workflow.source.service ? <div className="mt-1">Source Repository</div> : null }
               
               {data.workflow.source.name ?

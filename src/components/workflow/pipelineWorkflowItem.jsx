@@ -81,7 +81,7 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
   return (
     <>
       <div>
-        <div className="title-text upper-case-first ml-1 mt-1 title-text-divider">{item.type[0] ? item.type[0] : "New Step"}        
+        <div className="title-text-6 upper-case-first ml-1 mt-1 title-text-divider">{item.type[0] ? item.type[0] : "New Step"}        
           <div className="float-right text-right">
             {item.tool !== undefined ? 
               <>
