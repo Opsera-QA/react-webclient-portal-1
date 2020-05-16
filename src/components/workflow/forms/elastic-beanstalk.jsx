@@ -10,17 +10,17 @@ import DropdownList from "react-widgets/lib/DropdownList";
 
 const PLATFORM_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
-  { value: "Single Container Docker", label: "Single Container Docker" },
-  { value: "Multicontainer Docker", label: "Multiple Container Docker" },
-  { value: "Preconfigured Docker", label: "Pre-configured Docker" },
+  { value: ".NET on Windows Server", label: ".NET on Windows Server" },
   { value: "Go", label: "Go" },
   { value: "Java SE", label: "Java SE" },
-  { value: "Tomcat", label: "Tomcat" },
-  { value: ".NET on Windows Server", label: ".NET on Windows Server" },
+  { value: "Multicontainer Docker", label: "Multiple Container Docker" },
   { value: "Node.js", label: "Node.js" },
   { value: "PHP", label: "PHP" },
+  { value: "Preconfigured Docker", label: "Pre-configured Docker" },
   { value: "Python", label: "Python" },
-  { value: "Ruby", label: "Ruby" }
+  { value: "Ruby", label: "Ruby" },
+  { value: "Single Container Docker", label: "Single Container Docker" },
+  { value: "Tomcat", label: "Tomcat" }
 ];
 
 //This must match the form below and the data object expected.  Each tools' data object is different
@@ -41,8 +41,6 @@ const INITIAL_DATA = {
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
 function ElasticBeanstalkDeploy( { data, parentCallback }) {
-  const [thresholdVal, setThresholdValue] = useState("");
-  const [thresholdType, setThresholdType] = useState("");
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [formMessage, setFormMessage] = useState("");
   const [renderForm, setRenderForm] = useState(false);
@@ -70,34 +68,24 @@ function ElasticBeanstalkDeploy( { data, parentCallback }) {
 
   const loadFormData = async (step) => {
     if (typeof(step) !== "undefined") {
-      let { configuration, threshold } = step;
+      let { configuration } = step;
       if (typeof(configuration) !== "undefined") {
         setFormData(configuration);
-      }
-      if (typeof(threshold) !== "undefined") {
-        setThresholdType(threshold.type);
-        setThresholdValue(threshold.value);
-      }
+      }      
     } else {
       setFormData(INITIAL_DATA);
     }
 
   };
   
-
   const callbackFunction = () => {
     if (validateRequiredFields()) {
       const item = {
-        configuration: formData,
-        threshold: {
-          type: thresholdType,
-          value: thresholdVal
-        }
+        configuration: formData
       };
       parentCallback(item);
     }
   };
-
 
   const validateRequiredFields = () => {
     let { accessKey, secretKey, regions, bucketName, port, ec2KeyName } = formData;
@@ -115,7 +103,6 @@ function ElasticBeanstalkDeploy( { data, parentCallback }) {
       return true;
     }
   };
-
 
   const handlePlatformChange = (selectedOption) => {
     setFormData({ ...formData, platform: selectedOption.value });    
@@ -162,7 +149,7 @@ function ElasticBeanstalkDeploy( { data, parentCallback }) {
             data={PLATFORM_OPTIONS}
             valueField='id'
             textField='label'
-            defaultValue={data.configuration.platform ? PLATFORM_OPTIONS[PLATFORM_OPTIONS.findIndex(x => x.value === data.configuration.platform)] : PLATFORM_OPTIONS[0]}
+            defaultValue={formData.platform ? PLATFORM_OPTIONS[PLATFORM_OPTIONS.findIndex(x => x.value === formData.platform)] : PLATFORM_OPTIONS[0]}
             onChange={handlePlatformChange}             
           /> : null }
       </Form.Group>

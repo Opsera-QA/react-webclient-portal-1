@@ -62,25 +62,22 @@ function SshUploadDeploy( { data, parentCallback }) {
 
   const callbackFunction = () => {
     if (validateRequiredFields()) {
-    
       //TODO: Node needs to know which fields to post to Vault
       //TODO: Need to wire up streaming the file contents to vault...
-
       const item = {
         configuration: formData
       };
+
+      console.log("item: ", item);
       parentCallback(item);
     }
   };
 
 
   const validateRequiredFields = () => {
-    let { accessKey, secretKey, serverIp, serverPath, sshKey } = formData;
+    let { accessKey, secretKey } = formData;
     if (accessKey.length === 0 || 
-      secretKey.length === 0 || 
-      serverIp.length === 0 || 
-      serverPath.length === 0 || 
-      sshKey.length === 0) {
+      secretKey.length === 0) {
       setFormMessage("Required Fields Missing!");
       return false;
     } else {
@@ -112,8 +109,8 @@ function SshUploadDeploy( { data, parentCallback }) {
       
       {/* TODO: Wire this up. */}
       <Form.Group controlId="sshKey">
-        <Form.Label>SSH Key File*</Form.Label>
-        <Form.File id="sshKeyFile"  />  
+        <Form.Label>SSH Key File</Form.Label>
+        <Form.File id="sshKey"  />  
         <Form.Text className="text-muted">Attach the PEM/CER key file needed for accessing the EC2 instance</Form.Text>
       </Form.Group>
       <Form.Group controlId="userName">
@@ -128,20 +125,22 @@ function SshUploadDeploy( { data, parentCallback }) {
       </Form.Group>
       <Form.Group controlId="serverIp">
         <Form.Label>Server Path</Form.Label>
-        <Form.Control maxLength="250" type="text" placeholder="" value={formData.serverIp || ""} onChange={e => setFormData({ ...formData, serverIp: e.target.value })} />
+        <Form.Control maxLength="250" type="text" placeholder="" value={formData.serverPath || ""} onChange={e => setFormData({ ...formData, serverPath: e.target.value })} />
         <Form.Text className="text-muted">Path where the deployment happens</Form.Text>
       </Form.Group>
 
-      <Form.Check 
-        type="switch"
-        id="ssh-file-upload"
-        label="File Upload Method" 
-        checked={formData.fileUpload === "SSH File Upload" ? true : false}   
-        onChange={() => handleFileUploadToggle(formData.fileUpload)} 
-      />
+      <Form.Group controlId="ssh-file-upload">
+        <Form.Check 
+          type="switch"
+          id="ssh-file-upload"
+          label="Use SSH File Upload Method" 
+          checked={formData.fileUpload === "SSH File Upload" ? true : false}   
+          onChange={() => handleFileUploadToggle(formData.fileUpload)} 
+        />
+      </Form.Group>
 
       <Form.Group controlId="commands">
-        <Form.Label>SSH Commands*</Form.Label>
+        <Form.Label>SSH Commands</Form.Label>
         <Form.Control as="textarea" type="text" placeholder="" value={formData.commands || ""} onChange={e => setFormData({ ...formData, commands: e.target.value })} />
       </Form.Group>
       <small className="form-text text-muted mt-2 text-left pb-2">specify SSH commands to run for step</small>

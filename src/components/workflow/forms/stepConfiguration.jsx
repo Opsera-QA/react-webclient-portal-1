@@ -7,23 +7,24 @@ import DropdownList from "react-widgets/lib/DropdownList";
 
 const TOOLS_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes", type: "" },
-  { value: "jenkins", label: "Jenkins", type: "build" },
-  { value: "junit", label: "JUnit", type: "unit test" },
-  { value: "xunit", label: "XUnit", type: "unit test" },
-  { value: "sonar", label: "Sonarcube", type: "code scan" },
-  { value: "command-line", label: "Command Line Script", type: "script" },
-  { value: "npm", label: "NPM Commands", type: "script" },
-  { value: "teamcity", label: "TeamCity", type: "build" },
-  { value: "jmeter", label: "JMeter", type: "performance" },
-  { value: "selenium", label: "Selenium", type: "functional testing" },
-  { value: "twistlock", label: "Twistlock", type: "security" },
-  { value: "aws-deploy", label: "AWS Deploy", type: "deploy" },
-  { value: "s3", label: "Publish to S3", type: "deploy" },
-  { value: "gcp-deploy", label: "GCP Deploy", type: "deploy" },
-  { value: "databricks-notebook", label: "Databricks Notbook", type: "orchestration" },
-  { value: "ssh-upload", label: "SSH Upload", type: "deploy" },
+  /* { value: "aws-deploy", label: "AWS Deploy", type: "deploy" }, */
   { value: "elastic-beanstalk", label: "AWS Elastic Beanstalk Deploy", type: "deploy" },
-  { value: "approval", label: "Approval", type: "approval" }
+  { value: "pipeline", label: "Branch Pipeline", type: "pipeline" },
+  { value: "command-line", label: "Command Line Script", type: "script" },
+  { value: "databricks-notebook", label: "Databricks Notbook", type: "orchestration" },
+  { value: "gcp-deploy", label: "GCP Deploy", type: "deploy" },
+  { value: "jenkins", label: "Jenkins", type: "build" },
+  { value: "jmeter", label: "JMeter", type: "performance" }, 
+  { value: "junit", label: "JUnit", type: "unit test" },
+  { value: "npm", label: "NPM Commands", type: "script" },
+  { value: "s3", label: "Publish to S3", type: "deploy" },
+  { value: "selenium", label: "Selenium", type: "functional testing" },
+  { value: "sonar", label: "Sonarcube", type: "code scan" },
+  { value: "ssh-upload", label: "SSH Upload", type: "deploy" },
+  { value: "approval", label: "Step Approval", type: "approval" },
+  { value: "teamcity", label: "TeamCity", type: "build" },
+  { value: "twistlock", label: "Twistlock", type: "security" },
+  { value: "xunit", label: "XUnit", type: "unit test" }
 ];
 
 const INITIAL_DATA = {
