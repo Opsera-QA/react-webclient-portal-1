@@ -46,7 +46,6 @@ function SshUploadDeploy( { data, parentCallback }) {
     };
   }, []);
 
-
   const loadFormData = async (step) => {
     if (typeof(step) !== "undefined") {
       let { configuration } = step;
@@ -57,8 +56,6 @@ function SshUploadDeploy( { data, parentCallback }) {
       setFormData(INITIAL_DATA);
     }
   };
-
-
 
   const callbackFunction = () => {
     if (validateRequiredFields()) {
@@ -72,7 +69,6 @@ function SshUploadDeploy( { data, parentCallback }) {
       parentCallback(item);
     }
   };
-
 
   const validateRequiredFields = () => {
     let { accessKey, secretKey } = formData;
@@ -93,6 +89,17 @@ function SshUploadDeploy( { data, parentCallback }) {
       setFormData({ ...formData, fileUpload: "SSH File Upload" });
     }
   };
+
+  const handleFileUpload = async (e) => {
+    e.preventDefault();
+    const reader = new FileReader();
+    reader.onload = async (e) => { 
+      const text = (e.target.result);
+      console.log(text);
+      alert(text); //TODO: This works, so now we need to post it to vault!
+    };
+    reader.readAsText(e.target.files[0]);
+  };
   
   return (
     <Form>
@@ -110,8 +117,8 @@ function SshUploadDeploy( { data, parentCallback }) {
       {/* TODO: Wire this up. */}
       <Form.Group controlId="sshKey">
         <Form.Label>SSH Key File</Form.Label>
-        <Form.File id="sshKey"  />  
-        <Form.Text className="text-muted">Attach the PEM/CER key file needed for accessing the EC2 instance</Form.Text>
+        <Form.File id="sshKey" onChange={(e) => handleFileUpload(e)}  />  
+        <Form.Text className="text-muted">Attach the PEM/CER key file needed for accessing the EC2 instance.  This data will be secured in our Vault.</Form.Text>
       </Form.Group>
       <Form.Group controlId="userName">
         <Form.Label>User Name</Form.Label>
