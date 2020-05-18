@@ -20,7 +20,7 @@ const TOOLS_OPTIONS = [
   { value: "s3", label: "Publish to S3", type: "deploy" },
   { value: "selenium", label: "Selenium", type: "functional testing" },
   { value: "sonar", label: "Sonarcube", type: "code scan" },
-  { value: "ssh-upload", label: "SSH Upload", type: "deploy" },
+  { value: "ssh-upload", label: "SSH Deploy", type: "deploy" },
   { value: "approval", label: "Step Approval", type: "approval" },
   { value: "teamcity", label: "TeamCity", type: "build" },
   { value: "twistlock", label: "Twistlock", type: "security" },

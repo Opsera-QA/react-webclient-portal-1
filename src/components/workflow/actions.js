@@ -19,15 +19,6 @@ pipelineActions.run = async (pipelineId, postBody, getAccessToken) => {
   return response;
 };
 
-/* pipelineActions.action = async (pipelineId, postBody, getAccessToken) => {
-  const accessToken = await getAccessToken();
-  const apiUrl = `/pipelines/${pipelineId}/action/`;   
-  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
-    .then((result) =>  {return result;})
-    .catch(error => {return { error };});
-  return response;
-}; */
-
 pipelineActions.cancel = async (pipelineId, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = `/pipelines/${pipelineId}/reset/`;   
@@ -50,6 +41,15 @@ pipelineActions.get = async (pipelineId, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = `/pipelines/${pipelineId}`;   
   const response = await axiosApiService(accessToken).get(apiUrl)
+    .then((result) =>  {return result;})
+    .catch(error => {return { error };});
+  return response;
+};
+
+pipelineActions.saveToVault = async (postBody, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = "/vault";   
+  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
     .then((result) =>  {return result;})
     .catch(error => {return { error };});
   return response;

@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import PipelineActions from "../actions";
+import { AuthContext } from "../../../contexts/AuthContext"; 
 import JenkinsConfiguration from "./jenkins";
 import JunitStepConfiguration from "./junit";
 import XunitStepConfiguration from "./xunit";
@@ -19,15 +21,19 @@ import SshUploadDeploy from "./ssh-upload";
 import ElasticBeanstalkDeploy from "./elastic-beanstalk";
 
 
+
 function StepToolConfiguration( { data, editItem, parentCallback }) {
+  const contextType = useContext(AuthContext);
   const { plan } = data.workflow;
   const [stepTool, setStepTool] = useState({});
   const [stepName, setStepName] = useState();
+  const [stepId, setStepId] = useState("");
   
   useEffect(() => {
     let stepIndex = getStepIndex(editItem.step_id);
     setStepTool(plan[stepIndex].tool);
     setStepName(plan[stepIndex].name);
+    setStepId(plan[stepIndex]._id);
   }, [editItem, data]);
 
 
@@ -43,6 +49,12 @@ function StepToolConfiguration( { data, editItem, parentCallback }) {
     plan[stepArrayIndex].tool.threshold = tool.threshold;
     parentCallback(plan);
     setStepTool({});
+  };
+
+  const saveToVault = async (postBody) => {
+    const { getAccessToken } = contextType;
+    const response = await PipelineActions.saveToVault(postBody, getAccessToken);  
+    return response;
   };
   
 
@@ -69,7 +81,7 @@ function StepToolConfiguration( { data, editItem, parentCallback }) {
           {editItem.tool_name.toLowerCase() === "gcp-deploy" ? <GcpDeployStepConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
           {editItem.tool_name.toLowerCase() === "s3" ? <S3StepConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
           {editItem.tool_name.toLowerCase() === "databricks-notebook" ? <DatabricksNotebookConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
-          {editItem.tool_name.toLowerCase() === "ssh-upload" ? <SshUploadDeploy data={stepTool} parentCallback={callbackFunction} /> : null }
+          {editItem.tool_name.toLowerCase() === "ssh-upload" ? <SshUploadDeploy pipelineId={data._id} stepId={stepId} data={stepTool} parentCallback={callbackFunction} callbackSaveToVault={saveToVault} /> : null }
           {editItem.tool_name.toLowerCase() === "elastic-beanstalk" ? <ElasticBeanstalkDeploy data={stepTool} parentCallback={callbackFunction} /> : null }
         </div>
         : null }
