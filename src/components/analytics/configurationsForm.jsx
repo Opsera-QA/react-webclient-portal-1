@@ -8,7 +8,8 @@ import { ApiService } from "../../api/apiService";
 import Moment from "react-moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faAngleDown } from "@fortawesome/free-solid-svg-icons";
-import Select from "react-select";
+import DropdownList from "react-widgets/lib/DropdownList";
+import Multiselect from "react-widgets/lib/Multiselect";
 
 const INITIAL_SETTINGS = {
   dataUsage: "500",
@@ -182,19 +183,14 @@ function ConfigurationsForm({ settings, token }) {
                   <fieldset>
                     <div className="mt-1 text-muted">Tools:</div>
                     <div key="checkbox-tools" className="mb-1 mt-2 p-2">
-
-                      <Select
-                        defaultValue={enabledTools.length > 0 ? TOOL_OPTIONS.filter(e => enabledTools ? enabledTools.indexOf(e.value) !== -1 : TOOL_OPTIONS[0]) : []}
-                        menuPortalTarget={document.body}
-                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                        isMulti
-                        isSearchable={true}
-                        isDisabled={true}
-                        name="TOOLS-SELECTION"
-                        onChange={handleMultiSelectToolChange}
-                        options={TOOL_OPTIONS}
+                      <Multiselect
+                        data={TOOL_OPTIONS} 
                         className="basic-multi-select"
-                        classNamePrefix="select"
+                        valueField='value'
+                        textField='label'
+                        disabled
+                        defaultValue={enabledTools.length > 0 ? TOOL_OPTIONS.filter(e => enabledTools ? enabledTools.indexOf(e.value) !== -1 : TOOL_OPTIONS[0]) : []}
+                        onChange={handleMultiSelectToolChange}             
                       />
                     </div>
 
@@ -230,21 +226,14 @@ function ConfigurationsForm({ settings, token }) {
 
                     <div className="mt-3 text-muted">Default Persona:</div>
                     <div key="checkbox-persona" className="mb-1 mt-2 p-2">
-
-                      <Select
+                      <DropdownList
+                        data={PERSONAS} 
                         className="basic-single"
-                        menuPortalTarget={document.body}
-                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                        classNamePrefix="select"
-                        defaultValue={defaultPersona ? PERSONAS.filter(e => defaultPersona ? defaultPersona.indexOf(e.value) !== -1 : PERSONAS[0]) : PERSONAS[0]}
-                        isDisabled={false}
-                        isClearable={false}
-                        isSearchable={true}
-                        name="PERSONA-SELECT"
-                        options={PERSONAS}
-                        onChange={handleSelectPersonaChange}
+                        valueField='value'
+                        textField='label'
+                        defaultValue={defaultPersona ? defaultPersona : PERSONAS[0]}
+                        onChange={handleSelectPersonaChange}             
                       />
-
                     </div>
 
                     <div className="text-right">
