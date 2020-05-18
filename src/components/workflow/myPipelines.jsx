@@ -7,7 +7,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { ApiService } from "../../api/apiService";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
-import Moment from "react-moment";
+import { format } from "date-fns";
 import Modal from "../common/modal";
 import PipelineActions from "./actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -144,8 +144,8 @@ const ItemSummaries = (props) => {
           </Row>
           
           <Row className="row-content-spacing">
-            <Col><span className="text-muted">Created on: </span> <Moment format="YYYY-MM-DD, hh:mm a" date={item.createdAt} /></Col>
-            <Col><span className="text-muted">Last Activity on: </span> <Moment format="YYYY-MM-DD, hh:mm a" date={item.updatedAt} /></Col>
+            <Col><span className="text-muted">Created on: </span> {format(new Date(item.createdAt), "yyyy-MM-dd', 'hh:mm a")}</Col>
+            <Col><span className="text-muted">Last Activity on: </span> {format(new Date(item.updatedAt), "yyyy-MM-dd', 'hh:mm a")}</Col>
           </Row>
           
           { item.workflow.hasOwnProperty("last_step") ? 
@@ -158,16 +158,16 @@ const ItemSummaries = (props) => {
               
               </Col>
               { item.workflow.last_step.hasOwnProperty("failed") ? 
-                <Col className="failure-text">Last Failure on: <Moment format="YYYY-MM-DD, hh:mm a" date={item.workflow.last_step.failed.updatedAt} /></Col> : null }
+                <Col className="failure-text">Last Failure on: {format(new Date(item.workflow.last_step.failed.updatedAt), "yyyy-MM-dd', 'hh:mm a")}</Col> : null }
               
               { item.workflow.last_step.hasOwnProperty("success") ? 
-                <Col className="green">Last Successful on : <Moment format="YYYY-MM-DD, hh:mm a" date={item.workflow.last_step.success.updatedAt} /></Col> : null }
+                <Col className="green">Last Successful on : {format(new Date(item.workflow.last_step.success.updatedAt), "yyyy-MM-dd', 'hh:mm a")}</Col> : null }
             </Row> : null }
 
           { item.workflow.schedule !== undefined && item.workflow.schedule.start_date !== null ?
             <Row className="row-content-spacing">
               <Col><span className="text-muted">Next Scheduled Run: </span> 
-                <Moment format="YYYY-MM-DD, hh:mm a" date={item.workflow.schedule.start_date} />
+                {format(new Date(item.workflow.schedule.start_date), "yyyy-MM-dd', 'hh:mm a")}
               </Col>
             </Row> : null}
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button, Modal } from "react-bootstrap";
-import Moment from "react-moment";
+import { format } from "date-fns";
 import ReactJson from "react-json-view";
 
 
@@ -46,7 +46,7 @@ function ModalActivityLogsDialog({ header, size, jsonData, show, setParentVisibi
           </Modal.Header>
           <Modal.Body>
             <div className="my-2">
-              <div className="float-right"><Moment format="YYYY-MM-DD, hh:mm a" date={jsonData.createdAt} /></div> 
+              <div className="float-right">{format(new Date(jsonData.createdAt), "yyyy-MM-dd', 'hh:mm a")}</div> 
               <span className="upper-case-first">Step: {jsonData.step_name} <br/>Tool: {jsonData.step_configuration ? jsonData.step_configuration.tool_identifier : null }</span></div>
             { typeof(jsonData.api_response) !== "object" ?
               <div className="console-text m-3">

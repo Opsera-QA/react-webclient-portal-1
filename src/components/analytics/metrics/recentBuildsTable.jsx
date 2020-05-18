@@ -5,7 +5,7 @@ import LoadingDialog from "../../common/loading";
 import InfoDialog from "../../common/info";
 import ErrorDialog from "../../common/error";
 import { Table }  from "react-bootstrap";
-import Moment from "react-moment";
+import { format } from "date-fns";
 
 function RecentBuildsTable() {
   const contextType = useContext(AuthContext);
@@ -91,7 +91,7 @@ function RecentBuildsTable() {
                     return <tr key = {index}>
                       <td className={className}>{ (value["data_projectName"]) ? value["data_projectName"] : "Unknown" }</td>
                       <td className={"text-center" + className}>{ (value["data_buildNum"]) ? value["data_buildNum"] : "Unknown" }</td>
-                      <td className={"text-center" + className}>{ (value["timestamp"]) ? <Moment format="YYYY-MM-DD, hh:mm a" date={value["timestamp"]} /> : "Unknown" }</td>
+                      <td className={"text-center" + className}>{ (value["timestamp"]) ? format(new Date(value["timestamp"]), "yyyy-MM-dd', 'hh:mm a"): "Unknown" }</td>
                       <td className={"text-center" + className}>{ (value["data_duration"]) ? value["data_duration"] : "0" } Seconds</td>
                       <td className={"text-center upper-case-first" + className}>
                         { (value["data_result"]) ? value["data_result"].toLowerCase() : "Failed"}

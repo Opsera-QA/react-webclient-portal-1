@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import ErrorDialog from "../common/error";
 import LoadingDialog from "../common/loading";
 import { AuthContext } from "../../contexts/AuthContext";
-import Moment from "react-moment";
+import { format } from "date-fns";
 //import InfoDialog from "../common/info";
 import Modal from "../common/modal";
 import { ApiService } from "../../api/apiService";
@@ -147,7 +147,7 @@ function RegisteredUsers() {
                     <td>{val.organizationName}</td>
                     <td>{val.division}</td>
                     <td>{val.domain}</td>
-                    <td><Moment format="YYYY-MM-DD, hh:mm a" date={val.createdAt} /></td>
+                    <td>{format(new Date(val.createdAt), "yyyy-MM-dd', 'hh:mm a")}</td>
                     <td>
                       <Button variant="danger" onClick={() => { handleDeletePress(val._id); }} >Deactivate User</Button>
                     </td>

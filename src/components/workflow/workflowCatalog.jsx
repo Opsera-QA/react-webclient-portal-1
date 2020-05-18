@@ -8,7 +8,7 @@ import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import InfoDialog from "../common/info";
 import ModalActivityLogs from "../common/modalActivityLogs";
-import Moment from "react-moment";
+import { format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faSearch } from "@fortawesome/free-solid-svg-icons";
 
@@ -136,10 +136,10 @@ const ItemSummaries = (props) => {
               </Row> */}
 
                 <Row className="mt-3">
-                  <Col lg><small className="text-muted">Last updated on <Moment format="YYYY-MM-DD" date={item.updatedAt} /></small></Col>
+                  <Col lg><small className="text-muted">Last updated on {format(new Date(item.updatedAt), "yyyy-MM-dd', 'hh:mm a")}</small></Col>
                 </Row>
                 <Row className="mb-2">
-                  <Col lg><small className="text-muted">Created on <Moment format="YYYY-MM-DD" date={item.createdAt} /></small></Col>
+                  <Col lg><small className="text-muted">Created on {format(new Date(item.createdAt), "yyyy-MM-dd', 'hh:mm a")}</small></Col>
                 </Row>
 
               </Card.Body>

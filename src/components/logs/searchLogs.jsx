@@ -6,7 +6,7 @@ import LoadingDialog from "../common/loading";
 import InfoDialog from "../common/info";
 import ErrorDialog from "../common/error";
 import { Form, Button, Alert, Table, Overlay, Popover } from "react-bootstrap";
-import Moment from "react-moment";
+import { format, addDays } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus, faCalendar } from "@fortawesome/free-solid-svg-icons";
 import "./logs.css";
@@ -18,7 +18,6 @@ import { DateRangePicker } from "react-date-range";
 import ModalLogs from "../common/modalLogs";
 
 const Highlight = require("react-highlighter");
-const moment = require("moment");
 
 function SearchLogs ( { tools }) {
   //const FILTER = [{ value: "pipeline", label: "Pipeline" }, { value: "metricbeat", label: "MetricBeat" }, { value: "twistlock", label: "TwistLock" }, { value: "blueprint", label: "Build Blueprint" }];
@@ -44,7 +43,7 @@ function SearchLogs ( { tools }) {
   const [date, setDate] = useState([
     {
       startDate: new Date(),
-      endDate: moment(new Date(), "YYYY-MM-DD").add(7, "days"),
+      endDate: addDays(new Date(), 7),
       key: "selection"
     }
   ]);
@@ -54,13 +53,12 @@ function SearchLogs ( { tools }) {
   const [sDate, setSDate] = useState("");
   const [eDate, setEDate] = useState("");
 
-
   const handleFormSubmit = e => {
     submitClicked(true);
     e.preventDefault();
     setData([]);  
-    let startDate = moment(date[0].startDate, "YYYY-MM-DD").format("YYYY-MM-DD");
-    let endDate = moment(date[0].endDate, "YYYY-MM-DD").format("YYYY-MM-DD");
+    let startDate = format(new Date(date[0].startDate), "yyyy-MM-dd");
+    let endDate = format(new Date(date[0].endDate), "yyyy-MM-dd");
     
     if (startDate === endDate) {
       endDate = 0;
@@ -193,8 +191,8 @@ function SearchLogs ( { tools }) {
     setCalenderActivation(true);
     setCalendar(!calendar);
     setTarget(event.target);
-    let startDate = moment(date[0].startDate, "YYYY-MM-DD").format("YYYY-MM-DD");
-    let endDate = moment(date[0].endDate, "YYYY-MM-DD").format("YYYY-MM-DD");
+    let startDate = format(new Date(date[0].startDate), "yyyy-MM-dd");
+    let endDate = format(new Date(date[0].endDate), "yyyy-MM-dd");
     if (endDate === 0) {
       setEDate(startDate);
     } else {
@@ -437,7 +435,7 @@ const MapLogData = (props) => {
   //                   size="xs"
   //                   style={{ cursor: "pointer" }}
   //                   onClick={() => { handleClick(item._source.data); }} /></td> 
-  //               <td><Moment format="YYYY-MM-DD, hh:mm a" date={typeof(item._source["@timestamp"]) !== "undefined" ? item._source["@timestamp"] : null} /></td>          
+  //               <td>{format(new Date(typeof(item._source["@timestamp"]) !== "undefined" ? item._source["@timestamp"] : null), "yyyy-MM-dd', 'hh:mm a")}</td>          
   //               <td className="text-center">{typeof(item._source.data) !== "undefined" ? item._source.data.buildNum : null}</td>      
   //               <td className="text-center">{typeof(item._source["source_host"]) !== "undefined" ? item._source["source_host"] : null}</td>
   //               <td className="text-muted text-center">{typeof(item._source["source"]) !== "undefined" ? item._source["source"] : null}</td>
@@ -482,7 +480,7 @@ const MapLogData = (props) => {
                     style={{ cursor: "pointer" }}
                     onClick= {() => { handleClick(item); }} /></td>
                 <td className="force-text-wrap upper-case-all">{item["Release Environment"]}</td> 
-                <td><Moment format="YYYY-MM-DD, hh:mm a" date={item["time"]} /></td>                
+                <td>{format(new Date(item["time"]), "yyyy-MM-dd', 'hh:mm a")}</td>                
                 <td className="upper-case-first">{item["tool"]}</td>
                 <td className="force-text-wrap">{item["message"]}</td>
                 <td className="force-text-wrap">{item["Git Commit ID"]}</td>
@@ -508,7 +506,7 @@ const MapLogData = (props) => {
                   size="sm"
                   style={{ cursor: "pointer", alignItems: "flex-end" }}
                   onClick= {() => { handleClick(item); }} />
-                <strong className="ml-2"><Moment format="YYYY-MM-DD, hh:mm a" date={typeof(item._source["@timestamp"]) !== "undefined" ? item._source["@timestamp"] : null}></Moment></strong>
+                <strong className="ml-2">{format(new Date(typeof(item._source["@timestamp"]) !== "undefined" ? item._source["@timestamp"] : null), "yyyy-MM-dd', 'hh:mm a")}</strong>
                 { (item._source.data) ? <strong className="ml-4">Job Name: {typeof(item._source.data.buildVariables) !== "undefined" ? item._source.data.buildVariables.JOB_NAME : "N/A"}</strong> : ""}
                 { (item._source.data) ? <strong className="ml-4">Build Number: {typeof(item._source.data.buildNum) !== "undefined" ? item._source.data.buildNum : "N/A"}</strong> : ""}
 

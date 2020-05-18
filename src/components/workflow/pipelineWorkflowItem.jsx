@@ -4,7 +4,7 @@ import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus, faCog, faArchive, faBookmark, faSpinner, faCheckCircle, faEnvelope, faExclamationTriangle, faTrash } from "@fortawesome/free-solid-svg-icons";
 import ModalActivityLogs from "../common/modalActivityLogs";
-import Moment from "react-moment";
+import { format } from "date-fns";
 import "./workflows.css";
 
 
@@ -167,7 +167,7 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
           <div className="d-flex flex-row mb-1">
             <div className="pl-1 workflow-module-text-flex-basis text-muted">Status:</div>
             <div className="pl-1">{currentStatus.status}&nbsp;
-                   on <Moment format="YYYY-MM-DD, hh:mm a" date={currentStatus.updatedAt} /></div>
+                   on {format(new Date(currentStatus.updatedAt), "yyyy-MM-dd', 'hh:mm a")}</div>
             <div className="flex-grow-1"></div>
           </div> : null}
 
