@@ -63,7 +63,7 @@ function ElasticBeanstalkDeploy( { data, parentCallback }) {
       setRenderForm(false);     
       controller.abort();      
     };
-  }, []);
+  }, [data]);
 
 
   const loadFormData = async (step) => {

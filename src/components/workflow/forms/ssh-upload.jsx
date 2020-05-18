@@ -57,14 +57,14 @@ function SshUploadDeploy( { data, pipelineId, stepId, parentCallback, callbackSa
     return () => {     
       controller.abort();      
     };
-  }, []);
+  }, [data]);
 
-  const loadFormData = async (step) => {
-    if (typeof(step) !== "undefined") {
-      let { configuration } = step;
-      if (typeof(configuration) !== "undefined") {
-        setFormData(configuration);
-      }      
+  const loadFormData = async (step) => {    
+    let { configuration } = step;
+    console.log("Config: ", configuration);
+    if (typeof(configuration) !== "undefined") {
+      setFormData(configuration);
+      setSshKeyFile(configuration.sshKey);
     } else {
       setFormData(INITIAL_DATA);
     }
@@ -76,7 +76,7 @@ function SshUploadDeploy( { data, pipelineId, stepId, parentCallback, callbackSa
         configuration: formData
       };
       console.log("item: ", item);
-      //parentCallback(item);
+      parentCallback(item);
     }
   };
 
@@ -155,7 +155,7 @@ function SshUploadDeploy( { data, pipelineId, stepId, parentCallback, callbackSa
   return (
     <Form>
       { formMessage.length > 0 ? <p className="text-danger">{formMessage}</p> : null}
-
+      
       <Form.Group controlId="accessKey">
         <Form.Label>AWS Access Key ID*</Form.Label>
         <Form.Control maxLength="256" type="text" placeholder="" value={formData.accessKey || ""} onChange={e => setFormData({ ...formData, accessKey: e.target.value })} />
