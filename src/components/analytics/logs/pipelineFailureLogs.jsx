@@ -6,7 +6,7 @@ import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/loading";
 import ErrorDialog from "../../common/error";
 import { Alert } from "react-bootstrap";
-import Moment from "react-moment";
+import { format } from "date-fns";
 import Modal from "../../common/modal";
 import "./logs.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -107,7 +107,7 @@ const MapActivityData = (props) => {
               <div className="col" style={{ fontWeight: "bold" }}>{item["data_projectName"]}: {item.data_result}</div>
             </div>
             <div className="row mt-1">
-              <div className="col"><Moment format="YYYY-MM-DD, hh:mm a" date={item["timestamp"]} /></div>
+              <div className="col">{format(new Date(item["timestamp"]), "yyyy-MM-dd', 'hh:mm a")}</div>
             </div>
             <div className="row mt-2">
               {/* <div className="col">Version: {item["version"]}</div> */}

@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { PureComponent, Fragment } from "react";
 import { Form, Alert } from "react-bootstrap";
-import Moment from "react-moment";
+import { format } from "date-fns";
 import { AuthContext } from "../../contexts/AuthContext";  //REact Context API Code for User Authentication
 import { ApiService } from "../../api/apiService";
 import ErrorDialog from "../common/error";
@@ -193,7 +193,7 @@ const ToolTable = ({ tool }) => {
       </div>
       <div className="row m-1">
         <div className="col-md"><span className="text-muted">Status:</span> {toolStatus}</div>
-        <div className="col-md"><span className="text-muted">Install Date:</span> <Moment format="YYYY-MM-DD, hh:mm a" date={installationDate} /></div>
+        <div className="col-md"><span className="text-muted">Install Date:</span> {format(new Date(installationDate), "yyyy-MM-dd', 'hh:mm a")}</div>
       </div>
       <div className="row m-1">
         <div className="col-md"><span className="text-muted">ID:</span> {_id}</div>

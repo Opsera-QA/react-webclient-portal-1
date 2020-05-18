@@ -7,7 +7,7 @@ import PipelineItemDetail from "./pipelineItemDetail";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import InfoDialog from "../common/info";
-import Moment from "react-moment";
+import { format } from "date-fns";
 import ModalActivityLogs from "../common/modalActivityLogs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
@@ -166,7 +166,7 @@ const PipelineActivity = (props) => {
                         size="xs"
                         style={{ cursor: "pointer" }}
                         onClick= {() => { handleClick(item); }} /> : null }</td>
-                  <td><Moment format="YYYY-MM-DD, hh:mm a" date={item["createdAt"]} /> </td>   
+                  <td>{format(new Date(item["createdAt"]), "yyyy-MM-dd', 'hh:mm a")}</td>   
                 </tr>
               ))}
             </tbody>

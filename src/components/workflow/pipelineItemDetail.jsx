@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { Card, Row, Col, Button, Form } from "react-bootstrap";
 import PipelineActions from "./actions";
-import Moment from "react-moment";
+import { format } from "date-fns";
 import Modal from "../common/modal";
 import ModalActivityLogs from "../common/modalActivityLogs";
 import ErrorDialog from "../common/error";
@@ -361,7 +361,7 @@ const PipelineItemDetail = (props) => {
               </Row>
               <Row className="row-content-spacing">
                 <Col lg className="py-1"><span className="text-muted mr-1">Organization:</span> {data.organizationName}</Col>
-                <Col lg className="py-1"><span className="text-muted mr-1">Created On:</span>  <Moment format="YYYY-MM-DD, hh:mm a" date={data.createdAt} /></Col>
+                <Col lg className="py-1"><span className="text-muted mr-1">Created On:</span>  {format(new Date(data.createdAt), "yyyy-MM-dd', 'hh:mm a")}</Col>
               </Row>
               <Row className="row-content-spacing">
                 <Col className="py-1"><span className="text-muted mr-1">Tags:</span> 
@@ -395,7 +395,7 @@ const PipelineItemDetail = (props) => {
                   <Col className="py-1"><span className="text-muted mr-1">Schedule:</span> 
                     {data.workflow.schedule && data.workflow.schedule.start_date !== null && !editSchedule ? 
                       <>
-                        <span className="ml-1">Run next on: <Moment format="YYYY-MM-DD, hh:mm a" date={data.workflow.schedule.start_date} /></span>
+                        <span className="ml-1">Run next on: {format(new Date(data.workflow.schedule.start_date), "yyyy-MM-dd', 'hh:mm a")}</span>
                         <span className="ml-2">Frequency: {data.workflow.schedule ? data.workflow.schedule.frequency : "undefined"}</span> 
                       </> : null }
 

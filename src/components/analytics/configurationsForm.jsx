@@ -5,7 +5,7 @@ import ErrorDialog from "../common/error";
 import InfoDialog from "../common/info";
 import Modal from "../common/modal";
 import { ApiService } from "../../api/apiService";
-import Moment from "react-moment";
+import { format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
@@ -167,8 +167,8 @@ function ConfigurationsForm({ settings, token }) {
                 <Col className="text-right">
                   {(enabledToolsOn && !disabledToolsOn) &&
                     <>
-                      <span className="italic pr-3" style={{ fontSize: "smaller" }}>(Enabled on&nbsp;
-                        <Moment format="YYYY-MM-DD, hh:mm a" date={enabledToolsOn} />)
+                      <span className="italic pr-3" style={{ fontSize: "smaller" }}>Enabled on&nbsp;
+                        {format(new Date(enabledToolsOn), "yyyy-MM-dd', 'hh:mm a")}
                       </span>
                     </>
                   }
