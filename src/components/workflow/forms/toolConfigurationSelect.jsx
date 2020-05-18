@@ -72,7 +72,6 @@ function ToolConfigurationSelect( { data, editItem, parentCallback }) {
           by that step and must be configured in the <Link to="/api_connector">Tools Interface</Link>.
         </Form.Text>
         <Form.Label className="upper-case-first mt-2">{editItem.tool_name} Configuration</Form.Label>
-
         <Select
           className="basic-single mr-2"
           menuPortalTarget={document.body}

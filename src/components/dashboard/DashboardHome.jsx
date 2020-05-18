@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../contexts/AuthContext";
 import { axiosApiService } from "../../api/apiService";
-import Select from "react-select";
 import { Row, Col, Alert } from "react-bootstrap";
 import ErrorDialog from "../../components/common/error";
+import DropdownList from "react-widgets/lib/DropdownList";
 // import PipelineDashboard from "../../components/dashboard/Pipeline";
 // import SecOpsDashboard from "../../components/dashboard/SecOps";
 // import TestingDashboard from "../../components/dashboard/Testing";
@@ -170,19 +170,15 @@ function DashboardHome() {
                       </li>                        
                     </ul>
                   </Col>
-                  <Col sm={4}>                    
-                    <Select
+                  <Col sm={4}>    
+                    <DropdownList
+                      data={PERSONAS} 
                       className="basic-single mr-2"
-                      menuPortalTarget={document.body}
-                      styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                      classNamePrefix="select"
+                      valueField='value'
+                      textField='label'
                       defaultValue={persona ?  PERSONAS.find(o => o.value === persona) : PERSONAS[0]}
-                      isClearable={false}
-                      isSearchable={true}
-                      name="PERSONA-SELECT"
-                      options={PERSONAS}
-                      onChange={handleSelectPersonaChange}
-                    /> 
+                      onChange={handleSelectPersonaChange}             
+                    />
                   </Col>
                 </Row>
             

@@ -16,6 +16,7 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css"; 
 import { DateRangePicker } from "react-date-range";
 import ModalLogs from "../common/modalLogs";
+import DropdownList from "react-widgets/lib/DropdownList";
 
 const Highlight = require("react-highlighter");
 const moment = require("moment");
@@ -34,7 +35,7 @@ function SearchLogs ( { tools }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOptions, setFilters] = useState([]);
   const [filterType, setFilterType] = useState("pipeline");
-  console.log(filterType);
+  //console.log(filterType);
   const [customFilter, setCustomFilter] = useState([]);
   const [filterLoading, setFilterLoading] = useState(false);
   const [manualCache, setManualCaching] = useState(false);
@@ -218,17 +219,14 @@ function SearchLogs ( { tools }) {
                     <Form.Control placeholder="Enter Build Number" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
                   </div>
                   <div className="p-2 flex-grow-1">
-                    <Select
+                    <DropdownList
+                      data={FILTER} 
                       className="basic-single"
-                      menuPortalTarget={document.body}
-                      classNamePrefix="select"
+                      valueField='value'
+                      textField='label'
+                      filter='contains'
                       defaultValue={filterType ? FILTER[FILTER.findIndex(x => x.value ===filterType)] : FILTER[0]}
-                      isDisabled={false}
-                      isClearable={false}
-                      isSearchable={true}
-                      name="FILTER-SELECT"
-                      options={FILTER}
-                      onChange={handleSelectChange}
+                      onChange={handleSelectChange}             
                     />
                   </div>
                   <div className="p-2">
@@ -299,17 +297,13 @@ function SearchLogs ( { tools }) {
                     <Form.Control placeholder="Search logs" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
                   </div>
                   <div className="p-2 flex-grow-1">
-                    <Select
+                    <DropdownList
+                      data={Array.isArray(FILTER) ? FILTER : [{ "value": "pipeline", "label": "Pipeline" }]} 
+                      defaultValue={"pipeline"}
                       className="basic-single"
-                      menuPortalTarget={document.body}
-                      classNamePrefix="select"
-                      defaultValue={filterType && Array.isArray(FILTER) ? FILTER[FILTER.findIndex(x => x.value ===filterType)] : { "value": "pipeline", "label": "Pipeline" }}
-                      isDisabled={false}
-                      isClearable={false}
-                      isSearchable={false}
-                      name="FILTER-SELECT"
-                      options={FILTER}
-                      onChange={handleSelectChange}
+                      valueField='value'
+                      textField='label'
+                      onChange={handleSelectChange}             
                     />
                   </div>
                   <div className="p-2">
