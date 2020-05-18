@@ -26,6 +26,7 @@ const INITIAL_DATA = {
 function SshUploadDeploy( { data, parentCallback }) {
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [formMessage, setFormMessage] = useState("");
+  const [sshFileMessage, setSshFileMessage] = useState("");
 
 
   useEffect(() => {    
@@ -92,11 +93,21 @@ function SshUploadDeploy( { data, parentCallback }) {
 
   const handleFileUpload = async (e) => {
     e.preventDefault();
+    setSshFileMessage("");
     const reader = new FileReader();
     reader.onload = async (e) => { 
-      const text = (e.target.result);
-      console.log(text);
-      alert(text); //TODO: This works, so now we need to post it to vault!
+      const text = (e.target.result);      
+      
+      if (text.length < 5000) {
+        //todo call post to Vault and update UI
+        console.log(text);
+      } else {
+        //file key too large message
+        setSshFileMessage("Warning, file contents too large for this system.  Please ensure the proper file has been selected or contact OpsERA to report this issue.");
+      }
+      console.log("Length: ", text.length);
+      
+      
     };
     reader.readAsText(e.target.files[0]);
   };
@@ -114,12 +125,15 @@ function SshUploadDeploy( { data, parentCallback }) {
         <Form.Control maxLength="256" type="password" placeholder="" value={formData.secretKey || ""} onChange={e => setFormData({ ...formData, secretKey: e.target.value })} />
       </Form.Group>
       
-      {/* TODO: Wire this up. */}
       <Form.Group controlId="sshKey">
         <Form.Label>SSH Key File</Form.Label>
         <Form.File id="sshKey" onChange={(e) => handleFileUpload(e)}  />  
-        <Form.Text className="text-muted">Attach the PEM/CER key file needed for accessing the EC2 instance.  This data will be secured in our Vault.</Form.Text>
+        
+        {sshFileMessage ? 
+          <Form.Text className="red">{sshFileMessage}</Form.Text> :
+          <Form.Text className="text-muted">Attach the PEM/CER key file needed for accessing the EC2 instance.  This data will be secured in our Vault.</Form.Text> }
       </Form.Group>
+      
       <Form.Group controlId="userName">
         <Form.Label>User Name</Form.Label>
         <Form.Control maxLength="150" type="text" placeholder="" value={formData.userName || ""} onChange={e => setFormData({ ...formData, userName: e.target.value })} />
@@ -130,6 +144,7 @@ function SshUploadDeploy( { data, parentCallback }) {
         <Form.Label>Server IP Address</Form.Label>
         <Form.Control maxLength="75" type="text" placeholder="" value={formData.serverIp || ""} onChange={e => setFormData({ ...formData, serverIp: e.target.value })} />
       </Form.Group>
+
       <Form.Group controlId="serverIp">
         <Form.Label>Server Path</Form.Label>
         <Form.Control maxLength="250" type="text" placeholder="" value={formData.serverPath || ""} onChange={e => setFormData({ ...formData, serverPath: e.target.value })} />
