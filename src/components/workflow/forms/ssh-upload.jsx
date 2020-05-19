@@ -3,15 +3,14 @@
 
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Form, Button, InputGroup } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave, faLock, faLockOpen } from "@fortawesome/free-solid-svg-icons";
+import { faSave, faSpinner } from "@fortawesome/free-solid-svg-icons";
 
-//This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
   accessKey: "",
   secretKey: "",
-  sshKey: {}, //file stream to vaule
+  sshKey: {}, //file stream to value
   userName: "",
   serverIp: "",
   serverPath: "",
@@ -24,23 +23,13 @@ const INITIAL_SSH_KEYFILE = {
   vaultKey: "" //pipelineId-stepId-sshKey
 };
 
-const INITIAL_SECRET_KEY = {
-  name: "",
-  vaultKey: "" //pipelineId-stepId-secretKey
-};
 
-
-//data is JUST the tool object passed from parent component, that's returned through parent Callback
-// ONLY allow changing of the configuration and threshold properties of "tool"!
 function SshUploadDeploy( { data, pipelineId, stepId, parentCallback, callbackSaveToVault }) {
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [formMessage, setFormMessage] = useState("");
   const [sshFileMessage, setSshFileMessage] = useState("");
-  const [secretKeyMessage, setSecretKeyMessage] = useState("");
   const [sshKeyFile, setSshKeyFile] = useState(INITIAL_SSH_KEYFILE);
-  const [secretKey, setSecretKey] = useState(INITIAL_SECRET_KEY);
-  const [secretForm, setSecretForm] = useState("");
-
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {    
     const controller = new AbortController();
@@ -62,23 +51,48 @@ function SshUploadDeploy( { data, pipelineId, stepId, parentCallback, callbackSa
 
   const loadFormData = async (step) => {    
     let { configuration } = step;
-    console.log("Config: ", configuration);
     if (typeof(configuration) !== "undefined") {
       setFormData(configuration);
       setSshKeyFile(configuration.sshKey);
-      setSecretKey(configuration.secretKey);
     } else {
       setFormData(INITIAL_DATA);
     }
   };
 
-  const callbackFunction = () => {
+  const callbackFunction = async () => {
     if (validateRequiredFields()) {
+      setLoading(true);
+      let newConfiguration = formData;
+      
+      if (typeof(newConfiguration.secretKey) === "string") {
+        newConfiguration.secretKey = await saveToVault(pipelineId, stepId, "secretKey", "Vault Secured Key", newConfiguration.secretKey);
+      }
+      
       const item = {
-        configuration: formData
+        configuration: newConfiguration
       };
-      console.log("item: ", item);
+      //console.log("item: ", item);
+      setLoading(false);
       parentCallback(item);
+    }
+  };
+
+  const saveToVault = async (pipelineId, stepId, key, name, value) => {
+    const keyName = `${pipelineId}-${stepId}-${key}`;
+    const body = {
+      "key": keyName,
+      "value": value
+    };
+    const response = await callbackSaveToVault(body);    
+    if (response.status === 200 ) {
+      return { name: name, vaultKey: keyName };
+    } else {
+      setFormData(formData => {
+        return { ...formData, secretKey: {} };
+      });
+      setLoading(false);
+      setFormMessage("ERROR: Something has gone wrong saving secure data to your vault.  Please try again or report the issue to OpsERA.");
+      return "";
     }
   };
 
@@ -134,37 +148,7 @@ function SshUploadDeploy( { data, pipelineId, stepId, parentCallback, callbackSa
     reader.readAsText(e.target.files[0]);
   };
 
-  const saveToVault = async (pipelineId, stepId, key, value) => {
-    const keyName = `${pipelineId}-${stepId}-${key}`;
-    const body = {
-      "key": keyName,
-      "value": value
-    };
-    const response = await callbackSaveToVault(body);    
-    return response.status === 200;
-  };
 
-  const handleSaveSecretKey = async (value) => {
-    
-    setSecretKeyMessage("");
-    const vaultResponse = await saveToVault(pipelineId, stepId, "secretKey", value);
-    if (vaultResponse) {
-      // set validation on the form to green
-
-      const keyName = `${pipelineId}-${stepId}-secretKey`;
-      setSecretKey({ name: "Vault Secured Key", vaultKey: keyName });
-      setFormData(formData => {
-        return { ...formData, secretKey: { name: "Vault Secured Key", vaultKey: keyName } };
-      });
-          
-    } else {
-      setSecretKey(INITIAL_SECRET_KEY);
-      setFormData(formData => {
-        return { ...formData, secretKey: {} };
-      });
-      setSecretKeyMessage("ERROR: Something has gone wrong saving secure data to your vault.  Please try again or report the issue to OpsERA.");
-    }  
-  };
 
   return (
     <Form>
@@ -177,20 +161,8 @@ function SshUploadDeploy( { data, pipelineId, stepId, parentCallback, callbackSa
      
       <Form.Group controlId="accessKey">
         <Form.Label>AWS Secret Access Key*</Form.Label>
-        <InputGroup>
-          <Form.Control
-            placeholder={secretKey.name || ""}
-            disabled={false}
-            isValid={secretKey.name.length > 0 }
-            maxLength="256" type="password" value={secretForm || ""} onChange={e => setSecretForm(e.target.value)}
-          />
-          <InputGroup.Append>
-            <Button variant="outline-secondary" onClick={() => handleSaveSecretKey(secretForm)}><FontAwesomeIcon icon={faLock} fixedWidth /></Button>
-          </InputGroup.Append>
-        </InputGroup>
-        { secretKeyMessage ?
-          <Form.Text className="red">{secretKeyMessage}</Form.Text> :
-          <Form.Text className="text-muted">AWS access keys consist of two parts: an access key ID and a secret access key. Both are required for automated deployments.</Form.Text> }
+        <Form.Control maxLength="256" type="password" placeholder="" value={formData.secretKey || ""} onChange={e => setFormData({ ...formData, secretKey: e.target.value })} />            
+        <Form.Text className="text-muted">AWS access keys consist of two parts: an access key ID and a secret access key. Both are required for automated deployments.</Form.Text> 
       </Form.Group>
 
       <Form.Group controlId="accessKey" className="mt-2">
@@ -240,10 +212,11 @@ function SshUploadDeploy( { data, pipelineId, stepId, parentCallback, callbackSa
         <Form.Text className="text-muted">SSH commands necessary for this step to complete.</Form.Text>
       </Form.Group>
       
-      
       <Button variant="primary" type="button" 
         onClick={() => { callbackFunction(); }}> 
-        <FontAwesomeIcon icon={faSave} className="mr-1"/> Save
+        {loading ? 
+          <><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> Saving</> :
+          <><FontAwesomeIcon icon={faSave} className="mr-1"/> Save</> }
       </Button>
       
       <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
