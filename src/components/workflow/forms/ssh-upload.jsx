@@ -52,9 +52,11 @@ function SshUploadDeploy( { data, pipelineId, stepId, parentCallback, callbackSa
   const loadFormData = async (step) => {    
     let { configuration } = step;
     if (typeof(configuration) !== "undefined") {
-      if (configuration.commands.length > 0) {
+      
+      if (Array.isArray(configuration.commands)) {
         configuration.commands = configuration.commands.join("\n");
       }
+      
       setFormData(configuration);
       setSshKeyFile(configuration.sshKey);
     } else {
