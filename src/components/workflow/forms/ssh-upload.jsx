@@ -25,7 +25,7 @@ const INITIAL_SSH_KEYFILE = {
 };
 
 const INITIAL_SECRET_KEY = {
-  fileName: "",
+  name: "",
   vaultKey: "" //pipelineId-stepId-secretKey
 };
 
@@ -39,6 +39,7 @@ function SshUploadDeploy( { data, pipelineId, stepId, parentCallback, callbackSa
   const [secretKeyMessage, setSecretKeyMessage] = useState("");
   const [sshKeyFile, setSshKeyFile] = useState(INITIAL_SSH_KEYFILE);
   const [secretKey, setSecretKey] = useState(INITIAL_SECRET_KEY);
+  const [secretForm, setSecretForm] = useState("");
 
 
   useEffect(() => {    
@@ -65,6 +66,7 @@ function SshUploadDeploy( { data, pipelineId, stepId, parentCallback, callbackSa
     if (typeof(configuration) !== "undefined") {
       setFormData(configuration);
       setSshKeyFile(configuration.sshKey);
+      setSecretKey(configuration.secretKey);
     } else {
       setFormData(INITIAL_DATA);
     }
@@ -122,7 +124,7 @@ function SshUploadDeploy( { data, pipelineId, stepId, parentCallback, callbackSa
           setSshFileMessage("ERROR: Something has gone wrong saving secure data to your vault.  Please try again or report the issue to OpsERA.");
         }        
       } else {
-        setSshKeyFile({ fileName: "", vaultKey: "" });
+        setSshKeyFile(INITIAL_SSH_KEYFILE);
         setFormData(formData => {
           return { ...formData, sshKey: {} };
         });
@@ -143,11 +145,23 @@ function SshUploadDeploy( { data, pipelineId, stepId, parentCallback, callbackSa
   };
 
   const handleSaveSecretKey = async (value) => {
+    
     setSecretKeyMessage("");
     const vaultResponse = await saveToVault(pipelineId, stepId, "secretKey", value);
     if (vaultResponse) {
       // set validation on the form to green
+
+      const keyName = `${pipelineId}-${stepId}-secretKey`;
+      setSecretKey({ name: "Vault Secured Key", vaultKey: keyName });
+      setFormData(formData => {
+        return { ...formData, secretKey: { name: "Vault Secured Key", vaultKey: keyName } };
+      });
+          
     } else {
+      setSecretKey(INITIAL_SECRET_KEY);
+      setFormData(formData => {
+        return { ...formData, secretKey: {} };
+      });
       setSecretKeyMessage("ERROR: Something has gone wrong saving secure data to your vault.  Please try again or report the issue to OpsERA.");
     }  
   };
@@ -165,12 +179,13 @@ function SshUploadDeploy( { data, pipelineId, stepId, parentCallback, callbackSa
         <Form.Label>AWS Secret Access Key*</Form.Label>
         <InputGroup>
           <Form.Control
-            placeholder=""
+            placeholder={secretKey.name || ""}
             disabled={false}
-            maxLength="256" type="password" value={formData.secretKey || ""} onChange={e => setFormData({ ...formData, secretKey: e.target.value })}
+            isValid={secretKey.name.length > 0 }
+            maxLength="256" type="password" value={secretForm || ""} onChange={e => setSecretForm(e.target.value)}
           />
           <InputGroup.Append>
-            <Button variant="outline-secondary"><FontAwesomeIcon icon={faLock} fixedWidth /></Button>
+            <Button variant="outline-secondary" onClick={() => handleSaveSecretKey(secretForm)}><FontAwesomeIcon icon={faLock} fixedWidth /></Button>
           </InputGroup.Append>
         </InputGroup>
         { secretKeyMessage ?
