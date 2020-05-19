@@ -52,6 +52,9 @@ function SshUploadDeploy( { data, pipelineId, stepId, parentCallback, callbackSa
   const loadFormData = async (step) => {    
     let { configuration } = step;
     if (typeof(configuration) !== "undefined") {
+      if (configuration.commands.length > 0) {
+        configuration.commands = configuration.commands.join("\n");
+      }
       setFormData(configuration);
       setSshKeyFile(configuration.sshKey);
     } else {
@@ -67,11 +70,16 @@ function SshUploadDeploy( { data, pipelineId, stepId, parentCallback, callbackSa
       if (typeof(newConfiguration.secretKey) === "string") {
         newConfiguration.secretKey = await saveToVault(pipelineId, stepId, "secretKey", "Vault Secured Key", newConfiguration.secretKey);
       }
+
+      if (newConfiguration.commands.length > 0) {
+        const splitCommands = newConfiguration.commands.split(/\r?\n/g);        
+        newConfiguration.commands = splitCommands;        
+      }
       
       const item = {
         configuration: newConfiguration
       };
-      //console.log("item: ", item);
+      console.log("item: ", item);
       setLoading(false);
       parentCallback(item);
     }
