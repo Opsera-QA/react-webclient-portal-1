@@ -15,7 +15,7 @@ const INITIAL_DATA = {
   serverIp: "",
   serverPath: "",
   commands: "",
-  fileUpload: ""
+  sshAction: ""
 };
 
 const INITIAL_SSH_KEYFILE = {
@@ -111,9 +111,9 @@ function SshUploadDeploy( { data, pipelineId, stepId, parentCallback, callbackSa
 
   const handleFileUploadToggle = (value) => {
     if (value === "SSH File Upload") {
-      setFormData({ ...formData, fileUpload: "" });
+      setFormData({ ...formData, sshAction: "" });
     } else {
-      setFormData({ ...formData, fileUpload: "SSH File Upload" });
+      setFormData({ ...formData, sshAction: "SSH File Upload" });
     }
   };
 
@@ -201,14 +201,14 @@ function SshUploadDeploy( { data, pipelineId, stepId, parentCallback, callbackSa
           type="switch"
           id="ssh-file-upload"
           label="Use SSH File Upload Method" 
-          checked={formData.fileUpload === "SSH File Upload" ? true : false}   
-          onChange={() => handleFileUploadToggle(formData.fileUpload)} 
+          checked={formData.sshAction === "SSH File Upload" ? true : false}   
+          onChange={() => handleFileUploadToggle(formData.sshAction)} 
         />
       </Form.Group>
 
       <Form.Group controlId="commands">
         <Form.Label>SSH Commands</Form.Label>
-        <Form.Control as="textarea" type="text" placeholder="" value={formData.commands || ""} onChange={e => setFormData({ ...formData, commands: e.target.value })} />
+        <Form.Control as="textarea" type="text" rows={6} placeholder="" value={formData.commands || ""} onChange={e => setFormData({ ...formData, commands: e.target.value })} />
         <Form.Text className="text-muted">SSH commands necessary for this step to complete.</Form.Text>
       </Form.Group>
       
