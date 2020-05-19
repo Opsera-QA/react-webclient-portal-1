@@ -39,7 +39,6 @@ function StepToolConfiguration( { data, editItem, parentCallback }) {
 
   const getStepIndex = (step_id) => {
     let stepArrayIndex = plan.findIndex(x => x._id === step_id); 
-    console.log(plan[stepArrayIndex].tool);
     return stepArrayIndex;
   };
 
