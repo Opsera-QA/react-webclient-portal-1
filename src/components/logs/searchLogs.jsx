@@ -98,7 +98,9 @@ function SearchLogs ( { tools }) {
   const getFormattedCustomFilters = () => {
     let filterArray = [];
     if (filterType === "blueprint") {
-      filterArray.push(jobFilter.value);
+      if (jobFilter) {
+        filterArray.push(jobFilter.value);
+      }
     }
     else {
       multiFilter.forEach(filterGroup => {
