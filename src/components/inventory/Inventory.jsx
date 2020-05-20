@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { PureComponent, Fragment } from "react";
-import { Form, Alert } from "react-bootstrap";
+import { Form, Alert, ListGroup } from "react-bootstrap";
 import { format } from "date-fns";
 import { AuthContext } from "../../contexts/AuthContext";  //REact Context API Code for User Authentication
 import { ApiService } from "../../api/apiService";
@@ -104,12 +104,12 @@ class Inventory extends PureComponent {
 
         {error ? <ErrorDialog error={error} /> : null}
 
-        <ul className="nav nav-tabs mt-3">
+        <ul className="nav nav-pills mt-2">
           <li className="nav-item">
             <a className={"nav-link " + (this.state.selection === "platform" ? "active" : "")} href="#" onClick={this.handleTabClick("platform")}>Platform</a>
           </li>
           <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "pipeline" ? "active" : "")} href="#" onClick={this.handleTabClick("pipeline")}>Pipeline</a>
+            <a className={"nav-link " + (this.state.selection === "tools" ? "active" : "")} href="#" onClick={this.handleTabClick("tools")}>Tools</a>
           </li>
         </ul>
 
