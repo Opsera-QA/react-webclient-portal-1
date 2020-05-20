@@ -23,3 +23,9 @@
 .multi-select-filters ul{
   display: inline;
 }
+
+.multi-select-filters .rw-popup{
+  height: 25em;
+  overflow: hidden;
+  overflow-y: auto;
+}
