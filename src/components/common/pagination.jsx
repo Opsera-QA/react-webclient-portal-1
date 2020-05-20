@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Row, Col, Pagination } from "react-bootstrap";
 import DropdownList from "react-widgets/lib/DropdownList";
 
+import "./pagination.css";
 //import "./pagination.scss";  "node-sass": "^4.14.1",
 
 function PaginationComponent(props) {

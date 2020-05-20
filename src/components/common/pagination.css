@@ -1,0 +1,10 @@
+.pagination-block .page-link {
+  color: #226196;
+}
+.pagination-block .page-item.active .page-link {
+  background-color: #226196;
+  border-color: #0d4183;
+}
+.pagination-block .page-summary {
+  padding-top: 10px;
+}
