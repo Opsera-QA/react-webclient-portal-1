@@ -98,7 +98,9 @@ function SearchLogs ( { tools }) {
   const getFormattedCustomFilters = () => {
     let filterArray = [];
     if (filterType === "blueprint") {
-      filterArray.push(jobFilter.value);
+      if (jobFilter) {
+        filterArray.push(jobFilter.value);
+      }
     }
     else {
       multiFilter.forEach(filterGroup => {
@@ -207,7 +209,7 @@ function SearchLogs ( { tools }) {
               </div>
               <div className="p-2 flex-grow-1">
                 <DropdownList
-                  data={Array.isArray(FILTER) ? FILTER : [{ "value": "pipeline", "label": "Pipeline" }]} 
+                  data={Array.isArray(FILTER) ? FILTER : [{ "value": "pipeline", "label": "Pipeline" }]}  
                   defaultValue={"pipeline"}
                   className="basic-single"
                   valueField='value'
