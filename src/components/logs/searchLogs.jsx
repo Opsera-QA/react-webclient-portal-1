@@ -1,10 +1,10 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "../../contexts/AuthContext";
-import { ApiService } from "../../api/apiService";
-import LoadingDialog from "../common/loading";
-import InfoDialog from "../common/info";
-import ErrorDialog from "../common/error";
+import { AuthContext } from "contexts/AuthContext";
+import { ApiService } from "api/apiService";
+import LoadingDialog from "components/common/loading";
+import InfoDialog from "components/common/info";
+import ErrorDialog from "components/common/error";
 import { Form, Button, Alert, Table, Overlay, Popover } from "react-bootstrap";
 import { format, addDays } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,7 +13,7 @@ import "./logs.css";
 import "react-date-range/dist/styles.css"; 
 import "react-date-range/dist/theme/default.css"; 
 import { DateRangePicker } from "react-date-range";
-import ModalLogs from "../common/modalLogs";
+import ModalLogs from "components/common/modalLogs";
 import DropdownList from "react-widgets/lib/DropdownList";
 import Multiselect from "react-widgets/lib/Multiselect";
 
@@ -22,9 +22,6 @@ const Highlight = require("react-highlighter");
 function SearchLogs ( { tools }) {
   //const FILTER = [{ value: "pipeline", label: "Pipeline" }, { value: "metricbeat", label: "MetricBeat" }, { value: "twistlock", label: "TwistLock" }, { value: "blueprint", label: "Build Blueprint" }];
   const FILTER = tools;
-  //console.log(Array.isArray(FILTER));
-  // console.log(FILTER);
-  //console.log(typeof FILTER2);
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -33,8 +30,8 @@ function SearchLogs ( { tools }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOptions, setFilters] = useState([]);
   const [filterType, setFilterType] = useState("pipeline");
-  //console.log(filterType);
-  const [customFilter, setCustomFilter] = useState([]);
+  const [multiFilter, setMultiFilter] = useState([]);
+  const [jobFilter, setJobFilter] = useState("");
   const [calenderActivation, setCalenderActivation] = useState(false);
   const [submitted, submitClicked] = useState(false);
   const [date, setDate] = useState([
@@ -65,7 +62,7 @@ function SearchLogs ( { tools }) {
       endDate = 0;
     }
     if (searchTerm) {
-      fetchData(searchTerm, filterType, customFilter, startDate, endDate);    
+      fetchData(searchTerm, filterType, startDate, endDate);    
     } else {
       setLoading(false);
       setData([]);
@@ -78,51 +75,47 @@ function SearchLogs ( { tools }) {
     setSDate(startDate);
   };
 
-  const cancelSearchClicked = e => {
+  const cancelSearchClicked = () => {
     submitClicked(false);
-    e.preventDefault();
-    // setCustomFilter([]);
     setData([]);
     setSearchTerm("");
     setCalenderActivation(false);
     setEDate("");
     setSDate("");
+    setMultiFilter([]);
+    setJobFilter("");
   };
 
   const handleSelectChange = (selectedOption) => {
+    setFilters([]);
     submitClicked(false);
     setData([]);
-    setFilters([]);
-    setCustomFilter([]);
+    setMultiFilter([]);
+    setJobFilter("");
     setFilterType(selectedOption.value);
   };
 
-  const customFilterSelectionChange = (selectedOption) => {
-    if (selectedOption && filterOptions.length > 0) {
-      let optionsArray = [];
-      if (filterType === "blueprint") {
-        optionsArray.push(selectedOption.value);
-        setCustomFilter(optionsArray);
-      }
-      else {
-        selectedOption.forEach(filterGroup => {
-          optionsArray.push({
-            group: filterGroup["type"],
-            value: filterGroup["value"]
-          });
+  const getFormattedCustomFilters = () => {
+    let filterArray = [];
+    if (filterType === "blueprint") {
+      filterArray.push(jobFilter.value);
+    }
+    else {
+      multiFilter.forEach(filterGroup => {
+        filterArray.push({
+          group: filterGroup["type"],
+          value: filterGroup["value"]
         });
-        setCustomFilter(optionsArray);
-      }
+      });
     }
-    if (selectedOption === null) {
-      setCustomFilter(selectedOption);
-    }
+    return filterArray;
   };
 
-  const fetchData = async (search, filter, customFilter, startDate, endDate) => {
+
+  const fetchData = async (search, filter, startDate, endDate) => {
     let jsonToPost = {};
     jsonToPost.index = filter;
-    jsonToPost.customFilter = customFilter;
+    jsonToPost.customFilter = getFormattedCustomFilters();
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
@@ -194,15 +187,12 @@ function SearchLogs ( { tools }) {
     setSDate(startDate);
   };
 
-  //On load get the filter list; executed only once
+  //Every time we select a new filter, update the list. But only for blueprint and pipeline
   useEffect(() => {
-    fetchFilterData();
-  }, []);
-
-  //Every time we select a new filter, update the list. But since only for blueprint here
-  useEffect(() => {
-    fetchFilterData();
-  }, [filterType == "blueprint"]);
+    if (filterType === "blueprint" || filterType === "pipeline") {
+      fetchFilterData();
+    }
+  }, [filterType]);
 
   if (error) {
     return (<ErrorDialog error={error} />);
@@ -266,8 +256,10 @@ function SearchLogs ( { tools }) {
                     textField='label'
                     groupBy="type"
                     filter='contains'
-                    placeholder={"Type to multiselect filters"}
-                    onChange={customFilterSelectionChange}             
+                    value={multiFilter}
+                    placeholder={"Type to multi-select filters"}
+                    onChange={setMultiFilter} 
+                    onToggle={fetchFilterData}         
                   />}
                 {filterType === "blueprint" && 
                   <DropdownList
@@ -279,7 +271,9 @@ function SearchLogs ( { tools }) {
                     textField='label'
                     filter='contains'
                     placeholder={"Select Job Name"}
-                    onChange={customFilterSelectionChange}             
+                    value={jobFilter}
+                    onChange={setJobFilter}    
+                    onToggle={fetchFilterData}         
                   />
                 }
               </div> 
