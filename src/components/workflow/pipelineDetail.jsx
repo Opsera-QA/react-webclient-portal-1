@@ -1,14 +1,15 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Table } from "react-bootstrap";
-import { AuthContext } from "../../contexts/AuthContext"; 
-import { axiosApiServiceMultiGet, axiosApiService } from "../../api/apiService";
+import { AuthContext } from "contexts/AuthContext"; 
+import { axiosApiService } from "api/apiService";
 import PipelineItemDetail from "./pipelineItemDetail";
-import LoadingDialog from "../common/loading";
-import ErrorDialog from "../common/error";
-import InfoDialog from "../common/info";
+import LoadingDialog from "components/common/loading";
+import ErrorDialog from "components/common/error";
+import InfoDialog from "components/common/info";
+import Pagination from "components/common/pagination";
 import { format } from "date-fns";
-import ModalActivityLogs from "../common/modalActivityLogs";
+import ModalActivityLogs from "components/common/modalActivityLogs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import "./workflows.css";
@@ -18,10 +19,14 @@ function PipelineDetail({ id }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
   const [data, setData] = useState({});
+  const [activityData, setActivityData] = useState({});
   const [role, setRole] = useState("");
   const [stepStatus, setStepStatus] = useState({});
   const [loading, setLoading] = useState(false);
-    
+  
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+
   useEffect(() => {    
     const controller = new AbortController();
     const runEffect = async () => {
@@ -42,22 +47,26 @@ function PipelineDetail({ id }) {
     };
   }, []);
 
+  // Executed every time page number or page size changes
+  useEffect(() => {    
+    getActivityLogs();
+  }, [currentPage, pageSize]);
+
   async function fetchData() {
     setLoading(true);
     const { getAccessToken, getUserSsoUsersRecord } = contextType;
     const accessToken = await getAccessToken();
     const ssoUsersRecord = await getUserSsoUsersRecord();
-    const apiUrls = [ `/pipelines/${id}`, `/pipelines/${id}/activity` ];   
+    const apiUrl =  `/pipelines/${id}`;   
     try {
-      const [pipeline, activity] = await axiosApiServiceMultiGet(accessToken, apiUrls);
+      const pipeline = await axiosApiService(accessToken).get(apiUrl); 
       setData({
-        pipeline: pipeline && pipeline.data[0],
-        activity: activity && activity.data
+        ...data,
+        pipeline: pipeline && pipeline.data[0]
       });
       setPipelineAttributes(pipeline && pipeline.data[0], ssoUsersRecord._id);
       setLoading(false);  
       console.log("pipeline", pipeline);      
-      console.log("activity", activity);
     }
     catch (err) {
       console.log(err.message);
@@ -65,6 +74,29 @@ function PipelineDetail({ id }) {
       setErrors(err.message);
     }
   }
+
+  async function getActivityLogs() {
+    setLoading(true);
+    const { getAccessToken } = contextType;
+    const accessToken = await getAccessToken();
+    const apiUrl = `/pipelines/${id}/activity?page=${currentPage}&size=${pageSize}`;  
+    try {
+      const activity = await axiosApiService(accessToken).get(apiUrl); 
+      setActivityData(activity.data);   
+      setLoading(false);  
+      console.log("activity", activity);
+    }
+    catch (err) {
+      setLoading(false);  
+      setErrors(err.message);
+      console.log(err.message);
+    }
+  }
+
+  const gotoPage = (pageNumber, pageSize) => {
+    setCurrentPage(pageNumber);
+    setPageSize(pageSize);
+  };
 
   const setPipelineAttributes = (pipeline, ssoUsersId) => {
     if (typeof(pipeline.roles) !== "undefined") {
@@ -88,17 +120,9 @@ function PipelineDetail({ id }) {
     await fetchData();
   };
 
-  const callbackRefreshActivity = async () => {
-    const { getAccessToken } = contextType;
-    const accessToken = await getAccessToken();
-    const apiUrl = `/pipelines/${id}/activity`;
-    const activity = await axiosApiService(accessToken).get(apiUrl);      
-    setData({
-      ...data,
-      activity: activity && activity.data
-    });
+  const callbackRefreshActivity = () => {
+    getActivityLogs();
   };
-
 
   if (error) {
     return (<ErrorDialog error={error} />);
@@ -108,10 +132,14 @@ function PipelineDetail({ id }) {
     return ( <InfoDialog message="No Pipeline details found.  Please ensure you have access to view the requested pipeline." />);
   } else {
     return (
-      <div className="mt-3 max-content-width">
-        {typeof(data.pipeline) !== "undefined" ? <PipelineItemDetail data={data.pipeline} parentCallback={callbackFunction} parentCallbackRefreshActivity={callbackRefreshActivity} role={role} stepStatus={stepStatus}  />  : null }
-        {typeof(data.activity) !== "undefined" ? <PipelineActivity data={data.activity} />  : null}
-      </div>         
+      <>
+        <div className="mt-3 max-content-width">
+          {typeof(data.pipeline) !== "undefined" ? <PipelineItemDetail data={data.pipeline} parentCallback={callbackFunction} parentCallbackRefreshActivity={callbackRefreshActivity} role={role} stepStatus={stepStatus}  />  : null }
+          {typeof(activityData.pipelineData) !== "undefined" ? <PipelineActivity data={activityData.pipelineData} />  : null}
+          {activityData.pipelineData && <Pagination total={activityData.count} currentPage={currentPage} pageSize={pageSize} onClick={(pageNumber, pageSize) => gotoPage(pageNumber, pageSize)} />}
+        </div>       
+       
+      </>
     );
   }
 }
@@ -193,8 +221,8 @@ PipelineDetail.propTypes = {
 
 PipelineActivity.propTypes = {
   data: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.array
+    PropTypes.array,
+    PropTypes.object
   ]),
 };
 
