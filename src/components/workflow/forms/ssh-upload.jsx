@@ -15,7 +15,13 @@ const INITIAL_DATA = {
   serverIp: "",
   serverPath: "",
   commands: "",
-  sshAction: ""
+  sshAction: "SSH Execution", // default it's ssh execution not empty anymore 
+  // jenkins details if action is upload
+  jenkinsUrl: "",
+  jenkinsPort: "",
+  jUserId: "",
+  jAuthToken: "",
+  jobName: ""
 };
 
 const INITIAL_SSH_KEYFILE = {
@@ -121,7 +127,12 @@ function SshUploadDeploy( { data, pipelineId, stepId, parentCallback, callbackSa
 
   const handleFileUploadToggle = (value) => {
     if (value === "SSH File Upload") {
-      setFormData({ ...formData, sshAction: "" });
+      // resetting the jenkins form not sure if this is to be done!
+      setFormData({ ...formData,  jenkinsUrl: "",
+        jenkinsPort: "",
+        jUserId: "",
+        jAuthToken: "",
+        jobName: "", sshAction: "SSH Execution" });
     } else {
       setFormData({ ...formData, sshAction: "SSH File Upload" });
     }
@@ -215,6 +226,37 @@ function SshUploadDeploy( { data, pipelineId, stepId, parentCallback, callbackSa
           onChange={() => handleFileUploadToggle(formData.sshAction)} 
         />
       </Form.Group>
+
+      {formData.sshAction === "SSH File Upload" && 
+      <>
+       
+        <Form.Group controlId="repoField">
+          <Form.Label>Jenkins Container URL*</Form.Label>
+          <Form.Control maxLength="100" type="text" placeholder="" value={formData.jenkinsUrl || ""} onChange={e => setFormData({ ...formData, jenkinsUrl: e.target.value })} />
+        </Form.Group>
+
+        <Form.Group controlId="branchField">
+          <Form.Label>Jenkins Port</Form.Label>
+          <Form.Control maxLength="5" type="text" placeholder="" value={formData.jenkinsPort || ""} onChange={e => setFormData({ ...formData, jenkinsPort: e.target.value })} />
+        </Form.Group>
+        
+        <Form.Group controlId="branchField">
+          <Form.Label>Jenkins User ID*</Form.Label>
+          <Form.Control maxLength="50" type="text" placeholder="" value={formData.jUserId || ""} onChange={e => setFormData({ ...formData, jUserId: e.target.value })} />
+        </Form.Group>
+        
+        <Form.Group controlId="branchField">
+          <Form.Label>Jenkins Token*</Form.Label>
+          <Form.Control maxLength="500" type="password" placeholder="" value={formData.jAuthToken || ""} onChange={e => setFormData({ ...formData, jAuthToken: e.target.value })} />
+        </Form.Group>
+        
+        <Form.Group controlId="branchField">
+          <Form.Label>Job Name</Form.Label>
+          <Form.Control maxLength="150" type="text" placeholder="" value={formData.jobName || ""} onChange={e => setFormData({ ...formData, jobName: e.target.value })} />
+        </Form.Group>
+      
+      </>
+      }
 
       <Form.Group controlId="commands">
         <Form.Label>SSH Commands</Form.Label>
