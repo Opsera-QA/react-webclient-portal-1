@@ -74,7 +74,7 @@ const PlatformInventory = () => {
     const controller = new AbortController();
     const runEffect = async () => {
       try {
-        await getApiData();
+        getApiData();
         setRenderForm(true);
       } catch (err) {
         if (err.name === "AbortError") {
