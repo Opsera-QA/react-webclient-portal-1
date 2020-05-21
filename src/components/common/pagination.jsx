@@ -17,6 +17,7 @@ function PaginationComponent(props) {
   };
 
   const updatePageSize = (pageSize) => {
+    setCurrentPage(1);
     setPageSize(pageSize.value);
   };
 
@@ -42,9 +43,19 @@ function PaginationComponent(props) {
         <Pagination>
           <Pagination.Item  disabled={currentPage > totalPagesArray.slice(0)[0] ? false : true} onClick={() => gotoPage(totalPagesArray.slice(0)[0])}>First</Pagination.Item>
           <Pagination.Item  disabled={currentPage > totalPagesArray.slice(0)[0] ? false : true} onClick={() => gotoPage(currentPage - 1)}>Previous</Pagination.Item>
+          <Pagination.Item  disabled={false}>...</Pagination.Item>
           {totalPagesArray.map((pageNumber) => {
-            return <Pagination.Item active={pageNumber == currentPage} key={pageNumber} onClick={() => gotoPage(pageNumber)}>{pageNumber}</Pagination.Item>;
+            if(currentPage < pageNumber &&  pageNumber - currentPage < 5) {
+              return <Pagination.Item key={pageNumber} onClick={() => gotoPage(pageNumber)}>{pageNumber}</Pagination.Item>;
+            }else if(currentPage > pageNumber &&  currentPage - pageNumber < 5) {
+              return <Pagination.Item key={pageNumber} onClick={() => gotoPage(pageNumber)}>{pageNumber}</Pagination.Item>;
+            }else if(currentPage === pageNumber){
+              return <Pagination.Item active={pageNumber == currentPage} key={pageNumber} onClick={() => gotoPage(pageNumber)}>{pageNumber}</Pagination.Item>;
+            }else {
+              return null;
+            }
           })}
+          <Pagination.Item  disabled={false}>...</Pagination.Item>
           <Pagination.Item disabled={currentPage < totalPagesArray.slice(-1)[0] ? false : true} onClick={() => gotoPage(currentPage + 1)}>Next</Pagination.Item>
           <Pagination.Item disabled={currentPage < totalPagesArray.slice(-1)[0] ? false : true} onClick={() => gotoPage(totalPagesArray.slice(-1)[0])}>Last</Pagination.Item>
         </Pagination>  
