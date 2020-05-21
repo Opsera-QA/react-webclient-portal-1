@@ -107,7 +107,7 @@ const PipelineWorkflowDetail = (props) => {
         tmpDataObject = dataObj;
         let status =  data.workflow.last_step !== undefined && data.workflow.last_step.hasOwnProperty("status") ? data.workflow.last_step.status : false;
 
-        if (staleRefreshCount >= 50) {
+        if (staleRefreshCount >= 20) {
           console.log("closing connection due to stale data");
           setWorkflowStatus(false);
           setSocketRunning(false);
@@ -121,7 +121,7 @@ const PipelineWorkflowDetail = (props) => {
           setLastStep(dataObj);
         }
 
-        if (staleRefreshCount > 5 && status === "stopped") {
+        if (staleRefreshCount > 3 && status === "stopped") {
           console.log("closing connection due to stopped status");
           setWorkflowStatus(false);
           setSocketRunning(false);

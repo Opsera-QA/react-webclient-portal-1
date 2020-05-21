@@ -76,40 +76,51 @@ const PipelineItemDetail = (props) => {
   let tmpDataObject = {};
   let staleRefreshCount = 0;
   const subscribeToTimer = () => {    
-    const socket = socketIOClient(endPointUrl, { query: "pipelineId=" + data._id }); 
-
+    const socket = socketIOClient(endPointUrl, { query: "pipelineId=" + data._id });
+    console.log("Connected status before onConnect", socket.socket ? socket.socket.connected : socket.socket === undefined );
     setSocketRunning(true);
-    socket.emit("subscribeToPipelineActivity", 1000);
-    socket.on("subscribeToPipelineActivity", dataObj => {
-      console.log("Update from Websocket (staleRefreshCount: "+staleRefreshCount+"): ", dataObj);
-      if (isEqual(dataObj, tmpDataObject)) {
-        staleRefreshCount++;
-      } else {
-        staleRefreshCount = 0;
-      }  
-      tmpDataObject = dataObj;
-      
-      if (staleRefreshCount >= 50) {
-        console.log("closing connection");
-        setWorkflowStatus(false);
-        socket.close();
-        setSocketRunning(false);
-        parentCallbackRefreshActivity(); 
-      } else {
-        let status = data.workflow.last_step.hasOwnProperty("status") ? data.workflow.last_step.status : false;
-        setWorkflowStatus(status);               
-      }
+    
+    if (socket.socket === undefined ) {
+      socket.emit("subscribeToPipelineActivity", 1000);
+      socket.on("subscribeToPipelineActivity", dataObj => {
+        console.log("Update from Websocket (staleRefreshCount: "+staleRefreshCount+"): ", dataObj);
+        if (isEqual(dataObj, tmpDataObject)) {
+          staleRefreshCount++;
+        } else {
+          staleRefreshCount = 0;
+        }  
+        tmpDataObject = dataObj;
+        let status =  data.workflow.last_step !== undefined && data.workflow.last_step.hasOwnProperty("status") ? data.workflow.last_step.status : false;
+
+        if (staleRefreshCount >= 20) {
+          console.log("closing connection due to stale data");
+          setWorkflowStatus(false);
+          setSocketRunning(false);
+          socket.close();
+          parentCallbackRefreshActivity();
+        } else {          
+          setWorkflowStatus(status);
+        }
            
-      if (typeof(dataObj) !== "undefined" && Object.keys(dataObj).length > 0) {
-        data.workflow.last_step = dataObj;
-        setLastStep(dataObj);
-      }
-    });
+        if (typeof(dataObj) !== "undefined" && Object.keys(dataObj).length > 0) {
+          data.workflow.last_step = dataObj;
+          setLastStep(dataObj);
+        }
+
+        if (staleRefreshCount > 3 && status === "stopped") {
+          console.log("closing connection due to stopped status");
+          setWorkflowStatus(false);
+          setSocketRunning(false);
+          socket.close();
+          parentCallbackRefreshActivity();
+        }
+
+      });
+    }
 
     socket.on("disconnect", () => {
       setWorkflowStatus(false);
       setSocketRunning(false);
-      parentCallbackRefreshActivity(); 
     });
 
     socket.on("connect_error", function(err) {
@@ -117,7 +128,6 @@ const PipelineItemDetail = (props) => {
       setWorkflowStatus(false);
       setSocketRunning(false);
       socket.close();
-      parentCallbackRefreshActivity(); 
     });
   };
 
