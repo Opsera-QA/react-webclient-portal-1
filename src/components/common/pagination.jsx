@@ -11,8 +11,16 @@ function PaginationComponent(props) {
   const [pageSize, setPageSize] = useState(props.pageSize || 10);
   const totalPages = Math.ceil(parseInt(props.total)/props.pageSize);
   const totalPagesArray = Array(totalPages).fill().map((_, i) => i+1);
+  const [pageWindowSize, setPageWindowSize] = useState(5);
 
   const gotoPage = (page) => {
+    if(totalPages - page == 0 || page == 1) {
+      setPageWindowSize(5);
+    }else if(page <= 2 || (totalPages - page) < 2) {
+      setPageWindowSize(4);
+    }else {
+      setPageWindowSize(3);
+    }
     setCurrentPage(page);
   };
 
@@ -35,6 +43,17 @@ function PaginationComponent(props) {
   useEffect(()=> {
     props.onClick(currentPage, pageSize);
   }, [currentPage, pageSize]);
+  
+  //This is only needed because the component re-renders due to Loading component in the parent 
+  useEffect(()=> {
+    if(totalPages - currentPage == 0 || currentPage == 1) {
+      setPageWindowSize(5);
+    }else if(currentPage <= 2 || (totalPages - currentPage) < 2) {
+      setPageWindowSize(4);
+    }else {
+      setPageWindowSize(3);
+    }
+  }, [currentPage]);
 
   return (   
     <Row className="pagination-block justify-content-center">
@@ -43,11 +62,10 @@ function PaginationComponent(props) {
         <Pagination>
           <Pagination.Item  disabled={currentPage > totalPagesArray.slice(0)[0] ? false : true} onClick={() => gotoPage(totalPagesArray.slice(0)[0])}>First</Pagination.Item>
           <Pagination.Item  disabled={currentPage > totalPagesArray.slice(0)[0] ? false : true} onClick={() => gotoPage(currentPage - 1)}>Previous</Pagination.Item>
-          <Pagination.Item  disabled={false}>...</Pagination.Item>
-          {totalPagesArray.map((pageNumber) => {
-            if(currentPage < pageNumber &&  pageNumber - currentPage < 5) {
+          {totalPagesArray.map((pageNumber, index) => {
+            if(currentPage < pageNumber && (pageNumber - currentPage) < pageWindowSize) {
               return <Pagination.Item key={pageNumber} onClick={() => gotoPage(pageNumber)}>{pageNumber}</Pagination.Item>;
-            }else if(currentPage > pageNumber &&  currentPage - pageNumber < 5) {
+            }else if(currentPage > pageNumber &&  currentPage - pageNumber < pageWindowSize) {
               return <Pagination.Item key={pageNumber} onClick={() => gotoPage(pageNumber)}>{pageNumber}</Pagination.Item>;
             }else if(currentPage === pageNumber){
               return <Pagination.Item active={pageNumber == currentPage} key={pageNumber} onClick={() => gotoPage(pageNumber)}>{pageNumber}</Pagination.Item>;
@@ -55,7 +73,6 @@ function PaginationComponent(props) {
               return null;
             }
           })}
-          <Pagination.Item  disabled={false}>...</Pagination.Item>
           <Pagination.Item disabled={currentPage < totalPagesArray.slice(-1)[0] ? false : true} onClick={() => gotoPage(currentPage + 1)}>Next</Pagination.Item>
           <Pagination.Item disabled={currentPage < totalPagesArray.slice(-1)[0] ? false : true} onClick={() => gotoPage(totalPagesArray.slice(-1)[0])}>Last</Pagination.Item>
         </Pagination>  
