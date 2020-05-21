@@ -8,7 +8,7 @@ import { axiosApiService } from "../../api/apiService";
 import ErrorDialog from "../common/error";
 //import LoadingDialog from "../common/loading";
 import DropdownList from "react-widgets/lib/DropdownList";
-import ToolRegistray from "../tools/registry";
+import ToolRegistry from "../tools/registry";
 
 function Inventory () {
   const { view } = useParams();
@@ -55,7 +55,7 @@ function Inventory () {
       </ul>
       
       {selection === "platform" ? <PlatformInventory /> : null }
-      {selection === "tools" ? <ToolRegistray /> : null } 
+      {selection === "tools" ? <ToolRegistry /> : null } 
     </div >
   );  
 }
