@@ -31,7 +31,9 @@ function PipelineDetail({ id }) {
     const controller = new AbortController();
     const runEffect = async () => {
       try {
-        await fetchData();        
+        setLoading(true);
+        await fetchData();      
+        setLoading(false);    
       } catch (err) {
         if (err.name === "AbortError") {
           console.log("Request was canceled via controller.abort");
@@ -53,7 +55,6 @@ function PipelineDetail({ id }) {
   }, [currentPage, pageSize]);
 
   async function fetchData() {
-    setLoading(true);
     const { getAccessToken, getUserSsoUsersRecord } = contextType;
     const accessToken = await getAccessToken();
     const ssoUsersRecord = await getUserSsoUsersRecord();
@@ -65,12 +66,10 @@ function PipelineDetail({ id }) {
         pipeline: pipeline && pipeline.data[0]
       });
       setPipelineAttributes(pipeline && pipeline.data[0], ssoUsersRecord._id);
-      setLoading(false);  
       console.log("pipeline", pipeline);      
     }
     catch (err) {
       console.log(err.message);
-      setLoading(false);
       setErrors(err.message);
     }
   }

@@ -94,10 +94,10 @@ const PipelineItemDetail = (props) => {
         setWorkflowStatus(false);
         socket.close();
         setSocketRunning(false);
+        parentCallbackRefreshActivity(); 
       } else {
         let status = data.workflow.last_step.hasOwnProperty("status") ? data.workflow.last_step.status : false;
-        setWorkflowStatus(status);       
-        parentCallbackRefreshActivity(); 
+        setWorkflowStatus(status);               
       }
            
       if (typeof(dataObj) !== "undefined" && Object.keys(dataObj).length > 0) {
@@ -109,6 +109,7 @@ const PipelineItemDetail = (props) => {
     socket.on("disconnect", () => {
       setWorkflowStatus(false);
       setSocketRunning(false);
+      parentCallbackRefreshActivity(); 
     });
 
     socket.on("connect_error", function(err) {
@@ -116,6 +117,7 @@ const PipelineItemDetail = (props) => {
       setWorkflowStatus(false);
       setSocketRunning(false);
       socket.close();
+      parentCallbackRefreshActivity(); 
     });
   };
 
