@@ -11,7 +11,7 @@ import Pagination from "components/common/pagination";
 import { format } from "date-fns";
 import ModalActivityLogs from "components/common/modalActivityLogs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faExclamationTriangle, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import "./workflows.css";
 
 
@@ -23,7 +23,7 @@ function PipelineDetail({ id }) {
   const [role, setRole] = useState("");
   const [stepStatus, setStepStatus] = useState({});
   const [loading, setLoading] = useState(false);
-  
+  const [logsIsLoading, setLogsIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(50);
 
@@ -77,16 +77,19 @@ function PipelineDetail({ id }) {
   async function getActivityLogs() {
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = `/pipelines/${id}/activity?page=${currentPage}&size=${pageSize}`;  
+    const apiUrl = `/pipelines/${id}/activity?page=${currentPage}&size=${pageSize}`;
+    setLogsIsLoading(true);  
     try {
       const activity = await axiosApiService(accessToken).get(apiUrl); 
       setActivityData(activity.data);   
       console.log("activity", activity);
+      setLogsIsLoading(false);  
     }
     catch (err) {
       setLoading(false);  
       setErrors(err.message);
       console.log(err.message);
+      setLogsIsLoading(false);  
     }
   }
 
@@ -132,7 +135,7 @@ function PipelineDetail({ id }) {
       <>
         <div className="mt-3 max-content-width">
           {typeof(data.pipeline) !== "undefined" ? <PipelineItemDetail data={data.pipeline} parentCallback={callbackFunction} parentCallbackRefreshActivity={callbackRefreshActivity} role={role} stepStatus={stepStatus}  />  : null }
-          {typeof(activityData.pipelineData) !== "undefined" ? <PipelineActivity data={activityData.pipelineData} />  : null}
+          {typeof(activityData.pipelineData) !== "undefined" ? <PipelineActivity data={activityData.pipelineData} isLoading={logsIsLoading} />  : null}
           {activityData.pipelineData && <Pagination total={activityData.count} currentPage={currentPage} pageSize={pageSize} onClick={(pageNumber, pageSize) => gotoPage(pageNumber, pageSize)} />}
         </div>       
        
@@ -146,7 +149,7 @@ function PipelineDetail({ id }) {
 const PipelineActivity = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState({});
-  const { data } = props;
+  const { data, isLoading } = props;
   
   const handleClick = (data) => {
     setModalData(data);
@@ -157,7 +160,8 @@ const PipelineActivity = (props) => {
     <>
       {data !== undefined && data.length > 0 ?
         <>
-          <div className="h6 mt-4">Activity Log</div>
+          <div className="h6 mt-4">Activity Log 
+            { isLoading ? <FontAwesomeIcon icon={faSpinner} spin className="ml-1" fixedWidth/> : null }</div>
           <Table striped bordered hover className="table-sm" style={{ fontSize:"small" }}>
             <thead>
               <tr>
@@ -221,6 +225,7 @@ PipelineActivity.propTypes = {
     PropTypes.array,
     PropTypes.object
   ]),
+  isLoading: PropTypes.bool
 };
 
 

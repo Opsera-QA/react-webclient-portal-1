@@ -22,6 +22,7 @@ function PaginationComponent(props) {
       setPageWindowSize(3);
     }
     setCurrentPage(page);
+    window.scrollTo(0, 50);
   };
 
   const updatePageSize = (pageSize) => {
