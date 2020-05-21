@@ -1,92 +1,68 @@
-/* Top level Tool Registry View */
-import React, { useEffect, useState } from "react";
-import { Link, useParams, useLocation } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faPlus, faList } from "@fortawesome/free-solid-svg-icons";
+/*  Top level REgistry Compontent.  Offers 3 views:  
+List Tools Inventory (tool_configuration collection) 
+Add New Tool Entry to Collection
+Configure Tool in Collection: meta data & actual setting configurations: jobs, permissions, etc */
 
 
-function ToolsRegistry() {
-  const { id, view } = useParams();
-  const [itemId, setItemId] = useState({});
-  const [selection, setSelection] = useState("myPipelines");
-  let location = useLocation();
-    
-  useEffect( () => {
-    if (typeof id === "string") {
-      if (id.match(/^[0-9a-fA-F]{24}$/)) {
-        setItemId(id);
-        if (view === "model") {
-          setSelection("workflowView");
-        } else {
-          setSelection("pipelineDetail");
-        }
-      } else if (id.toLowerCase() === "catalog") {
-        setItemId("");
-        setSelection("catalog");
-      } else {
-        setItemId("");
-        setSelection("myPipelines");
-      }
-    } else {
-      setItemId("");
-      setSelection("myPipelines");
-    }
-  }, [id, location]);
+import React, { useState, useEffect, useContext } from "react";
+/* import PropTypes from "prop-types";
+import { Form, Alert, Table } from "react-bootstrap";
+import { AuthContext } from "../../contexts/AuthContext";  
+import { axiosApiService } from "../../api/apiService";
+import ErrorDialog from "../common/error";
+import LoadingDialog from "../common/loading";
+import DropdownList from "react-widgets/lib/DropdownList";
+ */
+function ToolRegistry () {
+  const [selection, setSelection] = useState("platform");
+  /* const contextType = useContext(AuthContext);
+  const [previewRole, setPreviewRole] = useState(false);
+
+  useEffect(()=> {
+    getRoles();
+  }, []);
   
+  const getRoles = async () => {
+    const { getIsPreviewRole } = contextType; 
+    //this returns true IF the Okta groups for user contains "Preview".  Please wrap display components in this.
+    const isPreviewRole = await getIsPreviewRole();
+    setPreviewRole(isPreviewRole);
+    if (isPreviewRole) {
+      console.log("Enabling Preview Feature Toggle. ", isPreviewRole);
+    }    
+  };
+*/
   const handleTabClick = param => e => {
-    setSelection(param);
-  };
-
-  const setPillClass = (item, selection) => {
-    if (selection === "myPipelines" || selection === "catalog") {
-      return "disabled";
-    }
-
-    if (selection === item) {
-      return "active";
-    } else {
-      return "";
-    }
-  };
+    e.preventDefault();
+    setSelection(param);    
+  }; 
 
   return (
-    <>
-      <div className="mt-3 max-content-width">
-        <h4>Tools Registry</h4>
-        <p>Register and configure all of your organization's tools in one place!</p>
+    <div className="mt-3 max-content-width">
+      {/* <h4>Tool Registry</h4>
+      <p>The OpsERA Tool Registry allows you to register, track and configure all of the tools in your organization in one place.</p>
+ */}
+      <ul className="nav mt-3">
+        <li className="nav-item">
+          <a className={"nav-link " + (selection === "tools" ? "active" : "")} href="#" onClick={handleTabClick("tools")}>Home</a>
+        </li>
+        <li className="nav-item">
+          <a className={"nav-link " + (selection === "configuration" ? "active" : "")} href="#" onClick={handleTabClick("configuration")}>Configuration</a>
+        </li>
+        <li className="nav-item">
+          <a className={"nav-link " + (selection === "new" ? "active" : "")} href="#" onClick={handleTabClick("new")}>New</a>
+        </li>
+      </ul>
       
-        <ul className="nav nav-tabs mt-3">
-          <li className="nav-item">
-            <Link className={"nav-link " + (selection === "home" ? "active" : "")} 
-              to="/tools" onClick={handleTabClick("home")}><FontAwesomeIcon icon={faHome} className="mr-1"/> Home</Link>
-          </li>
-          <li className="nav-item">
-            <Link className={"nav-link " + (selection === "inventory" ? "active" : "")} 
-              to="/tools/inventory" onClick={handleTabClick("inventory")}><FontAwesomeIcon icon={faList} className="mr-1"/> Inventory</Link>
-          </li>
-          <li className="nav-item">
-            <Link className={"nav-link " + (selection === "new" ? "active" : "")} 
-              to="/tools/new" onClick={handleTabClick("new")}><FontAwesomeIcon icon={faPlus} className="mr-1"/> New Tool</Link>
-          </li>
-        </ul>
-        
-        
-        {/* <li className="nav-item">
-            <Link className={"nav-link " + setPillClass("pipelineDetail", selection)} 
-              to={location => `/workflow/${itemId}`} onClick={handleTabClick("pipelineDetail")}>Overview</Link>
-          </li> */}
-
+      {/* {selection === "platform" ? <PlatformInventory /> : null }
+      {selection === "tools" ? <div>Tools Registry Coming Soon</div> : null }  */}
+      <div className="mt-3 max-content-module-width-50">
+        Developing PP-55's Tool configurations interface here as well as an open ended UI form to register tools outside of the OpsERA Platform managed tools. 
+        This will provide one place to track and configure any tools users will want to leverage for Pipeline or Analytics or simply have awareness of for future use.
       </div>
-
-      {itemId.length > 0 && selection === "home" ? <PipelineDetail id={itemId} /> : null } 
-      {itemId.length > 0 && selection === "inventory" ? <PipelineDetail id={itemId} /> : null } 
-      {itemId.length > 0 && selection === "new" ? <PipelineWorkflow id={itemId} /> : null } 
-             
-    </>
-  );
+    </div >
+  );  
 }
 
 
-export default ToolsRegistry;
-
-
+export default ToolRegistry;

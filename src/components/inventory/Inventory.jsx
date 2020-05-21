@@ -1,16 +1,40 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useParams, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Form, Alert, Table } from "react-bootstrap";
 import { format } from "date-fns";
 import { AuthContext } from "../../contexts/AuthContext";  
 import { axiosApiService } from "../../api/apiService";
 import ErrorDialog from "../common/error";
-import LoadingDialog from "../common/loading";
+//import LoadingDialog from "../common/loading";
 import DropdownList from "react-widgets/lib/DropdownList";
+import ToolRegistray from "../tools/registry";
 
 function Inventory () {
-  const [selection, setSelection] = useState("platform");
+  const { view } = useParams();
+  const contextType = useContext(AuthContext);
+  const [selection, setSelection] = useState("");
+  const [previewRole, setPreviewRole] = useState(false);
   
+  useEffect(()=> {
+    getRoles();
+    if (view === "tools") {
+      setSelection("tools");
+    } else {
+      setSelection("platform");
+    }  
+  }, []);
+  
+  const getRoles = async () => {
+    const { getIsPreviewRole } = contextType; 
+    //this returns true IF the Okta groups for user contains "Preview".  Please wrap display components in this.
+    const isPreviewRole = await getIsPreviewRole();
+    setPreviewRole(isPreviewRole);
+    if (isPreviewRole) {
+      console.log("Enabling Preview Feature Toggle. ", isPreviewRole);
+    }    
+  };
+
   const handleTabClick = param => e => {
     e.preventDefault();
     setSelection(param);    
@@ -18,20 +42,20 @@ function Inventory () {
 
   return (
     <div className="mt-3 max-content-width">
-      <h4>Inventory</h4>
-      <p>The OpsERA Tools Inventory allows you to see all of the configured tools and register new ones.</p>
+      <h4>{selection === "tools" ? "Tool Registry" : "Inventory"}</h4>
+      <p>The OpsERA Tool Registry allows you to register, track and configure all of the tools in your organization in one centralized inventory.</p>
 
       <ul className="nav nav-pills mt-2">
         <li className="nav-item">
           <a className={"nav-link " + (selection === "platform" ? "active" : "")} href="#" onClick={handleTabClick("platform")}>Platform</a>
         </li>
         <li className="nav-item">
-          <a className={"nav-link disabled " + (selection === "tools" ? "active" : "")} href="#" onClick={handleTabClick("tools")}>Tools</a>
+          <a className={"nav-link " + (selection === "tools" ? "active" : "") + (!previewRole ? "disabled" : "")} href="#" onClick={handleTabClick("tools")}>Tools</a>
         </li>
       </ul>
       
       {selection === "platform" ? <PlatformInventory /> : null }
-      {selection === "tools" ? <div>Tools Registry Coming Soon</div> : null } 
+      {selection === "tools" ? <ToolRegistray /> : null } 
     </div >
   );  
 }
@@ -94,12 +118,10 @@ const PlatformInventory = () => {
 
   if (error) {
     return (<ErrorDialog error={error} />);
-  }  else if (loading) {
-    return (<LoadingDialog size="lg" />);
   } else {
     return (
       <div className="mt-3">
-        {data && data.length === 0 ? 
+        {!loading && data && data.length === 0 ? 
           <>
             <div className="mt-3 max-content-module-width-50">
               <Alert variant="secondary">
@@ -117,6 +139,7 @@ const PlatformInventory = () => {
                   <DropdownList
                     data={data} 
                     valueField='name'
+                    busy={loading} 
                     textField='name'
                     onChange={handleDropdownChange}             
                   /> : null }
