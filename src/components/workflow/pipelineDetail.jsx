@@ -76,14 +76,12 @@ function PipelineDetail({ id }) {
   }
 
   async function getActivityLogs() {
-    setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
     const apiUrl = `/pipelines/${id}/activity?page=${currentPage}&size=${pageSize}`;  
     try {
       const activity = await axiosApiService(accessToken).get(apiUrl); 
       setActivityData(activity.data);   
-      setLoading(false);  
       console.log("activity", activity);
     }
     catch (err) {
