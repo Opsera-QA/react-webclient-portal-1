@@ -1,211 +1,183 @@
-/* eslint-disable react/prop-types */
-import React, { PureComponent, Fragment } from "react";
-import { Form, Alert, ListGroup } from "react-bootstrap";
+import React, { useState, useEffect, useContext } from "react";
+import PropTypes from "prop-types";
+import { Form, Alert, Table } from "react-bootstrap";
 import { format } from "date-fns";
-import { AuthContext } from "../../contexts/AuthContext";  //REact Context API Code for User Authentication
-import { ApiService } from "../../api/apiService";
+import { AuthContext } from "../../contexts/AuthContext";  
+import { axiosApiService } from "../../api/apiService";
 import ErrorDialog from "../common/error";
 import LoadingDialog from "../common/loading";
+import DropdownList from "react-widgets/lib/DropdownList";
 
-
-class Inventory extends PureComponent {
-  static contextType = AuthContext;  //Registers the User Authentication context data in the component
-
-  constructor(props, context) {
-    super(props, context);
-    this.state = {
-      data: [],
-      fetching: true,
-      error: null,
-      messages: null,
-      selection: "platform"
-    };
-  }
-
-  componentDidMount() {
-    this.getApiData();
-  }
-
-  async getApiData() {
-    const { getAccessToken, getUserInfo } = this.context;
-    const accessToken = await getAccessToken();
-    const userInfo = await getUserInfo();
-    const urlParams = { userid: userInfo.sub };
-    const apiCall = new ApiService("/applications", urlParams, accessToken);
-    let currentComponent = this;
-    apiCall.get()
-      .then(function (response) {
-        currentComponent.setState({
-          data: response.data,
-          error: null,
-          fetching: false
-        });
-      })
-      .catch(function (error) {
-        currentComponent.setState({
-          error: error,
-          fetching: false
-        });
-      });
-  }
-
-
-  handleTabClick = param => e => {
-    // param is the argument you passed to the function
-    // e is the event object that returned
+function Inventory () {
+  const [selection, setSelection] = useState("platform");
+  
+  const handleTabClick = param => e => {
     e.preventDefault();
-    this.setState({
-      selection: param,
-      key: ""
-    });
-
-    //TODO: Please filter the list of applications by the selected value: Pipeline or Platform
+    setSelection(param);    
   };
 
-  handleDropdownChange = (e) => {
-    this.setState({ key: e.target.value });
-  }
+  return (
+    <div className="mt-3 max-content-width">
+      <h4>Inventory</h4>
+      <p>The OpsERA Tools Inventory allows you to see all of the configured tools and register new ones.</p>
 
-  getApp = () => {
-    //console.log(this.state);
-    const { key, data, selection } = this.state;
+      <ul className="nav nav-pills mt-2">
+        <li className="nav-item">
+          <a className={"nav-link " + (selection === "platform" ? "active" : "")} href="#" onClick={handleTabClick("platform")}>Platform</a>
+        </li>
+        <li className="nav-item">
+          <a className={"nav-link disabled " + (selection === "tools" ? "active" : "")} href="#" onClick={handleTabClick("tools")}>Tools</a>
+        </li>
+      </ul>
+      
+      {selection === "platform" ? <PlatformInventory /> : null }
+      {selection === "tools" ? <div>Tools Registry Coming Soon</div> : null } 
+    </div >
+  );  
+}
 
-    let typeSelectedApps = [];
-    // const typeSelectedApps = data.filter((app) => { return app.type === selection }) // Actual implementation
 
-    // TODO :::: Remove this later
-    if (selection === "platform") {
-      typeSelectedApps = data.filter((app) => { return app.type != "pipeline"; });
-    } else if (selection === "pipeline") {
-      typeSelectedApps = data.filter((app) => { return app.type != "platform"; });
+const PlatformInventory = () => {
+  const contextType = useContext(AuthContext);
+  const [error, setErrors] = useState(false);
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  
+  const [key, setKey] = useState({});
+  const [renderForm, setRenderForm] = useState(false);
+
+  useEffect(()=> {
+    const controller = new AbortController();
+    const runEffect = async () => {
+      try {
+        await getApiData();
+        setRenderForm(true);
+      } catch (err) {
+        if (err.name === "AbortError") {
+          console.log("Request was canceled via controller.abort");
+          return;
+        }        
+      }
+    };
+    runEffect();
+    return () => {
+      setRenderForm(false);     
+      controller.abort();      
+    };
+  }, []);
+
+  const getApiData = async () => {
+    setLoading(true);
+    setKey(null);
+    const { getAccessToken, getUserInfo } = contextType;
+    const accessToken = await getAccessToken();
+    const userInfo = await getUserInfo();
+    const params = { userid: userInfo.sub };
+    const apiUrl = "/applications";
+    
+    try {
+      const result = await axiosApiService(accessToken).get(apiUrl, { params });    
+      const filteredApps = result.data.filter((app) => { return app.type !== "pipeline"; }); //we don't want the legacy pipeline apps to show.
+      setData(filteredApps);
+      setLoading(false);
     }
-    // ::::::::::::::
-
-    return typeSelectedApps.find(({ name }) => name === key);
-  }
-
-  render() {
-    const { data, error, fetching, selection } = this.state;
-    let typeSelectedApps = [];
-    // const typeSelectedApps = data.filter((app) => { return app.type === selection }) // right way of implementation
-
-    // TODO :::: Remove this later
-    if (selection === "platform") {
-      typeSelectedApps = data.filter((app) => { return app.type != "pipeline"; });
-    } else if (selection === "pipeline") {
-      typeSelectedApps = data.filter((app) => { return app.type != "platform"; });
+    catch (err) {
+      setErrors(err);
+      setLoading(false);
     }
-    // ::::::::::::::
+  };
 
+  const handleDropdownChange = (selectedOption) => {
+    console.log(selectedOption);
+    setKey(selectedOption);
+  };
+
+  if (error) {
+    return (<ErrorDialog error={error} />);
+  }  else if (loading) {
+    return (<LoadingDialog size="lg" />);
+  } else {
     return (
-      <div className="mt-3 max-content-width">
-        <h4>Inventory</h4>
-        <p>The OpsERA Inventory tool allows you to see all of the configured tools per application.  Please select either Pipeline or Platform and then select the application in order to view its tools and their current status.</p>
-
-        {error ? <ErrorDialog error={error} /> : null}
-
-        <ul className="nav nav-pills mt-2">
-          <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "platform" ? "active" : "")} href="#" onClick={this.handleTabClick("platform")}>Platform</a>
-          </li>
-          <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "tools" ? "active" : "")} href="#" onClick={this.handleTabClick("tools")}>Tools</a>
-          </li>
-        </ul>
-
-        {fetching && <LoadingDialog />}
-        <div>
-          {(!fetching && !error && data.length === 0) &&
-            <div className="mt-3">
+      <div className="mt-3">
+        {data && data.length === 0 ? 
+          <>
+            <div className="mt-3 max-content-module-width-50">
               <Alert variant="secondary">
                 No applications are currently configured for the system.
               </Alert>
             </div>
-          }
+          </>:
 
-          <Form>
-            <Form.Group>
-              <Form.Control as="select"
-                defaultValue=""
-                value={this.state.key}
-                hidden={(!fetching && data.length > 0) ? false : true}
-                onChange={this.handleDropdownChange}
-                style={{ marginTop: 25 }}>
-                <option value="" disabled>{fetching ? "loading..." : "Select application"}</option>
-                {!fetching && (
-                  <>
-                    {typeSelectedApps ? typeSelectedApps.map(application => (
-                      <Fragment key={application.name}>
-                        {
-                          application.tools.length > 0 && (
-                            <option key={application.name} value={application.name}>{application.name}</option>
-                          )
-                        }
-                      </Fragment>
-                    )) : ""}
-                  </>
-                )}
-              </Form.Control>
-            </Form.Group>
-          </Form>
+          <div className="mt-1 max-content-module-width-50">
+            <Form>
+              <Form.Group>
+
+                <Form.Label>Select Application</Form.Label>
+                {renderForm ?
+                  <DropdownList
+                    data={data} 
+                    valueField='name'
+                    textField='name'
+                    onChange={handleDropdownChange}             
+                  /> : null }
+
+              </Form.Group>
+            </Form>
+          </div> }
+        
+        <div className="mt-3">
+          {key && Object.keys(key).length > 0 ? 
+            <>
+              {Object.keys(key.tools).length > 0 ? 
+                <App application={key} /> : 
+                <div className="max-content-module-width-50"><Alert variant="secondary">No tools are currently configured for this application.</Alert></div> }
+            </>
+            : null }
         </div>
-        {
-          (!fetching && typeSelectedApps.length > 0) &&
-          <>
-            {fetching ? null : <App application={this.getApp()} />}
-          </>
-        }
-      </div >
+      </div>
     );
   }
-}
+};
 
-function App({ application }) {
-  if (!application)
-    return (<div></div>);
 
+const App = ({ application }) => {
   const { tools } = application;
-  if (tools.length === 0) {
-    return (
-      <div className="m-4">
-        <p>No tools for this application.</p>
-      </div>
-    );
-  }
-
+  console.log(application);
   return (
-    <div style={{ marginTop: 25 }}>
-      {tools.map((tool, key) => (
-        <ToolTable tool={tool} key={key} />
-      ))}
-    </div>
-  );
-}
+    <Table striped bordered hover className="table-sm" style={{ fontSize:"small" }}>
+      <thead>
+        <tr>
+          <th style={{ width: "15%" }}>Tool</th>
+          <th className="text-center" style={{ width: "5%" }}>Port</th>
+          <th className="text-center" style={{ width: "5%" }}>Version</th>                
+          <th className="text-center" style={{ width: "10%" }}>Status</th>
+          <th className="text-center" style={{ width: "10%" }}>Install Date</th>
+          <th style={{ width: "30%" }}>URL</th>
+          <th style={{ width: "25%" }}>DNS</th>
+        </tr>
+      </thead>
+      <tbody>
+        {tools && tools.map((item, idx) => (
+          <tr key={idx} >
+            <td>{item["name"]}<br /><span className="text-muted small">{item["id"]}</span></td>
+            <td className="text-center">{item["port"]}</td>
+            <td className="text-center">{item["versionNumber"]}</td>
+            <td className="text-center">{item["toolStatus"]}</td>
+            <td className="text-center">{format(new Date(item["installationDate"]), "yyyy-MM-dd")}</td>   
+            <td>{item["toolURL"]}</td>
+            <td>{item["dnsName"]}</td>
+          </tr>
+        ))}
+      </tbody>
+    </Table>
 
-const ToolTable = ({ tool }) => {
-  const { _id, name, port, toolStatus, toolURL, versionNumber, installationDate, dnsName } = tool;
-  return (
-    <div className="p-2 mt-2 border-bottom">
-      <div className="row m-1">
-        <div className="col-md col-header-text">{name}</div>
-        <div className="col-md"><span className="text-muted">Port:</span> {port}</div>
-        <div className="col-md"><span className="text-muted">Version:</span> {versionNumber}</div>
-      </div>
-      <div className="row m-1">
-        <div className="col-md"><span className="text-muted">Status:</span> {toolStatus}</div>
-        <div className="col-md"><span className="text-muted">Install Date:</span> {format(new Date(installationDate), "yyyy-MM-dd', 'hh:mm a")}</div>
-      </div>
-      <div className="row m-1">
-        <div className="col-md"><span className="text-muted">ID:</span> {_id}</div>
-      </div>
-      <div className="row m-1">
-        <div className="col-md"><span className="text-muted">URL:</span> {toolURL}</div>
-      </div>
-      <div className="row m-1">
-        <div className="col-md"><span className="text-muted">DNS:</span> {dnsName}</div>
-      </div>
-    </div>
   );
 };
+
+
+App.propTypes = {
+  application: PropTypes.object
+};
+
 
 export default Inventory;
