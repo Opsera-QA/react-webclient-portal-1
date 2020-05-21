@@ -59,7 +59,7 @@ function PaginationComponent(props) {
     <Row className="pagination-block justify-content-center">
       <Col xs={2} className="page-summary">Page {currentPage} / {totalPages} of {props.total} items</Col>
       <Col xs={6}>
-        <Pagination>
+        <Pagination className="justify-content-center">
           <Pagination.Item  disabled={currentPage > totalPagesArray.slice(0)[0] ? false : true} onClick={() => gotoPage(totalPagesArray.slice(0)[0])}>First</Pagination.Item>
           <Pagination.Item  disabled={currentPage > totalPagesArray.slice(0)[0] ? false : true} onClick={() => gotoPage(currentPage - 1)}>Previous</Pagination.Item>
           {totalPagesArray.map((pageNumber, index) => {
@@ -77,7 +77,7 @@ function PaginationComponent(props) {
           <Pagination.Item disabled={currentPage < totalPagesArray.slice(-1)[0] ? false : true} onClick={() => gotoPage(totalPagesArray.slice(-1)[0])}>Last</Pagination.Item>
         </Pagination>  
       </Col>
-      <Col xs={2}>                  
+      <Col xs={2} className="justify-content-right">                  
         <DropdownList
           data={pageSizeList} 
           valueField='value'
