@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { startOfDay, addHours } from "date-fns";
+import Moment from "moment";
+import momentLocalizer from "react-widgets-moment";
 import DateTimePicker from "react-widgets/lib/DateTimePicker";
 import DropdownList from "react-widgets/lib/DropdownList";
 import "react-widgets/dist/css/react-widgets.css";
@@ -16,7 +17,10 @@ const SELECT_FREQUENCIES = [
 function SchedulerWidget ({ startDate, frequency, schedule, setEditSchedule, setSchedule }) {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedFrequency, setSelectedFrequency] = useState("once");
-  let minDate = addHours(startOfDay(new Date(), "yyyy-MM-dd', 'hh:mm a"), 1);
+  //let minDate = addHours(startOfDay(new Date(), "yyyy-MM-dd', 'hh:mm a"), 1);
+  let minDate = Moment().add(1, "hour").startOf("hour").toDate();
+  Moment.locale("en");
+  momentLocalizer();
 
   useEffect(() => {
     console.log(startDate);
