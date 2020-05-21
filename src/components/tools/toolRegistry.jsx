@@ -1,13 +1,4 @@
-/*  Top level REgistry Compontent.  Offers 3 views:  
-List Tools Inventory (tool_configuration collection) 
-Add New Tool Entry to Collection
-Configure Tool in Collection: meta data & actual setting configurations: jobs, permissions, etc
-
-http://localhost:8080/inventory/tools
-*/
-
-
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
@@ -53,7 +44,7 @@ function ToolRegistry () {
 
 
       <div className="mt-5 max-content-module-width-50">
-        Developing PP-55's Tool configurations interface here as well as an open ended UI form to register tools outside of the OpsERA Platform managed tools. 
+        Developing PP55's Tool configurations interface here as well as an open ended UI form to register tools outside of the OpsERA Platform managed tools. 
         This will provide one place to track and configure any tools users will want to leverage for Pipeline or Analytics or simply have awareness of for future use.
       </div>
 

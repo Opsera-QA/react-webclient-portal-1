@@ -8,7 +8,7 @@ import { axiosApiService } from "../../api/apiService";
 import ErrorDialog from "../common/error";
 //import LoadingDialog from "../common/loading";
 import DropdownList from "react-widgets/lib/DropdownList";
-import ToolRegistry from "../tools/registry";
+import ToolRegistry from "../tools/toolRegistry";
 
 function Inventory () {
   const { view } = useParams();
