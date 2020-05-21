@@ -8,7 +8,7 @@ import "./pagination.css";
 
 function PaginationComponent(props) {
   const [currentPage, setCurrentPage] = useState(props.currentPage || 1);
-  const [pageSize, setPageSize] = useState(props.pageSize || 10);
+  const [pageSize, setPageSize] = useState(props.pageSize || 25);
   const totalPages = Math.ceil(parseInt(props.total)/props.pageSize);
   const totalPagesArray = Array(totalPages).fill().map((_, i) => i+1);
   const [pageWindowSize, setPageWindowSize] = useState(5);
@@ -30,14 +30,14 @@ function PaginationComponent(props) {
   };
 
   const pageSizeList = [{
-    label: "10 / page",
-    value: 10
-  }, {
-    label: "20 / page",
+    label: "25 / page",
     value: 20
   }, {
-    label: "30 / page",
-    value: 30
+    label: "50 / page",
+    value: 50
+  }, {
+    label: "100 / page",
+    value: 100
   }];
 
   useEffect(()=> {
@@ -56,36 +56,39 @@ function PaginationComponent(props) {
   }, [currentPage]);
 
   return (   
-    <Row className="pagination-block justify-content-center">
-      <Col xs={2} className="page-summary">Page {currentPage} / {totalPages} of {props.total} items</Col>
-      <Col xs={6}>
-        <Pagination className="justify-content-center">
-          <Pagination.Item  disabled={currentPage > totalPagesArray.slice(0)[0] ? false : true} onClick={() => gotoPage(totalPagesArray.slice(0)[0])}>First</Pagination.Item>
-          <Pagination.Item  disabled={currentPage > totalPagesArray.slice(0)[0] ? false : true} onClick={() => gotoPage(currentPage - 1)}>Previous</Pagination.Item>
-          {totalPagesArray.map((pageNumber, index) => {
-            if(currentPage < pageNumber && (pageNumber - currentPage) < pageWindowSize) {
-              return <Pagination.Item key={pageNumber} onClick={() => gotoPage(pageNumber)}>{pageNumber}</Pagination.Item>;
-            }else if(currentPage > pageNumber &&  currentPage - pageNumber < pageWindowSize) {
-              return <Pagination.Item key={pageNumber} onClick={() => gotoPage(pageNumber)}>{pageNumber}</Pagination.Item>;
-            }else if(currentPage === pageNumber){
-              return <Pagination.Item active={pageNumber == currentPage} key={pageNumber} onClick={() => gotoPage(pageNumber)}>{pageNumber}</Pagination.Item>;
-            }else {
-              return null;
-            }
-          })}
-          <Pagination.Item disabled={currentPage < totalPagesArray.slice(-1)[0] ? false : true} onClick={() => gotoPage(currentPage + 1)}>Next</Pagination.Item>
-          <Pagination.Item disabled={currentPage < totalPagesArray.slice(-1)[0] ? false : true} onClick={() => gotoPage(totalPagesArray.slice(-1)[0])}>Last</Pagination.Item>
-        </Pagination>  
-      </Col>
-      <Col xs={2} className="justify-content-right">                  
-        <DropdownList
-          data={pageSizeList} 
-          valueField='value'
-          textField='label'
-          defaultValue={pageSize}
-          onChange={updatePageSize}             
-        /></Col>
-    </Row>
+    <>
+      { props.total > props.pageSize ?
+        <Row className="pagination-block justify-content-center small">
+          <Col xs={2} className="page-summary">Results {props.total}</Col>
+          <Col xs={6}>
+            <Pagination className="justify-content-center">
+              <Pagination.Item  disabled={currentPage > totalPagesArray.slice(0)[0] ? false : true} onClick={() => gotoPage(totalPagesArray.slice(0)[0])}>First</Pagination.Item>
+              <Pagination.Item  disabled={currentPage > totalPagesArray.slice(0)[0] ? false : true} onClick={() => gotoPage(currentPage - 1)}>Previous</Pagination.Item>
+              {totalPagesArray.map((pageNumber, index) => {
+                if(currentPage < pageNumber && (pageNumber - currentPage) < pageWindowSize) {
+                  return <Pagination.Item key={pageNumber} onClick={() => gotoPage(pageNumber)}>{pageNumber}</Pagination.Item>;
+                }else if(currentPage > pageNumber &&  currentPage - pageNumber < pageWindowSize) {
+                  return <Pagination.Item key={pageNumber} onClick={() => gotoPage(pageNumber)}>{pageNumber}</Pagination.Item>;
+                }else if(currentPage === pageNumber){
+                  return <Pagination.Item active={pageNumber == currentPage} key={pageNumber} onClick={() => gotoPage(pageNumber)}>{pageNumber}</Pagination.Item>;
+                }else {
+                  return null;
+                }
+              })}
+              <Pagination.Item disabled={currentPage < totalPagesArray.slice(-1)[0] ? false : true} onClick={() => gotoPage(currentPage + 1)}>Next</Pagination.Item>
+              <Pagination.Item disabled={currentPage < totalPagesArray.slice(-1)[0] ? false : true} onClick={() => gotoPage(totalPagesArray.slice(-1)[0])}>Last</Pagination.Item>
+            </Pagination>  
+          </Col>
+          <Col xs={2} className="justify-content-right">                  
+            <DropdownList
+              data={pageSizeList} 
+              valueField='value'
+              textField='label'
+              defaultValue={pageSize}
+              onChange={updatePageSize}             
+            /></Col>
+        </Row> : null }
+    </>
   );
 }
 
