@@ -110,18 +110,19 @@ function TestView_Executive ({ persona }) {
     const { xunitExecuted, xunitSkipped, xunitPassed, xunitFailed, xunitError, xunitWarning, junitPassed, junitFailed, junitSkipped  } = data;
     
     let summaryCountsData = [];    
-    
-    if (xunitExecuted.status === 200 && xunitExecuted.data !== undefined) {
-      summaryCountsData.push({ name: "Tests Run", value: xunitExecuted.data[0], footer: "", status: "success" });
+
+    let junitPassedCount = 0;
+    let xunitPassedCount = 0;
+    let passedCount = 0;
+    if (junitPassed.status === 200 && junitPassed.data !== undefined && typeof(junitPassed.data[0].count) === "number") {
+      junitPassedCount = junitPassed.data[0].count;
     }
-    
-    if (junitPassed.status === 200 && junitPassed.data !== undefined) {
-      summaryCountsData.push({ name: "Passed", value: junitPassed.data[0].count, footer: "", status:  "success" });
+    if (xunitPassed.status === 200 && xunitPassed.data !== undefined && typeof(parseInt(xunitPassed.data[0])) === "number") {
+      xunitPassedCount = parseInt(xunitPassed.data[0]);
     }
-    
-    if (xunitPassed.status === 200 && xunitPassed.data !== undefined && xunitExecuted.status === 200 && xunitExecuted.data !== undefined) {
-      summaryCountsData.push({ name: "Pass Percentage", value: Math.floor(100*100*xunitPassed.data[0]/xunitExecuted.data[0])/100 + "%", footer: "", status: "success" });
-    }
+
+    passedCount = junitPassedCount + xunitPassedCount;
+    summaryCountsData.push({ name: "Passed", value: passedCount, footer: "", status:  "success" });
 
     if (xunitWarning.status === 200 && xunitWarning.data !== undefined && xunitWarning.data[0].count > 0) {
       summaryCountsData.push({ name: "Warnings", value: xunitWarning.data[0], footer: "", status: xunitWarning.data[0].count > 5 ? "warning" : "success" });
@@ -142,6 +143,17 @@ function TestView_Executive ({ persona }) {
     failedCount = junitFailedCount + xunitFailedCount;
     summaryCountsData.push({ name: "Failed", value: failedCount, footer: "", status: failedCount > 0 ? "danger" : "success" });
 
+    let junitExecutedCount = junitPassedCount + junitFailedCount;
+    let xunitExecutedCount = 0;
+
+    if (xunitExecuted.status === 200 && xunitExecuted.data !== undefined) {
+      xunitExecutedCount = parseInt(xunitExecuted.data[0]);
+    }  
+    let executedCount = junitExecutedCount + xunitExecutedCount;
+    summaryCountsData.push({ name: "Tests Run", value: executedCount, footer: "", status: "success" });
+    if (executedCount !== 0) {  
+      summaryCountsData.push({ name: "Pass Percentage", value: Math.floor(100*100*passedCount/executedCount)/100 + "%", footer: "", status: "success" });
+    }
 
 
     let junitSkippedCount = 0;
