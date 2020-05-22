@@ -66,12 +66,15 @@ class AuthContextProvider extends Component {
     }
   }
 
-  getIsPreviewRole = async () => {
+  getIsPreviewRole = async (restrictProd) => {
     let userInfo = await this.getUserInfo();
-    console.log("Environment: ", process.env.REACT_APP_ENVIRONMENT);
-    let nonProdEnvironment = process.env.REACT_APP_ENVIRONMENT !== "production";
-    let enabledPreviewFF = nonProdEnvironment && userInfo.Groups.includes("Preview");
-    return enabledPreviewFF;
+    console.log("Environment: ", process.env.REACT_APP_ENVIRONMENT);    
+    if (restrictProd && process.env.REACT_APP_ENVIRONMENT === "production") {
+      //always restrict view in this case
+      return false;
+    } else {
+      return userInfo.Groups.includes("Preview");
+    }    
   }
 
   getUserSsoUsersRecord = async () => {

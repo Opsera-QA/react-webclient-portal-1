@@ -28,7 +28,7 @@ function Inventory () {
   const getRoles = async () => {
     const { getIsPreviewRole } = contextType; 
     //this returns true IF the Okta groups for user contains "Preview".  Please wrap display components in this.
-    const isPreviewRole = await getIsPreviewRole();
+    const isPreviewRole = await getIsPreviewRole(true);
     setPreviewRole(isPreviewRole);
     if (isPreviewRole) {
       console.log("Enabling Preview Feature Toggle. ", isPreviewRole);
