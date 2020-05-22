@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Form, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave } from "@fortawesome/free-solid-svg-icons";
+import { faSave, faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 
 //This must match the form below and the data object expected.  Each tools' data object is different
@@ -11,17 +11,22 @@ const INITIAL_DATA = {
   jenkinsPort: "",
   jUserId: "",
   jAuthToken: "",
-  jobName: ""
+  jobName: "",
+  accessKey: "", 
+  secretKey: "", // store in vault
+  region: "",
+  bucket: ""
 };
 
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
-function S3StepConfiguration( { data, parentCallback }) {
+function S3StepConfiguration( { data, pipelineId, stepId, parentCallback, callbackSaveToVault  }) {
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [formMessage, setFormMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (typeof(data) !== "undefined") {
@@ -39,23 +44,55 @@ function S3StepConfiguration( { data, parentCallback }) {
   }, [data]);
 
 
-  const callbackFunction = () => {
+  const callbackFunction = async () => {
     if (validateRequiredFields()) {
+      setLoading(true);
+
+      let newConfiguration = formData;
+      
+      if (typeof(newConfiguration.secretKey) === "string") {
+        newConfiguration.secretKey = await saveToVault(pipelineId, stepId, "secretKey", "Vault Secured Key", newConfiguration.secretKey);
+      }
+
       const item = {
-        configuration: formData,
+        configuration: newConfiguration,
         threshold: {
           type: thresholdType,
           value: thresholdVal
         }
       };
+      console.log("item: ", item);
+      setLoading(false);
       parentCallback(item);
     }
   };
 
+  const saveToVault = async (pipelineId, stepId, key, name, value) => {
+    const keyName = `${pipelineId}-${stepId}-${key}`;
+    const body = {
+      "key": keyName,
+      "value": value
+    };
+    const response = await callbackSaveToVault(body);    
+    if (response.status === 200 ) {
+      return { name: name, vaultKey: keyName };
+    } else {
+      setFormData(formData => {
+        return { ...formData, secretKey: {} };
+      });
+      setLoading(false);
+      setFormMessage("ERROR: Something has gone wrong saving secure data to your vault.  Please try again or report the issue to OpsERA.");
+      return "";
+    }
+  };
 
   const validateRequiredFields = () => {
-    let { jenkinsUrl, jUserId, jAuthToken } = formData;
-    if (jenkinsUrl.length === 0 || jUserId.length === 0 || jAuthToken.length === 0) {
+    let { jenkinsUrl, jUserId, jAuthToken, accessKey, secretKey, region, bucket } = formData;
+    if (jenkinsUrl.length === 0 || jUserId.length === 0 || jAuthToken.length === 0 ||
+      accessKey.length === 0 ||
+      secretKey.length === 0 ||
+      region.length === 0 ||
+      bucket.length === 0  ) {
       setFormMessage("Required Fields Missing!");
       return false;
     } else {
@@ -64,8 +101,6 @@ function S3StepConfiguration( { data, parentCallback }) {
     }
   };
 
-
-  
   return (
     <Form>
       { formMessage.length > 0 ? <p className="text-danger">{formMessage}</p> : null}
@@ -96,10 +131,33 @@ function S3StepConfiguration( { data, parentCallback }) {
         <Form.Label>Step Success Threshold</Form.Label>
         <Form.Control type="text" placeholder="" value={thresholdVal || ""} onChange={e => setThresholdValue(e.target.value)} disabled={true} />
       </Form.Group>
+
+      <Form.Group controlId="accessKey">
+        <Form.Label>AWS Access Key ID*</Form.Label>
+        <Form.Control maxLength="256" type="text" placeholder="" value={formData.accessKey || ""} onChange={e => setFormData({ ...formData, accessKey: e.target.value })} />
+      </Form.Group>
+     
+      <Form.Group controlId="accessKey">
+        <Form.Label>AWS Secret Access Key*</Form.Label>
+        <Form.Control maxLength="256" type="password" placeholder="" value={formData.secretKey || ""} onChange={e => setFormData({ ...formData, secretKey: e.target.value })} />            
+        <Form.Text className="text-muted">AWS access keys consist of two parts: an access key ID and a secret access key. Both are required for automated deployments.</Form.Text> 
+      </Form.Group>
+
+      <Form.Group controlId="branchField">
+        <Form.Label>S3 bucket Region*</Form.Label>
+        <Form.Control maxLength="150" type="text" placeholder="" value={formData.region || ""} onChange={e => setFormData({ ...formData, region: e.target.value })} />
+      </Form.Group>
+
+      <Form.Group controlId="branchField">
+        <Form.Label>Bucket Name*</Form.Label>
+        <Form.Control maxLength="150" type="text" placeholder="" value={formData.bucket || ""} onChange={e => setFormData({ ...formData, bucket: e.target.value })} />
+      </Form.Group>
       
       <Button variant="primary" type="button" 
         onClick={() => { callbackFunction(); }}> 
-        <FontAwesomeIcon icon={faSave} className="mr-1"/> Save
+        {loading ? 
+          <><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> Saving</> :
+          <><FontAwesomeIcon icon={faSave} className="mr-1"/> Save</> }
       </Button>
       
       <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
@@ -109,7 +167,10 @@ function S3StepConfiguration( { data, parentCallback }) {
 
 S3StepConfiguration.propTypes = {
   data: PropTypes.object,
-  parentCallback: PropTypes.func
+  pipelineId: PropTypes.string,
+  stepId: PropTypes.string,
+  parentCallback: PropTypes.func,
+  callbackSaveToVault: PropTypes.func
 };
 
 export default S3StepConfiguration;

@@ -8,14 +8,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const INITIAL_DATA = {
-  accessKey: "",
-  secretKey: "",
+  // accessKey: "", 
+  // secretKey: "",
   sshKey: {}, //file stream to value
   userName: "",
   serverIp: "",
   serverPath: "",
   commands: "",
-  sshAction: ""
+  sshAction: "SSH Execution", // default it's ssh execution not empty anymore 
+  // jenkins details if SSHaction is upload
+  jenkinsUrl: "",
+  jenkinsPort: "",
+  jUserId: "",
+  jAuthToken: "",
+  jobName: ""
 };
 
 const INITIAL_SSH_KEYFILE = {
@@ -121,7 +127,12 @@ function SshUploadDeploy( { data, pipelineId, stepId, parentCallback, callbackSa
 
   const handleFileUploadToggle = (value) => {
     if (value === "SSH File Upload") {
-      setFormData({ ...formData, sshAction: "" });
+      // resetting the jenkins form not sure if this is to be done!
+      setFormData({ ...formData,  jenkinsUrl: "",
+        jenkinsPort: "",
+        jUserId: "",
+        jAuthToken: "",
+        jobName: "", sshAction: "SSH Execution" });
     } else {
       setFormData({ ...formData, sshAction: "SSH File Upload" });
     }
@@ -164,7 +175,8 @@ function SshUploadDeploy( { data, pipelineId, stepId, parentCallback, callbackSa
     <Form>
       { formMessage.length > 0 ? <p className="text-danger">{formMessage}</p> : null}
       
-      <Form.Group controlId="accessKey">
+      {/* AccessKey and SecretKey are not required anymore */}
+      {/* <Form.Group controlId="accessKey">
         <Form.Label>AWS Access Key ID*</Form.Label>
         <Form.Control maxLength="256" type="text" placeholder="" value={formData.accessKey || ""} onChange={e => setFormData({ ...formData, accessKey: e.target.value })} />
       </Form.Group>
@@ -173,13 +185,13 @@ function SshUploadDeploy( { data, pipelineId, stepId, parentCallback, callbackSa
         <Form.Label>AWS Secret Access Key*</Form.Label>
         <Form.Control maxLength="256" type="password" placeholder="" value={formData.secretKey || ""} onChange={e => setFormData({ ...formData, secretKey: e.target.value })} />            
         <Form.Text className="text-muted">AWS access keys consist of two parts: an access key ID and a secret access key. Both are required for automated deployments.</Form.Text> 
-      </Form.Group>
+      </Form.Group> */}
 
       <Form.Group controlId="accessKey" className="mt-2">
         <Form.Label>Security Key*</Form.Label>
         <Form.File 
-          id="sshKey-file" isValid={sshKeyFile.fileName.length > 0 }
-          label={sshKeyFile.fileName ? sshKeyFile.fileName : "Upload Key File"}
+          id="sshKey-file" isValid={sshKeyFile && sshKeyFile.fileName && sshKeyFile.fileName.length > 0 }
+          label={sshKeyFile && sshKeyFile.fileName ? sshKeyFile.fileName : "Upload Key File"}
           custom
           onChange={(e) => handleFileUpload(e)} 
         />
@@ -215,6 +227,37 @@ function SshUploadDeploy( { data, pipelineId, stepId, parentCallback, callbackSa
           onChange={() => handleFileUploadToggle(formData.sshAction)} 
         />
       </Form.Group>
+
+      {formData.sshAction === "SSH File Upload" && 
+      <>
+       
+        <Form.Group controlId="repoField">
+          <Form.Label>Jenkins Container URL*</Form.Label>
+          <Form.Control maxLength="100" type="text" placeholder="" value={formData.jenkinsUrl || ""} onChange={e => setFormData({ ...formData, jenkinsUrl: e.target.value })} />
+        </Form.Group>
+
+        <Form.Group controlId="branchField">
+          <Form.Label>Jenkins Port</Form.Label>
+          <Form.Control maxLength="5" type="text" placeholder="" value={formData.jenkinsPort || ""} onChange={e => setFormData({ ...formData, jenkinsPort: e.target.value })} />
+        </Form.Group>
+        
+        <Form.Group controlId="branchField">
+          <Form.Label>Jenkins User ID*</Form.Label>
+          <Form.Control maxLength="50" type="text" placeholder="" value={formData.jUserId || ""} onChange={e => setFormData({ ...formData, jUserId: e.target.value })} />
+        </Form.Group>
+        
+        <Form.Group controlId="branchField">
+          <Form.Label>Jenkins Token*</Form.Label>
+          <Form.Control maxLength="500" type="password" placeholder="" value={formData.jAuthToken || ""} onChange={e => setFormData({ ...formData, jAuthToken: e.target.value })} />
+        </Form.Group>
+        
+        <Form.Group controlId="branchField">
+          <Form.Label>Job Name</Form.Label>
+          <Form.Control maxLength="150" type="text" placeholder="" value={formData.jobName || ""} onChange={e => setFormData({ ...formData, jobName: e.target.value })} />
+        </Form.Group>
+      
+      </>
+      }
 
       <Form.Group controlId="commands">
         <Form.Label>SSH Commands</Form.Label>
