@@ -427,7 +427,7 @@ const PipelineItemDetail = (props) => {
                 <Row>
                   <Col className="py-3">
                     <LinkContainer to={`/workflow/${data._id}/model`}>
-                      <Button variant="success" className="mr-2 mt-2">
+                      <Button variant="success" className="mr-2 mt-2" size="sm">
                         <FontAwesomeIcon icon={faCogs} className="mr-1" fixedWidth/>Build Workflow</Button>
                     </LinkContainer>
                   </Col>
@@ -436,25 +436,25 @@ const PipelineItemDetail = (props) => {
                 <Row>
                   <Col className="py-3">
                     <LinkContainer to={`/workflow/${data._id}/model`}>
-                      <Button variant="primary" className="mr-2 mt-2">
+                      <Button variant="primary" className="mr-2 mt-2" size="sm">
                         <FontAwesomeIcon icon={faThLarge} className="mr-1" fixedWidth/>View Workflow</Button>
                     </LinkContainer>
                 
                     {workflowStatus === "running" ? 
                       <>
-                        <Button variant="outline-dark" className="mr-2 mt-2" disabled>
+                        <Button variant="outline-dark" className="mr-2 mt-2" disabled size="sm">
                           <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> Running</Button>
 
-                        <Button variant="outline-danger" className="mr-2 mt-2" 
+                        <Button variant="outline-danger" className="mr-2 mt-2" size="sm" 
                           onClick={() => { handleStopWorkflowClick(data._id); }} disabled={workflowStatus !== "running"}>
                           <FontAwesomeIcon icon={faStopCircle} className="mr-1" fixedWidth/>Restart Pipeline</Button>
                       </>
                       :
-                      <Button variant="success" className="mr-2 mt-2" onClick={() => handleRunPipelineClick(data._id)}>
+                      <Button variant="success" className="mr-2 mt-2" size="sm" onClick={() => handleRunPipelineClick(data._id)}>
                         <FontAwesomeIcon icon={faPlay} className="mr-1" fixedWidth/>Start Pipeline</Button>
                     }
                  
-                    <Button variant="outline-warning" className="mr-2 mt-2" onClick={() => { handleRefreshClick(data._id); }}>
+                    <Button variant="outline-warning" className="mr-2 mt-2" size="sm" onClick={() => { handleRefreshClick(data._id); }}>
                       <FontAwesomeIcon icon={faSync} className="fa-fw" fixedWidth/></Button> 
 
                   </Col>
