@@ -81,7 +81,7 @@ function RecentBuildsTable() {
                     <th style={{ width: "20%" }}>Project Name</th>
                     <th style={{ width: "20%" }} className="text-center">Build Number</th>
                     <th style={{ width: "20%" }} className="text-center">Completed At</th>
-                    <th style={{ width: "20%" }} className="text-center">Duration</th>
+                    {/* <th style={{ width: "20%" }} className="text-center">Duration</th> */}
                     <th style={{ width: "20%" }} className="text-center">Result</th>
                   </tr>
                 </thead>
@@ -92,7 +92,7 @@ function RecentBuildsTable() {
                       <td className={className}>{ (value["data_projectName"]) ? value["data_projectName"] : "Unknown" }</td>
                       <td className={"text-center" + className}>{ (value["data_buildNum"]) ? value["data_buildNum"] : "Unknown" }</td>
                       <td className={"text-center" + className}>{ (value["timestamp"]) ? format(new Date(value["timestamp"]), "yyyy-MM-dd', 'hh:mm a"): "Unknown" }</td>
-                      <td className={"text-center" + className}>{ (value["data_duration"]) ? value["data_duration"] : "0" } Seconds</td>
+                      {/* <td className={"text-center" + className}>{ (value["data_duration"]) ? value["data_duration"] : "0" } Seconds</td> */}
                       <td className={"text-center upper-case-first" + className}>
                         { (value["data_result"]) ? value["data_result"].toLowerCase() : "Failed"}
                       </td>
