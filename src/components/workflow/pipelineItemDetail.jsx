@@ -136,9 +136,9 @@ const PipelineItemDetail = (props) => {
     setShowModal(true);
   };
 
-  const handleRefreshClick = async () => {
-    await parentCallback();
-    //subscribeToTimer();
+  const handleRefreshClick = () => {
+    parentCallback();
+    parentCallbackRefreshActivity();
   };
 
   const handleDeleteClick = (itemId) => e => {
