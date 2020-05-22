@@ -104,20 +104,6 @@ a:hover, .active {
   font-style: italic;
 }
 
-.console-text {
-  background-color: black;
-  background-image: radial-gradient(
-    rgb(56, 75, 112, 0.75), black 120%
-  );
-  padding: 10px;
-  color: white;
-  font: 1rem Inconsolata, monospace;
-  white-space: pre-wrap;       /* Since CSS 2.1 */
-  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-  white-space: -pre-wrap;      /* Opera 4-6 */
-  white-space: -o-pre-wrap;    /* Opera 7 */
-  word-wrap: break-word;       /* Internet Explorer 5.5+ */
-}
 
 .border-bottom {
   border-width: 2px;
@@ -443,6 +429,27 @@ a:hover, .active {
 }
 
 pre {
+  white-space: pre-wrap;       /* Since CSS 2.1 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+.no-wrap {
+  display: inline-block;
+  white-space: nowrap;
+  word-break: keep-all;
+}
+
+.console-text {
+  background-color: black;
+  background-image: radial-gradient(
+    rgb(56, 75, 112, 0.75), black 120%
+  );
+  padding: 10px;
+  color: white;
+  font: 1rem Inconsolata, monospace;
   white-space: pre-wrap;       /* Since CSS 2.1 */
   white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
   white-space: -pre-wrap;      /* Opera 4-6 */

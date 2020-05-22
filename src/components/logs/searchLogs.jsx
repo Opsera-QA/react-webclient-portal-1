@@ -5,7 +5,7 @@ import { ApiService } from "api/apiService";
 import LoadingDialog from "components/common/loading";
 import InfoDialog from "components/common/info";
 import ErrorDialog from "components/common/error";
-import { Form, Button, Table, Overlay, Popover } from "react-bootstrap";
+import { Form, Button, Table, Overlay, Popover, Row, Col } from "react-bootstrap";
 import { format, addDays } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
@@ -227,7 +227,88 @@ function SearchLogs (props) {
       <>
         <div className="max-content-width">
           <Form onSubmit={handleFormSubmit}>
-            <div className="d-flex mt">
+            <Row>
+              <Col md={7}>
+                <Form.Control placeholder="Search logs" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
+              </Col>
+              <Col md={5}>
+                <DropdownList
+                  data={Array.isArray(FILTER) ? FILTER : [{ "value": "pipeline", "label": "Pipeline" }]}  
+                  defaultValue={"pipeline"}
+                  className="basic-single"
+                  valueField='value'
+                  textField='label'
+                  filter='contains'
+                  onChange={handleSelectChange}             
+                />
+              </Col>
+              
+            </Row>
+
+            <Row className="mt-2">
+              <Col md={7}>
+                {filterType === "pipeline" && 
+                  <Multiselect
+                    data={filterOptions} 
+                    className="multi-select-filters"
+                    busy={Object.keys(filterOptions).length == 0 ? true : false}
+                    disabled={Object.keys(filterOptions).length == 0 ? true : false}
+                    valueField='value'
+                    textField='label'
+                    groupBy="type"
+                    filter='contains'
+                    value={multiFilter}
+                    placeholder={"Type to multi-select filters"}
+                    onChange={setMultiFilter} 
+                    onToggle={fetchFilterData}         
+                  />}
+                {filterType === "blueprint" && 
+                  <DropdownList
+                    data={filterOptions} 
+                    busy={Object.keys(filterOptions).length == 0 ? true : false}
+                    disabled={Object.keys(filterOptions).length == 0 ? true : false}
+                    className="basic-single"
+                    valueField='value'
+                    textField='label'
+                    filter='contains'
+                    placeholder={"Select Job Name"}
+                    value={jobFilter}
+                    onChange={setJobFilter}    
+                    onToggle={fetchFilterData}         
+                  />
+                }
+              </Col>
+              <Col md={5} style={{ textAlign: "right" }} className="no-wrap">
+                <Button variant="outline-secondary" type="button" onClick={toggleCalendar}>
+                  <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth/>
+                  {(calendar && sDate || eDate) ? sDate + " - " + eDate : "Date Range"}</Button>
+                <Button variant="primary" className="ml-1" type="submit">Search</Button>
+                <Button variant="outline-secondary" className="ml-1" type="button" onClick={cancelSearchClicked}>Clear</Button>
+                <Overlay
+                  show={calendar}
+                  target={target}
+                  placement="bottom"
+                  container={ref.current}
+                  containerPadding={20}
+                >
+                  <Popover className="max-content-width">
+                    <Popover.Title><div style={{ display: "flex" }}>Filter By Date<Button variant="outline-secondary" size="sm" type="button" style={{ marginLeft: "auto" }} onClick={ () => setCalendar(false)}>X</Button></div>
+                    </Popover.Title>
+                    <Popover.Content>
+                      <DateRangePicker
+                        onChange={item => setDate([item.selection])}
+                        showSelectionPreview={true}
+                        moveRangeOnFirstSelection={false}
+                        months={2}
+                        ranges={date}
+                        direction="horizontal"
+                      />
+                    </Popover.Content>
+                  </Popover>
+                </Overlay>
+              </Col>
+            </Row>
+            {/* <div className="d-flex mt">
               <div className="p-2 flex-grow-1">
                 <Form.Control placeholder="Search logs" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
               </div>
@@ -269,8 +350,8 @@ function SearchLogs (props) {
                   </Popover>
                 </Overlay>
               </div>
-            </div>
-            <div className="d-flex mt">
+            </div> */}
+            {/* <div className="d-flex mt">
               <div className={filterType === "pipeline" || filterType === "blueprint" ? "p-2 flex-grow-1" : ""}>
                 {filterType === "pipeline" && 
                   <Multiselect
@@ -303,7 +384,7 @@ function SearchLogs (props) {
                   />
                 }
               </div> 
-            </div>
+            </div> */}
           </Form>
         </div>
 
