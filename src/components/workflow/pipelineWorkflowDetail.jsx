@@ -30,12 +30,25 @@ const PipelineWorkflowDetail = (props) => {
   const [workflowStatus, setWorkflowStatus] = useState(false);
   const [editWorkflow, setEditWorkflow] = useState(false);
   const endPointUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
-   
+  
+  //Feature Flag
+  const [previewRole, setPreviewRole] = useState(false);
+  const getRoles = async () => {
+    const { getIsPreviewRole } = contextType; 
+    //this returns true IF the Okta groups for user contains "Preview".  Please wrap display components in this.
+    const isPreviewRole = await getIsPreviewRole();
+    setPreviewRole(isPreviewRole);
+    if (isPreviewRole) {
+      console.log("Enabling Preview Feature Toggle. ", isPreviewRole);
+    }    
+  };
+
 
   useEffect(() => {    
     const controller = new AbortController();
     const runEffect = async () => {
       try {
+        await getRoles();
         await checkAuthentication();
         await loadFormData(data);                
       } catch (err) {
@@ -383,11 +396,14 @@ const PipelineWorkflowDetail = (props) => {
                       style={{ cursor: "pointer" }}
                       onClick= {() => { handleCancelWorkflowEditsClick(); }} /> 
                   </>:
-                  <FontAwesomeIcon icon={faCog}
-                    className="mr-3 mt-1 text-muted"
-                    size="lg"
-                    style={{ cursor: "pointer" }}
-                    onClick= {() => { handleEditWorkflowClick(); }} />
+                  <>
+                    {previewRole ?
+                      <FontAwesomeIcon icon={faCog}
+                        className="mr-3 mt-1 text-muted"
+                        size="lg"
+                        style={{ cursor: "pointer" }}
+                        onClick= {() => { handleEditWorkflowClick(); }} /> : null }
+                  </>
                 }
 
                 <FontAwesomeIcon icon={faSearchPlus}
