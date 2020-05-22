@@ -12,6 +12,7 @@ function PaginationComponent(props) {
   const totalPages = Math.ceil(parseInt(props.total)/props.pageSize);
   const totalPagesArray = Array(totalPages).fill().map((_, i) => i+1);
   const [pageWindowSize, setPageWindowSize] = useState(5);
+  const [countOffset, setCountOffset] = useState(1);
 
   const gotoPage = (page) => {
     if(totalPages - page == 0 || page == 1) {
@@ -27,19 +28,10 @@ function PaginationComponent(props) {
 
   const updatePageSize = (pageSize) => {
     setCurrentPage(1);
-    setPageSize(pageSize.value);
+    setPageSize(pageSize);
   };
 
-  const pageSizeList = [{
-    label: "25 / page",
-    value: 20
-  }, {
-    label: "50 / page",
-    value: 50
-  }, {
-    label: "100 / page",
-    value: 100
-  }];
+  const pageSizeList = [25, 50, 100];
 
   useEffect(()=> {
     props.onClick(currentPage, pageSize);
@@ -54,13 +46,15 @@ function PaginationComponent(props) {
     }else {
       setPageWindowSize(3);
     }
+
+    setCountOffset((currentPage - 1) * props.pageSize + 1);    
   }, [currentPage]);
 
   return (   
     <>
       { props.total > props.pageSize ?
-        <Row className="pagination-block justify-content-center small">
-          <Col xs={2} className="page-summary">Results {props.total}</Col>
+        <Row className="pagination-block small mb-4">
+          <Col xs={3} className="page-summary">Results {countOffset} - {(countOffset + props.pageSize) - 1} of {props.total}</Col>
           <Col xs={6}>
             <Pagination className="justify-content-center">
               <Pagination.Item  disabled={currentPage > totalPagesArray.slice(0)[0] ? false : true} onClick={() => gotoPage(totalPagesArray.slice(0)[0])}>First</Pagination.Item>
@@ -80,11 +74,11 @@ function PaginationComponent(props) {
               <Pagination.Item disabled={currentPage < totalPagesArray.slice(-1)[0] ? false : true} onClick={() => gotoPage(totalPagesArray.slice(-1)[0])}>Last</Pagination.Item>
             </Pagination>  
           </Col>
-          <Col xs={2} className="justify-content-right">                  
+          <Col xs={3} className="justify-content-right">     
             <DropdownList
               data={pageSizeList} 
               valueField='value'
-              textField='label'
+              textField={item => item + " results per page"}
               defaultValue={pageSize}
               onChange={updatePageSize}             
             /></Col>
