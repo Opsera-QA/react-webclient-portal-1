@@ -13,6 +13,7 @@ function PaginationComponent(props) {
   const totalPagesArray = Array(totalPages).fill().map((_, i) => i+1);
   const [pageWindowSize, setPageWindowSize] = useState(5);
   const [countOffset, setCountOffset] = useState(1);
+  const [countOffsetUpper, setCountOffsetUpper] = useState(10);
 
   const gotoPage = (page) => {
     if(totalPages - page == 0 || page == 1) {
@@ -47,14 +48,17 @@ function PaginationComponent(props) {
       setPageWindowSize(3);
     }
 
-    setCountOffset((currentPage - 1) * props.pageSize + 1);    
+    const lowerResultsViewLimit = (currentPage - 1) * props.pageSize + 1;
+    const upperResultsViewLimit = (lowerResultsViewLimit + props.pageSize) - 1;
+    setCountOffset(lowerResultsViewLimit); 
+    setCountOffsetUpper((upperResultsViewLimit < props.total) ? upperResultsViewLimit : props.total);
   }, [currentPage]);
 
   return (   
     <>
       { props.total > props.pageSize ?
         <Row className="pagination-block small mb-4">
-          <Col xs={3} className="page-summary">Results {countOffset} - {(countOffset + props.pageSize) - 1} of {props.total}</Col>
+          <Col xs={3} className="page-summary">Results {countOffset} - {countOffsetUpper} of {props.total}</Col>
           <Col xs={6}>
             <Pagination className="justify-content-center">
               <Pagination.Item  disabled={currentPage > totalPagesArray.slice(0)[0] ? false : true} onClick={() => gotoPage(totalPagesArray.slice(0)[0])}>First</Pagination.Item>
