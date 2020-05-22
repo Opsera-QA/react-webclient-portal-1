@@ -381,7 +381,7 @@ const PipelineWorkflowDetail = (props) => {
           </div>
 
           <div className="workflow-container ml-3 pl-2 max-content-module-width-50">
-            { userInfo._id === data.owner ? 
+            { userInfo && userInfo._id === data.owner ? 
               <div className="pr-1 pt-1 text-right">
                 {editWorkflow ?
                   <>
