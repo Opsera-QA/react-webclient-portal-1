@@ -281,6 +281,8 @@ const PipelineWorkflowDetail = (props) => {
 
   const callbackFunctionEditItem = (item) => {
     window.scrollTo(0, 0);
+    quietlySavePlan();
+    setEditWorkflow(false);
     item.id = data._id;
     parentCallback(item);
   };
@@ -312,6 +314,12 @@ const PipelineWorkflowDetail = (props) => {
     setEditWorkflow(!editWorkflow);
     await updatePipeline(data);  
     parentCallback(); //refreshes items
+  };
+
+  //paased to child object to just save changes as user makes changes (without refreshing ui)
+  const quietlySavePlan = () => {
+    console.log("saving plan: ", data.workflow.plan);
+    updatePipeline(data);      
   };
 
   const handleCancelWorkflowEditsClick = () => {
@@ -367,10 +375,10 @@ const PipelineWorkflowDetail = (props) => {
                       data.workflow.last_step.hasOwnProperty("success") || 
                     data.workflow.last_step.hasOwnProperty("running") || 
                     data.workflow.last_step.hasOwnProperty("failed")) ?
-                      <Button variant="outline-primary" className="mr-2"  size="sm" 
+                      <Button variant="outline-danger" className="mr-2"  size="sm" 
                         onClick={() => { handleStopWorkflowClick(data._id); }}
                         disabled={role !== "administrator"}>
-                        <FontAwesomeIcon icon={faHistory} className="mr-1"/>Restart Pipeline</Button> : null}
+                        <FontAwesomeIcon icon={faHistory} fixedWidth className="mr-1"/>Reset Pipeline</Button> : null}
                   </>
                 }
                 <Button variant="outline-warning"  size="sm" onClick={() => { handleRefreshClick(data._id); }}>
@@ -488,6 +496,7 @@ const PipelineWorkflowDetail = (props) => {
                 setStateItems={setState}
                 parentCallbackRefreshItems={parentCallback}
                 parentCallbackEditItem={callbackFunctionEditItem} 
+                parentQuietSavePlan={quietlySavePlan}
                 parentHandleViewSourceActivityLog={handleViewSourceActivityLog} />             
             </div>
             <SteppedLineTo from="source" to="step-items" orientation="v" borderColor="#226196" borderWidth={2} fromAnchor="bottom" toAnchor="top" />

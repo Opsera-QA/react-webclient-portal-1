@@ -163,7 +163,7 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
           <div className="flex-grow-1"></div>
         </div>
 
-        { item.tool !== undefined && currentStatus.step_id === item._id ? 
+        { currentStatus.hasOwnProperty("updatedAt") && item.tool !== undefined && currentStatus.step_id === item._id ? 
           <div className="d-flex flex-row mb-1">
             <div className="pl-1 workflow-module-text-flex-basis text-muted">Status:</div>
             <div className="pl-1">{currentStatus.status}&nbsp;

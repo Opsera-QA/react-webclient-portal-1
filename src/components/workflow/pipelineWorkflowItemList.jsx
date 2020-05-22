@@ -7,7 +7,7 @@ import PipelineWorkflowItem from "./pipelineWorkflowItem";
 import "./workflows.css";
 
 
-function PipelineWorkflowItemList({ items, lastStep, nextStep, editWorkflow, pipelineId, parentCallbackEditItem, parentHandleViewSourceActivityLog, setStateItems }) {
+function PipelineWorkflowItemList({ items, lastStep, nextStep, editWorkflow, pipelineId, parentCallbackEditItem, parentHandleViewSourceActivityLog, setStateItems, parentQuietSavePlan }) {
   
   useEffect(() => {    
   }, [items]);
@@ -19,7 +19,6 @@ function PipelineWorkflowItemList({ items, lastStep, nextStep, editWorkflow, pip
   const handleAddStep = (itemId, index) => {
     console.log("Prior Step ID: ", itemId);
     console.log("Prior Step index: ", index);
-    //TODO: based on index value, add blank step template to the next index value (index+1)
 
     const newStep = {
       "trigger": [],
@@ -30,11 +29,15 @@ function PipelineWorkflowItemList({ items, lastStep, nextStep, editWorkflow, pip
       "active": true
     };
     items.splice(index + 1, 0, newStep);
-    setStateItems({ items: items });    
+    setStateItems({ items: items });   
+    parentQuietSavePlan(); 
   };
 
   const handleDeleteStep = (itemId, index) => {
     items.splice(index, 1);
+    if (items.length === 0) {
+      handleAddStep("", 0);
+    }
     setStateItems({ items: items });
   };
 
@@ -102,7 +105,8 @@ PipelineWorkflowItemList.propTypes = {
   pipelineId: PropTypes.string,
   parentCallbackEditItem: PropTypes.func,
   parentHandleViewSourceActivityLog: PropTypes.func,
-  setStateItems: PropTypes.func
+  setStateItems: PropTypes.func,
+  parentQuietSavePlan: PropTypes.func
 };
 
 

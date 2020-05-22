@@ -11,7 +11,7 @@ import Modal from "../common/modal";
 import ModalActivityLogs from "../common/modalActivityLogs";
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faPencilAlt, faStopCircle, faSync, faPlay, faTrash, faThLarge, faSave, faSpinner, faTimes, faCogs } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faPencilAlt, faHistory, faSync, faPlay, faTrash, faThLarge, faSave, faSpinner, faTimes, faCogs } from "@fortawesome/free-solid-svg-icons";
 import "./workflows.css";
 import SchedulerWidget from "../common/schedulerWidget";
 import isEqual from "lodash.isequal";
@@ -447,7 +447,7 @@ const PipelineItemDetail = (props) => {
 
                         <Button variant="outline-danger" className="mr-2 mt-2" size="sm" 
                           onClick={() => { handleStopWorkflowClick(data._id); }} disabled={workflowStatus !== "running"}>
-                          <FontAwesomeIcon icon={faStopCircle} className="mr-1" fixedWidth/>Restart Pipeline</Button>
+                          <FontAwesomeIcon icon={faHistory} className="mr-1" fixedWidth/>Reset Pipeline</Button>
                       </>
                       :
                       <Button variant="success" className="mr-2 mt-2" size="sm" onClick={() => handleRunPipelineClick(data._id)}>
