@@ -8,15 +8,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const INITIAL_DATA = {
-  accessKey: "",
-  secretKey: "",
+  // accessKey: "", 
+  // secretKey: "",
   sshKey: {}, //file stream to value
   userName: "",
   serverIp: "",
   serverPath: "",
   commands: "",
   sshAction: "SSH Execution", // default it's ssh execution not empty anymore 
-  // jenkins details if action is upload
+  // jenkins details if SSHaction is upload
   jenkinsUrl: "",
   jenkinsPort: "",
   jUserId: "",
@@ -175,7 +175,8 @@ function SshUploadDeploy( { data, pipelineId, stepId, parentCallback, callbackSa
     <Form>
       { formMessage.length > 0 ? <p className="text-danger">{formMessage}</p> : null}
       
-      <Form.Group controlId="accessKey">
+      {/* AccessKey and SecretKey are not required anymore */}
+      {/* <Form.Group controlId="accessKey">
         <Form.Label>AWS Access Key ID*</Form.Label>
         <Form.Control maxLength="256" type="text" placeholder="" value={formData.accessKey || ""} onChange={e => setFormData({ ...formData, accessKey: e.target.value })} />
       </Form.Group>
@@ -184,13 +185,13 @@ function SshUploadDeploy( { data, pipelineId, stepId, parentCallback, callbackSa
         <Form.Label>AWS Secret Access Key*</Form.Label>
         <Form.Control maxLength="256" type="password" placeholder="" value={formData.secretKey || ""} onChange={e => setFormData({ ...formData, secretKey: e.target.value })} />            
         <Form.Text className="text-muted">AWS access keys consist of two parts: an access key ID and a secret access key. Both are required for automated deployments.</Form.Text> 
-      </Form.Group>
+      </Form.Group> */}
 
       <Form.Group controlId="accessKey" className="mt-2">
         <Form.Label>Security Key*</Form.Label>
         <Form.File 
-          id="sshKey-file" isValid={sshKeyFile.fileName.length > 0 }
-          label={sshKeyFile.fileName ? sshKeyFile.fileName : "Upload Key File"}
+          id="sshKey-file" isValid={sshKeyFile && sshKeyFile.fileName && sshKeyFile.fileName.length > 0 }
+          label={sshKeyFile && sshKeyFile.fileName ? sshKeyFile.fileName : "Upload Key File"}
           custom
           onChange={(e) => handleFileUpload(e)} 
         />

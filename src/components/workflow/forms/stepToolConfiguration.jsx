@@ -78,7 +78,7 @@ function StepToolConfiguration( { data, editItem, parentCallback }) {
           {editItem.tool_name.toLowerCase() === "twistlock" ? <TwistlockStepConfiguration data={stepTool} parentCallback={callbackFunction} />: null }
           {editItem.tool_name.toLowerCase() === "aws-deploy" ? <AwsDeployStepConfiguration  data={stepTool} parentCallback={callbackFunction} /> : null }
           {editItem.tool_name.toLowerCase() === "gcp-deploy" ? <GcpDeployStepConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
-          {editItem.tool_name.toLowerCase() === "s3" ? <S3StepConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
+          {editItem.tool_name.toLowerCase() === "s3" ? <S3StepConfiguration pipelineId={data._id} stepId={stepId} data={stepTool} parentCallback={callbackFunction} callbackSaveToVault={saveToVault} /> : null }
           {editItem.tool_name.toLowerCase() === "databricks-notebook" ? <DatabricksNotebookConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
           {editItem.tool_name.toLowerCase() === "ssh-upload" ? <SshUploadDeploy pipelineId={data._id} stepId={stepId} data={stepTool} parentCallback={callbackFunction} callbackSaveToVault={saveToVault} /> : null }
           {editItem.tool_name.toLowerCase() === "elastic-beanstalk" ? <ElasticBeanstalkDeploy pipelineId={data._id} stepId={stepId} data={stepTool} parentCallback={callbackFunction} callbackSaveToVault={saveToVault} /> : null }
