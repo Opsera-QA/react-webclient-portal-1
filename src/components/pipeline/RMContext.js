@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { createContext, Component } from "react";
 import { withRouter } from "react-router-dom";
-import { isAlphaNumeric } from "../../helpers";
+import { isAlphaNumeric } from "utils/helpers";
 import { AuthContext } from "../../contexts/AuthContext";
 
 let RMContext;

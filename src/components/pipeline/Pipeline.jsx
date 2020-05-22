@@ -6,7 +6,7 @@ import RMModal from "./RMModal";
 import ErrorDialog from "../common/error";
 import SuccessDialog from "../common/success";
 import InfoDialog from "../common/info";
-import { isAlphaNumeric, handleError } from "../../helpers";
+import { isAlphaNumeric, handleError } from "utils/helpers";
 import { ApiService } from "../../api/apiService";
 import "./styles.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

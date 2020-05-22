@@ -5,7 +5,8 @@
       "src/*": ["src/*"],
       "components/*": ["src/components/*"],
       "api/*": ["src/api/*"],
-      "contexts/*": ["src/contexts/*"]
+      "contexts/*": ["src/contexts/*"],
+      "utils/*": ["src/utils/*"]
     }
   },
   "include": ["src"]
