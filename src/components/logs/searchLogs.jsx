@@ -50,6 +50,7 @@ function SearchLogs (props) {
   const [pageSize, setPageSize] = useState(10);
 
   const handleFormSubmit = e => {
+    setCurrentPage(1);
     submitClicked(true);
     e.preventDefault();
     setLogData([]);  
@@ -86,6 +87,7 @@ function SearchLogs (props) {
     setSDate("");
     setMultiFilter([]);
     setJobFilter("");
+    setNoResults(false);
   };
 
   const handleSelectChange = (selectedOption) => {
@@ -151,7 +153,11 @@ function SearchLogs (props) {
       if (result) {
         searchResults = result.data.hasOwnProperty("hits") && result.data.hits.hasOwnProperty("hits") ? result.data.hits : [];
       }
-      setNoResults(searchResults.length === 0);
+      if (searchResults.hits.length === 0) {
+        setNoResults(true);
+      } else {
+        setNoResults(false);
+      }
       setLogData(searchResults);
       setLoading(false);
     })
@@ -304,9 +310,6 @@ function SearchLogs (props) {
 
         {loading && <LoadingDialog size="sm" />}
 
-        {Object.keys(logData).length > 0 && (filterType == "blueprint" ? <BlueprintSearchResult searchResults={logData.hits} /> : <LogSearchResult searchResults={logData.hits} /> )}
-        {Object.keys(logData).length > 0 && <Pagination total={logData.total.value || 30} currentPage={currentPage} pageSize={pageSize} onClick={(pageNumber, pageSize) => gotoPage(pageNumber, pageSize)} /> }
-
         {(!loading && noResults && searchTerm.length > 0) && 
           <div style={{ height: "400px" }}>
             <div className="row h-100">
@@ -316,6 +319,11 @@ function SearchLogs (props) {
             </div>
           </div> 
         }
+
+        {Object.keys(logData).length > 0 && (filterType == "blueprint" ? <BlueprintSearchResult searchResults={logData.hits} /> : <LogSearchResult searchResults={logData.hits} /> )}
+        
+        {Object.keys(logData).length > 0 && filterType !== "blueprint" && !noResults? <Pagination total={logData.total.value || 30} currentPage={currentPage} pageSize={pageSize} onClick={(pageNumber, pageSize) => gotoPage(pageNumber, pageSize)} /> : ""}
+
         {(!loading && !searchTerm && submitted) && 
           <div style={{ height: "400px" }}>
             <div className="row h-100">
