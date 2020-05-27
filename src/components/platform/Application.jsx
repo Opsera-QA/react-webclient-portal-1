@@ -1,0 +1,291 @@
+import React, { useState, useContext } from "react";
+import { Form, CardColumns, Button } from "react-bootstrap";
+import ConfigurationManagement from "./ConfigurationManagement";
+import ContinousIntegration from "./ContinousIntegration";
+import LogManagement from "./LogManagement";
+import RepositoryManagement from "./RepositoryManagement";
+import SAST from "./SAST";
+import Monitoring from "./Monitoring";
+import InfoDialog from "components/common/info";
+import Confirmation from "./Confirmation";
+import { NewAppContext } from "./context";
+import { ApiService } from "api/apiService";
+import ErrorDialog from "components/common/error";
+import SuccessDialog from "components/common/success";
+import { handleError, isAlphaNumeric } from "utils/helpers";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWrench, faClipboardList } from "@fortawesome/free-solid-svg-icons";
+
+
+function Application(props) {
+  const { data, saving, gotoInventory, token, user, reset, setAppDetails, appid } = useContext(NewAppContext);
+
+  const [dropdownData, setDropdownData] = useState([]);
+  const [showEditTools, toggleEditTools] = useState(false);
+  const [applicationDetails, setApplicationDetails] = useState({ data: {}, tools: [] });
+  const [savingStatus, setSavingStatus] = useState(null);
+  const [applicationStatus, setApplicationStatus] = useState(null);
+  const [createAppStatus, setAppStatus] = useState({ error: false, message: "" });
+  const [fetching, setFetching] = useState(true);
+  const [checkingAppName, setCheckingAppName] = useState(false);
+  const [appName, setAppName] = useState("");
+  const [appNameError, setAppNameError] = useState(null);
+
+  const getApiData = async () => {
+    const urlParams = { userid: user.sub };
+    const apiCall = new ApiService("/applications", urlParams, token);
+    apiCall.get()
+      .then(function (response) {
+        let apiResponse = response.data;
+        let filteredDropdownData = apiResponse.filter((app) => { return app.type != "pipeline"; });
+        setDropdownData(filteredDropdownData);
+        setAppStatus({ error: null, message: "" });
+        setFetching(false);
+      })
+      .catch(function (error) {
+        setAppStatus({ error: error, message: "" });
+        setFetching(false);
+      });
+  };
+
+  const handleTabClick = (e) => {
+    e.preventDefault();
+    setSavingStatus(null);
+    changeEditTools();
+  };
+
+  const changeEditTools = async () => {
+    await reset();
+    toggleEditTools(!showEditTools);
+    getApiData();
+  };
+
+  const handleAppNameChange = ({ target: { name, value } }) => {
+    let error = null;
+    if (value.length > 20) error = "App Name has to be 20 chars or less";
+    if (value.length > 1 && !isAlphaNumeric(value))
+      error = "App Name has to be alphanumeric";
+    setAppName(value);
+    setAppNameError(error);
+  };
+
+  const handleCreateClick = async (e) => {
+    e.preventDefault();
+
+    if (appName.trim().length < 1) {
+      setAppNameError(true);
+      return;
+    }
+
+    setCheckingAppName(true);  
+
+    let postBody = { userid: user.sub, name: appName, type: "platform" };
+    new ApiService(
+      "/applications/create",
+      null,
+      token,
+      postBody).post()
+      .then(function (response) {
+        setAppDetails(response.data);
+        setAppStatus({
+          error: null,
+          message: "Application is successfully created!"
+        });
+        setApplicationStatus("success");
+        setApplicationDetails({
+          ...applicationDetails, 
+          data: response.data
+        });
+      })
+      .catch(function (error) {
+        let message = null;
+        if(error.response.data.errmsg.includes("duplicate key error")) {
+          message = "Application already exists.";
+          setApplicationStatus("failed");
+          setAppStatus({
+            error: message,
+            message: message ? message : "Error reported accessing API."
+          });
+        } else {
+          message = handleError(error);
+          setApplicationStatus("failed");
+          setAppStatus({
+            error: error,
+            messages: message ? message : "Error reported accessing API.",
+          });
+        }  
+      })
+      .finally(function () {
+        setFetching(false);
+        setAppNameError(false);
+        setCheckingAppName(false);
+
+        // currentComponent.context.setState(ps => ({
+        //   ...ps,
+        //   appName: currentComponent.state.appName,
+        // }));
+
+      });
+  };
+
+  const handleSaveTools = async () => {
+    let postBody = {
+      id: appid,
+      tools: data,
+      uid: user.sub 
+    };
+    new ApiService(
+      "/applications/create/tools",
+      null,
+      token,
+      postBody).post()
+      .then(function (response) {
+        setApplicationDetails({
+          ...applicationDetails, 
+          data: response.data
+        });
+        setSavingStatus("success");
+        setAppStatus({
+          error: false,
+          message: "Tools Saved Successfully."
+        });
+      })
+      .catch(function (error) {
+        let message = null;
+        if (error.response) {
+          message = `Status ${error.response.status}: ${
+            error.response.data.message ? error.response.data.message : JSON.stringify(error.response.data)}`;
+        }
+        setSavingStatus("failed");
+
+        setAppStatus({
+          error: true,
+          message: message ? message : "Error reported accessing API."
+        });
+
+      })
+      .finally(function () {
+        setFetching(false);
+      });
+
+    // this.setState({
+    //   saving: false,
+    // });
+  };
+
+  const handleDropdownChange = (e) => {
+    e.preventDefault();
+    const selectedApp = dropdownData.find(el => el._id === e.target.value);
+    setAppDetails(selectedApp);
+    let tools = selectedApp.tools.map(({ name }) => name);
+    setApplicationDetails({
+      data: selectedApp,
+      tools: tools,
+    });
+    setApplicationStatus("success");
+  };
+
+  return(
+    <>
+      <div>
+        <h4>Platforms</h4>
+        <ul className="nav nav-tabs mt-3 mb-3">
+          <li className="nav-item">
+            <a className={"nav-link " + (!showEditTools ? "active" : "")} href="#" onClick={handleTabClick}>Add New</a>
+          </li>
+          <li className="nav-item">
+            <a className={"nav-link " + (showEditTools ? "active" : "")} href="#" onClick={handleTabClick}>Edit Existing</a>
+          </li>
+        </ul>
+
+        <div className="row m-2">
+
+          {applicationStatus !== "success" && !showEditTools && (
+            <div className="col ml-auto">
+              <Form loading={checkingAppName || saving ? "true" : undefined}>
+                <Form.Row>
+                  <Form.Group controlId="formGridEmail">
+                    <Form.Label>Application Name</Form.Label>
+                    <Form.Control type="text"
+                      placeholder="Application Name"
+                      name="appName"
+                      value={appName}
+                      onChange={handleAppNameChange}
+                      isInvalid={appNameError}
+                      disabled={applicationStatus === "success" ? true : false}
+                    />
+                    <Form.Control.Feedback type="invalid">{appNameError}</Form.Control.Feedback>
+                  </Form.Group>
+                </Form.Row>
+                <Button
+                  variant="outline-primary"
+                  type="submit"
+                  onClick={handleCreateClick}
+                  loading={checkingAppName ? "true" : undefined}
+                  disabled={!!appNameError || !appName || !appName.length || applicationStatus === "success"}>
+                    Create
+                </Button>
+              </Form>
+            </div>
+          )}
+
+          {showEditTools && dropdownData  && savingStatus !== "success" && (
+            <>
+              {dropdownData.length > 0 ? (
+                <div className="col ml-auto">
+                  <Form>
+                    <Form.Group>
+                      <Form.Control as="select"
+                        defaultValue=""
+                        hidden={(!fetching && dropdownData.length > 0) ? false : true}
+                        onChange={handleDropdownChange}
+                        style={{ marginTop: 25 }}>
+                        <option value="" disabled>{fetching ? "loading..." : "Select Application to Edit"}</option>
+                        {!fetching && (
+                          <>
+                            {dropdownData.map(application => (
+                              <option key={application.name} value={application._id}>{application.name}</option>
+                            ))}
+                          </>
+                        )}
+                      </Form.Control>
+                    </Form.Group>
+                  </Form>
+                </div>
+              ): (
+                <InfoDialog message="No applications are saved yet. Please try adding a new application." />
+              )}
+            </>
+          )}
+        </div>
+
+        {createAppStatus.error ? <ErrorDialog error={createAppStatus.error} /> : null}
+
+        {applicationStatus === "success" && savingStatus === null && createAppStatus.message ? <SuccessDialog successMessage={createAppStatus.message} /> : null}
+
+        {savingStatus === "success" && createAppStatus.message ? <>
+          <SuccessDialog successMessage={createAppStatus.message} />
+          <Button variant="outline-primary" className="ml-2" onClick={gotoInventory}>
+            <FontAwesomeIcon icon={faClipboardList} fixedWidth /> Inventory
+          </Button>
+        </> : null}
+
+        {applicationStatus === "success" && savingStatus === null && (
+          <div className="mb-2">
+            <CardColumns>
+              <ConfigurationManagement app={applicationDetails.data} tools={applicationDetails.tools} />
+              <SAST app={applicationDetails.data} tools={applicationDetails.tools} />
+              <ContinousIntegration app={applicationDetails.data} tools={applicationDetails.tools} />
+              <LogManagement app={applicationDetails.data} tools={applicationDetails.tools} />
+              <RepositoryManagement app={applicationDetails.data} tools={applicationDetails.tools} />
+              <Monitoring app={applicationDetails.data} tools={applicationDetails.tools} />
+            </CardColumns>
+            <Confirmation app={applicationDetails.data} tools={applicationDetails.tools} handleSaveTools={handleSaveTools} />
+          </div>
+        )}
+      </div>
+    </>
+  );
+}
+
+export default Application;

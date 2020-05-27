@@ -1,18 +1,18 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import { Card } from "react-bootstrap";
 import { NewAppContext } from "./context";
 
-class ContinousIntegration extends React.PureComponent {
-  static contextType = NewAppContext
-  render() {
-    const { setState } = this.context;
-    const { tools } = this.props;
-    return (
+function ContinousIntegration(props) {
+
+  const { setState } = useContext(NewAppContext);
+  const { tools } = props;
+
+  return (
+    <>
       <Card style={{ minWidth: "16rem" }}>
         <Card.Body className="text-center">
           <Card.Title>Continuous Integration</Card.Title>
-          
           <Card.Text>
             <div
               className={`newApp__service-logo ${tools.includes("Jenkins") ? "newApp__service-logo--alredy-installed" : ""}`}
@@ -44,12 +44,12 @@ class ContinousIntegration extends React.PureComponent {
           </Card.Text>
         </Card.Body>
       </Card>
-    );
-  }
-}
+    </>
+  );
+} 
 
 ContinousIntegration.propTypes = {
-  tools: PropTypes.object
+  tools: PropTypes.array
 };
 
 export default ContinousIntegration;

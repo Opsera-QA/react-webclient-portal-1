@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import { Form, CardColumns, Button } from "react-bootstrap";
 import ConfigurationManagement from "./ConfigurationManagement";
 import ContinousIntegration from "./ContinousIntegration";
@@ -6,14 +6,13 @@ import LogManagement from "./LogManagement";
 import RepositoryManagement from "./RepositoryManagement";
 import SAST from "./SAST";
 import Monitoring from "./Monitoring";
-import InfoDialog from "../common/info";
+import InfoDialog from "components/common/info";
 import Confirmation from "./Confirmation";
 import { NewAppContext } from "./context";
-import { isAlphaNumeric } from "../../helpers";
-import { ApiService } from "../../api/apiService";
-import ErrorDialog from "../common/error";
-import SuccessDialog from "../common/success";
-import { handleError } from "../../helpers";
+import { ApiService } from "api/apiService";
+import ErrorDialog from "components/common/error";
+import SuccessDialog from "components/common/success";
+import { handleError, isAlphaNumeric } from "utils/helpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWrench, faClipboardList } from "@fortawesome/free-solid-svg-icons";
 
@@ -48,10 +47,10 @@ class NewApplication extends React.PureComponent {
     // param is the argument you passed to the function
     // e is the event object that returned
     e.preventDefault();
-    this.editTools();
+    this.changeEditTools();
   };
 
-  editTools = async () => {
+  changeEditTools = async () => {
     const { reset } = this.context;
     await reset();
     this.setState(prevState => ({
@@ -100,7 +99,6 @@ class NewApplication extends React.PureComponent {
 
   setSelectedApp() {
     const { setAppDetails } = this.context;
-
     const selectedApp = this.state.dropdownData.find(el => el._id === this.state.key);
     setAppDetails(selectedApp);
     let tools = selectedApp.tools.map(({ name }) => name);
@@ -304,7 +302,6 @@ class NewApplication extends React.PureComponent {
             )}
           </div>
 
-
           {error ? <ErrorDialog error={error} /> : null}
           {status === "success" && savingStatus === null && messages ? <SuccessDialog successMessage={messages} /> : null}
           {savingStatus === "success" && messages ? <>
@@ -313,6 +310,7 @@ class NewApplication extends React.PureComponent {
               <FontAwesomeIcon icon={faClipboardList} fixedWidth /> Inventory
             </Button>
           </> : null}
+          
           {status === "success" && savingStatus === null && (
             <div className="mb-2">
               <CardColumns>
@@ -323,7 +321,6 @@ class NewApplication extends React.PureComponent {
                 <RepositoryManagement app={this.state.data} tools={this.state.tools} />
                 <Monitoring app={this.state.data} tools={this.state.tools} />
               </CardColumns>
-
               <Confirmation app={this.state.data} tools={this.state.tools} handleSaveTools={this.handleSaveTools} />
             </div>
           )}

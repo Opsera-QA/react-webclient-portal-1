@@ -1,20 +1,19 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import { Card } from "react-bootstrap";
 
 import { NewAppContext } from "./context";
 
-class ConfigurationManagement extends React.PureComponent {
-  static contextType = NewAppContext
+function ConfigurationManagement(props) {
 
-  render() {
-    const { setState } = this.context;
-    const { tools } = this.props;
-    return (
+  const { setState } = useContext(NewAppContext);
+  const { tools } = props;
+  
+  return (
+    <>
       <Card style={{ minWidth: "16rem" }}>
         <Card.Body className="text-center">
           <Card.Title>Configuration Management</Card.Title>
-          
           <Card.Text>
             <div
               className={`newApp__service-logo ${tools.includes("Ansible") ? "newApp__service-logo--alredy-installed" : ""}`}
@@ -60,12 +59,12 @@ class ConfigurationManagement extends React.PureComponent {
           </Card.Text>
         </Card.Body>
       </Card>
-    );
-  }
-}
+    </>
+  );
+} 
 
 ConfigurationManagement.propTypes = {
-  tools: PropTypes.object
+  tools: PropTypes.array
 };
 
 export default ConfigurationManagement;

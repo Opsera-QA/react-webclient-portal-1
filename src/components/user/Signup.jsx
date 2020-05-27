@@ -4,7 +4,7 @@ import Modal from "../common/modal";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ApiService } from "../../api/apiService";
 import states from "./states";
-import { isAlphaNumeric, validateEmail } from "../../helpers";
+import { isAlphaNumeric, validateEmail } from "utils/helpers";
 
 const state = {
   domain: { value: "", error: null },

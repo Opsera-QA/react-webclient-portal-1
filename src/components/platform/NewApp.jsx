@@ -6,15 +6,13 @@ import NewAppProvider from "./context";
 
 import "./style.css";
 
-class NewApp extends React.PureComponent {
-  render() {
-    return (
-      <NewAppProvider>
-        <CreationModal />
-        <NewApplication />
-      </NewAppProvider>
-    );
-  }
-}
+function NewApp() {
+  return (
+    <NewAppProvider>
+      <CreationModal />
+      <NewApplication />
+    </NewAppProvider>
+  );
+} 
 
 export default NewApp;
