@@ -14,8 +14,9 @@ const INITIAL_DATA = {
   jobName: "",
   accessKey: "", 
   secretKey: "", // store in vault
-  region: "",
-  bucket: ""
+  regions: "",
+  bucketName: "",
+  responseURL: ""
 };
 
 
@@ -143,16 +144,22 @@ function S3StepConfiguration( { data, pipelineId, stepId, parentCallback, callba
         <Form.Text className="text-muted">AWS access keys consist of two parts: an access key ID and a secret access key. Both are required for automated deployments.</Form.Text> 
       </Form.Group>
 
-      <Form.Group controlId="branchField">
+      <Form.Group controlId="bucketRegion">
         <Form.Label>S3 bucket Region*</Form.Label>
-        <Form.Control maxLength="150" type="text" placeholder="" value={formData.region || ""} onChange={e => setFormData({ ...formData, region: e.target.value })} />
+        <Form.Control maxLength="150" type="text" placeholder="" value={formData.regions || ""} onChange={e => setFormData({ ...formData, regions: e.target.value })} />
       </Form.Group>
 
-      <Form.Group controlId="branchField">
+      <Form.Group controlId="bucketName">
         <Form.Label>Bucket Name*</Form.Label>
-        <Form.Control maxLength="150" type="text" placeholder="" value={formData.bucket || ""} onChange={e => setFormData({ ...formData, bucket: e.target.value })} />
+        <Form.Control maxLength="150" type="text" placeholder="" value={formData.bucketName || ""} onChange={e => setFormData({ ...formData, bucketName: e.target.value })} />
       </Form.Group>
       
+      {/* ssh upload response url */}       
+      <Form.Group controlId="fileURL">
+        <Form.Label>Uploaded File URL</Form.Label>
+        <Form.Control maxLength="350" type="text" disabled placeholder="" value={formData.responseURL || ""} onChange={e => setFormData({ ...formData, responseURL: e.target.value })} />
+      </Form.Group>
+
       <Button variant="primary" type="button" 
         onClick={() => { callbackFunction(); }}> 
         {loading ? 
