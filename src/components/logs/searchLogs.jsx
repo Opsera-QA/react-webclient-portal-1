@@ -10,6 +10,7 @@ import { format, addDays } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import "./logs.css";
+import Moment from "moment";
 import "react-date-range/dist/styles.css"; 
 import "react-date-range/dist/theme/default.css"; 
 import { DateRangePicker } from "react-date-range";
@@ -18,6 +19,7 @@ import Multiselect from "react-widgets/lib/Multiselect";
 import LogSearchResult from "./LogSearchResult";
 import BlueprintSearchResult from "./BlueprintSearchResult";
 import Pagination from "components/common/pagination";
+import { set } from "date-fns/esm";
 
 function SearchLogs (props) {
   //const FILTER = [{ value: "pipeline", label: "Pipeline" }, { value: "metricbeat", label: "MetricBeat" }, { value: "twistlock", label: "TwistLock" }, { value: "blueprint", label: "Build Blueprint" }];
@@ -38,7 +40,7 @@ function SearchLogs (props) {
     {
       startDate: new Date(),
       endDate: addDays(new Date(), 7),
-      key: "selection"
+      key: "selection"  
     }
   ]);
   const [calendar, setCalendar] = useState(false);
@@ -54,31 +56,45 @@ function SearchLogs (props) {
     submitClicked(true);
     e.preventDefault();
     setLogData([]);  
-    let startDate = format(new Date(date[0].startDate), "yyyy-MM-dd");
-    let endDate = format(new Date(date[0].endDate), "yyyy-MM-dd");
-    
-    if (startDate === endDate) {
-      endDate = 0;
+    let startDate = 0;
+    let endDate = 0;
+    if (date[0].startDate && date[0].endDate) {
+      startDate = format(new Date(date[0].startDate), "yyyy-MM-dd");
+      endDate = format(new Date(date[0].endDate), "yyyy-MM-dd");
+      
+      if (startDate === endDate) {
+        endDate = 0;
+      }
+      if (calenderActivation === false ){
+        startDate = 0;
+        endDate = 0;
+      }
     }
-    if (calenderActivation === false ){
-      startDate = 0;
-      endDate = 0;
-    }
+
     if (searchTerm) {
       getSearchResults(startDate, endDate);    
     } else {
       setLoading(false);
       setLogData([]);
     }
-    if (endDate === 0) {
-      setEDate(startDate);
-    } else {
-      setEDate(endDate);
-    }
-    setSDate(startDate);
+    // if (endDate === 0) {
+    //   setEDate(startDate);
+    // } else {
+    //   setEDate(endDate);
+    // }
+    // setSDate(startDate);
   };
 
   const cancelSearchClicked = () => {
+    
+    setDate([
+      {
+        startDate: undefined,
+        endDate: undefined,
+        key: "selection"  
+      }
+    ]);
+    setCalendar(false);
     submitClicked(false);
     setLogData([]);
     setSearchTerm("");
@@ -203,14 +219,57 @@ function SearchLogs (props) {
     setCalenderActivation(true);
     setCalendar(!calendar);
     setTarget(event.target);
-    let startDate = format(new Date(date[0].startDate), "yyyy-MM-dd");
-    let endDate = format(new Date(date[0].endDate), "yyyy-MM-dd");
-    if (endDate === 0) {
-      setEDate(startDate);
-    } else {
-      setEDate(endDate);
+    if (date[0].startDate && date[0].endDate) {
+      let startDate = format(new Date(date[0].startDate), "MM/dd");
+      let endDate = format(new Date(date[0].endDate), "MM/dd");
+      if (endDate === 0) {
+        setEDate(startDate);
+      } else {
+        setEDate(endDate);
+      }
+      setSDate(startDate);
     }
-    setSDate(startDate);
+  };
+
+  const closeCalender = () => {
+    setCalendar(false);
+    if (date[0].startDate && date[0].endDate) {
+      let startDate = format(new Date(date[0].startDate), "MM/dd");
+      let endDate = format(new Date(date[0].endDate), "MM/dd");
+      if (endDate === 0) {
+        setEDate(startDate);
+      } else {
+        setEDate(endDate);
+      }
+      setSDate(startDate);
+    }
+  };
+
+  const dateChange = item => {
+    console.log(item);
+    setDate([item.selection]);
+    if (item.selection) {
+      let startDate = format(item.selection.startDate, "MM/dd");
+      let endDate = format(item.selection.endDate, "MM/dd");
+      if (endDate === 0) {
+        setEDate(startDate);
+      } else {
+        setEDate(endDate);
+      }
+      setSDate(startDate);
+    }
+  };
+
+  const clearCalendar = () => {
+    setDate([
+      {
+        startDate: undefined,
+        endDate: undefined,
+        key: "selection"
+      }
+    ]);
+    setSDate(undefined);
+    setEDate(undefined);
   };
 
   //Every time we select a new filter, update the list. But only for blueprint and pipeline
@@ -292,14 +351,16 @@ function SearchLogs (props) {
                   containerPadding={20}
                 >
                   <Popover className="max-content-width">
-                    <Popover.Title><div style={{ display: "flex" }}>Filter By Date<Button variant="outline-secondary" size="sm" type="button" style={{ marginLeft: "auto" }} onClick={ () => setCalendar(false)}>X</Button></div>
+                    <Popover.Title><div style={{ display: "flex" }}><Button variant="outline-secondary" size="sm" type="button" style={{ marginRight: "auto" }} onClick={clearCalendar}>Clear</Button><Button variant="outline-secondary" size="sm" type="button" style={{ marginLeft: "auto" }} onClick={closeCalender}>X</Button></div>
                     </Popover.Title>
                     <Popover.Content>
                       <DateRangePicker
-                        onChange={item => setDate([item.selection])}
+                        startDatePlaceholder="Start Date"
+                        endDatePlaceholder="End Date"
+                        onChange={dateChange}
                         showSelectionPreview={true}
                         moveRangeOnFirstSelection={false}
-                        months={2}
+                        months={1}
                         ranges={date}
                         direction="horizontal"
                       />
