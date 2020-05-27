@@ -47,10 +47,10 @@ class NewApplication extends React.PureComponent {
     // param is the argument you passed to the function
     // e is the event object that returned
     e.preventDefault();
-    this.editTools();
+    this.changeEditTools();
   };
 
-  editTools = async () => {
+  changeEditTools = async () => {
     const { reset } = this.context;
     await reset();
     this.setState(prevState => ({
@@ -302,7 +302,6 @@ class NewApplication extends React.PureComponent {
             )}
           </div>
 
-
           {error ? <ErrorDialog error={error} /> : null}
           {status === "success" && savingStatus === null && messages ? <SuccessDialog successMessage={messages} /> : null}
           {savingStatus === "success" && messages ? <>
@@ -311,6 +310,7 @@ class NewApplication extends React.PureComponent {
               <FontAwesomeIcon icon={faClipboardList} fixedWidth /> Inventory
             </Button>
           </> : null}
+          
           {status === "success" && savingStatus === null && (
             <div className="mb-2">
               <CardColumns>

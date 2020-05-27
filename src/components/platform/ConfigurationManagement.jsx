@@ -8,7 +8,7 @@ function ConfigurationManagement(props) {
 
   const { setState } = useContext(NewAppContext);
   const { tools } = props;
-
+  
   return (
     <>
       <Card style={{ minWidth: "16rem" }}>
