@@ -16,7 +16,7 @@ const INITIAL_DATA = {
   secretKey: "", // store in vault
   regions: "",
   bucketName: "",
-  responseURL: ""
+  s3Url: ""
 };
 
 
@@ -157,7 +157,7 @@ function S3StepConfiguration( { data, pipelineId, stepId, parentCallback, callba
       {/* ssh upload response url */}       
       <Form.Group controlId="fileURL">
         <Form.Label>Uploaded File URL</Form.Label>
-        <Form.Control maxLength="350" type="text" disabled placeholder="" value={formData.responseURL || ""} onChange={e => setFormData({ ...formData, responseURL: e.target.value })} />
+        <Form.Control maxLength="350" type="text" disabled placeholder="" value={formData.s3Url || ""} onChange={e => setFormData({ ...formData, s3Url: e.target.value })} />
       </Form.Group>
 
       <Button variant="primary" type="button" 
