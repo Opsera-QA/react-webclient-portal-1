@@ -18,7 +18,7 @@ import { faWrench, faClipboardList } from "@fortawesome/free-solid-svg-icons";
 
 
 function Application(props) {
-  const { data, saving, gotoInventory, token, user, reset, setAppDetails, appid } = useContext(NewAppContext);
+  const { data, saving, gotoInventory, token, user, reset, setAppDetails, appid, setState } = useContext(NewAppContext);
 
   const [dropdownData, setDropdownData] = useState([]);
   const [showEditTools, toggleEditTools] = useState(false);
@@ -128,7 +128,7 @@ function Application(props) {
       });
   };
 
-  const handleSaveTools = async () => {
+  const saveTools = async () => {
     let postBody = {
       id: appid,
       tools: data,
@@ -145,6 +145,7 @@ function Application(props) {
           data: response.data
         });
         setSavingStatus("success");
+        setApplicationStatus(null);
         setAppStatus({
           error: false,
           message: "Tools Saved Successfully."
@@ -173,6 +174,14 @@ function Application(props) {
     // });
   };
 
+  const cancelTools = () => {
+    setState({ 
+      ...data,
+      data: {}
+    });
+    setApplicationDetails({ data: {}, tools: [] });
+  };
+
   const handleDropdownChange = (e) => {
     e.preventDefault();
     const selectedApp = dropdownData.find(el => el._id === e.target.value);
@@ -189,6 +198,7 @@ function Application(props) {
     <>
       <div>
         <h4>Platforms</h4>
+
         <ul className="nav nav-tabs mt-3 mb-3">
           <li className="nav-item">
             <a className={"nav-link " + (!showEditTools ? "active" : "")} href="#" onClick={handleTabClick}>Add New</a>
@@ -200,7 +210,7 @@ function Application(props) {
 
         <div className="row m-2">
 
-          {applicationStatus !== "success" && !showEditTools && (
+          {applicationStatus !== "success" && !showEditTools && savingStatus !== "success" ? (
             <div className="col ml-auto">
               <Form loading={checkingAppName || saving ? "true" : undefined}>
                 <Form.Row>
@@ -227,7 +237,7 @@ function Application(props) {
                 </Button>
               </Form>
             </div>
-          )}
+          ) : null}
 
           {showEditTools && dropdownData  && savingStatus !== "success" && (
             <>
@@ -280,7 +290,16 @@ function Application(props) {
               <RepositoryManagement app={applicationDetails.data} tools={applicationDetails.tools} />
               <Monitoring app={applicationDetails.data} tools={applicationDetails.tools} />
             </CardColumns>
-            <Confirmation app={applicationDetails.data} tools={applicationDetails.tools} handleSaveTools={handleSaveTools} />
+            <br />
+            <br />
+            <div className="m-2 text-right">
+              <Button variant="outline-primary" onClick={cancelTools} disabled={Object.keys(data).length == 0} className="m-2">
+                Cancel
+              </Button>
+              <Button variant="primary" onClick={saveTools}>
+                Save
+              </Button>
+            </div>
           </div>
         )}
       </div>

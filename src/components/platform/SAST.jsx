@@ -1,19 +1,54 @@
-import React, { useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import PropTypes from "prop-types";
 import { Card } from "react-bootstrap";
 import { NewAppContext } from "./context";
 
 function SAST(props) {
 
-  const { setState } = useContext(NewAppContext);
+  const { data, setState } = useContext(NewAppContext);
   const { tools } = props;
+  const [isChecked, setCheckbox] = useState({
+    SonarQube: tools.includes("SonarQube") ? true : false
+  });
 
-  const  handleLogoClick = () => {
-    setState({
-      open: !tools.includes("SonarQube"),
-      category: "SASST",
-      service: "SonarQube",
+  useEffect(() => {
+    setCheckbox({ 
+      SonarQube: false
     });
+    if(tools.length > 0) {
+      tools.map((tool) => {
+        if(isChecked[tool] !== undefined) {
+          setCheckbox({ 
+            ...isChecked, 
+            [tool] : true 
+          });
+        }
+      });
+    }
+  }, [tools]);
+
+  const selectCard = (serviceType) => {
+    //On each click, check if it's already selected 
+    if(isChecked[serviceType] ) {
+      //de-select the checkbox
+      setCheckbox({ 
+        ...isChecked, 
+        [serviceType] : false
+      });
+      //remove the entry from master dataset ( data from context here )
+      delete data[serviceType];
+    }else {
+      //If it's a new selection, select the checkbox, show the modal and update the dataset (data from context here )
+      setCheckbox({ 
+        ...isChecked, 
+        [serviceType] : true
+      });
+      setState({
+        open: true,
+        category: "SASST",
+        service: serviceType,
+      });
+    }
   };
 
   return (
@@ -21,15 +56,22 @@ function SAST(props) {
       <Card.Body className="text-center">
         <Card.Title>Code Security</Card.Title>
           
-        <Card.Text>
+        <div>
           <div
             className={`newApp__service-logo ${tools.includes("SonarQube") ? "newApp__service-logo--alredy-installed" : ""}`}
-            onClick={handleLogoClick}
+            onClick={() => selectCard("SonarQube")}
           >
+            <input type="checkbox"
+              inline
+              disabled={tools.includes("SonarQube") ? true : false}
+              checked={isChecked.SonarQube}
+              className="newApp__checkbox"
+              onClick={() => selectCard("SonarQube")}
+            />
             <img src={require("./imgs/sonar.png")} />
             <span className="newApp__service-title">SonarQube</span>
           </div>
-        </Card.Text>
+        </div>
       </Card.Body>
     </Card>
   );
