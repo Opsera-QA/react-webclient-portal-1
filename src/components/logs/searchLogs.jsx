@@ -50,6 +50,8 @@ function SearchLogs (props) {
   const [eDate, setEDate] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const node = useRef();
+
 
   const handleFormSubmit = e => {
     setCurrentPage(1);
@@ -145,6 +147,23 @@ function SearchLogs (props) {
     }
   }, [currentPage, pageSize]);
 
+  useEffect(() => {
+
+    document.addEventListener("mousedown", handleClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+    };
+  }, []);
+
+  const handleClick = e => {
+    if (node && node.current) {
+      if (node.current.contains(e.target)) {
+        return;
+      }
+    }
+    setCalendar(false);
+  };
 
   const getSearchResults = async (startDate, endDate) => {
     setLoading(true);
@@ -284,7 +303,7 @@ function SearchLogs (props) {
   } else {
     return (
       <>
-        <div className="max-content-width">
+        <div className="max-content-width" >
           <Form onSubmit={handleFormSubmit}>
             <Row>
               <Col md={7}>
@@ -343,17 +362,19 @@ function SearchLogs (props) {
                   {(calendar && sDate || eDate) ? sDate + " - " + eDate : "Date Range"}</Button>
                 <Button variant="primary" className="ml-1" type="submit">Search</Button>
                 <Button variant="outline-secondary" className="ml-1" type="button" onClick={cancelSearchClicked}>Clear</Button>
+                
                 <Overlay
                   show={calendar}
                   target={target}
                   placement="bottom"
                   container={ref.current}
                   containerPadding={20}
+                  
                 >
-                  <Popover className="max-content-width">
+                  <Popover className="max-content-width" >
                     <Popover.Title><div style={{ display: "flex" }}><Button variant="outline-secondary" size="sm" type="button" style={{ marginRight: "auto" }} onClick={clearCalendar}>Clear</Button><Button variant="outline-secondary" size="sm" type="button" style={{ marginLeft: "auto" }} onClick={closeCalender}>X</Button></div>
                     </Popover.Title>
-                    <Popover.Content>
+                    <Popover.Content ref={node}>
                       <DateRangePicker
                         startDatePlaceholder="Start Date"
                         endDatePlaceholder="End Date"
@@ -367,6 +388,7 @@ function SearchLogs (props) {
                     </Popover.Content>
                   </Popover>
                 </Overlay>
+
               </Col>
             </Row>
             {/* <div className="d-flex mt">
