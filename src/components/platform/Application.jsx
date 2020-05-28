@@ -7,7 +7,6 @@ import RepositoryManagement from "./RepositoryManagement";
 import SAST from "./SAST";
 import Monitoring from "./Monitoring";
 import InfoDialog from "components/common/info";
-import Confirmation from "./Confirmation";
 import { NewAppContext } from "./context";
 import { ApiService } from "api/apiService";
 import ErrorDialog from "components/common/error";
@@ -52,6 +51,7 @@ function Application(props) {
     e.preventDefault();
     setSavingStatus(null);
     changeEditTools();
+    setApplicationStatus(null);
   };
 
   const changeEditTools = async () => {
