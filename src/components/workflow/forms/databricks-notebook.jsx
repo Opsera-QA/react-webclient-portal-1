@@ -85,7 +85,7 @@ function DatabricksNotebookConfiguration( { data, parentCallback }) {
 
       <Form.Group controlId="branchField">
         <Form.Label>Authorization Token*</Form.Label>
-        <Form.Control maxLength="500" as="text" type="password" placeholder="" value={formData.authToken || ""} onChange={e => setFormData({ ...formData, authToken: e.target.value })} />
+        <Form.Control maxLength="500" type="password" placeholder="" value={formData.authToken || ""} onChange={e => setFormData({ ...formData, authToken: e.target.value })} />
       </Form.Group>
 
       <div style={{ maxWidth: "580", maxHeight: "100%", border: "1px solid #ced4da", borderRadius: ".25rem" }}>
