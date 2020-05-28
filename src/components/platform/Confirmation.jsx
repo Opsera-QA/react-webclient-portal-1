@@ -84,7 +84,10 @@ function Confirmation(props) {
 
               <div className="m-2 text-right">
                 <Button variant="outline-primary" onClick={handleSaveTools}>
-                    Confirm
+                    Cancel
+                </Button>
+                <Button variant="primary" onClick={handleSaveTools}>
+                    Save
                 </Button>
               </div>
             </Form>
