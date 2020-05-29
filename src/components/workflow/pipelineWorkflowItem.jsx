@@ -163,22 +163,26 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
           <div className="flex-grow-1"></div>
         </div>
 
-        { currentStatus.hasOwnProperty("updatedAt") && item.tool !== undefined && currentStatus.step_id === item._id ? 
-          <div className="d-flex flex-row mb-1">
-            <div className="pl-1 workflow-module-text-flex-basis text-muted">Status:</div>
-            <div className="pl-1">{currentStatus.status}&nbsp;
-                   on {format(new Date(currentStatus.updatedAt), "yyyy-MM-dd', 'hh:mm a")}</div>
-            <div className="flex-grow-1"></div>
+        { Object.keys(item.last_status).length > 0 && typeof(item.last_status.data) === "object" ? 
+          <div>
+            <div className="pl-1 text-muted small">Last status update on {format(new Date(item.last_status.updatedAt), "hh:mm a 'on' MMM dd yyyy'")}:</div>
+            <div className="pt-1 pl-1 code json-block-text small">
+              {Object.keys(item.last_status.data).map(key => {
+                if (typeof(item.last_status.data[key]) === "string" || typeof(item.last_status.data[key]) === "number") {
+                  return <div key={key}className="json-block-text small ml-1" style={{ padding:0, margin:0 }}>{key}: {item.last_status.data[key]}</div>;
+                }                
+              })}              
+            </div>            
           </div> : null}
 
 
-        <div className="d-flex flex-row mb-1">
+        {/* <div className="d-flex flex-row mb-1">
           <div className="p-1"></div>
         </div>
-
+ */}
         {stepConfigured === true ? 
           <div className="d-flex align-items-end flex-row">
-            <div className="p-1"><span className="text-muted small">{item._id}</span></div>
+            <div className="p-1"><span className="text-muted small">Step: {item._id}</span></div>
             <div className="p-2"></div>
             <div className="flex-grow-1 p-1 text-right">
               {!editWorkflow ? 

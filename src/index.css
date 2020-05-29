@@ -68,11 +68,6 @@ a:hover, .active {
   text-decoration: none;
 }
 
-.code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
 .title-text-5 { 
   font-weight: 500;
   line-height: 1.4;
@@ -428,6 +423,11 @@ a:hover, .active {
   text-transform: capitalize;
 }
 
+.code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
 pre {
   white-space: pre-wrap;       /* Since CSS 2.1 */
   white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
@@ -450,6 +450,16 @@ pre {
   padding: 10px;
   color: white;
   font: 1rem Inconsolata, monospace;
+  white-space: pre-wrap;       /* Since CSS 2.1 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+.json-block-text {
+  padding: 10px;
+  font: Inconsolata, monospace;
   white-space: pre-wrap;       /* Since CSS 2.1 */
   white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
   white-space: -pre-wrap;      /* Opera 4-6 */
