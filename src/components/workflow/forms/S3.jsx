@@ -88,12 +88,12 @@ function S3StepConfiguration( { data, pipelineId, stepId, parentCallback, callba
   };
 
   const validateRequiredFields = () => {
-    let { jenkinsUrl, jUserId, jAuthToken, accessKey, secretKey, region, bucket } = formData;
+    let { jenkinsUrl, jUserId, jAuthToken, accessKey, secretKey, regions, bucketName } = formData;
     if (jenkinsUrl.length === 0 || jUserId.length === 0 || jAuthToken.length === 0 ||
       accessKey.length === 0 ||
       secretKey.length === 0 ||
-      region.length === 0 ||
-      bucket.length === 0  ) {
+      regions.length === 0 ||
+      bucketName.length === 0  ) {
       setFormMessage("Required Fields Missing!");
       return false;
     } else {
