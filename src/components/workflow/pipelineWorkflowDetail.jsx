@@ -7,7 +7,7 @@ import { SteppedLineTo } from "react-lineto";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faCog, faArchive, faPlay, faSync, faSpinner, faStopCircle, faHistory, faPlusSquare, faSave, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faCog, faArchive, faPlay, faSync, faSpinner, faStopCircle, faHistory, faPlusSquare, faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 import ModalActivityLogs from "../common/modalActivityLogs";
 import PipelineActions from "./actions";
 import PipelineWorkflowItemList from "./pipelineWorkflowItemList";
@@ -309,11 +309,11 @@ const PipelineWorkflowDetail = (props) => {
     setEditWorkflow(!editWorkflow);
   };
 
-  const handleSaveWorkflowEditsClick = async () => {
-    console.log("saving plan: ", data.workflow.plan);
+  const handleDoneWorkflowEditsClick = async () => {
+    //console.log("saving plan: ", data.workflow.plan);
     setEditWorkflow(!editWorkflow);
-    await updatePipeline(data);  
-    parentCallback(); //refreshes items
+    //await updatePipeline(data);  
+    //parentCallback(); //refreshes items
   };
 
   //paased to child object to just save changes as user makes changes (without refreshing ui)
@@ -322,10 +322,10 @@ const PipelineWorkflowDetail = (props) => {
     updatePipeline(data);      
   };
 
-  const handleCancelWorkflowEditsClick = () => {
-    setEditWorkflow(!editWorkflow);
-    parentCallback(); //refreshes workflow object from DB
-  };
+  // const handleCancelWorkflowEditsClick = () => {
+  //   setEditWorkflow(!editWorkflow);
+  //   parentCallback(); //refreshes workflow object from DB
+  // };
 
   const handleViewSourceActivityLog = async (pipelineId, tool, stepId, activityId) => {
     //get activity data, filtered by tool!
@@ -393,16 +393,16 @@ const PipelineWorkflowDetail = (props) => {
               <div className="pr-1 pt-1 text-right">
                 {editWorkflow ?
                   <>
-                    <FontAwesomeIcon icon={faSave}
+                    <FontAwesomeIcon icon={faCheck}
                       className="mr-3 mt-1 green"
                       size="lg"
                       style={{ cursor: "pointer" }}
-                      onClick= {() => { handleSaveWorkflowEditsClick(); }} /> 
-                    <FontAwesomeIcon icon={faTimes}
+                      onClick= {() => { handleDoneWorkflowEditsClick(); }} /> 
+                    {/* <FontAwesomeIcon icon={faTimes}
                       className="mr-3 mt-1 dark-grey"
                       size="lg"
                       style={{ cursor: "pointer" }}
-                      onClick= {() => { handleCancelWorkflowEditsClick(); }} /> 
+                      onClick= {() => { handleCancelWorkflowEditsClick(); }} />  */}
                   </>:
                   <>
                     {previewRole ?

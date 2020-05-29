@@ -83,8 +83,8 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
     }
   };  
 
-  const handleDeleteStepClick = (itemId, index) => {
-    parentCallbackDeleteStep(itemId, index);
+  const handleDeleteStepClick = (index) => {
+    parentCallbackDeleteStep(index);
   };
 
 
@@ -145,7 +145,7 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
                 overlay={renderTooltip({ message: "Delete Step" })} >
                 <FontAwesomeIcon icon={faTrash} className="mr-2 ml-1 dark-grey" 
                   style={{ cursor: "pointer" }}
-                  onClick={() => { handleDeleteStepClick(item._id, index); }} />
+                  onClick={() => { handleDeleteStepClick(index); }} />
               </OverlayTrigger>
             </> : null }
           </div>
@@ -163,7 +163,7 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
           <div className="flex-grow-1"></div>
         </div>
 
-        { Object.keys(item.last_status).length > 0 && typeof(item.last_status.data) === "object" ? 
+        { item.last_status && Object.keys(item.last_status).length > 0 && typeof(item.last_status.data) === "object" ? 
           <div>
             <div className="pl-1 text-muted small">Last status update on {format(new Date(item.last_status.updatedAt), "hh:mm a 'on' MMM dd yyyy'")}:</div>
             <div className="pt-1 pl-1 code json-block-text small">

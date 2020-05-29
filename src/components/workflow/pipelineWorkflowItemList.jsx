@@ -1,14 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { SteppedLineTo } from "react-lineto";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 import PipelineWorkflowItem from "./pipelineWorkflowItem";
+import Modal from "../common/modal";
 import "./workflows.css";
 
 
 function PipelineWorkflowItemList({ items, lastStep, nextStep, editWorkflow, pipelineId, parentCallbackEditItem, parentHandleViewSourceActivityLog, setStateItems, parentQuietSavePlan }) {
-  
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [modalDeleteIndex, setModalDeleteIndex] = useState(false);
+
   useEffect(() => {    
   }, [items]);
   
@@ -33,12 +36,22 @@ function PipelineWorkflowItemList({ items, lastStep, nextStep, editWorkflow, pip
     parentQuietSavePlan(); 
   };
 
-  const handleDeleteStep = (itemId, index) => {
+
+  const handleDeleteStepClick = (index) => {    
+    setShowDeleteModal(true);    
+    setModalDeleteIndex(index);
+  };
+
+  const handleDeleteStep = (index) => {
+    setShowDeleteModal(false); 
     items.splice(index, 1);
     if (items.length === 0) {
       handleAddStep("", 0);
+    } else {
+      parentQuietSavePlan(); 
     }
     setStateItems({ items: items });
+
   };
 
   const setStepStatusClass = (last_step, item_id) => {
@@ -71,7 +84,7 @@ function PipelineWorkflowItemList({ items, lastStep, nextStep, editWorkflow, pip
           pipelineId={pipelineId} 
           nextStep={nextStep} 
           parentCallbackEditItem={callbackFunction} 
-          parentCallbackDeleteStep={handleDeleteStep}
+          parentCallbackDeleteStep={handleDeleteStepClick}
           parentHandleViewSourceActivityLog={parentHandleViewSourceActivityLog} />
       </div>
 
@@ -92,6 +105,13 @@ function PipelineWorkflowItemList({ items, lastStep, nextStep, editWorkflow, pip
           <div style={{ height: "40px" }} className={"step-"+ index}>&nbsp;</div>
         </>
       }
+
+      {showDeleteModal ? <Modal header="Confirm Pipeline Step Delete"
+        message="Warning! Data about this step cannot be recovered once it is deleted. Do you still want to proceed?"
+        button="Confirm"
+        handleCancelModal={() => setShowDeleteModal(false)}
+        handleConfirmModal={() => handleDeleteStep(modalDeleteIndex)} /> : null}
+     
     </div>
   ));
 }
