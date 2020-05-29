@@ -10,15 +10,13 @@ import PipelineWorkflowDetail from "./pipelineWorkflowDetail";
 import PipelineWorkflowEditor from "./pipelineWorkflowEditor";
 import "./workflows.css";
 
-
-
 function PipelineWorkflow({ id }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
   const [editItem, setEditItem] = useState(false);
-  const [ssoUserId, setSsoUserId] = useState("");
+  //const [ssoUserId, setSsoUserId] = useState("");
   const [reload, setReload] = useState(true);
   const [role, setRole] = useState("");
   
@@ -26,6 +24,7 @@ function PipelineWorkflow({ id }) {
     const controller = new AbortController();
     const runEffect = async () => {
       try {
+        setLoading(true);
         await fetchData();
         setReload(false);
       } catch (err) {
@@ -40,15 +39,14 @@ function PipelineWorkflow({ id }) {
     return () => {
       controller.abort();
     };
-  }, [setData, reload]);
+  }, []);
 
   async function fetchData() {
-    setLoading(true);
     const { getAccessToken, getUserSsoUsersRecord } = contextType;
     const accessToken = await getAccessToken();
     const ssoUsersRecord = await getUserSsoUsersRecord();
     const apiUrl = `/pipelines/${id}`;   
-    setSsoUserId(ssoUsersRecord._id.toString());
+    //setSsoUserId(ssoUsersRecord._id.toString());
     try {
       const pipeline = await axiosApiService(accessToken).get(apiUrl);      
       setData(pipeline && pipeline.data[0]);
@@ -72,21 +70,22 @@ function PipelineWorkflow({ id }) {
     
   };
 
-  const callbackFunctionDetail = async (param) => {
+  //no param will just refresh the pipeline data object, passing param tells the UI to open the edit screen for that object
+  const callbackFetchData = async (param) => {
+    setEditItem(false);
+    await fetchData();
     if (param) {
       setEditItem(param);   
-    } else {
-      setReload(true);
-      await fetchData();      
-    }    
+    } 
+    //setReload(true);   
   };
 
-  const callbackRefreshPipeline = async () => {
+  /*   const callbackRefreshPipeline = async () => {
     setEditItem(false);
-    setReload(true);
+    //setReload(true);
     await fetchData();          
   };
-
+ */
   const callbackFunctionEditor = () => {
     setEditItem(false);    
   };
@@ -102,11 +101,11 @@ function PipelineWorkflow({ id }) {
           {typeof(data) !== "undefined" ?
             <Row>
               <Col>
-                <PipelineWorkflowDetail data={data} editItemId={editItem.step_id} parentCallback={callbackFunctionDetail} role={role} /></Col>
+                <PipelineWorkflowDetail data={data} editItemId={editItem.step_id} callbackFetchData={callbackFetchData} role={role} /></Col>
               <Col md="auto"></Col>
               {editItem ?
                 <Col xs lg="4" className="workflow-editor-panel p-3">
-                  <PipelineWorkflowEditor editItem={editItem} data={data} parentCallback={callbackFunctionEditor} parentCallbackRefreshPipeline={callbackRefreshPipeline} /></Col>: null}
+                  <PipelineWorkflowEditor editItem={editItem} data={data} parentCallback={callbackFunctionEditor} callbackFetchData={callbackFetchData} /></Col>: null}
             </Row> : null}
 
           {data.length == 0 ?

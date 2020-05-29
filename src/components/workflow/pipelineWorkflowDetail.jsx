@@ -15,7 +15,7 @@ import isEqual from "lodash.isequal";
 import "./workflows.css";
 
 const PipelineWorkflowDetail = (props) => {
-  const { data, parentCallback, role, editItemId } = props;
+  const { data, callbackFetchData, role, editItemId } = props;
   const [error, setErrors] = useState();
   const [userInfo, setUserInfo] = useState();
   const [modalHeader, setModalHeader] = useState("");
@@ -185,12 +185,10 @@ const PipelineWorkflowDetail = (props) => {
     setShowModal(true);
   };
 
-
   const handleRefreshClick = async (pipelineId, stepNext) => {
     await fetchStatusData(pipelineId, stepNext);
     setTimeout(subscribeToTimer(), 5000); // delay this by 5 seconds to allow time for services to spin up
   };
-
 
   const handleStopWorkflowClick = async (pipelineId) => {
     const { getAccessToken } = contextType;
@@ -204,12 +202,10 @@ const PipelineWorkflowDetail = (props) => {
     }     
   };
   
-
   const handleRunPipelineClick = async (pipelineId, oneStep) => {
     await runPipeline(pipelineId, oneStep);
     setWorkflowStatus("running");    
   };
-
 
   async function fetchStatusData(pipelineId, stepNext) {
     const { getAccessToken } = contextType;
@@ -222,14 +218,13 @@ const PipelineWorkflowDetail = (props) => {
     try {
       const pipelineActivityLog = await axiosApiService(accessToken).get(apiUrl);
       console.log(pipelineActivityLog);
-      parentCallback();
+      callbackFetchData();
     }
     catch (err) {
       console.log(err.message);
       setErrors(err.message);      
     }
   }
-
 
   async function runPipeline(pipelineId, oneStep) {
     const { getAccessToken } = contextType;
@@ -278,15 +273,14 @@ const PipelineWorkflowDetail = (props) => {
     setShowModal(true);
   };
 
-
   const callbackFunctionEditItem = (item) => {
     window.scrollTo(0, 0);
-    quietlySavePlan();
+    //quietlySavePlan();
+    //callbackFetchData();
     setEditWorkflow(false);
     item.id = data._id;
-    parentCallback(item);
+    callbackFetchData(item);
   };
-
 
   async function updatePipeline(pipeline) {
     const { getAccessToken } = contextType;
@@ -302,7 +296,7 @@ const PipelineWorkflowDetail = (props) => {
   }
 
   const handleSourceEditClick = () => {
-    parentCallback({ id: data._id, type: "source", item_id: "" });
+    callbackFetchData({ id: data._id, type: "source", item_id: "" });
   };
 
   const handleEditWorkflowClick = () => {
@@ -311,9 +305,10 @@ const PipelineWorkflowDetail = (props) => {
 
   const handleDoneWorkflowEditsClick = async () => {
     //console.log("saving plan: ", data.workflow.plan);
+    //callbackFetchData();
     setEditWorkflow(!editWorkflow);
     //await updatePipeline(data);  
-    //parentCallback(); //refreshes items
+    //callbackFetchData(); //refreshes items
   };
 
   //paased to child object to just save changes as user makes changes (without refreshing ui)
@@ -324,7 +319,7 @@ const PipelineWorkflowDetail = (props) => {
 
   // const handleCancelWorkflowEditsClick = () => {
   //   setEditWorkflow(!editWorkflow);
-  //   parentCallback(); //refreshes workflow object from DB
+  //   callbackFetchData(); //refreshes workflow object from DB
   // };
 
   const handleViewSourceActivityLog = async (pipelineId, tool, stepId, activityId) => {
@@ -494,7 +489,6 @@ const PipelineWorkflowDetail = (props) => {
                 editWorkflow={editWorkflow}
                 pipelineId={data._id} 
                 setStateItems={setState}
-                parentCallbackRefreshItems={parentCallback}
                 parentCallbackEditItem={callbackFunctionEditItem} 
                 parentQuietSavePlan={quietlySavePlan}
                 parentHandleViewSourceActivityLog={handleViewSourceActivityLog} />             
@@ -537,7 +531,7 @@ function renderTooltip(props) {
 
 PipelineWorkflowDetail.propTypes = {
   data: PropTypes.object,
-  parentCallback: PropTypes.func,
+  callbackFetchData: PropTypes.func,
   role: PropTypes.string,
   editItemId: PropTypes.string
 };

@@ -47,8 +47,7 @@ function StepConfiguration( { data, stepId, parentCallback }) {
     const runEffect = async () => {
       try {
         const stepIndex = getStepIndex(stepId);
-        await loadFormData(plan[stepIndex]);        
-        setRenderForm(true);
+        await loadFormData(plan[stepIndex]);                
       } catch (err) {
         if (err.name === "AbortError") {
           console.log("Request was canceled via controller.abort");
@@ -58,12 +57,13 @@ function StepConfiguration( { data, stepId, parentCallback }) {
     };
     runEffect();
     return () => {
-      setRenderForm(false);     
+      setRenderForm(false); 
       controller.abort();      
     };
   }, [stepId]);
 
   const loadFormData = async (step) => {
+    setRenderForm(true);
     setFormData(INITIAL_DATA);    
     setDisableToolSelect(false);
     let stepType = getStepType(step.type[0], step.tool);
@@ -80,7 +80,7 @@ function StepConfiguration( { data, stepId, parentCallback }) {
       }
 
     } 
-
+    //setRenderForm(false);
   };
 
   const getStepType = (type, tool) => {

@@ -13,7 +13,7 @@ import StepToolConfiguration from "./forms/stepToolConfiguration";
 import StepConfiguration from "./forms/stepConfiguration";
 
 
-const PipelineWorkflowEditor = ({ editItem, data, parentCallback, parentCallbackRefreshPipeline }) => {
+const PipelineWorkflowEditor = ({ editItem, data, parentCallback, callbackFetchData }) => {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
   const [loading, setLoading] = useState(false);
@@ -45,7 +45,7 @@ const PipelineWorkflowEditor = ({ editItem, data, parentCallback, parentCallback
   const callbackConfigureStep = async (plan) => {
     data.workflow.plan = plan;
     await postData(data);
-    parentCallbackRefreshPipeline();  
+    callbackFetchData();  
   };
 
   const callbackFunctionSource = async (source) => {
@@ -138,7 +138,7 @@ PipelineWorkflowEditor.propTypes = {
   editItem: PropTypes.object,
   data: PropTypes.object,
   parentCallback: PropTypes.func,
-  parentCallbackRefreshPipeline: PropTypes.func
+  callbackFetchData: PropTypes.func
 };
 
 export default PipelineWorkflowEditor;

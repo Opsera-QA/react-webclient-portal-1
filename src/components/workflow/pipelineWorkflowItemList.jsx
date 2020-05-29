@@ -15,9 +15,6 @@ function PipelineWorkflowItemList({ items, lastStep, nextStep, editWorkflow, pip
   useEffect(() => {    
   }, [items]);
   
-  const callbackFunction = (param) => {
-    parentCallbackEditItem(param);
-  };
 
   const handleAddStep = (itemId, index) => {
     console.log("Prior Step ID: ", itemId);
@@ -35,7 +32,6 @@ function PipelineWorkflowItemList({ items, lastStep, nextStep, editWorkflow, pip
     setStateItems({ items: items });   
     parentQuietSavePlan(); 
   };
-
 
   const handleDeleteStepClick = (index) => {    
     setShowDeleteModal(true);    
@@ -83,7 +79,7 @@ function PipelineWorkflowItemList({ items, lastStep, nextStep, editWorkflow, pip
           editWorkflow={editWorkflow} 
           pipelineId={pipelineId} 
           nextStep={nextStep} 
-          parentCallbackEditItem={callbackFunction} 
+          parentCallbackEditItem={parentCallbackEditItem} 
           parentCallbackDeleteStep={handleDeleteStepClick}
           parentHandleViewSourceActivityLog={parentHandleViewSourceActivityLog} />
       </div>
