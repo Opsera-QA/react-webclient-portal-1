@@ -187,6 +187,11 @@ function ElasticBeanstalkDeploy( { data, pipelineId, stepId, parentCallback, cal
         <Form.Control maxLength="250" type="text" placeholder="" value={formData.applicationName || ""} onChange={e => setFormData({ ...formData, applicationName: e.target.value })} />
       </Form.Group>
 
+      <Form.Group controlId="description">
+        <Form.Label>Description</Form.Label>
+        <Form.Control maxLength="250" type="text" placeholder="" value={formData.description || ""} onChange={e => setFormData({ ...formData, description: e.target.value })} />
+      </Form.Group>
+
       <Form.Group controlId="applicationVersionLabel">
         <Form.Label>Application Version</Form.Label>
         <Form.Control maxLength="50" type="text" placeholder="" value={formData.applicationVersionLabel || ""} onChange={e => setFormData({ ...formData, applicationVersionLabel: e.target.value })} />
