@@ -128,10 +128,10 @@ function S3StepConfiguration( { data, pipelineId, stepId, parentCallback, callba
       </Form.Group>
 
       {/* Leave the threshold form group as is for now, just read only for all forms */}
-      <Form.Group controlId="threshold">
+      {/* <Form.Group controlId="threshold">
         <Form.Label>Step Success Threshold</Form.Label>
         <Form.Control type="text" placeholder="" value={thresholdVal || ""} onChange={e => setThresholdValue(e.target.value)} disabled={true} />
-      </Form.Group>
+      </Form.Group> */}
 
       <Form.Group controlId="accessKey">
         <Form.Label>AWS Access Key ID*</Form.Label>
@@ -156,7 +156,7 @@ function S3StepConfiguration( { data, pipelineId, stepId, parentCallback, callba
       
       {/* ssh upload response url */}       
       <Form.Group controlId="fileURL">
-        <Form.Label>Uploaded File URL</Form.Label>
+        <Form.Label>Last Uploaded Package</Form.Label>
         <Form.Control maxLength="350" type="text" disabled placeholder="" value={formData.s3Url || ""} onChange={e => setFormData({ ...formData, s3Url: e.target.value })} />
       </Form.Group>
 
