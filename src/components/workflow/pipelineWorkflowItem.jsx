@@ -174,7 +174,7 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
           <div>
             <div className="pl-1 text-muted small">Last status update on {format(new Date(item.last_status.updatedAt), "hh:mm a 'on' MMM dd yyyy'")}:</div>
             <div className="pt-1 pl-1 code json-block-text small">
-              {Object.keys(item.last_status.data).map(key => {
+              {Object.keys(item.last_status.data).slice(0, 5).map(key => {
                 if (typeof(item.last_status.data[key]) === "string" || typeof(item.last_status.data[key]) === "number") {
                   return <div key={key}className="json-block-text small ml-1" style={{ padding:0, margin:0 }}>{key}: {item.last_status.data[key]}</div>;
                 }                
