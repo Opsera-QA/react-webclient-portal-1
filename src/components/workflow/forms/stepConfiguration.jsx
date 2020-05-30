@@ -94,6 +94,7 @@ function StepConfiguration( { data, stepId, parentCallback }) {
 
   const callbackFunction = () => {   
     if (validateRequiredFields()) {      
+      console.log(stepId);
       let stepArrayIndex = getStepIndex(stepId); 
       plan[stepArrayIndex].name = formData.name;
       plan[stepArrayIndex].type[0] = formData.type;

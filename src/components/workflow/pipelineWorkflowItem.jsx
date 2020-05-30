@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import Modal from "../common/modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus, faCog, faArchive, faBookmark, faSpinner, faCheckCircle, faEnvelope, faExclamationTriangle, faTrash } from "@fortawesome/free-solid-svg-icons";
 import ModalActivityLogs from "../common/modalActivityLogs";
@@ -8,15 +9,16 @@ import { format } from "date-fns";
 import "./workflows.css";
 
 
-const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, editWorkflow, parentCallbackEditItem, parentCallbackDeleteStep, parentHandleViewSourceActivityLog }) => {
+const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, editWorkflow, parentCallbackEditItem, deleteStep, parentHandleViewSourceActivityLog }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
   const [modalHeader, setModalHeader] = useState("");
   const [currentStatus, setCurrentStatus] = useState({});
   const [itemState, setItemState] = useState(false);
   const [stepConfigured, setStepConfigured] = useState(true);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [modalDeleteIndex, setModalDeleteIndex] = useState(false);
   
-
   useEffect(() => {    
     const controller = new AbortController();
     const runEffect = async () => {
@@ -35,7 +37,6 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
     };
   }, [item, lastStep]);
 
-  
   const loadFormData = async (item, lastStep) => {
     if (typeof(lastStep) !== "undefined" && typeof(item) !== "undefined") {
       if(typeof(lastStep.success) !== "undefined" && lastStep.success.step_id === item._id) {
@@ -84,7 +85,13 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
   };  
 
   const handleDeleteStepClick = (index) => {
-    parentCallbackDeleteStep(index);
+    setShowDeleteModal(true);    
+    setModalDeleteIndex(index);    
+  };
+
+  const handleDeleteStepClickConfirm = (index) => {    
+    setShowDeleteModal(false);    
+    deleteStep(index);
   };
 
 
@@ -233,6 +240,12 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
       </div>
 
       <ModalActivityLogs header={modalHeader} size="lg" jsonData={modalMessage} show={showModal} setParentVisibility={setShowModal} />
+
+      {showDeleteModal ? <Modal header="Confirm Pipeline Step Delete"
+        message="Warning! Data about this step cannot be recovered once it is deleted. Do you still want to proceed?"
+        button="Confirm"
+        handleCancelModal={() => setShowDeleteModal(false)}
+        handleConfirmModal={() => handleDeleteStepClickConfirm(modalDeleteIndex)} /> : null}
     </>
   );
 };

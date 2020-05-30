@@ -11,7 +11,7 @@ import Modal from "../common/modal";
 import ModalActivityLogs from "../common/modalActivityLogs";
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faPencilAlt, faHistory, faSync, faPlay, faTrash, faThLarge, faSave, faSpinner, faTimes, faCogs } from "@fortawesome/free-solid-svg-icons";
+import { faFileAlt, faPencilAlt, faHistory, faSync, faPlay, faTrash, faThLarge, faSave, faSpinner, faTimes, faCogs } from "@fortawesome/free-solid-svg-icons";
 import "./workflows.css";
 import SchedulerWidget from "../common/schedulerWidget";
 import isEqual from "lodash.isequal";
@@ -287,7 +287,7 @@ const PipelineItemDetail = (props) => {
                     
                     <FontAwesomeIcon icon={faTrash} className="pointer red float-right ml-3" size="xs" onClick={handleDeleteClick(data._id)}/>
                     
-                    <FontAwesomeIcon icon={faSearchPlus}
+                    <FontAwesomeIcon icon={faFileAlt}
                       className="mr-1 float-right text-muted"
                       size="xs"
                       style={{ cursor: "pointer" }}
@@ -454,8 +454,8 @@ const PipelineItemDetail = (props) => {
                         <FontAwesomeIcon icon={faPlay} className="mr-1" fixedWidth/>Start Pipeline</Button>
                     }
                  
-                    <Button variant="outline-warning" className="mr-2 mt-2" size="sm" onClick={() => { handleRefreshClick(data._id); }}>
-                      <FontAwesomeIcon icon={faSync} className="fa-fw" fixedWidth/></Button> 
+                    <Button variant="secondary" className="mr-2 mt-2" size="sm" onClick={() => { handleRefreshClick(data._id); }}>
+                      <FontAwesomeIcon icon={faSync} className="mr-1" fixedWidth/>Refresh</Button> 
 
                   </Col>
                 </Row>

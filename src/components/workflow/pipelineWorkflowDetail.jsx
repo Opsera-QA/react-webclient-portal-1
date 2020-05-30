@@ -7,7 +7,7 @@ import { SteppedLineTo } from "react-lineto";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faCog, faArchive, faPlay, faSync, faSpinner, faStopCircle, faHistory, faPlusSquare, faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faFileAlt, faCog, faArchive, faPlay, faSync, faSpinner, faStopCircle, faHistory, faCheck } from "@fortawesome/free-solid-svg-icons";
 import ModalActivityLogs from "../common/modalActivityLogs";
 import PipelineActions from "./actions";
 import PipelineWorkflowItemList from "./pipelineWorkflowItemList";
@@ -15,7 +15,7 @@ import isEqual from "lodash.isequal";
 import "./workflows.css";
 
 const PipelineWorkflowDetail = (props) => {
-  const { data, callbackFetchData, role, editItemId } = props;
+  const { data, fetchPlan, role, editItemId } = props;
   const [error, setErrors] = useState();
   const [userInfo, setUserInfo] = useState();
   const [modalHeader, setModalHeader] = useState("");
@@ -23,7 +23,6 @@ const PipelineWorkflowDetail = (props) => {
   const [state, setState] = useState({ items: [] });
   const [lastStep, setLastStep] = useState({});
   const [nextStep, setNextStep] = useState({});
-  const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [socketRunning, setSocketRunning] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
@@ -81,10 +80,6 @@ const PipelineWorkflowDetail = (props) => {
         setWorkflowStatus(false);        
       }      
     }
-
-    //todo: Wire up highligting the item that's edited basedon this value passed in from parent!
-    console.log("edit: ", editItemId);
-
   };
 
   async function checkAuthentication ()  {
@@ -99,7 +94,6 @@ const PipelineWorkflowDetail = (props) => {
       console.log("Error occurred getting user authentication status.", err);
     }    
   }
-
 
   let tmpDataObject = {};
   let staleRefreshCount = 0;  
@@ -157,27 +151,22 @@ const PipelineWorkflowDetail = (props) => {
     });
   };
 
-  
   const calculateNextStep = (last_step) => {
     let nextStep = {};    
     if (last_step && last_step.hasOwnProperty("running")) {
       let runningStepId = typeof(last_step.running.step_id) !== "undefined" && last_step.running.step_id.length > 0 ? last_step.running.step_id : false;
       let stepArrayIndex = data.workflow.plan.findIndex(x => x._id.toString() === runningStepId); 
-      setCurrentStepIndex(stepArrayIndex);
       nextStep = data.workflow.plan[stepArrayIndex + 1];
      
     } else if (last_step && last_step.hasOwnProperty("success")) {
       let lastSuccessStepId = typeof(last_step.success.step_id) !== "undefined" && last_step.success.step_id.length > 0 ? last_step.success.step_id : false;
       let stepArrayIndex = data.workflow.plan.findIndex(x => x._id.toString() === lastSuccessStepId); 
-      setCurrentStepIndex(stepArrayIndex);
       nextStep = data.workflow.plan[stepArrayIndex + 1];
-
     } else {
       nextStep = data.workflow.plan[0];
     }
     return nextStep;
   };
-
 
   const handleViewClick = (data, header) => {
     setModalMessage(data);
@@ -218,7 +207,7 @@ const PipelineWorkflowDetail = (props) => {
     try {
       const pipelineActivityLog = await axiosApiService(accessToken).get(apiUrl);
       console.log(pipelineActivityLog);
-      callbackFetchData();
+      fetchPlan();
     }
     catch (err) {
       console.log(err.message);
@@ -244,7 +233,6 @@ const PipelineWorkflowDetail = (props) => {
     }   
   }
 
-
   async function fetchPipelineActivityByTool(pipelineId, tool, stepId, activityId) {
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
@@ -266,7 +254,6 @@ const PipelineWorkflowDetail = (props) => {
     }
   }
 
-
   const handleViewPipelineClick = (param) => {
     setModalHeader("Pipeline Details");
     setModalMessage(param);
@@ -274,12 +261,10 @@ const PipelineWorkflowDetail = (props) => {
   };
 
   const callbackFunctionEditItem = (item) => {
-    window.scrollTo(0, 0);
-    //quietlySavePlan();
-    //callbackFetchData();
+    window.scrollTo(0, 0);    
     setEditWorkflow(false);
     item.id = data._id;
-    callbackFetchData(item);
+    fetchPlan(item);
   };
 
   async function updatePipeline(pipeline) {
@@ -296,34 +281,23 @@ const PipelineWorkflowDetail = (props) => {
   }
 
   const handleSourceEditClick = () => {
-    callbackFetchData({ id: data._id, type: "source", item_id: "" });
+    fetchPlan({ id: data._id, type: "source", item_id: "" });
   };
 
   const handleEditWorkflowClick = () => {
-    setEditWorkflow(!editWorkflow);
+    setEditWorkflow(true);
   };
 
-  const handleDoneWorkflowEditsClick = async () => {
-    //console.log("saving plan: ", data.workflow.plan);
-    //callbackFetchData();
-    setEditWorkflow(!editWorkflow);
-    //await updatePipeline(data);  
-    //callbackFetchData(); //refreshes items
+  const handleDoneWorkflowEditsClick = () => {
+    setEditWorkflow(false);    
   };
 
-  //paased to child object to just save changes as user makes changes (without refreshing ui)
-  const quietlySavePlan = () => {
+  const quietSavePlan = async () => {
     console.log("saving plan: ", data.workflow.plan);
-    updatePipeline(data);      
+    await updatePipeline(data);      
   };
-
-  // const handleCancelWorkflowEditsClick = () => {
-  //   setEditWorkflow(!editWorkflow);
-  //   callbackFetchData(); //refreshes workflow object from DB
-  // };
 
   const handleViewSourceActivityLog = async (pipelineId, tool, stepId, activityId) => {
-    //get activity data, filtered by tool!
     if (tool) {
       const activityData = await fetchPipelineActivityByTool(pipelineId, tool, stepId, activityId);
       if (activityData && activityData.data) {
@@ -340,82 +314,56 @@ const PipelineWorkflowDetail = (props) => {
       {typeof(data.workflow) !== "undefined" && data.workflow.hasOwnProperty("source") ? 
         <>
           <div className="ml-3 mb-2 w-100 max-content-module-width-50">           
-            { _configuredToolsCount(data.workflow.plan) > 0 ?             
-              <div className="mb-1 text-right">
-                {workflowStatus === "running" ? 
-                  <>
-                    <Button variant="outline-dark" className="mr-2"  size="sm" disabled>
-                      <FontAwesomeIcon icon={faSpinner} spin className="mr-1"/> Running</Button>
-                    <Button variant="outline-danger" className="mr-2"  size="sm" 
-                      onClick={() => { handleStopWorkflowClick(data._id); }}
-                      disabled={role !== "administrator"}>
-                      <FontAwesomeIcon icon={faStopCircle} className="mr-1"/>Stop Pipeline</Button>
-                  </>
-                  :
-                  <>
-                    { nextStep === undefined || nextStep === data.workflow.plan[0] ?
-                      <Button variant="success" className="mr-2" size="sm"
-                        onClick={() => { handleRunPipelineClick(data._id); }}
-                        disabled={role !== "administrator"}>
-                        <FontAwesomeIcon icon={faPlay} className="mr-1"/>Start Pipeline</Button>
-                      :
-                      <>
-                        <Button variant="success" className="mr-2"  size="sm" 
-                          onClick={() => { handleRunPipelineClick(data._id); }}
-                          disabled={role !== "administrator"}>
-                          <FontAwesomeIcon icon={faPlay} className="mr-1"/>Continue Pipeline</Button>
-
-                      </>}
-                    { data.workflow.hasOwnProperty("last_step") && ( 
-                      data.workflow.last_step.hasOwnProperty("success") || 
-                    data.workflow.last_step.hasOwnProperty("running") || 
-                    data.workflow.last_step.hasOwnProperty("failed")) ?
-                      <Button variant="outline-danger" className="mr-2"  size="sm" 
-                        onClick={() => { handleStopWorkflowClick(data._id); }}
-                        disabled={role !== "administrator"}>
-                        <FontAwesomeIcon icon={faHistory} fixedWidth className="mr-1"/>Reset Pipeline</Button> : null}
-                  </>
-                }
-                <Button variant="outline-warning"  size="sm" onClick={() => { handleRefreshClick(data._id); }}>
-                  <FontAwesomeIcon icon={faSync} className="fa-fw"/></Button>                            
-              </div> : null }     
-
             <div className="title-text-5 mt-2">{data.name}</div>     
           </div>
 
           <div className="workflow-container ml-3 pl-2 max-content-module-width-50">
-            { userInfo && userInfo._id === data.owner ? 
-              <div className="pr-1 pt-1 text-right">
-                {editWorkflow ?
-                  <>
-                    <FontAwesomeIcon icon={faCheck}
-                      className="mr-3 mt-1 green"
-                      size="lg"
-                      style={{ cursor: "pointer" }}
-                      onClick= {() => { handleDoneWorkflowEditsClick(); }} /> 
-                    {/* <FontAwesomeIcon icon={faTimes}
-                      className="mr-3 mt-1 dark-grey"
-                      size="lg"
-                      style={{ cursor: "pointer" }}
-                      onClick= {() => { handleCancelWorkflowEditsClick(); }} />  */}
-                  </>:
-                  <>
-                    {previewRole ?
-                      <FontAwesomeIcon icon={faCog}
-                        className="mr-3 mt-1 text-muted"
-                        size="lg"
-                        style={{ cursor: "pointer" }}
-                        onClick= {() => { handleEditWorkflowClick(); }} /> : null }
-                  </>
-                }
+            <div className="pr-1 my-2 text-right">
+              {workflowStatus === "running" ? 
+                <>
+                  <Button variant="outline-dark" className="mr-1"  size="sm" disabled><FontAwesomeIcon icon={faSpinner} spin className="mr-1"/> Running</Button>
+                  <Button variant="outline-danger" className="mr-1"  size="sm" onClick={() => { handleStopWorkflowClick(data._id); }}
+                    disabled={role !== "administrator"}><FontAwesomeIcon icon={faStopCircle} className="mr-1"/>Stop</Button>
+                </>
+                : 
+                <>
+                  <Button variant="success" className="mr-1" size="sm"
+                    onClick={() => { handleRunPipelineClick(data._id); }}
+                    disabled={role !== "administrator" || editWorkflow}>
+                    <FontAwesomeIcon icon={faPlay} fixedWidth className="mr-1"/>Start Pipeline</Button>
 
-                <FontAwesomeIcon icon={faSearchPlus}
-                  className="mr-1 mt-1 text-muted"
-                  size="lg"
-                  style={{ cursor: "pointer" }}
-                  onClick= {() => { handleViewPipelineClick(data); }} />
-              </div> : null }
+                  <Button variant="outline-danger" className="mr-1"  size="sm" 
+                    onClick={() => { handleStopWorkflowClick(data._id); }}
+                    disabled={role !== "administrator" || editWorkflow}>
+                    <FontAwesomeIcon icon={faHistory} fixedWidth className="mr-1"/>Reset Pipeline</Button>
+                </> }
             
+              <Button variant="secondary" className="mr-1" size="sm" onClick={() => { handleRefreshClick(data._id); }}>
+                <FontAwesomeIcon icon={faSync} className="mr-1" fixedWidth/>Refresh </Button>  
+              
+              <Button variant="secondary" className="mr-1" size="sm" onClick= {() => { handleViewPipelineClick(data); }} >
+                <FontAwesomeIcon icon={faFileAlt}
+                  fixedWidth
+                  size="lg"
+                  style={{ cursor: "pointer" }}/></Button>
+                    
+              { userInfo && userInfo._id === data.owner && previewRole ? <>              
+                {editWorkflow ?
+                  <Button variant="success" size="sm" onClick= {() => { handleDoneWorkflowEditsClick(); }} >
+                    <FontAwesomeIcon icon={faCheck}
+                      className="green" fixedWidth
+                      size="lg"
+                      style={{ cursor: "pointer" }} /> Done</Button>                  
+                  :
+                  <Button variant="secondary" size="sm" onClick= {() => { handleEditWorkflowClick(); }} >
+                    <FontAwesomeIcon icon={faCog}
+                      fixedWidth
+                      size="lg"
+                      style={{ cursor: "pointer" }} /> </Button>
+                }                
+              </>: null }            
+            </div>
+
 
             <div className="source workflow-module-container workflow-module-container-width-sm p-2">
               <div className="title-text-6 title-text-divider">Start of Workflow</div>
@@ -489,8 +437,9 @@ const PipelineWorkflowDetail = (props) => {
                 editWorkflow={editWorkflow}
                 pipelineId={data._id} 
                 setStateItems={setState}
+                fetchPlan={fetchPlan}
                 parentCallbackEditItem={callbackFunctionEditItem} 
-                parentQuietSavePlan={quietlySavePlan}
+                quietSavePlan={quietSavePlan}
                 parentHandleViewSourceActivityLog={handleViewSourceActivityLog} />             
             </div>
             <SteppedLineTo from="source" to="step-items" orientation="v" borderColor="#226196" borderWidth={2} fromAnchor="bottom" toAnchor="top" />
@@ -531,7 +480,7 @@ function renderTooltip(props) {
 
 PipelineWorkflowDetail.propTypes = {
   data: PropTypes.object,
-  callbackFetchData: PropTypes.func,
+  fetchPlan: PropTypes.func,
   role: PropTypes.string,
   editItemId: PropTypes.string
 };

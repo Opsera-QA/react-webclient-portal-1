@@ -8,15 +8,13 @@ import Modal from "../common/modal";
 import "./workflows.css";
 
 
-function PipelineWorkflowItemList({ items, lastStep, nextStep, editWorkflow, pipelineId, parentCallbackEditItem, parentHandleViewSourceActivityLog, setStateItems, parentQuietSavePlan }) {
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [modalDeleteIndex, setModalDeleteIndex] = useState(false);
-
+function PipelineWorkflowItemList({ items, lastStep, nextStep, editWorkflow, pipelineId, parentCallbackEditItem, parentHandleViewSourceActivityLog, setStateItems, quietSavePlan, fetchPlan }) {
+  
   useEffect(() => {    
   }, [items]);
   
 
-  const handleAddStep = (itemId, index) => {
+  const handleAddStep = async (itemId, index) => {
     console.log("Prior Step ID: ", itemId);
     console.log("Prior Step index: ", index);
 
@@ -30,24 +28,19 @@ function PipelineWorkflowItemList({ items, lastStep, nextStep, editWorkflow, pip
     };
     items.splice(index + 1, 0, newStep);
     setStateItems({ items: items });   
-    parentQuietSavePlan(); 
+    await quietSavePlan(); 
+    fetchPlan();
   };
 
-  const handleDeleteStepClick = (index) => {    
-    setShowDeleteModal(true);    
-    setModalDeleteIndex(index);
-  };
-
-  const handleDeleteStep = (index) => {
-    setShowDeleteModal(false); 
+  const deleteStep = async (index) => {
     items.splice(index, 1);
     if (items.length === 0) {
       handleAddStep("", 0);
     } else {
-      parentQuietSavePlan(); 
+      await quietSavePlan();  
+      fetchPlan();
     }
     setStateItems({ items: items });
-
   };
 
   const setStepStatusClass = (last_step, item_id) => {
@@ -80,7 +73,7 @@ function PipelineWorkflowItemList({ items, lastStep, nextStep, editWorkflow, pip
           pipelineId={pipelineId} 
           nextStep={nextStep} 
           parentCallbackEditItem={parentCallbackEditItem} 
-          parentCallbackDeleteStep={handleDeleteStepClick}
+          deleteStep={deleteStep}
           parentHandleViewSourceActivityLog={parentHandleViewSourceActivityLog} />
       </div>
 
@@ -101,12 +94,6 @@ function PipelineWorkflowItemList({ items, lastStep, nextStep, editWorkflow, pip
           <div style={{ height: "40px" }} className={"step-"+ index}>&nbsp;</div>
         </>
       }
-
-      {showDeleteModal ? <Modal header="Confirm Pipeline Step Delete"
-        message="Warning! Data about this step cannot be recovered once it is deleted. Do you still want to proceed?"
-        button="Confirm"
-        handleCancelModal={() => setShowDeleteModal(false)}
-        handleConfirmModal={() => handleDeleteStep(modalDeleteIndex)} /> : null}
      
     </div>
   ));
@@ -122,7 +109,8 @@ PipelineWorkflowItemList.propTypes = {
   parentCallbackEditItem: PropTypes.func,
   parentHandleViewSourceActivityLog: PropTypes.func,
   setStateItems: PropTypes.func,
-  parentQuietSavePlan: PropTypes.func
+  quietSavePlan: PropTypes.func,
+  fetchPlan: PropTypes.func
 };
 
 
