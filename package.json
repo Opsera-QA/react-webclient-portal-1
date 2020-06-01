@@ -37,6 +37,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.3.1",
     "react-select": "^3.0.8",
+    "react-table": "^7.1.0",
     "react-widgets": "^4.5.0",
     "react-widgets-moment": "^4.0.28",
     "save": "^2.4.0",

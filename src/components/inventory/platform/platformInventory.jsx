@@ -1,30 +1,29 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useParams, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
-import { AuthContext } from "../../contexts/AuthContext";  
-import { Form, Alert, Table, Button } from "react-bootstrap";
+import { Form, Alert, Table } from "react-bootstrap";
 import { format } from "date-fns";
-import { axiosApiService } from "../../api/apiService";
-import ErrorDialog from "../common/error";
+import { AuthContext } from "contexts/AuthContext";  
+import { axiosApiService } from "api/apiService";
+import ErrorDialog from "components/common/error";
+//import LoadingDialog from "../common/loading";
 import DropdownList from "react-widgets/lib/DropdownList";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faWrench } from "@fortawesome/free-solid-svg-icons";
 
+function PlatformInventory () {
 
-function ToolList () {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [renderForm, setRenderForm] = useState(false);
-  const [filter, setFilter] = useState({});
-  const [filterData, setFilterData] = useState({});
   
+  const [key, setKey] = useState({});
+  const [renderForm, setRenderForm] = useState(false);
 
   useEffect(()=> {
     const controller = new AbortController();
     const runEffect = async () => {
       try {
-        //await getApiData();
+        getApiData();
         setRenderForm(true);
       } catch (err) {
         if (err.name === "AbortError") {
@@ -42,15 +41,17 @@ function ToolList () {
 
   const getApiData = async () => {
     setLoading(true);
-    const { getAccessToken } = contextType;
+    setKey(null);
+    const { getAccessToken, getUserInfo } = contextType;
     const accessToken = await getAccessToken();
-    const params = {};
+    const userInfo = await getUserInfo();
+    const params = { userid: userInfo.sub };
     const apiUrl = "/applications";
     
     try {
       const result = await axiosApiService(accessToken).get(apiUrl, { params });    
-      //const filteredApps = result.data.filter((app) => { return app.type !== "pipeline"; }); //we don't want the legacy pipeline apps to show.
-      setData(result.data);
+      const filteredApps = result.data.filter((app) => { return app.type !== "pipeline"; }); //we don't want the legacy pipeline apps to show.
+      setData(filteredApps);
       setLoading(false);
     }
     catch (err) {
@@ -61,63 +62,59 @@ function ToolList () {
 
   const handleDropdownChange = (selectedOption) => {
     console.log(selectedOption);
-    setFilter(selectedOption);
+    setKey(selectedOption);
   };
-
 
   if (error) {
     return (<ErrorDialog error={error} />);
   } else {
     return (
       <div className="mt-3">
-
-       
-
         {!loading && data && data.length === 0 ? 
           <>
             <div className="mt-3 max-content-module-width-50">
               <Alert variant="secondary">
-                No tools are currently registered for this organization.
+                No applications are currently configured for the system.
               </Alert>
             </div>
           </>:
-          <>
-            <div className="mt-3 max-content-module-width-50 text-right">
-              <Form>
-                <Form.Group>
 
-                  <Form.Label>Filter</Form.Label>
-                  {renderForm ?
-                    <DropdownList
-                      data={filterData} 
-                      valueField='name'
-                      busy={loading} 
-                      textField='name'
-                      onChange={handleDropdownChange}             
-                    /> : null }
+          <div className="mt-1 max-content-module-width-50">
+            <Form>
+              <Form.Group>
 
-                </Form.Group>
-              </Form>
-            </div> 
+                <Form.Label>Select Application</Form.Label>
+                {renderForm ?
+                  <DropdownList
+                    data={data} 
+                    valueField='name'
+                    busy={loading} 
+                    textField='name'
+                    onChange={handleDropdownChange}             
+                  /> : null }
 
-            
-            <div className="mt-1">
-              <Tools data={data} />
-            </div> 
-          </>
-        }
+              </Form.Group>
+            </Form>
+          </div> }
         
-        
+        <div className="mt-3">
+          {key && Object.keys(key).length > 0 ? 
+            <>
+              {Object.keys(key.tools).length > 0 ? 
+                <App application={key} /> : 
+                <div className="max-content-module-width-50"><Alert variant="secondary">No tools are currently configured for this application.</Alert></div> }
+            </>
+            : null }
+        </div>
       </div>
     );
   }
 }
 
 
-
-const Tools = ({ data }) => {
-  
-  console.log(data);
+const App = ({ application }) => {
+  const { tools } = application;
+  console.log(application);
   return (
     <Table striped bordered hover className="table-sm" style={{ fontSize:"small" }}>
       <thead>
@@ -132,7 +129,7 @@ const Tools = ({ data }) => {
         </tr>
       </thead>
       <tbody>
-        {data && data.map((item, idx) => (
+        {tools && tools.map((item, idx) => (
           <tr key={idx} >
             <td>{item["name"]}<br /><span className="text-muted small">{item["id"]}</span></td>
             <td className="text-center">{item["port"]}</td>
@@ -150,9 +147,9 @@ const Tools = ({ data }) => {
 };
 
 
-Tools.propTypes = {
-  data: PropTypes.array
+App.propTypes = {
+  application: PropTypes.object
 };
 
 
-export default ToolList;
+export default PlatformInventory;
