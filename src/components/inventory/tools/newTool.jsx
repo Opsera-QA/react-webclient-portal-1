@@ -4,29 +4,12 @@ import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
 import PropTypes from "prop-types";
 
+import "./tools.css";
+
 function NewTool(props) {
 
   const { getAccessToken } = useContext(AuthContext);
-  const editTool = props.edittool;
-  // const initialState = {
-  //   "name": "",
-  //   "description": "",
-  //   "tool_identifier": "",
-  //   "tool_type_identifier": "",
-  //   "contacts": [],
-  //   "project": [],
-  //   "application": [],
-  //   "location": {},
-  //   "organization": {},
-  //   "external_reference": [], 
-  //   "tags": [],
-  //   "roles": [], 
-  //   "configuration": {}, 
-  //   "licensing": {},
-  //   "compliance": {},
-  //   "active": true,
-  //   "status": "String"
-  // };
+  const editTool = props.edittool.details;
   const formFields = [
     {
       label: "Name",
@@ -101,7 +84,7 @@ function NewTool(props) {
     }
   ];
 
-  const [ toolFormFields, setFormFields ] = useState({ ...props.edittool });
+  const [ toolFormFields, setFormFields ] = useState({ ...props.edittool.details });
   const [ tool_list, setToolList ] = useState({
     tool_type_identifier: [], 
     tool_identifier: []
@@ -112,8 +95,8 @@ function NewTool(props) {
   }, []);
 
   useEffect(() => {    
-    setFormFields(props.edittool);
-  }, [props.edittool]);
+    setFormFields(props.edittool.details);
+  }, [props.edittool.details]);
 
   const getToolList = async () => {
     try {
@@ -151,7 +134,7 @@ function NewTool(props) {
       const postBody = {
         data: [toolFormFields ]
       };
-      await axiosApiService(accessToken).post("/registry/create", postBody);
+      await axiosApiService(accessToken).post("/registry/"+ props.edittool.id + "/update", postBody);
       props.closeModal(false);
     }
     catch (err) {
@@ -189,15 +172,15 @@ function NewTool(props) {
 
   return (
     <>
-      <Modal show={props.showModal} onHide={handleClose}>
+      <Modal size="lg" show={props.showModal} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>{props.type == "new" ? "New" : "Edit"} Tool</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form className="formContainer">
             {formFields.map((field, i) => {
               return(
-                <Form.Group as={Row} key={i} controlId="formPlaintextEmail">
+                <Form.Group key={i} controlId="formPlaintextEmail">
                   <Form.Label column sm="2">
                     {field.label}
                   </Form.Label>

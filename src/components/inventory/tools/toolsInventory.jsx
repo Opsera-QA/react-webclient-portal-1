@@ -16,14 +16,20 @@ function ToolInventory () {
 
   const { getAccessToken } = useContext(AuthContext);
   const [showModal, setShowModal] = useState(false);
-  const [rowDetails, editRowDetails] = useState({});
+  const [rowDetails, editRowDetails] = useState({
+    id: "",
+    details: {}
+  });
   const [modalType, setModalType] = useState("new");
   const [toolList, setToolList] = useState([]);
 
 
   const editTool = (cellData) => {
     setModalType("edit");
-    editRowDetails(cellData.row.values);
+    editRowDetails({
+      id: cellData.row.original._id,
+      details: cellData.row.values
+    });
     setShowModal(true);
   };
 

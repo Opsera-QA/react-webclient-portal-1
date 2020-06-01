@@ -31,7 +31,6 @@ function ToolsTable({ columns, data }) {
     usePagination
   );
 
-  // Render the UI for your table
   return (
     <>
       <Table bordered hover size="sm" {...getTableProps()}>
@@ -41,7 +40,6 @@ function ToolsTable({ columns, data }) {
               {headerGroup.headers.map((column, j) => (
                 <th key={j} {...column.getHeaderProps(column.getSortByToggleProps())}>
                   {column.render("Header")}
-                  {/* Add a sort direction indicator */}
                   <span>
                     {column.isSorted
                       ? column.isSortedDesc
