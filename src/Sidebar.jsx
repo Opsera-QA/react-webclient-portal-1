@@ -17,7 +17,7 @@ function Sidebar({ hideView }) {
   const [authenticated, setAuthenticated] = useState(false);
 
 
-  useEffect(() => {    
+  /*   useEffect(() => {    
     const controller = new AbortController();
     const runEffect = async () => {
       try {
@@ -33,8 +33,12 @@ function Sidebar({ hideView }) {
     return () => {     
       controller.abort();      
     };
-  }, [hideView, contextType]);
+  }, [hideView, contextType]); */
 
+
+  useEffect(() => {    
+    checkAuthentication();
+  }, [hideView, contextType]);
 
   const handleToggleMenuClick = () => {
     setHideSideBar(!hideSideBar);    
