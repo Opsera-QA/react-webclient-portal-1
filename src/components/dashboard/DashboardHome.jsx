@@ -105,7 +105,7 @@ function DashboardHome() {
         <>
           <div className="mt-2 mb-3">
         
-            <div className="max-content-width mt-3 mb-4">
+            <div className="max-content-width mb-4">
               <h4>My Dashboard</h4>
               <p>OpsERA offers the best, easy to use solutions for deploying, monitoring and managing your entire automation and workflow 
                 pipelines, enabling organizations to build optimized and efficient DevOps based projects.</p>               
