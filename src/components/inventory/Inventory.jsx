@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import { AuthContext } from "contexts/AuthContext";  
 
 import PlatformInventory from "./platform/platformInventory";
 import ToolInventory from "./tools/toolsInventory";
 
 function Inventory () {
-  const { view } = useParams();
+  const { id, view } = useParams();
   const contextType = useContext(AuthContext);
   const [selection, setSelection] = useState("");
   const [previewRole, setPreviewRole] = useState(false);
-  
+
   useEffect(()=> {
     getRoles();
     if (view === "tools") {
@@ -31,8 +31,7 @@ function Inventory () {
   };
 
   const handleTabClick = param => e => {
-    e.preventDefault();
-    setSelection(param);    
+    setSelection(param);
   };
 
   return (
@@ -42,10 +41,12 @@ function Inventory () {
 
       <ul className="nav nav-pills mt-2">
         <li className="nav-item">
-          <a className={"nav-link " + (selection === "platform" ? "active" : "")} href="#" onClick={handleTabClick("platform")}>Platform</a>
+          <Link className={"nav-link " + (selection === "platform" ? "active" : "")}  
+            to="/inventory" onClick={handleTabClick("platform")}>Platform</Link>
         </li>
         <li className="nav-item">
-          <a className={"nav-link " + (selection === "tools" ? "active" : "") + (!previewRole ? "disabled" : "")} href="#" onClick={handleTabClick("tools")}>Tools</a>
+          <Link className={"nav-link " + (selection === "tools" ? "active" : "") + (!previewRole ? "disabled" : "")}   
+            to={"/inventory/tools"}  onClick={handleTabClick("tools")}>Tools</Link>
         </li>
       </ul>
       {selection === "platform" ? <PlatformInventory /> : null}

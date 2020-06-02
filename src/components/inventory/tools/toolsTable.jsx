@@ -25,7 +25,7 @@ function ToolsTable({ columns, data }) {
 
   return (
     <>
-      <Table bordered hover size="sm" {...getTableProps()}>
+      <Table hover size="sm" {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup, i) => (
             <tr key={i}  {...headerGroup.getHeaderGroupProps()}>

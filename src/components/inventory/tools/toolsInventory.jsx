@@ -6,6 +6,7 @@ import { axiosApiService } from "api/apiService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import LoadingDialog from "components/common/loading";
+import { useHistory, useParams } from "react-router-dom";
 
 import ToolsTable from "./toolsTable";
 import NewTool from "./newTool";
@@ -20,9 +21,11 @@ function ToolInventory () {
   });
   const [modalType, setModalType] = useState("new");
   const [toolList, setToolList] = useState([]);
-
+  let history = useHistory();
+  const { id, view } = useParams();
 
   const editTool = (cellData) => {
+    history.push(`/inventory/tools/${cellData.row.original._id}`);
     setModalType("edit");
     editRowDetails({
       id: cellData.row.original._id,
@@ -40,17 +43,17 @@ function ToolInventory () {
     const accessToken = await getAccessToken();
     const response = await axiosApiService(accessToken).delete("/registry/" + cellData.row.original._id )
       .then((result) =>  {
-        getToolRegistryList();
+        getToolRegistryList("");
       })
       .catch(error => {return error;});
   };
 
-  const getToolRegistryList = async () => {
+  const getToolRegistryList = async (id) => {
     try {
       const accessToken = await getAccessToken();
-      const response = await axiosApiService(accessToken).get("/registry", {});
+      const response = await axiosApiService(accessToken).get("/registry/" + id, {});
       setToolList(response.data);
-      console.log(response.data);
+      if(id) setShowModal(true);
     }
     catch (err) {
       console.log(err.message);
@@ -58,16 +61,18 @@ function ToolInventory () {
   };
     
   useEffect(() => {    
-    getToolRegistryList();
+    if(id && id.match(/^[0-9a-fA-F]{24}$/))  setModalType("edit");
+    getToolRegistryList(id !==  undefined ? id : "");   
   }, []);
 
   const handleActionClick = () => {
+    setModalType("new");
     setShowModal(true);
   };
 
   const closeModal = (data) => {
     setShowModal(data);
-    getToolRegistryList();
+    getToolRegistryList("");
   };
 
   const actionButtons = (cellData) => {
@@ -124,7 +129,7 @@ function ToolInventory () {
 
       <div className="mt-2 mb-2 text-right">
         <Button variant="primary" size="sm"  
-          onClick={() => { handleActionClick("add"); }}> 
+          onClick={() => { handleActionClick("new"); }}> 
           <FontAwesomeIcon icon={faPlus} className="mr-1"/> New Entry
         </Button>
         <br />
