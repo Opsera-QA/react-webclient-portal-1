@@ -31,6 +31,7 @@ const INITIAL_DATA = {
   regions: "",
   applicationName: "",
   applicationVersionLabel: "",
+  s3StepId: "",
   description: "",
   port: "",
   ec2KeyName: "",
@@ -40,11 +41,18 @@ const INITIAL_DATA = {
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
-function ElasticBeanstalkDeploy( { data, pipelineId, stepId, parentCallback, callbackSaveToVault }) {
+function ElasticBeanstalkDeploy( { data, pipelineId, plan, stepId, parentCallback, callbackSaveToVault }) {
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [formMessage, setFormMessage] = useState("");
   const [renderForm, setRenderForm] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [listOfSteps, setListOfSteps] = useState([]);
+
+  useEffect(()=> {
+    let STEP_OPTIONS = plan.slice(0, plan.findIndex( (element) => element._id === stepId)-1);
+    STEP_OPTIONS.unshift({ _id: "", name : "Select One",  isDisabled: "yes" }); 
+    setListOfSteps(STEP_OPTIONS);
+  }, [plan]);
 
   useEffect(() => {    
     const controller = new AbortController();
@@ -134,6 +142,10 @@ function ElasticBeanstalkDeploy( { data, pipelineId, stepId, parentCallback, cal
     setFormData({ ...formData, platform: selectedOption.value });    
   };
   
+  const handleS3StepChange = (selectedOption) => {
+    setFormData({ ...formData, s3StepId: selectedOption._id });    
+  };
+  
   return (
     <Form>
       { formMessage.length > 0 ? <p className="text-danger">{formMessage}</p> : null}
@@ -197,6 +209,19 @@ function ElasticBeanstalkDeploy( { data, pipelineId, stepId, parentCallback, cal
         <Form.Control maxLength="50" type="text" placeholder="" value={formData.applicationVersionLabel || ""} onChange={e => setFormData({ ...formData, applicationVersionLabel: e.target.value })} />
       </Form.Group>
 
+      
+      <Form.Group controlId="s3Step">
+        <Form.Label>S3 Step Info :</Form.Label>
+        {renderForm && listOfSteps ?
+          <DropdownList
+            data={listOfSteps}
+            valueField='_id'
+            textField='name'
+            defaultValue={formData.platform ? listOfSteps[listOfSteps.findIndex(x => x._id === formData.s3StepId)] : listOfSteps[0]}
+            onChange={handleS3StepChange}             
+          /> : null }
+      </Form.Group>
+
       {/* Leave the threshold form group as is for now, just read only for all forms */}
       {/* <Form.Group controlId="threshold">
         <Form.Label>Step Success Threshold</Form.Label>
@@ -217,6 +242,7 @@ function ElasticBeanstalkDeploy( { data, pipelineId, stepId, parentCallback, cal
 
 ElasticBeanstalkDeploy.propTypes = {
   data: PropTypes.object,
+  plan: PropTypes.array,
   pipelineId: PropTypes.string,
   stepId: PropTypes.string,
   parentCallback: PropTypes.func,
