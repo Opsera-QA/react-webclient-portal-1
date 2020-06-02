@@ -49,11 +49,16 @@ function ElasticBeanstalkDeploy( { stepTool, pipelineId, plan, stepId, parentCal
   const [listOfSteps, setListOfSteps] = useState([]);
 
   useEffect(()=> {
-    let STEP_OPTIONS = plan.slice(0, plan.findIndex( (element) => element._id === stepId)-1);
-    STEP_OPTIONS.unshift({ _id: "", name : "Select One",  isDisabled: "yes" }); 
-    setListOfSteps(STEP_OPTIONS);
-  }, [plan]);
+    if( plan && stepId ) {
+      setListOfSteps(formatStepOptions(plan, stepId));
+    }
+  }, [plan, stepId]);
 
+  const formatStepOptions = (plan, stepId) => {
+    let STEP_OPTIONS = plan.slice(0, plan.findIndex( (element) => element._id === stepId));
+    STEP_OPTIONS.unshift({ _id: "", name : "Select One",  isDisabled: "yes" });
+    return STEP_OPTIONS;
+  };
   useEffect(() => {    
     const controller = new AbortController();
     const runEffect = async () => {
@@ -217,7 +222,7 @@ function ElasticBeanstalkDeploy( { stepTool, pipelineId, plan, stepId, parentCal
             data={listOfSteps}
             valueField='_id'
             textField='name'
-            defaultValue={formData.platform ? listOfSteps[listOfSteps.findIndex(x => x._id === formData.s3StepId)] : listOfSteps[0]}
+            defaultValue={formData.s3StepId ? listOfSteps[listOfSteps.findIndex(x => x._id === formData.s3StepId)] : listOfSteps[0]}
             onChange={handleS3StepChange}             
           /> : null }
       </Form.Group>
