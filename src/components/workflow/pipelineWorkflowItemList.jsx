@@ -86,11 +86,11 @@ function PipelineWorkflowItemList({ items, lastStep, nextStep, editWorkflow, pip
             style={{ cursor: "pointer", paddingBottom: "2px" }}
             onClick= {() => { handleAddStep(item._id, index); }} />
         </div>
-        <SteppedLineTo from={"step-plus-"+index}to={"step-"+ index} delay={100} orientation="v" borderColor="#226196" borderWidth={2} fromAnchor="bottom" toAnchor="bottom" />
+        <SteppedLineTo from={"step-plus-"+index}to={"step-"+ index} delay={100} orientation="v" borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="bottom" />
         <div style={{ height: "25px" }} className={"step-"+ index}>&nbsp;</div>
       </>:       
         <>
-          <SteppedLineTo from={"step-"+item._id}to={"step-"+ index} delay={100} orientation="v" borderColor="#226196" borderWidth={2} fromAnchor="bottom" toAnchor="bottom" />
+          <SteppedLineTo from={"step-"+item._id}to={"step-"+ index} delay={100} orientation="v" borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="bottom" />
           <div style={{ height: "40px" }} className={"step-"+ index}>&nbsp;</div>
         </>
       }

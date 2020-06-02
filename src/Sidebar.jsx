@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStream, faChartBar, faArchive, faColumns, faLink, faBox, faDownload, faHome, faTools, faDraftingCompass } from "@fortawesome/free-solid-svg-icons";
+import { faClipboardList, faChartBar, faArchive, faColumns, faLink, faBox, faDownload, faHome, faTools, faDraftingCompass } from "@fortawesome/free-solid-svg-icons";
 import "./sidebar.css";
 
 function Sidebar({ hideView }) {
@@ -75,7 +75,8 @@ function Sidebar({ hideView }) {
               <div className="sidebar-menu">
       
                 <div className="mt-3 mb-1 sub-header">Products</div>
-                <NavLink className="nav-link" activeClassName="chosen" to="/inventory"><FontAwesomeIcon icon={faHome} fixedWidth /> <span className="menu-text">Inventory</span></NavLink>
+                {previewRole && <NavLink className="nav-link" activeClassName="chosen" to="/overview"><FontAwesomeIcon icon={faHome} fixedWidth /> <span className="menu-text">Overview</span></NavLink>}
+                <NavLink className="nav-link" activeClassName="chosen" to="/inventory"><FontAwesomeIcon icon={faClipboardList} fixedWidth /> <span className="menu-text">Inventory</span></NavLink>
                 <NavLink className="nav-link" activeClassName="chosen" exact to="/dashboard"><FontAwesomeIcon icon={faColumns} fixedWidth /> <span className="menu-text">Dashboard</span><div className="caret"></div></NavLink>                
                 <NavLink className="nav-link" activeClassName="chosen" to="/platform"><FontAwesomeIcon icon={faBox} fixedWidth /> <span className="menu-text">Platforms</span></NavLink>
                 

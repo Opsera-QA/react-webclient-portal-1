@@ -8,6 +8,7 @@
 
 .sidebar-menu .nav-link {
   padding-left: 0 !important;
+  font-size: 1rem;
 }
 
 /*  Appending FontAwesome Icon to class
@@ -17,7 +18,7 @@
 } */
 
 .sub-header {
-  color: #226196;
+  color: #0f3e84;
   text-transform: uppercase;
   font-size: 0.72rem;
   letter-spacing: 1px;
@@ -28,13 +29,13 @@
 }
 
 .sidebar-menu .nav-link {
-  color: #226196;
+  color: #1578dc;
 }
 .sidebar-menu a.chosen {
-  color: #334152;
+  color: #0f3e84;
 }
 .sidebar-menu a:hover {
-  color: #00a1e0;
+  color: #1578dc;
 }
 
 

@@ -18,6 +18,7 @@ import DropdownList from "react-widgets/lib/DropdownList";
 import Multiselect from "react-widgets/lib/Multiselect";
 import LogSearchResult from "./LogSearchResult";
 import BlueprintSearchResult from "./BlueprintSearchResult";
+import CommitSearchResult from "./CommitSearchResult";
 import Pagination from "components/common/pagination";
 import { set } from "date-fns/esm";
 
@@ -474,19 +475,19 @@ function SearchLogs (props) {
 
         {loading && <LoadingDialog size="sm" />}
 
-        {(!loading && noResults && searchTerm.length > 0) && 
+        {(!loading && noResults && searchTerm.length > 0) &&
           <div style={{ height: "400px" }}>
             <div className="row h-100">
               <div className="col-sm-12 my-auto text-center">
-                <div className="h6">No Results found</div>   
+                <div className="h6">No Results found</div>
               </div>
             </div>
           </div> 
         }
 
-        {Object.keys(logData).length > 0 && (filterType == "blueprint" ? <BlueprintSearchResult searchResults={logData.hits} /> : <LogSearchResult searchResults={logData.hits} /> )}
-        
-        {Object.keys(logData).length > 0 && filterType !== "blueprint" && !noResults? <Pagination total={logData.total.value || 30} currentPage={currentPage} pageSize={pageSize} onClick={(pageNumber, pageSize) => gotoPage(pageNumber, pageSize)} /> : ""}
+        {Object.keys(logData).length > 0 && (filterType == "blueprint" ? <BlueprintSearchResult searchResults={logData.hits} /> : <LogSearchResult searchResults={logData.hits} />  )}
+        {Object.keys(logData).length > 0 && (filterType == "commit" ? <CommitSearchResult searchResults={logData.hits} /> : "")}
+        {Object.keys(logData).length > 0 && filterType != "blueprint" && filterType!== "commit" && !noResults? <Pagination total={logData.total.value || 30} currentPage={currentPage} pageSize={pageSize} onClick={(pageNumber, pageSize) => gotoPage(pageNumber, pageSize)} /> : ""}
 
         {(!loading && !searchTerm && submitted) && 
           <div style={{ height: "400px" }}>

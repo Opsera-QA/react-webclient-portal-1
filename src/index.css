@@ -22,11 +22,11 @@ color: green;
 }
 
 .opsera-blue {
-  color: #384b70;
+  color: #1989F9;
 }
 
 .nav-blue {
-  color: #226196;
+  color: #1989F9;
 }
 
 .dark-grey {
@@ -35,6 +35,14 @@ color: green;
 
 .light-grey {
   color: #c9cdd0;
+}
+
+.dark-blue {
+  color: #0f3e84;
+}
+
+.medium-blue {
+  color: #1989F9;
 }
 
 .pointer {
@@ -59,12 +67,12 @@ body {
 }
 
 a {
-  color: #226196;
+  color: #1578dc;
   text-decoration: none;
 }
 
 a:hover, .active {
-  color: #00a1e0;
+  color: #1578dc;
   text-decoration: none;
 }
 
@@ -317,7 +325,7 @@ a:hover, .active {
 
 .auth-box-w .auth-header:after {
   content: "";
-  background-color: #00a1e0;
+  background-color: #1578dc;
   width: 32px;
   height: 7px;
   border-radius: 2px;
@@ -344,7 +352,7 @@ a:hover, .active {
   position: absolute;
   bottom: 5px;
   font-size: 24px;
-  color: #00a1e0;
+  color: #1578dc;
   left: -38px;
 }
 

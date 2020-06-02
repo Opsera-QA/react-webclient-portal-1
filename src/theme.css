@@ -1,6 +1,6 @@
 /*------------------------------------
 - https://lingtalfi.com/bootstrap4-color-generator
-- Source Color: #0d4183
+- Source Color: #1578dc
 ------------------------------------*/
 
 .modal-lg {
@@ -12,33 +12,33 @@
 
 .btn-link {
   font-weight: 400;
-  color: #226196;
+  color: #1578dc;
   text-decoration: none;
 }
 
 .btn-link:hover {
   font-weight: 400;
-  color: #00a1e0;
+  color: #1578dc;
   text-decoration: none;
 }
 
 .btn-link:focus, .btn-link.focus {
   font-weight: 400;
-  color: #226196;
+  color: #1578dc;
   text-decoration: none;
 }
 
 
 .btn-primary {
   color: #fff;
-  background-color: #226196;
-  border-color: #0d4183;
+  background-color: #1578dc;
+  border-color: #1578dc;
 }
 
 .btn-primary:hover {
   color: #fff;
   background-color: #1a4e79;
-  border-color: #0d4183;
+  border-color: #1578dc;
 }
 
 .btn-primary:focus, .btn-primary.focus {
@@ -54,7 +54,7 @@
 
 .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
   color: #fff;
-  background-color: #226196;
+  background-color: #1578dc;
   border-color: #224b96;
 }
 
@@ -63,15 +63,15 @@
 }
 
 .btn-outline-primary {
-  color: #0d4183;
+  color: #1578dc;
   background-color: transparent;
   border-color: #4b6588;
 }
 
 .btn-outline-primary:hover {
   color: #fff;
-  background-color: #226196;
-  border-color: #0d4183;
+  background-color: #1578dc;
+  border-color: #1578dc;
 }
 
 .btn-outline-primary:focus, .btn-outline-primary.focus {
@@ -79,7 +79,7 @@
 }
 
 .btn-outline-primary.disabled, .btn-outline-primary:disabled {
-  color: #0d4183;
+  color: #1578dc;
   background-color: transparent;
   border-color: #90a8c5;
   cursor: default;
@@ -87,8 +87,8 @@
 
 .btn-outline-primary:not(:disabled):not(.disabled):active, .btn-outline-primary:not(:disabled):not(.disabled).active, .show > .btn-outline-primary.dropdown-toggle {
   color: #fff;
-  background-color: #0d4183;
-  border-color: #0d4183;
+  background-color: #1578dc;
+  border-color: #1578dc;
 }
 
 .btn-outline-primary:not(:disabled):not(.disabled):active:focus, .btn-outline-primary:not(:disabled):not(.disabled).active:focus, .show > .btn-outline-primary.dropdown-toggle:focus {
@@ -121,7 +121,7 @@
 
 .badge-primary {
   color: #fff;
-  background-color: #0d4183;
+  background-color: #1578dc;
 }
 
 .badge-primary[href]:hover, .badge-primary[href]:focus {
@@ -130,7 +130,7 @@
 }
 
 .bg-primary {
-  background-color: #226196 !important;
+  background-color: #1578dc !important;
 }
 
 a.bg-primary:hover, a.bg-primary:focus,
@@ -140,7 +140,7 @@ button.bg-primary:focus {
 }
 
 .border-primary {
-  border-color: #0d4183 !important;
+  border-color: #1578dc !important;
 }
 
 
@@ -153,7 +153,7 @@ button.bg-primary:focus {
 
 /* active*/
 .nav-pills .nav-item .active {
-  background-color:#226196;
+  background-color:#1578dc;
   color: white;
 }
 
@@ -189,7 +189,7 @@ button.bg-primary:focus {
 }
 
 .text-primary {
-  color: #0d4183 !important;
+  color: #1578dc !important;
 }
 
 a.text-primary:hover, a.text-primary:focus {

@@ -118,7 +118,7 @@ class LoginForm extends React.Component {
         <div className="all-wrapper menu-side with-pattern">
           <div className="auth-box-w">
             <div className="logo-w">
-              <a href="index.html"><img alt="" src="img/opsera_logo_125x125.png" /></a>
+              <a href="index.html"><img alt="" src="img/opsera_logo_120x118.png" /></a>
             </div>
             { this.state.resetPassword ? 
               <>

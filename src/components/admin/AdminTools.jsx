@@ -37,7 +37,7 @@ class AdminTools extends Component {
             <h4>Administration Tools</h4>
             <div>Listed below are administration tools for the platform.</div>
 
-            <Row className="m-5">
+            <Row className="m-5" style={{ fontSize:"1rem" }}>
               {/* <Col xs={12} md={6} lg={4} className="p-2">
                <Link to="/admin/health"><FontAwesomeIcon icon={faHeartbeat} fixedWidth /> System Health Check</Link>
                </Col> */}

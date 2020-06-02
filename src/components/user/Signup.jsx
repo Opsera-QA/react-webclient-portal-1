@@ -20,7 +20,7 @@ const state = {
   state: { value: "", error: null },
   modal: false,
   loading: false,
-  sharedStack: false
+  sharedStack: true //turned on so we don't spin up systems
 };
 
 
@@ -207,7 +207,12 @@ export default class Signup extends PureComponent {
       .then(function (response) {
         console.debug(response);
         currentComponent.setState({ loading: false });
-        currentComponent.showSuccessAlert();
+        //currentComponent.showSuccessAlert();
+
+        //TODO: Send user to new registration confirmation form:
+        currentComponent.loadRegistrationResponse();
+
+
       })
       .catch(function (error) {
         console.error(error);
@@ -305,6 +310,11 @@ export default class Signup extends PureComponent {
     let path = "/";
     // eslint-disable-next-line react/prop-types
     this.props.history.push(path);
+  }
+
+  loadRegistrationResponse = () => {
+    // eslint-disable-next-line react/prop-types
+    this.props.history.push("/registration");
   }
 
   render() {
@@ -477,12 +487,12 @@ export default class Signup extends PureComponent {
                   type="text"
                   placeholder=""
                   name="domain"
-                  disabled={this.state.sharedStack}
+                  //disabled={this.state.sharedStack}
                   value={this.state.domain.value}
                   onChange={this.handleChange}
                   isInvalid={this.state.domain.error}
                 />
-                <Form.Text className="text-muted">* When new resources are created for this account, this will be the default sub-domain name used when building DNS records. 
+                <Form.Text className="text-muted">When new resources are created for this account, this will be the default sub-domain name used when building DNS records. 
                   {/* Either supply a subdomain name or check the box below to share an existing configuration in order to proceed. */}
                 </Form.Text>
                 <Form.Control.Feedback type="invalid">{this.state.domain.error}</Form.Control.Feedback>
