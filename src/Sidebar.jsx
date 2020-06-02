@@ -75,21 +75,21 @@ function Sidebar({ hideView }) {
               <div className="sidebar-menu">
       
                 <div className="mt-3 mb-1 sub-header">Products</div>
-                {previewRole && <NavLink className="nav-link" activeClassName="chosen" to="/overview"><FontAwesomeIcon icon={faHome} fixedWidth /> <span className="menu-text">Overview</span></NavLink>}
-                <NavLink className="nav-link" activeClassName="chosen" to="/inventory"><FontAwesomeIcon icon={faClipboardList} fixedWidth /> <span className="menu-text">Inventory</span></NavLink>
-                <NavLink className="nav-link" activeClassName="chosen" exact to="/dashboard"><FontAwesomeIcon icon={faColumns} fixedWidth /> <span className="menu-text">Dashboard</span><div className="caret"></div></NavLink>                
-                <NavLink className="nav-link" activeClassName="chosen" to="/platform"><FontAwesomeIcon icon={faBox} fixedWidth /> <span className="menu-text">Platforms</span></NavLink>
+                {previewRole && <NavLink className="nav-link" activeClassName="chosen" to="/overview"><FontAwesomeIcon size="lg" icon={faHome} fixedWidth /> <span className="menu-text">Overview</span></NavLink>}
+                <NavLink className="nav-link" activeClassName="chosen" to="/inventory"><FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth /> <span className="menu-text">Inventory</span></NavLink>
+                <NavLink className="nav-link" activeClassName="chosen" exact to="/dashboard"><FontAwesomeIcon size="lg" icon={faColumns} fixedWidth /> <span className="menu-text">Dashboard</span><div className="caret"></div></NavLink>                
+                <NavLink className="nav-link" activeClassName="chosen" to="/platform"><FontAwesomeIcon size="lg" icon={faBox} fixedWidth /> <span className="menu-text">Platforms</span></NavLink>
                 
-                <NavLink className="nav-link" activeClassName="chosen" to="/workflow"><FontAwesomeIcon icon={faDraftingCompass} fixedWidth /> <span className="menu-text">Pipelines</span></NavLink>
+                <NavLink className="nav-link" activeClassName="chosen" to="/workflow"><FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth /> <span className="menu-text">Pipelines</span></NavLink>
                 
                 {/* <NavLink className="nav-link" activeClassName="chosen" to="/pipeline"><FontAwesomeIcon icon={faStream} fixedWidth /> <span className="menu-text">Pipelines</span></NavLink> */}
-                <NavLink className="nav-link" activeClassName="chosen" to="/analytics"><FontAwesomeIcon icon={faChartBar} fixedWidth /> <span className="menu-text">Analytics</span></NavLink>
-                <NavLink className="nav-link" activeClassName="chosen" to="/logs"><FontAwesomeIcon icon={faArchive} fixedWidth /> <span className="menu-text">Logs</span></NavLink>
+                <NavLink className="nav-link" activeClassName="chosen" to="/analytics"><FontAwesomeIcon size="lg" icon={faChartBar} fixedWidth /> <span className="menu-text">Analytics</span></NavLink>
+                <NavLink className="nav-link" activeClassName="chosen" to="/logs"><FontAwesomeIcon size="lg" icon={faArchive} fixedWidth /> <span className="menu-text">Logs</span></NavLink>
         
                 <div className="mt-3 mb-1 sub-header">Operations</div>
-                <NavLink className="nav-link" activeClassName="chosen" to="/tools"><FontAwesomeIcon icon={faLink} fixedWidth /> <span className="menu-text">Tools</span></NavLink>
-                <NavLink className="nav-link" activeClassName="chosen" to="/update"><FontAwesomeIcon icon={faDownload} fixedWidth /> <span className="menu-text">Updates</span></NavLink>
-                {administrator && <NavLink className="nav-link" activeClassName="chosen" to="/admin"><FontAwesomeIcon icon={faTools} fixedWidth /> <span className="menu-text">Admin Tools</span></NavLink>}
+                <NavLink className="nav-link" activeClassName="chosen" to="/tools"><FontAwesomeIcon size="lg" icon={faLink} fixedWidth /> <span className="menu-text">Tools</span></NavLink>
+                <NavLink className="nav-link" activeClassName="chosen" to="/update"><FontAwesomeIcon size="lg" icon={faDownload} fixedWidth /> <span className="menu-text">Updates</span></NavLink>
+                {administrator && <NavLink className="nav-link" activeClassName="chosen" to="/admin"><FontAwesomeIcon size="lg" icon={faTools} fixedWidth /> <span className="menu-text">Admin Tools</span></NavLink>}
               </div>
             </div>
           </div>

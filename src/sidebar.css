@@ -8,7 +8,7 @@
 
 .sidebar-menu .nav-link {
   padding-left: 0 !important;
-  font-size: 1rem;
+  /* font-size: 1rem; */
 }
 
 /*  Appending FontAwesome Icon to class
