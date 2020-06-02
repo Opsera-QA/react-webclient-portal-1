@@ -81,7 +81,7 @@ function StepToolConfiguration( { data, editItem, parentCallback }) {
           {editItem.tool_name.toLowerCase() === "s3" ? <S3StepConfiguration pipelineId={data._id} stepId={stepId} data={stepTool} parentCallback={callbackFunction} callbackSaveToVault={saveToVault} /> : null }
           {editItem.tool_name.toLowerCase() === "databricks-notebook" ? <DatabricksNotebookConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
           {editItem.tool_name.toLowerCase() === "ssh-upload" ? <SshUploadDeploy pipelineId={data._id} stepId={stepId} data={stepTool} parentCallback={callbackFunction} callbackSaveToVault={saveToVault} /> : null }
-          {editItem.tool_name.toLowerCase() === "elastic-beanstalk" ? <ElasticBeanstalkDeploy pipelineId={data._id} stepId={stepId} data={stepTool} parentCallback={callbackFunction} callbackSaveToVault={saveToVault} /> : null }
+          {editItem.tool_name.toLowerCase() === "elastic-beanstalk" ? <ElasticBeanstalkDeploy pipelineId={data._id} plan={data.workflow.plan} stepId={stepId} stepTool={stepTool} parentCallback={callbackFunction} callbackSaveToVault={saveToVault} /> : null }
         </div>
         : null }
 
