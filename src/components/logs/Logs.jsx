@@ -86,7 +86,7 @@ function Logs() {
       {loadingProfile ? <LoadingDialog size="lg" /> : null }
       {error ? <ErrorDialog error={error} /> : null}
     
-      <div className="mt-3 max-content-width">
+      <div className="max-content-width">
         <h4>Logs</h4>
         <p>OpsERA provides users with access to a vast repository of logging with industry leading search and filtering capability.  Access all available 
          logging, reports and configurations around the OpsERA Analytics Platform or search your 

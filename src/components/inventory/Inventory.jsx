@@ -36,7 +36,7 @@ function Inventory () {
   };
 
   return (
-    <div className="mt-3 max-content-width">
+    <div className="max-content-width">
       <h4>{selection === "tools" ? "Tool Registry" : "Inventory"}</h4>
       <p>The OpsERA Tool Registry allows you to register, track and configure all of the tools in your organization in one centralized inventory.</p>
 

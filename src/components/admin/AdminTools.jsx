@@ -33,7 +33,7 @@ class AdminTools extends Component {
       <>
         {
           administrator &&
-          <div className="mt-3 max-content-width">
+          <div className="max-content-width">
             <h4>Administration Tools</h4>
             <div>Listed below are administration tools for the platform.</div>
 

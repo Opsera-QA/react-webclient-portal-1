@@ -36,8 +36,8 @@ class ApiConnector extends Component {
 
   render() {
     return (
-      <div className="mt-3 max-content-width">
-        <h4>Tools and Connectivity</h4>
+      <div className="max-content-width">
+        <h4>API Tools and Connectivity</h4>
         <div>Configure connection information for various platform and pipeline supported tools.</div>
 
 

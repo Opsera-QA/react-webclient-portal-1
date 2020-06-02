@@ -118,7 +118,7 @@ function Analytics() {
         {loadingProfile ? <LoadingDialog size="lg" /> : null }
         {error ? <ErrorDialog error={error} /> : null}
         { !isEnabled || !enabledOn || profile.esSearchApi === null || profile.vault !== 200 || profile.esSearchApi.status !== 200 ? 
-          <div style={{ height: "250px" }} className="max-content-module-width-50 mt-3">
+          <div style={{ height: "250px" }} className="max-content-module-width-50">
             <div className="max-content-width">
               <h4>Analytics</h4>
               <p>OpsERA provides users with access to a vast repository of logging and analytics.  Access all available

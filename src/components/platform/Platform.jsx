@@ -11,7 +11,7 @@ function Platform() {
 
   return (
     <>
-      <div className="mt-3 max-content-width">
+      <div className="max-content-width">
         <NewAppProvider>
           <CreationModal />
           <Application />
