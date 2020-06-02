@@ -84,7 +84,7 @@ function NewTool(props) {
     }
   ];
 
-  const [ toolFormFields, setFormFields ] = useState({ ...props.edittool.details });
+  const [ toolFormFields, setFormFields ] = useState({ active: true });
   const [ tool_list, setToolList ] = useState({
     tool_type_identifier: [], 
     tool_identifier: []
@@ -95,7 +95,10 @@ function NewTool(props) {
   }, []);
 
   useEffect(() => {    
-    setFormFields(props.edittool.details);
+    setFormFields({
+      ...toolFormFields,
+      ...props.edittool.details
+    });
   }, [props.edittool.details]);
 
   const getToolList = async () => {
@@ -116,10 +119,7 @@ function NewTool(props) {
   const createNewTool = async () => {
     try {
       const accessToken = await getAccessToken();
-      const postBody = {
-        data: [ toolFormFields ]
-      };
-      const response = await axiosApiService(accessToken).post("/registry/create", postBody);
+      const response = await axiosApiService(accessToken).post("/registry/create", { ...toolFormFields });
       console.log(response.data);
       props.closeModal(false);
     }
@@ -131,10 +131,7 @@ function NewTool(props) {
   const updateTool = async () => {
     try {
       const accessToken = await getAccessToken();
-      const postBody = {
-        data: [toolFormFields ]
-      };
-      await axiosApiService(accessToken).post("/registry/"+ props.edittool.id + "/update", postBody);
+      await axiosApiService(accessToken).post("/registry/"+ props.edittool.id + "/update", { ...toolFormFields });
       props.closeModal(false);
     }
     catch (err) {
@@ -151,6 +148,7 @@ function NewTool(props) {
         type="switch"
         id="custom-switch"
         label="Check this switch"
+        defaultValue={true}
         onChange={e => setFormFields({ ...toolFormFields, [field.id]: e.target.value })}
       />;
     case "textarea":
@@ -194,8 +192,8 @@ function NewTool(props) {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>Close</Button>
-          {}
-          <Button variant="primary" onClick={props.modalType == "new" ? createNewTool : updateTool} disabled={Object.keys(toolFormFields).length == 0 }>Save changes</Button>
+
+          <Button variant="primary" onClick={props.type == "new" ? createNewTool : updateTool} disabled={Object.keys(toolFormFields).length == 0 }>Save changes</Button>
         </Modal.Footer>
       </Modal>
     </>

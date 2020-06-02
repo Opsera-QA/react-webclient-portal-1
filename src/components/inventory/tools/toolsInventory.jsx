@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useContext, useMemo } from "react";
-import { useParams, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
-import { Form, Alert, Table, Button } from "react-bootstrap";
-import { format } from "date-fns";
+import { Button } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext";  
 import { axiosApiService } from "api/apiService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import LoadingDialog from "components/common/loading";
+import { useHistory, useParams } from "react-router-dom";
 
 import ToolsTable from "./toolsTable";
 import NewTool from "./newTool";
@@ -22,9 +21,11 @@ function ToolInventory () {
   });
   const [modalType, setModalType] = useState("new");
   const [toolList, setToolList] = useState([]);
-
+  let history = useHistory();
+  const { id, view } = useParams();
 
   const editTool = (cellData) => {
+    history.push(`/inventory/tools/${cellData.row.original._id}`);
     setModalType("edit");
     editRowDetails({
       id: cellData.row.original._id,
@@ -33,12 +34,26 @@ function ToolInventory () {
     setShowModal(true);
   };
 
-  const getToolRegistryList = async () => {
+  const deleteTool = async (cellData) => {
+    editRowDetails({
+      id: cellData.row.original._id,
+      details: cellData.row.values
+    });
+
+    const accessToken = await getAccessToken();
+    const response = await axiosApiService(accessToken).delete("/registry/" + cellData.row.original._id )
+      .then((result) =>  {
+        getToolRegistryList("");
+      })
+      .catch(error => {return error;});
+  };
+
+  const getToolRegistryList = async (id) => {
     try {
       const accessToken = await getAccessToken();
-      const response = await axiosApiService(accessToken).get("/registry", {});
+      const response = await axiosApiService(accessToken).get("/registry/" + id, {});
       setToolList(response.data);
-      console.log(response.data);
+      if(id) setShowModal(true);
     }
     catch (err) {
       console.log(err.message);
@@ -46,16 +61,27 @@ function ToolInventory () {
   };
     
   useEffect(() => {    
-    getToolRegistryList();
+    if(id && id.match(/^[0-9a-fA-F]{24}$/))  setModalType("edit");
+    getToolRegistryList(id !==  undefined ? id : "");   
   }, []);
 
   const handleActionClick = () => {
+    setModalType("new");
     setShowModal(true);
   };
 
   const closeModal = (data) => {
     setShowModal(data);
-    getToolRegistryList();
+    getToolRegistryList("");
+  };
+
+  const actionButtons = (cellData) => {
+    return(
+      <>
+        <Button variant="outline-primary" size="sm" className="mr-1" onClick={() => { editTool(cellData); }} ><FontAwesomeIcon icon={faEdit} className="mr-1"/> Edit</Button>
+        <Button variant="outline-danger" size="sm" className="mr-1" onClick={() => { deleteTool(cellData); }} ><FontAwesomeIcon icon={faTrash} className="mr-1"/> Delete</Button>
+      </>
+    );
   };
 
   
@@ -91,7 +117,7 @@ function ToolInventory () {
       },
       {
         Header: "Action",
-        Cell: (cellData) => <Button variant="link" onClick={() => { editTool(cellData); }} ><FontAwesomeIcon icon={faEdit} className="mr-1"/> Edit</Button>
+        Cell: (cellData) => actionButtons(cellData)
       }
     ],
     []
@@ -103,7 +129,7 @@ function ToolInventory () {
 
       <div className="mt-2 mb-2 text-right">
         <Button variant="primary" size="sm"  
-          onClick={() => { handleActionClick("add"); }}> 
+          onClick={() => { handleActionClick("new"); }}> 
           <FontAwesomeIcon icon={faPlus} className="mr-1"/> New Entry
         </Button>
         <br />
