@@ -5,14 +5,11 @@ import { Row, Col } from "react-bootstrap";
 
 function OverviewLanding() {
   const contextType = useContext(AuthContext);
-  const { authenticated } = contextType;
   const [userInfo, setUserInfo] = useState();
 
   useEffect(() => {    
-    if (authenticated) {
-      getRoles();
-    }
-  }, [authenticated]);
+    getRoles();
+  }, []);
 
   const getRoles = async () => {
     const { getUserInfo } = contextType; 
