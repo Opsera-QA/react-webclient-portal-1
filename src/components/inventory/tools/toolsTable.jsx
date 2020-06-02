@@ -11,15 +11,7 @@ function ToolsTable({ columns, data }) {
     getTableBodyProps,
     headerGroups,
     prepareRow,
-    page, // Instead of using 'rows', we'll use page,
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    pageCount,
-    gotoPage,
-    nextPage,
-    previousPage,
-    setPageSize,
+    rows, 
     state: { pageIndex, pageSize },
   } = useTable(
     {
@@ -40,6 +32,7 @@ function ToolsTable({ columns, data }) {
               {headerGroup.headers.map((column, j) => (
                 <th key={j} {...column.getHeaderProps(column.getSortByToggleProps())}>
                   {column.render("Header")}
+
                   <span>
                     {column.isSorted
                       ? column.isSortedDesc
@@ -53,7 +46,7 @@ function ToolsTable({ columns, data }) {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {page.map((row, i) => {
+          {rows.map((row, i) => {
             prepareRow(row);
             return (
               <tr key={i} {...row.getRowProps()}>
@@ -65,44 +58,6 @@ function ToolsTable({ columns, data }) {
           })}
         </tbody>
       </Table>
-      {/* <div className="pagination">
-        <Pagination className="justify-content-center">
-          <Pagination.Item  onClick={() => gotoPage(0)} disabled={!canPreviousPage}>First</Pagination.Item>
-          <Pagination.Item  disabled={!canPreviousPage} onClick={() => previousPage()}>Previous</Pagination.Item>
-          <Pagination.Item  disabled={!canNextPage} onClick={() => nextPage()}>Next</Pagination.Item>
-          <Pagination.Item  onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>Last</Pagination.Item>
-        </Pagination>
-         <span>
-          Page{" "}
-          <strong>
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>{" "}
-        </span>
-        <span>
-          | Go to page:{" "}
-          <input
-            type="number"
-            defaultValue={pageIndex + 1}
-            onChange={e => {
-              const page = e.target.value ? Number(e.target.value) - 1 : 0;
-              gotoPage(page);
-            }}
-            style={{ width: "100px" }}
-          />
-        </span>{" "}
-        <select
-          value={pageSize}
-          onChange={e => {
-            setPageSize(Number(e.target.value));
-          }}
-        >
-          {[25, 50, 100].map(pageSize => (
-            <option key={pageSize} value={pageSize}>
-              Show {pageSize}
-            </option>
-          ))}
-        </select> 
-      </div> */}
     </>
   );
 }
