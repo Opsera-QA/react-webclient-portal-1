@@ -189,6 +189,7 @@ function RegisteredUsers() {
                             <Row key={index} style={{ marginLeft: "10px", fontSize: ".9em" }}>
                               <Col>{tool.name}</Col>
                               <Col>{tool.toolStatus}</Col>
+                              <Col>{tool.dnsName}</Col>
                               <Col>{tool._id}</Col>
                             </Row>
                           ))}
