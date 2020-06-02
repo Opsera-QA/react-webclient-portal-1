@@ -29,6 +29,8 @@ import ApiConnectionDemo from "./components/api_connector/ApiDemo";
 import Workflow from "./components/workflow/Workflow";
 import SystemStatus from "./components/admin/status/SystemStatus";
 import CustomerSystemStatus from "./components/admin/status/CustomerSystemStatus";
+import Overview from "./components/landing/Overview";
+import Registration from "./components/landing/Registration";
 
 const config = require("./config");
 
@@ -67,10 +69,12 @@ class App extends Component {
                   <Route path="/" exact component={Home} />
                   <Route path="/login" exact component={Login} />
                   <Route path="/signup" exact component={Signup} />
+                  <Route path="/overview" exact component={Overview} />
                   <Route path="/about" exact component={About} />
                   <Route path="/about/pricing" component={Pricing} />
                   <Route path="/about/solutions" component={Solutions} />
                   <Route path="/implicit/callback" component={ImplicitCallback} />
+                  <Route path="/registration" exact component={Registration} />
                   <SecureRoute path="/profile" component={Profile} />
                   <SecureRoute path="/inventory/:view?" component={Inventory} />
                   <SecureRoute path="/dashboard" component={Dashboard} />

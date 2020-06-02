@@ -21,6 +21,36 @@
       "src": "img/opsera_logo.png",
       "type": "image/png",
       "sizes": "42x42"
+    },
+    {
+      "src": "img/analytics.png",
+      "type": "image/png",
+      "sizes": "195x225"
+    },
+    {
+      "src": "img/dashboard.png",
+      "type": "image/png",
+      "sizes": "195x225"
+    },
+    {
+      "src": "img/pipeline.png",
+      "type": "image/png",
+      "sizes": "195x225"
+    },
+    {
+      "src": "img/platform.png",
+      "type": "image/png",
+      "sizes": "195x225"
+    },
+    {
+      "src": "img/opsera_logo_170x35.png",
+      "type": "image/png",
+      "sizes": "170x35"
+    },
+    {
+      "src": "img/opsera_logo_120x118.png",
+      "type": "image/png",
+      "sizes": "120x118"
     }
   ],
   "start_url": ".",

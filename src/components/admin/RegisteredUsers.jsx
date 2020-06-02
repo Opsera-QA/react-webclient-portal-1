@@ -7,7 +7,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { format } from "date-fns";
 //import InfoDialog from "../common/info";
 import Modal from "../common/modal";
-import { ApiService } from "../../api/apiService";
+import { ApiService, axiosApiService } from "../../api/apiService";
 
 function RegisteredUsers() {
 
@@ -24,7 +24,8 @@ function RegisteredUsers() {
       administrator: false,
       fetching: true,
       error: null,
-      messages: null
+      messages: null,
+      deployingElk: false
     }
   );
 
@@ -62,6 +63,30 @@ function RegisteredUsers() {
     const accessToken = getAccessToken();
     const userInfo = getUserInfo();
     deactivateUser(userId, accessToken, userInfo);
+  }
+
+  async function handleDeployElkStack(userId) {
+    setState({ deployingElk: true });
+    await deployElkStack(userId);
+    //refresh page
+    getApiData();
+  }
+
+  async function deployElkStack(id) {
+    const { getAccessToken, } = Auth;
+    const accessToken = await getAccessToken();
+    const apiUrl = `/users/tools/activate-elk/${id}`;         
+    try {
+      const response = await axiosApiService(accessToken).get(apiUrl);      
+      console.log(response);    
+    }
+    catch (err) {
+      console.log(err.message);
+      setState({
+        error: err,
+        fetching: false
+      });
+    }
   }
 
   function deactivateUser(userId, accessToken) {
@@ -106,7 +131,7 @@ function RegisteredUsers() {
       });
   }
 
-  const { data, error, fetching, confirm, administrator } = state;
+  const { data, error, fetching, confirm, administrator, deployingElk } = state;
 
   return (
     <>
@@ -127,12 +152,13 @@ function RegisteredUsers() {
           <Table responsive>
             <thead>
               <tr>
+                <th>ID</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Email</th>
                 <th>Organization</th>
-                <th>Division</th>
                 <th>Domain</th>
+                
                 <th>Created</th>
                 <th>Actions</th>
               </tr>
@@ -141,15 +167,16 @@ function RegisteredUsers() {
               {data.map((val, key) => (
                 <Fragment key={key}>
                   <tr>
+                    <td>{val._id}</td>
                     <td>{val.firstName}</td>
                     <td>{val.lastName}</td>
                     <td>{val.email}</td>
                     <td>{val.organizationName}</td>
-                    <td>{val.division}</td>
                     <td>{val.domain}</td>
+                    
                     <td>{format(new Date(val.createdAt), "yyyy-MM-dd', 'hh:mm a")}</td>
                     <td>
-                      <Button variant="danger" onClick={() => { handleDeletePress(val._id); }} >Deactivate User</Button>
+                      <Button variant="danger" size="sm" onClick={() => { handleDeletePress(val._id); }} >Deactivate User</Button>
                     </td>
                   </tr>
 
@@ -157,6 +184,7 @@ function RegisteredUsers() {
                     Object.keys(val.tools).length > 0 ? (
                       <tr>
                         <td colSpan="7" style={{ borderTop: 0, paddingTop: 0, marginTop: 0, paddingBottom: "25px" }}>
+                          <h6>Tools:</h6>
                           {val.tools.map((tool, index) => (
                             <Row key={index} style={{ marginLeft: "10px", fontSize: ".9em" }}>
                               <Col>{tool.name}</Col>
@@ -168,7 +196,13 @@ function RegisteredUsers() {
                       </tr>
                     ) :
                       <tr>
-                        <td colSpan="7" className="text-muted text-center" style={{ borderTop: 0, paddingBottom: "25px" }}>No tools are associated with this user account!</td>
+                        <td colSpan="7" className="text-muted text-center" style={{ borderTop: 0, paddingBottom: "25px" }}>
+                          No tools are associated with this user account! 
+                          <br />
+                          <Button variant="outline-secondary" disabled={deployingElk} size="sm" 
+                            onClick={() => { handleDeployElkStack(val._id); }} >
+                            {deployingElk ? "working..." : "Deploy ELK Stack Now"}</Button>
+                        </td>
                       </tr>
                   ) :
                     <tr>

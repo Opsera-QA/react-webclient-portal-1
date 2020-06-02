@@ -442,7 +442,7 @@ const PipelineWorkflowDetail = (props) => {
                 quietSavePlan={quietSavePlan}
                 parentHandleViewSourceActivityLog={handleViewSourceActivityLog} />             
             </div>
-            <SteppedLineTo from="source" to="step-items" orientation="v" borderColor="#226196" borderWidth={2} fromAnchor="bottom" toAnchor="top" />
+            <SteppedLineTo from="source" to="step-items" orientation="v" borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="top" />
 
             <div className="workflow-module-container workflow-module-container-width-sm pt-2 mb-4 text-center mx-auto h6">
             End of Workflow

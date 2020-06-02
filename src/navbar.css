@@ -1,5 +1,6 @@
 .nav-bar {
   padding-top:5px;
+  border-bottom: solid 1px #c9cdd0
 }
 
 .nav-bar .header-text {
@@ -15,13 +16,13 @@
 
 /* UserName Text Style */
 .navbar-nav .nav-link {
-  color: #fff !important;
+  /* color: #fff !important; */
   font-size: 1.2em;
 }
 
 a.nav-drop-down-item:hover {
-  color: #fff !important;
-  background-color: #00a1e0 !important;
+  /* color: #fff !important; */
+  background-color: #1989F9 !important;
   text-decoration: none;
 }
 

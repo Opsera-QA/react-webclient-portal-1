@@ -37,14 +37,14 @@ function HeaderNavBar() {
   };
 
   return (
-    <Navbar bg="dark" variant="dark" className="nav-bar">
+    <Navbar className="nav-bar">
       <Navbar.Brand href="/" style={{ minWidth:165 }}>
         <img alt="OpsERA"
-          src="/img/opsera_logo.png"
-          width="40"
-          height="40"
-          className="d-inline-block align-top"
-        /><span className="header-text">psERA</span>
+          src="/img/opsera_logo_170x35.png"
+          width="170"
+          height="35"
+          className="d-inline-block align-top ml-3"
+        />
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav"/>
       <Navbar.Collapse id="basic-navbar-nav">

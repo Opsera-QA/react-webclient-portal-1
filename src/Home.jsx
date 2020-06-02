@@ -1,17 +1,19 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "./contexts/AuthContext";
 import { Row, Col, Button, Card } from "react-bootstrap";
-import DashboardHome from "./components/dashboard/DashboardHome";
+//import DashboardHome from "./components/dashboard/DashboardHome";
 import LoadingDialog from "./components/common/loading";
 
 function Home() {
   const contextType = useContext(AuthContext);
   const { authenticated, loading } = contextType;
   const history = useHistory();
+  const [previewRole, setPreviewRole] = useState(false);
 
   useEffect(() => {    
     if (authenticated) {
+      getRoles();
       gotoHomePage();
     }
   }, [authenticated]);
@@ -26,7 +28,18 @@ function Home() {
   };
 
   const gotoHomePage = () => {
-    history.push("/inventory");
+    //if user is @opsera.io, go to new overview page else inventory
+    if (previewRole) {
+      history.push("/overview");
+    } else {
+      history.push("/inventory");
+    }    
+  };
+
+  const getRoles = async () => {
+    const { getUserInfo } = contextType; 
+    const user = await getUserInfo();
+    setPreviewRole(user.email.includes("@opsera.io"));    
   };
 
   // if (authenticated) {
