@@ -125,7 +125,7 @@ function Analytics() {
            logging, reports and configurations around the OpsERA Analytics Platform or search your
           currently configured logs repositories below.</p>
             </div>
-            <div className="mt-1 max-content-width mb-4">
+            <div className="mt-1 max-content-width mb-1">
               <ConfigurationsForm settings={data} token={token} />
             </div>
             <div className="row h-100">
@@ -169,19 +169,19 @@ function Analytics() {
            logging, reports and configurations around the OpsERA Analytics Platform or search your
           currently configured logs repositories below.</p>
               </div>
-              <div className="p-2 mt-1 max-content-width mb-4">
+              <div className="p-2 mt-1 max-content-width mb-1">
                 <ConfigurationsForm settings={data} token={token} />
               </div>
   
               <div className="p-2">
   
-                <div className="mt-3">
+                <div className="mt-1">
                   <ListGroup horizontal>
                     <ListGroup.Item className={"pointer " + (selection === "pipeline" ? "active" : "")} onClick={handleTabClick("pipeline")}>Pipeline</ListGroup.Item>
                     <ListGroup.Item className={"pointer " + (selection === "security" ? "active" : "")} onClick={handleTabClick("security")}>Security</ListGroup.Item>
                     <ListGroup.Item className={"pointer " + (selection === "software_development" ? "active" : "")} onClick={handleTabClick("software_development")}>Software Development</ListGroup.Item>
                     <ListGroup.Item className={"pointer " + (selection === "software_testing" ? "active" : "")} onClick={handleTabClick("software_testing")}>Software Testing</ListGroup.Item>
-                    <ListGroup.Item className={"pointer " + (selection === "service_operation" ? "active" : "")} onClick={handleTabClick("service_operation")}>Service Operation</ListGroup.Item>
+                    {/* <ListGroup.Item className={"pointer " + (selection === "service_operation" ? "active" : "")} onClick={handleTabClick("service_operation")}>Service Operation</ListGroup.Item> */}
                   </ListGroup>
                 </div>
                 <div className="mt-3">
@@ -207,7 +207,7 @@ function ChartView({ selection, persona }) {
     case "pipeline":
       return (
         <>
-          <div className="m-2">
+          <div className="mt-2">
             <SummaryChartsView />
           </div>
         </>);
@@ -216,7 +216,7 @@ function ChartView({ selection, persona }) {
     case "security":
       return (
         <>
-          <div className="m-2">
+          <div className="mt-2">
             <ReliabilityMetricsCharts persona={persona} />
           </div>
           
@@ -275,7 +275,7 @@ function ChartView({ selection, persona }) {
     case "software_testing":
       return (
         <>
-          <div className="m-2">
+          <div className="mt-2">
             <CodeCoverageMetricsView />
           </div>
           <div className="d-flex">
