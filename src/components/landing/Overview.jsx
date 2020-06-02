@@ -21,15 +21,15 @@ function OverviewLanding() {
   
   return (
     <>
-      <div className="mt-3 ml-5 w-75">
+      <div className="mt-3 ml-5">
         <Row>
           <Col xl="12">
             <div style={{ maxWidth: "1025px" }}>
               <div className="h5 mb-3">Welcome back {userInfo && userInfo.name ? userInfo.name : null}!</div>
               <div className="h4 text-muted mb-5">Get started with Opsera</div>
               
-              <div className="row mx-n2 mt-4">
-                <div className="col-md px-2">
+              <div className="row mx-n2 mt-4" style={{ minWidth:"1020px" }}>
+                <div className="col-md px-2 landing-content-module">
                   <img alt="OpsERA"
                     src="/img/platform.png"
                     width="195"
@@ -37,7 +37,7 @@ function OverviewLanding() {
                     className="d-inline-block align-top"
                   />
                 </div>
-                <div className="col-md px-2">
+                <div className="col-md px-2 landing-content-module">
                   <img alt="OpsERA"
                     src="/img/pipeline.png"
                     width="195"
@@ -45,7 +45,7 @@ function OverviewLanding() {
                     className="d-inline-block align-top"
                   />
                 </div>
-                <div className="col-md px-2">
+                <div className="col-md px-2 landing-content-module">
                   <img alt="OpsERA"
                     src="/img/analytics.png"
                     width="195"
@@ -53,7 +53,7 @@ function OverviewLanding() {
                     className="d-inline-block align-top"
                   />
                 </div>
-                <div className="col-md px-2">
+                <div className="col-md px- landing-content-module2">
                   <img alt="OpsERA"
                     src="/img/dashboard.png"
                     width="195"
@@ -62,20 +62,20 @@ function OverviewLanding() {
                   />
                 </div>
               </div>
-              <div className="row mx-n2 mt-4">
-                <div className="col-md px-2">
+              <div className="row mx-n2 mt-4" style={{ minWidth:"1020px" }}>
+                <div className="col-md px-2 landing-content-module">
                   <div className="h5">Platform</div>
                   <div className="text-muted">Spin up a variety of tools through OpsERA.</div>
                 </div>
-                <div className="col-md px-2">
+                <div className="col-md px-2 landing-content-module">
                   <div className="h5">Pipeline</div>
                   <div className="text-muted">Orchestrate workflows across various technologies and platforms.</div>
                 </div>
-                <div className="col-md px-2">
+                <div className="col-md px-2 landing-content-module">
                   <div className="h5">Analytics</div>
                   <div className="text-muted">Get real time observability across your various pipelines.</div>
                 </div>
-                <div className="col-md px-2">
+                <div className="col-md px-2 landing-content-module">
                   <div className="h5">Dashboard</div>
                   <div className="text-muted">Stay current on exactly what you need to know.</div>
                 </div>
@@ -84,7 +84,7 @@ function OverviewLanding() {
           </Col>          
         </Row>
         <Row>
-          <Col xl="12" className="pt-5"><hr /></Col>
+          <Col xl="12" className="pt-5"><hr style={{ width:"1020px", textAlign: "left", marginLeft: "0" }} /></Col>
         </Row>  
         <Row>
           <Col xl="12" className="pt-2">
