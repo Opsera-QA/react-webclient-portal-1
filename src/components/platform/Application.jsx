@@ -52,6 +52,7 @@ function Application(props) {
     setSavingStatus(null);
     changeEditTools();
     setApplicationStatus(null);
+    setApplicationDetails({ data: {}, tools: [] });
   };
 
   const changeEditTools = async () => {
@@ -99,14 +100,15 @@ function Application(props) {
       })
       .catch(function (error) {
         let message = null;
-        if(error.response.data.errmsg.includes("duplicate key error")) {
+        
+        if(error.response.data && error.response.data.errmsg.includes("duplicate key error")) {
           message = "Application already exists.";
           setApplicationStatus("failed");
           setAppStatus({
             error: message,
             message: message ? message : "Error reported accessing API."
           });
-        } else {
+        } else { 
           message = handleError(error);
           setApplicationStatus("failed");
           setAppStatus({
@@ -199,25 +201,25 @@ function Application(props) {
       <div>
         <h4>Platforms</h4>
 
-        <ul className="nav nav-tabs mt-3 mb-3">
+        <ul className="nav nav-tabs mt-3">
           <li className="nav-item">
-            <a className={"nav-link " + (!showEditTools ? "active" : "")} href="#" onClick={handleTabClick}>Add New</a>
+            <a className={"nav-link " + (!showEditTools ? "active" : "")} href="#" onClick={handleTabClick}>Add New Platform</a>
           </li>
           <li className="nav-item">
-            <a className={"nav-link " + (showEditTools ? "active" : "")} href="#" onClick={handleTabClick}>Edit Existing</a>
+            <a className={"nav-link " + (showEditTools ? "active" : "")} href="#" onClick={handleTabClick}>Edit Existing Platform</a>
           </li>
         </ul>
 
         <div className="row m-2">
 
           {applicationStatus !== "success" && !showEditTools && savingStatus !== "success" ? (
-            <div className="col ml-auto">
+            <div className="col ml-auto pb-4 mt-3">
               <Form loading={checkingAppName || saving ? "true" : undefined}>
                 <Form.Row>
                   <Form.Group controlId="formGridEmail">
-                    <Form.Label>Application Name</Form.Label>
+                    <Form.Label>New Application</Form.Label>
                     <Form.Control type="text"
-                      placeholder="Application Name"
+                      placeholder="Name"
                       name="appName"
                       value={appName}
                       onChange={handleAppNameChange}
@@ -271,8 +273,11 @@ function Application(props) {
 
         {createAppStatus.error ? <ErrorDialog error={createAppStatus.error} /> : null}
 
-        {applicationStatus === "success" && savingStatus === null && createAppStatus.message ? <SuccessDialog successMessage={createAppStatus.message} /> : null}
-
+        {applicationDetails.data && applicationDetails.data.name ? 
+          <>
+            <h4>{applicationDetails.data.name}</h4>
+          </> : null }
+        
         {savingStatus === "success" && createAppStatus.message ? <>
           <SuccessDialog successMessage={createAppStatus.message} />
           <Button variant="outline-primary" className="ml-2" onClick={gotoInventory}>
@@ -290,18 +295,18 @@ function Application(props) {
               <RepositoryManagement app={applicationDetails.data} tools={applicationDetails.tools} />
               <Monitoring app={applicationDetails.data} tools={applicationDetails.tools} />
             </CardColumns>
-            <br />
-            <br />
-            <div className="m-2 text-right">
+            <div className="text-right">
               <Button variant="outline-primary" onClick={cancelTools} disabled={Object.keys(data).length == 0} className="m-2">
                 Cancel
               </Button>
-              <Button variant="primary" onClick={saveTools}>
-                Save
+              <Button variant="primary" onClick={saveTools} disabled={Object.keys(data).length == 0}>
+                Deploy Tool Selection
               </Button>
             </div>
           </div>
         )}
+
+        {/* {applicationStatus === "success" && savingStatus === null && createAppStatus.message ? <SuccessDialog successMessage={createAppStatus.message} /> : null} */}
       </div>
     </>
   );
