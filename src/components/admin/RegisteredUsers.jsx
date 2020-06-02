@@ -10,7 +10,6 @@ import Modal from "../common/modal";
 import { ApiService, axiosApiService } from "../../api/apiService";
 
 function RegisteredUsers() {
-
   const Auth = useContext(AuthContext);
   let history = useHistory();
   // console.log(Auth);
@@ -25,29 +24,38 @@ function RegisteredUsers() {
       fetching: true,
       error: null,
       messages: null,
-      deployingElk: false
+      deployingElk: false,
+      accessToken: null,
+      userInfo: null
     }
   );
 
   useEffect(() => {
-    const { authenticated, getUserInfo } = Auth;
-    // function get the user data from okta and checks if the user is admin or not.
-    async function checkUserData() {
-      const userInfo = await getUserInfo();
-      setState({ authenticated: authenticated });
-      if (userInfo) {
-        setState({ administrator: userInfo.Groups.includes("Admin") });
-      }
-
-      if (!userInfo.Groups.includes("Admin")) {
-        //move out
-        history.push("/");
-      } else {
-        getApiData();
-      }
-    }
-    checkUserData();
+    loadPage();
   }, []);
+
+  async function loadPage() {
+    await checkUserData();
+    getApiData();
+    console.log(state);
+  }
+
+  async function checkUserData() {
+    const { authenticated, getUserInfo, getAccessToken } = Auth;    
+    const accessToken = await getAccessToken();
+    const userInfo = await getUserInfo();
+    setState({ accessToken: accessToken, userInfo: userInfo, authenticated: authenticated });
+    if (userInfo) {
+      setState({ administrator: userInfo.Groups.includes("Admin") });
+    }
+
+    if (!userInfo.Groups.includes("Admin")) {
+      //move out
+      history.push("/");
+    } else {
+      getApiData();
+    }
+  }
 
   function handleDeletePress(userId) { setState({ confirm: true, delUserId: userId }); }
   function handleCancel() { setState({ confirm: false, delUserId: "" }); }
@@ -59,9 +67,7 @@ function RegisteredUsers() {
   }
 
   function handleDeactivateUser(userId) {
-    const { getAccessToken, getUserInfo } = Auth;  //this.context is where all data from the above AuthContext component resides.  It's like the state props design wise
-    const accessToken = getAccessToken();
-    const userInfo = getUserInfo();
+    const { accessToken, userInfo } = state;
     deactivateUser(userId, accessToken, userInfo);
   }
 
@@ -70,11 +76,11 @@ function RegisteredUsers() {
     await deployElkStack(userId);
     //refresh page
     getApiData();
+    setState({ deployingElk: false });
   }
 
   async function deployElkStack(id) {
-    const { getAccessToken, } = Auth;
-    const accessToken = await getAccessToken();
+    const { accessToken } = state;
     const apiUrl = `/users/tools/activate-elk/${id}`;         
     try {
       const response = await axiosApiService(accessToken).get(apiUrl);      
@@ -89,9 +95,8 @@ function RegisteredUsers() {
     }
   }
 
-  function deactivateUser(userId, accessToken) {
-    console.log(userId);
-    // deactivate user api call goes here
+  function deactivateUser(userId) {
+    const { accessToken } = state;
     const apiCall = new ApiService("/users/deactivate-user", null, accessToken, { userId: userId });
     apiCall.post()
       .then(function (response) {
@@ -110,9 +115,8 @@ function RegisteredUsers() {
 
   }
 
-  function getApiData() {
-    const { getAccessToken } = Auth;
-    const accessToken = getAccessToken();
+  function getApiData() {    
+    const { accessToken } = state;
     const apiCall = new ApiService("/users/get-users", {}, accessToken);
     apiCall.get()
       .then(function (response) {
@@ -152,15 +156,13 @@ function RegisteredUsers() {
           <Table responsive>
             <thead>
               <tr>
-                <th>ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Organization</th>
-                <th>Domain</th>
-                
-                <th>Created</th>
-                <th>Actions</th>
+                <th style={{ width: "10%" }}>SSO Users ID</th>
+                <th style={{ width: "20%" }}>Name</th>
+                <th style={{ width: "20%" }}>Email</th>
+                <th style={{ width: "15%" }}>Organization</th>
+                <th style={{ width: "10%" }}>Domain</th>
+                <th style={{ width: "15%" }}>Created</th>
+                <th style={{ width: "10%" }}>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -168,8 +170,7 @@ function RegisteredUsers() {
                 <Fragment key={key}>
                   <tr>
                     <td>{val._id}</td>
-                    <td>{val.firstName}</td>
-                    <td>{val.lastName}</td>
+                    <td>{val.firstName} {val.lastName}</td>
                     <td>{val.email}</td>
                     <td>{val.organizationName}</td>
                     <td>{val.domain}</td>
@@ -187,10 +188,10 @@ function RegisteredUsers() {
                           <h6>Tools:</h6>
                           {val.tools.map((tool, index) => (
                             <Row key={index} style={{ marginLeft: "10px", fontSize: ".9em" }}>
-                              <Col>{tool.name}</Col>
-                              <Col>{tool.toolStatus}</Col>
-                              <Col>{tool.dnsName}</Col>
-                              <Col>{tool._id}</Col>
+                              <Col xs={3}>{tool._id}</Col>
+                              <Col xs={2}>{tool.name}</Col>
+                              <Col xs={2}>{tool.toolStatus}</Col>
+                              <Col>{tool.dnsName}</Col>                              
                             </Row>
                           ))}
                         </td>
@@ -202,7 +203,7 @@ function RegisteredUsers() {
                           <br />
                           <Button variant="outline-secondary" disabled={deployingElk} size="sm" 
                             onClick={() => { handleDeployElkStack(val._id); }} >
-                            {deployingElk ? "working..." : "Deploy ELK Stack Now"}</Button>
+                            Deploy ELK Stack Now</Button>
                         </td>
                       </tr>
                   ) :
