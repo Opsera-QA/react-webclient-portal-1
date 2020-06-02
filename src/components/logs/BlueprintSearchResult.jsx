@@ -18,7 +18,7 @@ function BlueprintSearchResult({ searchResults }) {
   return (   
     <>
       <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
-        <thead>
+        {searchResults.length > 0 ? <thead>
           <tr>
             <th style={{ width: "5%" }}>Build</th>
             <th style={{ width: "5%" }}>Environment</th>
@@ -28,7 +28,7 @@ function BlueprintSearchResult({ searchResults }) {
             <th style={{ width: "25%" }}>Git Commit ID</th>
             <th style={{ width: "5%" }}>Status</th>
           </tr>
-        </thead>
+        </thead> : ""}
         <tbody>
           {searchResults.map((item, idx) => (
             <tr key={idx} >
