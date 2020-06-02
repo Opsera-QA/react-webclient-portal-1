@@ -41,7 +41,7 @@ const INITIAL_DATA = {
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
-function ElasticBeanstalkDeploy( { data, pipelineId, plan, stepId, parentCallback, callbackSaveToVault }) {
+function ElasticBeanstalkDeploy( { stepTool, pipelineId, plan, stepId, parentCallback, callbackSaveToVault }) {
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [formMessage, setFormMessage] = useState("");
   const [renderForm, setRenderForm] = useState(false);
@@ -58,7 +58,7 @@ function ElasticBeanstalkDeploy( { data, pipelineId, plan, stepId, parentCallbac
     const controller = new AbortController();
     const runEffect = async () => {
       try {
-        await loadFormData(data);        
+        await loadFormData(stepTool);        
         setRenderForm(true);
       } catch (err) {
         if (err.name === "AbortError") {
@@ -72,7 +72,7 @@ function ElasticBeanstalkDeploy( { data, pipelineId, plan, stepId, parentCallbac
       setRenderForm(false);     
       controller.abort();      
     };
-  }, [data]);
+  }, [stepTool]);
 
 
   const loadFormData = async (step) => {
@@ -241,7 +241,7 @@ function ElasticBeanstalkDeploy( { data, pipelineId, plan, stepId, parentCallbac
 }
 
 ElasticBeanstalkDeploy.propTypes = {
-  data: PropTypes.object,
+  stepTool: PropTypes.object,
   plan: PropTypes.array,
   pipelineId: PropTypes.string,
   stepId: PropTypes.string,
