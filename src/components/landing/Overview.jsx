@@ -1,31 +1,16 @@
 //landing page after user signs in
 import React, { useContext, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
-import { Row, Col, Button, Card } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 
 function OverviewLanding() {
   const contextType = useContext(AuthContext);
-  const { authenticated, loading } = contextType;
-  const history = useHistory();
-  const [userInfo, setUserInfo] = useState(false);
+  const [userInfo, setUserInfo] = useState();
 
   useEffect(() => {    
-    if (authenticated) {
-      //gotoHomePage();
-      getRoles();
-    }
-  }, [authenticated]);
+    getRoles();
+  }, []);
 
-  
-  /*   const gotoSignUp = () => {
-    history.push("/signup");
-  };
-
-  const gotoHomePage = () => {
-    history.push("/inventory");
-  };
- */
   const getRoles = async () => {
     const { getUserInfo } = contextType; 
     const user = await getUserInfo();
@@ -40,7 +25,7 @@ function OverviewLanding() {
         <Row>
           <Col xl="12">
             <div style={{ maxWidth: "1025px" }}>
-              <div className="h5 mb-3">Welcome back {userInfo || userInfo.name}!</div>
+              <div className="h5 mb-3">Welcome back {userInfo && userInfo.name ? userInfo.name : null}!</div>
               <div className="h4 text-muted mb-5">Get started with Opsera</div>
               
               <div className="row mx-n2 mt-4">

@@ -82,7 +82,7 @@ function Home() {
                   </Card>
                 </div>
               </Col>
-              <Col className="text-center" xl="3"><img src="/img/opsera_logo_large.png" width="325" alt="" className="d-none d-xl-block text-center" /></Col>
+              <Col className="text-center" xl="3">{/* <img src="/img/opsera_logo_large.png" width="325" alt="" className="d-none d-xl-block text-center" /> */}</Col>
             </Row>
           </div>
           
