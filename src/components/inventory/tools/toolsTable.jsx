@@ -25,7 +25,7 @@ function ToolsTable({ columns, data }) {
 
   return (
     <>
-      <Table hover size="sm" {...getTableProps()}>
+      <Table responsive hover {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup, i) => (
             <tr key={i}  {...headerGroup.getHeaderGroupProps()}>
