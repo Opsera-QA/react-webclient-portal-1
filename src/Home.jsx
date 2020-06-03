@@ -29,7 +29,6 @@ function Home() {
     const { getUserInfo } = contextType; 
     const user = await getUserInfo();
     setPreviewRole(user.email.includes("@opsera.io")); 
-    console.log("user: ", user.email.includes("@opsera.io"));
 
     if (user.email.includes("@opsera.io")) {
       history.push("/overview");
