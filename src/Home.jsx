@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "./contexts/AuthContext";
 import { Row, Col, Button, Card } from "react-bootstrap";
-//import DashboardHome from "./components/dashboard/DashboardHome";
 import LoadingDialog from "./components/common/loading";
 
 function Home() {
@@ -13,8 +12,7 @@ function Home() {
 
   useEffect(() => {    
     if (authenticated) {
-      getRoles();
-      gotoHomePage();
+      getRoles();      
     }
   }, [authenticated]);
 
@@ -27,24 +25,20 @@ function Home() {
     history.push("/signup");
   };
 
-  const gotoHomePage = () => {
-    //if user is @opsera.io, go to new overview page else inventory
-    if (previewRole) {
+  const getRoles = async () => {
+    const { getUserInfo } = contextType; 
+    const user = await getUserInfo();
+    setPreviewRole(user.email.includes("@opsera.io")); 
+    console.log("user: ", user.email.includes("@opsera.io"));
+
+    if (user.email.includes("@opsera.io")) {
       history.push("/overview");
     } else {
       history.push("/inventory");
     }    
   };
 
-  const getRoles = async () => {
-    const { getUserInfo } = contextType; 
-    const user = await getUserInfo();
-    setPreviewRole(user.email.includes("@opsera.io"));    
-  };
 
-  // if (authenticated) {
-  //   return (<DashboardHome />);
-  // } else {
   return (
     <>
       {loading ? <LoadingDialog /> : 
