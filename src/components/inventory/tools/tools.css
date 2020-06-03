@@ -12,3 +12,7 @@
 .btn-link-danger {
   color: #dc3545;
 }
+
+.btn.focus, .btn:focus {
+  box-shadow: none !important;
+}

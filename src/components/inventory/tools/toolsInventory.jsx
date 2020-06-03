@@ -51,9 +51,17 @@ function ToolInventory () {
   const getToolRegistryList = async (id) => {
     try {
       const accessToken = await getAccessToken();
-      const response = await axiosApiService(accessToken).get("/registry/" + id, {});
-      setToolList(response.data);
-      if(id) setShowModal(true);
+      let apiUrl = id ? "/registry/" + id : "/registry/";
+      const response = await axiosApiService(accessToken).get(apiUrl, {});
+      if(id) {
+        editRowDetails({
+          id: id,
+          details: response.data[0]
+        });
+        setShowModal(true);
+      }else {
+        setToolList(response.data);
+      }
     }
     catch (err) {
       console.log(err.message);
@@ -62,23 +70,28 @@ function ToolInventory () {
     
   useEffect(() => {    
     if(id && id.match(/^[0-9a-fA-F]{24}$/))  setModalType("edit");
-    getToolRegistryList(id !==  undefined ? id : "");   
+    getToolRegistryList(id !=  undefined ? id : "");   
   }, []);
 
   const handleActionClick = () => {
     setModalType("new");
+    editRowDetails({
+      id: "",
+      details: ""
+    });
     setShowModal(true);
   };
 
   const closeModal = (data) => {
-    setShowModal(data);
-    getToolRegistryList("");
+    setShowModal(false);
+    getToolRegistryList(null);
+    history.push("/inventory/tools");
   };
 
   const actionButtons = (cellData) => {
     return(
       <>
-        <Button variant="outline-primary" size="sm" className="mr-1" onClick={() => { editTool(cellData); }} ><FontAwesomeIcon icon={faEdit} className="mr-1"/> Edit</Button>
+        <Button variant="outline-primary" size="sm" className="mr-2" onClick={() => { editTool(cellData); }} ><FontAwesomeIcon icon={faEdit} className="mr-1"/> Edit</Button>
         <Button variant="outline-danger" size="sm" className="mr-1" onClick={() => { deleteTool(cellData); }} ><FontAwesomeIcon icon={faTrash} className="mr-1"/> Delete</Button>
       </>
     );
@@ -125,6 +138,7 @@ function ToolInventory () {
 
   return (
     <>
+      
       <NewTool showModal={showModal} closeModal={(toggleModal) => closeModal(toggleModal)} type={modalType} edittool={rowDetails}/>
 
       <div className="mt-2 mb-2 text-right">
