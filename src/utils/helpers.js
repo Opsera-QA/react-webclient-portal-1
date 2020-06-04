@@ -8,7 +8,11 @@ export function isLocalHost(hostname) {
 
 // check if char/string is alpha number or has a dash.
 export function isAlphaNumeric(str) {
-  return /^[a-z0-9-]+$/i.test(str);
+  if (str.length > 0) {
+    return /^[a-z0-9-]+$/i.test(str);
+  } else {
+    return true;
+  }
 }
 
 export function validateEmail(email) {

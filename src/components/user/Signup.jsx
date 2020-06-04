@@ -16,26 +16,55 @@ function Signup(props) {
   const [ signupFormFields, updateFormFields ] = useState(defaultSignupFormFields);
     
   const handleChange = ({ target: { value } }, field ) => {
-    //Validate the form fields based on rule
-    let { isValid, errorMessage } = validate(value, field);
-    let validateInput = {
-      valid: isValid,   
-      error: field.id == "domain" ? field.error : errorMessage,
-      touched: true,      
-      value: value
-    };
-    //update the form fields for value, error and touched
-    updateFormFields(prevState => ({ 
-      ...prevState, 
-      [field.id]: { 
-        ...prevState[field.id],
-        ...validateInput
-      } 
-    }));
+    
+    
+    if (value.length > 0) {
+      //Validate the form fields based on rule
+      let { isValid, errorMessage } = validate(value, field);
+
+      console.log("value: ", value);
+      console.log("value.length: ", value.length);
+      console.log("isValid: ", isValid);
+
+      let validateInput = {
+        valid: isValid,   
+        error: field.id == "domain" ? field.error : errorMessage,
+        touched: true,      
+        value: value
+      };
+      //update the form fields for value, error and touched
+      updateFormFields(prevState => ({ 
+        ...prevState, 
+        [field.id]: { 
+          ...prevState[field.id],
+          ...validateInput
+        } 
+      }));
+    } else { 
+      //if value is set to nothing (zero length), then reset fields's isvalid state
+      console.log("reseting stuff");
+      let validateInput = {
+        valid: true,   
+        error: null,
+        touched: false,      
+        value: "",
+      };
+
+      updateFormFields(prevState => ({ 
+        ...prevState, 
+        [field.id]: { 
+          ...prevState[field.id],
+          ...validateInput
+        } 
+      }));
+    }
+    
+    
+    
   };
 
   //At any given time, check if all the mandatory field is valid or not
-  const isFormValid = !Object.values(signupFormFields).every(x => (x.valid == true));
+  const isFormValid = Object.values(signupFormFields).every(x => (x.valid == true));
 
   //Check if the email is already registered in the system
   const isEmailAvailable = async () => {
@@ -152,7 +181,7 @@ function Signup(props) {
 
             { isLoading ?
               <Button id="login-button"  disabled={true} variant="outline-success" className="mr-2 px-4" type="button">Working...</Button> :
-              <Button id="login-button"  disabled= {isFormValid} variant="success" className="mr-2 px-4" type="submit">Register Account</Button>
+              <Button id="login-button"  disabled= {!isFormValid} variant="success" className="mr-2 px-4" type="submit">Register Account</Button>
             }
             <Button id="cancel-button" variant="outline-secondary" className="ml-2" type="button" onClick={cancelSignup}>Cancel</Button>
             <div className="mt-1 text-muted text-right">* Required Fields</div>

@@ -48,7 +48,7 @@ function OverviewLanding() {
           <Col xl="12">
             <div style={{ maxWidth: "1025px" }}>
               <div className="h5 mb-3">Welcome back {userInfo && userInfo.name ? userInfo.name : null}!</div>
-              <div className="h4 text-muted mb-5">Get started with Opsera</div>
+              <div className="h4 text-muted mb-5">Get started with OpsERA</div>
               
               <div className="row mx-n2 mt-4" style={{ minWidth:"1020px" }}>
                 <div className="col-md px-2 landing-content-module">
@@ -78,15 +78,7 @@ function OverviewLanding() {
                     onClick= {() => { loadAnalytics(); }}
                   />
                 </div>
-                <div className="col-md px- landing-content-module2">
-                  <img alt="OpsERA"
-                    src="/img/dashboard.png"
-                    width="195"
-                    height="225"
-                    className="d-inline-block align-top pointer"
-                    onClick= {() => { loadDashboards(); }}
-                  />
-                </div>
+                
               </div>
               <div className="row mx-n2 mt-4" style={{ minWidth:"1020px" }}>
                 <div className="col-md px-2 landing-content-module">
@@ -101,8 +93,25 @@ function OverviewLanding() {
                   <div className="h5">Analytics</div>
                   <div className="text-muted">Get real time observability across your various pipelines.</div>
                 </div>
+                
+              </div>
+
+              <hr style={{ width:"1020px", textAlign: "left", marginLeft: "0" }} />
+
+              <div className="row mx-n2 mt-4" style={{ minWidth:"1020px" }}>
+                <div className="col-md px-2 landing-content-module2">
+                  <img alt="OpsERA"
+                    src="/img/dashboard.png"
+                    width="195"
+                    height="225"
+                    className="d-inline-block align-top pointer"
+                    onClick= {() => { loadDashboards(); }}
+                  />
+                </div>
+              </div>
+              <div className="row mx-n2 mt-4" style={{ minWidth:"1020px" }}>
                 <div className="col-md px-2 landing-content-module">
-                  <div className="h5">Dashboard</div>
+                  <div className="h5">My Dashboards</div>
                   <div className="text-muted">Stay current on exactly what you need to know.</div>
                 </div>
               </div>
@@ -110,7 +119,7 @@ function OverviewLanding() {
           </Col>          
         </Row>
         <Row>
-          <Col xl="12" className="pt-5"><hr style={{ width:"1020px", textAlign: "left", marginLeft: "0" }} /></Col>
+          <Col xl="12" className="pt-4"><hr style={{ width:"1020px", textAlign: "left", marginLeft: "0" }} /></Col>
         </Row>  
         <Row>
           <Col xl="12" className="pt-2">

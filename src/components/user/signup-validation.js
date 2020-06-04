@@ -29,7 +29,12 @@ const validate = (value, field) => {
 };
 
 const minLengthValidator = (value, minLength) => {
-  return value.length >= minLength;
+  if (value.length > 0) {
+    return value.length >= minLength;
+  } else {
+    return true; //if no value is passed, then this shoudn't validate
+  }
+  
 };
 
 const requiredValidator = value => {

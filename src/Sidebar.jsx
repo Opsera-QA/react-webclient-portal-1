@@ -83,12 +83,13 @@ function Sidebar({ hideView }) {
       
                 
                 {previewRole && <NavLink className="nav-link" activeClassName="chosen" to="/overview"><FontAwesomeIcon size="lg" icon={faHome} fixedWidth /> <span className="menu-text">Overview</span></NavLink>}
-                
+                <NavLink className="nav-link" activeClassName="chosen" exact to="/dashboard"><FontAwesomeIcon size="lg" icon={faColumns} fixedWidth /> <span className="menu-text">Dashboards</span><div className="caret"></div></NavLink>                
+
                 <div className="mt-3 mb-1 sub-header">Products</div>
                 <NavLink className="nav-link" activeClassName="chosen" to="/platform"><FontAwesomeIcon size="lg" icon={faBox} fixedWidth /> <span className="menu-text">Platforms</span></NavLink>
                 <NavLink className="nav-link" activeClassName="chosen" to="/workflow"><FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth /> <span className="menu-text">Pipelines</span></NavLink>
                 <NavLink className="nav-link" activeClassName="chosen" to="/analytics"><FontAwesomeIcon size="lg" icon={faChartBar} fixedWidth /> <span className="menu-text">Analytics</span></NavLink>                
-                <NavLink className="nav-link" activeClassName="chosen" exact to="/dashboard"><FontAwesomeIcon size="lg" icon={faColumns} fixedWidth /> <span className="menu-text">Dashboard</span><div className="caret"></div></NavLink>                
+                
                 
                 <div className="mt-3 mb-1 sub-header">Operations</div>
 
