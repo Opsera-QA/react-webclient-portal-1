@@ -140,7 +140,9 @@ const defaultSignupFormFields = {
     width:  98,
     valid: false, 
     rules: {
-      isAlphaNumeric: true      
+      isRequired: false,
+      isAlphaNumeric: true,
+      minLength: 10,
     }
   },
 };
