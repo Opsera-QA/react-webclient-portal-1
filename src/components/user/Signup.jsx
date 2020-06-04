@@ -16,16 +16,9 @@ function Signup(props) {
   const [ signupFormFields, updateFormFields ] = useState(defaultSignupFormFields);
     
   const handleChange = ({ target: { value } }, field ) => {
-    
-    
     if (value.length > 0) {
       //Validate the form fields based on rule
       let { isValid, errorMessage } = validate(value, field);
-
-      console.log("value: ", value);
-      console.log("value.length: ", value.length);
-      console.log("isValid: ", isValid);
-
       let validateInput = {
         valid: isValid,   
         error: field.id == "domain" ? field.error : errorMessage,
@@ -40,9 +33,9 @@ function Signup(props) {
           ...validateInput
         } 
       }));
+
     } else { 
       //if value is set to nothing (zero length), then reset fields's isvalid state
-      console.log("reseting stuff");
       let validateInput = {
         valid: true,   
         error: null,
@@ -57,10 +50,7 @@ function Signup(props) {
           ...validateInput
         } 
       }));
-    }
-    
-    
-    
+    }    
   };
 
   //At any given time, check if all the mandatory field is valid or not
