@@ -2,10 +2,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { Row, Col } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 
 function OverviewLanding() {
   const contextType = useContext(AuthContext);
   const [userInfo, setUserInfo] = useState();
+  const history = useHistory();
 
   useEffect(() => {    
     getRoles();
@@ -14,8 +16,28 @@ function OverviewLanding() {
   const getRoles = async () => {
     const { getUserInfo } = contextType; 
     const user = await getUserInfo();
-    console.log(user);
+    
     setUserInfo(user);    
+  };
+
+  const loadPlatforms = () => {
+    // eslint-disable-next-line react/prop-types
+    history.push("/platform");
+  };
+
+  const loadPipelines = () => {
+    // eslint-disable-next-line react/prop-types
+    history.push("/workflow");
+  };
+
+  const loadAnalytics = () => {
+    // eslint-disable-next-line react/prop-types
+    history.push("/analytics");
+  };
+
+  const loadDashboards = () => {
+    // eslint-disable-next-line react/prop-types
+    history.push("/dashboard");
   };
 
   
@@ -34,7 +56,8 @@ function OverviewLanding() {
                     src="/img/platform.png"
                     width="195"
                     height="225"
-                    className="d-inline-block align-top"
+                    className="d-inline-block align-top pointer"
+                    onClick= {() => { loadPlatforms(); }}
                   />
                 </div>
                 <div className="col-md px-2 landing-content-module">
@@ -42,7 +65,8 @@ function OverviewLanding() {
                     src="/img/pipeline.png"
                     width="195"
                     height="225"
-                    className="d-inline-block align-top"
+                    className="d-inline-block align-top pointer"
+                    onClick= {() => { loadPipelines(); }}
                   />
                 </div>
                 <div className="col-md px-2 landing-content-module">
@@ -50,7 +74,8 @@ function OverviewLanding() {
                     src="/img/analytics.png"
                     width="195"
                     height="225"
-                    className="d-inline-block align-top"
+                    className="d-inline-block align-top pointer"
+                    onClick= {() => { loadAnalytics(); }}
                   />
                 </div>
                 <div className="col-md px- landing-content-module2">
@@ -58,7 +83,8 @@ function OverviewLanding() {
                     src="/img/dashboard.png"
                     width="195"
                     height="225"
-                    className="d-inline-block align-top"
+                    className="d-inline-block align-top pointer"
+                    onClick= {() => { loadDashboards(); }}
                   />
                 </div>
               </div>
