@@ -32,7 +32,6 @@ function ToolsTable({ columns, data }) {
               {headerGroup.headers.map((column, j) => (
                 <th key={j} {...column.getHeaderProps(column.getSortByToggleProps())}>
                   {column.render("Header")}
-
                   <span>
                     {column.isSorted
                       ? column.isSortedDesc
