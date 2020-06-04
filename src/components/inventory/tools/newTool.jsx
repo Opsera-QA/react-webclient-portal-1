@@ -14,73 +14,87 @@ function NewTool(props) {
     {
       label: "Name",
       id: "name",
-      type: ""
+      type: "",
+      disabled: false
     },
     {
       label: "Description",
       id: "description",
-      type: ""
+      type: "",
+      disabled: false
     },
     {
       label: "Tool",
       id: "tool_identifier",
-      type: "select"
+      type: "select",
+      disabled: false
     },
     {
       label: "Contacts",
       id: "contacts",
-      type: "textarea"
+      type: "textarea",
+      disabled: true
     },
     {
       label: "Project",
       id: "project",
-      type: "textarea"
+      type: "textarea",
+      disabled: true
     },
     {
       label: "Application",
       id: "application",
-      type: "textarea"
+      type: "textarea",
+      disabled: true
     },
     {
       label: "Location",
       id: "location",
-      type: "textarea"
+      type: "textarea",
+      disabled: true
     },
     {
       label: "Organization",
       id: "organization",
-      type: "textarea"
+      type: "textarea",
+      disabled: true
     },
     {
       label: "Tool Type",
       id: "tool_type_identifier",
-      type: "select"
+      type: "select",
+      disabled: false
     },
     {
       label: "External Reference",
       id: "external_reference",
-      type: "textarea"
+      type: "textarea",
+      disabled: true
     },
     {
       label: "Tags",
       id: "tags",
-      type: "textarea"
+      type: "textarea",
+      disabled: true
     },
     {
       label: "Licensing",
       id: "licensing",
-      type: "textarea"
+      type: "textarea",
+      disabled: true
     },
     {
       label: "Compliance",
       id: "compliance",
-      type: "textarea"
+      type: "textarea",
+      disabled: true
     },
     {
       label: "Active",
       id: "active",
       value: true,
-      type: "switch"
+      type: "switch",
+      disabled: false
     }
   ];
 
@@ -155,6 +169,7 @@ function NewTool(props) {
       return <Form.Control 
         as="textarea"
         rows={2}
+        disabled={field.disabled}
         onChange={e => setFormFields({ ...toolFormFields, [field.id]: e.target.value })}
       />;     
     case "select":
@@ -164,7 +179,7 @@ function NewTool(props) {
         ))} 
       </Form.Control>;
     default:
-      return  <Form.Control defaultValue={editTool[field.id]}  onChange={e => setFormFields({ ...toolFormFields, [field.id]: e.target.value })} />;
+      return  <Form.Control defaultValue={editTool[field.id]} disabled={field.disabled}  onChange={e => setFormFields({ ...toolFormFields, [field.id]: e.target.value })} />;
     }
   };
 
