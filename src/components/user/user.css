@@ -1,0 +1,11 @@
+.formContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around
+}
+
+.formContainer .form-group {
+  margin-bottom: 1rem;
+  width: 48%;
+  display: flex;
+}
