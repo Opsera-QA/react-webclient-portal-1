@@ -135,7 +135,7 @@ const defaultSignupFormFields = {
     id: "domain",
     type: "",
     value: "",
-    error: "min 20 chars and no special chars allowed",
+    error: "Minimum 10 chars and no special chars allowed",
     touched: false,
     width:  98,
     valid: false, 
