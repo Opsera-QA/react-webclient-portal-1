@@ -122,7 +122,7 @@ function RegisteredUsers() {
       .then(function (response) {
         // console.log(response.data)
         setState({
-          data: response.data,
+          data: response.data.users,
           error: null,
           fetching: false
         });
