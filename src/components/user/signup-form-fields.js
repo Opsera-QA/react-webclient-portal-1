@@ -100,7 +100,9 @@ const defaultSignupFormFields = {
     touched: true,
     width: 32,
     valid: true, 
-    rules: {}
+    rules: {
+      isRequired: true
+    }
   },
   state: {
     label: "State",
@@ -111,7 +113,9 @@ const defaultSignupFormFields = {
     touched: true,
     width: 32,
     valid: true, 
-    rules: {}
+    rules: {
+      isRequired: true
+    }
   },
   zip: {
     label: "Zip",
@@ -122,7 +126,9 @@ const defaultSignupFormFields = {
     touched: true,
     width: 32,
     valid: true, 
-    rules: {}
+    rules: {
+      isRequired: true
+    }
   },
   domain: {
     label: "New Resource Subdomain Name",
@@ -134,9 +140,7 @@ const defaultSignupFormFields = {
     width:  98,
     valid: false, 
     rules: {
-      isRequired: true,
-      isAlphaNumeric: true,
-      minLength: 20,
+      isAlphaNumeric: true      
     }
   },
 };
