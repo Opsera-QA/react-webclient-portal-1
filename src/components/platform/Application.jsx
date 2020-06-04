@@ -275,7 +275,7 @@ function Application(props) {
 
         {applicationDetails.data && applicationDetails.data.name ? 
           <>
-            <h4>{applicationDetails.data.name}</h4>
+            <h5>{applicationDetails.data.name}</h5>
           </> : null }
         
         {savingStatus === "success" && createAppStatus.message ? <>
