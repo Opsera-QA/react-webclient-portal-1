@@ -15,6 +15,7 @@ function ToolInventory () {
 
   const { getAccessToken } = useContext(AuthContext);
   const [showModal, setShowModal] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const [rowDetails, editRowDetails] = useState({
     id: "",
     details: {}
@@ -50,6 +51,7 @@ function ToolInventory () {
 
   const getToolRegistryList = async (id) => {
     try {
+      setLoading(true);
       const accessToken = await getAccessToken();
       let apiUrl = id ? "/registry/" + id : "/registry/";
       const response = await axiosApiService(accessToken).get(apiUrl, {});
@@ -62,6 +64,7 @@ function ToolInventory () {
       }else {
         setToolList(response.data);
       }
+      setLoading(false);
     }
     catch (err) {
       console.log(err.message);
@@ -136,6 +139,10 @@ function ToolInventory () {
     []
   );
 
+  const NoDataConst = () => (
+    <p>This is the dynamic title</p>
+  );
+
   return (
     <>
       
@@ -148,8 +155,9 @@ function ToolInventory () {
         </Button>
         <br />
       </div>
-      {Object.keys(toolList).length == 0 && <LoadingDialog />}
-      {Object.keys(toolList).length > 0 && <ToolsTable columns={columns} data={toolList} />}
+      {isLoading && <LoadingDialog />}
+      {!isLoading && <ToolsTable columns={columns} data={toolList} />}
+      
     </>
   );  
 }
