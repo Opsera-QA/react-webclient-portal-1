@@ -16,9 +16,10 @@ function Signup(props) {
   const [ signupFormFields, updateFormFields ] = useState(defaultSignupFormFields);
     
   const handleChange = ({ target: { value } }, field ) => {
-    if (value.length > 0) {
-      //Validate the form fields based on rule
-      let { isValid, errorMessage } = validate(value, field);
+    let { isValid, errorMessage } = validate(value, field);
+
+    if (value.length > 0 || field.rules.isRequired) {
+      //Validate the form fields based on rule      
       let validateInput = {
         valid: isValid,   
         error: field.id == "domain" ? field.error : errorMessage,
