@@ -38,20 +38,23 @@ function Sidebar({ hideView }) {
 
   useEffect(() => {    
     checkAuthentication();
-  }, [hideView, contextType]);
+  }, [hideView, authenticated, contextType]);
 
   const handleToggleMenuClick = () => {
     setHideSideBar(!hideSideBar);    
   };
 
   async function checkAuthentication ()  {
+    console.log("checking authentication");
     const { getUserInfo, authenticated } = contextType;
     try {
       const userInfoResponse = await getUserInfo();
       setAuthenticated(authenticated);
       console.log("Authenticated: ", authenticated);
-    
-      if (userInfoResponse !== undefined && Object.keys(userInfoResponse).length > 0) {
+
+      if (!authenticated) {
+        setUserInfo(null);
+      } else if (userInfoResponse !== undefined && Object.keys(userInfoResponse).length > 0) {
         setUserInfo(userInfoResponse);
         setAdministrator(userInfoResponse.Groups.includes("Admin"));
         setPreviewRole(userInfoResponse.email.includes("@opsera.io"));      
@@ -65,7 +68,7 @@ function Sidebar({ hideView }) {
 
   return (
     <>
-      {(userInfo !== undefined && authenticated) ?
+      {(authenticated) ?
         <>
           <div className="d-block d-md-none pt-1 mr-2">
             <Button variant="outline-primary" onClick={handleToggleMenuClick}>
