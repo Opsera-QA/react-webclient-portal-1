@@ -4,6 +4,8 @@ import { useTable, useExpanded, useSortBy } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {  faSortUp, faSortDown, faSort } from "@fortawesome/free-solid-svg-icons";
 
+import "./admin.css";
+
 function RegisteredUserTable({  data, deployingElk, handleDeletePress, handleDeployElkStack }) {
 
   const columns = useMemo(
@@ -97,10 +99,10 @@ function RegisteredUserTable({  data, deployingElk, handleDeletePress, handleDep
 
                 {/* Sub block code goes here */}
 
+                {Object.keys(row.original.tools).length > 0 && <tr> <td colSpan="7">Tools:</td></tr>}
                 {Object.keys(row.original.tools).length > 0 ? (
-                  <tr key={i}>
-                    <td colSpan="7" style={{ borderTop: 0, paddingTop: 0, marginTop: 0, paddingBottom: "25px" }}>
-                      <h6>Tools:</h6>
+                  <tr key={i} className="tools-block">
+                    <td colSpan="7">
                       {row.original.tools.map((tool, index) => (
                         <Row key={index} style={{ marginLeft: "10px", fontSize: ".9em" }}>
                           <Col xs={3}>{tool._id}</Col>
@@ -111,10 +113,9 @@ function RegisteredUserTable({  data, deployingElk, handleDeletePress, handleDep
                       ))}
                     </td>
                   </tr>) :
-                  <tr>
-                    <td colSpan="7" className="text-muted text-center" style={{ borderTop: 0, paddingBottom: "25px" }}>
-                          No tools are associated with this user account! 
-                      <br />
+                  <tr className="tools-block">
+                    <td colSpan="2" className="text-muted text-center"> No tools are associated with this user account! </td>
+                    <td colSpan="2" className="text-muted text-center">
                       <Button variant="outline-secondary" disabled={deployingElk} size="sm" 
                         onClick={() => { handleDeployElkStack(row._id); }} >
                             Deploy ELK Stack Now</Button> 

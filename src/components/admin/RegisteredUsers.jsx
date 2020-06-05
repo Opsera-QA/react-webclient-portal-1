@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, Fragment, useContext, useMemo } from "react";
+import React, { useReducer, useEffect, useState, useContext, useMemo } from "react";
 import { Table, Row, Col, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import ErrorDialog from "../common/error";
@@ -10,11 +10,13 @@ import Modal from "../common/modal";
 import { ApiService, axiosApiService } from "../../api/apiService";
 import { useTable, usePagination, useSortBy } from "react-table";
 import RegisteredUserTable from "./RegisteredUserTable";
+import Pagination from "components/common/pagination";
 
 function RegisteredUsers() {
   const Auth = useContext(AuthContext);
   let history = useHistory();
-  // console.log(Auth);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   const [state, setState] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
@@ -32,11 +34,16 @@ function RegisteredUsers() {
     }
   );
 
-  useEffect(() => {
+  // Executed every time page number or page size changes
+  useEffect(() => {   
     loadPage();
-  }, []);
+  }, [currentPage, pageSize]);
 
 
+  const gotoPage = (pageNumber, pageSize) => {
+    setCurrentPage(pageNumber);
+    setPageSize(pageSize);
+  };
 
   async function loadPage() {
     await checkUserData();
@@ -55,9 +62,7 @@ function RegisteredUsers() {
     if (!userInfo.Groups.includes("Admin")) {
       //move out
       history.push("/");
-    } else {
-      getApiData();
-    }
+    } 
   }
 
   function handleDeletePress(userId) { setState({ confirm: true, delUserId: userId }); }
@@ -120,12 +125,16 @@ function RegisteredUsers() {
 
   function getApiData() {    
     const { accessToken } = state;
-    const apiCall = new ApiService("/users/get-users?page=1&size=10", {}, accessToken);
+    const urlParams = {
+      page: currentPage,
+      size: pageSize
+    };
+    const apiCall = new ApiService("/users/get-users", urlParams, accessToken);
     apiCall.get()
       .then(function (response) {
         // console.log(response.data)
         setState({
-          userData: response.data,
+          userData: response.data.users,
           error: null,
           fetching: false
         });
@@ -161,6 +170,8 @@ function RegisteredUsers() {
             deployingElk={deployingElk} 
             handleDeletePress={(id) => { handleDeletePress(id); }} 
             handleDeployElkStack={(id) => {handleDeployElkStack(id);}} />}
+
+          {Object.keys(userData).length > 0 && <Pagination total={userData.count || 30} currentPage={currentPage} pageSize={pageSize} onClick={(pageNumber, pageSize) => gotoPage(pageNumber, pageSize)} /> }
 
         </div>
       }
