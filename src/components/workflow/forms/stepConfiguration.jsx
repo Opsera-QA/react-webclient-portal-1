@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
 
+//TODO: wire this up to ToolIdentifier collection
 const TOOLS_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes", type: "" },
   /* { value: "aws-deploy", label: "AWS Deploy", type: "deploy" }, */
@@ -60,7 +61,7 @@ function StepConfiguration( { data, stepId, parentCallback }) {
       setRenderForm(false); 
       controller.abort();      
     };
-  }, [stepId]);
+  }, [stepId, plan]);
 
   const loadFormData = async (step) => {
     setRenderForm(true);
@@ -93,9 +94,10 @@ function StepConfiguration( { data, stepId, parentCallback }) {
   };
 
   const callbackFunction = () => {   
-    if (validateRequiredFields()) {      
-      console.log(stepId);
-      let stepArrayIndex = getStepIndex(stepId); 
+    console.log(stepId);
+    const stepArrayIndex = getStepIndex(stepId); 
+    console.log(plan[stepArrayIndex]);
+    if (validateRequiredFields() && plan[stepArrayIndex] !== undefined) {            
       plan[stepArrayIndex].name = formData.name;
       plan[stepArrayIndex].type[0] = formData.type;
       plan[stepArrayIndex].tool = { ...plan[stepArrayIndex].tool, tool_identifier: formData.tool_identifier };    

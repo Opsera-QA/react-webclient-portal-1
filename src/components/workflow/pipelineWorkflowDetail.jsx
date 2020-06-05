@@ -7,7 +7,7 @@ import { SteppedLineTo } from "react-lineto";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faFileAlt, faCog, faArchive, faPlay, faSync, faSpinner, faStopCircle, faHistory, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faFileAlt, faCog, faPen, faArchive, faPlay, faSync, faSpinner, faStopCircle, faHistory, faCheck } from "@fortawesome/free-solid-svg-icons";
 import ModalActivityLogs from "../common/modalActivityLogs";
 import PipelineActions from "./actions";
 import PipelineWorkflowItemList from "./pipelineWorkflowItemList";
@@ -356,7 +356,7 @@ const PipelineWorkflowDetail = (props) => {
                       style={{ cursor: "pointer" }} /> Done</Button>                  
                   :
                   <Button variant="secondary" size="sm" onClick= {() => { handleEditWorkflowClick(); }} >
-                    <FontAwesomeIcon icon={faCog}
+                    <FontAwesomeIcon icon={faPen}
                       fixedWidth
                       size="lg"
                       style={{ cursor: "pointer" }} /> </Button>

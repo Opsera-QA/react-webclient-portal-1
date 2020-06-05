@@ -4,7 +4,6 @@ import { SteppedLineTo } from "react-lineto";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 import PipelineWorkflowItem from "./pipelineWorkflowItem";
-import Modal from "../common/modal";
 import "./workflows.css";
 
 
