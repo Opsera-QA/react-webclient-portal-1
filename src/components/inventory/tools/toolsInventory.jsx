@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import LoadingDialog from "components/common/loading";
 import { useHistory, useParams } from "react-router-dom";
+import { format } from "date-fns";
 
 import ToolsTable from "./toolsTable";
 import NewTool from "./newTool";
@@ -62,6 +63,7 @@ function ToolInventory () {
         });
         setShowModal(true);
       }else {
+        //import { format } from "date-fns";
         setToolList(response.data);
       }
       setLoading(false);
@@ -129,7 +131,10 @@ function ToolInventory () {
       },
       {
         Header: "Created Date",
-        accessor: "createdAt"
+        accessor: "createdAt",
+        Cell: (props) => {
+          return format(new Date(props.value), "yyyy-MM-dd', 'hh:mm a");
+        }
       },
       {
         Header: "Action",
@@ -137,10 +142,6 @@ function ToolInventory () {
       }
     ],
     []
-  );
-
-  const NoDataConst = () => (
-    <p>This is the dynamic title</p>
   );
 
   return (
