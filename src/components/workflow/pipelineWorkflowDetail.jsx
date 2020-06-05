@@ -351,7 +351,7 @@ const PipelineWorkflowDetail = (props) => {
                 {editWorkflow ?
                   <Button variant="success" size="sm" onClick= {() => { handleDoneWorkflowEditsClick(); }} >
                     <FontAwesomeIcon icon={faCheck}
-                      className="green" fixedWidth
+                      fixedWidth
                       size="lg"
                       style={{ cursor: "pointer" }} /> Done</Button>                  
                   :
