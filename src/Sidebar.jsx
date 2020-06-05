@@ -38,20 +38,23 @@ function Sidebar({ hideView }) {
 
   useEffect(() => {    
     checkAuthentication();
-  }, [hideView, contextType]);
+  }, [hideView, authenticated, contextType]);
 
   const handleToggleMenuClick = () => {
     setHideSideBar(!hideSideBar);    
   };
 
   async function checkAuthentication ()  {
+    console.log("checking authentication");
     const { getUserInfo, authenticated } = contextType;
     try {
       const userInfoResponse = await getUserInfo();
       setAuthenticated(authenticated);
       console.log("Authenticated: ", authenticated);
-    
-      if (userInfoResponse !== undefined && Object.keys(userInfoResponse).length > 0) {
+
+      if (!authenticated) {
+        setUserInfo(null);
+      } else if (userInfoResponse !== undefined && Object.keys(userInfoResponse).length > 0) {
         setUserInfo(userInfoResponse);
         setAdministrator(userInfoResponse.Groups.includes("Admin"));
         setPreviewRole(userInfoResponse.email.includes("@opsera.io"));      
@@ -65,7 +68,7 @@ function Sidebar({ hideView }) {
 
   return (
     <>
-      {(userInfo !== undefined && authenticated) ?
+      {(authenticated) ?
         <>
           <div className="d-block d-md-none pt-1 mr-2">
             <Button variant="outline-primary" onClick={handleToggleMenuClick}>
@@ -80,12 +83,13 @@ function Sidebar({ hideView }) {
       
                 
                 {previewRole && <NavLink className="nav-link" activeClassName="chosen" to="/overview"><FontAwesomeIcon size="lg" icon={faHome} fixedWidth /> <span className="menu-text">Overview</span></NavLink>}
-                
+                <NavLink className="nav-link" activeClassName="chosen" exact to="/dashboard"><FontAwesomeIcon size="lg" icon={faColumns} fixedWidth /> <span className="menu-text">Dashboards</span><div className="caret"></div></NavLink>                
+
                 <div className="mt-3 mb-1 sub-header">Products</div>
                 <NavLink className="nav-link" activeClassName="chosen" to="/platform"><FontAwesomeIcon size="lg" icon={faBox} fixedWidth /> <span className="menu-text">Platforms</span></NavLink>
                 <NavLink className="nav-link" activeClassName="chosen" to="/workflow"><FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth /> <span className="menu-text">Pipelines</span></NavLink>
                 <NavLink className="nav-link" activeClassName="chosen" to="/analytics"><FontAwesomeIcon size="lg" icon={faChartBar} fixedWidth /> <span className="menu-text">Analytics</span></NavLink>                
-                <NavLink className="nav-link" activeClassName="chosen" exact to="/dashboard"><FontAwesomeIcon size="lg" icon={faColumns} fixedWidth /> <span className="menu-text">Dashboard</span><div className="caret"></div></NavLink>                
+                
                 
                 <div className="mt-3 mb-1 sub-header">Operations</div>
 

@@ -55,6 +55,7 @@ function ToolsTable({ columns, data }) {
               </tr>
             );
           })}
+          {rows.length == 0 && <tr><td colSpan="8" style={{ textAlign: "center" }}>No Data</td></tr>}
         </tbody>
       </Table>
     </>
