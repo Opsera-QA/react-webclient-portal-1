@@ -1,33 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { AuthContext } from "contexts/AuthContext"; 
+import { axiosApiService } from "api/apiService";
 import { Form, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
 
-//TODO: wire this up to ToolIdentifier collection
-const TOOLS_OPTIONS = [
-  { value: "", label: "Select One", isDisabled: "yes", type: "" },
-  /* { value: "aws-deploy", label: "AWS Deploy", type: "deploy" }, */
-  { value: "elastic-beanstalk", label: "AWS Elastic Beanstalk Deploy", type: "deploy" },
-  { value: "pipeline", label: "Branch Pipeline", type: "pipeline" },
-  { value: "command-line", label: "Command Line Script", type: "script" },
-  { value: "databricks-notebook", label: "Databricks Notbook", type: "orchestration" },
-  { value: "gcp-deploy", label: "GCP Deploy", type: "deploy" },
-  { value: "jenkins", label: "Jenkins", type: "build" },
-  { value: "jmeter", label: "JMeter", type: "performance" }, 
-  { value: "junit", label: "JUnit", type: "unit test" },
-  { value: "npm", label: "NPM Commands", type: "script" },
-  { value: "s3", label: "Publish to S3", type: "deploy" },
-  { value: "selenium", label: "Selenium", type: "functional testing" },
-  { value: "sonar", label: "Sonarcube", type: "code scan" },
-  { value: "ssh-upload", label: "SSH Deploy", type: "deploy" },
-  { value: "spinnaker", label: "Spinnaker", type: "deploy" },
-  { value: "approval", label: "Step Approval", type: "approval" },
-  { value: "teamcity", label: "TeamCity", type: "build" },
-  { value: "twistlock", label: "Twistlock", type: "security" },
-  { value: "xunit", label: "XUnit", type: "unit test" }
-];
 
 const INITIAL_DATA = {
   name: "",
@@ -37,24 +16,28 @@ const INITIAL_DATA = {
 };
 
 function StepConfiguration( { data, stepId, parentCallback }) {
+  const { getAccessToken } = useContext(AuthContext);
   const { plan } = data.workflow;
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [formMessage, setFormMessage] = useState("");
   const [renderForm, setRenderForm] = useState(false);
   const [disableToolSelect, setDisableToolSelect] = useState(false);
+  const [toolList, setToolList] = useState([]);
 
 
   useEffect(() => {    
     const controller = new AbortController();
     const runEffect = async () => {
-      try {
-        const stepIndex = getStepIndex(stepId);
-        await loadFormData(plan[stepIndex]);                
-      } catch (err) {
-        if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
-          return;
-        }        
+      if( plan && stepId ) {
+        try {
+          const stepIndex = getStepIndex(stepId);
+          await loadFormData(plan[stepIndex]);                        
+        } catch (err) {
+          if (err.name === "AbortError") {
+            console.log("Request was canceled via controller.abort");
+            return;
+          }        
+        }
       }
     };
     runEffect();
@@ -64,7 +47,20 @@ function StepConfiguration( { data, stepId, parentCallback }) {
     };
   }, [stepId, plan]);
 
+  const getToolList = async () => {
+    try {
+      const accessToken = await getAccessToken();
+      const toolResponse = await axiosApiService(accessToken).get("/registry/tool", {});      
+      setToolList(toolResponse.data);
+      console.log(toolResponse.data);
+    }
+    catch (err) {
+      console.log(err.message);
+    }
+  };
+
   const loadFormData = async (step) => {
+    await getToolList();    
     setRenderForm(true);
     setFormData(INITIAL_DATA);    
     setDisableToolSelect(false);
@@ -80,15 +76,13 @@ function StepConfiguration( { data, stepId, parentCallback }) {
       if (step.tool.tool_identifier.length > 0) {
         setDisableToolSelect(true);
       }
-
     } 
-    //setRenderForm(false);
   };
 
   const getStepType = (type, tool) => {
     if (type === null || type === undefined) {
       if (tool && tool.tool_identifier) {
-        return TOOLS_OPTIONS[TOOLS_OPTIONS.findIndex(x => x.value === tool.tool_identifier)].type;
+        return toolList[toolList.findIndex(x => x.identifier === tool.tool_identifier)].tool_type_identifier;
       }      
     } 
     return type;
@@ -123,14 +117,13 @@ function StepConfiguration( { data, stepId, parentCallback }) {
   };
 
   const handleToolIdentifierChange = (selectedOption) => {
-    setFormData({ ...formData, tool_identifier: selectedOption.value, type: selectedOption.type });    
+    console.log("selectedOption", selectedOption);
+    setFormData({ ...formData, tool_identifier: selectedOption.identifier, type: selectedOption.tool_type_identifier });    
   };
 
    
   return (
     <Form>
-      {/* <h6 className="upper-case-first">{typeof(stepName) !== "undefined" ? stepName + ": " : null}
-        {typeof(stepTool) !== "undefined" ? stepTool.tool_identifier : null}</h6> */}
       <div className="text-muted mt-1 mb-3">Each step requires a tool to be selected before it can be configured.  Please select the required tool and give the step a name below.</div>
       
       { formMessage.length > 0 ? <p className="text-danger">{formMessage}</p> : null}
@@ -150,15 +143,16 @@ function StepConfiguration( { data, stepId, parentCallback }) {
 
         <Form.Group controlId="tool"  className="mt-2">
           <Form.Label>Tool*</Form.Label>
-          {renderForm ?
+          {renderForm && toolList ?
             <DropdownList
-              data={TOOLS_OPTIONS} 
-              valueField='id'
+              data={toolList} 
+              valueField='identifier'
               disabled={!formData.active || disableToolSelect}
-              textField='label'
-              defaultValue={TOOLS_OPTIONS[TOOLS_OPTIONS.findIndex(x => x.value === formData.tool_identifier)]}
+              textField='name'
+              defaultValue={toolList[toolList.findIndex(x => x.identifier === formData.tool_identifier)]}
               onChange={handleToolIdentifierChange}             
             /> : null }
+
         </Form.Group>
       </div> 
       
