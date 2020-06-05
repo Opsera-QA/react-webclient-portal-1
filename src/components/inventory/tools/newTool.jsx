@@ -90,7 +90,7 @@ function NewTool(props) {
       disabled: true
     },
     {
-      label: "Active",
+      label: "",
       id: "active",
       value: true,
       type: "switch",
@@ -161,7 +161,7 @@ function NewTool(props) {
       return <Form.Check 
         type="switch"
         id="custom-switch"
-        label="Check this switch"
+        label="Active"
         defaultValue={true}
         onChange={e => setFormFields({ ...toolFormFields, [field.id]: e.target.value })}
       />;
@@ -173,7 +173,7 @@ function NewTool(props) {
         onChange={e => setFormFields({ ...toolFormFields, [field.id]: e.target.value })}
       />;     
     case "select":
-      return <Form.Control as="select" onChange={e => setFormFields({ ...toolFormFields, [field.id]: e.target.value })}>
+      return <Form.Control as="select" placeholder="Please select" onChange={e => setFormFields({ ...toolFormFields, [field.id]: e.target.value })}>
         {tool_list[field.id].map((option, i) => (
           <option key={i}>{option.name}</option>
         ))} 
