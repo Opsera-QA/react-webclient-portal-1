@@ -51,7 +51,7 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
   const [isAppSearching, setIsAppSearching] = useState(true);
   const [isToolSearching, setIsToolSearching] = useState(true);
 
-  const debouncedSearchURL = useDebounce(formData.spinnakerUrl, 500);
+  const debouncedSearchURL = useDebounce(formData.spinnakerUrl, 1000);
 
   useEffect(() => {    
     const controller = new AbortController();
