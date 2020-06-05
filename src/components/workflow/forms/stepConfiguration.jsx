@@ -61,7 +61,6 @@ function StepConfiguration( { data, stepId, parentCallback }) {
 
   const loadFormData = async (step) => {
     await getToolList();    
-    setRenderForm(true);
     setFormData(INITIAL_DATA);    
     setDisableToolSelect(false);
     let stepType = getStepType(step.type[0], step.tool);
@@ -77,6 +76,7 @@ function StepConfiguration( { data, stepId, parentCallback }) {
         setDisableToolSelect(true);
       }
     } 
+    setRenderForm(true);
   };
 
   const getStepType = (type, tool) => {
@@ -152,8 +152,8 @@ function StepConfiguration( { data, stepId, parentCallback }) {
               defaultValue={toolList[toolList.findIndex(x => x.identifier === formData.tool_identifier)]}
               onChange={handleToolIdentifierChange}             
             /> : null }
-
-        </Form.Group>
+          <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text>
+        </Form.Group>        
       </div> 
       
       <Button variant="primary" type="button"  
