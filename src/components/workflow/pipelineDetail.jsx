@@ -11,7 +11,7 @@ import Pagination from "components/common/pagination";
 import { format } from "date-fns";
 import ModalActivityLogs from "components/common/modalActivityLogs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faExclamationTriangle, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faTimesCircle, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import "./workflows.css";
 
 
@@ -186,7 +186,7 @@ const PipelineActivity = (props) => {
                   
                   <td className="upper-case-first">
                     {item["status"] === "failure" || item["status"] === "failed" ? 
-                      <FontAwesomeIcon icon={faExclamationTriangle} className="mr-2 red" style={{ cursor: "pointer" }}  /> : null }
+                      <FontAwesomeIcon icon={faTimesCircle} className="mr-1 red" style={{ cursor: "pointer" }}  /> : null }
                     {item["status"] ? item["status"] : "unknown"}</td>
                   <td>{item["message"] ? item["message"] : ""} 
                     { item["action"] !== "automation task" ? 

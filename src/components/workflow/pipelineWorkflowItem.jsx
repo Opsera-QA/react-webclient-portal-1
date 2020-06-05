@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import Modal from "../common/modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faCog, faArchive, faBookmark, faSpinner, faCheckCircle, faEnvelope, faExclamationTriangle, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faCog, faArchive, faBookmark, faPen, faExclamationTriangle, faSpinner, faCheckCircle, faEnvelope, faTimesCircle, faTrash } from "@fortawesome/free-solid-svg-icons";
 import ModalActivityLogs from "../common/modalActivityLogs";
 import { format } from "date-fns";
 import "./workflows.css";
@@ -18,6 +18,8 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
   const [stepConfigured, setStepConfigured] = useState(true);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [modalDeleteIndex, setModalDeleteIndex] = useState(false);
+
+  const [infoModal, setInfoModal] = useState({ show:false, header: "", message: "", button: "OK" });
   
   useEffect(() => {    
     const controller = new AbortController();
@@ -37,10 +39,14 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
     };
   }, [item, lastStep]);
 
+
   const loadFormData = async (item, lastStep) => {
-    if (typeof(lastStep) !== "undefined" && typeof(item) !== "undefined") {
+    
+    if (item.tool.configuration === undefined) {
+      setItemState("warning");
+    } else if (typeof(lastStep) !== "undefined" && typeof(item) !== "undefined") {
       if(typeof(lastStep.success) !== "undefined" && lastStep.success.step_id === item._id) {
-        setCurrentStatus(lastStep.success);
+        setCurrentStatus(lastStep.success);      
         setItemState("completed");
       }
       else if(typeof(lastStep.running) !== "undefined" && lastStep.running.step_id === item._id) {
@@ -60,7 +66,9 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
     }    
 
     if (item !== undefined) {
-      if (item.tool !== undefined && (typeof(item.tool.tool_identifier) === "string" && item.tool.tool_identifier.length > 0) && (item.type !== undefined && Object.keys(item.type[0]).length > 0)) {
+      if (item.tool !== undefined && 
+        (typeof(item.tool.tool_identifier) === "string" && item.tool.tool_identifier.length > 0) 
+          && (item.type !== undefined && Object.keys(item.type[0]).length > 0)) {
         setStepConfigured(true);
       } else {
         setStepConfigured(false);
@@ -102,43 +110,55 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
           <div className="float-right text-right">
             {stepConfigured === true && editWorkflow === false ? 
               <>
-                { currentStatus.status === "failed" || currentStatus.status === "failure" ? 
+                { itemState === "failed" && 
                   <OverlayTrigger
                     placement="top"
                     delay={{ show: 250, hide: 400 }}
                     overlay={renderTooltip({ message: "View Errors" })} >
-                    <FontAwesomeIcon icon={faExclamationTriangle} className="mr-2 red" 
+                    <FontAwesomeIcon icon={faTimesCircle} className="mr-2 red" 
                       style={{ cursor: "pointer" }} 
                       onClick={() => { parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id); }} />
-                  </OverlayTrigger> :
-                  <>
-                    {itemState === "completed" ? 
-                      <OverlayTrigger
-                        placement="top"
-                        delay={{ show: 250, hide: 400 }}
-                        overlay={renderTooltip({ message: "View Log" })} >
-                        <FontAwesomeIcon icon={faCheckCircle} className="mr-2 green" 
-                          style={{ cursor: "pointer" }} 
-                          onClick={() => { parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id); }} />
-                      </OverlayTrigger> : null }
-                    {itemState === "running" ?  <OverlayTrigger
+                  </OverlayTrigger> }
+                
+                {itemState === "completed" &&
+                    <OverlayTrigger
                       placement="top"
                       delay={{ show: 250, hide: 400 }}
                       overlay={renderTooltip({ message: "View Log" })} >
-                      <FontAwesomeIcon icon={faSpinner} className="mr-2 green" 
-                        style={{ cursor: "pointer" }} spin
+                      <FontAwesomeIcon icon={faCheckCircle} className="mr-2 green" 
+                        style={{ cursor: "pointer" }} 
                         onClick={() => { parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id); }} />
-                    </OverlayTrigger> : null }  
+                    </OverlayTrigger> }
 
-                    {nextStep !== undefined && nextStep._id === item._id && itemState !== "running" ? 
-                      <FontAwesomeIcon icon={faBookmark} className="nav-blue mr-2" /> : null }
-                  </> }                  
+                {itemState === "running" && 
+                  <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip({ message: "View Log" })} >
+                    <FontAwesomeIcon icon={faSpinner} className="mr-2 green" 
+                      style={{ cursor: "pointer" }} spin
+                      onClick={() => { parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id); }} />
+                  </OverlayTrigger>  }  
+
+                { itemState === "warning" && 
+                  <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip({ message: "Step Warning Alert" })} >
+                    <FontAwesomeIcon icon={faExclamationTriangle} className="mr-2 yellow" 
+                      style={{ cursor: "pointer" }} 
+                      onClick={() => { setInfoModal({ show:true, header: "Step Warning", message: "This step is missing configuration information and will not run.", button: "OK" }); }} />
+                  </OverlayTrigger> }
+
+                {/* {nextStep !== undefined && nextStep._id === item._id && itemState !== "running" ? 
+                    <FontAwesomeIcon icon={faBookmark} className="nav-blue mr-2" /> : null } */}
+                
               </> : 
               <OverlayTrigger
                 placement="top"
                 delay={{ show: 250, hide: 400 }}
                 overlay={renderTooltip({ message: "Step Setup" })} >
-                <FontAwesomeIcon icon={faCog}
+                <FontAwesomeIcon icon={faPen}
                   style={{ cursor: "pointer" }}
                   className="text-muted mx-1" fixedWidth
                   onClick={() => { handleEditClick("step", item.tool, item._id); }} />
@@ -241,6 +261,11 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
 
       <ModalActivityLogs header={modalHeader} size="lg" jsonData={modalMessage} show={showModal} setParentVisibility={setShowModal} />
 
+      {infoModal.show ? <Modal header={infoModal.header}
+        message={infoModal.message}
+        button={infoModal.button}
+        handleCancelModal={() => setInfoModal({ ...infoModal, show: false })}  /> : null}
+
       {showDeleteModal ? <Modal header="Confirm Pipeline Step Delete"
         message="Warning! Data about this step cannot be recovered once it is deleted. Do you still want to proceed?"
         button="Confirm"
@@ -268,7 +293,7 @@ PipelineWorkflowItem.propTypes = {
   pipelineId: PropTypes.string,
   editWorkflow: PropTypes.bool,
   parentCallbackEditItem: PropTypes.func,
-  parentCallbackDeleteStep: PropTypes.func,
+  deleteStep: PropTypes.func,
   handleViewSourceActivityLog: PropTypes.func,
   parentHandleViewSourceActivityLog: PropTypes.func
 };

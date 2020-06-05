@@ -42,10 +42,14 @@ function PipelineWorkflowItemList({ items, lastStep, nextStep, editWorkflow, pip
     setStateItems({ items: items });
   };
 
-  const setStepStatusClass = (last_step, item_id) => {
+  const setStepStatusClass = (last_step, item) => {
+    const item_id = item._id;
     let classString = "step-"+item_id;
     
-    if (typeof(last_step) !== "undefined") {
+    if (item.tool.configuration === undefined) {
+      //set to warning state
+      classString += " workflow-step-warning";
+    } else if (typeof(last_step) !== "undefined") {
       if(typeof(last_step.success) !== "undefined" && last_step.success.step_id === item_id) {
         classString += " workflow-step-success";
       }
@@ -63,7 +67,7 @@ function PipelineWorkflowItemList({ items, lastStep, nextStep, editWorkflow, pip
 
   return items.map((item, index) => (
     <div key={index}>
-      <div className={"workflow-module-container workflow-module-container-width mx-auto " + setStepStatusClass(lastStep, item._id)}>
+      <div className={"workflow-module-container workflow-module-container-width mx-auto " + setStepStatusClass(lastStep, item)}>
         <PipelineWorkflowItem 
           item={item} 
           index={index}          

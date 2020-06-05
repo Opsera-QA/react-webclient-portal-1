@@ -13,6 +13,9 @@ function CustomModalDialog({ header, message, button, size, handleConfirmModal, 
   useEffect(() => {
     setShow(true);
     setDisplayJson(jsonView === "true");
+
+    console.log(handleConfirmModal);
+    console.log(typeof(handleConfirmModal));
   }, []);
 
   const handleClose = () => {
@@ -46,8 +49,8 @@ function CustomModalDialog({ header, message, button, size, handleConfirmModal, 
             Close
           </Button>
           {
-            !displayJson ? 
-              <Button variant="outline-primary" onClick={() => handleConfirm()}>
+            !displayJson && handleConfirmModal !== undefined ? 
+              <Button variant="success" onClick={() => handleConfirm()}>
                 <FontAwesomeIcon icon={faCheck} fixedWidth />
                 {button ? button : "Confirm"}
               </Button> : null }
@@ -63,7 +66,7 @@ CustomModalDialog.propTypes = {
   message: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   button: PropTypes.string,
   size: PropTypes.string,
-  handleConfirmModal: PropTypes.func.isRequired,
+  handleConfirmModal: PropTypes.func,
   handleCancelModal: PropTypes.func.isRequired,
   jsonView: PropTypes.string,
   jsonMessage: PropTypes.oneOfType([PropTypes.object, PropTypes.array])

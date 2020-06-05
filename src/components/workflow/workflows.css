@@ -56,6 +56,11 @@
   border-width: 2px;
 }
 
+.workflow-step-warning {
+  border-color: #f9c116;
+  border-width: 2px;
+}
+
 .workflow-action-icons {
   font-size: 1.1em;
   
