@@ -200,7 +200,7 @@ function StepNotificationConfiguration( { data, stepId, parentCallback }) {
         </Form.Group> 
       </div>
 
-      <div className="my-4 pt-3">
+      {/* <div className="my-4 pt-3">
         <Form.Check 
           type="switch" disabled
           id="approval-switch"
@@ -209,7 +209,7 @@ function StepNotificationConfiguration( { data, stepId, parentCallback }) {
           onChange={() => setFormDataApproval({ ...formDataApproval, enabled: !formDataApproval.enabled })}    
         />
         <small className="form-text text-muted mt-2">If this feature is enabled, the notifier listed above will need to approve the completion of this step before the pipeline can proceed.  WARNING: This will halt the pipeline workflow until a user responds.</small>
-      </div>
+      </div> */}
 
       <Button variant="primary" type="button"  
         onClick={() => { callbackFunction(); }}> 
