@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { axiosApiService } from "../../api/apiService";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import Modal from "../common/modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,7 +10,7 @@ import { format } from "date-fns";
 import "./workflows.css";
 
 
-const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, editWorkflow, parentCallbackEditItem, deleteStep, parentHandleViewSourceActivityLog }) => {
+const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, accessToken, editWorkflow, parentCallbackEditItem, deleteStep, parentHandleViewSourceActivityLog }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
   const [modalHeader, setModalHeader] = useState("");
@@ -18,11 +19,12 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
   const [stepConfigured, setStepConfigured] = useState(true);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [modalDeleteIndex, setModalDeleteIndex] = useState(false);
+  const [toolProperties, setToolProperties] = useState({});
 
   const [infoModal, setInfoModal] = useState({ show:false, header: "", message: "", button: "OK" });
   
   useEffect(() => {    
-    const controller = new AbortController();
+    /*  const controller = new AbortController();
     const runEffect = async () => {
       try {
         await loadFormData(item, lastStep);                
@@ -36,13 +38,15 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
     runEffect();
     return () => {
       controller.abort();      
-    };
-  }, [item, lastStep]);
+    }; */
+    loadFormData(item, lastStep);      
+  }, [item]);//item, lastStep
 
 
   const loadFormData = async (item, lastStep) => {
-    
-    if (item.tool.configuration === undefined) {
+    setStepConfigured(false);
+
+    if (item.tool === undefined || item.tool.configuration === undefined) {
       setItemState("warning");
     } else if (typeof(lastStep) !== "undefined" && typeof(item) !== "undefined") {
       if(typeof(lastStep.success) !== "undefined" && lastStep.success.step_id === item._id) {
@@ -65,6 +69,20 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
       setItemState("");
     }    
 
+
+
+    if (item.tool !== undefined && (typeof(item.tool.tool_identifier) === "string" && item.tool.tool_identifier.length > 0)) {
+      getToolDetails(item.tool.tool_identifier);
+    
+      if (item.type !== undefined && Object.keys(item.type[0]).length > 0) {
+        setStepConfigured(true);
+      }
+    
+    
+    }
+    
+
+    /* 
     if (item !== undefined) {
       if (item.tool !== undefined && 
         (typeof(item.tool.tool_identifier) === "string" && item.tool.tool_identifier.length > 0) 
@@ -75,7 +93,7 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
       }
     } else {
       setStepConfigured(false);
-    }    
+    }     */
   };
 
   const handleViewClick = (data, header) => {
@@ -102,11 +120,25 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
     deleteStep(index);
   };
 
+  const getToolDetails = async (tool_identifier) => {
+    //take tool ID (too_identifier in pipeline), pass to Node route that returns both tool record and type from registry
+    try {
+      const toolResponse = await axiosApiService(accessToken).get("/registry/tool/properties/"+tool_identifier, {});      
+      console.log(toolResponse.data);
+      setToolProperties(toolResponse.data);
+    }
+    catch (err) {
+      console.log(err.message);
+    }
+  };
+
+
+
 
   return (
     <>
       <div>
-        <div className="title-text-6 upper-case-first ml-1 mt-1 title-text-divider">{item.type[0] ? item.type[0] : "Pipeline Step"}        
+        <div className="title-text-6 upper-case-first ml-1 mt-1 title-text-divider">{toolProperties.type ? toolProperties.type.name : "Pipeline Step"}        
           <div className="float-right text-right">
             {stepConfigured === true && editWorkflow === false ? 
               <>
@@ -186,7 +218,8 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, edi
 
         <div className="d-flex flex-row mb-1">
           <div className="pl-1 workflow-module-text-flex-basis text-muted">Tool:</div>
-          <div className="pl-1 upper-case-first">{item.tool !== undefined ? item.tool.tool_identifier : ""}</div>
+          <div className="pl-1 upper-case-first">
+            {toolProperties.name ? toolProperties.name : ""}</div>
           <div className="flex-grow-1"></div>
         </div>
 
@@ -291,6 +324,7 @@ PipelineWorkflowItem.propTypes = {
   lastStep: PropTypes.object,
   nextStep: PropTypes.object,
   pipelineId: PropTypes.string,
+  accessToken: PropTypes.string,
   editWorkflow: PropTypes.bool,
   parentCallbackEditItem: PropTypes.func,
   deleteStep: PropTypes.func,

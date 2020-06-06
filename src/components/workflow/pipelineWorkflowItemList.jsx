@@ -7,7 +7,7 @@ import PipelineWorkflowItem from "./pipelineWorkflowItem";
 import "./workflows.css";
 
 
-function PipelineWorkflowItemList({ items, lastStep, nextStep, editWorkflow, pipelineId, parentCallbackEditItem, parentHandleViewSourceActivityLog, setStateItems, quietSavePlan, fetchPlan }) {
+function PipelineWorkflowItemList({ items, lastStep, nextStep, editWorkflow, pipelineId, accessToken, parentCallbackEditItem, parentHandleViewSourceActivityLog, setStateItems, quietSavePlan, fetchPlan }) {
   
   useEffect(() => {    
   }, [items]);
@@ -46,7 +46,7 @@ function PipelineWorkflowItemList({ items, lastStep, nextStep, editWorkflow, pip
     const item_id = item._id;
     let classString = "step-"+item_id;
     
-    if (item.tool.configuration === undefined) {
+    if (item.tool === undefined || item.tool.configuration === undefined) {
       //set to warning state
       classString += " workflow-step-warning";
     } else if (typeof(last_step) !== "undefined") {
@@ -74,6 +74,7 @@ function PipelineWorkflowItemList({ items, lastStep, nextStep, editWorkflow, pip
           lastStep={lastStep} 
           editWorkflow={editWorkflow} 
           pipelineId={pipelineId} 
+          accessToken={accessToken}
           nextStep={nextStep} 
           parentCallbackEditItem={parentCallbackEditItem} 
           deleteStep={deleteStep}
@@ -109,6 +110,7 @@ PipelineWorkflowItemList.propTypes = {
   nextStep: PropTypes.object,
   editWorkflow: PropTypes.bool,
   pipelineId: PropTypes.string,
+  accessToken: PropTypes.string,
   parentCallbackEditItem: PropTypes.func,
   parentHandleViewSourceActivityLog: PropTypes.func,
   setStateItems: PropTypes.func,

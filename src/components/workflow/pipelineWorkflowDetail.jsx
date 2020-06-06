@@ -29,6 +29,7 @@ const PipelineWorkflowDetail = (props) => {
   const [workflowStatus, setWorkflowStatus] = useState(false);
   const [editWorkflow, setEditWorkflow] = useState(false);
   const endPointUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
+  const [accessToken, setAccessToken] = useState();
   
   //Feature Flag
   const [previewRole, setPreviewRole] = useState(false);
@@ -83,7 +84,9 @@ const PipelineWorkflowDetail = (props) => {
   };
 
   async function checkAuthentication ()  {
-    const { getUserSsoUsersRecord } = contextType;
+    const { getUserSsoUsersRecord, getAccessToken } = contextType;
+    const accessToken = await getAccessToken();
+    setAccessToken(accessToken);
     try {
       const userInfoResponse = await getUserSsoUsersRecord();      
       if (userInfoResponse !== undefined && Object.keys(userInfoResponse).length > 0) {
@@ -197,8 +200,6 @@ const PipelineWorkflowDetail = (props) => {
   };
 
   async function fetchStatusData(pipelineId, stepNext) {
-    const { getAccessToken } = contextType;
-    const accessToken = await getAccessToken();
     let apiUrl = `/pipelines/${pipelineId}/status`;
     if (stepNext) {
       apiUrl = apiUrl + "?run=true";
@@ -234,8 +235,6 @@ const PipelineWorkflowDetail = (props) => {
   }
 
   async function fetchPipelineActivityByTool(pipelineId, tool, stepId, activityId) {
-    const { getAccessToken } = contextType;
-    const accessToken = await getAccessToken();
     let apiUrl = `/pipelines/${pipelineId}/activity`;
     const params = { 
       tool: tool, 
@@ -255,7 +254,7 @@ const PipelineWorkflowDetail = (props) => {
   }
 
   const handleViewPipelineClick = (param) => {
-    setModalHeader("Pipeline Details");
+    setModalHeader("Pipeline Configuration");
     setModalMessage(param);
     setShowModal(true);
   };
@@ -268,8 +267,6 @@ const PipelineWorkflowDetail = (props) => {
   };
 
   async function updatePipeline(pipeline) {
-    const { getAccessToken } = contextType;
-    const accessToken = await getAccessToken();
     const apiUrl = `/pipelines/${data._id}/update`;   
     try {
       await axiosApiService(accessToken).post(apiUrl, pipeline);
@@ -436,6 +433,7 @@ const PipelineWorkflowDetail = (props) => {
                 nextStep={nextStep} 
                 editWorkflow={editWorkflow}
                 pipelineId={data._id} 
+                accessToken={accessToken}
                 setStateItems={setState}
                 fetchPlan={fetchPlan}
                 parentCallbackEditItem={callbackFunctionEditItem} 
