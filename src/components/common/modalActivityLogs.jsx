@@ -13,8 +13,8 @@ function ModalActivityLogsDialog({ header, size, jsonData, show, setParentVisibi
   useEffect(() => {
     setShowModal(show);
     if (jsonData !== undefined) {
-      setViewType(jsonData.action);      
-      const new_obj = iterate(jsonData);      
+      setViewType(jsonData.action);        
+      const new_obj = iterate(JSON.parse(JSON.stringify(jsonData)));      
       setDataView(new_obj);
     }    
   }, [jsonData, show]);

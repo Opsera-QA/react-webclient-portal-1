@@ -11,7 +11,7 @@ import Modal from "../common/modal";
 import ModalActivityLogs from "../common/modalActivityLogs";
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileAlt, faPencilAlt, faHistory, faSync, faPlay, faTrash, faThLarge, faSave, faSpinner, faTimes, faCogs } from "@fortawesome/free-solid-svg-icons";
+import { faFileAlt, faPencilAlt, faHistory, faSync, faPlay, faTrash, faThLarge, faSave, faSpinner, faTimes, faCogs, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import "./workflows.css";
 import SchedulerWidget from "../common/schedulerWidget";
 import isEqual from "lodash.isequal";
@@ -379,10 +379,10 @@ const PipelineItemDetail = (props) => {
                 <Col className="py-1"><span className="text-muted mr-1">Tags:</span> 
                   {data.tags.map((item, idx) => (<span key={idx}>{item}, </span>))}</Col>
               </Row>
-              <Row className="row-content-spacing">
+              {/* <Row className="row-content-spacing">
                 <Col className="py-1"><span className="text-muted mr-1">Tools:</span> 
                   {_buildToolList(data.workflow.plan).map((item, idx) => (<span key={idx} className="upper-case-first mr-1">{item} </span>))}</Col> 
-              </Row>
+              </Row> */}
 
               { data.workflow.source !== undefined ?
                 <Row className="row-content-spacing">
@@ -456,6 +456,9 @@ const PipelineItemDetail = (props) => {
                  
                     <Button variant="secondary" className="mr-2 mt-2" size="sm" onClick={() => { handleRefreshClick(data._id); }}>
                       <FontAwesomeIcon icon={faSync} className="mr-1" fixedWidth/>Refresh</Button> 
+
+                    <Button variant="success" disabled className="mr-2 mt-2" size="sm" onClick={() => { handleRefreshClick(data._id); }}>
+                      <FontAwesomeIcon icon={faCheckCircle} className="mr-1" fixedWidth/>Approve Pending Step</Button> 
 
                   </Col>
                 </Row>

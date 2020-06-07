@@ -4,13 +4,13 @@ import { axiosApiService } from "../../api/apiService";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import Modal from "../common/modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faCog, faArchive, faBookmark, faPen, faExclamationTriangle, faSpinner, faCheckCircle, faEnvelope, faTimesCircle, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faCog, faArchive, faHourglassStart, faPen, faExclamationTriangle, faSpinner, faCheckCircle, faEnvelope, faTimesCircle, faTrash } from "@fortawesome/free-solid-svg-icons";
 import ModalActivityLogs from "../common/modalActivityLogs";
 import { format } from "date-fns";
 import "./workflows.css";
 
 
-const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, accessToken, editWorkflow, parentCallbackEditItem, deleteStep, parentHandleViewSourceActivityLog }) => {
+const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessToken, editWorkflow, parentCallbackEditItem, deleteStep, parentHandleViewSourceActivityLog }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
   const [modalHeader, setModalHeader] = useState("");
@@ -20,80 +20,67 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, acc
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [modalDeleteIndex, setModalDeleteIndex] = useState(false);
   const [toolProperties, setToolProperties] = useState({});
-
   const [infoModal, setInfoModal] = useState({ show:false, header: "", message: "", button: "OK" });
   
   useEffect(() => {    
-    /*  const controller = new AbortController();
-    const runEffect = async () => {
-      try {
-        await loadFormData(item, lastStep);                
-      } catch (err) {
-        if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
-          return;
-        }        
-      }
-    };
-    runEffect();
-    return () => {
-      controller.abort();      
-    }; */
-    loadFormData(item, lastStep);      
-  }, [item]);//item, lastStep
+    loadFormData(item, lastStep, index, plan);      
+  }, [item, lastStep]);
 
 
-  const loadFormData = async (item, lastStep) => {
+  const loadFormData = async (item, lastStep1, index, plan) => {
     setStepConfigured(false);
+    setToolProperties({});
+    setCurrentStatus({});    
+    setItemState("");
 
-    if (item.tool === undefined || item.tool.configuration === undefined) {
-      setItemState("warning");
-    } else if (typeof(lastStep) !== "undefined" && typeof(item) !== "undefined") {
-      if(typeof(lastStep.success) !== "undefined" && lastStep.success.step_id === item._id) {
-        setCurrentStatus(lastStep.success);      
-        setItemState("completed");
-      }
-      else if(typeof(lastStep.running) !== "undefined" && lastStep.running.step_id === item._id) {
-        setCurrentStatus(lastStep.running);
-        setItemState("running");
-      }
-      else if(typeof(lastStep.failed) !== "undefined" && lastStep.failed.step_id === item._id) {
-        setCurrentStatus(lastStep.failed);
-        setItemState("failed");
-      } else {
-        setCurrentStatus({});
-        setItemState("");
-      }
-    } else {
-      setCurrentStatus({});
-      setItemState("");
-    }    
-
-
-
-    if (item.tool !== undefined && (typeof(item.tool.tool_identifier) === "string" && item.tool.tool_identifier.length > 0)) {
-      getToolDetails(item.tool.tool_identifier);
-    
-      if (item.type !== undefined && Object.keys(item.type[0]).length > 0) {
-        setStepConfigured(true);
-      }
-    
-    
-    }
-    
-
-    /* 
     if (item !== undefined) {
-      if (item.tool !== undefined && 
-        (typeof(item.tool.tool_identifier) === "string" && item.tool.tool_identifier.length > 0) 
-          && (item.type !== undefined && Object.keys(item.type[0]).length > 0)) {
-        setStepConfigured(true);
-      } else {
-        setStepConfigured(false);
+      if (item.tool === undefined || item.tool.configuration === undefined) {
+        setItemState("warning");
       }
-    } else {
-      setStepConfigured(false);
-    }     */
+
+      if (lastStep !== undefined) { 
+
+        if (lastStep.success !== undefined && Object.keys(lastStep.success).length > 0) {
+          let stepArrayIndex = plan.findIndex(x => x._id.toString() === lastStep.success.step_id); 
+          if (index === stepArrayIndex) {  //current step is successful, so it's completed
+            setCurrentStatus(lastStep.success);
+            setItemState("completed");
+
+          } else if (index === stepArrayIndex + 1)  { //this is the next step in the plan
+            setItemState("pending");
+          }          
+        }
+
+        if (lastStep.running !== undefined && Object.keys(lastStep.running).length > 0) {
+          let stepArrayIndex = plan.findIndex(x => x._id.toString() === lastStep.running.step_id); 
+          if (index === stepArrayIndex) {  //current step is successful, so it's completed
+            setCurrentStatus(lastStep.running);
+            setItemState("running");
+
+          } else if (index === stepArrayIndex + 1)  { //this is the next step in the plan
+            setItemState("pending");
+          }
+        }
+
+        if (lastStep.failed !== undefined && Object.keys(lastStep.failed).length > 0) {
+          let stepArrayIndex = plan.findIndex(x => x._id.toString() === lastStep.failed.step_id); 
+          if (index === stepArrayIndex) {  //current step is successful, so it's completed
+            setCurrentStatus(lastStep.failed);
+            setItemState("failed");
+
+          } else if (index === stepArrayIndex + 1)  { //this is the next step in the plan
+            setItemState("pending");
+          }
+        }
+      }
+
+      if (item.tool !== undefined && (typeof(item.tool.tool_identifier) === "string" && item.tool.tool_identifier.length > 0)) {
+        getToolDetails(item.tool.tool_identifier);    
+        if (typeof(item.type) === "object" && Object.keys(item.type).length > 0) {
+          setStepConfigured(true);
+        }    
+      }
+    }
   };
 
   const handleViewClick = (data, header) => {
@@ -124,15 +111,12 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, acc
     //take tool ID (too_identifier in pipeline), pass to Node route that returns both tool record and type from registry
     try {
       const toolResponse = await axiosApiService(accessToken).get("/registry/tool/properties/"+tool_identifier, {});      
-      console.log(toolResponse.data);
       setToolProperties(toolResponse.data);
     }
     catch (err) {
       console.log(err.message);
     }
   };
-
-
 
 
   return (
@@ -182,8 +166,15 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, acc
                       onClick={() => { setInfoModal({ show:true, header: "Step Warning", message: "This step is missing configuration information and will not run.", button: "OK" }); }} />
                   </OverlayTrigger> }
 
-                {/* {nextStep !== undefined && nextStep._id === item._id && itemState !== "running" ? 
-                    <FontAwesomeIcon icon={faBookmark} className="nav-blue mr-2" /> : null } */}
+                { itemState === "pending" && 
+                  <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip({ message: "Status Message" })} >
+                    <FontAwesomeIcon icon={faHourglassStart} className="mr-2 yellow" 
+                      style={{ cursor: "pointer" }} 
+                      onClick={() => { setInfoModal({ show:true, header: "Step Warning", message: "This step is the next pending step in the workflow.", button: "OK" }); }} />
+                  </OverlayTrigger> }
                 
               </> : 
               <OverlayTrigger
@@ -267,25 +258,47 @@ const PipelineWorkflowItem = ({ item, index, lastStep, nextStep, pipelineId, acc
                       onClick={() => { parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id); }} />
                   </OverlayTrigger>
 
-                  <OverlayTrigger
-                    placement="top"
-                    delay={{ show: 250, hide: 400 }}
-                    overlay={renderTooltip({ message: "Configure Step Notification and Approval Rules" })} >
-                    <FontAwesomeIcon icon={faEnvelope}
-                      style={{ cursor: "pointer" }}
-                      className="text-muted mx-1" fixedWidth
-                      onClick={() => { handleEditClick("notification", item.tool, item._id); }} />
-                  </OverlayTrigger>
+                  {itemState !== "running" ? 
+                    <>
+                      <OverlayTrigger
+                        placement="top"
+                        delay={{ show: 250, hide: 400 }}
+                        overlay={renderTooltip({ message: "Configure Step Notification and Approval Rules" })} >
+                        <FontAwesomeIcon icon={faEnvelope}
+                          style={{ cursor: "pointer" }}
+                          className="text-muted mx-1" fixedWidth
+                          onClick={() => { handleEditClick("notification", item.tool, item._id); }} />
+                      </OverlayTrigger>
 
-                  <OverlayTrigger
-                    placement="top"
-                    delay={{ show: 250, hide: 400 }}
-                    overlay={renderTooltip({ message: "Configure Step Settings" })} >
-                    <FontAwesomeIcon icon={faCog}
-                      style={{ cursor: "pointer" }}
-                      className="text-muted mx-1" fixedWidth
-                      onClick={() => { handleEditClick("tool", item.tool, item._id); }} />
-                  </OverlayTrigger>
+                      <OverlayTrigger
+                        placement="top"
+                        delay={{ show: 250, hide: 400 }}
+                        overlay={renderTooltip({ message: "Configure Step Settings" })} >
+                        <FontAwesomeIcon icon={faCog}
+                          style={{ cursor: "pointer" }}
+                          className="text-muted mx-1" fixedWidth
+                          onClick={() => { handleEditClick("tool", item.tool, item._id); }} />
+                      </OverlayTrigger>
+                    </> 
+                    : 
+                    <>
+                      <OverlayTrigger
+                        placement="top"
+                        delay={{ show: 250, hide: 400 }}
+                        overlay={renderTooltip({ message: "Cannot access settings while pipeline is running" })} >
+                        <FontAwesomeIcon icon={faEnvelope}
+                          className="text-muted mx-1" fixedWidth  />
+                      </OverlayTrigger>
+
+                      <OverlayTrigger
+                        placement="top"
+                        delay={{ show: 250, hide: 400 }}
+                        overlay={renderTooltip({ message: "Cannot access settings while pipeline is running" })} >
+                        <FontAwesomeIcon icon={faCog}
+                          className="text-muted mx-1" fixedWidth  />
+                      </OverlayTrigger>
+                    </>}
+
                 </> : null }
             </div>
           </div> : null }
@@ -319,10 +332,10 @@ function renderTooltip(props) {
 }
 
 PipelineWorkflowItem.propTypes = {
+  plan: PropTypes.array,
   item: PropTypes.object,
   index: PropTypes.number,
   lastStep: PropTypes.object,
-  nextStep: PropTypes.object,
   pipelineId: PropTypes.string,
   accessToken: PropTypes.string,
   editWorkflow: PropTypes.bool,

@@ -119,7 +119,7 @@ const PipelineWorkflowEditor = ({ editItem, data, closeEditorPanel, fetchPlan })
       return (
         <>
           <Row className="mb-2">
-            <Col sm={10}><h5>Tool Configuration</h5></Col>
+            <Col sm={10}><h5>Step Configuration</h5></Col>
             <Col sm={2} className="text-right">
               <FontAwesomeIcon 
                 icon={faTimes} 
@@ -127,7 +127,7 @@ const PipelineWorkflowEditor = ({ editItem, data, closeEditorPanel, fetchPlan })
                 style={{ cursor:"pointer" }}
                 onClick={() => { handleCloseClick(); }} />
             </Col>
-          </Row>            
+          </Row> 
           <StepToolConfiguration data={data} editItem={editItem} parentCallback={callbackFunctionTools} /> 
         </>
       );

@@ -45,12 +45,12 @@ function Sidebar({ hideView }) {
   };
 
   async function checkAuthentication ()  {
-    console.log("checking authentication");
+    //console.log("checking authentication");
     const { getUserInfo, authenticated } = contextType;
     try {
       const userInfoResponse = await getUserInfo();
       setAuthenticated(authenticated);
-      console.log("Authenticated: ", authenticated);
+      //console.log("Authenticated: ", authenticated);
 
       if (!authenticated) {
         setUserInfo(null);

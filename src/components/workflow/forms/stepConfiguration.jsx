@@ -23,7 +23,7 @@ function StepConfiguration( { data, stepId, parentCallback }) {
   const [renderForm, setRenderForm] = useState(false);
   const [disableToolSelect, setDisableToolSelect] = useState(false);
   const [toolList, setToolList] = useState([]);
-
+  
 
   useEffect(() => {    
     const controller = new AbortController();
@@ -59,11 +59,22 @@ function StepConfiguration( { data, stepId, parentCallback }) {
     }
   };
 
+  const getToolDetails = async (tool_identifier) => {
+    const accessToken = await getAccessToken();
+    try {
+      const toolResponse = await axiosApiService(accessToken).get("/registry/tool/properties/"+tool_identifier, {});      
+      return toolResponse.data;
+    }
+    catch (err) {
+      console.log(err.message);
+    }
+  };
+
   const loadFormData = async (step) => {
     await getToolList();    
     setFormData(INITIAL_DATA);    
     setDisableToolSelect(false);
-    let stepType = getStepType(step.type[0], step.tool);
+    let stepType = getStepType(step.type[0], step.tool);    
     setFormData({
       name: step.name,
       type: stepType,
@@ -71,7 +82,7 @@ function StepConfiguration( { data, stepId, parentCallback }) {
       active: step.active ? true : false
     });
 
-    if (step.tool !== undefined) {
+    if (step.tool !== undefined) {      
       if (step.tool.tool_identifier.length > 0) {
         setDisableToolSelect(true);
       }
@@ -79,10 +90,11 @@ function StepConfiguration( { data, stepId, parentCallback }) {
     setRenderForm(true);
   };
 
-  const getStepType = (type, tool) => {
+  const getStepType = async (type, tool) => {
     if (type === null || type === undefined) {
       if (tool && tool.tool_identifier) {
-        return toolList[toolList.findIndex(x => x.identifier === tool.tool_identifier)].tool_type_identifier;
+        const toolData = await getToolDetails(tool.tool_identifier);
+        return toolData.tool_type_identifier; //toolList[toolList.findIndex(x => x.identifier === tool.tool_identifier)].tool_type_identifier;
       }      
     } 
     return type;

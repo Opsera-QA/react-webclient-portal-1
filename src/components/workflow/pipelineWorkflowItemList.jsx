@@ -7,7 +7,7 @@ import PipelineWorkflowItem from "./pipelineWorkflowItem";
 import "./workflows.css";
 
 
-function PipelineWorkflowItemList({ items, lastStep, nextStep, editWorkflow, pipelineId, accessToken, parentCallbackEditItem, parentHandleViewSourceActivityLog, setStateItems, quietSavePlan, fetchPlan }) {
+function PipelineWorkflowItemList({ items, lastStep, editWorkflow, pipelineId, accessToken, parentCallbackEditItem, parentHandleViewSourceActivityLog, setStateItems, quietSavePlan, fetchPlan }) {
   
   useEffect(() => {    
   }, [items]);
@@ -69,13 +69,13 @@ function PipelineWorkflowItemList({ items, lastStep, nextStep, editWorkflow, pip
     <div key={index}>
       <div className={"workflow-module-container workflow-module-container-width mx-auto " + setStepStatusClass(lastStep, item)}>
         <PipelineWorkflowItem 
+          plan={items}
           item={item} 
           index={index}          
           lastStep={lastStep} 
           editWorkflow={editWorkflow} 
           pipelineId={pipelineId} 
           accessToken={accessToken}
-          nextStep={nextStep} 
           parentCallbackEditItem={parentCallbackEditItem} 
           deleteStep={deleteStep}
           parentHandleViewSourceActivityLog={parentHandleViewSourceActivityLog} />
@@ -107,7 +107,6 @@ function PipelineWorkflowItemList({ items, lastStep, nextStep, editWorkflow, pip
 PipelineWorkflowItemList.propTypes = {
   items: PropTypes.array,
   lastStep: PropTypes.object,
-  nextStep: PropTypes.object,
   editWorkflow: PropTypes.bool,
   pipelineId: PropTypes.string,
   accessToken: PropTypes.string,
