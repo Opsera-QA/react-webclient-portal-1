@@ -123,7 +123,7 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
     <>
       <div>
         <div className="title-text-6 upper-case-first ml-1 mt-1 title-text-divider">
-          <span className="text-muted">Step {index + 1}:</span> {toolProperties.type ? toolProperties.type.name : null}        
+          <span className="text-muted mr-1">Step {index + 1}:</span> {toolProperties.type ? toolProperties.type.name : null}        
           <div className="float-right text-right">
             {stepConfigured === true && editWorkflow === false ? 
               <>
