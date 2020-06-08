@@ -46,7 +46,7 @@ function RegistrationLanding() {
               <div className="row mx-n2 mt-4" style={{ minWidth:"1020px" }}>
                 <div className="col-md px-2 landing-content-module">
                   <div className="h5">Platform</div>
-                  <div className="text-muted">Spin up a variety of tools through OpsERA.</div>
+                  <div className="text-muted">Get started in your DevOps journey or experiment with many of our tool offerings to figure out your next steps.</div>
                 </div>
                 <div className="col-md px-2 landing-content-module">
                   <div className="h5">Pipeline</div>
