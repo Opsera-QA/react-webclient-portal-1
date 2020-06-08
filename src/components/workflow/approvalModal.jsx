@@ -111,7 +111,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
           {errors ? <div className="error-text">Error Reported: {errors}</div> : null}
 
           <div className="mt-1 pb-3">{message}</div>  
-          {JSON.stringify(formData)}
+          
           <Form>
             <Form.Group controlId="repoField">
               <Form.Label>Log Approval Message</Form.Label>
