@@ -224,7 +224,7 @@ function ElasticBeanstalkDeploy( { stepTool, pipelineId, plan, stepId, parentCal
             textField='name'
             defaultValue={formData.s3StepId ? listOfSteps[listOfSteps.findIndex(x => x._id === formData.s3StepId)] : listOfSteps[0]}
             onChange={handleS3StepChange}             
-          /> : null }
+          /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted ml-2" fixedWidth/> }
       </Form.Group>
 
       {/* Leave the threshold form group as is for now, just read only for all forms */}
@@ -237,7 +237,7 @@ function ElasticBeanstalkDeploy( { stepTool, pipelineId, plan, stepId, parentCal
         onClick={() => { callbackFunction(); }}> 
         {loading ? 
           <><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> Saving</> :
-          <><FontAwesomeIcon icon={faSave} className="mr-1"/> Save</> }
+          <><FontAwesomeIcon icon={faSave} disabled={!listOfSteps || !renderForm} className="mr-1"/> Save</> }
       </Button>
       
       <small className="form-text text-muted mt-2 text-right">* Required Fields</small>

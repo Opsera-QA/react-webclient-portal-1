@@ -4,7 +4,7 @@ import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
 import { Form, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave } from "@fortawesome/free-solid-svg-icons";
+import { faSave, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
 
 
@@ -74,7 +74,8 @@ function StepConfiguration( { data, stepId, parentCallback }) {
     await getToolList();    
     setFormData(INITIAL_DATA);    
     setDisableToolSelect(false);
-    let stepType = getStepType(step.type[0], step.tool);    
+    let stepType = await getStepType(step.tool);    
+
     setFormData({
       name: step.name,
       type: stepType,
@@ -90,14 +91,14 @@ function StepConfiguration( { data, stepId, parentCallback }) {
     setRenderForm(true);
   };
 
-  const getStepType = async (type, tool) => {
-    if (type === null || type === undefined) {
-      if (tool && tool.tool_identifier) {
-        const toolData = await getToolDetails(tool.tool_identifier);
-        return toolData.tool_type_identifier; //toolList[toolList.findIndex(x => x.identifier === tool.tool_identifier)].tool_type_identifier;
-      }      
-    } 
-    return type;
+  const getStepType = async (tool) => {    
+    if (tool && tool.tool_identifier) {
+      const toolData = await getToolDetails(tool.tool_identifier);
+      console.log("toolData", toolData);
+      return toolData.tool_type_identifier; //toolList[toolList.findIndex(x => x.identifier === tool.tool_identifier)].tool_type_identifier;
+    } else {
+      return null;
+    }    
   };
 
   const callbackFunction = () => {   
@@ -141,7 +142,7 @@ function StepConfiguration( { data, stepId, parentCallback }) {
       { formMessage.length > 0 ? <p className="text-danger">{formMessage}</p> : null}
       <div className="mt-4 mb-4">
         <Form.Check 
-          type="switch"  
+          type="switch"  disabled
           id="enabled-switch"
           label="Step Enabled" 
           checked={formData.active ? true : false}   
@@ -163,12 +164,12 @@ function StepConfiguration( { data, stepId, parentCallback }) {
               textField='name'
               defaultValue={toolList[toolList.findIndex(x => x.identifier === formData.tool_identifier)]}
               onChange={handleToolIdentifierChange}             
-            /> : null }
+            /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted ml-2" fixedWidth/> }
           <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text>
         </Form.Group>        
       </div> 
       
-      <Button variant="primary" type="button"  
+      <Button variant="primary" type="button" disabled={!renderForm}  
         onClick={() => { callbackFunction(); }}> 
         <FontAwesomeIcon icon={faSave} className="mr-1"/> Save
       </Button>

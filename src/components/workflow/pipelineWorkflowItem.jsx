@@ -75,8 +75,8 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
       }
 
       if (item.tool !== undefined && (typeof(item.tool.tool_identifier) === "string" && item.tool.tool_identifier.length > 0)) {
-        getToolDetails(item.tool.tool_identifier);    
-        if (typeof(item.type) === "object" && Object.keys(item.type).length > 0) {
+        getToolDetails(item.tool.tool_identifier); 
+        if (item.type && item.type[0] && item.type[0].length > 0) {
           setStepConfigured(true);
         }    
       }

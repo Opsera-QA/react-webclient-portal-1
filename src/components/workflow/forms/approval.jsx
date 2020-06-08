@@ -100,7 +100,7 @@ function ApprovalStepConfiguration( { stepTool, pipelineId, plan, stepId, parent
       <div className="my-4 pt-3">
         <Form.Label>Approval Threshold</Form.Label>
         <Form.Check 
-          type="switch" 
+          type="switch" disabled 
           id="approval-switch"
           label="Step Approved!" 
           checked={thresholdData.approved ? true : false}   
