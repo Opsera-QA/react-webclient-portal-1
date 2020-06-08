@@ -4,7 +4,7 @@ import { useTable, usePagination, useSortBy } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faSortUp, faSortDown, faSort } from "@fortawesome/free-solid-svg-icons";
 
-function ToolsTable({ columns, data }) {
+function ToolsTable({ columns, data, rowInfo }) {
 
   const {
     getTableProps,
@@ -48,7 +48,7 @@ function ToolsTable({ columns, data }) {
           {rows.map((row, i) => {
             prepareRow(row);
             return (
-              <tr key={i} {...row.getRowProps()}>
+              <tr key={i} {...row.getRowProps({ onClick: () => rowInfo(row) } )}>
                 {row.cells.map((cell, j) => {
                   return <td key={j} {...cell.getCellProps()}>{cell.render("Cell")}</td>;
                 })}

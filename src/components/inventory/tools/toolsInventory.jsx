@@ -11,13 +11,16 @@ import { format } from "date-fns";
 
 import ToolsTable from "./toolsTable";
 import NewTool from "./newTool";
+import ToolDetails from "./toolDetails";
 
 function ToolInventory () {
 
   const { getAccessToken } = useContext(AuthContext);
-  const [showModal, setShowModal] = useState(false);
+  const [isEditModal, toggleEditModal] = useState(false);
+  const [isViewModal, toggleViewModal] = useState(false);
+
   const [isLoading, setLoading] = useState(false);
-  const [rowDetails, editRowDetails] = useState({
+  const [selectedRowDetail, setRowDetails] = useState({
     id: "",
     details: {}
   });
@@ -26,18 +29,19 @@ function ToolInventory () {
   let history = useHistory();
   const { id, view } = useParams();
 
-  const editTool = (cellData) => {
-    history.push(`/inventory/tools/${cellData.row.original._id}`);
+  const editTool = (event, cellData) => {
+    event.stopPropagation();
     setModalType("edit");
-    editRowDetails({
+    setRowDetails({
       id: cellData.row.original._id,
       details: cellData.row.values
     });
-    setShowModal(true);
+    toggleEditModal(true);
   };
 
-  const deleteTool = async (cellData) => {
-    editRowDetails({
+  const deleteTool = async (event, cellData) => {
+    event.stopPropagation();
+    setRowDetails({
       id: cellData.row.original._id,
       details: cellData.row.values
     });
@@ -57,11 +61,11 @@ function ToolInventory () {
       let apiUrl = id ? "/registry/" + id : "/registry/";
       const response = await axiosApiService(accessToken).get(apiUrl, {});
       if(id) {
-        editRowDetails({
+        setRowDetails({
           id: id,
           details: response.data[0]
         });
-        setShowModal(true);
+        toggleViewModal(true);
       }else {
         //import { format } from "date-fns";
         setToolList(response.data);
@@ -80,15 +84,15 @@ function ToolInventory () {
 
   const handleActionClick = () => {
     setModalType("new");
-    editRowDetails({
+    setRowDetails({
       id: "",
       details: ""
     });
-    setShowModal(true);
+    toggleEditModal(true);
   };
 
   const closeModal = (data) => {
-    setShowModal(false);
+    toggleEditModal(false);
     getToolRegistryList(null);
     history.push("/inventory/tools");
   };
@@ -96,8 +100,8 @@ function ToolInventory () {
   const actionButtons = (cellData) => {
     return(
       <>
-        <Button variant="outline-primary" size="sm" className="mr-2" onClick={() => { editTool(cellData); }} ><FontAwesomeIcon icon={faEdit} className="mr-1"/> Edit</Button>
-        <Button variant="outline-danger" size="sm" className="mr-1" onClick={() => { deleteTool(cellData); }} ><FontAwesomeIcon icon={faTrash} className="mr-1"/> Delete</Button>
+        <Button variant="outline-primary" size="sm" className="mr-2" onClick={(e) => { editTool(e, cellData); }} ><FontAwesomeIcon icon={faEdit} className="mr-1"/> Edit</Button>
+        <Button variant="outline-danger" size="sm" className="mr-1" onClick={(e) => { deleteTool(e, cellData); }} ><FontAwesomeIcon icon={faTrash} className="mr-1"/> Delete</Button>
       </>
     );
   };
@@ -144,10 +148,27 @@ function ToolInventory () {
     []
   );
 
+  const viewTool = (rowData) => {
+    console.log(rowData);
+    history.push(`/inventory/tools/${rowData.original._id}`);
+    setRowDetails({
+      id: rowData.original._id,
+      details: rowData.values
+    });
+    toggleViewModal(true);
+  };
+
+  const closeViewModal = () => {
+    toggleViewModal(false);
+    history.push("/inventory/tools");
+  };
+
   return (
     <>
       
-      <NewTool showModal={showModal} closeModal={(toggleModal) => closeModal(toggleModal)} type={modalType} edittool={rowDetails}/>
+      <NewTool showModal={isEditModal} closeModal={(toggleModal) => closeModal(toggleModal)} type={modalType} edittool={selectedRowDetail}/>
+
+      <ToolDetails showModal={isViewModal} closeModal={(toggleModal) => closeViewModal(toggleModal)} toolData={selectedRowDetail}/>
 
       <div className="mt-2 mb-2 text-right">
         <Button variant="primary" size="sm"  
@@ -156,8 +177,10 @@ function ToolInventory () {
         </Button>
         <br />
       </div>
+
       {isLoading && <LoadingDialog />}
-      {!isLoading && <ToolsTable columns={columns} data={toolList} />}
+
+      {!isLoading && <ToolsTable rowInfo={viewTool}  columns={columns} data={toolList} />}
       
     </>
   );  
