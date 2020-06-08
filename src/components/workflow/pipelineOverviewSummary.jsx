@@ -15,6 +15,7 @@ import { faFileAlt, faPencilAlt, faHistory, faSync, faPlay, faTrash, faThLarge, 
 import "./workflows.css";
 import SchedulerWidget from "../common/schedulerWidget";
 import isEqual from "lodash.isequal";
+import ApprovalModal from "./approvalModal";
 
 
 const INITIAL_FORM_DATA = {
@@ -40,6 +41,7 @@ const PipelineItemDetail = (props) => {
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [workflowStatus, setWorkflowStatus] = useState(false);
   const [lastStep, setLastStep] = useState({});
+  const [showApprovalModal, setShowApprovalModal] = useState(false);
   const endPointUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
   let history = useHistory();
   
@@ -145,6 +147,10 @@ const PipelineItemDetail = (props) => {
     e.preventDefault();
     setShowDeleteModal(true);
     setModalDeleteId(itemId);    
+  };
+
+  const handleApprovalClick = () => {
+    setShowApprovalModal(true);    
   };
 
   const handleStopWorkflowClick = async (pipelineId) => {
@@ -457,8 +463,8 @@ const PipelineItemDetail = (props) => {
                     <Button variant="secondary" className="mr-2 mt-2" size="sm" onClick={() => { handleRefreshClick(data._id); }}>
                       <FontAwesomeIcon icon={faSync} className="mr-1" fixedWidth/>Refresh</Button> 
 
-                    <Button variant="success" disabled className="mr-2 mt-2" size="sm" onClick={() => { handleRefreshClick(data._id); }}>
-                      <FontAwesomeIcon icon={faCheckCircle} className="mr-1" fixedWidth/>Approve Pending Step</Button> 
+                    <Button variant="success" disabled={false} className="mr-2 mt-2" size="sm" onClick={() => { handleApprovalClick(); }}>
+                      <FontAwesomeIcon icon={faCheckCircle} className="mr-1" fixedWidth/>Approve Request</Button> 
 
                   </Col>
                 </Row>
@@ -476,6 +482,8 @@ const PipelineItemDetail = (props) => {
         handleConfirmModal={() => deleteItem(modalDeleteId)} /> : null}
      
       <ModalActivityLogs header="Pipeline Details" size="lg" jsonData={modalMessage} show={showModal} setParentVisibility={setShowModal} />
+
+      <ApprovalModal pipelineId={data._id} visible={showApprovalModal} setVisible={setShowApprovalModal} refreshActivity={parentCallbackRefreshActivity} />
     </>
     
   );

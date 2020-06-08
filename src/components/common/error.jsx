@@ -45,30 +45,24 @@ function ErrorDialog({ error, align, type }) {
     });
   }, [error]);
 
-  const { statusCode, variant, alignment } = state;
+  const { statusCode, alignment } = state;
 
   if (alignment === "center") {
     return (
       <div className="row h-100">
         <div className="col-sm-12 my-auto text-center">
-          <Alert variant={variant}>
-            {state.message}
-            { statusCode === 401 &&
-          <span style={{ marginLeft: "10px" }}><a href="#" onClick={() => { login(); }}>Click here to refresh login.</a></span>
-            }
-          </Alert>
+          <div className="error-text">
+            {state.message} { statusCode === 401 && <span className="ml-1"><a href="#" onClick={() => { login(); }}>Click here to refresh login.</a></span>}
+          </div>          
         </div>
       </div>
     );
   } else {
     return (
       <div className="mt-1 mb-3 max-content-module-width-50"> 
-        <Alert variant={variant}>
-          {state.message}
-          { statusCode === 401 &&
-          <span style={{ marginLeft: "10px" }}><a href="#" onClick={() => { login(); }}>Click here to refresh login.</a></span>
-          }
-        </Alert>
+        <div className="error-text">
+          {state.message} { statusCode === 401 && <span className="ml-1"><a href="#" onClick={() => { login(); }}>Click here to refresh login.</a></span>}
+        </div>        
       </div>
     );}
 

@@ -430,14 +430,19 @@ a:hover, .active {
 
 /* status page css */
 
-.stausText {
+.status-text {
   font-size: smaller ;
   text-transform: capitalize;
 }
 
+.error-text {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  color: #ff7b7b;
+  padding: 5px;
+}
+
 .code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 pre {

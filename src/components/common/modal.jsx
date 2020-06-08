@@ -13,9 +13,6 @@ function CustomModalDialog({ header, message, button, size, handleConfirmModal, 
   useEffect(() => {
     setShow(true);
     setDisplayJson(jsonView === "true");
-
-    console.log(handleConfirmModal);
-    console.log(typeof(handleConfirmModal));
   }, []);
 
   const handleClose = () => {
