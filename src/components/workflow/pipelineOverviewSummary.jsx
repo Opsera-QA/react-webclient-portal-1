@@ -226,7 +226,7 @@ const PipelineItemDetail = (props) => {
       
       if (Object.keys(postBody).length > 0 ) {
         const response = await PipelineActions.save(pipelineId, postBody, getAccessToken);
-        console.log(response);
+        //console.log(response);
         if (typeof(response.error) !== "undefined") {
           console.log(response.error);
           setErrors(response.error);

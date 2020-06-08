@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Table } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext"; 
 import { axiosApiService } from "api/apiService";
-import PipelineItemDetail from "./pipelineItemDetail";
+import PipelineItemDetail from "./pipelineOverviewSummary";
 import LoadingDialog from "components/common/loading";
 import ErrorDialog from "components/common/error";
 import InfoDialog from "components/common/info";
