@@ -56,7 +56,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
     
 
     //IF a custom message is defined for the approval setp (tool.configuration) then load it in the setMessage, otherwise put a generic block of text in there
-    setMessage(`A step in Pipeline ${pipeline.name} (${pipeline._id}) requires approval in order to proceed.  Please complete the form below in order to allow the pipeline to continue.`);      
+    setMessage(`A step in Pipeline ${pipeline.name} requires approval in order to proceed.  Please complete the form below in order to allow the pipeline to continue.`);      
 
   };
 
@@ -105,7 +105,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
 
           {errors ? <div className="error-text">Error Reported: {errors}</div> : null}
 
-          <div className="m-2 pb-2">{message}</div>  
+          <div className="mt-1 pb-3">{message}</div>  
 
           <Form>
             <Form.Group controlId="repoField">
