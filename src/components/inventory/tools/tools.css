@@ -1,12 +1,20 @@
 .formContainer {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .formContainer .form-group {
   margin-bottom: 1rem;
   width: 50%;
   display: flex;
+}
+
+.tool-details-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 30%;
+    margin-top: 5%;
 }
 
 .btn-link-danger {
