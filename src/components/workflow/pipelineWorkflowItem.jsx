@@ -122,7 +122,8 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
   return (
     <>
       <div>
-        <div className="title-text-6 upper-case-first ml-1 mt-1 title-text-divider">{toolProperties.type ? toolProperties.type.name : "Pipeline Step"}        
+        <div className="title-text-6 upper-case-first ml-1 mt-1 title-text-divider">
+          <span className="text-muted">Step {index + 1}:</span> {toolProperties.type ? toolProperties.type.name : null}        
           <div className="float-right text-right">
             {stepConfigured === true && editWorkflow === false ? 
               <>
@@ -201,7 +202,7 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
           </div>
         </div>
         
-        <div className="d-flex flex-row mb-1 mt-1">
+        <div className="d-flex flex-row mb-1 mt-2">
           <div className="pl-1 workflow-module-text-flex-basis text-muted">Name:</div>
           <div className="pl-1">{item.name}</div>
           <div className="flex-grow-1"></div>                  
