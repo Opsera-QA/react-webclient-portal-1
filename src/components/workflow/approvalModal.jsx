@@ -18,11 +18,16 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
   const [isSaving, setIsSaving] = useState(false);
   const [accessToken, setAccessToken] = useState("");
   const [message, setMessage] = useState("");
+  const [stepId, setStepId] = useState("");
   const [formData, setFormData] = useState(INITIAL_FORM);
 
   useEffect(() => {
     console.log("fetch'n");
-    fetchPipelineData(pipelineId);
+    fetchPipelineData(pipelineId);    
+  }, []);
+
+  useEffect(() => {
+    setFormData(INITIAL_FORM);
   }, [visible]);
 
 
@@ -53,7 +58,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
     //parse through pipeline and figure out which step is waiting for approval.  Look a thte last_step.running.paused and get it's stepID
 
     //register form valules:
-    
+    setStepId("123123123123");
 
     //IF a custom message is defined for the approval setp (tool.configuration) then load it in the setMessage, otherwise put a generic block of text in there
     setMessage(`A step in Pipeline ${pipeline.name} requires approval in order to proceed.  Please complete the form below in order to allow the pipeline to continue.`);      
@@ -67,7 +72,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
     setIsSaving(true);
     const apiUrl = `/pipelines/${pipelineId}/approve`;   
     const postBody = {
-      "stepId": "STEP!",
+      "stepId": stepId,
       "message": formData.message
     };
 
@@ -91,7 +96,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
   };
 
   const handleConfirm = async () => {
-    submitApproval(pipelineId, formData);    
+    submitApproval(pipelineId, stepId, formData);    
   };
 
 
@@ -106,7 +111,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
           {errors ? <div className="error-text">Error Reported: {errors}</div> : null}
 
           <div className="mt-1 pb-3">{message}</div>  
-
+          {JSON.stringify(formData)}
           <Form>
             <Form.Group controlId="repoField">
               <Form.Label>Log Approval Message</Form.Label>
@@ -120,7 +125,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
                 id="approval-switch"
                 label="Approved" 
                 checked={formData.approved ? true : false}   
-                onChange={() => setFormData({ ...setFormData, approved: !formData.approved })}    
+                onChange={() => setFormData({ ...formData, approved: !formData.approved })}    
               />
               <small className="form-text text-muted mt-2">Flip the Approved switch to approve this step</small>
             </div>
