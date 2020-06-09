@@ -156,14 +156,14 @@ const ItemSummaries = (props) => {
               </Card.Body>
               <Card.Footer style={{ backgroundColor: "#fff" }}>
                 <div className="d-flex bd-highlight">
-                  <div className="p-2 bd-highlight align-items-end mt-auto">
-                    <small className="text-muted">Updated {format(new Date(item.updatedAt), "yyyy-MM-dd', 'hh:mm a")}</small><br/>
-                    <small className="text-muted">Created {format(new Date(item.createdAt), "yyyy-MM-dd', 'hh:mm a")}</small>
-                  </div>
                   <div className="p-2 flex-grow-1 bd-highlight m-auto">
                     <Button variant="primary" size="sm" className="mr-2 btn-block" onClick={handleDetailsClick(item._id)}>
                       <FontAwesomeIcon icon={faSearch} className="mr-1"/> View </Button>
                   </div>                                    
+                  <div className="p-2 bd-highlight align-items-end mt-auto">
+                    <small className="text-muted">Updated {format(new Date(item.updatedAt), "yyyy-MM-dd', 'hh:mm a")}</small><br/>
+                    <small className="text-muted">Created {format(new Date(item.createdAt), "yyyy-MM-dd', 'hh:mm a")}</small>
+                  </div>                  
                 </div>              
               </Card.Footer>
             </Card>
