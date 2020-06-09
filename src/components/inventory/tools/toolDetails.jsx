@@ -1,77 +1,62 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Button, Modal, Row, Col } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import PropTypes from "prop-types";
+import { AuthContext } from "contexts/AuthContext";
+import { axiosApiService } from "api/apiService";
+import { useParams } from "react-router-dom";
+
+import ToolSummary from "./toolDetails/toolDetailsSummary";
+import ToolConfiguration from "./toolDetails/toolDetailsConfiguration";
+import ToolLogs from "./toolDetails/toolDetailsLogs";
 
 import "./tools.css";
 
 function ToolDetails(props) {
-  const toolData = props.toolData.details;
+  const { getAccessToken } = useContext(AuthContext);
+  const [toolData, setToolData] = useState({});
   const handleClose = () => props.closeModal(false);
+  let { id } = useParams();
+  const toolId = id || props.toolId;
+  const [activeTab, setActiveTab] = useState("summary");
+
+  useEffect(() => {    
+    setToolData({});
+    getToolRegistryList();   
+  }, []);
+
+  const getToolRegistryList = async () => {
+    try {
+      const accessToken = await getAccessToken();
+      let apiUrl =  "/registry/" + toolId;
+      const response = await axiosApiService(accessToken).get(apiUrl, {});
+      setToolData(response.data[0]);
+    }
+    catch (err) {
+      console.log(err.message);
+    }
+  };
 
   return (
     <>
-      <Modal size="lg" show={props.showModal} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>{toolData.name}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Row>
-            <Col>
-              <Row className="mt-2">
-                <Col className="text-muted">Name:</Col>
-                <Col>{toolData.name}</Col>
-              </Row>
-              <Row className="mt-2">
-                <Col className="text-muted">Description:</Col>
-                <Col>{toolData.description}</Col>
-              </Row>
-              <Row className="mt-2">
-                <Col className="text-muted">Tool:</Col>
-                <Col>{toolData.tool_identifier}</Col>
-              </Row>
-              <Row className="mt-2">
-                <Col className="text-muted">Project:</Col>
-                <Col>{toolData.project}</Col>
-              </Row>
-              <Row className="mt-2">
-                <Col className="text-muted">Roles:</Col>
-                <Col>{toolData.roles}</Col>
-              </Row>
-              <Row className="mt-2">
-                <Col className="text-muted">Created:</Col>
-                <Col>{toolData.createdAt}</Col>
-              </Row>
-            </Col>
-            <Col>
-              <Row className="mt-2">
-                <Col className="text-muted">ID:</Col>
-                <Col>{toolData._id}</Col>
-              </Row>
-              <Row className="mt-2">
-                <Col className="text-muted">Contacts:</Col>
-                <Col>{toolData.contacts}</Col>
-              </Row>
-              <Row className="mt-2">
-                <Col className="text-muted">Application:</Col>
-                <Col>{toolData.application}</Col>
-              </Row>
-              <Row className="mt-2">
-                <Col className="text-muted">Tags:</Col>
-                <Col>{toolData.tags}</Col>
-              </Row>
-              <Row className="mt-2">
-                <Col className="text-muted">Active:</Col>
-                <Col>{toolData.active == true ? "Yes" : "No"}</Col>
-              </Row>
-            </Col>
-          </Row>
-          <div className="tool-details-buttons">
-            <Button variant="success" size="sm" onClick={handleClose}>Button 1</Button>
-            <Button variant="primary" size="sm" onClick={handleClose}>Button 2</Button>
-            <Button variant="success" size="sm" onClick={handleClose}>Button 3</Button>
-            <Button variant="danger" size="sm" onClick={handleClose}>Button 4</Button>
-          </div>
-        </Modal.Body>
+      <Modal size="lg" show={props.showModal} onHide={handleClose}>       
+        {Object.keys(toolData).length > 0 && (
+          <>
+            <Modal.Header closeButton>
+              <Modal.Title>{toolData.name}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+
+              <Button variant={activeTab === "summary" ? "primary" : "link"} onClick={() => setActiveTab("summary")}>Summary</Button>              
+              <Button variant={activeTab === "configuration" ? "primary" : "link"} onClick={() => setActiveTab("configuration")}>Configuration</Button>
+              <Button variant={activeTab === "logs" ? "primary" : "link"} onClick={() => setActiveTab("logs")}>Logs</Button>
+
+              {activeTab === "summary" ? <ToolSummary toolData={toolData} toolId={toolId} /> : null}
+              {activeTab === "configuration" ? <ToolConfiguration toolData={toolData} toolId={toolId} /> : null}
+              {activeTab === "logs" ? <ToolLogs toolData={toolData} toolId={toolId} /> : null}
+
+            </Modal.Body>
+          </>
+        )} 
       </Modal>
     </>
   );
@@ -81,7 +66,7 @@ ToolDetails.propTypes = {
   showModal: PropTypes.bool,
   type: PropTypes.string,
   closeModal: PropTypes.func.isRequired,
-  toolData: PropTypes.object
+  toolId: PropTypes.string
 };
 
 

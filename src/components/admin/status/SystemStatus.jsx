@@ -146,7 +146,7 @@ function SystemStatus() {
                                   { status.instance[0].status && status.instance[0].status === "DOWN" &&  <Status color="#FF0000" /> }
                                   { status.instance[0].status && status.instance[0].status != "UP" && status.instance[0].status != "DOWN" &&  <Status color="#ffbf00" /> }
                                 </Col>
-                                <Col className="stausText">{status.name.replace(/-/g, " ")}</Col>
+                                <Col className="status-text">{status.name.replace(/-/g, " ")}</Col>
                               </Row>
                             </td>
                           ))

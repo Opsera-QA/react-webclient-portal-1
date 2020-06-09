@@ -11,8 +11,7 @@ function ToolsTable({ columns, data, rowInfo }) {
     getTableBodyProps,
     headerGroups,
     prepareRow,
-    rows, 
-    state: { pageIndex, pageSize },
+    rows
   } = useTable(
     {
       columns,
