@@ -11,11 +11,12 @@ import Modal from "../common/modal";
 import ModalActivityLogs from "../common/modalActivityLogs";
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileAlt, faPencilAlt, faHistory, faSync, faPlay, faTrash, faThLarge, faSave, faSpinner, faTimes, faCogs, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import { faFileAlt, faPencilAlt, faHistory, faSync, faPlay, faTrash, faThLarge, faSave, faSpinner, faTimes, faCogs, faCheckCircle, faFlag } from "@fortawesome/free-solid-svg-icons";
 import "./workflows.css";
 import SchedulerWidget from "../common/schedulerWidget";
 import isEqual from "lodash.isequal";
 import ApprovalModal from "./approvalModal";
+import PipelineHelpers from "./pipelineHelpers";
 
 
 const INITIAL_FORM_DATA = {
@@ -40,7 +41,7 @@ const PipelineItemDetail = (props) => {
   const [editSchedule, setEditSchedule] = useState(false);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [workflowStatus, setWorkflowStatus] = useState(false);
-  const [lastStep, setLastStep] = useState({});
+  const [approvalStep, setApprovalStep] = useState({});
   const [showApprovalModal, setShowApprovalModal] = useState(false);
   const endPointUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
   let history = useHistory();
@@ -60,7 +61,15 @@ const PipelineItemDetail = (props) => {
           } else {
             setWorkflowStatus(false);        
           }       
+        
+          const step = PipelineHelpers.getPendingApprovalStep(data);
+          if (step) {
+            setApprovalStep(step);
+          } else {
+            setApprovalStep({});
+          }        
         }
+        
       } catch (err) {
         if (err.name === "AbortError") {
           console.log("Request was canceled via controller.abort");
@@ -105,8 +114,7 @@ const PipelineItemDetail = (props) => {
         }
            
         if (typeof(dataObj) !== "undefined" && Object.keys(dataObj).length > 0) {
-          data.workflow.last_step = dataObj;
-          setLastStep(dataObj);
+          data.workflow.last_step = dataObj;          
         }
 
         if (staleRefreshCount > 3 && status === "stopped") {
@@ -283,6 +291,7 @@ const PipelineItemDetail = (props) => {
                   </> 
                   :
                   <>
+                    { Object.keys(approvalStep).length > 0 && <FontAwesomeIcon icon={faFlag} className="red mr-1" /> }
                     {data.name} 
                     {role === "administrator" ? 
                       <FontAwesomeIcon icon={faPencilAlt}
@@ -456,15 +465,15 @@ const PipelineItemDetail = (props) => {
                           <FontAwesomeIcon icon={faHistory} className="mr-1" fixedWidth/>Reset Pipeline</Button>
                       </>
                       :
-                      <Button variant="success" className="mr-2 mt-2" size="sm" onClick={() => handleRunPipelineClick(data._id)}>
+                      <Button variant="success" disabled={Object.keys(approvalStep).length > 0} className="mr-2 mt-2" size="sm" onClick={() => handleRunPipelineClick(data._id)}>
                         <FontAwesomeIcon icon={faPlay} className="mr-1" fixedWidth/>Start Pipeline</Button>
                     }
                  
+                    { Object.keys(approvalStep).length > 0 ? <Button variant="success" disabled={false} className="mr-2 mt-2" size="sm" onClick={() => { handleApprovalClick(); }}>
+                      <FontAwesomeIcon icon={faFlag} className="mr-1" fixedWidth/>Approve Request</Button> : null }
+
                     <Button variant="secondary" className="mr-2 mt-2" size="sm" onClick={() => { handleRefreshClick(data._id); }}>
                       <FontAwesomeIcon icon={faSync} className="mr-1" fixedWidth/>Refresh</Button> 
-
-                    <Button variant="success" disabled={false} className="mr-2 mt-2" size="sm" onClick={() => { handleApprovalClick(); }}>
-                      <FontAwesomeIcon icon={faCheckCircle} className="mr-1" fixedWidth/>Approve Request</Button> 
 
                   </Col>
                 </Row>

@@ -5,6 +5,7 @@ import { axiosApiService } from "api/apiService";
 import { Button, Modal, Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import PipelineHelpers from "./pipelineHelpers";
 
 const INITIAL_FORM = {
   message: "",
@@ -18,7 +19,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
   const [isSaving, setIsSaving] = useState(false);
   const [accessToken, setAccessToken] = useState("");
   const [message, setMessage] = useState("");
-  const [stepId, setStepId] = useState("");
+  const [approvalStep, setApprovalStep] = useState({});
   const [formData, setFormData] = useState(INITIAL_FORM);
 
   useEffect(() => {
@@ -27,6 +28,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
   }, []);
 
   useEffect(() => {
+    setApprovalStep({});
     setFormData(INITIAL_FORM);
   }, [visible]);
 
@@ -39,12 +41,9 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
     const apiUrl =  `/pipelines/${pipelineId}`;
     try {
       const pipeline = await axiosApiService(accessToken).get(apiUrl); 
-      const pipelineData = pipeline && pipeline.data[0];
-      
+      const pipelineData = pipeline && pipeline.data[0];      
       console.log("pipelineData", pipelineData); 
-
-      loadApprovalRequest(pipelineData);
-      
+      loadApprovalRequest(pipelineData);      
     }
     catch (err) {
       console.log(err.message);
@@ -53,20 +52,20 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
     setIsLoading(false);
   };
 
-
   const loadApprovalRequest = async (pipeline) => {
-    //parse through pipeline and figure out which step is waiting for approval.  Look a thte last_step.running.paused and get it's stepID
+    //Add a "flag" to the My Pipelines view if a pipeline is PAUSED!
+    // Also refactor the size of My Pipelines to match Catalog while I'm in there!
+    const step = PipelineHelpers.getPendingApprovalStep(pipeline);
 
-    //register form valules:
-    setStepId("123123123123");
-
-    //IF a custom message is defined for the approval setp (tool.configuration) then load it in the setMessage, otherwise put a generic block of text in there
-    setMessage(`A step in Pipeline ${pipeline.name} requires approval in order to proceed.  Please complete the form below in order to allow the pipeline to continue.`);      
-
+    if (step) {
+      setApprovalStep(step);
+      let message = `Step ${step.name} in ${pipeline.name} requires approval in order to proceed.  `;
+      if (step.tool.configuration.message.length > 0) {
+        message += step.tool.configuration.message;
+      }
+      setMessage(message); 
+    }      
   };
-
-
-
 
   const submitApproval = async (pipelineId, stepId, formData) => {
     setIsSaving(true);
@@ -96,7 +95,9 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
   };
 
   const handleConfirm = async () => {
-    submitApproval(pipelineId, stepId, formData);    
+    if (approvalStep) {
+      submitApproval(pipelineId, approvalStep._id, formData);    
+    }    
   };
 
 
@@ -110,34 +111,37 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
 
           {errors ? <div className="error-text">Error Reported: {errors}</div> : null}
 
-          <div className="mt-1 pb-3">{message}</div>  
+          {Object.keys(approvalStep) === 0 ? <div className="info-text">No steps in this pipeline require approval at this time.</div> : 
+            <>
+              <div className="mt-1 pb-3">{message}</div>   
+              <div className="mb-3">Please complete the form below in order to allow the pipeline to continue.</div>         
+              <Form>
+                <Form.Group controlId="repoField">
+                  <Form.Label>Log Approval Message</Form.Label>
+                  <Form.Control as="textarea" type="text" placeholder="" value={formData.message || ""} onChange={e => setFormData({ ...formData, message: e.target.value })} />
+                </Form.Group>
+                <small className="form-text text-muted mt-2 text-left">Optional message to include in approval log</small>
           
-          <Form>
-            <Form.Group controlId="repoField">
-              <Form.Label>Log Approval Message</Form.Label>
-              <Form.Control as="textarea" type="text" placeholder="" value={formData.message || ""} onChange={e => setFormData({ ...formData, message: e.target.value })} />
-            </Form.Group>
-            <small className="form-text text-muted mt-2 text-left">Optional message to include in approval log</small>
-          
-            <div className="my-4 pt-1">
-              <Form.Check 
-                type="switch"
-                id="approval-switch"
-                label="Approved" 
-                checked={formData.approved ? true : false}   
-                onChange={() => setFormData({ ...formData, approved: !formData.approved })}    
-              />
-              <small className="form-text text-muted mt-2">Flip the Approved switch to approve this step</small>
-            </div>
-          </Form>
-
+                <div className="my-4 pt-1">
+                  <Form.Check 
+                    type="switch"
+                    id="approval-switch"
+                    label="Approved" 
+                    checked={formData.approved ? true : false}   
+                    onChange={() => setFormData({ ...formData, approved: !formData.approved })}    
+                  />
+                  <small className="form-text text-muted mt-2">Flip the Approved switch to approve this step</small>
+                </div>
+              </Form>
+            </> 
+          }
         </Modal.Body>
         <Modal.Footer>
           <Button variant="outline-secondary" onClick={() => handleClose()}>
             Close
           </Button>
           
-          <Button variant="success" onClick={() => handleConfirm()} disabled={isLoading || !formData.approved || isSaving}>            
+          <Button variant="success" onClick={() => handleConfirm()} disabled={isLoading || !formData.approved || isSaving || !approvalStep}>            
             {isSaving ? <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> : <FontAwesomeIcon icon={faCheck} fixedWidth />  }
              Approve Step
           </Button>

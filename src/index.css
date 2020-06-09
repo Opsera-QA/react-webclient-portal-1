@@ -441,6 +441,12 @@ a:hover, .active {
   padding: 5px;
 }
 
+.info-text {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  color: #7ea2c7;
+  padding: 5px;
+}
+
 .code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
