@@ -3,6 +3,7 @@ import { Button, Modal, Form, Row, Col } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext"; 
 import { axiosApiService } from "api/apiService";
 import PropTypes from "prop-types";
+import MultiInputFormField from "./multiInputFormField";
 
 import "./tools.css";
 
@@ -30,44 +31,20 @@ function NewTool(props) {
       disabled: false
     },
     {
-      label: "Contacts",
-      id: "contacts",
-      type: "textarea",
-      disabled: true
-    },
-    {
-      label: "Project",
-      id: "project",
-      type: "textarea",
-      disabled: true
-    },
-    {
-      label: "Application",
-      id: "application",
-      type: "textarea",
-      disabled: true
-    },
-    {
-      label: "Location",
-      id: "location",
-      type: "textarea",
-      disabled: true
-    },
-    {
-      label: "Organization",
-      id: "organization",
-      type: "textarea",
-      disabled: true
-    },
-    {
       label: "Tool Type",
       id: "tool_type_identifier",
       type: "select",
       disabled: false
+    },    
+    {
+      label: "Location",
+      id: "location",
+      type: "location",
+      disabled: true
     },
     {
-      label: "External Reference",
-      id: "external_reference",
+      label: "Licensing",
+      id: "licensing",
       type: "textarea",
       disabled: true
     },
@@ -78,15 +55,44 @@ function NewTool(props) {
       disabled: true
     },
     {
-      label: "Licensing",
-      id: "licensing",
+      label: "Compliance",
+      id: "compliance",
       type: "textarea",
       disabled: true
     },
     {
-      label: "Compliance",
-      id: "compliance",
-      type: "textarea",
+      label: "Contacts",
+      id: "contacts",
+      type: "multi",
+      fields: ["name", "email", "id"],
+      disabled: true
+    },
+    {
+      label: "Project",
+      id: "project",
+      type: "multi",
+      fields: ["name", "reference", "id"],
+      disabled: true
+    },
+    {
+      label: "Application",
+      id: "application",
+      type: "multi",
+      fields: ["name", "reference", "id"],
+      disabled: true
+    },
+    {
+      label: "Organization",
+      id: "organization",
+      type: "multi",
+      fields: ["name", "reference", "id"],
+      disabled: true
+    },
+    {
+      label: "External Reference",
+      id: "external_reference",
+      type: "multi",
+      fields: ["name", "description", "identifier"],
       disabled: true
     },
     {
@@ -155,31 +161,46 @@ function NewTool(props) {
 
   const handleClose = () => props.closeModal(false);
 
-  const formFieldType = (field) => {
-    switch (field.type) {
+  const handleLocationUpdate = (value, formField, type) => {
+    setFormFields({ 
+      ...toolFormFields, 
+      [formField.id]: { [type]: value }
+    });
+  };
+
+  const formFieldType = (formField) => {
+    switch (formField.type) {
     case "switch":
       return <Form.Check 
         type="switch"
         id="custom-switch"
         label="Active"
         defaultValue={true}
-        onChange={e => setFormFields({ ...toolFormFields, [field.id]: e.target.value })}
+        onChange={e => setFormFields({ ...toolFormFields, [formField.id]: e.target.value })}
       />;
     case "textarea":
       return <Form.Control 
         as="textarea"
-        rows={2}
-        disabled={field.disabled}
-        onChange={e => setFormFields({ ...toolFormFields, [field.id]: e.target.value })}
+        rows={1}
+        disabled={formField.disabled}
+        onChange={e => setFormFields({ ...toolFormFields, [formField.id]: e.target.value })}
       />;     
     case "select":
-      return <Form.Control as="select" placeholder="Please select" onChange={e => setFormFields({ ...toolFormFields, [field.id]: e.target.value })}>
-        {tool_list[field.id].map((option, i) => (
+      return <Form.Control as="select" placeholder="Please select" onChange={e => setFormFields({ ...toolFormFields, [formField.id]: e.target.value })}>
+        {tool_list[formField.id].map((option, i) => (
           <option key={i}>{option.name}</option>
         ))} 
       </Form.Control>;
+    case "location":
+      return (<Row>
+        <Col><Form.Control placeholder="name" defaultValue={editTool[formField.id]} onChange={e => handleLocationUpdate(e.target.value, formField, "name") } /> </Col>  
+        <Col><Form.Control placeholder="value" defaultValue={editTool[formField.id]} onChange={e => handleLocationUpdate(e.target.value, formField, "value")} /> </Col> 
+      </Row>
+      );
+    case "multi":
+      return <MultiInputFormField formField={formField} defaultData={editTool[formField.id]} onChange={data => setFormFields({ ...toolFormFields, [formField.id]: data })} />;      
     default:
-      return  <Form.Control defaultValue={editTool[field.id]} disabled={field.disabled}  onChange={e => setFormFields({ ...toolFormFields, [field.id]: e.target.value })} />;
+      return  <Form.Control defaultValue={editTool[formField.id]} disabled={formField.disabled}  onChange={e => setFormFields({ ...toolFormFields, [formField.id]: e.target.value })} />;
     }
   };
 
@@ -191,14 +212,14 @@ function NewTool(props) {
         </Modal.Header>
         <Modal.Body>
           <Form className="formContainer">
-            {formFields.map((field, i) => {
+            {formFields.map((formField, i) => {
               return(
                 <Form.Group key={i} controlId="formPlaintextEmail">
                   <Form.Label column sm="2">
-                    {field.label}
+                    {formField.label}
                   </Form.Label>
                   <Col sm="10">
-                    {formFieldType(field)}
+                    {formFieldType(formField)}
                   </Col>
                 </Form.Group>
               );
