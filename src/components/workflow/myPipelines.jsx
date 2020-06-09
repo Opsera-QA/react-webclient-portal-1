@@ -123,8 +123,8 @@ const ItemSummaries = (props) => {
     <>
       <Row>
         {data !== undefined ? data.map((item, idx) => (
-          <Col sm={6} lg={4} key={idx} className="p-2">
-            <Card style={{ height:"100%" }}>
+          <Col md={6} lg={6} xl={4} key={idx} className="p-2">
+            <Card style={{ height:"100%"  }}>
               <Card.Body>
                 <Card.Title>
                   { PipelineHelpers.getPendingApprovalStep(item) && 
