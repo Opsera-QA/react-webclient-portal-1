@@ -9,6 +9,10 @@ const validate = (value, field) => {
       isValid = isValid && minLengthValidator(value, field.rules[rule]); 
       errorMessage = "value has to be more than "+ field.rules[rule] +" chars";
       break;
+    case "maxLength": 
+      isValid = isValid && maxLengthValidator(value, field.rules[rule]); 
+      errorMessage = "value has to be less than "+ field.rules[rule] +" chars";
+      break;
     case "isRequired": 
       isValid = isValid && requiredValidator(value); 
       errorMessage = "this field is required";
@@ -31,6 +35,15 @@ const validate = (value, field) => {
 const minLengthValidator = (value, minLength) => {
   if (value.length > 0) {
     return value.length >= minLength;
+  } else {
+    return true; //if no value is passed, then this shoudn't validate
+  }
+  
+};
+
+const maxLengthValidator = (value, maxLength) => {
+  if (value.length > 0) {
+    return value.length <= maxLength;
   } else {
     return true; //if no value is passed, then this shoudn't validate
   }
