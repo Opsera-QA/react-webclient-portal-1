@@ -16,7 +16,7 @@ import ModalLogs from "../../common/modalLogs";
 
 
 
-function MaintainabilityLineChart( { persona } ) {
+function MaintainabilityLineChart( { persona, date } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -34,7 +34,9 @@ function MaintainabilityLineChart( { persona } ) {
           request: "successfulDeploymentFrequency",
           metric: "stacked" 
         }
-      ]
+      ],
+      startDate: date.start, 
+      endDate: date.end
     };
 
     try {

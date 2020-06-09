@@ -1,9 +1,8 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../contexts/AuthContext";
 import { axiosApiService } from "../../api/apiService";
-import { Row, Col, Alert } from "react-bootstrap";
 import ErrorDialog from "../../components/common/error";
 import DropdownList from "react-widgets/lib/DropdownList";
 // import PipelineDashboard from "../../components/dashboard/Pipeline";
@@ -19,8 +18,34 @@ import SecOpsDashboard_v2 from "../../components/dashboard/v2/SecOps";
 import QualityDashboard from "../../components/dashboard/v2/Quality";
 import OperationsDashboard from "../../components/dashboard/v2/Operations";
 import PlanningDashboard from "../../components/dashboard/v2/Planning";
+import "react-date-range/dist/styles.css"; 
+import "react-date-range/dist/theme/default.css"; 
+import { DefinedRange } from "react-date-range";
+import { Button, Alert, Overlay, Popover, Row, Col } from "react-bootstrap";
+import { format, addDays } from "date-fns";
+import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 
 const PERSONAS = [ { value: "developer", label: "Developer" }, { value: "manager", label: "Manager" }, { value: "executive", label: "Executive" }];
+const DATELABELS = [ { value: {
+  start: "now-1h",
+  end: "now"
+}, label : "Last 1 Hour" }, { value: {
+  start: "now-6h",
+  end: "now"
+}, label : "Last 6 Hours" }, { value: {
+  start: "now-1d",
+  end: "now"
+}, label : "Last 24 Hours" }, { value: {
+  start: "now-7d",
+  end: "now"
+}, label : "Last Week" }, { value: {
+  start: "now-31d",
+  end: "now"
+}, label : "Last Month" }, { value: {
+  start: "now-90d",
+  end: "now"
+}, label : "Last 3 Months" }, ];
+
 
 function DashboardHome() {
   const contextType = useContext(AuthContext);
@@ -31,7 +56,12 @@ function DashboardHome() {
   const [loading, setLoading] = useState(false);
   const [isEnabled, setIsEnabled] = useState(true);
   const [enabledOn, setEnabledOn] = useState(true);
-  //const [previewRole, setPreviewRole] = useState(false);
+  const [date, setDate] = useState({
+    start: "now-90d",
+    end: "now",
+    key: "selection"  
+  });
+
   
   useEffect(() => {    
     const controller = new AbortController();
@@ -77,7 +107,7 @@ function DashboardHome() {
       setIsEnabled(dataObject.active !== undefined ? dataObject.active : false);
       setEnabledOn((dataObject.enabledToolsOn && dataObject.enabledToolsOn.length !== 0) ? true : false);
 
-      setPersona(persona);    
+      setPersona(persona);   
       setLoading(false);
     }
     catch (err) {
@@ -86,15 +116,18 @@ function DashboardHome() {
     }
   }
 
-
-
   const handleTabClick = param => e => {
     e.preventDefault();
     setSelection(param);
   };
 
   const handleSelectPersonaChange = (selectedOption) => {
-    setPersona(selectedOption.value);
+    setPersona([selectedOption.selecton]);
+  };
+
+
+  const handleDateChange = (e) => {
+    setDate(e.value);
   };
 
  
@@ -170,7 +203,17 @@ function DashboardHome() {
                       </li>                        
                     </ul>
                   </Col>
-                  <Col sm={4}>    
+                  <Col sm={2}>
+                    <DropdownList
+                      data={DATELABELS} 
+                      className="max-content-width"
+                      valueField='value'
+                      textField='label'
+                      defaultValue={date ?  DATELABELS.find(o => o.value.start === date.start && o.value.end === date.end) : DATELABELS[5]}
+                      onChange={handleDateChange}             
+                    />
+                  </Col>
+                  <Col sm={2}>    
                     <DropdownList
                       data={PERSONAS} 
                       className="basic-single mr-2"
@@ -182,7 +225,7 @@ function DashboardHome() {
                   </Col>
                 </Row>
             
-                <DashboardView selection={selection} persona={persona} />
+                <DashboardView selection={selection} persona={persona} date={date}/>
               </>
             }
             
@@ -194,16 +237,18 @@ function DashboardHome() {
   
 }
 
-function DashboardView({ selection, persona }) {
+function DashboardView({ selection, persona, date }) {
   useEffect(() => {
-  }, [selection, persona]);
+    console.log("CHANGE HAPPENED");
+  }, [selection, persona, date.start]);
+  console.log(date.start);
 
   if (selection) {
     switch (selection) {
     case "logs":
       return <LogsDashboard persona={persona} />;
     case "pipeline":
-      return <PipelineDashboard_v2 persona={persona} />;
+      return <PipelineDashboard_v2 persona={persona} date={date} />;
     case "secops_v2":
       return <SecOpsDashboard_v2 persona={persona} />;
     case "quality_v2":
@@ -221,7 +266,8 @@ function DashboardView({ selection, persona }) {
 
 DashboardView.propTypes = {
   selection: PropTypes.string,
-  persona: PropTypes.string
+  persona: PropTypes.string, 
+  date: PropTypes.object
 };
 
 export default DashboardHome;
