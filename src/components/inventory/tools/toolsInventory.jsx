@@ -45,13 +45,7 @@ function ToolInventory () {
       id: cellData.row.original._id,
       details: cellData.row.values
     });
-
-    const accessToken = await getAccessToken();
-    const response = await axiosApiService(accessToken).delete("/registry/" + cellData.row.original._id )
-      .then((result) =>  {
-        getToolRegistryList("");
-      })
-      .catch(error => {return error;});
+    getToolRegistryList("");
   };
 
   const getToolRegistryList = async (id) => {
@@ -168,7 +162,7 @@ function ToolInventory () {
       
       <NewTool showModal={isEditModal} closeModal={(toggleModal) => closeModal(toggleModal)} type={modalType} edittool={selectedRowDetail}/>
 
-      <ToolDetails showModal={isViewModal} closeModal={(toggleModal) => closeViewModal(toggleModal)} toolData={selectedRowDetail}/>
+      <ToolDetails showModal={isViewModal} closeModal={(toggleModal) => closeViewModal(toggleModal)} toolId={selectedRowDetail.id}/>
 
       <div className="mt-2 mb-2 text-right">
         <Button variant="primary" size="sm"  
