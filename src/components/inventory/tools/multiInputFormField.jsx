@@ -7,12 +7,21 @@ import { faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import "./tools.css";
 
 function MultiInputFormField(props) {
-  const formField = props.formField;
+  const { defaultValue, formField } = props;
   const [rowList, setRowList ] = useState([]);
 
   //On load create one row
   useEffect(() => {    
-    addRow();
+    //When it's a new form, defaultValue will be undefined
+    if(defaultValue == undefined) {
+      addRow();
+    }else {
+      if(defaultValue.length > 0) {
+        prePopulateData();
+      }else {
+        addRow();
+      }
+    }
   }, []);
 
   //Everytime a row is added or updated, call parent to construct the payload
@@ -20,13 +29,28 @@ function MultiInputFormField(props) {
     props.onChange(rowList);
   }, [rowList]);
 
+  //We are computing the number of rows required based on the data from API
+  const prePopulateData = () => {
+    let newRows = [];
+    defaultValue.map((data) => {
+      let firstRow = {};
+      //For each field set the default data
+      formField.fields.map((field, key) => {
+        firstRow[field] = data[field];
+      });
+      newRows.push(firstRow);
+    });
+    setRowList([
+      ...newRows
+    ]);
+  };
+
   //Add new row to the table
   const addRow = () => {
-
     let firstRow = {};
     //Since every form field have different header. We are generating it dynamically 
     formField.fields.map((field, key) => {
-      firstRow[field] = "";
+      firstRow[field] =  "";
     });
 
     setRowList([
@@ -34,6 +58,8 @@ function MultiInputFormField(props) {
       {
         ...firstRow
       }]);
+
+    console.log(rowList);
   };
 
   //Find index of deleted row and update the master list
@@ -69,7 +95,8 @@ function MultiInputFormField(props) {
           {rowList.map((row, key) => {
             return <tr key={key}>
               {formField.fields.map((field, key) => {
-                return <td key={key}><Form.Control type="text" size="sm" placeholder={"New " + `${field}`} onChange={e => updateCellData(e, row, field)} /></td>;
+
+                return <td key={key}><Form.Control defaultValue={row[field]} disabled={field == "id" || field == "identifier"} type="text" size="sm" placeholder={"New " + `${field}`} onChange={e => updateCellData(e, row, field)} /></td>;
               })}
               <td><Button variant="outline-danger" size="sm" onClick={e => deleteRow(e, row)} ><FontAwesomeIcon icon={faTrash}/></Button></td>
             </tr>;

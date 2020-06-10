@@ -51,7 +51,7 @@ function NewTool(props) {
     {
       label: "Tags",
       id: "tags",
-      type: "textarea",
+      type: "tags",
       disabled: true
     },
     {
@@ -149,6 +149,7 @@ function NewTool(props) {
   };
 
   const updateTool = async () => {
+    console.log(toolFormFields);
     try {
       const accessToken = await getAccessToken();
       await axiosApiService(accessToken).post("/registry/"+ props.edittool.id + "/update", { ...toolFormFields });
@@ -193,12 +194,18 @@ function NewTool(props) {
       </Form.Control>;
     case "location":
       return (<Row>
-        <Col><Form.Control placeholder="name" defaultValue={editTool[formField.id]} onChange={e => handleLocationUpdate(e.target.value, formField, "name") } /> </Col>  
-        <Col><Form.Control placeholder="value" defaultValue={editTool[formField.id]} onChange={e => handleLocationUpdate(e.target.value, formField, "value")} /> </Col> 
+        <Col><Form.Control placeholder="name" defaultValue={editTool[formField.id]["name"]} onChange={e => handleLocationUpdate(e.target.value, formField, "name") } /> </Col>  
+        <Col><Form.Control placeholder="value" defaultValue={editTool[formField.id]["value"]} onChange={e => handleLocationUpdate(e.target.value, formField, "value")} /> </Col> 
+      </Row>
+      );
+    case "tags":
+      return (<Row>
+        <Col><Form.Control placeholder="name" defaultValue={editTool[formField.id][0]["name"]} onChange={e => handleLocationUpdate(e.target.value, formField, "name") } /> </Col>  
+        <Col><Form.Control placeholder="value" defaultValue={editTool[formField.id][0]["value"]} onChange={e => handleLocationUpdate(e.target.value, formField, "value")} /> </Col> 
       </Row>
       );
     case "multi":
-      return <MultiInputFormField formField={formField} defaultData={editTool[formField.id]} onChange={data => setFormFields({ ...toolFormFields, [formField.id]: data })} />;      
+      return <MultiInputFormField formField={formField} defaultValue={editTool[formField.id]} onChange={data => setFormFields({ ...toolFormFields, [formField.id]: data })} />;      
     default:
       return  <Form.Control defaultValue={editTool[formField.id]} disabled={formField.disabled}  onChange={e => setFormFields({ ...toolFormFields, [formField.id]: e.target.value })} />;
     }
