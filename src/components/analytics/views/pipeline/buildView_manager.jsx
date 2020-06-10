@@ -14,7 +14,7 @@ import DeploymentFrequencyLineChart from "../../charts/deploymentFrequencyLineCh
 import RecentBuildsTable from "../../metrics/recentBuildsTable.jsx";
 
 
-function BuildView_Manager({ persona }) {
+function BuildView_Manager({ persona, date }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -40,7 +40,7 @@ function BuildView_Manager({ persona }) {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [date]);
 
   async function fetchData() {
     setLoading(true);
@@ -144,26 +144,26 @@ function BuildView_Manager({ persona }) {
         <SummaryCountBlocksView data={countBlockData} />
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
-            <JenkinsBuildsByUserBarChart persona={persona} />
+            <JenkinsBuildsByUserBarChart persona={persona}  date={date} />
           </div>
 
           <div className="align-self-stretch p-2 w-100">
-            <JenkinsBuildDurationBarChart persona={persona} />
+            <JenkinsBuildDurationBarChart persona={persona}  date={date} />
           </div>
         </div>
 
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
-            <JenkinsStatusByJobNameBarChart persona={persona} />
+            <JenkinsStatusByJobNameBarChart persona={persona}  date={date} />
           </div>
           <div className="align-self-stretch p-2 w-100">
-            <DeploymentFrequencyLineChart persona={persona}/>            
+            <DeploymentFrequencyLineChart persona={persona}  date={date}/>            
           </div>
         </div>
 
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
-            <RecentBuildsTable persona={persona} />
+            <RecentBuildsTable persona={persona} date={date}/>
           </div>
         </div>
 

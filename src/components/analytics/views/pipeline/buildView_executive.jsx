@@ -14,7 +14,7 @@ import DeploymentFrequencyLineChart from "../../charts/deploymentFrequencyLineCh
 
 
 
-function BuildView_Executive({ persona }) {
+function BuildView_Executive({ persona, date }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -40,7 +40,7 @@ function BuildView_Executive({ persona }) {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [date]);
 
   async function fetchData() {
     setLoading(true);
@@ -81,7 +81,9 @@ function BuildView_Executive({ persona }) {
           "request": "codeshipBuildStopped",
           "metric": "count"
         }
-      ]
+      ],
+      startDate: date.start, 
+      endDate: date.end
     };
     
     try {
@@ -144,20 +146,20 @@ function BuildView_Executive({ persona }) {
         <SummaryCountBlocksView data={countBlockData} />
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
-            <JenkinsBuildsByUserBarChart persona={persona} />
+            <JenkinsBuildsByUserBarChart persona={persona}  date={date} />
           </div>
 
           <div className="align-self-stretch p-2 w-100">
-            <JenkinsBuildDurationBarChart persona={persona} />
+            <JenkinsBuildDurationBarChart persona={persona}  date={date} />
           </div>
         </div>
 
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
-            <JenkinsStatusByJobNameBarChart persona={persona} />
+            <JenkinsStatusByJobNameBarChart persona={persona}  date={date} />
           </div>
           <div className="align-self-stretch p-2 w-100">
-            <DeploymentFrequencyLineChart persona={persona}/>            
+            <DeploymentFrequencyLineChart persona={persona}  date={date}/>            
           </div>
         </div>
 

@@ -20,9 +20,7 @@ import OperationsDashboard from "../../components/dashboard/v2/Operations";
 import PlanningDashboard from "../../components/dashboard/v2/Planning";
 import "react-date-range/dist/styles.css"; 
 import "react-date-range/dist/theme/default.css"; 
-import { DefinedRange } from "react-date-range";
-import { Button, Alert, Overlay, Popover, Row, Col } from "react-bootstrap";
-import { format, addDays } from "date-fns";
+import { Alert, OverlayTrigger, Tooltip, Row, Col } from "react-bootstrap";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 
 const PERSONAS = [ { value: "developer", label: "Developer" }, { value: "manager", label: "Manager" }, { value: "executive", label: "Executive" }];
@@ -56,6 +54,7 @@ function DashboardHome() {
   const [loading, setLoading] = useState(false);
   const [isEnabled, setIsEnabled] = useState(true);
   const [enabledOn, setEnabledOn] = useState(true);
+  const [label, setLabel] = useState("Last 3 Months");
   const [date, setDate] = useState({
     start: "now-90d",
     end: "now",
@@ -128,8 +127,79 @@ function DashboardHome() {
 
   const handleDateChange = (e) => {
     setDate(e.value);
+    setLabel(e.label.toString());
   };
 
+  const ValueInput = ({ item }) => (
+    <span>
+      <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth/>
+      {" " + DATELABELS.find(o => o.value.start === date.start && o.value.end === date.end).label.toString()}
+    </span>
+  );
+
+  const handleCreate = (name) => {
+    let item = {
+      value: "test", 
+      label: name
+    };
+
+    if (name.toLowerCase().includes("last")) {
+      if (name.toLowerCase().includes("week") || name.toLowerCase().includes("weeks")) {
+        let matches = name.match(/(\d+)/);
+        let filter = "now-" + matches[0].toString() + "w";
+        item.value = {
+          start: filter,
+          end: "now"
+        };
+        DATELABELS.push(item);
+        setDate(item.value);        
+      } else if (name.toLowerCase().includes("days") || name.toLowerCase().includes("day")) {
+        let matches = name.match(/(\d+)/);
+        let filter = "now-" + matches[0].toString() + "d";
+        item.value = {
+          start: filter,
+          end: "now"
+        };
+        DATELABELS.push(item);
+        setDate(item.value);        
+      } else if (name.toLowerCase().includes("months") || name.toLowerCase().includes("month")) {
+        let matches = name.match(/(\d+)/);
+        let filter = "now-" + matches[0].toString() + "M";
+        item.value = {
+          start: filter,
+          end: "now"
+        };
+        DATELABELS.push(item);
+        setDate(item.value);        
+      } else if (name.toLowerCase().includes("year") || name.toLowerCase().includes("years")) {
+        let matches = name.match(/(\d+)/);
+        let filter = "now-" + matches[0].toString() + "y";
+        item.value = {
+          start: filter,
+          end: "now"
+        };
+        DATELABELS.push(item);
+        setDate(item.value);        
+      } else if (name.toLowerCase().includes("hour") || name.toLowerCase().includes("hours")) {
+        let matches = name.match(/(\d+)/);
+        let filter = "now-" + matches[0].toString() + "h";
+        item.value = {
+          start: filter,
+          end: "now"
+        };
+        DATELABELS.push(item);
+        setDate(item.value);        
+      }
+    }
+  };
+
+  function renderTooltip(props) {
+    return (
+      <Tooltip id="button-tooltip" {...props}>
+        Select timeframe or manually enter in a "Last XX Days/Months/Years" format
+      </Tooltip>
+    );
+  }
  
   return (
     <div className="mb-3 max-charting-width">
@@ -202,19 +272,29 @@ function DashboardHome() {
                         <a className={"nav-link " + (selection === "operations_v2" ? "active" : "")} onClick={handleTabClick("operations_v2")} href="#">Operations</a>
                       </li>                        
                     </ul>
-                  </Col>
+                  </Col>                   
                   <Col sm={2}>
-                    <DropdownList
-                      data={DATELABELS} 
-                      className="max-content-width"
-                      valueField='value'
-                      textField='label'
-                      defaultValue={date ?  DATELABELS.find(o => o.value.start === date.start && o.value.end === date.end) : DATELABELS[5]}
-                      onChange={handleDateChange}             
-                    />
-                  </Col>
+                    <OverlayTrigger
+                      placement="top"
+                      delay={{ show: 250, hide: 250 }}
+                      overlay={renderTooltip}
+                    >
+                      <DropdownList filter
+                        disabled={selection !== "pipeline"}
+                        data={DATELABELS} 
+                        className="max-content-width"
+                        valueComponent={ValueInput}
+                        textField='label'
+                        allowCreate="onFilter"
+                        onCreate={handleCreate}
+                        defaultValue={date ?  DATELABELS.find(o => o.value.start === date.start && o.value.end === date.end) : DATELABELS[5]}
+                        onChange={handleDateChange}             
+                      />
+                    </OverlayTrigger>
+                  </Col> 
+
                   <Col sm={2}>    
-                    <DropdownList
+                    <DropdownList 
                       data={PERSONAS} 
                       className="basic-single mr-2"
                       valueField='value'

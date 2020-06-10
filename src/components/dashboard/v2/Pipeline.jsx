@@ -11,14 +11,14 @@ function PipelineDashboard( { persona,  date } ) {
     return <BuildView_Developer persona={persona} date={date} />;
 
   case "manager":
-    return <BuildView_Manager persona={persona} />;
+    return <BuildView_Manager persona={persona} date={date}/>;
 
   case "executive":
-    return <BuildView_Executive persona={persona} />;
+    return <BuildView_Executive persona={persona} date={date}/>;
 
   default:
-    return <BuildView_Manager persona={persona} />;
-  }  
+    return <BuildView_Manager persona={persona} date={date}/>;
+  }   
 }
 
 
