@@ -95,8 +95,8 @@ function ToolInventory () {
   const actionButtons = (cellData) => {
     return(
       <>
-        <Button variant="outline-primary" size="sm" className="mr-2" onClick={(e) => { editTool(e, cellData); }} ><FontAwesomeIcon icon={faEdit} className="mr-1"/> Edit</Button>
-        <Button variant="outline-danger" size="sm" className="mr-1" onClick={(e) => { deleteTool(e, cellData); }} ><FontAwesomeIcon icon={faTrash} className="mr-1"/> Delete</Button>
+        <Button variant="outline-primary" size="sm" className="mr-2" onClick={(e) => { editTool(e, cellData); }} ><FontAwesomeIcon icon={faEdit} fixedWidth/></Button>
+        <Button variant="outline-danger" size="sm" className="mr-1" onClick={(e) => { deleteTool(e, cellData); }} ><FontAwesomeIcon icon={faTrash} fixedWidth/></Button>
       </>
     );
   };
@@ -113,31 +113,34 @@ function ToolInventory () {
         accessor: "description",
       },
       {
-        Header: "Tool Identifier",
+        Header: "Tool",
         accessor: "tool_identifier"
       },
-      {
+      /* {
         Header: "Contacts",
-        //accessor: "contacts"
+        accessor: "contacts"
       },
       {
         Header: "Project",
-        //accessor: "project"
+        accessor: "project"
       },
       {
         Header: "Application",
-        //accessor: "application"
-      },
+        accessor: "application"
+      }, */
       {
-        Header: "Created Date",
+        Header: "Created",
         accessor: "createdAt",
         Cell: (props) => {
-          return format(new Date(props.value), "yyyy-MM-dd', 'hh:mm a");
-        }
+          return format(new Date(props.value), "yyyy-MM-dd");
+        },
+        class: "no-wrap-inline"
       },
       {
         Header: "Action",
-        Cell: (props) => actionButtons(props.cell.row.original)
+        accessor: "action",
+        Cell: (props) => actionButtons(props.cell.row.original),
+        class: "no-wrap"
       }
     ],
     []
