@@ -1,20 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Form, Button, InputGroup } from "react-bootstrap";
 import DropdownList from "react-widgets/lib/DropdownList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave, faCopy } from "@fortawesome/free-solid-svg-icons";
+import { faSave, faCopy, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { AuthContext } from "../../../contexts/AuthContext";
+import { axiosApiService } from "../../../api/apiService";
+import ErrorDialog from "../../common/error";
 
 //value maps to the tool_identifer string used for each tool
 const SERVICE_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
   { value: "gitlab", label: "GitLab" },
-  { value: "github", label: "GitHub" }
+  { value: "github", label: "GitHub" },
+  { value: "bitbucket", label: "Bitbucket" }
 ];
 
 const INITIAL_DATA = {
   name: "",
   service: "",
+  accountId : "",
+  username: "",
+  password: "",
   repository: "", 
   branch: "",
   key: "",
@@ -23,8 +30,14 @@ const INITIAL_DATA = {
 
 
 function SourceRepositoryConfig( { data, parentCallback }) {
+  const contextType = useContext(AuthContext);
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [formMessage, setFormMessage] = useState("");
+  const [error, setErrors] = useState(false);
+  const [accountList, setAccountList] = useState([]);
+  const [isAccountSearching, setIsAccountSearching] = useState(true);
+  const [repoList, setRepoList] = useState([]);
+  const [isRepoSearching, setIsRepoSearching] = useState(true);
     
   useEffect(() => {
     if (data !== undefined) {
@@ -38,12 +51,72 @@ function SourceRepositoryConfig( { data, parentCallback }) {
   }, [data]);
 
 
+  useEffect(
+    () => {
+      setFormData({ ...formData, accountId: "", username: "", password: "", branch : "" });
+      console.log(formData);
+      async function fetchApps(service){
+        // Set results state
+        let results = await searchAccounts(service);
+        if(results) {
+          setAccountList(formatOptions(results));
+          setIsAccountSearching(false);
+        }
+      }
+      if (formData.service && formData.service.length > 0) {
+        // Fire off our API call
+        fetchApps(formData.service);
+      } else {
+        setAccountList([{ value: "", name : "Select One",  isDisabled: "yes" }]);
+      }
+    },
+    [formData.service]
+  );
+  
+  useEffect(
+    () => {
+      setFormData({ ...formData, branch : "" });
+      async function fetchRepos(service, accountId){
+        // Set results state
+        let results = await searchRepositories(service, accountId);
+        if(results) {
+          console.log(results);
+          setRepoList(formatOptions(results));
+          setIsRepoSearching(false);
+        }
+      }
+      if (formData.service && formData.service.length > 0 && formData.accountId && formData.accountId.length > 0) {
+        // Fire off our API call
+        fetchRepos(formData.service, formData.accountId);
+      } else {
+        setRepoList([{ value: "", name : "Select One",  isDisabled: "yes" }]);
+      }
+    },
+    [formData.service, formData.accountId]
+  );
+  
+  const formatOptions = (options) => {
+    options.unshift({ value: "", name : "Select One",  isDisabled: "yes" });
+    return options;
+  };
+
+  const handleAccountChange = (selectedOption) => {
+    setFormData({ ...formData, accountId: selectedOption.id, username: selectedOption.configuration ? selectedOption.configuration.accountUsername : "",  password: selectedOption.configuration ? selectedOption.configuration.accountPassword : "" });
+  };
+  
+  const handleRepoChange = (selectedOption) => {
+    setFormData({ ...formData, repository: selectedOption.value });    
+  };
+ 
   const callbackFunction = () => {
     if (validateRequiredFields()) {
-      let { name, service, repository, branch, key, trigger_active } = formData;
+      let { name, service, accountId, username, password, repository, branch, key, trigger_active } = formData;
       const item = {
         name: name,
         service: service, 
+        accountId: accountId,
+        username : username,
+        password: password,
         repository: repository,
         branch: branch,
         key: key, 
@@ -57,9 +130,8 @@ function SourceRepositoryConfig( { data, parentCallback }) {
 
 
   const validateRequiredFields = () => {
-    console.log(formData);
-    let { service, repository, branch } = formData;
-    if (service.length === 0 || repository.length === 0 || branch.length === 0) {
+    let { service, accountId, username, password, repository, branch } = formData;
+    if (service.length === 0 || repository.length === 0 || branch.length === 0 || accountId.length === 0 || username.length === 0 || password.length === 0  ) {
       setFormMessage("Required Fields Missing!");
       return false;
     } else {
@@ -70,56 +142,174 @@ function SourceRepositoryConfig( { data, parentCallback }) {
 
 
   const handleServiceChange = (selectedOption) => {
-    setFormData({ ...formData, service: selectedOption.value });
+    setAccountList([{ value: "", name : "Select One",  isDisabled: "yes" }]);
+    setRepoList([{ value: "", name : "Select One",  isDisabled: "yes" }]);
+    setFormData({ ...formData, service: selectedOption.value, accountId: "", username: "", password: "", repository: "" });
+  };
+  
+  const searchAccounts = async (service) => {  
+    const { getAccessToken } = contextType;
+    const accessToken = await getAccessToken();
+    const apiUrl = "/registry/properties/"+service;   // this is to get all the service accounts from tool registry
+    try {
+      const res = await axiosApiService(accessToken).get(apiUrl);
+      if( res.data ) {
+        let respObj = [];
+        let arrOfObj = res.data;
+        arrOfObj.map((item) => {
+          respObj.push({ "name" : item.name, "id" : item._id, "configuration" : item.configuration });
+        });
+        return respObj;
+      } else {
+        setErrors("Data is missing!");
+      }
+    }
+    catch (err) {
+      console.log(err.message);
+      setErrors(err.message);
+    }
+  };
+  
+  const searchRepositories = async (service, gitAccountId) => {  
+    const { getAccessToken } = contextType;
+    const accessToken = await getAccessToken();
+    const apiUrl = "/tools/properties";   
+    const postBody = {
+      tool : service,
+      metric : "getRepositories",
+      gitAccountId: gitAccountId
+    };
+    console.log(postBody);
+    try {
+      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
+      if( res.data && res.data.data ) {
+        let arrOfObj = res.data.data;
+        if(arrOfObj) {
+          var result = arrOfObj.map(function(el) {
+            var o = Object.assign({}, el);
+            o.value = el.name;
+            return o;
+          });
+          return result;
+        }
+      } else {
+        setErrors("Data is missing!");
+      }
+    }
+    catch (err) {
+      console.log(err.message);
+      setErrors(err.message);
+    }
   };
 
+  console.log(formData);
+  
+  // console.log(formData.accountId);
+  // console.log(formData.accountId.length);
 
   return (
-    <Form>
-      { formMessage.length > 0 ? <p className="text-danger">{formMessage}</p> : null}
+    <>
+      {error && 
+        <ErrorDialog  error={error} />
+      }
+      <Form>
+        { formMessage.length > 0 ? <p className="text-danger">{formMessage}</p> : null}
       
-      <Form.Group controlId="repoField">
-        <Form.Label>Name</Form.Label>
-        <Form.Control maxLength="150" type="text" placeholder="Short description for repository." value={formData.name || ""} onChange={e => setFormData({ ...formData, name: e.target.value })} />
-      </Form.Group>
+        <Form.Group controlId="repoField">
+          <Form.Label>Name</Form.Label>
+          <Form.Control maxLength="150" type="text" placeholder="Short description for repository." value={formData.name || ""} onChange={e => setFormData({ ...formData, name: e.target.value })} />
+        </Form.Group>
 
-      <Form.Group controlId="formBasicEmail">
-        <Form.Label>Service*</Form.Label>
-        {data.workflow.source !== undefined ?
-          <DropdownList
-            data={SERVICE_OPTIONS}
-            valueField='id'
-            textField='label'
-            defaultValue={data.workflow.source.service ? SERVICE_OPTIONS[SERVICE_OPTIONS.findIndex(x => x.value === data.workflow.source.service)] : SERVICE_OPTIONS[0]}
-            onChange={handleServiceChange}             
-          /> : null }
-      </Form.Group>
-
-      <Form.Group controlId="repoField">
-        <Form.Label>Repository*</Form.Label>
-        <Form.Control maxLength="75" type="text" placeholder="Project repository name" value={formData.repository || ""} onChange={e => setFormData({ ...formData, repository: e.target.value })} />
-      </Form.Group>
-      <Form.Group controlId="branchField">
-        <Form.Label>Branch*</Form.Label>
-        <Form.Control maxLength="75" type="text" placeholder="Branch to watch" value={formData.branch || ""} onChange={e => setFormData({ ...formData, branch: e.target.value })} />
-      </Form.Group>
-      <Form.Group controlId="securityKeyField">
-        <Form.Label>Security Key/Token</Form.Label>
-        <Form.Control maxLength="75" type="password" placeholder="Optional security key/token from service" value={formData.key || ""} onChange={e => setFormData({ ...formData, key: e.target.value })} />
-      </Form.Group>
-      <Form.Group controlId="formBasicCheckbox" className="mt-1">
-        <Form.Check type="checkbox" label="Enable Event Based Trigger" checked={formData.trigger_active ? true : false} onChange={() => setFormData({ ...formData, trigger_active: !formData.trigger_active })}  />        
-      </Form.Group>
+        <Form.Group controlId="formBasicEmail">
+          <Form.Label>Service*</Form.Label>
+          {data.workflow.source !== undefined ?
+            <DropdownList
+              data={SERVICE_OPTIONS}
+              valueField='id'
+              textField='label'
+              defaultValue={data.workflow.source.service ? SERVICE_OPTIONS[SERVICE_OPTIONS.findIndex(x => x.value === data.workflow.source.service)] : SERVICE_OPTIONS[0]}
+              onChange={handleServiceChange}             
+            /> : null }
+        </Form.Group>
+        
+        <Form.Group controlId="account"  className="mt-2">
+          <Form.Label>Select Account*</Form.Label>
+          {isAccountSearching ? (
+            <small className="form-text text-muted mt-2 text-center">Select Data source to get list of accounts associated.</small>
+          ) :(
+            <>
+              {accountList ?
+                <DropdownList
+                  data={accountList} 
+                  value={formData.accountId ? accountList[accountList.findIndex(x => x.id === formData.accountId)] : accountList[0]}
+                  valueField='id'
+                  textField='name'
+                  defaultValue={formData.accountId ? accountList[accountList.findIndex(x => x.id === formData.accountId)] : accountList[0]}
+                  onChange={handleAccountChange}             
+                /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted ml-2" fixedWidth/> }
+            </>
+          )}
+          {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
+        </Form.Group> 
+        
+        {formData.username  && formData.password  &&
+        <>
+          <Form.Group controlId="useerName">
+            <Form.Label>User Name</Form.Label>
+            <Form.Control maxLength="75" type="text" disabled placeholder="Username" value={formData.username || ""} onChange={e => setFormData({ ...formData, username: e.target.value })} />
+          </Form.Group> 
+          <Form.Group controlId="password">
+            <Form.Label>password</Form.Label>
+            <Form.Control maxLength="75" type="password" disabled placeholder="Password" value={formData.password || ""} onChange={e => setFormData({ ...formData, password: e.target.value })} />
+          </Form.Group> 
+        </>
+        }
+         
+        <Form.Group controlId="account"  className="mt-2">
+          <Form.Label>Select Repository*</Form.Label>
+          {isRepoSearching ? (
+            <small className="form-text text-muted mt-2 text-center">Select an account to get list of Repositories.</small>
+          ) :(
+            <>
+              {repoList ?
+                <DropdownList
+                  data={repoList} 
+                  value={formData.repository ? repoList[repoList.findIndex(x => x.name === formData.repository)] : repoList[0]}
+                  valueField='name'
+                  textField='name'
+                  defaultValue={formData.repository ? repoList[repoList.findIndex(x => x.name === formData.repository)] : repoList[0]}
+                  onChange={handleRepoChange}             
+                /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted ml-2" fixedWidth/> }
+            </>
+          )}
+          {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
+        </Form.Group>   
+       
+        <Form.Group controlId="branchField">
+          <Form.Label>Branch*</Form.Label>
+          { formData.repository.length > 0 ?
+            <Form.Control maxLength="75" type="text" placeholder="Branch to watch" value={formData.branch || ""} onChange={e => setFormData({ ...formData, branch: e.target.value })} /> :
+            <small className="form-text text-muted mt-2 text-center">Select a repository first.</small>
+          }
+        </Form.Group>
+        <Form.Group controlId="securityKeyField">
+          <Form.Label>Security Key/Token</Form.Label>
+          <Form.Control maxLength="75" type="password" placeholder="Optional security key/token from service" value={formData.key || ""} onChange={e => setFormData({ ...formData, key: e.target.value })} />
+        </Form.Group>
+        <Form.Group controlId="formBasicCheckbox" className="mt-1">
+          <Form.Check type="checkbox" label="Enable Event Based Trigger" checked={formData.trigger_active ? true : false} onChange={() => setFormData({ ...formData, trigger_active: !formData.trigger_active })}  />        
+        </Form.Group>
       
-      {formData.trigger_active === true ? <EventBasedTriggerDetails pipelineId={data._id} /> : null }
+        {formData.trigger_active === true ? <EventBasedTriggerDetails pipelineId={data._id} /> : null }
       
-      <Button variant="primary" type="button" className="mt-2"
-        onClick={() => { callbackFunction(); }}> 
-        <FontAwesomeIcon icon={faSave} className="mr-1"/> Save
-      </Button>
+        <Button variant="primary" type="button" className="mt-2"
+          onClick={() => { callbackFunction(); }}> 
+          <FontAwesomeIcon icon={faSave} className="mr-1"/> Save
+        </Button>
       
-      <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
-    </Form>
+        <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
+      </Form>
+    </>
   );
 }
 
