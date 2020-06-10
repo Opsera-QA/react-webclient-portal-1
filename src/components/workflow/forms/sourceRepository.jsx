@@ -53,6 +53,7 @@ function SourceRepositoryConfig( { data, parentCallback }) {
 
   useEffect(
     () => {
+      setErrors(false);
       setFormData({ ...formData, accountId: "", username: "", password: "", branch : "" });
       console.log(formData);
       async function fetchApps(service){
@@ -75,6 +76,7 @@ function SourceRepositoryConfig( { data, parentCallback }) {
   
   useEffect(
     () => {
+      setErrors(false);
       setFormData({ ...formData, branch : "" });
       async function fetchRepos(service, accountId){
         // Set results state
@@ -142,6 +144,8 @@ function SourceRepositoryConfig( { data, parentCallback }) {
 
 
   const handleServiceChange = (selectedOption) => {
+    
+    setErrors(false);
     setAccountList([{ value: "", name : "Select One",  isDisabled: "yes" }]);
     setRepoList([{ value: "", name : "Select One",  isDisabled: "yes" }]);
     setFormData({ ...formData, service: selectedOption.value, accountId: "", username: "", password: "", repository: "" });
