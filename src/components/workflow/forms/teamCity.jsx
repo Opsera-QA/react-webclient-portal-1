@@ -9,6 +9,7 @@ import { faSave } from "@fortawesome/free-solid-svg-icons";
 const INITIAL_DATA = {
   teamcityApiURL: "",
   teamcityBuildTypeId: "",
+  teamcityProjectId: "",
   teamcityUsername: "", 
   teamcityPassword: ""
 };
@@ -53,8 +54,8 @@ function TeamCityStepConfiguration( { data, parentCallback }) {
 
 
   const validateRequiredFields = () => {
-    let { teamcityApiURL, teamcityUsername, teamcityPassword, teamcityBuildTypeId } = formData;
-    if (teamcityApiURL.length === 0 || teamcityUsername.length === 0 || teamcityPassword.length === 0 || teamcityBuildTypeId.length === 0) {
+    let { teamcityApiURL, teamcityUsername, teamcityPassword, teamcityBuildTypeId, teamcityProjectId } = formData;
+    if (teamcityApiURL.length === 0 || teamcityUsername.length === 0 || teamcityPassword.length === 0 || teamcityBuildTypeId.length === 0|| teamcityProjectId.length === 0) {
       setFormMessage("Required Fields Missing!");
       return false;
     } else {
@@ -84,9 +85,14 @@ function TeamCityStepConfiguration( { data, parentCallback }) {
         <Form.Control maxLength="100" type="password" placeholder="" value={formData.teamcityPassword || ""} onChange={e => setFormData({ ...formData, teamcityPassword: e.target.value })} />
       </Form.Group>
       <Form.Group controlId="branchField">
-        <Form.Label>Build Step ID*</Form.Label>
+        <Form.Label>Build Configuration ID*</Form.Label>
         <Form.Control maxLength="150" type="text" placeholder="" value={formData.teamcityBuildTypeId || ""} onChange={e => setFormData({ ...formData, teamcityBuildTypeId: e.target.value })} />
         <Form.Text className="text-muted">TeamCity Project Build Settings &#62; ID</Form.Text>
+      </Form.Group>
+      <Form.Group controlId="branchField">
+        <Form.Label>Project ID*</Form.Label>
+        <Form.Control maxLength="150" type="text" placeholder="" value={formData.teamcityProjectId || ""} onChange={e => setFormData({ ...formData, teamcityProjectId: e.target.value })} />
+        <Form.Text className="text-muted">TeamCity Project Settings &#62; ID</Form.Text>
       </Form.Group>
 
       {/* Leave the threshold form group as is for now, just read only for all forms */}
