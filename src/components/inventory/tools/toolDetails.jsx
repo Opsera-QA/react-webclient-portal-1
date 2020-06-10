@@ -29,6 +29,8 @@ function ToolDetails(props) {
       const accessToken = await getAccessToken();
       let apiUrl =  "/registry/" + toolId;
       const response = await axiosApiService(accessToken).get(apiUrl, {});
+      
+      
       setToolData(response.data[0]);
     }
     catch (err) {
@@ -53,6 +55,8 @@ function ToolDetails(props) {
               <Button variant={activeTab === "logs" ? "primary" : "link"} onClick={() => setActiveTab("logs")}>Logs</Button>
 
               {activeTab === "summary" ? <ToolSummary toolData={toolData} toolId={toolId} /> : null}
+
+
               {activeTab === "configuration" ? <ToolConfiguration toolData={toolData} toolId={toolId} /> : null}
               {activeTab === "logs" ? <ToolLogs toolData={toolData} toolId={toolId} /> : null}
             </>
