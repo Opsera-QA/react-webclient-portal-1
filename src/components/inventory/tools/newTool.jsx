@@ -251,7 +251,7 @@ function NewTool(props) {
           <Form className="formContainer">
             {formFields.map((formField, i) => {
               return(
-                <Form.Group key={i} controlId="formPlaintextEmail">
+                <Form.Group key={i} controlId="formPlaintextEmail" className="mt-2">
                   <Form.Label column sm="2">
                     {formField.label}
                   </Form.Label>
