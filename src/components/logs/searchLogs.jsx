@@ -171,6 +171,10 @@ function SearchLogs (props) {
     setLogData([]);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
+    let route = "/analytics/search";
+    if (filterType === "blueprint") {
+      route = "/analytics/blueprint";
+    } 
     const urlParams = {
       search: searchTerm,
       date: (startDate !== 0 && endDate === 0) ? startDate : undefined,
@@ -183,7 +187,7 @@ function SearchLogs (props) {
       page: currentPage,
       size: pageSize
     };
-    const apiCall = new ApiService("/analytics/search", urlParams, accessToken);
+    const apiCall = new ApiService(route, urlParams, accessToken);
     await apiCall.get().then(result => {
       let searchResults = [];
       if (result) {
