@@ -25,3 +25,23 @@
 .btn.focus, .btn:focus {
   box-shadow: none !important;
 }
+
+.tag-block {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.tag-block .tags {
+  padding: 4px 8px;
+  border-radius: 5px;
+  border: 1px solid #6c757d;
+  font-size: 12px;
+  margin: 4px 4px;
+  text-transform: capitalize;
+}
+
+.tool-details-modal .modal-content{
+  height: calc(100vh - 200px);
+  overflow-y: auto;
+}

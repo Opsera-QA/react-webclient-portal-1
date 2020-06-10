@@ -32,9 +32,10 @@ function ToolInventory () {
   const editTool = (event, cellData) => {
     event.stopPropagation();
     setModalType("edit");
+    console.log(cellData);
     setRowDetails({
-      id: cellData.row.original._id,
-      details: cellData.row.values
+      id: cellData._id,
+      details: cellData
     });
     toggleEditModal(true);
   };
@@ -136,7 +137,7 @@ function ToolInventory () {
       },
       {
         Header: "Action",
-        Cell: (cellData) => actionButtons(cellData)
+        Cell: (props) => actionButtons(props.cell.row.original)
       }
     ],
     []
@@ -146,7 +147,7 @@ function ToolInventory () {
     console.log(rowData);
     history.push(`/inventory/tools/${rowData.original._id}`);
     setRowDetails({
-      id: rowData.original._id,
+      id: rowData._id,
       details: rowData.values
     });
     toggleViewModal(true);
@@ -160,7 +161,7 @@ function ToolInventory () {
   return (
     <>
       
-      <NewTool showModal={isEditModal} closeModal={(toggleModal) => closeModal(toggleModal)} type={modalType} edittool={selectedRowDetail}/>
+      {isEditModal && <NewTool showModal={isEditModal} closeModal={(toggleModal) => closeModal(toggleModal)} type={modalType} edittool={selectedRowDetail}/>}
 
       <ToolDetails showModal={isViewModal} closeModal={(toggleModal) => closeViewModal(toggleModal)} toolId={selectedRowDetail.id}/>
 

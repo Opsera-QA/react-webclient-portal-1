@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
 import { useParams } from "react-router-dom";
+import { format } from "date-fns";
 
 import "components/inventory/tools/tools.css";
 
@@ -14,52 +15,87 @@ function ToolDetails(props) {
 
   return (
     <>
+      <br /><br />
       <Row>
         <Col>
           <Row className="mt-2">
-            <Col className="text-muted">Name:</Col>
+            <Col lg={2} className="text-muted">Name:</Col>
             <Col>{toolData.name}</Col>
           </Row>
           <Row className="mt-2">
-            <Col className="text-muted">Description:</Col>
+            <Col lg={2} className="text-muted">Description:</Col>
             <Col>{toolData.description}</Col>
           </Row>
           <Row className="mt-2">
-            <Col className="text-muted">Tool:</Col>
+            <Col lg={2} className="text-muted">Tool:</Col>
             <Col>{toolData.tool_identifier}</Col>
           </Row>
           <Row className="mt-2">
-            <Col className="text-muted">Project:</Col>
-            <Col>{toolData.project}</Col>
+            <Col lg={2} className="text-muted">Project:</Col>
+            <Col>
+              <div className="tag-block">
+                {toolData.project.map((data, key) => {
+                  return <span className="tags" key={key}>{data.name}</span>;
+                })}
+              </div>
+            </Col>
           </Row>
           <Row className="mt-2">
-            <Col className="text-muted">Roles:</Col>
-            <Col>{toolData.roles}</Col>
+            <Col lg={2} className="text-muted">Roles:</Col>
+            <Col>
+              <div className="tag-block">
+                {toolData.roles.map((data, key) => {
+                  return <span className="tags" key={key}>{data.name}</span>;
+                })}
+              </div>
+            </Col>
           </Row>
           <Row className="mt-2">
-            <Col className="text-muted">Created:</Col>
-            <Col>{toolData.createdAt}</Col>
+            <Col lg={2} className="text-muted">Created:</Col>
+            <Col>{format(new Date(toolData.createdAt), "yyyy-MM-dd', 'hh:mm a")}</Col>
           </Row>
         </Col>
         <Col>
           <Row className="mt-2">
-            <Col className="text-muted">ID:</Col>
+            <Col lg={2} className="text-muted">ID:</Col>
             <Col>{toolData._id}</Col>
           </Row>
           <Row className="mt-2">
-            <Col className="text-muted">Contacts:</Col>
-            <Col>{toolData.contacts}</Col>
+            <Col lg={2} className="text-muted">Contacts:</Col>
+            <Col>
+              <div className="tag-block">
+                {toolData.contacts.map((data, key) => {
+                  return <span className="tags" key={key}>{data.name}</span>;
+                })}
+              </div>
+            </Col>
           </Row>
           <Row className="mt-2">
-            <Col className="text-muted">Application:</Col>
-            <Col>{toolData.application}</Col>
+            <Col lg={2} className="text-muted">Application:</Col>
+            <Col>
+              <div className="tag-block">
+                {toolData.application.map((data, key) => {
+                  return <span className="tags" key={key}>{data.name}</span>;
+                })}
+              </div>
+            </Col>
+          </Row>          
+          <Row className="mt-2">
+            <Col lg={2} className="text-muted">External Reference:</Col>
+            <Col>
+              <div className="tag-block">
+                {toolData.external_reference.map((data, key) => {
+                  return <span className="tags" key={key}>{data.name}</span>;
+                })}
+              </div>
+            </Col>
           </Row>
           <Row className="mt-2">
-            <Col className="text-muted">Tags:</Col>
-            <Col>{toolData.tags}</Col>
+            <Col lg={2} className="text-muted">Tags:</Col>
+            <Col>{toolData.tags || ""}</Col>
           </Row>
           <Row className="mt-2">
-            <Col className="text-muted">Active:</Col>
+            <Col lg={2} className="text-muted">Active:</Col>
             <Col>{toolData.active == true ? "Yes" : "No"}</Col>
           </Row>
         </Col>

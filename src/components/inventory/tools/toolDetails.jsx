@@ -22,7 +22,7 @@ function ToolDetails(props) {
   useEffect(() => {    
     setToolData({});
     getToolRegistryList();   
-  }, []);
+  }, [toolId]);
 
   const getToolRegistryList = async () => {
     try {
@@ -38,14 +38,16 @@ function ToolDetails(props) {
 
   return (
     <>
-      <Modal size="lg" show={props.showModal} onHide={handleClose}>       
-        {Object.keys(toolData).length > 0 && (
-          <>
-            <Modal.Header closeButton>
-              <Modal.Title>{toolData.name}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
+      <Modal size="lg" show={props.showModal} onHide={handleClose} className="tool-details-modal">       
+        {Object.keys(toolData).length > 0 && (<Modal.Header closeButton>
+          <Modal.Title>{toolData.name}</Modal.Title>
+        </Modal.Header>)}
+        <Modal.Body>
 
+          {Object.keys(toolData).length == 0 && (<h3 className="text-center" style={{ padding: "20%"  }}>Loading ....</h3>)}
+
+          {Object.keys(toolData).length > 0 && (
+            <>
               <Button variant={activeTab === "summary" ? "primary" : "link"} onClick={() => setActiveTab("summary")}>Summary</Button>              
               <Button variant={activeTab === "configuration" ? "primary" : "link"} onClick={() => setActiveTab("configuration")}>Configuration</Button>
               <Button variant={activeTab === "logs" ? "primary" : "link"} onClick={() => setActiveTab("logs")}>Logs</Button>
@@ -53,10 +55,9 @@ function ToolDetails(props) {
               {activeTab === "summary" ? <ToolSummary toolData={toolData} toolId={toolId} /> : null}
               {activeTab === "configuration" ? <ToolConfiguration toolData={toolData} toolId={toolId} /> : null}
               {activeTab === "logs" ? <ToolLogs toolData={toolData} toolId={toolId} /> : null}
-
-            </Modal.Body>
-          </>
-        )} 
+            </>
+          )}
+        </Modal.Body>
       </Modal>
     </>
   );
