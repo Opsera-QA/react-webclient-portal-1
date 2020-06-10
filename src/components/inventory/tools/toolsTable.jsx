@@ -22,6 +22,18 @@ function ToolsTable({ columns, data, rowInfo }) {
     usePagination
   );
 
+  const setColumnClass = (id, columns) => {
+    let response = "";
+    if (columns && id){
+      Object.keys(columns).forEach(function(key) {
+        if (columns[key].accessor === id) {
+          response = columns[key].class;
+        }      
+      });      
+    } 
+    return response;
+  };
+
   return (
     <>
       <Table responsive hover {...getTableProps()}>
@@ -49,7 +61,7 @@ function ToolsTable({ columns, data, rowInfo }) {
             return (
               <tr key={i} {...row.getRowProps({ onClick: () => rowInfo(row) } )}>
                 {row.cells.map((cell, j) => {
-                  return <td key={j} {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+                  return <td key={j} {...cell.getCellProps()} className={setColumnClass(cell.column.id, columns)}>{cell.render("Cell")}</td>;
                 })}
               </tr>
             );

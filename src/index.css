@@ -465,6 +465,11 @@ pre {
   word-break: keep-all;
 }
 
+.no-wrap-inline {
+  white-space: nowrap;
+  word-break: keep-all;
+}
+
 .console-text {
   background-color: black;
   background-image: radial-gradient(
