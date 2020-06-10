@@ -7,6 +7,28 @@ import MultiInputFormField from "./multiInputFormField";
 
 import "./tools.css";
 
+//TODO: Please wire this data object up and use it for the form
+const INITIAL_FORM = {
+  name: "",
+  description: "",
+  tool_identifier: "", 
+  tool_type_identifier: "",  //please make sure this value gets set based on the user's drop down selection for Tool.  The user should not be allowed to directly set this value.
+  contacts: [],
+  projects: [],
+  applications: [],
+  location: [], 
+  organization: {},
+  external_reference: [],
+  tags: [],  //["tag1","tag2","tag3"]
+  roles: [], //what user or group has access to: read, write, edit, delete
+  configuration: {},
+  licensing: [], 
+  compliance: [],
+  active: true,
+  status: ""
+};
+
+
 function NewTool(props) {
 
   const { getAccessToken } = useContext(AuthContext);
@@ -39,13 +61,13 @@ function NewTool(props) {
     {
       label: "Location",
       id: "location",
-      type: "location",
+      fields: ["name", "value"],
       disabled: true
     },
     {
       label: "Licensing",
       id: "licensing",
-      type: "textarea",
+      fields: ["name", "value"],
       disabled: true
     },
     {
@@ -57,7 +79,7 @@ function NewTool(props) {
     {
       label: "Compliance",
       id: "compliance",
-      type: "textarea",
+      fields: ["name", "value"],
       disabled: true
     },
     {
@@ -69,14 +91,14 @@ function NewTool(props) {
     },
     {
       label: "Project",
-      id: "project",
+      id: "projects",
       type: "multi",
       fields: ["name", "reference", "id"],
       disabled: true
     },
     {
       label: "Application",
-      id: "application",
+      id: "applications",
       type: "multi",
       fields: ["name", "reference", "id"],
       disabled: true
@@ -169,6 +191,15 @@ function NewTool(props) {
     });
   };
 
+  const handleArrayUpdate = (value, formField) => {
+    console.log(value);
+    console.log(formField);
+    setFormFields({ 
+      ...toolFormFields, 
+      [formField.id]: value
+    });
+  };
+
   const formFieldType = (formField) => {
     switch (formField.type) {
     case "switch":
@@ -200,8 +231,7 @@ function NewTool(props) {
       );
     case "tags":
       return (<Row>
-        <Col><Form.Control placeholder="name" defaultValue={editTool[formField.id][0]["name"]} onChange={e => handleLocationUpdate(e.target.value, formField, "name") } /> </Col>  
-        <Col><Form.Control placeholder="value" defaultValue={editTool[formField.id][0]["value"]} onChange={e => handleLocationUpdate(e.target.value, formField, "value")} /> </Col> 
+        <Col><Form.Control placeholder="name" defaultValue={editTool[formField.id]} onChange={e => handleArrayUpdate(e.target.value, formField,) } /> </Col>        
       </Row>
       );
     case "multi":
