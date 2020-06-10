@@ -75,7 +75,7 @@ function ToolInventory () {
   useEffect(() => {    
     if(id && id.match(/^[0-9a-fA-F]{24}$/))  setModalType("edit");
     getToolRegistryList(id !=  undefined ? id : "");   
-  }, []);
+  }, [id]);
 
   const handleActionClick = () => {
     setModalType("new");
