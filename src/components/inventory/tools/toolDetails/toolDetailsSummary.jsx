@@ -15,21 +15,23 @@ function ToolDetails(props) {
   return (
     <>
       { Object.keys(toolData) && <>
-        <Row className="mt-4">
-          <Col lg={4} md={6} className="my-2">
-            <span className="pr-1 text-muted">Name: </span>{toolData.name}</Col>
+        <Row className="mt-3">
+          <Col lg={4} md={6} className="my-2 ml-2">
+            <span className="pr-1 text-muted">Tool Name: </span>{toolData.name}</Col>
 
+          
+
+          <Col lg={12} md={12} className="my-2 ml-2">
+            <span className="pr-1 text-muted">Description: </span>{toolData.description}</Col>
+        </Row>
+
+        <Row className="mt-3 mx-1 px-1 py-2 tool-content-block">   
           <Col lg={4} md={6} className="my-2">
             <span className="pr-1 text-muted">ID: </span>{toolData._id}</Col>
 
           <Col lg={4} md={6} className="my-2">
             <span className="pr-1 text-muted">Created: </span>{format(new Date(toolData.createdAt), "yyyy-MM-dd")}</Col>
 
-          <Col lg={12} md={12} className="my-2">
-            <span className="pr-1 text-muted">Description: </span>{toolData.description}</Col>
-        </Row>
-
-        <Row className="mt-3 mx-1 px-1 tool-content-block">            
           <Col lg={4} md={6} className="my-2"> 
             <span className="pr-1 text-muted">Tool: </span>{toolData.tool_identifier}</Col> 
 
@@ -49,7 +51,7 @@ function ToolDetails(props) {
             <span className="pr-1 text-muted">Tags: </span>{toolData.tags.map(str => { return(`${str},`);})}</Col>
         </Row>
 
-        <Row className="mt-3 mx-1 px-1 tool-content-block">
+        <Row className="mt-3 mx-1 px-1 py-2 tool-content-block">
           <Col lg={4} md={6} className="my-2">
             <span className="pr-1 text-muted">Contacts: </span>
             {toolData.contacts.map((item, i) => <div className="p-1" key={i}>{item.name} {item.email}</div>)}</Col>
@@ -79,12 +81,12 @@ function ToolDetails(props) {
         </Row> 
       </>}
       
-      <div className="tool-details-buttons">
+      {/* <div className="tool-details-buttons">
         <Button variant="success" size="sm" onClick={handleClose}>Button 1</Button>
         <Button variant="primary" size="sm" onClick={handleClose}>Button 2</Button>
         <Button variant="success" size="sm" onClick={handleClose}>Button 3</Button>
         <Button variant="danger" size="sm" onClick={handleClose}>Button 4</Button>
-      </div>
+      </div> */}
     </>
   );
 }

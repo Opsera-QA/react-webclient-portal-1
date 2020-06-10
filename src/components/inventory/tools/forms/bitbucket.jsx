@@ -1,0 +1,1 @@
+// This is where the custom ToolsConfiguration.configuration form will reside for this tool.
