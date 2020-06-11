@@ -111,11 +111,19 @@ function ToolInventory () {
     toggleEditModal(true);
   };
 
-  const closeModal = () => {
+  const closeModal = (val1, saveResponse) => {
+    console.log("val1 ", val1);
+    console.log("saveResponse ", saveResponse);
     toggleEditModal(false);
-    setToolId("");
-    toggleViewModal(false);
-    history.push("/inventory/tools");
+    
+    if (saveResponse && saveResponse._id) {
+      history.push(`/inventory/tools/${saveResponse._id}`);
+      setToolId(saveResponse._id);
+      toggleViewModal(true);
+    } else {
+      getToolRegistryList();
+    }
+    
   };
 
   const actionButtons = (cellData) => {
@@ -170,7 +178,7 @@ function ToolInventory () {
       
       {/*Both of these should be doing a lookup of the altest tool data, not using data passed form ehre */}
       <ToolDetails showModal={isViewModal} closeModal={(toggleModal) => closeViewModal(toggleModal)} toolId={toolId} fnEditTool={handelEditClick}/>
-      <NewTool showModal={isEditModal} closeModal={(toggleModal) => closeModal(toggleModal)} type={modalType} editTool={selectedRowDetail}/>
+      <NewTool showModal={isEditModal} closeModal={(toggleModal, response) => closeModal(toggleModal, response)} type={modalType} editTool={selectedRowDetail}/>
 
       <div className="mt-2 mb-2 text-right">
         <Button variant="primary" size="sm"  
