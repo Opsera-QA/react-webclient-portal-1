@@ -6,12 +6,15 @@ import { axiosApiService } from "api/apiService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import LoadingDialog from "components/common/loading";
+import Modal from "components/common/modal";
 import { useHistory, useParams } from "react-router-dom";
 import { format } from "date-fns";
 
 import ToolsTable from "./toolsTable";
 import NewTool from "./newTool";
-import ToolDetails from "./toolDetails";
+import ToolDetails from "./toolDetails/toolDetails";
+
+import "./tools.css";
 
 function ToolInventory () {
 
@@ -28,11 +31,11 @@ function ToolInventory () {
   const [toolList, setToolList] = useState([]);
   let history = useHistory();
   const { id, view } = useParams();
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const editTool = (event, cellData) => {
     event.stopPropagation();
     setModalType("edit");
-    console.log(cellData);
     setRowDetails({
       id: cellData._id,
       details: cellData
@@ -40,13 +43,28 @@ function ToolInventory () {
     toggleEditModal(true);
   };
 
-  const deleteTool = async (event, cellData) => {
-    event.stopPropagation();
+  const handleDeleteClick = (e, cellData) => {
+    e.stopPropagation();
+    setShowDeleteModal(true);
     setRowDetails({
-      id: cellData.row.original._id,
-      details: cellData.row.values
-    });
-    getToolRegistryList("");
+      id: cellData._id,
+      details: cellData
+    });   
+  };
+
+  const deleteTool = async () => {
+    console.log(selectedRowDetail);
+
+    try {
+      setLoading(true);
+      const accessToken = await getAccessToken();
+      let apiUrl = "/registry/" + selectedRowDetail.id;
+      const response = await axiosApiService(accessToken).delete(apiUrl, {});
+    }
+    catch (err) {
+      console.log(err.message);
+    }
+    getToolRegistryList(null);
   };
 
   const getToolRegistryList = async (id) => {
@@ -86,7 +104,7 @@ function ToolInventory () {
     toggleEditModal(true);
   };
 
-  const closeModal = (data) => {
+  const closeModal = () => {
     toggleEditModal(false);
     getToolRegistryList(null);
     history.push("/inventory/tools");
@@ -96,7 +114,7 @@ function ToolInventory () {
     return(
       <>
         <Button variant="outline-primary" size="sm" className="mr-2" onClick={(e) => { editTool(e, cellData); }} ><FontAwesomeIcon icon={faEdit} fixedWidth/></Button>
-        <Button variant="outline-danger" size="sm" className="mr-1" onClick={(e) => { deleteTool(e, cellData); }} ><FontAwesomeIcon icon={faTrash} fixedWidth/></Button>
+        <Button variant="outline-danger" size="sm" className="mr-1" onClick={(e) => { handleDeleteClick(e, cellData); }} ><FontAwesomeIcon icon={faTrash} fixedWidth/></Button>
       </>
     );
   };
@@ -179,6 +197,12 @@ function ToolInventory () {
       {isLoading && <LoadingDialog />}
 
       {!isLoading && <ToolsTable rowInfo={viewTool}  columns={columns} data={toolList} />}
+
+      {showDeleteModal ? <Modal showModal={showDeleteModal} header="Confirm Tool Delete"
+        message="Warning! Data cannot be recovered once the tool is deleted. Do you still want to proceed?"
+        button="Confirm"
+        handleCancelModal={() => setShowDeleteModal(false)}
+        handleConfirmModal={() => deleteTool()} /> : null}
       
     </>
   );  
