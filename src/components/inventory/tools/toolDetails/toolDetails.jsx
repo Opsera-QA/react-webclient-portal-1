@@ -7,6 +7,7 @@ import Loading from "../../../common/loading";
 import ToolSummary from "./toolDetailsSummary";
 import ToolConfiguration from "./toolDetailsConfiguration";
 import ToolLogs from "./toolDetailsLogs";
+import PipelineActions from "../../../workflow/actions";
 
 const INITIAL_FORM = {
   name: "",
@@ -38,6 +39,7 @@ function ToolDetails(props) {
   const [isSaving, setIsSaving] = useState(false);
   const handleClose = () => props.closeModal(false);
   const [activeTab, setActiveTab] = useState("summary");
+  
 
   useEffect(() => {    
     console.log("toolId ", toolId);
@@ -85,6 +87,13 @@ function ToolDetails(props) {
     setIsSaving(false);    
   };
 
+
+  const saveToVault = async (postBody) => {
+    console.log("saving to vault: ", postBody);
+    const response = await PipelineActions.saveToVault(postBody, getAccessToken);  
+    return response;
+  };
+
   return (
     <>
       <Modal size="lg" show={props.showModal} onHide={handleClose} className="tool-details-modal">       
@@ -104,7 +113,7 @@ function ToolDetails(props) {
 
               {toolData && toolId && !isLoading ? <>
                 {activeTab === "summary" ? <ToolSummary toolData={toolData} toolId={toolId} fnSaveChanges={updateTool} fnEditTool={fnEditTool} /> : null}
-                {activeTab === "configuration" ? <ToolConfiguration toolData={toolData} toolId={toolId} fnSaveChanges={updateTool} /> : null}
+                {activeTab === "configuration" ? <ToolConfiguration toolData={toolData} toolId={toolId} fnSaveChanges={updateTool} fnSaveToVault={saveToVault} /> : null}
                 {activeTab === "logs" ? <ToolLogs toolData={toolData} toolId={toolId} /> : null}
               </> : null }
             </>
