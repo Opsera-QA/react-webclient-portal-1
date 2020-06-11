@@ -11,6 +11,7 @@ import ErrorDialog from "../../common/error";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
+  spinnakerId: "",
   spinnakerUrl: "",
   appName: "",
   toolName: "",
@@ -46,8 +47,10 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
   const [formMessage, setFormMessage] = useState("");
   const [renderForm, setRenderForm] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [spinnakerList, setSpinnakerList] = useState([]);
   const [applicationList, setApplicationList] = useState([]);
   const [toolsList, setToolsList] = useState([]);
+  const [isSpinnakerSearching, setIsSpinnakerSearching] = useState(true);
   const [isAppSearching, setIsAppSearching] = useState(true);
   const [isToolSearching, setIsToolSearching] = useState(true);
 
@@ -73,6 +76,31 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
     };
   }, [stepTool]);
 
+  
+  useEffect(
+    () => {
+      setErrors(false);
+      async function fetchSpinnakerDetails(service){
+        // Set results state
+        let results = await searchSpinnakerList(service);
+        if(results) {
+          console.log(results);
+          setSpinnakerList(formatOptions(results));
+          setIsSpinnakerSearching(false);
+        } else {
+          setSpinnakerList([{ value: "", name : "Select One",  isDisabled: "yes" }]);
+        }
+      }
+      
+      // Fire off our API call
+      fetchSpinnakerDetails("spinnaker");
+      // } else {
+      //   setSpinnakerList([{ value: "", name : "Select One",  isDisabled: "yes" }]);
+      // }
+    },
+    []
+  );
+  
 
   const loadFormData = async (step) => {
     let { configuration } = step;
@@ -95,13 +123,40 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
       parentCallback(item);
     }
   };
-  const searchApplications = async (spinnakerURL) => {  
+  
+  const searchSpinnakerList = async (service) => {  
+    const { getAccessToken } = contextType;
+    const accessToken = await getAccessToken();
+    const apiUrl = "/registry/properties/"+service;   // this is to get all the service accounts from tool registry
+    try {
+      const res = await axiosApiService(accessToken).get(apiUrl);
+      console.log(res);
+      if( res.data ) {
+        let respObj = [];
+        let arrOfObj = res.data;
+        arrOfObj.map((item) => {
+          respObj.push({ "name" : item.name, "id" : item._id, "configuration" : item.configuration });
+        });
+        console.log(respObj);
+        return respObj;
+      } else {
+        setErrors("Data is missing!");
+      }
+    }
+    catch (err) {
+      console.log(err.message);
+      setErrors(err.message);
+    }
+  };
+
+  const searchApplications = async (spinnakerId, spinnakerURL) => {  
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
     const apiUrl = "/tools/properties";   
     const postBody = {
       tool : "spinnaker",
       metric : "applications",
+      id: spinnakerId,
       url: spinnakerURL
     };
 
@@ -161,28 +216,30 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
 
   useEffect(
     () => {
-      async function fetchApplications(url){
+      setErrors(false);
+      setFormData({ ...formData, spinnakerId: "", spinnakerUrl: "", appName: "", toolName: "" });
+      async function fetchApplications(id, url){
         // Set results state
-        let results = await searchApplications(url);
+        let results = await searchApplications(id, url);
         if(results) {
           setApplicationList(formatOptions(results));
           setIsAppSearching(false);
         }
       }
       // Make sure we have a value (user has entered something in input)
-      if (debouncedSearchURL) {
+      if (formData.spinnakerId && formData.spinnakerId.length > 0 ) {
         // API call
-        fetchApplications(debouncedSearchURL);      
+        fetchApplications(formData.spinnakerId, formData.spinnakerUrl);      
       } else {
         setApplicationList([{ value: "", name : "Select One",  isDisabled: "yes" }]);
       }
     },
-    [debouncedSearchURL]
+    [formData.spinnakerId]
   );
-
   
   useEffect(
     () => {
+      setErrors(false); 
       async function fetchTools(appname){
         // Set results state
         let results = await searchTools(appname);
@@ -207,9 +264,10 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
   };
 
   const validateRequiredFields = () => {
-    let { spinnakerUrl, appName, toolName } = formData;
+    let { spinnakerId, spinnakerUrl, appName, toolName } = formData;
     if (
-      spinnakerUrl.length === 0 || 
+      spinnakerUrl.length === 0 ||    
+      spinnakerId.length === 0 || 
       appName.length === 0 || 
       toolName.length === 0 ) {
       setFormMessage("Required Fields Missing!");
@@ -218,6 +276,10 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
       setFormMessage("");
       return true;
     }
+  };
+
+  const handleSpinnakerChange = (selectedOption) => {
+    setFormData({ ...formData, spinnakerId: selectedOption.id, spinnakerUrl: selectedOption.configuration ? selectedOption.configuration.spinnakerURL : "" });    
   };
 
   const handleApplicationChange = (selectedOption) => {
@@ -236,24 +298,32 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
       <Form>
         { formMessage.length > 0 ? <p className="text-danger">{formMessage}</p> : null}
 
-        <Form.Group controlId="spinnakerURL">
+        {/* <Form.Group controlId="spinnakerURL">
           <Form.Label>Spinnaker URL*</Form.Label>
           <Form.Control maxLength="256" type="text" placeholder="" value={formData.spinnakerUrl || ""} onChange={e => setFormData({ ...formData, spinnakerUrl: e.target.value })} />
-        </Form.Group>
+        </Form.Group> */}
 
         {/* use this if we get the spinnaker url from tools registry */}
       
-        {/* <Form.Group controlId="platform">
-        <Form.Label>application Name*</Form.Label>
-        {renderForm && SpinnakerURLList ? 
-          <DropdownList
-            data={SpinnakerURLList}
-            valueField='id'
-            textField='label'
-            defaultValue={formData.spinnakerUrk ? SpinnakerURLList[SpinnakerURLList.findIndex(x => x.value === formData.spinnakerUrl)] : SpinnakerURLList[0]}
-            onChange={handleSpinnaketUrlChange}             
-          /> : null }
-      </Form.Group> */}
+
+        <Form.Group controlId="spinnakarlist">
+          <Form.Label>Select Spinnaker*</Form.Label>
+          {isSpinnakerSearching ? (
+            <small className="form-text text-muted mt-2 text-center">Getting list of spinnakers from tools.</small>
+          ) :(
+            <>
+              {renderForm && spinnakerList ? 
+                <DropdownList
+                  data={spinnakerList}
+                  valueField='id'
+                  textField='name'
+                  defaultValue={formData.spinnakerId ? spinnakerList[spinnakerList.findIndex(x => x.id === formData.spinnakerId)] : spinnakerList[0]}
+                  onChange={handleSpinnakerChange}             
+                /> : null }
+            </>
+
+          )}
+        </Form.Group>
 
         <Form.Group controlId="platform">
           <Form.Label>application Name*</Form.Label>
@@ -305,13 +375,5 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
   );
 }
 
-SpinnakerStepConfiguration.propTypes = {
-  stepTool: PropTypes.object,
-  plan: PropTypes.array,
-  pipelineId: PropTypes.string,
-  stepId: PropTypes.string,
-  parentCallback: PropTypes.func,
-  callbackSaveToVault: PropTypes.func
-};
 
 export default SpinnakerStepConfiguration;
