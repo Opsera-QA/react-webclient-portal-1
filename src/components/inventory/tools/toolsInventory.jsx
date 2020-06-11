@@ -67,7 +67,7 @@ function ToolInventory () {
   };
 
   const deleteTool = async () => {
-    console.log(selectedRowDetail);
+    setShowDeleteModal(false);
     try {
       setLoading(true);
       const accessToken = await getAccessToken();
