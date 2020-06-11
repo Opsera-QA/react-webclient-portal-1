@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext, useMemo } from "react";
-import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext";  
 import { axiosApiService } from "api/apiService";
@@ -19,7 +18,7 @@ import "./tools.css";
 
 function ToolInventory () {
   let history = useHistory();
-  const { id, view } = useParams();
+  const { id } = useParams();
   const { getAccessToken } = useContext(AuthContext);
   const [isEditModal, toggleEditModal] = useState(false);
   const [isViewModal, toggleViewModal] = useState(false);
@@ -48,13 +47,12 @@ function ToolInventory () {
   }, [id]);
 
 
-  const editTool = (event, cellData) => {
-    event.stopPropagation();
+  const handelEditClick = (toolId, toolData) => {
     setModalType("view");
-    setToolId(cellData._id);
+    setToolId(toolId);
     setRowDetails({
-      id: cellData._id,
-      details: cellData
+      id: toolId,
+      details: toolData
     });
     toggleEditModal(true);
   };
@@ -115,20 +113,20 @@ function ToolInventory () {
 
   const closeModal = () => {
     toggleEditModal(false);
-    getToolRegistryList(null);
+    setToolId("");
+    toggleViewModal(false);
     history.push("/inventory/tools");
   };
 
   const actionButtons = (cellData) => {
     return(
       <>
-        <Button variant="outline-primary" size="sm" className="mr-2" onClick={(e) => { editTool(e, cellData); }} ><FontAwesomeIcon icon={faEdit} fixedWidth/></Button>
         <Button variant="outline-danger" size="sm" className="mr-1" onClick={(e) => { handleDeleteClick(e, cellData); }} ><FontAwesomeIcon icon={faTrash} fixedWidth/></Button>
       </>
     );
   };
 
-  
+  //TODO: Nobal, Please add default sort as an option here AND the option to hide sorting on a column!
   const columns = useMemo(
     () => [
       {
@@ -152,7 +150,7 @@ function ToolInventory () {
         class: "no-wrap-inline"
       },
       {
-        Header: "Action",
+        Header: "",
         accessor: "action",
         Cell: (props) => actionButtons(props.cell.row.original),
         class: "no-wrap"
@@ -171,7 +169,7 @@ function ToolInventory () {
     <>
       
       {/*Both of these should be doing a lookup of the altest tool data, not using data passed form ehre */}
-      <ToolDetails showModal={isViewModal} closeModal={(toggleModal) => closeViewModal(toggleModal)} toolId={toolId}/>
+      <ToolDetails showModal={isViewModal} closeModal={(toggleModal) => closeViewModal(toggleModal)} toolId={toolId} fnEditTool={handelEditClick}/>
       <NewTool showModal={isEditModal} closeModal={(toggleModal) => closeModal(toggleModal)} type={modalType} editTool={selectedRowDetail}/>
 
       <div className="mt-2 mb-2 text-right">

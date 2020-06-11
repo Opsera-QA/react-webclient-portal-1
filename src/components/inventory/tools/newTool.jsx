@@ -29,7 +29,6 @@ const INITIAL_FORM = {
 
 
 function NewTool(props) {
-
   const { getAccessToken } = useContext(AuthContext);
   const editTool = props.editTool.details;
   const formFields = [
