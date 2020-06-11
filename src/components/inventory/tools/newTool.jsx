@@ -4,7 +4,7 @@ import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
 import PropTypes from "prop-types";
 import MultiInputFormField from "./multiInputFormField";
-
+import TagInput from "utils/tagInput";
 
 //TODO: Please wire this data object up and use it for the form
 const INITIAL_FORM = {
@@ -139,7 +139,7 @@ function NewTool(props) {
     tool_identifier: []
   });
 
-  useEffect(() => {    
+  useEffect(() => {   
     getToolList();
   }, []);
 
@@ -207,15 +207,6 @@ function NewTool(props) {
     });
   };
 
-  const handleArrayUpdate = (value, formField) => {
-    console.log(value);
-    console.log(formField);
-    setFormFields({ 
-      ...toolFormFields, 
-      [formField.id]: value
-    });
-  };
-
   const formFieldType = (formField) => {
     switch (formField.type) {
     case "switch":
@@ -236,16 +227,13 @@ function NewTool(props) {
         onChange={e => setFormFields({ ...toolFormFields, [formField.id]: e.target.value })}
       />;     
     case "select":
-      return <Form.Control as="select" disabled={formField.disabled} defaultValue={editTool[formField.id]} value={toolFormFields[formField.id]} placeholder="Please select" onChange={e => handleToolTypeUpdate(e.target.value, formField)}>
+      return <Form.Control as="select" disabled={formField.disabled} defaultValue={editTool[formField.id]} placeholder="Please select" onChange={e => handleToolTypeUpdate(e.target.value, formField)}>
         {tool_list[formField.id].map((option, i) => (
           <option key={i} value={option.identifier}>{option.name}</option>
         ))} 
       </Form.Control>;
     case "tags":
-      return (<Row>
-        <Col><Form.Control placeholder="name" defaultValue={editTool[formField.id]} onChange={e => handleArrayUpdate(e.target.value, formField) } /> </Col>        
-      </Row>
-      );
+      return <TagInput defaultValue={editTool[formField.id]} onChange={data => setFormFields({ ...toolFormFields, [formField.id]: data })} />;
     case "multi":
       return <MultiInputFormField formField={formField} defaultValue={editTool[formField.id]} onChange={data => setFormFields({ ...toolFormFields, [formField.id]: data })} />;      
     default:
