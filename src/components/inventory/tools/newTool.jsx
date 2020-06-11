@@ -181,8 +181,8 @@ function NewTool(props) {
     console.log(toolFormFields);
     try {
       const accessToken = await getAccessToken();
-      await axiosApiService(accessToken).post("/registry/"+ props.editTool.id + "/update", { ...toolFormFields });
-      props.closeModal(false);
+      const response = await axiosApiService(accessToken).post("/registry/"+ props.editTool.id + "/update", { ...toolFormFields });
+      props.closeModal(false, response.data);
     }
     catch (err) {
       console.log(err.message);
