@@ -5,7 +5,6 @@ import { axiosApiService } from "api/apiService";
 import PropTypes from "prop-types";
 import MultiInputFormField from "./multiInputFormField";
 
-import "./tools.css";
 
 //TODO: Please wire this data object up and use it for the form
 const INITIAL_FORM = {
@@ -56,14 +55,15 @@ function NewTool(props) {
       label: "Tool Type",
       id: "tool_type_identifier",
       type: "select",
-      disabled: false
-    },    
+      disabled: true
+    },  
     {
-      label: "Location",
-      id: "location",
+      label: "Compliance",
+      id: "compliance",
       fields: ["name", "value"],
       disabled: true
-    },
+    }, 
+
     {
       label: "Licensing",
       id: "licensing",
@@ -77,15 +77,19 @@ function NewTool(props) {
       disabled: true
     },
     {
-      label: "Compliance",
-      id: "compliance",
+      label: "Location",
+      id: "location",
+      type: "multi",
+      showEditButton: false,
       fields: ["name", "value"],
       disabled: true
     },
+
     {
       label: "Contacts",
       id: "contacts",
       type: "multi",
+      showEditButton: true,
       fields: ["name", "email", "id"],
       disabled: true
     },
@@ -93,6 +97,7 @@ function NewTool(props) {
       label: "Project",
       id: "projects",
       type: "multi",
+      showEditButton: true,
       fields: ["name", "reference", "id"],
       disabled: true
     },
@@ -100,6 +105,7 @@ function NewTool(props) {
       label: "Application",
       id: "applications",
       type: "multi",
+      showEditButton: true,
       fields: ["name", "reference", "id"],
       disabled: true
     },
@@ -107,16 +113,18 @@ function NewTool(props) {
       label: "Organization",
       id: "organization",
       type: "multi",
+      showEditButton: true,
       fields: ["name", "reference", "id"],
       disabled: true
     },
-    {
-      label: "External Reference",
-      id: "external_reference",
-      type: "multi",
-      fields: ["name", "description", "identifier"],
-      disabled: true
-    },
+    // {
+    //   label: "External Reference",
+    //   id: "external_reference",
+    //   type: "multi",
+    //   showEditButton: true,
+    //   fields: ["name", "description", "identifier"],
+    //   disabled: true
+    // },
     {
       label: "",
       id: "active",
@@ -126,7 +134,7 @@ function NewTool(props) {
     }
   ];
 
-  const [ toolFormFields, setFormFields ] = useState({ active: true });
+  const [ toolFormFields, setFormFields ] = useState(INITIAL_FORM);
   const [ tool_list, setToolList ] = useState({
     tool_type_identifier: [], 
     tool_identifier: []
@@ -184,10 +192,19 @@ function NewTool(props) {
 
   const handleClose = () => props.closeModal(false);
 
-  const handleLocationUpdate = (value, formField, type) => {
+  // const handleLocationUpdate = (value, formField, type) => {
+  //   setFormFields({ 
+  //     ...toolFormFields, 
+  //     [formField.id]: { [type]: value }
+  //   });
+  // };
+
+  const handleToolTypeUpdate = (value, formField) => {
+    let selectedToolType = tool_list.tool_identifier.find(function (o) { return o.identifier == value; });
     setFormFields({ 
       ...toolFormFields, 
-      [formField.id]: { [type]: value }
+      tool_type_identifier: selectedToolType.tool_type_identifier,
+      [formField.id]: selectedToolType.identifier 
     });
   };
 
@@ -206,9 +223,11 @@ function NewTool(props) {
       return <Form.Check 
         type="switch"
         id="custom-switch"
+        checked={toolFormFields[formField.id]}
         label="Active"
-        defaultValue={true}
-        onChange={e => setFormFields({ ...toolFormFields, [formField.id]: e.target.value })}
+        onChange={e => {
+          setFormFields({ ...toolFormFields, [formField.id]: e.target.checked });
+        }}
       />;
     case "textarea":
       return <Form.Control 
@@ -218,20 +237,14 @@ function NewTool(props) {
         onChange={e => setFormFields({ ...toolFormFields, [formField.id]: e.target.value })}
       />;     
     case "select":
-      return <Form.Control as="select" placeholder="Please select" onChange={e => setFormFields({ ...toolFormFields, [formField.id]: e.target.value })}>
+      return <Form.Control as="select" disabled={formField.disabled} defaultValue={editTool[formField.id]} value={toolFormFields[formField.id]} placeholder="Please select" onChange={e => handleToolTypeUpdate(e.target.value, formField)}>
         {tool_list[formField.id].map((option, i) => (
-          <option key={i}>{option.name}</option>
+          <option key={i} value={option.identifier}>{option.name}</option>
         ))} 
       </Form.Control>;
-    case "location":
-      return (<Row>
-        <Col><Form.Control placeholder="name" defaultValue={editTool[formField.id]["name"]} onChange={e => handleLocationUpdate(e.target.value, formField, "name") } /> </Col>  
-        <Col><Form.Control placeholder="value" defaultValue={editTool[formField.id]["value"]} onChange={e => handleLocationUpdate(e.target.value, formField, "value")} /> </Col> 
-      </Row>
-      );
     case "tags":
       return (<Row>
-        <Col><Form.Control placeholder="name" defaultValue={editTool[formField.id]} onChange={e => handleArrayUpdate(e.target.value, formField,) } /> </Col>        
+        <Col><Form.Control placeholder="name" defaultValue={editTool[formField.id]} onChange={e => handleArrayUpdate(e.target.value, formField) } /> </Col>        
       </Row>
       );
     case "multi":
@@ -248,7 +261,7 @@ function NewTool(props) {
           <Modal.Title>{props.type == "new" ? "New" : "Edit"} Tool</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form className="formContainer">
+          <Form className="newToolFormContainer">
             {formFields.map((formField, i) => {
               return(
                 <Form.Group key={i} controlId="formPlaintextEmail" className="mt-2">
@@ -273,12 +286,6 @@ function NewTool(props) {
   );
 }
 
-NewTool.propTypes = {
-  showModal: PropTypes.bool,
-  type: PropTypes.string,
-  closeModal: PropTypes.func.isRequired,
-  edittool: PropTypes.object
-};
 
 
 export default NewTool;
