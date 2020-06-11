@@ -56,7 +56,7 @@ function ToolDetails(props) {
             {toolData.location.map((item, i) => <div className="p-1" key={i}>{item.name} {item.value}</div>)}</Col>
 
           <Col lg={4} md={6} className="my-2">
-            <span className="pr-1 text-muted">Tags: </span>{toolData.tags.map(str => { return(`${str},`);})}</Col>
+            <span className="pr-1 text-muted">Tags: </span>{toolData.tags.map(str => { return(`${str}, `);})}</Col>
         </Row>
 
         <Row className="mt-3 mx-1 px-1 py-2 tool-content-block">

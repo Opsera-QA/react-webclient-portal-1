@@ -123,6 +123,8 @@ function ToolInventory () {
       toggleViewModal(true);
     } else {
       getToolRegistryList();
+      toggleViewModal(false);
+      toggleEditModal(false);
     }
     
   };
