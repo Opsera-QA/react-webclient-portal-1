@@ -104,6 +104,7 @@ function ToolInventory () {
 
   const handleNewEntryClick = () => {
     setModalType("new");
+    setToolId("");
     setRowDetails({
       id: "",
       details: ""
@@ -115,7 +116,7 @@ function ToolInventory () {
     console.log("val1 ", val1);
     console.log("saveResponse ", saveResponse);
     toggleEditModal(false);
-    
+    setToolId("");
     if (saveResponse && saveResponse._id) {
       history.push(`/inventory/tools/${saveResponse._id}`);
       setToolId(saveResponse._id);
