@@ -31,6 +31,7 @@ import SystemStatus from "./components/admin/status/SystemStatus";
 import CustomerSystemStatus from "./components/admin/status/CustomerSystemStatus";
 import Overview from "./components/landing/Overview";
 import Registration from "./components/landing/Registration";
+import ToolConfigurations from "./components/admin/tools/ToolConfigurations";
 
 const config = require("./config");
 
@@ -92,7 +93,8 @@ class App extends Component {
                   <SecureRoute path="/admin/registered_users" component={RegisteredUsers} />
                   <SecureRoute path="/admin/systemstatus" component={SystemStatus} />
                   <SecureRoute path="/admin/customerstatus" component={CustomerSystemStatus} />
-                  <SecureRoute path="/admin/analytics/reports_registration" component={ReportsRegistration} />
+                  <SecureRoute path="/admin/analytics/reports-registration" component={ReportsRegistration} />
+                  <SecureRoute path="/admin/tool-configurations" component={ToolConfigurations} />
                   <SecureRoute path="/api_demo" component={ApiConnectionDemo} />
                 </div>
               </div>

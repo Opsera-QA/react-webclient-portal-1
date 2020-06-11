@@ -3,7 +3,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { Link } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faHeartbeat, faTimes, faUserCircle, faLink, faChartBar } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faHeartbeat, faTimes, faUserCircle, faLink, faChartBar, faWrench } from "@fortawesome/free-solid-svg-icons";
 
 class AdminTools extends Component {
   static contextType = AuthContext;
@@ -51,7 +51,7 @@ class AdminTools extends Component {
                 <Link to="/admin/registered_users"><FontAwesomeIcon icon={faUserCircle} fixedWidth /> Registered Users</Link>
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/analytics/reports_registration"><FontAwesomeIcon icon={faChartBar} fixedWidth /> Reports Registration</Link>
+                <Link to="/admin/analytics/reports-registration"><FontAwesomeIcon icon={faChartBar} fixedWidth /> Reports Registration</Link>
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
                 <Link to="/api_demo"><FontAwesomeIcon icon={faLink} fixedWidth /> API Test</Link>
@@ -64,6 +64,9 @@ class AdminTools extends Component {
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
                 <Link to="/admin/customerstatus"><FontAwesomeIcon icon={faHeartbeat} fixedWidth /> Customer System Status</Link>
+              </Col>
+              <Col xs={12} md={6} lg={4} className="p-2">
+                <Link to="/admin/tool-configurations"><FontAwesomeIcon icon={faWrench} fixedWidth /> Tool Configurations</Link>
               </Col>              
             </Row>
 
