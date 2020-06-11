@@ -18,7 +18,7 @@ const INITIAL_DATA = {
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
-function JenkinsToolConfiguration( { toolData, toolId, fnSaveChanges }) {
+function JenkinsToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVault }) {
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [formMessage, setFormMessage] = useState("");
   const [isSaving, setIsSaving] = useState(false);
@@ -36,8 +36,8 @@ function JenkinsToolConfiguration( { toolData, toolId, fnSaveChanges }) {
 
 
   const callbackFunction = async () => {
-    setIsSaving(true);
     if (validateRequiredFields()) {
+      setIsSaving(true);
       const item = {
         configuration: formData
       };
@@ -94,7 +94,8 @@ function JenkinsToolConfiguration( { toolData, toolId, fnSaveChanges }) {
 JenkinsToolConfiguration.propTypes = {
   toolData: PropTypes.object,
   toolId:  PropTypes.string,
-  fnSaveChanges: PropTypes.func
+  fnSaveChanges: PropTypes.func,
+  fnSaveToVault: PropTypes.func
 };
 
 export default JenkinsToolConfiguration;
