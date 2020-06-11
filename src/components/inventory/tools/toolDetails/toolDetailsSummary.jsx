@@ -2,11 +2,13 @@ import React, { useContext, useState, useEffect } from "react";
 import { Button, Modal, Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { format } from "date-fns";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
 
 import "components/inventory/tools/tools.css";
 
 function ToolDetails(props) {
-  const { toolId, toolData } = props;
+  const { toolId, toolData, fnEditTool } = props;
   const handleClose = () => props.closeModal(false);
 
   console.log(toolId);
@@ -15,7 +17,14 @@ function ToolDetails(props) {
   return (
     <>
       { Object.keys(toolData) && <>
-        <Row className="mt-3">
+        <div className="text-right">
+          <Button variant="secondary" size="sm" onClick= {() => { fnEditTool(toolId, toolData); }} >
+            <FontAwesomeIcon icon={faPen}
+              fixedWidth
+              
+              style={{ cursor: "pointer" }} /> </Button>
+        </div>
+        <Row>
           <Col lg={4} md={6} className="my-2 ml-2">
             <span className="pr-1 text-muted">Tool Name: </span>{toolData.name}</Col>
 
@@ -91,7 +100,8 @@ ToolDetails.propTypes = {
   showModal: PropTypes.bool,
   type: PropTypes.string,
   toolId: PropTypes.string,
-  toolData: PropTypes.object
+  toolData: PropTypes.object,
+  fnEditTool: PropTypes.func
 };
 
 

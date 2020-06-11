@@ -30,13 +30,13 @@ const INITIAL_FORM = {
 
 
 function ToolDetails(props) {
+  const { toolId, fnEditTool } = props;  
   const { getAccessToken } = useContext(AuthContext);
   const [toolData, setToolData] = useState(INITIAL_FORM);
   const [errors, setErrors] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const handleClose = () => props.closeModal(false);
-  const { toolId } = props;  
   const [activeTab, setActiveTab] = useState("summary");
 
   useEffect(() => {    
@@ -73,13 +73,16 @@ function ToolDetails(props) {
     try {
       console.log("tool to save: ", tool);
       console.log("apiUrl: ", apiUrl);
-      //await axiosApiService(accessToken).post(apiUrl, tool);
+      await axiosApiService(accessToken).post(apiUrl, tool);
+
+      //saving successful so revert UI to initial view
+      setActiveTab("summary");
     }
     catch (err) {
       console.log(err.message);
       setErrors(err.message);
     }
-    setIsSaving(false);
+    setIsSaving(false);    
   };
 
   return (
@@ -100,7 +103,7 @@ function ToolDetails(props) {
               <Button variant={activeTab === "logs" ? "primary" : "link"} onClick={() => setActiveTab("logs")}>Logs</Button>
 
               {toolData && toolId && !isLoading ? <>
-                {activeTab === "summary" ? <ToolSummary toolData={toolData} toolId={toolId} fnSaveChanges={updateTool} /> : null}
+                {activeTab === "summary" ? <ToolSummary toolData={toolData} toolId={toolId} fnSaveChanges={updateTool} fnEditTool={fnEditTool} /> : null}
                 {activeTab === "configuration" ? <ToolConfiguration toolData={toolData} toolId={toolId} fnSaveChanges={updateTool} /> : null}
                 {activeTab === "logs" ? <ToolLogs toolData={toolData} toolId={toolId} /> : null}
               </> : null }
@@ -116,7 +119,8 @@ ToolDetails.propTypes = {
   showModal: PropTypes.bool,
   type: PropTypes.string,
   closeModal: PropTypes.func.isRequired,
-  toolId: PropTypes.string
+  toolId: PropTypes.string,
+  fnEditTool: PropTypes.func
 };
 
 

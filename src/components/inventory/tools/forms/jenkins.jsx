@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Form, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave } from "@fortawesome/free-solid-svg-icons";
+import { faSave, faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 
 //This must match the form below and the data object expected.  Each tools' data object is different
@@ -18,12 +18,13 @@ const INITIAL_DATA = {
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
-function JenkinsToolConfiguration( { toolData, toolId, parentCallback }) {
+function JenkinsToolConfiguration( { toolData, toolId, fnSaveChanges }) {
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [formMessage, setFormMessage] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
-    if (typeof(data) !== "undefined") {
+    if (typeof(toolData) !== "undefined") {
       let { configuration } = toolData;
       if (typeof(configuration) !== "undefined") {
         setFormData(configuration);
@@ -34,12 +35,14 @@ function JenkinsToolConfiguration( { toolData, toolId, parentCallback }) {
   }, [toolData]);
 
 
-  const callbackFunction = () => {
+  const callbackFunction = async () => {
+    setIsSaving(true);
     if (validateRequiredFields()) {
       const item = {
-        configuration: FormData
+        configuration: formData
       };
-      parentCallback(item); //todo: This needs to be calling the parent toolDetailsConfiguration.jsx function to save the data back to API
+      await fnSaveChanges(item); 
+      setIsSaving(false);
     }
   };
 
@@ -78,9 +81,9 @@ function JenkinsToolConfiguration( { toolData, toolId, parentCallback }) {
         <Form.Control maxLength="500" type="password" placeholder="" value={formData.jAuthToken || ""} onChange={e => setFormData({ ...formData, jAuthToken: e.target.value })} />
       </Form.Group>
             
-      <Button variant="primary" type="button" 
+      <Button variant="primary" type="button" disabled={isSaving}
         onClick={() => { callbackFunction(); }}> 
-        <FontAwesomeIcon icon={faSave} className="mr-1"/> Save
+        {isSaving ? <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> : <FontAwesomeIcon icon={faSave} className="mr-1"/>} Save
       </Button>
       
       <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
@@ -91,7 +94,7 @@ function JenkinsToolConfiguration( { toolData, toolId, parentCallback }) {
 JenkinsToolConfiguration.propTypes = {
   toolData: PropTypes.object,
   toolId:  PropTypes.string,
-  parentCallback: PropTypes.func
+  fnSaveChanges: PropTypes.func
 };
 
 export default JenkinsToolConfiguration;
