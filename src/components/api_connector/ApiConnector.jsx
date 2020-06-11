@@ -127,9 +127,9 @@ class ApiConnector extends Component {
             At this time, OpsERA supports Atlassian's Jira Software for project planning and defect tracking.  Configure your Jira solution here in order to link pipelines and 
             developers to defects and sprints and leverage advanced analytics and analysis for SDLC pipelines.
 
-            <div className="header-text mt-4">Communication Tools</div>
-            OpsERA supports various forms of notification for pipeline solutions.  Slack is the most popular and can be configured to send notifications per pipeline step to 
-            step specific Slack channels.  In order to leverage this feature, register your Slack Account Token here and then in your pipelines, enable Slack notification per 
+            <div className="header-text mt-4">Collaboration Tools</div>
+            OpsERA supports various forms of notification and collaboration for our solutions.  Slack is the most popular and can be configured to send notifications per pipeline step to 
+             specific Slack channels.  In order to leverage this feature, register your Slack Account Token here and then in your pipelines, enable Slack notification per 
             step.  
 
           </div>
