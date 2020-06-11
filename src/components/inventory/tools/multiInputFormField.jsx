@@ -4,8 +4,6 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 
-import "./tools.css";
-
 function MultiInputFormField(props) {
   const { defaultValue, formField } = props;
   const [rowList, setRowList ] = useState([]);
@@ -98,12 +96,12 @@ function MultiInputFormField(props) {
 
                 return <td key={key}><Form.Control defaultValue={row[field]} disabled={field == "id" || field == "identifier"} type="text" size="sm" placeholder={"New " + `${field}`} onChange={e => updateCellData(e, row, field)} /></td>;
               })}
-              <td><Button variant="outline-danger" size="sm" onClick={e => deleteRow(e, row)} ><FontAwesomeIcon icon={faTrash}/></Button></td>
+              {formField.showEditButton && <td><Button variant="outline-danger" size="sm" onClick={e => deleteRow(e, row)} ><FontAwesomeIcon icon={faTrash}/></Button></td>}
             </tr>;
           })}
         </tbody>
       </Table>
-      <Button variant="primary" size="sm" onClick={addRow}><FontAwesomeIcon icon={faPlus} className="mr-1"/> Add</Button>
+      {formField.showEditButton && <Button variant="primary" size="sm" onClick={addRow}><FontAwesomeIcon icon={faPlus} className="mr-1"/> Add</Button>}
     </>
   );
 }

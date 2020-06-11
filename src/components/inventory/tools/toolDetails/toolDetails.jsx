@@ -5,11 +5,9 @@ import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
 import { useParams } from "react-router-dom";
 
-import ToolSummary from "./toolDetails/toolDetailsSummary";
-import ToolConfiguration from "./toolDetails/toolDetailsConfiguration";
-import ToolLogs from "./toolDetails/toolDetailsLogs";
-
-import "./tools.css";
+import ToolSummary from "./toolDetailsSummary";
+import ToolConfiguration from "./toolDetailsConfiguration";
+import ToolLogs from "./toolDetailsLogs";
 
 function ToolDetails(props) {
   const { getAccessToken } = useContext(AuthContext);
