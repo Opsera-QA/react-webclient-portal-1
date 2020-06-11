@@ -12,16 +12,18 @@ import { format } from "date-fns";
 
 import ToolsTable from "./toolsTable";
 import NewTool from "./newTool";
-import ToolDetails from "./toolDetails/toolDetails";
+import ToolDetails from "./toolDetails/toolDetails"; //tool summary view
 
 import "./tools.css";
 
-function ToolInventory () {
 
+function ToolInventory () {
+  let history = useHistory();
+  const { id, view } = useParams();
   const { getAccessToken } = useContext(AuthContext);
   const [isEditModal, toggleEditModal] = useState(false);
   const [isViewModal, toggleViewModal] = useState(false);
-
+  const [toolId, setToolId] = useState("");
   const [isLoading, setLoading] = useState(false);
   const [selectedRowDetail, setRowDetails] = useState({
     id: "",
@@ -29,13 +31,27 @@ function ToolInventory () {
   });
   const [modalType, setModalType] = useState("new");
   const [toolList, setToolList] = useState([]);
-  let history = useHistory();
-  const { id, view } = useParams();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+
+  useEffect(() => {    
+    if(id && id.match(/^[0-9a-fA-F]{24}$/)) {
+      console.log("ID Found? ", id);
+      setModalType("view");
+      setToolId(id);
+      toggleViewModal(true);
+    } else {
+      //don't need this to run by ID since child componetnts will handle queries
+      getToolRegistryList();
+      setToolId("");
+    }
+  }, [id]);
+
 
   const editTool = (event, cellData) => {
     event.stopPropagation();
-    setModalType("edit");
+    setModalType("view");
+    setToolId(cellData._id);
     setRowDetails({
       id: cellData._id,
       details: cellData
@@ -54,12 +70,12 @@ function ToolInventory () {
 
   const deleteTool = async () => {
     console.log(selectedRowDetail);
-
     try {
       setLoading(true);
       const accessToken = await getAccessToken();
       let apiUrl = "/registry/" + selectedRowDetail.id;
       const response = await axiosApiService(accessToken).delete(apiUrl, {});
+      console.log(response);
     }
     catch (err) {
       console.log(err.message);
@@ -67,22 +83,13 @@ function ToolInventory () {
     getToolRegistryList(null);
   };
 
-  const getToolRegistryList = async (id) => {
+  const getToolRegistryList = async () => {
     try {
       setLoading(true);
       const accessToken = await getAccessToken();
-      let apiUrl = id ? "/registry/" + id : "/registry/";
+      let apiUrl = "/registry/";
       const response = await axiosApiService(accessToken).get(apiUrl, {});
-      if(id) {
-        setRowDetails({
-          id: id,
-          details: response.data[0]
-        });
-        toggleViewModal(true);
-      }else {
-        //import { format } from "date-fns";
-        setToolList(response.data);
-      }
+      setToolList(response.data);
       setLoading(false);
     }
     catch (err) {
@@ -90,12 +97,14 @@ function ToolInventory () {
     }
   };
     
-  useEffect(() => {    
-    if(id && id.match(/^[0-9a-fA-F]{24}$/))  setModalType("edit");
-    getToolRegistryList(id !=  undefined ? id : "");   
-  }, [id]);
+  const viewTool = (rowData) => {
+    console.log(rowData);
+    history.push(`/inventory/tools/${rowData.original._id}`);
+    setToolId(rowData.original._id);
+    toggleViewModal(true);
+  };
 
-  const handleActionClick = () => {
+  const handleNewEntryClick = () => {
     setModalType("new");
     setRowDetails({
       id: "",
@@ -133,19 +142,7 @@ function ToolInventory () {
       {
         Header: "Tool",
         accessor: "tool_identifier"
-      },
-      /* {
-        Header: "Contacts",
-        accessor: "contacts"
-      },
-      {
-        Header: "Project",
-        accessor: "project"
-      },
-      {
-        Header: "Application",
-        accessor: "application"
-      }, */
+      },      
       {
         Header: "Created",
         accessor: "createdAt",
@@ -164,15 +161,6 @@ function ToolInventory () {
     []
   );
 
-  const viewTool = (rowData) => {
-    console.log(rowData);
-    history.push(`/inventory/tools/${rowData.original._id}`);
-    setRowDetails({
-      id: rowData._id,
-      details: rowData.values
-    });
-    toggleViewModal(true);
-  };
 
   const closeViewModal = () => {
     toggleViewModal(false);
@@ -182,19 +170,17 @@ function ToolInventory () {
   return (
     <>
       
-      {isEditModal && <NewTool showModal={isEditModal} closeModal={(toggleModal) => closeModal(toggleModal)} type={modalType} edittool={selectedRowDetail}/>}
-
-      <ToolDetails showModal={isViewModal} closeModal={(toggleModal) => closeViewModal(toggleModal)} toolId={selectedRowDetail.id}/>
+      {/*Both of these should be doing a lookup of the altest tool data, not using data passed form ehre */}
+      <ToolDetails showModal={isViewModal} closeModal={(toggleModal) => closeViewModal(toggleModal)} toolId={toolId}/>
+      <NewTool showModal={isEditModal} closeModal={(toggleModal) => closeModal(toggleModal)} type={modalType} editTool={selectedRowDetail}/>
 
       <div className="mt-2 mb-2 text-right">
         <Button variant="primary" size="sm"  
-          onClick={() => { handleActionClick("new"); }}> 
+          onClick={() => { handleNewEntryClick("new"); }}> 
           <FontAwesomeIcon icon={faPlus} className="mr-1"/> New Entry
         </Button>
         <br />
       </div>
-
-      {isLoading && <LoadingDialog />}
 
       {!isLoading && <ToolsTable rowInfo={viewTool}  columns={columns} data={toolList} />}
 

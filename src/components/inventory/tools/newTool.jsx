@@ -31,7 +31,7 @@ const INITIAL_FORM = {
 function NewTool(props) {
 
   const { getAccessToken } = useContext(AuthContext);
-  const editTool = props.edittool.details;
+  const editTool = props.editTool.details;
   const formFields = [
     {
       label: "Name",
@@ -147,9 +147,9 @@ function NewTool(props) {
   useEffect(() => {    
     setFormFields({
       ...toolFormFields,
-      ...props.edittool.details
+      ...props.editTool.details
     });
-  }, [props.edittool.details]);
+  }, [props.editTool.details]);
 
   const getToolList = async () => {
     try {
@@ -182,7 +182,7 @@ function NewTool(props) {
     console.log(toolFormFields);
     try {
       const accessToken = await getAccessToken();
-      await axiosApiService(accessToken).post("/registry/"+ props.edittool.id + "/update", { ...toolFormFields });
+      await axiosApiService(accessToken).post("/registry/"+ props.editTool.id + "/update", { ...toolFormFields });
       props.closeModal(false);
     }
     catch (err) {

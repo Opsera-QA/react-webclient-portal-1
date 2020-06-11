@@ -19,8 +19,6 @@ function ToolDetails(props) {
           <Col lg={4} md={6} className="my-2 ml-2">
             <span className="pr-1 text-muted">Tool Name: </span>{toolData.name}</Col>
 
-          
-
           <Col lg={12} md={12} className="my-2 ml-2">
             <span className="pr-1 text-muted">Description: </span>{toolData.description}</Col>
         </Row>
@@ -29,8 +27,8 @@ function ToolDetails(props) {
           <Col lg={4} md={6} className="my-2">
             <span className="pr-1 text-muted">ID: </span>{toolData._id}</Col>
 
-          <Col lg={4} md={6} className="my-2">
-            <span className="pr-1 text-muted">Created: </span>{format(new Date(toolData.createdAt), "yyyy-MM-dd")}</Col>
+          { toolData.createdAt && <Col lg={4} md={6} className="my-2">
+            <span className="pr-1 text-muted">Created: </span>{format(new Date(toolData.createdAt), "yyyy-MM-dd")}</Col>}
 
           <Col lg={4} md={6} className="my-2"> 
             <span className="pr-1 text-muted">Tool: </span>{toolData.tool_identifier}</Col> 
@@ -45,7 +43,8 @@ function ToolDetails(props) {
             <span className="pr-1 text-muted">Organization: </span>{toolData.organization ? toolData.organization.name : null}</Col>
         
           <Col lg={4} md={6} className="my-2">
-            <span className="pr-1 text-muted">Location: </span>{toolData.location ? toolData.organization.location : null}</Col>
+            <span className="pr-1 text-muted">Location: </span>
+            {toolData.location.map((item, i) => <div className="p-1" key={i}>{item.name} {item.value}</div>)}</Col>
 
           <Col lg={4} md={6} className="my-2">
             <span className="pr-1 text-muted">Tags: </span>{toolData.tags.map(str => { return(`${str},`);})}</Col>
@@ -55,9 +54,6 @@ function ToolDetails(props) {
           <Col lg={4} md={6} className="my-2">
             <span className="pr-1 text-muted">Contacts: </span>
             {toolData.contacts.map((item, i) => <div className="p-1" key={i}>{item.name} {item.email}</div>)}</Col>
-
-          {/* <Col lg={4} md={6} className="my-2">
-          <span className="pr-1 text-muted">External References: </span>coming soon</Col> */}
 
           <Col lg={4} md={6} className="my-2">
             <span className="pr-1 text-muted">Licensing: </span>
