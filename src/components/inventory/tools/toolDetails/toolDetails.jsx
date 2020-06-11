@@ -89,7 +89,7 @@ function ToolDetails(props) {
 
 
   const saveToVault = async (postBody) => {
-    console.log("saving to vault: ", postBody);
+    // console.log("saving to vault: ", postBody);
     const response = await PipelineActions.saveToVault(postBody, getAccessToken);  
     return response;
   };
