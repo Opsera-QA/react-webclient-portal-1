@@ -154,8 +154,8 @@ function NewTool(props) {
   const getToolList = async () => {
     try {
       const accessToken = await getAccessToken();
-      const toolResponse = await axiosApiService(accessToken).get("/registry/tool", {});
-      const typeResponse = await axiosApiService(accessToken).get("/registry/type", {});
+      const toolResponse = await axiosApiService(accessToken).get("/registry/tools", {});
+      const typeResponse = await axiosApiService(accessToken).get("/registry/types", {});
       setToolList({
         tool_identifier: toolResponse.data,
         tool_type_identifier: typeResponse.data

@@ -50,7 +50,7 @@ function StepConfiguration( { data, stepId, parentCallback }) {
   const getToolList = async () => {
     try {
       const accessToken = await getAccessToken();
-      const toolResponse = await axiosApiService(accessToken).get("/registry/tool", {});      
+      const toolResponse = await axiosApiService(accessToken).get("/registry/tools", {});      
       setToolList(toolResponse.data);
       console.log(toolResponse.data);
     }
