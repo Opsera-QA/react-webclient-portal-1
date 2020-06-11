@@ -36,7 +36,7 @@ function GithubToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVaul
       }      
     } else {
       setFormData(INITIAL_DATA);
-    }
+    }    
   }, [toolData]);
 
 
@@ -46,10 +46,7 @@ function GithubToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVaul
       let newConfiguration = formData;
       
       if (typeof(newConfiguration.secretKey) === "string") {
-        //TODO: Faseeh, we don't have a pipelineId or stepId at this level.  How can we handle this?  
-        //for now, I'm setting pipelineID to tool ID, but look at the commented out old code vs what I did
-        //newConfiguration.secretKey = await saveToVault(pipelineId, stepId, "secretKey", "Vault Secured Key", newConfiguration.secretKey);
-        newConfiguration.secretKey = await saveToVault(toolId, "secretKey", "Vault Secured Key", newConfiguration.secretKey);
+        newConfiguration.secretKey = await saveToVault(toolId, toolData.tool_identifier, "secretKey", "Vault Secured Key", newConfiguration.secretKey);
       }
 
       const item = {
@@ -61,9 +58,9 @@ function GithubToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVaul
     }
   };
 
-  const saveToVault = async (toolId, key, name, value) => {
+  const saveToVault = async (toolId, toolIdentifier, key, name, value) => {
     //const keyName = `${pipelineId}-${stepId}-${key}`;  //old keyname with pipelineID
-    const keyName = `${toolId}-${key}`;
+    const keyName = `${toolId}-${toolIdentifier}-${key}`; 
     const body = {
       "key": keyName,
       "value": value

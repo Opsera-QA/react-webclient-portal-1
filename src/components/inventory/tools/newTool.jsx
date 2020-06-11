@@ -170,7 +170,7 @@ function NewTool(props) {
       const accessToken = await getAccessToken();
       const response = await axiosApiService(accessToken).post("/registry/create", { ...toolFormFields });
       console.log(response.data);
-      props.closeModal(false);
+      props.closeModal(false, response.data);
     }
     catch (err) {
       console.log(err.message);
