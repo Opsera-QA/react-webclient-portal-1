@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext, useMemo } from "react";
 import { Table, Pagination } from "react-bootstrap";
 import { useTable, usePagination, useSortBy } from "react-table";
+import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faSortUp, faSortDown, faSort } from "@fortawesome/free-solid-svg-icons";
 
@@ -66,12 +67,17 @@ function ToolsTable({ columns, data, rowInfo }) {
               </tr>
             );
           })}
-          {rows.length == 0 && <tr><td colSpan="8" style={{ textAlign: "center" }}>No Data</td></tr>}
+          {rows.length == 0 && <tr><td colSpan="8" className="text-center p-5">No tools are currently registered</td></tr>}
         </tbody>
       </Table>
     </>
   );
 }
 
+ToolsTable.propTypes = {
+  columns: PropTypes.array,
+  data: PropTypes.array,
+  rowInfo: PropTypes.func
+};
 
 export default ToolsTable;

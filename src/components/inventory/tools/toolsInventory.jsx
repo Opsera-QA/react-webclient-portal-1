@@ -164,7 +164,7 @@ function ToolInventory () {
         Header: "",
         accessor: "action",
         Cell: (props) => actionButtons(props.cell.row.original),
-        class: "no-wrap"
+        class: "text-center"
       }
     ],
     []
