@@ -1,10 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Button, Modal, Form, Row, Col } from "react-bootstrap";
+import { Button, Modal, Form, Popover, Col, OverlayTrigger } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext"; 
 import { axiosApiService } from "api/apiService";
 import PropTypes from "prop-types";
 import MultiInputFormField from "./multiInputFormField";
 import TagInput from "utils/tagInput";
+import validate from "utils/formValidation";
 
 //TODO: Please wire this data object up and use it for the form
 const INITIAL_FORM = {
@@ -31,49 +32,84 @@ const INITIAL_FORM = {
 function NewTool(props) {
   const { getAccessToken } = useContext(AuthContext);
   const editTool = props.editTool.details;
-  const formFields = [
+  const [ formFieldList, updateFormFields ] = useState([
     {
       label: "Name",
       id: "name",
       type: "",
-      disabled: false
+      disabled: false,
+      touched: false,
+      valid: false,
+      rules: {
+        isRequired: true 
+      }
     },
     {
       label: "Description",
       id: "description",
       type: "",
-      disabled: false
+      disabled: false,
+      touched: false,
+      valid: false,
+      rules: {
+        isRequired: false 
+      }
     },
     {
       label: "Tool",
       id: "tool_identifier",
       type: "select",
-      disabled: false
+      disabled: false,
+      touched: false,
+      valid: false,
+      rules: {
+        isRequired: true 
+      }
     },
     {
       label: "Tool Type",
       id: "tool_type_identifier",
       type: "select",
-      disabled: true
+      disabled: true,
+      touched: false,
+      valid: false,
+      rules: {
+        isRequired: false 
+      }
     },  
     {
       label: "Compliance",
       id: "compliance",
       fields: ["name", "value"],
-      disabled: true
+      disabled: true,
+      touched: false,
+      valid: false,
+      rules: {
+        isRequired: false 
+      }
     }, 
 
     {
       label: "Licensing",
       id: "licensing",
       fields: ["name", "value"],
-      disabled: true
+      disabled: true,
+      touched: false,
+      valid: false,
+      rules: {
+        isRequired: false 
+      }
     },
     {
       label: "Tags",
       id: "tags",
       type: "tags",
-      disabled: true
+      disabled: true,
+      touched: false,
+      valid: false,
+      rules: {
+        isRequired: false 
+      }
     },
     {
       label: "Location",
@@ -81,7 +117,12 @@ function NewTool(props) {
       type: "multi",
       showEditButton: false,
       fields: ["name", "value"],
-      disabled: true
+      disabled: true,
+      touched: false,
+      valid: false,
+      rules: {
+        isRequired: false 
+      }
     },
 
     {
@@ -90,7 +131,12 @@ function NewTool(props) {
       type: "multi",
       showEditButton: true,
       fields: ["name", "email", "id"],
-      disabled: true
+      disabled: true,
+      touched: false,
+      valid: false,
+      rules: {
+        isRequired: false 
+      }
     },
     {
       label: "Project",
@@ -98,7 +144,12 @@ function NewTool(props) {
       type: "multi",
       showEditButton: true,
       fields: ["name", "reference", "id"],
-      disabled: true
+      disabled: true,
+      touched: false,
+      valid: false,
+      rules: {
+        isRequired: false 
+      }
     },
     {
       label: "Application",
@@ -106,7 +157,12 @@ function NewTool(props) {
       type: "multi",
       showEditButton: true,
       fields: ["name", "reference", "id"],
-      disabled: true
+      disabled: true,
+      touched: false,
+      valid: false,
+      rules: {
+        isRequired: false 
+      }
     },
     {
       label: "Organization",
@@ -114,7 +170,12 @@ function NewTool(props) {
       type: "multi",
       showEditButton: true,
       fields: ["name", "reference", "id"],
-      disabled: true
+      disabled: true,
+      touched: false,
+      valid: false,
+      rules: {
+        isRequired: false 
+      }
     },
     // {
     //   label: "External Reference",
@@ -122,22 +183,31 @@ function NewTool(props) {
     //   type: "multi",
     //   showEditButton: true,
     //   fields: ["name", "description", "identifier"],
-    //   disabled: true
+    //   disabled: true,
+    //         rules: {
+    //    isRequired: false 
+    //  }
     // },
     {
       label: "",
       id: "active",
       value: true,
       type: "switch",
-      disabled: false
+      disabled: false,
+      touched: false,
+      valid: false,
+      rules: {
+        isRequired: false 
+      }
     }
-  ];
+  ]);
 
   const [ toolFormFields, setFormFields ] = useState(INITIAL_FORM);
   const [ tool_list, setToolList ] = useState({
     tool_type_identifier: [], 
     tool_identifier: []
   });
+  const [ isFormValid, setFormValidity ] = useState(false);
 
   useEffect(() => {   
     getToolList();
@@ -178,7 +248,6 @@ function NewTool(props) {
   };
 
   const updateTool = async () => {
-    console.log(toolFormFields);
     try {
       const accessToken = await getAccessToken();
       const response = await axiosApiService(accessToken).post("/registry/"+ props.editTool.id + "/update", { ...toolFormFields });
@@ -189,14 +258,22 @@ function NewTool(props) {
     }
   };
 
-  const handleClose = () => props.closeModal(false);
+  const handleFormChange = (formField, value) => {
+    let index = formFieldList.indexOf(formField);
+    if (formField.id == "name" && formField.rules.isRequired) {
+      let { isValid, errorMessage } = validate(value, formField);
+      formFieldList[index].touched = true;
+      formFieldList[index].valid = isValid;
+      setFormValidity(isValid ? true : false);
+      updateFormFields([ ...formFieldList ]);
+    }
+    setFormFields({ 
+      ...toolFormFields, 
+      [formField.id]: value 
+    });
+  };
 
-  // const handleLocationUpdate = (value, formField, type) => {
-  //   setFormFields({ 
-  //     ...toolFormFields, 
-  //     [formField.id]: { [type]: value }
-  //   });
-  // };
+  const handleClose = () => props.closeModal(false);
 
   const handleToolTypeUpdate = (value, formField) => {
     let selectedToolType = tool_list.tool_identifier.find(function (o) { return o.identifier == value; });
@@ -215,16 +292,18 @@ function NewTool(props) {
         id="custom-switch"
         checked={toolFormFields[formField.id]}
         label="Active"
+        placeholder="Please select"
+        isInvalid={formField.valid}
         onChange={e => {
-          setFormFields({ ...toolFormFields, [formField.id]: e.target.checked });
-        }}
+          handleFormChange(formField, e.target.checked);}
+        }
       />;
     case "textarea":
       return <Form.Control 
         as="textarea"
         rows={1}
         disabled={formField.disabled}
-        onChange={e => setFormFields({ ...toolFormFields, [formField.id]: e.target.value })}
+        onChange={e => handleFormChange(formField, e.target.value)}
       />;     
     case "select":
       return <Form.Control as="select" disabled={formField.disabled} defaultValue={editTool[formField.id]} placeholder="Please select" onChange={e => handleToolTypeUpdate(e.target.value, formField)}>
@@ -233,13 +312,21 @@ function NewTool(props) {
         ))} 
       </Form.Control>;
     case "tags":
-      return <TagInput defaultValue={editTool[formField.id]} onChange={data => setFormFields({ ...toolFormFields, [formField.id]: data })} />;
+      return <TagInput defaultValue={editTool[formField.id]} onChange={data => handleFormChange(formField, data)} />;
     case "multi":
-      return <MultiInputFormField formField={formField} defaultValue={editTool[formField.id]} onChange={data => setFormFields({ ...toolFormFields, [formField.id]: data })} />;      
+      return <MultiInputFormField formField={formField} defaultValue={editTool[formField.id]} onChange={data => handleFormChange(formField, data)} />;      
     default:
-      return  <Form.Control defaultValue={editTool[formField.id]} disabled={formField.disabled}  onChange={e => setFormFields({ ...toolFormFields, [formField.id]: e.target.value })} />;
+      return  <Form.Control defaultValue={editTool[formField.id]} disabled={formField.disabled} isInvalid={formField.touched && !formField.valid} onChange={e => handleFormChange(formField, e.target.value)} />;
     }
   };
+
+  const popover = (
+    <Popover id="popover-basic">
+      <Popover.Content>
+        All unsaved changes will be lost
+      </Popover.Content>
+    </Popover>
+  );
 
   return (
     <>
@@ -249,14 +336,16 @@ function NewTool(props) {
         </Modal.Header>
         <Modal.Body>
           <Form className="newToolFormContainer">
-            {formFields.map((formField, i) => {
+            {formFieldList.map((formField, i) => {
               return(
                 <Form.Group key={i} controlId="formPlaintextEmail" className="mt-2">
                   <Form.Label column sm="2">
-                    {formField.label}
+                    {formField.label} 
+                    {formField.rules.isRequired && <span style={{ marginLeft:5, color: "#dc3545" }}>*</span>}
                   </Form.Label>
                   <Col sm="10">
                     {formFieldType(formField)}
+                    <Form.Control.Feedback type="invalid">this field is required</Form.Control.Feedback>
                   </Col>
                 </Form.Group>
               );
@@ -264,9 +353,10 @@ function NewTool(props) {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>Close</Button>
-
-          <Button variant="primary" onClick={props.type == "new" ? createNewTool : updateTool} disabled={Object.keys(toolFormFields).length == 0 }>Save changes</Button>
+          <OverlayTrigger trigger="hover" placement="top" overlay={popover}>
+            <Button variant="secondary" onClick={handleClose}>Close</Button>
+          </OverlayTrigger>
+          <Button variant="primary" onClick={props.type == "new" ? createNewTool : updateTool} disabled={!isFormValid}>Save changes</Button>
         </Modal.Footer>
       </Modal>
     </>

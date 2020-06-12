@@ -56,8 +56,6 @@ function MultiInputFormField(props) {
       {
         ...firstRow
       }]);
-
-    console.log(rowList);
   };
 
   //Find index of deleted row and update the master list

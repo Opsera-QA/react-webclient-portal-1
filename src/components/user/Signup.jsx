@@ -4,7 +4,7 @@ import Modal from "components/common/modal";
 import { AuthContext } from "contexts/AuthContext";  
 import { ApiService } from "api/apiService";
 import { useHistory } from "react-router-dom";
-import validate from "./signup-validation.js";
+import validate from "utils/formValidation";
 import defaultSignupFormFields from "./signup-form-fields.js";
 import usStateList from "./states";
 
