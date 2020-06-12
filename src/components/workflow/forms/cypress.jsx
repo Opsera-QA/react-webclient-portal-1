@@ -111,7 +111,7 @@ function CypressStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
         console.log(respObj);
         return respObj;
       } else {
-        setErrors("Data is missing!");
+        setErrors("Cypress information is missing or unavailable!  Please ensure the required Cypress creds are registered and up to date in Tool Registry.");
       }
     }
     catch (err) {
@@ -156,8 +156,8 @@ function CypressStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
       <Form>
         { formMessage.length > 0 ? <p className="text-danger">{formMessage}</p> : null}
 
-        <Form.Group controlId="spinnakarlist">
-          <Form.Label>Select Spinnaker*</Form.Label>
+        <Form.Group controlId="cypressList">
+          <Form.Label>Select Cypress*</Form.Label>
           {isCypressSearching ? (
             <div className="form-text text-muted mt-2 p-2">
               <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> 
