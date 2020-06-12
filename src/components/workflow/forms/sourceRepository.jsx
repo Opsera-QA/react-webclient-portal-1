@@ -36,15 +36,18 @@ function SourceRepositoryConfig( { data, parentCallback }) {
   const [formMessage, setFormMessage] = useState("");
   const [error, setErrors] = useState(false);
   const [accountList, setAccountList] = useState([]);
-  const [isAccountSearching, setIsAccountSearching] = useState(true);
+  const [isAccountSearching, setIsAccountSearching] = useState(false);
   const [repoList, setRepoList] = useState([]);
-  const [isRepoSearching, setIsRepoSearching] = useState(true);
+  const [isRepoSearching, setIsRepoSearching] = useState(false);
     
   useEffect(() => {
     if (data !== undefined) {
       let { workflow } = data;
       if (workflow.source !== undefined) {
         setFormData(workflow.source);
+        setIsRepoSearching(false);
+        setIsAccountSearching(false);  
+
       }
     } else {
       setFormData(INITIAL_DATA);
@@ -58,6 +61,7 @@ function SourceRepositoryConfig( { data, parentCallback }) {
       setFormData({ ...formData, accountId: "", username: "", password: "", branch : "" });
       console.log(formData);
       async function fetchApps(service){
+        setIsAccountSearching(true);
         // Set results state
         let results = await searchAccounts(service);
         if(results) {
@@ -69,6 +73,7 @@ function SourceRepositoryConfig( { data, parentCallback }) {
         // Fire off our API call
         fetchApps(formData.service);
       } else {
+        setIsAccountSearching(true);
         setAccountList([{ value: "", name : "Select One",  isDisabled: "yes" }]);
       }
     },
@@ -80,10 +85,11 @@ function SourceRepositoryConfig( { data, parentCallback }) {
       setErrors(false);
       setFormData({ ...formData, branch : "" });
       async function fetchRepos(service, accountId){
+        setIsRepoSearching(true);
         // Set results state
         let results = await searchRepositories(service, accountId);
         if(results) {
-          console.log(results);
+          //console.log(results);
           setRepoList(formatOptions(results));
           setIsRepoSearching(false);
         }
@@ -92,6 +98,7 @@ function SourceRepositoryConfig( { data, parentCallback }) {
         // Fire off our API call
         fetchRepos(formData.service, formData.accountId);
       } else {
+        setIsRepoSearching(true);
         setRepoList([{ value: "", name : "Select One",  isDisabled: "yes" }]);
       }
     },
@@ -108,7 +115,7 @@ function SourceRepositoryConfig( { data, parentCallback }) {
   };
   
   const handleRepoChange = (selectedOption) => {
-    setFormData({ ...formData, repository: selectedOption.value });    
+    setFormData({ ...formData, repository: selectedOption.value, branch: "" });  
   };
  
   const callbackFunction = () => {
@@ -147,8 +154,8 @@ function SourceRepositoryConfig( { data, parentCallback }) {
   const handleServiceChange = (selectedOption) => {
     
     setErrors(false);
-    setAccountList([{ value: "", name : "Select One",  isDisabled: "yes" }]);
-    setRepoList([{ value: "", name : "Select One",  isDisabled: "yes" }]);
+    //setAccountList([{ value: "", name : "Select One",  isDisabled: "yes" }]);
+    //setRepoList([{ value: "", name : "Select One",  isDisabled: "yes" }]);
     setFormData({ ...formData, service: selectedOption.value, accountId: "", username: "", password: "", repository: "" });
   };
   
@@ -170,7 +177,7 @@ function SourceRepositoryConfig( { data, parentCallback }) {
       }
     }
     catch (err) {
-      console.log(err.message);
+      //console.log(err.message);
       setErrors(err.message);
     }
   };
@@ -184,15 +191,16 @@ function SourceRepositoryConfig( { data, parentCallback }) {
       metric : "getRepositories",
       gitAccountId: gitAccountId
     };
-    console.log(postBody);
+    //console.log(postBody);
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       if( res.data && res.data.data ) {
         let arrOfObj = res.data.data;
         if(arrOfObj) {
           var result = arrOfObj.map(function(el) {
-            var o = Object.assign({}, el);
-            o.value = el.name;
+            var o = Object.assign({});
+            o.value = el.toLowerCase();
+            o.name = el;
             return o;
           });
           return result;
@@ -264,7 +272,7 @@ function SourceRepositoryConfig( { data, parentCallback }) {
         
         {formData.username && formData.password  &&
         <>
-          <Form.Group controlId="useerName">
+          <Form.Group controlId="userName">
             <Form.Label>Account</Form.Label>
             <Form.Control maxLength="75" type="text" disabled placeholder="Username" value={formData.username || ""} onChange={e => setFormData({ ...formData, username: e.target.value })} />
           </Form.Group> 
@@ -287,8 +295,8 @@ function SourceRepositoryConfig( { data, parentCallback }) {
               {repoList ?
                 <DropdownList
                   data={repoList} 
-                  value={formData.repository ? repoList[repoList.findIndex(x => x.name === formData.repository)] : repoList[0]}
-                  valueField='name'
+                  value={formData.repository ? repoList[repoList.findIndex(x => x.value === formData.repository)] : repoList[0]}
+                  valueField='value'
                   textField='name'
                   defaultValue={formData.repository ? repoList[repoList.findIndex(x => x.name === formData.repository)] : repoList[0]}
                   onChange={handleRepoChange}             
@@ -301,14 +309,16 @@ function SourceRepositoryConfig( { data, parentCallback }) {
         {formData.service && formData.repository && 
         <Form.Group controlId="branchField">
           <Form.Label>Branch*</Form.Label>
-          { formData.repository.length > 0 ?
-            <Form.Control maxLength="75" type="text" placeholder="Branch to watch" value={formData.branch || ""} onChange={e => setFormData({ ...formData, branch: e.target.value })} /> :
-            <small className="form-text text-muted mt-2 text-center">Branch within repository</small>
+          { formData.repository.length > 0 &&
+          <>
+            <Form.Control maxLength="75" type="text" placeholder="" value={formData.branch || ""} onChange={e => setFormData({ ...formData, branch: e.target.value })} /> 
+            <small className="form-text text-muted mt-2 text-center">Branch within repository to watch: "master" or "feature X"</small>
+          </>
           }
         </Form.Group> }
 
         {((formData.service === "github" || formData.service === "gitlab") && accountList.length > 1) &&
-        <Form.Group controlId="formBasicCheckbox" className="mt-3 ml-1">
+        <Form.Group controlId="formBasicCheckbox" className="mt-4 ml-1">
           <Form.Check type="checkbox" label="Enable Event Based Trigger" 
             checked={formData.trigger_active ? true : false} onChange={() => setFormData({ ...formData, trigger_active: !formData.trigger_active })}  />  
           <Form.Text className="text-muted">To use an webhook based event trigger with your source repository, the hook URL below (and optional security key) must 
