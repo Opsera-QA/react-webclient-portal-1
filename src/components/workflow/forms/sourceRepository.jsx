@@ -58,8 +58,8 @@ function SourceRepositoryConfig( { data, parentCallback }) {
   useEffect(
     () => {
       setErrors(false);
-      setFormData({ ...formData, accountId: "", username: "", password: "", branch : "" });
-      console.log(formData);
+      // setFormData({ ...formData, accountId: "", username: "", password: "", branch : "" });
+      // console.log(formData);
       async function fetchApps(service){
         setIsAccountSearching(true);
         // Set results state
@@ -83,7 +83,7 @@ function SourceRepositoryConfig( { data, parentCallback }) {
   useEffect(
     () => {
       setErrors(false);
-      setFormData({ ...formData, branch : "" });
+      // setFormData({ ...formData, branch : "" });
       async function fetchRepos(service, accountId){
         setIsRepoSearching(true);
         // Set results state
@@ -111,7 +111,7 @@ function SourceRepositoryConfig( { data, parentCallback }) {
   };
 
   const handleAccountChange = (selectedOption) => {
-    setFormData({ ...formData, accountId: selectedOption.id, username: selectedOption.configuration ? selectedOption.configuration.accountUsername : "",  password: selectedOption.configuration ? selectedOption.configuration.accountPassword : "" });
+    setFormData({ ...formData, accountId: selectedOption.id, username: selectedOption.configuration ? selectedOption.configuration.accountUsername : "",  password: selectedOption.configuration ? selectedOption.configuration.accountPassword : "", repository: "" });
   };
   
   const handleRepoChange = (selectedOption) => {
