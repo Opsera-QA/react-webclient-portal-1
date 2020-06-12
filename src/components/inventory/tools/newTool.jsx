@@ -209,11 +209,28 @@ function NewTool(props) {
   });
   const [ isFormValid, setFormValidity ] = useState(false);
 
-  useEffect(() => {   
+  useEffect(() => {  
     getToolList();
   }, []);
 
   useEffect(() => {    
+    if (props.type == "new") {
+      setFormValidity(false); //new form always start invalid
+    } else if (props.editTool.details) {
+      let formItems = props.editTool.details;
+      formFieldList.map((item, i) => {
+        if (item.rules.isRequired) {
+          // check if item.id in dataObject matches rul
+          console.log(formItems[item.id]);
+          let { isValid, errorMessage } = validate(formItems[item.id], item);
+          formFieldList[i].touched = true;
+          formFieldList[i].valid = isValid;
+          setFormValidity(isValid ? true : false);
+          updateFormFields([ ...formFieldList ]);
+        }
+      });      
+    }
+
     setFormFields({
       ...toolFormFields,
       ...props.editTool.details
@@ -353,7 +370,7 @@ function NewTool(props) {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <OverlayTrigger trigger="hover" placement="top" overlay={popover}>
+          <OverlayTrigger trigger={["hover", "hover"]} placement="top" overlay={popover}>
             <Button variant="secondary" onClick={handleClose}>Close</Button>
           </OverlayTrigger>
           <Button variant="primary" onClick={props.type == "new" ? createNewTool : updateTool} disabled={!isFormValid}>Save changes</Button>
