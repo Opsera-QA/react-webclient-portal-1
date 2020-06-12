@@ -68,7 +68,7 @@ const PipelineWorkflowEditor = ({ editItem, data, closeEditorPanel, fetchPlan })
       return (
         <>
           <Row className="mb-2">
-            <Col sm={10}><h5>Source Repository Configuration</h5></Col>
+            <Col sm={10}><h5>Source Repository</h5></Col>
             <Col sm={2} className="text-right">
               <FontAwesomeIcon 
                 icon={faTimes} 
