@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Form, Button, InputGroup } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import DropdownList from "react-widgets/lib/DropdownList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave, faCopy, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faSave, faCopy, faSpinner, faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
 import ErrorDialog from "../../common/error";
@@ -206,10 +207,6 @@ function SourceRepositoryConfig( { data, parentCallback }) {
     }
   };
 
-  console.log(formData);
-  
-  // console.log(formData.accountId);
-  // console.log(formData.accountId.length);
 
   return (
     <>
@@ -217,15 +214,15 @@ function SourceRepositoryConfig( { data, parentCallback }) {
         <ErrorDialog  error={error} />
       }
       <Form>
-        { formMessage.length > 0 ? <p className="text-danger">{formMessage}</p> : null}
+        { formMessage.length > 0 ? <p className="error-text">{formMessage}</p> : null}
       
         <Form.Group controlId="repoField">
-          <Form.Label>Name</Form.Label>
-          <Form.Control maxLength="150" type="text" placeholder="Short description for repository." value={formData.name || ""} onChange={e => setFormData({ ...formData, name: e.target.value })} />
+          <Form.Label>Step Name</Form.Label>
+          <Form.Control maxLength="150" type="text" placeholder="" value={formData.name || ""} onChange={e => setFormData({ ...formData, name: e.target.value })} />
         </Form.Group>
 
         <Form.Group controlId="formBasicEmail">
-          <Form.Label>Service*</Form.Label>
+          <Form.Label>Platform*</Form.Label>
           {data.workflow.source !== undefined ?
             <DropdownList
               data={SERVICE_OPTIONS}
@@ -236,13 +233,16 @@ function SourceRepositoryConfig( { data, parentCallback }) {
             /> : null }
         </Form.Group>
         
+        {formData.service && 
         <Form.Group controlId="account"  className="mt-2">
           <Form.Label>Select Account*</Form.Label>
           {isAccountSearching ? (
-            <small className="form-text text-muted mt-2 text-center">Select Data source to get list of accounts associated.</small>
+            <div className="form-text text-muted mt-2 p-2">
+              <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> 
+              Loading accounts from registry</div>
           ) :(
             <>
-              {accountList ?
+              {accountList && accountList.length > 1 ? 
                 <DropdownList
                   data={accountList} 
                   value={formData.accountId ? accountList[accountList.findIndex(x => x.id === formData.accountId)] : accountList[0]}
@@ -250,29 +250,38 @@ function SourceRepositoryConfig( { data, parentCallback }) {
                   textField='name'
                   defaultValue={formData.accountId ? accountList[accountList.findIndex(x => x.id === formData.accountId)] : accountList[0]}
                   onChange={handleAccountChange}             
-                /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted ml-2" fixedWidth/> }
+                /> : 
+                <>
+                  <div className="form-text text-muted p-2">
+                    <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth/> 
+                No accounts have been registered for <span className="upper-case-first">{formData.service}</span>.  Please go to 
+                    <Link to="/inventory/tools"> Tool Registry</Link> and add an entry for this repository in order to proceed. </div>
+                </> }
             </>
           )}
           {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
-        </Form.Group> 
+        </Form.Group> }
         
-        {formData.username  && formData.password  &&
+        {formData.username && formData.password  &&
         <>
           <Form.Group controlId="useerName">
-            <Form.Label>User Name</Form.Label>
+            <Form.Label>Account</Form.Label>
             <Form.Control maxLength="75" type="text" disabled placeholder="Username" value={formData.username || ""} onChange={e => setFormData({ ...formData, username: e.target.value })} />
           </Form.Group> 
-          <Form.Group controlId="password">
-            <Form.Label>password</Form.Label>
+          {/* <Form.Group controlId="password">
+            <Form.Label>Password</Form.Label>
             <Form.Control maxLength="75" type="password" disabled placeholder="Password" value={formData.password || ""} onChange={e => setFormData({ ...formData, password: e.target.value })} />
-          </Form.Group> 
+          </Form.Group>  */}
         </>
         }
          
+        {formData.service && formData.accountId && 
         <Form.Group controlId="account"  className="mt-2">
           <Form.Label>Select Repository*</Form.Label>
           {isRepoSearching ? (
-            <small className="form-text text-muted mt-2 text-center">Select an account to get list of Repositories.</small>
+            <div className="form-text text-muted mt-2 p-2">
+              <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> 
+              Loading repositories from registry</div>
           ) :(
             <>
               {repoList ?
@@ -283,28 +292,38 @@ function SourceRepositoryConfig( { data, parentCallback }) {
                   textField='name'
                   defaultValue={formData.repository ? repoList[repoList.findIndex(x => x.name === formData.repository)] : repoList[0]}
                   onChange={handleRepoChange}             
-                /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted ml-2" fixedWidth/> }
+                /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> }
             </>
           )}
           {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
-        </Form.Group>   
+        </Form.Group>  }
        
+        {formData.service && formData.repository && 
         <Form.Group controlId="branchField">
           <Form.Label>Branch*</Form.Label>
           { formData.repository.length > 0 ?
             <Form.Control maxLength="75" type="text" placeholder="Branch to watch" value={formData.branch || ""} onChange={e => setFormData({ ...formData, branch: e.target.value })} /> :
-            <small className="form-text text-muted mt-2 text-center">Select a repository first.</small>
+            <small className="form-text text-muted mt-2 text-center">Branch within repository</small>
           }
-        </Form.Group>
-        <Form.Group controlId="securityKeyField">
-          <Form.Label>Security Key/Token</Form.Label>
-          <Form.Control maxLength="75" type="password" placeholder="Optional security key/token from service" value={formData.key || ""} onChange={e => setFormData({ ...formData, key: e.target.value })} />
-        </Form.Group>
-        <Form.Group controlId="formBasicCheckbox" className="mt-1">
-          <Form.Check type="checkbox" label="Enable Event Based Trigger" checked={formData.trigger_active ? true : false} onChange={() => setFormData({ ...formData, trigger_active: !formData.trigger_active })}  />        
-        </Form.Group>
+        </Form.Group> }
+
+        {((formData.service === "github" || formData.service === "gitlab") && accountList.length > 1) &&
+        <Form.Group controlId="formBasicCheckbox" className="mt-3 ml-1">
+          <Form.Check type="checkbox" label="Enable Event Based Trigger" 
+            checked={formData.trigger_active ? true : false} onChange={() => setFormData({ ...formData, trigger_active: !formData.trigger_active })}  />  
+          <Form.Text className="text-muted">To use an webhook based event trigger with your source repository, the hook URL below (and optional security key) must 
+            be setup in your source repository.</Form.Text>      
+        </Form.Group> }
       
-        {formData.trigger_active === true ? <EventBasedTriggerDetails pipelineId={data._id} /> : null }
+        {formData.trigger_active === true && 
+        <>
+          <EventBasedTriggerDetails pipelineId={data._id} />
+          <Form.Group controlId="securityKeyField">
+            <Form.Label>Webhook Security Key</Form.Label>
+            <Form.Control maxLength="75" type="password" placeholder="Optional security key/token from service" value={formData.key || ""} onChange={e => setFormData({ ...formData, key: e.target.value })} />
+            <Form.Text className="text-muted">Optional security key/token configured in Source Repository to ensure secure webhook communication.</Form.Text>
+          </Form.Group>
+        </> }
       
         <Button variant="primary" type="button" className="mt-2"
           onClick={() => { callbackFunction(); }}> 
@@ -334,11 +353,11 @@ function EventBasedTriggerDetails({ pipelineId }) {
   };
 
   return (
-    <div className="mt-2 mb-2">
+    <div className="mt-3">
       <Form.Group controlId="branchField">
-        <Form.Label>Wesbhook URL</Form.Label>
+        <Form.Label>Webhook URL</Form.Label>
         
-        <InputGroup className="mb-3">
+        <InputGroup className="mb-1">
           <Form.Control maxLength="75" type="text" value={triggerUrl || ""} disabled={true} />
           <InputGroup.Append>
             <Button variant="outline-secondary" onClick={() => { copyToClipboard(triggerUrl); }}><FontAwesomeIcon icon={faCopy} /></Button>            
