@@ -192,6 +192,7 @@ function ToolInventory () {
       </div>
 
       {!isLoading && <ToolsTable rowInfo={viewTool}  columns={columns} data={toolList} />}
+      {isLoading && <LoadingDialog size="sm" />}
 
       {showDeleteModal ? <Modal showModal={showDeleteModal} header="Confirm Tool Delete"
         message="Warning! This may impact running pipelines.  Deleting this record would stop any associated pipelines from running.  Data cannot be recovered once the tool is deleted. Do you still want to proceed?"

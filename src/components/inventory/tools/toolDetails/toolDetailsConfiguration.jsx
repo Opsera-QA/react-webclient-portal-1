@@ -33,7 +33,7 @@ function ToolConfiguration(props) {
     <div className="mt-4 p-2">
       <div className="text-muted pb-3">Enter tool specific configuration information below.  These settings will be used in pipelines</div>
       { typeof(toolId) !== "undefined" ? 
-        <>
+        <div className="tool-content-block p-3">
           {toolData.tool_identifier.toLowerCase() === "jenkins" ? <JenkinsConfiguration toolId={toolId} toolData={toolData} fnSaveChanges={saveToolConfiguration} fnSaveToVault={fnSaveToVault} /> : null }
           {toolData.tool_identifier.toLowerCase() === "github" ? <GitHubConfiguration toolId={toolId} toolData={toolData} fnSaveChanges={saveToolConfiguration} fnSaveToVault={fnSaveToVault} /> : null }
           {toolData.tool_identifier.toLowerCase() === "gitlab" ? <GitlabToolConfiguration toolId={toolId} toolData={toolData} fnSaveChanges={saveToolConfiguration} fnSaveToVault={fnSaveToVault} /> : null }
@@ -41,8 +41,8 @@ function ToolConfiguration(props) {
           {toolData.tool_identifier.toLowerCase() === "spinnaker" ? <SpinnakerToolConfiguration toolId={toolId} toolData={toolData} fnSaveChanges={saveToolConfiguration} fnSaveToVault={fnSaveToVault} /> : null }
           {toolData.tool_identifier.toLowerCase() === "cypress" ? <CypressToolConfiguration toolId={toolId} toolData={toolData} fnSaveChanges={saveToolConfiguration} fnSaveToVault={fnSaveToVault} /> : null }
           
-
-        </> : null}
+        </div>
+        : null}
 
     </div>
   );

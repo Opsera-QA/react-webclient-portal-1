@@ -31,6 +31,8 @@ function CypressStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
   const [loading, setLoading] = useState(false);
   const [cypressList, setCypressList] = useState([]);
   const [isCypressSearching, setIsCypressSearching] = useState(false);
+  const [thresholdVal, setThresholdValue] = useState("");
+  const [thresholdType, setThresholdType] = useState("");
 
   useEffect(() => {    
     const controller = new AbortController();
@@ -74,9 +76,18 @@ function CypressStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
   
 
   const loadFormData = async (step) => {
-    let { configuration } = step;
+    let { configuration, threshold } = step;
     if (typeof(configuration) !== "undefined") {
-      setFormData(configuration);
+
+      if (typeof(configuration) !== "undefined") {
+        setFormData(configuration);
+      }
+      if (typeof(threshold) !== "undefined") {
+        setThresholdType(threshold.type);
+        setThresholdValue(threshold.value);
+      }
+
+
     } else {
       setFormData(INITIAL_DATA);
     }
@@ -87,7 +98,11 @@ function CypressStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
       setLoading(true);
    
       const item = {
-        configuration: formData
+        configuration: formData,
+        threshold: {
+          type: thresholdType,
+          value: thresholdVal
+        }
       };
       console.log("item: ", item);
       setLoading(false);
@@ -154,10 +169,10 @@ function CypressStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
         <ErrorDialog  error={error} />
       }
       <Form>
-        { formMessage.length > 0 ? <p className="text-danger">{formMessage}</p> : null}
+        { formMessage.length > 0 ? <p className="error-text">{formMessage}</p> : null}
 
         <Form.Group controlId="cypressList">
-          <Form.Label>Select Cypress*</Form.Label>
+          <Form.Label>Select Tool*</Form.Label>
           {isCypressSearching ? (
             <div className="form-text text-muted mt-2 p-2">
               <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> 
@@ -183,17 +198,43 @@ function CypressStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
           )}
         </Form.Group>
 
+        
+        {formData.toolConfigId && 
+        <> {formData.jenkinsUrl && formData.jUserId ?
+          <>
+            <Form.Group controlId="repoField">
+              <Form.Label>Jenkins Container URL*</Form.Label>
+              <Form.Control  disabled={true} type="text" placeholder="" value={formData.jenkinsUrl || ""} />
+            </Form.Group>
+            <Form.Group controlId="branchField">
+              <Form.Label>Jenkins Port</Form.Label>
+              <Form.Control  disabled={true} type="text" placeholder="" value={formData.jenkinsPort || ""} />
+            </Form.Group>
+            <Form.Group controlId="branchField">
+              <Form.Label>Jenkins User ID*</Form.Label>
+              <Form.Control disabled={true} type="text" placeholder="" value={formData.jUserId || ""}  />
+            </Form.Group>
+
+            <Form.Group controlId="branchField">
+              <Form.Label>Job Name</Form.Label>
+              <Form.Control maxLength="150" type="text" placeholder="" value={formData.jobName || ""} onChange={e => setFormData({ ...formData, jobName: e.target.value })} />
+            </Form.Group>
+
+            <Form.Group controlId="threshold">
+              <Form.Label>Step Success Threshold</Form.Label>
+              <Form.Control type="text" placeholder="" value={thresholdVal || ""} onChange={e => setThresholdValue(e.target.value)} disabled={true} />
+            </Form.Group>
+          </> :
           
-        {formData.jenkinsUrl && 
-        <>
-          <Form.Group controlId="jenkinsUrl">
-            <Form.Label>Jenkins URL</Form.Label>
-            <Form.Control maxLength="75" disabled type="text" disabled placeholder="Jenkins URL" value={formData.jenkinsUrl || ""} onChange={e => setFormData({ ...formData, jenkinsUrl: e.target.value })} />
-          </Form.Group> 
+          <div className="form-text text-muted pt-2 pl-2">
+            <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth/> 
+              Incomplete account selected.  This account is missing configuration details. Please go to 
+            <Link to="/inventory/tools"> Tool Registry</Link> and add configuration details for this tool. </div>
+        }
         </>
         }
                
-        <Button variant="primary" type="button" 
+        <Button variant="primary" type="button"  className="mt-3"
           onClick={() => { callbackFunction(); }}> 
           {loading ? 
             <><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> Saving</> :
@@ -205,6 +246,14 @@ function CypressStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
     </>
   );
 }
+
+CypressStepConfiguration.propTypes = {
+  data: PropTypes.object,
+  pipelineId: PropTypes.string,
+  stepId: PropTypes.string,
+  parentCallback: PropTypes.func,
+  callbackSaveToVault: PropTypes.func
+};
 
 
 export default CypressStepConfiguration;
