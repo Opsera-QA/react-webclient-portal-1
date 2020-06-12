@@ -194,7 +194,7 @@ function ToolInventory () {
       {!isLoading && <ToolsTable rowInfo={viewTool}  columns={columns} data={toolList} />}
 
       {showDeleteModal ? <Modal showModal={showDeleteModal} header="Confirm Tool Delete"
-        message="Warning! Data cannot be recovered once the tool is deleted. Do you still want to proceed?"
+        message="Warning! This may impact running pipelines.  Deleting this record would stop any associated pipelines from running.  Data cannot be recovered once the tool is deleted. Do you still want to proceed?"
         button="Confirm"
         handleCancelModal={() => setShowDeleteModal(false)}
         handleConfirmModal={() => deleteTool()} /> : null}
