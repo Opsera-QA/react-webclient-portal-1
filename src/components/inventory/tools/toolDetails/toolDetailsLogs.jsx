@@ -8,18 +8,19 @@ import { useParams } from "react-router-dom";
 import "components/inventory/tools/tools.css";
 
 function ToolLogs(props) {
-  const toolId = props.toolId;
-  const toolData = props.toolData;
+  const { toolId, toolData } = props;
+  
 
   return (
     <>
-      <p>Logs tab</p>
+      <div className="text-center p-5 text-muted">Logs data coming soon</div>
     </>
   );
 }
 
 ToolLogs.propTypes = {
-
+  toolId: PropTypes.string,
+  toolData: PropTypes.object
 };
 
 
