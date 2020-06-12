@@ -166,7 +166,7 @@ function SourceRepositoryConfig( { data, parentCallback }) {
         });
         return respObj;
       } else {
-        setErrors("Data is missing!");
+        setErrors("Account information is missing or unavailable!  Please ensure the required account is registered and up to date in Tool Registry.");
       }
     }
     catch (err) {
@@ -198,7 +198,7 @@ function SourceRepositoryConfig( { data, parentCallback }) {
           return result;
         }
       } else {
-        setErrors("Data is missing!");
+        setErrors("Account information is missing or unavailable!  Please ensure the required account is registered and up to date in Tool Registry.");
       }
     }
     catch (err) {
