@@ -21,6 +21,7 @@ import SshUploadDeploy from "./ssh-upload";
 import ElasticBeanstalkDeploy from "./elastic-beanstalk";
 import SpinnakerStepConfiguration from "./spinnaker";
 import ApprovalStepConfiguration from "./approval";
+import CypressStepConfiguration from "./cypress";
 
 
 function StepToolConfiguration( { data, editItem, parentCallback }) {
@@ -85,6 +86,7 @@ function StepToolConfiguration( { data, editItem, parentCallback }) {
           {editItem.tool_name.toLowerCase() === "elastic-beanstalk" ? <ElasticBeanstalkDeploy pipelineId={data._id} plan={data.workflow.plan} stepId={stepId} stepTool={stepTool} parentCallback={callbackFunction} callbackSaveToVault={saveToVault} /> : null }
           {editItem.tool_name.toLowerCase() === "spinnaker" ? <SpinnakerStepConfiguration pipelineId={data._id} plan={data.workflow.plan} stepId={stepId} stepTool={stepTool} parentCallback={callbackFunction} callbackSaveToVault={saveToVault} /> : null }
           {editItem.tool_name.toLowerCase() === "approval" ? <ApprovalStepConfiguration pipelineId={data._id} plan={data.workflow.plan} stepId={stepId} stepTool={stepTool} parentCallback={callbackFunction} callbackSaveToVault={saveToVault} /> : null }
+          {editItem.tool_name.toLowerCase() === "cypress" ? <CypressStepConfiguration pipelineId={data._id} plan={data.workflow.plan} stepId={stepId} stepTool={stepTool} parentCallback={callbackFunction} callbackSaveToVault={saveToVault} /> : null }
         </div>
         : null }
 

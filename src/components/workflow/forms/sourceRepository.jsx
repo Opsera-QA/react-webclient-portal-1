@@ -111,7 +111,7 @@ function SourceRepositoryConfig( { data, parentCallback }) {
   };
 
   const handleAccountChange = (selectedOption) => {
-    setFormData({ ...formData, accountId: selectedOption.id, username: selectedOption.configuration ? selectedOption.configuration.accountUsername : "",  password: selectedOption.configuration ? selectedOption.configuration.accountPassword : "", repository: "" });
+    setFormData({ ...formData, accountId: selectedOption.id ? selectedOption.id : "", username: selectedOption.configuration ? selectedOption.configuration.accountUsername : "",  password: selectedOption.configuration ? selectedOption.configuration.accountPassword : "", repository: "" });
   };
   
   const handleRepoChange = (selectedOption) => {

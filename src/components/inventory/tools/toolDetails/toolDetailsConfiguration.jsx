@@ -13,6 +13,7 @@ import "components/inventory/tools/tools.css";
 import GitlabToolConfiguration from "../forms/gitlab";
 import BitbucketToolConfiguration from "../forms/bitbucket";
 import SpinnakerToolConfiguration from "../forms/spinnaker";
+import CypressToolConfiguration from "../forms/cypress";
 
 
 function ToolConfiguration(props) {
@@ -38,6 +39,7 @@ function ToolConfiguration(props) {
           {toolData.tool_identifier.toLowerCase() === "gitlab" ? <GitlabToolConfiguration toolId={toolId} toolData={toolData} fnSaveChanges={saveToolConfiguration} fnSaveToVault={fnSaveToVault} /> : null }
           {toolData.tool_identifier.toLowerCase() === "bitbucket" ? <BitbucketToolConfiguration toolId={toolId} toolData={toolData} fnSaveChanges={saveToolConfiguration} fnSaveToVault={fnSaveToVault} /> : null }
           {toolData.tool_identifier.toLowerCase() === "spinnaker" ? <SpinnakerToolConfiguration toolId={toolId} toolData={toolData} fnSaveChanges={saveToolConfiguration} fnSaveToVault={fnSaveToVault} /> : null }
+          {toolData.tool_identifier.toLowerCase() === "cypress" ? <CypressToolConfiguration toolId={toolId} toolData={toolData} fnSaveChanges={saveToolConfiguration} fnSaveToVault={fnSaveToVault} /> : null }
           
 
         </> : null}
