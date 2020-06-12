@@ -9,10 +9,10 @@ function Inventory () {
   const { id, view } = useParams();
   const contextType = useContext(AuthContext);
   const [selection, setSelection] = useState("");
-  const [previewRole, setPreviewRole] = useState(false);
+  //const [previewRole, setPreviewRole] = useState(false);
 
   useEffect(()=> {
-    getRoles();
+    //getRoles();
     if (view === "tools") {
       setSelection("tools");
     } else {
@@ -20,7 +20,7 @@ function Inventory () {
     }  
   }, []);
   
-  const getRoles = async () => {
+  /* const getRoles = async () => {
     const { getIsPreviewRole } = contextType; 
     //this returns true IF the Okta groups for user contains "Preview".  Please wrap display components in this.
     const isPreviewRole = await getIsPreviewRole(true);
@@ -28,7 +28,7 @@ function Inventory () {
     if (isPreviewRole) {
       console.log("Enabling Preview Feature Toggle. ", isPreviewRole);
     }    
-  };
+  }; */
 
   const handleTabClick = param => e => {
     setSelection(param);
@@ -45,7 +45,7 @@ function Inventory () {
             to="/inventory" onClick={handleTabClick("platform")}>Platform</Link>
         </li>
         <li className="nav-item">
-          <Link className={"nav-link " + (selection === "tools" ? "active" : "") + (!previewRole ? "disabled" : "")}   
+          <Link className={"nav-link " + (selection === "tools" ? "active" : "")}   
             to={"/inventory/tools"}  onClick={handleTabClick("tools")}>Tools</Link>
         </li>
       </ul>
