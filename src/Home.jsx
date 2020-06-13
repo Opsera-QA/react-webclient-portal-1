@@ -26,14 +26,14 @@ function Home() {
   };
 
   const getRoles = async () => {
-    const { getUserInfo } = contextType; 
-    const user = await getUserInfo();
-    setPreviewRole(user.email.includes("@opsera.io")); 
+    //const { getUserInfo } = contextType; 
+    //const user = await getUserInfo();
+    //setPreviewRole(user.email.includes("@opsera.io")); 
 
     //if (user.email.includes("@opsera.io")) {
     history.push("/overview");
     //} else {
-    history.push("/inventory");
+    //history.push("/inventory");
     //}    
   };
 
