@@ -25,7 +25,7 @@ function PipelineDetail({ id }) {
   const [loading, setLoading] = useState(false);
   const [logsIsLoading, setLogsIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(50);
+  const [pageSize, setPageSize] = useState(25);
 
   useEffect(() => {    
     const controller = new AbortController();
@@ -135,7 +135,7 @@ function PipelineDetail({ id }) {
       <>
         <div className="mt-3 max-content-width">
           {typeof(data.pipeline) !== "undefined" ? <PipelineItemDetail data={data.pipeline} parentCallback={callbackFunction} parentCallbackRefreshActivity={callbackRefreshActivity} role={role} stepStatus={stepStatus}  />  : null }
-          {typeof(activityData.pipelineData) !== "undefined" ? <PipelineActivity data={activityData.pipelineData} isLoading={logsIsLoading} />  : null}
+          <PipelineActivity data={activityData.pipelineData} isLoading={logsIsLoading} />
           {activityData.pipelineData && <Pagination total={activityData.count} currentPage={currentPage} pageSize={pageSize} onClick={(pageNumber, pageSize) => gotoPage(pageNumber, pageSize)} />}
         </div>       
        
@@ -158,10 +158,12 @@ const PipelineActivity = (props) => {
 
   return (
     <>
-      {data !== undefined && data.length > 0 ?
+      
+      <div className="h6 mt-4">Activity Log 
+        { isLoading ? <FontAwesomeIcon icon={faSpinner} spin className="ml-1" fixedWidth/> : null }</div>
+
+      {data && data.length > 0 &&
         <>
-          <div className="h6 mt-4">Activity Log 
-            { isLoading ? <FontAwesomeIcon icon={faSpinner} spin className="ml-1" fixedWidth/> : null }</div>
           <Table striped bordered hover className="table-sm" style={{ fontSize:"small" }}>
             <thead>
               <tr>
@@ -202,10 +204,10 @@ const PipelineActivity = (props) => {
           </Table>
           
           <ModalActivityLogs header="Pipeline Activity Log" size="lg" jsonData={modalData} show={showModal} setParentVisibility={setShowModal} />
-
-        </>
-        : <InfoDialog message="No pipeline activity data is currently available.  Logs will start getting populated once the pipeline starts running." />}
-
+        </>}
+        
+      {data && data.length === 0 &&
+         <div className="info-text mt-3 p-2">Pipeline activity data has not been generated yet.  Once this pipeline begins running, it will publish details here.</div>}
     </>
     
   );

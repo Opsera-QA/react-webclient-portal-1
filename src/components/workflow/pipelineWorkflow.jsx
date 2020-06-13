@@ -7,11 +7,13 @@ import { SteppedLineTo } from "react-lineto";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faFileAlt, faCog, faPen, faArchive, faPlay, faSync, faSpinner, faStopCircle, faHistory, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faFileAlt, faCog, faPen, faArchive, faPlay, faSync, faSpinner, faStopCircle, faHistory, faCheck, faPause, faFlag } from "@fortawesome/free-solid-svg-icons";
 import ModalActivityLogs from "../common/modalActivityLogs";
 import PipelineActions from "./actions";
 import PipelineWorkflowItemList from "./pipelineWorkflowItemList";
 import isEqual from "lodash.isequal";
+import ApprovalModal from "./approvalModal";
+import Modal from "../common/modal";
 import "./workflows.css";
 
 const PipelineWorkflowDetail = (props) => {
@@ -29,6 +31,8 @@ const PipelineWorkflowDetail = (props) => {
   const [editWorkflow, setEditWorkflow] = useState(false);
   const endPointUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
   const [accessToken, setAccessToken] = useState();
+  const [infoModal, setInfoModal] = useState({ show:false, header: "", message: "", button: "OK" });
+  const [showApprovalModal, setShowApprovalModal] = useState(false);
   
   //Feature Flag
   const [previewRole, setPreviewRole] = useState(false);
@@ -72,7 +76,13 @@ const PipelineWorkflowDetail = (props) => {
 
       if (step !== undefined && step.workflow.last_step !== undefined) {
         let status = step.workflow.last_step.hasOwnProperty("status") ? step.workflow.last_step.status : false;
-        setWorkflowStatus(status);
+
+        if (status === "stopped" && step.workflow.last_step.running.paused) {
+          setWorkflowStatus("paused");
+        } else {
+          setWorkflowStatus(status);
+        }
+        
         if (status === "running" && !socketRunning) {
           subscribeToTimer();
         }        
@@ -179,6 +189,14 @@ const PipelineWorkflowDetail = (props) => {
   const handleRunPipelineClick = async (pipelineId, oneStep) => {
     await runPipeline(pipelineId, oneStep);
     setWorkflowStatus("running");    
+  };
+
+  const handleApprovalClick = () => {
+    setShowApprovalModal(true);    
+  };
+
+  const handleApprovalActivity = () => {
+    setInfoModal({ show:true, header: "Approval Status", message: "Your approval action has been logged.  The pipeline has been scheduled to resume in a few minutes.", button: "OK" });
   };
 
   async function fetchStatusData(pipelineId, stepNext) {
@@ -298,49 +316,67 @@ const PipelineWorkflowDetail = (props) => {
 
           <div className="workflow-container ml-3 pl-2 max-content-module-width-50">
             <div className="pr-1 my-2 text-right">
-              {workflowStatus === "running" ? 
+              {workflowStatus === "running" && 
                 <>
                   <Button variant="outline-dark" className="mr-1"  size="sm" disabled><FontAwesomeIcon icon={faSpinner} spin className="mr-1"/> Running</Button>
                   <Button variant="outline-danger" className="mr-1"  size="sm" onClick={() => { handleStopWorkflowClick(data._id); }}
                     disabled={role !== "administrator"}><FontAwesomeIcon icon={faStopCircle} className="mr-1"/>Stop</Button>
-                </>
-                : 
-                <>
-                  <Button variant="success" className="mr-1" size="sm"
-                    onClick={() => { handleRunPipelineClick(data._id); }}
-                    disabled={role !== "administrator" || editWorkflow}>
-                    <FontAwesomeIcon icon={faPlay} fixedWidth className="mr-1"/>Start Pipeline</Button>
+                </>}
 
-                  <Button variant="outline-danger" className="mr-1"  size="sm" 
-                    onClick={() => { handleStopWorkflowClick(data._id); }}
-                    disabled={role !== "administrator" || editWorkflow}>
-                    <FontAwesomeIcon icon={faHistory} fixedWidth className="mr-1"/>Reset Pipeline</Button>
-                </> }
-            
-              <Button variant="secondary" className="mr-1" size="sm" onClick={() => { handleRefreshClick(data._id); }}>
-                <FontAwesomeIcon icon={faSync} className="mr-1" fixedWidth/>Refresh </Button>  
+              {workflowStatus === "paused" && 
+                <>
+                  <Button variant="outline-warning" className="mr-1"  size="sm" disabled><FontAwesomeIcon icon={faPause} className="mr-1"/> Paused</Button>
+                  <Button variant="warning" className="mr-1"  size="sm" onClick={() => { handleApprovalClick(); }}
+                    disabled={role !== "administrator"}><FontAwesomeIcon icon={faFlag} className="mr-1" fixedWidth/>Approve Step</Button>
+                </>}
+
+              {(workflowStatus === "stopped" || !workflowStatus) && 
+                <Button variant="success" className="mr-1" size="sm"
+                  onClick={() => { handleRunPipelineClick(data._id); }}
+                  disabled={role !== "administrator" || editWorkflow}>
+                  <FontAwesomeIcon icon={faPlay} fixedWidth className="mr-1"/>Start Pipeline</Button>}
               
-              <Button variant="secondary" className="mr-1" size="sm" onClick= {() => { handleViewPipelineClick(data); }} >
-                <FontAwesomeIcon icon={faFileAlt}
-                  fixedWidth
-                  size="lg"
-                  style={{ cursor: "pointer" }}/></Button>
+              <OverlayTrigger
+                placement="top"
+                delay={{ show: 250, hide: 400 }}
+                overlay={renderTooltip({ message: "Restart pipeline from beginning as new run" })} >
+                <Button variant="outline-danger" className="mr-1"  size="sm" 
+                  onClick={() => { handleStopWorkflowClick(data._id); }}
+                  disabled={role !== "administrator" || editWorkflow}>
+                  <FontAwesomeIcon icon={faHistory} fixedWidth className="mr-1"/>Reset Pipeline</Button>
+              </OverlayTrigger>
+              
+              <OverlayTrigger
+                placement="top"
+                delay={{ show: 250, hide: 400 }}
+                overlay={renderTooltip({ message: "Refresh pipeline status" })} >
+                <Button variant="secondary" className="mr-1" size="sm" onClick={() => { handleRefreshClick(data._id); }}>
+                  <FontAwesomeIcon icon={faSync} fixedWidth/></Button>  
+              </OverlayTrigger>
+              
+              <OverlayTrigger
+                placement="top"
+                delay={{ show: 250, hide: 400 }}
+                overlay={renderTooltip({ message: "View pipeline configuration" })} >
+                <Button variant="secondary" className="mr-1" size="sm" onClick= {() => { handleViewPipelineClick(data); }} >
+                  <FontAwesomeIcon icon={faFileAlt} fixedWidth/></Button>
+              </OverlayTrigger>
                     
-              { userInfo && userInfo._id === data.owner && previewRole ? <>              
-                {editWorkflow ?
-                  <Button variant="success" size="sm" onClick= {() => { handleDoneWorkflowEditsClick(); }} >
-                    <FontAwesomeIcon icon={faCheck}
-                      fixedWidth
-                      size="lg"
-                      style={{ cursor: "pointer" }} /> Done</Button>                  
-                  :
-                  <Button variant="secondary" size="sm" onClick= {() => { handleEditWorkflowClick(); }} >
-                    <FontAwesomeIcon icon={faPen}
-                      fixedWidth
-                      size="lg"
-                      style={{ cursor: "pointer" }} /> </Button>
-                }                
-              </>: null }            
+                       
+              {editWorkflow ?
+                <Button variant="success" size="sm" onClick= {() => { handleDoneWorkflowEditsClick(); }} >
+                  <FontAwesomeIcon icon={faCheck} fixedWidth/> Done</Button>                  
+                :
+                <OverlayTrigger
+                  placement="top"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltip({ message: "Edit workflow" })} >                  
+                  <Button variant="secondary" size="sm" onClick= {() => { handleEditWorkflowClick(); }} 
+                    disabled={(workflowStatus && workflowStatus !== "stopped") || !previewRole || (userInfo && userInfo._id !== data.owner)} >
+                    <FontAwesomeIcon icon={faPen} fixedWidth/> </Button>                  
+                </OverlayTrigger>
+              }                
+                    
             </div>
 
 
@@ -430,6 +466,8 @@ const PipelineWorkflowDetail = (props) => {
           
         </> : null }
       <ModalActivityLogs header={modalHeader} size="lg" jsonData={modalMessage} show={showModal} setParentVisibility={setShowModal} />
+      {showApprovalModal && <ApprovalModal pipelineId={data._id} visible={showApprovalModal} setVisible={setShowApprovalModal} refreshActivity={handleApprovalActivity} />}
+      {infoModal.show && <Modal header={infoModal.header} message={infoModal.message} button={infoModal.button} handleCancelModal={() => setInfoModal({ ...infoModal, show: false })}  />}
     </>
   );
 };

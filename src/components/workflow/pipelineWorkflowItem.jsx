@@ -4,8 +4,9 @@ import { axiosApiService } from "../../api/apiService";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import Modal from "../common/modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faCog, faArchive, faHourglassStart, faPen, faExclamationTriangle, faSpinner, faCheckCircle, faEnvelope, faTimesCircle, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faCog, faArchive, faHourglassStart, faFlag, faPen, faExclamationTriangle, faSpinner, faCheckCircle, faEnvelope, faTimesCircle, faTrash } from "@fortawesome/free-solid-svg-icons";
 import ModalActivityLogs from "../common/modalActivityLogs";
+import ApprovalModal from "./approvalModal";
 import { format } from "date-fns";
 import "./workflows.css";
 
@@ -21,6 +22,7 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
   const [modalDeleteIndex, setModalDeleteIndex] = useState(false);
   const [toolProperties, setToolProperties] = useState({});
   const [infoModal, setInfoModal] = useState({ show:false, header: "", message: "", button: "OK" });
+  const [showApprovalModal, setShowApprovalModal] = useState(false);
   
   useEffect(() => {    
     loadFormData(item, lastStep, index, plan);      
@@ -55,8 +57,12 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
           let stepArrayIndex = plan.findIndex(x => x._id.toString() === lastStep.running.step_id); 
           if (index === stepArrayIndex) {  //current step is successful, so it's completed
             setCurrentStatus(lastStep.running);
-            setItemState("running");
-
+            if (lastStep.running.paused) {
+              setItemState("paused");
+            } else {
+              setItemState("running");
+            }
+            
           } else if (index === stepArrayIndex + 1)  { //this is the next step in the plan
             setItemState("pending");
           }
@@ -102,6 +108,10 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
     setModalDeleteIndex(index);    
   };
 
+  const handleApprovalActivity = () => {
+    setInfoModal({ show:true, header: "Approval Status", message: "Your approval action has been logged.  The pipeline has been scheduled to resume in a few minutes.", button: "OK" });
+  };
+
   const handleDeleteStepClickConfirm = (index) => {    
     setShowDeleteModal(false);    
     deleteStep(index);
@@ -141,7 +151,7 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
                     <OverlayTrigger
                       placement="top"
                       delay={{ show: 250, hide: 400 }}
-                      overlay={renderTooltip({ message: "View Log" })} >
+                      overlay={renderTooltip({ message: "View last completed log" })} >
                       <FontAwesomeIcon icon={faCheckCircle} className="mr-2 green" 
                         style={{ cursor: "pointer" }} 
                         onClick={() => { parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id); }} />
@@ -151,17 +161,27 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
                   <OverlayTrigger
                     placement="top"
                     delay={{ show: 250, hide: 400 }}
-                    overlay={renderTooltip({ message: "View Log" })} >
+                    overlay={renderTooltip({ message: "View running step configuration" })} >
                     <FontAwesomeIcon icon={faSpinner} className="mr-2 green" 
                       style={{ cursor: "pointer" }} spin
                       onClick={() => { parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id); }} />
+                  </OverlayTrigger>  } 
+
+                {itemState === "paused" && //assumes approval is needed
+                  <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip({ message: "Approval of this step is required to proceed" })} >
+                    <FontAwesomeIcon icon={faFlag} className="mr-2 red" 
+                      style={{ cursor: "pointer" }}
+                      onClick={() => { setShowApprovalModal(true); }} />
                   </OverlayTrigger>  }  
 
                 { itemState === "warning" && 
                   <OverlayTrigger
                     placement="top"
                     delay={{ show: 250, hide: 400 }}
-                    overlay={renderTooltip({ message: "Step Warning Alert" })} >
+                    overlay={renderTooltip({ message: "Step warning alert due to missing data" })} >
                     <FontAwesomeIcon icon={faExclamationTriangle} className="mr-2 yellow" 
                       style={{ cursor: "pointer" }} 
                       onClick={() => { setInfoModal({ show:true, header: "Step Warning", message: "This step is missing configuration information and will not run.", button: "OK" }); }} />
@@ -171,7 +191,7 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
                   <OverlayTrigger
                     placement="top"
                     delay={{ show: 250, hide: 400 }}
-                    overlay={renderTooltip({ message: "Status Message" })} >
+                    overlay={renderTooltip({ message: "This is the next pending step in the workflow" })} >
                     <FontAwesomeIcon icon={faHourglassStart} className="mr-2 yellow" 
                       style={{ cursor: "pointer" }} 
                       onClick={() => { setInfoModal({ show:true, header: "Step Warning", message: "This step is the next pending step in the workflow.", button: "OK" }); }} />
@@ -228,10 +248,6 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
           </div> : null}
 
 
-        {/* <div className="d-flex flex-row mb-1">
-          <div className="p-1"></div>
-        </div>
- */}
         {stepConfigured === true ? 
           <div className="d-flex align-items-end flex-row">
             <div className="p-1"><span className="text-muted small">Step: {item._id}</span></div>
@@ -307,6 +323,8 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
       </div>
 
       <ModalActivityLogs header={modalHeader} size="lg" jsonData={modalMessage} show={showModal} setParentVisibility={setShowModal} />
+
+      {showApprovalModal && <ApprovalModal pipelineId={pipelineId} visible={showApprovalModal} setVisible={setShowApprovalModal} refreshActivity={handleApprovalActivity} />}
 
       {infoModal.show ? <Modal header={infoModal.header}
         message={infoModal.message}

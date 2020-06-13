@@ -23,14 +23,10 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
   const [formData, setFormData] = useState(INITIAL_FORM);
 
   useEffect(() => {
-    console.log("fetch'n");
-    fetchPipelineData(pipelineId);    
-  }, []);
-
-  useEffect(() => {
     setApprovalStep({});
     setFormData(INITIAL_FORM);
-  }, [visible]);
+    fetchPipelineData(pipelineId);   
+  }, []);
 
 
   const fetchPipelineData = async (pipelineId) => {
@@ -42,7 +38,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
     try {
       const pipeline = await axiosApiService(accessToken).get(apiUrl); 
       const pipelineData = pipeline && pipeline.data[0];      
-      console.log("pipelineData", pipelineData); 
+      //console.log("pipelineData", pipelineData); 
       loadApprovalRequest(pipelineData);      
     }
     catch (err) {
@@ -53,10 +49,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
   };
 
   const loadApprovalRequest = async (pipeline) => {
-    //Add a "flag" to the My Pipelines view if a pipeline is PAUSED!
-    // Also refactor the size of My Pipelines to match Catalog while I'm in there!
     const step = PipelineHelpers.getPendingApprovalStep(pipeline);
-
     if (step) {
       setApprovalStep(step);
       let message = `Step ${step.name} in ${pipeline.name} requires approval in order to proceed.  `;
@@ -78,8 +71,8 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
     try {
       console.log("apiUrl", apiUrl);
       console.log("postBody", postBody);
-      //const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      //console.log(res);   
+      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
+      console.log(res);   
       refreshActivity();   
       setVisible(false);
     }
