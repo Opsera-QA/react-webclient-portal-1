@@ -56,7 +56,7 @@ function MyPipelines() {
   } else {
     return (
       <>        
-        {errors ? <div className="error-text">Error Reported: {errors}</div> : null}
+        {errors ? <div className="error-text">Error Reported: {JSON.stringify(errors)}</div> : null}
         
         <div className="mt-3 max-content-width">
           { Object.keys(data) === 0 ? 

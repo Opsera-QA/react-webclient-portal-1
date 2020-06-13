@@ -54,7 +54,11 @@ function PipelineWorkflowItemList({ items, lastStep, editWorkflow, pipelineId, a
         classString += " workflow-step-success";
       }
       else if(typeof(last_step.running) !== "undefined" && last_step.running.step_id === item_id) {
-        classString += " workflow-step-running";
+        if (last_step.running.paused) {
+          classString += " workflow-step-warning";
+        } else {
+          classString += " workflow-step-running";
+        }        
       }
       else if(typeof(last_step.failed) !== "undefined" && last_step.failed.step_id === item_id) {
         classString += " workflow-step-failure";

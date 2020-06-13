@@ -4,14 +4,14 @@ import { AuthContext } from "../../contexts/AuthContext";
 import socketIOClient from "socket.io-client";
 import { useHistory } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
-import { Card, Row, Col, Button, Form } from "react-bootstrap";
+import { Card, Row, Col, Button, OverlayTrigger, Tooltip, Form } from "react-bootstrap";
 import PipelineActions from "./actions";
 import { format } from "date-fns";
 import Modal from "../common/modal";
 import ModalActivityLogs from "../common/modalActivityLogs";
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileAlt, faPencilAlt, faHistory, faSync, faPlay, faTrash, faThLarge, faSave, faSpinner, faTimes, faCogs, faCheckCircle, faFlag } from "@fortawesome/free-solid-svg-icons";
+import { faFileAlt, faPencilAlt, faHistory, faSync, faPlay, faTrash, faStopCircle, faSave, faSpinner, faTimes, faCogs, faPause, faFlag } from "@fortawesome/free-solid-svg-icons";
 import "./workflows.css";
 import SchedulerWidget from "../common/schedulerWidget";
 import isEqual from "lodash.isequal";
@@ -44,6 +44,7 @@ const PipelineItemDetail = (props) => {
   const [approvalStep, setApprovalStep] = useState({});
   const [showApprovalModal, setShowApprovalModal] = useState(false);
   const endPointUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
+  const [ownerName, setOwnerName] = useState("");
   let history = useHistory();
   
   
@@ -52,9 +53,19 @@ const PipelineItemDetail = (props) => {
     const runEffect = async () => {
       try {
         if (data.workflow !== undefined) {
+          const { getAccessToken } = contextType;
+          let owner = await PipelineHelpers.getUserNameById(data.owner, getAccessToken);
+          setOwnerName(owner);
+
           if (data.workflow.last_step !== undefined) {
             let status = data.workflow.last_step.hasOwnProperty("status") ? data.workflow.last_step.status : false;
-            setWorkflowStatus(status);
+            
+            if (status === "stopped" && step.workflow.last_step.running.paused) {
+              setWorkflowStatus("paused");
+            } else {
+              setWorkflowStatus(status);
+            }
+
             if (status === "running" && !socketRunning) {
               subscribeToTimer();
             }
@@ -67,7 +78,9 @@ const PipelineItemDetail = (props) => {
             setApprovalStep(step);
           } else {
             setApprovalStep({});
-          }        
+          }    
+          
+          
         }
         
       } catch (err) {
@@ -384,10 +397,10 @@ const PipelineItemDetail = (props) => {
 
               <Row className="row-content-spacing">
                 <Col lg className="py-1"><span className="text-muted mr-1">ID:</span> {data._id}</Col>
-                <Col lg className="py-1"><span className="text-muted mr-1">Owner:</span> {data.owner}</Col>                
+                <Col lg className="py-1"><span className="text-muted mr-1">Owner:</span> {ownerName}</Col>                
               </Row>
               <Row className="row-content-spacing">
-                <Col lg className="py-1"><span className="text-muted mr-1">Organization:</span> {data.organizationName}</Col>
+                <Col lg className="py-1"><span className="text-muted mr-1">Organization:</span> <span className="upper-case-first">{data.organizationName}</span></Col>
                 <Col lg className="py-1"><span className="text-muted mr-1">Created On:</span>  {format(new Date(data.createdAt), "yyyy-MM-dd', 'hh:mm a")}</Col>
               </Row>
               <Row className="row-content-spacing">
@@ -399,12 +412,12 @@ const PipelineItemDetail = (props) => {
                   {_buildToolList(data.workflow.plan).map((item, idx) => (<span key={idx} className="upper-case-first mr-1">{item} </span>))}</Col> 
               </Row> */}
 
-              { data.workflow.source !== undefined ?
+              {/* { data.workflow.source !== undefined ?
                 <Row className="row-content-spacing">
                   <Col md className="py-1"><span className="text-muted mr-1">Source:</span> <span className="upper-case-first">{data.workflow.source.name}</span></Col>
                   {data.workflow.source.repository ? <Col md className="py-1"><span className="text-muted mr-1">Repository:</span> {data.workflow.source.repository}</Col> : null}
                   {data.workflow.source.branch ? <Col md className="py-1"><span className="text-muted mr-1">Branch:</span> {data.workflow.source.branch}</Col> : null}
-                </Row> : null}              
+                </Row> : null}      */}         
 
               <Row className="row-content-spacing">
                 { editSchedule ? 
@@ -450,11 +463,42 @@ const PipelineItemDetail = (props) => {
                 :
                 <Row>
                   <Col className="py-3">
-                    <LinkContainer to={`/workflow/${data._id}/model`}>
+                    {/* <LinkContainer to={`/workflow/${data._id}/model`}>
                       <Button variant="primary" className="mr-2 mt-2" size="sm">
                         <FontAwesomeIcon icon={faThLarge} className="mr-1" fixedWidth/>View Workflow</Button>
-                    </LinkContainer>
+                    </LinkContainer> */}
+
+                    {workflowStatus === "running" && 
+                      <>
+                        <Button variant="outline-dark" className="mr-1"  size="sm" disabled><FontAwesomeIcon icon={faSpinner} spin className="mr-1"/> Running</Button>
+                        <Button variant="outline-danger" className="mr-1"  size="sm" onClick={() => { handleStopWorkflowClick(data._id); }}
+                          disabled={role !== "administrator"}><FontAwesomeIcon icon={faStopCircle} className="mr-1"/>Stop</Button>
+                      </>}
+
+                    {workflowStatus === "paused" && 
+                      <>
+                        <Button variant="outline-warning" className="mr-1"  size="sm" disabled><FontAwesomeIcon icon={faPause} className="mr-1"/> Paused</Button>
+                        <Button variant="warning" className="mr-1"  size="sm" onClick={() => { handleApprovalClick(); }}
+                          disabled={role !== "administrator"}><FontAwesomeIcon icon={faFlag} className="mr-1" fixedWidth/>Approve Step</Button>
+                      </>}
+
+                    {(workflowStatus === "stopped" || !workflowStatus) && 
+                      <Button variant="success" className="mr-1" size="sm"
+                        onClick={() => { handleRunPipelineClick(data._id); }}
+                        disabled={role !== "administrator"}>
+                        <FontAwesomeIcon icon={faPlay} fixedWidth className="mr-1"/>Start Pipeline</Button>}
                 
+                    <OverlayTrigger
+                      placement="top"
+                      delay={{ show: 250, hide: 400 }}
+                      overlay={renderTooltip({ message: "Restart pipeline from beginning as new run" })} >
+                      <Button variant="outline-danger" className="mr-1"  size="sm" 
+                        onClick={() => { handleStopWorkflowClick(data._id); }}
+                        disabled={role !== "administrator"}>
+                        <FontAwesomeIcon icon={faHistory} fixedWidth className="mr-1"/>Reset Pipeline</Button>
+                    </OverlayTrigger>
+
+                    {/* 
                     {workflowStatus === "running" ? 
                       <>
                         <Button variant="outline-dark" className="mr-2 mt-2" disabled size="sm">
@@ -469,11 +513,16 @@ const PipelineItemDetail = (props) => {
                         <FontAwesomeIcon icon={faPlay} className="mr-1" fixedWidth/>Start Pipeline</Button>
                     }
                  
-                    { Object.keys(approvalStep).length > 0 ? <Button variant="success" disabled={false} className="mr-2 mt-2" size="sm" onClick={() => { handleApprovalClick(); }}>
-                      <FontAwesomeIcon icon={faFlag} className="mr-1" fixedWidth/>Approve Request</Button> : null }
+                    { Object.keys(approvalStep).length > 0 ? <Button variant="warning" disabled={false} className="mr-2 mt-2" size="sm" onClick={() => { handleApprovalClick(); }}>
+                      <FontAwesomeIcon icon={faFlag} className="mr-1" fixedWidth/>Approve Step</Button> : null } */}
 
-                    <Button variant="secondary" className="mr-2 mt-2" size="sm" onClick={() => { handleRefreshClick(data._id); }}>
-                      <FontAwesomeIcon icon={faSync} className="mr-1" fixedWidth/>Refresh</Button> 
+                    <OverlayTrigger
+                      placement="top"
+                      delay={{ show: 250, hide: 400 }}
+                      overlay={renderTooltip({ message: "Refresh pipeline status" })} >
+                      <Button variant="secondary" size="sm" onClick={() => { handleRefreshClick(data._id); }}>
+                        <FontAwesomeIcon icon={faSync} fixedWidth/></Button> 
+                    </OverlayTrigger>
 
                   </Col>
                 </Row>
@@ -492,7 +541,7 @@ const PipelineItemDetail = (props) => {
      
       <ModalActivityLogs header="Pipeline Details" size="lg" jsonData={modalMessage} show={showModal} setParentVisibility={setShowModal} />
 
-      <ApprovalModal pipelineId={data._id} visible={showApprovalModal} setVisible={setShowApprovalModal} refreshActivity={parentCallbackRefreshActivity} />
+      {showApprovalModal && <ApprovalModal pipelineId={data._id} visible={showApprovalModal} setVisible={setShowApprovalModal} refreshActivity={parentCallbackRefreshActivity} />}
     </>
     
   );
@@ -530,5 +579,14 @@ const _buildToolList = (array) => {
   return tools.filter((a, b) => tools.indexOf(a) === b);
   
 };
+
+function renderTooltip(props) {
+  const { message } = props;
+  return (
+    <Tooltip id="button-tooltip" {...props}>
+      {message}
+    </Tooltip>
+  );
+}
 
 export default PipelineItemDetail;
