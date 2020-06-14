@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams, useLocation } from "react-router-dom";
 import MyPipelines from "./myPipelines";
 import PipelineDetail from "./pipelineOverview";
-import PipelineWorkflow from "./pipelineWorkflowView";
+import PipelineWorkflowView from "./pipelineWorkflowView";
 import WorkflowCatalog from "./workflowCatalog";
 import "./workflows.css";
 
@@ -79,7 +79,7 @@ function Workflow() {
         </ul>
       </div>
       {itemId.length > 0 && selection === "pipelineDetail" ? <PipelineDetail id={itemId} /> : null } 
-      {itemId.length > 0 && selection === "workflowView" ? <PipelineWorkflow id={itemId} /> : null } 
+      {itemId.length > 0 && selection === "workflowView" ? <PipelineWorkflowView id={itemId} /> : null } 
       {itemId.length === 0 && selection === "catalog" ? <WorkflowCatalog id={itemId} /> : null } 
       {itemId.length === 0 && selection === "myPipelines" ? <MyPipelines /> : null }
              
