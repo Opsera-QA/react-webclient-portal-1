@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
@@ -86,18 +87,22 @@ function ApprovalStepConfiguration( { stepTool, pipelineId, plan, stepId, parent
         <Form.Label>Notification Message*</Form.Label>
         <Form.Control as="textarea" type="text" placeholder="" value={formData.message || ""} onChange={e => setFormData({ ...formData, message: e.target.value })} />
       </Form.Group>
-      <small className="form-text text-muted mt-2 text-left pb-2">Provide the step specific message to include in the approval notification.  Please ensure notification rules are enabled.</small>
+      <small className="form-text text-muted mb-3">Provide the step specific message to include in the approval notification.  Please ensure notification rules are enabled.</small>
 
       <Form.Group controlId="repoField">
         <Form.Label>Step Contact*</Form.Label>
         <Form.Control type="text" placeholder="" value={formData.contact || ""} onChange={e => setFormData({ ...formData, contact: e.target.value })} />
       </Form.Group>
-      <small className="form-text text-muted mt-2 text-left pb-2">Identify the name of the owner of this step in case the approver has questions</small>
+      <small className="form-text text-muted mb-3">Identify the name of the owner of this step in case the approver has questions</small>
 
+      <div className="text-muted mb-3">
+        Please note: For active notification, please use Slack.  Configure a Slack token in <Link to="/tools">API Tools</Link> and then 
+        enable Slack notification for this step.
+      </div>
 
       {/* Leave the threshold form group as is for now, just read only for all forms */}
       
-      <div className="my-4 pt-3">
+      {/* <div className="my-4 pt-3">
         <Form.Label>Approval Threshold</Form.Label>
         <Form.Check 
           type="switch" disabled 
@@ -107,7 +112,7 @@ function ApprovalStepConfiguration( { stepTool, pipelineId, plan, stepId, parent
           onChange={() => setThresholdData({ ...thresholdData, approved: !thresholdData.approved })}    
         />
         <small className="form-text text-muted mt-2">This sets this step to approved until the next run.</small>
-      </div>
+      </div> */}
       
       <Button variant="primary" type="button" 
         onClick={() => { callbackFunction(); }}> 
