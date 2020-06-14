@@ -43,7 +43,7 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
       if (lastStep !== undefined) { 
 
         if (lastStep.success !== undefined && Object.keys(lastStep.success).length > 0) {
-          let stepArrayIndex = plan.findIndex(x => x._id.toString() === lastStep.success.step_id); 
+          let stepArrayIndex = plan.findIndex((x) => { if (x._id && x._id.toString() === lastStep.success.step_id) { return true; }}); 
           if (index === stepArrayIndex) {  //current step is successful, so it's completed
             setCurrentStatus(lastStep.success);
             setItemState("completed");

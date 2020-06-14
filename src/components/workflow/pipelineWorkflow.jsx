@@ -16,7 +16,7 @@ import ApprovalModal from "./approvalModal";
 import Modal from "../common/modal";
 import "./workflows.css";
 
-const PipelineWorkflowDetail = (props) => {
+const PipelineWorkflow = (props) => {
   const { data, fetchPlan, role, editItemId } = props;
   const [error, setErrors] = useState();
   const [userInfo, setUserInfo] = useState();
@@ -33,6 +33,7 @@ const PipelineWorkflowDetail = (props) => {
   const [accessToken, setAccessToken] = useState();
   const [infoModal, setInfoModal] = useState({ show:false, header: "", message: "", button: "OK" });
   const [showApprovalModal, setShowApprovalModal] = useState(false);
+  const [isSavingPipeline, setIsSavingPipeline] = useState(false);
   
   //Feature Flag
   const [previewRole, setPreviewRole] = useState(false);
@@ -68,7 +69,7 @@ const PipelineWorkflowDetail = (props) => {
   }, [data, editItemId]);
 
   const loadFormData = async (step) => {
-    setEditWorkflow(false);
+    //setEditWorkflow(false);
     if (step.workflow !== undefined) {
       setState({ items: step.workflow.plan });
       setLastStep(step.workflow.last_step);
@@ -285,8 +286,11 @@ const PipelineWorkflowDetail = (props) => {
     setEditWorkflow(true);
   };
 
-  const handleDoneWorkflowEditsClick = () => {
-    setEditWorkflow(false);    
+  const handleDoneWorkflowEditsClick = async () => {
+    setIsSavingPipeline(true);
+    await fetchPlan();  
+    setIsSavingPipeline(false);
+    setEditWorkflow(false);  
   };
 
   const quietSavePlan = async () => {
@@ -365,7 +369,10 @@ const PipelineWorkflowDetail = (props) => {
                        
               {editWorkflow ?
                 <Button variant="success" size="sm" onClick= {() => { handleDoneWorkflowEditsClick(); }} >
-                  <FontAwesomeIcon icon={faCheck} fixedWidth/> Done</Button>                  
+                  {isSavingPipeline ? 
+                    <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/> :
+                    <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1"/> }
+                   Done</Button>                  
                 :
                 <OverlayTrigger
                   placement="top"
@@ -495,7 +502,7 @@ function renderTooltip(props) {
   );
 }
 
-PipelineWorkflowDetail.propTypes = {
+PipelineWorkflow.propTypes = {
   data: PropTypes.object,
   fetchPlan: PropTypes.func,
   role: PropTypes.string,
@@ -505,4 +512,4 @@ PipelineWorkflowDetail.propTypes = {
 
 
 
-export default PipelineWorkflowDetail;
+export default PipelineWorkflow;

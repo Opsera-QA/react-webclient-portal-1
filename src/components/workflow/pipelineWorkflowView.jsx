@@ -3,20 +3,17 @@ import PropTypes from "prop-types";
 import { AuthContext } from "../../contexts/AuthContext"; 
 import { axiosApiService } from "../../api/apiService";
 import { Row, Col } from "react-bootstrap";
-import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import InfoDialog from "../common/info";
-import PipelineWorkflowDetail from "./pipelineWorkflow";
+import PipelineWorkflow from "./pipelineWorkflow";
 import PipelineWorkflowEditor from "./pipelineWorkflowItemEditor";
 import "./workflows.css";
 
-function PipelineWorkflow({ id }) {
+function PipelineWorkflowView({ id }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
   const [data, setData] = useState({});
-  const [loading, setLoading] = useState(false);
   const [editItem, setEditItem] = useState(false);
-  const [reload, setReload] = useState(true);
   const [role, setRole] = useState("");
   
   useEffect(() => {    
@@ -37,7 +34,7 @@ function PipelineWorkflow({ id }) {
     return () => {
       controller.abort();
     };
-  }, [reload]);
+  }, []);
 
   async function fetchData() {
     const { getAccessToken, getUserSsoUsersRecord } = contextType;
@@ -83,13 +80,12 @@ function PipelineWorkflow({ id }) {
   } else {
     return (
       <>
-        {loading ? <LoadingDialog size="lg" /> : null }
           
         <div className="mt-1 workflow-view">
           {typeof(data) !== "undefined" ?
             <Row>
               <Col>
-                <PipelineWorkflowDetail data={data} editItemId={editItem.step_id} fetchPlan={fetchPlan} role={role} /></Col>
+                <PipelineWorkflow data={data} editItemId={editItem.step_id} fetchPlan={fetchPlan} role={role} /></Col>
               <Col md="auto"></Col>
               {editItem ?
                 <Col xs lg="4" className="workflow-editor-panel p-3">
@@ -107,8 +103,8 @@ function PipelineWorkflow({ id }) {
 }
 
 
-PipelineWorkflow.propTypes = {
+PipelineWorkflowView.propTypes = {
   id: PropTypes.string
 };
 
-export default PipelineWorkflow;
+export default PipelineWorkflowView;
