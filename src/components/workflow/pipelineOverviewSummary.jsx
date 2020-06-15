@@ -52,37 +52,7 @@ const PipelineItemDetail = (props) => {
     const controller = new AbortController();
     const runEffect = async () => {
       try {
-        if (data.workflow !== undefined) {
-          const { getAccessToken } = contextType;
-          let owner = await PipelineHelpers.getUserNameById(data.owner, getAccessToken);
-          setOwnerName(owner);
-
-          if (data.workflow.last_step !== undefined) {
-            let status = data.workflow.last_step.hasOwnProperty("status") ? data.workflow.last_step.status : false;
-            
-            if (status === "stopped" && step.workflow.last_step.running.paused) {
-              setWorkflowStatus("paused");
-            } else {
-              setWorkflowStatus(status);
-            }
-
-            if (status === "running" && !socketRunning) {
-              subscribeToTimer();
-            }
-          } else {
-            setWorkflowStatus(false);        
-          }       
-        
-          const step = PipelineHelpers.getPendingApprovalStep(data);
-          if (step) {
-            setApprovalStep(step);
-          } else {
-            setApprovalStep({});
-          }    
-          
-          
-        }
-        
+        await loadFormData(data);            
       } catch (err) {
         if (err.name === "AbortError") {
           console.log("Request was canceled via controller.abort");
@@ -95,6 +65,37 @@ const PipelineItemDetail = (props) => {
       controller.abort();
     };
   }, []);
+
+
+  const loadFormData = async (pipeline) => {
+    if (pipeline.workflow !== undefined) {
+      const { getAccessToken } = contextType;
+      let owner = await PipelineHelpers.getUserNameById(pipeline.owner, getAccessToken);
+      setOwnerName(owner);
+
+      if (pipeline.workflow.last_step !== undefined) {
+        let status = pipeline.workflow.last_step.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;         
+        if (status === "stopped" && pipeline.workflow.last_step.running.paused) {
+          setWorkflowStatus("paused");
+        } else {
+          setWorkflowStatus(status);
+        }
+
+        if (status === "running" && !socketRunning) {
+          subscribeToTimer();
+        }
+      } else {
+        setWorkflowStatus(false);        
+      }       
+        
+      const step = PipelineHelpers.getPendingApprovalStep(data);
+      if (step) {
+        setApprovalStep(step);
+      } else {
+        setApprovalStep({});
+      }              
+    }
+  };
 
 
   let tmpDataObject = {};
