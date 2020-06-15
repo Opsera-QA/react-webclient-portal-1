@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../contexts/AuthContext";
 import socketIOClient from "socket.io-client";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { Card, Row, Col, Button, OverlayTrigger, Tooltip, Form } from "react-bootstrap";
 import PipelineActions from "./actions";
@@ -280,256 +280,253 @@ const PipelineItemDetail = (props) => {
       {error ? <ErrorDialog error={error} /> : null}
       {typeof(data) !== "undefined" && data !== {} ? 
         <>
-          <Card className="mb-3">
-            <Card.Body>
-              <Card.Title>
-                { editTitle ? 
+          <div className="ml-1 mb-2 w-100 max-content-width">           
+            <div className="title-text-5 mt-2">
+              { editTitle ? 
+                <>
+                  <Row>
+                    <Col sm={11}>
+                      <Form.Control maxLength="500" type="text" placeholder="" value={formData.name || ""} 
+                        onChange={e => setFormData({ ...formData, name: e.target.value })} /></Col>
+                    <Col sm={1} className="my-auto">
+                      <FontAwesomeIcon icon={faSave}
+                        className="text-muted"
+                        size="sm"
+                        style={{ cursor: "pointer" }}
+                        onClick= {() => { handleSavePropertyClick(data._id, formData, "name"); }} />
+                      <FontAwesomeIcon icon={faTimes}
+                        className="text-muted ml-3"
+                        size="sm"
+                        style={{ cursor: "pointer" }}
+                        onClick= {() => { setEditTitle(false); }} />
+                    </Col>
+                  </Row>                    
+                </> 
+                :
+                <>
+                  { Object.keys(approvalStep).length > 0 && <FontAwesomeIcon icon={faFlag} className="red mr-1" /> }
+                  {data.name} 
+                  {role === "administrator" ? 
+                    <FontAwesomeIcon icon={faPencilAlt}
+                      className="ml-2 text-muted"
+                      size="xs" transform="shrink-6"
+                      style={{ cursor: "pointer" }}
+                      onClick= {() => { setEditTitle(true); setFormData({ ...formData, name: data.name }); }} /> : null }
+                    
+                  
+                </> 
+              }</div>     
+          </div>
+          
+          
+          <ul className="nav nav-tabs w-100">
+            <li className="nav-item">
+              <Link className="nav-link active"
+                to={location => `/workflow/${data._id}`}>Summary</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link"
+                to={location => `/workflow/${data._id}/model`}>Workflow</Link>
+            </li>
+          </ul>
+
+          <div className="mb-3 flat-top-content-block p-3">              
+            <div className="mb-2 text-muted">
+              <FontAwesomeIcon icon={faTrash} className="pointer red float-right ml-3" size="sm" onClick={handleDeleteClick(data._id)}/>
+                    
+              <FontAwesomeIcon icon={faFileAlt}
+                className="mr-1 float-right text-muted"
+                size="sm"
+                style={{ cursor: "pointer" }}
+                onClick= {() => { handleViewClick(data); }} />                                        
+              { editDescription ? 
+                <>
+                  <Row className="my-2">
+                    <Col sm={11}>
+                      <Form.Control maxLength="2000" as="textarea" type="text" placeholder="" value={formData.description || ""} 
+                        onChange={e => setFormData({ ...formData, description: e.target.value })} /></Col>
+                    <Col sm={1} className="my-auto">
+                      <FontAwesomeIcon icon={faSave}
+                        className="text-muted"
+                        size="sm"
+                        style={{ cursor: "pointer" }}
+                        onClick= {() => { handleSavePropertyClick(data._id, formData, "description"); }} />
+                      <FontAwesomeIcon icon={faTimes}
+                        className="text-muted ml-3"
+                        size="sm"
+                        style={{ cursor: "pointer" }}
+                        onClick= {() => { setEditDescription(false); }} />
+                    </Col>
+                  </Row>                    
+                </> 
+                :
+                <>
+                  {data.description} 
+                  {role === "administrator" ? 
+                    <FontAwesomeIcon icon={faPencilAlt}
+                      className="ml-2 text-muted"
+                      size="xs" transform="shrink-5"
+                      style={{ cursor: "pointer" }}
+                      onClick= {() => { setEditDescription(true); setFormData({ ...formData, description: data.description }); }} /> : null }                    
+                </> 
+              }
+            </div>
+            <hr></hr>
+            <Row className="mt-3">
+              <Col lg className="py-1"><span className="text-muted mr-1">ID:</span> {data._id}</Col>
+              <Col lg className="py-1"><span className="text-muted mr-1">Pipeline Run Count:</span> {data.workflow.run_count || "0"}</Col>
+            </Row>
+
+
+            <Row className="row-content-spacing">
+              
+              <Col>
+                { editProject ? 
                   <>
-                    <Row>
-                      <Col sm={11}>
-                        <Form.Control maxLength="500" type="text" placeholder="" value={formData.name || ""} 
-                          onChange={e => setFormData({ ...formData, name: e.target.value })} /></Col>
-                      <Col sm={1} className="my-auto">
+                    <Row className="my-2">
+                      <Col sm={9}>
+                        <Form.Control maxLength="150" type="text" placeholder="Project Name" value={formData.project.name || ""} 
+                          onChange={e => setFormData({ ...formData, project: { name: e.target.value } })} /></Col>
+                      <Col sm={3} className="my-auto">
                         <FontAwesomeIcon icon={faSave}
                           className="text-muted"
                           size="sm"
                           style={{ cursor: "pointer" }}
-                          onClick= {() => { handleSavePropertyClick(data._id, formData, "name"); }} />
+                          onClick= {() => { handleSavePropertyClick(data._id, formData, "project"); }} />
                         <FontAwesomeIcon icon={faTimes}
                           className="text-muted ml-3"
                           size="sm"
                           style={{ cursor: "pointer" }}
-                          onClick= {() => { setEditTitle(false); }} />
+                          onClick= {() => { setEditProject(false); }} />
                       </Col>
                     </Row>                    
                   </> 
                   :
                   <>
-                    { Object.keys(approvalStep).length > 0 && <FontAwesomeIcon icon={faFlag} className="red mr-1" /> }
-                    {data.name} 
+                    <span className="text-muted">Project: </span> {data.project !== undefined && data.project.hasOwnProperty("name") ? <>{data.project.name}</> : <span className="text-muted font-italic">untitled</span> }                    
                     {role === "administrator" ? 
                       <FontAwesomeIcon icon={faPencilAlt}
                         className="ml-2 text-muted"
                         size="xs" transform="shrink-6"
                         style={{ cursor: "pointer" }}
-                        onClick= {() => { setEditTitle(true); setFormData({ ...formData, name: data.name }); }} /> : null }
-                    
-                    <FontAwesomeIcon icon={faTrash} className="pointer red float-right ml-3" size="xs" onClick={handleDeleteClick(data._id)}/>
-                    
-                    <FontAwesomeIcon icon={faFileAlt}
-                      className="mr-1 float-right text-muted"
-                      size="xs"
-                      style={{ cursor: "pointer" }}
-                      onClick= {() => { handleViewClick(data); }} />                                        
-                  </> 
-                }
-                
-              </Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">
-                { editDescription ? 
-                  <>
-                    <Row className="my-2">
-                      <Col sm={11}>
-                        <Form.Control maxLength="2000" as="textarea" type="text" placeholder="" value={formData.description || ""} 
-                          onChange={e => setFormData({ ...formData, description: e.target.value })} /></Col>
-                      <Col sm={1} className="my-auto">
-                        <FontAwesomeIcon icon={faSave}
-                          className="text-muted"
-                          size="sm"
-                          style={{ cursor: "pointer" }}
-                          onClick= {() => { handleSavePropertyClick(data._id, formData, "description"); }} />
-                        <FontAwesomeIcon icon={faTimes}
-                          className="text-muted ml-3"
-                          size="sm"
-                          style={{ cursor: "pointer" }}
-                          onClick= {() => { setEditDescription(false); }} />
-                      </Col>
-                    </Row>                    
-                  </> 
-                  :
-                  <>
-                    {data.description} 
-                    {role === "administrator" ? 
-                      <FontAwesomeIcon icon={faPencilAlt}
-                        className="ml-2 text-muted"
-                        size="xs" transform="shrink-5"
-                        style={{ cursor: "pointer" }}
-                        onClick= {() => { setEditDescription(true); setFormData({ ...formData, description: data.description }); }} /> : null }                    
-                  </> 
-                }
-              </Card.Subtitle>
-              
-              <Row className="mt-3">
-                <Col>
-                  { editProject ? 
-                    <>
-                      <Row className="my-2">
-                        <Col sm={9}>
-                          <Form.Control maxLength="150" type="text" placeholder="Project Name" value={formData.project.name || ""} 
-                            onChange={e => setFormData({ ...formData, project: { name: e.target.value } })} /></Col>
-                        <Col sm={3} className="my-auto">
-                          <FontAwesomeIcon icon={faSave}
-                            className="text-muted"
-                            size="sm"
-                            style={{ cursor: "pointer" }}
-                            onClick= {() => { handleSavePropertyClick(data._id, formData, "project"); }} />
-                          <FontAwesomeIcon icon={faTimes}
-                            className="text-muted ml-3"
-                            size="sm"
-                            style={{ cursor: "pointer" }}
-                            onClick= {() => { setEditProject(false); }} />
-                        </Col>
-                      </Row>                    
-                    </> 
-                    :
-                    <>
-                      <span className="text-muted">Project: </span> {data.project !== undefined && data.project.hasOwnProperty("name") ? <>{data.project.name}</> : <span className="text-muted font-italic">untitled</span> }                    
-                      {role === "administrator" ? 
-                        <FontAwesomeIcon icon={faPencilAlt}
-                          className="ml-2 text-muted"
-                          size="xs" transform="shrink-6"
-                          style={{ cursor: "pointer" }}
-                          onClick= {() => { setEditProject(true); setFormData({ ...formData, project: { name: data.project !== undefined && data.project.hasOwnProperty("name") ? data.project.name : "" } }); }} /> : null }                  
-                    </>  }
-                </Col>
-                <Col lg className="py-1"><span className="text-muted mr-1">Pipeline Run Count:</span> {data.workflow.run_count || "0"}</Col>
-              </Row>
-
-
-              <Row className="row-content-spacing">
-                <Col lg className="py-1"><span className="text-muted mr-1">ID:</span> {data._id}</Col>
-                <Col lg className="py-1"><span className="text-muted mr-1">Owner:</span> {ownerName}</Col>                
-              </Row>
-              <Row className="row-content-spacing">
-                <Col lg className="py-1"><span className="text-muted mr-1">Organization:</span> <span className="upper-case-first">{data.organizationName}</span></Col>
-                <Col lg className="py-1"><span className="text-muted mr-1">Created On:</span>  {format(new Date(data.createdAt), "yyyy-MM-dd', 'hh:mm a")}</Col>
-              </Row>
-              <Row className="row-content-spacing">
-                <Col className="py-1"><span className="text-muted mr-1">Tags:</span> 
-                  {data.tags.map((item, idx) => (<span key={idx}>{item}, </span>))}</Col>
-              </Row>
-              {/* <Row className="row-content-spacing">
+                        onClick= {() => { setEditProject(true); setFormData({ ...formData, project: { name: data.project !== undefined && data.project.hasOwnProperty("name") ? data.project.name : "" } }); }} /> : null }                  
+                  </>  }
+              </Col>
+              <Col lg className="py-1"><span className="text-muted mr-1">Owner:</span> {ownerName}</Col>                
+            </Row>
+            <Row className="row-content-spacing">
+              <Col lg className="py-1"><span className="text-muted mr-1">Organization:</span> <span className="upper-case-first">{data.organizationName}</span></Col>
+              <Col lg className="py-1"><span className="text-muted mr-1">Created On:</span>  {format(new Date(data.createdAt), "yyyy-MM-dd', 'hh:mm a")}</Col>
+            </Row>
+            <Row className="row-content-spacing">
+              <Col className="py-1"><span className="text-muted mr-1">Tags:</span> 
+                {data.tags.map((item, idx) => (<span key={idx}>{item}, </span>))}</Col>
+            </Row>
+            {/* <Row className="row-content-spacing">
                 <Col className="py-1"><span className="text-muted mr-1">Tools:</span> 
                   {_buildToolList(data.workflow.plan).map((item, idx) => (<span key={idx} className="upper-case-first mr-1">{item} </span>))}</Col> 
               </Row> */}
 
-              {/* { data.workflow.source !== undefined ?
+            {/* { data.workflow.source !== undefined ?
                 <Row className="row-content-spacing">
                   <Col md className="py-1"><span className="text-muted mr-1">Source:</span> <span className="upper-case-first">{data.workflow.source.name}</span></Col>
                   {data.workflow.source.repository ? <Col md className="py-1"><span className="text-muted mr-1">Repository:</span> {data.workflow.source.repository}</Col> : null}
                   {data.workflow.source.branch ? <Col md className="py-1"><span className="text-muted mr-1">Branch:</span> {data.workflow.source.branch}</Col> : null}
                 </Row> : null}      */}         
 
-              <Row className="row-content-spacing">
-                { editSchedule ? 
-                  <>
-                    <Col xs={12} md={8}><span className="text-muted mr-1">Schedule:</span>
-                      <SchedulerWidget 
-                        startDate={data.workflow.schedule ? data.workflow.schedule.start_date : new Date()} 
-                        frequency={data.workflow.schedule ? data.workflow.schedule.frequency : ""} 
-                        schedule={data.workflow.schedule ? data.workflow.schedule : null }
-                        setEditSchedule={setEditSchedule} 
-                        setSchedule={handleSetSchedule}></SchedulerWidget></Col> 
-                    <Col xs={6} md={4}></Col>
-                  </> : 
+            <Row className="row-content-spacing">
+              { editSchedule ? 
+                <>
+                  <Col xs={12} md={8}><span className="text-muted mr-1">Schedule:</span>
+                    <SchedulerWidget 
+                      startDate={data.workflow.schedule ? data.workflow.schedule.start_date : new Date()} 
+                      frequency={data.workflow.schedule ? data.workflow.schedule.frequency : ""} 
+                      schedule={data.workflow.schedule ? data.workflow.schedule : null }
+                      setEditSchedule={setEditSchedule} 
+                      setSchedule={handleSetSchedule}></SchedulerWidget></Col> 
+                  <Col xs={6} md={4}></Col>
+                </> : 
 
-                  <Col className="py-1"><span className="text-muted mr-1">Schedule:</span> 
-                    {data.workflow.schedule && data.workflow.schedule.start_date !== null && !editSchedule ? 
-                      <>
-                        <span className="ml-1">Run next on: {format(new Date(data.workflow.schedule.start_date), "yyyy-MM-dd', 'hh:mm a")}</span>
-                        <span className="ml-2">Frequency: {data.workflow.schedule ? data.workflow.schedule.frequency : "undefined"}</span> 
-                      </> : null }
+                <Col className="py-1"><span className="text-muted mr-1">Schedule:</span> 
+                  {data.workflow.schedule && data.workflow.schedule.start_date !== null && !editSchedule ? 
+                    <>
+                      <span className="ml-1">Run next on: {format(new Date(data.workflow.schedule.start_date), "yyyy-MM-dd', 'hh:mm a")}</span>
+                      <span className="ml-2">Frequency: {data.workflow.schedule ? data.workflow.schedule.frequency : "undefined"}</span> 
+                    </> : null }
 
-                    {role === "administrator" ? 
-                      <FontAwesomeIcon icon={faPencilAlt}
-                        className="ml-2 text-muted"
-                        size="xs" transform="shrink-4"
-                        style={{ cursor: "pointer" }}
-                        onClick= {() => { setEditSchedule(true); }} /> : null }                    
+                  {role === "administrator" ? 
+                    <FontAwesomeIcon icon={faPencilAlt}
+                      className="ml-2 text-muted"
+                      size="xs" transform="shrink-4"
+                      style={{ cursor: "pointer" }}
+                      onClick= {() => { setEditSchedule(true); }} /> : null }                    
 
-                  </Col>                               
-                }
-              </Row> 
+                </Col>                               
+              }
+            </Row> 
 
 
-              {_configuredToolsCount(data.workflow.plan) === 0 ?
-                <Row>
-                  <Col className="py-3">
-                    <LinkContainer to={`/workflow/${data._id}/model`}>
-                      <Button variant="success" className="mr-2 mt-2" size="sm">
-                        <FontAwesomeIcon icon={faCogs} className="mr-1" fixedWidth/>Build Workflow</Button>
-                    </LinkContainer>
-                  </Col>
-                </Row>
-                :
-                <Row>
-                  <Col className="py-3">
-                    {/* <LinkContainer to={`/workflow/${data._id}/model`}>
+            {_configuredToolsCount(data.workflow.plan) === 0 ?
+              <Row>
+                <Col className="mt-3 mb-1">
+                  <LinkContainer to={`/workflow/${data._id}/model`}>
+                    <Button variant="success" className="mr-2 mt-2" size="sm">
+                      <FontAwesomeIcon icon={faCogs} className="mr-1" fixedWidth/>Build Workflow</Button>
+                  </LinkContainer>
+                </Col>
+              </Row>
+              :
+              <Row>
+                <Col className="mt-3 mb-1">
+                  {/* <LinkContainer to={`/workflow/${data._id}/model`}>
                       <Button variant="primary" className="mr-2 mt-2" size="sm">
                         <FontAwesomeIcon icon={faThLarge} className="mr-1" fixedWidth/>View Workflow</Button>
                     </LinkContainer> */}
 
-                    {workflowStatus === "running" && 
+                  {workflowStatus === "running" && 
                       <>
                         <Button variant="outline-dark" className="mr-1"  size="sm" disabled><FontAwesomeIcon icon={faSpinner} spin className="mr-1"/> Running</Button>
                         <Button variant="outline-danger" className="mr-1"  size="sm" onClick={() => { handleStopWorkflowClick(data._id); }}
                           disabled={role !== "administrator"}><FontAwesomeIcon icon={faStopCircle} className="mr-1"/>Stop</Button>
                       </>}
 
-                    {workflowStatus === "paused" && 
+                  {workflowStatus === "paused" && 
                       <>
                         <Button variant="outline-warning" className="mr-1"  size="sm" disabled><FontAwesomeIcon icon={faPause} className="mr-1"/> Paused</Button>
                         <Button variant="warning" className="mr-1"  size="sm" onClick={() => { handleApprovalClick(); }}
                           disabled={role !== "administrator"}><FontAwesomeIcon icon={faFlag} className="mr-1" fixedWidth/>Approve Step</Button>
                       </>}
 
-                    {(workflowStatus === "stopped" || !workflowStatus) && 
+                  {(workflowStatus === "stopped" || !workflowStatus) && 
                       <Button variant="success" className="mr-1" size="sm"
                         onClick={() => { handleRunPipelineClick(data._id); }}
                         disabled={role !== "administrator"}>
                         <FontAwesomeIcon icon={faPlay} fixedWidth className="mr-1"/>Start Pipeline</Button>}
                 
-                    <OverlayTrigger
-                      placement="top"
-                      delay={{ show: 250, hide: 400 }}
-                      overlay={renderTooltip({ message: "Restart pipeline from beginning as new run" })} >
-                      <Button variant="outline-danger" className="mr-1"  size="sm" 
-                        onClick={() => { handleStopWorkflowClick(data._id); }}
-                        disabled={role !== "administrator"}>
-                        <FontAwesomeIcon icon={faHistory} fixedWidth className="mr-1"/>Reset Pipeline</Button>
-                    </OverlayTrigger>
+                  <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip({ message: "Restart pipeline from beginning as new run" })} >
+                    <Button variant="outline-danger" className="mr-1"  size="sm" 
+                      onClick={() => { handleStopWorkflowClick(data._id); }}
+                      disabled={role !== "administrator"}>
+                      <FontAwesomeIcon icon={faHistory} fixedWidth className="mr-1"/>Reset Pipeline</Button>
+                  </OverlayTrigger>
 
-                    {/* 
-                    {workflowStatus === "running" ? 
-                      <>
-                        <Button variant="outline-dark" className="mr-2 mt-2" disabled size="sm">
-                          <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> Running</Button>
+                  
+                  <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip({ message: "Refresh pipeline status" })} >
+                    <Button variant="secondary" size="sm" onClick={() => { handleRefreshClick(data._id); }}>
+                      <FontAwesomeIcon icon={faSync} fixedWidth/></Button> 
+                  </OverlayTrigger>
 
-                        <Button variant="outline-danger" className="mr-2 mt-2" size="sm" 
-                          onClick={() => { handleStopWorkflowClick(data._id); }} disabled={workflowStatus !== "running"}>
-                          <FontAwesomeIcon icon={faHistory} className="mr-1" fixedWidth/>Reset Pipeline</Button>
-                      </>
-                      :
-                      <Button variant="success" disabled={Object.keys(approvalStep).length > 0} className="mr-2 mt-2" size="sm" onClick={() => handleRunPipelineClick(data._id)}>
-                        <FontAwesomeIcon icon={faPlay} className="mr-1" fixedWidth/>Start Pipeline</Button>
-                    }
-                 
-                    { Object.keys(approvalStep).length > 0 ? <Button variant="warning" disabled={false} className="mr-2 mt-2" size="sm" onClick={() => { handleApprovalClick(); }}>
-                      <FontAwesomeIcon icon={faFlag} className="mr-1" fixedWidth/>Approve Step</Button> : null } */}
-
-                    <OverlayTrigger
-                      placement="top"
-                      delay={{ show: 250, hide: 400 }}
-                      overlay={renderTooltip({ message: "Refresh pipeline status" })} >
-                      <Button variant="secondary" size="sm" onClick={() => { handleRefreshClick(data._id); }}>
-                        <FontAwesomeIcon icon={faSync} fixedWidth/></Button> 
-                    </OverlayTrigger>
-
-                  </Col>
-                </Row>
-              }
-            </Card.Body>
-          </Card>
+                </Col>
+              </Row>
+            }
+          </div>
+          
 
         </>
         : null}
