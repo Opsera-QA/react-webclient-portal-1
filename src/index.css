@@ -37,6 +37,10 @@ color: green;
   color: #c9cdd0;
 }
 
+.light-grey2 {
+  color: #fafafb;
+}
+
 .dark-blue {
   color: #0f3e84;
 }
@@ -425,6 +429,14 @@ a:hover, .active {
 .bordered-content-block {
   border-radius: 5px;
   border: 1px solid #d2d2d2;
+}
+
+.flat-top-content-block {
+  border-bottom: 1px solid #d2d2d2;
+  border-left: 1px solid #d2d2d2;
+  border-right: 1px solid #d2d2d2;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 
 

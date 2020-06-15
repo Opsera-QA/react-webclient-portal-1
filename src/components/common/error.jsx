@@ -59,7 +59,7 @@ function ErrorDialog({ error, align, type }) {
     );
   } else {
     return (
-      <div className="mt-1 mb-3 max-content-module-width-50"> 
+      <div className="mx-3 my-3 max-content-module-width-50"> 
         <div className="error-text">
           {state.message} { statusCode === 401 && <span className="ml-1"><a href="#" onClick={() => { login(); }}>Click here to refresh login.</a></span>}
         </div>        
