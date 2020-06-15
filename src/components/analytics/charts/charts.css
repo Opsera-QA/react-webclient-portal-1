@@ -48,9 +48,9 @@
  }
 
 .count-block-primary-text {
-  font-size:2.2rem;
+  font-size:2rem;
   font-weight: bold;
-  line-height: 1.5rem;
+  line-height: 1.3rem;
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
