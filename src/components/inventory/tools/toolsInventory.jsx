@@ -10,7 +10,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { format } from "date-fns";
 
 import ToolsTable from "./toolsTable";
-import NewTool from "./newTool";
+import NewTool from "./newTool/newTool";
 import ToolDetails from "./toolDetails/toolDetails"; //tool summary view
 
 import "./tools.css";
@@ -48,7 +48,7 @@ function ToolInventory () {
 
 
   const handelEditClick = (toolId, toolData) => {
-    setModalType("view");
+    setModalType("edit");
     setToolId(toolId);
     setRowDetails({
       id: toolId,
