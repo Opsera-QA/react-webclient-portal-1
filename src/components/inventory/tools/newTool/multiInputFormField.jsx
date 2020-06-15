@@ -91,7 +91,6 @@ function MultiInputFormField(props) {
           {rowList.map((row, key) => {
             return <tr key={key}>
               {formField.fields.map((field, key) => {
-
                 return <td key={key}><Form.Control defaultValue={row[field]} disabled={field == "id" || field == "identifier"} type="text" size="sm" placeholder={"New " + `${field}`} onChange={e => updateCellData(e, row, field)} /></td>;
               })}
               {formField.showEditButton && <td><Button variant="outline-danger" size="sm" onClick={e => deleteRow(e, row)} ><FontAwesomeIcon icon={faTrash}/></Button></td>}
