@@ -7,28 +7,35 @@ import MultiInputFormField from "./multiInputFormField";
 import TagInput from "utils/tagInput";
 import validate from "utils/formValidation";
 import newToolFormFields from "./new-tool-form-fields.js";
-import { ApiService } from "api/apiService";
+import Loading from "components/common/loading";
 
 function NewTool(props) {
   const { getAccessToken } = useContext(AuthContext);
+  const [errors, setErrors] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [ formFieldList, updateFormFields ] = useState({ ...newToolFormFields });
   const [ tool_list, setToolList ] = useState({
     tool_type_identifier: [], 
     tool_identifier: []
   });
-  let editFormValues = props.editTool.details;
 
   useEffect(() => {  
     Object.assign(formFieldList, newToolFormFields);
     getToolList();
+    if(props.toolId) {
+      setIsLoading(true);
+      getToolDetails(props.toolId);
+    }
   }, []);
 
-  useEffect(() => {  
-    if(props.type == "edit") {
+  const getToolDetails = async (toolId) => {
+    try {
+      const accessToken = await getAccessToken();
+      const toolDetails = await axiosApiService(accessToken).get("/registry/" + toolId, {});
       Object.keys(formFieldList).map((item, i) => {
         let validateInput = {
           isValid: true,
-          value: editFormValues[item]
+          value: toolDetails.data[0][item]
         };
         updateFormFields(prevState => ({ 
           ...prevState, 
@@ -37,14 +44,15 @@ function NewTool(props) {
             ...validateInput
           } 
         }));
-        updateFormFields({ 
-          ...formFieldList
-        });
-      }); 
-    }else {
-      console.log(newToolFormFields);
+      });
+      setIsLoading(false);
     }
-  }, [props.editTool.details]);
+    catch (err) {
+      setErrors(err.message);
+      console.log(err.message);
+      setIsLoading(false);
+    }
+  };
 
   const getToolList = async () => {
     try {
@@ -57,6 +65,7 @@ function NewTool(props) {
       });
     }
     catch (err) {
+      setErrors(err.message);
       console.log(err.message);
     }
   };
@@ -74,31 +83,26 @@ function NewTool(props) {
         props.closeModal(false, response.data);
       }
       catch (err) {
-        console.log(err.message);
+        isNameValid();
       }
     }
   };
 
-  //Check if the name is already registered in the system
-  const isNameAvailable = async () => {
-    const apiCall = new ApiService("/users/check-tool-name", {}, null, {  });
-    await apiCall.post()
-      .then(function (response) {
-        if (response.data) {
-          updateFormFields(prevState => ({ 
-            ...prevState, 
-            name: { 
-              ...prevState.name,
-              isValid: false,
-              errorMessage: "Name already exists in our system!  Try logging in with a new name."
-            } 
-          }));
-        }
-      })
-      .catch(function (error) {
-        console.error(error);
-        return true;
-      });
+  const isNameValid = () => {
+    let validateInput = {
+      errorMessage: "Name already exist! Please use a different name.",
+      touched: true, 
+      isValid: false,
+      value: ""
+    };
+
+    updateFormFields(prevState => ({ 
+      ...prevState, 
+      name: { 
+        ...prevState["name"],
+        ...validateInput
+      } 
+    }));
   };
 
   const updateTool = async () => {
@@ -113,6 +117,7 @@ function NewTool(props) {
       props.closeModal(false, response.data);
     }
     catch (err) {
+      setErrors(err.message);
       console.log(err.message);
     }
   };
@@ -148,20 +153,28 @@ function NewTool(props) {
 
   const handleToolTypeUpdate = (value, formField) => {
     let selectedToolType = tool_list.tool_identifier.find(function (o) { return o.identifier == value; });
-    console.log(selectedToolType);
+
+    let tool_type_identifier = {        
+      isValid: true,
+      touched: true,
+      value: selectedToolType.tool_type_identifier 
+    };
+
+    let tool_identifier = {        
+      isValid: true,
+      touched: true,
+      value: selectedToolType.identifier
+    };
+
     updateFormFields(prevState => ({ 
       ...prevState, 
       tool_type_identifier: {
         ...prevState["tool_type_identifier"],
-        isValid: true,
-        touched: true,
-        value: selectedToolType.tool_type_identifier
+        ...tool_type_identifier
       },
       tool_identifier: { 
         ...prevState["tool_identifier"],
-        isValid: true,
-        touched: true,
-        value: selectedToolType.identifier 
+        ...tool_identifier
       } 
     }));
   };
@@ -190,17 +203,17 @@ function NewTool(props) {
         onChange={e => handleFormChange(formField, e.target.value)}
       />;     
     case "select":
-      return <Form.Control as="select" disabled={formField.disabled} defaultValue={editFormValues[formField.id]} onChange={e => handleToolTypeUpdate(e.target.value, formField)}>
+      return <Form.Control as="select" disabled={formField.disabled} value={formField.value} onChange={e => handleToolTypeUpdate(e.target.value, formField)}>
         {tool_list[formField.id].map((option, i) => (
           <option key={i} value={option.identifier}>{option.name}</option>
         ))} 
       </Form.Control>;
     case "tags":
-      return <TagInput defaultValue={editFormValues[formField.id]} onChange={data => handleFormChange(formField, data)} />;
+      return <TagInput defaultValue={formField.value} onChange={data => handleFormChange(formField, data)} />;
     case "multi":
-      return <MultiInputFormField formField={formField} defaultValue={editFormValues[formField.id]} onChange={data => handleFormChange(formField, data)} />;      
+      return <MultiInputFormField formField={formField} defaultValue={formField.value} onChange={data => handleFormChange(formField, data)} />;      
     default:
-      return  <Form.Control defaultValue={editFormValues[formField.id]} disabled={formField.disabled} isInvalid={formField.touched && !formField.isValid} onChange={e => handleFormChange(formField, e.target.value)} />;
+      return  <Form.Control value={formField.value} disabled={formField.disabled} isInvalid={formField.touched && !formField.isValid} onChange={e => handleFormChange(formField, e.target.value)} />;
     }
   };
 
@@ -214,30 +227,36 @@ function NewTool(props) {
 
   return (
     <>
-      <Modal size="lg" show={props.showModal} onHide={handleClose}>
+      <Modal size="lg" show={props.showModal} onHide={handleClose} backdrop="static">
         <Modal.Header closeButton>
           <Modal.Title>{props.type == "new" ? "New" : "Edit"} Tool</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form className="newToolFormContainer">
-            {Object.values(formFieldList).map((formField, i) => {
-              if(formField.toShow) {
-                return(
-                  <Form.Group key={i} controlId="formPlaintextEmail" className="mt-2">
-                    <Form.Label column sm="2">
-                      {formField.label} 
-                      {formField.rules.isRequired && <span style={{ marginLeft:5, color: "#dc3545" }}>*</span>}
-                    </Form.Label>
-                    <Col sm="10">
-                      {JSON.stringify(formField.touched)}
-                      {formFieldType(formField)}
-                      <Form.Control.Feedback type="invalid">{formField.errorMessage}</Form.Control.Feedback>
-                    </Col>
-                  </Form.Group>
-                );
-              }
-            })}
-          </Form>
+
+          {errors ? <div className="error-text">Error Reported: {errors}</div> : null}
+          {isLoading ? <Loading size="sm" /> : null}
+          
+          {!isLoading && (
+            <Form className="newToolFormContainer">
+              {Object.values(formFieldList).map((formField, i) => {
+                if(formField.toShow) {
+                  return(
+                    <Form.Group key={i} controlId="formPlaintextEmail" className="mt-2">
+                      <Form.Label column sm="2">
+                        {formField.label} 
+                        {formField.rules.isRequired && <span style={{ marginLeft:5, color: "#dc3545" }}>*</span>}
+                      </Form.Label>
+                      <Col sm="10">
+                        {formFieldType(formField)}
+                        <Form.Control.Feedback type="invalid">{formField.errorMessage}</Form.Control.Feedback>
+                      </Col>
+                    </Form.Group>
+                  );
+                }
+              })}
+            </Form>
+          )}
+
         </Modal.Body>
         <Modal.Footer>
           <OverlayTrigger trigger={["hover", "hover"]} placement="top" overlay={popover}>
@@ -253,7 +272,7 @@ function NewTool(props) {
 
 NewTool.propTypes = {
   showModal: PropTypes.bool,
-  type:  PropTypes.string,
+  toolId:  PropTypes.string,
   editTool: PropTypes.object
 };
 
