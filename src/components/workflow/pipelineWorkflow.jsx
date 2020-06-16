@@ -4,6 +4,7 @@ import { axiosApiService } from "../../api/apiService";
 import { AuthContext } from "../../contexts/AuthContext"; 
 import socketIOClient from "socket.io-client";
 import { SteppedLineTo } from "react-lineto";
+import { Link } from "react-router-dom";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -314,11 +315,24 @@ const PipelineWorkflow = (props) => {
       {error ? <ErrorDialog error={error} /> : null}
       {typeof(data.workflow) !== "undefined" && data.workflow.hasOwnProperty("source") ? 
         <>
-          <div className="ml-3 mb-2 w-100 max-content-module-width-50">           
+          <div className="mb-2 w-100 max-content-module-width-50">           
             <div className="title-text-5 mt-2">{data.name}</div>     
           </div>
 
-          <div className="workflow-container ml-3 pl-2 max-content-module-width-50">
+
+          <ul className="nav nav-tabs w-100" style={{ borderBottom: "none" }}>
+            <li className="nav-item">
+              <Link className="nav-link" 
+                to={location => `/workflow/${data._id}`}>Summary</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link active" 
+                to={location => `/workflow/${data._id}/model`}>Workflow</Link>
+            </li>
+          </ul>
+
+
+          <div className="workflow-container pl-2 max-content-module-width-50">
             <div className="pr-1 my-2 text-right">
               {workflowStatus === "running" && 
                 <>
