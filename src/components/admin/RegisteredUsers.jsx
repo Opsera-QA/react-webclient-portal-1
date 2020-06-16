@@ -103,8 +103,7 @@ function RegisteredUsers() {
     }
   }
 
-  function deactivateUser(userId) {
-    const { accessToken } = state;
+  function deactivateUser(userId, accessToken, userInfo) {
     const apiCall = new ApiService("/users/deactivate-user", null, accessToken, { userId: userId });
     apiCall.post()
       .then(function (response) {
