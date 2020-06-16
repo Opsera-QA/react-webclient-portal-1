@@ -24,10 +24,6 @@ function ToolInventory () {
   const [isViewModal, toggleViewModal] = useState(false);
   const [toolId, setToolId] = useState("");
   const [isLoading, setLoading] = useState(false);
-  const [selectedRowDetail, setRowDetails] = useState({
-    id: "",
-    details: {}
-  });
   const [modalType, setModalType] = useState("new");
   const [toolList, setToolList] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -50,20 +46,13 @@ function ToolInventory () {
   const handelEditClick = (toolId, toolData) => {
     setModalType("edit");
     setToolId(toolId);
-    setRowDetails({
-      id: toolId,
-      details: toolData
-    });
     toggleEditModal(true);
   };
 
   const handleDeleteClick = (e, cellData) => {
     e.stopPropagation();
+    setToolId(cellData._id);
     setShowDeleteModal(true);
-    setRowDetails({
-      id: cellData._id,
-      details: cellData
-    });   
   };
 
   const deleteTool = async () => {
@@ -71,7 +60,7 @@ function ToolInventory () {
     try {
       setLoading(true);
       const accessToken = await getAccessToken();
-      let apiUrl = "/registry/" + selectedRowDetail.id;
+      let apiUrl = "/registry/" + toolId;
       const response = await axiosApiService(accessToken).delete(apiUrl, {});
       console.log(response);
     }
@@ -105,10 +94,6 @@ function ToolInventory () {
   const handleNewEntryClick = () => {
     setModalType("new");
     setToolId("");
-    setRowDetails({
-      id: "",
-      details: ""
-    });
     toggleEditModal(true);
   };
 
@@ -122,6 +107,7 @@ function ToolInventory () {
       setToolId(saveResponse._id);
       toggleViewModal(true);
     } else {
+      history.push("/inventory/tools");
       getToolRegistryList();
       toggleViewModal(false);
       toggleEditModal(false);
@@ -181,7 +167,8 @@ function ToolInventory () {
       
       {/*Both of these should be doing a lookup of the altest tool data, not using data passed form ehre */}
       <ToolDetails showModal={isViewModal} closeModal={(toggleModal) => closeViewModal(toggleModal)} toolId={toolId} fnEditTool={handelEditClick}/>
-      <NewTool showModal={isEditModal} closeModal={(toggleModal, response) => closeModal(toggleModal, response)} type={modalType} editTool={selectedRowDetail}/>
+      <NewTool showModal={isEditModal} closeModal={(toggleModal, response) => closeModal(toggleModal, response)} type={modalType} toolId={toolId} /> 
+      
 
       <div className="mt-2 mb-2 text-right">
         <Button variant="primary" size="sm"  
