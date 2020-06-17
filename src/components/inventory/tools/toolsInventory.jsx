@@ -47,6 +47,7 @@ function ToolInventory () {
     setModalType("edit");
     setToolId(toolId);
     toggleEditModal(true);
+    toggleViewModal(false);
   };
 
   const handleDeleteClick = (e, cellData) => {
@@ -167,7 +168,7 @@ function ToolInventory () {
       
       {/*Both of these should be doing a lookup of the altest tool data, not using data passed form ehre */}
       <ToolDetails showModal={isViewModal} closeModal={(toggleModal) => closeViewModal(toggleModal)} toolId={toolId} fnEditTool={handelEditClick}/>
-      <NewTool showModal={isEditModal} closeModal={(toggleModal, response) => closeModal(toggleModal, response)} type={modalType} toolId={toolId} /> 
+      {isEditModal && <NewTool showModal={isEditModal} closeModal={(toggleModal, response) => closeModal(toggleModal, response)} type={modalType} toolId={toolId} />} 
       
 
       <div className="mt-2 mb-2 text-right">
