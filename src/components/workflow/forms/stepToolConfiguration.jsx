@@ -71,7 +71,7 @@ function StepToolConfiguration( { data, editItem, parentCallback }) {
           
       { typeof(stepTool) !== "undefined" ? 
         <div className="ml-1 mt-3">
-          {editItem.tool_name.toLowerCase() === "jenkins" ? <JenkinsConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
+          {editItem.tool_name.toLowerCase() === "jenkins" ? <JenkinsConfiguration pipelineId={data._id} plan={data.workflow.plan} stepId={stepId} stepTool={stepTool} parentCallback={callbackFunction} callbackSaveToVault={saveToVault} /> : null }
           {editItem.tool_name.toLowerCase() === "junit" ? <JunitStepConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
           {editItem.tool_name.toLowerCase() === "xunit" ? <XunitStepConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
           {editItem.tool_name.toLowerCase() === "sonar" ? <SonarStepConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }

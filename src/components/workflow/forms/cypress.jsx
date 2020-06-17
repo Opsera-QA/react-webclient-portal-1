@@ -142,23 +142,23 @@ function CypressStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
   };
 
   const validateRequiredFields = () => {
-    let { toolConfigId, jenkinsUrl, jUserId, jAuthToken } = formData;
+    let { toolConfigId, jenkinsUrl, jUserId, jAuthToken, jobName } = formData;
     if (
       toolConfigId.length === 0 ||    
       jenkinsUrl.length === 0 || 
       jUserId.length === 0 || 
+      jobName.length === 0 ||
       jAuthToken.length === 0 ) {
       setFormMessage("Required Fields Missing!");
       return false;
     } else {
-      setFormMessage("");
-      return true;
     }
   };
 
   const handleCypressChange = (selectedOption) => {
     setFormData({ ...formData, toolConfigId: selectedOption.id ? selectedOption.id : "", jenkinsUrl: selectedOption.configuration ? selectedOption.configuration.jenkinsUrl : "",
       jUserId: selectedOption.configuration ? selectedOption.configuration.jUserId : "",
+      jenkinsPort: selectedOption.configuration ? selectedOption.configuration.jenkinsPort : "",
       jAuthToken: selectedOption.configuration ? selectedOption.configuration.jAuthToken : ""
     });    
   };
