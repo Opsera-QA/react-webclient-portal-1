@@ -152,6 +152,8 @@ function CypressStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
       setFormMessage("Required Fields Missing!");
       return false;
     } else {
+      setFormMessage("");
+      return true;
     }
   };
 
