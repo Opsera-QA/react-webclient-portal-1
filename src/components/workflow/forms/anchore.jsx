@@ -17,12 +17,14 @@ const INITIAL_DATA = {
   jenkinsPort: "",
   jUserId: "",
   jAuthToken: "",
-  jobName: ""
+  jobType: "anchore scan", //hardcoded for now
+  jobName: "",
+  dockerImageUrl: ""
 };
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
-function CypressStepConfiguration( { stepTool, pipelineId, plan, stepId, parentCallback, callbackSaveToVault }) {
+function AnchoreStepConfiguration( { stepTool, pipelineId, plan, stepId, parentCallback, callbackSaveToVault }) {
   
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
@@ -70,7 +72,7 @@ function CypressStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
         }
       }
       // Fire off our API call
-      fetchCypressDetails("cypress");
+      fetchCypressDetails("anchore-scan");
     },
     []
   );
@@ -142,12 +144,14 @@ function CypressStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
   };
 
   const validateRequiredFields = () => {
-    let { toolConfigId, jenkinsUrl, jUserId, jAuthToken } = formData;
+    let { toolConfigId, jenkinsUrl, jUserId, jAuthToken, jobName, dockerImageUrl } = formData;
     if (
       toolConfigId.length === 0 ||    
       jenkinsUrl.length === 0 || 
       jUserId.length === 0 || 
-      jAuthToken.length === 0 ) {
+      jAuthToken.length === 0 ||
+      jobName.length === 0 ||
+      dockerImageUrl.length === 0 ) {
       setFormMessage("Required Fields Missing!");
       return false;
     } else {
@@ -217,8 +221,13 @@ function CypressStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
             </Form.Group>
 
             <Form.Group controlId="branchField">
-              <Form.Label>Job Name</Form.Label>
+              <Form.Label>Job Name*</Form.Label>
               <Form.Control maxLength="150" type="text" placeholder="" value={formData.jobName || ""} onChange={e => setFormData({ ...formData, jobName: e.target.value })} />
+            </Form.Group>
+            
+            <Form.Group controlId="branchField">
+              <Form.Label>Docker Image URL*</Form.Label>
+              <Form.Control maxLength="150" type="text" placeholder="" value={formData.dockerImageUrl || ""} onChange={e => setFormData({ ...formData, dockerImageUrl: e.target.value })} />
             </Form.Group>
 
             <Form.Group controlId="threshold">
@@ -248,7 +257,7 @@ function CypressStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
   );
 }
 
-CypressStepConfiguration.propTypes = {
+AnchoreStepConfiguration.propTypes = {
   data: PropTypes.object,
   pipelineId: PropTypes.string,
   stepId: PropTypes.string,
@@ -257,4 +266,4 @@ CypressStepConfiguration.propTypes = {
 };
 
 
-export default CypressStepConfiguration;
+export default AnchoreStepConfiguration;
