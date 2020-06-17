@@ -11,6 +11,7 @@ import ErrorDialog from "../../common/error";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
+  jobType: "BUILD", //hardcoded, every step wil have a hardcoded jobType is what i know needs to check with Todd.
   toolConfigId: "",
   jenkinsUrl: "",
   jenkinsPort: "",
