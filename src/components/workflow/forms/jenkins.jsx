@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Form, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave, faSpinner, faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
+import { faSave, faSpinner, faExclamationCircle, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
@@ -165,17 +165,16 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
   };
 
   const handleJenkinsChange = (selectedOption) => {
-    setFormData({ ...formData, toolConfigId: selectedOption.id ? selectedOption.id : "", jenkinsUrl: selectedOption.configuration ? selectedOption.configuration.jenkinsUrl : "",
-      jUserId: selectedOption.configuration ? selectedOption.configuration.jUserId : "",
-      jenkinsPort: selectedOption.configuration ? selectedOption.configuration.jenkinsPort : "",
-      jAuthToken: selectedOption.configuration ? selectedOption.configuration.jAuthToken : "",
-    });    
-    // if theres no jobtype add it while he interracts with dropdown
-    if(!formData.jobType) {
-      setFormData({ ...formData, jobType:"BUILD" }); // buildType should also be added but skipping it so that it will be added as part of a dropdown
+    setLoading(true);    
+    if (selectedOption.id && selectedOption.configuration) {
+      setFormData({ ...formData, toolConfigId: selectedOption.id, 
+        jenkinsUrl: selectedOption.configuration.jenkinsUrl, 
+        jUserId: selectedOption.configuration.jUserId, 
+        jenkinsPort: selectedOption.configuration.jenkinsPort, 
+        jAuthToken: selectedOption.configuration.jAuthToken });
     }
+    setLoading(false);    
   };
-  console.log(formData);
 
   return (
     <>
@@ -186,7 +185,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
         { formMessage.length > 0 ? <p className="error-text">{formMessage}</p> : null}
 
         <Form.Group controlId="jenkinsList">
-          <Form.Label>Select Tool*</Form.Label>
+          <Form.Label>Select Registered Tool*</Form.Label>
           {isJenkinsSearching ? (
             <div className="form-text text-muted mt-2 p-2">
               <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> 
@@ -212,68 +211,43 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
           )}
         </Form.Group>
 
-        
-        {formData.toolConfigId ?
-          <> {formData.jenkinsUrl && formData.jUserId ?
-            <>
-              <Form.Group controlId="repoField">
-                <Form.Label>Jenkins Container URL*</Form.Label>
-                <Form.Control  disabled={true} type="text" placeholder="" value={formData.jenkinsUrl || ""} />
-              </Form.Group>
-              <Form.Group controlId="branchField">
-                <Form.Label>Jenkins Port</Form.Label>
-                <Form.Control  disabled={true} type="text" placeholder="" value={formData.jenkinsPort || ""} />
-              </Form.Group>
-              <Form.Group controlId="branchField">
-                <Form.Label>Jenkins User ID*</Form.Label>
-                <Form.Control disabled={true} type="text" placeholder="" value={formData.jUserId || ""}  />
-              </Form.Group>
+        {(!formData.toolConfigId && formData.jenkinsUrl) &&
+        <div className="form-text text-muted mb-3">
+          <FontAwesomeIcon icon={faExclamationTriangle} className="mr-1 yellow" fixedWidth/> 
+              Unregistered Tool settings in use.  The settings below can be used in this step, but cannot be updated.  You must register 
+              a new Jenkins server in the 
+          <Link to="/inventory/tools"> Tool Registry</Link> and add its configuration details. </div>}
 
-              <Form.Group controlId="branchField">
-                <Form.Label>Job Name</Form.Label>
-                <Form.Control maxLength="150" type="text" placeholder="" value={formData.jobName || ""} onChange={e => setFormData({ ...formData, jobName: e.target.value })} />
-              </Form.Group>
 
-              <Form.Group controlId="threshold">
-                <Form.Label>Step Success Threshold</Form.Label>
-                <Form.Control type="text" placeholder="" value={thresholdVal || ""} onChange={e => setThresholdValue(e.target.value)} disabled={true} />
-              </Form.Group>
-            </> :
-          
-            <div className="form-text text-muted pt-2 pl-2">
-              <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth/> 
-              Incomplete account selected.  This account is missing configuration details. Please go to 
-              <Link to="/inventory/tools"> Tool Registry</Link> and add configuration details for this tool. </div>
-          }
-          </> : <>
-            {Object.keys(formData).length > 0 && 
-            <>
-              <Form.Group controlId="repoField">
-                <Form.Label>Jenkins Container URL*</Form.Label>
-                <Form.Control  disabled={true} type="text" placeholder="" value={formData.jenkinsUrl || ""} />
-              </Form.Group>
-              <Form.Group controlId="branchField">
-                <Form.Label>Jenkins Port</Form.Label>
-                <Form.Control  disabled={true} type="text" placeholder="" value={formData.jenkinsPort || ""} />
-              </Form.Group>
-              <Form.Group controlId="branchField">
-                <Form.Label>Jenkins User ID*</Form.Label>
-                <Form.Control disabled={true} type="text" placeholder="" value={formData.jUserId || ""}  />
-              </Form.Group>
+        <Form.Group controlId="repoField">
+          <Form.Label>Jenkins Container URL</Form.Label>
+          <Form.Control disabled={true} type="text" placeholder="" value={formData.jenkinsUrl || ""} />
+        </Form.Group>
+        <Form.Group controlId="branchField">
+          <Form.Label>Jenkins Port</Form.Label>
+          <Form.Control disabled={true} type="text" placeholder="" value={formData.jenkinsPort || ""} />
+        </Form.Group>
+        <Form.Group controlId="branchField">
+          <Form.Label>Jenkins User ID</Form.Label>
+          <Form.Control disabled={true} type="text" placeholder="" value={formData.jUserId || ""}  />
+        </Form.Group>
 
-              <Form.Group controlId="branchField">
-                <Form.Label>Job Name</Form.Label>
-                <Form.Control disabled={true} maxLength="150" type="text" placeholder="" value={formData.jobName || ""} onChange={e => setFormData({ ...formData, jobName: e.target.value })} />
-              </Form.Group>
-            </>
-            }
-          </>
-        }
+        <Form.Group controlId="branchField">
+          <Form.Label>Job Name*</Form.Label>
+          <Form.Control maxLength="150" disabled={false} type="text" placeholder="" value={formData.jobName || ""} onChange={e => setFormData({ ...formData, jobName: e.target.value })} />
+        </Form.Group>
+
+        <Form.Group controlId="threshold">
+          <Form.Label>Success Threshold</Form.Label>
+          <Form.Control type="text" placeholder="" value={thresholdVal || ""} onChange={e => setThresholdValue(e.target.value)} disabled={true} />
+        </Form.Group>
+
+
 
 
         {(formData.jenkinsUrl && jenkinsList.length > 1) &&
         <Form.Group controlId="formBasicCheckbox" className="mt-4 ml-1">
-          <Form.Check type="checkbox" label="Use a docker build?" 
+          <Form.Check type="checkbox" label="Enable Docker Build Support" 
             checked={formData.buildType === "docker" ? true : false} onChange={() => setFormData({ ...formData, buildType: formData.buildType === "docker" ? "gradle" : "docker", dockerTagName : "", dockerName: ""  })}  />  
           {/* <Form.Text className="text-muted"></Form.Text>       */}
         </Form.Group> }
