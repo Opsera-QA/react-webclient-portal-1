@@ -63,7 +63,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
   useEffect(
     () => {
       setErrors(false);
-      async function fetchCypressDetails(service){
+      async function fetchJenkinsDetails(service){
         setisJenkinsSearching(true);
         // Set results state
         let results = await searchjenkinsList(service);
@@ -74,7 +74,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
         }
       }
       // Fire off our API call
-      fetchCypressDetails("jenkins");
+      fetchJenkinsDetails("jenkins");
     },
     []
   );
@@ -131,7 +131,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
         console.log(respObj);
         return respObj;
       } else {
-        setErrors("Cypress information is missing or unavailable!  Please ensure the required Cypress creds are registered and up to date in Tool Registry.");
+        setErrors("Jenkins information is missing or unavailable!  Please ensure the required Jenkins creds are registered and up to date in Tool Registry.");
       }
     }
     catch (err) {
@@ -168,8 +168,12 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
     setFormData({ ...formData, toolConfigId: selectedOption.id ? selectedOption.id : "", jenkinsUrl: selectedOption.configuration ? selectedOption.configuration.jenkinsUrl : "",
       jUserId: selectedOption.configuration ? selectedOption.configuration.jUserId : "",
       jenkinsPort: selectedOption.configuration ? selectedOption.configuration.jenkinsPort : "",
-      jAuthToken: selectedOption.configuration ? selectedOption.configuration.jAuthToken : ""
+      jAuthToken: selectedOption.configuration ? selectedOption.configuration.jAuthToken : "",
     });    
+    // if theres no jobtype add it while he interracts with dropdown
+    if(!formData.jobType) {
+      setFormData({ ...formData, jobType:"BUILD" }); // buildType should also be added but skipping it so that it will be added as part of a dropdown
+    }
   };
   console.log(formData);
 
@@ -186,7 +190,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
           {isJenkinsSearching ? (
             <div className="form-text text-muted mt-2 p-2">
               <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> 
-            Loading Cypress accounts from registry</div>
+            Loading Jenkins accounts from registry</div>
           ) :(
             <>
               {renderForm && jenkinsList && jenkinsList.length > 1 ? 
@@ -209,39 +213,61 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
         </Form.Group>
 
         
-        {formData.toolConfigId && 
-        <> {formData.jenkinsUrl && formData.jUserId ?
-          <>
-            <Form.Group controlId="repoField">
-              <Form.Label>Jenkins Container URL*</Form.Label>
-              <Form.Control  disabled={true} type="text" placeholder="" value={formData.jenkinsUrl || ""} />
-            </Form.Group>
-            <Form.Group controlId="branchField">
-              <Form.Label>Jenkins Port</Form.Label>
-              <Form.Control  disabled={true} type="text" placeholder="" value={formData.jenkinsPort || ""} />
-            </Form.Group>
-            <Form.Group controlId="branchField">
-              <Form.Label>Jenkins User ID*</Form.Label>
-              <Form.Control disabled={true} type="text" placeholder="" value={formData.jUserId || ""}  />
-            </Form.Group>
+        {formData.toolConfigId ?
+          <> {formData.jenkinsUrl && formData.jUserId ?
+            <>
+              <Form.Group controlId="repoField">
+                <Form.Label>Jenkins Container URL*</Form.Label>
+                <Form.Control  disabled={true} type="text" placeholder="" value={formData.jenkinsUrl || ""} />
+              </Form.Group>
+              <Form.Group controlId="branchField">
+                <Form.Label>Jenkins Port</Form.Label>
+                <Form.Control  disabled={true} type="text" placeholder="" value={formData.jenkinsPort || ""} />
+              </Form.Group>
+              <Form.Group controlId="branchField">
+                <Form.Label>Jenkins User ID*</Form.Label>
+                <Form.Control disabled={true} type="text" placeholder="" value={formData.jUserId || ""}  />
+              </Form.Group>
 
-            <Form.Group controlId="branchField">
-              <Form.Label>Job Name</Form.Label>
-              <Form.Control maxLength="150" type="text" placeholder="" value={formData.jobName || ""} onChange={e => setFormData({ ...formData, jobName: e.target.value })} />
-            </Form.Group>
+              <Form.Group controlId="branchField">
+                <Form.Label>Job Name</Form.Label>
+                <Form.Control maxLength="150" type="text" placeholder="" value={formData.jobName || ""} onChange={e => setFormData({ ...formData, jobName: e.target.value })} />
+              </Form.Group>
 
-            <Form.Group controlId="threshold">
-              <Form.Label>Step Success Threshold</Form.Label>
-              <Form.Control type="text" placeholder="" value={thresholdVal || ""} onChange={e => setThresholdValue(e.target.value)} disabled={true} />
-            </Form.Group>
-          </> :
+              <Form.Group controlId="threshold">
+                <Form.Label>Step Success Threshold</Form.Label>
+                <Form.Control type="text" placeholder="" value={thresholdVal || ""} onChange={e => setThresholdValue(e.target.value)} disabled={true} />
+              </Form.Group>
+            </> :
           
-          <div className="form-text text-muted pt-2 pl-2">
-            <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth/> 
+            <div className="form-text text-muted pt-2 pl-2">
+              <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth/> 
               Incomplete account selected.  This account is missing configuration details. Please go to 
-            <Link to="/inventory/tools"> Tool Registry</Link> and add configuration details for this tool. </div>
-        }
-        </>
+              <Link to="/inventory/tools"> Tool Registry</Link> and add configuration details for this tool. </div>
+          }
+          </> : <>
+            {Object.keys(formData).length > 0 && 
+            <>
+              <Form.Group controlId="repoField">
+                <Form.Label>Jenkins Container URL*</Form.Label>
+                <Form.Control  disabled={true} type="text" placeholder="" value={formData.jenkinsUrl || ""} />
+              </Form.Group>
+              <Form.Group controlId="branchField">
+                <Form.Label>Jenkins Port</Form.Label>
+                <Form.Control  disabled={true} type="text" placeholder="" value={formData.jenkinsPort || ""} />
+              </Form.Group>
+              <Form.Group controlId="branchField">
+                <Form.Label>Jenkins User ID*</Form.Label>
+                <Form.Control disabled={true} type="text" placeholder="" value={formData.jUserId || ""}  />
+              </Form.Group>
+
+              <Form.Group controlId="branchField">
+                <Form.Label>Job Name</Form.Label>
+                <Form.Control disabled={true} maxLength="150" type="text" placeholder="" value={formData.jobName || ""} onChange={e => setFormData({ ...formData, jobName: e.target.value })} />
+              </Form.Group>
+            </>
+            }
+          </>
         }
 
 
