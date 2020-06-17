@@ -34,10 +34,10 @@ function Workflow() {
     }
   }, [id, location]);
   
-  const handleTabClick = param => e => {
+  /* const handleTabClick = param => e => {
     setSelection(param);
-  };
-
+  }; */
+  /* 
   const setPillClass = (item, selection) => {
     if (selection === "myPipelines" || selection === "catalog") {
       return "disabled";
@@ -49,34 +49,32 @@ function Workflow() {
       return "";
     }
   };
-
+ */
   return (
     <>
       <div className="max-content-width">
-        <h4>Pipelines</h4>
-        <p>Configure your <b>C</b>ontinuous <b>I</b>ntegration and <b>C</b>ontinuous <b>D</b>elivery pipeline workflows below.</p>
-      
-        <ul className="nav nav-pills mb-2">
-          <li className="nav-item">
-            <Link className={"nav-link " + (selection === "catalog" ? "active" : "")} 
-              to="/workflow/catalog" onClick={handleTabClick("catalog")}>Catalog</Link>
-          </li>
-          <li className="nav-item">
-            <Link className={"nav-link " + (selection === "myPipelines" ? "active" : "")} 
-              to="/workflow" onClick={handleTabClick("myPipelines")}>My Pipelines</Link>
-          </li>
-        
-          <li className="nav-item">
-            <Link className={"nav-link " + setPillClass("pipelineDetail", selection)} 
-              to={location => `/workflow/${itemId}`} onClick={handleTabClick("pipelineDetail")}>Overview</Link>
-          </li>
+        <h4>
+          {selection === "catalog" && "Pipelines Catalog"}
+          {selection === "myPipelines" && "My Pipelines"}
+          {(selection === "pipelineDetail" || selection === "workflowView") && "Pipeline"}
 
-          <li className="nav-item">
-            <Link className={"nav-link " + setPillClass("workflowView", selection)} 
-              to={location => `/workflow/${itemId}/model`} onClick={handleTabClick("workflowView")}>Workflow</Link>
-          </li>
-        
-        </ul>
+        </h4>
+        {/* <p>Configure your <b>C</b>ontinuous <b>I</b>ntegration and <b>C</b>ontinuous <b>D</b>elivery pipeline workflows below.</p> */}
+      
+
+        <nav aria-label="breadcrumb">
+          <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
+            <li className={selection === "catalog" ? "breadcrumb-item active" : "breadcrumb-item"}>
+              {selection !== "catalog" ? <><Link to="/workflow/catalog">Catalog</Link></> : <>Catalog</>}
+            </li>
+            <li className={selection === "myPipelines" ? "breadcrumb-item active" : "breadcrumb-item"}>
+              {selection !== "myPipelines" ? <><Link to="/workflow">My Pipelines</Link></> : <>My Pipelines</>}</li>
+            
+            {(selection === "pipelineDetail" || selection === "workflowView") && 
+            <li className="breadcrumb-item active">Pipeline</li> }
+          </ol>
+        </nav>
+
       </div>
       {itemId.length > 0 && selection === "pipelineDetail" ? <PipelineDetail id={itemId} /> : null } 
       {itemId.length > 0 && selection === "workflowView" ? <PipelineWorkflowView id={itemId} /> : null } 

@@ -45,7 +45,7 @@ function RegisteredUserTable({  data, deployingElk, handleDeletePress, handleDep
   const actionButtons = (cellData) => {
     return(
       <>
-        <Button variant="danger" size="sm" onClick={() => { handleDeletePress(cellData._id); }} > Deactivate User</Button>
+        <Button variant="danger" size="sm" onClick={() => { handleDeletePress(cellData.row.original._id); }} > Deactivate User</Button>
       </>
     );
   };

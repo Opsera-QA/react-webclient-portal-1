@@ -13,16 +13,16 @@ import ErrorDialog from "../../common/error";
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
   toolConfigId: "",
-  jenkinsUrl: "",
-  jenkinsPort: "",
-  jUserId: "",
-  jAuthToken: "",
-  jobName: ""
+  toolUrl: "",
+  userName: "",
+  password: "",
+  vaultSecretKey: "",
+  applicationName: ""
 };
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
-function CypressStepConfiguration( { stepTool, pipelineId, plan, stepId, parentCallback, callbackSaveToVault }) {
+function ArgoCDStepConfiguration( { stepTool, pipelineId, plan, stepId, parentCallback, callbackSaveToVault }) {
   
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
@@ -30,11 +30,11 @@ function CypressStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
   const [formMessage, setFormMessage] = useState("");
   const [renderForm, setRenderForm] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [cypressList, setCypressList] = useState([]);
-  const [isCypressSearching, setIsCypressSearching] = useState(false);
-  const [thresholdVal, setThresholdValue] = useState("");
-  const [thresholdType, setThresholdType] = useState("");
-
+  const [argoList, setArgoList] = useState([]);
+  const [isArgoSearching, setIsArgoSearching] = useState(false);
+  const [argoAppsList, setArgoAppsList] = useState([]);
+  const [isArgoAppsSearching, setIsArgoAppsSearching] = useState(false);
+  
   useEffect(() => {    
     const controller = new AbortController();
     const runEffect = async () => {
@@ -59,35 +59,50 @@ function CypressStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
   useEffect(
     () => {
       setErrors(false);
-      async function fetchCypressDetails(service){
-        setIsCypressSearching(true);
+      async function fetchArgoDetails(service){
+        setIsArgoSearching(true);
         // Set results state
-        let results = await searchCypressList(service);
+        let results = await searchArgoList(service);
         if(results) {
           console.log(results);
-          setCypressList(formatOptions(results));
-          setIsCypressSearching(false);
+          setArgoList(formatOptions(results));
+          setIsArgoSearching(false);
         }
       }
       // Fire off our API call
-      fetchCypressDetails("cypress");
+      fetchArgoDetails("argo");
     },
     []
   );
   
+  useEffect(
+    () => {
+      setErrors(false);
+      async function fetchArgoApplications(id){
+        setIsArgoAppsSearching(true);
+        // Set results state
+        let results = await searchArgoAppsList(id);
+        if(results) {
+          console.log(results);
+          setArgoAppsList(formatOptions(results));
+          setIsArgoAppsSearching(false);
+        }
+      }
+      if(formData.toolUrl && formData.toolConfigId && formData.toolUrl.length >0 && formData.toolConfigId.length > 0 ){
+      // Fire off our API call
+        fetchArgoApplications(formData.toolConfigId);
+      }
+    },
+    [formData.toolUrl]
+  );
 
   const loadFormData = async (step) => {
-    let { configuration, threshold } = step;
+    let { configuration } = step;
     if (typeof(configuration) !== "undefined") {
 
       if (typeof(configuration) !== "undefined") {
         setFormData(configuration);
       }
-      if (typeof(threshold) !== "undefined") {
-        setThresholdType(threshold.type);
-        setThresholdValue(threshold.value);
-      }
-
 
     } else {
       setFormData(INITIAL_DATA);
@@ -100,10 +115,6 @@ function CypressStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
    
       const item = {
         configuration: formData,
-        threshold: {
-          type: thresholdType,
-          value: thresholdVal
-        }
       };
       console.log("item: ", item);
       setLoading(false);
@@ -111,7 +122,7 @@ function CypressStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
     }
   };
   
-  const searchCypressList = async (service) => {  
+  const searchArgoList = async (service) => {  
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
     const apiUrl = "/registry/properties/"+service;   // this is to get all the service accounts from tool registry
@@ -127,7 +138,33 @@ function CypressStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
         console.log(respObj);
         return respObj;
       } else {
-        setErrors("Cypress information is missing or unavailable!  Please ensure the required Cypress creds are registered and up to date in Tool Registry.");
+        setErrors("Argo information is missing or unavailable!  Please ensure the required Cypress creds are registered and up to date in Tool Registry.");
+      }
+    }
+    catch (err) {
+      console.log(err.message);
+      setErrors(err.message);
+    }
+  };
+
+  const searchArgoAppsList = async (id) => {  
+    const { getAccessToken } = contextType;
+    const accessToken = await getAccessToken(); 
+    const apiUrl = "/tools/properties";   
+    const postBody = {
+      tool : "argo",
+      metric : "getApplications",
+      id: id
+    };
+    try {
+      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
+      console.log(res);
+      if( res.data ) {
+        let arrOfObj = res.data.data ? res.data.data.applicationList : [];
+        console.log(arrOfObj);
+        return arrOfObj;
+      } else {
+        setErrors("Argo information is missing or unavailable!  Please ensure the required Cypress creds are registered and up to date in Tool Registry.");
       }
     }
     catch (err) {
@@ -142,13 +179,15 @@ function CypressStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
   };
 
   const validateRequiredFields = () => {
-    let { toolConfigId, jenkinsUrl, jUserId, jAuthToken, jobName } = formData;
+    let { toolConfigId, toolUrl, userName, password, vaultSecretKey, applicationName } = formData;
     if (
       toolConfigId.length === 0 ||    
-      jenkinsUrl.length === 0 || 
-      jUserId.length === 0 || 
-      jobName.length === 0 ||
-      jAuthToken.length === 0 ) {
+      toolUrl.length === 0 || 
+      userName.length === 0 || 
+      password.length === 0 || 
+      vaultSecretKey.length === 0 || 
+      applicationName.length === 0
+    ) {
       setFormMessage("Required Fields Missing!");
       return false;
     } else {
@@ -157,12 +196,17 @@ function CypressStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
     }
   };
 
-  const handleCypressChange = (selectedOption) => {
-    setFormData({ ...formData, toolConfigId: selectedOption.id ? selectedOption.id : "", jenkinsUrl: selectedOption.configuration ? selectedOption.configuration.jenkinsUrl : "",
-      jUserId: selectedOption.configuration ? selectedOption.configuration.jUserId : "",
-      jenkinsPort: selectedOption.configuration ? selectedOption.configuration.jenkinsPort : "",
-      jAuthToken: selectedOption.configuration ? selectedOption.configuration.jAuthToken : ""
+  const handleArgoChange = (selectedOption) => {
+    setFormData({ ...formData, toolConfigId: selectedOption.id ? selectedOption.id : "", userName: selectedOption.configuration ? selectedOption.configuration.userName : "",
+      toolUrl: selectedOption.configuration ? selectedOption.configuration.toolUrl : "",
+      password: selectedOption.configuration ? selectedOption.configuration.password : "",
+      vaultSecretKey: selectedOption.configuration ? selectedOption.configuration.password.vaultKey : "",
+      applicationName: ""
     });    
+  };
+  
+  const handleAppNameChange = (selectedOption) => {
+    setFormData({ ...formData, applicationName: selectedOption.name  });    
   };
   console.log(formData);
 
@@ -176,20 +220,20 @@ function CypressStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
 
         <Form.Group controlId="cypressList">
           <Form.Label>Select Tool*</Form.Label>
-          {isCypressSearching ? (
+          {isArgoSearching ? (
             <div className="form-text text-muted mt-2 p-2">
               <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> 
-            Loading Cypress accounts from registry</div>
+            Loading Argo CD accounts from registry</div>
           ) :(
             <>
-              {renderForm && cypressList && cypressList.length > 1 ? 
+              {renderForm && argoList && argoList.length > 1 ? 
                 <DropdownList
-                  data={cypressList}
-                  value={formData.toolConfigId ? cypressList[cypressList.findIndex(x => x.id === formData.toolConfigId)] : cypressList[0]}
+                  data={argoList}
+                  value={formData.toolConfigId ? argoList[argoList.findIndex(x => x.id === formData.toolConfigId)] : argoList[0]}
                   valueField='id'
                   textField='name'
-                  defaultValue={formData.toolConfigId ? cypressList[cypressList.findIndex(x => x.id === formData.toolConfigId)] : cypressList[0]}
-                  onChange={handleCypressChange}             
+                  defaultValue={formData.toolConfigId ? argoList[argoList.findIndex(x => x.id === formData.toolConfigId)] : argoList[0]}
+                  onChange={handleArgoChange}             
                 /> : <>
                   <div className="form-text text-muted p-2">
                     <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth/> 
@@ -203,30 +247,17 @@ function CypressStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
 
         
         {formData.toolConfigId && 
-        <> {formData.jenkinsUrl && formData.jUserId ?
+        <> {formData.toolUrl && formData.userName ?
           <>
             <Form.Group controlId="repoField">
-              <Form.Label>Jenkins Container URL*</Form.Label>
-              <Form.Control  disabled={true} type="text" placeholder="" value={formData.jenkinsUrl || ""} />
+              <Form.Label>Argo URL*</Form.Label>
+              <Form.Control  disabled={true} type="text" placeholder="" value={formData.toolUrl || ""} />
             </Form.Group>
             <Form.Group controlId="branchField">
-              <Form.Label>Jenkins Port</Form.Label>
-              <Form.Control  disabled={true} type="text" placeholder="" value={formData.jenkinsPort || ""} />
-            </Form.Group>
-            <Form.Group controlId="branchField">
-              <Form.Label>Jenkins User ID*</Form.Label>
-              <Form.Control disabled={true} type="text" placeholder="" value={formData.jUserId || ""}  />
+              <Form.Label>User Name</Form.Label>
+              <Form.Control  disabled={true} type="text" placeholder="" value={formData.userName || ""} />
             </Form.Group>
 
-            <Form.Group controlId="branchField">
-              <Form.Label>Job Name</Form.Label>
-              <Form.Control maxLength="150" type="text" placeholder="" value={formData.jobName || ""} onChange={e => setFormData({ ...formData, jobName: e.target.value })} />
-            </Form.Group>
-
-            <Form.Group controlId="threshold">
-              <Form.Label>Step Success Threshold</Form.Label>
-              <Form.Control type="text" placeholder="" value={thresholdVal || ""} onChange={e => setThresholdValue(e.target.value)} disabled={true} />
-            </Form.Group>
           </> :
           
           <div className="form-text text-muted pt-2 pl-2">
@@ -235,6 +266,35 @@ function CypressStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
             <Link to="/inventory/tools"> Tool Registry</Link> and add configuration details for this tool. </div>
         }
         </>
+        }
+
+        
+        {formData.toolConfigId && 
+        <Form.Group controlId="cypressList">
+          <Form.Label>Select Application*</Form.Label>
+          {isArgoAppsSearching ? (
+            <div className="form-text text-muted mt-2 p-2">
+              <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> 
+            Loading Argo CD Applications</div>
+          ) :(
+            <>
+              {renderForm && argoAppsList && argoAppsList.length > 1 ? 
+                <DropdownList
+                  data={argoAppsList}
+                  value={formData.applicationName ? argoAppsList[argoAppsList.findIndex(x => x.name === formData.applicationName)] : argoAppsList[0]}
+                  valueField='name'
+                  textField='name'
+                  defaultValue={formData.applicationName ? argoList[argoList.findIndex(x => x.name === formData.applicationName)] : argoAppsList[0]}
+                  onChange={handleAppNameChange}             
+                /> : <>
+                  <div className="form-text text-muted p-2">
+                    <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth/> 
+              No applications have been found </div>
+                </> }
+            </>
+
+          )}
+        </Form.Group>
         }
                
         <Button variant="primary" type="button"  className="mt-3"
@@ -250,7 +310,7 @@ function CypressStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
   );
 }
 
-CypressStepConfiguration.propTypes = {
+ArgoCDStepConfiguration.propTypes = {
   data: PropTypes.object,
   pipelineId: PropTypes.string,
   stepId: PropTypes.string,
@@ -259,4 +319,4 @@ CypressStepConfiguration.propTypes = {
 };
 
 
-export default CypressStepConfiguration;
+export default ArgoCDStepConfiguration;
