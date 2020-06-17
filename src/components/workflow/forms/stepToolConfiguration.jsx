@@ -23,6 +23,8 @@ import SpinnakerStepConfiguration from "./spinnaker";
 import ApprovalStepConfiguration from "./approval";
 import CypressStepConfiguration from "./cypress";
 import DockerPushStepConfiguration from "./docker-push";
+import ArgoCDStepConfiguration from "./argocd";
+import AnchoreStepConfiguration from "./anchore";
 
 
 function StepToolConfiguration( { data, editItem, parentCallback }) {
@@ -89,6 +91,8 @@ function StepToolConfiguration( { data, editItem, parentCallback }) {
           {editItem.tool_name.toLowerCase() === "approval" ? <ApprovalStepConfiguration pipelineId={data._id} plan={data.workflow.plan} stepId={stepId} stepTool={stepTool} parentCallback={callbackFunction} callbackSaveToVault={saveToVault} /> : null }
           {editItem.tool_name.toLowerCase() === "cypress" ? <CypressStepConfiguration pipelineId={data._id} plan={data.workflow.plan} stepId={stepId} stepTool={stepTool} parentCallback={callbackFunction} callbackSaveToVault={saveToVault} /> : null }
           {editItem.tool_name.toLowerCase() === "docker-push" ? <DockerPushStepConfiguration pipelineId={data._id} plan={data.workflow.plan} stepId={stepId} stepTool={stepTool} parentCallback={callbackFunction} callbackSaveToVault={saveToVault} /> : null }
+          {editItem.tool_name.toLowerCase() === "argo" ? <ArgoCDStepConfiguration pipelineId={data._id} plan={data.workflow.plan} stepId={stepId} stepTool={stepTool} parentCallback={callbackFunction} callbackSaveToVault={saveToVault} /> : null }
+          {editItem.tool_name.toLowerCase() === "anchore-scan" ? <AnchoreStepConfiguration pipelineId={data._id} plan={data.workflow.plan} stepId={stepId} stepTool={stepTool} parentCallback={callbackFunction} callbackSaveToVault={saveToVault} /> : null }
         </div>
         : null }
 
