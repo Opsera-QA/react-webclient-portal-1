@@ -17,7 +17,7 @@ import SchedulerWidget from "../common/schedulerWidget";
 import isEqual from "lodash.isequal";
 import ApprovalModal from "./approvalModal";
 import PipelineHelpers from "./pipelineHelpers";
-
+import EditToolModal from "./editToolModal";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -39,6 +39,7 @@ const PipelineItemDetail = (props) => {
   const [editDescription, setEditDescription] = useState(false);
   const [editProject, setEditProject] = useState(false);
   const [editSchedule, setEditSchedule] = useState(false);
+  const [editTags, setEditTags] = React.useState(false);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [workflowStatus, setWorkflowStatus] = useState(false);
   const [approvalStep, setApprovalStep] = useState({});
@@ -214,7 +215,6 @@ const PipelineItemDetail = (props) => {
   }
 
   const handleSavePropertyClick = async (pipelineId, value, type) => {
-    console.log(value);
 
     if (Object.keys(value).length > 0 && type.length > 0) {
       const { getAccessToken } = contextType;
@@ -250,6 +250,12 @@ const PipelineItemDetail = (props) => {
           "workflow": data.workflow
         };
         setEditTitle(false);
+      } else if (type === "tags") {
+        data.tags = value;
+        postBody = {
+          "tags": data.tags
+        };
+        setEditTags(false);
       }
       
       if (Object.keys(postBody).length > 0 ) {
@@ -260,9 +266,9 @@ const PipelineItemDetail = (props) => {
           setErrors(response.error);
         } else {
           setFormData(INITIAL_FORM_DATA);          
-
         }  
       }
+
     } else {
       console.log("Missing value or type for edit field");
     }
@@ -312,8 +318,6 @@ const PipelineItemDetail = (props) => {
                       size="xs" transform="shrink-6"
                       style={{ cursor: "pointer" }}
                       onClick= {() => { setEditTitle(true); setFormData({ ...formData, name: data.name }); }} /> : null }
-                    
-                  
                 </> 
               }</div>     
           </div>
@@ -418,10 +422,21 @@ const PipelineItemDetail = (props) => {
               <Col lg className="py-1"><span className="text-muted mr-1">Organization:</span> <span className="upper-case-first">{data.organizationName}</span></Col>
               <Col lg className="py-1"><span className="text-muted mr-1">Created On:</span>  {format(new Date(data.createdAt), "yyyy-MM-dd', 'hh:mm a")}</Col>
             </Row>
+
             <Row className="row-content-spacing">
               <Col className="py-1"><span className="text-muted mr-1">Tags:</span> 
-                {data.tags.map((item, idx) => (<span key={idx}>{item}, </span>))}</Col>
+                {!editTags && <> 
+                  {data.tags.map((item, idx) => (<span key={idx}>{item}, </span>))} 
+                  <FontAwesomeIcon icon={faPencilAlt}
+                    className="ml-2 text-muted"
+                    size="xs" transform="shrink-4"
+                    style={{ cursor: "pointer" }}
+                    onClick= {() => { setEditTags(true); }} />
+                </>}
+                {editTags && <EditToolModal data={data.tags} visible={editTags} onHide={() => { setEditTags(false); }} onClick= {(tags) => { handleSavePropertyClick(data._id, tags, "tags"); }} /> }
+              </Col>
             </Row>
+
             {/* <Row className="row-content-spacing">
                 <Col className="py-1"><span className="text-muted mr-1">Tools:</span> 
                   {_buildToolList(data.workflow.plan).map((item, idx) => (<span key={idx} className="upper-case-first mr-1">{item} </span>))}</Col> 

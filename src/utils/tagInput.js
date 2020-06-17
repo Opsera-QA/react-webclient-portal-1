@@ -5,7 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 function TagInput(props) {
-  const [ tags, setTags ] = useState(props.defaultValue || []);
+  let defaultTag = props.defaultValue;
+  const [ tags, setTags ] = useState( defaultTag || []);
   const [ tagInput, setTagInput ] = useState("");
 
   useEffect(() => {
