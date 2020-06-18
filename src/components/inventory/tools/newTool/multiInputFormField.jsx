@@ -91,15 +91,15 @@ function MultiInputFormField(props) {
           {rowList.map((row, key) => {
             return <tr key={key}>
               {formField.fields.map((field, key) => {
-
                 return <td key={key}><Form.Control defaultValue={row[field]} disabled={field == "id" || field == "identifier"} type="text" size="sm" placeholder={"New " + `${field}`} onChange={e => updateCellData(e, row, field)} /></td>;
               })}
-              {formField.showEditButton && <td><Button variant="outline-danger" size="sm" onClick={e => deleteRow(e, row)} ><FontAwesomeIcon icon={faTrash}/></Button></td>}
+              {formField.showEditButton && <td><Button variant="primary" size="sm" onClick={addRow}><FontAwesomeIcon icon={faPlus}/></Button></td>}
+              {formField.showEditButton && <td><Button disabled={Object.values(row)[0].length == 0} variant={ Object.values(row)[0].length == 0 ? "outline-secondary" : "outline-danger"} size="sm" onClick={e => deleteRow(e, row)} ><FontAwesomeIcon icon={faTrash} /></Button></td>}
             </tr>;
           })}
         </tbody>
       </Table>
-      {formField.showEditButton && <Button variant="primary" size="sm" onClick={addRow}><FontAwesomeIcon icon={faPlus} className="mr-1"/> Add</Button>}
+
     </>
   );
 }
