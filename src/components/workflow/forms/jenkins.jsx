@@ -171,7 +171,9 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
         jenkinsUrl: selectedOption.configuration.jenkinsUrl, 
         jUserId: selectedOption.configuration.jUserId, 
         jenkinsPort: selectedOption.configuration.jenkinsPort, 
-        jAuthToken: selectedOption.configuration.jAuthToken });
+        jAuthToken: selectedOption.configuration.jAuthToken,
+        jobType : "BUILD"
+      });
     }
     setLoading(false);    
   };
