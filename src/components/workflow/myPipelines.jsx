@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { AuthContext } from "../../contexts/AuthContext"; 
 import { ApiService } from "../../api/apiService";
+import ErrorDialog from "../common/error";
 import { format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTag, faSearch, faFlag, faStar, faClock } from "@fortawesome/free-solid-svg-icons";
@@ -56,7 +57,7 @@ function MyPipelines() {
   } else {
     return (
       <>        
-        {errors ? <div className="error-text">Error Reported: {JSON.stringify(errors)}</div> : null}
+        {errors && <ErrorDialog error={errors} />}
         
         <div className="mt-3 max-content-width">
           { Object.keys(data) === 0 ? 
