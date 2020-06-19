@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faFileAlt, faCog, faPen, faArchive, faPlay, faSync, faSpinner, faStopCircle, faHistory, faCheck, faPause, faFlag } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faFileAlt, faCog, faPen, faArchive, faPlay, faSync, faSpinner, faStopCircle, faHistory, faCheck, faPause, faFlag, faClipboardCheck, faCodeBranch, faFileCode, faCubes } from "@fortawesome/free-solid-svg-icons";
 import ModalActivityLogs from "../common/modalActivityLogs";
 import PipelineActions from "./actions";
 import PipelineWorkflowItemList from "./pipelineWorkflowItemList";
@@ -410,25 +410,35 @@ const PipelineWorkflow = (props) => {
                   <div className="p-1 upper-case-first"><span className="text-muted">Project:</span> {data.workflow.source.name}</div>            
                 </div> : null }
               {data.workflow.source.service ? 
-                <div className="d-flex">
-                  <div className="p-1 upper-case-first"><span className="text-muted">Service:</span> {data.workflow.source.service}</div>            
+                <div className="d-flex mt-1">
+                  <div className="upper-case-first">
+                    <span className="text-muted small">
+                      <FontAwesomeIcon icon={faCubes} size="sm" fixedWidth className="mr-1"/>Service: {data.workflow.source.service}</span>                    
+                  </div>            
                 </div> : null }
+
               {data.workflow.source.repository ? 
                 <div className="d-flex">
-                  <div className="p-1 upper-case-first"><span className="text-muted">Repository:</span> {data.workflow.source.repository}</div>            
+                  <div className="upper-case-first">
+                    <span className="text-muted small">
+                      <FontAwesomeIcon icon={faFileCode} size="sm" fixedWidth className="mr-1"/>Repository: {data.workflow.source.repository}</span>                    
+                  </div>            
                 </div> : null }
               {data.workflow.source.branch ? 
                 <div className="d-flex">
-                  <div className="p-1 upper-case-first"><span className="text-muted">Branch:</span> {data.workflow.source.branch}</div>            
+                  <div className="upper-case-first">
+                    <span className="text-muted small">
+                      <FontAwesomeIcon icon={faCodeBranch} size="sm" fixedWidth className="mr-1"/>Branch: {data.workflow.source.branch}</span>
+                  </div>            
                 </div> : null }
-              
-              <div className="d-flex">
-                <div className="p-1"></div>
-              </div>
 
-              <div className="d-flex align-items-end flex-row">
-                <div className="text-left"><span className="text-muted small">Trigger: {data.workflow.source.trigger_active ? "Enabled": "Disabled"}</span></div>
-                <div className="p-2"></div>
+              <div className="d-flex">
+                <div className="upper-case-first">
+                  <span className="text-muted small">
+                    <FontAwesomeIcon icon={faClipboardCheck} size="sm" fixedWidth className="mr-1"/>Webhook Trigger: {data.workflow.source.trigger_active ? "Enabled": "Disabled"}</span></div>
+              </div>
+                
+              <div className="d-flex align-items-end flex-row mt-1">
                 <div className="ml-auto text-right">
                   <OverlayTrigger
                     placement="top"
@@ -456,7 +466,7 @@ const PipelineWorkflow = (props) => {
                     overlay={renderTooltip({ message: "Configure Source Repository" })} >
                     <FontAwesomeIcon icon={faCog}
                       style={{ cursor: "pointer" }}
-                      className="text-muted mr-2" fixedWidth
+                      className="text-muted" fixedWidth
                       onClick={() => { handleSourceEditClick(); }} />  
                   </OverlayTrigger> 
                 </div>

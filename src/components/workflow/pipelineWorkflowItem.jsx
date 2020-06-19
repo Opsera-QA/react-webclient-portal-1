@@ -4,7 +4,7 @@ import { axiosApiService } from "../../api/apiService";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import Modal from "../common/modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faCog, faArchive, faHourglassStart, faFlag, faPen, faExclamationTriangle, faSpinner, faCheckCircle, faEnvelope, faTimesCircle, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faCog, faArchive, faHourglassStart, faFlag, faIdBadge, faPen, faExclamationTriangle, faSpinner, faCheckCircle, faEnvelope, faTimesCircle, faTrash, faBan } from "@fortawesome/free-solid-svg-icons";
 import ModalActivityLogs from "../common/modalActivityLogs";
 import ApprovalModal from "./approvalModal";
 import { format } from "date-fns";
@@ -187,15 +187,27 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
                       onClick={() => { setInfoModal({ show:true, header: "Step Warning", message: "This step is missing configuration information and will not run.", button: "OK" }); }} />
                   </OverlayTrigger> }
 
-                { itemState === "pending" && 
-                  <OverlayTrigger
-                    placement="top"
-                    delay={{ show: 250, hide: 400 }}
-                    overlay={renderTooltip({ message: "This is the next pending step in the workflow" })} >
-                    <FontAwesomeIcon icon={faHourglassStart} className="mr-2 yellow" 
-                      style={{ cursor: "pointer" }} 
-                      onClick={() => { setInfoModal({ show:true, header: "Step Warning", message: "This step is the next pending step in the workflow.", button: "OK" }); }} />
-                  </OverlayTrigger> }
+                { (itemState === "pending" && item.active) && 
+                    <OverlayTrigger
+                      placement="top"
+                      delay={{ show: 250, hide: 400 }}
+                      overlay={renderTooltip({ message: "This is the next pending step in the workflow" })} >
+                      <FontAwesomeIcon icon={faHourglassStart} className="mr-2 yellow" 
+                        style={{ cursor: "pointer" }} 
+                        onClick={() => { setInfoModal({ show:true, header: "Step Warning", message: "This step is the next pending step in the workflow.", button: "OK" }); }} />
+                    </OverlayTrigger>                                     
+                }
+
+                { !item.active && 
+                <OverlayTrigger
+                  placement="top"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltip({ message: "This step is currently disabled" })} >
+                  <FontAwesomeIcon icon={faBan} className="mr-2 dark-grey" 
+                    style={{ cursor: "pointer" }} 
+                    onClick={() => { setInfoModal({ show:true, header: "Step Disabled", message: "This step is currently disabled and will be skipped during a pipeline run.  To enable this step, edit the workflow (via the pipeline editor icon at the top) and mark the step as Active.", button: "OK" }); }} />
+                </OverlayTrigger> 
+                }
                 
               </> : 
               <OverlayTrigger
@@ -250,7 +262,8 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
 
         {stepConfigured === true ? 
           <div className="d-flex align-items-end flex-row">
-            <div className="p-1"><span className="text-muted small">Step: {item._id}</span></div>
+            <div className="p-1"><span className="text-muted small">
+              <FontAwesomeIcon icon={faIdBadge} size="sm" fixedWidth className="mr-1"/>ID: {item._id}</span></div>
             <div className="p-2"></div>
             <div className="flex-grow-1 p-1 text-right">
               {!editWorkflow ? 
