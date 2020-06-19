@@ -450,7 +450,7 @@ const PipelineWorkflow = (props) => {
                       onClick={() => { handleViewClick(data.workflow.source, "Step Settings"); }} />
                   </OverlayTrigger>
 
-                  <OverlayTrigger
+                  {/* <OverlayTrigger
                     placement="top"
                     delay={{ show: 250, hide: 400 }}
                     overlay={renderTooltip({ message: "View Source Activity Logs" })} >
@@ -458,7 +458,7 @@ const PipelineWorkflow = (props) => {
                       className="text-muted mr-2" fixedWidth
                       style={{ cursor: "pointer" }}
                       onClick={() => { handleViewSourceActivityLog(data._id, data.workflow.source.service); }} />
-                  </OverlayTrigger>
+                  </OverlayTrigger> */}
 
                   <OverlayTrigger
                     placement="top"
