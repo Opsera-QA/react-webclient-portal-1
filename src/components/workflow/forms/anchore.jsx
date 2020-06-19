@@ -19,7 +19,7 @@ const INITIAL_DATA = {
   jAuthToken: "",
   jobType: "anchore scan", //hardcoded for now
   jobName: "",
-  buildStepId: "",
+  ecrPushStepId: "",
   dockerImageUrl: ""
 };
 
@@ -183,8 +183,8 @@ function AnchoreStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
   };
   console.log(formData);
 
-  const handleBuildStepChange = (selectedOption) => {
-    setFormData({ ...formData, buildStepId: selectedOption._id });    
+  const handleECRStepChange = (selectedOption) => {
+    setFormData({ ...formData, ecrPushStepId: selectedOption._id });    
   };
 
   return (
@@ -200,7 +200,7 @@ function AnchoreStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
           {isCypressSearching ? (
             <div className="form-text text-muted mt-2 p-2">
               <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> 
-            Loading Cypress accounts from registry</div>
+            Loading anchore accounts from registry</div>
           ) :(
             <>
               {renderForm && cypressList && cypressList.length > 1 ? 
@@ -245,15 +245,15 @@ function AnchoreStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
             </Form.Group>
 
             <Form.Group controlId="s3Step">
-              <Form.Label>Build Step Info*</Form.Label>
+              <Form.Label>ECR Push Step Info*</Form.Label>
               {listOfSteps ?
                 <DropdownList
                   data={listOfSteps}
-                  value = {formData.buildStepId ? listOfSteps[listOfSteps.findIndex(x => x._id === formData.buildStepId)] : listOfSteps[0]}
+                  value = {formData.ecrPushStepId ? listOfSteps[listOfSteps.findIndex(x => x._id === formData.ecrPushStepId)] : listOfSteps[0]}
                   valueField='_id'
                   textField='name'
-                  defaultValue={formData.buildStepId ? listOfSteps[listOfSteps.findIndex(x => x._id === formData.buildStepId)] : listOfSteps[0]}
-                  onChange={handleBuildStepChange}             
+                  defaultValue={formData.ecrPushStepId ? listOfSteps[listOfSteps.findIndex(x => x._id === formData.ecrPushStepId)] : listOfSteps[0]}
+                  onChange={handleECRStepChange}             
                 /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted ml-2" fixedWidth/> }
             </Form.Group>
 
