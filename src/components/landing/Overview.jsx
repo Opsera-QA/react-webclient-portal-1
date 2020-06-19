@@ -53,7 +53,11 @@ function OverviewLanding() {
 
   const loadPipelines = (id) => {
     // eslint-disable-next-line react/prop-types
-    history.push("/workflow/" + id);
+    if (id) {
+      history.push("/workflow/" + id);
+    } else {
+      history.push("/workflow");
+    }    
   };
 
   const loadAnalytics = () => {
