@@ -4,7 +4,7 @@ import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
 import { Button, Modal, Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faSpinner, faIdBadge } from "@fortawesome/free-solid-svg-icons";
 import PipelineHelpers from "./pipelineHelpers";
 
 const INITIAL_FORM = {
@@ -20,6 +20,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
   const [accessToken, setAccessToken] = useState("");
   const [message, setMessage] = useState("");
   const [approvalStep, setApprovalStep] = useState({});
+  const [priorToApprovalStep, setPriorToApprovalStep] = useState({});
   const [formData, setFormData] = useState(INITIAL_FORM);
 
   useEffect(() => {
@@ -50,13 +51,16 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
 
   const loadApprovalRequest = async (pipeline) => {
     const step = PipelineHelpers.getPendingApprovalStep(pipeline);
+    const priorStep = PipelineHelpers.getPriorStepFrom(pipeline, step);
     if (step) {
       setApprovalStep(step);
-      let message = `Step ${step.name} in ${pipeline.name} requires approval in order to proceed.  `;
+      setPriorToApprovalStep(priorStep);
+      console.log(priorStep);
+      let customStepMessage = "";
       if (step.tool.configuration.message.length > 0) {
-        message += step.tool.configuration.message;
+        customStepMessage += step.tool.configuration.message + " Approval Contact: " + step.tool.configuration.contact;
       }
-      setMessage(message); 
+      setMessage(customStepMessage); 
     }      
   };
 
@@ -106,11 +110,16 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
 
           {Object.keys(approvalStep) === 0 ? <div className="info-text">No steps in this pipeline require approval at this time.</div> : 
             <>
-              <div className="mt-1 pb-3">{message}</div>   
-              <div className="mb-3">Please complete the form below in order to allow the pipeline to continue.</div>         
+              <div className="my-2">Approval Required After Step: {priorToApprovalStep.name}</div> 
+              <div><small className="pl-2"><FontAwesomeIcon icon={faIdBadge} size="sm" fixedWidth className="mr-1"/>  
+                      ID: {priorToApprovalStep._id}</small></div>   
+              
+              { message && <div className="my-3">Step Approval Message:<br/><span className="text-muted">{message}</span></div>}            
+
+              <div className="my-3">Please review the status of this pipeline and then log approval here in order for it to proceed to the next step.</div>   
               <Form>
                 <Form.Group controlId="repoField">
-                  <Form.Label>Log Approval Message</Form.Label>
+                  <Form.Label>Notes:</Form.Label>
                   <Form.Control as="textarea" type="text" placeholder="" value={formData.message || ""} onChange={e => setFormData({ ...formData, message: e.target.value })} />
                 </Form.Group>
                 <small className="form-text text-muted mt-2 text-left">Optional message to include in approval log</small>

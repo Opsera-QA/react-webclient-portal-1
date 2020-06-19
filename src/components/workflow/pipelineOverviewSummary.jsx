@@ -11,7 +11,7 @@ import Modal from "../common/modal";
 import ModalActivityLogs from "../common/modalActivityLogs";
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileAlt, faPencilAlt, faHistory, faSync, faPlay, faTrash, faStopCircle, faSave, faSpinner, faTimes, faCogs, faPause, faFlag } from "@fortawesome/free-solid-svg-icons";
+import { faFileAlt, faPencilAlt, faHistory, faSync, faPlay, faTrash, faStopCircle, faSave, faSpinner, faTimes, faCogs, faPause, faHourglass, faFlag } from "@fortawesome/free-solid-svg-icons";
 import "./workflows.css";
 import SchedulerWidget from "../common/schedulerWidget";
 import isEqual from "lodash.isequal";
@@ -44,6 +44,7 @@ const PipelineItemDetail = (props) => {
   const [workflowStatus, setWorkflowStatus] = useState(false);
   const [approvalStep, setApprovalStep] = useState({});
   const [showApprovalModal, setShowApprovalModal] = useState(false);
+  const [infoModal, setInfoModal] = useState({ show:false, header: "", message: "", button: "OK" });
   const endPointUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
   const [ownerName, setOwnerName] = useState("");
   let history = useHistory();
@@ -174,6 +175,12 @@ const PipelineItemDetail = (props) => {
 
   const handleApprovalClick = () => {
     setShowApprovalModal(true);    
+  };
+
+  const handleApprovalActivity = () => {
+    setInfoModal({ show:true, header: "Approval Status", message: "Your approval action has been logged.  The pipeline has been scheduled to resume in a few minutes.", button: "OK" });
+    parentCallback();
+    subscribeToTimer();  
   };
 
   const handleStopWorkflowClick = async (pipelineId) => {
@@ -513,10 +520,23 @@ const PipelineItemDetail = (props) => {
                       </>}
 
                   {(workflowStatus === "stopped" || !workflowStatus) && 
+                  <>
+                    { data.workflow.schedule.start_date ? 
+                      <>
+                        <Button variant="outline-dark" className="mr-1"  size="sm" disabled>
+                          <FontAwesomeIcon icon={faHourglass} fixedWidth className="mr-1"/>Pending Scheduled Activity</Button> 
+                        <Button variant="outline-success" className="mr-1" size="sm"
+                          onClick={() => { handleRunPipelineClick(data._id); }}
+                          disabled={role !== "administrator"}>
+                          <FontAwesomeIcon icon={faPlay} fixedWidth className="mr-1"/>Force Start</Button> 
+                      </>
+                      :
                       <Button variant="success" className="mr-1" size="sm"
                         onClick={() => { handleRunPipelineClick(data._id); }}
                         disabled={role !== "administrator"}>
-                        <FontAwesomeIcon icon={faPlay} fixedWidth className="mr-1"/>Start Pipeline</Button>}
+                        <FontAwesomeIcon icon={faPlay} fixedWidth className="mr-1"/>Start Pipeline</Button>
+                    }                        
+                  </>}
                 
                   <OverlayTrigger
                     placement="top"
@@ -553,8 +573,8 @@ const PipelineItemDetail = (props) => {
         handleConfirmModal={() => deleteItem(modalDeleteId)} /> : null}
      
       <ModalActivityLogs header="Pipeline Details" size="lg" jsonData={modalMessage} show={showModal} setParentVisibility={setShowModal} />
-
-      {showApprovalModal && <ApprovalModal pipelineId={data._id} visible={showApprovalModal} setVisible={setShowApprovalModal} refreshActivity={parentCallbackRefreshActivity} />}
+      {infoModal.show && <Modal header={infoModal.header} message={infoModal.message} button={infoModal.button} handleCancelModal={() => setInfoModal({ ...infoModal, show: false })}  />}
+      {showApprovalModal && <ApprovalModal pipelineId={data._id} visible={showApprovalModal} setVisible={setShowApprovalModal} refreshActivity={handleApprovalActivity} />}
     </>
     
   );
