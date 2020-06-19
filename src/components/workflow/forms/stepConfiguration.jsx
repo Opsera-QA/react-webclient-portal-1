@@ -142,7 +142,7 @@ function StepConfiguration( { data, stepId, parentCallback }) {
       { formMessage.length > 0 ? <p className="text-danger">{formMessage}</p> : null}
       <div className="mt-4 mb-4">
         <Form.Check 
-          type="switch"  disabled
+          type="switch" 
           id="enabled-switch"
           label="Step Enabled" 
           checked={formData.active ? true : false}   

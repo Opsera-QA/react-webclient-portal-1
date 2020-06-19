@@ -79,6 +79,8 @@ function PipelineWorkflowItemList({ items, lastStep, editWorkflow, pipelineId, a
     if (item.tool === undefined || item.tool.configuration === undefined) {
       //set to warning state
       classString += " workflow-step-warning";
+    } else if (!item.active) {
+      classString += " workflow-step-disabled";
     } else if (typeof(last_step) !== "undefined") {
       if(typeof(last_step.success) !== "undefined" && last_step.success.step_id === item_id) {
         classString += " workflow-step-success";
