@@ -145,7 +145,7 @@ const ItemSummaries = (props) => {
                   Tags: {item.tags.map((item, idx) => (<span key={idx}>{item} </span>))}</small>
                   </Col>
                 </Row>
-                <Row className="mt-2">
+                <Row className="mt-1">
                   <Col lg className="text-muted">
                     <small className="text-muted">
                       <FontAwesomeIcon icon={faIdBadge} size="sm" fixedWidth className="mr-1"/>  
