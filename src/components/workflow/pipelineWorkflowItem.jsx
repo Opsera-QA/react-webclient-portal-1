@@ -4,7 +4,7 @@ import { axiosApiService } from "../../api/apiService";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import Modal from "../common/modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faCog, faArchive, faHourglassStart, faFlag, faIdBadge, faPen, faExclamationTriangle, faSpinner, faCheckCircle, faEnvelope, faTimesCircle, faTrash, faBan } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faCog, faArchive, faHourglassStart, faFlag, faIdBadge, faPen, faExclamationTriangle, faSpinner, faCheckCircle, faEnvelope, faTimesCircle, faTrash, faBan, faTerminal } from "@fortawesome/free-solid-svg-icons";
 import ModalActivityLogs from "../common/modalActivityLogs";
 import ApprovalModal from "./approvalModal";
 import { format } from "date-fns";
@@ -12,9 +12,6 @@ import "./workflows.css";
 
 
 const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessToken, editWorkflow, parentCallbackEditItem, deleteStep, parentHandleViewSourceActivityLog }) => {
-  const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState({});
-  const [modalHeader, setModalHeader] = useState("");
   const [currentStatus, setCurrentStatus] = useState({});
   const [itemState, setItemState] = useState(false);
   const [stepConfigured, setStepConfigured] = useState(true);
@@ -22,6 +19,7 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
   const [modalDeleteIndex, setModalDeleteIndex] = useState(false);
   const [toolProperties, setToolProperties] = useState({});
   const [infoModal, setInfoModal] = useState({ show:false, header: "", message: "", button: "OK" });
+  const [activityLogModal, setActivityLogModal] = useState({ show:false, header: "", message: "", button: "OK" });
   const [showApprovalModal, setShowApprovalModal] = useState(false);
   
   useEffect(() => {    
@@ -90,10 +88,10 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
   };
 
   const handleViewClick = (data, header) => {
-    setModalMessage(data);
-    setModalHeader(header);
-    setShowModal(true);
+    setActivityLogModal({ show:true, header: header, message: data, button: "OK" });
   };
+
+
 
   const handleEditClick = (type, tool, itemId) => {
     if (tool && tool.tool_identifier !== undefined) {
@@ -115,6 +113,11 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
   const handleDeleteStepClickConfirm = (index) => {    
     setShowDeleteModal(false);    
     deleteStep(index);
+  };
+
+  const handleViewToolActivity = (pipelineId, tool_identifier, stepId) => {
+    //trigger custom modal that will start the stream
+    
   };
 
   const getToolDetails = async (tool_identifier) => {
@@ -278,18 +281,31 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
                       onClick={() => { handleViewClick(item, "Step Settings"); }} />
                   </OverlayTrigger>
 
-                  <OverlayTrigger
+                  {/* TMP! */}
+                  {/*  <OverlayTrigger
                     placement="top"
                     delay={{ show: 250, hide: 400 }}
-                    overlay={renderTooltip({ message: "View Step Activity Logs" })} >
-                    <FontAwesomeIcon icon={faArchive}
-                      className="text-muted mx-1" fixedWidth
+                    overlay={renderTooltip({ message: "View Running Tool Activity (if available)" })} >
+                    <FontAwesomeIcon icon={faTerminal}
+                      className="green mx-1" fixedWidth
                       style={{ cursor: "pointer" }}
-                      onClick={() => { parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id); }} />
-                  </OverlayTrigger>
+                      onClick={() => { handleViewToolActivity(pipelineId, item.tool.tool_identifier, item._id); }} />
+                  </OverlayTrigger> */}
+                  {/* TMP! */}
+
+
 
                   {itemState !== "running" ? 
                     <>
+                      <OverlayTrigger
+                        placement="top"
+                        delay={{ show: 250, hide: 400 }}
+                        overlay={renderTooltip({ message: "View Step Activity Logs" })} >
+                        <FontAwesomeIcon icon={faArchive}
+                          className="text-muted mx-1" fixedWidth
+                          style={{ cursor: "pointer" }}
+                          onClick={() => { parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id); }} />
+                      </OverlayTrigger>
                       <OverlayTrigger
                         placement="top"
                         delay={{ show: 250, hide: 400 }}
@@ -315,6 +331,15 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
                       <OverlayTrigger
                         placement="top"
                         delay={{ show: 250, hide: 400 }}
+                        overlay={renderTooltip({ message: "View Running Tool Activity (if available)" })} >
+                        <FontAwesomeIcon icon={faTerminal}
+                          className="green mx-1" fixedWidth
+                          style={{ cursor: "pointer" }}
+                          onClick={() => { handleViewToolActivity(pipelineId, item.tool.tool_identifier, item._id); }} />
+                      </OverlayTrigger>
+                      <OverlayTrigger
+                        placement="top"
+                        delay={{ show: 250, hide: 400 }}
                         overlay={renderTooltip({ message: "Cannot access settings while pipeline is running" })} >
                         <FontAwesomeIcon icon={faEnvelope}
                           className="text-muted mx-1" fixedWidth  />
@@ -335,7 +360,13 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
 
       </div>
 
-      <ModalActivityLogs header={modalHeader} size="lg" jsonData={modalMessage} show={showModal} setParentVisibility={setShowModal} />
+      <ModalActivityLogs 
+        header={activityLogModal.header} 
+        size="lg" 
+        jsonData={activityLogModal.message} 
+        liveStreamObject={activityLogModal.liveData} 
+        show={activityLogModal.slow}
+        setParentVisibility={() => setActivityLogModal({ ...activityLogModal, show: false })}  />
 
       {showApprovalModal && <ApprovalModal pipelineId={pipelineId} visible={showApprovalModal} setVisible={setShowApprovalModal} refreshActivity={handleApprovalActivity} />}
 
