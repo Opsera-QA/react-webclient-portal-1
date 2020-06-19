@@ -15,6 +15,15 @@ pipelineHelpers.getPendingApprovalStep = (pipeline) => {
   return false;
 };
 
+pipelineHelpers.getPriorStepFrom = (pipeline, step) => {
+  if (step) {
+    let stepArrayIndex = pipeline.workflow.plan.findIndex(x => x._id === step._id); 
+    if (stepArrayIndex > 0) {
+      return pipeline.workflow.plan[stepArrayIndex-1];
+    }
+  }
+};
+
 pipelineHelpers.getUserNameById = async (userId, accessTokenFn) => {
   const accessToken = await accessTokenFn();
   let name = userId;
