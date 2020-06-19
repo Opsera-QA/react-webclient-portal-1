@@ -59,6 +59,12 @@
   border-width: 2px;
 }
 
+.workflow-step-disabled {
+  border-color: #6c757d;
+  border-width: 2px;
+  opacity: .65;
+}
+
 .workflow-action-icons {
   font-size: 1.1em;
   
