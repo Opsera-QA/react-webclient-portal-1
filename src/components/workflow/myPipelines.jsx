@@ -8,7 +8,7 @@ import { ApiService } from "../../api/apiService";
 import ErrorDialog from "../common/error";
 import { format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTags, faSearch, faFlag, faStar, faClock, faIdBadge } from "@fortawesome/free-solid-svg-icons";
+import { faTags, faSearch, faFlag, faStar, faClock, faIdBadge, faTimesCircle, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import PipelineHelpers from "./pipelineHelpers";
 import { Spinner } from "react-bootstrap";
 import "./workflows.css";
@@ -135,6 +135,23 @@ const ItemSummaries = (props) => {
                     overlay={renderTooltip({ message: "Approval Required" })} >
                     <FontAwesomeIcon icon={faFlag} className="red mr-1" />
                   </OverlayTrigger> }
+
+                  { PipelineHelpers.getPipelineStatus(item) === "failed" && 
+                  <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip({ message: "An error has occurred in this pipeline.  See activity logs for details." })} >
+                    <FontAwesomeIcon icon={faTimesCircle} className="red mr-1" />
+                  </OverlayTrigger> }
+
+                  { PipelineHelpers.getPipelineStatus(item) === "running" && 
+                  <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip({ message: "A pipeline operation is currently in progress." })} >
+                    <FontAwesomeIcon icon={faSpinner} spin className="green mr-1" />
+                  </OverlayTrigger> }
+
                   {item.name}</Card.Title>
                 <Card.Text className="mb-2">{item.description}</Card.Text>
               
