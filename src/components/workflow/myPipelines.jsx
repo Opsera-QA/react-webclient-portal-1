@@ -8,7 +8,7 @@ import { ApiService } from "../../api/apiService";
 import ErrorDialog from "../common/error";
 import { format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTag, faSearch, faFlag, faStar, faClock } from "@fortawesome/free-solid-svg-icons";
+import { faTags, faSearch, faFlag, faStar, faClock, faIdBadge } from "@fortawesome/free-solid-svg-icons";
 import PipelineHelpers from "./pipelineHelpers";
 import { Spinner } from "react-bootstrap";
 import "./workflows.css";
@@ -141,15 +141,22 @@ const ItemSummaries = (props) => {
                 <Row className="mt-2">
                   <Col lg className="text-muted">
                     <small className="text-muted">
-                      <FontAwesomeIcon icon={faTag} size="sm" className="mr-1"/>  
+                      <FontAwesomeIcon icon={faTags} size="sm" fixedWidth className="mr-1"/>  
                   Tags: {item.tags.map((item, idx) => (<span key={idx}>{item} </span>))}</small>
+                  </Col>
+                </Row>
+                <Row className="mt-2">
+                  <Col lg className="text-muted">
+                    <small className="text-muted">
+                      <FontAwesomeIcon icon={faIdBadge} size="sm" fixedWidth className="mr-1"/>  
+                      ID: {item._id}</small>
                   </Col>
                 </Row>
                 { item.workflow.schedule !== undefined && item.workflow.schedule.start_date !== null && 
                 <Row className="mt-1">
                   <Col lg className="">
                     <small className="text-muted">
-                      <FontAwesomeIcon icon={faClock} size="sm" className="mr-1"/> Scheduled for  &nbsp;
+                      <FontAwesomeIcon icon={faClock} size="sm" fixedWidth className="mr-1"/> Scheduled for  &nbsp;
                       {format(new Date(item.workflow.schedule.start_date), "yyyy-MM-dd', 'hh:mm a")}</small>
                   </Col>
                 </Row> }
