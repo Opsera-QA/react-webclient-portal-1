@@ -13,6 +13,15 @@ function LogSearchResult({ searchResults }) {
   const [modalMessage, setModalMessage] = useState({});
 
   const handleClick = (param) => {
+    // ONLY FOR DEMO PURPOSES - REMOVE AFTER DEMO - START HERE
+    if (param._source && param._source.message) {
+      try {
+        param._source.message = JSON.parse(param._source.message);
+      } catch { 
+        console.log("Ignoring Parser");
+      }
+    }
+    // ONLY FOR DEMO PURPOSES - REMOVE AFTER DEMO - END HERE
     setModalMessage(param);
     setShowModal(true);
   };
