@@ -219,7 +219,8 @@ function ElasticBeanstalkDeploy( { stepTool, pipelineId, plan, stepId, parentCal
         <Form.Label>S3 Step Info :</Form.Label>
         {renderForm && listOfSteps ?
           <DropdownList
-            data={listOfSteps}
+            data={listOfSteps} 
+            value={formData.s3StepId ? listOfSteps[listOfSteps.findIndex(x => x._id === formData.s3StepId)] : listOfSteps[0]}
             valueField='_id'
             textField='name'
             defaultValue={formData.s3StepId ? listOfSteps[listOfSteps.findIndex(x => x._id === formData.s3StepId)] : listOfSteps[0]}
