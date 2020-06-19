@@ -21,7 +21,7 @@ function ModalActivityLogsDialog({ header, size, jsonData, show, setParentVisibi
 
   const handleClose = () => {
     setShowModal(false);
-    setParentVisibility(false);
+    setParentVisibility();
   };
 
   const iterate = (obj) => {
