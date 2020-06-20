@@ -303,7 +303,7 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
                     </> 
                     : 
                     <>
-                      <OverlayTrigger
+                      {toolProperties.properties && toolProperties.properties.isLiveStream && <OverlayTrigger
                         placement="top"
                         delay={{ show: 250, hide: 400 }}
                         overlay={renderTooltip({ message: "View Running Tool Activity (if available)" })} >
@@ -311,7 +311,7 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
                           className="green mx-1" fixedWidth
                           style={{ cursor: "pointer" }}
                           onClick={() => { setShowToolActivity(true); }} />
-                      </OverlayTrigger>
+                      </OverlayTrigger>}
                       <OverlayTrigger
                         placement="top"
                         delay={{ show: 250, hide: 400 }}
@@ -357,6 +357,7 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
 
       { showToolActivity && <StepToolActivityView pipelineId={pipelineId} 
         stepId={item._id} 
+        itemState={itemState}
         tool_identifier={item.tool.tool_identifier} 
         handleClose={() => setShowToolActivity(false)} />}
     </>

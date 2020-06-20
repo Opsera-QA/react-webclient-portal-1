@@ -3,27 +3,46 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";  
 import { axiosApiService } from "api/apiService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faTimes, faSpinner, faSync } from "@fortawesome/free-solid-svg-icons";
 
 
-function StepToolActivityView({ pipelineId, stepId, tool_identifier, handleClose }) {
+function StepToolActivityView({ pipelineId, stepId, tool_identifier, handleClose, itemState }) {
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setLoading] = useState(false);
   const [errors, setErrors] = useState(false);
   const [data, setData] = useState("");
   const [timer, setTimer] = useState();
-  
+    
   useEffect(() => {
     if (pipelineId && stepId && tool_identifier) {
-      loadFormData(pipelineId, stepId, tool_identifier);
+      setLoading(true);
+
+      //first do a delayed call to get initial data (rather than waiting 30 seconds)
+      setTimeout(async function () {
+        await loadFormData(pipelineId, stepId, tool_identifier);
+      }, 5000);
+
       const timerInterval = startTimer();
       setTimer(timerInterval);      
     } else {
       setData("");
       clearInterval(timer);
-    }
-    //start timer.  This is a temporary solution
+    }    
   }, []);
+
+  useEffect(() => {
+    console.log("itemState", itemState);
+    if (itemState !== "running") {
+      //shut it down
+      console.log("entering a shutdown sequence on timer: ", timer);
+      clearInterval(timer);
+      setTimeout(async function () {
+        await loadFormData(pipelineId, stepId, tool_identifier);
+        setLoading(false);
+      }, 10000);
+    } 
+  }, [itemState]);
+
 
   const loadFormData = async (pipelineId, stepId, tool_identifier) => {
     try {
@@ -38,20 +57,21 @@ function StepToolActivityView({ pipelineId, stepId, tool_identifier, handleClose
         setData(response.data);
       } else {
         setData("");
-      }      
+      }            
     }
     catch (err) {
       console.log(err.message);
       setErrors(err.message);
     }
+    //setLoading(false);
   };
 
   const startTimer = () => {
     let counter = 0;
-    const timerInterval = setInterval(function() {
+    const timerInterval = setInterval(async function() {
       counter++;
       console.log("checking data round ", counter);
-      loadFormData(pipelineId, stepId, tool_identifier);
+      await loadFormData(pipelineId, stepId, tool_identifier);      
       if (counter > 9) {
         clearInterval(timerInterval);
         setLoading(false);
@@ -64,14 +84,20 @@ function StepToolActivityView({ pipelineId, stepId, tool_identifier, handleClose
     console.log(timer);
     handleClose(false);
     clearInterval(timer);
+    setLoading(false);
   };
 
 
   return (
     <>
       <div className="console-text workflow-tool-activity-container">
-        <div>
-          {isLoading && <FontAwesomeIcon icon={faSpinner} fixedWidth size="sm" spin /> }
+        <div style={{ minHeight: "15px" }}>
+          {isLoading ? 
+            <FontAwesomeIcon icon={faSpinner} fixedWidth size="sm" spin /> 
+            :  
+            <FontAwesomeIcon icon={faSync} fixedWidth
+              style={{ cursor: "pointer" }}
+              onClick={() => { loadFormData(pipelineId, stepId, tool_identifier); }} /> }
           <div className="text-right float-right">
             <FontAwesomeIcon icon={faTimes} fixedWidth
               style={{ cursor: "pointer" }}
@@ -79,7 +105,7 @@ function StepToolActivityView({ pipelineId, stepId, tool_identifier, handleClose
           </div>      
         </div>
         <div className="workflow-tool-activity-window">
-          {data}
+          {data && data.length > 0 ? data : <>Loading tool activity, please stand by...</>}
         </div>
       </div>
     </>);
@@ -91,7 +117,8 @@ StepToolActivityView.propTypes = {
   pipelineId: PropTypes.string,
   stepId: PropTypes.string,
   tool_identifier: PropTypes.string,
-  handleClose: PropTypes.func
+  handleClose: PropTypes.func,
+  itemState: PropTypes.string
 };
 
 export default StepToolActivityView;

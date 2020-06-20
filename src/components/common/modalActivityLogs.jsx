@@ -42,12 +42,12 @@ function ModalActivityLogsDialog({ header, size, jsonData, show, setParentVisibi
       <>
         <Modal show={showModal} size={size} onHide={() => handleClose()}>
           <Modal.Header closeButton>
-            <Modal.Title>Console Output</Modal.Title>
+            <Modal.Title>Tool Output: <span className="upper-case-first">{jsonData.step_configuration ? jsonData.step_configuration.tool_identifier : null }</span></Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <div className="my-2">
-              <div className="float-right">{format(new Date(jsonData.createdAt), "yyyy-MM-dd', 'hh:mm a")}</div> 
-              <span className="upper-case-first">Step: {jsonData.step_name} <br/>Tool: {jsonData.step_configuration ? jsonData.step_configuration.tool_identifier : null }</span></div>
+            <div className="ml-1">
+              <div className="float-right">{format(new Date(jsonData.updatedAt), "yyyy-MM-dd', 'hh:mm a")}</div> 
+              <span className="text-muted">Step Name: </span> {jsonData.step_name}</div>
             { typeof(jsonData.api_response) !== "object" ?
               <div className="console-text m-3">
                 {jsonData.api_response}

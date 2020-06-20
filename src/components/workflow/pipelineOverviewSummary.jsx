@@ -77,7 +77,8 @@ const PipelineItemDetail = (props) => {
 
       if (pipeline.workflow.last_step !== undefined) {
         let status = pipeline.workflow.last_step.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;         
-        if (status === "stopped" && pipeline.workflow.last_step.running.paused) {
+        
+        if (status === "stopped" && pipeline.workflow.last_step.running && pipeline.workflow.last_step.running.paused) {
           setWorkflowStatus("paused");
         } else {
           setWorkflowStatus(status);
@@ -126,7 +127,11 @@ const PipelineItemDetail = (props) => {
           socket.close();
           parentCallbackRefreshActivity();
         } else {          
-          setWorkflowStatus(status);
+          if (status === "stopped" && data.workflow.last_step.running && data.workflow.last_step.running.paused) {
+            setWorkflowStatus("paused");
+          } else {
+            setWorkflowStatus(status);
+          }
         }
            
         if (typeof(dataObj) !== "undefined" && Object.keys(dataObj).length > 0) {
@@ -179,6 +184,7 @@ const PipelineItemDetail = (props) => {
 
   const handleApprovalActivity = () => {
     setInfoModal({ show:true, header: "Approval Status", message: "Your approval action has been recorded in this pipeline's Activity Logs.  The pipeline will resume operations shortly.", button: "OK" });
+    setWorkflowStatus("running");  
     parentCallback();
     subscribeToTimer();  
   };
