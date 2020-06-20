@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus, faCog, faArchive, faHourglassStart, faFlag, faIdBadge, faPen, faExclamationTriangle, faSpinner, faCheckCircle, faEnvelope, faTimesCircle, faTrash, faBan, faTerminal } from "@fortawesome/free-solid-svg-icons";
 import ModalActivityLogs from "../common/modalActivityLogs";
 import ApprovalModal from "./approvalModal";
+import StepToolActivityView from "./stepToolActivityView";
 import { format } from "date-fns";
 import "./workflows.css";
 
@@ -21,6 +22,7 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
   const [infoModal, setInfoModal] = useState({ show:false, header: "", message: "", button: "OK" });
   const [activityLogModal, setActivityLogModal] = useState({ show:false, header: "", message: "", button: "OK" });
   const [showApprovalModal, setShowApprovalModal] = useState(false);
+  const [showToolActivity, setShowToolActivity] = useState(false);
   
   useEffect(() => {    
     loadFormData(item, lastStep, index, plan);      
@@ -90,8 +92,6 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
   const handleViewClick = (data, header) => {
     setActivityLogModal({ show:true, header: header, message: data, button: "OK" });
   };
-
-
 
   const handleEditClick = (type, tool, itemId) => {
     if (tool && tool.tool_identifier !== undefined) {
@@ -281,21 +281,7 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
                       onClick={() => { handleViewClick(item, "Step Settings"); }} />
                   </OverlayTrigger>
 
-                  {/* TMP! */}
-                  {/*  <OverlayTrigger
-                    placement="top"
-                    delay={{ show: 250, hide: 400 }}
-                    overlay={renderTooltip({ message: "View Running Tool Activity (if available)" })} >
-                    <FontAwesomeIcon icon={faTerminal}
-                      className="green mx-1" fixedWidth
-                      style={{ cursor: "pointer" }}
-                      onClick={() => { handleViewToolActivity(pipelineId, item.tool.tool_identifier, item._id); }} />
-                  </OverlayTrigger> */}
-                  {/* TMP! */}
-
-
-
-                  {itemState !== "running" ? 
+                  {itemState !== "running" ?  
                     <>
                       <OverlayTrigger
                         placement="top"
@@ -335,7 +321,7 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
                         <FontAwesomeIcon icon={faTerminal}
                           className="green mx-1" fixedWidth
                           style={{ cursor: "pointer" }}
-                          onClick={() => { handleViewToolActivity(pipelineId, item.tool.tool_identifier, item._id); }} />
+                          onClick={() => { setShowToolActivity(true); }} />
                       </OverlayTrigger>
                       <OverlayTrigger
                         placement="top"
@@ -370,16 +356,22 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
 
       {showApprovalModal && <ApprovalModal pipelineId={pipelineId} visible={showApprovalModal} setVisible={setShowApprovalModal} refreshActivity={handleApprovalActivity} />}
 
-      {infoModal.show ? <Modal header={infoModal.header}
+      {infoModal.show && <Modal header={infoModal.header}
         message={infoModal.message}
         button={infoModal.button}
-        handleCancelModal={() => setInfoModal({ ...infoModal, show: false })}  /> : null}
+        handleCancelModal={() => setInfoModal({ ...infoModal, show: false })}  /> }
 
-      {showDeleteModal ? <Modal header="Confirm Pipeline Step Delete"
+      {showDeleteModal && <Modal header="Confirm Pipeline Step Delete"
         message="Warning! Data about this step cannot be recovered once it is deleted. Do you still want to proceed?"
         button="Confirm"
         handleCancelModal={() => setShowDeleteModal(false)}
-        handleConfirmModal={() => handleDeleteStepClickConfirm(modalDeleteIndex)} /> : null}
+        handleConfirmModal={() => handleDeleteStepClickConfirm(modalDeleteIndex)} /> }
+
+
+      { showToolActivity && <StepToolActivityView pipelineId={pipelineId} 
+        stepId={item._id} 
+        tool_identifier={item.tool.tool_identifier} 
+        handleClose={() => setShowToolActivity(false)} />}
     </>
   );
 };
