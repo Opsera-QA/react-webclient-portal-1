@@ -53,7 +53,7 @@ function StepToolActivityView({ pipelineId, stepId, tool_identifier, handleClose
       const response = await axiosApiService(accessToken).get(apiUrl, urlParams);
       console.log("stepId: ", stepId);
       console.log("tool_identifier: ", tool_identifier);
-      if (response.data) {
+      if (response.data && response.data.length > 0) {
         setData(response.data);
       }
     }
