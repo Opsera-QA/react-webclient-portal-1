@@ -21,7 +21,6 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
   const [toolProperties, setToolProperties] = useState({});
   const [infoModal, setInfoModal] = useState({ show:false, header: "", message: "", button: "OK" });
   const [activityLogModal, setActivityLogModal] = useState({ show:false, header: "", message: "", button: "OK" });
-  const [showApprovalModal, setShowApprovalModal] = useState(false);
   const [showToolActivity, setShowToolActivity] = useState(false);
   
   useEffect(() => {    
@@ -106,18 +105,9 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
     setModalDeleteIndex(index);    
   };
 
-  const handleApprovalActivity = () => {
-    setInfoModal({ show:true, header: "Approval Status", message: "Your approval action has been logged.  The pipeline has been scheduled to resume in a few minutes.", button: "OK" });
-  };
-
   const handleDeleteStepClickConfirm = (index) => {    
     setShowDeleteModal(false);    
     deleteStep(index);
-  };
-
-  const handleViewToolActivity = (pipelineId, tool_identifier, stepId) => {
-    //trigger custom modal that will start the stream
-    
   };
 
   const getToolDetails = async (tool_identifier) => {
@@ -176,8 +166,7 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
                     delay={{ show: 250, hide: 400 }}
                     overlay={renderTooltip({ message: "Approval of this step is required to proceed" })} >
                     <FontAwesomeIcon icon={faFlag} className="mr-2 red" 
-                      style={{ cursor: "pointer" }}
-                      onClick={() => { setShowApprovalModal(true); }} />
+                      style={{ cursor: "help" }}/>
                   </OverlayTrigger>  }  
 
                 { itemState === "warning" && 
@@ -353,8 +342,6 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
         liveStreamObject={activityLogModal.liveData} 
         show={activityLogModal.slow}
         setParentVisibility={() => setActivityLogModal({ ...activityLogModal, show: false })}  />
-
-      {showApprovalModal && <ApprovalModal pipelineId={pipelineId} visible={showApprovalModal} setVisible={setShowApprovalModal} refreshActivity={handleApprovalActivity} />}
 
       {infoModal.show && <Modal header={infoModal.header}
         message={infoModal.message}

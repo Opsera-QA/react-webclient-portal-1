@@ -69,17 +69,17 @@ const PipelineWorkflow = (props) => {
     };
   }, [data, editItemId]);
 
-  const loadFormData = async (step) => {
+  const loadFormData = async (data) => {
     //setEditWorkflow(false);
-    if (step.workflow !== undefined) {
-      setState({ items: step.workflow.plan });
-      setLastStep(step.workflow.last_step);
+    if (data.workflow !== undefined) {
+      setState({ items: data.workflow.plan });
+      setLastStep(data.workflow.last_step);
       //setNextStep(calculateNextStep(step.workflow.last_step));
 
-      if (step !== undefined && step.workflow.last_step !== undefined) {
-        let status = step.workflow.last_step.hasOwnProperty("status") ? step.workflow.last_step.status : false;
+      if (data !== undefined && data.workflow.last_step !== undefined) {
+        let status = data.workflow.last_step.hasOwnProperty("status") ? data.workflow.last_step.status : false;
 
-        if (status === "stopped" && step.workflow.last_step.running.paused) {
+        if (status === "stopped" && data.workflow.last_step.running.paused) {
           setWorkflowStatus("paused");
         } else {
           setWorkflowStatus(status);
@@ -134,7 +134,11 @@ const PipelineWorkflow = (props) => {
           setSocketRunning(false);
           socket.close();
         } else {          
-          setWorkflowStatus(status);
+          if (status === "stopped" && data.workflow.last_step.running.paused) {
+            setWorkflowStatus("paused");
+          } else {
+            setWorkflowStatus(status);
+          }
         }
            
         if (typeof(dataObj) !== "undefined" && Object.keys(dataObj).length > 0) {
@@ -198,7 +202,9 @@ const PipelineWorkflow = (props) => {
   };
 
   const handleApprovalActivity = () => {
-    setInfoModal({ show:true, header: "Approval Status", message: "Your approval action has been logged.  The pipeline has been scheduled to resume in a few minutes.", button: "OK" });
+    setInfoModal({ show:true, header: "Approval Status", message: "Your approval action has been recorded in this pipeline's Activity Logs.  The pipeline will resume operations shortly.", button: "OK" });
+    setWorkflowStatus("running");  
+    subscribeToTimer();
   };
 
   async function fetchStatusData(pipelineId, stepNext) {

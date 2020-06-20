@@ -178,7 +178,7 @@ const PipelineItemDetail = (props) => {
   };
 
   const handleApprovalActivity = () => {
-    setInfoModal({ show:true, header: "Approval Status", message: "Your approval action has been logged.  The pipeline has been scheduled to resume in a few minutes.", button: "OK" });
+    setInfoModal({ show:true, header: "Approval Status", message: "Your approval action has been recorded in this pipeline's Activity Logs.  The pipeline will resume operations shortly.", button: "OK" });
     parentCallback();
     subscribeToTimer();  
   };
