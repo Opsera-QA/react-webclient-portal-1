@@ -55,9 +55,7 @@ function StepToolActivityView({ pipelineId, stepId, tool_identifier, handleClose
       console.log("tool_identifier: ", tool_identifier);
       if (response.data) {
         setData(response.data);
-      } else {
-        setData("");
-      }            
+      }
     }
     catch (err) {
       console.log(err.message);
