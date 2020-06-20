@@ -74,3 +74,21 @@
   flex-basis: 3rem;
 }
 
+.workflow-tool-activity-container {
+  position: fixed;
+  bottom: 5px;
+  right: 5px;
+  width: 740px;
+  height: 440px;
+  z-index: 10;  
+  padding-top:5px !important;  
+}
+
+.workflow-tool-activity-window {
+  height: 400px;
+  overflow:scroll;
+  display: flex;
+  flex-direction: column-reverse;
+  overscroll-behavior: contain;
+  margin-top:5px;
+}
