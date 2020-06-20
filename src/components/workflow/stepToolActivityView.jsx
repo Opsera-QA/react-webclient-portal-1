@@ -32,11 +32,10 @@ function StepToolActivityView({ pipelineId, stepId, tool_identifier, handleClose
       const apiUrl = `/pipelines/${pipelineId}/tool-activity/${stepId}`;
       const urlParams = { params: { tool: tool_identifier } };
       const response = await axiosApiService(accessToken).get(apiUrl, urlParams);
-      const { message } = response.data;
       console.log("stepId: ", stepId);
       console.log("tool_identifier: ", tool_identifier);
-      if (message) {
-        setData(message.status);
+      if (response.data) {
+        setData(response.data);
       } else {
         setData("");
       }      
