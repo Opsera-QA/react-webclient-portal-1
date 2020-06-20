@@ -69,17 +69,17 @@ const PipelineWorkflow = (props) => {
     };
   }, [data, editItemId]);
 
-  const loadFormData = async (data) => {
-    //setEditWorkflow(false);
-    if (data.workflow !== undefined) {
-      setState({ items: data.workflow.plan });
-      setLastStep(data.workflow.last_step);
+  
+  const loadFormData = async (pipeline) => {
+    if (pipeline.workflow !== undefined) {
+      setState({ items: pipeline.workflow.plan });
+      setLastStep(pipeline.workflow.last_step);
       //setNextStep(calculateNextStep(step.workflow.last_step));
 
-      if (data !== undefined && data.workflow.last_step !== undefined) {
-        let status = data.workflow.last_step.hasOwnProperty("status") ? data.workflow.last_step.status : false;
+      if (pipeline !== undefined && pipeline.workflow.last_step !== undefined) {
+        let status = pipeline.workflow.last_step.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;
 
-        if (status === "stopped" && data.workflow.last_step.running.paused) {
+        if (status === "stopped" && pipeline.workflow.last_step.running && pipeline.workflow.last_step.running.paused) {
           setWorkflowStatus("paused");
         } else {
           setWorkflowStatus(status);
@@ -134,7 +134,7 @@ const PipelineWorkflow = (props) => {
           setSocketRunning(false);
           socket.close();
         } else {          
-          if (status === "stopped" && data.workflow.last_step.running.paused) {
+          if (status === "stopped" && data.workflow.last_step.running && data.workflow.last_step.running.paused) {
             setWorkflowStatus("paused");
           } else {
             setWorkflowStatus(status);
