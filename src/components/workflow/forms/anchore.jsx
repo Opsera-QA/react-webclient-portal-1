@@ -257,12 +257,6 @@ function AnchoreStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
                 /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted ml-2" fixedWidth/> }
             </Form.Group>
 
-            
-            <Form.Group controlId="branchField">
-              <Form.Label>Docker Image URL</Form.Label>
-              <Form.Control maxLength="150" type="text" placeholder="" value={formData.dockerImageUrl || ""} onChange={e => setFormData({ ...formData, dockerImageUrl: e.target.value })} />
-            </Form.Group>
-
             <Form.Group controlId="threshold">
               <Form.Label>Step Success Threshold</Form.Label>
               <Form.Control type="text" placeholder="" value={thresholdVal || ""} onChange={e => setThresholdValue(e.target.value)} disabled={true} />
