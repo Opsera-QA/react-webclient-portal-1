@@ -205,16 +205,6 @@ function DockerPushStepConfiguration( { stepTool, pipelineId, plan, stepId, pare
           /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted ml-2" fixedWidth/> }
       </Form.Group>
 
-      <Form.Group controlId="dockerName">
-        <Form.Label>Docker Name</Form.Label>
-        <Form.Control maxLength="150" type="text" placeholder="" value={formData.dockerName || ""} onChange={e => setFormData({ ...formData, dockerName: e.target.value })} />
-      </Form.Group>
-     
-      <Form.Group controlId="dockerTagName">
-        <Form.Label>Docker Tag Name</Form.Label>
-        <Form.Control maxLength="150" type="text" placeholder="" value={formData.dockerTagName || ""} onChange={e => setFormData({ ...formData, dockerTagName: e.target.value })} />
-      </Form.Group>
-
       <Button variant="primary" type="button" 
         onClick={() => { callbackFunction(); }}> 
         {loading ? 
