@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Form, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faSpinner } from "@fortawesome/free-solid-svg-icons";
-
+import DropdownList from "react-widgets/lib/DropdownList";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
@@ -18,6 +18,7 @@ const INITIAL_DATA = {
   secretKey: "", // store in vault
   regions: "",
   awsAccountId: "",
+  buildStepId: "",
   dockerName: "",
   dockerTagName : ""
 };
@@ -31,6 +32,19 @@ function DockerPushStepConfiguration( { stepTool, pipelineId, plan, stepId, pare
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [formMessage, setFormMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [listOfSteps, setListOfSteps] = useState([]);
+
+  useEffect(()=> {
+    if( plan && stepId ) {
+      setListOfSteps(formatStepOptions(plan, stepId));
+    }
+  }, [plan, stepId]);
+
+  const formatStepOptions = (plan, stepId) => {
+    let STEP_OPTIONS = plan.slice(0, plan.findIndex( (element) => element._id === stepId));
+    STEP_OPTIONS.unshift({ _id: "", name : "Select One",  isDisabled: "yes" });
+    return STEP_OPTIONS;
+  };
 
   useEffect(() => {    
     const controller = new AbortController();
@@ -104,13 +118,14 @@ function DockerPushStepConfiguration( { stepTool, pipelineId, plan, stepId, pare
 
   const validateRequiredFields = () => {
 
-    let { jenkinsUrl, jUserId, jAuthToken, accessKey, secretKey, regions, awsAccountId, dockerName, dockerTagName } = formData;
+    let { jenkinsUrl, jUserId, jAuthToken, accessKey, secretKey, regions, awsAccountId, dockerName, dockerTagName, buildStepId } = formData;
     if ( accessKey.length === 0 ||
       secretKey.length === 0 ||
       regions.length === 0 ||
       awsAccountId.length === 0 ||
-      dockerName.length === 0 ||
-      dockerTagName.length === 0 ||
+    // dockerName.length === 0 ||
+    // dockerTagName.length === 0 ||
+       buildStepId.length === 0 ||
       jenkinsUrl.length === 0 || jUserId.length === 0 || jAuthToken.length === 0
     ) {
       setFormMessage("Required Fields Missing!");
@@ -119,6 +134,10 @@ function DockerPushStepConfiguration( { stepTool, pipelineId, plan, stepId, pare
       setFormMessage("");
       return true;
     }
+  };
+  
+  const handleBuildStepChange = (selectedOption) => {
+    setFormData({ ...formData, buildStepId: selectedOption._id });    
   };
 
   return (
@@ -173,14 +192,17 @@ function DockerPushStepConfiguration( { stepTool, pipelineId, plan, stepId, pare
         <Form.Control maxLength="150" type="text" placeholder="" value={formData.awsAccountId || ""} onChange={e => setFormData({ ...formData, awsAccountId: e.target.value })} />
       </Form.Group>
 
-      <Form.Group controlId="dockerName">
-        <Form.Label>Docker Name*</Form.Label>
-        <Form.Control maxLength="150" type="text" placeholder="" value={formData.dockerName || ""} onChange={e => setFormData({ ...formData, dockerName: e.target.value })} />
-      </Form.Group>
-     
-      <Form.Group controlId="dockerTagName">
-        <Form.Label>Docker Tag Name*</Form.Label>
-        <Form.Control maxLength="150" type="text" placeholder="" value={formData.dockerTagName || ""} onChange={e => setFormData({ ...formData, dockerTagName: e.target.value })} />
+      <Form.Group controlId="s3Step">
+        <Form.Label>Build Step Info*</Form.Label>
+        {listOfSteps ?
+          <DropdownList
+            data={listOfSteps}
+            value = {formData.buildStepId ? listOfSteps[listOfSteps.findIndex(x => x._id === formData.buildStepId)] : listOfSteps[0]}
+            valueField='_id'
+            textField='name'
+            defaultValue={formData.buildStepId ? listOfSteps[listOfSteps.findIndex(x => x._id === formData.buildStepId)] : listOfSteps[0]}
+            onChange={handleBuildStepChange}             
+          /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted ml-2" fixedWidth/> }
       </Form.Group>
 
       <Button variant="primary" type="button" 
@@ -198,6 +220,7 @@ function DockerPushStepConfiguration( { stepTool, pipelineId, plan, stepId, pare
 DockerPushStepConfiguration.propTypes = {
   data: PropTypes.object,
   pipelineId: PropTypes.string,
+  plan: PropTypes.array,
   stepId: PropTypes.string,
   parentCallback: PropTypes.func,
   callbackSaveToVault: PropTypes.func

@@ -19,6 +19,7 @@ const INITIAL_DATA = {
   jAuthToken: "",
   jobType: "anchore scan", //hardcoded for now
   jobName: "",
+  ecrPushStepId: "",
   dockerImageUrl: ""
 };
 
@@ -36,6 +37,19 @@ function AnchoreStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
   const [isCypressSearching, setIsCypressSearching] = useState(false);
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
+  const [listOfSteps, setListOfSteps] = useState([]);
+
+  useEffect(()=> {
+    if( plan && stepId ) {
+      setListOfSteps(formatStepOptions(plan, stepId));
+    }
+  }, [plan, stepId]);
+
+  const formatStepOptions = (plan, stepId) => {
+    let STEP_OPTIONS = plan.slice(0, plan.findIndex( (element) => element._id === stepId));
+    STEP_OPTIONS.unshift({ _id: "", name : "Select One",  isDisabled: "yes" });
+    return STEP_OPTIONS;
+  };
 
   useEffect(() => {    
     const controller = new AbortController();
@@ -144,14 +158,15 @@ function AnchoreStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
   };
 
   const validateRequiredFields = () => {
-    let { toolConfigId, jenkinsUrl, jUserId, jAuthToken, jobName, dockerImageUrl } = formData;
+    let { toolConfigId, jenkinsUrl, jUserId, jAuthToken, jobName, buildStepId, dockerImageUrl } = formData;
     if (
       toolConfigId.length === 0 ||    
       jenkinsUrl.length === 0 || 
       jUserId.length === 0 || 
       jAuthToken.length === 0 ||
-      jobName.length === 0 ||
-      dockerImageUrl.length === 0 ) {
+      jobName.length === 0 || buildStepId.length === 0 
+      // dockerImageUrl.length === 0 
+    ) {
       setFormMessage("Required Fields Missing!");
       return false;
     } else {
@@ -168,6 +183,10 @@ function AnchoreStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
   };
   console.log(formData);
 
+  const handleECRStepChange = (selectedOption) => {
+    setFormData({ ...formData, ecrPushStepId: selectedOption._id });    
+  };
+
   return (
     <>
       {error && 
@@ -181,7 +200,7 @@ function AnchoreStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
           {isCypressSearching ? (
             <div className="form-text text-muted mt-2 p-2">
               <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> 
-            Loading Cypress accounts from registry</div>
+            Loading anchore accounts from registry</div>
           ) :(
             <>
               {renderForm && cypressList && cypressList.length > 1 ? 
@@ -224,10 +243,18 @@ function AnchoreStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
               <Form.Label>Job Name*</Form.Label>
               <Form.Control maxLength="150" type="text" placeholder="" value={formData.jobName || ""} onChange={e => setFormData({ ...formData, jobName: e.target.value })} />
             </Form.Group>
-            
-            <Form.Group controlId="branchField">
-              <Form.Label>Docker Image URL*</Form.Label>
-              <Form.Control maxLength="150" type="text" placeholder="" value={formData.dockerImageUrl || ""} onChange={e => setFormData({ ...formData, dockerImageUrl: e.target.value })} />
+
+            <Form.Group controlId="s3Step">
+              <Form.Label>ECR Push Step Info*</Form.Label>
+              {listOfSteps ?
+                <DropdownList
+                  data={listOfSteps}
+                  value = {formData.ecrPushStepId ? listOfSteps[listOfSteps.findIndex(x => x._id === formData.ecrPushStepId)] : listOfSteps[0]}
+                  valueField='_id'
+                  textField='name'
+                  defaultValue={formData.ecrPushStepId ? listOfSteps[listOfSteps.findIndex(x => x._id === formData.ecrPushStepId)] : listOfSteps[0]}
+                  onChange={handleECRStepChange}             
+                /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted ml-2" fixedWidth/> }
             </Form.Group>
 
             <Form.Group controlId="threshold">
@@ -260,6 +287,7 @@ function AnchoreStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
 AnchoreStepConfiguration.propTypes = {
   data: PropTypes.object,
   pipelineId: PropTypes.string,
+  plan: PropTypes.array,
   stepId: PropTypes.string,
   parentCallback: PropTypes.func,
   callbackSaveToVault: PropTypes.func
