@@ -6,6 +6,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { AuthContext } from "../../contexts/AuthContext"; 
 import { ApiService } from "../../api/apiService";
 import ErrorDialog from "../common/error";
+import Pagination from "components/common/pagination";
 import { format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTags, faSearch, faFlag, faStar, faClock, faIdBadge, faTimesCircle, faSpinner } from "@fortawesome/free-solid-svg-icons";
@@ -20,16 +21,20 @@ function MyPipelines() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(30);
+  
+  // Executed every time page number or page size changes
   useEffect(() => {    
     fetchData();
-  }, []);
+  }, [currentPage, pageSize]);
 
   async function fetchData() {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
 
-    const apiCall = new ApiService("/pipelines", {}, accessToken);
+    const apiCall = new ApiService(`/pipelines?page=${currentPage}&size=${pageSize}`, {}, accessToken);
     apiCall.get()
       .then(function (result) {
         console.log(result);
@@ -42,7 +47,12 @@ function MyPipelines() {
         console.log(`Error Reported: ${error}`);
       });
   }
-
+  
+  const gotoPage = (pageNumber, pageSize) => {
+    setCurrentPage(pageNumber);
+    setPageSize(pageSize);
+  };
+  
   if (loading) {
     return (
       <div className="row" style={{ height:"250px" }}>
@@ -63,7 +73,14 @@ function MyPipelines() {
           { Object.keys(data) === 0 ? 
             <WelcomeView />
             :
-            <ItemSummaries data={data} />   
+            <>
+              {data && data.count && data.response && 
+              <>
+                <ItemSummaries data={data.response} />  
+                <Pagination total={data.count} currentPage={currentPage} pageSize={pageSize} onClick={(pageNumber, pageSize) => gotoPage(pageNumber, pageSize)} />
+              </>
+              }
+            </>  
           }          
         </div>        
       </>
