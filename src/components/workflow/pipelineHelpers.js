@@ -25,11 +25,11 @@ pipelineHelpers.getPriorStepFrom = (pipeline, step) => {
 pipelineHelpers.getPipelineStatus = (pipeline) => {
   if (pipeline) {
     const { workflow } = pipeline;
-    if (workflow.last_step.success && workflow.last_step.success.step_id.length > 0) {
+    if (workflow.last_step && workflow.last_step.success && workflow.last_step.success.step_id.length > 0) {
       return "success";
-    } else if (workflow.last_step.failed && workflow.last_step.failed.step_id.length > 0) {
+    } else if (workflow.last_step && workflow.last_step.failed && workflow.last_step.failed.step_id.length > 0) {
       return "failed";
-    } else if (workflow.last_step.status === "running") {
+    } else if (workflow.last_step && workflow.last_step.status === "running") {
       return "running";
     } else {
       return false; //idle or stopped state
