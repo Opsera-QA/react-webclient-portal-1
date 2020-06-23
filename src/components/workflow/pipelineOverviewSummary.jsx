@@ -11,7 +11,7 @@ import Modal from "../common/modal";
 import ModalActivityLogs from "../common/modalActivityLogs";
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileAlt, faPencilAlt, faHistory, faSync, faPlay, faTrash, faStopCircle, faSave, faSpinner, faTimes, faCogs, faPause, faHourglass, faFlag } from "@fortawesome/free-solid-svg-icons";
+import { faFileAlt, faPencilAlt, faHistory, faSync, faPlay, faTrash, faStopCircle, faSave, faSpinner, faTimes, faCogs, faPause, faHourglass, faFlag, faCopy } from "@fortawesome/free-solid-svg-icons";
 import "./workflows.css";
 import SchedulerWidget from "../common/schedulerWidget";
 import isEqual from "lodash.isequal";
@@ -176,6 +176,10 @@ const PipelineItemDetail = (props) => {
     e.preventDefault();
     setShowDeleteModal(true);
     setModalDeleteId(itemId);    
+  };
+
+  const handleCopyPipeline = (itemId) => {
+    console.log("Copy this pipeline coming soon.", itemId);
   };
 
   const handleApprovalClick = () => {
@@ -349,13 +353,29 @@ const PipelineItemDetail = (props) => {
 
           <div className="mb-3 flat-top-content-block p-3">              
             <div className="mb-2 text-muted">
-              <FontAwesomeIcon icon={faTrash} className="pointer red float-right ml-3" size="sm" onClick={handleDeleteClick(data._id)}/>
+              {role === "administrator" && 
+              <OverlayTrigger
+                placement="top"
+                delay={{ show: 250, hide: 400 }}
+                overlay={renderTooltip({ message: "Delete this pipeline" })} >
+                <FontAwesomeIcon icon={faTrash} className="pointer red float-right ml-3" size="sm" onClick={handleDeleteClick(data._id)}/></OverlayTrigger>}
+
+              <OverlayTrigger
+                placement="top"
+                delay={{ show: 250, hide: 400 }}
+                overlay={renderTooltip({ message: "COMING SOON! Duplicate this pipeline" })} >
+                <FontAwesomeIcon icon={faCopy} className="pointer float-right ml-3" size="sm" onClick={handleCopyPipeline(data._id)}/></OverlayTrigger>
                     
-              <FontAwesomeIcon icon={faFileAlt}
-                className="mr-1 float-right text-muted"
-                size="sm"
-                style={{ cursor: "pointer" }}
-                onClick= {() => { handleViewClick(data); }} />                                        
+              <OverlayTrigger
+                placement="top"
+                delay={{ show: 250, hide: 400 }}
+                overlay={renderTooltip({ message: "View Pipeline Configurations" })} >
+                <FontAwesomeIcon icon={faFileAlt}
+                  className="mr-1 float-right text-muted"
+                  size="sm"
+                  style={{ cursor: "pointer" }}
+                  onClick= {() => { handleViewClick(data); }} /></OverlayTrigger>
+
               { editDescription ? 
                 <>
                   <Row className="my-2">

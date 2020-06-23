@@ -53,11 +53,17 @@ function PipelineWorkflowView({ id }) {
     }
   }
 
+
   const setPipelineAttributes = (pipeline, ssoUsersId) => {
     if (typeof(pipeline.roles) !== "undefined") {
-      let adminRoleIndex = pipeline.roles.findIndex(x => x.role === "administrator"); 
-      if (pipeline.roles[adminRoleIndex].user === ssoUsersId) {
-        setRole(pipeline.roles[adminRoleIndex].role);
+      let userRoleObject = pipeline.roles.findIndex(x => x.user === ssoUsersId); 
+      
+      console.log("userRoleObject", userRoleObject);
+      if (userRoleObject >= 0) {
+        console.log("ROLe FOUND: userRoleObject ", userRoleObject);
+        setRole(pipeline.roles[userRoleObject].role);
+      } else {
+        setRole("");
       }
     }    
   };

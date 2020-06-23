@@ -8,7 +8,7 @@ import PipelineWorkflowItem from "./pipelineWorkflowItem";
 import "./workflows.css";
 
 
-function PipelineWorkflowItemList({ items, lastStep, editWorkflow, pipelineId, accessToken, parentCallbackEditItem, parentHandleViewSourceActivityLog, setStateItems, quietSavePlan, fetchPlan }) {
+function PipelineWorkflowItemList({ items, lastStep, editWorkflow, pipelineId, accessToken, parentCallbackEditItem, parentHandleViewSourceActivityLog, setStateItems, quietSavePlan, fetchPlan, role }) {
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {    
@@ -111,6 +111,7 @@ function PipelineWorkflowItemList({ items, lastStep, editWorkflow, pipelineId, a
           lastStep={lastStep} 
           editWorkflow={editWorkflow} 
           pipelineId={pipelineId} 
+          role={role}
           accessToken={accessToken}
           parentCallbackEditItem={parentCallbackEditItem} 
           deleteStep={deleteStep}
@@ -183,7 +184,8 @@ PipelineWorkflowItemList.propTypes = {
   parentHandleViewSourceActivityLog: PropTypes.func,
   setStateItems: PropTypes.func,
   quietSavePlan: PropTypes.func,
-  fetchPlan: PropTypes.func
+  fetchPlan: PropTypes.func,
+  role: PropTypes.string
 };
 
 
