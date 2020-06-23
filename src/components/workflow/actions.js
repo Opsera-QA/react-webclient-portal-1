@@ -55,5 +55,14 @@ pipelineActions.saveToVault = async (postBody, getAccessToken) => {
   return response;
 };
 
+pipelineActions.duplicate = async (pipelineId, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/pipelines/${pipelineId}/duplicate/`;   
+  const response = await axiosApiService(accessToken).put(apiUrl)
+    .then((result) =>  {return result;})
+    .catch(error => {return { error };});
+  return response;
+};
+
 
 export default pipelineActions;
