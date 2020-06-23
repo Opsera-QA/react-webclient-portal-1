@@ -352,7 +352,7 @@ const PipelineWorkflow = (props) => {
                 <>
                   <Button variant="outline-dark" className="mr-1"  size="sm" disabled><FontAwesomeIcon icon={faSpinner} spin className="mr-1"/> Running</Button>
                   <Button variant="outline-danger" className="mr-1"  size="sm" onClick={() => { handleStopWorkflowClick(data._id); }}
-                    disabled={role !== "administrator" || role !== "user"}><FontAwesomeIcon icon={faStopCircle} className="mr-1"/>Stop</Button>
+                    disabled={role !== "administrator" && role !== "user"}><FontAwesomeIcon icon={faStopCircle} className="mr-1"/>Stop</Button>
                 </>}
 
               {workflowStatus === "paused" && 
@@ -365,7 +365,7 @@ const PipelineWorkflow = (props) => {
               {(workflowStatus === "stopped" || !workflowStatus) && 
                 <Button variant="success" className="mr-1" size="sm"
                   onClick={() => { handleRunPipelineClick(data._id); }}
-                  disabled={role !== "administrator" || role !== "user" || editWorkflow}>
+                  disabled={role !== "administrator" && role !== "user" || editWorkflow}>
                   <FontAwesomeIcon icon={faPlay} fixedWidth className="mr-1"/>Start Pipeline</Button>}
               
               <OverlayTrigger
@@ -374,7 +374,7 @@ const PipelineWorkflow = (props) => {
                 overlay={renderTooltip({ message: "Restart pipeline from beginning as new run" })} >
                 <Button variant="outline-danger" className="mr-1"  size="sm" 
                   onClick={() => { handleStopWorkflowClick(data._id); }}
-                  disabled={role !== "administrator" || role !== "user" || editWorkflow}>
+                  disabled={role !== "administrator" && role !== "user" || editWorkflow}>
                   <FontAwesomeIcon icon={faHistory} fixedWidth className="mr-1"/>Reset Pipeline</Button>
               </OverlayTrigger>
               
