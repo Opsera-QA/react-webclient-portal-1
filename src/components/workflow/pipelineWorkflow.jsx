@@ -325,6 +325,14 @@ const PipelineWorkflow = (props) => {
             <div className="title-text-5 mt-2">{data.name}</div>     
           </div>
 
+          { role === "user" &&<div className="mb-2 w-100 max-content-module-width-50">           
+            <div className="info-text">Limited Access Role.  Your account is a standard user and as such can view the pipeline and run it, but not change settings or approve actions.</div>     
+          </div> }
+
+          { role === "viewer" &&<div className="mb-2 w-100 max-content-module-width-50">           
+            <div className="info-text">Limited Access Role.  Your account is only able to view this pipeline.  You cannot perform any actions around it. </div>     
+          </div> }
+
 
           <ul className="nav nav-tabs w-100" style={{ borderBottom: "none" }}>
             <li className="nav-item">
@@ -344,7 +352,7 @@ const PipelineWorkflow = (props) => {
                 <>
                   <Button variant="outline-dark" className="mr-1"  size="sm" disabled><FontAwesomeIcon icon={faSpinner} spin className="mr-1"/> Running</Button>
                   <Button variant="outline-danger" className="mr-1"  size="sm" onClick={() => { handleStopWorkflowClick(data._id); }}
-                    disabled={role !== "administrator"}><FontAwesomeIcon icon={faStopCircle} className="mr-1"/>Stop</Button>
+                    disabled={role !== "administrator" || role !== "user"}><FontAwesomeIcon icon={faStopCircle} className="mr-1"/>Stop</Button>
                 </>}
 
               {workflowStatus === "paused" && 
@@ -357,7 +365,7 @@ const PipelineWorkflow = (props) => {
               {(workflowStatus === "stopped" || !workflowStatus) && 
                 <Button variant="success" className="mr-1" size="sm"
                   onClick={() => { handleRunPipelineClick(data._id); }}
-                  disabled={role !== "administrator" || editWorkflow}>
+                  disabled={role !== "administrator" || role !== "user" || editWorkflow}>
                   <FontAwesomeIcon icon={faPlay} fixedWidth className="mr-1"/>Start Pipeline</Button>}
               
               <OverlayTrigger
@@ -366,7 +374,7 @@ const PipelineWorkflow = (props) => {
                 overlay={renderTooltip({ message: "Restart pipeline from beginning as new run" })} >
                 <Button variant="outline-danger" className="mr-1"  size="sm" 
                   onClick={() => { handleStopWorkflowClick(data._id); }}
-                  disabled={role !== "administrator" || editWorkflow}>
+                  disabled={role !== "administrator" || role !== "user" || editWorkflow}>
                   <FontAwesomeIcon icon={faHistory} fixedWidth className="mr-1"/>Reset Pipeline</Button>
               </OverlayTrigger>
               
@@ -386,23 +394,23 @@ const PipelineWorkflow = (props) => {
                   <FontAwesomeIcon icon={faFileAlt} fixedWidth/></Button>
               </OverlayTrigger>
                     
-                       
-              {editWorkflow ?
-                <Button variant="success" size="sm" onClick= {() => { handleDoneWorkflowEditsClick(); }} >
-                  {isSavingPipeline ? 
-                    <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/> :
-                    <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1"/> }
+              {role === "administrator" && <>
+                {editWorkflow ?
+                  <Button variant="success" size="sm" onClick= {() => { handleDoneWorkflowEditsClick(); }} >
+                    {isSavingPipeline ? 
+                      <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/> :
+                      <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1"/> }
                    Done</Button>                  
-                :
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "Edit workflow" })} >                  
-                  <Button variant="secondary" size="sm" onClick= {() => { handleEditWorkflowClick(); }} 
-                    disabled={(workflowStatus && workflowStatus !== "stopped") || !previewRole || (userInfo && userInfo._id !== data.owner)} >
-                    <FontAwesomeIcon icon={faPen} fixedWidth/> </Button>                  
-                </OverlayTrigger>
-              }                
+                  :
+                  <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip({ message: "Edit workflow" })} >                  
+                    <Button variant="secondary" size="sm" onClick= {() => { handleEditWorkflowClick(); }} 
+                      disabled={(workflowStatus && workflowStatus !== "stopped") || !previewRole || (userInfo && userInfo._id !== data.owner)} >
+                      <FontAwesomeIcon icon={faPen} fixedWidth/> </Button>                  
+                  </OverlayTrigger>
+                }  </> }              
                     
             </div>
 
@@ -489,7 +497,8 @@ const PipelineWorkflow = (props) => {
                 pipelineId={data._id} 
                 accessToken={accessToken}
                 setStateItems={setState}
-                fetchPlan={fetchPlan}
+                fetchPlan={fetchPlan} 
+                role={role}
                 parentCallbackEditItem={callbackFunctionEditItem} 
                 quietSavePlan={quietSavePlan}
                 parentHandleViewSourceActivityLog={handleViewSourceActivityLog} />             

@@ -12,7 +12,7 @@ import { format } from "date-fns";
 import "./workflows.css";
 
 
-const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessToken, editWorkflow, parentCallbackEditItem, deleteStep, parentHandleViewSourceActivityLog }) => {
+const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessToken, editWorkflow, parentCallbackEditItem, deleteStep, parentHandleViewSourceActivityLog, role }) => {
   const [currentStatus, setCurrentStatus] = useState({});
   const [itemState, setItemState] = useState(false);
   const [stepConfigured, setStepConfigured] = useState(true);
@@ -93,11 +93,17 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
   };
 
   const handleEditClick = (type, tool, itemId) => {
-    if (tool && tool.tool_identifier !== undefined) {
-      parentCallbackEditItem({ type: type, tool_name: tool.tool_identifier, step_id: itemId });    
+    console.log("ROLE DETECTED: ", role);
+    if (role !== "administrator") {
+      setInfoModal({ show:true, header: "Permission Denied", message: "Editing step details requires administrator access to this Pipeline.", button: "OK" });
     } else {
-      parentCallbackEditItem({ type: type, tool_name: "", step_id: itemId });    
+      if (tool && tool.tool_identifier !== undefined) {
+        parentCallbackEditItem({ type: type, tool_name: tool.tool_identifier, step_id: itemId });    
+      } else {
+        parentCallbackEditItem({ type: type, tool_name: "", step_id: itemId });    
+      }
     }
+    
   };  
 
   const handleDeleteStepClick = (index) => {
@@ -385,7 +391,8 @@ PipelineWorkflowItem.propTypes = {
   parentCallbackEditItem: PropTypes.func,
   deleteStep: PropTypes.func,
   handleViewSourceActivityLog: PropTypes.func,
-  parentHandleViewSourceActivityLog: PropTypes.func
+  parentHandleViewSourceActivityLog: PropTypes.func,
+  role: PropTypes.string
 };
 
 export default PipelineWorkflowItem;
