@@ -172,8 +172,7 @@ const PipelineItemDetail = (props) => {
     parentCallbackRefreshActivity();
   };
 
-  const handleDeleteClick = (itemId) => e => {
-    e.preventDefault();
+  const handleDeleteClick = (itemId) => {
     setShowDeleteModal(true);
     setModalDeleteId(itemId);    
   };
