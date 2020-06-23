@@ -360,21 +360,20 @@ const PipelineItemDetail = (props) => {
                 placement="top"
                 delay={{ show: 250, hide: 400 }}
                 overlay={renderTooltip({ message: "Delete this pipeline" })} >
-                <FontAwesomeIcon icon={faTrash} className="pointer red float-right ml-3" size="sm" onClick={handleDeleteClick(data._id)}/></OverlayTrigger>}
+                <FontAwesomeIcon icon={faTrash} className="pointer red float-right ml-3" onClick={() => { handleDeleteClick(data._id);}}/></OverlayTrigger>}
 
               <OverlayTrigger
                 placement="top"
                 delay={{ show: 250, hide: 400 }}
                 overlay={renderTooltip({ message: "Duplicate this pipeline configuration" })} >
-                <FontAwesomeIcon icon={faCopy} className="pointer float-right ml-3" size="sm" onClick={() => { handleCopyPipeline(data._id); }}/></OverlayTrigger>
+                <FontAwesomeIcon icon={faCopy} className="pointer float-right ml-3" onClick={() => { handleCopyPipeline(data._id); }}/></OverlayTrigger>
                     
               <OverlayTrigger
                 placement="top"
                 delay={{ show: 250, hide: 400 }}
                 overlay={renderTooltip({ message: "View Pipeline Configurations" })} >
                 <FontAwesomeIcon icon={faFileAlt}
-                  className="mr-1 float-right text-muted"
-                  size="sm"
+                  className="float-right text-muted ml-3"                  
                   style={{ cursor: "pointer" }}
                   onClick= {() => { handleViewClick(data); }} /></OverlayTrigger>
 
