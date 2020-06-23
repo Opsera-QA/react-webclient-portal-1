@@ -178,8 +178,10 @@ const PipelineItemDetail = (props) => {
     setModalDeleteId(itemId);    
   };
 
-  const handleCopyPipeline = (itemId) => {
-    console.log("Copy this pipeline coming soon.", itemId);
+  const handleCopyPipeline = async (pipelineId) => {
+    const { getAccessToken } = contextType;
+    await PipelineActions.duplicate(pipelineId, getAccessToken);
+    setInfoModal({ show:true, header: "Duplicate Pipeline", message: "A new pipeline configuration has been created, duplicating all of the settings from this one.  That pipeline is now in your list of Pipelines for viewing.  No tools or activity logs were duplicated in this process.", button: "OK" });
   };
 
   const handleApprovalClick = () => {
@@ -363,8 +365,8 @@ const PipelineItemDetail = (props) => {
               <OverlayTrigger
                 placement="top"
                 delay={{ show: 250, hide: 400 }}
-                overlay={renderTooltip({ message: "COMING SOON! Duplicate this pipeline" })} >
-                <FontAwesomeIcon icon={faCopy} className="pointer float-right ml-3" size="sm" onClick={handleCopyPipeline(data._id)}/></OverlayTrigger>
+                overlay={renderTooltip({ message: "Duplicate this pipeline configuration" })} >
+                <FontAwesomeIcon icon={faCopy} className="pointer float-right ml-3" size="sm" onClick={() => { handleCopyPipeline(data._id); }}/></OverlayTrigger>
                     
               <OverlayTrigger
                 placement="top"
@@ -605,6 +607,8 @@ const PipelineItemDetail = (props) => {
     
   );
 };
+
+
 
 PipelineItemDetail.propTypes = {
   data: PropTypes.object,
