@@ -9,7 +9,7 @@ import ErrorDialog from "../common/error";
 import Pagination from "components/common/pagination";
 import { format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTags, faSearch, faFlag, faStar, faClock, faIdBadge, faTimesCircle, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faTags, faSearch, faFlag, faPlay, faClock, faIdBadge, faTimesCircle, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import PipelineHelpers from "./pipelineHelpers";
 import { Spinner } from "react-bootstrap";
 import "./workflows.css";
@@ -76,7 +76,7 @@ function MyPipelines() {
         {errors && <ErrorDialog error={errors} />}
         
         <div className="mt-3 max-content-width">
-          { Object.keys(data) === 0 ? 
+          { data && data.count === 0 ? 
             <WelcomeView />
             :
             <>
@@ -103,29 +103,30 @@ const WelcomeView = () => {
   return (
     <div className="pl-2 mt-5">      
       <div className="h5 mb-3 mt-4">Welcome to OpsERA Pipelines!</div>
-      <div className="h6 text-muted mb-3">
-      This technology will enable you to leverage OpsERA's expertise in building and managing DevSecOPS workflows to meet your individual needs.  
-      </div>
+      
               
       <div className="row mx-n2 mt-1 pl-2">
-        <div className="col-md px-2 landing-content-module">
+        <div className="col-md-1 px-2 landing-content-module">
           <img alt="OpsERA"
             src="/img/pipeline.png"
-            width="195"
-            height="225"
-            className="d-inline-block align-top"
+            style={{ width:"auto", height:"150px" }}
+            className="d-inline-block align-top ml-2"
           />
         </div>
+        <div className="col-md-6 px-2 text-muted pt-5">
+        OpsERA's Advanced Orchestration Technology combined with our robust tools experience will enable you to build and manage various continuous integration 
+        and delivery as well as unique policy based pipelines saving you time and resources!
+        </div>
+        <div className="col-md px-2 text-muted"></div>
       </div>
 
       <div className="row mx-n2 mt-4" style={{ maxWidth:"620px" }}>
         <div className="col-md px-2 landing-content-module">
-          <div className="h5">Pipeline</div>
           <div className="text-muted mb-3">
              At this time you do not have any pipelines configured.  Please visit the Catalog in order to add a workflow template to your pipeline.</div>
           <LinkContainer to={"/workflow/catalog"}>
-            <Button variant="success">
-              <FontAwesomeIcon icon={faStar} className="mr-1" fixedWidth/>Get Started!</Button>
+            <Button variant="success" className="px-2">
+              <FontAwesomeIcon icon={faPlay} className="mr-1" fixedWidth/>Get Started!</Button>
           </LinkContainer>
         </div>
       </div>
