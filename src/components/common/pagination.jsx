@@ -8,6 +8,8 @@ import "./pagination.css";
 
 function PaginationComponent(props) {
   const [currentPage, setCurrentPage] = useState(props.currentPage || 1);
+  const location = props.location || "bottom";
+  const [sortOption, setSortOption] = useState(props.sortOption || { name: "createdAt", text: "Newest", order: -1 });
   const [pageSize, setPageSize] = useState(props.pageSize || 25);
   const totalPages = Math.ceil(parseInt(props.total)/props.pageSize);
   const totalPagesArray = Array(totalPages).fill().map((_, i) => i+1);
@@ -32,11 +34,24 @@ function PaginationComponent(props) {
     setPageSize(pageSize);
   };
 
+  const updateSortOption = (sortOption) => {
+    setCurrentPage(1);
+    setSortOption(sortOption);
+  };
+
   const pageSizeList = [25, 50, 100];
+  const sortOptionList = [
+    { name: "createdAt", text: "Newest", order: -1 },
+    { name: "createdAt", text: "Oldest", order: 1 },
+    { name: "name", text: "Pipeline Name (a-z)", order: 1 }, 
+    { name: "name", text: "Pipeline Name (z-a)", order: -1 },
+    { name: "updatedAt", text: "Latest Updated", order: -1 },
+    { name: "updatedAt", text: "Earliest Updated", order: 1 },
+  ];
 
   useEffect(()=> {
-    props.onClick(currentPage, pageSize);
-  }, [currentPage, pageSize]);
+    props.onClick(currentPage, pageSize, sortOption);
+  }, [currentPage, pageSize, sortOption]);
   
   //This is only needed because the component re-renders due to Loading component in the parent 
   useEffect(()=> {
@@ -56,36 +71,52 @@ function PaginationComponent(props) {
 
   return (   
     <>
-      { props.total > props.pageSize ?
-        <Row className="pagination-block small mb-4">
+      { props.total > 10 ?
+        <Row className="pagination-block small">
           <Col xs={3} className="page-summary">Results {countOffset} - {countOffsetUpper} of {props.total}</Col>
-          <Col xs={6}>
-            <Pagination className="justify-content-center">
-              <Pagination.Item  disabled={currentPage > totalPagesArray.slice(0)[0] ? false : true} onClick={() => gotoPage(totalPagesArray.slice(0)[0])}>First</Pagination.Item>
-              <Pagination.Item  disabled={currentPage > totalPagesArray.slice(0)[0] ? false : true} onClick={() => gotoPage(currentPage - 1)}>Previous</Pagination.Item>
-              {totalPagesArray.map((pageNumber, index) => {
-                if(currentPage < pageNumber && (pageNumber - currentPage) < pageWindowSize) {
-                  return <Pagination.Item key={pageNumber} onClick={() => gotoPage(pageNumber)}>{pageNumber}</Pagination.Item>;
-                }else if(currentPage > pageNumber &&  currentPage - pageNumber < pageWindowSize) {
-                  return <Pagination.Item key={pageNumber} onClick={() => gotoPage(pageNumber)}>{pageNumber}</Pagination.Item>;
-                }else if(currentPage === pageNumber){
-                  return <Pagination.Item active={pageNumber == currentPage} key={pageNumber} onClick={() => gotoPage(pageNumber)}>{pageNumber}</Pagination.Item>;
-                }else {
-                  return null;
-                }
-              })}
-              <Pagination.Item disabled={currentPage < totalPagesArray.slice(-1)[0] ? false : true} onClick={() => gotoPage(currentPage + 1)}>Next</Pagination.Item>
-              <Pagination.Item disabled={currentPage < totalPagesArray.slice(-1)[0] ? false : true} onClick={() => gotoPage(totalPagesArray.slice(-1)[0])}>Last</Pagination.Item>
-            </Pagination>  
-          </Col>
-          <Col xs={3} className="justify-content-right">     
-            <DropdownList
-              data={pageSizeList} 
-              valueField='value'
-              textField={item => item + " results per page"}
-              defaultValue={pageSize}
-              onChange={updatePageSize}             
-            /></Col>
+          { location === "top" ?
+            <>
+              <Col xs={6}></Col>
+              <Col xs={3} className="justify-content-right">     
+                <DropdownList
+                  data={sortOptionList} 
+                  valueField='value'
+                  textField={sortObject => sortObject.text }
+                  defaultValue={sortOption}
+                  onChange={updateSortOption}             
+                />
+              </Col>
+            </>
+            : 
+            <>
+              <Col xs={6}>
+                <Pagination disabled={props.total < props.pageSize} className="justify-content-center">
+                  <Pagination.Item  disabled={currentPage > totalPagesArray.slice(0)[0] ? false : true} onClick={() => gotoPage(totalPagesArray.slice(0)[0])}>First</Pagination.Item>
+                  <Pagination.Item  disabled={currentPage > totalPagesArray.slice(0)[0] ? false : true} onClick={() => gotoPage(currentPage - 1)}>Previous</Pagination.Item>
+                  {totalPagesArray.map((pageNumber, index) => {
+                    if(currentPage < pageNumber && (pageNumber - currentPage) < pageWindowSize) {
+                      return <Pagination.Item key={pageNumber} onClick={() => gotoPage(pageNumber)}>{pageNumber}</Pagination.Item>;
+                    }else if(currentPage > pageNumber &&  currentPage - pageNumber < pageWindowSize) {
+                      return <Pagination.Item key={pageNumber} onClick={() => gotoPage(pageNumber)}>{pageNumber}</Pagination.Item>;
+                    }else if(currentPage === pageNumber){
+                      return <Pagination.Item disabled={currentPage < totalPagesArray.slice(-1)[0] ? false : true} active={pageNumber == currentPage} key={pageNumber} onClick={() => gotoPage(pageNumber)}>{pageNumber}</Pagination.Item>;
+                    }else {
+                      return null;
+                    }
+                  })}
+                  <Pagination.Item disabled={currentPage < totalPagesArray.slice(-1)[0] ? false : true} onClick={() => gotoPage(currentPage + 1)}>Next</Pagination.Item>
+                  <Pagination.Item disabled={currentPage < totalPagesArray.slice(-1)[0] ? false : true} onClick={() => gotoPage(totalPagesArray.slice(-1)[0])}>Last</Pagination.Item>
+                </Pagination>  
+              </Col>
+              <Col xs={3} className="justify-content-right">     
+                <DropdownList
+                  data={pageSizeList} 
+                  valueField='value'
+                  textField={item => item + " results per page"}
+                  defaultValue={pageSize}
+                  onChange={updatePageSize}             
+                /></Col>
+            </> }
         </Row> : null }
     </>
   );
@@ -95,7 +126,9 @@ PaginationComponent.propTypes = {
   currentPage: PropTypes.number,
   pageSize: PropTypes.number,
   total: PropTypes.number,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
+  location: PropTypes.string,
+  sortOption: PropTypes.object
 };
 
 

@@ -1,10 +1,20 @@
 .pagination-block .page-link {
-  color: #0f3e84;
+  color: #1578dc;
 }
 .pagination-block .page-item.active .page-link {
-  background-color: #0f3e84;
-  border-color: #0d4183;
+  background-color: #1578dc;
+  border-color: #1578dc;
 }
+
+.pagination-block .page-item.active.disabled .page-link {
+  background-color: #fff;
+  border-color: #dee2e6;
+}
+
+.pagination-block ul {
+  margin-bottom: .25rem;
+}
+
 .pagination-block .page-summary {
   padding-top: 10px;
 }
