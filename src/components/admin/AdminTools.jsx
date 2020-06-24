@@ -1,38 +1,35 @@
-import React, { Component } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { Link } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faHeartbeat, faTimes, faUserCircle, faLink, faChartBar, faWrench } from "@fortawesome/free-solid-svg-icons";
 
-class AdminTools extends Component {
-  static contextType = AuthContext;
-  constructor(props, context) {
-    super(props, context);
-    this.state = {
-      administrator: false
-    };
-  }
 
-  async componentDidMount() {
-    const { getUserInfo } = this.context;
+function AdminTools(props) {
+  const [administrator, setAdministrator] = useState(false);
+  const { getUserInfo } = useContext(AuthContext);
+
+  useEffect(() => {
+    isAdmin();
+  }, []);
+
+  const isAdmin = async () => {
     const userInfo = await getUserInfo();
     console.log(userInfo);
-    this.setState({ administrator: userInfo.Groups.includes("Admin") });
+    setAdministrator(userInfo.Groups.includes("Admin"));
     if (!userInfo.Groups.includes("Admin")) {
       //move out
       this.props.history.push("/");
     } else {
       //do nothing
     }
-  }
+  };
 
-  render() {
-    const { administrator } = this.state;
-    return (
-      <>
-        {
-          administrator &&
+  return (
+    <>
+      {
+        administrator &&
           <div className="max-content-width">
             <h4>Administration Tools</h4>
             <div>Listed below are administration tools for the platform.</div>
@@ -69,12 +66,15 @@ class AdminTools extends Component {
                 <Link to="/admin/tool-configurations"><FontAwesomeIcon icon={faWrench} fixedWidth /> Tool Configurations</Link>
               </Col>              
             </Row>
-
           </div>
-        }
-      </>
-    );
-  }
+      }
+    </>
+  );
 }
+
+AdminTools.propTypes = {
+
+};
+
 
 export default AdminTools;
