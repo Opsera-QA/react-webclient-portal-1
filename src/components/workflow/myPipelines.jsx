@@ -23,18 +23,19 @@ function MyPipelines() {
   
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(30);
+  const [sortOption, setSortOption] = useState({ name: "createdAt", text: "Newest", order: -1 });
   
-  // Executed every time page number or page size changes
+  // Executed every time page number, page size, or sort option changes
   useEffect(() => {    
     fetchData();
-  }, [currentPage, pageSize]);
+  }, [currentPage, pageSize, sortOption]);
 
   async function fetchData() {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
 
-    const apiCall = new ApiService(`/pipelines?page=${currentPage}&size=${pageSize}`, {}, accessToken);
+    const apiCall = new ApiService(`/pipelines?page=${currentPage}&size=${pageSize}&sort=${sortOption.name}&order=${sortOption.order}`, {}, accessToken);
     apiCall.get()
       .then(function (result) {
         console.log(result);
@@ -51,6 +52,11 @@ function MyPipelines() {
   const gotoPage = (pageNumber, pageSize) => {
     setCurrentPage(pageNumber);
     setPageSize(pageSize);
+  };
+
+  const sortPage = (pageNumber, sortOption) => {
+    setCurrentPage(pageNumber);
+    setSortOption(sortOption);
   };
   
   if (loading) {
@@ -76,8 +82,11 @@ function MyPipelines() {
             <>
               {data && data.count && data.response && 
               <>
-                <ItemSummaries data={data.response} />  
-                <Pagination total={data.count} currentPage={currentPage} pageSize={pageSize} onClick={(pageNumber, pageSize) => gotoPage(pageNumber, pageSize)} />
+                <div className="mb-4">
+                  <Pagination total={data.count} currentPage={currentPage} pageSize={pageSize} location="top" sortOption={sortOption} onClick={(pageNumber, pageSize, sortOption) => sortPage(pageNumber, sortOption)} />
+                  <ItemSummaries data={data.response} />  
+                  <Pagination total={data.count} currentPage={currentPage} pageSize={pageSize} onClick={(pageNumber, pageSize, sortOption) => gotoPage(pageNumber, pageSize)} />
+                </div>
               </>
               }
             </>  
