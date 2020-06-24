@@ -54,6 +54,7 @@ const PipelineItemDetail = (props) => {
     const controller = new AbortController();
     const runEffect = async () => {
       try {
+        
         await loadFormData(data);            
       } catch (err) {
         if (err.name === "AbortError") {
@@ -341,6 +342,20 @@ const PipelineItemDetail = (props) => {
           </div>
           
           
+          { role === "user" &&<div className="mb-2 w-100 max-charting-width">           
+            <div className="info-text">Limited Access Role.  Your account is a standard user and as such can view the pipeline and run it, but not change settings or approve actions.</div>     
+          </div> }
+
+          { role === "viewer" &&<div className="mb-2 w-100 max-charting-width">           
+            <div className="info-text">Limited Access Role.  Your account is only able to view this pipeline.  You cannot perform any actions around it. </div>     
+          </div> }
+
+          { !role &&<div className="mb-2 w-100 max-charting-width">           
+            <div className="info-text">Role Access Warning.  Your account does not have any roles associated with this pipeline.  You are being temporarily granted Viewer permissions and will not be able to perform any actions on this pipeline.</div>     
+          </div> }
+
+
+          
           <ul className="nav nav-tabs w-100">
             <li className="nav-item">
               <Link className="nav-link active"
@@ -547,7 +562,7 @@ const PipelineItemDetail = (props) => {
 
                   {(workflowStatus === "stopped" || !workflowStatus) && 
                   <>
-                    { data.workflow.schedule.start_date ? 
+                    { data.workflow.schedule && data.workflow.schedule.start_date ? 
                       <>
                         <Button variant="outline-dark" className="mr-1"  size="sm" disabled>
                           <FontAwesomeIcon icon={faHourglass} fixedWidth className="mr-1"/>Pending Scheduled Activity</Button> 
