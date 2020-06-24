@@ -3,7 +3,7 @@ import { Button, Modal, Form, Popover, Col, OverlayTrigger } from "react-bootstr
 import { AuthContext } from "contexts/AuthContext"; 
 import { axiosApiService } from "api/apiService";
 import PropTypes from "prop-types";
-import MultiInputFormField from "./multiInputFormField";
+import MultiInputFormField from "utils/multiInputFormField";
 import TagInput from "utils/tagInput";
 import validate from "utils/formValidation";
 import newToolFormFields from "./new-tool-form-fields.js";
