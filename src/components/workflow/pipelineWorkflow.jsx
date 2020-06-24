@@ -333,6 +333,10 @@ const PipelineWorkflow = (props) => {
             <div className="info-text">Limited Access Role.  Your account is only able to view this pipeline.  You cannot perform any actions around it. </div>     
           </div> }
 
+          { !role &&<div className="mb-2 w-100 max-content-module-width-50">           
+            <div className="info-text">Role Access Warning.  Your account does not have any roles associated with this pipeline.  You are being temporarily granted Viewer permissions and will not be able to perform any actions on this pipeline.</div>     
+          </div> }
+          
 
           <ul className="nav nav-tabs w-100" style={{ borderBottom: "none" }}>
             <li className="nav-item">
