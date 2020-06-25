@@ -72,9 +72,9 @@ const toolIdentifierFormFields = {
   properties: {
     label: "Properties",
     id: "properties",
-    type: "multi-checkbox",
+    type: "multi-checkbox", 
     toShow: true,
-    value: [],
+    value: { isLiveStream : false },
     fields: ["name", "value"],
     showEditButton: true,
     disabled: true,
