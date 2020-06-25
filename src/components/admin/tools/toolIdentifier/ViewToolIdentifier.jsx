@@ -8,7 +8,7 @@ import { faPen } from "@fortawesome/free-solid-svg-icons";
 import "components/inventory/tools/tools.css";
 
 function ViewToolIdentifier(props) {
-  const { toolId, toolData } = props;
+  const { toolData } = props;
 
   return (
     <>
@@ -26,24 +26,24 @@ function ViewToolIdentifier(props) {
           <Col lg={4} md={6} className="my-2">
             <span className="pr-1 text-muted">ID: </span>{toolData._id}</Col>
 
-          { toolData.createdAt && <Col lg={4} md={6} className="my-2">
+          {toolData.createdAt && <Col lg={4} md={6} className="my-2">
             <span className="pr-1 text-muted">Created: </span>{format(new Date(toolData.createdAt), "yyyy-MM-dd")}</Col>}
 
           <Col lg={4} md={6} className="my-2"> 
             <span className="pr-1 text-muted">Tool: </span>{toolData.identifier}</Col> 
 
           <Col lg={4} md={6} className="my-2"> 
-            <span className="pr-1 text-muted">Type: </span>{toolData.tool_type_identifier}</Col> 
+            <span className="pr-1 text-muted">Type: </span>{toolData.tool_type_identifier}</Col>  
+    
+          {(toolData.tags && toolData.tags.length > 0) && <Col lg={4} md={6} className="my-2">
+            <span className="pr-1 text-muted">Tags: </span>{toolData.tags.map(str => { return(`${str}, `);})}</Col> }
 
           <Col lg={4} md={6} className="my-2">
-            <span className="pr-1 text-muted">Tags: </span>{toolData.tags.map(str => { return(`${str}, `);})}</Col>
+            <span className="pr-1 text-muted">State: </span>{toolData.active ? "Active" : "Disabled"}</Col> 
 
-          <Col lg={4} md={6} className="my-2">
-            <span className="pr-1 text-muted">State: </span>{toolData.active ? "Active" : "Disabled"}</Col>
-
-          <Col lg={4} md={6} className="my-2">
+          {toolData.properties && Object.keys(toolData.properties).length > 0 && <Col lg={4} md={6} className="my-2">
             <span className="pr-1 text-muted">Properties: </span>
-            {Object.keys(toolData.properties).map((item, i) => <div className="p-1" key={i}>{item} : {toolData.properties[item] ? "Active" : "Disabled"}</div>)}</Col>
+            {Object.keys(toolData.properties).map((item, i) => <div className="p-1" key={i}>{item} : {toolData.properties[item] ? "Active" : "Disabled"}</div>)}</Col>}
         </Row>
 
       </>}

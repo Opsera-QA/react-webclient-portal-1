@@ -199,17 +199,16 @@ function ToolIdentifierModal(props) {
 
   const updateToolIdentifier = async () => {
 
-    let formattedProperties = {};
-    formFieldList.properties.value.map((item) => {
-      formattedProperties[item.name] = item.value ? true : false ;
-    });
-
-    formFieldList.properties.value = formattedProperties;
+    //Even if use deletes the default value set default before submitting the form data
+    let newProperties = formFieldList.properties.value;
+    if(Object.keys(newProperties).length == 0) {
+      formFieldList.properties.value = { isLiveStream: false };
+    }else {
+      formFieldList.properties.value = newProperties.reduce((obj, item) => Object.assign(obj, { [item.name]: item.value ? true : false }), {});
+    }
     
-    let formData = Object.keys(formFieldList).reduce((obj, key) => {
-      obj[key] = formFieldList[key].value;
-      return obj;
-    }, {});
+    //Only extract the value filed before sending to the API
+    let formData = Object.keys(formFieldList).reduce((obj, item) => Object.assign(obj, { [item]: formFieldList[item].value }), {});
 
     let API_URL = toolType == "New" ? "/registry/tool/create" : "/registry/tool/" + props.toolId + "/update";
 
