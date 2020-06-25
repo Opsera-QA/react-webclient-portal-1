@@ -8,7 +8,7 @@ import { faPen } from "@fortawesome/free-solid-svg-icons";
 import "components/inventory/tools/tools.css";
 
 function ViewToolType(props) {
-  const { toolId, toolData } = props;
+  const { toolData } = props;
 
   return (
     <>
@@ -25,7 +25,7 @@ function ViewToolType(props) {
           <Col lg={4} md={6} className="my-2">
             <span className="pr-1 text-muted">ID: </span>{toolData._id}</Col>
 
-          { toolData.createdAt && <Col lg={4} md={6} className="my-2">
+          {toolData.createdAt && <Col lg={4} md={6} className="my-2">
             <span className="pr-1 text-muted">Created: </span>{format(new Date(toolData.createdAt), "yyyy-MM-dd")}</Col>}
 
           <Col lg={4} md={6} className="my-2"> 
@@ -35,8 +35,8 @@ function ViewToolType(props) {
             <span className="pr-1 text-muted">Type: </span>{toolData.tool_type_identifier}</Col> */}
 
 
-          <Col lg={4} md={6} className="my-2">
-            <span className="pr-1 text-muted">Tags: </span>{toolData.tags.map(str => { return(`${str}, `);})}</Col> 
+          {(toolData.tags && Object.keys(toolData.tags).length) > 0 && <Col lg={4} md={6} className="my-2">
+            <span className="pr-1 text-muted">Tags: </span>{toolData.tags.map(str => { return(`${str}, `);})}</Col> }
 
           <Col lg={4} md={6} className="my-2">
             <span className="pr-1 text-muted">State: </span>{toolData.active ? "Active" : "Disabled"}</Col>
