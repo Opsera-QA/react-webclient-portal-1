@@ -32,6 +32,7 @@ import CustomerSystemStatus from "./components/admin/status/CustomerSystemStatus
 import Overview from "./components/landing/Overview";
 import Registration from "./components/landing/Registration";
 import ToolConfigurations from "./components/admin/tools/ToolConfigurations";
+import TagEditor from "./components/admin/tags/TagsEditor";
 
 const config = require("./config");
 
@@ -95,6 +96,7 @@ class App extends Component {
                   <SecureRoute path="/admin/customerstatus" component={CustomerSystemStatus} />
                   <SecureRoute path="/admin/analytics/reports-registration" component={ReportsRegistration} />
                   <SecureRoute path="/admin/tool-configurations" component={ToolConfigurations} />
+                  <SecureRoute path="/admin/tags" component={TagEditor} />
                   <SecureRoute path="/api_demo" component={ApiConnectionDemo} />
                 </div>
               </div>
