@@ -41,12 +41,12 @@ function PaginationComponent(props) {
 
   const pageSizeList = [25, 50, 100];
   const sortOptionList = [
-    { name: "createdAt", text: "Newest", order: -1 },
-    { name: "createdAt", text: "Oldest", order: 1 },
+    { name: "createdAt", text: "Newest Pipelines", order: -1 },
+    { name: "createdAt", text: "Oldest Pipelines", order: 1 },
     { name: "name", text: "Pipeline Name (a-z)", order: 1 }, 
     { name: "name", text: "Pipeline Name (z-a)", order: -1 },
-    { name: "updatedAt", text: "Latest Updated", order: -1 },
-    { name: "updatedAt", text: "Earliest Updated", order: 1 },
+    { name: "updatedAt", text: "Updated (latest)", order: -1 },
+    { name: "updatedAt", text: "Updated (earliest)", order: 1 },
   ];
 
   useEffect(()=> {
