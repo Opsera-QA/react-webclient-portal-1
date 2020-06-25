@@ -114,7 +114,7 @@ function ToolIdentifierModal(props) {
           }}
         />
       );
-    case "multi-checkboxxx":
+    case "multi-input":
       return (
         <>
           {Object.keys(formFieldList[formField.id].value).map((item, i) => (
@@ -132,7 +132,6 @@ function ToolIdentifierModal(props) {
           ))}
         </>
       );
-
     case "textarea":
       return (
         <Form.Control
@@ -210,7 +209,7 @@ function ToolIdentifierModal(props) {
     //Only extract the value filed before sending to the API
     let formData = Object.keys(formFieldList).reduce((obj, item) => Object.assign(obj, { [item]: formFieldList[item].value }), {});
 
-    let API_URL = toolType == "New" ? "/registry/tool/create" : "/registry/tool/" + props.toolId + "/update";
+    let API_URL = toolType == "New" ? "/registry/tool/create" : "/registry/tool/" + toolData._id + "/update";
 
     try {
       const accessToken = await getAccessToken();
@@ -244,7 +243,7 @@ function ToolIdentifierModal(props) {
   const deleteTool = async () => {
     try {
       const accessToken = await getAccessToken();
-      const response = await axiosApiService(accessToken).delete("/registry/tool/"+ props.toolId, { });
+      const response = await axiosApiService(accessToken).delete("/registry/tool/"+ toolData._id, { });
       console.log(response.data);
       props.closeModal(false);
     }
