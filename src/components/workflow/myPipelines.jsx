@@ -23,7 +23,7 @@ function MyPipelines() {
   
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(30);
-  const [sortOption, setSortOption] = useState({ name: "createdAt", text: "Newest", order: -1 });
+  const [sortOption, setSortOption] = useState({ name: "name", text: "Pipeline Name (a-z)", order: 1 });
   
   // Executed every time page number, page size, or sort option changes
   useEffect(() => {    
