@@ -14,7 +14,8 @@ function ModalActivityLogsDialog({ header, size, jsonData, show, setParentVisibi
     setShowModal(show);
     if (jsonData !== undefined) {
       setViewType(jsonData.action);        
-      const new_obj = iterate(JSON.parse(JSON.stringify(jsonData)));      
+      //const new_obj = iterate(JSON.parse(JSON.stringify(jsonData)));      
+      const new_obj = jsonData;      
       setDataView(new_obj);
     }    
   }, [jsonData, show]);
@@ -24,7 +25,7 @@ function ModalActivityLogsDialog({ header, size, jsonData, show, setParentVisibi
     setParentVisibility();
   };
 
-  const iterate = (obj) => {
+  /* const iterate = (obj) => {
     Object.keys(obj).forEach(key => {
       if (key === "configuration") {
         obj[key] = { data: "hidden" };
@@ -34,7 +35,7 @@ function ModalActivityLogsDialog({ header, size, jsonData, show, setParentVisibi
       }
     });
     return obj;
-  };
+  }; */
 
 
   if (viewType === "console output") {
