@@ -7,6 +7,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { format } from "date-fns";
 import Loading from "components/common/loading";
 import ErrorDialog from "components/common/error";
+import { Link } from "react-router-dom";
 
 import ToolTypeTable from "./toolType/ToolTypeTable";
 import ToolTypeModal from "./toolType/ToolTypeModal";
@@ -133,6 +134,15 @@ function ToolConfigurationsAdmin() {
     <div> 
       <h4>Tool Management</h4>
       <br />
+
+      <nav aria-label="breadcrumb">
+        <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
+          <li className="breadcrumb-item">
+            <Link to="/admin">Admin</Link>
+          </li>
+          <li className="breadcrumb-item active">Tool Management</li> 
+        </ol>
+      </nav>  
 
       {pageLoading ? <Loading size="sm" /> : null} 
       {(!isAdminCheck && !pageLoading)&& <ErrorDialog error={"You do not have access to view this page!"} />}

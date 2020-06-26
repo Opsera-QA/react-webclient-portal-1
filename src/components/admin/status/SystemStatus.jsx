@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { ApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/loading";
+import { Link } from "react-router-dom";
 
 const Status = ({ color }) =>  <svg height="20" width="20"><circle cx="10" cy="10" r="10" fill={color} /></svg>;
 
@@ -111,6 +112,16 @@ function SystemStatus() {
     <div className="mt-3 max-content-width">
       <h4>System Status</h4>
       <div>Listed below are system tools for Opsera.</div>
+      <br />
+      <nav aria-label="breadcrumb">
+        <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
+          <li className="breadcrumb-item">
+            <Link to="/admin">Admin</Link>
+          </li>
+          <li className="breadcrumb-item active">System Status</li> 
+        </ol>
+      </nav>  
+      <br />
       {state.modal &&
         <Alert className="mt-3" variant={state.type} onClose={() => setState({ modal: false, type: "", title: "", message: "" })} dismissible>
           {state.title} {state.message}

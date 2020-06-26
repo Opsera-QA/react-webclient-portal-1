@@ -44,18 +44,14 @@ function AdminTools(props) {
               {/* <Col xs={12} md={6} lg={4} className="p-2">
                <Link to="/admin/health"><FontAwesomeIcon icon={faHeartbeat} fixedWidth /> System Health Check</Link>
                </Col> */}                                    
-            </Row>
-
-            <Row className="ml-5" style={{ fontSize:"1rem" }}>             
+           
               <Col xs={12} md={6} lg={4} className="p-2">
                 <Link to="/reports"><FontAwesomeIcon icon={faLink} fixedWidth /> Reports</Link>
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
                 <Link to="/admin/analytics/reports-registration"><FontAwesomeIcon icon={faChartBar} fixedWidth /> Reports Registration</Link>
               </Col>              
-            </Row>
 
-            <Row className="ml-5" style={{ fontSize:"1rem" }}>
               <Col xs={12} md={6} lg={4} className="p-2">
                 <Link to="/admin/manage_systems"><FontAwesomeIcon icon={faEdit} fixedWidth /> System Management</Link>
               </Col>
@@ -65,9 +61,7 @@ function AdminTools(props) {
               <Col xs={12} md={6} lg={4} className="p-2">
                 <Link to="/api_demo"><FontAwesomeIcon icon={faLink} fixedWidth /> API Test</Link>
               </Col>                          
-            </Row>
-
-            <Row className="ml-5" style={{ fontSize:"1rem" }}>
+              
               <Col xs={12} md={6} lg={4} className="p-2">
                 <Link to="/admin/tool-configurations"><FontAwesomeIcon icon={faWrench} fixedWidth /> Tool Configurations</Link>
               </Col>   
