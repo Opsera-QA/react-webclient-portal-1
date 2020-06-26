@@ -175,7 +175,7 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
         tmpDataObject = dataObj;
         let status =  pipeline.workflow.last_step !== undefined && pipeline.workflow.last_step.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;
         if (staleRefreshCount % 2 === 0) {
-          console.log("divisible by 2 refresh");
+          //console.log("divisible by 2 refresh");
           fetchActivityLogs();
         }
 
