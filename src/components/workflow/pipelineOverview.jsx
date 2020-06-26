@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Table } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext"; 
 import { axiosApiService } from "api/apiService";
-import PipelineItemDetail from "./pipelineOverviewSummary";
+import PipelineOverviewSummary from "./pipelineOverviewSummary";
 import LoadingDialog from "components/common/loading";
 import ErrorDialog from "components/common/error";
 import InfoDialog from "components/common/info";
@@ -13,9 +13,10 @@ import ModalActivityLogs from "components/common/modalActivityLogs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus, faTimesCircle, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import "./workflows.css";
+import PipelineActionControls from "./piplineActionControls";
 
 
-function PipelineDetail({ id }) {
+function PipelineOverview({ id }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
   const [data, setData] = useState({});
@@ -26,6 +27,7 @@ function PipelineDetail({ id }) {
   const [logsIsLoading, setLogsIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(25);
+  const [workflowStatus, setWorkflowStatus] = useState(false);
 
   useEffect(() => {    
     const controller = new AbortController();
@@ -138,8 +140,10 @@ function PipelineDetail({ id }) {
   } else {
     return (
       <>
-        <div className="mt-3 max-content-width">
-          {typeof(data.pipeline) !== "undefined" ? <PipelineItemDetail data={data.pipeline} parentCallback={callbackFunction} parentCallbackRefreshActivity={callbackRefreshActivity} role={role} stepStatus={stepStatus}  />  : null }
+        <div className="max-content-width">
+          {typeof(data.pipeline) !== "undefined" && <PipelineActionControls pipeline={data.pipeline} disabledActionState={false} role={role} fetchData={fetchData} fetchActivityLogs={getActivityLogs} setParentWorkflowStatus={setWorkflowStatus} /> }
+
+          {typeof(data.pipeline) !== "undefined" ? <PipelineOverviewSummary data={data.pipeline} parentCallback={callbackFunction} parentCallbackRefreshActivity={callbackRefreshActivity} role={role} stepStatus={stepStatus}  />  : null }
           <PipelineActivity data={activityData.pipelineData} isLoading={logsIsLoading} />
           {activityData.pipelineData && <Pagination total={activityData.count} currentPage={currentPage} pageSize={pageSize} onClick={(pageNumber, pageSize) => gotoPage(pageNumber, pageSize)} />}
         </div>       
@@ -222,7 +226,7 @@ const PipelineActivity = (props) => {
 
 
 
-PipelineDetail.propTypes = {
+PipelineOverview.propTypes = {
   id: PropTypes.string
 };
 
@@ -236,4 +240,4 @@ PipelineActivity.propTypes = {
 };
 
 
-export default PipelineDetail;
+export default PipelineOverview;

@@ -2,18 +2,15 @@ import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { axiosApiService } from "../../api/apiService";
 import { AuthContext } from "../../contexts/AuthContext"; 
-import socketIOClient from "socket.io-client";
 import { SteppedLineTo } from "react-lineto";
 import { Link } from "react-router-dom";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faFileAlt, faCog, faPen, faArchive, faPlay, faSync, faSpinner, faStopCircle, faHistory, faCheck, faPause, faFlag, faClipboardCheck, faCodeBranch, faFileCode, faCubes } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faFileAlt, faCog, faPen, faSpinner, faCheck, faClipboardCheck, faCodeBranch, faFileCode, faCubes } from "@fortawesome/free-solid-svg-icons";
 import ModalActivityLogs from "../common/modalActivityLogs";
-import PipelineActions from "./actions";
 import PipelineWorkflowItemList from "./pipelineWorkflowItemList";
-import isEqual from "lodash.isequal";
-import ApprovalModal from "./approvalModal";
+import PipelineActionControls from "./piplineActionControls";
 import Modal from "../common/modal";
 import "./workflows.css";
 
@@ -25,15 +22,12 @@ const PipelineWorkflow = (props) => {
   const contextType = useContext(AuthContext);
   const [state, setState] = useState({ items: [] });
   const [lastStep, setLastStep] = useState({});  
-  const [socketRunning, setSocketRunning] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
   const [workflowStatus, setWorkflowStatus] = useState(false);
   const [editWorkflow, setEditWorkflow] = useState(false);
-  const endPointUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
   const [accessToken, setAccessToken] = useState();
   const [infoModal, setInfoModal] = useState({ show:false, header: "", message: "", button: "OK" });
-  const [showApprovalModal, setShowApprovalModal] = useState(false);
   const [isSavingPipeline, setIsSavingPipeline] = useState(false);
   
   //Feature Flag
@@ -74,8 +68,7 @@ const PipelineWorkflow = (props) => {
     if (pipeline.workflow !== undefined) {
       setState({ items: pipeline.workflow.plan });
       setLastStep(pipeline.workflow.last_step);
-      //setNextStep(calculateNextStep(step.workflow.last_step));
-
+      
       if (pipeline !== undefined && pipeline.workflow.last_step !== undefined) {
         let status = pipeline.workflow.last_step.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;
 
@@ -83,11 +76,7 @@ const PipelineWorkflow = (props) => {
           setWorkflowStatus("paused");
         } else {
           setWorkflowStatus(status);
-        }
-        
-        if (status === "running" && !socketRunning) {
-          subscribeToTimer();
-        }        
+        }          
       } else {
         setWorkflowStatus(false);        
       }      
@@ -108,141 +97,15 @@ const PipelineWorkflow = (props) => {
       console.log("Error occurred getting user authentication status.", err);
     }    
   }
-
-  let tmpDataObject = {};
-  let staleRefreshCount = 0;  
-  const subscribeToTimer = () => {    
-    const socket = socketIOClient(endPointUrl, { query: "pipelineId=" + data._id });
-    console.log("Connected status before onConnect", socket.socket ? socket.socket.connected : socket.socket === undefined );
-    setSocketRunning(true);
-    
-    if (socket.socket === undefined ) {
-      socket.emit("subscribeToPipelineActivity", 1000);
-      socket.on("subscribeToPipelineActivity", dataObj => {
-        console.log("Update from Websocket (staleRefreshCount: "+staleRefreshCount+"): ", dataObj);
-        if (isEqual(dataObj, tmpDataObject)) {
-          staleRefreshCount++;
-        } else {
-          staleRefreshCount = 0;
-        }  
-        tmpDataObject = dataObj;
-        let status =  data.workflow.last_step !== undefined && data.workflow.last_step.hasOwnProperty("status") ? data.workflow.last_step.status : false;
-
-        if (staleRefreshCount >= 20) {
-          console.log("closing connection due to stale data");
-          setWorkflowStatus(false);
-          setSocketRunning(false);
-          socket.close();
-        } else {          
-          if (status === "stopped" && data.workflow.last_step.running && data.workflow.last_step.running.paused) {
-            setWorkflowStatus("paused");
-          } else {
-            setWorkflowStatus(status);
-          }
-        }
-           
-        if (typeof(dataObj) !== "undefined" && Object.keys(dataObj).length > 0) {
-          data.workflow.last_step = dataObj;
-          setLastStep(dataObj);
-        }
-
-        if (staleRefreshCount > 3 && status === "stopped") {
-          console.log("closing connection due to stopped status");
-          setWorkflowStatus(false);
-          setSocketRunning(false);
-          socket.close();
-        }
-
-      });
-    }
-
-    socket.on("disconnect", () => {
-      setWorkflowStatus(false);
-      setSocketRunning(false);
-    });
-
-    socket.on("connect_error", function(err) {
-      console.log("Connection Error on Socket:", err);
-      setWorkflowStatus(false);
-      setSocketRunning(false);
-      socket.close();
-    });
-  };
+ 
 
   const handleViewClick = (data, header) => {
     setModalMessage(data);
     setModalHeader(header);
     setShowModal(true);
   };
-
-  const handleRefreshClick = async (pipelineId, stepNext) => {
-    await fetchStatusData(pipelineId, stepNext);
-    setTimeout(subscribeToTimer(), 5000); // delay this by 5 seconds to allow time for services to spin up
-  };
-
-  const handleStopWorkflowClick = async (pipelineId) => {
-    const { getAccessToken } = contextType;
-    const response = await PipelineActions.cancel(pipelineId, getAccessToken);
-    setWorkflowStatus(false);
-    await fetchStatusData(pipelineId);
-
-    if (typeof(response.error) !== "undefined") {
-      console.log(response.error);
-      setErrors(response.error);
-    }     
-  };
   
-  const handleRunPipelineClick = async (pipelineId, oneStep) => {
-    await runPipeline(pipelineId, oneStep);
-    setWorkflowStatus("running");    
-  };
-
-  const handleApprovalClick = () => {
-    setShowApprovalModal(true);    
-  };
-
-  const handleApprovalActivity = () => {
-    setInfoModal({ show:true, header: "Approval Status", message: "Your approval action has been recorded in this pipeline's Activity Logs.  The pipeline will resume operations shortly.", button: "OK" });
-    setWorkflowStatus("running");  
-    subscribeToTimer();
-  };
-
-  async function fetchStatusData(pipelineId, stepNext) {
-    let apiUrl = `/pipelines/${pipelineId}/status`;
-    if (stepNext) {
-      apiUrl = apiUrl + "?run=true";
-    }   
-    
-    try {
-      const pipelineActivityLog = await axiosApiService(accessToken).get(apiUrl);
-      console.log(pipelineActivityLog);
-      fetchPlan();
-    }
-    catch (err) {
-      console.log(err.message);
-      setErrors(err.message);      
-    }
-  }
-
-  async function runPipeline(pipelineId, oneStep) {
-    const { getAccessToken } = contextType;
-    const postBody = {
-      "oneStep": oneStep
-    };
-    const response = await PipelineActions.run(pipelineId, postBody, getAccessToken);
-    console.log(response);
-    if (typeof(response.error) !== "undefined") {
-      console.log(response.error);
-      setErrors(response.error);
-    } else {
-      setWorkflowStatus("running");
-      setTimeout(function () {
-        subscribeToTimer();
-      }, 5000);      
-    }   
-  }
-
-  async function fetchPipelineActivityByTool(pipelineId, tool, stepId, activityId) {
+  const fetchPipelineActivityByTool = async (pipelineId, tool, stepId, activityId) => {
     let apiUrl = `/pipelines/${pipelineId}/activity`;
     const params = { 
       tool: tool, 
@@ -259,7 +122,7 @@ const PipelineWorkflow = (props) => {
       console.log(err.message);
       return false;      
     }
-  }
+  };
 
   const handleViewPipelineClick = (param) => {
     setModalHeader("Pipeline Configuration");
@@ -316,13 +179,21 @@ const PipelineWorkflow = (props) => {
     }    
   };
 
+  const fetchActivityLogs = () => {
+    loadFormData(data);
+  };
+
+
   return (
     <>      
       {error ? <ErrorDialog error={error} /> : null}
       {typeof(data.workflow) !== "undefined" && data.workflow.hasOwnProperty("source") ? 
         <>
+          <div className="max-content-module-width-50" style={{ margin:"0", padding: "0" }}>     
+            <PipelineActionControls pipeline={data} disabledActionState={false} role={role} fetchData={fetchPlan} fetchActivityLogs={fetchActivityLogs} setParentWorkflowStatus={setWorkflowStatus} /> 
+          </div>
           <div className="mb-2 w-100 max-content-module-width-50">           
-            <div className="title-text-5 mt-2">{data.name}</div>     
+            <div className="title-text-5">{data.name}</div>               
           </div>
 
           { role === "user" &&<div className="mb-2 w-100 max-content-module-width-50">           
@@ -352,51 +223,13 @@ const PipelineWorkflow = (props) => {
 
           <div className="workflow-container pl-2 max-content-module-width-50">
             <div className="pr-1 my-2 text-right">
-              {workflowStatus === "running" && 
-                <>
-                  <Button variant="outline-dark" className="mr-1"  size="sm" disabled><FontAwesomeIcon icon={faSpinner} spin className="mr-1"/> Running</Button>
-                  <Button variant="outline-danger" className="mr-1"  size="sm" onClick={() => { handleStopWorkflowClick(data._id); }}
-                    disabled={role !== "administrator" && role !== "user"}><FontAwesomeIcon icon={faStopCircle} className="mr-1"/>Stop</Button>
-                </>}
-
-              {workflowStatus === "paused" && 
-                <>
-                  <Button variant="outline-warning" className="mr-1"  size="sm" disabled><FontAwesomeIcon icon={faPause} className="mr-1"/> Paused</Button>
-                  <Button variant="warning" className="mr-1"  size="sm" onClick={() => { handleApprovalClick(); }}
-                    disabled={role !== "administrator"}><FontAwesomeIcon icon={faFlag} className="mr-1" fixedWidth/>Approve Step</Button>
-                </>}
-
-              {(workflowStatus === "stopped" || !workflowStatus) && 
-                <Button variant="success" className="mr-1" size="sm"
-                  onClick={() => { handleRunPipelineClick(data._id); }}
-                  disabled={role !== "administrator" && role !== "user" || editWorkflow}>
-                  <FontAwesomeIcon icon={faPlay} fixedWidth className="mr-1"/>Start Pipeline</Button>}
-              
-              <OverlayTrigger
-                placement="top"
-                delay={{ show: 250, hide: 400 }}
-                overlay={renderTooltip({ message: "Restart pipeline from beginning as new run" })} >
-                <Button variant="outline-danger" className="mr-1"  size="sm" 
-                  onClick={() => { handleStopWorkflowClick(data._id); }}
-                  disabled={role !== "administrator" && role !== "user" || editWorkflow}>
-                  <FontAwesomeIcon icon={faHistory} fixedWidth className="mr-1"/>Reset Pipeline</Button>
-              </OverlayTrigger>
-              
-              <OverlayTrigger
-                placement="top"
-                delay={{ show: 250, hide: 400 }}
-                overlay={renderTooltip({ message: "Refresh pipeline status" })} >
-                <Button variant="secondary" className="mr-1" size="sm" onClick={() => { handleRefreshClick(data._id); }}>
-                  <FontAwesomeIcon icon={faSync} fixedWidth/></Button>  
-              </OverlayTrigger>
-              
               <OverlayTrigger
                 placement="top"
                 delay={{ show: 250, hide: 400 }}
                 overlay={renderTooltip({ message: "View pipeline configuration" })} >
                 <Button variant="secondary" className="mr-1" size="sm" onClick= {() => { handleViewPipelineClick(data); }} >
                   <FontAwesomeIcon icon={faFileAlt} fixedWidth/></Button>
-              </OverlayTrigger>
+              </OverlayTrigger> 
                     
               {role === "administrator" && <>
                 {editWorkflow ?
@@ -468,16 +301,6 @@ const PipelineWorkflow = (props) => {
                       onClick={() => { handleViewClick(data.workflow.source, "Step Settings"); }} />
                   </OverlayTrigger>
 
-                  {/* <OverlayTrigger
-                    placement="top"
-                    delay={{ show: 250, hide: 400 }}
-                    overlay={renderTooltip({ message: "View Source Activity Logs" })} >
-                    <FontAwesomeIcon icon={faArchive}
-                      className="text-muted mr-2" fixedWidth
-                      style={{ cursor: "pointer" }}
-                      onClick={() => { handleViewSourceActivityLog(data._id, data.workflow.source.service); }} />
-                  </OverlayTrigger> */}
-
                   <OverlayTrigger
                     placement="top"
                     delay={{ show: 250, hide: 400 }}
@@ -516,25 +339,12 @@ const PipelineWorkflow = (props) => {
           
         </> : null }
       <ModalActivityLogs header={modalHeader} size="lg" jsonData={modalMessage} show={showModal} setParentVisibility={setShowModal} />
-      {showApprovalModal && <ApprovalModal pipelineId={data._id} visible={showApprovalModal} setVisible={setShowApprovalModal} refreshActivity={handleApprovalActivity} />}
       {infoModal.show && <Modal header={infoModal.header} message={infoModal.message} button={infoModal.button} handleCancelModal={() => setInfoModal({ ...infoModal, show: false })}  />}
     </>
   );
 };
 
 
-
-const _configuredToolsCount = (array) => {
-  let toolsCount = 0;
-  array.map((item) => {
-    if (item.tool !== undefined) {
-      if ((item.tool.tool_identifier !== undefined && item.tool.tool_identifier !== "") || item.tool.configuration !== undefined) {
-        toolsCount++;
-      }
-    }      
-  });  
-  return toolsCount; 
-};
 
 function renderTooltip(props) {
   const { message } = props;
@@ -551,8 +361,4 @@ PipelineWorkflow.propTypes = {
   role: PropTypes.string,
   editItemId: PropTypes.string
 };
-
-
-
-
 export default PipelineWorkflow;

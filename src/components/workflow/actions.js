@@ -64,5 +64,14 @@ pipelineActions.duplicate = async (pipelineId, getAccessToken) => {
   return response;
 };
 
+pipelineActions.getLogs = async (pipelineId, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/pipelines/${pipelineId}/status`;   
+  const response = await axiosApiService(accessToken).get(apiUrl)
+    .then((result) =>  {return result;})
+    .catch(error => {return { error };});
+  return response;
+};
+
 
 export default pipelineActions;
