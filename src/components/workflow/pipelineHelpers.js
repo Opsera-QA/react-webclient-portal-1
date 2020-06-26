@@ -54,8 +54,7 @@ pipelineHelpers.getUserNameById = async (userId, accessTokenFn) => {
     const user = await axiosApiService(accessToken).get(apiUrl); 
     if (user.data && user.data.lastName) {
       name = user.data.firstName + " " + user.data.lastName;
-    }
-    console.log("user: ", user);    
+    }     
   }
   catch (err) {
     console.log(err.message);       
