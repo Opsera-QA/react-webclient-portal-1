@@ -22,6 +22,15 @@ pipelineHelpers.getPriorStepFrom = (pipeline, step) => {
   }
 };
 
+pipelineHelpers.getStepIndex = (pipeline, stepId) => {
+  if (stepId) {
+    let stepArrayIndex = pipeline.workflow.plan.findIndex(x => x._id === stepId); 
+    return stepArrayIndex;
+  }
+};
+
+
+//TODO: Why doesn't this include "paused" and can I use it in PipelineActionControls?
 pipelineHelpers.getPipelineStatus = (pipeline) => {
   if (pipeline) {
     const { workflow } = pipeline;
