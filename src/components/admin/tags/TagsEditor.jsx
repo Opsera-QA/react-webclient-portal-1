@@ -7,6 +7,7 @@ import { faPlus, faTimesCircle, faCheckCircle } from "@fortawesome/free-solid-sv
 import { format } from "date-fns";
 import Loading from "components/common/loading";
 import ErrorDialog from "components/common/error";
+import { Link } from "react-router-dom";
 
 import TagsTable from "./TagsTable";
 import TagEditorModal from "./TagEditorModal";
@@ -112,10 +113,18 @@ function TagsEditor() {
       <h4>Tag Management</h4>
       <br />
 
+      <nav aria-label="breadcrumb">
+        <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
+          <li className="breadcrumb-item">
+            <Link to="/admin">Admin</Link>
+          </li>
+          <li className="breadcrumb-item active">Tag Management</li> 
+        </ol>
+      </nav>      
+
       {pageLoading ? <Loading size="sm" /> : null} 
       {(!isAdminCheck && !pageLoading)&& <ErrorDialog error={"You do not have access to view this page!"} />}
       {isAdminCheck && <>
-
       
         <div className="mt-4 mb-4 text-right">
           <Button variant="primary" size="sm"  

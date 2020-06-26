@@ -5,7 +5,7 @@ import { ApiService } from "../../../api/apiService";
 import ErrorDialog from "../../common/error";
 import LoadingDialog from "../../common/loading";
 import Tools from "./Tools";
-
+import { Link } from "react-router-dom";
 class DeleteTools extends PureComponent {
   static contextType = AuthContext;
   constructor(props, context) {
@@ -71,6 +71,15 @@ class DeleteTools extends PureComponent {
         {
           administrator &&
           <Container className="DefaultDashboardPage">
+            <nav aria-label="breadcrumb">
+              <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
+                <li className="breadcrumb-item">
+                  <Link to="/admin">Admin</Link>
+                </li>
+                <li className="breadcrumb-item active">Delete Tools</li> 
+              </ol>
+            </nav> 
+            <br /> 
             <h2>Delete Tools</h2>
             <div style={{ marginBottom: "10px" }}>This tool enables administrators to select a registered application, view the active tools and then delete them from the platform.  At this
               time the tool does not perform a complete end to end removal of all instances related to an application.
