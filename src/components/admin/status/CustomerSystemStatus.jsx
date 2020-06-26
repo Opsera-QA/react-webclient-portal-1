@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthContext";
 import ErrorDialog from "../../common/error";
 import LoadingDialog from "../../common/loading";
+import { Link } from "react-router-dom";
 
 const Status = ({ color }) =>  <svg height="20" width="20"><circle cx="10" cy="10" r="10" fill={color} /></svg>;
 
@@ -43,6 +44,18 @@ function CustomerSystemStatus() {
     <div className="mt-3 max-content-width">
       <h4>Customer System Status</h4>
       <div>Listed below are Customer tools for Opsera.</div>
+      <br />
+      <nav aria-label="breadcrumb">
+        <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
+          <li className="breadcrumb-item">
+            <Link to="/admin">Admin</Link>
+          </li>
+          <li className="breadcrumb-item active">Customer Status</li> 
+        </ol>
+      </nav> 
+      <br /> 
+
+
       <Row>
         <Col sm={6}></Col>
         <Col sm={6}>

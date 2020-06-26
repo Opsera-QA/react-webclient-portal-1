@@ -6,6 +6,7 @@ import UserInfo from "./UserInfo";
 import SearchInput from "./SearchInput";
 import ErrorDialog from "../../common/error";
 import Tools from "../delete_tools/Tools";
+import { Link } from "react-router-dom";
 
 const initState = {
   loading: false,
@@ -118,6 +119,15 @@ export default class ManageSystems extends PureComponent {
         {
           administrator &&
           <Container>
+            <nav aria-label="breadcrumb">
+              <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
+                <li className="breadcrumb-item">
+                  <Link to="/admin">Admin</Link>
+                </li>
+                <li className="breadcrumb-item active">Manage Tools</li> 
+              </ol>
+            </nav> 
+            <br />
             <h2>Manage Tools</h2>
             {error ? <ErrorDialog error={error} /> : null}
             <Form loading={loading ? "true" : undefined} style={{ maxWidth: "500px" }}>
