@@ -67,8 +67,7 @@ function PipelineOverview({ id }) {
         ...data,
         pipeline: pipeline && pipeline.data[0]
       });
-      setPipelineAttributes(pipeline && pipeline.data[0], ssoUsersRecord._id);
-      console.log("pipeline", pipeline);      
+      setPipelineAttributes(pipeline && pipeline.data[0], ssoUsersRecord._id);      
     }
     catch (err) {
       console.log(err.message);
@@ -84,7 +83,6 @@ function PipelineOverview({ id }) {
     try {
       const activity = await axiosApiService(accessToken).get(apiUrl); 
       setActivityData(activity.data);   
-      console.log("activity", activity);
       setLogsIsLoading(false);  
     }
     catch (err) {
@@ -103,10 +101,7 @@ function PipelineOverview({ id }) {
   const setPipelineAttributes = (pipeline, ssoUsersId) => {
     if (typeof(pipeline.roles) !== "undefined") {
       let userRoleObject = pipeline.roles.findIndex(x => x.user === ssoUsersId); 
-      
-      console.log("userRoleObject", userRoleObject);
       if (userRoleObject >= 0) {
-        console.log("ROLe FOUND: userRoleObject ", userRoleObject);
         setRole(pipeline.roles[userRoleObject].role);
       } else {
         setRole("");
@@ -115,7 +110,6 @@ function PipelineOverview({ id }) {
 
     if (typeof(pipeline.workflow) !== "undefined") {
       if (typeof(pipeline.workflow.last_step) !== "undefined") {
-        console.log("Last Step: ", pipeline.workflow.last_step);
         setStepStatus(pipeline.workflow.last_step);
       } else {
         setStepStatus({});

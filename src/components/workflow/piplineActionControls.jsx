@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { axiosApiService } from "../../api/apiService";
 import { AuthContext } from "contexts/AuthContext"; 
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import Modal from "../common/modal";
@@ -42,24 +41,19 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
   };
 
   const loadData = (pipeline) => {
-    console.log("pipelineID: ", pipeline);
     if (pipeline.workflow !== undefined) {
       if (pipeline.workflow.last_step !== undefined) {
-        let status = pipeline.workflow.last_step.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;         
-        
+        let status = pipeline.workflow.last_step.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;                 
         if (status === "stopped" && pipeline.workflow.last_step.running && pipeline.workflow.last_step.running.paused) {
-          setWorkflowStatus("paused");
-          setStartPipeline(false);
+          setWorkflowStatus("paused");          
         } else {
           setWorkflowStatus(status);
         }
-
         if (status === "running" && !socketRunning) {
           subscribeToTimer();
         }        
       } else {
-        setWorkflowStatus("stopped");        
-        setStartPipeline(false);
+        setWorkflowStatus("stopped");                
       }                    
     }
   };
@@ -69,8 +63,8 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
   // button handlers
   const handleStopWorkflowClick = async (pipelineId) => {
     setResetPipeline(true);
-    await cancelPipelineRun(pipelineId);
     setWorkflowStatus("stopped");
+    await cancelPipelineRun(pipelineId);    
     await fetchData();
     fetchActivityLogs();      
     setResetPipeline(false);
@@ -92,6 +86,7 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
 
   const handleRunPipelineClick = async (pipelineId, oneStep) => {
     setStartPipeline(true);
+    setWorkflowStatus("running");   
     if (pipeline.workflow.last_step && pipeline.workflow.last_step.step_id) {
       const stepIndex = PipelineHelpers.getStepIndex(pipeline, pipeline.workflow.last_step.step_id);
       if (stepIndex+1 === Object.keys(pipeline.workflow.plan).length) {
@@ -100,8 +95,7 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
         await cancelPipelineRun(pipelineId);
       }
     }
-    await runPipeline(pipelineId, oneStep);
-    setWorkflowStatus("running");        
+    await runPipeline(pipelineId, oneStep);         
   };
 
   const handleRefreshClick = async () => {
@@ -110,7 +104,6 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
     setTimeout(subscribeToTimer(), 5000); 
   };
   
-
 
 
   //action functions
@@ -126,7 +119,6 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
   }
 
   async function runPipeline(pipelineId) {
-    setWorkflowStatus("running");
     const { getAccessToken } = contextType;
     const response = await PipelineActions.run(pipelineId, {}, getAccessToken);
     
@@ -134,11 +126,16 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
       setWorkflowStatus("stopped");
       console.log(response.error);
       setErrors(response.error);
-    } else {
-      setWorkflowStatus("running");
+      setStartPipeline(false);
+    } else {    
       setTimeout(function () {
         subscribeToTimer();
       }, 5000);      
+
+      setTimeout(function () {
+        setStartPipeline(false);
+      }, 20000);
+
     }   
   }
 
@@ -147,12 +144,24 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
 
   let tmpDataObject = {};
   let staleRefreshCount = 0;
-  let lastLoggedStepId = "";
-  const socket = socketIOClient(endPointUrl, { query: "pipelineId=" + pipeline._id });
-  const subscribeToTimer = () => {    
-    
+  let socket;
+  
+  const initializeSocket = () => {    
+    socket = socketIOClient(endPointUrl, { query: "pipelineId=" + pipeline._id });
     console.log("Connected status before onConnect", socket.socket ? socket.socket.connected : socket.socket === undefined );
-    setSocketRunning(true);
+    setSocketRunning(true);      
+  };
+
+  const stopSocket = () => {    
+    socket.close();
+    console.log("closing connection manually");
+    setSocketRunning(false);
+  };
+
+  const subscribeToTimer = () => {       
+    if (!socketRunning) {
+      initializeSocket();
+    }
     
     if (socket.socket === undefined ) {
       socket.emit("subscribeToPipelineActivity", 1000);
@@ -165,24 +174,20 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
         }  
         tmpDataObject = dataObj;
         let status =  pipeline.workflow.last_step !== undefined && pipeline.workflow.last_step.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;
-        
-
-        if (lastLoggedStepId !==dataObj.step_id) {
+        if (staleRefreshCount % 2 === 0) {
+          console.log("divisible by 2 refresh");
           fetchActivityLogs();
         }
-        lastLoggedStepId = dataObj.step_id;
 
         if (staleRefreshCount >= 20) {
           console.log("closing connection due to stale data");
           setWorkflowStatus("stopped");
-          setStartPipeline(false);
           setSocketRunning(false);
           socket.close();
           fetchActivityLogs();
         } else {          
           if (status === "stopped" && pipeline.workflow.last_step.running && pipeline.workflow.last_step.running.paused) {
-            setWorkflowStatus("paused");
-            setStartPipeline(false);
+            setWorkflowStatus("paused");          
           } else {
             setWorkflowStatus(status);
           }
@@ -192,37 +197,30 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
           pipeline.workflow.last_step = dataObj;          
         }
 
-        if (staleRefreshCount > 2 && status === "stopped") {
+        if (staleRefreshCount > 1 && status === "stopped") {
           console.log("closing connection due to stopped status");
           setWorkflowStatus("stopped");
-          setStartPipeline(false);
           setSocketRunning(false);
           socket.close();
           fetchActivityLogs();
         }
-
       });
     }
 
     socket.on("disconnect", () => {
       setWorkflowStatus("stopped");
-      setStartPipeline(false);
       setSocketRunning(false);
     });
 
     socket.on("connect_error", function(err) {
       console.log("Connection Error on Socket:", err);
       setWorkflowStatus("stopped");
-      setStartPipeline(false);
       setSocketRunning(false);
       socket.close();
     });
   };
 
-  const stopSocket = () => {
-    setSocketRunning(false);
-    socket.close();
-  };
+  
 
 
   return (
