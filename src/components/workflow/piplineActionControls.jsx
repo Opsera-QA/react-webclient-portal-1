@@ -227,7 +227,7 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
 
   return (
     <>
-      <div className="text-right">
+      <div className="text-right" style={{ marginBottom: "5px" }}>
         {workflowStatus === "running" && 
         <>
           <Button variant="outline-dark" className="mr-1"  size="sm" disabled><FontAwesomeIcon icon={faSpinner} spin className="mr-1"/> Running</Button>
