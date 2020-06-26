@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { SteppedLineTo } from "react-lineto";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusSquare, faCaretSquareDown, faCaretSquareUp } from "@fortawesome/free-solid-svg-icons";
+import { faPlusSquare, faCaretSquareDown, faCaretSquareUp, faCopy } from "@fortawesome/free-solid-svg-icons";
 import PipelineWorkflowItem from "./pipelineWorkflowItem";
 import "./workflows.css";
 
@@ -25,6 +25,26 @@ function PipelineWorkflowItemList({ items, lastStep, editWorkflow, pipelineId, a
       "notification": [],
       "name": "",
       "description": "",
+      "active": true
+    };
+    items.splice(index + 1, 0, newStep);
+    setStateItems({ items: items });   
+    await quietSavePlan(); 
+    await fetchPlan();
+    setIsSaving(false);
+  };
+
+  const handleCopyStep = async (item, index) => {
+    console.log("Prior Step ID: ", item);
+    console.log("Prior Step index: ", index);
+    setIsSaving(true);
+    const newStep = {
+      "trigger": item.trigger,
+      "type": item.type,
+      "tool": item.tool,
+      "notification": item.notification,
+      "name": "Copy of " + item.name,
+      "description": item.description,
       "active": true
     };
     items.splice(index + 1, 0, newStep);
@@ -119,43 +139,53 @@ function PipelineWorkflowItemList({ items, lastStep, editWorkflow, pipelineId, a
       </div>
 
       {editWorkflow ? <>
-        <div className={"text-center pb-1 step-plus-"+ index}>    
+        <div className={"text-center my-3 step-plus-"+ index}>    
           <OverlayTrigger
             placement="top"
             delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip({ message: "Move step" })} >
+            overlay={renderTooltip({ message: "Move previous step up" })} >
             <FontAwesomeIcon icon={faCaretSquareUp} size="lg" 
               fixedWidth 
-              className={index === 0 ? "fa-disabled" : "pointer dark-grey"} 
+              className={index === 0 ? "fa-disabled" : "pointer green"} 
               onClick= {() => { handleMoveStep(item._id, index, "up"); }} />
           </OverlayTrigger> 
           
           <OverlayTrigger
             placement="top"
             delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip({ message: "Add new step" })} >
+            overlay={renderTooltip({ message: "Add new step below" })} >
             <FontAwesomeIcon icon={faPlusSquare} 
               size="lg" 
               fixedWidth 
-              className="dark-grey pointer mx-1"
+              className="green pointer mx-1"
               onClick= {() => { handleAddStep(item._id, index); }} />
+          </OverlayTrigger>
+
+          <OverlayTrigger
+            placement="top"
+            delay={{ show: 250, hide: 400 }}
+            overlay={renderTooltip({ message: "Copy previous step" })} >
+            <FontAwesomeIcon icon={faCopy} 
+              size="lg" 
+              fixedWidth 
+              className="green pointer mx-1"
+              onClick= {() => { handleCopyStep(item, index); }} />
           </OverlayTrigger>
           
           <OverlayTrigger
             placement="top"
             delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip({ message: "Move step" })} >
+            overlay={renderTooltip({ message: "Move previous step down" })} >
             <FontAwesomeIcon icon={faCaretSquareDown}  size="lg" 
               fixedWidth 
-              className={index === items.length - 1 ? "fa-disabled" : "pointer dark-grey"} 
+              className={index === items.length - 1 ? "fa-disabled" : "pointer green"} 
               onClick= {() => { handleMoveStep(item._id, index, "down"); }} />
           </OverlayTrigger>
         </div>
-        <SteppedLineTo from={"step-plus-"+index}to={"step-"+ index} delay={100} orientation="v" borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="bottom" />
-        <div style={{ height: "25px" }} className={"step-"+ index}>&nbsp;</div>
+        <SteppedLineTo from={"step-"+item._id} to={"step-plus-"+index} delay={100} orientation="v" borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="top" />        
       </>:       
         <>
-          <SteppedLineTo from={"step-"+item._id}to={"step-"+ index} delay={100} orientation="v" borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="bottom" />
+          <SteppedLineTo from={"step-"+item._id} to={"step-"+ index} delay={100} orientation="v" borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="bottom" />
           <div style={{ height: "40px" }} className={"step-"+ index}>&nbsp;</div>
         </>
       }
