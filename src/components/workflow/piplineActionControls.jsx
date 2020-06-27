@@ -152,10 +152,12 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
     setSocketRunning(true);      
   };
 
-  const stopSocket = () => {    
-    socket.close();
-    console.log("closing connection manually");
-    setSocketRunning(false);
+  const stopSocket = () => {   
+    if (socket) {
+      socket.close();
+      console.log("closing connection manually");
+      setSocketRunning(false);
+    }     
   };
 
   const subscribeToTimer = () => {       
