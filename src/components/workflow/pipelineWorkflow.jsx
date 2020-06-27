@@ -244,7 +244,7 @@ const PipelineWorkflow = (props) => {
                     delay={{ show: 250, hide: 400 }}
                     overlay={renderTooltip({ message: "Edit workflow" })} >                  
                     <Button variant="secondary" size="sm" onClick= {() => { handleEditWorkflowClick(); }} 
-                      disabled={(workflowStatus && workflowStatus !== "stopped") || !previewRole || (userInfo && userInfo._id !== data.owner)} >
+                      disabled={(workflowStatus && workflowStatus !== "stopped") || role !== "administrator"} >
                       <FontAwesomeIcon icon={faPen} fixedWidth/> </Button>                  
                   </OverlayTrigger>
                 }  </> }              
