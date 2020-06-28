@@ -24,7 +24,7 @@ const INITIAL_FORM_DATA = {
 
 
 const PipelineOverviewSummary = (props) => {
-  const { data, role } = props;
+  const { data, role, parentWorkflowStatus } = props;
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
   const [showModal, setShowModal] = useState(false);
@@ -210,7 +210,7 @@ const PipelineOverviewSummary = (props) => {
                 <>
                   { Object.keys(approvalStep).length > 0 && <FontAwesomeIcon icon={faFlag} className="red mr-1" /> }
                   {data.name} 
-                  {role === "administrator" ? 
+                  {role === "administrator" && parentWorkflowStatus !== "running" ? 
                     <FontAwesomeIcon icon={faPencilAlt}
                       className="ml-2 text-muted"
                       size="xs" transform="shrink-6"
@@ -293,7 +293,7 @@ const PipelineOverviewSummary = (props) => {
                 :
                 <>
                   {data.description} 
-                  {role === "administrator" ? 
+                  {role === "administrator" && parentWorkflowStatus !== "running" ? 
                     <FontAwesomeIcon icon={faPencilAlt}
                       className="ml-2 text-muted"
                       size="xs" transform="shrink-5"
@@ -335,7 +335,7 @@ const PipelineOverviewSummary = (props) => {
                   :
                   <>
                     <span className="text-muted">Project: </span> {data.project !== undefined && data.project.hasOwnProperty("name") ? <>{data.project.name}</> : <span className="text-muted font-italic">untitled</span> }                    
-                    {role === "administrator" ? 
+                    {role === "administrator" && parentWorkflowStatus !== "running" ? 
                       <FontAwesomeIcon icon={faPencilAlt}
                         className="ml-2 text-muted"
                         size="xs" transform="shrink-6"
@@ -352,7 +352,7 @@ const PipelineOverviewSummary = (props) => {
 
             <Row className="row-content-spacing">
               <Col className="py-1"><span className="text-muted mr-1">Tags:</span> 
-                {!editTags && <> 
+                {!editTags && role === "administrator" && parentWorkflowStatus !== "running" && <> 
                   {data.tags.map((item, idx) => (<span key={idx}>{item}, </span>))} 
                   <FontAwesomeIcon icon={faPencilAlt}
                     className="ml-2 text-muted"
@@ -384,7 +384,7 @@ const PipelineOverviewSummary = (props) => {
                       <span className="ml-2">Frequency: {data.workflow.schedule ? data.workflow.schedule.frequency : "undefined"}</span> 
                     </> : null }
 
-                  {role === "administrator" ? 
+                  {role === "administrator" && parentWorkflowStatus !== "running" ? 
                     <FontAwesomeIcon icon={faPencilAlt}
                       className="ml-2 text-muted"
                       size="xs" transform="shrink-4"
@@ -446,6 +446,7 @@ function renderTooltip(props) {
 
 PipelineOverviewSummary.propTypes = {
   data: PropTypes.object,
-  role: PropTypes.string
+  role: PropTypes.string,
+  parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
 };
 export default PipelineOverviewSummary;
