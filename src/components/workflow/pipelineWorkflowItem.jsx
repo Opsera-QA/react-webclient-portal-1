@@ -12,7 +12,7 @@ import { format } from "date-fns";
 import "./workflows.css";
 
 
-const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessToken, editWorkflow, parentCallbackEditItem, deleteStep, parentHandleViewSourceActivityLog, role }) => {
+const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessToken, editWorkflow, parentCallbackEditItem, deleteStep, parentHandleViewSourceActivityLog, role, parentWorkflowStatus }) => {
   const [currentStatus, setCurrentStatus] = useState({});
   const [itemState, setItemState] = useState(false);
   const [stepConfigured, setStepConfigured] = useState(true);
@@ -93,7 +93,6 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
   };
 
   const handleEditClick = (type, tool, itemId) => {
-    console.log("ROLE DETECTED: ", role);
     if (role !== "administrator") {
       setInfoModal({ show:true, header: "Permission Denied", message: "Editing step details requires administrator access to this Pipeline.", button: "OK" });
     } else {
@@ -287,6 +286,22 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
                           style={{ cursor: "pointer" }}
                           onClick={() => { parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id); }} />
                       </OverlayTrigger>
+                    </> 
+                    : 
+                    <>
+                      {toolProperties.properties && toolProperties.properties.isLiveStream && <OverlayTrigger
+                        placement="top"
+                        delay={{ show: 250, hide: 400 }}
+                        overlay={renderTooltip({ message: "View Running Tool Activity (if available)" })} >
+                        <FontAwesomeIcon icon={faTerminal}
+                          className="green mx-1" fixedWidth
+                          style={{ cursor: "pointer" }}
+                          onClick={() => { setShowToolActivity(true); }} />
+                      </OverlayTrigger>}
+                    </>}
+
+                  {parentWorkflowStatus !== "running" ?
+                    <>
                       <OverlayTrigger
                         placement="top"
                         delay={{ show: 250, hide: 400 }}
@@ -306,18 +321,9 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
                           className="text-muted mx-1" fixedWidth
                           onClick={() => { handleEditClick("tool", item.tool, item._id); }} />
                       </OverlayTrigger>
-                    </> 
-                    : 
+                    </>
+                    :
                     <>
-                      {toolProperties.properties && toolProperties.properties.isLiveStream && <OverlayTrigger
-                        placement="top"
-                        delay={{ show: 250, hide: 400 }}
-                        overlay={renderTooltip({ message: "View Running Tool Activity (if available)" })} >
-                        <FontAwesomeIcon icon={faTerminal}
-                          className="green mx-1" fixedWidth
-                          style={{ cursor: "pointer" }}
-                          onClick={() => { setShowToolActivity(true); }} />
-                      </OverlayTrigger>}
                       <OverlayTrigger
                         placement="top"
                         delay={{ show: 250, hide: 400 }}
@@ -334,6 +340,8 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
                           className="text-muted mx-1" fixedWidth  />
                       </OverlayTrigger>
                     </>}
+                      
+                    
 
                 </> : null }
             </div>
@@ -349,10 +357,7 @@ const PipelineWorkflowItem = ({ plan, item, index, lastStep, pipelineId, accessT
         show={activityLogModal.slow}
         setParentVisibility={() => setActivityLogModal({ ...activityLogModal, show: false })}  />
 
-      {infoModal.show && <Modal header={infoModal.header}
-        message={infoModal.message}
-        button={infoModal.button}
-        handleCancelModal={() => setInfoModal({ ...infoModal, show: false })}  /> }
+      { }
 
       {showDeleteModal && <Modal header="Confirm Pipeline Step Delete"
         message="Warning! Data about this step cannot be recovered once it is deleted. Do you still want to proceed?"
@@ -392,7 +397,8 @@ PipelineWorkflowItem.propTypes = {
   deleteStep: PropTypes.func,
   handleViewSourceActivityLog: PropTypes.func,
   parentHandleViewSourceActivityLog: PropTypes.func,
-  role: PropTypes.string
+  role: PropTypes.string,
+  parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
 };
 
 export default PipelineWorkflowItem;
