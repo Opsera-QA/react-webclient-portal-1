@@ -156,14 +156,15 @@ function AnchoreStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
   };
 
   const validateRequiredFields = () => {
-    let { toolConfigId, jenkinsUrl, jUserId, jAuthToken, jobName, buildStepId, dockerImageUrl } = formData;
+    let { toolConfigId, jenkinsUrl, jUserId, jAuthToken, jobName, ecrPushStepId, dockerImageUrl } = formData;
     if (
       toolConfigId.length === 0 ||    
       jenkinsUrl.length === 0 || 
       jUserId.length === 0 || 
       jAuthToken.length === 0 ||
-      jobName.length === 0 || buildStepId.length === 0 
-      // dockerImageUrl.length === 0 
+      jobName.length === 0 || 
+      ecrPushStepId.length === 0 ||
+      dockerImageUrl.length === 0 
     ) {
       setFormMessage("Required Fields Missing!");
       return false;

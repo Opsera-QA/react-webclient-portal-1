@@ -60,7 +60,6 @@ function PipelineWorkflowView({ id }) {
       
       console.log("userRoleObject", userRoleObject);
       if (userRoleObject >= 0) {
-        console.log("ROLe FOUND: userRoleObject ", userRoleObject);
         setRole(pipeline.roles[userRoleObject].role);
       } else {
         setRole("");

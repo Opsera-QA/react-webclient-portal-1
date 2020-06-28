@@ -300,16 +300,30 @@ const PipelineWorkflow = (props) => {
                       style={{ cursor: "pointer" }}
                       onClick={() => { handleViewClick(data.workflow.source, "Step Settings"); }} />
                   </OverlayTrigger>
-
-                  <OverlayTrigger
-                    placement="top"
-                    delay={{ show: 250, hide: 400 }}
-                    overlay={renderTooltip({ message: "Configure Source Repository" })} >
-                    <FontAwesomeIcon icon={faCog}
-                      style={{ cursor: "pointer" }}
-                      className="text-muted" fixedWidth
-                      onClick={() => { handleSourceEditClick(); }} />  
-                  </OverlayTrigger> 
+                  
+                  {workflowStatus !== "running" ?
+                    <>
+                      <OverlayTrigger
+                        placement="top"
+                        delay={{ show: 250, hide: 400 }}
+                        overlay={renderTooltip({ message: "Configure Source Repository" })} >
+                        <FontAwesomeIcon icon={faCog}
+                          style={{ cursor: "pointer" }}
+                          className="text-muted" fixedWidth
+                          onClick={() => { handleSourceEditClick(); }} />  
+                      </OverlayTrigger>                       
+                    </>
+                    :
+                    <>
+                      <OverlayTrigger
+                        placement="top"
+                        delay={{ show: 250, hide: 400 }}
+                        overlay={renderTooltip({ message: "Cannot access settings while pipeline is running" })} >
+                        <FontAwesomeIcon icon={faCog}
+                          className="text-muted mx-1" fixedWidth  />
+                      </OverlayTrigger>
+                    </>
+                  }
                 </div>
               </div>
             </div>
@@ -328,7 +342,8 @@ const PipelineWorkflow = (props) => {
                 role={role}
                 parentCallbackEditItem={callbackFunctionEditItem} 
                 quietSavePlan={quietSavePlan}
-                parentHandleViewSourceActivityLog={handleViewSourceActivityLog} />             
+                parentHandleViewSourceActivityLog={handleViewSourceActivityLog}
+                parentWorkflowStatus={workflowStatus} />             
             </div>
             <SteppedLineTo from="source" to="step-items" orientation="v" borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="top" />
 
