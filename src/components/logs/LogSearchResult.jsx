@@ -14,13 +14,13 @@ function LogSearchResult({ searchResults }) {
 
   const handleClick = (param) => {
     // ONLY FOR DEMO PURPOSES - REMOVE AFTER DEMO - START HERE
-    if (param._source && param._source.message) {
-      try {
-        param._source.message = JSON.parse(param._source.message);
-      } catch { 
-        console.log("Ignoring Parser");
-      }
-    }
+    // if (param._source && param._source.data && param._source.data.tool_output) {
+    //   try {
+    //     param._source.data.tool_output = param._source.data.tool_output.join("\n");
+    //   } catch { 
+    //     console.log("Ignoring Parser");
+    //   }
+    // }
     // ONLY FOR DEMO PURPOSES - REMOVE AFTER DEMO - END HERE
     setModalMessage(param);
     setShowModal(true);
