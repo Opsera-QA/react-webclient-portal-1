@@ -5,14 +5,14 @@ import PropTypes from "prop-types";
 import { Button, Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { AuthContext } from "./contexts/AuthContext"; 
+//import { AuthContext } from "./contexts/AuthContext"; 
 import { axiosApiService } from "./api/apiService";
 
 
 class LoginForm extends React.Component {
-  static contextType = AuthContext;
-  constructor(props, context) {
-    super(props, context);
+  //static contextType = AuthContext;
+  constructor(props) {
+    super(props);
     this.state = {
       sessionToken: null,
       error: null,

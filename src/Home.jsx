@@ -6,17 +6,17 @@ import LoadingDialog from "./components/common/loading";
 
 function Home() {
   const contextType = useContext(AuthContext);
-  const [contextLoading, setContextLoading] = useState(false);
+  const { userRecord, authenticated, loading } = contextType;
+  
   const history = useHistory();
   
   useEffect(() => {    
     getStatus();
-  }, [contextLoading]);
+  }, [loading, authenticated]);
 
   const getStatus = () => {
-    const { authenticated, loading } = contextType;
     console.log("Authenticated? ", authenticated);
-    setContextLoading(loading);
+    
     if (authenticated) {
       history.push("/overview");
     } 
@@ -34,7 +34,7 @@ function Home() {
   
   return (
     <>
-      {contextLoading ? <LoadingDialog /> : 
+      {loading ? <LoadingDialog /> : 
         <>
          
           <div className="mt-3 ml-5 w-75">
