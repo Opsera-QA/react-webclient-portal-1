@@ -35,6 +35,7 @@ function SearchLogs (props) {
   const [filterType, setFilterType] = useState("pipeline");
   const [multiFilter, setMultiFilter] = useState([]);
   const [jobFilter, setJobFilter] = useState("");
+  const [pipelineFilter, setPipelineFilter] = useState("");
   const [calenderActivation, setCalenderActivation] = useState(false);
   const [submitted, submitClicked] = useState(false);
   const [date, setDate] = useState([
@@ -106,6 +107,7 @@ function SearchLogs (props) {
     setSDate("");
     setMultiFilter([]);
     setJobFilter("");
+    setPipelineFilter("");
     setNoResults(false);
   };
 
@@ -115,6 +117,7 @@ function SearchLogs (props) {
     setLogData([]);
     setMultiFilter([]);
     setJobFilter("");
+    setPipelineFilter("");
     setFilterType(selectedOption.value);
   };
 
@@ -125,13 +128,10 @@ function SearchLogs (props) {
         filterArray.push(jobFilter.value);
       }
     }
-    else {
-      multiFilter.forEach(filterGroup => {
-        filterArray.push({
-          group: filterGroup["type"],
-          value: filterGroup["value"]
-        });
-      });
+    if (filterType === "opsera-pipeline") {
+      if (pipelineFilter) {
+        filterArray.push(pipelineFilter.value);
+      }
     }
     return filterArray;
   };
@@ -211,32 +211,76 @@ function SearchLogs (props) {
   const fetchFilterData = async () => {
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiCall = new ApiService("/analytics/search/filter", {}, accessToken);
-    await apiCall.get()
-      .then(res => {
-        let filterDataApiResponse = res.data.hits.hits;
-        let formattedFilterData = [];
+    if (filterType === "blueprint") {
+      const apiCall = new ApiService("/analytics/search/filter", {}, accessToken);
+      await apiCall.get()
+        .then(res => {
+          let filterDataApiResponse = res.data.hits.hits;
+          let formattedFilterData = [];
          
-        // In the API response, since react-widget can't process nested dataset. We need to add a property to group the dataset
-        // We are adding 'type': which is label here to achieve groupBy in react-widget
-        filterDataApiResponse.forEach(filterGroup => {
-          filterGroup["options"].map((filters) => {
-            filters["type"] = filterGroup["label"];
+          // In the API response, since react-widget can't process nested dataset. We need to add a property to group the dataset
+          // We are adding 'type': which is label here to achieve groupBy in react-widget
+          filterDataApiResponse.forEach(filterGroup => {
+            filterGroup["options"].map((filters) => {
+              filters["type"] = filterGroup["label"];
+            });
+            //Since we add type to the dataset, we only need 'options' for the dropdown
+            formattedFilterData.push(...filterGroup["options"]);
           });
-          //Since we add type to the dataset, we only need 'options' for the dropdown
-          formattedFilterData.push(...filterGroup["options"]);
+          console.log(formattedFilterData);
+          // For Blueprint we only need Job Names  
+          if (filterType === "blueprint") {
+            setFilters(formattedFilterData.filter(filterSet => filterSet.type == "Job Names"));
+          } else {
+            setFilters(formattedFilterData);
+          }
+        })
+        .catch(err => {
+          setFilters([]);
+        });
+    }
+    if (filterType === "opsera-pipeline") {
+      const apiCall = new ApiService("/pipelines", {}, accessToken);
+      await apiCall.get()
+        .then(res => {
+          let formatArr = [];
+          for (const item in res.data.response) {
+            let stepsArr = [];
+            res.data.response[item].workflow.plan.forEach(step => stepsArr.push(step._id));
+            formatArr.push({
+              "value": res.data.response[item]._id,
+              "label": res.data.response[item].name,
+              "steps": stepsArr
+            });
+          }
+          let filterDataApiResponse = [{
+            label: "My Pipelines", 
+            options: formatArr
+          }];
+          let formattedFilterData = [];
+          // In the API response, since react-widget can't process nested dataset. We need to add a property to group the dataset
+          // We are adding 'type': which is label here to achieve groupBy in react-widget
+          filterDataApiResponse.forEach(filterGroup => {
+            filterGroup["options"].map((filters) => {
+              filters["type"] = filterGroup["label"];
+            });
+            console.log(filterDataApiResponse);
+
+            //Since we add type to the dataset, we only need 'options' for the dropdown
+            formattedFilterData.push(...filterGroup["options"]);
+          });
+          // For Blueprint we only need Job Names  
+          if (filterType === "blueprint") {
+            setFilters(formattedFilterData.filter(filterSet => filterSet.type == "Job Names"));
+          } else {
+            setFilters(formattedFilterData);
+          }
+        })
+        .catch(err => {
+          setFilters([]);
         });
 
-        // For Blueprint we only need Job Names  
-        if (filterType === "blueprint") {
-          setFilters(formattedFilterData.filter(filterSet => filterSet.type == "Job Names"));
-        } else {
-          setFilters(formattedFilterData);
-        }
-      })
-      .catch(err => {
-        setFilters([]);
-      });
+    }
   };
 
   const toggleCalendar = event => {
@@ -298,7 +342,7 @@ function SearchLogs (props) {
 
   //Every time we select a new filter, update the list. But only for blueprint and pipeline
   useEffect(() => {
-    if (filterType === "blueprint" || filterType === "pipeline") {
+    if (filterType === "blueprint" || filterType === "opsera-pipeline") {
       fetchFilterData();
     }
   }, [filterType]);
@@ -311,10 +355,7 @@ function SearchLogs (props) {
         <div className="max-content-width" >
           <Form onSubmit={handleFormSubmit}>
             <Row>
-              <Col md={7}>
-                <Form.Control placeholder="Search logs" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
-              </Col>
-              <Col md={5}>
+              <Col md={3}>
                 <DropdownList
                   data={Array.isArray(FILTER) ? FILTER : [{ "value": "pipeline", "label": "Pipeline" }]}  
                   defaultValue={"pipeline"}
@@ -325,11 +366,61 @@ function SearchLogs (props) {
                   onChange={handleSelectChange}             
                 />
               </Col>
+              <Col md={3}>
+                {filterType === "opsera-pipeline" && 
+                  <DropdownList
+                    data={filterOptions} 
+                    busy={Object.keys(filterOptions).length == 0 ? true : false}
+                    disabled={Object.keys(filterOptions).length == 0 ? true : false}
+                    // disabled={true}
+                    valueField='value'
+                    textField='label'
+                    filter='contains'
+                    value={pipelineFilter}
+                    placeholder={"Select Pipeline Name"}
+                    onChange={setPipelineFilter} 
+                    onToggle={fetchFilterData}         
+                  />}
+                {filterType === "blueprint" && 
+                  <DropdownList
+                    data={filterOptions} 
+                    busy={Object.keys(filterOptions).length == 0 ? true : false}
+                    disabled={Object.keys(filterOptions).length == 0 ? true : false}
+                    className="basic-single"
+                    valueField='value'
+                    textField='label'
+                    filter='contains'
+                    placeholder={"Select Job Name"}
+                    value={jobFilter}
+                    onChange={setJobFilter}    
+                    onToggle={fetchFilterData}         
+                  />
+                }
+              </Col>
+              <Col md={3}>
+                {filterType === "opsera-pipeline" && pipelineFilter &&
+                  <DropdownList
+                    data={pipelineFilter.steps} 
+                    busy={Object.keys(filterOptions).length == 0 ? true : false}
+                    disabled={Object.keys(filterOptions).length == 0 ? true : false}
+                    // disabled={true}
+                    valueField='value'
+                    textField='label'
+                    filter='contains'
+                    value={pipelineFilter.steps[0]}
+                    placeholder={"Select Pipeline Name"}
+                    onChange={setPipelineFilter} 
+                    onToggle={fetchFilterData}         
+                  />}
+              </Col>
+              <Col md={3}>
+                <Form.Control placeholder="Search logs" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
+              </Col>
               
             </Row>
 
             <Row className="mt-2">
-              <Col md={7}>
+              {/* <Col md={7}>
                 {filterType === "pipeline" && 
                   <Multiselect
                     data={filterOptions} 
@@ -360,8 +451,8 @@ function SearchLogs (props) {
                     onToggle={fetchFilterData}         
                   />
                 }
-              </Col>
-              <Col md={5} style={{ textAlign: "right" }} className="no-wrap">
+              </Col> */}
+              <Col md={3} style={{ textAlign: "right" }} className="no-wrap">
                 <Button variant="outline-secondary" type="button" onClick={toggleCalendar}>
                   <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth/>
                   {(calendar && sDate || eDate) ? sDate + " - " + eDate : "Date Range"}</Button>
@@ -395,6 +486,7 @@ function SearchLogs (props) {
                 </Overlay>
 
               </Col>
+
             </Row>
             {/* <div className="d-flex mt">
               <div className="p-2 flex-grow-1">
