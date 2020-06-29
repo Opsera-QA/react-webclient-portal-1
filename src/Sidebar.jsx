@@ -24,12 +24,10 @@ function Sidebar({ hideView }) {
   };
 
   async function checkAuthentication (user)  {
-    console.log("IS IT EVEN CHECKING HERE AGAIN???", loading);
     if (user) {
       console.log("userRecord ", userRecord);
       console.log("authenticated ", authenticated);
       if (authenticated && userRecord && userRecord.groups) {
-        console.log("IN HERE!");
         setAdministrator(userRecord.groups.includes("Admin"));
       }
     }
