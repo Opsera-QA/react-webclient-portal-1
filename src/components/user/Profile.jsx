@@ -20,9 +20,9 @@ function Profile() {
 
   async function fetchData() {
     setLoading(true);
-    const { getUserInfo, getAccessToken } = contextType;
+    const { getUserRecord, getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const userInfoResponse = await getUserInfo();
+    const userInfoResponse = await getUserRecord();
     setToken(accessToken);
     
     const apiCall = new ApiService("/analytics/settings", {}, accessToken);

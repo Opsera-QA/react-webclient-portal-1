@@ -29,11 +29,11 @@ export default class ManageSystems extends PureComponent {
   }
 
   async componentDidMount() {
-    const { getUserInfo } = this.context;  //this.context is where all data from the above AuthContext component resides.  It's like the state props design wise
-    const userInfo = await getUserInfo();
-    this.setState({ administrator: userInfo.Groups.includes("Admin") });
+    const { getUserRecord } = this.context;  //this.context is where all data from the above AuthContext component resides.  It's like the state props design wise
+    const userInfo = await getUserRecord();
+    this.setState({ administrator: userInfo.groups.includes("Admin") });
 
-    if (!userInfo.Groups.includes("Admin")) {
+    if (!userInfo.groups.includes("Admin")) {
       //move out
       this.props.history.push("/");
     } else {
@@ -100,16 +100,9 @@ export default class ManageSystems extends PureComponent {
     let updater = {
       [name]: value,
     };
-
-    if (name === "org") {
-      updater = {
-        ...initState,
-        [name]: value,
-      };
-    }
-
     this.setState(updater);
   }
+  
 
   render() {
     const { applications, application, users, loading, org, user, fetching, error, administrator } = this.state;
@@ -167,7 +160,7 @@ export default class ManageSystems extends PureComponent {
                 <p>No Applications to display for this user</p>
               )}
 
-              {applications && applications.length > 0 && (
+              {users && users.length > 0 && applications && applications.length > 0 && (
                 <Form>
                   <Form.Group>
                     <Form.Control as="select"
@@ -180,11 +173,13 @@ export default class ManageSystems extends PureComponent {
                         <>
                           {applications ? applications.map((app, key) => (
                             <>
-                              {
+                              <option key={app.name} value={app.name}>{app.name}</option>
+
+                              {/* {
                                 app.tools.length > 0 && (
                                   <option key={app.name} value={app.name}>{app.name}</option>
                                 )
-                              }
+                              } */}
                             </>
                           )) : ""}
                         </>

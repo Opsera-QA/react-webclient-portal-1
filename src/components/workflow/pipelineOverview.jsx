@@ -57,9 +57,9 @@ function PipelineOverview({ id }) {
   }, [currentPage, pageSize]);
 
   async function fetchData() {
-    const { getAccessToken, getUserSsoUsersRecord } = contextType;
+    const { getAccessToken, getUserRecord } = contextType;
     const accessToken = await getAccessToken();
-    const ssoUsersRecord = await getUserSsoUsersRecord();
+    const ssoUsersRecord = await getUserRecord();
     const apiUrl =  `/pipelines/${id}`;   
     try {
       const pipeline = await axiosApiService(accessToken).get(apiUrl); 

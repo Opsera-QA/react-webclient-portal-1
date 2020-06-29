@@ -9,60 +9,33 @@ import { faClipboardList, faChartBar, faArchive, faColumns, faLink, faBox, faDow
 import "./sidebar.css";
 
 function Sidebar({ hideView }) {
-  const contextType = useContext(AuthContext);
-  const [userInfo, setUserInfo] = useState();
+  const contextType = useContext(AuthContext); 
+  const { userRecord, authenticated, loading } = contextType;
   const [administrator, setAdministrator] = useState(false);
-  const [previewRole, setPreviewRole] = useState(false);
   const [hideSideBar, setHideSideBar] = useState(false);
-  const [authenticated, setAuthenticated] = useState(false);
-
-
-  /*   useEffect(() => {    
-    const controller = new AbortController();
-    const runEffect = async () => {
-      try {
-        await checkAuthentication();                
-      } catch (err) {
-        if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
-          return;
-        }        
-      }
-    };
-    runEffect();
-    return () => {     
-      controller.abort();      
-    };
-  }, [hideView, contextType]); */
-
+  
 
   useEffect(() => {    
-    checkAuthentication();
-  }, [hideView, authenticated, contextType]);
+    checkAuthentication(userRecord);    
+  }, [hideView, userRecord, loading]);
 
   const handleToggleMenuClick = () => {
     setHideSideBar(!hideSideBar);    
   };
 
-  async function checkAuthentication ()  {
-    //console.log("checking authentication");
-    const { getUserInfo, authenticated } = contextType;
-    try {
-      const userInfoResponse = await getUserInfo();
-      setAuthenticated(authenticated);
-      //console.log("Authenticated: ", authenticated);
-
-      if (!authenticated) {
-        setUserInfo(null);
-      } else if (userInfoResponse !== undefined && Object.keys(userInfoResponse).length > 0) {
-        setUserInfo(userInfoResponse);
-        setAdministrator(userInfoResponse.Groups.includes("Admin"));
-        setPreviewRole(userInfoResponse.email.includes("@opsera.io"));      
+  async function checkAuthentication (user)  {
+    if (user) {
+      console.log("userRecord ", userRecord);
+      console.log("authenticated ", authenticated);
+      if (authenticated && userRecord && userRecord.groups) {
+        setAdministrator(userRecord.groups.includes("Admin"));
       }
     }
-    catch (err) {
-      console.log("Error occurred getting user authentication status.", err);
-    }    
+      
+    //  const userInfoResponse = await getUserRecord();
+    //setIsAuthenticated(authenticated);
+      
+        
   }
 
 

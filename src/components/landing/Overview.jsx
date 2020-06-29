@@ -20,8 +20,8 @@ function OverviewLanding() {
   }, []);
 
   const getRoles = async () => {
-    const { getUserInfo } = contextType; 
-    const user = await getUserInfo();
+    const { getUserRecord } = contextType; 
+    const user = await getUserRecord();
     
     setUserInfo(user);    
   };

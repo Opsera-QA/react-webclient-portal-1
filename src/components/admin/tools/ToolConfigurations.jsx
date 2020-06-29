@@ -16,7 +16,7 @@ import ToolIdentifierTable from "./toolIdentifier/ToolIdentifierTable";
 import ToolIdentifierModal from "./toolIdentifier/ToolIdentifierModal";
 
 function ToolConfigurationsAdmin() {
-  const { getUserInfo, getAccessToken } = useContext(AuthContext);
+  const { getUserRecord, getAccessToken } = useContext(AuthContext);
   const [ isAdminCheck, setAdminStatus] = useState(false);
   const [ pageLoading, setPageLoading ] = useState(true);
 
@@ -119,8 +119,8 @@ function ToolConfigurationsAdmin() {
   };
 
   const isAdmin = async () => {
-    const userInfo = await getUserInfo();
-    if (!userInfo.Groups.includes("Admin")) {
+    const userInfo = await getUserRecord();
+    if (!userInfo.groups.includes("Admin")) {
       //move out
       setAdminStatus(false);
     } else {

@@ -5,14 +5,14 @@ import PropTypes from "prop-types";
 import { Button, Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { AuthContext } from "./contexts/AuthContext"; 
+//import { AuthContext } from "./contexts/AuthContext"; 
 import { axiosApiService } from "./api/apiService";
 
 
 class LoginForm extends React.Component {
-  static contextType = AuthContext;
-  constructor(props, context) {
-    super(props, context);
+  //static contextType = AuthContext;
+  constructor(props) {
+    super(props);
     this.state = {
       sessionToken: null,
       error: null,
@@ -33,10 +33,10 @@ class LoginForm extends React.Component {
     this.handleResetPasswordSubmit = this.handleResetPasswordSubmit.bind(this);
   }
 
-  componentDidMount = async() => {
-    const { getUserInfo } = this.context;
+  /* componentDidMount = async() => {
+    const { getUserRecord } = this.context;
     try {
-      const userInfo = await getUserInfo();
+      const userInfo = await getUserRecord();
       if(userInfo != undefined) {
         //this.props.history.goBack();
       }
@@ -45,7 +45,7 @@ class LoginForm extends React.Component {
       console.log("Error occured getting user authentication status.", err);
     }
   }
-  
+   */
   handleSubmit(e) {
     e.preventDefault();
     this.setState({ loading: true });

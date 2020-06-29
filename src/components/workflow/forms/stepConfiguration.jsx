@@ -10,6 +10,7 @@ import DropdownList from "react-widgets/lib/DropdownList";
 
 const INITIAL_DATA = {
   name: "",
+  tool_type: "",
   type: "",
   tool_identifier: "",
   active: true
@@ -22,7 +23,10 @@ function StepConfiguration( { data, stepId, parentCallback }) {
   const [formMessage, setFormMessage] = useState("");
   const [renderForm, setRenderForm] = useState(false);
   const [disableToolSelect, setDisableToolSelect] = useState(false);
+  const [toolTypeList, setToolTypeList] = useState([]);
   const [toolList, setToolList] = useState([]);
+  const [isToolListSearching, setIsToolListSearching] = useState(false);
+  const [isToolTypeSearching, setIsToolTypeSearching] = useState(false);
   
 
   useEffect(() => {    
@@ -47,16 +51,54 @@ function StepConfiguration( { data, stepId, parentCallback }) {
     };
   }, [stepId, plan]);
 
-  const getToolList = async () => {
-    try {
-      const accessToken = await getAccessToken();
-      const toolResponse = await axiosApiService(accessToken).get("/registry/tools", {});      
-      setToolList(toolResponse.data);
-      console.log(toolResponse.data);
-    }
-    catch (err) {
-      console.log(err.message);
-    }
+  
+  
+  useEffect(
+    () => {
+      async function fetchToolDetails(){
+        try {
+          setIsToolTypeSearching(true);
+          const accessToken = await getAccessToken();
+          const toolResponse = await axiosApiService(accessToken).get("/registry/types", {});      
+          setToolTypeList(formatOptions(toolResponse.data));
+          setIsToolTypeSearching(false);
+          console.log(toolResponse.data);
+        }
+        catch (err) {
+          console.log(err.message);
+        }
+      }
+      // Fire off our API call
+      fetchToolDetails();
+    },
+    []
+  );
+  
+  useEffect(
+    () => {
+      async function fetchToolDetails(toolType){
+        try {
+          setIsToolListSearching(true);
+          const accessToken = await getAccessToken();
+          const toolResponse = await axiosApiService(accessToken).get("/registry/tools", {});
+          const filteredList = toolResponse.data.filter(el => el.tool_type_identifier === toolType);
+          setToolList(filteredList);
+          setIsToolListSearching(false);
+          console.log(filteredList);
+        }
+        catch (err) {
+          console.log(err.message);
+        }
+      }
+      // Fire off our API call
+      fetchToolDetails(formData.tool_type);
+    },
+    [formData.tool_type]
+  );
+
+  const formatOptions = (options) => {
+    options.unshift({ value: "", name : "Select One",  isDisabled: "yes" });
+    return options;
   };
 
   const getToolDetails = async (tool_identifier) => {
@@ -71,7 +113,8 @@ function StepConfiguration( { data, stepId, parentCallback }) {
   };
 
   const loadFormData = async (step) => {
-    await getToolList();    
+    // await getToolList();   
+    // await getToolTypeList(); 
     setFormData(INITIAL_DATA);    
     setDisableToolSelect(false);
     let stepType = await getStepType(step.tool);    
@@ -129,12 +172,16 @@ function StepConfiguration( { data, stepId, parentCallback }) {
     return true;
   };
 
+  const handleToolTypeChange = (selectedOption) => {
+    console.log("selectedOption", selectedOption);
+    setFormData({ ...formData, tool_type: selectedOption.identifier,  tool_identifier: "", type: "" });    
+  };
+
   const handleToolIdentifierChange = (selectedOption) => {
     console.log("selectedOption", selectedOption);
     setFormData({ ...formData, tool_identifier: selectedOption.identifier, type: selectedOption.tool_type_identifier });    
   };
 
-   
   return (
     <Form>
       <div className="text-muted mt-1 mb-3">Each step requires a tool to be selected before it can be configured.  Please select the required tool and give the step a name below.</div>
@@ -153,18 +200,57 @@ function StepConfiguration( { data, stepId, parentCallback }) {
           <Form.Label>Step Name*</Form.Label>
           <Form.Control maxLength="50" type="text" disabled={!formData.active} placeholder="" value={formData.name || ""} onChange={e => setFormData({ ...formData, name: e.target.value })} />
         </Form.Group>
+        
+        <Form.Group controlId="tool"  className="mt-2">
+          <Form.Label>Tool Type*</Form.Label>
+          {isToolTypeSearching ? (
+            <div className="form-text text-muted mt-2 p-2">
+              <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> 
+            Loading Tool Types </div>
+          ) :(
+            <>
+              {renderForm && toolTypeList ?
+                <DropdownList
+                  data={toolTypeList} 
+                  valueField='identifier'
+                  value={toolTypeList[toolTypeList.findIndex(x => x.identifier === formData.tool_type)]}
+                  disabled={!formData.active || disableToolSelect}
+                  textField='name'
+                  defaultValue={toolTypeList[toolTypeList.findIndex(x => x.identifier === formData.type)]}
+                  onChange={handleToolTypeChange}             
+                /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted ml-2" fixedWidth/> }
+            </> 
+          ) 
+          }
+        </Form.Group>        
 
         <Form.Group controlId="tool"  className="mt-2">
           <Form.Label>Tool*</Form.Label>
-          {renderForm && toolList ?
-            <DropdownList
-              data={toolList} 
-              valueField='identifier'
-              disabled={!formData.active || disableToolSelect}
-              textField='name'
-              defaultValue={toolList[toolList.findIndex(x => x.identifier === formData.tool_identifier)]}
-              onChange={handleToolIdentifierChange}             
-            /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted ml-2" fixedWidth/> }
+          { formData.tool_type && formData.tool_type.length > 0 ? 
+            <>
+              {isToolListSearching ? (
+                <div className="form-text text-muted mt-2 p-2">
+                  <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> 
+            Loading Tool List accounts </div>
+              ) :(
+                <>
+                  {renderForm && toolList  ?
+                    <DropdownList
+                      data={toolList} 
+                      value={toolList[toolList.findIndex(x => x.identifier === formData.tool_identifier)]}
+                      valueField='identifier'
+                      disabled={!formData.active || disableToolSelect}
+                      textField='name'
+                      defaultValue={toolList[toolList.findIndex(x => x.identifier === formData.tool_identifier)]}
+                      onChange={handleToolIdentifierChange}             
+                    /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted ml-2" fixedWidth/> }
+                </> 
+              )
+              }
+            </>  : 
+            <Form.Text className="text-muted">Select tool type to get the list of all supported tools for it.</Form.Text>       
+          }
+        
           <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text>
         </Form.Group>        
       </div> 

@@ -1,20 +1,27 @@
-import React from "react"
+import React from "react";
+import { Table, Button, Row, Col } from "react-bootstrap";
+
 
 function UserInfo({ user }) {
   return (
-    <div className="grid-striped">
-      <div className="p-2 mt-2">
-        <div className="row mt-1">
-          <div className="col-md col-header-text">User Info</div>
-        </div>
-        <div className="row">
-          <div className="col-md"><span className="text-muted">Name:</span> {user.firstName} {user.lastName}</div>
-          <div className="col-md"><span className="text-muted">Email:</span>{user.email}</div>
-          <div className="col-md"><span className="text-muted">organization Name:</span>{user.organizationName}</div>
-          <div className="col-md"><span className="text-muted">Domain:</span> {user.domain}</div>
-        </div>
-      </div>
-    </div>
-  )
+    <Table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Organization</th>
+          <th>Domain</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{user.firstName}</td>
+          <td>{user.email}</td>
+          <td>{user.organizationName}</td>
+          <td>{user.domain}</td>
+        </tr>
+      </tbody>
+    </Table>
+  );
 }
-export default UserInfo
+export default UserInfo;

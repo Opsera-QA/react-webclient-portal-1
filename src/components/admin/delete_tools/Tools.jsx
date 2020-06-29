@@ -65,14 +65,13 @@ class ToolTable extends React.PureComponent {
   }
 
   deleteTool = async tool => {
-    const { getAccessToken, getUserInfo } = this.context;  //this.context is where all data from the above AuthContext component resides.  It's like the state props design wise
+    const { getAccessToken } = this.context;  //this.context is where all data from the above AuthContext component resides.  It's like the state props design wise
     const accessToken = await getAccessToken();
-    const userInfo = await getUserInfo();
-    this.delToolData(accessToken, tool, userInfo);
+    this.delToolData(accessToken, tool);
 
   }
 
-  delToolData(accessToken, tool, userInfo) {
+  delToolData(accessToken, tool) {
     console.log(tool);
     // this.setState({loading: true, tool: null})
     const apiCall = new ApiService("/tools", null, accessToken, { id: tool._id });

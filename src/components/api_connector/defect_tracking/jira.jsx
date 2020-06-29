@@ -135,10 +135,10 @@ function Jira() {
   async function handleSave(e) {
     e.preventDefault();
 
-    const { getAccessToken, getUserInfo } = Auth;
+    const { getAccessToken } = Auth;
     const accessToken = await getAccessToken();
     // const userInfo = await getUserInfo();
-    // const urlParams = { data: this.state, userid: userInfo.sub };
+    // const urlParams = { data: this.state, userid: userInfo.userId };
 
     const urlParams = state;
     if (state.update) {
