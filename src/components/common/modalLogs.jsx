@@ -30,7 +30,7 @@ function ModalLogsDialog({ header, size, jsonMessage, dataType, show, setParentV
           <Modal.Title>{header}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <ReactJson src={jsonMessage} displayDataTypes={false} />               
+          <div className="pre"> <ReactJson src={jsonMessage} displayDataTypes={false} />  </div>             
         </Modal.Body>
         <Modal.Footer>
           <Button variant="outline-secondary" onClick={() => handleClose()}>
