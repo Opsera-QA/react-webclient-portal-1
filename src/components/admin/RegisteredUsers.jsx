@@ -51,15 +51,15 @@ function RegisteredUsers() {
   }
 
   async function checkUserData() {
-    const { authenticated, getUserInfo, getAccessToken } = Auth;    
+    const { authenticated, getUserRecord, getAccessToken } = Auth;    
     const accessToken = await getAccessToken();
-    const userInfo = await getUserInfo();
+    const userInfo = await getUserRecord();
     setState({ accessToken: accessToken, userInfo: userInfo, authenticated: authenticated });
     if (userInfo) {
-      setState({ administrator: userInfo.Groups.includes("Admin") });
+      setState({ administrator: userInfo.groups.includes("Admin") });
     }
 
-    if (!userInfo.Groups.includes("Admin")) {
+    if (!userInfo.groups.includes("Admin")) {
       //move out
       history.push("/");
     } 

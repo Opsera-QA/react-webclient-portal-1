@@ -84,11 +84,11 @@ const PipelineWorkflow = (props) => {
   };
 
   async function checkAuthentication ()  {
-    const { getUserSsoUsersRecord, getAccessToken } = contextType;
+    const { getUserRecord, getAccessToken } = contextType;
     const accessToken = await getAccessToken();
     setAccessToken(accessToken);
     try {
-      const userInfoResponse = await getUserSsoUsersRecord();      
+      const userInfoResponse = await getUserRecord();      
       if (userInfoResponse !== undefined && Object.keys(userInfoResponse).length > 0) {
         setUserInfo(userInfoResponse);            
       }

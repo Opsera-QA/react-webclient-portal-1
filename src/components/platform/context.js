@@ -26,9 +26,9 @@ class NewAppProvider extends React.Component {
   }
 
   getToken = async () => {
-    const { getAccessToken, getUserInfo } = this.context;
+    const { getAccessToken, getUserRecord } = this.context;
     const accessToken = await getAccessToken();
-    const userInfo = await getUserInfo();
+    const userInfo = await getUserRecord();
     this.setState({
       token: accessToken,
       user: userInfo

@@ -34,9 +34,9 @@ class LoginForm extends React.Component {
   }
 
   componentDidMount = async() => {
-    const { getUserInfo } = this.context;
+    const { getUserRecord } = this.context;
     try {
-      const userInfo = await getUserInfo();
+      const userInfo = await getUserRecord();
       if(userInfo != undefined) {
         //this.props.history.goBack();
       }

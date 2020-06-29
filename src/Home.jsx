@@ -26,8 +26,8 @@ function Home() {
   };
 
   const getRoles = async () => {
-    //const { getUserInfo } = contextType; 
-    //const user = await getUserInfo();
+    //const { getUserRecord } = contextType; 
+    //const user = await getUserRecord();
     //setPreviewRole(user.email.includes("@opsera.io")); 
 
     //if (user.email.includes("@opsera.io")) {

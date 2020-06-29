@@ -1,52 +1,43 @@
 import React, { createContext, Component } from "react";
 import { withAuth } from "@okta/okta-react";
-import { ApiService } from "../api/apiService";
+import { ApiService, axiosApiService } from "../api/apiService";
 export const AuthContext = createContext();
 
-async function checkAuthentication() {
-  let curAuthenticatedState = this.state.authenticated;
-  let ssoUserRecord = {};
+async function checkAuthentication() {  
   const authenticated = await this.props.auth.isAuthenticated();
-  if (authenticated !== this.state.authenticated) {
-    if (authenticated && !this.state.userInfo) {
-      const userInfo = await this.props.auth.getUser();
-      const accessToken = await this.props.auth.getAccessToken();
-      if (!curAuthenticatedState && userInfo) { 
-        ssoUserRecord = await updateUserRecord(userInfo, accessToken); 
-      }
-      this.setState({ authenticated, userInfo, loading: false, ssoUserRecord });      
-    } else {
-      this.setState({ authenticated, loading: false });
-    }
+  if (authenticated && !this.state.userRecord) {
+    const accessToken = await this.props.auth.getAccessToken();
+    const userRecord = await getUser(accessToken);
+    this.setState({ authenticated, loading: false, userRecord: userRecord });
   }
 }
 
-async function updateUserRecord(userInfo, accessToken) {
-  if (userInfo && accessToken) {
-    let userRecord = {
-      "system": "okta",
-      "user_data": userInfo
-    };
-    const apiCall = new ApiService("/users/save", null, accessToken, userRecord);
-    const ssoUserRecord = apiCall.post()
-      .then(function (response) {
-        return response.data;        
-      })
-      .catch(function (error) {console.log("error on saving user record silently.");});
-    return ssoUserRecord;
+const getUser = async (accessToken) => {
+  try {    
+    let apiUrl = "/users";
+    const response = await axiosApiService(accessToken).get(apiUrl, {});
+    console.log(response.data);
+    return response.data;
   }
-}
+  catch (err) {
+    console.log("Error getting user data: " + err.message);
+    return null;
+  }
+};
+
+
+
 
 
 class AuthContextProvider extends Component {
   constructor(props) {
     super(props);
-    this.state = { authenticated: null, userInfo: null, sharedState: null, loading: true, ssoUserRecord: null };
+    this.state = { authenticated: null, sharedState: null, loading: true, userRecord: null };
     this.checkAuthentication = checkAuthentication.bind(this);
   }
 
   logoutUserContext = () => {
-    this.setState({ authenticated: null, userInfo: null, sharedState: null });
+    this.setState({ authenticated: null, sharedState: null, loading: false,  userRecord: null });
     return this.props.auth.logout("/");
   }
 
@@ -58,27 +49,50 @@ class AuthContextProvider extends Component {
     return this.props.auth.getAccessToken();
   }
 
-  getUserInfo = () => {
-    if (this.state.userInfo) {
+
+  //New LDAP derived getUsers Service
+  getUserRecord = async () => {
+    console.log("user record: ", this.state.userRecord);
+    if (this.state.userRecord !== null) {
+      return this.state.userRecord;
+    } else {
+      const accessToken = await this.props.auth.getAccessToken();
+      const userRecord = await getUser(accessToken);
+      return userRecord;
+    }
+  }
+  
+
+  //TODO To be removed for LDAP
+  //getUserInfo = async () => {
+  //  const user = await this.getUserRecord();
+  //  return user;
+    
+  /* if (this.state.userInfo) {
       return this.state.userInfo;
     } else {
       return this.props.auth.getUser();
-    }
-  }
+    } */
+  // }
 
+  //TODO Review this with new LDAP serivces
   getIsPreviewRole = async (restrictProd) => {
-    let userInfo = await this.getUserInfo();
+    const userInfo = await this.getUserRecord();
+    
     console.log("Environment: ", process.env.REACT_APP_ENVIRONMENT);    
     if (restrictProd && process.env.REACT_APP_ENVIRONMENT === "production") {
       //always restrict view in this case
       return false;
     } else {
-      return userInfo.Groups.includes("Preview");
+      return userInfo.groups.includes("Preview");
     }    
   }
 
-  getUserSsoUsersRecord = async () => {
-    if (this.state.ssoUserRecord) {
+  //TODO Review this with new LDAP serivces
+  //getUserSsoUsersRecord = async () => {
+  //  const user = await this.getUserRecord();
+  //  return user;
+  /* if (this.state.ssoUserRecord) {
       return this.state.ssoUserRecord;
     } else {
       const accessToken = await this.props.auth.getAccessToken();
@@ -89,8 +103,9 @@ class AuthContextProvider extends Component {
         })
         .catch(function (error) {console.log("error on user record lookup in context.");});
       return ssoUserRecord;
-    }
-  }
+    } */
+  //}
+
   
 
   setSharedState = (value) => {
@@ -112,9 +127,10 @@ class AuthContextProvider extends Component {
         logoutUserContext: this.logoutUserContext, 
         loginUserContext: this.loginUserContext, 
         getAccessToken: this.getAccessToken,
-        getUserInfo: this.getUserInfo,
-        getIsPreviewRole: this.getIsPreviewRole,
-        getUserSsoUsersRecord: this.getUserSsoUsersRecord,
+        getUserInfo: this.getUserInfo,  //TODO: Depracate
+        getIsPreviewRole: this.getIsPreviewRole, //TODO: Depracate
+        getUserSsoUsersRecord: this.getUserSsoUsersRecord, //TODO: Depracate
+        getUserRecord: this.getUserRecord,
         setSharedState: this.setSharedState }}>
         {this.props.children}
       </AuthContext.Provider>

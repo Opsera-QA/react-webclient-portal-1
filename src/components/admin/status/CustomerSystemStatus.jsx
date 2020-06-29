@@ -21,16 +21,16 @@ function CustomerSystemStatus() {
   );
 
   useEffect(() => {
-    const { authenticated, getUserInfo } = Auth;
+    const { authenticated, getUserRecord } = Auth;
     // function get the user data from okta and checks if the user is admin or not.
     async function checkUserData() {
-      const userInfo = await getUserInfo();
+      const userInfo = await getUserRecord();
       setState({ authenticated: authenticated });
       if (userInfo) {
-        setState({ administrator: userInfo.Groups.includes("Admin") });
+        setState({ administrator: userInfo.groups.includes("Admin") });
       }
 
-      if (!userInfo.Groups.includes("Admin")) {
+      if (!userInfo.groups.includes("Admin")) {
         //move out
         history.push("/");
       } else {
