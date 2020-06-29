@@ -13,7 +13,7 @@ import TagsTable from "./TagsTable";
 import TagEditorModal from "./TagEditorModal";
 
 function TagsEditor() {
-  const { getUserInfo, getAccessToken } = useContext(AuthContext);
+  const { getUserRecord, getAccessToken } = useContext(AuthContext);
   const [ isAdminCheck, setAdminStatus] = useState(false);
   const [ pageLoading, setPageLoading ] = useState(true);
   const [ tagList, setTagList ] = useState([]);
@@ -87,8 +87,8 @@ function TagsEditor() {
   };
 
   const isAdmin = async () => {
-    const userInfo = await getUserInfo();
-    if (!userInfo.Groups.includes("Admin")) {
+    const userInfo = await getUserRecord();
+    if (!userInfo.groups.includes("Admin")) {
       //move out
       setAdminStatus(false);
     } else {

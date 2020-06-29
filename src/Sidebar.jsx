@@ -10,31 +10,9 @@ import "./sidebar.css";
 
 function Sidebar({ hideView }) {
   const contextType = useContext(AuthContext);
-  const [userInfo, setUserInfo] = useState();
   const [administrator, setAdministrator] = useState(false);
-  const [previewRole, setPreviewRole] = useState(false);
   const [hideSideBar, setHideSideBar] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
-
-
-  /*   useEffect(() => {    
-    const controller = new AbortController();
-    const runEffect = async () => {
-      try {
-        await checkAuthentication();                
-      } catch (err) {
-        if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
-          return;
-        }        
-      }
-    };
-    runEffect();
-    return () => {     
-      controller.abort();      
-    };
-  }, [hideView, contextType]); */
-
 
   useEffect(() => {    
     checkAuthentication();
@@ -46,18 +24,13 @@ function Sidebar({ hideView }) {
 
   async function checkAuthentication ()  {
     //console.log("checking authentication");
-    const { getUserInfo, authenticated } = contextType;
+    const { getUserRecord, authenticated } = contextType;
     try {
-      const userInfoResponse = await getUserInfo();
+      const userInfoResponse = await getUserRecord();
       setAuthenticated(authenticated);
-      //console.log("Authenticated: ", authenticated);
-
-      if (!authenticated) {
-        setUserInfo(null);
-      } else if (userInfoResponse !== undefined && Object.keys(userInfoResponse).length > 0) {
-        setUserInfo(userInfoResponse);
-        setAdministrator(userInfoResponse.Groups.includes("Admin"));
-        setPreviewRole(userInfoResponse.email.includes("@opsera.io"));      
+      if (authenticated && userInfoResponse && userInfoResponse.groups) {
+        console.log(userInfoResponse);
+        setAdministrator(userInfoResponse.groups.includes("Admin"));
       }
     }
     catch (err) {

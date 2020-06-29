@@ -23,10 +23,10 @@ class ServiceNow extends Component {
     e.preventDefault();
     // TODO :: change endpoint
 
-    const { getAccessToken, getUserInfo } = this.context;
+    const { getAccessToken, getUserRecord } = this.context;
     const accessToken = await getAccessToken();
-    const userInfo = await getUserInfo();
-    const urlParams = { data: this.state, userid: userInfo.sub };
+    const userInfo = await getUserRecord();
+    const urlParams = { data: this.state, userid: userInfo.email };
     new ApiService(
       apiServerUrl + "",
       null,

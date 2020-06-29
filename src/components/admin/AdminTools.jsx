@@ -8,17 +8,17 @@ import { faEdit, faHeartbeat, faTimes, faUserCircle, faLink, faChartBar, faWrenc
 
 function AdminTools(props) {
   const [administrator, setAdministrator] = useState(false);
-  const { getUserInfo } = useContext(AuthContext);
+  const { getUserRecord } = useContext(AuthContext);
 
   useEffect(() => {
     isAdmin();
   }, []);
 
   const isAdmin = async () => {
-    const userInfo = await getUserInfo();
+    const userInfo = await getUserRecord();
     console.log(userInfo);
-    setAdministrator(userInfo.Groups.includes("Admin"));
-    if (!userInfo.Groups.includes("Admin")) {
+    setAdministrator(userInfo.groups.includes("Admin"));
+    if (!userInfo.groups.includes("Admin")) {
       //move out
       this.props.history.push("/");
     } else {

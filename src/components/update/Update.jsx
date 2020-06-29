@@ -25,10 +25,10 @@ class Update extends Component {
   }
 
   async getApiData() {
-    const { getAccessToken, getUserInfo } = this.context;
+    const { getAccessToken, getUserRecord } = this.context;
     const accessToken = await getAccessToken();
-    const userInfo = await getUserInfo();
-    const urlParams = { userid: userInfo.sub };
+    const userInfo = await getUserRecord();
+    const urlParams = { userid: userInfo.email };
     const apiCall = new ApiService("/tools/upgradable", urlParams, accessToken);
     let currentComponent = this;
     apiCall.get()

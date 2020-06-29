@@ -45,8 +45,8 @@ function ApprovalStepConfiguration( { stepTool, pipelineId, plan, stepId, parent
   const callbackFunction = async () => {
     if (validateRequiredFields()) {
       if (thresholdData.approved) {
-        const { getUserSsoUsersRecord } = contextType;
-        const userInfoResponse = await getUserSsoUsersRecord();
+        const { getUserRecord } = contextType;
+        const userInfoResponse = await getUserRecord();
         thresholdData.user = userInfoResponse._id;
         thresholdData.email = userInfoResponse.email;        
         thresholdData.approved_on = new Date();
