@@ -266,5 +266,10 @@ function StepConfiguration( { data, stepId, parentCallback }) {
 }
 
 
+StepConfiguration.propTypes = {
+  data: PropTypes.object,
+  stepId: PropTypes.string,
+  parentCallback: PropTypes.func
+};
 
 export default StepConfiguration;
