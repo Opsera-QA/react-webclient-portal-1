@@ -31,7 +31,8 @@ function Application(props) {
   const [appNameError, setAppNameError] = useState(null);
 
   const getApiData = async () => {
-    const urlParams = { userid: user.sub };
+    console.log("user: ", user);
+    const urlParams = { userid: user.userId };
     const apiCall = new ApiService("/applications", urlParams, token);
     apiCall.get()
       .then(function (response) {
@@ -80,7 +81,7 @@ function Application(props) {
 
     setCheckingAppName(true);  
 
-    let postBody = { userid: user.sub, name: appName, type: "platform" };
+    let postBody = { userid: user.userId, name: appName, type: "platform" };
     new ApiService(
       "/applications/create",
       null,

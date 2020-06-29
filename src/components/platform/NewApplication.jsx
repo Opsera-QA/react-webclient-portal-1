@@ -70,7 +70,7 @@ class NewApplication extends React.PureComponent {
 
   async getApiData() {
     const { token, user } = this.context;
-    const urlParams = { userid: user.sub };
+    const urlParams = { userid: user.userId };
     const apiCall = new ApiService("/applications", urlParams, token);
     let currentComponent = this;
     apiCall.get()
@@ -123,7 +123,7 @@ class NewApplication extends React.PureComponent {
       checkingAppName: true,
     });
 
-    let postBody = { userid: user.sub, name: this.state.appname, type: "platform" };
+    let postBody = { userid: user.userId, name: this.state.appname, type: "platform" };
     console.log(postBody);
     let currentComponent = this;
     new ApiService(

@@ -9,33 +9,35 @@ import { faClipboardList, faChartBar, faArchive, faColumns, faLink, faBox, faDow
 import "./sidebar.css";
 
 function Sidebar({ hideView }) {
-  const contextType = useContext(AuthContext);
+  const contextType = useContext(AuthContext); 
+  const { userRecord, authenticated, loading } = contextType;
   const [administrator, setAdministrator] = useState(false);
   const [hideSideBar, setHideSideBar] = useState(false);
-  const [authenticated, setAuthenticated] = useState(false);
+  
 
   useEffect(() => {    
-    checkAuthentication();
-  }, [hideView, authenticated, contextType]);
+    checkAuthentication(userRecord);    
+  }, [hideView, userRecord, loading]);
 
   const handleToggleMenuClick = () => {
     setHideSideBar(!hideSideBar);    
   };
 
-  async function checkAuthentication ()  {
-    //console.log("checking authentication");
-    const { getUserRecord, authenticated } = contextType;
-    try {
-      const userInfoResponse = await getUserRecord();
-      setAuthenticated(authenticated);
-      if (authenticated && userInfoResponse && userInfoResponse.groups) {
-        console.log(userInfoResponse);
-        setAdministrator(userInfoResponse.groups.includes("Admin"));
+  async function checkAuthentication (user)  {
+    console.log("IS IT EVEN CHECKING HERE AGAIN???", loading);
+    if (user) {
+      console.log("userRecord ", userRecord);
+      console.log("authenticated ", authenticated);
+      if (authenticated && userRecord && userRecord.groups) {
+        console.log("IN HERE!");
+        setAdministrator(userRecord.groups.includes("Admin"));
       }
     }
-    catch (err) {
-      console.log("Error occurred getting user authentication status.", err);
-    }    
+      
+    //  const userInfoResponse = await getUserRecord();
+    //setIsAuthenticated(authenticated);
+      
+        
   }
 
 

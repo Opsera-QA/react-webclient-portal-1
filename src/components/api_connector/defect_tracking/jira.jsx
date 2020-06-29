@@ -138,7 +138,7 @@ function Jira() {
     const { getAccessToken } = Auth;
     const accessToken = await getAccessToken();
     // const userInfo = await getUserInfo();
-    // const urlParams = { data: this.state, userid: userInfo.email };
+    // const urlParams = { data: this.state, userid: userInfo.userId };
 
     const urlParams = state;
     if (state.update) {

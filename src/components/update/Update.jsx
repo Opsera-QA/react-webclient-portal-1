@@ -28,7 +28,7 @@ class Update extends Component {
     const { getAccessToken, getUserRecord } = this.context;
     const accessToken = await getAccessToken();
     const userInfo = await getUserRecord();
-    const urlParams = { userid: userInfo.email };
+    const urlParams = { userid: userInfo.userId };
     const apiCall = new ApiService("/tools/upgradable", urlParams, accessToken);
     let currentComponent = this;
     apiCall.get()

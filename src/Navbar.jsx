@@ -10,17 +10,22 @@ function HeaderNavBar() {
   const history = useHistory();
   const [state, setState] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
-    { authenticated: false, administrator: false, userName: null }
+    { authenticated: false, administrator: false, userRecord: null }
   );
 
   useEffect(() => {
-    const { authenticated, userInfo } = contextType;
+    getUser();
+  }, [contextType]); 
+
+
+  const getUser = async () => {
+    const { authenticated, getUserRecord } = contextType;
+    const userInfo = await getUserRecord();
     setState({ authenticated: authenticated });
     if (userInfo) {
-      setState({ userName: userInfo.name });
+      setState({ userName: userInfo.firstName + " " + userInfo.lastName });
     }
-
-  }, [contextType]); 
+  };
 
   const login = function() {
     const { loginUserContext } = contextType;

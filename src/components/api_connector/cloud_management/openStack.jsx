@@ -27,7 +27,7 @@ class OpenStack extends Component {
     const { getAccessToken, getUserRecord } = this.context;
     const accessToken = await getAccessToken();
     const userInfo = await getUserRecord();
-    const urlParams = { data: this.state, userid: userInfo.email };
+    const urlParams = { data: this.state, userid: userInfo.userId };
     new ApiService(
       apiServerUrl + "",
       null,

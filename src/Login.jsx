@@ -33,7 +33,7 @@ class LoginForm extends React.Component {
     this.handleResetPasswordSubmit = this.handleResetPasswordSubmit.bind(this);
   }
 
-  componentDidMount = async() => {
+  /* componentDidMount = async() => {
     const { getUserRecord } = this.context;
     try {
       const userInfo = await getUserRecord();
@@ -45,7 +45,7 @@ class LoginForm extends React.Component {
       console.log("Error occured getting user authentication status.", err);
     }
   }
-  
+   */
   handleSubmit(e) {
     e.preventDefault();
     this.setState({ loading: true });
