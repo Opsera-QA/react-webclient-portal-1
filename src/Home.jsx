@@ -6,15 +6,21 @@ import LoadingDialog from "./components/common/loading";
 
 function Home() {
   const contextType = useContext(AuthContext);
-  const { authenticated, loading } = contextType;
+  const [contextLoading, setContextLoading] = useState(false);
   const history = useHistory();
-  const [previewRole, setPreviewRole] = useState(false);
-
+  
   useEffect(() => {    
+    getStatus();
+  }, [contextLoading]);
+
+  const getStatus = () => {
+    const { authenticated, loading } = contextType;
+    console.log("Authenticated? ", authenticated);
+    setContextLoading(loading);
     if (authenticated) {
-      getRoles();      
-    }
-  }, [authenticated]);
+      history.push("/overview");
+    } 
+  };
 
   const login = () => {
     const { loginUserContext } = contextType;
@@ -25,22 +31,10 @@ function Home() {
     history.push("/signup");
   };
 
-  const getRoles = async () => {
-    //const { getUserRecord } = contextType; 
-    //const user = await getUserRecord();
-    //setPreviewRole(user.email.includes("@opsera.io")); 
-
-    //if (user.email.includes("@opsera.io")) {
-    history.push("/overview");
-    //} else {
-    //history.push("/inventory");
-    //}    
-  };
-
-
+  
   return (
     <>
-      {loading ? <LoadingDialog /> : 
+      {contextLoading ? <LoadingDialog /> : 
         <>
          
           <div className="mt-3 ml-5 w-75">

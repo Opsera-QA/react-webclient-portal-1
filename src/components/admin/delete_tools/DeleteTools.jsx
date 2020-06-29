@@ -30,7 +30,7 @@ class DeleteTools extends PureComponent {
       this.props.history.push("/");
     } else {
       //do nothing
-      const urlParams = { userid: userInfo.email };
+      const urlParams = { userid: userInfo.userId };
       const accessToken = await getAccessToken();
       this.getApiData(accessToken, urlParams);
     }

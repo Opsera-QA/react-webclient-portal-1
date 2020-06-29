@@ -1,80 +1,67 @@
 import React, { createContext, Component } from "react";
 import { withAuth } from "@okta/okta-react";
-import { ApiService, axiosApiService } from "../api/apiService";
+import { axiosApiService } from "../api/apiService";
 export const AuthContext = createContext();
 
 async function checkAuthentication() {  
   const authenticated = await this.props.auth.isAuthenticated();
-  if (authenticated && !this.state.userRecord) {
-    const accessToken = await this.props.auth.getAccessToken();
+  const accessToken = await this.props.auth.getAccessToken();
+  if (authenticated && !this.state.userRecord && accessToken) {    
     const userRecord = await getUser(accessToken);
     this.setState({ authenticated, loading: false, userRecord: userRecord });
+  } else {
+    this.setState({ authenticated: false, loading: false,  userRecord: null });
   }
 }
 
-const getUser = async (accessToken) => {
+const getUser = async (accessToken) => {  
   try {    
     let apiUrl = "/users";
     const response = await axiosApiService(accessToken).get(apiUrl, {});
-    console.log(response.data);
+    console.log("getting user", response.data);
     return response.data;
   }
-  catch (err) {
-    console.log("Error getting user data: " + err.message);
-    return null;
+  catch (err) {   
+    console.log("Error getting user data: " + err.message);    
   }
 };
-
-
-
 
 
 class AuthContextProvider extends Component {
   constructor(props) {
     super(props);
-    this.state = { authenticated: null, sharedState: null, loading: true, userRecord: null };
-    this.checkAuthentication = checkAuthentication.bind(this);
+    this.state = { authenticated: false, sharedState: null, loading: false, userRecord: null };
+    this.checkAuthentication = checkAuthentication.bind(this);    
   }
 
   logoutUserContext = () => {
-    this.setState({ authenticated: null, sharedState: null, loading: false,  userRecord: null });
-    return this.props.auth.logout("/");
+    this.setState({ authenticated: false, sharedState: null, loading: false,  userRecord: null });
+    return this.props.auth.logout("/login");
   }
 
   loginUserContext = () => {
-    return this.props.auth.login("/");
+    return this.props.auth.login("/overview");
   }
 
   getAccessToken = () => {
     return this.props.auth.getAccessToken();
   }
 
+  getIsAuthenticated = () => {
+    return this.state.authenticated;
+  }
+
 
   //New LDAP derived getUsers Service
   getUserRecord = async () => {
-    console.log("user record: ", this.state.userRecord);
-    if (this.state.userRecord !== null) {
-      return this.state.userRecord;
-    } else {
-      const accessToken = await this.props.auth.getAccessToken();
-      const userRecord = await getUser(accessToken);
-      return userRecord;
-    }
+    
+    if (!this.state.userRecord) {
+      await this.checkAuthentication();
+    }      
+    const user = this.state.userRecord;     
+    return user;        
   }
   
-
-  //TODO To be removed for LDAP
-  //getUserInfo = async () => {
-  //  const user = await this.getUserRecord();
-  //  return user;
-    
-  /* if (this.state.userInfo) {
-      return this.state.userInfo;
-    } else {
-      return this.props.auth.getUser();
-    } */
-  // }
-
   //TODO Review this with new LDAP serivces
   getIsPreviewRole = async (restrictProd) => {
     const userInfo = await this.getUserRecord();
@@ -88,37 +75,22 @@ class AuthContextProvider extends Component {
     }    
   }
 
-  //TODO Review this with new LDAP serivces
-  //getUserSsoUsersRecord = async () => {
-  //  const user = await this.getUserRecord();
-  //  return user;
-  /* if (this.state.ssoUserRecord) {
-      return this.state.ssoUserRecord;
-    } else {
-      const accessToken = await this.props.auth.getAccessToken();
-      const apiCall = new ApiService("/users", null, accessToken);
-      const ssoUserRecord = apiCall.get()
-        .then(function (response) {
-          return response.data;        
-        })
-        .catch(function (error) {console.log("error on user record lookup in context.");});
-      return ssoUserRecord;
-    } */
-  //}
-
-  
-
   setSharedState = (value) => {
     this.setState({ sharedState: value });
   }
 
-  componentDidMount() {
+  componentDidMount () {
+    this.setState({ loading: true });
     this.checkAuthentication();
   }
-  
+
+  componentDidUnMount() {
+    this.checkAuthentication();
+  }
+  /* 
   componentDidUpdate() {
     this.checkAuthentication();
-  }
+   }*/
 
   render() { 
     return ( 
@@ -129,8 +101,8 @@ class AuthContextProvider extends Component {
         getAccessToken: this.getAccessToken,
         getUserInfo: this.getUserInfo,  //TODO: Depracate
         getIsPreviewRole: this.getIsPreviewRole, //TODO: Depracate
-        getUserSsoUsersRecord: this.getUserSsoUsersRecord, //TODO: Depracate
         getUserRecord: this.getUserRecord,
+        getIsAuthenticated: this.getIsAuthenticated,
         setSharedState: this.setSharedState }}>
         {this.props.children}
       </AuthContext.Provider>

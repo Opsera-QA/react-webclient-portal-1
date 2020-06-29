@@ -45,7 +45,7 @@ function PlatformInventory () {
     const { getAccessToken, getUserRecord } = contextType;
     const accessToken = await getAccessToken();
     const userInfo = await getUserRecord();
-    const params = { userid: userInfo.email };
+    const params = { userid: userInfo.userId };
     const apiUrl = "/applications";
     
     try {

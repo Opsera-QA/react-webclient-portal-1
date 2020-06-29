@@ -66,7 +66,7 @@ class Pipeline extends React.PureComponent {
 
   async getApiData() {
     const { token, user } = this.context;
-    const urlParams = { userid: user.sub };
+    const urlParams = { userid: user.userId };
     const apiCall = new ApiService("/applications", urlParams, token);
     let currentComponent = this;
     apiCall.get()
@@ -165,7 +165,7 @@ class Pipeline extends React.PureComponent {
     // eslint-disable-next-line no-unused-vars
     const { token, user, appname, setAppDetails } = this.context;
 
-    let postBody = { userid: user.sub, name: appname, type: "pipeline" };
+    let postBody = { userid: user.userId, name: appname, type: "pipeline" };
     let currentComponent = this;
     new ApiService(
       "/applications/create",
