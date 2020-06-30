@@ -54,6 +54,7 @@ function OPBlueprint (props) {
   const [pipeIDerror, setPipeIDError] = useState(false);
   const [runCountError, setRunCountError] = useState(false);
   const history = useHistory();
+  const [disabledForm, setDisabledState] = useState(false);
 
 
   simpleNumberLocalizer();
@@ -187,29 +188,32 @@ function OPBlueprint (props) {
     const apiCall = new ApiService("/pipelines", {}, accessToken);
     await apiCall.get()
       .then(res => {
-        let formattedArray = [];
-        for (let item in res.data.response) {
-          let tempText = res.data.response[item].name;
-          runCountFetch[res.data.response[item].name] = res.data.response[item].workflow.run_count;
-          idFetch[res.data.response[item].name] = res.data.response[item]._id;
-          formattedArray.push({ value: tempText, label: tempText });
-        }
-        console.log(runCountFetch);
-        let filterDataApiResponse = [{
-          label: "My Pipelines", 
-          options: formattedArray
-        }];
-        let formattedFilterData = [];
-
-        filterDataApiResponse.forEach(filterGroup => {
-          filterGroup["options"].map((filters) => {
-            filters["type"] = filterGroup["label"];
+        if (res.data.count > 0 || res.data.response.length > 0) {
+          let formattedArray = [];
+          for (let item in res.data.response) {
+            let tempText = res.data.response[item].name;
+            runCountFetch[res.data.response[item].name] = res.data.response[item].workflow.run_count;
+            idFetch[res.data.response[item].name] = res.data.response[item]._id;
+            formattedArray.push({ value: tempText, label: tempText });
+          }
+          console.log(runCountFetch);
+          let filterDataApiResponse = [{
+            label: "My Pipelines", 
+            options: formattedArray
+          }];
+          let formattedFilterData = [];
+  
+          filterDataApiResponse.forEach(filterGroup => {
+            filterGroup["options"].map((filters) => {
+              filters["type"] = filterGroup["label"];
+            });
+            formattedFilterData.push(...filterGroup["options"]);
           });
-          formattedFilterData.push(...filterGroup["options"]);
-        });
-
-        setFilters(formattedFilterData);
-        
+  
+          setFilters(formattedFilterData);
+        } else {
+          setDisabledState(true);
+        }
       })
       .catch(err => {
         setFilters([]);
@@ -329,7 +333,7 @@ function OPBlueprint (props) {
                 <DropdownList
                   placeholder={"Select Opsera Pipeline"}
                   data={filterOptions} 
-                  busy={Object.keys(filterOptions).length == 0 ? true : false}
+                  busy={(disabledForm) ? false : Object.keys(filterOptions).length == 0 ? true : false}
                   disabled={Object.keys(filterOptions).length == 0 ? true : false}
                   valueField='value'
                   textField='label'
@@ -342,6 +346,7 @@ function OPBlueprint (props) {
                 <NumberPicker 
                   type="number"
                   placeholder={"Run Count"}
+                  disabled={disabledForm}
                   value={(run_count) ? run_count : null}
                   className="max-content-width"
                   onChange={runCountSelect}
@@ -355,10 +360,10 @@ function OPBlueprint (props) {
                 {/* <Button variant="outline-secondary" type="button" onClick={toggleCalendar}>
                   <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth/>
                   {(calendar && sDate || eDate) ? sDate + " - " + eDate : "Date Range"}</Button> */}
-                <Button variant="primary" className="float-right ml-2" type="submit">Lookup</Button>
+                <Button variant="primary" className="float-right ml-2" type="submit" disabled={disabledForm}>Lookup</Button>
 
 
-                <Button variant="outline-secondary" className="float-right ml-2" type="button" onClick={cancelSearchClicked}>Clear</Button>
+                <Button variant="outline-secondary" className="float-right ml-2" type="button" onClick={cancelSearchClicked} disabled={disabledForm}>Clear</Button>
               </Col>
 
 
@@ -406,7 +411,7 @@ function OPBlueprint (props) {
           </div> 
         } */}
 
-        {(!loading  && noResults && submitted) && 
+        {(!loading  && noResults && submitted && !runCountError && !pipeIDerror) && 
           <div style={{ height: "400px" }}>
             <div className="row h-100">
               <div className="col-sm-12 my-auto text-center max-content-width">
@@ -441,6 +446,16 @@ function OPBlueprint (props) {
             <div className="row h-100">
               <div className="col-sm-12 my-auto text-center max-content-width">
                 <div className="h6"><InfoDialog  message="Please Select a pipeline in order to see results." /></div>   
+              </div>
+            </div>
+          </div> 
+        }
+
+        {( !loading  && disabledForm) && 
+          <div style={{ height: "400px" }}>
+            <div className="row h-100">
+              <div className="col-sm-12 my-auto text-center max-content-width">
+                <div className="h6"><InfoDialog  message="No pipeline activity available to report on" /></div>   
               </div>
             </div>
           </div> 

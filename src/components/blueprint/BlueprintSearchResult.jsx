@@ -17,7 +17,7 @@ function BlueprintSearchResult({ searchResults }) {
       <br></br>
       <div className="mb-1 mt-3 bordered-content-block p-3 max-content-width"> 
         { Object.keys(searchResults).length > 0 &&
-          <Tab.Container id="left-tabs-example">
+          <Tab.Container id="left-tabs-example" defaultActiveKey={0}>
             <Row>
               <Col sm={2}>
                 <div className="blueprint-title pl-3 mb-1">Steps</div>
