@@ -7,7 +7,7 @@ import ErrorDialog from "../../common/error";
 import { Table }  from "react-bootstrap";
 import { format } from "date-fns";
 
-function RecentBuildsTable() {
+function RecentBuildsTable({ date }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -42,7 +42,9 @@ function RecentBuildsTable() {
     const postBody = {
       "requests": [ 
         "jenkinsBuildRecent" 
-      ]
+      ],
+      startDate: date.start, 
+      endDate: date.end
     };
     
     try {

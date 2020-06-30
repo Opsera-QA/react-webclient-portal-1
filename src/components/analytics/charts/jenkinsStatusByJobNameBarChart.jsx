@@ -11,7 +11,7 @@ import LoadingDialog from "../../common/loading";
 import ErrorDialog from "../../common/error";
 
 
-function JenkinsStatusByJobNameBarChar( { persona } ) {
+function JenkinsStatusByJobNameBarChar( { persona, date  } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -50,7 +50,9 @@ function JenkinsStatusByJobNameBarChar( { persona } ) {
           "request": "jenkinsStatusByJobName",
           "metric": "bar"
         }
-      ]
+      ],
+      startDate: date.start, 
+      endDate: date.end
     };
 
     try {

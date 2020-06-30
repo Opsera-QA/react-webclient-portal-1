@@ -1,9 +1,8 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../contexts/AuthContext";
 import { axiosApiService } from "../../api/apiService";
-import { Row, Col, Alert } from "react-bootstrap";
 import ErrorDialog from "../../components/common/error";
 import DropdownList from "react-widgets/lib/DropdownList";
 // import PipelineDashboard from "../../components/dashboard/Pipeline";
@@ -19,8 +18,32 @@ import SecOpsDashboard_v2 from "../../components/dashboard/v2/SecOps";
 import QualityDashboard from "../../components/dashboard/v2/Quality";
 import OperationsDashboard from "../../components/dashboard/v2/Operations";
 import PlanningDashboard from "../../components/dashboard/v2/Planning";
+import "react-date-range/dist/styles.css"; 
+import "react-date-range/dist/theme/default.css"; 
+import { Alert, OverlayTrigger, Tooltip, Row, Col } from "react-bootstrap";
+import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 
 const PERSONAS = [ { value: "developer", label: "Developer" }, { value: "manager", label: "Manager" }, { value: "executive", label: "Executive" }];
+const DATELABELS = [ { value: {
+  start: "now-1h",
+  end: "now"
+}, label : "Last 1 Hour" }, { value: {
+  start: "now-6h",
+  end: "now"
+}, label : "Last 6 Hours" }, { value: {
+  start: "now-1d",
+  end: "now"
+}, label : "Last 24 Hours" }, { value: {
+  start: "now-7d",
+  end: "now"
+}, label : "Last Week" }, { value: {
+  start: "now-31d",
+  end: "now"
+}, label : "Last Month" }, { value: {
+  start: "now-90d",
+  end: "now"
+}, label : "Last 3 Months" }, ];
+
 
 function DashboardHome() {
   const contextType = useContext(AuthContext);
@@ -31,7 +54,13 @@ function DashboardHome() {
   const [loading, setLoading] = useState(false);
   const [isEnabled, setIsEnabled] = useState(true);
   const [enabledOn, setEnabledOn] = useState(true);
-  //const [previewRole, setPreviewRole] = useState(false);
+  const [label, setLabel] = useState("Last 3 Months");
+  const [date, setDate] = useState({
+    start: "now-90d",
+    end: "now",
+    key: "selection"  
+  });
+
   
   useEffect(() => {    
     const controller = new AbortController();
@@ -77,7 +106,7 @@ function DashboardHome() {
       setIsEnabled(dataObject.active !== undefined ? dataObject.active : false);
       setEnabledOn((dataObject.enabledToolsOn && dataObject.enabledToolsOn.length !== 0) ? true : false);
 
-      setPersona(persona);    
+      setPersona(persona);   
       setLoading(false);
     }
     catch (err) {
@@ -86,17 +115,91 @@ function DashboardHome() {
     }
   }
 
-
-
   const handleTabClick = param => e => {
     e.preventDefault();
     setSelection(param);
   };
 
   const handleSelectPersonaChange = (selectedOption) => {
-    setPersona(selectedOption.value);
+    setPersona([selectedOption.selecton]);
   };
 
+
+  const handleDateChange = (e) => {
+    setDate(e.value);
+    setLabel(e.label.toString());
+  };
+
+  const ValueInput = ({ item }) => (
+    <span>
+      <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth/>
+      {" " + DATELABELS.find(o => o.value.start === date.start && o.value.end === date.end).label.toString()}
+    </span>
+  );
+
+  const handleCreate = (name) => {
+    let item = {
+      value: "test", 
+      label: name
+    };
+
+    if (name.toLowerCase().includes("last")) {
+      if (name.toLowerCase().includes("week") || name.toLowerCase().includes("weeks")) {
+        let matches = name.match(/(\d+)/);
+        let filter = "now-" + matches[0].toString() + "w";
+        item.value = {
+          start: filter,
+          end: "now"
+        };
+        DATELABELS.push(item);
+        setDate(item.value);        
+      } else if (name.toLowerCase().includes("days") || name.toLowerCase().includes("day")) {
+        let matches = name.match(/(\d+)/);
+        let filter = "now-" + matches[0].toString() + "d";
+        item.value = {
+          start: filter,
+          end: "now"
+        };
+        DATELABELS.push(item);
+        setDate(item.value);        
+      } else if (name.toLowerCase().includes("months") || name.toLowerCase().includes("month")) {
+        let matches = name.match(/(\d+)/);
+        let filter = "now-" + matches[0].toString() + "M";
+        item.value = {
+          start: filter,
+          end: "now"
+        };
+        DATELABELS.push(item);
+        setDate(item.value);        
+      } else if (name.toLowerCase().includes("year") || name.toLowerCase().includes("years")) {
+        let matches = name.match(/(\d+)/);
+        let filter = "now-" + matches[0].toString() + "y";
+        item.value = {
+          start: filter,
+          end: "now"
+        };
+        DATELABELS.push(item);
+        setDate(item.value);        
+      } else if (name.toLowerCase().includes("hour") || name.toLowerCase().includes("hours")) {
+        let matches = name.match(/(\d+)/);
+        let filter = "now-" + matches[0].toString() + "h";
+        item.value = {
+          start: filter,
+          end: "now"
+        };
+        DATELABELS.push(item);
+        setDate(item.value);        
+      }
+    }
+  };
+
+  function renderTooltip(props) {
+    return (
+      <Tooltip id="button-tooltip" {...props}>
+        Select timeframe or manually enter in a "Last XX Days/Months/Years" format
+      </Tooltip>
+    );
+  }
  
   return (
     <div className="mb-3 max-charting-width">
@@ -169,9 +272,29 @@ function DashboardHome() {
                         <a className={"nav-link " + (selection === "operations_v2" ? "active" : "")} onClick={handleTabClick("operations_v2")} href="#">Operations</a>
                       </li>                        
                     </ul>
-                  </Col>
-                  <Col sm={4}>    
-                    <DropdownList
+                  </Col>                   
+                  <Col sm={2}>
+                    <OverlayTrigger
+                      placement="top"
+                      delay={{ show: 250, hide: 250 }}
+                      overlay={renderTooltip}
+                    >
+                      <DropdownList filter
+                        disabled={selection !== "pipeline"}
+                        data={DATELABELS} 
+                        className="max-content-width"
+                        valueComponent={ValueInput}
+                        textField='label'
+                        allowCreate="onFilter"
+                        onCreate={handleCreate}
+                        defaultValue={date ?  DATELABELS.find(o => o.value.start === date.start && o.value.end === date.end) : DATELABELS[5]}
+                        onChange={handleDateChange}             
+                      />
+                    </OverlayTrigger>
+                  </Col> 
+
+                  <Col sm={2}>    
+                    <DropdownList 
                       data={PERSONAS} 
                       className="basic-single mr-2"
                       valueField='value'
@@ -182,7 +305,7 @@ function DashboardHome() {
                   </Col>
                 </Row>
             
-                <DashboardView selection={selection} persona={persona} />
+                <DashboardView selection={selection} persona={persona} date={date}/>
               </>
             }
             
@@ -194,16 +317,18 @@ function DashboardHome() {
   
 }
 
-function DashboardView({ selection, persona }) {
+function DashboardView({ selection, persona, date }) {
   useEffect(() => {
-  }, [selection, persona]);
+    console.log("CHANGE HAPPENED");
+  }, [selection, persona, date.start]);
+  console.log(date.start);
 
   if (selection) {
     switch (selection) {
     case "logs":
       return <LogsDashboard persona={persona} />;
     case "pipeline":
-      return <PipelineDashboard_v2 persona={persona} />;
+      return <PipelineDashboard_v2 persona={persona} date={date} />;
     case "secops_v2":
       return <SecOpsDashboard_v2 persona={persona} />;
     case "quality_v2":
@@ -221,7 +346,8 @@ function DashboardView({ selection, persona }) {
 
 DashboardView.propTypes = {
   selection: PropTypes.string,
-  persona: PropTypes.string
+  persona: PropTypes.string, 
+  date: PropTypes.object
 };
 
 export default DashboardHome;
