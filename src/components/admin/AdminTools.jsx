@@ -3,7 +3,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { Link } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faHeartbeat, faTimes, faUserCircle, faLink, faChartBar, faWrench, faTags } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faHeartbeat, faTimes, faUserCircle, faLink, faChartBar, faWrench, faTags, faStream } from "@fortawesome/free-solid-svg-icons";
 
 
 function AdminTools(props) {
@@ -70,7 +70,10 @@ function AdminTools(props) {
               </Col>  
               <Col xs={12} md={6} lg={4} className="p-2">
                 <Link to="/admin/tags"><FontAwesomeIcon icon={faTags} fixedWidth /> Tags</Link>
-              </Col>                                     
+              </Col> 
+              <Col xs={12} md={6} lg={4} className="p-2">
+                <Link to="/admin/template-editor"><FontAwesomeIcon icon={faStream} fixedWidth /> Template Editor</Link>
+              </Col>                                                   
             </Row>
           </div>
       }
