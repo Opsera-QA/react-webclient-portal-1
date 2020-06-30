@@ -46,7 +46,7 @@ export default {
   axisBottom: {
     "tickSize": 8,
     "tickPadding": 5,
-    "tickRotation": 0,
+    tickRotation: -15,
     "legend": "Sprint Name",
     "legendPosition": "middle",
     "legendOffset": 50
