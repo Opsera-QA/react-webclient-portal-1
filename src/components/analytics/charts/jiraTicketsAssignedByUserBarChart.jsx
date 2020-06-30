@@ -115,6 +115,7 @@ function JiraTicketsAssignedByUserBarChart( { persona } ) {
               motionStiffness={90}
               borderWidth={2}
               motionDamping={15}
+              legends={config.legends}
               tooltip={({ indexValue, value, data, color }) => (
                 <div>
                   <strong style={{ color }}>  User: </strong> {indexValue}<br></br>

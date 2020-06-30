@@ -19,11 +19,11 @@ function SummaryCountBlocksView( { data } ) {
       return "red";
     } else if (status === "warning") {
       return "yellow";
+    } else if (status === "success") {
+      return "green";
     } else {
       return null;
     }
-    
-
   };
 
   return (

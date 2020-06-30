@@ -59,7 +59,7 @@ export default {
     "tickRotation": 0,
     "legend": "Test Case Metrics per Build Number",
     "legendPosition": "middle",
-    "legendOffset": -65
+    "legendOffset": -50
   },
   legends: [
     {

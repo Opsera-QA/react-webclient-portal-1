@@ -225,7 +225,7 @@ function ConfigurationsForm({ settings, token }) {
                     </div>
 
                     <div className="mt-3 text-muted">Default Persona:</div>
-                    <div key="checkbox-persona" className="mb-1 mt-2 p-2">
+                    <div key="checkbox-persona" className="mb-3 mt-2 p-2">
                       <DropdownList
                         data={PERSONAS} 
                         className="basic-single"

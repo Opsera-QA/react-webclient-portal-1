@@ -36,6 +36,7 @@ function CodeSmellLineChart( { data, persona } ) {
           pointLabelYOffset={-12}
           useMesh={true}
           lineWidth={3.5}
+          legends={config.legends}
           tooltip={({ point, color }) => (
             <div style={{
               background: "white",

@@ -6,7 +6,7 @@ import { ResponsiveLine } from "@nivo/line";
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/loading";
 import ErrorDialog from "../../common/error";
-import config from "./deploymentFrequencyLineChartConfigs";
+import config from "./jiraIssuesCreatedByDateLineChartConfigs";
 import "./charts.css";
 import InfoDialog from "../../common/info";
 import ModalLogs from "../../common/modalLogs";
@@ -99,21 +99,8 @@ function JiraIssuesCreatedByDateLineChart( { persona } ) {
                 type: "linear",
                 stacked: false,
               }}
-              axisLeft={{
-                "tickSize": 8,
-                "tickPadding": 5,
-                "tickRotation": 0,
-                "legend": "Number of Issues",
-                "legendPosition": "middle",
-                "legendOffset": -90
-              }}
-              axisBottom={{
-                format: "%b %d",
-                tickValues: "every 2 days",
-                "tickRotation": -65,
-                "legendPosition": "middle",
-                "legendOffset": 50
-              }}
+              axisLeft={config.axisLeft}
+              axisBottom={config.axisBottom}
               pointSize={10}
               pointBorderWidth={8}
               pointLabel="y"

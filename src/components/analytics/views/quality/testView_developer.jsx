@@ -121,7 +121,7 @@ function TestView_Developer ({ persona }) {
     }
 
     passedCount = junitPassedCount + xunitPassedCount;
-    summaryCountsData.push({ name: "Passed", value: passedCount, footer: "", status:  "success" });
+    summaryCountsData.push({ name: "Passed", value: passedCount, footer: "", status: passedCount > 0 ? "success" : null });
 
     if (xunitWarning.status === 200 && xunitWarning.data !== undefined && xunitWarning.data[0].count > 0) {
       summaryCountsData.push({ name: "Warnings", value: xunitWarning.data[0], footer: "", status: xunitWarning.data[0].count > 5 ? "warning" : "success" });
@@ -140,7 +140,7 @@ function TestView_Developer ({ persona }) {
       xunitFailedCount = parseInt(xunitFailed.data[0]);      
     }
     failedCount = junitFailedCount + xunitFailedCount;
-    summaryCountsData.push({ name: "Failed", value: failedCount, footer: "", status: failedCount > 0 ? "danger" : "success" });
+    summaryCountsData.push({ name: "Failed", value: failedCount, footer: "", status: failedCount > 0 ? "danger" : null });
 
     let junitExecutedCount = junitPassedCount + junitFailedCount;
     let xunitExecutedCount = 0;
@@ -149,7 +149,7 @@ function TestView_Developer ({ persona }) {
       xunitExecutedCount = parseInt(xunitExecuted.data[0]);
     }  
     let executedCount = junitExecutedCount + xunitExecutedCount;
-    summaryCountsData.push({ name: "Tests Run", value: executedCount, footer: "", status: "success" });
+    summaryCountsData.push({ name: "Tests Run", value: executedCount, footer: "", status: executedCount > 0 ? "success" : null });
     if (executedCount !== 0) {  
       summaryCountsData.push({ name: "Pass Percentage", value: Math.floor(100*100*passedCount/executedCount)/100 + "%", footer: "", status: "success" });
     }
@@ -165,7 +165,7 @@ function TestView_Developer ({ persona }) {
       xunitSkippedCount = parseInt(xunitSkipped.data[0]);      
     }
     skippedCount = junitSkippedCount + xunitSkippedCount;
-    summaryCountsData.push({ name: "Skipped", value: skippedCount, footer: "", status: skippedCount > 1 ? "warning" : "success" });
+    summaryCountsData.push({ name: "Skipped", value: skippedCount, footer: "", status: skippedCount > 1 ? "warning" : null });
 
 
     return summaryCountsData;

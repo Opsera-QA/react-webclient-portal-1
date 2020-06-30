@@ -114,6 +114,7 @@ function JiraIssuesByPriorityBarChart( { persona } ) {
               motionStiffness={90}
               borderWidth={2}
               motionDamping={15}
+              legends={config.legends}
               tooltip={({ indexValue, value, id, data }) => (
                 <div>
                   <strong>  Project: </strong> {indexValue}<br></br>

@@ -1,12 +1,12 @@
 export default {
   axisBottom: {
-    orient: "bottom",
-    tickSize: 5,
-    format: "%b %d",
-    tickPadding: 5,
-    tickRotation: -65,
-    legendOffset: 40,
-    legendPosition: "middle"
+    "orient": "bottom",
+    "tickSize": 5,
+    "format": "%b %d",
+    "tickPadding": 5,
+    "tickRotation": -65,
+    "legendOffset": 40,
+    "legendPosition": "middle"
   },
   axisLeft: {
     "orient": "left",
