@@ -46,10 +46,9 @@ export default {
     }
   ],
   axisBottom: {
-    "tickSize": 8,
-    "tickPadding": 5,
+    "format": "%b %d",
+    "tickValues": "every 2 days",
     "tickRotation": -65,
-    "legend": "Number of Issues",
     "legendPosition": "middle",
     "legendOffset": 50
   },
@@ -57,28 +56,30 @@ export default {
     "tickSize": 8,
     "tickPadding": 5,
     "tickRotation": 0,
-    "legend": "Project",
+    "legend": "Number of Issues",
     "legendPosition": "middle",
-    "legendOffset": -90
+    "legendOffset": -60
   },
   legends: [
     {
-      "dataFrom": "keys",
       "anchor": "bottom-right",
       "direction": "column",
       "justify": false,
-      "translateX": 80,
+      "translateX": 85,
       "translateY": 0,
-      "itemsSpacing": 2,
-      "itemWidth": 100,
+      "itemsSpacing": 0,
+      "itemDirection": "left-to-right",
+      "itemWidth": 80,
       "itemHeight": 20,
-      "itemDirection": "bottom-to-top",
-      "itemOpacity": 0.85,
-      "symbolSize": 20,
+      "itemOpacity": 0.75,
+      "symbolSize": 12,
+      "symbolShape": "circle",
+      "symbolBorderColor": "rgba(0, 0, 0, .5)",
       "effects": [
         {
           "on": "hover",
           "style": {
+            "itemBackground": "rgba(0, 0, 0, .03)",
             "itemOpacity": 1
           }
         }

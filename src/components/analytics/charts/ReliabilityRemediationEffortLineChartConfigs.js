@@ -15,7 +15,7 @@ export default {
     "tickPadding": 5,
     "tickRotation": 0,
     "legend": "Time in minutes",
-    "legendOffset": -40,
+    "legendOffset": -50,
     "legendPosition": "middle"
   },
   legends: [

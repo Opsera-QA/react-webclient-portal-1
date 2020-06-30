@@ -56,7 +56,7 @@ export default {
     "tickRotation": 0,
     "legend": "Deployment Count",
     "legendPosition": "middle",
-    "legendOffset": -65
+    "legendOffset": -55
   },
   legends: [
     {

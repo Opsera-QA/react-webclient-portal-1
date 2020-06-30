@@ -132,7 +132,7 @@ function CodeView_Manager ({ persona }) {
       summaryCountsData.push({ name: "Low Vulnerabilities", value: twistlockLowVulnerabilities.data[0].count, footer: twistlockLowVulnerabilities.tool, status: twistlockLowVulnerabilities.data[0].count > 5 ? "warning" : "success" });
     }
     if (sonarBugs.status === 200 && sonarBugs.data !== undefined) {
-      summaryCountsData.push({ name: "Detected Bugs", value: sonarBugs.data[0], footer: sonarBugs.tool, status: twistlockLowVulnerabilities.data[0].count > 5 ? "warning" : "success" });
+      summaryCountsData.push({ name: "Detected Bugs", value: sonarBugs.data[0], footer: sonarBugs.tool, status: sonarBugs.data[0] > 5 ? "warning" : "success" });
     }   
     
     return summaryCountsData;
