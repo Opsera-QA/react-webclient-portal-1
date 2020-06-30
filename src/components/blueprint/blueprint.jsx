@@ -25,7 +25,6 @@ function OPBlueprintMain() {
   const [profile, setProfile] = useState(true);
   const [isEnabled, setIsEnabled] = useState(true);
   const [enabledOn, setEnabledOn] = useState(true);
-  const [filters, setFilters] = useState([]);
   
 
   useEffect(() => {    
@@ -34,7 +33,6 @@ function OPBlueprintMain() {
       try {
         console.log("FETCHING DATA");
         await fetchData();  
-        await fetchFilterData();      
       } catch (err) {
         if (err.name === "AbortError") {
           console.log("Request was canceled via controller.abort");
@@ -79,43 +77,6 @@ function OPBlueprintMain() {
     }
   }
 
-  const fetchFilterData = async () => {
-    setLoadingProfile(true);
-    const { getAccessToken } = contextType;
-    const accessToken = await getAccessToken();
-    const apiCall = new ApiService("/pipelines", {}, accessToken);
-    await apiCall.get()
-      .then(res => {
-        let formattedArray = [];
-        for (let item in res.data.response) {
-          let tempText = res.data.response[item].name;
-          formattedArray.push({ value: tempText, label: tempText });
-        }
-        let filterDataApiResponse = [{
-          label: "My Pipelines", 
-          options: formattedArray
-        }];
-        let formattedFilterData = [];
-
-        filterDataApiResponse.forEach(filterGroup => {
-          filterGroup["options"].map((filters) => {
-            filters["type"] = filterGroup["label"];
-          });
-          formattedFilterData.push(...filterGroup["options"]);
-        });
-
-        setFilters(formattedFilterData);
-        setLoadingProfile(false);
-
-      })
-      .catch(err => {
-        setFilters([]);
-        setLoadingProfile(false);
-
-      });
-  };
-
-
   return (
     <div className="mb-3 max-charting-width">
       { loadingProfile ? <LoadingDialog size="lg" /> : null}
@@ -128,7 +89,7 @@ function OPBlueprintMain() {
             <p>The Pipeline Blueprint offers an end to end picture of the pipeline run combining logs from all stages under a single pane of glass for clear visibility and effortless debugging.</p>
           </div>
           {error ? <ErrorDialog error={error} /> : null}
-          { !isEnabled || !enabledOn || profile.esSearchApi === null || profile.vault !== 200 || profile.esSearchApi.status !== 200  || filters.length === 0 ? 
+          { !isEnabled || !enabledOn || profile.esSearchApi === null || profile.vault !== 200 || profile.esSearchApi.status !== 200 ?
             <div style={{ height: "250px" }} className="max-content-module-width-50">
               <div className="row h-100">
                 <div className="col-sm-12 my-auto">
@@ -151,12 +112,6 @@ function OPBlueprintMain() {
                       <li className="list-group-item d-flex justify-content-between align-items-center">
                     OpsERA Analytics authentication information must be secured and available.
                         {profile.vault === undefined || profile.vault !== 200 ? 
-                          <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span> :
-                          <span className="badge badge-success badge-pill"><FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth /></span> }
-                      </li>
-                      <li className="list-group-item d-flex justify-content-between align-items-center">
-                      OpsERA Pipeline activity must be captured in order to enable the blueprint.
-                        {filters.length === 0 ? 
                           <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span> :
                           <span className="badge badge-success badge-pill"><FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth /></span> }
                       </li>
