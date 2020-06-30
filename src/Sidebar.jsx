@@ -6,6 +6,7 @@ import { NavLink } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClipboardList, faChartBar, faArchive, faColumns, faLink, faBox, faDownload, faHome, faTools, faDraftingCompass } from "@fortawesome/free-solid-svg-icons";
+import LoadingDialog from "./components/common/loading";
 import "./sidebar.css";
 
 function Sidebar({ hideView }) {
@@ -30,17 +31,13 @@ function Sidebar({ hideView }) {
       if (authenticated && userRecord && userRecord.groups) {
         setAdministrator(userRecord.groups.includes("Admin"));
       }
-    }
-      
-    //  const userInfoResponse = await getUserRecord();
-    //setIsAuthenticated(authenticated);
-      
-        
+    }     
   }
 
 
   return (
     <>
+      { loading && <LoadingDialog  />}
       {(authenticated) ?
         <>
           <div className="d-block d-md-none pt-1 mr-2">

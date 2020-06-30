@@ -6,7 +6,7 @@ import LoadingDialog from "./components/common/loading";
 
 function Home() {
   const contextType = useContext(AuthContext);
-  const { userRecord, authenticated, loading } = contextType;
+  const { authenticated, loading } = contextType;
   
   const history = useHistory();
   
@@ -15,8 +15,6 @@ function Home() {
   }, [loading, authenticated]);
 
   const getStatus = () => {
-    console.log("Authenticated? ", authenticated);
-    
     if (authenticated) {
       history.push("/overview");
     } 
