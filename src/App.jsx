@@ -33,6 +33,8 @@ import Overview from "./components/landing/Overview";
 import Registration from "./components/landing/Registration";
 import ToolConfigurations from "./components/admin/tools/ToolConfigurations";
 import TagEditor from "./components/admin/tags/TagsEditor";
+import OPBlueprintMain from "./components/blueprint/blueprint";
+
 
 const config = require("./config");
 
@@ -86,6 +88,7 @@ class App extends Component {
                   <SecureRoute path="/platform" component={Platform} />
                   <SecureRoute path="/analytics" exact component={Analytics} />
                   <SecureRoute path="/logs" exact component={Logs} />
+                  <SecureRoute path="/blueprint" exact component={OPBlueprintMain} />
                   <SecureRoute path="/reports" exact component={Reports} />
                   <SecureRoute path="/update" component={Update} />
                   <SecureRoute path="/admin" exact component={AdminTools} />
