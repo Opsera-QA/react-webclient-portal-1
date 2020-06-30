@@ -53,8 +53,7 @@ class AuthContextProvider extends Component {
 
 
   //New LDAP derived getUsers Service
-  getUserRecord = async () => {
-    
+  getUserRecord = async () => {    
     if (!this.state.userRecord) {
       await this.checkAuthentication();
     }      
@@ -87,11 +86,7 @@ class AuthContextProvider extends Component {
   componentDidUnMount() {
     this.checkAuthentication();
   }
-  /* 
-  componentDidUpdate() {
-    this.checkAuthentication();
-   }*/
-
+  
   render() { 
     return ( 
       <AuthContext.Provider value={{
