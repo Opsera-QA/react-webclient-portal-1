@@ -108,25 +108,25 @@ function BuildView_Manager({ persona, date }) {
       summaryCountsData.push({ name: "Successful Builds", value: jenkinsBuildSuccess.data[0].count, footer: "", status: "success" });
     }
     if (jenkinsBuildFailure.status === 200 && jenkinsBuildFailure.data !== undefined) {
-      summaryCountsData.push({ name: "Failed Builds", value: jenkinsBuildFailure.data[0].count, footer: "", status: jenkinsBuildFailure.data[0].count > 0 ? "danger" : "success" });
+      summaryCountsData.push({ name: "Failed Builds", value: jenkinsBuildFailure.data[0].count, footer: "", status: jenkinsBuildFailure.data[0].count > 0 ? "danger" : null });
     }
     if (jenkinsBuildAborted.status === 200 && jenkinsBuildAborted.data !== undefined) {
-      summaryCountsData.push({ name: "Aborted Builds", value: jenkinsBuildAborted.data[0].count, footer: "", status: jenkinsBuildAborted.data[0].count > 0 ? "warning" : "success" });
-    }
-    if (jenkinsDeploySuccess.status === 200 && jenkinsDeploySuccess.data !== undefined) {
-      summaryCountsData.push({ name: "Successful Deployments", value: jenkinsDeploySuccess.data[0].count, footer: "", status: "success" });
+      summaryCountsData.push({ name: "Aborted Builds", value: jenkinsBuildAborted.data[0].count, footer: "", status: jenkinsBuildAborted.data[0].count > 0 ? "warning" : null });
+    }    
+    if (jenkinsDeploySuccess.status === 200 && jenkinsDeploySuccess.data !== undefined) {     
+      summaryCountsData.push({ name: "Successful Deployments", value: jenkinsDeploySuccess.data[0].count, footer: "", status: jenkinsDeploySuccess.data[0].count > 0 ? "success" : null });
     }
     if (jenkinsDeployFailure.status === 200 && jenkinsDeployFailure.data !== undefined) {
       summaryCountsData.push({ name: "Failed Deployments", value: jenkinsDeployFailure.data[0].count, footer: "", status: jenkinsDeployFailure.data[0].count > 0 ? "danger" : "success" });
     }
     if (codeshipBuildSuccess.status === 200 && codeshipBuildSuccess.data !== undefined) {
-      summaryCountsData.push({ name: "CodeShip Success", value: codeshipBuildSuccess.data[0].count, footer: "", status: "success" });
+      summaryCountsData.push({ name: "CodeShip Success", value: codeshipBuildSuccess.data[0].count, footer: "", status: codeshipBuildSuccess.data[0].count > 0 ? "success" : null });
     }
     if (codeshipBuildFailure.status === 200 && codeshipBuildFailure.data !== undefined) {
       summaryCountsData.push({ name: "CodeShip Failed", value: codeshipBuildFailure.data[0].count, footer: "", status: codeshipBuildFailure.data[0].count > 0 ? "danger" : "success" });
     }
     if (codeshipBuildStopped.status === 200 && codeshipBuildStopped.data !== undefined) {
-      summaryCountsData.push({ name: "CodeShip Stopped", value: codeshipBuildStopped.data[0].count, footer: "", status: "success" });
+      summaryCountsData.push({ name: "CodeShip Stopped", value: codeshipBuildStopped.data[0].count, footer: "", status: codeshipBuildFailure.data[0].count > 0 ? "success": null });
     }
 
     

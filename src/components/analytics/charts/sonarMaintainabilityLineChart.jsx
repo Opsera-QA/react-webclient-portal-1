@@ -35,6 +35,7 @@ function MaintainabilityLineChart( { data, persona } ) {
           pointLabelYOffset={-12}
           useMesh={true}
           lineWidth={3.5}
+          // legends={config.legends}
           colors={{ scheme: "category10" }}
           tooltip={({ point, color }) => (
             <div style={{

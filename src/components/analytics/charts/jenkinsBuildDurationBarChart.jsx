@@ -117,7 +117,7 @@ function JenkinsBuildDurationBarChart( { persona, date } ) {
               animate={true}
               motionStiffness={90}
               motionDamping={15}
-              // legends={config.legends}
+              legends={config.legends}
               tooltip={({ data, value, color }) => (
                 <div>
                   <strong style={{ color }}>  Duration: </strong> {value} minutes <br></br>

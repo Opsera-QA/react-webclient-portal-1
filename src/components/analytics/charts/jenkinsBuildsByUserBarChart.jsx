@@ -118,6 +118,7 @@ function JenkinsBuildsByUserBarChart( { persona, date } ) {
               motionStiffness={90}
               borderWidth={2}
               motionDamping={15}
+              legends={config.legends}
               tooltip={({ indexValue, value, color }) => (
                 <div>
                   <strong style={{ color }}>

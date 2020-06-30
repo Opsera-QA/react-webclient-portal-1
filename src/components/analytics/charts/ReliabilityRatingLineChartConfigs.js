@@ -15,7 +15,7 @@ export default {
     "tickPadding": 5,
     "tickRotation": 0,
     "legend": "Reliability Rating",
-    "legendOffset": -40,
+    "legendOffset": -50,
     "legendPosition": "middle"
   },
   legends: [
@@ -23,7 +23,7 @@ export default {
       "anchor": "bottom-right",
       "direction": "column",
       "justify": false,
-      "translateX": 100,
+      "translateX": 85,
       "translateY": 0,
       "itemsSpacing": 0,
       "itemDirection": "left-to-right",

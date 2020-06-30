@@ -14,7 +14,7 @@ export default {
     "tickPadding": 5,
     "tickRotation": 0,
     "legend": "Number of Pending Issues",
-    "legendOffset": -75,
+    "legendOffset": -65,
     "legendPosition": "middle"
   },
   legends: [

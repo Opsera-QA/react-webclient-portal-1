@@ -16,7 +16,7 @@ export default {
     "tickPadding": 5,
     "tickRotation": 0,
     "legend": "Errors",
-    "legendOffset": -60,
+    "legendOffset": -65,
     "legendPosition": "middle"
   },
   legends: [

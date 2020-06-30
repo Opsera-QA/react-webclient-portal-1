@@ -181,7 +181,7 @@ function Analytics() {
                     <ListGroup.Item className={"pointer " + (selection === "security" ? "active" : "")} onClick={handleTabClick("security")}>Security</ListGroup.Item>
                     <ListGroup.Item className={"pointer " + (selection === "software_development" ? "active" : "")} onClick={handleTabClick("software_development")}>Software Development</ListGroup.Item>
                     <ListGroup.Item className={"pointer " + (selection === "software_testing" ? "active" : "")} onClick={handleTabClick("software_testing")}>Software Testing</ListGroup.Item>
-                    {/* <ListGroup.Item className={"pointer " + (selection === "service_operation" ? "active" : "")} onClick={handleTabClick("service_operation")}>Service Operation</ListGroup.Item> */}
+                    <ListGroup.Item className={"pointer " + (selection === "source_code" ? "active" : "")} onClick={handleTabClick("source_code")}>Source Code</ListGroup.Item>
                   </ListGroup>
                 </div>
                 <div className="mt-3">
@@ -297,7 +297,7 @@ function ChartView({ selection, persona }) {
           <JMeterResultsTable />
         </>);
 
-    case "service_operation":
+    case "source_code":
       return (
         <>
           {/* Wire-up each chart component here, stacking them on top of each other.  Please wrap each individual chart in their own div with "m-2" class providing some margin around it */}

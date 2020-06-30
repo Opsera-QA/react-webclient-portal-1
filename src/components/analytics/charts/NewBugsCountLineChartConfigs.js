@@ -16,7 +16,7 @@ export default {
     "tickPadding": 5,
     "tickRotation": 0,
     "legend": "Number of Bugs",
-    "legendOffset": -40,
+    "legendOffset": -50,
     "legendPosition": "middle"
   },
   legends: [

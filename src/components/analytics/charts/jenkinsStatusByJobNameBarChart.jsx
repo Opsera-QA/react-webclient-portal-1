@@ -100,7 +100,7 @@ function JenkinsStatusByJobNameBarChar( { persona, date  } ) {
               margin={config.margin}
               padding={0.3}
               layout={"horizontal"}
-              colors={{ scheme: "set2" }}
+              colors={{ scheme: "dark2" }}
               borderColor={{ theme: "background" }}
               colorBy="id"
               defs={config.defs}
@@ -118,6 +118,7 @@ function JenkinsStatusByJobNameBarChar( { persona, date  } ) {
               motionStiffness={90}
               borderWidth={2}
               motionDamping={15}
+              legends={config.legends}
               tooltip={({ indexValue, color, value, id }) => (
                 <div>
                   <strong style={{ color }}>

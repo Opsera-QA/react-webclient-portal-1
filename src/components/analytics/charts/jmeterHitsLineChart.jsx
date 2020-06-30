@@ -106,6 +106,7 @@ function JMeterHitsLineChart( { persona } ) {
               useMesh={true}
               lineWidth={3.5}
               colors={{ scheme: "category10" }}
+              legends={config.legends}
               tooltip={({ point, color }) => (
                 <div style={{
                   background: "white",

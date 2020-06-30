@@ -46,7 +46,7 @@ function XUnitMaxMinPercBarChart( { data, persona } ) {
           animate={true}
           motionStiffness={90}
           motionDamping={15}
-          // legends={config.legends}
+          legends={config.legends}
           tooltip={({ indexValue, value, id, color }) => (
             <div>
               <strong style={{ color }}>
