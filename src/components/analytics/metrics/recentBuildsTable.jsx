@@ -82,7 +82,7 @@ function RecentBuildsTable({ date }) {
                   <tr>
                     <th style={{ width: "20%" }}>Project Name</th>
                     <th style={{ width: "20%" }} className="text-center">Build Number</th>
-                    <th style={{ width: "20%" }} className="text-center">Completed At</th>
+                    <th style={{ width: "20%" }} className="text-center">Started At</th>
                     {/* <th style={{ width: "20%" }} className="text-center">Duration</th> */}
                     <th style={{ width: "20%" }} className="text-center">Result</th>
                   </tr>
