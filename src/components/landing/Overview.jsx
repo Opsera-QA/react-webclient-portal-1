@@ -5,6 +5,7 @@ import { axiosApiService } from "api/apiService";
 import { Row, Col, Badge, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import SummaryCountBlocksView from "../analytics/views/summaryCountBlocksView";
+import LoadingDialog from "../common/loading";
 import "./landing.css";
 
 function OverviewLanding() {
@@ -13,6 +14,7 @@ function OverviewLanding() {
   const [statsData, setStatsData] = useState({});
   const [summaryStats, setSummaryStats] = useState([]);
   const history = useHistory();
+  const { getUserRecord, loading } = contextType; 
 
   useEffect(() => {    
     getRoles();
@@ -20,9 +22,7 @@ function OverviewLanding() {
   }, []);
 
   const getRoles = async () => {
-    const { getUserRecord } = contextType; 
     const user = await getUserRecord();
-    
     setUserInfo(user);    
   };
 
@@ -39,6 +39,7 @@ function OverviewLanding() {
         { name: "Pipelines", value: response.data.pipelines, footer: null, status: null },
         { name: "Platforms", value: response.data.applications, footer: null, status: null },
         { name: "Tools", value: response.data.tools.length, footer: null, status: null }]);
+
     }
     catch (err) {
       console.log(err.message);
@@ -72,6 +73,7 @@ function OverviewLanding() {
   
   return (
     <>
+      {loading && <LoadingDialog /> }
       <div className="mt-3 ml-5">
         <Row>
           <Col xl="12">
@@ -143,7 +145,7 @@ function OverviewLanding() {
                 </div>
                 
               </div>
-
+              {/* 
               <hr style={{ width:"820px", textAlign: "left", marginLeft: "0" }} />
               
               <div className="row mx-n2 mt-4" style={{ minWidth:"820px" }}>
@@ -163,7 +165,7 @@ function OverviewLanding() {
                   <div className="h5">My Dashboards</div>
                   <div className="text-muted">Stay current on exactly what you need to know.</div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </Col>          
         </Row>

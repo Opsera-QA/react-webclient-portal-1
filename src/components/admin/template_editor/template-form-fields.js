@@ -1,4 +1,4 @@
-const tagEditorFormFields = {
+const templateEditorFormFields = {
   name: {
     label: "Name",
     id: "name",
@@ -27,6 +27,48 @@ const tagEditorFormFields = {
       isRequired: true 
     }
   },  
+  type: {
+    label: "Type",
+    id: "type",
+    type: "tags",
+    toShow: true,
+    value: [],
+    disabled: false,
+    touched: false,
+    isValid: false,
+    errorMessage: "",    
+    rules: {
+      isRequired: false 
+    }
+  }, 
+  roles: {
+    label: "Roles",
+    id: "roles",
+    type: "tags",
+    toShow: true,
+    value: [],
+    disabled: false,
+    touched: false,
+    isValid: false,
+    errorMessage: "",    
+    rules: {
+      isRequired: false 
+    }
+  },   
+  tags: {
+    label: "Tags",
+    id: "tags",
+    type: "tags",
+    toShow: true,
+    value: [],
+    disabled: false,
+    touched: false,
+    isValid: false,
+    errorMessage: "",    
+    rules: {
+      isRequired: false 
+    }
+  }, 
   active: {
     label: "",
     id: "active",
@@ -41,6 +83,30 @@ const tagEditorFormFields = {
       isRequired: false 
     }
   },
+  plan: {
+    label: "Plan",
+    id: "plan",
+    type: "JSON",
+    toShow: true,
+    value: [
+      {
+        "tool": {},
+        "trigger": [],
+        "type": [],
+        "notification": [],
+        "name": "",
+        "description": "",
+        "active": true
+      }
+    ],
+    disabled: false,
+    touched: false,
+    isValid: false,
+    errorMessage: "",    
+    rules: {
+      isRequired: false 
+    }
+  }, 
 };
 
-export default tagEditorFormFields;
+export default templateEditorFormFields;

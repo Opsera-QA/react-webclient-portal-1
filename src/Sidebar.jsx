@@ -18,7 +18,7 @@ function Sidebar({ hideView }) {
 
   useEffect(() => {    
     checkAuthentication(userRecord);    
-  }, [hideView, userRecord, loading]);
+  }, [hideView, userRecord, loading, authenticated]);
 
   const handleToggleMenuClick = () => {
     setHideSideBar(!hideSideBar);    

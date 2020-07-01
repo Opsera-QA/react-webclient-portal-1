@@ -6,6 +6,7 @@ export const AuthContext = createContext();
 async function checkAuthentication() {  
   const authenticated = await this.props.auth.isAuthenticated();
   const accessToken = await this.props.auth.getAccessToken();
+  console.log("authenticated here?", authenticated);
   if (authenticated && !this.state.userRecord && accessToken) {    
     const userRecord = await getUser(accessToken);
     this.setState({ authenticated, loading: false, userRecord: userRecord });
@@ -30,13 +31,13 @@ const getUser = async (accessToken) => {
 class AuthContextProvider extends Component {
   constructor(props) {
     super(props);
-    this.state = { authenticated: false, sharedState: null, loading: false, userRecord: null };
+    this.state = { authenticated: false, sharedState: null, loading: true, userRecord: null };
     this.checkAuthentication = checkAuthentication.bind(this);    
   }
 
   logoutUserContext = () => {
-    this.setState({ authenticated: false, sharedState: null, loading: false,  userRecord: null });
-    return this.props.auth.logout("/login");
+    this.setState({ authenticated: false, sharedState: null, userRecord: null });
+    return this.props.auth.logout("/");
   }
 
   loginUserContext = () => {
@@ -53,13 +54,13 @@ class AuthContextProvider extends Component {
 
 
   //New LDAP derived getUsers Service
-  getUserRecord = async () => {    
-    if (!this.state.userRecord) {
-      await this.checkAuthentication();
-    }      
-    const user = this.state.userRecord;     
-    return user;        
+  getUserRecord = async (forceReset) => {    
+    if (!this.state.userRecord || forceReset) {
+      await this.checkAuthentication(); 
+    }
+    return this.state.userRecord;        
   }
+
   
   //TODO Review this with new LDAP serivces
   getIsPreviewRole = async (restrictProd) => {

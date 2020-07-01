@@ -25,6 +25,7 @@ import JMeterResultsTable from "./metrics/jmeterResultsTable";
 import GitlabPlanCodeView from "./views/GitlabPlanCodeView";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faQuestion } from "@fortawesome/free-solid-svg-icons";
+import GitlabMergeRequestsByUserChart from "./charts/GitlabMergeRequestsByUserChart";
 
 function Analytics() {
   const contextType = useContext(AuthContext);
@@ -242,7 +243,6 @@ function ChartView({ selection, persona }) {
     case "software_development":
       return (
         <>
-
           <div className="d-flex">
             <div className="align-self-stretch p-2 w-100">
               <DeploymentFrequencyLineChart persona={persona} date={{ start : "now-90d", end : "now" }}/>
@@ -301,7 +301,14 @@ function ChartView({ selection, persona }) {
       return (
         <>
           {/* Wire-up each chart component here, stacking them on top of each other.  Please wrap each individual chart in their own div with "m-2" class providing some margin around it */}
-          <div>NO CHARTS AVAILABLE YET</div>
+          <div className="d-flex">
+            <div className="align-self-stretch p-2 w-100">
+              <GitlabMergeRequestsByUserChart persona={persona} />
+            </div>
+            <div className="align-self-stretch p-2 w-100">
+              {/* Self Contained Chart Component 2  */}
+            </div>
+          </div>
         </>);
 
     default:
