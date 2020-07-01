@@ -4,13 +4,23 @@ import { Alert, Button, Row, Col, Nav } from "react-bootstrap";
 import TabContainer from "react-bootstrap/TabContainer";
 import ModalLogs from "components/common/modalLogs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faLayerGroup } from "@fortawesome/free-solid-svg-icons";
 import { format } from "date-fns";
 import Tab from "react-bootstrap/Tab";
 
 const Highlight = require("react-highlighter");
 
 function BlueprintSearchResult({ searchResults }) {
+
+  let completeInput = [];
+
+  for (let item in searchResults) {
+    if (Object.keys(searchResults).length > 0) {
+      if (searchResults[item]._source && searchResults[item]._source.data) {
+        completeInput.push(searchResults[item]._source.data.tool_output);
+      }
+    }
+  }
 
   return (   
     <>
@@ -23,10 +33,20 @@ function BlueprintSearchResult({ searchResults }) {
                 <div className="blueprint-title pl-3 mb-1">Steps</div>
                 <Nav variant="pills" className="flex-column">
                   {searchResults.map((item, idx) => (
-                    <Nav.Item key={idx}>
-                      <Nav.Link eventKey={idx} >{item._source.data.jobId.toString()}</Nav.Link>
-                    </Nav.Item>
+                    <>
+                      <Nav.Item key={idx}>
+                        <Nav.Link eventKey={idx} >{item._source.data.jobId.toString()}</Nav.Link>
+                      </Nav.Item>
+                    </>
                   ))}
+                  
+                  { completeInput.length > 0 && 
+                  
+                    <Nav.Item>
+                      <hr />
+                      <Nav.Link eventKey="view_all"><FontAwesomeIcon icon={faLayerGroup} fixedWidth/> View All</Nav.Link>
+                    </Nav.Item>
+                  }
                 </Nav>
               </Col>
               <Col sm={9}>
@@ -39,6 +59,13 @@ function BlueprintSearchResult({ searchResults }) {
                       </div>
                     </Tab.Pane>
                   ))}
+                  { completeInput.length > 0 && 
+                  <Tab.Pane eventKey="view_all">
+                    <div className="console-text-invert">
+                      {completeInput}
+                    </div>
+                  </Tab.Pane>
+                  }
                 </Tab.Content>
               </Col>
             </Row>
