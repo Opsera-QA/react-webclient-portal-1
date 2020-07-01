@@ -111,7 +111,10 @@ export default class ManageSystems extends PureComponent {
       <>
         {
           administrator &&
-          <Container>
+          <div>
+
+            <h4>Administration Tools</h4>
+
             <nav aria-label="breadcrumb">
               <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
                 <li className="breadcrumb-item">
@@ -120,8 +123,9 @@ export default class ManageSystems extends PureComponent {
                 <li className="breadcrumb-item active">Manage Tools</li> 
               </ol>
             </nav> 
+
+            <h5>Manage Tools</h5>   
             <br />
-            <h2>Manage Tools</h2>
             {error ? <ErrorDialog error={error} /> : null}
             <Form loading={loading ? "true" : undefined} style={{ maxWidth: "500px" }}>
               <SearchInput
@@ -191,7 +195,7 @@ export default class ManageSystems extends PureComponent {
             </Form>
 
             {application && applications.length > 0 && <>{!fetching && <Tools application={application} />}</>}
-          </Container>
+          </div>
         }
       </>
     );

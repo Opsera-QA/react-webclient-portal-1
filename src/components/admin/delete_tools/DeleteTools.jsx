@@ -70,7 +70,8 @@ class DeleteTools extends PureComponent {
       <>
         {
           administrator &&
-          <Container className="DefaultDashboardPage">
+          <div className="DefaultDashboardPage">
+            <h4>Administration Tools</h4>  
             <nav aria-label="breadcrumb">
               <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
                 <li className="breadcrumb-item">
@@ -79,8 +80,7 @@ class DeleteTools extends PureComponent {
                 <li className="breadcrumb-item active">Delete Tools</li> 
               </ol>
             </nav> 
-            <br /> 
-            <h2>Delete Tools</h2>
+            <h5>Delete Tools</h5>
             <div style={{ marginBottom: "10px" }}>This tool enables administrators to select a registered application, view the active tools and then delete them from the platform.  At this
               time the tool does not perform a complete end to end removal of all instances related to an application.
             </div>
@@ -114,7 +114,7 @@ class DeleteTools extends PureComponent {
             </Form>
 
             <Tools application={this.state.application} />
-          </Container>
+          </div>
         }
       </>
     );
