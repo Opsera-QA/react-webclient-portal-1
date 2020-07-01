@@ -65,7 +65,6 @@ class App extends Component {
   enableSideBar(path) {
     if (path !== "/login" && 
     path !== "/signup" && 
-    path !== "/overview" && 
     path !== "/registration") {
       return true;
     } else {
@@ -89,12 +88,12 @@ class App extends Component {
                   <Route path="/" exact component={Home} />
                   <Route path="/login" exact component={Login} />
                   <Route path="/signup" exact component={Signup} />
-                  <Route path="/overview" exact component={Overview} />
                   <Route path="/about" exact component={About} />
                   <Route path="/about/pricing" component={Pricing} />
                   <Route path="/about/solutions" component={Solutions} />
                   <Route path="/implicit/callback" component={ImplicitCallback} />
                   <Route path="/registration" exact component={Registration} />
+                  <SecureRoute path="/overview" exact component={Overview} />
                   <SecureRoute path="/profile" component={Profile} />
                   <SecureRoute path="/inventory/:view?/:id?" component={Inventory} />
                   <SecureRoute path="/dashboard" component={Dashboard} />
