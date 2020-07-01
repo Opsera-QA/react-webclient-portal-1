@@ -97,6 +97,7 @@ function TagsEditor() {
     }
     setPageLoading(false);
   };
+  
 
   const closeTagView = (toggleModal) => {
     getTags();
