@@ -36,6 +36,7 @@ import TagEditor from "./components/admin/tags/TagsEditor";
 import TemplateEditor from "./components/admin/template_editor/TemplateEditor";
 import OPBlueprintMain from "./components/blueprint/blueprint";
 
+import { createBrowserHistory } from "history";
 
 const config = require("./config");
 
@@ -43,13 +44,16 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      hideSideBar: false
+      hideSideBar: false,
+      history: createBrowserHistory()
     };
+    
   }
 
   componentDidMount() {
     this.updateDimensions();
     window.addEventListener("resize", this.updateDimensions.bind(this));
+
   }
 
   updateDimensions() {
@@ -58,8 +62,19 @@ class App extends Component {
     }
   }
 
+  enableSideBar(path) {
+    if (path !== "/login" && 
+    path !== "/signup" && 
+    path !== "/overview" && 
+    path !== "/registration") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   render() {
-    const { hideSideBar } = this.state;
+    const { hideSideBar, history } = this.state;
     return (
       <Router>
         <Security {...config.okta_config}>
@@ -68,7 +83,7 @@ class App extends Component {
             <div className="container-fluid">
               <div className="d-flex flex-row">
 
-                <Sidebar hideView={hideSideBar} />
+                {this.enableSideBar(history.location.pathname)  && <Sidebar hideView={hideSideBar} /> }
 
                 <div className="w-100 pt-4 pb-4">
                   <Route path="/" exact component={Home} />
