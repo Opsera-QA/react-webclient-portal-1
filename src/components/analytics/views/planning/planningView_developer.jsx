@@ -13,8 +13,8 @@ import JiraHealthBySprintBarChart from "../../charts/jiraHealthBySprintBarChart"
 import JiraBurndownLineChart from "../../charts/jiraBurndownLineChart";
 import JiraVelocityBarChart from "../../charts/jiraVelocityBarChart";
 import JiraIssuesAssignedToMe from "../../metrics/jiraIssuesAssignedToMe";
-
-
+import GitlabCommitsByRepositoryBarChart from "../../charts/gitlabCommitsByRepositoryBarChart";
+import GitlabLatestCommitTable from "../../metrics/gitlabLatestCommitTable";
 
 function PlanningView_Developer ({ persona }) {
   const contextType = useContext(AuthContext);
@@ -137,6 +137,14 @@ function PlanningView_Developer ({ persona }) {
             <JiraIssuesAssignedToMe persona={persona}/> 
           </div>
         </div>
+
+        {/* <div className="d-flex">
+          <div className="align-self-stretch p-2 w-100">
+            <GitlabCommitsByRepositoryBarChart persona={persona} />
+          </div>
+        </div> */}
+
+        {/* <GitlabLatestCommitTable /> */}
       </>
     );}
 
