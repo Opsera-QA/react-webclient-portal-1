@@ -138,13 +138,13 @@ function PlanningView_Developer ({ persona }) {
           </div>
         </div>
 
-        <div className="d-flex">
+        {/* <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
             <GitlabCommitsByRepositoryBarChart persona={persona} />
           </div>
-        </div>
+        </div> */}
 
-        <GitlabLatestCommitTable />
+        {/* <GitlabLatestCommitTable /> */}
       </>
     );}
 
