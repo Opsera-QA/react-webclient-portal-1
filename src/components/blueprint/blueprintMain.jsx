@@ -389,7 +389,7 @@ function OPBlueprint (props) {
                         months={1}
                         ranges={date}
                         direction="horizontal"
-                      />
+                      /> 
                     </Popover.Content>
                   </Popover>
                 </Overlay> */}

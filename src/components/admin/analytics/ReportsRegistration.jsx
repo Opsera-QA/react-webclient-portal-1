@@ -3,6 +3,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCogs, faUserCog } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 class AdminReportRegistration extends Component {
   static contextType = AuthContext;
@@ -26,9 +27,22 @@ class AdminReportRegistration extends Component {
     const { administrator } = this.state;
     return (
       <>
+
+        <h4>Administration Tools</h4>
+
+        <nav aria-label="breadcrumb">
+          <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
+            <li className="breadcrumb-item">
+              <Link to="/admin">Admin</Link>
+            </li>
+            <li className="breadcrumb-item active">Report Registration</li> 
+          </ol>
+        </nav>     
+
+        <h5>Report Registration</h5>     
+
         {administrator &&
           <div>
-            <h4>Administration Tools: Report Registration</h4>
             <div>Tools and forms will be listed below for registering reporting systems for the portal and individual customers.
               This tool is intended to be use by OpsERA admins for onboarding new customers.
             </div>

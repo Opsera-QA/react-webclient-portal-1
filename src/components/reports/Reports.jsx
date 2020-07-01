@@ -3,7 +3,7 @@ import { Form, Tooltip, OverlayTrigger, Button, Container } from "react-bootstra
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import ErrorDialog from "../common/error";
-
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext"; //New AuthContext State 
 import { ApiService } from "../../api/apiService";
 
@@ -73,14 +73,28 @@ export default class Reports extends PureComponent {
     const { tool, showIframe, error } = this.state;
 
     return (
-      <Container>  
+      <div> 
+        <h4>Administration Tools</h4>
+
+        <nav aria-label="breadcrumb">
+          <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
+            <li className="breadcrumb-item">
+              <Link to="/admin">Admin</Link>
+            </li>
+            <li className="breadcrumb-item active">Reporting</li> 
+          </ol>
+        </nav>     
+
+        <h5>Reporting</h5>    
         {this.state.error ? <ErrorDialog error={error} /> : <>
-          <div className="reporting__to-dashboard-container">
-            <h2>Reporting</h2>
+
+          <div className="mt-4 mb-4 text-right">
             <Button disabled={this.state.url === ""} onClick={this.onClickButton}>
                 click here to view the dashboard
             </Button>
+            <br />
           </div>
+
           <Form onSubmit={this.handleSubmit}>
             <Form.Group controlId="formGridIframeURL">
               <Form.Label>Iframe Url 
@@ -111,7 +125,7 @@ export default class Reports extends PureComponent {
           )}
         </>
         }
-      </Container>
+      </div>
     );
   }
 }

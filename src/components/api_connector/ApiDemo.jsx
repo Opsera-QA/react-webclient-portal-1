@@ -5,7 +5,7 @@ import LoadingDialog from "../common/loading";
 import { AuthContext } from "../../contexts/AuthContext"; 
 import Modal from "../common/modal";
 import ReactJson from "react-json-view";
-
+import { Link } from "react-router-dom";
 
 function ApiDemo() {
   const contextType = useContext(AuthContext);
@@ -18,8 +18,6 @@ function ApiDemo() {
   const [authenticated, setAuthenticated] = useState();
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
-  
-
 
   useEffect(() => {    
     const controller = new AbortController();
@@ -73,6 +71,18 @@ function ApiDemo() {
   } else {
     return (
       <div>
+        <h4>Administration Tools</h4>
+
+        <nav aria-label="breadcrumb">
+          <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
+            <li className="breadcrumb-item">
+              <Link to="/admin">Admin</Link>
+            </li>
+            <li className="breadcrumb-item active">API Management</li> 
+          </ol>
+        </nav>     
+
+        <h5>API Management</h5>  
         <h2>API Test w/ Okta Authentication Token and Axios.js</h2>
         { error ? <ErrorDialog error={error} /> : null }
       

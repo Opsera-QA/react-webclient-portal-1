@@ -5,19 +5,42 @@ import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPen } from "@fortawesome/free-solid-svg-icons";
-
+import TagInput from "utils/tagInput";
 import MultiInputFormField from "utils/multiInputFormField";
 import validate from "utils/formValidation";
 import templateEditorFormFields from "./template-form-fields.js";
-
+import JSONInput from "react-json-editor-ajrm";
+import locale    from "react-json-editor-ajrm/locale/en";
 import ViewTemplate from "./ViewTemplate";
+
+import "./template_editor.css";
 
 function TemplateEditorModal(props) {
   const { getAccessToken } = useContext(AuthContext);
   const [templateData, setTemplateData] = useState({});
   const [templateType, setTemplateType] = useState("View");
   const [formFieldList, updateFormFields ] = useState({ ...templateEditorFormFields });
+  const [ planData, setPlanData] = useState([]);
 
+  const defaultForm = {
+    "type": [],
+    "tags": [],
+    "name": "Blank Pipeline Template",
+    "description": "Create a new template from scratch.",
+    "active": true,
+    "roles": ["opsera"],
+    "plan": [
+      {
+        "tool": {},
+        "trigger": [],
+        "type": [],
+        "notification": [],
+        "name": "",
+        "description": "",
+        "active": true
+      }
+    ]
+  };
 
   useEffect(() => {  
     setTemplateType(props.type);
@@ -84,6 +107,17 @@ function TemplateEditorModal(props) {
           onChange={data => handleFormChange(formField, data)}
         />
       );
+    case "tags":
+      return <TagInput defaultValue={formField.value} onChange={data => handleFormChange(formField, data)} />;      
+    case "JSON": 
+      return  <JSONInput
+        placeholder={formField.value}
+        onChange={e => handleJsonInputUpdate(e) }
+        theme="light_mitsuketa_tribute"
+        locale={locale}
+        height="300px"
+        width= "100%"
+      />; 
     default:
       return (
         <Form.Control
@@ -101,20 +135,14 @@ function TemplateEditorModal(props) {
   //Use a single function for create and update template
   const updateTag = async () => {
 
-    //Even if user deletes the default value set default before submitting the form data for configuration
-    let newConfiguration = formFieldList.configuration.value;
-
-    if(newConfiguration.length == 0) {
-      formFieldList.configuration.value = { "type": "" };
-    }else {
-      //Convert array of objects to object
-      formFieldList.configuration.value = newConfiguration.reduce((obj, item) => Object.assign(obj, { [item.name]: item.value }), {});
-    }
+    //Check if plan data is empty
+    formFieldList.plan.value = planData.length == 0 ? defaultForm.plan : JSON.parse(planData);
 
     //Only extract the value filed before sending to the API
     let formData = Object.keys(formFieldList).reduce((obj, item) => Object.assign(obj, { [item]: formFieldList[item].value }), {});
     console.log(formData);
-    let API_URL = templateType == "New" ? "/templates/create" : "/templates/" + templateData._id + "/update";
+
+    let API_URL = templateType == "New" ? "/pipelines/workflows/create" : "/pipelines/workflows/" + templateData._id + "/update";
 
     if(isFormValid) {
       try {
@@ -137,7 +165,7 @@ function TemplateEditorModal(props) {
     Object.keys(formFieldList).map((item, i) => {
       let validateInput = {};
 
-      //For configutation, convet the object to array
+      //For configuration, convert the object to array
       if(item == "configuration") {
         let formatConfiguration = [];
         Object.keys(templateData[item]).map((data) => {
@@ -177,19 +205,40 @@ function TemplateEditorModal(props) {
       console.log(err.message);
     }
   };
+
+  const renderTemplateFormFields = (formField, i) => {
+    return(
+      <Form.Group key={i} controlId="formPlaintextEmail" className={formField.id == "plan" ? "mt-2 full-width" : "mt-2 half-width"}>
+        <Form.Label column sm={formField.id == "plan" ? "1" : "2"}>
+          {formField.label} 
+          {formField.rules.isRequired && <span style={{ marginLeft:5, color: "#dc3545" }}>*</span>}
+        </Form.Label>
+        <Col sm={formField.id == "plan" ? "11" : "10"}>
+          {formFieldType(formField)}
+          <Form.Control.Feedback type="invalid">{formField.errorMessage}</Form.Control.Feedback>
+        </Col>
+      </Form.Group>
+    );
+  };
+
+  const handleJsonInputUpdate = (e) => {
+    console.log(e.json);
+    setPlanData(e.json);
+  };
   
   return (
     <Modal size="lg" show={props.showModal} onHide={handleClose} backdrop="static">
       <Modal.Header closeButton>
         <Modal.Title>{templateType} Tempalte</Modal.Title>
       </Modal.Header>
+      
       <Modal.Body>
 
         {templateType == "View" &&  <div className="text-right">
-          {/* <Button variant="primary" size="sm" onClick= {() => { editTag(); }} className="mr-2">
+          <Button variant="primary" size="sm" onClick= {() => { editTag(); }} className="mr-2">
             <FontAwesomeIcon icon={faPen}
               fixedWidth
-              style={{ cursor: "pointer" }} /> </Button> */}
+              style={{ cursor: "pointer" }} /> </Button> 
           <Button variant="danger" size="sm" onClick= {() => { deleteTemplate(); }} >
             <FontAwesomeIcon icon={faTrash}
               fixedWidth
@@ -199,25 +248,13 @@ function TemplateEditorModal(props) {
         {templateType == "View" && <ViewTemplate templateData={templateData} templateId={props.templateId} />}
 
         {(templateType == "New" || templateType == "Edit") && (
-          <Form className="newTemplateFormContainer">
+          <Form className="templateFormContainer">
             {Object.values(formFieldList).map((formField, i) => {
               if(formField.toShow) {
-                return(
-                  <Form.Group key={i} controlId="formPlaintextEmail" className="mt-2">
-                    <Form.Label column sm="2">
-                      {formField.label} 
-                      {formField.rules.isRequired && <span style={{ marginLeft:5, color: "#dc3545" }}>*</span>}
-                    </Form.Label>
-                    <Col sm="10">
-                      {formFieldType(formField)}
-                      <Form.Control.Feedback type="invalid">{formField.errorMessage}</Form.Control.Feedback>
-                    </Col>
-                  </Form.Group>
-                );
+                return renderTemplateFormFields(formField, i);
               }
-            })}
+            })}    
           </Form>
-
         )}
 
       </Modal.Body>

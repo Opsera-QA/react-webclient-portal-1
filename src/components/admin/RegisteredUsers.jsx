@@ -11,6 +11,7 @@ import { ApiService, axiosApiService } from "../../api/apiService";
 import { useTable, usePagination, useSortBy } from "react-table";
 import RegisteredUserTable from "./RegisteredUserTable";
 import Pagination from "components/common/pagination";
+import { Link } from "react-router-dom";
 
 function RegisteredUsers() {
   const Auth = useContext(AuthContext);
@@ -153,7 +154,20 @@ function RegisteredUsers() {
       {
         administrator &&
         <div>
-          <h3 style={{ padding: "20px 0" }}>Registered Users</h3>
+
+          <h4>Administration Tools</h4>
+
+          <nav aria-label="breadcrumb">
+            <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
+              <li className="breadcrumb-item">
+                <Link to="/admin">Admin</Link>
+              </li>
+              <li className="breadcrumb-item active">Registered Users</li> 
+            </ol>
+          </nav>     
+
+          <h5>Registered Users</h5>  
+          <br />
 
           {error ? <ErrorDialog error={error} /> : null}
           {fetching && <LoadingDialog />}
@@ -172,6 +186,7 @@ function RegisteredUsers() {
 
           {Object.keys(userData).length > 0 && <Pagination total={userData.count || 30} currentPage={currentPage} pageSize={pageSize} onClick={(pageNumber, pageSize) => gotoPage(pageNumber, pageSize)} /> }
 
+          <br />
         </div>
       }
     </>

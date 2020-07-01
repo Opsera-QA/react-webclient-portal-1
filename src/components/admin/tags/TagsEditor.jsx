@@ -97,6 +97,7 @@ function TagsEditor() {
     }
     setPageLoading(false);
   };
+  
 
   const closeTagView = (toggleModal) => {
     getTags();
@@ -110,8 +111,7 @@ function TagsEditor() {
 
   return (
     <div> 
-      <h4>Tag Management</h4>
-      <br />
+      <h4>Administration Tools</h4>
 
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
@@ -120,7 +120,9 @@ function TagsEditor() {
           </li>
           <li className="breadcrumb-item active">Tag Management</li> 
         </ol>
-      </nav>      
+      </nav>     
+
+      <h5>Tag Management</h5>     
 
       {pageLoading ? <Loading size="sm" /> : null} 
       {(!isAdminCheck && !pageLoading)&& <ErrorDialog error={"You do not have access to view this page!"} />}

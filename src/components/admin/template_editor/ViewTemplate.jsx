@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { format } from "date-fns";
+import ReactJson from "react-json-view";
 
 import "components/inventory/tools/tools.css";
 
@@ -36,8 +37,14 @@ function ViewTags(props) {
             <span className="pr-1 text-muted">State: </span>{templateData.active ? "Active" : "Disabled"}</Col>
 
           {templateData.createdAt && <Col lg={4} md={6} className="my-2">
-            <span className="pr-1 text-muted">Created: </span>{format(new Date(templateData.createdAt), "yyyy-MM-dd")}</Col>}
-
+            <span className="pr-1 text-muted">Created: </span>{format(new Date(templateData.createdAt), "yyyy-MM-dd")}</Col>}    
+        </Row>
+        <br />
+        <p><span className="pr-1 text-muted">Plan:</span></p>
+        <Row>
+          <Col className="my-2 ml-2">
+            <ReactJson src={templateData.plan} /> 
+          </Col>
         </Row>
       </>}
     </>

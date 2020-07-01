@@ -5,6 +5,7 @@ import { axiosApiService } from "api/apiService";
 import { Row, Col, Badge, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import SummaryCountBlocksView from "../analytics/views/summaryCountBlocksView";
+import LoadingDialog from "../common/loading";
 import "./landing.css";
 
 function OverviewLanding() {
@@ -13,6 +14,7 @@ function OverviewLanding() {
   const [statsData, setStatsData] = useState({});
   const [summaryStats, setSummaryStats] = useState([]);
   const history = useHistory();
+  const { getUserRecord, loading } = contextType; 
 
   useEffect(() => {    
     getRoles();
@@ -20,9 +22,7 @@ function OverviewLanding() {
   }, []);
 
   const getRoles = async () => {
-    const { getUserRecord } = contextType; 
     const user = await getUserRecord();
-    
     setUserInfo(user);    
   };
 
@@ -73,6 +73,7 @@ function OverviewLanding() {
   
   return (
     <>
+      {loading && <LoadingDialog /> }
       <div className="mt-3 ml-5">
         <Row>
           <Col xl="12">

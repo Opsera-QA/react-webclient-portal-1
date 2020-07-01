@@ -26,7 +26,7 @@ function BuildCounts( { data, persona } ) {
               {jenkinsBuildFailure && Object.keys(jenkinsBuildFailure.data[0]).length > 0 || jenkinsBuildFailure.status === 200 ? Object.values(jenkinsBuildFailure.data[0]) : null}</div>
             <footer className="blockquote">
               <div className="metric-box-subtext text-muted">
-            Failed Builds
+            Unsuccessful Builds
               </div>
             </footer>
           </blockquote>

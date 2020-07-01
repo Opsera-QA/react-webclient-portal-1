@@ -110,9 +110,7 @@ function SystemStatus() {
 
   return (
     <div className="mt-3 max-content-width">
-      <h4>System Status</h4>
-      <div>Listed below are system tools for Opsera.</div>
-      <br />
+      <h4>Administration Tools</h4>
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
           <li className="breadcrumb-item">
@@ -121,7 +119,10 @@ function SystemStatus() {
           <li className="breadcrumb-item active">System Status</li> 
         </ol>
       </nav>  
-      <br />
+      <h5>System Status</h5>
+      <div>Listed below are system tools for Opsera.</div>
+      <br />      
+
       {state.modal &&
         <Alert className="mt-3" variant={state.type} onClose={() => setState({ modal: false, type: "", title: "", message: "" })} dismissible>
           {state.title} {state.message}

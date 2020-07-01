@@ -13,14 +13,13 @@ import TemplatesTable from "./TemplateTable";
 import TemplateModal from "./TemplateModal";
 
 function TemplateEditor() {
-  const { getUserInfo, getAccessToken } = useContext(AuthContext);
+  const { getUserRecord, getAccessToken } = useContext(AuthContext);
   const [ isAdminCheck, setAdminStatus] = useState(false);
   const [ pageLoading, setPageLoading ] = useState(true);
   const [ templateList, setTemplateList ] = useState([]);
   const [modalType, setModalType] = useState("View");
   const [templateId, setTemplateId] = useState("");
   const [templateData, setTemplateData] = useState({});
-
   const [showTemplateModal, toggleTemplateModal] = useState(false);
 
   useEffect(() => {  
@@ -79,8 +78,9 @@ function TemplateEditor() {
   };
 
   const isAdmin = async () => {
-    const userInfo = await getUserInfo();
-    if (!userInfo.Groups.includes("Admin")) {
+    const userInfo = await getUserRecord();
+    console.log(userInfo);
+    if (!userInfo.groups.includes("Admin")) {
       //move out
       setAdminStatus(false);
     } else {
@@ -102,9 +102,9 @@ function TemplateEditor() {
 
   return (
     <div> 
-      <h4>Template Management</h4>
-      <br />
 
+      <h4>Administration Tools</h4>
+      
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
           <li className="breadcrumb-item">
@@ -112,19 +112,22 @@ function TemplateEditor() {
           </li>
           <li className="breadcrumb-item active">Template Management</li> 
         </ol>
-      </nav>      
+      </nav> 
+
+      <h5>Template Management</h5>
+      <br />     
 
       {pageLoading ? <Loading size="sm" /> : null} 
       {(!isAdminCheck && !pageLoading)&& <ErrorDialog error={"You do not have access to view this page!"} />}
       {isAdminCheck && <>
       
-        {/* <div className="mt-4 mb-4 text-right">
+        <div className="mt-4 mb-4 text-right">
           <Button variant="primary" size="sm"  
             onClick={() => { createTemplate(); }}> 
             <FontAwesomeIcon icon={faPlus} className="mr-1"/> New Template
           </Button>
           <br />
-        </div> */}
+        </div>
       
         <TemplatesTable selectedRow={rowData => selectedRow(rowData, "tool_type")} columns={columns} data={templateList} />
 
