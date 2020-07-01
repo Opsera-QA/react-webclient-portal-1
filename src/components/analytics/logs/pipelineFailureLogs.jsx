@@ -70,7 +70,7 @@ function PipelineFailureLogs( { persona, searchQuery, filterType } ) {
   } else {
     return (
       <>
-        <div className="activity-label-text mb-2">Failed Builds</div>
+        <div className="activity-label-text mb-2">Unsuccessful Builds</div>
         <MapActivityData data={data} type="danger" />
         
       </>

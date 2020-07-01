@@ -108,7 +108,7 @@ function BuildView_Executive({ persona }) {
       summaryCountsData.push({ name: "Successful Builds", value: jenkinsBuildSuccess.data[0].count, footer: "", status: "success" });
     }
     if (jenkinsBuildFailure.status === 200 && jenkinsBuildFailure.data !== undefined) {
-      summaryCountsData.push({ name: "Failed Builds", value: jenkinsBuildFailure.data[0].count, footer: "", status: jenkinsBuildFailure.data[0].count > 0 ? "danger" : "success" });
+      summaryCountsData.push({ name: "Unsuccessful Builds", value: jenkinsBuildFailure.data[0].count, footer: "", status: jenkinsBuildFailure.data[0].count > 0 ? "danger" : "success" });
     }
     if (jenkinsBuildAborted.status === 200 && jenkinsBuildAborted.data !== undefined) {
       summaryCountsData.push({ name: "Aborted Builds", value: jenkinsBuildAborted.data[0].count, footer: "", status: jenkinsBuildAborted.data[0].count > 0 ? "warning" : "success" });

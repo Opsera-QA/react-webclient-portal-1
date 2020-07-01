@@ -36,6 +36,8 @@ function SearchLogs (props) {
   const [multiFilter, setMultiFilter] = useState([]);
   const [jobFilter, setJobFilter] = useState("");
   const [pipelineFilter, setPipelineFilter] = useState("");
+  const [stepOptions, setStepOptions] = useState([]);
+  const [stepFilter, setStepFilter] = useState("");
   const [calenderActivation, setCalenderActivation] = useState(false);
   const [submitted, submitClicked] = useState(false);
   const [date, setDate] = useState([
@@ -108,6 +110,7 @@ function SearchLogs (props) {
     setMultiFilter([]);
     setJobFilter("");
     setPipelineFilter("");
+    setStepFilter("");
     setNoResults(false);
   };
 
@@ -118,7 +121,13 @@ function SearchLogs (props) {
     setMultiFilter([]);
     setJobFilter("");
     setPipelineFilter("");
+    setStepFilter("");
     setFilterType(selectedOption.value);
+  };
+
+  const opseraPipelineSelectChange = (selectedOption) => {
+    setPipelineFilter(selectedOption);
+    setStepFilter("");
   };
 
   const getFormattedCustomFilters = () => {
@@ -130,7 +139,10 @@ function SearchLogs (props) {
     }
     if (filterType === "opsera-pipeline") {
       if (pipelineFilter) {
-        filterArray.push(pipelineFilter.value);
+        filterArray.push({ "Pipeline": pipelineFilter.value });
+      }
+      if (stepFilter) {
+        filterArray.push({ "Step": stepFilter.value });
       }
     }
     return filterArray;
@@ -246,7 +258,7 @@ function SearchLogs (props) {
           let formatArr = [];
           for (const item in res.data.response) {
             let stepsArr = [];
-            res.data.response[item].workflow.plan.forEach(step => stepsArr.push(step._id));
+            res.data.response[item].workflow.plan.forEach(step => stepsArr.push({ "label": step.name, "value": step._id }));
             formatArr.push({
               "value": res.data.response[item]._id,
               "label": res.data.response[item].name,
@@ -366,7 +378,7 @@ function SearchLogs (props) {
                   onChange={handleSelectChange}             
                 />
               </Col>
-              <Col md={3}>
+              {filterType === "opsera-pipeline" || filterType === "blueprint" ? <Col md={3}>
                 {filterType === "opsera-pipeline" && 
                   <DropdownList
                     data={filterOptions} 
@@ -378,7 +390,7 @@ function SearchLogs (props) {
                     filter='contains'
                     value={pipelineFilter}
                     placeholder={"Select Pipeline Name"}
-                    onChange={setPipelineFilter} 
+                    onChange={opseraPipelineSelectChange} 
                     onToggle={fetchFilterData}         
                   />}
                 {filterType === "blueprint" && 
@@ -396,24 +408,23 @@ function SearchLogs (props) {
                     onToggle={fetchFilterData}         
                   />
                 }
-              </Col>
-              <Col md={3}>
-                {filterType === "opsera-pipeline" && pipelineFilter &&
+              </Col> : ""}
+              {filterType === "opsera-pipeline" ? <Col md={3}>
+                {filterType === "opsera-pipeline" && 
                   <DropdownList
                     data={pipelineFilter.steps} 
                     busy={Object.keys(filterOptions).length == 0 ? true : false}
-                    disabled={Object.keys(filterOptions).length == 0 ? true : false}
+                    disabled={Object.keys(pipelineFilter).length == 0 ? true : false}
                     // disabled={true}
                     valueField='value'
                     textField='label'
                     filter='contains'
-                    value={pipelineFilter.steps[0]}
-                    placeholder={"Select Pipeline Name"}
-                    onChange={setPipelineFilter} 
-                    onToggle={fetchFilterData}         
+                    value={stepFilter}
+                    placeholder={"Select Step"}
+                    onChange={setStepFilter}        
                   />}
-              </Col>
-              <Col md={3}>
+              </Col> : ""}
+              <Col md={filterType === "opsera-pipeline" ? 3 : 9} >
                 <Form.Control placeholder="Search logs" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
               </Col>
               
@@ -452,8 +463,11 @@ function SearchLogs (props) {
                   />
                 }
               </Col> */}
+              <Col></Col>
+              <Col></Col>
+              <Col></Col>
               <Col md={3} style={{ textAlign: "right" }} className="no-wrap">
-                <Button variant="outline-secondary" type="button" onClick={toggleCalendar}>
+                <Button className="float-right" variant="outline-secondary" type="button" onClick={toggleCalendar} >
                   <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth/>
                   {(calendar && sDate || eDate) ? sDate + " - " + eDate : "Date Range"}</Button>
                 <Button variant="primary" className="ml-1" type="submit">Search</Button>
@@ -484,9 +498,7 @@ function SearchLogs (props) {
                     </Popover.Content>
                   </Popover>
                 </Overlay>
-
               </Col>
-
             </Row>
             {/* <div className="d-flex mt">
               <div className="p-2 flex-grow-1">
