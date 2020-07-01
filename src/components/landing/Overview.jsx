@@ -36,9 +36,9 @@ function OverviewLanding() {
       console.log("response.data: ", response.data);
       
       setSummaryStats([
-        { name: "Pipelines", value: response.data.pipelines, footer: null, status: "success" },
-        { name: "Platforms", value: response.data.applications, footer: null, status: "success" },
-        { name: "Tools", value: response.data.tools.length, footer: null, status: "success" }]);
+        { name: "Pipelines", value: response.data.pipelines, footer: null, status: null },
+        { name: "Platforms", value: response.data.applications, footer: null, status: null },
+        { name: "Tools", value: response.data.tools.length, footer: null, status: null }]);
 
     }
     catch (err) {
@@ -145,7 +145,7 @@ function OverviewLanding() {
                 </div>
                 
               </div>
-
+              {/* 
               <hr style={{ width:"820px", textAlign: "left", marginLeft: "0" }} />
               
               <div className="row mx-n2 mt-4" style={{ minWidth:"820px" }}>
@@ -165,7 +165,7 @@ function OverviewLanding() {
                   <div className="h5">My Dashboards</div>
                   <div className="text-muted">Stay current on exactly what you need to know.</div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </Col>          
         </Row>
