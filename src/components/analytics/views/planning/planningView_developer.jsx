@@ -115,9 +115,7 @@ function PlanningView_Developer ({ persona }) {
           <div className="align-self-stretch p-2 w-100">
             <JiraIssuesByPriorityBarChart persona={persona} />
           </div>
-
         </div>
-
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
             <JiraHealthBySprintBarChart persona={persona} />
@@ -132,8 +130,7 @@ function PlanningView_Developer ({ persona }) {
           <div className="align-self-stretch p-2 w-100">
             <JiraVelocityBarChart persona={persona} />
           </div>
-          <div className="align-self-stretch p-2 w-100">
- 
+          <div className="align-self-stretch p-2 w-100"> 
             <JiraIssuesAssignedToMe persona={persona}/> 
           </div>
         </div>
@@ -146,11 +143,8 @@ function PlanningView_Developer ({ persona }) {
 
         {/* <GitlabLatestCommitTable /> */}
       </>
-    );}
-
-
-
-
+    );
+  }
 }
 
 
