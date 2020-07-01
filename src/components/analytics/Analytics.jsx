@@ -208,7 +208,7 @@ function ChartView({ selection, persona }) {
       return (
         <>
           <div className="mt-2">
-            <SummaryChartsView />
+            <SummaryChartsView date={{ start : "now-90d", end : "now" }}/>
           </div>
         </>);
 
@@ -245,7 +245,7 @@ function ChartView({ selection, persona }) {
 
           <div className="d-flex">
             <div className="align-self-stretch p-2 w-100">
-              <DeploymentFrequencyLineChart persona={persona}/>
+              <DeploymentFrequencyLineChart persona={persona} date={{ start : "now-90d", end : "now" }}/>
             </div>
             <div className="align-self-stretch p-2 w-100">
               <JiraIssuesCreatedByDateLineChart persona={persona} />
