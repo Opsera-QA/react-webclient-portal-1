@@ -11,7 +11,7 @@ import LoadingDialog from "../../common/loading";
 import ErrorDialog from "../../common/error";
 
 
-function JenkinsBuildsByUserBarChart( { persona } ) {
+function JenkinsBuildsByUserBarChart( { persona, date } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -50,7 +50,9 @@ function JenkinsBuildsByUserBarChart( { persona } ) {
           "request": "jenkinsBuildsByUser",
           "metric": "bar"
         }
-      ]
+      ],
+      startDate: date.start, 
+      endDate: date.end
     };
 
     try {
@@ -116,6 +118,7 @@ function JenkinsBuildsByUserBarChart( { persona } ) {
               motionStiffness={90}
               borderWidth={2}
               motionDamping={15}
+              legends={config.legends}
               tooltip={({ indexValue, value, color }) => (
                 <div>
                   <strong style={{ color }}>

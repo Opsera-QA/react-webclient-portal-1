@@ -12,7 +12,8 @@ import ErrorDialog from "../../common/error";
 
 
 
-function JenkinsBuildDurationBarChart( { persona } ) {
+
+function JenkinsBuildDurationBarChart( { persona, date } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -31,7 +32,9 @@ function JenkinsBuildDurationBarChart( { persona } ) {
           "request": "jenkinsBuildDuration",
           "metric": "bar"
         }
-      ]
+      ], 
+      startDate: date.start, 
+      endDate: date.end
     };
 
     try {
@@ -114,7 +117,7 @@ function JenkinsBuildDurationBarChart( { persona } ) {
               animate={true}
               motionStiffness={90}
               motionDamping={15}
-              // legends={config.legends}
+              legends={config.legends}
               tooltip={({ data, value, color }) => (
                 <div>
                   <strong style={{ color }}>  Duration: </strong> {value} minutes <br></br>

@@ -54,7 +54,7 @@ export default {
     "tickRotation": 0,
     "legend": "Project",
     "legendPosition": "middle",
-    "legendOffset": -45
+    "legendOffset": -42.5
   },
   legends: [
     {

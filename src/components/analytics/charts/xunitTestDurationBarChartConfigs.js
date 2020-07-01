@@ -60,7 +60,7 @@ export default {
     "tickRotation": 0,
     "legend": "Maximum Test Case Duration (Seconds)",
     "legendPosition": "middle",
-    "legendOffset": -65
+    "legendOffset": -50
   },
   legends: [
     {

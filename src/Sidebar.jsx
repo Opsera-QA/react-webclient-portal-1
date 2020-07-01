@@ -5,7 +5,8 @@ import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClipboardList, faChartBar, faArchive, faColumns, faLink, faBox, faDownload, faHome, faTools, faDraftingCompass } from "@fortawesome/free-solid-svg-icons";
+import { faClipboardList, faChartBar, faArchive, faColumns, faLink, faBox, faDownload, faHome, faTools, faDraftingCompass, faLayerGroup } from "@fortawesome/free-solid-svg-icons";
+import LoadingDialog from "./components/common/loading";
 import "./sidebar.css";
 
 function Sidebar({ hideView }) {
@@ -30,17 +31,13 @@ function Sidebar({ hideView }) {
       if (authenticated && userRecord && userRecord.groups) {
         setAdministrator(userRecord.groups.includes("Admin"));
       }
-    }
-      
-    //  const userInfoResponse = await getUserRecord();
-    //setIsAuthenticated(authenticated);
-      
-        
+    }     
   }
 
 
   return (
     <>
+      { loading && <LoadingDialog  />}
       {(authenticated) ?
         <>
           <div className="d-block d-md-none pt-1 mr-2">
@@ -64,6 +61,7 @@ function Sidebar({ hideView }) {
                 <div className="mt-3 mb-1 sub-header">Operations</div>
                 <NavLink className="nav-link" activeClassName="chosen" to="/inventory"><FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth /> <span className="menu-text">Inventory</span></NavLink>
                 <NavLink className="nav-link" activeClassName="chosen" to="/logs"><FontAwesomeIcon size="lg" icon={faArchive} fixedWidth /> <span className="menu-text">Logs</span></NavLink>
+                <NavLink className="nav-link" activeClassName="chosen" to="/blueprint"><FontAwesomeIcon size="lg" icon={faLayerGroup} fixedWidth /> <span className="menu-text">Blueprints</span></NavLink>
                 <NavLink className="nav-link" activeClassName="chosen" to="/tools"><FontAwesomeIcon size="lg" icon={faLink} fixedWidth /> <span className="menu-text">API Tools</span></NavLink>
                 <NavLink className="nav-link" activeClassName="chosen" to="/update"><FontAwesomeIcon size="lg" icon={faDownload} fixedWidth /> <span className="menu-text">Updates</span></NavLink>
                 {administrator && <NavLink className="nav-link" activeClassName="chosen" to="/admin"><FontAwesomeIcon size="lg" icon={faTools} fixedWidth /> <span className="menu-text">Admin Tools</span></NavLink>}

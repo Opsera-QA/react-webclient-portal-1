@@ -33,6 +33,9 @@ import Overview from "./components/landing/Overview";
 import Registration from "./components/landing/Registration";
 import ToolConfigurations from "./components/admin/tools/ToolConfigurations";
 import TagEditor from "./components/admin/tags/TagsEditor";
+import TemplateEditor from "./components/admin/template_editor/TemplateEditor";
+import OPBlueprintMain from "./components/blueprint/blueprint";
+
 
 const config = require("./config");
 
@@ -86,6 +89,7 @@ class App extends Component {
                   <SecureRoute path="/platform" component={Platform} />
                   <SecureRoute path="/analytics" exact component={Analytics} />
                   <SecureRoute path="/logs" exact component={Logs} />
+                  <SecureRoute path="/blueprint" exact component={OPBlueprintMain} />
                   <SecureRoute path="/reports" exact component={Reports} />
                   <SecureRoute path="/update" component={Update} />
                   <SecureRoute path="/admin" exact component={AdminTools} />
@@ -97,6 +101,7 @@ class App extends Component {
                   <SecureRoute path="/admin/analytics/reports-registration" component={ReportsRegistration} />
                   <SecureRoute path="/admin/tool-configurations" component={ToolConfigurations} />
                   <SecureRoute path="/admin/tags" component={TagEditor} />
+                  <SecureRoute path="/admin/template-editor" component={TemplateEditor} />
                   <SecureRoute path="/api_demo" component={ApiConnectionDemo} />
                 </div>
               </div>

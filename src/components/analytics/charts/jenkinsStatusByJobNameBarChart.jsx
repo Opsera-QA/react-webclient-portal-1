@@ -11,7 +11,7 @@ import LoadingDialog from "../../common/loading";
 import ErrorDialog from "../../common/error";
 
 
-function JenkinsStatusByJobNameBarChar( { persona } ) {
+function JenkinsStatusByJobNameBarChar( { persona, date  } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -50,7 +50,9 @@ function JenkinsStatusByJobNameBarChar( { persona } ) {
           "request": "jenkinsStatusByJobName",
           "metric": "bar"
         }
-      ]
+      ],
+      startDate: date.start, 
+      endDate: date.end
     };
 
     try {
@@ -98,7 +100,7 @@ function JenkinsStatusByJobNameBarChar( { persona } ) {
               margin={config.margin}
               padding={0.3}
               layout={"horizontal"}
-              colors={{ scheme: "set2" }}
+              colors={{ scheme: "dark2" }}
               borderColor={{ theme: "background" }}
               colorBy="id"
               defs={config.defs}
@@ -116,6 +118,7 @@ function JenkinsStatusByJobNameBarChar( { persona } ) {
               motionStiffness={90}
               borderWidth={2}
               motionDamping={15}
+              legends={config.legends}
               tooltip={({ indexValue, color, value, id }) => (
                 <div>
                   <strong style={{ color }}>

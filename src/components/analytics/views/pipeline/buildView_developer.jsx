@@ -15,7 +15,7 @@ import RecentBuildsTable from "../../metrics/recentBuildsTable.jsx";
 
 
 
-function BuildView_Developer ({ persona }) {
+function BuildView_Developer ({ persona, date }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -41,7 +41,7 @@ function BuildView_Developer ({ persona }) {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [date]);
 
   async function fetchData() {
     setLoading(true);
@@ -82,7 +82,9 @@ function BuildView_Developer ({ persona }) {
           "request": "codeshipBuildStopped",
           "metric": "count"
         }
-      ]
+      ],
+      startDate: date.start, 
+      endDate: date.end
     };
     
     try {
@@ -109,25 +111,25 @@ function BuildView_Developer ({ persona }) {
       summaryCountsData.push({ name: "Successful Builds", value: jenkinsBuildSuccess.data[0].count, footer: "", status: "success" });
     }
     if (jenkinsBuildFailure.status === 200 && jenkinsBuildFailure.data !== undefined) {
-      summaryCountsData.push({ name: "Unsuccessful Builds", value: jenkinsBuildFailure.data[0].count, footer: "", status: jenkinsBuildFailure.data[0].count > 0 ? "danger" : "success" });
+      summaryCountsData.push({ name: "Failed Builds", value: jenkinsBuildFailure.data[0].count, footer: "", status: jenkinsBuildFailure.data[0].count > 0 ? "danger" : null });
     }
     if (jenkinsBuildAborted.status === 200 && jenkinsBuildAborted.data !== undefined) {
-      summaryCountsData.push({ name: "Aborted Builds", value: jenkinsBuildAborted.data[0].count, footer: "", status: jenkinsBuildAborted.data[0].count > 0 ? "warning" : "success" });
-    }
-    if (jenkinsDeploySuccess.status === 200 && jenkinsDeploySuccess.data !== undefined) {
-      summaryCountsData.push({ name: "Successful Deployments", value: jenkinsDeploySuccess.data[0].count, footer: "", status: "success" });
+      summaryCountsData.push({ name: "Aborted Builds", value: jenkinsBuildAborted.data[0].count, footer: "", status: jenkinsBuildAborted.data[0].count > 0 ? "warning" : null });
+    }    
+    if (jenkinsDeploySuccess.status === 200 && jenkinsDeploySuccess.data !== undefined) {     
+      summaryCountsData.push({ name: "Successful Deployments", value: jenkinsDeploySuccess.data[0].count, footer: "", status: jenkinsDeploySuccess.data[0].count > 0 ? "success" : null });
     }
     if (jenkinsDeployFailure.status === 200 && jenkinsDeployFailure.data !== undefined) {
-      summaryCountsData.push({ name: "Failed Deployments", value: jenkinsDeployFailure.data[0].count, footer: "", status: jenkinsDeployFailure.data[0].count > 0 ? "danger" : "success" });
+      summaryCountsData.push({ name: "Failed Deployments", value: jenkinsDeployFailure.data[0].count, footer: "", status: jenkinsDeployFailure.data[0].count > 0 ? "danger" : null });
     }
     if (codeshipBuildSuccess.status === 200 && codeshipBuildSuccess.data !== undefined) {
-      summaryCountsData.push({ name: "CodeShip Success", value: codeshipBuildSuccess.data[0].count, footer: "", status: "success" });
+      summaryCountsData.push({ name: "CodeShip Success", value: codeshipBuildSuccess.data[0].count, footer: "", status: codeshipBuildSuccess.data[0].count > 0 ? "success" : null });
     }
     if (codeshipBuildFailure.status === 200 && codeshipBuildFailure.data !== undefined) {
       summaryCountsData.push({ name: "CodeShip Failed", value: codeshipBuildFailure.data[0].count, footer: "", status: codeshipBuildFailure.data[0].count > 0 ? "danger" : "success" });
     }
     if (codeshipBuildStopped.status === 200 && codeshipBuildStopped.data !== undefined) {
-      summaryCountsData.push({ name: "CodeShip Stopped", value: codeshipBuildStopped.data[0].count, footer: "", status: "success" });
+      summaryCountsData.push({ name: "CodeShip Stopped", value: codeshipBuildStopped.data[0].count, footer: "", status: codeshipBuildFailure.data[0].count > 0 ? "success": null });
     }
 
     
@@ -145,26 +147,26 @@ function BuildView_Developer ({ persona }) {
         <SummaryCountBlocksView data={countBlockData} />
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
-            <JenkinsBuildsByUserBarChart persona={persona} />
+            <JenkinsBuildsByUserBarChart persona={persona} date={date}/>
           </div>
 
           <div className="align-self-stretch p-2 w-100">
-            <JenkinsBuildDurationBarChart persona={persona} />
+            <JenkinsBuildDurationBarChart persona={persona} date={date} />
           </div>
         </div>
 
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
-            <JenkinsStatusByJobNameBarChart persona={persona} />
+            <JenkinsStatusByJobNameBarChart persona={persona} date={date}/>
           </div>
           <div className="align-self-stretch p-2 w-100">
-            <DeploymentFrequencyLineChart persona={persona}/>            
+            <DeploymentFrequencyLineChart persona={persona} date={date}/>            
           </div>
         </div>
 
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
-            <RecentBuildsTable persona={persona} />
+            <RecentBuildsTable persona={persona} date={date}/>
           </div>
         </div>
 
@@ -178,7 +180,8 @@ function BuildView_Developer ({ persona }) {
 
 
 BuildView_Developer.propTypes = {
-  persona: PropTypes.string
+  persona: PropTypes.string,
+  date: PropTypes.object
 };
 
 export default BuildView_Developer;
