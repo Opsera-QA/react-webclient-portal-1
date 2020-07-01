@@ -1,13 +1,12 @@
 export default {
   keys: [
-    "Successful",
-    "Failed"
+    "commits"
   ],
   margin: {
     "top": 50,
-    "right": 110,
+    "right": 130,
     "bottom": 80,
-    "left": 120
+    "left": 100
   },
   defs: [
     {
@@ -47,18 +46,18 @@ export default {
     "tickSize": 8,
     "tickPadding": 5,
     "tickRotation": 0,
-    "legend": "Number of Builds",
+    "legend": "Number of Commits Made",
     "legendPosition": "middle",
     "legendOffset": 50
   },
   axisLeft: {
-    "format": d => d.substring(0, 12),
+    "format": d => d.substring(0, 6),
     "tickSize": 8,
     "tickPadding": 5,
     "tickRotation": 0,
-    "legend": "Build Tag",
+    "legend": "Repositories",
     "legendPosition": "middle",
-    "legendOffset": -100
+    "legendOffset": -90
   },
   legends: [
     {
@@ -66,7 +65,7 @@ export default {
       "anchor": "bottom-right",
       "direction": "column",
       "justify": false,
-      "translateX": 110,
+      "translateX": 120,
       "translateY": 0,
       "itemsSpacing": 2,
       "itemWidth": 100,
