@@ -47,7 +47,6 @@ class App extends Component {
       hideSideBar: false,
       history: createBrowserHistory()
     };
-    
   }
 
   componentDidMount() {

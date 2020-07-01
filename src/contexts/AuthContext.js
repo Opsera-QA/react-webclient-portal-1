@@ -37,7 +37,7 @@ class AuthContextProvider extends Component {
 
   logoutUserContext = () => {
     this.setState({ authenticated: false, sharedState: null, userRecord: null });
-    return this.props.auth.logout("/login");
+    return this.props.auth.logout("/");
   }
 
   loginUserContext = () => {
@@ -54,12 +54,13 @@ class AuthContextProvider extends Component {
 
 
   //New LDAP derived getUsers Service
-  getUserRecord = async (forceUpdate) => {    
-    if (forceUpdate) {
-      await this.checkAuthentication();      
+  getUserRecord = async (forceReset) => {    
+    if (!this.state.userRecord || forceReset) {
+      await this.checkAuthentication(); 
     }
     return this.state.userRecord;        
   }
+
   
   //TODO Review this with new LDAP serivces
   getIsPreviewRole = async (restrictProd) => {
@@ -79,7 +80,7 @@ class AuthContextProvider extends Component {
   }
 
   componentDidMount () {
-    //this.setState({ loading: true });
+    this.setState({ loading: true });
     this.checkAuthentication();
   }
 

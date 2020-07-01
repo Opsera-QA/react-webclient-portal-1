@@ -6,9 +6,7 @@ import LoadingDialog from "./components/common/loading";
 
 function Home() {
   const contextType = useContext(AuthContext);
-  const { authenticated, loading, getUserRecord } = contextType;
-  
-
+  const { authenticated, loading } = contextType;
   const history = useHistory();
   
   useEffect(() => {    
@@ -18,9 +16,9 @@ function Home() {
   const getStatus = async () => {
     if (authenticated) {
       history.push("/overview");
-    } else {
+    } /* else {
       getUserRecord(true);
-    }
+    } */
   };
 
   const login = () => {
