@@ -42,9 +42,9 @@ function CustomerSystemStatus() {
 
   return (
     <div className="mt-3 max-content-width">
-      <h4>Customer System Status</h4>
-      <div>Listed below are Customer tools for Opsera.</div>
-      <br />
+
+      <h4>Administration Tools</h4>
+      
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
           <li className="breadcrumb-item">
@@ -53,8 +53,9 @@ function CustomerSystemStatus() {
           <li className="breadcrumb-item active">Customer Status</li> 
         </ol>
       </nav> 
+      <h5>Customer System Status</h5>
+      <div>Listed below are Customer tools for Opsera.</div>      
       <br /> 
-
 
       <Row>
         <Col sm={6}></Col>

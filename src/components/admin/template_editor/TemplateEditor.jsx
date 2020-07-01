@@ -102,9 +102,9 @@ function TemplateEditor() {
 
   return (
     <div> 
-      <h4>Template Management</h4>
-      <br />
 
+      <h4>Administration Tools</h4>
+      
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
           <li className="breadcrumb-item">
@@ -112,7 +112,10 @@ function TemplateEditor() {
           </li>
           <li className="breadcrumb-item active">Template Management</li> 
         </ol>
-      </nav>      
+      </nav> 
+
+      <h5>Template Management</h5>
+      <br />     
 
       {pageLoading ? <Loading size="sm" /> : null} 
       {(!isAdminCheck && !pageLoading)&& <ErrorDialog error={"You do not have access to view this page!"} />}

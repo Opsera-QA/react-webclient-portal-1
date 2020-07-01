@@ -132,9 +132,9 @@ function ToolConfigurationsAdmin() {
 
   return (
     <div> 
-      <h4>Tool Management</h4>
-      <br />
 
+      <h4>Administration Tools</h4>
+      
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
           <li className="breadcrumb-item">
@@ -143,6 +143,9 @@ function ToolConfigurationsAdmin() {
           <li className="breadcrumb-item active">Tool Management</li> 
         </ol>
       </nav>  
+      
+      <h5>Tool Management</h5>
+      <br />
 
       {pageLoading ? <Loading size="sm" /> : null} 
       {(!isAdminCheck && !pageLoading)&& <ErrorDialog error={"You do not have access to view this page!"} />}
