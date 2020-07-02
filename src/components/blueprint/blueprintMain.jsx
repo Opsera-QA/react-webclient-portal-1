@@ -360,10 +360,8 @@ function OPBlueprint (props) {
                 {/* <Button variant="outline-secondary" type="button" onClick={toggleCalendar}>
                   <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth/>
                   {(calendar && sDate || eDate) ? sDate + " - " + eDate : "Date Range"}</Button> */}
-                <Button variant="primary" className="float-right ml-2" type="submit" disabled={disabledForm}>Lookup</Button>
-
-
                 <Button variant="outline-secondary" className="float-right ml-2" type="button" onClick={cancelSearchClicked} disabled={disabledForm}>Clear</Button>
+                <Button variant="primary" className="float-right ml-2" type="submit" disabled={disabledForm}>Lookup</Button>
               </Col>
 
 
@@ -483,7 +481,7 @@ function OPBlueprint (props) {
               </Row>
               <Row className="mt-1">
                 <Col lg className="py-1"><span className="text-muted mr-1">Last Run: </span> {logData.hits[0]._source["@timestamp"]}</Col>
-                <Col lg className="py-1"><span className="text-muted mr-1">Number of Stages:</span> {uniqueSteps(logData) || "N/A"}</Col>
+                <Col lg className="py-1"><span className="text-muted mr-1">Number of Steps:</span> {uniqueSteps(logData) || "N/A"}</Col>
               </Row>
             </div>
             <BlueprintSearchResult searchResults={logData.hits} />  
