@@ -46,7 +46,7 @@ const templateEditorFormFields = {
     id: "roles",
     type: "tags",
     toShow: true,
-    value: [],
+    value: ["opsera", "everyone"],
     disabled: false,
     touched: false,
     isValid: false,

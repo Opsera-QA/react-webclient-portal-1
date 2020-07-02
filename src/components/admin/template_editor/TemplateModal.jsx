@@ -28,7 +28,7 @@ function TemplateEditorModal(props) {
     "name": "Blank Pipeline Template",
     "description": "Create a new template from scratch.",
     "active": true,
-    "roles": ["opsera"],
+    "roles": ["opsera", "everyone"],
     "plan": [
       {
         "tool": {},
@@ -135,8 +135,11 @@ function TemplateEditorModal(props) {
   //Use a single function for create and update template
   const updateTag = async () => {
 
+    //Check if role data is empty. If yes, add default
+    formFieldList.roles.value = formFieldList.roles.value.length == 0 ? defaultForm.roles : formFieldList.roles.value;
+
     //Check if plan data is empty
-    formFieldList.plan.value = planData.length == 0 ? defaultForm.plan : JSON.parse(planData);
+    formFieldList.plan.value = planData.length == 0 ? defaultForm.plan : validateDefaults(planData);
 
     //Only extract the value filed before sending to the API
     let formData = Object.keys(formFieldList).reduce((obj, item) => Object.assign(obj, { [item]: formFieldList[item].value }), {});
@@ -157,7 +160,18 @@ function TemplateEditorModal(props) {
         console.log(err.message);
       }
     }
+  };
 
+  //Check if all the default keys are present before submit
+  const validateDefaults = (data) => {
+    let planList = data;
+    let defaultPlan = defaultForm.plan[0];
+    planList.map((planData) => {
+      Object.keys(defaultPlan).map((item) => {
+        return planData.hasOwnProperty(item) ? item : planData[item] = defaultPlan[item];
+      });
+    });
+    return planList;
   };
 
   const editTag = () => {
@@ -222,8 +236,7 @@ function TemplateEditorModal(props) {
   };
 
   const handleJsonInputUpdate = (e) => {
-    console.log(e.json);
-    setPlanData(e.json);
+    setPlanData(JSON.parse(e.json));
   };
   
   return (
