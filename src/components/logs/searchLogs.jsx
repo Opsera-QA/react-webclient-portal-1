@@ -367,7 +367,7 @@ function SearchLogs (props) {
         <div className="max-content-width" >
           <Form onSubmit={handleFormSubmit}>
             <Row>
-              <Col md={3}>
+              <Col md={3} className="py-1">
                 <DropdownList
                   data={Array.isArray(FILTER) ? FILTER : [{ "value": "pipeline", "label": "Pipeline" }]}  
                   defaultValue={"pipeline"}
@@ -378,7 +378,7 @@ function SearchLogs (props) {
                   onChange={handleSelectChange}             
                 />
               </Col>
-              {filterType === "opsera-pipeline" || filterType === "blueprint" ? <Col md={3}>
+              {filterType === "opsera-pipeline" || filterType === "blueprint" ? <Col md={3} className="py-1">
                 {filterType === "opsera-pipeline" && 
                   <DropdownList
                     data={filterOptions} 
@@ -409,7 +409,7 @@ function SearchLogs (props) {
                   />
                 }
               </Col> : ""}
-              {filterType === "opsera-pipeline" ? <Col md={3}>
+              {filterType === "opsera-pipeline" ? <Col className="py-1" md={3}>
                 {filterType === "opsera-pipeline" && 
                   <DropdownList
                     data={pipelineFilter.steps} 
@@ -424,7 +424,7 @@ function SearchLogs (props) {
                     onChange={setStepFilter}        
                   />}
               </Col> : ""}
-              <Col md={filterType === "opsera-pipeline" ? 3 : (filterType === "blueprint" ? 6 : 9)} >
+              <Col className="py-1" md={filterType === "opsera-pipeline" ? 3 : (filterType === "blueprint" ? 6 : 9)} >
                 <Form.Control placeholder="Search logs" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
               </Col>
               

@@ -329,7 +329,7 @@ function OPBlueprint (props) {
         <div className="max-content-width">
           <Form onSubmit={handleFormSubmit}>
             <Row>
-              <Col md={5}>
+              <Col md={5} className="py-1">
                 <DropdownList
                   placeholder={"Select Opsera Pipeline"}
                   data={filterOptions} 
@@ -342,7 +342,7 @@ function OPBlueprint (props) {
                   onChange={pipelineSelect} 
                 />
               </Col>
-              <Col md={4}>
+              <Col md={4} className="py-1">
                 <NumberPicker 
                   type="number"
                   placeholder={"Run Count"}
