@@ -360,10 +360,8 @@ function OPBlueprint (props) {
                 {/* <Button variant="outline-secondary" type="button" onClick={toggleCalendar}>
                   <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth/>
                   {(calendar && sDate || eDate) ? sDate + " - " + eDate : "Date Range"}</Button> */}
-                <Button variant="primary" className="float-right ml-2" type="submit" disabled={disabledForm}>Lookup</Button>
-
-
                 <Button variant="outline-secondary" className="float-right ml-2" type="button" onClick={cancelSearchClicked} disabled={disabledForm}>Clear</Button>
+                <Button variant="primary" className="float-right ml-2" type="submit" disabled={disabledForm}>Lookup</Button>
               </Col>
 
 
