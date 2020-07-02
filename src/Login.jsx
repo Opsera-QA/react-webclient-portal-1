@@ -40,10 +40,10 @@ class LoginForm extends React.Component {
         password: this.state.password
       })
       .then(res => {
+        this.context.setRootLoading(true);
         this.setState({
           sessionToken: res.sessionToken
-        });
-        this.context.setRootLoading(true);
+        });        
       })
       .catch(err => {
         this.setState({ error: err.message, loading: false });
