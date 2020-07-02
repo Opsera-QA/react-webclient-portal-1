@@ -113,14 +113,14 @@ const newToolFormFields = {
       isRequired: false 
     }
   }, 
-  contacts: {
-    label: "Contacts",
-    id: "contacts",
+  projects: {
+    label: "Project",
+    id: "projects",
     type: "multi",
     toShow: true,
     value: [],
     showEditButton: true,
-    fields: ["name", "email", "id"],
+    fields: ["name", "value"],
     disabled: true,
     touched: false,
     isValid: false,
@@ -129,14 +129,14 @@ const newToolFormFields = {
       isRequired: false 
     }
   },
-  projects: {
-    label: "Project",
-    id: "projects",
+  contacts: {
+    label: "Contacts",
+    id: "contacts",
     type: "multi",
     toShow: true,
     value: [],
     showEditButton: true,
-    fields: ["name", "reference", "id"],
+    fields: ["name", "email", "user_id"],
     disabled: true,
     touched: false,
     isValid: false,
@@ -152,7 +152,7 @@ const newToolFormFields = {
     toShow: true,
     value: [],
     showEditButton: true,
-    fields: ["name", "reference", "id"],
+    fields: ["name", "value"],
     disabled: true,
     touched: false,
     isValid: false,
@@ -166,9 +166,9 @@ const newToolFormFields = {
     id: "organization",
     type: "multi",
     toShow: true,
-    value: {},
+    value: [],
     showEditButton: true,
-    fields: ["name", "reference", "id"],
+    fields: ["name", "value"],
     disabled: true,
     touched: false,
     isValid: false,

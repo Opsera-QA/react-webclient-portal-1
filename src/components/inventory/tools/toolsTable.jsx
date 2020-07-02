@@ -17,7 +17,15 @@ function ToolsTable({ columns, data, rowInfo }) {
     {
       columns,
       data,
-      initialState: { pageIndex: 0 },
+      initialState: { 
+        pageIndex: 0,
+        sortBy: [
+          {
+            id: "name",
+            desc: false
+          }
+        ]
+      },
     },
     useSortBy,
     usePagination
@@ -49,7 +57,7 @@ function ToolsTable({ columns, data, rowInfo }) {
                       ? column.isSortedDesc
                         ? <FontAwesomeIcon icon={faSortDown} className="float-right" />
                         : <FontAwesomeIcon icon={faSortUp} className="float-right" />
-                      : <FontAwesomeIcon icon={faSort} className="float-right"/>}
+                      : null}
                   </span>
                 </th>
               ))}
@@ -60,7 +68,7 @@ function ToolsTable({ columns, data, rowInfo }) {
           {rows.map((row, i) => {
             prepareRow(row);
             return (
-              <tr key={i} {...row.getRowProps({ onClick: () => rowInfo(row) } )}>
+              <tr className={row.values.active ? "" : "disabledTool"} key={i} {...row.getRowProps({ onClick: () => rowInfo(row) } )}>
                 {row.cells.map((cell, j) => {
                   return <td key={j} {...cell.getCellProps()} className={setColumnClass(cell.column.id, columns)}>{cell.render("Cell")}</td>;
                 })}

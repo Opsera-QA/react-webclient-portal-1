@@ -46,6 +46,7 @@ pipelineHelpers.getPipelineStatus = (pipeline) => {
   }
 };
 
+// TODO: Move to general helper
 pipelineHelpers.getUserNameById = async (userId, accessTokenFn) => {
   const accessToken = await accessTokenFn();
   let name = userId;

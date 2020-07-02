@@ -52,6 +52,12 @@ class AuthContextProvider extends Component {
     return this.state.authenticated;
   }
 
+  setRootLoading = (value) => {
+    console.log("setRootLoading", value);
+    const loadingValue = value === true ? true : false;
+    this.setState({ loading: loadingValue });
+  }
+
 
   //New LDAP derived getUsers Service
   getUserRecord = async (forceReset) => {    
@@ -99,6 +105,7 @@ class AuthContextProvider extends Component {
         getIsPreviewRole: this.getIsPreviewRole, //TODO: Depracate
         getUserRecord: this.getUserRecord,
         getIsAuthenticated: this.getIsAuthenticated,
+        setRootLoading: this.setRootLoading,
         setSharedState: this.setSharedState }}>
         {this.props.children}
       </AuthContext.Provider>
