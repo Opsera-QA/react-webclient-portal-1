@@ -424,7 +424,7 @@ function SearchLogs (props) {
                     onChange={setStepFilter}        
                   />}
               </Col> : ""}
-              <Col md={filterType === "opsera-pipeline" ? 3 : 9} >
+              <Col md={filterType === "opsera-pipeline" ? 3 : (filterType === "blueprint" ? 6 : 9)} >
                 <Form.Control placeholder="Search logs" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
               </Col>
               
@@ -581,17 +581,9 @@ function SearchLogs (props) {
         </div>
 
 
-        {loading && <LoadingDialog size="sm" />}
+        {}
 
-        {(!loading && noResults && searchTerm.length > 0) &&
-          <div style={{ height: "400px" }}>
-            <div className="row h-100">
-              <div className="col-sm-12 my-auto text-center">
-                <div className="h6">No Results found</div>
-              </div>
-            </div>
-          </div> 
-        }
+        {        }
 
         {Object.keys(logData).length > 0 && (filterType == "blueprint" ? <BlueprintSearchResult searchResults={logData.hits} /> : <LogSearchResult searchResults={logData.hits} />  )}
         {Object.keys(logData).length > 0 && (filterType == "commit" ? <CommitSearchResult searchResults={logData.hits} /> : "")}
