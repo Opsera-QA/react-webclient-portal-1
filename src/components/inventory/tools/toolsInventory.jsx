@@ -12,6 +12,7 @@ import NewTool from "./newTool/newTool";
 import ToolDetails from "./toolDetails/toolDetails"; //tool summary view
 import "./tools.css";
 import ToolsTable from "./toolsTable";
+import { faTimesCircle, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
 function ToolInventory () {
   let history = useHistory();
@@ -148,7 +149,7 @@ function ToolInventory () {
         Header: "State",
         accessor: "active",
         Cell: (props) => {
-          return props.value ? "Active" : "Disabled";
+          return props.value ?  <FontAwesomeIcon icon={faCheckCircle} className="green ml-3" /> : <FontAwesomeIcon icon={faTimesCircle} className="red ml-3" />;
         },
       },
     ],
