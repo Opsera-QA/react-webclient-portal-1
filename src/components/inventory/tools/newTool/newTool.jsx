@@ -75,12 +75,13 @@ function NewTool(props) {
       obj[key] = formFieldList[key].value;
       return obj;
     }, {});
+    console.log("FORMDATA: ", formData);
     if(isFormValid) {
       try {
         const accessToken = await getAccessToken();
-        const response = await axiosApiService(accessToken).post("/registry/create", { ...formData });
-        console.log(response.data);
-        props.closeModal(false, response.data);
+        //const response = await axiosApiService(accessToken).post("/registry/create", { ...formData });
+        //console.log(response.data);
+        //props.closeModal(false, response.data);
       }
       catch (err) {
         isNameValid();
@@ -204,13 +205,13 @@ function NewTool(props) {
       />;     
     case "select":
       return <Form.Control as="select" disabled={formField.disabled} value={formField.value} onChange={e => handleToolTypeUpdate(e.target.value, formField)}>
-        <option name="Select One" value="" disabled="true">Select One</option>
+        <option name="Select One" value="" disabled={true}>Select One</option>
         {tool_list[formField.id].map((option, i) => (
           <option key={i} value={option.identifier}>{option.name}</option>
         ))} 
       </Form.Control>;
     case "tags":
-      return <TagInput defaultValue={formField.value} onChange={data => handleFormChange(formField, data)} />;
+      return <div className="pr-2 mr-1"><TagInput defaultValue={formField.value} onChange={data => handleFormChange(formField, data)} /></div>;
     case "multi":
       return <MultiInputFormField formField={formField} defaultValue={formField.value} onChange={data => handleFormChange(formField, data)} />;      
     default:
@@ -241,7 +242,7 @@ function NewTool(props) {
             {!isLoading && (
               <Form className="newToolFormContainer">
                 {Object.values(formFieldList).map((formField, i) => {
-                  console.log("Form field: " + JSON.stringify(formField));
+                  //console.log("Form field: " + JSON.stringify(formField));
                   if(formField.toShow) {
                     return(
                       <Form.Group key={i} controlId="formPlaintextEmail" className="mt-2">
@@ -249,7 +250,7 @@ function NewTool(props) {
                           {formField.label} 
                           {formField.rules.isRequired && <span style={{ marginLeft:5, color: "#dc3545" }}>*</span>}
                         </Form.Label>
-                        <Col sm="10">
+                        <Col sm="10" className="text-right">
                           {formFieldType(formField)}
                           <Form.Control.Feedback type="invalid">{formField.errorMessage}</Form.Control.Feedback>
                         </Col>

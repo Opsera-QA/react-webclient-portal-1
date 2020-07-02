@@ -8,27 +8,14 @@ function MultiInputFormField(props) {
   const { defaultValue, formField } = props;
   const [rowList, setRowList ] = useState([]);
 
-  //On load create one row
-  useEffect(() => {    
-    //When it's a new form, defaultValue will be undefined
-    if(defaultValue == undefined) {
-      addRow();
-    }else {
-      if(defaultValue.length > 0) {
-        prePopulateData();
-      }else {
-        addRow();
-      }
-    }
-  }, []);
-
+  
   //Everytime a row is added or updated, call parent to construct the payload
   useEffect(() => {    
     props.onChange(rowList);
   }, [rowList]);
 
   //We are computing the number of rows required based on the data from API
-  const prePopulateData = () => {
+  /* const prePopulateData = () => {
     let newRows = [];
     defaultValue.map((data) => {
       let firstRow = {};
@@ -41,7 +28,7 @@ function MultiInputFormField(props) {
     setRowList([
       ...newRows
     ]);
-  };
+  }; */
 
   //Add new row to the table
   const addRow = () => {
@@ -79,32 +66,45 @@ function MultiInputFormField(props) {
 
   return (
     <>
-      <Table borderless={true} className="mt-1" size="sm">
-        <thead>
-          <tr>
-            {formField.fields.map((field, key) => {
-              return <th key={key} className="text-muted" style={{ textTransform: "capitalize", fontWeight: "normal", fontSize: "14px" }}>{field}</th>;
-            })}
-          </tr>
-        </thead>
-        <tbody>
-          {rowList.map((row, key) => {
-            return <tr key={key}>
-              {formField.fields.map((field, key) => {
-                return <td key={key}><Form.Control defaultValue={row[field]} disabled={field == "id" || field == "identifier"} type="text" size="sm" placeholder={"New " + `${field}`} onChange={e => updateCellData(e, row, field)} /></td>;
+      {rowList && rowList.length > 0 ?
+        <>
+          <Table borderless={true} size="sm" style={{ marginBottom: "0" }}>
+            {/*  <thead>
+              <tr>
+                {formField.fields.map((field, key) => {
+                  return <th key={key} className="text-muted" style={{ textTransform: "capitalize", fontWeight: "normal", fontSize: "14px" }}>{field}</th>;
+                })}
+              </tr>
+            </thead> */}
+            <tbody>          
+              {rowList.map((row, key) => {
+                return <tr key={key}>
+                  {formField.fields.map((field, key) => {
+                    return <td key={key}><Form.Control defaultValue={row[field]} disabled={field == "id" || field == "identifier"} type="text" size="sm" placeholder={"New " + `${field}`} onChange={e => updateCellData(e, row, field)} /></td>;
+                  })}                  
+                  {formField.showEditButton && <td className="text-right"><Button variant={ Object.values(row)[0] && Object.values(row)[0].length == 0 ? "outline-secondary" : "outline-danger"} size="sm" onClick={e => deleteRow(e, row)} ><FontAwesomeIcon icon={faTrash} /></Button></td>}              
+                </tr>;
+                
               })}
-              {formField.showEditButton && <td><Button disabled={Object.values(row)[0] && Object.values(row)[0].length == 0} variant="primary" size="sm" onClick={addRow}><FontAwesomeIcon icon={faPlus}/></Button></td>}
-              {formField.showEditButton && <td><Button disabled={Object.values(row)[0] && rowList && (Object.values(row)[0].length == 0 || rowList.length > rowList.indexOf(row) + 1)} variant={ Object.values(row)[0] && Object.values(row)[0].length == 0 ? "outline-secondary" : "outline-danger"} size="sm" onClick={e => deleteRow(e, row)} ><FontAwesomeIcon icon={faTrash} /></Button></td>}
-            </tr>;
-          })}
-        </tbody>
-      </Table>
+            </tbody>
+          </Table>
+          <div className="text-right mr-1"><Button variant="primary" size="sm" onClick={addRow}><FontAwesomeIcon icon={faPlus}/></Button></div> 
+        </> :
+        <>
+          <div className="d-flex">
+            <div className="p-2"></div>
+            <div className="p-2 text-center text-muted">No Entires</div>
+            <div className="ml-auto p-2 text-right mr-1"><Button variant="primary" size="sm" onClick={addRow}><FontAwesomeIcon icon={faPlus}/></Button></div>
+          </div>
+
+        </>}
 
     </>
   );
 }
 
 MultiInputFormField.propTypes = {
+  defaultValue: PropTypes.array,
   formField: PropTypes.object,
   onChange: PropTypes.func.isRequired
 };

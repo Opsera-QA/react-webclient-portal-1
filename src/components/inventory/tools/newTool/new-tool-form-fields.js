@@ -83,26 +83,12 @@ const newToolFormFields = {
       isRequired: false 
     }
   },
-  tags: {
-    label: "Tags",
-    id: "tags",
-    type: "tags",
-    toShow: true,
-    value: [],
-    disabled: true,
-    touched: false,
-    isValid: false,
-    errorMessage: "",    
-    rules: {
-      isRequired: false 
-    }
-  }, 
   location: {
     label: "Location",
     id: "location",
     type: "multi",
     toShow: true,
-    showEditButton: false,
+    showEditButton: true,
     value: [],
     fields: ["name", "value"],
     disabled: true,
@@ -241,6 +227,20 @@ const newToolFormFields = {
     type: "",
     toShow: false, 
     disabled: false,
+    touched: false,
+    isValid: false,
+    errorMessage: "",    
+    rules: {
+      isRequired: false 
+    }
+  },
+  tags: {
+    label: "Tags",
+    id: "tags",
+    type: "tags",
+    toShow: true,
+    value: [],
+    disabled: true,
     touched: false,
     isValid: false,
     errorMessage: "",    
