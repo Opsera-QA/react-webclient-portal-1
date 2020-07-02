@@ -1,20 +1,17 @@
-import React, { useState, useEffect, useContext, useMemo } from "react";
-import { Button } from "react-bootstrap";
-import { AuthContext } from "contexts/AuthContext";  
-import { axiosApiService } from "api/apiService";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { axiosApiService } from "api/apiService";
 import LoadingDialog from "components/common/loading";
 import Modal from "components/common/modal";
-import { useHistory, useParams } from "react-router-dom";
+import { AuthContext } from "contexts/AuthContext";
 import { format } from "date-fns";
-
-import ToolsTable from "./toolsTable";
+import React, { useContext, useEffect, useMemo, useState } from "react";
+import { Button } from "react-bootstrap";
+import { useHistory, useParams } from "react-router-dom";
 import NewTool from "./newTool/newTool";
 import ToolDetails from "./toolDetails/toolDetails"; //tool summary view
-
 import "./tools.css";
-
+import ToolsTable from "./toolsTable";
 
 function ToolInventory () {
   let history = useHistory();
@@ -36,23 +33,23 @@ function ToolInventory () {
       setToolId(id);
       toggleViewModal(true);
     } else {
-      //don't need this to run by ID since child componetnts will handle queries
+      //don't need this to run by ID since child components will handle queries
       getToolRegistryList();
       setToolId("");
     }
   }, [id]);
 
 
-  const handelEditClick = (toolId, toolData) => {
+  const handleEditClick = (toolId, toolData) => {
     setModalType("edit");
     setToolId(toolId);
     toggleEditModal(true);
-    toggleViewModal(false);
+    // toggleViewModal(false);
   };
 
-  const handleDeleteClick = (e, cellData) => {
-    e.stopPropagation();
-    setToolId(cellData._id);
+  const handleDeleteClick = (toolId, toolData) => {
+    setModalType("delete");
+    setToolId(toolId);
     setShowDeleteModal(true);
   };
 
@@ -64,6 +61,8 @@ function ToolInventory () {
       let apiUrl = "/registry/" + toolId;
       const response = await axiosApiService(accessToken).delete(apiUrl, {});
       console.log(response);
+      toggleEditModal(false);
+      toggleViewModal(false);
     }
     catch (err) {
       console.log(err.message);
@@ -75,8 +74,14 @@ function ToolInventory () {
     try {
       setLoading(true);
       const accessToken = await getAccessToken();
-      let apiUrl = "/registry/";
-      const response = await axiosApiService(accessToken).get(apiUrl, {});
+      // sort by name ascending &sort=name&order=1
+      const params = {
+        sort: "name",
+        order: 1
+      };
+
+      let apiUrl = "/registry?hidden=true";
+      const response = await axiosApiService(accessToken).get(apiUrl, params);
       setToolList(response.data);
       setLoading(false);
     }
@@ -116,14 +121,6 @@ function ToolInventory () {
     
   };
 
-  const actionButtons = (cellData) => {
-    return(
-      <>
-        <Button variant="outline-danger" size="sm" className="mr-1" onClick={(e) => { handleDeleteClick(e, cellData); }} ><FontAwesomeIcon icon={faTrash} fixedWidth/></Button>
-      </>
-    );
-  };
-
   //TODO: Nobal, Please add default sort as an option here AND the option to hide sorting on a column!
   const columns = useMemo(
     () => [
@@ -148,11 +145,12 @@ function ToolInventory () {
         class: "no-wrap-inline"
       },
       {
-        Header: "",
-        accessor: "action",
-        Cell: (props) => actionButtons(props.cell.row.original),
-        class: "text-center"
-      }
+        Header: "State",
+        accessor: "active",
+        Cell: (props) => {
+          return props.value ? "Active" : "Disabled";
+        },
+      },
     ],
     []
   );
@@ -167,12 +165,17 @@ function ToolInventory () {
     <>
       
       {/*Both of these should be doing a lookup of the altest tool data, not using data passed form ehre */}
-      <ToolDetails showModal={isViewModal} closeModal={(toggleModal) => closeViewModal(toggleModal)} toolId={toolId} fnEditTool={handelEditClick}/>
+      <ToolDetails showModal={isViewModal} closeModal={(toggleModal) => closeViewModal(toggleModal)} toolId={toolId} fnEditTool={handleEditClick} fnDeleteTool={handleDeleteClick}/>
       {isEditModal && <NewTool showModal={isEditModal} closeModal={(toggleModal, response) => closeModal(toggleModal, response)} type={modalType} toolId={toolId} />} 
-      
+      {/* TODO: Refactor to be more like edit modal above */}
+      {showDeleteModal ? <Modal showModal={showDeleteModal} header="Confirm Tool Delete"
+        message="Warning! This may impact running pipelines.  Deleting this record would stop any associated pipelines from running.  Data cannot be recovered once the tool is deleted. Do you still want to proceed?"
+        button="Confirm"
+        handleCancelModal={() => setShowDeleteModal(false)}
+        handleConfirmModal={() => deleteTool()} /> : null}
 
       <div className="mt-2 mb-2 text-right">
-        <Button variant="primary" size="sm"  
+        <Button size="sm" variant="primary"   
           onClick={() => { handleNewEntryClick("new"); }}> 
           <FontAwesomeIcon icon={faPlus} className="mr-1"/> New Entry
         </Button>
@@ -181,13 +184,6 @@ function ToolInventory () {
 
       {!isLoading && <ToolsTable rowInfo={viewTool}  columns={columns} data={toolList} />}
       {isLoading && <LoadingDialog size="sm" />}
-
-      {showDeleteModal ? <Modal showModal={showDeleteModal} header="Confirm Tool Delete"
-        message="Warning! This may impact running pipelines.  Deleting this record would stop any associated pipelines from running.  Data cannot be recovered once the tool is deleted. Do you still want to proceed?"
-        button="Confirm"
-        handleCancelModal={() => setShowDeleteModal(false)}
-        handleConfirmModal={() => deleteTool()} /> : null}
-      
     </>
   );  
 }

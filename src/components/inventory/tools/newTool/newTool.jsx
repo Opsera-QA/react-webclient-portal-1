@@ -90,7 +90,7 @@ function NewTool(props) {
 
   const isNameValid = () => {
     let validateInput = {
-      errorMessage: "Name already exist! Please use a different name.",
+      errorMessage: "Name already exists! Please use a different name.",
       touched: true, 
       isValid: false,
       value: ""
@@ -204,6 +204,7 @@ function NewTool(props) {
       />;     
     case "select":
       return <Form.Control as="select" disabled={formField.disabled} value={formField.value} onChange={e => handleToolTypeUpdate(e.target.value, formField)}>
+        <option name="Select One" value="" disabled="true">Select One</option>
         {tool_list[formField.id].map((option, i) => (
           <option key={i} value={option.identifier}>{option.name}</option>
         ))} 
@@ -232,37 +233,39 @@ function NewTool(props) {
           <Modal.Title>{props.type == "new" ? "New" : "Edit"} Tool</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <div className="tool-content-block m-3 pt-2">
 
-          {errors ? <div className="error-text">Error Reported: {errors}</div> : null}
-          {isLoading ? <Loading size="sm" /> : null}
+            {errors ? <div className="error-text">Error Reported: {errors}</div> : null}
+            {isLoading ? <Loading size="sm" /> : null}
           
-          {!isLoading && (
-            <Form className="newToolFormContainer">
-              {Object.values(formFieldList).map((formField, i) => {
-                if(formField.toShow) {
-                  return(
-                    <Form.Group key={i} controlId="formPlaintextEmail" className="mt-2">
-                      <Form.Label column sm="2">
-                        {formField.label} 
-                        {formField.rules.isRequired && <span style={{ marginLeft:5, color: "#dc3545" }}>*</span>}
-                      </Form.Label>
-                      <Col sm="10">
-                        {formFieldType(formField)}
-                        <Form.Control.Feedback type="invalid">{formField.errorMessage}</Form.Control.Feedback>
-                      </Col>
-                    </Form.Group>
-                  );
-                }
-              })}
-            </Form>
-          )}
-
+            {!isLoading && (
+              <Form className="newToolFormContainer">
+                {Object.values(formFieldList).map((formField, i) => {
+                  console.log("Form field: " + JSON.stringify(formField));
+                  if(formField.toShow) {
+                    return(
+                      <Form.Group key={i} controlId="formPlaintextEmail" className="mt-2">
+                        <Form.Label column sm="2">
+                          {formField.label} 
+                          {formField.rules.isRequired && <span style={{ marginLeft:5, color: "#dc3545" }}>*</span>}
+                        </Form.Label>
+                        <Col sm="10">
+                          {formFieldType(formField)}
+                          <Form.Control.Feedback type="invalid">{formField.errorMessage}</Form.Control.Feedback>
+                        </Col>
+                      </Form.Group>
+                    );
+                  }
+                })}
+              </Form>
+            )}
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <OverlayTrigger trigger={["hover", "hover"]} placement="top" overlay={popover}>
-            <Button variant="secondary" onClick={handleClose}>Close</Button>
+            <Button size="sm" variant="secondary" onClick={handleClose}>Close</Button>
           </OverlayTrigger>
-          <Button variant="primary" onClick={props.type == "new" ? createNewTool : updateTool} disabled={!isFormValid}>Save changes</Button>
+          <Button size="sm" variant="primary" onClick={props.type == "new" ? createNewTool : updateTool} disabled={!isFormValid}>Save changes</Button>
         </Modal.Footer>
       </Modal>
     </>
