@@ -6,12 +6,12 @@ import { Button, Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { axiosApiService } from "./api/apiService";
-
+import { AuthContext } from "./contexts/AuthContext";
 
 class LoginForm extends React.Component {
-  //static contextType = AuthContext;
-  constructor(props) {
-    super(props);
+  static contextType = AuthContext;
+  constructor(props, context) {
+    super(props, context);
     this.state = {
       sessionToken: null,
       error: null,
@@ -24,7 +24,6 @@ class LoginForm extends React.Component {
     };
 
     this.oktaAuth = new OktaAuth({ url: process.env.REACT_APP_OKTA_BASEURL });
-
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
@@ -40,11 +39,12 @@ class LoginForm extends React.Component {
         username: this.state.username,
         password: this.state.password
       })
-      .then(res =>
+      .then(res => {
         this.setState({
           sessionToken: res.sessionToken
-        })
-      )
+        });
+        this.context.setRootLoading(true);
+      })
       .catch(err => {
         this.setState({ error: err.message, loading: false });
         console.log(err.statusCode + " error", err);
