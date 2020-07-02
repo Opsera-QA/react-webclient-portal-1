@@ -5,6 +5,7 @@ import { axiosApiService } from "api/apiService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTimesCircle, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { format } from "date-fns";
+import Modal from "components/common/modal";
 import Loading from "components/common/loading";
 import ErrorDialog from "components/common/error";
 import { Link } from "react-router-dom";
@@ -20,8 +21,9 @@ function TagsEditor() {
   const [modalType, setModalType] = useState("View");
   const [tagId, setTagId] = useState("");
   const [tagData, setTagData] = useState({});
-
-  const [showTagModal, toggleTagModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showTagModal, setShowTagModal] = useState(false);
+  const [canDelete, setCanDelete] = useState(false);
 
   useEffect(() => {  
     isAdmin();
@@ -54,7 +56,7 @@ function TagsEditor() {
       },      
       {
         Header: "Owner",
-        accessor: "owner",
+        accessor: "owner_name",
       },   
       {
         Header: "Account",
@@ -83,11 +85,17 @@ function TagsEditor() {
     setTagData(rowData.original);
     setTagId(rowData.original._id);
     setModalType("View");
-    toggleTagModal(true);
+    setShowTagModal(true);
   };
 
   const isAdmin = async () => {
     const userInfo = await getUserRecord();
+
+    if ((tagData && tagData.owner == userInfo._id) || userInfo.email.endsWith("@opsera.io")) {
+      setCanDelete(true);
+      // setCanEdit(true);
+    }
+
     if (!userInfo.groups.includes("Admin")) {
       //move out
       setAdminStatus(false);
@@ -97,16 +105,33 @@ function TagsEditor() {
     }
     setPageLoading(false);
   };
-  
+
+  const handleDeleteClick = (tagId, tagData) => {
+    setModalType("delete");
+    setTagId(tagId);
+    setShowDeleteModal(true);
+  };
+
+  const deleteTag = async () => {
+    try {
+      const accessToken = await getAccessToken();
+      const response = await axiosApiService(accessToken).delete("/tags/"+ tagData._id, { });
+      console.log(response.data);
+      setShowTagModal(false);
+    }
+    catch (err) {
+      console.log(err.message);
+    }
+  };  
 
   const closeTagView = (toggleModal) => {
     getTags();
-    toggleTagModal(toggleModal);
+    setShowTagModal(toggleModal);
   };  
 
   const createTag = () => {
     setModalType("New");
-    toggleTagModal(true);
+    setShowTagModal(true);
   };
 
   return (
@@ -131,19 +156,30 @@ function TagsEditor() {
         <div className="mt-4 mb-4 text-right">
           <Button variant="primary" size="sm"  
             onClick={() => { createTag(); }}> 
-            <FontAwesomeIcon icon={faPlus} className="mr-1"/> New Tag
+            <FontAwesomeIcon icon={faPlus} className="mr-1"/>New Tag
           </Button>
           <br />
         </div>
       
         <TagsTable selectedRow={rowData => selectedRow(rowData, "tool_type")} columns={columns} data={tagList} />
 
-        {showTagModal && <TagEditorModal 
+        {showTagModal && !showDeleteModal && <TagEditorModal 
           type={modalType}
           tagId={tagId}
           tagData={tagData}
-          showModal={showTagModal} 
-          closeModal={(toggleModal) => closeTagView(toggleModal)}   /> }      
+          showModal={showTagModal}
+          fnDeleteTool={handleDeleteClick} 
+          closeModal={(toggleModal) => closeTagView(toggleModal)}   /> }
+
+        {showDeleteModal ? <Modal showModal={showDeleteModal} header="Confirm Tag Delete"
+          message="Warning! Data cannot be recovered once the tag is deleted. Do you still want to proceed?"
+          button="Confirm"
+          handleCancelModal={() => 
+          {
+            setShowDeleteModal(false);
+            setShowTagModal(false);
+          }}
+          handleConfirmModal={() => deleteTag()} /> : null}       
       
       </>}
       

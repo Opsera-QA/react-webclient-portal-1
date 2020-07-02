@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Row, Col, Table } from "react-bootstrap";
 import { AuthContext } from "../../../../contexts/AuthContext";
-import PipelineHelpers from "../../../workflow/pipelineHelpers";
 import PropTypes from "prop-types";
 import { format } from "date-fns";
 import "./toolDetails.css";
@@ -11,15 +10,11 @@ import "components/inventory/tools/tools.css";
 function ToolDetails(props) {
   const { toolId, toolData, fnEditTool } = props;
   const handleClose = () => props.closeModal(false);
-  const [ownerName, setOwnerName] = useState("");
   const contextType = useContext(AuthContext);
 
   const loadData = async (toolData) => {
     try {
-     
       const { getAccessToken } = contextType;
-      let owner = await PipelineHelpers.getUserNameById(toolData.owner, getAccessToken);
-      setOwnerName(owner);
     }
     catch (err) {
       if (err.name === "AbortError") {
@@ -34,7 +29,7 @@ function ToolDetails(props) {
   loadData(toolData);
   return (
     <>
-      { Object.keys(toolData) && ownerName && <>
+      { Object.keys(toolData) && <>
         <div className="tool-content-block m-3 pt-2">
           <Row>
             <Col>
@@ -84,10 +79,9 @@ function ToolDetails(props) {
                   <span className="pr-2 text-muted">Description:</span>
                   {toolData.description}
                 </li>
-                {/* TODO: pull actual owner name */}
                 <li className="list-group-item">
                   <span className="pr-2 text-muted">Owner:</span>
-                  {ownerName ? ownerName : toolData.owner}
+                  {toolData.owner_name}
                 </li>
                 <li className="list-group-item">
                   <span className="pr-2 text-muted">Licensing: </span>
@@ -202,7 +196,7 @@ function ToolDetails(props) {
                       </tr>
                     </thead>
                     <tbody>
-                      {toolData.organization.map((item, i) => (
+                      {toolData.organization && toolData.organization.length > 0 && toolData.organization.map((item, i) => (
                         <tr key={i} >
                           <td className="text-center">{item["name"]}</td>
                           <td className="text-center">{item["value"]}</td>

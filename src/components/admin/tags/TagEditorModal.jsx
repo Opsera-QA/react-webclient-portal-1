@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Button, Modal, Form, Popover, Col, OverlayTrigger } from "react-bootstrap";
+import { Button, Modal, Form, Popover, Col, OverlayTrigger, ButtonGroup, ButtonToolbar } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext"; 
 import { axiosApiService } from "api/apiService";
@@ -13,15 +13,17 @@ import tagEditorFormFields from "./tags-form-fields.js";
 import ViewToolType from "./ViewTags";
 
 function TagsEditorModal(props) {
+  const { tagId, fnDeleteTool } = props;  
   const { getAccessToken } = useContext(AuthContext);
-  const [tagData, setToolData] = useState({});
-  const [tagType, setToolType] = useState("View");
+  const [tagData, setTagData] = useState({});
+  const [tagType, setTagType] = useState("View");
   const [formFieldList, updateFormFields ] = useState({ ...tagEditorFormFields });
+  const [canDelete, setCanDelete] = useState(true);
 
 
   useEffect(() => {  
-    setToolType(props.type);
-    setToolData(props.tagData);
+    setTagType(props.type);
+    setTagData(props.tagData);
   }, []);
 
   const handleClose = () => {
@@ -122,8 +124,8 @@ function TagsEditorModal(props) {
         const response = await axiosApiService(
           accessToken
         ).post(API_URL, { ...formData });
-        setToolData(response.data);
-        setToolType("View");
+        setTagData(response.data);
+        setTagType("View");
       }
       catch (err) {
         console.log(err.message);
@@ -163,72 +165,66 @@ function TagsEditorModal(props) {
       }));
     });
 
-    setToolType("Edit");
+    setTagType("Edit");
   };
 
 
-  const deleteTool = async () => {
-    try {
-      const accessToken = await getAccessToken();
-      const response = await axiosApiService(accessToken).delete("/tags/"+ tagData._id, { });
-      console.log(response.data);
-      props.closeModal(false);
-    }
-    catch (err) {
-      console.log(err.message);
-    }
-  };
   
   return (
-    <Modal size="lg" show={props.showModal} onHide={handleClose} backdrop="static">
-      <Modal.Header closeButton>
-        <Modal.Title>{tagType} Tag</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
+    <>
+      <Modal size="lg" show={props.showModal} onHide={handleClose} backdrop="static">
+        <Modal.Header closeButton>
+          <Modal.Title>{tagType} Tag: {tagData.key}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div>
+            <ButtonToolbar className="justify-content-between my-2 ml-2 mr-2">
+              <ButtonGroup>
+                <Button size="sm" className="ml-2 mr-2" variant={tagType === "View" ? "primary" : "secondary"} onClick={() => setTagType("View")}>Summary</Button>   
+                <Button size="sm" className="mr-2" variant={tagType === "Edit" ? "primary" : "secondary"} onClick= {() => { editTag(); }} >
+                  <FontAwesomeIcon icon={faPen} fixedWidth style={{ cursor: "pointer" }} /> Edit Tag
+                </Button>
+              </ButtonGroup>
+              <ButtonGroup>
+                <Button size="sm" disabled={!canDelete} className="pull-right mr-2" variant={canDelete ? "danger" : "secondary"} onClick= {() => { fnDeleteTool(tagId, tagData); }} >
+                  <FontAwesomeIcon icon={faTrash} fixedWidth style={{ cursor: "pointer" }} /> Delete Tag
+                </Button>
+              </ButtonGroup>
+            </ButtonToolbar>
+          </div>
+          <div className="tool-content-block m-3 pt-2 full-height modal-min-height">
+            {tagType == "View" && <ViewToolType tagData={tagData} tagId={props.tagId} />}
+            {(tagType == "New" || tagType == "Edit") && (
+              <Form className="newToolFormContainer">
+                {Object.values(formFieldList).map((formField, i) => {
+                  if(formField.toShow) {
+                    return(
+                      <Form.Group key={i} controlId="formPlaintextEmail" className="mt-2">
+                        <Form.Label column sm="2">
+                          {formField.label} 
+                          {formField.rules.isRequired && <span style={{ marginLeft:5, color: "#dc3545" }}>*</span>}
+                        </Form.Label>
+                        <Col sm="10">
+                          {formFieldType(formField)}
+                          <Form.Control.Feedback type="invalid">{formField.errorMessage}</Form.Control.Feedback>
+                        </Col>
+                      </Form.Group>
+                    );
+                  }
+                })}
+              </Form>
 
-        {tagType == "View" &&  <div className="text-right">
-          <Button variant="primary" size="sm" onClick= {() => { editTag(); }} className="mr-2">
-            <FontAwesomeIcon icon={faPen}
-              fixedWidth
-              style={{ cursor: "pointer" }} /> </Button>
-          <Button variant="danger" size="sm" onClick= {() => { deleteTool(); }} >
-            <FontAwesomeIcon icon={faTrash}
-              fixedWidth
-              style={{ cursor: "pointer" }} /> </Button>
-        </div>}
-
-        {tagType == "View" && <ViewToolType tagData={tagData} tagId={props.tagId} />}
-
-        {(tagType == "New" || tagType == "Edit") && (
-          <Form className="newToolFormContainer">
-            {Object.values(formFieldList).map((formField, i) => {
-              if(formField.toShow) {
-                return(
-                  <Form.Group key={i} controlId="formPlaintextEmail" className="mt-2">
-                    <Form.Label column sm="2">
-                      {formField.label} 
-                      {formField.rules.isRequired && <span style={{ marginLeft:5, color: "#dc3545" }}>*</span>}
-                    </Form.Label>
-                    <Col sm="10">
-                      {formFieldType(formField)}
-                      <Form.Control.Feedback type="invalid">{formField.errorMessage}</Form.Control.Feedback>
-                    </Col>
-                  </Form.Group>
-                );
-              }
-            })}
-          </Form>
-
-        )}
-
-      </Modal.Body>
-      <Modal.Footer>
-        <OverlayTrigger trigger={["hover", "hover"]} placement="top" overlay={popover}>
-          <Button variant="secondary" onClick={handleClose}>Close</Button>
-        </OverlayTrigger>
-        {(tagType == "New" || tagType == "Edit") && <Button variant="primary" onClick={updateTag} disabled={!isFormValid}>Save changes</Button>}
-      </Modal.Footer>
-    </Modal>
+            )}
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <OverlayTrigger trigger={["hover", "hover"]} placement="top" overlay={popover}>
+            <Button size="sm" variant="secondary" onClick={handleClose}>Close</Button>
+          </OverlayTrigger>
+          {(tagType == "New" || tagType == "Edit") && <Button size="sm" variant="primary" onClick={updateTag} disabled={!isFormValid}>Save changes</Button>}
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 }
 
@@ -237,7 +233,8 @@ TagsEditorModal.propTypes = {
   type: PropTypes.string,
   tagId: PropTypes.string,
   tagData: PropTypes.object,
-  closeModal: PropTypes.func
+  closeModal: PropTypes.func,
+  fnDeleteTool: PropTypes.func
 };
 
 export default TagsEditorModal;
