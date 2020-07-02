@@ -43,7 +43,7 @@ function ViewTags(props) {
         <p><span className="pr-1 text-muted">Plan:</span></p>
         <Row>
           <Col className="my-2 ml-2">
-            <ReactJson src={templateData.plan} /> 
+            <ReactJson src={templateData.plan} enableClipboard={false} displayDataTypes={false} /> 
           </Col>
         </Row>
       </>}
