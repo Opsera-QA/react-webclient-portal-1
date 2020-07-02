@@ -481,7 +481,7 @@ function OPBlueprint (props) {
               </Row>
               <Row className="mt-1">
                 <Col lg className="py-1"><span className="text-muted mr-1">Last Run: </span> {logData.hits[0]._source["@timestamp"]}</Col>
-                <Col lg className="py-1"><span className="text-muted mr-1">Number of Stages:</span> {uniqueSteps(logData) || "N/A"}</Col>
+                <Col lg className="py-1"><span className="text-muted mr-1">Number of Steps:</span> {uniqueSteps(logData) || "N/A"}</Col>
               </Row>
             </div>
             <BlueprintSearchResult searchResults={logData.hits} />  
