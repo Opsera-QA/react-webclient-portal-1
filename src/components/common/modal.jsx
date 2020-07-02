@@ -32,14 +32,15 @@ function CustomModalDialog({ header, message, button, size, handleConfirmModal, 
           <Modal.Title>{header}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {
-            displayJson ? 
-              <>  
-                <ReactJson src={jsonMessage} displayDataTypes={false} />               
-              </> : 
-              <div style={{ overflowWrap: "break-word" }}>{message}</div>
-          }
-          
+          <div className="m-3 pt-2">
+            {
+              displayJson ? 
+                <>  
+                  <ReactJson src={jsonMessage} displayDataTypes={false} />               
+                </> : 
+                <div style={{ overflowWrap: "break-word" }}>{message}</div>
+            }
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="outline-secondary" onClick={() => handleClose()}>

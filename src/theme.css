@@ -210,3 +210,11 @@ a.text-primary:hover, a.text-primary:focus {
   width: 200px;
   min-width: 160px;
 }
+
+.full-height {
+  height: 100%;
+}
+
+.modal-min-height {
+  height: 500px;
+}

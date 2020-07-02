@@ -17,7 +17,15 @@ function TagsTable({ columns, data, selectedRow }) {
     {
       columns,
       data,
-      initialState: { pageIndex: 0 },
+      initialState: { 
+        pageIndex: 0,
+        sortBy: [
+          {
+            id: "key",
+            desc: false
+          }
+        ] 
+      },
     },
     useSortBy,
     usePagination
@@ -49,7 +57,7 @@ function TagsTable({ columns, data, selectedRow }) {
                       ? column.isSortedDesc
                         ? <FontAwesomeIcon icon={faSortDown} className="float-right" />
                         : <FontAwesomeIcon icon={faSortUp} className="float-right" />
-                      : <FontAwesomeIcon icon={faSort} className="float-right"/>}
+                      : null}
                   </span>
                 </th>
               ))}
