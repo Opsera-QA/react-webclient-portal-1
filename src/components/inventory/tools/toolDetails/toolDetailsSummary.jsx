@@ -1,12 +1,9 @@
-import React, { useContext, useState, useEffect } from "react";
-import { Button, Modal, Row, Col, Table } from "react-bootstrap";
+import React, { useContext, useState } from "react";
+import { Row, Col, Table } from "react-bootstrap";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import PipelineHelpers from "../../../workflow/pipelineHelpers";
 import PropTypes from "prop-types";
 import { format } from "date-fns";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
-import Multiselect from "react-widgets/lib/Multiselect";
 import "./toolDetails.css";
 
 import "components/inventory/tools/tools.css";
@@ -32,8 +29,8 @@ function ToolDetails(props) {
     }
   };
 
-  console.log(toolId);
-  console.log(JSON.stringify(toolData));
+  //console.log(toolId);
+  //console.log(JSON.stringify(toolData));
   loadData(toolData);
   return (
     <>
@@ -130,7 +127,7 @@ function ToolDetails(props) {
                       {toolData.projects.map((item, i) => (
                         <tr key={i} >
                           <td className="text-center">{item["name"]}</td>
-                          <td className="text-center">{item["reference"]}</td>
+                          <td className="text-center">{item["value"]}</td>
                         </tr>
                       ))}
                       {toolData.projects.length == 0 && <tr><td colSpan="8" className="text-center p-5">No projects are assigned to this tool.</td></tr>}
@@ -148,6 +145,7 @@ function ToolDetails(props) {
                       <tr>
                         <th className="text-center" style={{ width: "50%" }}>Name</th>
                         <th className="text-center" style={{ width: "50%" }}>Email</th>
+                        <th className="text-center" style={{ width: "50%" }}>ID</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -155,6 +153,7 @@ function ToolDetails(props) {
                         <tr key={i} >
                           <td className="text-center">{item["name"]}</td>
                           <td className="text-center">{item["email"]}</td>
+                          <td className="text-center text-muted">{item["user_id"]}</td>
                         </tr>
                       )}
                       {toolData.contacts.length == 0 && <tr><td colSpan="8" className="text-center p-5">No contacts are assigned to this tool.</td></tr>}
@@ -181,7 +180,7 @@ function ToolDetails(props) {
                       {toolData.applications.map((item, i) => (
                         <tr key={i} >
                           <td className="text-center">{item["name"]}</td>
-                          <td className="text-center">{item["reference"]}</td>
+                          <td className="text-center">{item["value"]}</td>
                         </tr>
                       ))}
                       {toolData.applications.length == 0 && <tr><td colSpan="8" className="text-center p-5">No applications are assigned to this tool.</td></tr>}
@@ -203,19 +202,19 @@ function ToolDetails(props) {
                       </tr>
                     </thead>
                     <tbody>
-                      {console.log("toolData.organization.value: " + JSON.stringify(toolData["organization"]))}
-                      {toolData.organization && toolData.organization.length != null && toolData.organization.map((item, i) => (
-                        <tr key={i}>
+                      {toolData.organization.map((item, i) => (
+                        <tr key={i} >
                           <td className="text-center">{item["name"]}</td>
-                          <td className="text-center">{item["reference"]}</td>
+                          <td className="text-center">{item["value"]}</td>
                         </tr>
                       ))}
-                      {(!toolData.organization || toolData.organization.length == 0) && <tr><td colSpan="8" className="text-center p-5">No organizations are assigned to this tool.</td></tr>}
+                      {toolData.organization.length == 0 && <tr><td colSpan="8" className="text-center p-5">No organizations are assigned to this tool.</td></tr>}
                     </tbody>
                   </Table>
                 </li>
+
               </ul>
-            </Col>
+            </Col>    
           </Row>
         </div>
       </>}

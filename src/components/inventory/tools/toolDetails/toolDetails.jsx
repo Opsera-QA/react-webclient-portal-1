@@ -21,7 +21,7 @@ const INITIAL_FORM = {
   projects: [],
   applications: [],
   location: [], 
-  organization: {},
+  organization: [],
   external_reference: [],
   tags: [],  //["tag1","tag2","tag3"]
   roles: [], //what user or group has access to: read, write, edit, delete

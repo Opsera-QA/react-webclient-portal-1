@@ -1,9 +1,5 @@
-import React, { useContext, useState, useEffect } from "react";
-import { Button, Modal, Row, Col, Form } from "react-bootstrap";
+import React from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "contexts/AuthContext";
-import { axiosApiService } from "api/apiService";
-import { useParams } from "react-router-dom";
 
 
 import JenkinsConfiguration from "../forms/jenkins";
