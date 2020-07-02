@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams, useLocation } from "react-router-dom";
 import { AuthContext } from "contexts/AuthContext";  
+import { Button } from "react-bootstrap";
 
 import PlatformInventory from "./platform/platformInventory";
 import ToolInventory from "./tools/toolsInventory";
@@ -41,12 +42,12 @@ function Inventory () {
 
       <ul className="nav nav-pills mt-2">
         <li className="nav-item">
-          <Link className={"nav-link " + (selection === "platform" ? "active" : "")}  
-            to="/inventory" onClick={handleTabClick("platform")}>Platform</Link>
+          <Button size="sm" className="mr-2" variant={selection === "platform" ? "primary" : "secondary"}   
+            to="/inventory" onClick={handleTabClick("platform")}>Platform</Button>
         </li>
         <li className="nav-item">
-          <Link className={"nav-link " + (selection === "tools" ? "active" : "")}   
-            to={"/inventory/tools"}  onClick={handleTabClick("tools")}>Tools</Link>
+          <Button size="sm" className="mr-2" variant={selection === "tools" ? "primary" : "secondary"} 
+            to={"/inventory/tools"}  onClick={handleTabClick("tools")}>Tools</Button>
         </li>
       </ul>
       {selection === "platform" ? <PlatformInventory /> : null}

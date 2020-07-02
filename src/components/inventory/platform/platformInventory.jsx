@@ -79,20 +79,19 @@ function PlatformInventory () {
             </div>
           </>:
 
-          <div className="mt-1 max-content-module-width-50">
+          <div className="mt-1">
             <Form>
-              <Form.Group>
-
-                <Form.Label>Select Application</Form.Label>
+              <Form.Group className="flex">
+                <Form.Label className="mr-3 mt-1 formLabel">Select Application</Form.Label>
                 {renderForm ?
                   <DropdownList
+                    className="application-select"
                     data={data} 
                     valueField='name'
                     busy={loading} 
                     textField='name'
                     onChange={handleDropdownChange}             
                   /> : null }
-
               </Form.Group>
             </Form>
           </div> }
