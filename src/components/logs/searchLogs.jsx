@@ -467,7 +467,7 @@ function SearchLogs (props) {
               <Col></Col>
               <Col></Col>
               <Col md={3} style={{ textAlign: "right" }} className="no-wrap">
-                <Button className="float-right" variant="outline-secondary" type="button" onClick={toggleCalendar} >
+                <Button variant="outline-secondary" type="button" onClick={toggleCalendar} >
                   <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth/>
                   {(calendar && sDate || eDate) ? sDate + " - " + eDate : "Date Range"}</Button>
                 <Button variant="primary" className="ml-1" type="submit">Search</Button>
