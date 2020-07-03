@@ -15,18 +15,32 @@ function BlueprintSearchResult({ searchResults }) {
   let completeInput = [];
 
   for (let item in searchResults) {
-    if (Object.keys(searchResults).length > 0) {
-      if (searchResults[item]._source && searchResults[item]._source.data) {
-        completeInput.push(searchResults[item]._source.data.tool_output);
+    if (searchResults.length > 0) {
+      if (searchResults[item].api_response) {
+        if (searchResults[item].api_response.jenkins_console_log) {
+          completeInput.push(searchResults[item].api_response.jenkins_console_log);
+        } else if (searchResults[item].api_response.status) {
+          completeInput.push(searchResults[item].api_response.status); 
+        } else if (searchResults[item].api_response.buildLog) {
+          completeInput.push(searchResults[item].api_response.buildLog); 
+        }
       }
     }
   }
-
+  
+  function makeUpper(item) {
+    var stringSplit = item.toLowerCase().split(" ");
+    for (var i = 0; i < stringSplit.length; i++) {
+      stringSplit[i] = stringSplit[i].charAt(0).toUpperCase() + stringSplit[i].substring(1);     
+    }
+    return stringSplit.join(" "); 
+  }
+ 
   return (   
     <>
       <br></br>
       <div className="mb-1 mt-3 bordered-content-block p-3 max-content-width"> 
-        { Object.keys(searchResults).length > 0 &&
+        { searchResults.length > 0 &&
           <Tab.Container id="left-tabs-example" defaultActiveKey={0}>
             <Row>
               <Col sm={2}>
@@ -35,7 +49,7 @@ function BlueprintSearchResult({ searchResults }) {
                   {searchResults.map((item, idx) => (
                     <>
                       <Nav.Item key={idx}>
-                        <Nav.Link eventKey={idx} >{item._source.data.jobId.toString()}</Nav.Link>
+                        <Nav.Link eventKey={idx} >{makeUpper(item.step_name)}</Nav.Link>
                       </Nav.Item>
                     </>
                   ))}
@@ -55,7 +69,7 @@ function BlueprintSearchResult({ searchResults }) {
                   {searchResults.map((item, idx) => (
                     <Tab.Pane key={idx} eventKey={idx}>
                       <div className="console-text-invert">
-                        {item._source.data.tool_output}
+                        {item.api_response.jenkins_console_log ? item.api_response.jenkins_console_log : (item.api_response.status ? item.api_response.status : (item.api_response.buildLog) ? item.api_response.buildLog : "")}
                       </div>
                     </Tab.Pane>
                   ))}

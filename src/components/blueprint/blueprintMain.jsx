@@ -55,6 +55,7 @@ function OPBlueprint (props) {
   const [runCountError, setRunCountError] = useState(false);
   const history = useHistory();
   const [disabledForm, setDisabledState] = useState(false);
+  const [submittedRunCount, setSubmittedRunCount] = useState(null);
 
 
   simpleNumberLocalizer();
@@ -66,6 +67,7 @@ function OPBlueprint (props) {
     setRunCountError(false);
     e.preventDefault();
     setLogData([]);  
+    setSubmittedRunCount(run_count);
     // let startDate = 0;
     // let endDate = 0;
     // if (date[0].startDate && date[0].endDate) {
@@ -88,7 +90,7 @@ function OPBlueprint (props) {
   };
 
   const cancelSearchClicked = () => {
-    
+    setSubmittedRunCount(null);
     // setDate([
     //   {
     //     startDate: undefined,
@@ -137,7 +139,7 @@ function OPBlueprint (props) {
     const accessToken = await getAccessToken();
     console.log(run_count);
     console.log(multiFilter);
-    let route = "/analytics/blueprint/op";
+    let route = "/analytics/blueprint/pipeline";
 
     if (run_count === null || run_count === undefined || run_count === 0 || !multiFilter.value) {
       if (!multiFilter.value) {
@@ -153,21 +155,19 @@ function OPBlueprint (props) {
         // date: (startDate !== 0 && endDate === 0) ? startDate : undefined,
         // start: (startDate !== 0 && endDate !== 0) ? startDate : undefined,
         // end: (startDate !== 0 && endDate !== 0) ? endDate : undefined,
-        filter: {
-          index: filterType,
-          customFilter: {
-            id: idFetch[multiFilter.value], 
-            run_count: run_count
-          }
-        },
+        run: run_count
+
       };
+
+      route = route + "/" + idFetch[multiFilter.value];
       const apiCall = new ApiService(route, urlParams, accessToken);
       await apiCall.get().then(result => {
         let searchResults = [];
         if (result) {
-          searchResults = result.data.hasOwnProperty("hits") && result.data.hits.hasOwnProperty("hits") ? result.data.hits : [];
+          searchResults = result.hasOwnProperty("data") ? result.data : [];
+          console.log(searchResults);
         }
-        if (searchResults.hits.length === 0 || searchResults.length === 0) {
+        if (searchResults.length === 0) {
           setNoResults(true);
           setLoading(false);
         } else {
@@ -301,22 +301,22 @@ function OPBlueprint (props) {
     setRunCountError(false);
     console.log(submitted);
     setRunCount(item); 
-    submitClicked(false);
+    // submitClicked(false);
   };
 
-  const uniqueSteps = logdata => { 
-    let arrayList = [];
-    for (let item in logdata.hits) { 
-      arrayList.push(logdata.hits[item]._source.data.jobId);
-    }
-    if (arrayList.length > 0) {
-      let setList = new Set(arrayList);
-      return setList.size;
-    } else {
-      return "N/A";
-    }
+  // const uniqueSteps = logdata => { 
+  //   let arrayList = [];
+  //   for (let item in logdata.hits) { 
+  //     arrayList.push(logdata.hits[item]._source.data.jobId);
+  //   }
+  //   if (arrayList.length > 0) {
+  //     let setList = new Set(arrayList);
+  //     return setList.size;
+  //   } else {
+  //     return "N/A";
+  //   }
 
-  };
+  // };
 
   const goToPipeline = () => {
     history.push("/workflow/" + idFetch[multiFilter.value]);
@@ -462,7 +462,7 @@ function OPBlueprint (props) {
         }
 
 
-        {submitted && Object.keys(logData).length > 0 && logData.hits.length > 0 ? 
+        {submitted && logData.length > 0 ? 
           <>
             <div className="mt-3 bordered-content-block p-3 max-content-width"> 
               <Row>
@@ -479,14 +479,11 @@ function OPBlueprint (props) {
               <hr />
               <Row className="mt-1">
                 <Col lg className="py-1"><span className="text-muted mr-1">ID:</span> {(Object.keys(multiFilter).length > 0 && Object.keys(idFetch).length) > 0 ? idFetch[multiFilter.value] : "N/A"}</Col>
-                <Col lg className="py-1"><span className="text-muted mr-1">Pipeline Run Count:</span> {logData.hits[0]._source.data.run_count || "N/A"}</Col>
-              </Row>
-              <Row className="mt-1">
-                <Col lg className="py-1"><span className="text-muted mr-1">Last Run: </span> {logData.hits[0]._source["@timestamp"]}</Col>
-                <Col lg className="py-1"><span className="text-muted mr-1">Number of Steps:</span> {uniqueSteps(logData) || "N/A"}</Col>
+                <Col lg className="py-1"><span className="text-muted mr-1">Pipeline Run Count:</span> {submittedRunCount ? submittedRunCount : "N/A"}</Col>
+                <Col lg className="py-1"><span className="text-muted mr-1">Number of Steps:</span> {logData ? logData.length : "N/A"}</Col>
               </Row>
             </div>
-            <BlueprintSearchResult searchResults={logData.hits} />  
+            <BlueprintSearchResult searchResults={logData} />  
           </>
         
           : "" }
