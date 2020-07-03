@@ -29,8 +29,8 @@ function BlueprintSearchResult({ searchResults }) {
   }
   
   function makeUpper(item) {
-    var stringSplit = item.toLowerCase().split(" ");
-    for (var i = 0; i < stringSplit.length; i++) {
+    let stringSplit = item.toLowerCase().split(" ");
+    for (let i = 0; i < stringSplit.length; i++) {
       stringSplit[i] = stringSplit[i].charAt(0).toUpperCase() + stringSplit[i].substring(1);     
     }
     return stringSplit.join(" "); 
