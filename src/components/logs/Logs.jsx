@@ -103,7 +103,8 @@ function Logs() {
         currently configured logs repositories below. </p>
           </div>
           {error ? <ErrorDialog error={error} /> : null}
-          { !isEnabled || !enabledOn || profile.esSearchApi === null || profile.vault !== 200 || profile.esSearchApi.status !== 200 ? 
+          
+          { (!isEnabled || !enabledOn || profile.esSearchApi === null || profile.vault !== 200 || profile.esSearchApi.status !== 200) && !error ? 
             <div style={{ height: "250px" }} className="max-content-module-width-50">
               <div className="row h-100">
                 <div className="col-sm-12 my-auto">
