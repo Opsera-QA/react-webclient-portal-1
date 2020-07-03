@@ -84,7 +84,6 @@ function MultiInputFormField(props) {
                   })}                  
                   {formField.showEditButton && <td className="text-right"><Button variant={ Object.values(row)[0] && Object.values(row)[0].length == 0 ? "outline-secondary" : "outline-danger"} size="sm" onClick={e => deleteRow(e, row)} ><FontAwesomeIcon icon={faTrash} /></Button></td>}              
                 </tr>;
-                
               })}
             </tbody>
           </Table>

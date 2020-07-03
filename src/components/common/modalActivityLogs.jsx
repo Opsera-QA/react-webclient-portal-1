@@ -5,6 +5,15 @@ import { format } from "date-fns";
 import ReactJson from "react-json-view";
 
 
+function IsJsonString(str) {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
+
 function ModalActivityLogsDialog({ header, size, jsonData, show, setParentVisibility }) {
   const [showModal, setShowModal] = useState(false);
   const [viewType, setViewType] = useState("log");
@@ -25,18 +34,6 @@ function ModalActivityLogsDialog({ header, size, jsonData, show, setParentVisibi
     setParentVisibility();
   };
 
-  /* const iterate = (obj) => {
-    Object.keys(obj).forEach(key => {
-      if (key === "configuration") {
-        obj[key] = { data: "hidden" };
-      }
-      if (typeof obj[key] === "object" && obj[key] !== null) {
-        iterate(obj[key]);
-      }
-    });
-    return obj;
-  }; */
-
 
   if (viewType === "console output") {
     return (
@@ -46,19 +43,26 @@ function ModalActivityLogsDialog({ header, size, jsonData, show, setParentVisibi
             <Modal.Title>Tool Output: <span className="upper-case-first">{jsonData.step_configuration ? jsonData.step_configuration.tool_identifier : null }</span></Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <div className="ml-1">
-              <div className="float-right">{format(new Date(jsonData.updatedAt), "yyyy-MM-dd', 'hh:mm a")}</div> 
-              <span className="text-muted">Step Name: </span> {jsonData.step_name}</div>
-            { typeof(jsonData.api_response) !== "object" ?
+            <div className="m-2">
+              <div className="float-right mr-1">{format(new Date(jsonData.updatedAt), "yyyy-MM-dd', 'hh:mm a")}</div> 
+              <span className="text-muted">Step: </span> {jsonData.step_name}</div>
+            
+            { typeof(jsonData.api_response) === "string" ?
               <div className="console-text m-3">
                 {jsonData.api_response}
-              </div> : <>
-                { jsonData.api_response.buildLog !== undefined ?
-                  <div className="console-text m-3">
-                    {jsonData.api_response.buildLog}
-                  </div> : 
-                  <ReactJson src={jsonData.api_response} displayDataTypes={false} /> }
-              </> }                       
+              </div> : 
+              <div className="m-3">
+
+                {Object.keys(jsonData.api_response).map((row, key) => {
+                  return <div key={key} className="console-text mb-1">
+                    {typeof(jsonData.api_response[row]) === "string" ? 
+                      jsonData.api_response[row] :
+                      <div className="m-3">{JSON.stringify(jsonData.api_response[row])}</div>
+                    }
+                  </div>;
+                })}
+
+              </div> }                   
           </Modal.Body>
           <Modal.Footer>
             <Button variant="outline-secondary" onClick={() => handleClose()}>
@@ -66,9 +70,8 @@ function ModalActivityLogsDialog({ header, size, jsonData, show, setParentVisibi
             </Button>
           </Modal.Footer>
         </Modal>
-      </>
-    );
-  } else {
+      </> );} 
+  else {
     return (
       <>
         <Modal show={showModal} size={size} onHide={() => handleClose()}>
@@ -76,7 +79,9 @@ function ModalActivityLogsDialog({ header, size, jsonData, show, setParentVisibi
             <Modal.Title>{header}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <ReactJson src={dataView} displayDataTypes={false} />               
+            <div className="m-3">
+              <ReactJson src={dataView} displayDataTypes={false} />               
+            </div>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="outline-secondary" onClick={() => handleClose()}>
