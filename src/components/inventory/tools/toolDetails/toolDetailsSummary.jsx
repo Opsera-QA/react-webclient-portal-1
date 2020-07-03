@@ -1,6 +1,6 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 import { Row, Col, Table } from "react-bootstrap";
-import { AuthContext } from "../../../../contexts/AuthContext";
+//import { AuthContext } from "../../../../contexts/AuthContext";
 import PropTypes from "prop-types";
 import { format } from "date-fns";
 import "./toolDetails.css";
@@ -10,7 +10,7 @@ import "components/inventory/tools/tools.css";
 function ToolDetails(props) {
   const { toolId, toolData, fnEditTool } = props;
   const handleClose = () => props.closeModal(false);
-  const contextType = useContext(AuthContext);
+  /* const contextType = useContext(AuthContext);
 
   const loadData = async (toolData) => {
     try {
@@ -22,11 +22,11 @@ function ToolDetails(props) {
         return;
       }      
     }
-  };
+  }; */
 
   //console.log(toolId);
   //console.log(JSON.stringify(toolData));
-  loadData(toolData);
+  //loadData(toolData);
   return (
     <>
       { Object.keys(toolData) && <>
@@ -85,15 +85,15 @@ function ToolDetails(props) {
                 </li>
                 <li className="list-group-item">
                   <span className="pr-2 text-muted">Licensing: </span>
-                  {toolData.licensing.map((item, i) => <span key={i}>{item.name}: {item.value}</span>)}
+                  {toolData.licensing && toolData.licensing.map((item, i) => <span key={i}>{item.name}: {item.value}</span>)}
                 </li>
                 <li className="list-group-item">
                   <span className="pr-2 text-muted">Compliance: </span>
-                  {toolData.compliance.map((item, i) => <span key={i}>{item.name}: {item.value}</span>)}
+                  {toolData.compliance && toolData.compliance.map((item, i) => <span key={i}>{item.name}: {item.value}</span>)}
                 </li>
                 <li className="list-group-item">
                   <span className="pr-2 text-muted">Location:</span>
-                  {toolData.location.map((item, i) => <span key={i}>{item.name}, {item.value}</span>)}
+                  {toolData.location && toolData.location.map((item, i) => <span key={i}>{item.name}, {item.value}</span>)}
                 </li>
                 <li className="list-group-item">
                   <span className="pr-2 text-muted">State: </span>
@@ -118,13 +118,13 @@ function ToolDetails(props) {
                       </tr>
                     </thead>
                     <tbody>
-                      {toolData.projects.map((item, i) => (
+                      {toolData.projects && toolData.projects.map((item, i) => (
                         <tr key={i} >
                           <td className="text-center">{item["name"]}</td>
                           <td className="text-center">{item["value"]}</td>
                         </tr>
                       ))}
-                      {toolData.projects.length == 0 && <tr><td colSpan="8" className="text-center p-5">No projects are assigned to this tool.</td></tr>}
+                      {(!toolData.projects || toolData.projects.length == 0) && <tr><td colSpan="8" className="text-center p-5">No projects are assigned to this tool.</td></tr>}
                     </tbody>
                   </Table>
                 </li>
@@ -143,14 +143,14 @@ function ToolDetails(props) {
                       </tr>
                     </thead>
                     <tbody>
-                      {toolData.contacts.map((item, i) => 
+                      {toolData.contacts && toolData.contacts.map((item, i) => 
                         <tr key={i} >
                           <td className="text-center">{item["name"]}</td>
                           <td className="text-center">{item["email"]}</td>
                           <td className="text-center text-muted">{item["user_id"]}</td>
                         </tr>
                       )}
-                      {toolData.contacts.length == 0 && <tr><td colSpan="8" className="text-center p-5">No contacts are assigned to this tool.</td></tr>}
+                      {(!toolData.contacts || toolData.contacts.length == 0) && <tr><td colSpan="8" className="text-center p-5">No contacts are assigned to this tool.</td></tr>}
                     </tbody>
                   </Table>
                 </li>
@@ -171,13 +171,13 @@ function ToolDetails(props) {
                       </tr>
                     </thead>
                     <tbody>
-                      {toolData.applications.map((item, i) => (
+                      {toolData.applications && toolData.applications.map((item, i) => (
                         <tr key={i} >
                           <td className="text-center">{item["name"]}</td>
                           <td className="text-center">{item["value"]}</td>
                         </tr>
                       ))}
-                      {toolData.applications.length == 0 && <tr><td colSpan="8" className="text-center p-5">No applications are assigned to this tool.</td></tr>}
+                      {(!toolData.applications || toolData.applications.length == 0) && <tr><td colSpan="8" className="text-center p-5">No applications are assigned to this tool.</td></tr>}
                     </tbody>
                   </Table>
                 </li>
@@ -202,7 +202,7 @@ function ToolDetails(props) {
                           <td className="text-center">{item["value"]}</td>
                         </tr>
                       ))}
-                      {toolData.organization.length == 0 && <tr><td colSpan="8" className="text-center p-5">No organizations are assigned to this tool.</td></tr>}
+                      {(!toolData.organization || toolData.organization.length == 0) && <tr><td colSpan="8" className="text-center p-5">No organizations are assigned to this tool.</td></tr>}
                     </tbody>
                   </Table>
                 </li>

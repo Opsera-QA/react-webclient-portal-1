@@ -145,9 +145,10 @@ function ToolInventory () {
         </Button>
         <br />
       </div>
-
-      {!isLoading && <ToolsTable rowInfo={viewTool} data={toolList} />}
-      {isLoading && <LoadingDialog size="sm" />}
+      {isLoading && <LoadingDialog />}
+      
+      {toolList && <ToolsTable rowInfo={viewTool} data={toolList} />}
+      
     </>
   );  
 }
