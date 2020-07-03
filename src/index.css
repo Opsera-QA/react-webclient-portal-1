@@ -118,6 +118,11 @@ a:hover, .active {
   font-style: italic;
 }
 
+/* Set at row level */
+.vertical-center-cols-in-row { 
+  display: flex; 
+  align-items: center;
+}
 
 .border-bottom {
   border-width: 2px;
@@ -528,4 +533,10 @@ a:hover, .active {
   white-space: -pre-wrap;      /* Opera 4-6 */
   white-space: -o-pre-wrap;    /* Opera 7 */
   word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+/*  Modal Style Changes */
+#dataManagerModal .modal-content
+{
+  min-height:600px;
 }

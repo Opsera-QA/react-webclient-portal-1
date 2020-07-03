@@ -111,7 +111,7 @@ function ToolDetails(props) {
 
   return (
     <>
-      <Modal size="lg" show={props.showModal && toolId} onHide={handleClose} className="tool-details-modal">       
+      <Modal size="lg" show={props.showModal && toolId} onHide={handleClose} className="tool-details-modal" id="dataManagerModal">       
         {Object.keys(toolData).length > 0 && (<Modal.Header closeButton>
           <Modal.Title className="upper-case-first">{toolData.name} {toolData.name != null && toolData.active ? "(Active)" : "(Disabled)"}</Modal.Title>
         </Modal.Header>)}
@@ -151,7 +151,9 @@ function ToolDetails(props) {
             </>
           )}
         </Modal.Body>
-        <Modal.Footer></Modal.Footer>
+        <Modal.Footer>
+          <Button size="sm" variant="secondary" onClick={handleClose}>Close</Button>
+        </Modal.Footer>
       </Modal>
     </>
   );

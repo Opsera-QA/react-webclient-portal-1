@@ -179,7 +179,7 @@ const newToolFormFields = {
     }
   },
   active: {
-    label: "",
+    label: "Status",
     id: "active",
     value: true,
     type: "switch",

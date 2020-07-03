@@ -28,11 +28,11 @@ const tagEditorFormFields = {
     }
   },  
   configuration: {
-    label: "Configuration",
+    label: "Configuration Properties",
     id: "configuration",
     type: "multi",
     toShow: true,
-    value: [],
+    value: {},
     fields: ["name", "value"],
     showEditButton: true,
     disabled: true,
@@ -44,7 +44,7 @@ const tagEditorFormFields = {
     }
   },  
   active: {
-    label: "",
+    label: "Status",
     id: "active",
     value: true,
     type: "switch",

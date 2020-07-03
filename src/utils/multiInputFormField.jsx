@@ -104,7 +104,10 @@ function MultiInputFormField(props) {
 }
 
 MultiInputFormField.propTypes = {
-  defaultValue: PropTypes.array,
+  defaultValue: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object
+  ]),
   formField: PropTypes.object,
   onChange: PropTypes.func.isRequired
 };

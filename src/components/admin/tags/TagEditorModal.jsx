@@ -199,7 +199,7 @@ function TagsEditorModal(props) {
                 {Object.values(formFieldList).map((formField, i) => {
                   if(formField.toShow) {
                     return(
-                      <Form.Group key={i} controlId="formPlaintextEmail" className="mt-2">
+                      <Form.Group key={i} controlId="formPlaintextEmail" className="mt-2 vertical-center-cols-in-row">
                         <Form.Label column sm="2">
                           {formField.label} 
                           {formField.rules.isRequired && <span style={{ marginLeft:5, color: "#dc3545" }}>*</span>}

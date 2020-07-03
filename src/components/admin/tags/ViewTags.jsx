@@ -20,7 +20,7 @@ function ViewTags(props) {
               </li>
               <li className="list-group-item">
                 <span className="pr-2 text-muted">Tag ID:</span>
-                {tagData.id}
+                {tagData._id}
               </li>
               <li className="list-group-item">
                 <span className="pr-2 text-muted">Account:</span>

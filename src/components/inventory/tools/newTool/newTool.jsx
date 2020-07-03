@@ -229,7 +229,7 @@ function NewTool(props) {
 
   return (
     <>
-      <Modal size="lg" show={props.showModal} onHide={handleClose} backdrop="static">
+      <Modal size="lg" show={props.showModal} onHide={handleClose} backdrop="static" id="dataManagerModal">
         <Modal.Header closeButton>
           <Modal.Title>{props.type == "new" ? "New" : "Edit"} Tool</Modal.Title>
         </Modal.Header>
@@ -245,7 +245,7 @@ function NewTool(props) {
                   //console.log("Form field: " + JSON.stringify(formField));
                   if(formField.toShow) {
                     return(
-                      <Form.Group key={i} controlId="formPlaintextEmail" className="mt-2">
+                      <Form.Group key={i} controlId="formPlaintextEmail" className="mt-2 vertical-center-cols-in-row">
                         <Form.Label column sm="2">
                           {formField.label} 
                           {formField.rules.isRequired && <span style={{ marginLeft:5, color: "#dc3545" }}>*</span>}
