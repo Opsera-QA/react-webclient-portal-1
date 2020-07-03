@@ -139,47 +139,50 @@ function OPBlueprint (props) {
     console.log(multiFilter);
     let route = "/analytics/blueprint/op";
 
-    if (!multiFilter.value) {
-      setPipeIDError(true);
-    }
-
-    if (run_count === null || run_count === undefined || run_count === 0) {
-      setRunCountError(true);
-    }
-
-    const urlParams = {
-      // date: (startDate !== 0 && endDate === 0) ? startDate : undefined,
-      // start: (startDate !== 0 && endDate !== 0) ? startDate : undefined,
-      // end: (startDate !== 0 && endDate !== 0) ? endDate : undefined,
-      filter: {
-        index: filterType,
-        customFilter: {
-          id: idFetch[multiFilter.value], 
-          run_count: run_count
-        }
-      },
-    };
-    const apiCall = new ApiService(route, urlParams, accessToken);
-    await apiCall.get().then(result => {
-      let searchResults = [];
-      if (result) {
-        searchResults = result.data.hasOwnProperty("hits") && result.data.hits.hasOwnProperty("hits") ? result.data.hits : [];
+    if (run_count === null || run_count === undefined || run_count === 0 || !multiFilter.value) {
+      if (!multiFilter.value) {
+        setPipeIDError(true);
+        
       }
-      if (searchResults.hits.length === 0 || searchResults.length === 0) {
-        setNoResults(true);
-        setLoading(false);
-      } else {
-        setNoResults(false);
-        setLogData(searchResults);
+      if (run_count === null || run_count === undefined || run_count === 0) {
+        setRunCountError(true);
       }
-      console.log(logData);
       setLoading(false);
-    })
-      .catch(function (error) {
-        setLogData([]);
+    } else {
+      const urlParams = {
+        // date: (startDate !== 0 && endDate === 0) ? startDate : undefined,
+        // start: (startDate !== 0 && endDate !== 0) ? startDate : undefined,
+        // end: (startDate !== 0 && endDate !== 0) ? endDate : undefined,
+        filter: {
+          index: filterType,
+          customFilter: {
+            id: idFetch[multiFilter.value], 
+            run_count: run_count
+          }
+        },
+      };
+      const apiCall = new ApiService(route, urlParams, accessToken);
+      await apiCall.get().then(result => {
+        let searchResults = [];
+        if (result) {
+          searchResults = result.data.hasOwnProperty("hits") && result.data.hits.hasOwnProperty("hits") ? result.data.hits : [];
+        }
+        if (searchResults.hits.length === 0 || searchResults.length === 0) {
+          setNoResults(true);
+          setLoading(false);
+        } else {
+          setNoResults(false);
+          setLogData(searchResults);
+        }
+        console.log(logData);
         setLoading(false);
-        // setErrors(error.toJSON());
-      });
+      })
+        .catch(function (error) {
+          setLogData([]);
+          setLoading(false);
+          // setErrors(error.toJSON());
+        });
+    }
   };
 
   const fetchFilterData = async () => {
@@ -191,26 +194,25 @@ function OPBlueprint (props) {
         if (res.data.count > 0 || res.data.response.length > 0) {
           let formattedArray = [];
           for (let item in res.data.response) {
-            let tempText = res.data.response[item].name;
-            runCountFetch[res.data.response[item].name] = res.data.response[item].workflow.run_count;
-            idFetch[res.data.response[item].name] = res.data.response[item]._id;
-            formattedArray.push({ value: tempText, label: tempText });
-          }
-          console.log(runCountFetch);
-          let filterDataApiResponse = [{
-            label: "My Pipelines", 
-            options: formattedArray
-          }];
-          let formattedFilterData = [];
-  
-          filterDataApiResponse.forEach(filterGroup => {
-            filterGroup["options"].map((filters) => {
-              filters["type"] = filterGroup["label"];
+            if (res.data.response[item].workflow.run_count && res.data.response[item].workflow.run_count > 0) {
+              let pipelineName = res.data.response[item].name;
+              runCountFetch[res.data.response[item].name] = res.data.response[item].workflow.run_count;
+              idFetch[res.data.response[item].name] = res.data.response[item]._id;
+              formattedArray.push({ value: pipelineName, label: pipelineName });
+            }
+            let filterDataApiResponse = [{
+              label: "My Pipelines", 
+              options: formattedArray
+            }];
+            let formattedFilterData = [];
+            filterDataApiResponse.forEach(filterGroup => {
+              filterGroup["options"].map((filters) => {
+                filters["type"] = filterGroup["label"];
+              });
+              formattedFilterData.push(...filterGroup["options"]);
             });
-            formattedFilterData.push(...filterGroup["options"]);
-          });
-  
-          setFilters(formattedFilterData);
+            setFilters(formattedFilterData);
+          } 
         } else {
           setDisabledState(true);
         }
