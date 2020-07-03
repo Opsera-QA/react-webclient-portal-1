@@ -179,7 +179,7 @@ function OPBlueprint (props) {
         .catch(function (error) {
           setLogData([]);
           setLoading(false);
-          // setErrors(error.toJSON());
+          
         });
     }
   };
