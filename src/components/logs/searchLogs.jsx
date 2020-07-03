@@ -378,7 +378,7 @@ function SearchLogs (props) {
                   onChange={handleSelectChange}             
                 />
               </Col>
-              {filterType === "opsera-pipeline" || filterType === "blueprint" ? <Col md={3} className="py-1">
+              {filterType === "opsera-pipeline" ? <Col md={3} className="py-1">
                 {filterType === "opsera-pipeline" && 
                   <DropdownList
                     data={filterOptions} 
@@ -393,7 +393,7 @@ function SearchLogs (props) {
                     onChange={opseraPipelineSelectChange} 
                     onToggle={fetchFilterData}         
                   />}
-                {filterType === "blueprint" && 
+                {/* {filterType === "blueprint" && 
                   <DropdownList
                     data={filterOptions} 
                     busy={Object.keys(filterOptions).length == 0 ? true : false}
@@ -407,7 +407,7 @@ function SearchLogs (props) {
                     onChange={setJobFilter}    
                     onToggle={fetchFilterData}         
                   />
-                }
+                } */}
               </Col> : ""}
               {filterType === "opsera-pipeline" ? 
                 <Col className="py-1">
@@ -425,8 +425,8 @@ function SearchLogs (props) {
                     onChange={setStepFilter}        
                   />}
                 </Col> : ""}
-              <Col className="py-1" md={filterType === "opsera-pipeline" ? 3 : (filterType === "blueprint" ? 6 : 9)} >
-                <Form.Control placeholder="Search logs" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
+              <Col className="py-1" md={filterType === "opsera-pipeline" ? 3 : 9} >
+                <Form.Control placeholder={filterType === "blueprint" ? "Enter Build Number" : "Search logs"} value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
               </Col>
             </Row>
 

@@ -23,10 +23,6 @@ function BlueprintSearchResult({ searchResults }) {
           completeInput.push(searchResults[item].api_response.status); 
         } else if (searchResults[item].api_response.buildLog) {
           completeInput.push(searchResults[item].api_response.buildLog); 
-        } else {
-          if (searchResults[item].api_response) {
-            completeInput.push(searchResults[item].api_response); 
-          }
         }
       }
     }
@@ -73,7 +69,7 @@ function BlueprintSearchResult({ searchResults }) {
                   {searchResults.map((item, idx) => (
                     <Tab.Pane key={idx} eventKey={idx}>
                       <div className="console-text-invert">
-                        {item.api_response.jenkins_console_log ? item.api_response.jenkins_console_log : (item.api_response.status ? item.api_response.status : (item.api_response.buildLog) ? item.api_response.buildLog : (item.api_response) ? item.api_response : "")}
+                        {item.api_response.jenkins_console_log ? item.api_response.jenkins_console_log : (item.api_response.status ? item.api_response.status : (item.api_response.buildLog) ? item.api_response.buildLog : "")}
                       </div>
                     </Tab.Pane>
                   ))}
