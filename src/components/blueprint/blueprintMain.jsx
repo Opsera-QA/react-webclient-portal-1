@@ -165,7 +165,6 @@ function OPBlueprint (props) {
         let searchResults = [];
         if (result) {
           searchResults = result.hasOwnProperty("data") ? result.data : [];
-          console.log(searchResults);
         }
         if (searchResults.length === 0) {
           setNoResults(true);
