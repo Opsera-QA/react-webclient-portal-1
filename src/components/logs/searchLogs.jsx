@@ -367,7 +367,7 @@ function SearchLogs (props) {
         <div className="max-content-width" >
           <Form onSubmit={handleFormSubmit}>
             <Row>
-              <Col md={3}>
+              <Col md={3} className="py-1">
                 <DropdownList
                   data={Array.isArray(FILTER) ? FILTER : [{ "value": "pipeline", "label": "Pipeline" }]}  
                   defaultValue={"pipeline"}
@@ -378,7 +378,7 @@ function SearchLogs (props) {
                   onChange={handleSelectChange}             
                 />
               </Col>
-              {filterType === "opsera-pipeline" || filterType === "blueprint" ? <Col md={3}>
+              {filterType === "opsera-pipeline" || filterType === "blueprint" ? <Col md={3} className="py-1">
                 {filterType === "opsera-pipeline" && 
                   <DropdownList
                     data={filterOptions} 
@@ -409,7 +409,7 @@ function SearchLogs (props) {
                   />
                 }
               </Col> : ""}
-              {filterType === "opsera-pipeline" ? <Col md={3}>
+              {filterType === "opsera-pipeline" ? <Col className="py-1" md={3}>
                 {filterType === "opsera-pipeline" && 
                   <DropdownList
                     data={pipelineFilter.steps} 
@@ -424,7 +424,7 @@ function SearchLogs (props) {
                     onChange={setStepFilter}        
                   />}
               </Col> : ""}
-              <Col md={filterType === "opsera-pipeline" ? 3 : 9} >
+              <Col className="py-1" md={filterType === "opsera-pipeline" ? 3 : (filterType === "blueprint" ? 6 : 9)} >
                 <Form.Control placeholder="Search logs" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
               </Col>
               
@@ -467,7 +467,7 @@ function SearchLogs (props) {
               <Col></Col>
               <Col></Col>
               <Col md={3} style={{ textAlign: "right" }} className="no-wrap">
-                <Button className="float-right" variant="outline-secondary" type="button" onClick={toggleCalendar} >
+                <Button variant="outline-secondary" type="button" onClick={toggleCalendar} >
                   <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth/>
                   {(calendar && sDate || eDate) ? sDate + " - " + eDate : "Date Range"}</Button>
                 <Button variant="primary" className="ml-1" type="submit">Search</Button>
@@ -581,17 +581,9 @@ function SearchLogs (props) {
         </div>
 
 
-        {loading && <LoadingDialog size="sm" />}
+        {}
 
-        {(!loading && noResults && searchTerm.length > 0) &&
-          <div style={{ height: "400px" }}>
-            <div className="row h-100">
-              <div className="col-sm-12 my-auto text-center">
-                <div className="h6">No Results found</div>
-              </div>
-            </div>
-          </div> 
-        }
+        {        }
 
         {Object.keys(logData).length > 0 && (filterType == "blueprint" ? <BlueprintSearchResult searchResults={logData.hits} /> : <LogSearchResult searchResults={logData.hits} />  )}
         {Object.keys(logData).length > 0 && (filterType == "commit" ? <CommitSearchResult searchResults={logData.hits} /> : "")}
