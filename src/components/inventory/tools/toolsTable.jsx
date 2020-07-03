@@ -1,89 +1,72 @@
-import React, { useState, useEffect, useContext, useMemo } from "react";
-import { Table, Pagination } from "react-bootstrap";
-import { useTable, usePagination, useSortBy } from "react-table";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
+import CustomTable from "components/common/table";
+import { faTimesCircle, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faSortUp, faSortDown, faSort } from "@fortawesome/free-solid-svg-icons";
+import { format } from "date-fns";
 
-function ToolsTable({ columns, data, rowInfo }) {
-
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    prepareRow,
-    rows
-  } = useTable(
-    {
-      columns,
-      data,
-      initialState: { 
-        pageIndex: 0,
-        sortBy: [
-          {
-            id: "name",
-            desc: false
-          }
-        ]
-      },
-    },
-    useSortBy,
-    usePagination
-  );
-
-  const setColumnClass = (id, columns) => {
-    let response = "";
-    if (columns && id){
-      Object.keys(columns).forEach(function(key) {
-        if (columns[key].accessor === id) {
-          response = columns[key].class;
-        }      
-      });      
-    } 
-    return response;
+function ToolsTable({ data, rowInfo }) {
+  const initialState = {
+    pageIndex: 0,
+    sortBy: [
+      {
+        id: "name",
+        desc: false
+      }
+    ]
   };
+
+  const rowStyling = (row) => {
+    return !row["values"].active ? " inactive-row" : "";
+  };
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: "Name",
+        accessor: "name",
+      },
+      {
+        Header: "Description",
+        accessor: "description",
+      },
+      {
+        Header: "Tool",
+        accessor: "tool_identifier"
+      },      
+      {
+        Header: "Created",
+        accessor: "createdAt",
+        Cell: (props) => {
+          return format(new Date(props.value), "yyyy-MM-dd");
+        },
+      },
+      {
+        Header: "State",
+        accessor: "active",
+        Cell: (props) => {
+          return props.value ?  <FontAwesomeIcon icon={faCheckCircle} className="cell-icon green ml-2" /> : <FontAwesomeIcon icon={faTimesCircle} className="cell-icon red ml-2" />;
+        },
+      },
+    ],
+    []
+  );
 
   return (
     <>
-      <Table responsive hover {...getTableProps()}>
-        <thead>
-          {headerGroups.map((headerGroup, i) => (
-            <tr key={i}  {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column, j) => (
-                <th key={j} {...column.getHeaderProps(column.getSortByToggleProps())}>
-                  {column.render("Header")}
-                  <span>
-                    {column.isSorted
-                      ? column.isSortedDesc
-                        ? <FontAwesomeIcon icon={faSortDown} className="float-right" />
-                        : <FontAwesomeIcon icon={faSortUp} className="float-right" />
-                      : null}
-                  </span>
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row, i) => {
-            prepareRow(row);
-            return (
-              <tr className={row.values.active ? "" : "disabledTool"} key={i} {...row.getRowProps({ onClick: () => rowInfo(row) } )}>
-                {row.cells.map((cell, j) => {
-                  return <td key={j} {...cell.getCellProps()} className={setColumnClass(cell.column.id, columns)}>{cell.render("Cell")}</td>;
-                })}
-              </tr>
-            );
-          })}
-          {rows.length == 0 && <tr><td colSpan="8" className="text-center p-5">No tools are currently registered</td></tr>}
-        </tbody>
-      </Table>
+      <CustomTable 
+        columns={columns} 
+        data={data}
+        selectedRow={rowInfo}
+        rowStyling={rowStyling}
+        initialState={initialState}
+      >
+      </CustomTable>
     </>
   );
 }
 
 ToolsTable.propTypes = {
-  columns: PropTypes.array,
   data: PropTypes.array,
   rowInfo: PropTypes.func
 };

@@ -4,7 +4,6 @@ import { axiosApiService } from "api/apiService";
 import LoadingDialog from "components/common/loading";
 import Modal from "components/common/modal";
 import { AuthContext } from "contexts/AuthContext";
-import { format } from "date-fns";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
@@ -12,7 +11,6 @@ import NewTool from "./newTool/newTool";
 import ToolDetails from "./toolDetails/toolDetails"; //tool summary view
 import "./tools.css";
 import ToolsTable from "./toolsTable";
-import { faTimesCircle, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
 function ToolInventory () {
   let history = useHistory();
@@ -122,41 +120,6 @@ function ToolInventory () {
     
   };
 
-  //TODO: Nobal, Please add default sort as an option here AND the option to hide sorting on a column!
-  const columns = useMemo(
-    () => [
-      {
-        Header: "Name",
-        accessor: "name",
-      },
-      {
-        Header: "Description",
-        accessor: "description",
-      },
-      {
-        Header: "Tool",
-        accessor: "tool_identifier"
-      },      
-      {
-        Header: "Created",
-        accessor: "createdAt",
-        Cell: (props) => {
-          return format(new Date(props.value), "yyyy-MM-dd");
-        },
-        class: "no-wrap-inline"
-      },
-      {
-        Header: "State",
-        accessor: "active",
-        Cell: (props) => {
-          return props.value ?  <FontAwesomeIcon icon={faCheckCircle} className="green ml-3" /> : <FontAwesomeIcon icon={faTimesCircle} className="red ml-3" />;
-        },
-      },
-    ],
-    []
-  );
-
-
   const closeViewModal = () => {
     toggleViewModal(false);
     history.push("/inventory/tools");
@@ -183,7 +146,7 @@ function ToolInventory () {
         <br />
       </div>
 
-      {!isLoading && <ToolsTable rowInfo={viewTool}  columns={columns} data={toolList} />}
+      {!isLoading && <ToolsTable rowInfo={viewTool} data={toolList} />}
       {isLoading && <LoadingDialog size="sm" />}
     </>
   );  
