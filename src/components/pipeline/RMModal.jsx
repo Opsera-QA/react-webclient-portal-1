@@ -128,11 +128,11 @@ class RMModal extends PureComponent {
         </Modal.Body>
         <Modal.Footer>
           <Button
-            variant="outline-secondary"
+            variant="secondary"
             onClick={this.handlecancel}
           > Cancel
           </Button>
-          <Button variant="outline-primary" onClick={this.handleSave}>
+          <Button variant="primary" onClick={this.handleSave}>
             Confirm
           </Button>
         </Modal.Footer>

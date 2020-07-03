@@ -17,7 +17,7 @@ function EditToolModal(props) {
           <TagInput defaultValue={tags} onChange={data => setTags(data)} />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="outline-secondary" onClick={() => props.onHide()}>
+          <Button variant="secondary" onClick={() => props.onHide()}>
             Close
           </Button>
           <Button variant="success" onClick={() => props.onClick(tags)}>

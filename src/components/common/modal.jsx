@@ -43,7 +43,7 @@ function CustomModalDialog({ header, message, button, size, handleConfirmModal, 
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="outline-secondary" onClick={() => handleClose()}>
+          <Button variant="secondary" onClick={() => handleClose()}>
             Close
           </Button>
           {

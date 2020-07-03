@@ -65,7 +65,7 @@ function ModalActivityLogsDialog({ header, size, jsonData, show, setParentVisibi
               </div> }                   
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="outline-secondary" onClick={() => handleClose()}>
+            <Button variant="secondary" onClick={() => handleClose()}>
             Close
             </Button>
           </Modal.Footer>
@@ -84,7 +84,7 @@ function ModalActivityLogsDialog({ header, size, jsonData, show, setParentVisibi
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="outline-secondary" onClick={() => handleClose()}>
+            <Button variant="secondary" onClick={() => handleClose()}>
             Close
             </Button>
           </Modal.Footer>

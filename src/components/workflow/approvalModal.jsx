@@ -105,41 +105,42 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
           <Modal.Title>Pipeline Step Approval</Modal.Title>
         </Modal.Header>
         <Modal.Body>          
+          <div className="m-3">
+            {errors ? <div className="error-text">Error Reported: {errors}</div> : null}
 
-          {errors ? <div className="error-text">Error Reported: {errors}</div> : null}
-
-          {Object.keys(approvalStep) === 0 ? <div className="info-text">No steps in this pipeline require approval at this time.</div> : 
-            <>
-              <div className="my-2">Approval Required After Step: {priorToApprovalStep.name}</div> 
-              <div><small className="pl-2"><FontAwesomeIcon icon={faIdBadge} size="sm" fixedWidth className="mr-1"/>  
+            {Object.keys(approvalStep) === 0 ? <div className="info-text">No steps in this pipeline require approval at this time.</div> : 
+              <>
+                <div className="my-2">Approval Required After Step: {priorToApprovalStep.name}</div> 
+                <div><small className="pl-2"><FontAwesomeIcon icon={faIdBadge} size="sm" fixedWidth className="mr-1"/>  
                       ID: {priorToApprovalStep._id}</small></div>   
               
-              { message && <div className="my-3">Step Approval Message:<br/><span className="text-muted">{message}</span></div>}            
+                { message && <div className="my-3">Step Approval Message:<br/><span className="text-muted">{message}</span></div>}            
 
-              <div className="my-3">Please review the status of this pipeline and then log approval here in order for it to proceed to the next step.</div>   
-              <Form>
-                <Form.Group controlId="repoField">
-                  <Form.Label>Notes:</Form.Label>
-                  <Form.Control as="textarea" type="text" placeholder="" value={formData.message || ""} onChange={e => setFormData({ ...formData, message: e.target.value })} />
-                </Form.Group>
-                <small className="form-text text-muted mt-2 text-left">Optional message to include in approval log</small>
+                <div className="my-3">Please review the status of this pipeline and then log approval here in order for it to proceed to the next step.</div>   
+                <Form>
+                  <Form.Group controlId="repoField">
+                    <Form.Label>Notes:</Form.Label>
+                    <Form.Control as="textarea" type="text" placeholder="" value={formData.message || ""} onChange={e => setFormData({ ...formData, message: e.target.value })} />
+                  </Form.Group>
+                  <small className="form-text text-muted mt-2 text-left">Optional message to include in approval log</small>
           
-                <div className="my-4 pt-1">
-                  <Form.Check 
-                    type="switch"
-                    id="approval-switch"
-                    label="Approved" 
-                    checked={formData.approved ? true : false}   
-                    onChange={() => setFormData({ ...formData, approved: !formData.approved })}    
-                  />
-                  <small className="form-text text-muted mt-2">Flip the Approved switch to approve this step</small>
-                </div>
-              </Form>
-            </> 
-          }
+                  <div className="my-4 pt-1">
+                    <Form.Check 
+                      type="switch"
+                      id="approval-switch"
+                      label="Approved" 
+                      checked={formData.approved ? true : false}   
+                      onChange={() => setFormData({ ...formData, approved: !formData.approved })}    
+                    />
+                    <small className="form-text text-muted mt-2">Flip the Approved switch to approve this step</small>
+                  </div>
+                </Form>
+              </> 
+            }
+          </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="outline-secondary" onClick={() => handleClose()}>
+          <Button variant="secondary" onClick={() => handleClose()}>
             Close
           </Button>
           

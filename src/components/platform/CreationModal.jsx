@@ -32,10 +32,10 @@ function CreationModal(props) {
       </Modal.Body>
       <Modal.Footer>
         <Button
-          variant="outline-secondary"
+          variant="secondary"
           onClick={() => handleCancel(service)}> Cancel
         </Button>
-        <Button variant="outline-primary" onClick={handleSave}>
+        <Button variant="primary" onClick={handleSave}>
             Confirm
         </Button>
       </Modal.Footer>
