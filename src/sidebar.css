@@ -34,10 +34,14 @@
 .sidebar-menu a.chosen {
   color: #0f3e84;
 }
+
 .sidebar-menu a:hover {
-  color: #1578dc;
+  color: #0f3e84;
 }
 
+.sidebar-menu a.chosen:hover {
+  color: #1578dc;
+}
 
 .fixed-row-footer-bottom { 
   position: fixed; 
