@@ -144,6 +144,11 @@ a:hover, .active {
   max-width: 800px;  
 }
 
+.min-content-message-dimension {
+  min-width: 20vw;  
+  min-height: 20vw;  
+}
+
 .upper-case-all {
   text-transform: uppercase;
 }
@@ -475,6 +480,7 @@ a:hover, .active {
   color: #7ea2c7;
   padding: 5px;
 }
+
 
 .code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;

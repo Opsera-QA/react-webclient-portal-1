@@ -1,14 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Alert } from "react-bootstrap";
 
 
 function InformationDialog ({ message }) {
   return (
-    <div className="mt-1 mb-3">
-      <Alert variant="info">
+    <div className="h-100 d-flex justify-content-center align-items-center min-content-message-dimension">
+      <div className="info-text">
         {message}
-      </Alert>
+      </div>
     </div>
   );
 }

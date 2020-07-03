@@ -367,7 +367,7 @@ function SearchLogs (props) {
         <div className="max-content-width" >
           <Form onSubmit={handleFormSubmit}>
             <Row>
-              <Col md={3} className="py-1">
+              <Col className="py-1">
                 <DropdownList
                   data={Array.isArray(FILTER) ? FILTER : [{ "value": "pipeline", "label": "Pipeline" }]}  
                   defaultValue={"pipeline"}
@@ -409,8 +409,9 @@ function SearchLogs (props) {
                   />
                 }
               </Col> : ""}
-              {filterType === "opsera-pipeline" ? <Col className="py-1" md={3}>
-                {filterType === "opsera-pipeline" && 
+              {filterType === "opsera-pipeline" ? 
+                <Col className="py-1">
+                  {filterType === "opsera-pipeline" && 
                   <DropdownList
                     data={pipelineFilter.steps} 
                     busy={Object.keys(filterOptions).length == 0 ? true : false}
@@ -423,50 +424,14 @@ function SearchLogs (props) {
                     placeholder={"Select Step"}
                     onChange={setStepFilter}        
                   />}
-              </Col> : ""}
+                </Col> : ""}
               <Col className="py-1" md={filterType === "opsera-pipeline" ? 3 : (filterType === "blueprint" ? 6 : 9)} >
                 <Form.Control placeholder="Search logs" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
               </Col>
-              
             </Row>
 
             <Row className="mt-2">
-              {/* <Col md={7}>
-                {filterType === "pipeline" && 
-                  <Multiselect
-                    data={filterOptions} 
-                    className="multi-select-filters"
-                    busy={Object.keys(filterOptions).length == 0 ? true : false}
-                    disabled={Object.keys(filterOptions).length == 0 ? true : false}
-                    valueField='value'
-                    textField='label'
-                    groupBy="type"
-                    filter='contains'
-                    value={multiFilter}
-                    placeholder={"Type to multi-select filters"}
-                    onChange={setMultiFilter} 
-                    onToggle={fetchFilterData}         
-                  />}
-                {filterType === "blueprint" && 
-                  <DropdownList
-                    data={filterOptions} 
-                    busy={Object.keys(filterOptions).length == 0 ? true : false}
-                    disabled={Object.keys(filterOptions).length == 0 ? true : false}
-                    className="basic-single"
-                    valueField='value'
-                    textField='label'
-                    filter='contains'
-                    placeholder={"Select Job Name"}
-                    value={jobFilter}
-                    onChange={setJobFilter}    
-                    onToggle={fetchFilterData}         
-                  />
-                }
-              </Col> */}
-              <Col></Col>
-              <Col></Col>
-              <Col></Col>
-              <Col md={3} style={{ textAlign: "right" }} className="no-wrap">
+              <Col className="text-right">
                 <Button variant="outline-secondary" type="button" onClick={toggleCalendar} >
                   <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth/>
                   {(calendar && sDate || eDate) ? sDate + " - " + eDate : "Date Range"}</Button>
@@ -478,9 +443,7 @@ function SearchLogs (props) {
                   target={target}
                   placement="bottom"
                   container={ref.current}
-                  containerPadding={20}
-                  
-                >
+                  containerPadding={20}  >
                   <Popover className="max-content-width" >
                     <Popover.Title><div style={{ display: "flex" }}><Button variant="outline-secondary" size="sm" type="button" style={{ marginRight: "auto" }} onClick={clearCalendar}>Clear</Button><Button variant="outline-secondary" size="sm" type="button" style={{ marginLeft: "auto" }} onClick={closeCalender}>X</Button></div>
                     </Popover.Title>
@@ -499,105 +462,15 @@ function SearchLogs (props) {
                   </Popover>
                 </Overlay>
               </Col>
-            </Row>
-            {/* <div className="d-flex mt">
-              <div className="p-2 flex-grow-1">
-                <Form.Control placeholder="Search logs" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
-              </div>
-              <div className="p-2 flex-grow-1">
-                <DropdownList
-                  data={Array.isArray(FILTER) ? FILTER : [{ "value": "pipeline", "label": "Pipeline" }]}  
-                  defaultValue={"pipeline"}
-                  className="basic-single"
-                  valueField='value'
-                  textField='label'
-                  filter='contains'
-                  onChange={handleSelectChange}             
-                />
-              </div>
-              <div className="p-2">
-                <Button variant="outline-secondary" type="button" onClick={toggleCalendar}><FontAwesomeIcon icon={faCalendar} className="mr-1 fa-fw"/>{(calendar && sDate || eDate) ? sDate + " - " + eDate : "Select Date Range"}</Button>
-                <Button variant="primary" className="ml-2" type="submit">Search</Button>
-                <Button variant="outline-secondary" className="ml-2" type="button" onClick={cancelSearchClicked}>Clear</Button>
-                <Overlay
-                  show={calendar}
-                  target={target}
-                  placement="bottom"
-                  container={ref.current}
-                  containerPadding={20}
-                >
-                  <Popover className="max-content-width">
-                    <Popover.Title><div style={{ display: "flex" }}>Filter By Date<Button variant="outline-secondary" size="sm" type="button" style={{ marginLeft: "auto" }} onClick={ () => setCalendar(false)}>X</Button></div>
-                    </Popover.Title>
-                    <Popover.Content>
-                      <DateRangePicker
-                        onChange={item => setDate([item.selection])}
-                        showSelectionPreview={true}
-                        moveRangeOnFirstSelection={false}
-                        months={2}
-                        ranges={date}
-                        direction="horizontal"
-                      />
-                    </Popover.Content>
-                  </Popover>
-                </Overlay>
-              </div>
-            </div> */}
-            {/* <div className="d-flex mt">
-              <div className={filterType === "pipeline" || filterType === "blueprint" ? "p-2 flex-grow-1" : ""}>
-                {filterType === "pipeline" && 
-                  <Multiselect
-                    data={filterOptions} 
-                    className="multi-select-filters"
-                    busy={Object.keys(filterOptions).length == 0 ? true : false}
-                    disabled={Object.keys(filterOptions).length == 0 ? true : false}
-                    valueField='value'
-                    textField='label'
-                    groupBy="type"
-                    filter='contains'
-                    value={multiFilter}
-                    placeholder={"Type to multi-select filters"}
-                    onChange={setMultiFilter} 
-                    onToggle={fetchFilterData}         
-                  />}
-                {filterType === "blueprint" && 
-                  <DropdownList
-                    data={filterOptions} 
-                    busy={Object.keys(filterOptions).length == 0 ? true : false}
-                    disabled={Object.keys(filterOptions).length == 0 ? true : false}
-                    className="basic-single"
-                    valueField='value'
-                    textField='label'
-                    filter='contains'
-                    placeholder={"Select Job Name"}
-                    value={jobFilter}
-                    onChange={setJobFilter}    
-                    onToggle={fetchFilterData}         
-                  />
-                }
-              </div> 
-            </div> */}
+            </Row>            
           </Form>
         </div>
 
-
-        {}
-
-        {        }
-
         {Object.keys(logData).length > 0 && (filterType == "blueprint" ? <BlueprintSearchResult searchResults={logData.hits} /> : <LogSearchResult searchResults={logData.hits} />  )}
         {Object.keys(logData).length > 0 && (filterType == "commit" ? <CommitSearchResult searchResults={logData.hits} /> : "")}
-        {Object.keys(logData).length > 0 && filterType != "blueprint" && filterType!== "commit" && !noResults? <Pagination total={logData.total.value || 30} currentPage={currentPage} pageSize={pageSize} onClick={(pageNumber, pageSize) => gotoPage(pageNumber, pageSize)} /> : ""}
-
-        {(!loading && !searchTerm && submitted) && 
-          <div style={{ height: "400px" }}>
-            <div className="row h-100">
-              <div className="col-sm-12 my-auto text-center max-content-width">
-                <div className="h6"><InfoDialog  message="Input a search term in order to perform a log search." /></div>   
-              </div>
-            </div>
-          </div> 
-        }
+        {Object.keys(logData).length > 0 && filterType != "blueprint" && filterType!== "commit" && !noResults? <Pagination total={logData.total.value || 30} currentPage={currentPage} pageSize={pageSize} onClick={(pageNumber, pageSize) => gotoPage(pageNumber, pageSize)} /> : ""}                
+        {(logData && logData.hits && Object.keys(logData.hits).length === 0 && searchTerm) && <InfoDialog  message="No results found." />}
+        {(!loading && !searchTerm && submitted) && <InfoDialog  message="Search term required." /> }
       </>
     );
   }
