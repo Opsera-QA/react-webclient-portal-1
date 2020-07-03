@@ -86,7 +86,7 @@ CustomTable.propTypes = {
   data: PropTypes.array,
   selectedRow: PropTypes.func,
   rowStyling: PropTypes.func,
-  initialState: JSON
+  initialState: PropTypes.object
 };
 
 export default CustomTable;

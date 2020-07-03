@@ -75,13 +75,12 @@ function NewTool(props) {
       obj[key] = formFieldList[key].value;
       return obj;
     }, {});
-    console.log("FORMDATA: ", formData);
     if(isFormValid) {
       try {
         const accessToken = await getAccessToken();
-        //const response = await axiosApiService(accessToken).post("/registry/create", { ...formData });
-        //console.log(response.data);
-        //props.closeModal(false, response.data);
+        const response = await axiosApiService(accessToken).post("/registry/create", { ...formData });
+        console.log(response.data);
+        props.closeModal(false, response.data);
       }
       catch (err) {
         isNameValid();

@@ -9,15 +9,17 @@ function MultiInputFormField(props) {
   const [rowList, setRowList ] = useState([]);
 
   
-  //Everytime a row is added or updated, call parent to construct the payload
   useEffect(() => {    
-    props.onChange(rowList);
-  }, [rowList]);
+    if (defaultValue && defaultValue.length > 0) {
+      prePopulateData();
+    }
+  }, []);
 
   //We are computing the number of rows required based on the data from API
-  /* const prePopulateData = () => {
+  const prePopulateData = () => {
     let newRows = [];
     defaultValue.map((data) => {
+      console.log("ROW?");
       let firstRow = {};
       //For each field set the default data
       formField.fields.map((field, key) => {
@@ -28,7 +30,7 @@ function MultiInputFormField(props) {
     setRowList([
       ...newRows
     ]);
-  }; */
+  };
 
   //Add new row to the table
   const addRow = () => {
@@ -62,6 +64,7 @@ function MultiInputFormField(props) {
     setRowList([
       ...rowList
     ]);
+    props.onChange(rowList); //this updates the parent object's data
   };
 
   return (
@@ -69,13 +72,6 @@ function MultiInputFormField(props) {
       {rowList && rowList.length > 0 ?
         <>
           <Table borderless={true} size="sm" style={{ marginBottom: "0" }}>
-            {/*  <thead>
-              <tr>
-                {formField.fields.map((field, key) => {
-                  return <th key={key} className="text-muted" style={{ textTransform: "capitalize", fontWeight: "normal", fontSize: "14px" }}>{field}</th>;
-                })}
-              </tr>
-            </thead> */}
             <tbody>          
               {rowList.map((row, key) => {
                 return <tr key={key}>
