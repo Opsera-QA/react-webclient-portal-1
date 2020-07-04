@@ -1,6 +1,5 @@
 import React from "react";
 import { Row, Col, Table } from "react-bootstrap";
-//import { AuthContext } from "../../../../contexts/AuthContext";
 import PropTypes from "prop-types";
 import { format } from "date-fns";
 import "./toolDetails.css";
@@ -8,25 +7,9 @@ import "./toolDetails.css";
 import "components/inventory/tools/tools.css";
 
 function ToolDetails(props) {
-  const { toolId, toolData, fnEditTool } = props;
-  const handleClose = () => props.closeModal(false);
-  /* const contextType = useContext(AuthContext);
-
-  const loadData = async (toolData) => {
-    try {
-      const { getAccessToken } = contextType;
-    }
-    catch (err) {
-      if (err.name === "AbortError") {
-        console.log("Request was canceled via controller.abort");
-        return;
-      }      
-    }
-  }; */
-
-  //console.log(toolId);
-  //console.log(JSON.stringify(toolData));
-  //loadData(toolData);
+  const { toolData, closeModal } = props;
+  const handleClose = () => closeModal(false);
+  
   return (
     <>
       { Object.keys(toolData) && <>
@@ -56,18 +39,7 @@ function ToolDetails(props) {
                 </li>
                 <li className="list-group-item">
                   <span className="pr-2 text-muted">Tags: </span>
-                  {/* <div key="checkbox-tools" className="mb-1 mt-2 p-2">
-                  <Multiselect
-                    data={toolData.tags} 
-                    className="basic-multi-select"
-                    valueField='value'
-                    textField='label'
-                    disabled
-                    defaultValue={toolData.tags.length > 0 ? toolData.tags[0] : []}        
-                  />
-                </div> */}
                   {toolData.tags.map((tag, index) => { 
-
                     return(`${tag}` );
                   })}
                 </li>
@@ -109,9 +81,6 @@ function ToolDetails(props) {
                   <span className="pr-2 text-muted">Projects</span>
                   <Table striped bordered hover className="table-sm" style={{ fontSize:"small" }}>
                     <thead>
-                      {/* <tr>
-                      <th className="text-center" colSpan="8"><span className="text-muted">Projects</span></th>
-                    </tr> */}
                       <tr>
                         <th className="text-center" style={{ width: "50%" }}>Name</th>
                         <th className="text-center" style={{ width: "50%" }}>Reference</th>                
@@ -217,11 +186,8 @@ function ToolDetails(props) {
 }
 
 ToolDetails.propTypes = {
-  showModal: PropTypes.bool,
-  type: PropTypes.string,
-  toolId: PropTypes.string,
-  toolData: PropTypes.object,
-  fnEditTool: PropTypes.func
+  closeModal: PropTypes.func,
+  toolData: PropTypes.object
 };
 
 

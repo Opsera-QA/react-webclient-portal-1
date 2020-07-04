@@ -19,7 +19,6 @@ function MultiInputFormField(props) {
   const prePopulateData = () => {
     let newRows = [];
     defaultValue.map((data) => {
-      console.log("ROW?");
       let firstRow = {};
       //For each field set the default data
       formField.fields.map((field, key) => {
@@ -55,6 +54,7 @@ function MultiInputFormField(props) {
     setRowList([
       ...rowList
     ]);
+    props.onChange(rowList); //this updates the parent object's data
   };
 
   const updateCellData = (event, row, field) => {

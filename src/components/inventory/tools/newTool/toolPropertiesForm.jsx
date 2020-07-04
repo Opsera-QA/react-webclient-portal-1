@@ -1,6 +1,5 @@
-import React, { useContext, useState, useEffect } from "react";
-import { Button, Modal, Form, Popover, Col, OverlayTrigger } from "react-bootstrap";
-import { AuthContext } from "contexts/AuthContext"; 
+import React, { useState, useEffect } from "react";
+import { Button, Form, Col } from "react-bootstrap";
 import { axiosApiService } from "api/apiService";
 import PropTypes from "prop-types";
 import MultiInputFormField from "utils/multiInputFormField";
@@ -9,8 +8,8 @@ import validate from "utils/formValidation";
 import newToolFormFields from "./new-tool-form-fields.js";
 import Loading from "components/common/loading";
 
-function NewTool(props) {
-  const { getAccessToken } = useContext(AuthContext);
+function ToolPropertiesForm(props) {
+  const { type, accessToken, toolId, setActiveTab, getToolRegistryItem, setToolId } = props;  
   const [errors, setErrors] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [ formFieldList, updateFormFields ] = useState({ ...newToolFormFields });
@@ -22,15 +21,15 @@ function NewTool(props) {
   useEffect(() => {  
     Object.assign(formFieldList, newToolFormFields);
     getToolList();
-    if(props.toolId) {
+    if(toolId) {
       setIsLoading(true);
-      getToolDetails(props.toolId);
-    }
+      getToolDetails(toolId);
+    } 
   }, []);
 
   const getToolDetails = async (toolId) => {
     try {
-      const accessToken = await getAccessToken();
+      
       const toolDetails = await axiosApiService(accessToken).get("/registry/" + toolId, {});
       Object.keys(formFieldList).map((item, i) => {
         let validateInput = {
@@ -54,9 +53,9 @@ function NewTool(props) {
     }
   };
 
+
   const getToolList = async () => {
     try {
-      const accessToken = await getAccessToken();
       const toolResponse = await axiosApiService(accessToken).get("/registry/tools", {});
       const typeResponse = await axiosApiService(accessToken).get("/registry/types", {});
       setToolList({
@@ -77,10 +76,10 @@ function NewTool(props) {
     }, {});
     if(isFormValid) {
       try {
-        const accessToken = await getAccessToken();
         const response = await axiosApiService(accessToken).post("/registry/create", { ...formData });
-        console.log(response.data);
-        props.closeModal(false, response.data);
+        setToolId(response.data._id);
+        getToolRegistryItem(response.data._id);
+        setActiveTab("summary");
       }
       catch (err) {
         isNameValid();
@@ -112,9 +111,9 @@ function NewTool(props) {
     }, {});
 
     try {
-      const accessToken = await getAccessToken();
-      const response = await axiosApiService(accessToken).post("/registry/"+ props.toolId + "/update", { ...formData });
-      props.closeModal(false, response.data);
+      await axiosApiService(accessToken).post("/registry/"+ toolId + "/update", { ...formData });
+      getToolRegistryItem(toolId);
+      setActiveTab("summary");
     }
     catch (err) {
       setErrors(err.message);
@@ -123,7 +122,6 @@ function NewTool(props) {
   };
 
   const handleFormChange = (formField, value) => {
-    
     let validateInput = {
       errorMessage: "",
       touched: true, 
@@ -145,10 +143,6 @@ function NewTool(props) {
       } 
     }));
 
-  };
-
-  const handleClose = () => {
-    props.closeModal(false);
   };
 
   const handleToolTypeUpdate = (value, formField) => {
@@ -179,8 +173,13 @@ function NewTool(props) {
     }));
   };
 
+  const handleCancel = (toolId) => {
+    getToolRegistryItem(toolId);
+    setActiveTab("summary");
+  };
+
   const isFormValid = (formFieldList.name.value && formFieldList.tool_identifier.value) ? true :false;
-  const isFormModified = Object.values(formFieldList).some(x => (x.touched == true));
+  //const isFormModified = Object.values(formFieldList).some(x => (x.touched == true));
 
   const formFieldType = (formField) => {
     switch (formField.type) {
@@ -218,67 +217,54 @@ function NewTool(props) {
     }
   };
 
-  const popover = (
-    <Popover id="popover-basic">
-      <Popover.Content>
-        All unsaved changes will be lost
-      </Popover.Content>
-    </Popover>
-  );
-
   return (
     <>
-      <Modal size="lg" show={props.showModal} onHide={handleClose} backdrop="static" id="dataManagerModal">
-        <Modal.Header closeButton>
-          <Modal.Title>{props.type == "new" ? "New" : "Edit"} Tool</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="tool-content-block m-3 pt-2">
+      <div className="tool-content-block m-3 pt-2">
 
-            {errors ? <div className="error-text">Error Reported: {errors}</div> : null}
-            {isLoading ? <Loading size="sm" /> : null}
+        {errors && <div className="error-text">Error Reported: {errors}</div>}
+        {isLoading ? <Loading size="sm" /> : null}
           
-            {!isLoading && (
-              <Form className="newToolFormContainer">
-                {Object.values(formFieldList).map((formField, i) => {
-                  //console.log("Form field: " + JSON.stringify(formField));
-                  if(formField.toShow) {
-                    return(
-                      <Form.Group key={i} controlId="formPlaintextEmail" className="mt-2 vertical-center-cols-in-row">
-                        <Form.Label column sm="2">
-                          {formField.label} 
-                          {formField.rules.isRequired && <span style={{ marginLeft:5, color: "#dc3545" }}>*</span>}
-                        </Form.Label>
-                        <Col sm="10" className="text-right">
-                          {formFieldType(formField)}
-                          <Form.Control.Feedback type="invalid">{formField.errorMessage}</Form.Control.Feedback>
-                        </Col>
-                      </Form.Group>
-                    );
-                  }
-                })}
-              </Form>
-            )}
+        {!isLoading && <>
+          <Form className="newToolFormContainer">
+            {Object.values(formFieldList).map((formField, i) => {
+              
+              if(formField.toShow) {
+                return(
+                  <Form.Group key={i} controlId="formPlaintextEmail" className="mt-2 vertical-center-cols-in-row">
+                    <Form.Label column sm="2">
+                      {formField.label} 
+                      {formField.rules.isRequired && <span style={{ marginLeft:5, color: "#dc3545" }}>*</span>}
+                    </Form.Label>
+                    <Col sm="10" className="text-right">
+                      {formFieldType(formField)}
+                      <Form.Control.Feedback type="invalid">{formField.errorMessage}</Form.Control.Feedback>
+                    </Col>
+                  </Form.Group>
+                );
+              }
+            })}
+          </Form>
+          <div className="text-right m-2">
+            <Button size="sm" variant="primary" onClick={type == "new" ? createNewTool : updateTool} disabled={!isFormValid}>Save changes</Button>
+            <Button size="sm" className="ml-1" variant="secondary" onClick={() => handleCancel(toolId)}>Cancel</Button>
           </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <OverlayTrigger trigger={["hover", "hover"]} placement="top" overlay={popover}>
-            <Button size="sm" variant="secondary" onClick={handleClose}>Close</Button>
-          </OverlayTrigger>
-          <Button size="sm" variant="primary" onClick={props.type == "new" ? createNewTool : updateTool} disabled={!isFormValid}>Save changes</Button>
-        </Modal.Footer>
-      </Modal>
+        </>}
+      </div>
     </>
   );
 }
 
 
-NewTool.propTypes = {
-  showModal: PropTypes.bool,
+ToolPropertiesForm.propTypes = {
+  type: PropTypes.string,
   toolId:  PropTypes.string,
-  editTool: PropTypes.object
+  accessToken: PropTypes.string,
+  setActiveTab: PropTypes.func,
+  getToolRegistryItem: PropTypes.func,
+  toolData: PropTypes.object,
+  setToolId: PropTypes.func
 };
 
 
 
-export default NewTool;
+export default ToolPropertiesForm;
