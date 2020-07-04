@@ -9,7 +9,7 @@ import newToolFormFields from "./new-tool-form-fields.js";
 import Loading from "components/common/loading";
 
 function ToolPropertiesForm(props) {
-  const { type, accessToken, toolId, setActiveTab, getToolRegistryItem, setToolId } = props;  
+  const { type, accessToken, toolId, setActiveTab, getToolRegistryItem, setToolId, closeModal } = props;  
   const [errors, setErrors] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [ formFieldList, updateFormFields ] = useState({ ...newToolFormFields });
@@ -173,9 +173,13 @@ function ToolPropertiesForm(props) {
     }));
   };
 
-  const handleCancel = (toolId) => {
-    getToolRegistryItem(toolId);
-    setActiveTab("summary");
+  const handleCancel = (toolId, type) => {
+    if (type === "new") {
+      closeModal(false);
+    } else {
+      getToolRegistryItem(toolId);
+      setActiveTab("summary");
+    }
   };
 
   const isFormValid = (formFieldList.name.value && formFieldList.tool_identifier.value) ? true :false;
@@ -246,7 +250,7 @@ function ToolPropertiesForm(props) {
           </Form>
           <div className="text-right m-2">
             <Button size="sm" variant="primary" onClick={type == "new" ? createNewTool : updateTool} disabled={!isFormValid}>Save changes</Button>
-            <Button size="sm" className="ml-1" variant="secondary" onClick={() => handleCancel(toolId)}>Cancel</Button>
+            <Button size="sm" className="ml-1" variant="secondary" onClick={() => handleCancel(toolId, type)}>Cancel</Button>
           </div>
         </>}
       </div>
@@ -262,7 +266,8 @@ ToolPropertiesForm.propTypes = {
   setActiveTab: PropTypes.func,
   getToolRegistryItem: PropTypes.func,
   toolData: PropTypes.object,
-  setToolId: PropTypes.func
+  setToolId: PropTypes.func,
+  closeModal: PropTypes.func
 };
 
 

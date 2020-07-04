@@ -29,13 +29,13 @@ function Inventory () {
 
       <ul className="nav nav-pills mt-2">
         <li className="nav-item">
-          <Button size="sm" className="mr-2" variant={selection === "platform" ? "primary" : "secondary"}   
-            onClick={() => { handleTabClick("platform", "/inventory");}}>Platform</Button>
-        </li>
-        <li className="nav-item">
           <Button size="sm" className="mr-2" variant={selection === "tools" ? "primary" : "secondary"} 
             onClick={() => { handleTabClick("tools", "/inventory/tools");}}>Tools</Button>
         </li>
+        <li className="nav-item">
+          <Button size="sm" className="mr-2" variant={selection === "platform" ? "primary" : "secondary"}   
+            onClick={() => { handleTabClick("platform", "/inventory");}}>Platform</Button>
+        </li>        
       </ul>
       {selection === "platform" ? <PlatformInventory /> : null}
       {selection === "tools" ? <ToolInventory /> : null}

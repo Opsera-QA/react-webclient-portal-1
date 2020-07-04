@@ -34,14 +34,14 @@ const INITIAL_FORM = {
 
 
 function ToolDetails(props) {
-  const { toolId, fnEditTool, fnDeleteTool, setToolId } = props;  
+  const { toolId, fnEditTool, fnDeleteTool, setToolId, closeModal } = props;  
   const { getAccessToken, getUserRecord } = useContext(AuthContext);
   const [toolData, setToolData] = useState(INITIAL_FORM);
   const [errors, setErrors] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [canDelete, setCanDelete] = useState(false);
   const [token, setToken] = useState("");
-  const handleClose = () => props.closeModal(false);
+  const handleClose = () => closeModal(false);
   const [activeTab, setActiveTab] = useState("summary");
   
 
@@ -136,17 +136,17 @@ function ToolDetails(props) {
                         {activeTab === "new" && <Button size="sm" className="ml-2 mr-2" variant="success" onClick={() => setActiveTab("new")}>New Tool</Button> }
                       </>}
 
-                    <Button size="sm" className="mr-2" variant={activeTab === "connections" ? "primary" : "secondary"} onClick={() => setActiveTab("connections")}>Connections</Button>
-                    <Button size="sm" className="mr-2" variant={activeTab === "jobs" ? "primary" : "secondary"} onClick={() => setActiveTab("jobs")}>Jobs</Button>
-                    <Button size="sm" className="mr-2" variant={activeTab === "logs" ? "primary" : "secondary"} onClick={() => setActiveTab("logs")}>Logs</Button>
+                    <Button size="sm" disabled={activeTab === "new" || activeTab === "edit"} className="mr-2" variant={activeTab === "connections" ? "primary" : "secondary"} onClick={() => setActiveTab("connections")}>Connections</Button>
+                    <Button size="sm" disabled={activeTab === "new" || activeTab === "edit"} className="mr-2" variant={activeTab === "jobs" ? "primary" : "secondary"} onClick={() => setActiveTab("jobs")}>Jobs</Button>
+                    <Button size="sm" disabled={activeTab === "new" || activeTab === "edit"} className="mr-2" variant={activeTab === "logs" ? "primary" : "secondary"} onClick={() => setActiveTab("logs")}>Logs</Button>
                   </ButtonGroup>
                   <ButtonGroup>
                     <Button size="sm" className="float-right mr-1" variant="secondary" 
-                      onClick= {() => { editTool(); }} >
+                      onClick= {() => { editTool(); }} disabled={activeTab === "new" || activeTab === "edit"}>
                       <FontAwesomeIcon icon={faPen} fixedWidth /> 
                     </Button>
-                    <Button size="sm" disabled={!canDelete} className="float-right mr-2" variant={canDelete ? "outline-danger" : "outline-secondary"}
-                      onClick= {() => { fnDeleteTool(toolId, toolData); }} >
+                    <Button size="sm" className="float-right mr-2" variant={canDelete ? "outline-danger" : "outline-secondary"}
+                      onClick= {() => { fnDeleteTool(toolId, toolData); }} disabled={(!canDelete || activeTab === "new" || activeTab === "edit")}>
                       <FontAwesomeIcon icon={faTrash} fixedWidth />
                     </Button>
                   </ButtonGroup>
@@ -162,7 +162,7 @@ function ToolDetails(props) {
                 {activeTab === "jobs" && <ToolJobs toolData={toolData} toolId={toolId} accessToken={token}  />}
                 {activeTab === "logs" && <ToolLogs toolData={toolData} toolId={toolId} accessToken={token}  />}
               </> : <>
-                {activeTab === "new" && <ToolPropertiesForm type={activeTab} toolId={toolId} accessToken={token} setActiveTab={setActiveTab} getToolRegistryItem={getToolRegistryItem} setToolId={setToolId} />}
+                {activeTab === "new" && <ToolPropertiesForm type={activeTab} toolId={toolId} accessToken={token} setActiveTab={setActiveTab} getToolRegistryItem={getToolRegistryItem} setToolId={setToolId} closeModal={closeModal} />}
               </>
               }              
             </>
