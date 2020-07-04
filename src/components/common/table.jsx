@@ -43,7 +43,7 @@ function CustomTable({ columns, data, selectedRow, rowStyling, initialState }) {
 
   return (
     <>
-      <table className="custom-table my-2 mr-1" responsive hover {...getTableProps()}>
+      <table className="custom-table my-3 mr-1" responsive hover {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup, i) => (
             <tr key={i}  {...headerGroup.getHeaderGroupProps()}>

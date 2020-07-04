@@ -138,7 +138,7 @@ function ToolInventory () {
         handleCancelModal={() => setShowDeleteModal(false)}
         handleConfirmModal={() => deleteTool()} /> : null}
 
-      <div className="mt-2 mb-2 text-right">
+      <div className="mb-2 text-right">
         <Button size="sm" variant="primary"   
           onClick={() => { handleNewEntryClick("new"); }}> 
           <FontAwesomeIcon icon={faPlus} className="mr-1"/> New Entry
