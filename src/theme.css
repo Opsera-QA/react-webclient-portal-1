@@ -222,20 +222,24 @@ a.text-primary:hover, a.text-primary:focus {
 
 /* Table Style Changes */
 .custom-table {
-  border-radius: 5px;
-  border: 1px solid #d2d2d2;
-  font-size: 13px;
+  /* border-radius: 5px; */
+  /* border: 1px solid #d2d2d2; */
+  font-size: .9em;
   width: 100%;
 }
 
 .custom-table th {
-  background-color: #3551a1;
+  background-color: #1578dc;
   color: #fff;
+  line-height:2.4em;
   border-bottom: 1px solid gray;
+  text-align: center;
+  vertical-align: middle;
 }
 
 .table-row {
   margin-bottom: 2em;
+  line-height:2em;
   border: 1px solid #dee2e6;
 }
 
@@ -248,29 +252,31 @@ a.text-primary:hover, a.text-primary:focus {
 }
 
 .custom-table tr.odd.inactive-row {
-  background-color: rgba(200, 4, 4, 0.3);
+  /* background-color: rgba(4, 95, 200, 0.178); */
+  opacity:.6;
 }
 
 .custom-table tr.even.inactive-row {
-  background-color: rgba(200, 4, 4, 0.4);
+  /* background-color: rgba(4, 95, 200, 0.178); */
+  opacity:.6;
 }
 .custom-table td:hover {
-  color: white;
+  /* color: white; */
 }
 
 .custom-table .table-row:hover .cell-icon {
-  color:white;
+  /* color:white; */
 }
 
 .custom-table .table-row:hover {
-  background-color: #418cec;
-  color: white;
+  background-color: #1578dc1f;
+  /* color: white; */
   /* cursor: pointer; */
 }
 
 .custom-table .table-footer {
-  background-color: #2c4055;
-  height: 1.5em;
+  background-color: #dee2e6;
+  height: 1em;
 }
 
 /* End custom table styling */

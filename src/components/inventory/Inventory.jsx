@@ -1,19 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, useParams, useLocation } from "react-router-dom";
-import { AuthContext } from "contexts/AuthContext";  
+import { useParams, useHistory } from "react-router-dom";
 import { Button } from "react-bootstrap";
-
 import PlatformInventory from "./platform/platformInventory";
 import ToolInventory from "./tools/toolsInventory";
 
 function Inventory () {
-  const { id, view } = useParams();
-  const contextType = useContext(AuthContext);
+  const { view } = useParams();
   const [selection, setSelection] = useState("");
-  //const [previewRole, setPreviewRole] = useState(false);
+  const history = useHistory();
 
   useEffect(()=> {
-    //getRoles();
     if (view === "tools") {
       setSelection("tools");
     } else {
@@ -21,18 +17,9 @@ function Inventory () {
     }  
   }, []);
   
-  /* const getRoles = async () => {
-    const { getIsPreviewRole } = contextType; 
-    //this returns true IF the Okta groups for user contains "Preview".  Please wrap display components in this.
-    const isPreviewRole = await getIsPreviewRole(true);
-    setPreviewRole(isPreviewRole);
-    if (isPreviewRole) {
-      console.log("Enabling Preview Feature Toggle. ", isPreviewRole);
-    }    
-  }; */
-
-  const handleTabClick = param => e => {
+  const handleTabClick = (param, path) => {
     setSelection(param);
+    history.push(path);
   };
 
   return (
@@ -43,11 +30,11 @@ function Inventory () {
       <ul className="nav nav-pills mt-2">
         <li className="nav-item">
           <Button size="sm" className="mr-2" variant={selection === "platform" ? "primary" : "secondary"}   
-            to="/inventory" onClick={handleTabClick("platform")}>Platform</Button>
+            onClick={() => { handleTabClick("platform", "/inventory");}}>Platform</Button>
         </li>
         <li className="nav-item">
           <Button size="sm" className="mr-2" variant={selection === "tools" ? "primary" : "secondary"} 
-            to={"/inventory/tools"}  onClick={handleTabClick("tools")}>Tools</Button>
+            onClick={() => { handleTabClick("tools", "/inventory/tools");}}>Tools</Button>
         </li>
       </ul>
       {selection === "platform" ? <PlatformInventory /> : null}

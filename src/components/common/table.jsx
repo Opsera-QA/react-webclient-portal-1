@@ -43,7 +43,7 @@ function CustomTable({ columns, data, selectedRow, rowStyling, initialState }) {
 
   return (
     <>
-      <table className="custom-table mb-2" responsive hover {...getTableProps()}>
+      <table className="custom-table m-2" responsive hover {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup, i) => (
             <tr key={i}  {...headerGroup.getHeaderGroupProps()}>
@@ -53,8 +53,8 @@ function CustomTable({ columns, data, selectedRow, rowStyling, initialState }) {
                   <span>
                     {column.isSorted
                       ? column.isSortedDesc
-                        ? <FontAwesomeIcon icon={faSortDown} className="float-right" />
-                        : <FontAwesomeIcon icon={faSortUp} className="float-right" />
+                        ? <FontAwesomeIcon icon={faSortDown} className="float-right mt-2" />
+                        : <FontAwesomeIcon icon={faSortUp} className="float-right mt-2" />
                       : null}
                   </span>
                 </th>
