@@ -3,8 +3,7 @@ import { Button } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext"; 
 import { axiosApiService } from "api/apiService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faTimesCircle, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import { format } from "date-fns";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Modal from "components/common/modal";
 import Loading from "components/common/loading";
 import ErrorDialog from "components/common/error";
@@ -43,43 +42,6 @@ function TagsEditor() {
       console.log(err.message);
     }
   };
-
-  const columns = useMemo(
-    () => [
-      {
-        Header: "Key",
-        accessor: "key",
-      },
-      {
-        Header: "Value",
-        accessor: "value",
-      },      
-      {
-        Header: "Owner",
-        accessor: "owner_name",
-      },   
-      {
-        Header: "Account",
-        accessor: "account",
-      },           
-      {
-        Header: "Active",
-        accessor: "active",
-        Cell: (props) => {
-          return props.value ?  <FontAwesomeIcon icon={faCheckCircle} className="green ml-3" /> :  <FontAwesomeIcon icon={faTimesCircle} className="red ml-3" />;
-        },
-      },
-      {
-        Header: "Created",
-        accessor: "createdAt",
-        Cell: (props) => {
-          return props.value ? format(new Date(props.value), "yyyy-MM-dd") : "";
-        },
-        class: "no-wrap-inline"
-      },
-    ],
-    []
-  );
 
   const selectedRow = (rowData, type) => {
     setTagData(rowData.original);
@@ -161,7 +123,7 @@ function TagsEditor() {
           <br />
         </div>
       
-        <TagsTable selectedRow={rowData => selectedRow(rowData, "tool_type")} columns={columns} data={tagList} />
+        <TagsTable selectedRow={rowData => selectedRow(rowData, "tool_type")} data={tagList} />
 
         {showTagModal && !showDeleteModal && <TagEditorModal 
           type={modalType}

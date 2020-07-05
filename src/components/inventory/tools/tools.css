@@ -59,6 +59,10 @@
   display: flex;
 }
 
+.tool-filter {
+  width: 30%;
+}
+
 .application-select {
   width: 85%;
   margin-left: auto;

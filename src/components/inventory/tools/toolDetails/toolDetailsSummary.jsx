@@ -1,14 +1,86 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Row, Col, Table } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { format } from "date-fns";
 import "./toolDetails.css";
 
 import "components/inventory/tools/tools.css";
+import CustomTable from "components/common/table";
 
 function ToolDetails(props) {
   const { toolData, closeModal } = props;
   const handleClose = () => closeModal(false);
+  
+  const initialState = {
+    pageIndex: 0,
+    sortBy: [
+      {
+        id: "name",
+        desc: false
+      }
+    ]
+  };
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: "Name",
+        accessor: "name",
+      },
+      {
+        Header: "Reference",
+        accessor: "value",
+      },
+    ],
+    []
+  );
+
+  const contactsColumns = useMemo(
+    () => [
+      {
+        Header: "Name",
+        accessor: "name",
+      },
+      {
+        Header: "Email",
+        accessor: "value",
+      },
+      {
+        Header: "ID",
+        accessor: "user_id",
+      },
+    ],
+    []
+  );
+
+  const getTable = (data, tableColumns, object) => {
+    return (
+      <>
+        <CustomTable 
+          columns={tableColumns} 
+          data={parseEmptyRows(data)}
+          initialState={initialState}
+          noDataMessage={"No " + object + " are assigned to this tool."}
+        >
+        </CustomTable>
+      </>
+    );
+  };
+
+  const parseEmptyRows = (data) => {
+    let parsedRows = [];
+
+    if (data && data.length > 0)
+    {
+      data.map((row, index) => {
+        if (row["name"] || row["value"]) {
+          parsedRows.push(row);
+        }
+      });
+    }
+
+    return parsedRows;
+  }; 
   
   return (
     <>
@@ -79,23 +151,7 @@ function ToolDetails(props) {
               <ul className="list-group my-2">
                 <li className="list-group-item">
                   <span className="pr-2 text-muted">Projects</span>
-                  <Table striped bordered hover className="table-sm" style={{ fontSize:"small" }}>
-                    <thead>
-                      <tr>
-                        <th className="text-center" style={{ width: "50%" }}>Name</th>
-                        <th className="text-center" style={{ width: "50%" }}>Reference</th>                
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {toolData.projects && toolData.projects.map((item, i) => (
-                        <tr key={i} >
-                          <td className="text-center">{item["name"]}</td>
-                          <td className="text-center">{item["value"]}</td>
-                        </tr>
-                      ))}
-                      {(!toolData.projects || toolData.projects.length == 0) && <tr><td colSpan="8" className="text-center p-5">No projects are assigned to this tool.</td></tr>}
-                    </tbody>
-                  </Table>
+                  {getTable(toolData.projects, columns, "projects")}
                 </li>
               </ul>
             </Col>
@@ -103,25 +159,7 @@ function ToolDetails(props) {
               <ul className="list-group my-2">
                 <li className="list-group-item">
                   <span style={{ width: "100%" }} className="text-muted text-center">Contacts</span>
-                  <Table striped bordered hover className="table-sm" style={{ fontSize:"small" }}>
-                    <thead>
-                      <tr>
-                        <th className="text-center" style={{ width: "50%" }}>Name</th>
-                        <th className="text-center" style={{ width: "50%" }}>Email</th>
-                        <th className="text-center" style={{ width: "50%" }}>ID</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {toolData.contacts && toolData.contacts.map((item, i) => 
-                        <tr key={i} >
-                          <td className="text-center">{item["name"]}</td>
-                          <td className="text-center">{item["email"]}</td>
-                          <td className="text-center text-muted">{item["user_id"]}</td>
-                        </tr>
-                      )}
-                      {(!toolData.contacts || toolData.contacts.length == 0) && <tr><td colSpan="8" className="text-center p-5">No contacts are assigned to this tool.</td></tr>}
-                    </tbody>
-                  </Table>
+                  {getTable(toolData.contacts, contactsColumns, "contracts")}
                 </li>
               </ul>
             </Col>
@@ -132,23 +170,7 @@ function ToolDetails(props) {
               <ul className="list-group my-2">
                 <li className="list-group-item">
                   <span className="pr-2 text-muted">Applications</span>
-                  <Table striped bordered hover className="table-sm" style={{ fontSize:"small" }}>
-                    <thead>
-                      <tr>
-                        <th className="text-center" style={{ width: "50%" }}>Name</th>
-                        <th className="text-center" style={{ width: "50%" }}>Reference</th>                
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {toolData.applications && toolData.applications.map((item, i) => (
-                        <tr key={i} >
-                          <td className="text-center">{item["name"]}</td>
-                          <td className="text-center">{item["value"]}</td>
-                        </tr>
-                      ))}
-                      {(!toolData.applications || toolData.applications.length == 0) && <tr><td colSpan="8" className="text-center p-5">No applications are assigned to this tool.</td></tr>}
-                    </tbody>
-                  </Table>
+                  {getTable(toolData.applications, columns, "applications")}
                 </li>
 
               </ul>
@@ -157,25 +179,8 @@ function ToolDetails(props) {
               <ul className="list-group my-2">
                 <li className="list-group-item">
                   <span className="pr-2 text-muted">Organizations</span>
-                  <Table striped bordered hover className="table-sm" style={{ fontSize:"small" }}>
-                    <thead>
-                      <tr>
-                        <th className="text-center" style={{ width: "50%" }}>Name</th>
-                        <th className="text-center" style={{ width: "50%" }}>Reference</th>                
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {toolData.organization && toolData.organization.length > 0 && toolData.organization.map((item, i) => (
-                        <tr key={i} >
-                          <td className="text-center">{item["name"]}</td>
-                          <td className="text-center">{item["value"]}</td>
-                        </tr>
-                      ))}
-                      {(!toolData.organization || toolData.organization.length == 0) && <tr><td colSpan="8" className="text-center p-5">No organizations are assigned to this tool.</td></tr>}
-                    </tbody>
-                  </Table>
+                  {getTable(toolData.organization, columns, "organizations")}
                 </li>
-
               </ul>
             </Col>    
           </Row>
@@ -185,10 +190,6 @@ function ToolDetails(props) {
   );
 }
 
-ToolDetails.propTypes = {
-  closeModal: PropTypes.func,
-  toolData: PropTypes.object
-};
 
 
 export default ToolDetails;

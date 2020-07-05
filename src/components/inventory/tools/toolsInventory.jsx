@@ -4,24 +4,28 @@ import { axiosApiService } from "api/apiService";
 import LoadingDialog from "components/common/loading";
 import Modal from "components/common/modal";
 import { AuthContext } from "contexts/AuthContext";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import ToolDetails from "./toolDetails/toolDetails"; //tool summary view
 import "./tools.css";
 import ToolsTable from "./toolsTable";
+import { DropdownList } from "react-widgets";
+import { createFilterOptionList } from "utils/tableHelpers";
 
 function ToolInventory () {
   let history = useHistory();
   const { id } = useParams();
   const { getAccessToken } = useContext(AuthContext);
+  const [filterOption, setFilterOption] = useState();
   const [isViewModal, toggleViewModal] = useState(false);
   const [toolId, setToolId] = useState("");
   const [errors, setErrors] = useState("");
   const [isLoading, setLoading] = useState(false);
-  const [toolList, setToolList] = useState([]);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-
+  const [toolRegistryList, setToolRegistryList] = useState([]);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);  
+  const [toolList, setToolList ] = useState([]);
+  const [filterOptionList, setFilterOptionList] = useState([]);
 
   useEffect(() => {    
     if(id && id.match(/^[0-9a-fA-F]{24}$/)) {
@@ -29,6 +33,7 @@ function ToolInventory () {
       toggleViewModal(true);
     } else {
       getToolRegistryList();
+      getToolList();
       setToolId("");
     }
   }, [id]);
@@ -71,7 +76,7 @@ function ToolInventory () {
 
       let apiUrl = "/registry?hidden=true";
       const response = await axiosApiService(accessToken).get(apiUrl, params);
-      setToolList(response.data);
+      setToolRegistryList(response.data);
       setLoading(false);
     }
     catch (err) {
@@ -97,6 +102,23 @@ function ToolInventory () {
     history.push("/inventory/tools");
   };
 
+  const updateFilterOption = (filterOption) => {
+    setFilterOption(filterOption);
+  };
+  
+  const getToolList = async () => {
+    try {
+      const accessToken = await getAccessToken();
+      const toolResponse = await axiosApiService(accessToken).get("/registry/tools", {});
+      setToolList(toolResponse.data);
+      setFilterOptionList(createFilterOptionList(toolResponse.data, "tool_identifier", "name", "identifier", false));
+    }
+    catch (err) {
+      setErrors(err.message);
+      console.log(err.message);
+    }
+  };
+
   return (
     <>
       <ToolDetails showModal={isViewModal} closeModal={(toggleModal) => closeViewModal(toggleModal)} toolId={toolId} fnEditTool={handleEditClick} fnDeleteTool={handleDeleteClick} setToolId={setToolId}/>
@@ -108,16 +130,27 @@ function ToolInventory () {
         handleCancelModal={() => setShowDeleteModal(false)}
         handleConfirmModal={() => deleteTool()} /> : null}
 
-      <div className="mb-2 text-right">
+      <div className="mt-3 d-flex flex-row-reverse">
         <Button size="sm" variant="primary"   
           onClick={() => { handleNewEntryClick("new"); }}> 
           <FontAwesomeIcon icon={faPlus} className="mr-1"/> New Entry
-        </Button>        
+        </Button>
+        <div className="tool-filter mr-3">
+          { filterOptionList && <DropdownList
+            busy={Object.keys(filterOptionList).length == 1 ? true : false}
+            disabled={Object.keys(filterOptionList).length == 1 ? true : false}
+            data={filterOptionList}
+            valueField='filterText'
+            textField='text'
+            defaultValue={filterOption}
+            onChange={updateFilterOption}             
+          />}   
+        </div>        
       </div>
       {isLoading && <LoadingDialog />}
       {errors && <div className="error-text">Error Reported: {errors}</div>}
       
-      {toolList && <ToolsTable rowInfo={viewTool} data={toolList} />}
+      {toolRegistryList && <ToolsTable tableFilter={filterOption} rowInfo={viewTool} data={toolRegistryList} />}
       
     </>
   );  
