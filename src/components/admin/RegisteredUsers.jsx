@@ -81,6 +81,7 @@ function RegisteredUsers() {
   }
 
   async function handleDeployElkStack(userId) {
+    console.log("Deploying for User ID: ", userId);
     setState({ deployingElk: true });
     await deployElkStack(userId);
     //refresh page
@@ -93,7 +94,7 @@ function RegisteredUsers() {
     const apiUrl = `/users/tools/activate-elk/${id}`;         
     try {
       const response = await axiosApiService(accessToken).get(apiUrl);      
-      console.log(response);    
+      //console.log(response);    
     }
     catch (err) {
       console.log(err.message);
@@ -132,7 +133,7 @@ function RegisteredUsers() {
     const apiCall = new ApiService("/users/get-users", urlParams, accessToken);
     apiCall.get()
       .then(function (response) {
-        // console.log(response.data)
+        //console.log(response.data);
         setState({
           userData: response.data.users,
           error: null,

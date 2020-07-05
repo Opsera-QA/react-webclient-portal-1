@@ -11,7 +11,7 @@ function RegisteredUserTable({  data, deployingElk, handleDeletePress, handleDep
   const columns = useMemo(
     () => [
       {
-        Header: "SSO Users ID",
+        Header: "User ID",
         accessor: "_id",
       },
       {
@@ -99,7 +99,7 @@ function RegisteredUserTable({  data, deployingElk, handleDeletePress, handleDep
 
                 {/* Sub block code goes here */}
 
-                {Object.keys(row.original.tools).length > 0 && <tr> <td colSpan="7">Tools:</td></tr>}
+                {Object.keys(row.original.tools).length > 0 && <tr><td colSpan="7">Tools:</td></tr>}
                 {Object.keys(row.original.tools).length > 0 ? (
                   <tr key={i} className="tools-block">
                     <td colSpan="7">
@@ -117,7 +117,7 @@ function RegisteredUserTable({  data, deployingElk, handleDeletePress, handleDep
                     <td colSpan="2" className="text-muted text-center"> No tools are associated with this user account! </td>
                     <td colSpan="2" className="text-muted text-center">
                       <Button variant="outline-secondary" disabled={deployingElk} size="sm" 
-                        onClick={() => { handleDeployElkStack(row._id); }} >
+                        onClick={() => { handleDeployElkStack(row.original._id); }} >
                             Deploy ELK Stack Now</Button> 
                     </td>
                   </tr>
