@@ -8,6 +8,7 @@ import { axiosApiService } from "api/apiService";
 import ErrorDialog from "components/common/error";
 //import LoadingDialog from "../common/loading";
 import DropdownList from "react-widgets/lib/DropdownList";
+import PlatformToolsTable from "./platformToolsTable.jsx";
 
 function PlatformInventory () {
 
@@ -100,7 +101,8 @@ function PlatformInventory () {
           {key && Object.keys(key).length > 0 ? 
             <>
               {Object.keys(key.tools).length > 0 ? 
-                <App application={key} /> : 
+                <PlatformToolsTable data={key.tools}></PlatformToolsTable>
+                : 
                 <div className="max-content-module-width-50"><Alert variant="secondary">No tools are currently configured for this application.</Alert></div> }
             </>
             : null }
@@ -109,46 +111,5 @@ function PlatformInventory () {
     );
   }
 }
-
-
-const App = ({ application }) => {
-  const { tools } = application;
-  console.log(application);
-  return (
-    <Table striped bordered hover className="table-sm" style={{ fontSize:"small" }}>
-      <thead>
-        <tr>
-          <th style={{ width: "15%" }}>Tool</th>
-          <th className="text-center" style={{ width: "5%" }}>Port</th>
-          <th className="text-center" style={{ width: "5%" }}>Version</th>                
-          <th className="text-center" style={{ width: "10%" }}>Status</th>
-          <th className="text-center" style={{ width: "10%" }}>Install Date</th>
-          <th style={{ width: "30%" }}>URL</th>
-          <th style={{ width: "25%" }}>DNS</th>
-        </tr>
-      </thead>
-      <tbody>
-        {tools && tools.map((item, idx) => (
-          <tr key={idx} >
-            <td>{item["name"]}<br /><span className="text-muted small">{item["id"]}</span></td>
-            <td className="text-center">{item["port"]}</td>
-            <td className="text-center">{item["versionNumber"]}</td>
-            <td className="text-center">{item["toolStatus"]}</td>
-            <td className="text-center">{format(new Date(item["installationDate"]), "yyyy-MM-dd")}</td>   
-            <td>{item["toolURL"]}</td>
-            <td>{item["dnsName"]}</td>
-          </tr>
-        ))}
-      </tbody>
-    </Table>
-
-  );
-};
-
-
-App.propTypes = {
-  application: PropTypes.object
-};
-
 
 export default PlatformInventory;

@@ -237,6 +237,11 @@ a.text-primary:hover, a.text-primary:focus {
   vertical-align: middle;
 }
 
+.custom-table .cell-center {
+  text-align: center;
+  vertical-align: middle;
+}
+
 .table-row {
   margin-bottom: 2em;
   line-height:2em;

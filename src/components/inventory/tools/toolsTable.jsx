@@ -5,7 +5,7 @@ import { faTimesCircle, faCheckCircle } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
 
-function ToolsTable({ data, rowInfo }) {
+function ToolsTable({ data, rowInfo, tableFilter }) {
   const initialState = {
     pageIndex: 0,
     sortBy: [
@@ -40,13 +40,15 @@ function ToolsTable({ data, rowInfo }) {
         Cell: (props) => {
           return format(new Date(props.value), "yyyy-MM-dd");
         },
+        class: "cell-center"
       },
       {
         Header: "State",
         accessor: "active",
         Cell: (props) => {
-          return props.value ?  <FontAwesomeIcon icon={faCheckCircle} className="cell-icon green ml-2" /> : <FontAwesomeIcon icon={faTimesCircle} className="cell-icon red ml-2" />;
+          return props.value ?  <FontAwesomeIcon icon={faCheckCircle} className="cell-icon green" /> : <FontAwesomeIcon icon={faTimesCircle} className="cell-icon red" />;
         },
+        class: "cell-center"
       },
     ],
     []
@@ -60,6 +62,7 @@ function ToolsTable({ data, rowInfo }) {
         selectedRow={rowInfo}
         rowStyling={rowStyling}
         initialState={initialState}
+        tableFilter={tableFilter}
       >
       </CustomTable>
     </>
@@ -68,7 +71,8 @@ function ToolsTable({ data, rowInfo }) {
 
 ToolsTable.propTypes = {
   data: PropTypes.array,
-  rowInfo: PropTypes.func
+  rowInfo: PropTypes.func,
+  tableFilter: PropTypes.object
 };
 
 export default ToolsTable;

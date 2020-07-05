@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
 
-function CustomTable({ columns, data, selectedRow, rowStyling, initialState }) {
+function CustomTable({ columns, data, noDataMessage, selectedRow, rowStyling, initialState, tableFilter }) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -20,6 +20,8 @@ function CustomTable({ columns, data, selectedRow, rowStyling, initialState }) {
     useSortBy,
     usePagination
   );
+
+  const defaultNoDataMessage = "No data is currently available";
 
   const setColumnClass = (id, columns) => {
     let response = "";
@@ -41,9 +43,21 @@ function CustomTable({ columns, data, selectedRow, rowStyling, initialState }) {
     return rowClassNames;
   };
 
+  const filterRow = (row) => {
+    if (tableFilter && tableFilter.filterText) {
+      
+      if (tableFilter.matchPartial){
+        return row.values[tableFilter.field].includes(tableFilter.filterText);
+      }
+      
+      return row.values[tableFilter.field] !== tableFilter.filterText;
+    }
+    return false;
+  };
+
   return (
     <>
-      <table className="custom-table my-3 mr-1" responsive hover {...getTableProps()}>
+      <table className="custom-table my-3 mr-1" responsive="true" hover="true" {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup, i) => (
             <tr key={i}  {...headerGroup.getHeaderGroupProps()}>
@@ -65,7 +79,7 @@ function CustomTable({ columns, data, selectedRow, rowStyling, initialState }) {
         <tbody {...getTableBodyProps()}>
           {rows.map((row, i) => {
             prepareRow(row);
-            return (
+            return filterRow(row) ? null : (
               <tr className={getRowClassNames(i, row)} key={i} {...row.getRowProps({ onClick: () => selectedRow ? selectedRow(row) : null } )}>
                 {row.cells.map((cell, j) => {
                   return <td key={j} {...cell.getCellProps()} className={"table-cell px-2 " + setColumnClass(cell.column.id, columns)}>{cell.render("Cell")}</td>;
@@ -73,7 +87,7 @@ function CustomTable({ columns, data, selectedRow, rowStyling, initialState }) {
               </tr>
             );
           })}
-          {rows.length == 0 && <tr><td colSpan="8" className="text-center p-5">No data is currently available</td></tr>}
+          {rows.length == 0 && <tr><td colSpan="8" className="text-center p-5">{noDataMessage ? noDataMessage : defaultNoDataMessage}</td></tr>}
           {<tr><td colSpan="8" className="table-footer"></td></tr>}  
         </tbody>
       </table>
@@ -84,9 +98,11 @@ function CustomTable({ columns, data, selectedRow, rowStyling, initialState }) {
 CustomTable.propTypes = {
   columns: PropTypes.array,
   data: PropTypes.array,
+  noDataMessage: PropTypes.string,
   selectedRow: PropTypes.func,
   rowStyling: PropTypes.func,
-  initialState: PropTypes.object
+  initialState: PropTypes.object,
+  tableFilter: PropTypes.object
 };
 
 export default CustomTable;
