@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { useOktaAuth } from "@okta/okta-react";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner, faClosedCaptioning } from "@fortawesome/free-solid-svg-icons";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { axiosApiService } from "../../api/apiService";
 
 

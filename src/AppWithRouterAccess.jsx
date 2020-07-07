@@ -5,7 +5,6 @@ import { Security, SecureRoute, LoginCallback } from "@okta/okta-react";
 import AuthContextProvider from "./contexts/AuthContext";
 
 import Home from "./Home";
-//import Login from "./Login";
 import Login from "./components/login/Login";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
@@ -120,13 +119,6 @@ const AppWithRouterAccess = () => {
           </div>
         </div>
       </AuthContextProvider>
-
-
-      {/* 
-      <Route path='/' exact={true} component={Home} />
-      <SecureRoute path='/protected' component={Protected} />
-      <Route path='/login' render={() => <Login issuer='https://${yourOktaDomain}/oauth2/default' />} />
-      <Route path='/implicit/callback' component={LoginCallback} /> */}
     </Security>
   );
 };
