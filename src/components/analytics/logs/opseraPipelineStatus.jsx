@@ -126,8 +126,10 @@ const MapActivityData = (props) => {
         { data.map((item, idx) => (
           <Alert key={idx} variant={(item.status === "fail") ? "danger" : item.status}>
             <div className="row">
-              <div className="col"><strong> Pipeline: </strong>{item.name}</div>
-              <Button variant="outline-dark mr-3" size="sm" onClick={() => { goToPipeline(item.pipeline_id); }}><FontAwesomeIcon icon={faDraftingCompass} fixedWidth/>View Pipeline</Button>
+                            {item.name !== "N/A" ? <div className="col"><strong> Pipeline: </strong> {item.name} </div> : ""}
+
+                          {/* <Button variant="outline-dark mr-3" size="sm" onClick={() => { goToPipeline(item.pipeline_id); }}><FontAwesomeIcon icon={faDraftingCompass} fixedWidth/>View Pipeline</Button> */}
+
             </div>
             <div className="row">
             <div className="col"><strong> Pipeline ID: </strong>{item.pipeline_id}</div>
