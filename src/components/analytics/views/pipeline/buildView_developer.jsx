@@ -12,6 +12,10 @@ import JenkinsBuildsByUserBarChart from "../../charts/jenkinsBuildsByUserBarChar
 import JenkinsStatusByJobNameBarChart from "../../charts/jenkinsStatusByJobNameBarChart";
 import DeploymentFrequencyLineChart from "../../charts/deploymentFrequencyLineChart.jsx";
 import RecentBuildsTable from "../../metrics/recentBuildsTable.jsx";
+import OpseraPipelineStatus from "../../logs/opseraPipelineStatus";
+import OpseraPipelineByStatusBarChart from "../../charts/opseraPipelineByStatusBarChart";
+
+
 
 
 
@@ -41,7 +45,7 @@ function BuildView_Developer ({ persona, date }) {
     return () => {
       controller.abort();
     };
-  }, [date]);
+  }, [date, persona]);
 
   async function fetchData() {
     setLoading(true);
@@ -81,6 +85,14 @@ function BuildView_Developer ({ persona, date }) {
         {
           "request": "codeshipBuildStopped",
           "metric": "count"
+        },
+        {
+          "request": "opseraPipelineSuccess",
+          "metric": "complexCount"
+        },
+        {
+          "request": "opseraPipelineFail",
+          "metric": "complexCount"
         }
       ],
       startDate: date.start, 
@@ -103,7 +115,7 @@ function BuildView_Developer ({ persona, date }) {
 
   
   const buildSummaryCounts = (data) => {
-    const { jenkinsBuildSuccess, jenkinsBuildFailure, jenkinsBuildAborted, jenkinsDeploySuccess, jenkinsDeployFailure, codeshipBuildSuccess, codeshipBuildFailure, codeshipBuildStopped } = data;
+    const { opseraPipelineSuccess, opseraPipelineFail,  jenkinsBuildSuccess, jenkinsBuildFailure, jenkinsBuildAborted, jenkinsDeploySuccess, jenkinsDeployFailure, codeshipBuildSuccess, codeshipBuildFailure, codeshipBuildStopped } = data;
 
     let summaryCountsData = [];    
 
@@ -121,6 +133,12 @@ function BuildView_Developer ({ persona, date }) {
     }
     if (jenkinsDeployFailure.status === 200 && jenkinsDeployFailure.data !== undefined) {
       summaryCountsData.push({ name: "Failed Deployments", value: jenkinsDeployFailure.data[0].count, footer: "", status: jenkinsDeployFailure.data[0].count > 0 ? "danger" : null });
+    }
+    if (opseraPipelineSuccess.status === 200 && opseraPipelineSuccess.data !== undefined) {
+      summaryCountsData.push({ name: "Successful Pipeline Runs", value: opseraPipelineSuccess.data[0].count, footer: "", status: "success" });
+    }
+    if (opseraPipelineFail.status === 200 && opseraPipelineFail.data !== undefined) {
+      summaryCountsData.push({ name: "Failed Pipeline Runs", value: opseraPipelineFail.data[0].count, footer: "", status: "danger" });
     }
     if (codeshipBuildSuccess.status === 200 && codeshipBuildSuccess.data !== undefined) {
       summaryCountsData.push({ name: "CodeShip Success", value: codeshipBuildSuccess.data[0].count, footer: "", status: codeshipBuildSuccess.data[0].count > 0 ? "success" : null });
@@ -168,8 +186,18 @@ function BuildView_Developer ({ persona, date }) {
           <div className="align-self-stretch p-2 w-100">
             <RecentBuildsTable persona={persona} date={date}/>
           </div>
+          <div className="align-self-stretch p-2 w-100">
+            <OpseraPipelineByStatusBarChart persona={persona} date={date}/>            
+          </div>
         </div>
 
+
+        <div className="d-flex">
+          <div className="align-self-stretch p-2 w-100">
+            <OpseraPipelineStatus persona={persona}  date={date}/>
+
+          </div>
+        </div>
       </>
     );}
 
