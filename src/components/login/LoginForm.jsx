@@ -92,7 +92,7 @@ const LoginForm = ({ issuer }) => {
   const handleDomainLookupSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const apiUrl = "/users/domain-lookup";   
+    const apiUrl = "/users/account-by-domain";   
     const params = { "email": lookupAccountEmail };
     /* await axiosApiService().post(apiUrl, params)
       .then(response => { 

@@ -63,11 +63,16 @@ function PipelineOverview({ id }) {
     const apiUrl =  `/pipelines/${id}`;   
     try {
       const pipeline = await axiosApiService(accessToken).get(apiUrl); 
-      setData({
-        ...data,
-        pipeline: pipeline && pipeline.data[0]
-      });
-      setPipelineAttributes(pipeline && pipeline.data[0], ssoUsersRecord._id);      
+      console.log(pipeline.data);
+      if (pipeline && pipeline.data && pipeline.data.length > 0) {
+        setData({
+          ...data,
+          pipeline: pipeline && pipeline.data[0]
+        });
+        setPipelineAttributes(pipeline && pipeline.data[0], ssoUsersRecord._id);      
+      } else {
+        setErrors("Pipeline not found");  
+      }      
     }
     catch (err) {
       console.log(err.message);
