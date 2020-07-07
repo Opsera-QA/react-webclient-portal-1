@@ -15,14 +15,18 @@ const LoginForm = ({ issuer }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [resetEmailAddress, setResetEmailAddress] = useState("");
+  const [lookupAccountEmail, setLookupAccountEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
   const [message, setMessage] = useState(false);
-  const [viewType, setViewType] = useState("login"); //login, reset or domain
+  const [viewType, setViewType] = useState("domain"); //login, reset or domain
 
 
-  useEffect(() => {    
-    setUsername("");
+  useEffect(() => {   
+    if (viewType !== "login") {
+      setUsername("");
+    } 
+    setLookupAccountEmail("");
     setPassword("");
     setResetEmailAddress("");     
   }, [viewType]);
@@ -60,6 +64,10 @@ const LoginForm = ({ issuer }) => {
     setResetEmailAddress(e.target.value);
   };
 
+  const handleLookupAccountEmailChange = (e) => {
+    setLookupAccountEmail(e.target.value);
+  };
+
   const handleResetPasswordSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -81,6 +89,33 @@ const LoginForm = ({ issuer }) => {
       });
   };
   
+  const handleDomainLookupSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const apiUrl = "/users/domain-lookup";   
+    const params = { "email": lookupAccountEmail };
+    /* await axiosApiService().post(apiUrl, params)
+      .then(response => { 
+        console.log("response: ", response);
+        setLoading(false);
+        setErrorMessage(false);
+        setMessage(response.data.message);
+        setViewType("login");     
+      })
+      .catch(err => { 
+        console.log(err.response);
+        setLoading(false);
+        setErrorMessage(err.response.data.message);
+        setMessage(false);                
+      }); */
+
+    //todo: call lookup API with email address:  
+    // if successful, update Okta values to match, swap out logo (future) and switch to login form
+    setUsername(lookupAccountEmail);
+    setViewType("login");
+    setLoading(false);
+  };
+
 
   if (sessionToken) {
     // Hide form while sessionToken is converted into id/access tokens
@@ -97,13 +132,13 @@ const LoginForm = ({ issuer }) => {
             <a href="index.html"><img alt="" src="img/opsera_logo_120x118.png" /></a>
           </div>
           <h4 className="auth-header">
-          Login Form
+          Sign in
           </h4>
           {errorMessage && <div className="mx-2 error-text">{errorMessage}</div>}
           {message && <div className="mx-2 info-text">{message}</div>}
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label htmlFor="username">Username</label>
+              <label htmlFor="username">Email Address</label>
               <input className="form-control"
                 id="username" type="text"
                 value={username}
@@ -165,6 +200,40 @@ const LoginForm = ({ issuer }) => {
               <Button variant="link" size="sm" 
                 onClick={() => { setViewType("login"); }}>Login Form</Button>
             </div>
+          </form>
+        </div>
+      </div>
+    );}
+
+  if (viewType === "domain") {
+    return (
+      <div className="d-flex align-items-center justify-content-center" style={{ minHeight:"500px" }}>
+        <div className="auth-box-w">
+          <div className="logo-w">
+            <a href="index.html"><img alt="" src="img/opsera_logo_120x118.png" /></a>
+          </div>
+          <h4 className="auth-header">
+            Sign in
+          </h4>
+            
+          {errorMessage && <div className="mx-2 error-text">{errorMessage}</div>}
+          {message && <div className="mx-2 info-text">{message}</div>}
+  
+          <form onSubmit={handleDomainLookupSubmit}>
+            <div className="form-group">
+              <label htmlFor="username">Email Address</label>
+              <input className="form-control"
+                id="username" type="text"
+                value={lookupAccountEmail}
+                onChange={handleLookupAccountEmailChange} />
+              <div className="pre-icon os-icon os-icon-user-male-circle"></div>
+            </div>
+              
+            <div className="buttons-w">
+              <Button variant="success" className="w-100 mb-3" type="submit" disabled={!lookupAccountEmail}>
+                {loading && <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth />}
+                   Next</Button>
+            </div>            
           </form>
         </div>
       </div>
