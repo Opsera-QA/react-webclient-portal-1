@@ -1,9 +1,128 @@
-import React, { createContext, Component } from "react";
-import { withAuth } from "@okta/okta-react";
+import React, { createContext, useState, useEffect } from "react";
+import { useOktaAuth } from "@okta/okta-react";
 import { axiosApiService } from "../api/apiService";
-export const AuthContext = createContext();
 
-async function checkAuthentication() {  
+const AuthContextProvider = (props) => {
+  const { authService, authState } = useOktaAuth();
+  const [authenticated, setAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [userRecord, setUserRecord] = useState(null);
+  const [sharedState, setSharedState] = useState(null);
+  
+
+  useEffect(() => {    
+    if (authState.isAuthenticated) {
+      setUserState();
+    }    
+  }, [authState]);
+
+
+  const setUserState = async () => {
+    const user = await _getUserProperties();    
+    setUserRecord(user);
+  };
+
+  const _getUserProperties = async () => {
+    const token = await authService.getAccessToken();
+    try {    
+      let apiUrl = "/users";
+      const response = await axiosApiService(token).get(apiUrl, {});
+      //console.log("getting user", response.data);
+      return response.data;
+    }
+    catch (err) {   
+      console.log("Error getting user data: " + err.message);    
+    }
+  };
+
+  const logoutUserContext = () => {
+    setAuthenticated(false);
+    setSharedState(null);
+    setUserRecord(null);
+    authService.clearAuthState();
+    return authService.logout("/");
+  };
+
+  const loginUserContext = () => {
+    return authService.login("/");
+  };
+
+  const getAccessToken = () => {
+    return authService.getAccessToken();
+  };
+
+  const getIsAuthenticated = async () => {
+    const authState = await authService.getAuthState();
+    return authState.isAuthenticated;
+  };
+
+  const setRootLoading = (value) => { //do we need this?
+    const loadingValue = value === true ? true : false;
+    setLoading(loadingValue);
+  };
+
+  const getUserRecord = async () => {    //New LDAP derived getUsers Service
+    if (!userRecord || authState.isPending) {
+      await delay(2000);
+      if (authState.isAuthenticated && !userRecord) {
+        return await _getUserProperties();
+      }
+    }
+    return userRecord; 
+  };
+
+
+  //TODO Review this with new LDAP serivces
+  const getIsPreviewRole = async (restrictProd) => {
+    const userInfo = await getUserRecord();    
+    console.log("Environment: ", process.env.REACT_APP_ENVIRONMENT);    
+    if (restrictProd && process.env.REACT_APP_ENVIRONMENT === "production") {
+      return false;
+    } else {
+      return userInfo.groups.includes("Preview");
+    }    
+  };
+
+  /* const checkAuth = async () => {
+    const authState = await authService.getAuthState();
+    console.log("authState", authState);    
+    if (authState.isAuthenticated && !userRecord && authState.accessToken) {    
+      const userRecord = await getUser(authState.accessToken);      
+      setAuthenticated(authState.isAuthenticated);
+      setLoading(false);
+      setUserRecord(userRecord);
+    } else {
+      setAuthenticated(false);
+      setLoading(false);
+      setUserRecord(null);
+      
+    }
+  }; */
+
+  return (
+    <AuthContext.Provider value={{
+      authState: authState,
+      logoutUserContext: logoutUserContext, 
+      loginUserContext: loginUserContext, 
+      getAccessToken: getAccessToken,
+      getIsPreviewRole: getIsPreviewRole, //TODO: Depracate
+      getUserRecord: getUserRecord,
+      getIsAuthenticated: getIsAuthenticated,
+      setRootLoading: setRootLoading,
+      setSharedState: setSharedState }}>
+      {props.children}
+    </AuthContext.Provider>
+  );
+};
+export const AuthContext = createContext();
+export default AuthContextProvider;
+
+async function delay(ms) {
+  // return await for better async stack trace support in case of errors.
+  return await new Promise(resolve => setTimeout(resolve, ms));
+}
+/* 
+async function checkAuthentication() { 
   const authenticated = await this.props.auth.isAuthenticated();
   const accessToken = await this.props.auth.getAccessToken();
   console.log("authenticated here?", authenticated);
@@ -13,22 +132,11 @@ async function checkAuthentication() {
   } else {
     this.setState({ authenticated: false, loading: false,  userRecord: null });
   }
-}
-
-const getUser = async (accessToken) => {  
-  try {    
-    let apiUrl = "/users";
-    const response = await axiosApiService(accessToken).get(apiUrl, {});
-    console.log("getting user", response.data);
-    return response.data;
-  }
-  catch (err) {   
-    console.log("Error getting user data: " + err.message);    
-  }
-};
+} */
 
 
-class AuthContextProvider extends Component {
+
+/* class AuthContextProvider extends Component {
   constructor(props) {
     super(props);
     this.state = { authenticated: false, sharedState: null, loading: true, userRecord: null };
@@ -111,6 +219,6 @@ class AuthContextProvider extends Component {
       </AuthContext.Provider>
     );
   }
-}
+} */
  
-export default withAuth(AuthContextProvider);
+

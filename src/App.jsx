@@ -1,44 +1,26 @@
-import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import { Security, SecureRoute, ImplicitCallback } from "@okta/okta-react";
-import AuthContextProvider from "./contexts/AuthContext";
-import Home from "./Home";
-import Login from "./Login";
-import Navbar from "./Navbar";
-import Sidebar from "./Sidebar";
-import Dashboard from "./components/dashboard/DashboardHome";
-import Profile from "./components/user/Profile";
-import About from "./components/about/About";
-import Pricing from "./components/about/Pricing";
-import Solutions from "./components/about/Solutions";
-import Inventory from "./components/inventory/Inventory";
-import Signup from "./components/user/Signup";
-import ApiConnector from "./components/api_connector/ApiConnector";
-import Pipeline from "./components/pipeline/index";
-import Platform from "./components/platform/Platform";
-import Reports from "./components/reports/Reports";
-import Analytics from "./components/analytics/Analytics";
-import Logs from "./components/logs/Logs";
-import Update from "./components/update/Update";
-import AdminTools from "./components/admin/AdminTools";
-import DeleteTools from "./components/admin/delete_tools/DeleteTools";
-import RegisteredUsers from "./components/admin/RegisteredUsers";
-import ManageSystems from "./components/admin/manage_systems/ManageSystems";
-import ReportsRegistration from "./components/admin/analytics/ReportsRegistration";
-import ApiConnectionDemo from "./components/api_connector/ApiDemo";
-import Workflow from "./components/workflow/Workflow";
-import SystemStatus from "./components/admin/status/SystemStatus";
-import CustomerSystemStatus from "./components/admin/status/CustomerSystemStatus";
-import Overview from "./components/landing/Overview";
-import Registration from "./components/landing/Registration";
-import ToolConfigurations from "./components/admin/tools/ToolConfigurations";
-import TagEditor from "./components/admin/tags/TagsEditor";
-import TemplateEditor from "./components/admin/template_editor/TemplateEditor";
-import OPBlueprintMain from "./components/blueprint/blueprint";
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 
-import { createBrowserHistory } from "history";
+import AppWithRouterAccess from "./AppWithRouterAccess";
 
-const config = require("./config");
+//import { createBrowserHistory } from "history";
+//const config = require("./config");
+
+
+const App = () => {
+  return (
+    <Router>
+      <AppWithRouterAccess/>
+    </Router>
+  );
+};
+
+
+
+
+
+
+/* 
 
 class App extends Component {
   constructor(props) {
@@ -75,7 +57,7 @@ class App extends Component {
     const { hideSideBar, history } = this.state;
     return (
       <Router>
-        <Security {...config.okta_config}>
+        <Security {...OKTA_CONFIG}>
           <AuthContextProvider>
             <Navbar />
             <div className="container-fluid">
@@ -127,6 +109,6 @@ class App extends Component {
       </Router>
     );
   }
-}
+} */
 
 export default App;

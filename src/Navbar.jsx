@@ -7,21 +7,22 @@ import "./navbar.css";
 
 function HeaderNavBar() {
   const contextType = useContext(AuthContext);
-  const { userRecord, authenticated, loading } = contextType;
+  const { getUserRecord, authState } = contextType;
   const history = useHistory();
   const [fullName, setFullName] = useState("Unknown");
+  const [administrator, setAdministrator] = useState(false);
   
   useEffect(() => {    
-    checkAuthentication(userRecord);    
-  }, [userRecord, loading, authenticated]);
+    checkAuthentication();    
+  }, [authState]);
 
 
-  async function checkAuthentication (user)  {
-    if (user) {
-      console.log("userRecord ", userRecord);
-      console.log("authenticated ", authenticated);
-      if (authenticated && userRecord) {
-        setFullName(user.firstName + " " + user.lastName);        
+  async function checkAuthentication ()  {
+    const user = await getUserRecord();
+    if (user && authState.isAuthenticated) {
+      if (user.groups) {
+        setAdministrator(user.groups.includes("Admin"));
+        setFullName(user.firstName + " " + user.lastName);     
       }
     }     
   }
@@ -53,9 +54,9 @@ function HeaderNavBar() {
       <Navbar.Toggle aria-controls="basic-navbar-nav"/>
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ml-auto">
-          { !authenticated && <Button variant="success" className="mr-2" onClick={gotoSignUp}>Sign Up</Button>}
-          { !authenticated && <Button variant="outline-success" onClick={login}>Login</Button>}
-          { authenticated && 
+          { !authState.isAuthenticated && <Button variant="success" className="mr-2" onClick={gotoSignUp}>Sign Up</Button>}
+          { !authState.isAuthenticated && <Button variant="outline-success" onClick={login}>Login</Button>}
+          { authState.isAuthenticated && 
           <NavDropdown title={fullName} id="basic-nav-dropdown" alignRight>
             {/* <NavDropdown.Item><Link to="/messages" id="messages-button" className="nav-drop-down-item">Messages</Link></NavDropdown.Item> */}
             <Link to="/profile" id="profile-button" className="dropdown-item nav-drop-down-item">Profile</Link>

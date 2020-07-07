@@ -11,34 +11,42 @@ import "./sidebar.css";
 
 function Sidebar({ hideView }) {
   const contextType = useContext(AuthContext); 
-  const { userRecord, authenticated, loading } = contextType;
+  const { getUserRecord, authState } = contextType;
   const [administrator, setAdministrator] = useState(false);
   const [hideSideBar, setHideSideBar] = useState(false);
+  const [loading, setLoading] = useState(false);
   
 
   useEffect(() => {    
-    checkAuthentication(userRecord);    
-  }, [hideView, userRecord, loading, authenticated]);
+    if (authState.isAuthenticated) {
+      checkAuthentication();    
+    }
+    
+  }, [authState]);
 
   const handleToggleMenuClick = () => {
     setHideSideBar(!hideSideBar);    
   };
 
-  async function checkAuthentication (user)  {
-    if (user) {
-      console.log("userRecord ", userRecord);
-      console.log("authenticated ", authenticated);
-      if (authenticated && userRecord && userRecord.groups) {
-        setAdministrator(userRecord.groups.includes("Admin"));
+  async function checkAuthentication ()  {
+    setLoading(true);
+    const user = await getUserRecord();
+    console.log(authState);
+    console.log("userRecord ", user);
+    console.log("authenticated ", authState.isAuthenticated);
+    if (user && authState.isAuthenticated) {
+      if (user.groups) {
+        setAdministrator(user.groups.includes("Admin"));
       }
     }     
+    setLoading(false);
   }
 
 
   return (
     <>
       { loading && <LoadingDialog  />}
-      {(authenticated) ?
+      {(authState.isAuthenticated) ?
         <>
           <div className="d-block d-md-none pt-1 mr-2">
             <Button variant="outline-primary" onClick={handleToggleMenuClick}>

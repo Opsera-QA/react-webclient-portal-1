@@ -2,23 +2,20 @@ import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "./contexts/AuthContext";
 import { Row, Col, Button, Card } from "react-bootstrap";
-import LoadingDialog from "./components/common/loading";
 
 function Home() {
   const contextType = useContext(AuthContext);
-  const { authenticated, loading } = contextType;
+  const { authState } = contextType;
   const history = useHistory();
   
   useEffect(() => {    
     getStatus();    
-  }, [loading, authenticated]);
+  }, [authState]);
 
   const getStatus = async () => {
-    if (authenticated) {
+    if (authState.isAuthenticated) {
       history.push("/overview");
-    } /* else {
-      getUserRecord(true);
-    } */
+    } 
   };
 
   const login = () => {
@@ -33,8 +30,6 @@ function Home() {
   
   return (
     <>
-      {loading && <LoadingDialog /> }
-        
       <div className="mt-3 ml-5 w-75">
         <Row>
           <Col xl="9">
@@ -67,11 +62,9 @@ function Home() {
               </Card>
             </div>
           </Col>
-          <Col className="text-center" xl="3">{/* <img src="/img/opsera_logo_large.png" width="325" alt="" className="d-none d-xl-block text-center" /> */}</Col>
+          <Col className="text-center" xl="3"></Col>
         </Row>
-      </div>
-          
-      
+      </div>                
     </>
   );
   // } 
