@@ -31,9 +31,6 @@ function Sidebar({ hideView }) {
   async function checkAuthentication ()  {
     setLoading(true);
     const user = await getUserRecord();
-    console.log(authState);
-    console.log("userRecord ", user);
-    console.log("authenticated ", authState.isAuthenticated);
     if (user && authState.isAuthenticated) {
       if (user.groups) {
         setAdministrator(user.groups.includes("Admin"));
