@@ -135,7 +135,7 @@ function Application(props) {
     let postBody = {
       id: appid,
       tools: data,
-      uid: user.sub 
+      uid: user._id 
     };
     new ApiService(
       "/applications/create/tools",

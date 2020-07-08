@@ -177,9 +177,9 @@ class NewApplication extends React.PureComponent {
     this.setState({
       saving: true,
     });
-    console.log(`saving app for user ${user.sub}`);
+    console.log(`saving app for user ${user._id}`);
 
-    let postBody = Object.assign({ id }, { tools: data }, { uid: user.sub });
+    let postBody = Object.assign({ id }, { tools: data }, { uid: user._id });
     let currentComponent = this;
     new ApiService(
       "/applications/create/tools",
