@@ -64,8 +64,7 @@ function ConfigurationManagement(props) {
           <div>
             <div
               className={`newApp__service-logo ${tools.includes("Ansible") ? "newApp__service-logo--alredy-installed" : ""}`}
-              onClick={() => selectCard("Ansible")}
-            >
+              onClick={() => selectCard("Ansible")}>
               <input type="checkbox"
                 inline
                 disabled={tools.includes("Ansible") ? true : false}

@@ -132,11 +132,13 @@ function Application(props) {
   };
 
   const saveTools = async () => {
+    console.log(`saving tools for user ${JSON.stringify(user._id)}`);
     let postBody = {
       id: appid,
       tools: data,
-      uid: user._id 
+      uid: user.userId //specifically uses the legacy ssousers.userId value
     };
+    console.log("POSTBODY", postBody);
     new ApiService(
       "/applications/create/tools",
       null,
