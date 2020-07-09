@@ -1,24 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Button, Modal, Row, Col } from "react-bootstrap";
+import JenkinJobs from "./toolJobs/jenkinsJobs/jenkins.jsx";
 import PropTypes from "prop-types";
 
-import "components/inventory/tools/tools.css";
-
 function ToolJobs(props) {
-  const { toolId, toolData, accessToken } = props;
-  
-
+  console.log(props);
   return (
     <>
-      <div className="text-center p-5 text-muted mt-5">Tool jobs: create / manage coming soon</div>
+      {props.toolData.tool_identifier.toLowerCase() === "jenkins" ? <JenkinJobs /> : null }
+      {props.toolData.tool_identifier.toLowerCase() !== "jenkins" ? <div className="text-center p-5 text-muted mt-5">Tool jobs: create / manage coming soon</div>  : null }
     </>
   );
 }
 
 ToolJobs.propTypes = {
-  toolId: PropTypes.string,
-  toolData: PropTypes.object,
-  accessToken: PropTypes.string
+  toolData: PropTypes.object
 };
 
 
