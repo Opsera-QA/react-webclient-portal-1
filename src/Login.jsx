@@ -1,3 +1,5 @@
+//DEPRICATED FORM: TO BE REMOVED
+
 import React from "react";
 import OktaAuth from "@okta/okta-auth-js";
 import { withAuth } from "@okta/okta-react";
