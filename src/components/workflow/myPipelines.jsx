@@ -213,8 +213,8 @@ const ItemSummaries = (props) => {
                       <FontAwesomeIcon icon={faSearch} className="mr-1"/> View </Button>
                   </div>                                    
                   <div className="p-2 bd-highlight align-items-end mt-auto">
-                    <small className="text-muted">Updated {format(new Date(item.updatedAt), "yyyy-MM-dd', 'hh:mm a")}</small><br/>
-                    <small className="text-muted">Created {format(new Date(item.createdAt), "yyyy-MM-dd', 'hh:mm a")}</small>
+                    <small className="text-muted">Updated {item.updatedAt && format(new Date(item.updatedAt), "yyyy-MM-dd', 'hh:mm a")}</small><br/>
+                    <small className="text-muted">Created {item.createdAt && format(new Date(item.createdAt), "yyyy-MM-dd', 'hh:mm a")}</small>
                   </div>                  
                 </div>              
               </Card.Footer>

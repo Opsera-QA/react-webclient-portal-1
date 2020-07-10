@@ -64,7 +64,6 @@ function Profile() {
                <tr><td>Account</td><td>{user.account}</td></tr>
                <tr><td>Platform SubDomain</td><td>{user.domain}</td></tr>
                <tr><td>Created</td><td>{user.createdAt}</td></tr>
-
                <tr><td>Groups & Roles</td>
                  <td>
                    {user.groups !== undefined && user.groups.map((group) => {
