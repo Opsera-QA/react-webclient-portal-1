@@ -5,7 +5,7 @@ import LoadingDialog from "../../common/loading";
 import { Link } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSitemap, faUserCircle, faUserFriends } from "@fortawesome/free-solid-svg-icons";
+import { faSitemap, faUserCircle, faUserFriends, faUser } from "@fortawesome/free-solid-svg-icons";
 
 
 function LdapDashboard() {
@@ -32,9 +32,19 @@ function LdapDashboard() {
   } else {
     return (
       <>
-        <div className="max-content-width">
-          <h4>LDAP Administration</h4>
-          <div>Listed below are administration tools for OpsERA LDAP.</div>
+        {/* <h4>Administration Tools</h4> */}
+        <nav aria-label="breadcrumb">
+          <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
+            <li className="breadcrumb-item">
+              <Link to="/admin">Admin</Link>
+            </li>
+            <li className="breadcrumb-item active">LDAP</li> 
+          </ol>
+        </nav> 
+
+        <div className="max-content-width ml-2 mt-1">
+          <h5>User and Account Management</h5>
+          <div>Manger organizations, accounts, groups and users from this dashboard.</div>
   
           <Row className="ml-5 mt-5" style={{ fontSize:"1rem" }}>
             <Col xs={12} md={6} lg={4} className="p-2">
@@ -46,6 +56,9 @@ function LdapDashboard() {
             <Col xs={12} md={6} lg={4} className="p-2">
               <Link to="/admin/ldap/"><FontAwesomeIcon icon={faUserFriends} fixedWidth /> Groups</Link>
             </Col>   
+            <Col xs={12} md={6} lg={4} className="p-2">
+              <Link to="/admin/ldap/"><FontAwesomeIcon icon={faUser} fixedWidth /> Users</Link>
+            </Col>  
           </Row>
   
   

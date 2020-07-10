@@ -110,7 +110,7 @@ function SystemStatus() {
 
   return (
     <div className="mt-3 max-content-width">
-      <h4>Administration Tools</h4>
+      {/* <h4>Administration Tools</h4> */}
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
           <li className="breadcrumb-item">
