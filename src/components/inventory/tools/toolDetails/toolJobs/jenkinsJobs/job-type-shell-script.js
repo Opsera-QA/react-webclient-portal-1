@@ -1,8 +1,8 @@
-const ToolJobFormFields = {
-  tool_type_identifier: {
-    label: "Job Type",
-    id: "tool_type_identifier",
-    type: "select",
+const JenkinsJobTypeShellScript = {
+  commands: {
+    label: "Commands",
+    id: "commands",
+    type: "",
     value: "",
     toShow: true,
     disabled: false,
@@ -15,4 +15,4 @@ const ToolJobFormFields = {
   }
 };
 
-export default ToolJobFormFields;
+export default JenkinsJobTypeShellScript;

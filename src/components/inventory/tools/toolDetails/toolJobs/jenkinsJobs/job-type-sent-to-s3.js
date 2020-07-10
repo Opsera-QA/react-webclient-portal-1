@@ -1,4 +1,4 @@
-const JenkinsJobTypeCypressUnitTesting = {
+const JenkinsJobTypeSendToS3 = {
   jobName: {
     label: "Job Name",
     id: "jobName",
@@ -13,20 +13,6 @@ const JenkinsJobTypeCypressUnitTesting = {
       isRequired: false 
     }
   },
-  jobDescription: {
-    label: "Job Description",
-    id: "jobDescription",
-    type: "",
-    value: "",
-    toShow: true,
-    disabled: false,
-    touched: false,
-    isValid: false,
-    errorMessage: "",    
-    rules: {
-      isRequired: false 
-    }
-  },  
   jenkinsUrl: {
     label: "Jenkins Url",
     id: "jenkinsUrl",
@@ -55,6 +41,7 @@ const JenkinsJobTypeCypressUnitTesting = {
       isRequired: false 
     }
   },
+
   jAuthToken: {
     label: "Jenkins Auth Token",
     id: "jAuthToken",
@@ -69,9 +56,9 @@ const JenkinsJobTypeCypressUnitTesting = {
       isRequired: false 
     }
   },
-  gitUrl: {
-    label: "Git Url",
-    id: "gitUrl",
+  accessKey: {
+    label: "Jenkins Access Key",
+    id: "accessKey",
     type: "",
     value: "",
     toShow: true,
@@ -83,9 +70,9 @@ const JenkinsJobTypeCypressUnitTesting = {
       isRequired: false 
     }
   },
-  gitCredential: {
-    label: "Git Credential",
-    id: "gitCredential",
+  secretKey: {
+    label: "Secret Key",
+    id: "secretKey",
     type: "",
     value: "",
     toShow: true,
@@ -97,9 +84,10 @@ const JenkinsJobTypeCypressUnitTesting = {
       isRequired: false 
     }
   },
-  gitBranch: {
-    label: "Git Branch",
-    id: "gitBranch",
+
+  regions: {
+    label: "Region",
+    id: "regions",
     type: "",
     value: "",
     toShow: true,
@@ -110,7 +98,21 @@ const JenkinsJobTypeCypressUnitTesting = {
     rules: {
       isRequired: false 
     }
-  }         
+  },
+  bucketName: {
+    label: "Bucket Name",
+    id: "bucketName",
+    type: "",
+    value: "",
+    toShow: true,
+    disabled: false,
+    touched: false,
+    isValid: false,
+    errorMessage: "",    
+    rules: {
+      isRequired: false 
+    }
+  },          
 };
 
-export default JenkinsJobTypeCypressUnitTesting;
+export default JenkinsJobTypeSendToS3;

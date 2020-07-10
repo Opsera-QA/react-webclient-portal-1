@@ -2,8 +2,18 @@ const JenkinsJobTypeCodeScan = {
   buildType: {
     label: "Build Type",
     id: "buildType",
-    type: "",
+    type: "select",
     value: "",
+    options: [
+      {
+        name: "Gradle",
+        value: "gradle"
+      },
+      {
+        name: "Maven",
+        value: "maven"
+      }      
+    ],
     toShow: true,
     disabled: false,
     touched: false,
@@ -16,8 +26,18 @@ const JenkinsJobTypeCodeScan = {
   buildTool: {
     label: "Build Tool",
     id: "buildTool",
-    type: "",
+    type: "select",
     value: "",
+    options: [
+      {
+        name: "Gradle",
+        value: "gradle"
+      },
+      {
+        name: "Maven",
+        value: "maven"
+      }      
+    ],
     toShow: true,
     disabled: false,
     touched: false,
@@ -32,6 +52,8 @@ const JenkinsJobTypeCodeScan = {
     id: "buildToolVersion",
     type: "",
     value: "",
+    linkedId: "buildType",
+    linkedValue: "gradle",    
     toShow: true,
     disabled: false,
     touched: false,
@@ -46,6 +68,8 @@ const JenkinsJobTypeCodeScan = {
     id: "gradleTask",
     type: "",
     value: "",
+    linkedId: "buildType",
+    linkedValue: "gradle",
     toShow: true,
     disabled: false,
     touched: false,
@@ -60,6 +84,8 @@ const JenkinsJobTypeCodeScan = {
     id: "mavenTask",
     type: "",
     value: "",
+    linkedId: "buildType",
+    linkedValue: "maven",
     toShow: true,
     disabled: false,
     touched: false,
