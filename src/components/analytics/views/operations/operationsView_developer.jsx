@@ -37,7 +37,7 @@ function OperationsView_Developer ({ persona }) {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [persona]);
 
   async function fetchData() {
     setLoading(true);

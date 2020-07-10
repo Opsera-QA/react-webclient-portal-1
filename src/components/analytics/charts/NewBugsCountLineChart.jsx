@@ -16,7 +16,7 @@ import InfoDialog from "../../common/info";
 import ModalLogs from "../../common/modalLogs";
 
 
-function NewBugsCountLineChart( { persona } ) {
+function NewBugsCountLineChart( { persona, date } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -41,7 +41,7 @@ function NewBugsCountLineChart( { persona } ) {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [date]);
 
   const getApiData = async () => {
     
@@ -55,7 +55,9 @@ function NewBugsCountLineChart( { persona } ) {
           request: "newBugs",
           metric: "line" 
         }
-      ]
+      ],
+      startDate: date.start, 
+      endDate: date.end
     };
 
     try {

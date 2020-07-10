@@ -16,7 +16,7 @@ import JiraIssuesAssignedToMe from "../../metrics/jiraIssuesAssignedToMe";
 import GitlabCommitsByRepositoryBarChart from "../../charts/gitlabCommitsByRepositoryBarChart";
 import GitlabLatestCommitTable from "../../metrics/gitlabLatestCommitTable";
 
-function PlanningView_Developer ({ persona }) {
+function PlanningView_Developer ({ persona, date }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -41,7 +41,7 @@ function PlanningView_Developer ({ persona }) {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [date, persona]);
 
   async function fetchData() {
     setLoading(true);
@@ -62,7 +62,9 @@ function PlanningView_Developer ({ persona }) {
           "request": "gitlabIssueDifference",
           "metric": "difference"
         }
-      ]
+      ],
+      startDate: date.start, 
+      endDate: date.end
     };
     
     try {
@@ -93,7 +95,7 @@ function PlanningView_Developer ({ persona }) {
       summaryCountsData.push({ name: "Issues Resolved", value: gitlabIssueClose.data[0].count, footer: "Gitlab", status : "success" });
     }
     if (gitlabIssueDifference.status === 200 && gitlabIssueDifference.data !== undefined) {
-      summaryCountsData.push({ name: "Average Resolution Time", value: gitlabIssueDifference.data[0].difference + " hrs", footer: "Gitlab", status: gitlabIssueDifference.data[0].difference > 5 ? "warning" : "success" });
+      (gitlabIssueDifference.data[0].difference) ? summaryCountsData.push({ name: "Average Resolution Time (hrs)", value: gitlabIssueDifference.data[0].difference, footer: "Gitlab", status: gitlabIssueDifference.data[0].difference > 5 ? "warning" : "success" }) : console.log("time filter active");
     }
     
     return summaryCountsData;
@@ -110,25 +112,25 @@ function PlanningView_Developer ({ persona }) {
 
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
-            <JiraTicketsAssignedByUserBarChart persona={persona} />
+            <JiraTicketsAssignedByUserBarChart persona={persona} date={date} />
           </div>
           <div className="align-self-stretch p-2 w-100">
-            <JiraIssuesByPriorityBarChart persona={persona} />
+            <JiraIssuesByPriorityBarChart persona={persona} date={date} />
           </div>
         </div>
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
-            <JiraHealthBySprintBarChart persona={persona} />
+            <JiraHealthBySprintBarChart persona={persona} date={date} />
           </div>
           
           <div className="align-self-stretch p-2 w-100">
-            <JiraBurndownLineChart persona={persona} />
+            <JiraBurndownLineChart persona={persona} date={date} />
           </div>
         </div>
         
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
-            <JiraVelocityBarChart persona={persona} />
+            <JiraVelocityBarChart persona={persona} date={date} />
           </div>
           <div className="align-self-stretch p-2 w-100"> 
             <JiraIssuesAssignedToMe persona={persona}/> 

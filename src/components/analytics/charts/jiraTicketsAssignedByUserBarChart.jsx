@@ -13,7 +13,7 @@ import ModalLogs from "../../common/modalLogs";
 
 
 
-function JiraTicketsAssignedByUserBarChart( { persona } ) {
+function JiraTicketsAssignedByUserBarChart( { persona, date } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -52,7 +52,9 @@ function JiraTicketsAssignedByUserBarChart( { persona } ) {
           request: "jiraTicketsAssignedByUser",
           metric: "bar" 
         }
-      ]
+      ],
+      startDate: date.start, 
+      endDate: date.end
     };
 
     try {
@@ -116,11 +118,11 @@ function JiraTicketsAssignedByUserBarChart( { persona } ) {
               borderWidth={2}
               motionDamping={15}
               legends={config.legends}
-              tooltip={({ indexValue, value, data, color }) => (
+              tooltip={({ indexValue, value, color }) => (
                 <div>
                   <strong style={{ color }}>  User: </strong> {indexValue}<br></br>
                   <strong style={{ color }}>  No. of Tickets: </strong> {value} Tickets<br></br>
-                  <strong style={{ color }}>  Percentage: </strong> {data.percentage}%
+                  {/* <strong style={{ color }}>  Percentage: </strong> {data.percentage}% */}
                 </div>
               )}
               theme={{

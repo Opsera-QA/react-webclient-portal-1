@@ -12,7 +12,7 @@ import InfoDialog from "../../common/info";
 import ModalLogs from "../../common/modalLogs";
 
 
-function JiraIssuesCreatedByDateLineChart( { persona } ) {
+function JiraIssuesCreatedByDateLineChart( { persona, date } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -30,7 +30,9 @@ function JiraIssuesCreatedByDateLineChart( { persona } ) {
           request: "jiraIssuesCreatedByDate",
           metric: "stacked" 
         }
-      ]
+      ],
+      startDate: date.start, 
+      endDate: date.end
     };
 
     try {
@@ -45,7 +47,7 @@ function JiraIssuesCreatedByDateLineChart( { persona } ) {
       setLoading(false);
       setErrors(err.message);
     }
-  }, [contextType]);
+  }, [contextType, date]);
 
   useEffect(() => {    
     const controller = new AbortController();

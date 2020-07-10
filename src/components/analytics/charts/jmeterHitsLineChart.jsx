@@ -16,7 +16,7 @@ import InfoDialog from "../../common/info";
 import ModalLogs from "../../common/modalLogs";
 
 
-function JMeterHitsLineChart( { persona } ) {
+function JMeterHitsLineChart( { persona, date } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -41,7 +41,7 @@ function JMeterHitsLineChart( { persona } ) {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [date]);
 
   const getApiData = async () => {
     
@@ -55,7 +55,9 @@ function JMeterHitsLineChart( { persona } ) {
           request: "jmeterHits",
           metric: "line" 
         }
-      ]
+      ],
+      startDate: date.start, 
+      endDate: date.end
     };
 
     try {

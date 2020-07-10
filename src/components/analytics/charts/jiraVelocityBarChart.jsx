@@ -17,7 +17,7 @@ import ModalLogs from "../../common/modalLogs";
 
 
 
-function JiraVelocityBarChart( { persona } ) {
+function JiraVelocityBarChart( { persona, date } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -55,7 +55,9 @@ function JiraVelocityBarChart( { persona } ) {
           request: "jiraVelocityReport",
           metric: "bar" 
         }
-      ]
+      ],
+      startDate: date.start, 
+      endDate: date.end
     };
 
     try {

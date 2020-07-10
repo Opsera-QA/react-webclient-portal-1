@@ -280,7 +280,7 @@ function DashboardHome() {
                       overlay={renderTooltip}
                     >
                       <DropdownList filter
-                        disabled={selection !== "pipeline"}
+                        disabled={selection === "operations_v2"}
                         data={DATELABELS} 
                         className="max-content-width"
                         valueComponent={ValueInput}
@@ -330,13 +330,13 @@ function DashboardView({ selection, persona, date }) {
     case "pipeline":
       return <PipelineDashboard_v2 persona={persona} date={date} />;
     case "secops_v2":
-      return <SecOpsDashboard_v2 persona={persona} />;
+      return <SecOpsDashboard_v2 persona={persona} date={date}/>;
     case "quality_v2":
-      return <QualityDashboard persona={persona} />;
+      return <QualityDashboard persona={persona} date={date}/>;
     case "operations_v2":
       return <OperationsDashboard persona={persona} />;
     case "planning":
-      return <PlanningDashboard persona={persona} />;
+      return <PlanningDashboard persona={persona} date={date}/>;
     default:
       return null; 
     }
