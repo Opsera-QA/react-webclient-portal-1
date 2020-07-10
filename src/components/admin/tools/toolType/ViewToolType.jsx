@@ -1,9 +1,7 @@
-import React, { useContext, useState, useEffect } from "react";
+import React from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { format } from "date-fns";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
 
 import "components/inventory/tools/tools.css";
 
@@ -13,36 +11,52 @@ function ViewToolType(props) {
   return (
     <>
       { Object.keys(toolData).length > 0  && <>
-        <Row>
-          <Col lg={4} md={6} className="my-2 ml-2">
-            <span className="pr-1 text-muted">Tool Name: </span>{toolData.name}</Col>
-
-          <Col lg={12} md={12} className="my-2 ml-2">
-            <span className="pr-1 text-muted">Description: </span>{toolData.description}</Col>
-        </Row>
-
-        <Row className="mt-3 mx-1 px-1 py-2 tool-content-block">   
-          <Col lg={4} md={6} className="my-2">
-            <span className="pr-1 text-muted">ID: </span>{toolData._id}</Col>
-
-          {toolData.createdAt && <Col lg={4} md={6} className="my-2">
-            <span className="pr-1 text-muted">Created: </span>{format(new Date(toolData.createdAt), "yyyy-MM-dd")}</Col>}
-
-          <Col lg={4} md={6} className="my-2"> 
-            <span className="pr-1 text-muted">Tool: </span>{toolData.identifier}</Col> 
-
-          {/* <Col lg={4} md={6} className="my-2"> 
-            <span className="pr-1 text-muted">Type: </span>{toolData.tool_type_identifier}</Col> */}
-
-
-          {(toolData.tags && Object.keys(toolData.tags).length) > 0 && <Col lg={4} md={6} className="my-2">
-            <span className="pr-1 text-muted">Tags: </span>{toolData.tags.map(str => { return(`${str}, `);})}</Col> }
-
-          <Col lg={4} md={6} className="my-2">
-            <span className="pr-1 text-muted">State: </span>{toolData.active ? "Active" : "Disabled"}</Col>
-
-        </Row>
-
+        <div className="tool-content-block m-3 pt-2">
+          <Row>
+            <Col>
+              <ul className="list-group my-1">
+                <li className="list-group-item">
+                  <span className="pr-2 text-muted">Tool Type Name: </span>
+                  {toolData.name}
+                </li>
+                <li className="list-group-item">
+                  <span className="pr-2 text-muted">ID: </span>
+                  {toolData._id}
+                </li>
+                <li className="list-group-item">
+                  <span className="pr-2 text-muted">Created:</span>
+                  {toolData.createdAt && format(new Date(toolData.createdAt), "yyyy-MM-dd")}
+                </li>
+              </ul>
+            </Col>
+            <Col>
+              <ul className="list-group my-1">
+                <li className="list-group-item">
+                  <span className="pr-1 text-muted">Description: </span>
+                  {toolData.description}
+                </li>
+                <li className="list-group-item">
+                  <span className="pr-1 text-muted">Tool: </span>
+                  {toolData.identifier}
+                </li>
+                <li className="list-group-item">
+                  <span className="pr-1 text-muted">State: </span>
+                  {toolData.active ? "Active" : "Disabled"}
+                </li>
+              </ul>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <ul className="list-group">
+                <li className="list-group-item">
+                  <span className="pr-1 text-muted">Tags: </span>
+                  {toolData.tags.toString().split(",").join(", ")}
+                </li>
+              </ul>
+            </Col>
+          </Row>
+        </div>
       </>}
     </>
   );

@@ -6,46 +6,82 @@ import ReactJson from "react-json-view";
 
 import "components/inventory/tools/tools.css";
 
-function ViewTags(props) {
-  const { templateId, templateData } = props;
-
+function ViewTags( { templateId, templateData } ) {
   return (
     <>
-      { Object.keys(templateData).length > 0  && <>
-        <Row>
-          <Col lg={4} md={6} className="my-2 ml-2">
-            <span className="pr-1 text-muted">Name: </span>{templateData.name}</Col>
-
-          <Col lg={6} md={6} className="my-2">
-            <span className="pr-1 text-muted">Description: </span>{templateData.description}</Col>
-        </Row>
-
-        <Row className="mt-3 mx-1 px-1 py-2 tool-content-block">   
-          <Col lg={4} md={6} className="my-2">
-            <span className="pr-1 text-muted">ID: </span>{templateData._id}</Col>
-
-          <Col lg={4} md={6} className="my-2">
-            <span className="pr-1 text-muted">Tags: </span>{templateData.tags.toString().split(",").join(", ")}</Col> 
-
-          <Col lg={4} md={6} className="my-2">
-            <span className="pr-1 text-muted">Type: </span>{templateData.type.toString().split(",").join(", ")}</Col> 
-
-          <Col lg={4} md={6} className="my-2">
-            <span className="pr-1 text-muted">Roles: </span>{templateData.roles.toString().split(",").join(", ")}</Col> 
-
-          <Col lg={4} md={6} className="my-2">
-            <span className="pr-1 text-muted">State: </span>{templateData.active ? "Active" : "Disabled"}</Col>
-
-          {templateData.createdAt && <Col lg={4} md={6} className="my-2">
-            <span className="pr-1 text-muted">Created: </span>{format(new Date(templateData.createdAt), "yyyy-MM-dd")}</Col>}    
-        </Row>
-        <br />
-        <p><span className="pr-1 text-muted">Plan:</span></p>
-        <Row>
-          <Col className="my-2 ml-2">
-            <ReactJson src={templateData.plan} enableClipboard={false} displayDataTypes={false} /> 
-          </Col>
-        </Row>
+      { Object.keys(templateData).length > 0 && <>
+        <div className="tool-content-block m-3 pt-2">
+          <Row>
+            <Col>
+              <ul className="list-group my-1">
+                <li className="list-group-item">
+                  <span className="pr-2 text-muted">Template Name: </span>
+                  {templateData.name}
+                </li>
+                <li className="list-group-item">
+                  <span className="pr-2 text-muted">ID: </span>
+                  {templateData._id}
+                </li>
+                <li className="list-group-item">
+                  <span className="pr-2 text-muted">Created:</span>
+                  {templateData.createdAt && format(new Date(templateData.createdAt), "yyyy-MM-dd")}
+                </li>
+              </ul>
+            </Col>
+            <Col>
+              <ul className="list-group my-1">
+                <li className="list-group-item">
+                  <span className="pr-1 text-muted">Description: </span>
+                  {templateData.description}
+                </li>
+                <li className="list-group-item">
+                  <span className="pr-1 text-muted">State: </span>
+                  {templateData.active ? "Active" : "Disabled"}
+                </li>
+              </ul>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <ul className="list-group">
+                <li className="list-group-item">
+                  <span className="pr-1 text-muted">Tags: </span>
+                  {templateData.tags.toString().split(",").join(", ")}
+                </li>
+              </ul>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <ul className="list-group">
+                <li className="list-group-item">
+                  <span className="pr-1 text-muted">Type: </span>
+                  {templateData.type.toString().split(",").join(", ")}
+                </li>
+              </ul>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <ul className="list-group">
+                <li className="list-group-item">
+                  <span className="pr-1 text-muted">Roles: </span>
+                  {templateData.roles.toString().split(",").join(", ")}
+                </li>
+              </ul>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <ul className="list-group">
+                <li className="list-group-item">
+                  <span className="pr-1 text-muted">Plan: </span>
+                  <ReactJson src={templateData.plan} enableClipboard={false} displayDataTypes={false} />
+                </li>
+              </ul>
+            </Col>
+          </Row>
+        </div>
       </>}
     </>
   );
