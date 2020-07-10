@@ -34,7 +34,7 @@ function TemplateEditor() {
   const getTemplates = async () => {
     try {
       const accessToken = await getAccessToken();
-      const templateListResponse  = await axiosApiService(accessToken).get("/pipelines/workflows", {});
+      const templateListResponse  = await axiosApiService(accessToken).get("/pipelines/workflows?hidden=true", {});
       console.log(templateListResponse.data);
       setTemplateList(templateListResponse.data);
     }

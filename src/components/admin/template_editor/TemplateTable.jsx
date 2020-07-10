@@ -25,13 +25,6 @@ function TemplateTable({ data, selectedRow }) {
       {
         Header: "Description",
         accessor: "description",
-      },                 
-      {
-        Header: "Active",
-        accessor: "active",
-        Cell: (props) => {
-          return props.value ?  <FontAwesomeIcon icon={faCheckCircle} className="green ml-3" /> :  <FontAwesomeIcon icon={faTimesCircle} className="red ml-3" />;
-        },
       },
       {
         Header: "Created",
@@ -40,16 +33,22 @@ function TemplateTable({ data, selectedRow }) {
           return props.value ? format(new Date(props.value), "yyyy-MM-dd") : "";
         },
         class: "no-wrap-inline"
+      },                 
+      {
+        Header: "Active",
+        accessor: "active",
+        Cell: (props) => {
+          return props.value ?  <FontAwesomeIcon icon={faCheckCircle} className="green ml-3" /> :  <FontAwesomeIcon icon={faTimesCircle} className="red ml-3" />;
+        },
       },
     ],
     []
   );
 
-  const noDataMessage = "No tags are currently available";
+  const noDataMessage = "No templates are currently available";
 
   const rowStyling = (row) => {
-    // TODO: if we want alternate colors for failure rows, do it here
-    // return (row["values"].status === "failure" || row["values"].status === "failed") ? " failure-row" : "";
+    return !row["values"].active ? " inactive-row" : "";
   };
 
   return (
