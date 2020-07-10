@@ -12,7 +12,7 @@ import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/loading";
 import InfoDialog from "../../common/info";
 
-function CircleChart( { persona } ) {
+function CircleChart( { persona, date } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -36,7 +36,7 @@ function CircleChart( { persona } ) {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [date]);
 
   const getApiData = async () => {
     setLoading(true);
@@ -49,7 +49,9 @@ function CircleChart( { persona } ) {
           request: "jenkinsDeploySuccess",
           metric: "guage" 
         }
-      ]
+      ],
+      startDate: date.start, 
+      endDate: date.end
     };
 
     try {

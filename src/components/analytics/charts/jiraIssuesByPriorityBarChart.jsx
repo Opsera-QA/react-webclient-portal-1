@@ -13,7 +13,7 @@ import ModalLogs from "../../common/modalLogs";
 
 
 
-function JiraIssuesByPriorityBarChart( { persona } ) {
+function JiraIssuesByPriorityBarChart( { persona , date} ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -51,7 +51,9 @@ function JiraIssuesByPriorityBarChart( { persona } ) {
           request: "jiraIssuesByPriority",
           metric: "bar" 
         }
-      ]
+      ],
+      startDate: date.start, 
+      endDate: date.end
     };
 
     try {

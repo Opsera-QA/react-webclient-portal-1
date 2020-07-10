@@ -16,7 +16,7 @@ import TwistlockVulnerability from "../../charts/twistlockVulnerabilityLineChart
 
 
 
-function CodeView_Developer ({ persona }) {
+function CodeView_Developer ({ persona, date }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -42,7 +42,7 @@ function CodeView_Developer ({ persona }) {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [date, persona]);
 
   async function fetchData() {
     setLoading(true);
@@ -99,7 +99,10 @@ function CodeView_Developer ({ persona }) {
           "request": "twistlockVulStatusLow",
           "metric": "line"
         }
-      ]
+      ],
+      startDate: date.start, 
+      endDate: date.end
+
     };
     
     try {
@@ -154,33 +157,40 @@ function CodeView_Developer ({ persona }) {
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
             {Object.keys(data.sonarCodeSmells.data[0]).length > 0 && data.sonarCodeSmells.status === 200 ? <div className="chart mb-3" style={{ height: "300px" }}>
-              <SonarCodeSmellsLineChart data={data} persona={persona} />
-            </div> : ""}
+              <SonarCodeSmellsLineChart data={data} persona={persona} date={date}/>
+            </div> :         <div className="chart mb-3" style={{ height: "300px" }}>
+              <div className="chart-label-text">Sonar: Code Smells</div><InfoDialog message="No Data is available for this chart at this time." /></div>}
           </div>
           <div className="align-self-stretch p-2 w-100">
             {Object.keys(data.sonarCodeCategoriesNO_VALUE.data[0]).length > 0 && data.sonarCodeCategoriesNO_VALUE.status === 200 ? <div className="chart mb-3" style={{ height: "300px" }}>
-              <SonarCodeCategoriesNO_VALUEPieChart data={data} persona={persona} />
-            </div> : ""}
+              <SonarCodeCategoriesNO_VALUEPieChart data={data} persona={persona} date={date}/>
+            </div> : <div className="chart mb-3" style={{ height: "300px" }}>
+              <div className="chart-label-text">Sonar: Code Categories (Keyword = No Value)
+              </div><InfoDialog message="No Data is available for this chart at this time." /></div>}
           </div>
         </div>
 
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
             {Object.keys(data.sonarCodeCategoriesOK.data[0]).length > 0 && data.sonarCodeCategoriesOK.status === 200 ? <div className="chart mb-3" style={{ height: "300px" }}>
-              <SonarCodeCategoriesOKPieChart data={data} persona={persona} />
-            </div> : ""}
+              <SonarCodeCategoriesOKPieChart data={data} persona={persona} date={date}/>
+            </div> : <div className="chart mb-3" style={{ height: "300px" }}>
+              <div className="chart-label-text">Sonar: Code Categories (Keyword = OK)
+              </div><InfoDialog message="No Data is available for this chart at this time." /></div>}
           </div>
           <div className="align-self-stretch p-2 w-100">
             {Object.keys(data.sonarMaintainability.data[0]).length > 0 && data.sonarMaintainability.status === 200 ? <div className="chart mb-3" style={{ height: "300px" }}>
-              <SonarMaintainabilityLineChart data={data} persona={persona} />
-            </div> : ""}
+              <SonarMaintainabilityLineChart data={data} persona={persona} date={date}/>
+            </div> : <div className="chart mb-3" style={{ height: "300px" }}>
+              <div className="chart-label-text">Sonar: Maintainability Rating
+              </div><InfoDialog message="No Data is available for this chart at this time." /></div>}
           </div>
         </div>
 
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
             {Object.keys(data.twistlockVulStatusHigh.data[0]).length > 0 && data.twistlockVulStatusHigh.status === 200 ? <div className="chart mb-3" style={{ height: "300px" }}>
-              <TwistlockVulnerability data={data} persona={persona} />
+              <TwistlockVulnerability data={data} persona={persona} date={date}/>
             </div> : ""}
             
           </div>

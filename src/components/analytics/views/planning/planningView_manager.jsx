@@ -18,7 +18,7 @@ import JiraVelocityBarChart from "../../charts/jiraVelocityBarChart";
 
 
 
-function PlanningView_Manager ({ persona }) {
+function PlanningView_Manager ({ persona, date }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -43,7 +43,7 @@ function PlanningView_Manager ({ persona }) {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [date, persona]);
 
   async function fetchData() {
     setLoading(true);
@@ -64,7 +64,9 @@ function PlanningView_Manager ({ persona }) {
           "request": "gitlabIssueDifference",
           "metric": "difference"
         }
-      ]
+      ],
+      startDate: date.start, 
+      endDate: date.end
     };
     
     try {
@@ -113,25 +115,25 @@ function PlanningView_Manager ({ persona }) {
 
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
-            <JiraTicketsAssignedByUserBarChart persona={persona} />
+            <JiraTicketsAssignedByUserBarChart persona={persona} date={date} />
           </div>
           <div className="align-self-stretch p-2 w-100">
-            <JiraIssuesByPriorityBarChart persona={persona} />
-          </div>
-        </div>
-
-        <div className="d-flex">
-          <div className="align-self-stretch p-2 w-100">
-            <JiraHealthBySprintBarChart persona={persona} />
-          </div>
-          <div className="align-self-stretch p-2 w-100">
-            <JiraBurndownLineChart persona={persona} />
+            <JiraIssuesByPriorityBarChart persona={persona} date={date} />
           </div>
         </div>
 
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
-            <JiraVelocityBarChart persona={persona} />
+            <JiraHealthBySprintBarChart persona={persona} date={date} />
+          </div>
+          <div className="align-self-stretch p-2 w-100">
+            <JiraBurndownLineChart persona={persona} date={date} />
+          </div>
+        </div>
+
+        <div className="d-flex">
+          <div className="align-self-stretch p-2 w-100">
+            <JiraVelocityBarChart persona={persona} date={date} />
           </div>
           <div className="align-self-stretch p-2 w-100">
             {/* Self Contained Chart Component 6 */}

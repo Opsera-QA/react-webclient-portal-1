@@ -17,7 +17,7 @@ import ModalLogs from "../../common/modalLogs";
 
 import LoadingDialog from "../../common/loading";
 
-function ReliabilityRemediationEffortLineChart( { persona } ) {
+function ReliabilityRemediationEffortLineChart( { persona, date } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -42,7 +42,7 @@ function ReliabilityRemediationEffortLineChart( { persona } ) {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [date]);
 
   const getApiData = async () => {
     setLoading(true);
@@ -55,7 +55,9 @@ function ReliabilityRemediationEffortLineChart( { persona } ) {
           request: "reliabilityRemediationEffort",
           metric: "line" 
         }
-      ]
+      ],
+      startDate: date.start, 
+      endDate: date.end
     };
 
     try {

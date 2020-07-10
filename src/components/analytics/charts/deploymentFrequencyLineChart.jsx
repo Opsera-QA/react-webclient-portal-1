@@ -69,7 +69,7 @@ function MaintainabilityLineChart( { persona, date } ) {
     return () => {
       controller.abort();
     };
-  }, [fetchData]);
+  }, [fetchData, date]);
 
 
   console.log("Rendering Dep Frequency Charts");

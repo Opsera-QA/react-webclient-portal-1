@@ -5,23 +5,23 @@ import NewBugsCountLineChart from "../../charts/NewBugsCountLineChart";
 import ReliabilityRatingLineChart from "../../charts/ReliabilityRatingLineChart";
 import ReliabilityRemediationEffortLineChart from "../../charts/ReliabilityRemediationEffortLineChart";
 
-function ReliabilityMetricsCharts( { persona } ) {  
+function ReliabilityMetricsCharts( { persona, date } ) {  
   return (
     <>
       <div className="d-flex">
         <div className="align-self-stretch p-2 w-100">
-          <BugsCountLineChart persona={persona} />
+          <BugsCountLineChart persona={persona} date={date} />
         </div>
         <div className="align-self-stretch p-2 w-100">
-          <NewBugsCountLineChart persona={persona} />
+          <NewBugsCountLineChart persona={persona} date={date} />
         </div>
       </div>
       <div className="d-flex">
         <div className="align-self-stretch p-2 w-100">
-          <ReliabilityRatingLineChart persona={persona} />
+          <ReliabilityRatingLineChart persona={persona} date={date} />
         </div>
         <div className="align-self-stretch p-2 w-100">
-          <ReliabilityRemediationEffortLineChart persona={persona} />
+          <ReliabilityRemediationEffortLineChart persona={persona} date={date} />
         </div>
       </div>
     </>
@@ -29,7 +29,8 @@ function ReliabilityMetricsCharts( { persona } ) {
 }
 
 ReliabilityMetricsCharts.propTypes = {
-  persona: PropTypes.string
+  persona: PropTypes.string,
+  date: PropTypes.object
 };
 
 

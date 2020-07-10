@@ -6,7 +6,7 @@ import InfoDialog from "../../common/info";
 import ErrorDialog from "../../common/error";
 import { Table }  from "react-bootstrap";
 
-function JMeterResultsTable() {
+function JMeterResultsTable({ date }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -30,7 +30,7 @@ function JMeterResultsTable() {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [date]);
 
 
   async function fetchData() {
@@ -45,6 +45,9 @@ function JMeterResultsTable() {
           "metric": "bar"
         }        
       ]
+      ,
+      startDate: date.start, 
+      endDate: date.end
     };
     
     try {
