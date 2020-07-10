@@ -42,7 +42,7 @@ function ToolConfigurationsAdmin() {
   const getToolType = async () => {
     try {
       const accessToken = await getAccessToken();
-      const tool_type = await axiosApiService(accessToken).get("/registry/types", {});
+      const tool_type = await axiosApiService(accessToken).get("/registry/types?hidden=true", {});
       setToolTypeList(tool_type.data);
       setToolTypeLoading(false);
     }
@@ -55,7 +55,7 @@ function ToolConfigurationsAdmin() {
   const getToolIdentifier = async () => {
     try {
       const accessToken = await getAccessToken();
-      const tool_identifier  = await axiosApiService(accessToken).get("/registry/tools", {});
+      const tool_identifier  = await axiosApiService(accessToken).get("/registry/tools?hidden=true", {});
       setToolIdentifierList(tool_identifier.data);
       setToolIdentifierLoading(false);
     }
