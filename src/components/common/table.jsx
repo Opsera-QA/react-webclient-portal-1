@@ -3,8 +3,9 @@ import { useTable, usePagination, useSortBy } from "react-table";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
+import Pagination from "components/common/pagination";
 
-function CustomTable({ columns, data, noDataMessage, selectedRow, rowStyling, initialState, tableFilter }) {
+function CustomTable({ columns, data, noDataMessage, selectedRow, rowStyling, initialState, tableFilter, paginationOptions }) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -57,6 +58,10 @@ function CustomTable({ columns, data, noDataMessage, selectedRow, rowStyling, in
 
   return (
     <>
+      {/* TODO: Create Title bar and action bar components */}
+      {/* <div className="table-title-bar mt-3 mr-1">
+        <div className="table-title ml-2">Table header</div>
+      </div> */}
       <table className="custom-table my-3 mr-1" responsive="true" hover="true" {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup, i) => (
@@ -88,8 +93,14 @@ function CustomTable({ columns, data, noDataMessage, selectedRow, rowStyling, in
             );
           })}
           {rows.length == 0 && <tr><td colSpan="8" className="text-center p-5">{noDataMessage ? noDataMessage : defaultNoDataMessage}</td></tr>}
-          {<tr><td colSpan="8" className="table-footer"></td></tr>}  
         </tbody>
+        <tfoot>
+          <tr>
+            <td colSpan="8" className="table-footer px-2 pt-2">
+              {paginationOptions && <Pagination total={paginationOptions.totalCount} currentPage={paginationOptions.currentPage} pageSize={paginationOptions.pageSize} onClick={(pageNumber, pageSize) => paginationOptions.gotoPageFn(pageNumber, pageSize)} />}
+            </td>
+          </tr>
+        </tfoot>
       </table>
     </>
   );
@@ -102,7 +113,8 @@ CustomTable.propTypes = {
   selectedRow: PropTypes.func,
   rowStyling: PropTypes.func,
   initialState: PropTypes.object,
-  tableFilter: PropTypes.object
+  tableFilter: PropTypes.object,
+  paginationOptions: PropTypes.object
 };
 
 export default CustomTable;

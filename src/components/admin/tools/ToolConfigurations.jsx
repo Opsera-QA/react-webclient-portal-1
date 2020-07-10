@@ -4,7 +4,6 @@ import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { format } from "date-fns";
 import Loading from "components/common/loading";
 import ErrorDialog from "components/common/error";
 import { Link } from "react-router-dom";
@@ -64,28 +63,6 @@ function ToolConfigurationsAdmin() {
       console.log(err.message);
     }
   };
-
-  const columns = useMemo(
-    () => [
-      {
-        Header: "Name",
-        accessor: "name",
-      },
-      {
-        Header: "Description",
-        accessor: "description",
-      },     
-      {
-        Header: "Created",
-        accessor: "createdAt",
-        Cell: (props) => {
-          return props.value ? format(new Date(props.value), "yyyy-MM-dd") : "";
-        },
-        class: "no-wrap-inline"
-      },
-    ],
-    []
-  );
 
   const newToolType = () => {
     setModalType("New");
@@ -164,7 +141,7 @@ function ToolConfigurationsAdmin() {
 
           {isToolTypeLoading ? <Loading size="sm" /> : null} 
 
-          {!isToolTypeLoading ? <ToolTypeTable selectedRow={rowData => selectedRow(rowData, "tool_type")} columns={columns} data={toolTypeList} /> : null}
+          {!isToolTypeLoading ? <ToolTypeTable selectedRow={rowData => selectedRow(rowData, "tool_type")} data={toolTypeList} /> : null}
 
           {showToolTypeModal && <ToolTypeModal 
             type={modalType}
@@ -187,7 +164,7 @@ function ToolConfigurationsAdmin() {
 
           {isToolIdentifierLoading ? <Loading size="sm" /> : null}
 
-          {!isToolIdentifierLoading ? <ToolIdentifierTable selectedRow={rowData => selectedRow(rowData, "tool_identifier")} columns={columns} data={toolIdentifierList} /> : null}     
+          {!isToolIdentifierLoading ? <ToolIdentifierTable selectedRow={rowData => selectedRow(rowData, "tool_identifier")} data={toolIdentifierList} /> : null}     
 
           {showToolIdentifierModal && <ToolIdentifierModal 
             type={modalType}

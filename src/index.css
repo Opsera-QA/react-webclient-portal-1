@@ -546,3 +546,8 @@ a:hover, .active {
 {
   min-height:600px;
 }
+
+#dataManagerModalSmall .modal-content
+{
+  min-height:400px;
+}
