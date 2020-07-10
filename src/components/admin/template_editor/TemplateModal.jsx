@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Button, Modal, Form, Popover, Col, OverlayTrigger } from "react-bootstrap";
+import { Button, Modal, Form, Popover, Col, OverlayTrigger, ButtonGroup, ButtonToolbar } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext"; 
 import { axiosApiService } from "api/apiService";
@@ -15,12 +15,13 @@ import ViewTemplate from "./ViewTemplate";
 
 import "./template_editor.css";
 
-function TemplateEditorModal(props) {
+function TemplateEditorModal({ showModal, type, templateId, data, closeModal, handleDelete }) {
   const { getAccessToken } = useContext(AuthContext);
   const [templateData, setTemplateData] = useState({});
   const [templateType, setTemplateType] = useState("View");
   const [formFieldList, updateFormFields ] = useState({ ...templateEditorFormFields });
   const [ planData, setPlanData] = useState([]);
+  const [canDelete, setCanDelete] = useState(true);
 
   const defaultForm = {
     "type": [],
@@ -43,12 +44,12 @@ function TemplateEditorModal(props) {
   };
 
   useEffect(() => {  
-    setTemplateType(props.type);
-    setTemplateData(props.templateData);
+    setTemplateType(type);
+    setTemplateData(data);
   }, []);
 
   const handleClose = () => {
-    props.closeModal(false);
+    closeModal(false);
   };
 
   const popover = (
@@ -133,7 +134,7 @@ function TemplateEditorModal(props) {
   const isFormValid = (formFieldList.name.value && formFieldList.description.value) ? true :false;
 
   //Use a single function for create and update template
-  const updateTag = async () => {
+  const updateTemplate = async () => {
 
     //Check if role data is empty. If yes, add default
     formFieldList.roles.value = formFieldList.roles.value.length == 0 ? defaultForm.roles : formFieldList.roles.value;
@@ -174,7 +175,7 @@ function TemplateEditorModal(props) {
     return planList;
   };
 
-  const editTag = () => {
+  const editTemplate = () => {
     //Format the API response for the form
     Object.keys(formFieldList).map((item, i) => {
       let validateInput = {};
@@ -208,23 +209,11 @@ function TemplateEditorModal(props) {
     setTemplateType("Edit");
   };
 
-
-  const deleteTemplate = async () => {
-    try {
-      const accessToken = await getAccessToken();
-      const response = await axiosApiService(accessToken).delete("/pipelines/workflows/"+ templateData._id, { });
-      props.closeModal(false);
-    }
-    catch (err) {
-      console.log(err.message);
-    }
-  };
-
   const renderTemplateFormFields = (formField, i) => {
     return(
       <Form.Group key={i} controlId="formPlaintextEmail" className={formField.id == "plan" ? "mt-2 full-width" : "mt-2 half-width"}>
         <Form.Label column sm={formField.id == "plan" ? "1" : "2"}>
-          {formField.label} 
+          {formField.label}
           {formField.rules.isRequired && <span style={{ marginLeft:5, color: "#dc3545" }}>*</span>}
         </Form.Label>
         <Col sm={formField.id == "plan" ? "11" : "10"}>
@@ -240,44 +229,51 @@ function TemplateEditorModal(props) {
   };
   
   return (
-    <Modal size="lg" show={props.showModal} onHide={handleClose} backdrop="static">
-      <Modal.Header closeButton>
-        <Modal.Title>{templateType} Tempalte</Modal.Title>
-      </Modal.Header>
-      
-      <Modal.Body>
-
-        {templateType == "View" &&  <div className="text-right">
-          <Button variant="primary" size="sm" onClick= {() => { editTag(); }} className="mr-2">
-            <FontAwesomeIcon icon={faPen}
-              fixedWidth
-              style={{ cursor: "pointer" }} /> </Button> 
-          <Button variant="danger" size="sm" onClick= {() => { deleteTemplate(); }} >
-            <FontAwesomeIcon icon={faTrash}
-              fixedWidth
-              style={{ cursor: "pointer" }} /> </Button>
-        </div>} 
-
-        {templateType == "View" && <ViewTemplate templateData={templateData} templateId={props.templateId} />}
-
-        {(templateType == "New" || templateType == "Edit") && (
-          <Form className="templateFormContainer">
-            {Object.values(formFieldList).map((formField, i) => {
-              if(formField.toShow) {
-                return renderTemplateFormFields(formField, i);
-              }
-            })}    
-          </Form>
-        )}
-
-      </Modal.Body>
-      <Modal.Footer>
-        <OverlayTrigger trigger={["hover", "hover"]} placement="top" overlay={popover}>
-          <Button variant="secondary" onClick={handleClose}>Close</Button>
-        </OverlayTrigger>
-        {(templateType == "New" || templateType == "Edit") && <Button variant="primary" onClick={updateTag} disabled={!isFormValid}>Save changes</Button>}
-      </Modal.Footer>
-    </Modal>
+    <>
+      <Modal size="lg" show={showModal} onHide={handleClose} backdrop="static">
+        <Modal.Header closeButton>
+          <Modal.Title>{templateType} Template</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div>
+            <ButtonToolbar className="justify-content-between my-2 ml-2 mr-2">
+              <ButtonGroup>
+                <Button size="sm" className="ml-2 mr-2" variant={templateType === "View" ? "primary" : "secondary"} onClick={() => setTemplateType("View")}>Summary</Button>   
+                <Button size="sm" className="mr-2" variant={templateType === "Edit" ? "primary" : "secondary"} onClick= {() => { editTemplate(); }} >
+                  <FontAwesomeIcon icon={faPen} fixedWidth style={{ cursor: "pointer" }} /> Edit Template
+                </Button>
+              </ButtonGroup>
+              <ButtonGroup>
+                <Button size="sm" disabled={!canDelete} className="pull-right mr-2" variant={canDelete ? "danger" : "secondary"} onClick= {() => { handleDelete(); }} >
+                  <FontAwesomeIcon icon={faTrash} fixedWidth style={{ cursor: "pointer" }} /> Delete Template
+                </Button>
+              </ButtonGroup>
+            </ButtonToolbar>
+          </div>
+          <div className="mx-2">
+            {templateType === "View" && <ViewTemplate templateData={templateData} templateId={templateId} />}
+            {(templateType === "New" || templateType === "Edit") && (
+              // TODO: Create New/Edit tool type component and manually place everything
+              <div className="tool-content-block m-3 pt-2">
+                <Form className="templateFormContainer">
+                  {Object.values(formFieldList).map((formField, i) => {
+                    if(formField.toShow) {
+                      return renderTemplateFormFields(formField, i);
+                    }
+                  })}    
+                </Form>
+              </div>
+            )}
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <OverlayTrigger trigger={["hover", "hover"]} placement="top" overlay={popover}>
+            <Button variant="secondary" size="sm" onClick={handleClose}>Close</Button>
+          </OverlayTrigger>
+          {(templateType === "New" || templateType === "Edit") && <Button size="sm" variant="primary" onClick={updateTemplate} disabled={!isFormValid}>Save changes</Button>}
+        </Modal.Footer>
+      </Modal>
+    </>    
   );
 }
 
@@ -285,8 +281,9 @@ TemplateEditorModal.propTypes = {
   showModal: PropTypes.bool,
   type: PropTypes.string,
   templateId: PropTypes.string,
-  templateData: PropTypes.object,
-  closeModal: PropTypes.func
+  data: PropTypes.object,
+  closeModal: PropTypes.func,
+  handleDelete: PropTypes.func
 };
 
 export default TemplateEditorModal;

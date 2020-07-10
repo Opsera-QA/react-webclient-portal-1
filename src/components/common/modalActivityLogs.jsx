@@ -44,8 +44,8 @@ function ModalActivityLogsDialog({ header, size, jsonData, show, setParentVisibi
           </Modal.Header>
           <Modal.Body>
             <div className="m-2">
-              <div className="float-right mr-1">{format(new Date(jsonData.updatedAt), "yyyy-MM-dd', 'hh:mm a")}</div> 
-              <span className="text-muted">Step: </span> {jsonData.step_name}</div>
+              <div className="float-right mr-2">{format(new Date(jsonData.updatedAt), "yyyy-MM-dd', 'hh:mm a")}</div> 
+              <span className="text-muted ml-2">Step: </span> {jsonData.step_name}</div>
             
             { typeof(jsonData.api_response) === "string" ?
               <div className="console-text m-3">

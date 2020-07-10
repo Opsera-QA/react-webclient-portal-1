@@ -242,6 +242,14 @@ a.text-primary:hover, a.text-primary:focus {
   vertical-align: middle;
 }
 
+.table-title-bar {
+  color: #1578dc;
+  line-height:2.4em;
+  font-weight: bold;
+  background-color: #dee2e6;
+  width: 100%;
+}
+
 .table-row {
   margin-bottom: 2em;
   line-height:2em;
@@ -265,12 +273,17 @@ a.text-primary:hover, a.text-primary:focus {
   /* background-color: rgba(4, 95, 200, 0.178); */
   opacity:.6;
 }
+
 .custom-table td:hover {
   /* color: white; */
 }
 
 .custom-table .table-row:hover .cell-icon {
   /* color:white; */
+}
+
+.custom-table .table-row {
+  color: #334152;
 }
 
 .custom-table .table-row:hover {
@@ -285,3 +298,40 @@ a.text-primary:hover, a.text-primary:focus {
 }
 
 /* End custom table styling */
+
+/* Custom modal styling */
+/* TODO: apply class to modal */
+div.modal-body {
+  padding: 0em 0;
+}
+
+div.modal-header .h4 {
+  font-size: 1.25em;
+}
+
+div.modal-header {
+  padding: .3em 1em;
+  margin-top: .2em;
+  background-color: #1578dc;
+  color: #fff;
+  margin-top: 0;
+}
+
+div.modal-header .close {
+  padding: 1rem 1rem 0 1rem;
+  text-shadow: none;
+  color: white;
+}
+
+.modal-content {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+div.modal-footer {
+  padding: .3em 0.2em;
+  margin-top: .2em;
+  background-color: #dee2e6;
+  min-height: 2em;
+}
+/* End custom modal styling */
