@@ -132,9 +132,9 @@ function Slack() {
           {state.title} {state.message}
         </Alert>
       }
-      <Card className="mt-3">
-        <Card.Header as="h5">Slack Credentials</Card.Header>
-        <Card.Body>
+      <div className="m-3">
+        <div className="h5">Slack Credentials</div>
+        <div className="p-2">
 
           {fetching && <LoadingDialog />}
           {!fetching &&
@@ -158,9 +158,8 @@ function Slack() {
             </Form>
           }
 
-
-        </Card.Body>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }

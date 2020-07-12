@@ -227,10 +227,12 @@ function GitHub() {
           {state.title} {state.message}
         </Alert>
       }
-      <Card className="mt-3">
-        <Card.Header as="h5">Github Credentials</Card.Header>
-        <Card.Body>
+     
+      <div className="m-3">
+        <div className="h5">Github Credentials</div>
+        <div className="p-2">
 
+    
           {fetching && <LoadingDialog />}
           {!fetching &&
             <Form onSubmit={handleSave}>
@@ -352,8 +354,8 @@ function GitHub() {
           }
 
 
-        </Card.Body>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }

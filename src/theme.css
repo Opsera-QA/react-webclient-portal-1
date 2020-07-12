@@ -394,6 +394,11 @@ div.modal-footer {
   border-color: #1578dc;
 }
 
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link:hover {
+  border-color: #1578dc;
+}
+
+
 .tabbed-content-block {
   border-radius: 0 5px 5px 5px;
   border: 1px solid #d2d2d2;
@@ -402,5 +407,7 @@ div.modal-footer {
 .tabbed-content-block {
   border-radius: 0 5px 5px 5px;
   border: 1px solid #d2d2d2;
+  padding-top: 1em;
 }
+
 /* End Nav Tab Styling */

@@ -66,7 +66,7 @@ function PlatformInventory () {
     return (<ErrorDialog error={error} />);
   } else {
     return (
-      <div>
+      <div className="tabbed-content-block px-2 pt-3 pb-4">
         {!loading && data && data.length === 0 ? 
           <>
             <div className="mt-3 max-content-module-width-50">
@@ -76,8 +76,8 @@ function PlatformInventory () {
             </div>
           </>:
 
-          <div className="custom-table-filter d-flex my-1">
-            <span className="formLabel mt-1">Select Application</span>
+          <div className="custom-table-filter d-flex mt-2 mb-3 mx-2">
+            <span className="formLabel mt-1">Application: </span>
             {renderForm ?
               <DropdownList
                 className="application-select"

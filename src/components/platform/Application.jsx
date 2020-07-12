@@ -212,104 +212,105 @@ function Application(props) {
             <a className={"nav-link " + (showEditTools ? "active" : "")} href="#" onClick={handleTabClick}>Edit Existing Platform</a>
           </li>
         </ul>
+        <div className="tabbed-content-block px-2 pt-3 pb-4">
+          <div className="row m-2">
 
-        <div className="row m-2">
-
-          {applicationStatus !== "success" && !showEditTools && savingStatus !== "success" ? (
-            <div className="col ml-auto pb-4 mt-3">
-              <Form loading={checkingAppName || saving ? "true" : undefined}>
-                <Form.Row>
-                  <Form.Group controlId="formGridEmail">
-                    <Form.Label>New Application</Form.Label>
-                    <Form.Control type="text"
-                      placeholder="Name"
-                      name="appName"
-                      value={appName}
-                      onChange={handleAppNameChange}
-                      isInvalid={appNameError}
-                      disabled={applicationStatus === "success" ? true : false}
-                    />
-                    <Form.Control.Feedback type="invalid">{appNameError}</Form.Control.Feedback>
-                  </Form.Group>
-                </Form.Row>
-                <Button
-                  variant="outline-primary"
-                  type="submit"
-                  onClick={handleCreateClick}
-                  loading={checkingAppName ? "true" : undefined}
-                  disabled={!!appNameError || !appName || !appName.length || applicationStatus === "success"}>
-                    Create
-                </Button>
-              </Form>
-            </div>
-          ) : null}
-
-          {showEditTools && dropdownData  && savingStatus !== "success" && (
-            <>
-              {dropdownData.length > 0 ? (
-                <div className="col ml-auto">
-                  <Form>
-                    <Form.Group>
-                      <Form.Control as="select"
-                        defaultValue=""
-                        hidden={(!fetching && dropdownData.length > 0) ? false : true}
-                        onChange={handleDropdownChange}
-                        style={{ marginTop: 25 }}>
-                        <option value="" disabled>{fetching ? "loading..." : "Select Application to Edit"}</option>
-                        {!fetching && (
-                          <>
-                            {dropdownData.map(application => (
-                              <option key={application.name} value={application._id}>{application.name}</option>
-                            ))}
-                          </>
-                        )}
-                      </Form.Control>
+            {applicationStatus !== "success" && !showEditTools && savingStatus !== "success" ? (
+              <div className="col ml-auto pb-4 mt-3">
+                <Form loading={checkingAppName || saving ? "true" : undefined}>
+                  <Form.Row>
+                    <Form.Group controlId="formGridEmail">
+                      <Form.Label>New Application</Form.Label>
+                      <Form.Control type="text"
+                        placeholder="Name"
+                        name="appName"
+                        value={appName}
+                        onChange={handleAppNameChange}
+                        isInvalid={appNameError}
+                        disabled={applicationStatus === "success" ? true : false}
+                      />
+                      <Form.Control.Feedback type="invalid">{appNameError}</Form.Control.Feedback>
                     </Form.Group>
-                  </Form>
-                </div>
-              ): (
-                <InfoDialog message="No applications are saved yet. Please try adding a new application." />
-              )}
-            </>
-          )}
-        </div>
+                  </Form.Row>
+                  <Button
+                    variant="outline-primary"
+                    type="submit"
+                    onClick={handleCreateClick}
+                    loading={checkingAppName ? "true" : undefined}
+                    disabled={!!appNameError || !appName || !appName.length || applicationStatus === "success"}>
+                    Create
+                  </Button>
+                </Form>
+              </div>
+            ) : null}
 
-        {createAppStatus.error ? <ErrorDialog error={createAppStatus.error} /> : null}
-
-        {applicationDetails.data && applicationDetails.data.name ? 
-          <>
-            <h5 className="ml-1">Application: {applicationDetails.data.name}</h5>
-          </> : null }
-        
-        {savingStatus === "success" && createAppStatus.message ? <>
-          <SuccessDialog successMessage={createAppStatus.message} />
-          <Button variant="outline-primary" className="ml-2" onClick={gotoInventory}>
-            <FontAwesomeIcon icon={faClipboardList} fixedWidth /> Inventory
-          </Button>
-        </> : null}
-
-        {applicationStatus === "success" && savingStatus === null && (
-          <div className="mb-2">
-            <CardColumns>
-              <ConfigurationManagement app={applicationDetails.data} tools={applicationDetails.tools} />
-              <SAST app={applicationDetails.data} tools={applicationDetails.tools} />
-              <ContinousIntegration app={applicationDetails.data} tools={applicationDetails.tools} />
-              <LogManagement app={applicationDetails.data} tools={applicationDetails.tools} />
-              <RepositoryManagement app={applicationDetails.data} tools={applicationDetails.tools} />
-              <Monitoring app={applicationDetails.data} tools={applicationDetails.tools} />
-            </CardColumns>
-            <div className="text-right">
-              <Button variant="outline-primary" onClick={cancelTools} disabled={Object.keys(data).length == 0} className="m-2">
-                Cancel
-              </Button>
-              <Button variant="primary" onClick={saveTools} disabled={Object.keys(data).length == 0}>
-                Deploy Tool Selection
-              </Button>
-            </div>
+            {showEditTools && dropdownData  && savingStatus !== "success" && (
+              <>
+                {dropdownData.length > 0 ? (
+                  <div className="col ml-auto">
+                    <Form>
+                      <Form.Group>
+                        <Form.Control as="select"
+                          defaultValue=""
+                          hidden={(!fetching && dropdownData.length > 0) ? false : true}
+                          onChange={handleDropdownChange}
+                          style={{ marginTop: 25 }}>
+                          <option value="" disabled>{fetching ? "loading..." : "Select Application to Edit"}</option>
+                          {!fetching && (
+                            <>
+                              {dropdownData.map(application => (
+                                <option key={application.name} value={application._id}>{application.name}</option>
+                              ))}
+                            </>
+                          )}
+                        </Form.Control>
+                      </Form.Group>
+                    </Form>
+                  </div>
+                ): (
+                  <InfoDialog message="No applications are saved yet. Please try adding a new application." />
+                )}
+              </>
+            )}
           </div>
-        )}
 
-        {/* {applicationStatus === "success" && savingStatus === null && createAppStatus.message ? <SuccessDialog successMessage={createAppStatus.message} /> : null} */}
+          {createAppStatus.error ? <ErrorDialog error={createAppStatus.error} /> : null}
+
+          {applicationDetails.data && applicationDetails.data.name ? 
+            <>
+              <h5 className="ml-1">Application: {applicationDetails.data.name}</h5>
+            </> : null }
+        
+          {savingStatus === "success" && createAppStatus.message ? <>
+            <SuccessDialog successMessage={createAppStatus.message} />
+            <Button variant="outline-primary" className="ml-2" onClick={gotoInventory}>
+              <FontAwesomeIcon icon={faClipboardList} fixedWidth /> Inventory
+            </Button>
+          </> : null}
+
+          {applicationStatus === "success" && savingStatus === null && (
+            <div className="mb-2">
+              <CardColumns>
+                <ConfigurationManagement app={applicationDetails.data} tools={applicationDetails.tools} />
+                <SAST app={applicationDetails.data} tools={applicationDetails.tools} />
+                <ContinousIntegration app={applicationDetails.data} tools={applicationDetails.tools} />
+                <LogManagement app={applicationDetails.data} tools={applicationDetails.tools} />
+                <RepositoryManagement app={applicationDetails.data} tools={applicationDetails.tools} />
+                <Monitoring app={applicationDetails.data} tools={applicationDetails.tools} />
+              </CardColumns>
+              <div className="text-right">
+                <Button variant="outline-primary" onClick={cancelTools} disabled={Object.keys(data).length == 0} className="m-2">
+                Cancel
+                </Button>
+                <Button variant="primary" onClick={saveTools} disabled={Object.keys(data).length == 0}>
+                Deploy Tool Selection
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {/* {applicationStatus === "success" && savingStatus === null && createAppStatus.message ? <SuccessDialog successMessage={createAppStatus.message} /> : null} */}
+        </div>
       </div>
     </>
   );

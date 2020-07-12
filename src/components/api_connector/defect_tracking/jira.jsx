@@ -228,9 +228,9 @@ function Jira() {
           {state.title} {state.message}
         </Alert>
       }
-      <Card className="mt-3">
-        <Card.Header as="h5">Jira Credentials</Card.Header>
-        <Card.Body>
+      <div className="m-3">
+        <div className="h5">Jira Credentials</div>
+        <div className="p-2">
 
           {fetching && <LoadingDialog />}
           {!fetching &&
@@ -368,8 +368,8 @@ function Jira() {
               {/* <Button id="cancel-button" variant="outline-secondary" className="mr-2" type="button" onClick={this.cancel}>Cancel</Button> */}
             </Form>
           }
-        </Card.Body>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }
