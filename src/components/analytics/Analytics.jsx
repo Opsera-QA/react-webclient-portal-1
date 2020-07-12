@@ -28,6 +28,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
+import GitlabLastCommitToCodeByUser from "./charts/GitlabLastCommitToCodeByUser";
+import GitlabMergeRequestsView from "./views/GitlabMergeRequestsView";
+// import GitlabMergeRequestTimeTakenBarChart from "./charts/GitlabMergeRequestTimeTakenBarChart";
 
 
 
@@ -333,7 +336,7 @@ function ChartView({ selection, persona, date }) {
   }, [selection, persona, date.start]);
 
   if (selection) {
-    switch (selection) {
+    switch (selection) {      
     case "pipeline":
       return (
         <>
@@ -349,7 +352,7 @@ function ChartView({ selection, persona, date }) {
           <div className="mt-2">
             <ReliabilityMetricsCharts persona={persona} date={date}/>
           </div>
-          
+            
           <div className="d-flex">
             <div className="align-self-stretch p-2 w-100">
               <SonarSecurityLineChart persona={persona} sonarMeasure="vulnerabilities" date={date} />
@@ -366,7 +369,7 @@ function ChartView({ selection, persona, date }) {
               <SonarSecurityLineChart persona={persona} sonarMeasure="new_technical_debt" date={date} />
             </div>
           </div>
-
+  
         </>);
 
     case "software_development":
@@ -398,7 +401,7 @@ function ChartView({ selection, persona, date }) {
             </div>
           </div>
           {/* Commenting this out as part of phase 2 - will be pushed as part of phase 2 forward fixes */}
-          {/* <GitlabPlanCodeView persona={persona} /> */}
+          <GitlabPlanCodeView persona={persona} />
 
         </>);
 
@@ -436,10 +439,13 @@ function ChartView({ selection, persona, date }) {
               <GitlabMergeRequestsByUserChart persona={persona} date={date}/>
             </div>
             <div className="align-self-stretch p-2 w-100">
-              {/* Self Contained Chart Component 2  */}
+              {/* Self Contained Chart Component 2  */}              
             </div>
           </div>
-
+          <div className="mt-2">
+            <GitlabLastCommitToCodeByUser persona={persona} /> 
+          </div>
+          <GitlabMergeRequestsView persona={persona} />
         </>);
 
     default:
