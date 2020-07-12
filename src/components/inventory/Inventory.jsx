@@ -12,12 +12,12 @@ function Inventory () {
       <h4>Tool Registry</h4>
       <p>The OpsERA Tool Registry allows you to register, track and configure all of the tools in your organization in one centralized inventory.</p>
       <Tabs defaultActiveKey="tools" id="uncontrolled-tab-example">
-        <Tab eventKey="platform" title="Platform" onClick={() => { history.push("/inventory");}}>
-          <PlatformInventory />
-        </Tab>
         <Tab eventKey="tools" title="Tool Type" onClick={() => { history.push("/inventory/tools");}}>
           <ToolInventory />
         </Tab>
+        <Tab eventKey="platform" title="Platform" onClick={() => { history.push("/inventory");}}>
+          <PlatformInventory />
+        </Tab>        
       </Tabs>
     </div>
   );

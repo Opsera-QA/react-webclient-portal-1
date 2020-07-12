@@ -11,6 +11,7 @@ import ToolLogs from "./toolDetailsLogs";
 import ToolJobs from "./toolJobs";
 import PipelineActions from "../../../workflow/actions";
 import ToolPropertiesForm from "../newTool/toolPropertiesForm";
+import LoadingDialog from "components/common/loading";
 
 const INITIAL_FORM = {
   name: "",
@@ -123,6 +124,9 @@ function ToolDetails(props) {
         </Modal.Header>)}
         <Modal.Body>
 
+          {isLoading && <LoadingDialog size="sm" />}
+          {errors && <div className="error-text ml-3">Error Reported: {errors}</div>}
+
           {Object.keys(toolData).length > 0 && !isLoading && (
             <>
               <div>
@@ -152,8 +156,6 @@ function ToolDetails(props) {
                   </ButtonGroup>
                 </ButtonToolbar>
               </div>
-
-              {errors ? <div className="error-text ml-3">Error Reported: {errors}</div> : null}
               
               {toolId ? <>
                 {activeTab === "summary" && <ToolSummary toolData={toolData} toolId={toolId} fnSaveChanges={updateTool} fnEditTool={fnEditTool} />}
