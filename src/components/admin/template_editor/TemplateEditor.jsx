@@ -101,21 +101,21 @@ function TemplateEditor() {
           </li>
           <li className="breadcrumb-item active">Template Management</li> 
         </ol>
-      </nav> 
-
-      <h5>Template Management</h5>
-      <br />     
+      </nav>
 
       {pageLoading ? <Loading size="sm" /> : null}
       {(!isAdminCheck && !pageLoading)&& <ErrorDialog error={"You do not have access to view this page!"} />}
       {isAdminCheck &&
       <>
-        <div className="mt-4 mb-4 text-right">
-          <Button variant="primary" size="sm"  
-            onClick={() => { createTemplate(); }}> 
-            <FontAwesomeIcon icon={faPlus} className="mr-1"/> New Template
-          </Button>
-          <br />
+        <div className="justify-content-between mb-1 d-flex">
+          <h5>Template Management</h5>
+          <div className="text-right">
+            <Button variant="primary" size="sm"  
+              onClick={() => { createTemplate(); }}> 
+              <FontAwesomeIcon icon={faPlus} className="mr-1"/> New Template
+            </Button>
+            <br />
+          </div>
         </div>
       
         <TemplatesTable selectedRow={rowData => selectedRow(rowData, "tool_type")} data={templateList} />

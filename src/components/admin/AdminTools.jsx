@@ -34,7 +34,7 @@ function AdminTools(props) {
             <h4>Administration Tools</h4>
             <div>Listed below are administration tools for the platform.</div>
 
-            <Row className="ml-5 mt-5" style={{ fontSize:"1rem" }}>
+            <Row className="mt-3 admin-tools">
               <Col xs={12} md={6} lg={4} className="p-2">
                 <Link to="/admin/systemstatus"><FontAwesomeIcon icon={faHeartbeat} fixedWidth /> System Status</Link>
               </Col>

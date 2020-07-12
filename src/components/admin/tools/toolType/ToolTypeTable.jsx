@@ -22,7 +22,7 @@ function ToolTypeTable({ data, selectedRow }) {
         Cell: (props) => {
           return props.value ? format(new Date(props.value), "yyyy-MM-dd") : "";
         },
-        class: "cell-center"
+        class: "cell-center no-wrap-inline"
       },
         {
             Header: "State",

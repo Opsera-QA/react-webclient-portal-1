@@ -130,12 +130,15 @@ function ToolInventory () {
         handleCancelModal={() => setShowDeleteModal(false)}
         handleConfirmModal={() => deleteTool()} /> : null}
 
-      <div className="mt-3 d-flex flex-row-reverse">
-        <Button size="sm" variant="primary"   
-          onClick={() => { handleNewEntryClick("new"); }}> 
-          <FontAwesomeIcon icon={faPlus} className="mr-1"/> New Entry
-        </Button>
-        <div className="tool-filter mr-3">
+      <div className="custom-table-filter d-flex flex-row-reverse">
+        <div className="my-1 text-right">
+          <Button variant="primary" size="sm"
+            onClick={() => { handleNewEntryClick("new"); }}>
+            <FontAwesomeIcon icon={faPlus} className="mr-1"/> New Tool Type
+          </Button>
+          <br />
+        </div>
+        <div className="tool-filter mr-2 mt-1">
           { filterOptionList && <DropdownList
             busy={Object.keys(filterOptionList).length == 1 ? true : false}
             disabled={Object.keys(filterOptionList).length == 1 ? true : false}
@@ -143,9 +146,9 @@ function ToolInventory () {
             valueField='filterText'
             textField='text'
             defaultValue={filterOption}
-            onChange={updateFilterOption}             
-          />}   
-        </div>        
+            onChange={updateFilterOption}
+          />}
+        </div>
       </div>
       {isLoading && <LoadingDialog />}
       {errors && <div className="error-text">Error Reported: {errors}</div>}

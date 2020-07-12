@@ -32,7 +32,7 @@ function TemplateTable({ data, selectedRow }) {
         Cell: (props) => {
           return props.value ? format(new Date(props.value), "yyyy-MM-dd") : "";
         },
-        class: "no-wrap-inline"
+        class: "cell-center no-wrap-inline"
       },                 
       {
         Header: "Active",

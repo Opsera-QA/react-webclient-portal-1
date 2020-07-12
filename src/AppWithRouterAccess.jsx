@@ -24,7 +24,7 @@ import Logs from "./components/logs/Logs";
 import Update from "./components/update/Update";
 import AdminTools from "./components/admin/AdminTools";
 import DeleteTools from "./components/admin/delete_tools/DeleteTools";
-import RegisteredUsers from "./components/admin/RegisteredUsers";
+import RegisteredUsers from "./components/admin/registered_users/RegisteredUsers";
 import ManageSystems from "./components/admin/manage_systems/ManageSystems";
 import ReportsRegistration from "./components/admin/analytics/ReportsRegistration";
 import ApiConnectionDemo from "./components/api_connector/ApiDemo";
