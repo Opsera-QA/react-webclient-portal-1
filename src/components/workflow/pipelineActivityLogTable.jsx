@@ -70,8 +70,8 @@ function PipelineActivityLogTable({ data, isLoading, paginationOptions, selectRu
         Cell: (props) => {
           return props.value ? 
             (props.value === "failure" || props.value === "failed") 
-              ? <><FontAwesomeIcon icon={faTimesCircle} className="cell-icon red" /><span className="pl-2">{props.value}</span></>
-              : <><FontAwesomeIcon icon={faCheckCircle} className="cell-icon green" /><span className="pl-2">{props.value}</span></>
+              ? <><div style={{ display: "flex",  flexWrap: "nowrap" }}><div><FontAwesomeIcon icon={faTimesCircle} className="cell-icon red" /></div><div className="ml-1">{props.value}</div></div></>
+              : <><div style={{ display: "flex",  flexWrap: "nowrap" }}><div><FontAwesomeIcon icon={faCheckCircle} className="cell-icon green" /></div><div className="ml-1">{props.value}</div></div></>
             : "unknown";
         },
       },
