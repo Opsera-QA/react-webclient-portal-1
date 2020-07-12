@@ -92,7 +92,7 @@ function CustomTable({ columns, data, noDataMessage, selectedRow, rowStyling, in
               </tr>
             );
           })}
-          {rows.length == 0 && <tr><td colSpan="8" className="text-center p-5">{noDataMessage ? noDataMessage : defaultNoDataMessage}</td></tr>}
+          {rows.length == 0 && <tr><td colSpan="8" className="info-text text-center p-5">{noDataMessage ? noDataMessage : defaultNoDataMessage}</td></tr>}
         </tbody>
         <tfoot>
           <tr>
