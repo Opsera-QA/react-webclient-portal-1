@@ -320,6 +320,11 @@ a.text-primary:hover, a.text-primary:focus {
   /* cursor: pointer; */
 }
 
+/*.custom-table .table-row.selected-row {*/
+/*  background-color: rgba(21, 120, 220, 0.58);*/
+/*  color: #010913;*/
+/*}*/
+
 .custom-table .table-footer {
   background-color: #dee2e6;
   height: 1em;
@@ -372,7 +377,14 @@ div.modal-footer {
 /* End Form Styling */
 
 
+/* Nav Tab Styling */
 .nav-tabs {
+  border-bottom: none;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link {
+  background: rgba(0,0,0,.05);
+  color: #6c757d;
   border-bottom: none;
 }
 
@@ -381,3 +393,9 @@ div.modal-footer {
   color: #fff;
   border-bottom: none;
 }
+
+.tabbed-content-block {
+  border-radius: 0 5px 5px 5px;
+  border: 1px solid #d2d2d2;
+}
+/* End Nav Tab Styling */

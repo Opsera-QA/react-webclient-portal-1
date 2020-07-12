@@ -146,11 +146,11 @@ function ToolDetails(props) {
                   </ButtonGroup>
                   <ButtonGroup>
                     <Button size="sm" className="float-right mr-1" variant="secondary" 
-                      onClick= {() => { editTool(); }} disabled={activeTab === "new" || activeTab === "edit"}>
+                      onClick= {() => { editTool(); }} disabled={activeTab !== "summary"}>
                       <FontAwesomeIcon icon={faPen} fixedWidth /> 
                     </Button>
                     <Button size="sm" className="float-right mr-2" variant={canDelete ? "outline-danger" : "outline-secondary"}
-                      onClick= {() => { fnDeleteTool(toolId, toolData); }} disabled={(!canDelete || activeTab === "new" || activeTab === "edit")}>
+                      onClick= {() => { fnDeleteTool(toolId, toolData); }} disabled={(!canDelete || activeTab !== "summary")}>
                       <FontAwesomeIcon icon={faTrash} fixedWidth />
                     </Button>
                   </ButtonGroup>

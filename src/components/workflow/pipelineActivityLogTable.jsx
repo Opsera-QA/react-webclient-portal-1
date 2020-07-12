@@ -124,8 +124,8 @@ function PipelineActivityLogTable({ data, isLoading, paginationOptions, selectRu
               {/*    />*/}
             </div>
           </div>
-          {data && data.length > 0 
-            && <>
+          {data &&
+            <>
               <CustomTable 
                 columns={columns} 
                 data={data}
