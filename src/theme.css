@@ -215,6 +215,16 @@ a.text-primary:hover, a.text-primary:focus {
   height: 100%;
 }
 
+.half-height {
+  /* Adjust vh if we tighten up whitespace at the top of the app */
+  height: 35vh;
+}
+
+.scroll-y {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 .modal-min-height {
   height: 500px;
 }
@@ -226,6 +236,24 @@ a.text-primary:hover, a.text-primary:focus {
   /* border: 1px solid #d2d2d2; */
   font-size: .9em;
   width: 100%;
+}
+
+/*.custom-table thead {*/
+/*  overflow-y: auto;*/
+/*  overflow-x: hidden;*/
+/*}*/
+
+/*.custom-table tbody {*/
+/*  overflow-y: scroll;*/
+/*  overflow-x: hidden;*/
+/*}*/
+
+.custom-table-filter {
+  font-size: .8em;
+}
+
+.custom-table-filter .btn {
+  font-size: 1em;
 }
 
 .custom-table th {
@@ -335,3 +363,10 @@ div.modal-footer {
   min-height: 2em;
 }
 /* End custom modal styling */
+
+/* Form Styling */
+.formLabel {
+  color: #334152;
+  font-size: 1.25em;
+}
+/* End Form Styling */

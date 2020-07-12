@@ -62,7 +62,7 @@ function CustomTable({ columns, data, noDataMessage, selectedRow, rowStyling, in
       {/* <div className="table-title-bar mt-3 mr-1">
         <div className="table-title ml-2">Table header</div>
       </div> */}
-      <table className="custom-table my-3 mr-1" responsive="true" hover="true" {...getTableProps()}>
+      <table className="custom-table mr-1" responsive="true" hover="true" {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup, i) => (
             <tr key={i}  {...headerGroup.getHeaderGroupProps()}>

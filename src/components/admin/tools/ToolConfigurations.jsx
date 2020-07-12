@@ -13,6 +13,7 @@ import ToolTypeModal from "./toolType/ToolTypeModal";
 
 import ToolIdentifierTable from "./toolIdentifier/ToolIdentifierTable";
 import ToolIdentifierModal from "./toolIdentifier/ToolIdentifierModal";
+import Modal from "../../common/modal";
 
 function ToolConfigurationsAdmin() {
   const { getUserRecord, getAccessToken } = useContext(AuthContext);
@@ -27,6 +28,8 @@ function ToolConfigurationsAdmin() {
 
   const [showToolTypeModal, toggleToolTypeModal] = useState(false);
   const [showToolIdentifierModal, toggleToolIdentiferModal] = useState(false);
+  const [showToolTypeDeleteModal, setShowToolTypeDeleteModal] = useState(false);
+  const [showToolIdentifierDeleteModal, setShowToolIdentifierDeleteModal] = useState(false);
 
   const [modalType, setModalType] = useState("View");
   const [toolId, setToolId] = useState("");
@@ -107,6 +110,40 @@ function ToolConfigurationsAdmin() {
     setPageLoading(false);
   };
 
+  const handleDeleteClick = (location) => {
+    if (location === "toolType") {
+      setShowToolTypeDeleteModal(true);
+    }
+    else {
+      setShowToolIdentifierDeleteModal(true);
+    }
+  };
+
+
+  const deleteToolIdentifier = async () => {
+    try {
+      const accessToken = await getAccessToken();
+      const response = await axiosApiService(accessToken).delete("/registry/tool/"+ toolData._id, { });
+      console.log(response.data);
+      toggleToolIdentiferModal(false);
+    }
+    catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  const deleteToolType = async () => {
+    try {
+      const accessToken = await getAccessToken();
+      const response = await axiosApiService(accessToken).delete("/registry/type/"+ toolData._id, { });
+      console.log(response.data);
+      toggleToolTypeModal(false);
+    }
+    catch (err) {
+      console.log(err.message);
+    }
+  };
+
   return (
     <div> 
 
@@ -131,7 +168,7 @@ function ToolConfigurationsAdmin() {
       <Tabs defaultActiveKey="toolType" id="uncontrolled-tab-example">
         <Tab eventKey="toolType" title="Tool Type">
 
-          <div className="mt-4 mb-4 text-right">
+          <div className="my-1 text-right">
             <Button variant="primary" size="sm"  
               onClick={() => { newToolType(); }}> 
               <FontAwesomeIcon icon={faPlus} className="mr-1"/> New Tool Type
@@ -139,7 +176,7 @@ function ToolConfigurationsAdmin() {
             <br />
           </div>
 
-          {isToolTypeLoading ? <Loading size="sm" /> : null} 
+          {isToolTypeLoading ? <Loading size="sm" /> : null}
 
           {!isToolTypeLoading ? <ToolTypeTable selectedRow={rowData => selectedRow(rowData, "tool_type")} data={toolTypeList} /> : null}
 
@@ -147,14 +184,15 @@ function ToolConfigurationsAdmin() {
             type={modalType}
             toolId={toolId}
             toolData={toolData}
-            showModal={showToolTypeModal} 
+            showModal={showToolTypeModal}
+            handleDeleteClick={handleDeleteClick}
             closeModal={(toggleModal) => closeToolType(toggleModal)}   /> }
 
         </Tab>
 
         <Tab eventKey="toolIdentifier" title="Tool Identifier">
 
-          <div className="mt-4 mb-4 text-right">
+          <div className="my-1 text-right">
             <Button variant="primary" size="sm"  
               onClick={() => { newToolIdentifer(); }}> 
               <FontAwesomeIcon icon={faPlus} className="mr-1"/> New Tool Identifier
@@ -170,9 +208,21 @@ function ToolConfigurationsAdmin() {
             type={modalType}
             toolId={toolId}
             toolData={toolData}
-            showModal={showToolIdentifierModal} 
+            showModal={showToolIdentifierModal}
+            handleDeleteClick={handleDeleteClick}
             closeModal={(toggleModal) => closeToolIdentifier(toggleModal)}   /> }
 
+          {showToolTypeDeleteModal ? <Modal header="Confirm Tool Type Delete"
+            message="Warning! Data cannot be recovered once this tool is deleted. Do you still want to proceed?"
+            button="Confirm"
+            handleCancelModal={() => setShowToolTypeDeleteModal(false)}
+            handleConfirmModal={() => deleteToolType()} /> : null}
+
+          {showToolIdentifierDeleteModal ? <Modal header="Confirm Tool Idenfitier Delete"
+            message="Warning! Data cannot be recovered once this tool is deleted. Do you still want to proceed?"
+            button="Confirm"
+            handleCancelModal={() => setShowToolIdentifierDeleteModal(false)}
+            handleConfirmModal={() => deleteToolIdentifier()} /> : null}
         </Tab>
       </Tabs>
       }
