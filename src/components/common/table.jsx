@@ -68,14 +68,16 @@ function CustomTable({ columns, data, noDataMessage, selectedRow, rowStyling, in
             <tr key={i}  {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column, j) => (
                 <th className="px-2" key={j} {...column.getHeaderProps(column.getSortByToggleProps())}>
-                  {column.render("Header")}
-                  <span>
-                    {column.isSorted
-                      ? column.isSortedDesc
-                        ? <FontAwesomeIcon icon={faSortDown} className="float-right mt-2" />
-                        : <FontAwesomeIcon icon={faSortUp} className="float-right mt-2" />
-                      : null}
-                  </span>
+                  <div style={{ display: "flex",  flexWrap: "nowrap" }}>
+                    <div>{column.render("Header")}</div>
+                    <div className="ml-1">
+                      {column.isSorted
+                        ? column.isSortedDesc
+                          ? <FontAwesomeIcon icon={faSortDown} />
+                          : <FontAwesomeIcon icon={faSortUp} />
+                        : null}
+                    </div>
+                  </div>                  
                 </th>
               ))}
             </tr>

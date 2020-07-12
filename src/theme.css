@@ -263,6 +263,7 @@ a.text-primary:hover, a.text-primary:focus {
   border-bottom: 1px solid gray;
   text-align: center;
   vertical-align: middle;
+  white-space: nowrap; 
 }
 
 .custom-table .cell-center {
