@@ -4,13 +4,11 @@ import CustomTable from "components/common/table";
 import { faTimesCircle, faCheckCircle, faSearchPlus, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
-import { DropdownList } from "react-widgets";
-import { createFilterOptionList } from "utils/tableHelpers";
 import ModalActivityLogs from "components/common/modalActivityLogs";
+import NumberPicker from "react-widgets/lib/NumberPicker";
+import simpleNumberLocalizer from "react-widgets-simple-number";
 
-function PipelineActivityLogTable({ data, isLoading, paginationOptions }) {
-  const [filterOptionList, setFilterOptionList] = useState([]);
-  const [filterOption, setFilterOption] = useState();
+function PipelineActivityLogTable({ data, isLoading, paginationOptions, selectRunCountFilter, currentRunCountFilter, maxRunCount }) {
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState({});
   const initialState = {
@@ -26,16 +24,12 @@ function PipelineActivityLogTable({ data, isLoading, paginationOptions }) {
       }
     ]
   };  
-  const noDataMessage = "Pipeline activity data has not been generated yet.  Once this pipeline begins running, it will publish details here.";
+  const noDataMessage = "Pipeline activity data has not been generated yet. Once this pipeline begins running, it will publish details here.";
 
-  useEffect(() => {    
-    {data && data.length > 0 && setFilterOptionList(createFilterOptionList(data, "run_count", "run_count", "run_count", false));}
-  }, []);
+  simpleNumberLocalizer();
+
+  useEffect(() => {}, []);
   
-  const updateFilterOption = (filterOption) => {
-    setFilterOption(filterOption);
-  };
-
   const getRowInfo = (row) => {
     setModalData(row);
     setShowModal(true);
@@ -43,6 +37,7 @@ function PipelineActivityLogTable({ data, isLoading, paginationOptions }) {
 
   const rowStyling = (row) => {
     // TODO: if we want alternate colors for failure rows, do it here
+    return "";
     // return (row["values"].status === "failure" || row["values"].status === "failed") ? " failure-row" : "";
   };
 
@@ -55,7 +50,7 @@ function PipelineActivityLogTable({ data, isLoading, paginationOptions }) {
       {
         Header: "Run",
         accessor: "run_count",
-        class: "cell-center"
+        class: "cell-center no-wrap-inline"
       },
       {
         Header: "Action",
@@ -75,8 +70,8 @@ function PipelineActivityLogTable({ data, isLoading, paginationOptions }) {
         Cell: (props) => {
           return props.value ? 
             (props.value === "failure" || props.value === "failed") 
-              ? <><FontAwesomeIcon icon={faTimesCircle} className="cell-icon red" /><span className="pl-2">{props.value}</span></>
-              : <><FontAwesomeIcon icon={faCheckCircle} className="cell-icon green" /><span className="pl-2">{props.value}</span></>
+              ? <><div style={{ display: "flex",  flexWrap: "nowrap" }}><div><FontAwesomeIcon icon={faTimesCircle} className="cell-icon red" /></div><div className="ml-1">{props.value}</div></div></>
+              : <><div style={{ display: "flex",  flexWrap: "nowrap" }}><div><FontAwesomeIcon icon={faCheckCircle} className="cell-icon green" /></div><div className="ml-1">{props.value}</div></div></>
             : "unknown";
         },
       },
@@ -90,7 +85,7 @@ function PipelineActivityLogTable({ data, isLoading, paginationOptions }) {
         Cell: (props) => {
           return format(new Date(props.value), "yyyy-MM-dd', 'hh:mm a");
         },
-        class: "cell-center"
+        class: "cell-center no-wrap-inline"
       },
       {
         Header: "Info",
@@ -114,30 +109,29 @@ function PipelineActivityLogTable({ data, isLoading, paginationOptions }) {
         ? <div className="h6 mt-4">Activity Log<FontAwesomeIcon icon={faSpinner} spin className="ml-1" fixedWidth/></div> 
         : 
         <>
-          <div className="my-1 d-flex justify-content-between">
+          <div className="mt-1 d-flex justify-content-between">
             <div className="h6 mt-2 d-flex">Activity Log</div>
-            <div className="tool-filter">
-              { filterOptionList && <DropdownList
-                busy={Object.keys(filterOptionList).length == 1 ? true : false}
-                disabled={Object.keys(filterOptionList).length == 1 ? true : false}
-                data={filterOptionList}
-                valueField='filterText'
-                textField='text'
-                defaultValue={filterOption}
-                onChange={updateFilterOption}             
-              ></DropdownList>
-              }   
+            <div className="custom-table-filter pipeline-activity-filter">
+              {/*<NumberPicker*/}
+              {/*    type="number"*/}
+              {/*    placeholder={"Run Count"}*/}
+              {/*    // disabled={maxRunCount ? maxRunCount < 2 : false}*/}
+              {/*    value={currentRunCountFilter ? currentRunCountFilter : 1}*/}
+              {/*    className="max-content-width"*/}
+              {/*    onChange={selectRunCountFilter}*/}
+              {/*    min={1}*/}
+              {/*    // max={maxRunCount}*/}
+              {/*    />*/}
             </div>
           </div>
-          {data && data.length > 0 
-            && <>
+          {data &&
+            <>
               <CustomTable 
                 columns={columns} 
                 data={data}
                 rowStyling={rowStyling}
                 noDataMessage={noDataMessage}
                 initialState={initialState}
-                tableFilter={filterOption}
                 paginationOptions={paginationOptions}
               >
               </CustomTable>
@@ -151,6 +145,9 @@ PipelineActivityLogTable.propTypes = {
   data: PropTypes.array,
   paginationOptions: PropTypes.object,
   isLoading: PropTypes.bool,
+  selectRunCountFilter: PropTypes.func,
+  currentRunCountFilter: PropTypes.number,
+  maxRunCount: PropTypes.number
 };
 
 export default PipelineActivityLogTable;

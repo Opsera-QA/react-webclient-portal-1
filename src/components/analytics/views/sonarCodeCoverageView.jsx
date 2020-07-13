@@ -8,7 +8,7 @@ import InfoDialog from "../../common/info";
 import SonarLinesToCoverBarChart from "../charts/sonarLinesToCoverBarChart";
 import SonarCodeCoverageBarChart from "../charts/sonarCodeCoverageBarChart";
 
-function CodeCoverageMetricsView( { persona } ) {
+function CodeCoverageMetricsView( { persona, date } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -31,7 +31,7 @@ function CodeCoverageMetricsView( { persona } ) {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [date]);
 
 
   const fetchData = async () => {
@@ -45,7 +45,9 @@ function CodeCoverageMetricsView( { persona } ) {
           request: "sonarCodeCoverage",
           metric: "bar" 
         }
-      ]
+      ],
+      startDate: date.start, 
+      endDate: date.end
     };
 
     try {
@@ -70,7 +72,13 @@ function CodeCoverageMetricsView( { persona } ) {
   } else if (error) {
     return (<ErrorDialog  error={error} />);
   } else if (typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) {
-    return (<InfoDialog  message="No log activity has been captured for this dashboard yet." />);
+    return (
+      <div className="chart mb-3" style={{ height: "300px" }}>
+        <div className="chart-label-text">Sonar: Lines to Cover & Code Coverage</div>
+
+        <InfoDialog  message="No log activity has been captured for this dashboard yet." />
+      </div>
+    );
   } else {
     return (
       <>

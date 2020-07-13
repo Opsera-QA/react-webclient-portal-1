@@ -98,7 +98,7 @@ function TagsEditor() {
 
   return (
     <div> 
-      <h4>Administration Tools</h4>
+      {/* <h4>Administration Tools</h4> */}
 
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
@@ -107,43 +107,44 @@ function TagsEditor() {
           </li>
           <li className="breadcrumb-item active">Tag Management</li> 
         </ol>
-      </nav>     
-
-      <h5>Tag Management</h5>     
-
-      {pageLoading ? <Loading size="sm" /> : null} 
+      </nav>
+      {pageLoading ? <Loading size="sm" /> : null}
       {(!isAdminCheck && !pageLoading)&& <ErrorDialog error={"You do not have access to view this page!"} />}
-      {isAdminCheck && <>
-      
-        <div className="mt-4 mb-4 text-right">
-          <Button variant="primary" size="sm"  
-            onClick={() => { createTag(); }}> 
-            <FontAwesomeIcon icon={faPlus} className="mr-1"/>New Tag
-          </Button>
-          <br />
-        </div>
-      
-        <TagsTable selectedRow={rowData => selectedRow(rowData, "tool_type")} data={tagList} />
+      {isAdminCheck &&
+        <>
+          <div className="justify-content-between mb-1 d-flex">
+            <h5>Tag Management</h5>
+            <div className="text-right">
+              <Button variant="primary" size="sm"
+                onClick={() => { createTag(); }}>
+                <FontAwesomeIcon icon={faPlus} className="mr-1"/>New Tag
+              </Button>
+              <br />
+            </div>
+          </div>
 
-        {showTagModal && !showDeleteModal && <TagEditorModal 
-          type={modalType}
-          tagId={tagId}
-          tagData={tagData}
-          showModal={showTagModal}
-          fnDeleteTool={handleDeleteClick} 
-          closeModal={(toggleModal) => closeTagView(toggleModal)}   /> }
 
-        {showDeleteModal ? <Modal showModal={showDeleteModal} header="Confirm Tag Delete"
-          message="Warning! Data cannot be recovered once the tag is deleted. Do you still want to proceed?"
-          button="Confirm"
-          handleCancelModal={() => 
-          {
-            setShowDeleteModal(false);
-            setShowTagModal(false);
-          }}
-          handleConfirmModal={() => deleteTag()} /> : null}       
+          <TagsTable selectedRow={rowData => selectedRow(rowData, "tool_type")} data={tagList} />
+
+          {showTagModal && !showDeleteModal && <TagEditorModal 
+            type={modalType}
+            tagId={tagId}
+            tagData={tagData}
+            showModal={showTagModal}
+            fnDeleteTool={handleDeleteClick} 
+            closeModal={(toggleModal) => closeTagView(toggleModal)}   /> }
+
+          {showDeleteModal ? <Modal showModal={showDeleteModal} header="Confirm Tag Delete"
+            message="Warning! Data cannot be recovered once the tag is deleted. Do you still want to proceed?"
+            button="Confirm"
+            handleCancelModal={() => 
+            {
+              setShowDeleteModal(false);
+              setShowTagModal(false);
+            }}
+            handleConfirmModal={() => deleteTag()} /> : null}       
       
-      </>}
+        </>}
       
     </div>
   );

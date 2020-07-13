@@ -90,26 +90,26 @@ class ApiConnector extends Component {
             <a className="nav-link disabled" href="#">Disabled</a>
           </li> */}
         </ul>
+        <div className="tabbed-content-block px-2 pt-3 pb-4">
 
+          {this.state.selection === "github" && <GitHub />}
+          {this.state.selection === "gitlab" && <GitLab />}
+          {this.state.selection === "bitbucket" && <Bitbucket />}
+          {this.state.selection === "jira" && <Jira />}
 
-        {this.state.selection === "github" && <GitHub />}
-        {this.state.selection === "gitlab" && <GitLab />}
-        {this.state.selection === "bitbucket" && <Bitbucket />}
-        {this.state.selection === "jira" && <Jira />}
+          {this.state.selection === "jenkins" && <JenkinsForm />}
+          {this.state.selection === "sonar" && <Sonar />}
+          {this.state.selection === "junit" && <JUnit />}
+          {this.state.selection === "jMeter" && <JMeter />}
+          {this.state.selection === "selenium" && <Selenium />}
+          {this.state.selection === "twistlock" && <Twistlock />}
 
-        {this.state.selection === "jenkins" && <JenkinsForm />}
-        {this.state.selection === "sonar" && <Sonar />}
-        {this.state.selection === "junit" && <JUnit />}
-        {this.state.selection === "jMeter" && <JMeter />}
-        {this.state.selection === "selenium" && <Selenium />}
-        {this.state.selection === "twistlock" && <Twistlock />}
-
-        {this.state.selection === "servicenow" && <ServiceNow />}
-        {this.state.selection === "openstack" && <OpenStack />}
-        {this.state.selection === "slack" && <Slack />}
-        {this.state.selection === "tableau" && <Tableau />}
-        {this.state.selection === "splunk" && <Splunk />}
-        {this.state.selection === "" &&
+          {this.state.selection === "servicenow" && <ServiceNow />}
+          {this.state.selection === "openstack" && <OpenStack />}
+          {this.state.selection === "slack" && <Slack />}
+          {this.state.selection === "tableau" && <Tableau />}
+          {this.state.selection === "splunk" && <Splunk />}
+          {this.state.selection === "" &&
           <div className="mt-4 ml-1">
             <div className="h5 mb-2 mt-2">Getting Started</div>
             OpsERA offers various out of the box API connectors which allow users to integrate their platforms and technologies with the OpsERA services. If your tool is 
@@ -133,8 +133,8 @@ class ApiConnector extends Component {
             step.  
 
           </div>
-        }
-
+          }
+        </div>
       </div>
     );
   }

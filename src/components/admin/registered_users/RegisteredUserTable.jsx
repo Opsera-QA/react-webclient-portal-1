@@ -4,7 +4,7 @@ import { useTable, useExpanded, useSortBy } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {  faSortUp, faSortDown, faSort } from "@fortawesome/free-solid-svg-icons";
 
-import "./admin.css";
+import "../admin.css";
 
 function RegisteredUserTable({  data, deployingElk, handleDeletePress, handleDeployElkStack }) {
 
@@ -32,7 +32,8 @@ function RegisteredUserTable({  data, deployingElk, handleDeletePress, handleDep
       },
       {
         Header: "Created",
-        accessor: "createdAt"
+        accessor: "createdAt",
+        class: "cell-center no-wrap-inline"
       },
       {
         Header: "Actions",

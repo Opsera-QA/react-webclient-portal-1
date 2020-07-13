@@ -6,7 +6,7 @@ import InfoDialog from "../../common/info";
 import ErrorDialog from "../../common/error";
 import { Table }  from "react-bootstrap";
 
-function TestResultsTable() {
+function TestResultsTable({date}) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -44,7 +44,10 @@ function TestResultsTable() {
           "request": "xunitTable",
           "metric": "bar"
         }        
-      ]
+      ],
+      startDate: date.start, 
+      endDate: date.end
+
     };
     
     try {

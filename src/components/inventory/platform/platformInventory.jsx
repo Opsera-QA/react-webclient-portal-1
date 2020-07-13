@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams, useLocation } from "react-router-dom";
-import PropTypes from "prop-types";
-import { Form, Alert, Table } from "react-bootstrap";
-import { format } from "date-fns";
-import { AuthContext } from "contexts/AuthContext";  
+import { Form, Alert } from "react-bootstrap";
+import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
 import ErrorDialog from "components/common/error";
 //import LoadingDialog from "../common/loading";
@@ -11,7 +8,6 @@ import DropdownList from "react-widgets/lib/DropdownList";
 import PlatformToolsTable from "./platformToolsTable.jsx";
 
 function PlatformInventory () {
-
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -70,7 +66,7 @@ function PlatformInventory () {
     return (<ErrorDialog error={error} />);
   } else {
     return (
-      <div className="mt-3">
+      <div className="tabbed-content-block px-2 pt-3 pb-4">
         {!loading && data && data.length === 0 ? 
           <>
             <div className="mt-3 max-content-module-width-50">
@@ -80,24 +76,21 @@ function PlatformInventory () {
             </div>
           </>:
 
-          <div className="mt-1">
-            <Form>
-              <Form.Group className="flex">
-                <Form.Label className="mr-3 mt-1 formLabel">Select Application</Form.Label>
-                {renderForm ?
-                  <DropdownList
-                    className="application-select"
-                    data={data} 
-                    valueField='name'
-                    busy={loading} 
-                    textField='name'
-                    onChange={handleDropdownChange}             
-                  /> : null }
-              </Form.Group>
-            </Form>
-          </div> }
-        
-        <div className="mt-3">
+          <div className="custom-table-filter d-flex mt-2 mb-3 mx-2">
+            <span className="formLabel mt-1">Application: </span>
+            {renderForm ?
+              <DropdownList
+                className="application-select"
+                data={data} 
+                valueField='name'
+                busy={loading} 
+                textField='name'
+                onChange={handleDropdownChange}             
+              /> : null }
+          </div>
+        }
+
+        <div>
           {key && Object.keys(key).length > 0 ? 
             <>
               {Object.keys(key.tools).length > 0 ? 

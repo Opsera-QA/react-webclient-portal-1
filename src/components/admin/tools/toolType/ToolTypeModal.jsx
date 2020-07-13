@@ -176,12 +176,12 @@ function ToolTypeModal(props) {
             <ButtonGroup>
               <Button size="sm" className="ml-2 mr-2" variant={toolType === "View" ? "primary" : "secondary"} onClick={() => setToolType("View")}>Summary</Button>
               <Button size="sm" className="mr-2" variant={toolType === "Edit" ? "primary" : "secondary"} onClick= {() => { editTool(); }} >
-                <FontAwesomeIcon icon={faPen} fixedWidth style={{ cursor: "pointer" }} /> Edit Tool Type
+                <FontAwesomeIcon icon={faPen} fixedWidth /> Edit Tool Type
               </Button>
             </ButtonGroup>
             <ButtonGroup>
-              <Button size="sm" disabled={!canDelete || toolType !== "View"} className="pull-right mr-2" variant={canDelete ? "danger" : "secondary"} onClick= {() => { props.handleDelete(); }} >
-                <FontAwesomeIcon icon={faTrash} fixedWidth style={{ cursor: "pointer" }} /> Delete Tool Type
+              <Button size="sm" disabled={!canDelete || toolType !== "View"} className="pull-right mr-2" variant={canDelete ? "danger" : "secondary"} onClick= {() => { props.handleDeleteClick("toolType"); }} >
+                <FontAwesomeIcon icon={faTrash} fixedWidth /> Delete Tool Type
               </Button>
             </ButtonGroup>
           </ButtonToolbar>
@@ -231,7 +231,7 @@ ToolTypeModal.propTypes = {
   toolId: PropTypes.string,
   toolData: PropTypes.object,
   closeModal: PropTypes.func,
-  handleDelete: PropTypes.func
+  handleDeleteClick: PropTypes.func
 };
 
 export default ToolTypeModal;

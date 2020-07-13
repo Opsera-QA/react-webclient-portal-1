@@ -62,20 +62,22 @@ function CustomTable({ columns, data, noDataMessage, selectedRow, rowStyling, in
       {/* <div className="table-title-bar mt-3 mr-1">
         <div className="table-title ml-2">Table header</div>
       </div> */}
-      <table className="custom-table my-3 mr-1" responsive="true" hover="true" {...getTableProps()}>
+      <table className="custom-table mr-1" responsive="true" hover="true" {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup, i) => (
             <tr key={i}  {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column, j) => (
                 <th className="px-2" key={j} {...column.getHeaderProps(column.getSortByToggleProps())}>
-                  {column.render("Header")}
-                  <span>
-                    {column.isSorted
-                      ? column.isSortedDesc
-                        ? <FontAwesomeIcon icon={faSortDown} className="float-right mt-2" />
-                        : <FontAwesomeIcon icon={faSortUp} className="float-right mt-2" />
-                      : null}
-                  </span>
+                  <div style={{ display: "flex",  flexWrap: "nowrap" }}>
+                    <div>{column.render("Header")}</div>
+                    <div className="ml-1">
+                      {column.isSorted
+                        ? column.isSortedDesc
+                          ? <FontAwesomeIcon icon={faSortDown} />
+                          : <FontAwesomeIcon icon={faSortUp} />
+                        : null}
+                    </div>
+                  </div>                  
                 </th>
               ))}
             </tr>
@@ -92,11 +94,11 @@ function CustomTable({ columns, data, noDataMessage, selectedRow, rowStyling, in
               </tr>
             );
           })}
-          {rows.length == 0 && <tr><td colSpan="8" className="text-center p-5">{noDataMessage ? noDataMessage : defaultNoDataMessage}</td></tr>}
+          {rows.length == 0 && <tr><td colSpan="8" className="info-text text-center p-5">{noDataMessage ? noDataMessage : defaultNoDataMessage}</td></tr>}
         </tbody>
         <tfoot>
           <tr>
-            <td colSpan="8" className="table-footer px-2 pt-2">
+            <td colSpan="8" className="table-footer">
               {paginationOptions && <Pagination total={paginationOptions.totalCount} currentPage={paginationOptions.currentPage} pageSize={paginationOptions.pageSize} onClick={(pageNumber, pageSize) => paginationOptions.gotoPageFn(pageNumber, pageSize)} />}
             </td>
           </tr>

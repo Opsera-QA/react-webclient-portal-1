@@ -71,7 +71,7 @@ class DeleteTools extends PureComponent {
         {
           administrator &&
           <div className="DefaultDashboardPage">
-            <h4>Administration Tools</h4>  
+            {/* <h4>Administration Tools</h4>   */}
             <nav aria-label="breadcrumb">
               <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
                 <li className="breadcrumb-item">

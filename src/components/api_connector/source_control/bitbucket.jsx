@@ -192,10 +192,11 @@ function Bitbucket() {
           {state.title} {state.message}
         </Alert>
       }
-      <Card className="mt-3">
-        <Card.Header as="h5">BitBucket Credentials</Card.Header>
-        <Card.Body>
+      <div className="m-3">
+        <div className="h5">BitBucket Credentials</div>
+        <div className="p-2">
 
+      
           {fetching && <LoadingDialog />}
           {!fetching &&
             <Form onSubmit={handleSave}>
@@ -276,9 +277,8 @@ function Bitbucket() {
             </Form>
           }
 
-
-        </Card.Body>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }

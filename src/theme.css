@@ -215,6 +215,16 @@ a.text-primary:hover, a.text-primary:focus {
   height: 100%;
 }
 
+.half-height {
+  /* Adjust vh if we tighten up whitespace at the top of the app */
+  height: 35vh;
+}
+
+.scroll-y {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 .modal-min-height {
   height: 500px;
 }
@@ -226,6 +236,26 @@ a.text-primary:hover, a.text-primary:focus {
   /* border: 1px solid #d2d2d2; */
   font-size: .9em;
   width: 100%;
+  margin-bottom:2em;
+}
+
+/*.custom-table thead {*/
+/*  overflow-y: auto;*/
+/*  overflow-x: hidden;*/
+/*}*/
+
+/*.custom-table tbody {*/
+/*  overflow-y: scroll;*/
+/*  overflow-x: hidden;*/
+/*}*/
+
+.custom-table-filter {
+  font-size: .8em;
+  padding-bottom:1em;
+}
+
+.custom-table-filter .btn {
+  font-size: 1em;
 }
 
 .custom-table th {
@@ -235,6 +265,7 @@ a.text-primary:hover, a.text-primary:focus {
   border-bottom: 1px solid gray;
   text-align: center;
   vertical-align: middle;
+  white-space: nowrap; 
 }
 
 .custom-table .cell-center {
@@ -292,9 +323,15 @@ a.text-primary:hover, a.text-primary:focus {
   /* cursor: pointer; */
 }
 
+/*.custom-table .table-row.selected-row {*/
+/*  background-color: rgba(21, 120, 220, 0.58);*/
+/*  color: #010913;*/
+/*}*/
+
 .custom-table .table-footer {
-  background-color: #dee2e6;
-  height: 1em;
+  background-color: #fff;
+  padding-top: 1em;
+  height: 2em;
 }
 
 /* End custom table styling */
@@ -335,3 +372,42 @@ div.modal-footer {
   min-height: 2em;
 }
 /* End custom modal styling */
+
+/* Form Styling */
+.formLabel {
+  color: #334152;
+  font-size: 1.25em;
+}
+/* End Form Styling */
+
+
+/* Nav Tab Styling */
+.nav-tabs {
+  border-bottom: none;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link {
+  background: rgba(0,0,0,.05);
+  color: #6c757d;
+  border-bottom: none;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+  background: #1578dc;
+  color: #fff;
+  border-color: #1578dc;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link:hover {
+  border-color: #1578dc;
+}
+
+
+.tabbed-content-block {
+  border-radius: 0 5px 5px 5px;
+  border: 1px solid #d2d2d2;
+  padding: 1em;
+}
+
+
+/* End Nav Tab Styling */

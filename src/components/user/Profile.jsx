@@ -12,7 +12,7 @@ function Profile() {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState();
-  const [claims, setClaims] = useState();
+  const [user, setUser] = useState();
     
   useEffect(() => {
     fetchData();
@@ -30,20 +30,13 @@ function Profile() {
       .then(function (result) {
         setData(result.data.profile[0]);
         setLoading(false);  
-        applyClaims(userInfoResponse);      
+        setUser(userInfoResponse);      
       })
       .catch(function (error) {
         setLoading(false);
         setErrors(error);
         console.log(`Error Reported: ${error}`);
       });
-  }
-
-  async function applyClaims(user) {
-    if (user && !claims) {
-      const claims = Object.entries(user);
-      setClaims(claims);
-    }
   }
 
   return (
@@ -57,29 +50,40 @@ function Profile() {
               stored in your identify provider so some changes may not be possible from this portal at this time.</p>               
         </div>
 
+        <h6 className="mt-4">My Profile</h6>
+        <div className="p-2 mt-1">
+          {user && 
+         <>        
+           <Table>
+             <tbody>
+               <tr><td>OpsERA User ID</td><td>{user._id}</td></tr>
+               <tr><td>Name</td><td>{user.firstName} {user.lastName}</td></tr>
+               <tr><td>Email Address</td><td>{user.email}</td></tr>
+               <tr><td>Job Title</td><td>{user.title}</td></tr>
+               <tr><td>Organization</td><td>{user.organizationName}</td></tr> {/* TODO: Replace with LDAP Org */}
+               <tr><td>Account</td><td>{user.account}</td></tr>
+               <tr><td>Platform SubDomain</td><td>{user.domain}</td></tr>
+               <tr><td>Created</td><td>{user.createdAt}</td></tr>
+               <tr><td>Groups & Roles</td>
+                 <td>
+                   {user.groups !== undefined && user.groups.map((group) => {
+                     return <div key={group}>{group}</div>;
+                   })}
+                 </td></tr>
+             </tbody>
+           </Table>
+         </>}
+        </div>
+
+
+        {/* 
         <h6>Analytics and Logging Settings</h6>  
         <div className="p-2 mt-1">
           {error && <ErrorDialog error={error} />}
           <ConfigurationsForm settings={data} token={token} />
         </div>
+ */}
 
-        <h6 className="mt-4">My User Profile (powered by Okta)</h6>
-        <div className="p-2 mt-1">
-          <Card>
-            <Card.Body>            
-              <Table>
-                <tbody>
-                  {claims !== undefined && claims.map((claimEntry) => {
-                    const claimName = claimEntry[0];
-                    const claimValue = claimEntry[1];
-                    const claimId = `claim-${claimName}`;
-                    return <tr key={claimName}><td>{claimName}</td><td id={claimId}>{claimValue}</td></tr>;
-                  })}
-                </tbody>
-              </Table>
-            </Card.Body>        
-          </Card>
-        </div>
       </>
         
       }

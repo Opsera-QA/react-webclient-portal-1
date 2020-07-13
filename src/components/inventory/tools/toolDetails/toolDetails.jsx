@@ -11,6 +11,7 @@ import ToolLogs from "./toolDetailsLogs";
 import ToolJobs from "./toolJobs";
 import PipelineActions from "../../../workflow/actions";
 import ToolPropertiesForm from "../newTool/toolPropertiesForm";
+import LoadingDialog from "components/common/loading";
 
 const INITIAL_FORM = {
   name: "",
@@ -123,6 +124,9 @@ function ToolDetails(props) {
         </Modal.Header>)}
         <Modal.Body>
 
+          {isLoading && <LoadingDialog size="sm" />}
+          {errors && <div className="error-text ml-3">Error Reported: {errors}</div>}
+
           {Object.keys(toolData).length > 0 && !isLoading && (
             <>
               <div>
@@ -142,18 +146,16 @@ function ToolDetails(props) {
                   </ButtonGroup>
                   <ButtonGroup>
                     <Button size="sm" className="float-right mr-1" variant="secondary" 
-                      onClick= {() => { editTool(); }} disabled={activeTab === "new" || activeTab === "edit"}>
+                      onClick= {() => { editTool(); }} disabled={activeTab !== "summary"}>
                       <FontAwesomeIcon icon={faPen} fixedWidth /> 
                     </Button>
                     <Button size="sm" className="float-right mr-2" variant={canDelete ? "outline-danger" : "outline-secondary"}
-                      onClick= {() => { fnDeleteTool(toolId, toolData); }} disabled={(!canDelete || activeTab === "new" || activeTab === "edit")}>
+                      onClick= {() => { fnDeleteTool(toolId, toolData); }} disabled={(!canDelete || activeTab !== "summary")}>
                       <FontAwesomeIcon icon={faTrash} fixedWidth />
                     </Button>
                   </ButtonGroup>
                 </ButtonToolbar>
               </div>
-
-              {errors ? <div className="error-text ml-3">Error Reported: {errors}</div> : null}
               
               {toolId ? <>
                 {activeTab === "summary" && <ToolSummary toolData={toolData} toolId={toolId} fnSaveChanges={updateTool} fnEditTool={fnEditTool} />}

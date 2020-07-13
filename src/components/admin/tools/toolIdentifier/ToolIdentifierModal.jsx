@@ -5,7 +5,7 @@ import {
   Form,
   Popover,
   Col,
-  OverlayTrigger
+  OverlayTrigger, ButtonToolbar, ButtonGroup
 } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
@@ -31,6 +31,7 @@ function ToolIdentifierModal(props) {
     ...toolIdentifierFormFields
   });
   const [tool_list, setToolList] = useState([]);
+  const [canDelete, setCanDelete] = useState(true);
 
   useEffect(() => {
     getToolList();
@@ -240,20 +241,9 @@ function ToolIdentifierModal(props) {
     setToolType("Edit");
   };
 
-  const deleteTool = async () => {
-    try {
-      const accessToken = await getAccessToken();
-      const response = await axiosApiService(accessToken).delete("/registry/tool/"+ toolData._id, { });
-      console.log(response.data);
-      props.closeModal(false);
-    }
-    catch (err) {
-      console.log(err.message);
-    }
-  };
-
   return (
     <Modal
+      id="dataManagerModal"
       size="lg"
       show={props.showModal}
       onHide={handleClose}
@@ -263,50 +253,57 @@ function ToolIdentifierModal(props) {
         <Modal.Title>{toolType} Tool Identifier</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {toolType == "View" &&  <div className="text-right">
-          <Button variant="primary" size="sm" onClick= {() => { editTool(); }} className="mr-2">
-            <FontAwesomeIcon icon={faPen}
-              fixedWidth
-              style={{ cursor: "pointer" }} /> </Button>
-          <Button variant="danger" size="sm" onClick= {() => { deleteTool(); }} >
-            <FontAwesomeIcon icon={faTrash}
-              fixedWidth
-              style={{ cursor: "pointer" }} /> </Button>
-        </div>}
+        <div>
+          <ButtonToolbar className="justify-content-between my-2 ml-2 mr-2">
+            <ButtonGroup>
+              <Button size="sm" className="ml-2 mr-2" variant={toolType === "View" ? "primary" : "secondary"} onClick={() => setToolType("View")}>Summary</Button>
+              <Button size="sm" className="mr-2" variant={toolType === "Edit" ? "primary" : "secondary"} onClick= {() => { editTool(); }} >
+                <FontAwesomeIcon icon={faPen} fixedWidth /> Edit Tool Identifier
+              </Button>
+            </ButtonGroup>
+            <ButtonGroup>
+              <Button size="sm" disabled={!canDelete || toolType !== "View"} className="pull-right mr-2" variant={canDelete ? "danger" : "secondary"} onClick= {() => { props.handleDeleteClick("toolIdentifier"); }} >
+                <FontAwesomeIcon icon={faTrash} fixedWidth /> Delete Tool Identifier
+              </Button>
+            </ButtonGroup>
+          </ButtonToolbar>
+        </div>
 
         {toolType == "View" && (
           <ViewToolIdentifier toolData={toolData} toolId={props.toolId} />
         )}
 
         {(toolType == "New" || toolType == "Edit") && (
-          <Form className="newToolFormContainer">
-            {Object.values(formFieldList).map((formField, i) => {
-              if (formField.toShow) {
-                return (
-                  <Form.Group
-                    key={i}
-                    controlId="formPlaintextEmail"
-                    className="mt-2"
-                  >
-                    <Form.Label column sm="2">
-                      {formField.label}
-                      {formField.rules.isRequired && (
-                        <span style={{ marginLeft: 5, color: "#dc3545" }}>
-                          *
-                        </span>
-                      )}
-                    </Form.Label>
-                    <Col sm="10">
-                      {formFieldType(formField)}
-                      <Form.Control.Feedback type="invalid">
-                        {formField.errorMessage}
-                      </Form.Control.Feedback>
-                    </Col>
-                  </Form.Group>
-                );
-              }
-            })}
-          </Form>
+          <div className="tool-content-block m-3 pt-2">
+            <Form className="newToolFormContainer">
+              {Object.values(formFieldList).map((formField, i) => {
+                if (formField.toShow) {
+                  return (
+                    <Form.Group
+                      key={i}
+                      controlId="formPlaintextEmail"
+                      className="mt-2"
+                    >
+                      <Form.Label column sm="2">
+                        {formField.label}
+                        {formField.rules.isRequired && (
+                          <span style={{ marginLeft: 5, color: "#dc3545" }}>
+                            *
+                          </span>
+                        )}
+                      </Form.Label>
+                      <Col sm="10">
+                        {formFieldType(formField)}
+                        <Form.Control.Feedback type="invalid">
+                          {formField.errorMessage}
+                        </Form.Control.Feedback>
+                      </Col>
+                    </Form.Group>
+                  );
+                }
+              })}
+            </Form>
+          </div>
         )}
       </Modal.Body>
       <Modal.Footer>
@@ -315,12 +312,13 @@ function ToolIdentifierModal(props) {
           placement="top"
           overlay={popover}
         >
-          <Button variant="secondary" onClick={handleClose}>
+          <Button size="sm" variant="secondary" onClick={handleClose}>
             Close
           </Button>
         </OverlayTrigger>
         {(toolType == "New" || toolType == "Edit") && (
           <Button
+            size="sm"
             variant="primary"
             onClick={updateToolIdentifier}
             disabled={!isFormValid}
@@ -338,7 +336,8 @@ ToolIdentifierModal.propTypes = {
   type: PropTypes.string,
   toolId: PropTypes.string,
   toolData: PropTypes.object,
-  closeModal: PropTypes.func
+  closeModal: PropTypes.func,
+  handleDeleteClick: PropTypes.func
 };
 
 export default ToolIdentifierModal;

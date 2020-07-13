@@ -40,7 +40,7 @@ function ToolsTable({ data, rowInfo, tableFilter }) {
         Cell: (props) => {
           return format(new Date(props.value), "yyyy-MM-dd");
         },
-        class: "cell-center"
+        class: "cell-center no-wrap-inline"
       },
       {
         Header: "State",

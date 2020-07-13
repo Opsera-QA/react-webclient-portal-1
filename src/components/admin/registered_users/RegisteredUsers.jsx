@@ -1,13 +1,13 @@
 import React, { useReducer, useEffect, useState, useContext, useMemo } from "react";
 import { Table, Row, Col, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import ErrorDialog from "../common/error";
-import LoadingDialog from "../common/loading";
-import { AuthContext } from "../../contexts/AuthContext";
+import ErrorDialog from "../../common/error";
+import LoadingDialog from "../../common/loading";
+import { AuthContext } from "../../../contexts/AuthContext";
 import { format } from "date-fns";
 //import InfoDialog from "../common/info";
-import Modal from "../common/modal";
-import { ApiService, axiosApiService } from "../../api/apiService";
+import Modal from "../../common/modal";
+import { ApiService, axiosApiService } from "../../../api/apiService";
 import { useTable, usePagination, useSortBy } from "react-table";
 import RegisteredUserTable from "./RegisteredUserTable";
 import Pagination from "components/common/pagination";
@@ -156,7 +156,7 @@ function RegisteredUsers() {
         administrator &&
         <div>
 
-          <h4>Administration Tools</h4>
+          {/* <h4>Administration Tools</h4> */}
 
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>

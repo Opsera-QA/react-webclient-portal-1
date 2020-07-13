@@ -5,7 +5,7 @@ import { axiosApiService } from "../../api/apiService";
 import ErrorDialog from "../common/error";
 import LoadingDialog from "../common/loading";
 import ConfigurationsForm from "./configurationsForm";
-import { ListGroup, Alert } from "react-bootstrap";
+import { ListGroup, Alert, Tooltip, OverlayTrigger, Col, Row } from "react-bootstrap";
 import SummaryChartsView from "./views/pipeline/buildView_developer";
 import ReliabilityMetricsCharts from "./views/reliability/ReliabilityMetricsView";
 import CodeCoverageMetricsView from "./views/sonarCodeCoverageView";
@@ -16,6 +16,7 @@ import JiraIssuesCreatedByDateLineChart from "./charts/jiraIssuesCreatedByDateLi
 import DeploymentsStackedBarChart from "./charts/DeploymentsStackedBarChart";
 import CircleChart from "./charts/CircleChart";
 import JiraHealthBySprintBarChart from "./charts/jiraHealthBySprintBarChart";
+import GitlabMergeRequestsByUserChart from "./charts/GitlabMergeRequestsByUserChart";
 import SonarSecurityLineChart from "./charts/sonarSecurityLineChart";
 import JMeterHitsLineChart from "./charts/jmeterHitsLineChart";
 import JMeterErrorsLineChart from "./charts/jmeterErrorsLineChart";
@@ -25,7 +26,30 @@ import JMeterResultsTable from "./metrics/jmeterResultsTable";
 import GitlabPlanCodeView from "./views/GitlabPlanCodeView";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faQuestion } from "@fortawesome/free-solid-svg-icons";
-import GitlabMergeRequestsByUserChart from "./charts/GitlabMergeRequestsByUserChart";
+import { faCalendar } from "@fortawesome/free-solid-svg-icons";
+import DropdownList from "react-widgets/lib/DropdownList";
+
+
+
+const DATELABELS = [ { value: {
+  start: "now-1h",
+  end: "now"
+}, label : "Last 1 Hour" }, { value: {
+  start: "now-6h",
+  end: "now"
+}, label : "Last 6 Hours" }, { value: {
+  start: "now-1d",
+  end: "now"
+}, label : "Last 24 Hours" }, { value: {
+  start: "now-7d",
+  end: "now"
+}, label : "Last Week" }, { value: {
+  start: "now-31d",
+  end: "now"
+}, label : "Last Month" }, { value: {
+  start: "now-90d",
+  end: "now"
+}, label : "Last 3 Months" }, ];
 
 function Analytics() {
   const contextType = useContext(AuthContext);
@@ -37,6 +61,12 @@ function Analytics() {
   const [profile, setProfile] = useState({});
   const [isEnabled, setIsEnabled] = useState(true);
   const [enabledOn, setEnabledOn] = useState(true);
+  const [label, setLabel] = useState("Last 3 Months");
+  const [date, setDate] = useState({
+    start: "now-90d",
+    end: "now",
+    key: "selection"  
+  });
 
 
   //const [previewRole, setPreviewRole] = useState(false);
@@ -59,6 +89,82 @@ function Analytics() {
       controller.abort();
     };
   }, []);
+
+  const handleDateChange = (e) => {
+    setDate(e.value);
+    setLabel(e.label.toString());
+  };
+
+  const ValueInput = ({ item }) => (
+    <span>
+      <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth/>
+      {" " + DATELABELS.find(o => o.value.start === date.start && o.value.end === date.end).label.toString()}
+    </span>
+  );
+
+  const handleCreate = (name) => {
+    let item = {
+      value: "test", 
+      label: name
+    };
+
+    if (name.toLowerCase().includes("last")) {
+      if (name.toLowerCase().includes("week") || name.toLowerCase().includes("weeks")) {
+        let matches = name.match(/(\d+)/);
+        let filter = "now-" + matches[0].toString() + "w";
+        item.value = {
+          start: filter,
+          end: "now"
+        };
+        DATELABELS.push(item);
+        setDate(item.value);        
+      } else if (name.toLowerCase().includes("days") || name.toLowerCase().includes("day")) {
+        let matches = name.match(/(\d+)/);
+        let filter = "now-" + matches[0].toString() + "d";
+        item.value = {
+          start: filter,
+          end: "now"
+        };
+        DATELABELS.push(item);
+        setDate(item.value);        
+      } else if (name.toLowerCase().includes("months") || name.toLowerCase().includes("month")) {
+        let matches = name.match(/(\d+)/);
+        let filter = "now-" + matches[0].toString() + "M";
+        item.value = {
+          start: filter,
+          end: "now"
+        };
+        DATELABELS.push(item);
+        setDate(item.value);        
+      } else if (name.toLowerCase().includes("year") || name.toLowerCase().includes("years")) {
+        let matches = name.match(/(\d+)/);
+        let filter = "now-" + matches[0].toString() + "y";
+        item.value = {
+          start: filter,
+          end: "now"
+        };
+        DATELABELS.push(item);
+        setDate(item.value);        
+      } else if (name.toLowerCase().includes("hour") || name.toLowerCase().includes("hours")) {
+        let matches = name.match(/(\d+)/);
+        let filter = "now-" + matches[0].toString() + "h";
+        item.value = {
+          start: filter,
+          end: "now"
+        };
+        DATELABELS.push(item);
+        setDate(item.value);        
+      }
+    }
+  };
+
+  function renderTooltip(props) {
+    return (
+      <Tooltip id="button-tooltip" {...props}>
+        Select timeframe or manually enter in a "Last XX Days/Months/Years" format
+      </Tooltip>
+    );
+  }
 
 
   async function fetchData() {
@@ -177,16 +283,39 @@ function Analytics() {
               <div className="p-2">
   
                 <div className="mt-1">
-                  <ListGroup horizontal>
-                    <ListGroup.Item className={"pointer " + (selection === "pipeline" ? "active" : "")} onClick={handleTabClick("pipeline")}>Pipeline</ListGroup.Item>
-                    <ListGroup.Item className={"pointer " + (selection === "security" ? "active" : "")} onClick={handleTabClick("security")}>Security</ListGroup.Item>
-                    <ListGroup.Item className={"pointer " + (selection === "software_development" ? "active" : "")} onClick={handleTabClick("software_development")}>Software Development</ListGroup.Item>
-                    <ListGroup.Item className={"pointer " + (selection === "software_testing" ? "active" : "")} onClick={handleTabClick("software_testing")}>Software Testing</ListGroup.Item>
-                    <ListGroup.Item className={"pointer " + (selection === "source_code" ? "active" : "")} onClick={handleTabClick("source_code")}>Source Code</ListGroup.Item>
-                  </ListGroup>
+                  <Row>
+                  
+                    <Col sm={8}>
+                      <ListGroup horizontal>
+                        <ListGroup.Item className={"pointer " + (selection === "pipeline" ? "active" : "")} onClick={handleTabClick("pipeline")}>Pipeline</ListGroup.Item>
+                        <ListGroup.Item className={"pointer " + (selection === "security" ? "active" : "")} onClick={handleTabClick("security")}>Security</ListGroup.Item>
+                        <ListGroup.Item className={"pointer " + (selection === "software_development" ? "active" : "")} onClick={handleTabClick("software_development")}>Software Development</ListGroup.Item>
+                        <ListGroup.Item className={"pointer " + (selection === "software_testing" ? "active" : "")} onClick={handleTabClick("software_testing")}>Software Testing</ListGroup.Item>
+                        <ListGroup.Item className={"pointer " + (selection === "source_code" ? "active" : "")} onClick={handleTabClick("source_code")}>Source Code</ListGroup.Item>
+                      </ListGroup>
+                    </Col>
+                    <Col sm={3}>
+                      <OverlayTrigger
+                        placement="top"
+                        delay={{ show: 250, hide: 250 }}
+                        overlay={renderTooltip}
+                      >
+                        <DropdownList filter
+                          data={DATELABELS} 
+                          className="max-content-width"
+                          valueComponent={ValueInput}
+                          textField='label'
+                          allowCreate="onFilter"
+                          onCreate={handleCreate}
+                          defaultValue={date ?  DATELABELS.find(o => o.value.start === date.start && o.value.end === date.end) : DATELABELS[5]}
+                          onChange={handleDateChange}             
+                        />
+                      </OverlayTrigger>
+                    </Col> 
+                  </Row>
                 </div>
                 <div className="mt-3">
-                  <ChartView token={token} selection={selection} persona={null} />
+                  <ChartView token={token} selection={selection} persona={null} date={date} />
                 </div>
               </div>
             </div>
@@ -199,9 +328,9 @@ function Analytics() {
 }
 
 
-function ChartView({ selection, persona }) {
+function ChartView({ selection, persona, date }) {
   useEffect(() => {
-  }, [selection, persona]);
+  }, [selection, persona, date.start]);
 
   if (selection) {
     switch (selection) {
@@ -209,7 +338,7 @@ function ChartView({ selection, persona }) {
       return (
         <>
           <div className="mt-2">
-            <SummaryChartsView date={{ start : "now-90d", end : "now" }}/>
+            <SummaryChartsView date={date}/>
           </div>
         </>);
 
@@ -218,23 +347,23 @@ function ChartView({ selection, persona }) {
       return (
         <>
           <div className="mt-2">
-            <ReliabilityMetricsCharts persona={persona} />
+            <ReliabilityMetricsCharts persona={persona} date={date}/>
           </div>
           
           <div className="d-flex">
             <div className="align-self-stretch p-2 w-100">
-              <SonarSecurityLineChart persona={persona} sonarMeasure="vulnerabilities" />
+              <SonarSecurityLineChart persona={persona} sonarMeasure="vulnerabilities" date={date} />
             </div>
             <div className="align-self-stretch p-2 w-100">
-              <SonarSecurityLineChart persona={persona} sonarMeasure="new_vulnerabilities" />
+              <SonarSecurityLineChart persona={persona} sonarMeasure="new_vulnerabilities" date={date} />
             </div>
           </div>
           <div className="d-flex">
             <div className="align-self-stretch p-2 w-100">
-              <SonarSecurityLineChart persona={persona} sonarMeasure="code_smells" />
+              <SonarSecurityLineChart persona={persona} sonarMeasure="code_smells" date={date} />
             </div>
             <div className="align-self-stretch p-2 w-100">
-              <SonarSecurityLineChart persona={persona} sonarMeasure="new_technical_debt" />
+              <SonarSecurityLineChart persona={persona} sonarMeasure="new_technical_debt" date={date} />
             </div>
           </div>
 
@@ -243,25 +372,26 @@ function ChartView({ selection, persona }) {
     case "software_development":
       return (
         <>
+
           <div className="d-flex">
             <div className="align-self-stretch p-2 w-100">
-              <DeploymentFrequencyLineChart persona={persona} date={{ start : "now-90d", end : "now" }}/>
+              <DeploymentFrequencyLineChart persona={persona} date={date}/>
             </div>
             <div className="align-self-stretch p-2 w-100">
-              <JiraIssuesCreatedByDateLineChart persona={persona} />
+              <JiraIssuesCreatedByDateLineChart persona={persona} date={date} />
             </div>
           </div>
           <div className="d-flex">
             <div className="align-self-stretch p-2 w-100">
-              <DeploymentsStackedBarChart persona={persona} />
+              <DeploymentsStackedBarChart persona={persona} date={date} />
             </div>
             <div className="align-self-stretch p-2 w-100">
-              <CircleChart persona={persona} />
+              <CircleChart persona={persona} date={date} />
             </div>
           </div>
           <div className="d-flex">
             <div className="align-self-stretch p-2 w-100">
-              <JiraHealthBySprintBarChart persona={persona} />
+              <JiraHealthBySprintBarChart persona={persona} date={date} />
             </div>
             <div className="align-self-stretch p-2 w-100">
               {/* Self Contained Chart Component 4  */}
@@ -276,25 +406,25 @@ function ChartView({ selection, persona }) {
       return (
         <>
           <div className="mt-2">
-            <CodeCoverageMetricsView />
+            <CodeCoverageMetricsView date={date}/>
           </div>
           <div className="d-flex">
             <div className="align-self-stretch p-2 w-100">
-              <JMeterHitsLineChart persona={persona} />
+              <JMeterHitsLineChart persona={persona} date={date} />
             </div>
             <div className="align-self-stretch p-2 w-100">
-              <JMeterErrorsLineChart persona={persona} />
+              <JMeterErrorsLineChart persona={persona} date={date} />
             </div>
           </div>
           <div className="d-flex">
             <div className="align-self-stretch p-2 w-100">
-              <JMeterThroughputLineChart persona={persona} />
+              <JMeterThroughputLineChart persona={persona} date={date} />
             </div>
             <div className="align-self-stretch p-2 w-100">
-              <JMeterResponseTimeLineChart persona={persona} />
+              <JMeterResponseTimeLineChart persona={persona} date={date} />
             </div>
           </div>
-          <JMeterResultsTable />
+          <JMeterResultsTable date={date}/>
         </>);
 
     case "source_code":
@@ -303,12 +433,13 @@ function ChartView({ selection, persona }) {
           {/* Wire-up each chart component here, stacking them on top of each other.  Please wrap each individual chart in their own div with "m-2" class providing some margin around it */}
           <div className="d-flex">
             <div className="align-self-stretch p-2 w-100">
-              <GitlabMergeRequestsByUserChart persona={persona} />
+              <GitlabMergeRequestsByUserChart persona={persona} date={date}/>
             </div>
             <div className="align-self-stretch p-2 w-100">
               {/* Self Contained Chart Component 2  */}
             </div>
           </div>
+
         </>);
 
     default:
@@ -320,7 +451,9 @@ function ChartView({ selection, persona }) {
 
 ChartView.propTypes = {
   selection: PropTypes.string,
-  persona: PropTypes.string
+  persona: PropTypes.string,
+  date: PropTypes.object
+
 };
 
 

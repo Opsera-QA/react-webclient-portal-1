@@ -16,7 +16,7 @@ import InfoDialog from "../../common/info";
 import ModalLogs from "../../common/modalLogs";
 
 
-function JiraBurndownLineChart( { persona } ) {
+function JiraBurndownLineChart( { persona, date } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -55,7 +55,9 @@ function JiraBurndownLineChart( { persona } ) {
           request: "jiraBurndownChart",
           metric: "stacked" 
         }
-      ]
+      ],
+      startDate: date.start, 
+      endDate: date.end
     };
 
     try {
@@ -85,10 +87,10 @@ function JiraBurndownLineChart( { persona } ) {
   } else {
     return (
       <>
-        <ModalLogs header="Burndown Chart (Last 30 Days)" size="lg" jsonMessage={data.data} dataType="line" show={showModal} setParentVisibility={setShowModal} />
+        <ModalLogs header="Burndown Chart" size="lg" jsonMessage={data.data} dataType="line" show={showModal} setParentVisibility={setShowModal} />
 
         <div className="chart mb-3" style={{ height: "300px" }}>
-          <div className="chart-label-text">Jira: Burndown Chart (Last 30 Days)</div>
+          <div className="chart-label-text">Jira: Burndown Chart</div>
           {(typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) ?
             <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
               <InfoDialog message="No Data is available for this chart at this time." />

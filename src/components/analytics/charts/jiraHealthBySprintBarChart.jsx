@@ -17,7 +17,7 @@ import ModalLogs from "../../common/modalLogs";
 
 
 
-function JiraHealthBySprintBarChart( { persona } ) {
+function JiraHealthBySprintBarChart( { persona, date } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -41,7 +41,7 @@ function JiraHealthBySprintBarChart( { persona } ) {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [date]);
 
 
   const fetchData = async () => {
@@ -55,7 +55,9 @@ function JiraHealthBySprintBarChart( { persona } ) {
           request: "jiraSprintHealthq1",
           metric: "bar" 
         }
-      ]
+      ],
+      startDate: date.start, 
+      endDate: date.end
     };
 
     try {
@@ -80,10 +82,10 @@ function JiraHealthBySprintBarChart( { persona } ) {
   } else {    
     return (
       <>
-        <ModalLogs header="Health (Last 30 Days)" size="lg" jsonMessage={data.data} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
+        <ModalLogs header="Jira: Health" size="lg" jsonMessage={data.data} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
 
         <div className="chart mb-3" style={{ height: "300px" }}>
-          <div className="chart-label-text">Jira: Health (Last 30 Days)</div>
+          <div className="chart-label-text">Jira: Health</div>
           {(typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) ?
             <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
               <InfoDialog message="No Data is available for this chart at this time." />

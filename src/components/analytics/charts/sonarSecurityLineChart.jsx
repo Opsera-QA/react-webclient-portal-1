@@ -26,7 +26,7 @@ import "./charts.css";
   "new_technical_debt", "new_uncovered_conditions", "new_uncovered_lines", "new_violations", "new_vulnerabilities", "new_coverage",
   "new_line_coverage", "skipped_tests", "test_errors", "test_execution_time", "test_failures", "test_success_density", "tests",
  */
-function SonarSecurityLineChart({ persona, sonarMeasure }) {
+function SonarSecurityLineChart({ persona, sonarMeasure, date }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -44,7 +44,9 @@ function SonarSecurityLineChart({ persona, sonarMeasure }) {
           request: "sonarMeasures-" + sonarMeasure,
           metric: "line",
         }
-      ]
+      ],
+      startDate: date.start, 
+      endDate: date.end
     };
 
     try {
@@ -58,7 +60,7 @@ function SonarSecurityLineChart({ persona, sonarMeasure }) {
       setLoading(false);
       setErrors(err.message);
     }
-  }, [contextType]);
+  }, [contextType, date]);
 
   useEffect(() => {
     const controller = new AbortController();

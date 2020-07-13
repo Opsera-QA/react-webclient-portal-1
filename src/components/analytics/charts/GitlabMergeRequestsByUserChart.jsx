@@ -12,7 +12,7 @@ import InfoDialog from "../../common/info";
 import ModalLogs from "../../common/modalLogs";
 
 
-function GitlabMergeRequestsByUser( { persona } ) {
+function GitlabMergeRequestsByUser( { persona, date } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -37,7 +37,7 @@ function GitlabMergeRequestsByUser( { persona } ) {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [date]);
 
 
   const fetchData = async () => {
@@ -51,11 +51,14 @@ function GitlabMergeRequestsByUser( { persona } ) {
           request: "gitlabMergeRequestsByUser",
           metric: "bar" 
         }
-      ]
+      ],
+      startDate: date.start, 
+      endDate: date.end
     };
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
+      console.log(res);
       let dataObject = res && res.data ? res.data.data[0].gitlabMergeRequestsByUser : [];
       setData(dataObject);
       setLoading(false);

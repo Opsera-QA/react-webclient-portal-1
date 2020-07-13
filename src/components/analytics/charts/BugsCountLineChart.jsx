@@ -15,7 +15,7 @@ import LoadingDialog from "../../common/loading";
 import InfoDialog from "../../common/info";
 import ModalLogs from "../../common/modalLogs";
 
-function BugsCountLineChart( { persona } ) {
+function BugsCountLineChart( { persona, date } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -40,7 +40,7 @@ function BugsCountLineChart( { persona } ) {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [date]);
 
   const getApiData = async () => {
    
@@ -54,7 +54,9 @@ function BugsCountLineChart( { persona } ) {
           request: "bugs",
           metric: "line" 
         }
-      ]
+      ],
+      startDate: date.start, 
+      endDate: date.end
     };
 
     try {

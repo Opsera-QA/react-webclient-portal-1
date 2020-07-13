@@ -24,7 +24,7 @@ import Logs from "./components/logs/Logs";
 import Update from "./components/update/Update";
 import AdminTools from "./components/admin/AdminTools";
 import DeleteTools from "./components/admin/delete_tools/DeleteTools";
-import RegisteredUsers from "./components/admin/RegisteredUsers";
+import RegisteredUsers from "./components/admin/registered_users/RegisteredUsers";
 import ManageSystems from "./components/admin/manage_systems/ManageSystems";
 import ReportsRegistration from "./components/admin/analytics/ReportsRegistration";
 import ApiConnectionDemo from "./components/api_connector/ApiDemo";
@@ -37,6 +37,7 @@ import ToolConfigurations from "./components/admin/tools/ToolConfigurations";
 import TagEditor from "./components/admin/tags/TagsEditor";
 import TemplateEditor from "./components/admin/template_editor/TemplateEditor";
 import OPBlueprintMain from "./components/blueprint/blueprint";
+import LdapDashboard from "./components/admin/ldap/LdapDashboard";
 
 const AppWithRouterAccess = () => {
   const history = useHistory();
@@ -111,6 +112,7 @@ const AppWithRouterAccess = () => {
               <SecureRoute path="/admin/tool-configurations" component={ToolConfigurations} />
               <SecureRoute path="/admin/tags" component={TagEditor} />
               <SecureRoute path="/admin/template-editor" component={TemplateEditor} />
+              <SecureRoute path="/admin/ldap" component={LdapDashboard} />
               <SecureRoute path="/api_demo" component={ApiConnectionDemo} />
             </div>
           </div>

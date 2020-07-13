@@ -13,7 +13,7 @@ import XUnitTestDurationBarChart from "../../charts/xunitTestDurationBarChart";
 import TestResultsTable from "../../metrics/testResultsTable";
 
 
-function TestView_Developer ({ persona }) {
+function TestView_Developer ({ persona, date }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -39,7 +39,7 @@ function TestView_Developer ({ persona }) {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [date, persona]);
 
   async function fetchData() {
     setLoading(true);
@@ -88,7 +88,9 @@ function TestView_Developer ({ persona }) {
           "request": "junitSkipped",
           "metric": "count"
         }
-      ]
+      ],
+      startDate: date.start, 
+      endDate: date.end
     };
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
@@ -187,16 +189,18 @@ function TestView_Developer ({ persona }) {
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
             {Object.keys(data.xunitMaxMinPerc.data[0]).length > 0 && data.xunitMaxMinPerc.status === 200 ? <div className="chart mb-3" style={{ height: "300px" }}>
-              <XUnitMaxMinPercBarChart data={data} persona={persona} />
-            </div> : ""}
+              <XUnitMaxMinPercBarChart data={data} persona={persona} date={date} />
+            </div> : <div className="chart mb-3" style={{ height: "300px" }}>
+              <div className="chart-label-text">X Unit: Max/Min/Percentiles Test Duration
+              </div><InfoDialog message="No Data is available for this chart at this time." /></div>}
           </div>
           <div className="align-self-stretch p-2 w-100">
-            <XUnitTestDurationBarChart persona={persona} />
+            <XUnitTestDurationBarChart persona={persona} date={date} />
           </div>
         </div>
 
 
-        <TestResultsTable />
+        <TestResultsTable date={date}/>
       </>
     );}
 

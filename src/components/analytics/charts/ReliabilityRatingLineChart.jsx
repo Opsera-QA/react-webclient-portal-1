@@ -16,7 +16,7 @@ import InfoDialog from "../../common/info";
 import ModalLogs from "../../common/modalLogs";
 
 
-function ReliabilityRatingLineChart( { persona } ) {
+function ReliabilityRatingLineChart( { persona, date } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -41,7 +41,7 @@ function ReliabilityRatingLineChart( { persona } ) {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [date]);
 
   const getApiData = async () => {
     setLoading(true);
@@ -54,7 +54,9 @@ function ReliabilityRatingLineChart( { persona } ) {
           request: "reliabilityRating",
           metric: "line" 
         }
-      ]
+      ],
+      startDate: date.start, 
+      endDate: date.end
     };
 
     try {

@@ -11,7 +11,7 @@ import config from "./xunitTestDurationBarChartConfigs";
 import "./charts.css";
 
 
-function XUnitTestDurationBarChart( { persona } ) {
+function XUnitTestDurationBarChart( { persona, date } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -33,7 +33,9 @@ function XUnitTestDurationBarChart( { persona } ) {
           "request": "xunitTestDuration",
           "metric": "bar"
         }
-      ]
+      ],
+      startDate: date.start, 
+      endDate: date.end
     };
     
     try {
@@ -74,7 +76,11 @@ function XUnitTestDurationBarChart( { persona } ) {
   } else if (error) {
     return (<ErrorDialog  error={error} />);
   } else if (typeof data !== "object" || Object.keys(data).length === 0 || data.xunitTestDuration.status !== 200 || data.xunitTestNames.status !== 200) {
-    return (<InfoDialog  message="No log activity has been captured for this dashboard yet." />);
+    return (
+      <div className="chart mb-3" style={{ height: "300px" }}>
+        <div className="chart-label-text">X Unit: Maximum Test Durations
+        </div><InfoDialog  message="No log activity has been captured for this dashboard yet." /></div>);
+
   } else {
     return (
       <>

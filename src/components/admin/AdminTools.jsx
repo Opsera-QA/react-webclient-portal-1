@@ -3,7 +3,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { Link } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faHeartbeat, faTimes, faUserCircle, faLink, faChartBar, faWrench, faTags, faStream } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faHeartbeat, faTimes, faUserCircle, faLink, faChartBar, faWrench, faTags, faStream, faUsers } from "@fortawesome/free-solid-svg-icons";
 
 
 function AdminTools(props) {
@@ -30,11 +30,11 @@ function AdminTools(props) {
     <>
       {
         administrator &&
-          <div className="max-content-width">
+          <div className="max-content-width mt-1">
             <h4>Administration Tools</h4>
             <div>Listed below are administration tools for the platform.</div>
 
-            <Row className="ml-5 mt-5" style={{ fontSize:"1rem" }}>
+            <Row className="mt-3 admin-tools">
               <Col xs={12} md={6} lg={4} className="p-2">
                 <Link to="/admin/systemstatus"><FontAwesomeIcon icon={faHeartbeat} fixedWidth /> System Status</Link>
               </Col>
@@ -73,7 +73,10 @@ function AdminTools(props) {
               </Col> 
               <Col xs={12} md={6} lg={4} className="p-2">
                 <Link to="/admin/template-editor"><FontAwesomeIcon icon={faStream} fixedWidth /> Template Editor</Link>
-              </Col>                                                   
+              </Col>  
+              <Col xs={12} md={6} lg={4} className="p-2">
+                <Link to="/admin/ldap"><FontAwesomeIcon icon={faUsers} fixedWidth /> LDAP</Link>
+              </Col>                                                  
             </Row>
           </div>
       }
