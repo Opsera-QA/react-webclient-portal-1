@@ -347,7 +347,7 @@ const PipelineOverviewSummary = (props) => {
             </Row>
             <Row className="row-content-spacing">
               <Col lg className="py-1"><span className="text-muted mr-1">Organization:</span> <span className="upper-case-first">{data.organizationName}</span></Col>
-              <Col lg className="py-1"><span className="text-muted mr-1">Created On:</span>  {format(new Date(data.createdAt), "yyyy-MM-dd', 'hh:mm a")}</Col>
+              <Col lg className="py-1"><span className="text-muted mr-1">Created On:</span>  {data.createdAt && format(new Date(data.createdAt), "yyyy-MM-dd', 'hh:mm a")}</Col>
             </Row>
 
             <Row className="row-content-spacing">
