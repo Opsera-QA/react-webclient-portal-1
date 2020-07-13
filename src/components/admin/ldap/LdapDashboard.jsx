@@ -48,16 +48,16 @@ function LdapDashboard() {
   
           <Row className="ml-5 mt-5" style={{ fontSize:"1rem" }}>
             <Col xs={12} md={6} lg={4} className="p-2">
-              <Link to="/admin/ldap/"><FontAwesomeIcon icon={faSitemap} fixedWidth /> Organizations</Link>
+              <Link to="/admin/ldap/organizations"><FontAwesomeIcon icon={faSitemap} fixedWidth /> Organizations</Link>
             </Col>
             <Col xs={12} md={6} lg={4} className="p-2">
-              <Link to="/admin/ldap/"><FontAwesomeIcon icon={faUserCircle} fixedWidth /> Account</Link>
+              <Link to="/admin/ldap/accounts"><FontAwesomeIcon icon={faUserCircle} fixedWidth /> Account</Link>
             </Col>   
             <Col xs={12} md={6} lg={4} className="p-2">
-              <Link to="/admin/ldap/"><FontAwesomeIcon icon={faUserFriends} fixedWidth /> Groups</Link>
+              <Link to="/admin/ldap/groups"><FontAwesomeIcon icon={faUserFriends} fixedWidth /> Groups</Link>
             </Col>   
             <Col xs={12} md={6} lg={4} className="p-2">
-              <Link to="/admin/ldap/"><FontAwesomeIcon icon={faUser} fixedWidth /> Users</Link>
+              <Link to="/admin/ldap/users"><FontAwesomeIcon icon={faUser} fixedWidth /> Users</Link>
             </Col>  
           </Row>
   
