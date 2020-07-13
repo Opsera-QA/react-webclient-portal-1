@@ -38,6 +38,7 @@ import TagEditor from "./components/admin/tags/TagsEditor";
 import TemplateEditor from "./components/admin/template_editor/TemplateEditor";
 import OPBlueprintMain from "./components/blueprint/blueprint";
 import LdapDashboard from "./components/admin/ldap/LdapDashboard";
+import LdapContentView from "./components/admin/ldap/LdapContentView";
 
 const AppWithRouterAccess = () => {
   const history = useHistory();
@@ -112,7 +113,8 @@ const AppWithRouterAccess = () => {
               <SecureRoute path="/admin/tool-configurations" component={ToolConfigurations} />
               <SecureRoute path="/admin/tags" component={TagEditor} />
               <SecureRoute path="/admin/template-editor" component={TemplateEditor} />
-              <SecureRoute path="/admin/ldap" component={LdapDashboard} />
+              <SecureRoute path="/admin/ldap" exact component={LdapDashboard} />
+              <SecureRoute path="/admin/ldap/:view" component={LdapContentView} />
               <SecureRoute path="/api_demo" component={ApiConnectionDemo} />
             </div>
           </div>
