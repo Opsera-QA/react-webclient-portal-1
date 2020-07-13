@@ -236,6 +236,7 @@ a.text-primary:hover, a.text-primary:focus {
   /* border: 1px solid #d2d2d2; */
   font-size: .9em;
   width: 100%;
+  margin-bottom:2em;
 }
 
 /*.custom-table thead {*/
@@ -250,6 +251,7 @@ a.text-primary:hover, a.text-primary:focus {
 
 .custom-table-filter {
   font-size: .8em;
+  padding-bottom:1em;
 }
 
 .custom-table-filter .btn {
@@ -327,8 +329,9 @@ a.text-primary:hover, a.text-primary:focus {
 /*}*/
 
 .custom-table .table-footer {
-  background-color: #dee2e6;
-  height: 1em;
+  background-color: #fff;
+  padding-top: 1em;
+  height: 2em;
 }
 
 /* End custom table styling */
@@ -403,12 +406,8 @@ div.modal-footer {
 .tabbed-content-block {
   border-radius: 0 5px 5px 5px;
   border: 1px solid #d2d2d2;
+  padding: 1em;
 }
 
-.tabbed-content-block {
-  border-radius: 0 5px 5px 5px;
-  border: 1px solid #d2d2d2;
-  padding-top: 1em;
-}
 
 /* End Nav Tab Styling */
