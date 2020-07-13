@@ -5,6 +5,7 @@ import { axiosApiService } from "api/apiService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 import { format } from "date-fns";
+import "components/inventory/tools/tools.css";
 
 import JobTypeBuild from "./job-type-build.js";
 import JobTypeCodeScan from "./job-type-code-scan.js";
@@ -14,15 +15,13 @@ import JenkinsJobTypeSendToS3 from "./job-type-sent-to-s3.js";
 import JobTypePerformanceTesting from "./job-type-performance-testing.js";
 import JenkinsJobTypeShellScript from "./job-type-shell-script.js";
 
-import "components/inventory/tools/tools.css";
-
-function JenkinJobs(props) {
+function JenkinsCreateJob(props) {
   const { toolId, toolData, accessToken } = props;
   const [ jenkinsFormList, updateJenkinsForm] = useState({ ...JobTypeBuild });
+  const [ pipelineId, setPipelineId ]= useState("");
   const [ formType, setFormType ] = useState("");
   const [ pipelineList, setPipelineList] = useState([]);
-  const [ pipelineId, setPipelineId ]= useState("");
-
+    
   const jobType = [
     {
       label: "Build",
@@ -62,10 +61,7 @@ function JenkinJobs(props) {
     }             
   ];
 
-
-
   useEffect(() => {  
-    console.log(formType.toUpperCase());
     switch (formType.toUpperCase()) {        
     case "CODE-SCAN":  
     case "UNIT-TEST":   
@@ -94,6 +90,21 @@ function JenkinJobs(props) {
     
   }, [formType]);
 
+  useEffect(() => {  
+    getToolList();
+  }, []);
+
+  const getToolList = async () => {
+    try {
+      //const toolResponse = await axiosApiService(accessToken).get("/regisformtry/types", {});
+      const pipelineResponse = await axiosApiService(accessToken).get("/pipelines", {});
+      setPipelineList(pipelineResponse.data.response.sort((a, b) => a.name.localeCompare(b.name)));
+    }
+    catch (err) {
+      console.log(err.message);
+    }
+  };
+
   const handleFormChange = (jenkinsFormList, value) => {
     let validateInput = {
       errorMessage: "",
@@ -108,21 +119,6 @@ function JenkinJobs(props) {
         ...validateInput
       } 
     }));
-  };
-
-  useEffect(() => {  
-    getToolList();
-  }, []);
-
-  const getToolList = async () => {
-    try {
-      //const toolResponse = await axiosApiService(accessToken).get("/regisformtry/types", {});
-      const pipelineResponse = await axiosApiService(accessToken).get("/pipelines", {});
-      setPipelineList(pipelineResponse.data.response);
-    }
-    catch (err) {
-      console.log(err.message);
-    }
   };
 
   const formFieldType = (formField) => {
@@ -147,8 +143,7 @@ function JenkinJobs(props) {
   };
 
   return (
-    <div className="pr-4 pl-4">
-      <br />
+    <>
       <Form className="newToolFormContainer">
         <Form.Group  controlId="formPlaintextEmail" className="mt-2 vertical-center-cols-in-row">
           <Form.Label column sm="3">
@@ -164,7 +159,7 @@ function JenkinJobs(props) {
           </Col>
         </Form.Group>
 
-        <Form.Group  controlId="formPlaintextEmail" className="mt-2 vertical-center-cols-in-row">
+        {props.jobAction == "CREATE_ACCOUNT" && <Form.Group  controlId="formPlaintextEmail" className="mt-2 vertical-center-cols-in-row">
           <Form.Label column sm="3">
             Pipelines
           </Form.Label>
@@ -176,11 +171,8 @@ function JenkinJobs(props) {
               ))} 
             </Form.Control>
           </Col>
-        </Form.Group>
-
-        
+        </Form.Group>}
       </Form>
-
       <br />
       <Form className="newToolFormContainer">
         {Object.values(jenkinsFormList).map((formField, i) => {
@@ -214,17 +206,18 @@ function JenkinJobs(props) {
         })}
       </Form>
       <div className="text-right m-2">
+        <Button size="sm" variant="secondary" onClick={() => props.setJobAction("")} className="mr-2"> Cancel</Button>
         <Button size="sm" variant="primary" onClick={createJob}><FontAwesomeIcon icon={faSave} fixedWidth /> Save</Button>
       </div>
-    </div>
+    </>
   );
 }
 
-JenkinJobs.propTypes = {
-  toolId: PropTypes.string,
+JenkinsCreateJob.propTypes = {
+  jobAction: PropTypes.string,
   toolData: PropTypes.object,
   accessToken: PropTypes.string
 };
 
 
-export default JenkinJobs;
+export default JenkinsCreateJob;

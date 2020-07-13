@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import JenkinJobs from "./toolJobs/jenkinsJobs/jenkins.jsx";
+import JenkinJobs from "./toolJobs/jenkins/jenkins.jsx";
 import PropTypes from "prop-types";
 
 function ToolJobs(props) {
-  console.log(props);
   return (
     <>
       {props.toolData.tool_identifier.toLowerCase() === "jenkins" ? <JenkinJobs /> : null }
