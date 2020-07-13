@@ -121,7 +121,7 @@ function ToolInventory () {
 
   return (
     <>
-      <div className="tabbed-content-block p-2">
+      <div className="tabbed-content-block">
         <ToolDetails showModal={isViewModal} closeModal={(toggleModal) => closeViewModal(toggleModal)} toolId={toolId} fnEditTool={handleEditClick} fnDeleteTool={handleDeleteClick} setToolId={setToolId}/>
       
         {/* TODO: Refactor to be more like edit modal above */}

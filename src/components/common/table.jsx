@@ -98,7 +98,7 @@ function CustomTable({ columns, data, noDataMessage, selectedRow, rowStyling, in
         </tbody>
         <tfoot>
           <tr>
-            <td colSpan="8" className="table-footer px-2 pt-2">
+            <td colSpan="8" className="table-footer">
               {paginationOptions && <Pagination total={paginationOptions.totalCount} currentPage={paginationOptions.currentPage} pageSize={paginationOptions.pageSize} onClick={(pageNumber, pageSize) => paginationOptions.gotoPageFn(pageNumber, pageSize)} />}
             </td>
           </tr>
