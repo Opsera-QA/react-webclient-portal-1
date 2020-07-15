@@ -40,6 +40,8 @@ import OPBlueprintMain from "./components/blueprint/blueprint";
 import LdapDashboard from "./components/admin/ldap/LdapDashboard";
 import LdapContentView from "./components/admin/ldap/LdapContentView";
 
+import FreeTrialRegistration from "./components/freeTrial/Registration";
+
 const AppWithRouterAccess = () => {
   const history = useHistory();
   const onAuthRequired = () => {
@@ -116,6 +118,8 @@ const AppWithRouterAccess = () => {
               <SecureRoute path="/admin/ldap" exact component={LdapDashboard} />
               <SecureRoute path="/admin/ldap/:view" component={LdapContentView} />
               <SecureRoute path="/api_demo" component={ApiConnectionDemo} />
+
+              <Route path="/trial/registration" exact component={FreeTrialRegistration} />
             </div>
           </div>
           <div className="row fixed-row-footer-bottom">
