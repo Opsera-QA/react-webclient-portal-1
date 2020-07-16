@@ -70,7 +70,7 @@ function ViewTags(props) {
                       </tr>
                     )}
                     {console.log("tag config: " + JSON.stringify(tagData.configuration))}
-                    {tagData.configuration.length == 0 && <tr><td colSpan="8" className="text-center p-5">No configurations are assigned to this tag.</td></tr>}
+                    {tagData.configuration && Object.keys(tagData.configuration).length == 0 && <tr><td colSpan="8" className="text-center p-5">No configurations are assigned to this tag.</td></tr>} 
                   </tbody>
                 </Table>
               </li>

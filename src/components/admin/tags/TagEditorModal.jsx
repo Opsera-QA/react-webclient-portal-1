@@ -106,8 +106,8 @@ function TagsEditorModal(props) {
     //Even if user deletes the default value set default before submitting the form data for configuration
     let newConfiguration = formFieldList.configuration.value;
 
-    if(newConfiguration.length == 0) {
-      formFieldList.configuration.value = { "type": "" };
+    if(Object.keys(newConfiguration).length == 0) {
+      formFieldList.configuration.value = { };
     }else {
       //Convert array of objects to object
       formFieldList.configuration.value = newConfiguration.reduce((obj, item) => Object.assign(obj, { [item.name]: item.value }), {});
@@ -138,24 +138,32 @@ function TagsEditorModal(props) {
     //Format the API response for the form
     Object.keys(formFieldList).map((item, i) => {
       let validateInput = {};
-
+      console.log(item);
+      console.log(tagData[item]);
       //For configutation, convet the object to array
       if(item == "configuration") {
-        let formatConfiguration = [];
-        Object.keys(tagData[item]).map((data) => {
-          formatConfiguration.push({
-            name: [data],
-            value: tagData[item][data]
+        if(tagData[item]) {
+          let formatConfiguration = [];
+          Object.keys(tagData[item]).map((data) => {
+            formatConfiguration.push({
+              name: [data],
+              value: tagData[item][data]
+            });
           });
-        });
-        validateInput = {
-          value: formatConfiguration
-        };
+          validateInput = {
+            value: formatConfiguration
+          };
+        }else {
+          validateInput = {
+            value: {}
+          };
+        }
       }else {
         validateInput = {
           value: tagData[item]
         };
       }
+
       updateFormFields(prevState => ({ 
         ...prevState, 
         [item]: { 
