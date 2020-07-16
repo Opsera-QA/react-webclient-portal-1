@@ -41,6 +41,7 @@ import LdapDashboard from "./components/admin/ldap/LdapDashboard";
 import LdapContentView from "./components/admin/ldap/LdapContentView";
 
 import FreeTrialRegistration from "./components/freeTrial/Registration";
+import FreeTrialLanding from "./components/freeTrial/Landing";
 
 const AppWithRouterAccess = () => {
   const history = useHistory();
@@ -120,6 +121,7 @@ const AppWithRouterAccess = () => {
               <SecureRoute path="/api_demo" component={ApiConnectionDemo} />
 
               <Route path="/trial/registration" exact component={FreeTrialRegistration} />
+              <Route path="/trial/landing" exact component={FreeTrialLanding} />
             </div>
           </div>
           <div className="row fixed-row-footer-bottom">
