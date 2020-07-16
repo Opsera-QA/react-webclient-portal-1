@@ -78,8 +78,8 @@ function TagsEditor() {
     try {
       const accessToken = await getAccessToken();
       const response = await axiosApiService(accessToken).delete("/tags/"+ tagData._id, { });
-      console.log(response.data);
       setShowTagModal(false);
+      getTags();
     }
     catch (err) {
       console.log(err.message);
