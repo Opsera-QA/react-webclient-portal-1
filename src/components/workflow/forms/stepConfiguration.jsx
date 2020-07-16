@@ -25,6 +25,7 @@ function StepConfiguration( { data, stepId, parentCallback }) {
   const [lockTool, setLockTool] = useState(false);
   const [toolTypeList, setToolTypeList] = useState([]);
   const [toolList, setToolList] = useState([]);
+  const [masterToolList, setMasterToolList] = useState([]);
   const [isToolListSearching, setIsToolListSearching] = useState(false);
   const [isToolTypeSearching, setIsToolTypeSearching] = useState(false);
   
@@ -82,6 +83,7 @@ function StepConfiguration( { data, stepId, parentCallback }) {
       const accessToken = await getAccessToken();
       const toolResponse = await axiosApiService(accessToken).get("/registry/tools", {});
       setToolList(toolResponse.data);
+      setMasterToolList(toolResponse.data);
       setIsToolListSearching(false);      
     }
     catch (err) {
@@ -89,8 +91,8 @@ function StepConfiguration( { data, stepId, parentCallback }) {
     }
   };
 
-  const filterToolListByType = (type) => {
-    const filteredList = toolList.filter(el => el.tool_type_identifier === type);
+  const filterToolListByType = (type, masterToolList) => {
+    const filteredList = masterToolList.filter(el => el.tool_type_identifier === type);
     setToolList(filteredList);         
   };
 
@@ -166,7 +168,7 @@ function StepConfiguration( { data, stepId, parentCallback }) {
 
   const handleToolTypeChange = (selectedOption) => {
     console.log("selectedOption", selectedOption);
-    filterToolListByType(selectedOption.identifier);
+    filterToolListByType(selectedOption.identifier, masterToolList);
     setFormData({ ...formData, tool_type: selectedOption.identifier,  tool_identifier: "", type: "" });    
   };
 
@@ -227,7 +229,7 @@ function StepConfiguration( { data, stepId, parentCallback }) {
                   data={toolList} 
                   value={toolList[toolList.findIndex(x => x.identifier === formData.tool_identifier)]}
                   valueField='identifier'
-                  disabled={!formData.active}
+                  disabled={!formData.active || !formData.tool_type}
                   textField='name'
                   onChange={handleToolIdentifierChange}             
                 /> }
