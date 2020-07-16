@@ -170,11 +170,11 @@ function DockerPushStepConfiguration( { stepTool, pipelineId, plan, stepId, pare
     if (validateRequiredFields()) {
       setLoading(true);
 
-      // let newConfiguration = formData;
+      let newConfiguration = formData;
       
-      // if (typeof(newConfiguration.secretKey) === "string") {
-      //   newConfiguration.secretKey = await saveToVault(pipelineId, stepId, "secretKey", "Vault Secured Key", newConfiguration.secretKey);
-      // }
+      if (typeof(newConfiguration.secretKey) === "string") {
+        newConfiguration.secretKey = await saveToVault(pipelineId, stepId, "secretKey", "Vault Secured Key", newConfiguration.secretKey);
+      }
 
       const item = {
         configuration: formData,
@@ -188,6 +188,27 @@ function DockerPushStepConfiguration( { stepTool, pipelineId, plan, stepId, pare
       parentCallback(item);
     }
   };
+
+
+  const saveToVault = async (pipelineId, stepId, key, name, value) => {
+    const keyName = `${pipelineId}-${stepId}-${key}`;
+    const body = {
+      "key": keyName,
+      "value": value
+    };
+    const response = await callbackSaveToVault(body);    
+    if (response.status === 200 ) {
+      return { name: name, vaultKey: keyName };
+    } else {
+      setFormData(formData => {
+        return { ...formData, secretKey: {} };
+      });
+      setLoading(false);
+      setFormMessage("ERROR: Something has gone wrong saving secure data to your vault.  Please try again or report the issue to OpsERA.");
+      return "";
+    }
+  };
+
 
   const validateRequiredFields = () => {
 

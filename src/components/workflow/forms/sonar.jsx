@@ -230,7 +230,7 @@ function SonarStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCall
           )}
         </Form.Group>
         
-        {(!formData.jenkinsToolConfigId || !formData.sonarToolConfigId) &&
+        {(!formData.jenkinsToolConfigId) &&
         <div className="form-text text-muted mb-3">
           <FontAwesomeIcon icon={faExclamationTriangle} className="mr-1 yellow" fixedWidth/> 
               Unregistered Tool settings in use.  The settings below can be used in this step, but cannot be updated.  You must register 
