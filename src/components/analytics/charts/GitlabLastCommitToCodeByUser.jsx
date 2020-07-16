@@ -67,6 +67,7 @@ function GitlabLastCommitToCodeByUser() {
   } else {
     return (
       <>
+        <div className="chart-label-text">Gitlab: Last Commit To Code</div>
         {data !== undefined && data.gitlabLastCommitToCode.data.length > 0 ? 
           <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
             <thead>
@@ -89,7 +90,7 @@ function GitlabLastCommitToCodeByUser() {
               }
             </tbody>
           </Table> 
-          : null }
+          : null }        
       </>
     );
   }

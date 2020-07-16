@@ -29,8 +29,10 @@ import { faCheckCircle, faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
 import GitlabLastCommitToCodeByUser from "./charts/GitlabLastCommitToCodeByUser";
-import GitlabMergeRequestsView from "./views/GitlabMergeRequestsView";
+// import GitlabMergeRequestsView from "./views/GitlabMergeRequestsView";
+import GitlabTimeTakenToCompleteMergeRequestReview from "./charts/GitlabTimeTakenToCompleteMergeRequestReview";
 // import GitlabMergeRequestTimeTakenBarChart from "./charts/GitlabMergeRequestTimeTakenBarChart";
+import GitlabTimeTakenToCompleteMergeRequestReviewTable from "./metrics/GitlabTimeTakenToCompleteMergeRequestReviewTable";
 
 
 
@@ -401,7 +403,7 @@ function ChartView({ selection, persona, date }) {
             </div>
           </div>
           {/* Commenting this out as part of phase 2 - will be pushed as part of phase 2 forward fixes */}
-          <GitlabPlanCodeView persona={persona} />
+          {/* <GitlabPlanCodeView persona={persona} /> */}
 
         </>);
 
@@ -439,13 +441,22 @@ function ChartView({ selection, persona, date }) {
               <GitlabMergeRequestsByUserChart persona={persona} date={date}/>
             </div>
             <div className="align-self-stretch p-2 w-100">
-              {/* Self Contained Chart Component 2  */}              
+              {/* Self Contained Chart Component 2  */}    
+              <GitlabTimeTakenToCompleteMergeRequestReview persona={persona} date={date}/>          
+            </div>
+          </div>
+          <div className="d-flex">
+            <div className="align-self-stretch p-2 w-100">
+              <GitlabTimeTakenToCompleteMergeRequestReviewTable persona={persona} date={date}/>
+            </div>
+            <div className="align-self-stretch p-2 w-100">
+              {/* Self Contained Chart Component 2  */}                  
             </div>
           </div>
           <div className="mt-2">
             <GitlabLastCommitToCodeByUser persona={persona} /> 
           </div>
-          <GitlabMergeRequestsView persona={persona} />
+          {/* <GitlabMergeRequestsView persona={persona} /> */}
         </>);
 
     default:
