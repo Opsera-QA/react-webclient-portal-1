@@ -16,6 +16,7 @@ const INITIAL_DATA = {
   city: "",
   state: "",
   zip: "",
+  attributes: { title: "", company: "" },
   configuration: { cloudProvider: "EKS", cloudProviderRegion: "us-east-2" }
 };
 
