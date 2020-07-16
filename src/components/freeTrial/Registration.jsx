@@ -16,7 +16,7 @@ const INITIAL_DATA = {
   city: "",
   state: "",
   zip: "",
-  attributes: { title: "", company: "" },
+  attributes: { title: "Director", company: "OpsERA" },
   configuration: { cloudProvider: "EKS", cloudProviderRegion: "us-east-2" }
 };
 
@@ -62,7 +62,7 @@ function FreeTrialSignup(props) {
 
   //Check if the email is already registered in the system
   const isEmailAvailable = async () => {
-    const apiCall = new ApiService("/users/check-email", {}, null, { email: formData.email.value });
+    const apiCall = new ApiService("/users/check-email", {}, null, { email: formData.email });
     await apiCall.post()
       .then(function (response) {
         if (response.data) {
@@ -84,6 +84,8 @@ function FreeTrialSignup(props) {
   const signupSubmit = async (event) => {
     event.preventDefault();
     event.stopPropagation();
+
+    console.log("formData: ", formData);
 
     //Check if the email is already exist in the system
     isEmailAvailable();
@@ -108,6 +110,7 @@ function FreeTrialSignup(props) {
         });
 
     } else {
+      setFormMessage("Data validation failed, Noah please implement some message for this");
       setLoading(false);
     }
   };
