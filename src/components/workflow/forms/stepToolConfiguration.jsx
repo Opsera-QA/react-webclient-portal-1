@@ -72,18 +72,18 @@ function StepToolConfiguration( { data, editItem, parentCallback }) {
       { typeof(stepTool) !== "undefined" ? 
         <div className="ml-1 mt-3">
           {editItem.tool_name.toLowerCase() === "jenkins" ? <JenkinsConfiguration pipelineId={data._id} plan={data.workflow.plan} stepId={stepId} stepTool={stepTool} parentCallback={callbackFunction} callbackSaveToVault={saveToVault} /> : null }
-          {editItem.tool_name.toLowerCase() === "junit" ? <JunitStepConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
-          {editItem.tool_name.toLowerCase() === "xunit" ? <XunitStepConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
-          {editItem.tool_name.toLowerCase() === "sonar" ? <SonarStepConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
+          {editItem.tool_name.toLowerCase() === "junit" ? <JunitStepConfiguration pipelineId={data._id} plan={data.workflow.plan} stepId={stepId} stepTool={stepTool} parentCallback={callbackFunction} callbackSaveToVault={saveToVault} /> : null }
+          {editItem.tool_name.toLowerCase() === "xunit" ? <XunitStepConfiguration pipelineId={data._id} plan={data.workflow.plan} stepId={stepId} stepTool={stepTool} parentCallback={callbackFunction} callbackSaveToVault={saveToVault} /> : null }
+          {editItem.tool_name.toLowerCase() === "sonar" ? <SonarStepConfiguration pipelineId={data._id} plan={data.workflow.plan} stepId={stepId} stepTool={stepTool} parentCallback={callbackFunction} callbackSaveToVault={saveToVault}  /> : null }
           {editItem.tool_name.toLowerCase() === "command-line" ? <CommandLineStepConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
           {editItem.tool_name.toLowerCase() === "npm" ? <NPMStepConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
           {editItem.tool_name.toLowerCase() === "teamcity" ? <TeamCityStepConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
-          {editItem.tool_name.toLowerCase() === "jmeter" ?  <JmeterStepConfiguration data={stepTool} parentCallback={callbackFunction} />: null }
+          {editItem.tool_name.toLowerCase() === "jmeter" ?  <JmeterStepConfiguration pipelineId={data._id} plan={data.workflow.plan} stepId={stepId} stepTool={stepTool} parentCallback={callbackFunction} callbackSaveToVault={saveToVault}  />: null }
           {editItem.tool_name.toLowerCase() === "selenium" ? <SeleniumStepConfiguration  pipelineId={data._id} plan={data.workflow.plan} stepId={stepId} stepTool={stepTool} parentCallback={callbackFunction} callbackSaveToVault={saveToVault}  /> : null }
-          {editItem.tool_name.toLowerCase() === "twistlock" ? <TwistlockStepConfiguration data={stepTool} parentCallback={callbackFunction} />: null }
+          {editItem.tool_name.toLowerCase() === "twistlock" ? <TwistlockStepConfiguration pipelineId={data._id} plan={data.workflow.plan} stepId={stepId} stepTool={stepTool} parentCallback={callbackFunction} callbackSaveToVault={saveToVault} />: null }
           {editItem.tool_name.toLowerCase() === "aws-deploy" ? <AwsDeployStepConfiguration  data={stepTool} parentCallback={callbackFunction} /> : null }
           {editItem.tool_name.toLowerCase() === "gcp-deploy" ? <GcpDeployStepConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
-          {editItem.tool_name.toLowerCase() === "s3" ? <S3StepConfiguration pipelineId={data._id} stepId={stepId} data={stepTool} parentCallback={callbackFunction} callbackSaveToVault={saveToVault} /> : null }
+          {editItem.tool_name.toLowerCase() === "s3" ? <S3StepConfiguration pipelineId={data._id} plan={data.workflow.plan} stepId={stepId} stepTool={stepTool} parentCallback={callbackFunction} callbackSaveToVault={saveToVault} /> : null }
           {editItem.tool_name.toLowerCase() === "databricks-notebook" ? <DatabricksNotebookConfiguration data={stepTool} parentCallback={callbackFunction} /> : null }
           {editItem.tool_name.toLowerCase() === "ssh-upload" ? <SshUploadDeploy pipelineId={data._id} stepId={stepId} data={stepTool} parentCallback={callbackFunction} callbackSaveToVault={saveToVault} /> : null }
           {editItem.tool_name.toLowerCase() === "elastic-beanstalk" ? <ElasticBeanstalkDeploy pipelineId={data._id} plan={data.workflow.plan} stepId={stepId} stepTool={stepTool} parentCallback={callbackFunction} callbackSaveToVault={saveToVault} /> : null }

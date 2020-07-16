@@ -12,13 +12,11 @@ import ErrorDialog from "../../common/error";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
-  toolConfigId: "",
-  jenkinsUrl: "",
-  jenkinsPort: "",
-  jUserId: "",
-  jAuthToken: "",
+  anchoreToolConfigId: "",
+  toolURL: "",
+  accountaccountUsername: "",
+  accountaccountPassword: "",
   jobType: "anchore scan", //hardcoded for now
-  jobName: "",
   ecrPushStepId: "",
   dockerImageUrl: ""
 };
@@ -156,15 +154,13 @@ function AnchoreStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
   };
 
   const validateRequiredFields = () => {
-    let { toolConfigId, jenkinsUrl, jUserId, jAuthToken, jobName, ecrPushStepId, dockerImageUrl } = formData;
+    let { anchoreToolConfigId, anchoreUrl, accountUsername, accountPassword, buildStepId, dockerImageUrl } = formData;
     if (
-      toolConfigId.length === 0 ||    
-      jenkinsUrl.length === 0 || 
-      jUserId.length === 0 || 
-      jAuthToken.length === 0 ||
-      jobName.length === 0 || 
-      ecrPushStepId.length === 0 ||
-      dockerImageUrl.length === 0 
+      anchoreToolConfigId.length === 0 ||    
+      anchoreUrl.length === 0 || 
+      accountUsername.length === 0 || 
+      accountPassword.length === 0 || buildStepId.length === 0 
+      // dockerImageUrl.length === 0 
     ) {
       setFormMessage("Required Fields Missing!");
       return false;
@@ -175,9 +171,9 @@ function AnchoreStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
   };
 
   const handleCypressChange = (selectedOption) => {
-    setFormData({ ...formData, toolConfigId: selectedOption.id ? selectedOption.id : "", jenkinsUrl: selectedOption.configuration ? selectedOption.configuration.jenkinsUrl : "",
-      jUserId: selectedOption.configuration ? selectedOption.configuration.jUserId : "",
-      jAuthToken: selectedOption.configuration ? selectedOption.configuration.jAuthToken : ""
+    setFormData({ ...formData, anchoreToolConfigId: selectedOption.id ? selectedOption.id : "", anchoreUrl: selectedOption.configuration ? selectedOption.configuration.anchoreUrl : "",
+      accountUsername: selectedOption.configuration ? selectedOption.configuration.accountUsername : "",
+      accountPassword: selectedOption.configuration ? selectedOption.configuration.accountPassword : ""
     });    
   };
   console.log(formData);
@@ -205,10 +201,10 @@ function AnchoreStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
               {renderForm && cypressList && cypressList.length > 1 ? 
                 <DropdownList
                   data={cypressList}
-                  value={formData.toolConfigId ? cypressList[cypressList.findIndex(x => x.id === formData.toolConfigId)] : cypressList[0]}
+                  value={formData.anchoreToolConfigId ? cypressList[cypressList.findIndex(x => x.id === formData.anchoreToolConfigId)] : cypressList[0]}
                   valueField='id'
                   textField='name'
-                  defaultValue={formData.toolConfigId ? cypressList[cypressList.findIndex(x => x.id === formData.toolConfigId)] : cypressList[0]}
+                  defaultValue={formData.anchoreToolConfigId ? cypressList[cypressList.findIndex(x => x.id === formData.anchoreToolConfigId)] : cypressList[0]}
                   onChange={handleCypressChange}             
                 /> : <>
                   <div className="form-text text-muted p-2">
@@ -222,25 +218,16 @@ function AnchoreStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
         </Form.Group>
 
         
-        {formData.toolConfigId && 
-        <> {formData.jenkinsUrl && formData.jUserId ?
+        {formData.anchoreToolConfigId && 
+        <> {formData.anchoreUrl && formData.accountUsername ?
           <>
             <Form.Group controlId="repoField">
-              <Form.Label>Jenkins Container URL*</Form.Label>
-              <Form.Control  disabled={true} type="text" placeholder="" value={formData.jenkinsUrl || ""} />
+              <Form.Label>Anchore URL*</Form.Label>
+              <Form.Control  disabled={true} type="text" placeholder="" value={formData.anchoreUrl || ""} />
             </Form.Group>
             <Form.Group controlId="branchField">
-              <Form.Label>Jenkins Port</Form.Label>
-              <Form.Control  disabled={true} type="text" placeholder="" value={formData.jenkinsPort || ""} />
-            </Form.Group>
-            <Form.Group controlId="branchField">
-              <Form.Label>Jenkins User ID*</Form.Label>
-              <Form.Control disabled={true} type="text" placeholder="" value={formData.jUserId || ""}  />
-            </Form.Group>
-
-            <Form.Group controlId="branchField">
-              <Form.Label>Job Name*</Form.Label>
-              <Form.Control maxLength="150" type="text" placeholder="" value={formData.jobName || ""} onChange={e => setFormData({ ...formData, jobName: e.target.value })} />
+              <Form.Label>User Name*</Form.Label>
+              <Form.Control disabled={true} type="text" placeholder="" value={formData.accountUsername || ""}  />
             </Form.Group>
 
             {/* TODO: Remove this block once back end supports ECR Push Step */}

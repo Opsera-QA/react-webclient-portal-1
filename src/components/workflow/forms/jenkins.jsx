@@ -177,7 +177,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
     }
     setLoading(false);    
   };
-
+  console.log(renderForm);
   return (
     <>
       {error && 
