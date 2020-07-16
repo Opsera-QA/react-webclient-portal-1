@@ -63,7 +63,7 @@ const AppWithRouterAccess = () => {
   }, []);
   
   const enableSideBar = (path) => {
-    if (path === "/login" || path === "/signup" || path === "/registration") {
+    if (path === "/login" || path === "/signup" || path === "/registration" || path === "/trial/registration") {
       setHideSideBar(true);
       console.log("hide sidebar true");
     } else {
@@ -75,7 +75,7 @@ const AppWithRouterAccess = () => {
   return (
     <Security {...OKTA_CONFIG}>
       <AuthContextProvider>
-        <Navbar />
+        <Navbar hideAuthComponents={hideSideBar} />
         <div className="container-fluid">
           <div className="d-flex flex-row">      
             {!hideSideBar && <Sidebar hideView={false} /> }

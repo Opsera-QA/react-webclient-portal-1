@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Button, Form, Row, Col, Card, Alert } from "react-bootstrap";
 import { ApiService } from "api/apiService";
 import { useHistory } from "react-router-dom";
+import { useOktaAuth } from "@okta/okta-react";
 
 const INITIAL_DATA = {
   domain: "freetrial",
@@ -21,11 +22,18 @@ const fieldsToValidate = ["firstName", "lastName", "email", "password", "confirm
 
 
 function FreeTrialSignup(props) {
+  //const { authService } = useOktaAuth();
   const [isLoading, setLoading] = useState(false);
   const history = useHistory();
   const [formMessage, setFormMessage] = useState("");
   const [ formData, setFormData] = useState(INITIAL_DATA);
   const [ emailAlreadyExists, setEmailAlreadyExists ] = useState(false);
+
+
+  useEffect(() => {   
+    //authService.clearAuthState();
+  }, []);
+
 
   const validateRequiredFields = () => {
     let { firstName, lastName, email, password, confirmPassword } = formData;
