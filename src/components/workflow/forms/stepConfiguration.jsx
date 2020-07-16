@@ -21,8 +21,8 @@ function StepConfiguration( { data, stepId, parentCallback }) {
   const { plan } = data.workflow;
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [formMessage, setFormMessage] = useState("");
-  const [renderForm, setRenderForm] = useState(false);
-  const [disableToolSelect, setDisableToolSelect] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [lockTool, setLockTool] = useState(false);
   const [toolTypeList, setToolTypeList] = useState([]);
   const [toolList, setToolList] = useState([]);
   const [isToolListSearching, setIsToolListSearching] = useState(false);
@@ -34,8 +34,12 @@ function StepConfiguration( { data, stepId, parentCallback }) {
     const runEffect = async () => {
       if( plan && stepId ) {
         try {
+          setIsLoading(true);
+          setLockTool(false);
           const stepIndex = getStepIndex(stepId);
-          await loadFormData(plan[stepIndex]);                        
+          await loadFormData(plan[stepIndex]);  
+          await fetchToolDetails();                                
+          setIsLoading(false);
         } catch (err) {
           if (err.name === "AbortError") {
             console.log("Request was canceled via controller.abort");
@@ -46,55 +50,49 @@ function StepConfiguration( { data, stepId, parentCallback }) {
     };
     runEffect();
     return () => {
-      setRenderForm(false); 
+      setIsLoading(false);
       controller.abort();      
     };
   }, [stepId, plan]);
 
-  
-  
   useEffect(
     () => {
-      async function fetchToolDetails(){
+      async function fetchToolTypes(){
         try {
           setIsToolTypeSearching(true);
           const accessToken = await getAccessToken();
           const toolResponse = await axiosApiService(accessToken).get("/registry/types", {});      
           setToolTypeList(formatOptions(toolResponse.data));
-          setIsToolTypeSearching(false);
-          console.log(toolResponse.data);
+          setIsToolTypeSearching(false);      
         }
         catch (err) {
           console.log(err.message);
         }
       }
       // Fire off our API call
-      fetchToolDetails();
+      fetchToolTypes();
     },
     []
   );
   
-  useEffect(
-    () => {
-      async function fetchToolDetails(toolType){
-        try {
-          setIsToolListSearching(true);
-          const accessToken = await getAccessToken();
-          const toolResponse = await axiosApiService(accessToken).get("/registry/tools", {});
-          const filteredList = toolResponse.data.filter(el => el.tool_type_identifier === toolType);
-          setToolList(filteredList);
-          setIsToolListSearching(false);
-          console.log(filteredList);
-        }
-        catch (err) {
-          console.log(err.message);
-        }
-      }
-      // Fire off our API call
-      fetchToolDetails(formData.tool_type);
-    },
-    [formData.tool_type]
-  );
+
+  const fetchToolDetails = async () => {
+    try {
+      setIsToolListSearching(true);
+      const accessToken = await getAccessToken();
+      const toolResponse = await axiosApiService(accessToken).get("/registry/tools", {});
+      setToolList(toolResponse.data);
+      setIsToolListSearching(false);      
+    }
+    catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  const filterToolListByType = (type) => {
+    const filteredList = toolList.filter(el => el.tool_type_identifier === type);
+    setToolList(filteredList);         
+  };
 
   const formatOptions = (options) => {
     options.unshift({ value: "", name : "Select One",  isDisabled: "yes" });
@@ -113,10 +111,7 @@ function StepConfiguration( { data, stepId, parentCallback }) {
   };
 
   const loadFormData = async (step) => {
-    // await getToolList();   
-    // await getToolTypeList(); 
-    setFormData(INITIAL_DATA);    
-    setDisableToolSelect(false);
+    setFormData(INITIAL_DATA);  
     let stepType = await getStepType(step.tool);    
 
     setFormData({
@@ -126,18 +121,15 @@ function StepConfiguration( { data, stepId, parentCallback }) {
       active: step.active ? true : false
     });
 
-    if (step.tool !== undefined) {      
-      if (step.tool.tool_identifier.length > 0) {
-        setDisableToolSelect(true);
-      }
-    } 
-    setRenderForm(true);
+    if (step.tool && step.tool.tool_identifier.length > 0) {
+      setLockTool(true);
+    }
+    
   };
 
   const getStepType = async (tool) => {    
     if (tool && tool.tool_identifier) {
       const toolData = await getToolDetails(tool.tool_identifier);
-      console.log("toolData", toolData);
       return toolData.tool_type_identifier; //toolList[toolList.findIndex(x => x.identifier === tool.tool_identifier)].tool_type_identifier;
     } else {
       return null;
@@ -174,6 +166,7 @@ function StepConfiguration( { data, stepId, parentCallback }) {
 
   const handleToolTypeChange = (selectedOption) => {
     console.log("selectedOption", selectedOption);
+    filterToolListByType(selectedOption.identifier);
     setFormData({ ...formData, tool_type: selectedOption.identifier,  tool_identifier: "", type: "" });    
   };
 
@@ -202,60 +195,48 @@ function StepConfiguration( { data, stepId, parentCallback }) {
         </Form.Group>
         
         <Form.Group controlId="tool"  className="mt-2">
-          <Form.Label>Tool Type*</Form.Label>
-          {isToolTypeSearching ? (
-            <div className="form-text text-muted mt-2 p-2">
-              <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> 
-            Loading Tool Types </div>
-          ) :(
+          <Form.Label>Tool Type*  {isToolTypeSearching && <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/>}</Form.Label>
+          {formData.type && formData.type.length > 0 && lockTool ? 
             <>
-              {renderForm && toolTypeList ?
+              <Form.Control maxLength="50" type="text" disabled={true} placeholder="" value={toolTypeList[toolTypeList.findIndex(x => x.identifier === formData.type)].name || ""} />              
+            </> :
+            <>
+              {toolTypeList.length > 0 &&
                 <DropdownList
                   data={toolTypeList} 
                   valueField='identifier'
                   value={toolTypeList[toolTypeList.findIndex(x => x.identifier === formData.tool_type)]}
-                  disabled={!formData.active || disableToolSelect}
+                  disabled={!formData.active}
                   textField='name'
-                  defaultValue={toolTypeList[toolTypeList.findIndex(x => x.identifier === formData.type)]}
                   onChange={handleToolTypeChange}             
-                /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted ml-2" fixedWidth/> }
-            </> 
-          ) 
-          }
+                /> }
+              <Form.Text className="text-muted">Select tool type to get the list of all supported tools for it.</Form.Text>       
+            </> }                    
         </Form.Group>        
 
         <Form.Group controlId="tool"  className="mt-2">
-          <Form.Label>Tool*</Form.Label>
-          { formData.tool_type && formData.tool_type.length > 0 ? 
+          <Form.Label>Tool*  {isToolListSearching && <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/>}</Form.Label>
+          {formData.tool_identifier && formData.tool_identifier.length > 0 && lockTool ? 
             <>
-              {isToolListSearching ? (
-                <div className="form-text text-muted mt-2 p-2">
-                  <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> 
-            Loading Tool List accounts </div>
-              ) :(
-                <>
-                  {renderForm && toolList  ?
-                    <DropdownList
-                      data={toolList} 
-                      value={toolList[toolList.findIndex(x => x.identifier === formData.tool_identifier)]}
-                      valueField='identifier'
-                      disabled={!formData.active || disableToolSelect}
-                      textField='name'
-                      defaultValue={toolList[toolList.findIndex(x => x.identifier === formData.tool_identifier)]}
-                      onChange={handleToolIdentifierChange}             
-                    /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted ml-2" fixedWidth/> }
-                </> 
-              )
-              }
-            </>  : 
-            <Form.Text className="text-muted">Select tool type to get the list of all supported tools for it.</Form.Text>       
-          }
-        
-          <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text>
+              <Form.Control maxLength="50" type="text" disabled={true} placeholder="" 
+                value={toolList[toolList.findIndex(x => x.identifier === formData.tool_identifier)] && toolList[toolList.findIndex(x => x.identifier === formData.tool_identifier)].name || ""} />
+            </> :
+            <>
+              {toolList &&
+                <DropdownList
+                  data={toolList} 
+                  value={toolList[toolList.findIndex(x => x.identifier === formData.tool_identifier)]}
+                  valueField='identifier'
+                  disabled={!formData.active}
+                  textField='name'
+                  onChange={handleToolIdentifierChange}             
+                /> }
+              <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text>
+            </>}                  
         </Form.Group>        
       </div> 
       
-      <Button variant="primary" type="button" disabled={!renderForm}  
+      <Button variant="primary" type="button" disabled={isLoading}
         onClick={() => { callbackFunction(); }}> 
         <FontAwesomeIcon icon={faSave} className="mr-1"/> Save
       </Button>
