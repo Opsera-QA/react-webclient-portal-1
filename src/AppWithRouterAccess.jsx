@@ -12,7 +12,7 @@ import Dashboard from "./components/dashboard/DashboardHome";
 import Profile from "./components/user/Profile";
 import About from "./components/about/About";
 import Pricing from "./components/about/Pricing";
-import Solutions from "./components/about/Solutions";
+import OnlineHelp from "./components/about/Help";
 import Inventory from "./components/inventory/Inventory";
 import Signup from "./components/user/Signup";
 import ApiConnector from "./components/api_connector/ApiConnector";
@@ -90,7 +90,7 @@ const AppWithRouterAccess = () => {
               <Route path="/signup" exact component={Signup} />
               <Route path="/about" exact component={About} />
               <Route path="/about/pricing" component={Pricing} />
-              <Route path="/about/solutions" component={Solutions} />
+              <Route path="/help" component={OnlineHelp} />
               {/* <Route path="/implicit/callback" component={ImplicitCallback} /> */}
               <Route path="/registration" exact component={Registration} />
               <SecureRoute path="/overview" exact component={Overview} />

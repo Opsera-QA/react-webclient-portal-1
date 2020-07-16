@@ -12,6 +12,7 @@ function HeaderNavBar({ hideAuthComponents }) {
   const history = useHistory();
   const [fullName, setFullName] = useState("Unknown");
   const [administrator, setAdministrator] = useState(false);
+  const [freeTrialUser, setFreeTrialUser] = useState(false);
   
   useEffect(() => {    
     checkAuthentication();    
@@ -23,7 +24,8 @@ function HeaderNavBar({ hideAuthComponents }) {
     if (user && authState.isAuthenticated) {
       if (user.groups) {
         setAdministrator(user.groups.includes("Admin"));
-        setFullName(user.firstName + " " + user.lastName);     
+        setFullName(user.firstName + " " + user.lastName);   
+        setFreeTrialUser(user.groups.includes("Free Trial"));  
       }
     }     
   }
@@ -59,15 +61,14 @@ function HeaderNavBar({ hideAuthComponents }) {
           { !authState.isAuthenticated && <Button variant="outline-success" onClick={login}>Login</Button>}
           { authState.isAuthenticated && 
           <NavDropdown title={fullName} id="basic-nav-dropdown" alignRight>
-            {/* <NavDropdown.Item><Link to="/messages" id="messages-button" className="nav-drop-down-item">Messages</Link></NavDropdown.Item> */}
             <Link to="/profile" id="profile-button" className="dropdown-item nav-drop-down-item">Profile</Link>
             <NavDropdown.Divider />
-            {/* <NavDropdown.Item href="/" id="slack-channel-button">#SlackChannel</NavDropdown.Item> */}
-            <NavDropdown.Item href="https://opsera.atlassian.net/wiki/x/kIA5" target="_blank" className="nav-drop-down-item" id="kb-button">KnowledgeBase</NavDropdown.Item>
-            <NavDropdown.Item href="https://opsera.atlassian.net/wiki/x/AQBYAw" target="_blank" className="nav-drop-down-item" id="request-help-button">Request Help</NavDropdown.Item>
-            <NavDropdown.Divider />
-            {/* <Link to="/about" id="profile-button" className="dropdown-item nav-drop-down-item">About OpsERA</Link> */}
-            <NavDropdown.Item href="https://opsera.io/" target="_blank" className="nav-drop-down-item" id="about-opsera">About OpsERA</NavDropdown.Item>
+            {!freeTrialUser && <>
+              <NavDropdown.Item href="https://opsera.atlassian.net/wiki/x/kIA5" target="_blank" className="nav-drop-down-item" id="kb-button">KnowledgeBase</NavDropdown.Item>
+              <NavDropdown.Item href="https://opsera.atlassian.net/wiki/x/AQBYAw" target="_blank" className="nav-drop-down-item" id="request-help-button">Request Help</NavDropdown.Item>
+              <NavDropdown.Divider />
+            </> }
+            <NavDropdown.Item href="https://opsera.io/" target="_blank" className="nav-drop-down-item" id="about-opsera">OpsERA.io</NavDropdown.Item>
             <NavDropdown.Item href="" onClick={logout} className="nav-drop-down-item" id="logout-button">Logout</NavDropdown.Item>
           </NavDropdown>}
         </Nav> }
