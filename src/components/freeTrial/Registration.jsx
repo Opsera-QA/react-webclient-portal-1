@@ -16,12 +16,11 @@ const INITIAL_DATA = {
   city: "",
   state: "",
   zip: "",
-  attributes: { title: "Director", company: "OpsERA" },
+  attributes: { title: "", company: "" },
   configuration: { cloudProvider: "EKS", cloudProviderRegion: "us-east-2" }
 };
 
 const fieldsToValidate = ["firstName", "lastName", "email", "password", "confirmPassword"];
-
 
 function FreeTrialSignup(props) {
   const [isLoading, setLoading] = useState(false);
@@ -31,7 +30,7 @@ function FreeTrialSignup(props) {
   const [ emailAlreadyExists, setEmailAlreadyExists ] = useState(false);
 
 
-  const validateRequiredFields = () => {
+  const isFormValid = () => {
     let { firstName, lastName, email, password, confirmPassword } = formData;
     if ( firstName.length === 0 ||
         lastName.length === 0 ||
@@ -39,11 +38,12 @@ function FreeTrialSignup(props) {
         password.length === 0 ||
         confirmPassword.length === 0
     ) {
-      setFormMessage("All fields must be filled out.");
+      setFormMessage("All required fields must be filled out.");
       return false;
     }
     else if (password.length < 8) {
       setFormMessage("Your password must be at least 8 characters.");
+      return false;
     }
     else if (email.includes("@yopmail.com")) {
       setFormMessage("Yopmail not supported");
@@ -56,7 +56,7 @@ function FreeTrialSignup(props) {
     else
     {
       setFormMessage("");
-      return false;
+      return true;
     }
   };
 
@@ -67,6 +67,7 @@ function FreeTrialSignup(props) {
       .then(function (response) {
         if (response.data) {
           setEmailAlreadyExists(true);
+          setFormMessage("Email address already exists.");
         }
       })
       .catch(function (error) {
@@ -88,11 +89,11 @@ function FreeTrialSignup(props) {
     console.log("formData: ", formData);
 
     //Check if the email is already exist in the system
-    isEmailAvailable();
+    await isEmailAvailable();
     // console.log("Final Form Data: " + JSON.stringify(formData));
 
     //Only if form is valid, call API for sign up
-    if(validateRequiredFields()) {
+    if(isFormValid() && !emailAlreadyExists) {
       setLoading(true);
       const apiCall = new ApiService("/users/create", {}, null, formData);
       await apiCall.post()
@@ -110,7 +111,6 @@ function FreeTrialSignup(props) {
         });
 
     } else {
-      setFormMessage("Data validation failed, Noah please implement some message for this");
       setLoading(false);
     }
   };
@@ -134,6 +134,14 @@ function FreeTrialSignup(props) {
               <Form.Group controlId="email">
                 <Form.Label><span>Email<span className="danger-red">*</span></span></Form.Label>
                 <Form.Control type="text" value={formData.email || ""} onChange={e => setFormData({ ...formData, email: e.target.value })}/>
+              </Form.Group>
+              <Form.Group controlId="company">
+                <Form.Label><span>Company</span></Form.Label>
+                <Form.Control type="text" value={formData.attributes.company || ""} onChange={e => setFormData({ ...formData, attributes: { company: e.target.value, title: formData.attributes.title } } )}/>
+              </Form.Group>
+              <Form.Group controlId="title">
+                <Form.Label><span>Title</span></Form.Label>
+                <Form.Control type="text" value={formData.attributes.title || ""} onChange={e => setFormData({ ...formData, attributes: { company: formData.attributes.company, title: e.target.value } } )}/>
               </Form.Group>
               <Form.Group controlId="password">
                 <Form.Label><span>Password<span className="danger-red">*</span></span></Form.Label>
