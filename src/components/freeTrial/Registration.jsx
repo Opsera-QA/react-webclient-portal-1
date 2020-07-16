@@ -16,23 +16,18 @@ const INITIAL_DATA = {
   city: "",
   state: "",
   zip: "",
+  configuration: { cloudProvider: "EKS", cloudProviderRegion: "us-east-2" }
 };
 
 const fieldsToValidate = ["firstName", "lastName", "email", "password", "confirmPassword"];
 
 
 function FreeTrialSignup(props) {
-  //const { authService } = useOktaAuth();
   const [isLoading, setLoading] = useState(false);
   const history = useHistory();
   const [formMessage, setFormMessage] = useState("");
   const [ formData, setFormData] = useState(INITIAL_DATA);
   const [ emailAlreadyExists, setEmailAlreadyExists ] = useState(false);
-
-
-  useEffect(() => {   
-    //authService.clearAuthState();
-  }, []);
 
 
   const validateRequiredFields = () => {
