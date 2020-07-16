@@ -13,6 +13,10 @@
   color: red;
 }
 
+.danger-red {
+  color: #dc3545;
+}
+
 .yellow {
 color: #f9c116;
 }

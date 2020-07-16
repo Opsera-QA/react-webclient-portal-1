@@ -348,7 +348,6 @@ div.modal-header .h4 {
 
 div.modal-header {
   padding: .3em 1em;
-  margin-top: .2em;
   background-color: #1578dc;
   color: #fff;
   margin-top: 0;
@@ -402,12 +401,71 @@ div.modal-footer {
   border-color: #1578dc;
 }
 
-
 .tabbed-content-block {
   border-radius: 0 5px 5px 5px;
   border: 1px solid #d2d2d2;
   padding: 1em;
 }
-
-
 /* End Nav Tab Styling */
+
+/* Sign Up Form Styling */
+.new-user-signup-form {
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -1.5rem;
+  margin-bottom: -1.5rem;
+}
+
+.new-user-signup-form form {
+  width: 500px;
+  display: flex;
+  align-items: center;
+}
+
+.new-user-signup-form .form-group {
+  width: 100%;
+}
+
+.new-user-signup-form .form-label {
+  margin-top: .5em;
+  width: 75%;
+}
+
+.new-user-signup-form .form-control {
+  height: 2em;
+  padding: 1em;
+}
+
+.new-user-header {
+  padding: .3em 1em;
+  background-color: #28a745;
+  border-color: #28a745;
+  color: #fff;
+  margin-top: 0;
+  text-align: center;
+}
+
+.new-user-body {
+  padding: 0;
+}
+
+.new-user-signup-form .register-button {
+  display: flex;
+  text-align: center;
+  width: 100%;
+}
+
+.new-user-signup-form .register-button span {
+  text-align: center;
+  width: 100%;
+}
+
+.new-user-footer {
+  padding: .3em 0.2em;
+  margin-top: .2em;
+  min-height: 2em;
+}
+
+/* End Sign Up Form Styling */

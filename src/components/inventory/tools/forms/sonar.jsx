@@ -1,4 +1,5 @@
 // This is where the custom ToolsConfiguration.configuration form will reside for this tool.
+
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Form, Button } from "react-bootstrap";
@@ -8,15 +9,16 @@ import { faSave, faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
-  toolURL: "",
-  accountUsername: "",
-  accountPassword: ""
+  sonarUrl: "",
+  sonarPort : "",
+  sonarUserId : "",
+  sonarAuthToken : "",
 };
 
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
-function AnchoreToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVault }) {
+function SonarToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVault }) {
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [formMessage, setFormMessage] = useState("");
   const [isSaving, setIsSaving] = useState(false);
@@ -29,7 +31,7 @@ function AnchoreToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVau
       }      
     } else {
       setFormData(INITIAL_DATA);
-    }    
+    }
   }, [toolData]);
 
 
@@ -38,8 +40,8 @@ function AnchoreToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVau
       setIsSaving(true);
       let newConfiguration = formData;
       
-      if (typeof(newConfiguration.accountPassword) === "string") {
-        newConfiguration.accountPassword = await saveToVault(toolId, toolData.tool_identifier, "secretKey", "Vault Secured Key", newConfiguration.accountPassword);
+      if (typeof(newConfiguration.sonarAuthToken) === "string") {
+        newConfiguration.secretKey = await saveToVault(toolId, toolData.tool_identifier, "secretKey", "Vault Secured Key", newConfiguration.sonarAuthToken);
       }
 
       const item = {
@@ -64,7 +66,7 @@ function AnchoreToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVau
       return { name: name, vaultKey: keyName };
     } else {
       setFormData(formData => {
-        return { ...formData, accountPassword: {} };
+        return { ...formData, sonarAuthToken: {} };
       });      
       setFormMessage("ERROR: Something has gone wrong saving secure data to your vault.  Please try again or report the issue to OpsERA.");
       return "";
@@ -72,8 +74,8 @@ function AnchoreToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVau
   };
 
   const validateRequiredFields = () => {
-    let { toolURL, accountUsername, accountPassword } = formData;
-    if (toolURL.length === 0 || accountUsername.length === 0 || accountPassword.length === 0 ) {
+    let { sonarUrl, sonarPort, sonarUserId, sonarAuthToken } = formData;
+    if ( sonarUrl.length === 0 || sonarUserId.length === 0 || sonarAuthToken.length === 0 ) {
       setFormMessage("Required Fields Missing!");
       return false;
     } else {
@@ -82,25 +84,28 @@ function AnchoreToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVau
     }
   };
 
-  // console.log(formData);
-
   return (
     <Form>
       { formMessage.length > 0 ? <p className="error-text">{formMessage}</p> : null}
 
-      <Form.Group controlId="repoField">
-        <Form.Label>Anchore URL*</Form.Label>
-        <Form.Control maxLength="100" type="text" placeholder="" value={formData.toolURL || ""} onChange={e => setFormData({ ...formData, toolURL: e.target.value })} />
+          
+      <Form.Group controlId="sonarUrl">
+        <Form.Label>Sonar Url*</Form.Label>
+        <Form.Control maxLength="100" type="text" placeholder="" value={formData.sonarUrl || ""} onChange={e => setFormData({ ...formData, sonarUrl: e.target.value })} />
       </Form.Group>
-      <Form.Group controlId="branchField">
-        <Form.Label>User Name*</Form.Label>
-        <Form.Control maxLength="50" type="text" placeholder="" value={formData.accountUsername || ""} onChange={e => setFormData({ ...formData, accountUsername: e.target.value })} />
+      <Form.Group controlId="sonarPort">
+        <Form.Label>Sonar Port</Form.Label>
+        <Form.Control  maxLength="5" type="text" placeholder="" value={formData.sonarPort || ""} onChange={e => setFormData({ ...formData, sonarPort: e.target.value })} />
       </Form.Group>
-      <Form.Group controlId="branchField">
-        <Form.Label>Password*</Form.Label>
-        <Form.Control maxLength="50" type="password" placeholder="" value={formData.accountPassword || ""} onChange={e => setFormData({ ...formData, accountPassword: e.target.value })} />
+      <Form.Group controlId="sonarUserId">
+        <Form.Label>Sonar UserId*</Form.Label>
+        <Form.Control  maxLength="50" type="text" placeholder="" value={formData.sonarUserId || ""} onChange={e => setFormData({ ...formData, sonarUserId: e.target.value })} />
       </Form.Group>
-      
+      <Form.Group controlId="sonarAuthToken">
+        <Form.Label>Sonar Auth Token*</Form.Label>
+        <Form.Control maxLength="500" type="password" placeholder="" value={formData.sonarAuthToken || ""} onChange={e => setFormData({ ...formData, sonarAuthToken: e.target.value })} />
+      </Form.Group>
+             
       <Button variant="primary" type="button" disabled={isSaving}
         onClick={() => { callbackFunction(); }}> 
         {isSaving ? <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> : <FontAwesomeIcon icon={faSave} className="mr-1"/>} Save
@@ -111,11 +116,11 @@ function AnchoreToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVau
   );
 }
 
-AnchoreToolConfiguration.propTypes = {
+SonarToolConfiguration.propTypes = {
   toolData: PropTypes.object,
   toolId:  PropTypes.string,
   fnSaveChanges: PropTypes.func,
   fnSaveToVault: PropTypes.func
 };
 
-export default AnchoreToolConfiguration;
+export default SonarToolConfiguration;

@@ -12,7 +12,7 @@ import Dashboard from "./components/dashboard/DashboardHome";
 import Profile from "./components/user/Profile";
 import About from "./components/about/About";
 import Pricing from "./components/about/Pricing";
-import Solutions from "./components/about/Solutions";
+import OnlineHelp from "./components/about/Help";
 import Inventory from "./components/inventory/Inventory";
 import Signup from "./components/user/Signup";
 import ApiConnector from "./components/api_connector/ApiConnector";
@@ -41,6 +41,7 @@ import LdapDashboard from "./components/admin/ldap/LdapDashboard";
 import LdapContentView from "./components/admin/ldap/LdapContentView";
 
 import FreeTrialRegistration from "./components/freeTrial/Registration";
+import FreeTrialLanding from "./components/freeTrial/Landing";
 
 const AppWithRouterAccess = () => {
   const history = useHistory();
@@ -63,7 +64,7 @@ const AppWithRouterAccess = () => {
   }, []);
   
   const enableSideBar = (path) => {
-    if (path === "/login" || path === "/signup" || path === "/registration") {
+    if (path === "/login" || path === "/signup" || path === "/registration" || path === "/trial/registration") {
       setHideSideBar(true);
       console.log("hide sidebar true");
     } else {
@@ -75,7 +76,7 @@ const AppWithRouterAccess = () => {
   return (
     <Security {...OKTA_CONFIG}>
       <AuthContextProvider>
-        <Navbar />
+        <Navbar hideAuthComponents={hideSideBar} />
         <div className="container-fluid">
           <div className="d-flex flex-row">      
             {!hideSideBar && <Sidebar hideView={false} /> }
@@ -89,7 +90,7 @@ const AppWithRouterAccess = () => {
               <Route path="/signup" exact component={Signup} />
               <Route path="/about" exact component={About} />
               <Route path="/about/pricing" component={Pricing} />
-              <Route path="/about/solutions" component={Solutions} />
+              <Route path="/help" component={OnlineHelp} />
               {/* <Route path="/implicit/callback" component={ImplicitCallback} /> */}
               <Route path="/registration" exact component={Registration} />
               <SecureRoute path="/overview" exact component={Overview} />
@@ -120,6 +121,7 @@ const AppWithRouterAccess = () => {
               <SecureRoute path="/api_demo" component={ApiConnectionDemo} />
 
               <Route path="/trial/registration" exact component={FreeTrialRegistration} />
+              <Route path="/trial/landing" exact component={FreeTrialLanding} />
             </div>
           </div>
           <div className="row fixed-row-footer-bottom">

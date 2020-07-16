@@ -100,7 +100,7 @@ function JenkinsStatusByJobNameBarChar( { persona, date  } ) {
               margin={config.margin}
               padding={0.3}
               layout={"horizontal"}
-              colors={{ scheme: "dark2" }}
+              colors={bar => {return bar.id === "Failed" ? "red" : "green";}}
               borderColor={{ theme: "background" }}
               colorBy="id"
               defs={config.defs}
