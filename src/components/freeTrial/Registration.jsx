@@ -44,6 +44,10 @@ function FreeTrialSignup(props) {
     else if (password.length < 8) {
       setFormMessage("Your password must be at least 8 characters.");
     }
+    else if (email.includes("@yopmail.com")) {
+      setFormMessage("Yopmail not supported");
+      return false;
+    }
     else if (password !== confirmPassword) {
       setFormMessage("Both password fields must match.");
       return false;
@@ -72,7 +76,7 @@ function FreeTrialSignup(props) {
 
   const loadRegistrationResponse = () => {
     // eslint-disable-next-line react/prop-types
-    history.push("/trial/registration");
+    history.push("/registration");
   };
 
   //Final form submit
@@ -81,8 +85,8 @@ function FreeTrialSignup(props) {
     event.stopPropagation();
 
     //Check if the email is already exist in the system
-    // isEmailAvailable();
-    console.log("Final Form Data: " + JSON.stringify(formData));
+    isEmailAvailable();
+    // console.log("Final Form Data: " + JSON.stringify(formData));
 
     //Only if form is valid, call API for sign up
     if(validateRequiredFields()) {
@@ -108,14 +112,8 @@ function FreeTrialSignup(props) {
   };
 
   return (
-    <div className="max-content-module-width-25 mx-auto new-user-signup-form">
-      <img alt="OpsERA"
-        src="/img/opsera_logo_170x35.png"
-        width="170"
-        height="35"
-        className="mb-3"
-      />
-      <Form noValidate onSubmit={signupSubmit} >
+    <div className="new-user-signup-form">
+      <Form className="m-auto" noValidate onSubmit={signupSubmit} >
         <Card>
           <Card.Header as="h5" className="new-user-header">Sign Up For OpsERA</Card.Header>
           <Card.Body className="new-user-body p-3">
@@ -145,7 +143,7 @@ function FreeTrialSignup(props) {
 
             { isLoading ?
               <Button id="login-button" disabled={true} variant="outline-success" className="mr-2 px-4" type="button"><span>Working...</span></Button> :
-              <Button size="md" className="register-button mx-auto" id="login-button" disabled={validateRequiredFields} type="submit" variant="success"><span>Register Account</span></Button>
+              <Button size="md" className="register-button mx-auto" id="login-button" type="submit" variant="success"><span>Register Account</span></Button>
             }
             {/*<Button id="cancel-button" variant="outline-secondary" className="ml-2" type="button" onClick={cancelSignup}>Cancel</Button>*/}
           </Card.Body>
