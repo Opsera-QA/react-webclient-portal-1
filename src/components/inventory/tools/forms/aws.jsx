@@ -1,4 +1,5 @@
 // This is where the custom ToolsConfiguration.configuration form will reside for this tool.
+
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Form, Button } from "react-bootstrap";
@@ -8,15 +9,16 @@ import { faSave, faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
-  toolURL: "",
-  accountUsername: "",
-  accountPassword: ""
+  accessKey: "", 
+  secretKey: "", // store in vault
+  regions: "",
+  awsAccountId: "",
 };
 
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
-function AnchoreToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVault }) {
+function AWSToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVault }) {
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [formMessage, setFormMessage] = useState("");
   const [isSaving, setIsSaving] = useState(false);
@@ -29,7 +31,7 @@ function AnchoreToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVau
       }      
     } else {
       setFormData(INITIAL_DATA);
-    }    
+    }
   }, [toolData]);
 
 
@@ -38,8 +40,9 @@ function AnchoreToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVau
       setIsSaving(true);
       let newConfiguration = formData;
       
-      if (typeof(newConfiguration.accountPassword) === "string") {
-        newConfiguration.accountPassword = await saveToVault(toolId, toolData.tool_identifier, "secretKey", "Vault Secured Key", newConfiguration.accountPassword);
+      if (typeof(newConfiguration.sonarAuthToken) === "string") {
+        newConfiguration.secretKey = await saveToVault(toolId, toolData.tool_identifier, "secretKey", "Vault Secured Key", newConfiguration.secretKey);
+        newConfiguration.accessKey = await saveToVault(toolId, toolData.tool_identifier, "secretKey", "Vault Secured Key", newConfiguration.accessKey);
       }
 
       const item = {
@@ -64,7 +67,7 @@ function AnchoreToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVau
       return { name: name, vaultKey: keyName };
     } else {
       setFormData(formData => {
-        return { ...formData, accountPassword: {} };
+        return { ...formData, sonarAuthToken: {}, accessKey: {} };
       });      
       setFormMessage("ERROR: Something has gone wrong saving secure data to your vault.  Please try again or report the issue to OpsERA.");
       return "";
@@ -72,8 +75,11 @@ function AnchoreToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVau
   };
 
   const validateRequiredFields = () => {
-    let { toolURL, accountUsername, accountPassword } = formData;
-    if (toolURL.length === 0 || accountUsername.length === 0 || accountPassword.length === 0 ) {
+    let {  accessKey, secretKey, regions, awsAccountId } = formData;
+    if ( accessKey.length === 0 ||
+      secretKey.length === 0 ||
+      regions.length === 0 ||
+      awsAccountId.length === 0 ) {
       setFormMessage("Required Fields Missing!");
       return false;
     } else {
@@ -82,25 +88,32 @@ function AnchoreToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVau
     }
   };
 
-  // console.log(formData);
-
   return (
     <Form>
       { formMessage.length > 0 ? <p className="error-text">{formMessage}</p> : null}
 
-      <Form.Group controlId="repoField">
-        <Form.Label>Anchore URL*</Form.Label>
-        <Form.Control maxLength="100" type="text" placeholder="" value={formData.toolURL || ""} onChange={e => setFormData({ ...formData, toolURL: e.target.value })} />
-      </Form.Group>
-      <Form.Group controlId="branchField">
-        <Form.Label>User Name*</Form.Label>
-        <Form.Control maxLength="50" type="text" placeholder="" value={formData.accountUsername || ""} onChange={e => setFormData({ ...formData, accountUsername: e.target.value })} />
-      </Form.Group>
-      <Form.Group controlId="branchField">
-        <Form.Label>Password*</Form.Label>
-        <Form.Control maxLength="50" type="password" placeholder="" value={formData.accountPassword || ""} onChange={e => setFormData({ ...formData, accountPassword: e.target.value })} />
-      </Form.Group>
       
+      <Form.Group controlId="accessKey">
+        <Form.Label>AWS Access Key ID*</Form.Label>
+        <Form.Control maxLength="256" type="text" placeholder="" value={formData.accessKey || ""} onChange={e => setFormData({ ...formData, accessKey: e.target.value })} />
+      </Form.Group>
+     
+      <Form.Group controlId="accessKey">
+        <Form.Label>AWS Secret Access Key*</Form.Label>
+        <Form.Control maxLength="256" type="password" placeholder="" value={formData.secretKey || ""} onChange={e => setFormData({ ...formData, secretKey: e.target.value })} />            
+        <Form.Text className="text-muted">AWS access keys consist of two parts: an access key ID and a secret access key. Both are required for automated deployments.</Form.Text> 
+      </Form.Group>
+
+      <Form.Group controlId="awsRegion">
+        <Form.Label>AWS Region*</Form.Label>
+        <Form.Control maxLength="150" type="text" placeholder="" value={formData.regions || ""} onChange={e => setFormData({ ...formData, regions: e.target.value })} />
+      </Form.Group>
+
+      <Form.Group controlId="awsAccountId">
+        <Form.Label>AWS Account ID*</Form.Label>
+        <Form.Control maxLength="150" type="text" placeholder="" value={formData.awsAccountId || ""} onChange={e => setFormData({ ...formData, awsAccountId: e.target.value })} />
+      </Form.Group>
+             
       <Button variant="primary" type="button" disabled={isSaving}
         onClick={() => { callbackFunction(); }}> 
         {isSaving ? <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> : <FontAwesomeIcon icon={faSave} className="mr-1"/>} Save
@@ -111,11 +124,11 @@ function AnchoreToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVau
   );
 }
 
-AnchoreToolConfiguration.propTypes = {
+AWSToolConfiguration.propTypes = {
   toolData: PropTypes.object,
   toolId:  PropTypes.string,
   fnSaveChanges: PropTypes.func,
   fnSaveToVault: PropTypes.func
 };
 
-export default AnchoreToolConfiguration;
+export default AWSToolConfiguration;
