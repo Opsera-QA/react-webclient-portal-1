@@ -7,6 +7,7 @@ import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
 import { format } from "date-fns";
 
 function BlueprintSearchResult({ searchResults }) {
+  console.log(searchResults);
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
 
@@ -17,7 +18,28 @@ function BlueprintSearchResult({ searchResults }) {
 
   return (   
     <>
-      <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
+      {searchResults.length > 0 ?
+        <div className="mb-1 mt-3 bordered-content-block p-3 max-content-width"> 
+          <div>
+            
+            {searchResults.map((item, idx) => (
+              
+              <div key={idx} className="console-text-invert">
+                <h3>Build: {item["full_name"]}</h3>
+                <b>Timestamp: {format(new Date(item["build_timestamp"]), "yyyy-MM-dd', 'hh:mm a")}</b>
+                <div>
+                  <FontAwesomeIcon icon={faSearchPlus}
+                    className="ml-1"
+                    size="lg"
+                    style={{ cursor: "pointer", float: "right" }}
+                    onClick= {() => { handleClick(item); }} />
+                </div>
+                <br></br>
+                {item["log"]}
+              </div>
+            ))}
+
+            {/* <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
         {searchResults.length > 0 ? <thead>
           <tr>
             <th style={{ width: "5%" }}>Build</th>
@@ -47,8 +69,10 @@ function BlueprintSearchResult({ searchResults }) {
             </tr>
           ))}
         </tbody>
-      </Table>
-      <ModalLogs header={"Build Number: " + modalMessage.build_number} size="lg" jsonMessage={modalMessage} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
+      </Table> */}
+          </div>
+        </div>  : ""}
+      <ModalLogs header={"Build: " + modalMessage.full_name} size="lg" jsonMessage={modalMessage} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
     </>
   );
 }
