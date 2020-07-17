@@ -36,7 +36,7 @@ const INITIAL_FORM = {
 
 function ToolDetails(props) {
   const { toolId, fnEditTool, fnDeleteTool, setToolId, closeModal } = props;  
-  const { getAccessToken, getUserRecord } = useContext(AuthContext);
+  const { getAccessToken, getUserRecord, featureFlagItemInProd } = useContext(AuthContext);
   const [toolData, setToolData] = useState(INITIAL_FORM);
   const [errors, setErrors] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -54,8 +54,7 @@ function ToolDetails(props) {
     } else {
       //this is a new entry so load up as nwe
       setActiveTab("new");
-    }
-    
+    }    
   }, [toolId]); 
 
   const getToolRegistryItem = async (id) => {
@@ -141,8 +140,8 @@ function ToolDetails(props) {
                       </>}
 
                     <Button size="sm" disabled={activeTab === "new" || activeTab === "edit"} className="mr-2" variant={activeTab === "connections" ? "primary" : "secondary"} onClick={() => setActiveTab("connections")}>Connections</Button>
-                    <Button size="sm" disabled={activeTab === "new" || activeTab === "edit"} className="mr-2" variant={activeTab === "jobs" ? "primary" : "secondary"} onClick={() => setActiveTab("jobs")}>Jobs</Button>
-                    <Button size="sm" disabled={activeTab === "new" || activeTab === "edit"} className="mr-2" variant={activeTab === "logs" ? "primary" : "secondary"} onClick={() => setActiveTab("logs")}>Logs</Button>
+                    <Button size="sm" disabled={activeTab === "new" || activeTab === "edit" || featureFlagItemInProd()} className="mr-2" variant={activeTab === "jobs" ? "primary" : "secondary"} onClick={() => setActiveTab("jobs")}>Jobs</Button>
+                    <Button size="sm" disabled={activeTab === "new" || activeTab === "edit" || featureFlagItemInProd()} className="mr-2" variant={activeTab === "logs" ? "primary" : "secondary"} onClick={() => setActiveTab("logs")}>Logs</Button>
                   </ButtonGroup>
                   <ButtonGroup>
                     <Button size="sm" className="float-right mr-1" variant="secondary" 

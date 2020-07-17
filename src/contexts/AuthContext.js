@@ -73,6 +73,14 @@ const AuthContextProvider = (props) => {
     }    
   };
 
+  const featureFlagItemInProd = () => {
+    if (process.env.REACT_APP_ENVIRONMENT === "production") {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
 
   return (
     <AuthContext.Provider value={{
@@ -80,7 +88,8 @@ const AuthContextProvider = (props) => {
       logoutUserContext: logoutUserContext, 
       loginUserContext: loginUserContext, 
       getAccessToken: getAccessToken,
-      getIsPreviewRole: getIsPreviewRole, //TODO: Depracate
+      getIsPreviewRole: getIsPreviewRole, 
+      featureFlagItemInProd: featureFlagItemInProd,
       getUserRecord: getUserRecord,
       getIsAuthenticated: getIsAuthenticated }}>
       {props.children}
