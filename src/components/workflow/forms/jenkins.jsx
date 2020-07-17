@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, OverlayTrigger, Popover } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faSpinner, faExclamationCircle, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
@@ -67,9 +67,10 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
         setisJenkinsSearching(true);
         // Set results state
         let results = await searchjenkinsList(service);
-        if(results) {
-          console.log(results);
-          setjenkinsList(formatOptions(results));
+        console.log(results);
+        const filteredList = results.filter(el => el.configuration !== undefined); //filter out items that do not have any configuration data!
+        if(filteredList) {          
+          setjenkinsList(formatOptions(filteredList));
           setisJenkinsSearching(false);
         }
       }
@@ -177,7 +178,31 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
     }
     setLoading(false);    
   };
-  console.log(renderForm);
+  
+  
+  const popover = (
+    <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
+      <Popover.Title as="h3">Tool Details</Popover.Title>
+      <Popover.Content>
+        <div className="text-muted mb-2">Information below is from the selected Tool Registry item.  To changes these values, edit the entry in Tool Registry.</div>
+        <div className="mb-1">
+          <div className="text-muted pr-1">Container URL:</div>
+          <div>{formData.jenkinsUrl || ""}</div>
+        </div>
+        <div className="mb-1">
+          <div className="text-muted pr-1">Port:</div>
+          <div>{formData.jenkinsPort || ""}</div>
+        </div>
+        <div className="mb-1">
+          <div className="text-muted pr-1">User ID:</div>
+          <div>{formData.jUserId || ""}</div>
+        </div>        
+      </Popover.Content>
+    </Popover>
+  );
+
+
+
   return (
     <>
       {error && 
@@ -194,7 +219,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
             Loading Jenkins accounts from registry</div>
           ) :(
             <>
-              {renderForm && jenkinsList && jenkinsList.length > 1 ? 
+              {renderForm && jenkinsList && jenkinsList.length > 1 ? <>
                 <DropdownList
                   data={jenkinsList}
                   value={formData.toolConfigId ? jenkinsList[jenkinsList.findIndex(x => x.id === formData.toolConfigId)] : jenkinsList[0]}
@@ -202,12 +227,18 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
                   textField='name'
                   defaultValue={formData.toolConfigId ? jenkinsList[jenkinsList.findIndex(x => x.id === formData.toolConfigId)] : jenkinsList[0]}
                   onChange={handleJenkinsChange}             
-                /> : <>
-                  <div className="form-text text-muted p-2">
-                    <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth/> 
+                /> 
+                <div className="text-right pt-2">
+                  <OverlayTrigger trigger="click" rootClose placement="left" overlay={popover}>
+                    <Button variant="outline-dark" size="sm">Info</Button>
+                  </OverlayTrigger>
+                </div>
+              </> : <>
+                <div className="form-text text-muted p-2">
+                  <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth/> 
               No accounts have been registered for <span className="upper-case-first">{formData.service}</span>.  Please go to 
-                    <Link to="/inventory/tools"> Tool Registry</Link> and add an entry for this repository in order to proceed. </div>
-                </> }
+                  <Link to="/inventory/tools"> Tool Registry</Link> and add an entry for this repository in order to proceed. </div>
+              </> }
             </>
 
           )}
@@ -220,33 +251,12 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
               a new Jenkins server in the 
           <Link to="/inventory/tools"> Tool Registry</Link> and add its configuration details. </div>}
 
-
-        <Form.Group controlId="repoField">
-          <Form.Label>Jenkins Container URL</Form.Label>
-          <Form.Control disabled={true} type="text" placeholder="" value={formData.jenkinsUrl || ""} />
-        </Form.Group>
-        <Form.Group controlId="branchField">
-          <Form.Label>Jenkins Port</Form.Label>
-          <Form.Control disabled={true} type="text" placeholder="" value={formData.jenkinsPort || ""} />
-        </Form.Group>
-        <Form.Group controlId="branchField">
-          <Form.Label>Jenkins User ID</Form.Label>
-          <Form.Control disabled={true} type="text" placeholder="" value={formData.jUserId || ""}  />
-        </Form.Group>
-
         <Form.Group controlId="branchField">
           <Form.Label>Job Name*</Form.Label>
           <Form.Control maxLength="150" disabled={false} type="text" placeholder="" value={formData.jobName || ""} onChange={e => setFormData({ ...formData, jobName: e.target.value })} />
         </Form.Group>
 
-        <Form.Group controlId="threshold">
-          <Form.Label>Success Threshold</Form.Label>
-          <Form.Control type="text" placeholder="" value={thresholdVal || ""} onChange={e => setThresholdValue(e.target.value)} disabled={true} />
-        </Form.Group>
-
-
-
-
+        
         {(formData.jenkinsUrl && jenkinsList.length > 1) &&
         <Form.Group controlId="formBasicCheckbox" className="mt-4 ml-1">
           <Form.Check type="checkbox" label="Enable Docker Build Support" 
@@ -267,6 +277,12 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
           </Form.Group>
           
         </> }
+
+        <Form.Group controlId="threshold">
+          <Form.Label>Success Threshold</Form.Label>
+          <Form.Control type="text" placeholder="" value={thresholdVal || ""} onChange={e => setThresholdValue(e.target.value)} disabled={true} />
+        </Form.Group>
+
 
       
         <Button variant="primary" type="button"  className="mt-3"
