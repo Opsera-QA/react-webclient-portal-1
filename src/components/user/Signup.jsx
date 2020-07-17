@@ -9,72 +9,86 @@ import defaultSignupFormFields from "./signup-form-fields.js";
 import usStateList from "./states";
 
 import "./user.css";
+import TextInput from "../common/input/text-input";
+import SelectInput from "../common/input/select-input";
+
+const INITIAL_DATA = {
+  domain: "",
+  organizationName: "",
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+  street: "",
+  city: "",
+  state: "",
+  zip: "",
+  attributes: { title: "", company: "" },
+  configuration: { cloudProvider: "EKS", cloudProviderRegion: "us-east-2" }
+};
 
 function Signup(props) {
   const [isLoading, setLoading] = useState(false);
   const history = useHistory();
   const [ signupFormFields, updateFormFields ] = useState(defaultSignupFormFields);
-    
-  const handleChange = ({ target: { value } }, field ) => {
-    let { isValid, errorMessage } = validate(value, field);
+  const [ formData, setFormData] = useState(INITIAL_DATA);
+  const [ emailAlreadyExists, setEmailAlreadyExists ] = useState(false);
+  const [formMessage, setFormMessage] = useState("");
 
-    if (value.length > 0 || field.rules.isRequired) {
-      //Validate the form fields based on rule      
-      let validateInput = {
-        valid: isValid,   
-        error: field.id == "domain" ? field.error : errorMessage,
-        touched: true,      
-        value: value
-      };
-      //update the form fields for value, error and touched
-      updateFormFields(prevState => ({ 
-        ...prevState, 
-        [field.id]: { 
-          ...prevState[field.id],
-          ...validateInput
-        } 
-      }));
-
-    } else { 
-      //if value is set to nothing (zero length), then reset fields's isvalid state
-      let validateInput = {
-        valid: true,   
-        error: null,
-        touched: false,      
-        value: "",
-      };
-
-      updateFormFields(prevState => ({ 
-        ...prevState, 
-        [field.id]: { 
-          ...prevState[field.id],
-          ...validateInput
-        } 
-      }));
-    }    
+  const isFormValid = () => {
+    // TODO: Write way to check for required fields via the fields themselves
+    let { firstName, lastName, organizationName, email, password, confirmPassword, city, state, zip, domain, configuration } = formData;
+    if (
+      firstName.length === 0 ||
+        lastName.length === 0 ||
+        organizationName.length === 0 ||
+        email.length === 0 ||
+        password.length === 0 ||
+        confirmPassword.length === 0||
+        city.length === 0 ||
+        state.length === 0 ||
+        zip.length === 0 ||
+        configuration["cloudProvider"].length === 0 ||
+        configuration["cloudProviderRegion"].length === 0
+    ) {
+      setFormMessage("All required fields must be filled out.");
+      return false;
+    }
+    else if (password.length < 8) {
+      setFormMessage("Your password must be at least 8 characters.");
+      return false;
+    }
+    else if (password !== confirmPassword) {
+      setFormMessage("Both password fields must match.");
+      return false;
+    }
+    else
+    {
+      setFormMessage("");
+      return true;
+    }
   };
 
-  //At any given time, check if all the mandatory field is valid or not
-  const isFormValid = Object.values(signupFormFields).every(x => (x.valid == true));
+  // TODO: when pulling actual data with react-dropdown, change text to label
+  const cloudProviders = [ { value: "EKS", text: "AWS" }];
+  const cloudProviderRegions = [ { value: "us-east-2", text: "us-east-2" }];
 
   //Check if the email is already registered in the system
   const isEmailAvailable = async () => {
-    const apiCall = new ApiService("/users/check-email", {}, null, { email: signupFormFields.email.value });
+    console.log("checking email: " + formData.email);
+    const apiCall = new ApiService("/users/check-email", {}, null, { email: formData.email });
     await apiCall.post()
       .then(function (response) {
         if (response.data) {
-          updateFormFields(prevState => ({ 
-            ...prevState, 
-            email: { 
-              ...prevState.email,
-              valid: false,
-              error: "Email already exists in our system!  Try logging in with this email now."
-            } 
-          }));
+          setEmailAlreadyExists(true);
+          setFormMessage("Email address already exists.");
+          return false;
         }
       })
       .catch(function (error) {
         console.error(error);
+        setEmailAlreadyExists(false);
         return true;
       });
   };
@@ -94,17 +108,14 @@ function Signup(props) {
     event.preventDefault();
     event.stopPropagation();
 
+    console.log("formData: ", formData);
+
     //Check if the email is already exist in the system
-    isEmailAvailable();
+    await isEmailAvailable();
 
     //Only if form is valid, call API for signup 
-    if(isFormValid) {
+    if(isFormValid() && !emailAlreadyExists) {
       setLoading(true);
-      let formData = Object.keys(signupFormFields).reduce((obj, key) => {
-        obj[key] = signupFormFields[key].value;
-        return obj;
-      }, {});
-
       const apiCall = new ApiService("/users/create", {}, null, formData);
       await apiCall.post()
         .then(function (response) {
@@ -125,59 +136,58 @@ function Signup(props) {
     }
   };
 
-  //Dymamically render the form fields
-  const formFieldType = (field) => {
-    switch (field.type) {
-    case "password":
-      return <Form.Control 
-        type="password"
-        onChange={(e) => {handleChange(e, field);}} isInvalid={field.touched && !field.valid}
-      />;     
-    case "select":
-      return <Form.Control as="select" onChange={(e) => {handleChange(e, field);}} isInvalid={field.touched && !field.valid}>
-        {usStateList.map((option, i) => (
-          <option key={i}>{option.text}</option>
-        ))} 
-      </Form.Control>;
-    default:
-      return  <Form.Control  onChange={(e) => {handleChange(e, field);}} isInvalid={field.touched && !field.valid} />;
-    }
+  const setFormField = (field, value) => {
+    formData[field] = value;
+    setFormData({ ...formData });
+    console.log("Form data: " + JSON.stringify(formData));
+  };
+
+  const setAttribute = (field, value) => {
+    formData["attributes"][field] = value;
+    setFormData({ ...formData, attributes: formData["attributes"] });
+  };
+
+  const setConfiguration = (field, value) => {
+    formData["configuration"][field] = value;
+    setFormData({ ...formData, configuration: formData["configuration"] });
   };
 
   return (
-    <div className="max-content-module-width-50 ml-5">
-      <Form noValidate onSubmit={signupSubmit} >
-        <Card style={{ marginTop: 25 }}>
-          <Card.Header as="h5">New User Signup</Card.Header>
-          <Card.Body>
-         
+    <div className="new-user-signup-form">
+      <Form className="full-signup-form m-auto" noValidate onSubmit={signupSubmit} >
+        <Card>
+          <Card.Header as="h5" className="new-user-header">Sign Up For OpsERA</Card.Header>
+          <Card.Body className="new-user-body-full p-3">
+            { formMessage.length > 0 ? <p className="text-danger">{formMessage}</p> : null}
             <div className="formContainer">
-              {Object.values(signupFormFields).map((field, i) => {
-                return(
-                  <Form.Group  as={Row} key={i} style={{ width: field.width +"%" }} controlId={field.id}>
-                    <Form.Label>
-                      {field.label} {field.rules.isRequired && <span style={{ color: "#dc3545" }}>*</span>}
-                    </Form.Label>
-                    {formFieldType(field)}
-                    {field.id == "domain" &&
-                      <Form.Text className="text-muted">When new resources are created for this account, this will be the default sub-domain name used when building DNS records. 
-                        {/* Either supply a subdomain name or check the box below to share an existing configuration in order to proceed. */}
-                      </Form.Text> 
-                    }
-                    <Form.Control.Feedback type="invalid">{field.error}</Form.Control.Feedback>
-                  </Form.Group>
-                );  
-              })}
+              <div className="col-6">
+                <TextInput field={ signupFormFields.firstName } setData={setFormField} formData={formData}/>
+                <TextInput field={ signupFormFields.email } setData={setFormField} formData={formData}/>
+                <TextInput field={ signupFormFields.password } setData={setFormField} formData={formData}/>
+                <TextInput field={ signupFormFields.street } setData={setFormField} formData={formData}/>
+                <SelectInput selectOptions={usStateList} field={ signupFormFields.state } setData={setFormField} formData={formData}/>
+                <SelectInput selectOptions={cloudProviders} field={ signupFormFields.cloudProvider } setData={setConfiguration} formData={formData["configuration"]}/>
+              </div>
+              <div className="col-6">
+                <TextInput field={ signupFormFields.lastName } setData={setFormField} formData={formData}/>
+                <TextInput field={ signupFormFields.organizationName } setData={setFormField} formData={formData}/>
+                <TextInput field={ signupFormFields.confirmPassword } setData={setFormField} formData={formData}/>
+                <TextInput field={ signupFormFields.city } setData={setFormField} formData={formData}/>
+                <TextInput field={ signupFormFields.zip } setData={setFormField} formData={formData}/>
+                <SelectInput selectOptions={cloudProviderRegions} field={ signupFormFields.cloudProviderRegion } setData={setConfiguration} formData={formData["configuration"]}/>
+              </div>
+              <div className="col-12">
+                <TextInput field={ signupFormFields.domain } setData={setFormField} formData={formData}/>
+              </div>
             </div>
 
             { isLoading ?
-              <Button id="login-button"  disabled={true} variant="outline-success" className="mr-2 px-4" type="button">Working...</Button> :
-              <Button id="login-button"  disabled= {!isFormValid} variant="success" className="mr-2 px-4" type="submit">Register Account</Button>
+              <Button id="login-button" disabled={true} variant="outline-success" className="mr-2 px-4" type="button"><span>Working...</span></Button> :
+              <Button size="md" className="register-button mx-auto" id="login-button" type="submit" variant="success"><span>Register Account</span></Button>
             }
-            <Button id="cancel-button" variant="outline-secondary" className="ml-2" type="button" onClick={cancelSignup}>Cancel</Button>
-            <div className="mt-1 text-muted text-right">* Required Fields</div>
-
+            {/*<Button id="cancel-button" variant="outline-secondary" className="ml-2" type="button" onClick={cancelSignup}>Cancel</Button>*/}
           </Card.Body>
+          <Card.Footer className="new-user-footer"><div className="text-muted text-right pr-2"><span className="danger-red">*</span> Required Fields</div></Card.Footer>
         </Card>
       </Form>
     </div>

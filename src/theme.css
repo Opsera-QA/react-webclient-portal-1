@@ -419,9 +419,16 @@ div.modal-footer {
 }
 
 .new-user-signup-form form {
-  width: 500px;
   display: flex;
   align-items: center;
+}
+
+.free-trial-form {
+  width: 500px;
+}
+
+.full-signup-form {
+  width: 1000px;
 }
 
 .new-user-signup-form .form-group {
@@ -436,6 +443,11 @@ div.modal-footer {
 .new-user-signup-form .form-control {
   height: 2em;
   padding: 1em;
+}
+
+.new-user-signup-form .form-group select {
+  padding: 0 1.25em 0 0;
+  height: 2em;
 }
 
 .new-user-header {
@@ -467,5 +479,66 @@ div.modal-footer {
   margin-top: .2em;
   min-height: 2em;
 }
-
 /* End Sign Up Form Styling */
+
+/* Text Input styling */
+.custom-text-input {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.custom-text-input label {
+  flex-basis: 33%;
+}
+
+.custom-text-input input {
+  flex-basis: 67%;
+}
+
+.custom-text-input select {
+  flex-basis: 67%;
+}
+
+.custom-text-input .rw-widget {
+  flex-basis: 67%;
+}
+
+.custom-text-input .form-text {
+  width: 100%;
+  flex-basis: 100%;
+  text-align: right;
+}
+
+.custom-text-input .invalid-feedback {
+  flex-basis: 100%;
+  text-align: right;
+}
+/* End Text Input Styling */
+
+/* Select Input styling */
+.custom-select-input {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.custom-select-input label {
+  flex-basis: 33%;
+  margin-top: .5em;
+}
+
+.custom-select-input .rw-widget {
+  flex-basis: 67%;
+}
+
+.custom-select-input .form-text {
+  width: 100%;
+  flex-basis: 100%;
+  text-align: right;
+}
+
+.custom-select-input .invalid-feedback {
+  flex-basis: 100%;
+  text-align: right;
+}
+/* End Input Styling */

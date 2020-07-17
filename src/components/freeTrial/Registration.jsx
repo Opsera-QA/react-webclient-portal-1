@@ -3,6 +3,8 @@ import { Button, Form, Row, Col, Card, Alert } from "react-bootstrap";
 import { ApiService } from "api/apiService";
 import { useHistory } from "react-router-dom";
 import { useOktaAuth } from "@okta/okta-react";
+import TextInput from "../common/input/text-input";
+import defaultSignupFormFields from "../user/signup-form-fields";
 
 const INITIAL_DATA = {
   domain: "freetrial",
@@ -20,14 +22,13 @@ const INITIAL_DATA = {
   configuration: { cloudProvider: "EKS", cloudProviderRegion: "us-east-2" }
 };
 
-const fieldsToValidate = ["firstName", "lastName", "email", "password", "confirmPassword"];
-
 function FreeTrialSignup(props) {
   const [isLoading, setLoading] = useState(false);
   const history = useHistory();
   const [formMessage, setFormMessage] = useState("");
   const [ formData, setFormData] = useState(INITIAL_DATA);
   const [ emailAlreadyExists, setEmailAlreadyExists ] = useState(false);
+  const [ signupFormFields, updateFormFields ] = useState(defaultSignupFormFields);
 
 
   const isFormValid = () => {
@@ -62,16 +63,19 @@ function FreeTrialSignup(props) {
 
   //Check if the email is already registered in the system
   const isEmailAvailable = async () => {
+    console.log("checking email: " + formData.email);
     const apiCall = new ApiService("/users/check-email", {}, null, { email: formData.email });
     await apiCall.post()
       .then(function (response) {
         if (response.data) {
           setEmailAlreadyExists(true);
           setFormMessage("Email address already exists.");
+          return false;
         }
       })
       .catch(function (error) {
         console.error(error);
+        setEmailAlreadyExists(false);
         return true;
       });
   };
@@ -115,42 +119,32 @@ function FreeTrialSignup(props) {
     }
   };
 
+  const setFormField = (field, value) => {
+    formData[field] = value;
+    setFormData({ ...formData });
+  };
+
+  const setAttribute = (field, value) => {
+    formData["attributes"][field] = value;
+    setFormData({ ...formData, attributes: formData["attributes"] });
+  };
+
+
   return (
     <div className="new-user-signup-form">
-      <Form className="m-auto" noValidate onSubmit={signupSubmit} >
+      <Form className="free-trial-form m-auto" noValidate onSubmit={signupSubmit} >
         <Card>
           <Card.Header as="h5" className="new-user-header">Sign Up For OpsERA</Card.Header>
           <Card.Body className="new-user-body p-3">
             { formMessage.length > 0 ? <p className="text-danger">{formMessage}</p> : null}
             <div className="formContainer">
-              <Form.Group controlId="firstName">
-                <Form.Label><span>First Name<span className="danger-red">*</span></span></Form.Label>
-                <Form.Control type="text" value={formData.firstName || ""} onChange={e => setFormData({ ...formData, firstName: e.target.value })}/>
-              </Form.Group>
-              <Form.Group controlId="lastName">
-                <Form.Label><span>Last Name<span className="danger-red">*</span></span></Form.Label>
-                <Form.Control type="text" value={formData.lastName || ""} onChange={e => setFormData({ ...formData, lastName: e.target.value })}/>
-              </Form.Group>
-              <Form.Group controlId="email">
-                <Form.Label><span>Email<span className="danger-red">*</span></span></Form.Label>
-                <Form.Control type="text" value={formData.email || ""} onChange={e => setFormData({ ...formData, email: e.target.value })}/>
-              </Form.Group>
-              <Form.Group controlId="company">
-                <Form.Label><span>Company</span></Form.Label>
-                <Form.Control type="text" value={formData.attributes.company || ""} onChange={e => setFormData({ ...formData, attributes: { company: e.target.value, title: formData.attributes.title } } )}/>
-              </Form.Group>
-              <Form.Group controlId="title">
-                <Form.Label><span>Title</span></Form.Label>
-                <Form.Control type="text" value={formData.attributes.title || ""} onChange={e => setFormData({ ...formData, attributes: { company: formData.attributes.company, title: e.target.value } } )}/>
-              </Form.Group>
-              <Form.Group controlId="password">
-                <Form.Label><span>Password<span className="danger-red">*</span></span></Form.Label>
-                <Form.Control value={formData.password || ""} type="password" onChange={e => setFormData({ ...formData, password: e.target.value })}/>
-              </Form.Group>
-              <Form.Group controlId="confirmPassword">
-                <Form.Label><span>Confirm Password<span className="danger-red">*</span></span></Form.Label>
-                <Form.Control value={formData.confirmPassword || ""} type="password" onChange={e => setFormData({ ...formData, confirmPassword: e.target.value })}/>
-              </Form.Group>
+              <TextInput field={ signupFormFields.firstName } setData={setFormField} formData={formData}/>
+              <TextInput field={ signupFormFields.lastName } setData={setFormField} formData={formData}/>
+              <TextInput field={ signupFormFields.email } setData={setFormField} formData={formData}/>
+              <TextInput field={ signupFormFields.company } setData={setAttribute} formData={formData["attributes"]}/>
+              <TextInput field={ signupFormFields.title } setData={setAttribute} formData={formData["attributes"]}/>
+              <TextInput field={ signupFormFields.password } setData={setFormField} formData={formData}/>
+              <TextInput field={ signupFormFields.confirmPassword } setData={setFormField} formData={formData}/>
             </div>
 
             { isLoading ?

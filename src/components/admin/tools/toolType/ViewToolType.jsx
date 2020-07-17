@@ -36,7 +36,7 @@ function ViewToolType(props) {
                   {toolData.description}
                 </li>
                 <li className="list-group-item">
-                  <span className="pr-1 text-muted">Tool: </span>
+                  <span className="pr-1 text-muted">Item Identifier: </span>
                   {toolData.identifier}
                 </li>
                 <li className="list-group-item">
