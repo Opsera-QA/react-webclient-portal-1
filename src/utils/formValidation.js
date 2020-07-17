@@ -7,23 +7,23 @@ const validate = (value, field) => {
     switch (rule) {
     case "minLength":
       isValid = isValid && minLengthValidator(value, field.rules[rule]); 
-      errorMessage = "The value has to be more than "+ field.rules[rule] +" characters";
+      errorMessage = "The value has to be at least "+ field.rules[rule] +" characters long.";
       break;
     case "maxLength": 
       isValid = isValid && maxLengthValidator(value, field.rules[rule]); 
-      errorMessage = "Value has to be less than "+ field.rules[rule] +" characters";
+      errorMessage = "The value has to be "+ field.rules[rule] +" characters or fewer.";
       break;
     case "isRequired": 
       isValid = isValid && requiredValidator(value); 
-      errorMessage = "This field is required";
+      errorMessage = "This field is required.";
       break;
-    case "isEmail": 
+    case "isEmail":
       isValid = isValid && validateEmail(value); 
-      errorMessage = "The email address given is not valid";
+      errorMessage = "The email address given is not valid.";
       break;
     case "isAlphaNumeric": 
       isValid = isValid && isAlphaNumeric(value); 
-      errorMessage = "No special characters are allowed";
+      errorMessage = "No special characters are allowed.";
       break;      
     default: 
       isValid = true;
