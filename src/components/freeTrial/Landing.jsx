@@ -17,7 +17,7 @@ function FreeTrialLanding() {
           <Col xl="12">
             <div style={{ maxWidth: "1025px" }}>
               <div className="h5 mb-3">Welcome to OpsERA!  Your DevSecOps Solution.</div>
-              <div className="h4 text-muted mb-5">Free Trail Landing Page: Your registration has been processed successfully.  You will be contacted via email shortly with details on how to proceed.</div>
+              <div className="h4 text-muted mb-5">Free Trail Landing Page: Please add the customized "Tab" design like the samples provided above the header text of this compontent.  The three options will be: Welcome, Platform, Pipeline and Analytics.  .</div>
               
               <div className="row mx-n2 mt-3" style={{ minWidth:"1020px" }}>
                 <div className="col-md px-2 landing-content-module">
@@ -49,36 +49,21 @@ function FreeTrialLanding() {
               <div className="row mx-n2 mt-4" style={{ minWidth:"1020px" }}>
                 <div className="col-md px-2 landing-content-module">
                   <div className="h5">Platform</div>
-                  <div className="text-muted">Get started in your DevOps journey or experiment with many of our tool offerings to figure out your next steps.</div>
+                  <div className="text-muted">TODO: this will link to a new UI componetnt that will have some text and links to a video.  Please stub out both and link to a placeholder video until we determine how that's going to work.   
+                  
+                  </div>
                 </div>
                 <div className="col-md px-2 landing-content-module">
                   <div className="h5">Pipeline</div>
-                  <div className="text-muted">Orchestrate workflows across various technologies and platforms.</div>
+                  <div className="text-muted">TODO: This page will need several content blocks.  At the top will be text describing what pipelines are.  Then a "get started" button (a big one) that takes users 
+                  directly to the Pipeline Catalogs page, so please add that navigation.  </div>
                 </div>
                 <div className="col-md px-2 landing-content-module">
                   <div className="h5">Analytics</div>
-                  <div className="text-muted">Get real time observability across your various pipelines.</div>
+                  <div className="text-muted">TODO: just wire up a new content component with some wording (Ip Sum) and put some chart imges on there and then add a "content module" that exaplains that Analytics 
+                  demos are available with the customer's realtime data.  This requires a setup, so have a button that says "request demo" and for now the button doesn't do anything but after you click it, let the button 
+                  disable and then display a message saying "real time demo request has been sent, you will be contacted by OpsERA".</div>
                 </div>                
-              </div>
-
-
-              <hr style={{ width:"1020px", textAlign: "left", marginLeft: "0" }} />
-
-              <div className="row mx-n2 mt-4" style={{ minWidth:"1020px" }}>
-                <div className="col-md px-2 landing-content-module2">
-                  <img alt="OpsERA"
-                    src="/img/dashboard.png"
-                    width="195"
-                    height="225"
-                    className="d-inline-block align-top pointer"
-                  />
-                </div>
-              </div>
-              <div className="row mx-n2 mt-4" style={{ minWidth:"1020px" }}>
-                <div className="col-md px-2 landing-content-module">
-                  <div className="h5">My Dashboards</div>
-                  <div className="text-muted">Stay current on exactly what you need to know.</div>
-                </div>
               </div>
 
             </div>
