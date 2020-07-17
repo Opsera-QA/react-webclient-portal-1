@@ -1,39 +1,23 @@
+// TODO: Pull directly from node server --
+//  also write way to pull text from a properties file for easier language localization
 const defaultSignupFormFields = {
   firstName: {
     label: "First Name",
     id: "firstName",
-    type: "",
-    value: "",
-    error: "",
-    touched: false,
-    width:  48,
-    valid: false, 
     rules: {
-      isRequired: true 
+      isRequired: true
     }
   },
   lastName: {
     label: "Last Name",
     id: "lastName",
-    type: "",
-    value: "",
-    error: "",
-    touched: false,
-    width:  48,
-    valid: false, 
     rules: {
-      isRequired: true 
+      isRequired: true
     }
   },
   email: {
     label: "Email",
     id: "email",
-    type: "",
-    value: "",
-    error: "Email is not valid",
-    touched: false,
-    width:  48,
-    valid: false, 
     rules: {
       isRequired: true,
       isEmail: true
@@ -42,12 +26,6 @@ const defaultSignupFormFields = {
   organizationName: {
     label: "Company",
     id: "organizationName",
-    type: "",
-    value: "",
-    error: "",
-    touched: false,
-    width:  48,
-    valid: false, 
     rules: {
       isRequired: true 
     }
@@ -56,11 +34,6 @@ const defaultSignupFormFields = {
     label: "Password",
     id: "password",
     type: "password",
-    value: "",
-    error: "min 8 chars required",
-    touched: false,
-    width:  48,
-    valid: false, 
     rules: {
       isRequired: true,
       minLength: 8
@@ -70,11 +43,6 @@ const defaultSignupFormFields = {
     label: "Confirm Password",
     id: "confirmPassword",
     type: "password",
-    value: "",
-    error: "min 8 chars required",
-    touched: false,
-    width:  48,
-    valid: false, 
     rules: {
       isRequired: true,        
       minLength: 8
@@ -83,23 +51,11 @@ const defaultSignupFormFields = {
   street: {
     label: "Street",
     id: "street",
-    type: "",
-    value: "",
-    error: null,
-    touched: true,
-    width:  98,
-    valid: true, 
     rules: {}
   },
   city: {
     label: "City",
     id: "city",
-    type: "",
-    value: "",
-    error: null,
-    touched: true,
-    width: 32,
-    valid: true, 
     rules: {
       isRequired: true
     }
@@ -107,12 +63,6 @@ const defaultSignupFormFields = {
   state: {
     label: "State",
     id: "state",
-    type: "select",
-    value: "",
-    error: null,
-    touched: true,
-    width: 32,
-    valid: true, 
     rules: {
       isRequired: true
     }
@@ -120,12 +70,6 @@ const defaultSignupFormFields = {
   zip: {
     label: "Zip",
     id: "zip",
-    type: "",
-    value: "",
-    error: null,
-    touched: true,
-    width: 32,
-    valid: true, 
     rules: {
       isRequired: true
     }
@@ -133,17 +77,35 @@ const defaultSignupFormFields = {
   domain: {
     label: "New Resource Subdomain Name",
     id: "domain",
-    type: "",
-    value: "",
-    error: "maximum of 10 chars and no special chars are allowed",
-    touched: false,
-    width:  98,
-    valid: true, 
+    fieldText: "When new resources are created for this account, this will be the default sub-domain name used when building DNS records.",
     rules: {
-      isRequired: true,
+      isRequired: false,
       isAlphaNumeric: true,
       maxLength: 10,
-      minLength: 1,
+    }
+  },
+  title: {
+    label: "Title",
+    id: "title",
+    rules: {}
+  },
+  company: {
+    label: "Company",
+    id: "company",
+    rules: {}
+  },
+  cloudProvider: {
+    label: "Cloud Provider",
+    id: "cloudProvider",
+    rules: {
+      isRequired: true
+    }
+  },
+  cloudProviderRegion: {
+    label: "Region",
+    id: "cloudProviderRegion",
+    rules: {
+      isRequired: true
     }
   },
 };
