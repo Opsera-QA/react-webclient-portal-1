@@ -33,6 +33,7 @@ import GitlabLastCommitToCodeByUser from "./charts/GitlabLastCommitToCodeByUser"
 import GitlabTimeTakenToCompleteMergeRequestReview from "./charts/GitlabTimeTakenToCompleteMergeRequestReview";
 // import GitlabMergeRequestTimeTakenBarChart from "./charts/GitlabMergeRequestTimeTakenBarChart";
 import GitlabTimeTakenToCompleteMergeRequestReviewTable from "./metrics/GitlabTimeTakenToCompleteMergeRequestReviewTable";
+import GitlabMrTitleTimeAuthorNoOfCommits from "./metrics/GitlabMrTitleTimeAuthorNoOfCommits";
 
 
 
@@ -450,7 +451,9 @@ function ChartView({ selection, persona, date }) {
               <GitlabTimeTakenToCompleteMergeRequestReviewTable persona={persona} date={date}/>
             </div>
             <div className="align-self-stretch p-2 w-100">
-              {/* Self Contained Chart Component 2  */}                  
+              {/* Self Contained Chart Component 2  */}      
+              <GitlabMrTitleTimeAuthorNoOfCommits persona={persona} date={date}/>
+                          
             </div>
           </div>
           <div className="mt-2">
