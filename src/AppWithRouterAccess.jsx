@@ -41,7 +41,7 @@ import LdapContentView from "./components/accounts/LdapContentView";
 import LdapDetailView from "./components/accounts/LdapDetailView";
 
 import FreeTrialRegistration from "./components/freeTrial/Registration";
-import FreeTrialLanding from "./components/freeTrial/Landing";
+import FreeTrialLanding from "./components/freeTrial/landing-page/Landing";
 
 import ApiConnectionDemo from "./components/api_connector/ApiDemo";
 import CommonTableDemo from "./components/common/samples/tableImplementation";

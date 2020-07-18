@@ -56,7 +56,7 @@ function TemplateTable({ data, selectedRow }) {
       <CustomTable 
         columns={columns} 
         data={data}
-        selectedRow={selectedRow}
+        onRowSelect={selectedRow}
         noDataMessage={noDataMessage}
         rowStyling={rowStyling}
         initialState={initialState}

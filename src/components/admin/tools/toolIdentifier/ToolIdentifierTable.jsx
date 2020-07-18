@@ -60,7 +60,7 @@ function ToolIdentifierTable({ data, selectedRow }) {
         rowStyling={rowStyling}
         noDataMessage={noDataMessage}
         initialState={initialState}
-        selectedRow={selectedRow}
+        onRowSelect={selectedRow}
         // tableFilter={filterOption}
         // paginationOptions={paginationOptions}
       >

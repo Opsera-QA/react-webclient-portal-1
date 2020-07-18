@@ -5,7 +5,7 @@ import { faTimesCircle, faCheckCircle } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
 
-function LdapContentTable({ data, rowInfo, tableFilter }) {
+function LdapContentTable({ data, onRowSelect, tableFilter }) {
   const initialState = {
     pageIndex: 0,
     sortBy: [
@@ -17,7 +17,8 @@ function LdapContentTable({ data, rowInfo, tableFilter }) {
   };
 
   const rowStyling = (row) => {
-    return !row["values"].active ? " inactive-row" : "";
+      return "";
+    // return !row["values"].active ? " inactive-row" : "";
   };
 
   const columns = useMemo(
@@ -31,25 +32,13 @@ function LdapContentTable({ data, rowInfo, tableFilter }) {
         accessor: "description",
       },
       {
-        Header: "Tool",
-        accessor: "tool_identifier"
-      },      
-      {
-        Header: "Created",
-        accessor: "createdAt",
-        Cell: (props) => {
-          return format(new Date(props.value), "yyyy-MM-dd");
-        },
-        class: "cell-center no-wrap-inline"
+        Header: "Organization Name",
+        accessor: "orgName"
       },
-      {
-        Header: "State",
-        accessor: "active",
-        Cell: (props) => {
-          return props.value ?  <FontAwesomeIcon icon={faCheckCircle} className="cell-icon green" /> : <FontAwesomeIcon icon={faTimesCircle} className="cell-icon red" />;
-        },
-        class: "cell-center"
-      },
+        {
+            Header: "Organization Owner Email",
+            accessor: "orgOwnerEmail"
+        }
     ],
     []
   );
@@ -59,10 +48,10 @@ function LdapContentTable({ data, rowInfo, tableFilter }) {
       <CustomTable 
         columns={columns} 
         data={data}
-        selectedRow={rowInfo}
+        onRowSelect={onRowSelect}
         rowStyling={rowStyling}
         initialState={initialState}
-        tableFilter={tableFilter}
+        // tableFilter={tableFilter}
       >
       </CustomTable>
     </>
@@ -71,7 +60,7 @@ function LdapContentTable({ data, rowInfo, tableFilter }) {
 
 LdapContentTable.propTypes = {
   data: PropTypes.array,
-  rowInfo: PropTypes.func,
+  onRowSelect: PropTypes.func,
   tableFilter: PropTypes.object
 };
 
