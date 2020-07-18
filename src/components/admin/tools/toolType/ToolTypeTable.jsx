@@ -2,8 +2,8 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import { format } from "date-fns";
 import CustomTable from "components/common/table";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCheckCircle, faTimesCircle} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheckCircle, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 
 function ToolTypeTable({ data, selectedRow }) {
   const columns = useMemo(
@@ -24,21 +24,21 @@ function ToolTypeTable({ data, selectedRow }) {
         },
         class: "cell-center no-wrap-inline"
       },
-        {
-            Header: "State",
-            accessor: "active",
-            Cell: (props) => {
-                return props.value ?  <FontAwesomeIcon icon={faCheckCircle} className="cell-icon green" /> : <FontAwesomeIcon icon={faTimesCircle} className="cell-icon red" />;
-            },
-            class: "cell-center"
+      {
+        Header: "State",
+        accessor: "active",
+        Cell: (props) => {
+          return props.value ?  <FontAwesomeIcon icon={faCheckCircle} className="cell-icon green" /> : <FontAwesomeIcon icon={faTimesCircle} className="cell-icon red" />;
         },
+        class: "cell-center"
+      },
     ],
     []
   );
 
-    const rowStyling = (row) => {
-        return !row["values"].active ? " inactive-row" : "";
-    };
+  const rowStyling = (row) => {
+    return !row["values"].active ? " inactive-row" : "";
+  };
 
   const noDataMessage = "No tools are currently registered";
 
@@ -60,7 +60,7 @@ function ToolTypeTable({ data, selectedRow }) {
         rowStyling={rowStyling}
         noDataMessage={noDataMessage}
         initialState={initialState}
-        selectedRow={selectedRow}
+        onRowSelect={selectedRow}
       // tableFilter={filterOption}
       // paginationOptions={paginationOptions}
       >

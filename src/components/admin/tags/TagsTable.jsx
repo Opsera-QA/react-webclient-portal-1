@@ -60,7 +60,7 @@ function TagsTable({ data, selectedRow }) {
 
   return (
     <>
-      <CustomTable selectedRow={selectedRow} data={data} rowStyling={rowStyling} columns={columns} initialState={initialState}></CustomTable>
+      <CustomTable onRowSelect={selectedRow} data={data} rowStyling={rowStyling} columns={columns} initialState={initialState}></CustomTable>
     </>
   );
 }

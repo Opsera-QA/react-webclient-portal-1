@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
 import Pagination from "components/common/pagination";
 
-function CustomTable({ columns, data, noDataMessage, selectedRow, rowStyling, initialState, tableFilter, paginationOptions }) {
+function CustomTable({ columns, data, noDataMessage, onRowSelect, rowStyling, initialState, tableFilter, paginationOptions }) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -24,12 +24,12 @@ function CustomTable({ columns, data, noDataMessage, selectedRow, rowStyling, in
 
   const defaultNoDataMessage = "No data is currently available";
 
-  const setColumnClass = (id, columns) => {
+  const setColumnClass = (id, columnDefinitions) => {
     let response = "";
-    if (columns && id){
-      Object.keys(columns).forEach(function(key) {
-        if (columns[key].accessor === id) {
-          response = columns[key].class;
+    if (columnDefinitions && id){
+      Object.keys(columnDefinitions).forEach(function(key) {
+        if (columnDefinitions[key].accessor === id) {
+          response = columnDefinitions[key].class;
         }      
       });      
     } 
@@ -39,7 +39,7 @@ function CustomTable({ columns, data, noDataMessage, selectedRow, rowStyling, in
   const getRowClassNames = (index, row) => {
     let rowClassNames = "table-row";
     rowClassNames += index % 2 == 0 ? " even" : " odd";
-    rowClassNames += selectedRow ? " pointer" : "";
+    rowClassNames += onRowSelect ? " pointer" : "";
     rowClassNames += rowStyling ? rowStyling(row) : "";  
     return rowClassNames;
   };
@@ -87,7 +87,7 @@ function CustomTable({ columns, data, noDataMessage, selectedRow, rowStyling, in
           {rows.map((row, i) => {
             prepareRow(row);
             return filterRow(row) ? null : (
-              <tr className={getRowClassNames(i, row)} key={i} {...row.getRowProps({ onClick: () => selectedRow ? selectedRow(row) : null } )}>
+              <tr className={getRowClassNames(i, row)} key={i} {...row.getRowProps({ onClick: () => onRowSelect ? onRowSelect(row) : null } )}>
                 {row.cells.map((cell, j) => {
                   return <td key={j} {...cell.getCellProps()} className={"table-cell px-2 " + setColumnClass(cell.column.id, columns)}>{cell.render("Cell")}</td>;
                 })}
@@ -112,7 +112,7 @@ CustomTable.propTypes = {
   columns: PropTypes.array,
   data: PropTypes.array,
   noDataMessage: PropTypes.string,
-  selectedRow: PropTypes.func,
+  onRowSelect: PropTypes.func,
   rowStyling: PropTypes.func,
   initialState: PropTypes.object,
   tableFilter: PropTypes.object,

@@ -125,8 +125,7 @@ function LdapContentView() {
           <div className="mt-1">
             <h6>View Name</h6>
             <div>Details on what the user is seeing here.</div>
-  
-            {/* <LdapContentTable data={ldapData}  /> */}
+             <LdapContentTable data={ldapData["data"]} />
             
           </div> }
 
