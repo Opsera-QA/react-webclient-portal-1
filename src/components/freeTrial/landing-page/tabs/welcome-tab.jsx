@@ -2,8 +2,10 @@ import React from "react";
 import { Row, Col } from "react-bootstrap";
 
 import "../../freeTrial.css";
+import PropTypes from "prop-types";
+import ToolDetails from "../../../inventory/tools/toolDetails/toolDetails";
 
-function FreeTrialLandingWelcome() {
+function FreeTrialLandingWelcome({ setActiveTab }) {
 
   return (
     <>
@@ -22,6 +24,7 @@ function FreeTrialLandingWelcome() {
                       width="195"
                       height="225"
                       className="d-inline-block align-top"
+                      onClick= {() => { setActiveTab("platform"); }}
                     />
                   </div>
                   <div className="col-md px-2 landing-content-module">
@@ -30,6 +33,7 @@ function FreeTrialLandingWelcome() {
                       width="195"
                       height="225"
                       className="d-inline-block align-top"
+                      onClick= {() => { setActiveTab("pipeline"); }}
                     />
                   </div>
                   <div className="col-md px-2 landing-content-module2">
@@ -38,6 +42,7 @@ function FreeTrialLandingWelcome() {
                       width="195"
                       height="225"
                       className="d-inline-block align-top"
+                      onClick= {() => { setActiveTab("analytics"); }}
                     />
                   </div>
 
@@ -88,5 +93,10 @@ function FreeTrialLandingWelcome() {
   // }
 
 }
+
+FreeTrialLandingWelcome.propTypes = {
+  setActiveTab: PropTypes.func,
+};
+
 
 export default FreeTrialLandingWelcome;

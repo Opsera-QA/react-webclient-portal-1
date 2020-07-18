@@ -154,7 +154,7 @@ function ToolInventory () {
         {isLoading && <LoadingDialog />}
         {errors && <div className="error-text">Error Reported: {errors}</div>}
       
-        {toolRegistryList && <ToolsTable tableFilter={filterOption} rowInfo={viewTool} data={toolRegistryList} />}
+        {toolRegistryList && <ToolsTable tableFilter={filterOption} onRowSelect={viewTool} data={toolRegistryList} />}
       </div>
     </>
   );  
