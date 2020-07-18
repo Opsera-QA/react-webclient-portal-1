@@ -5,7 +5,7 @@ import { faTimesCircle, faCheckCircle } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
 
-function ToolsTable({ data, rowInfo, tableFilter }) {
+function ToolsTable({ data, onRowSelect, tableFilter }) {
   const initialState = {
     pageIndex: 0,
     sortBy: [
@@ -59,7 +59,7 @@ function ToolsTable({ data, rowInfo, tableFilter }) {
       <CustomTable 
         columns={columns} 
         data={data}
-        selectedRow={rowInfo}
+        onRowSelect={onRowSelect}
         rowStyling={rowStyling}
         initialState={initialState}
         tableFilter={tableFilter}
@@ -71,7 +71,7 @@ function ToolsTable({ data, rowInfo, tableFilter }) {
 
 ToolsTable.propTypes = {
   data: PropTypes.array,
-  rowInfo: PropTypes.func,
+  onRowSelect: PropTypes.func,
   tableFilter: PropTypes.object
 };
 

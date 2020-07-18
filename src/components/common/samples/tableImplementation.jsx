@@ -10,7 +10,7 @@ import { faTimesCircle, faCheckCircle } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
 import CustomModalDialog from "../modal";
-import {DropdownList} from "react-widgets";
+import { DropdownList } from "react-widgets";
 
 /*
   This table implementation is an example of creating a table component for a screen.
@@ -88,7 +88,7 @@ function TableImplementationDemo() {
     "orgOwnerEmail": "todd@opsera.io",
     "active": "true"
   },
-    {
+  {
     "name": "org-test2",
     "description": "Opsera2",
     "envCount": "5",
@@ -98,7 +98,7 @@ function TableImplementationDemo() {
     "orgOwner": "Todd Barczak",
     "orgOwnerEmail": "todd@opsera.io",
   },
-    {
+  {
     "name": "org-test3",
     "description": "Opsera3",
     "envCount": "3",
@@ -109,61 +109,61 @@ function TableImplementationDemo() {
     "orgOwnerEmail": "todd@opsera.io",
     "active": "true"
   },
-    {
-      "name": "org-test4",
-      "description": "Opsera4",
-      "envCount": "1",
-      "numberOfLicenses": "2000",
-      "objectCount": 60000,
-      "orgName": "OpsEra Test",
-      "orgOwner": "Todd Barczak",
-      "orgOwnerEmail": "todd@opsera.io",
-      "active": "true"
-    },
-    {
-      "name": "org-test5",
-      "description": "Opsera5",
-      "envCount": "2",
-      "numberOfLicenses": "2000",
-      "objectCount": 50000,
-      "orgName": "OpsEra Test",
-      "orgOwner": "Todd Barczak",
-      "orgOwnerEmail": "todd@opsera.io",
-      "active": "true"
-    },
-    {
-      "name": "org-test6",
-      "description": "Opsera6",
-      "envCount": "6",
-      "numberOfLicenses": "2000",
-      "objectCount": 50000,
-      "orgName": "OpsEra Test",
-      "orgOwner": "Todd Barczak",
-      "orgOwnerEmail": "todd@opsera.io",
-      "active": "true"
-    },
-    {
-      "name": "org-test7",
-      "description": "Opsera7",
-      "envCount": "7",
-      "numberOfLicenses": "2000",
-      "objectCount": 50000,
-      "orgName": "OpsEra Test",
-      "orgOwner": "Todd Barczak",
-      "orgOwnerEmail": "todd@opsera.io",
-      "active": "true"
-    },
-    {
-      "name": "org-test8",
-      "description": "Opsera8",
-      "envCount": "8",
-      "numberOfLicenses": "2000",
-      "objectCount": 50000,
-      "orgName": "OpsEra Test",
-      "orgOwner": "Todd Barczak",
-      "orgOwnerEmail": "todd@opsera.io",
-      "active": "true"
-    },
+  {
+    "name": "org-test4",
+    "description": "Opsera4",
+    "envCount": "1",
+    "numberOfLicenses": "2000",
+    "objectCount": 60000,
+    "orgName": "OpsEra Test",
+    "orgOwner": "Todd Barczak",
+    "orgOwnerEmail": "todd@opsera.io",
+    "active": "true"
+  },
+  {
+    "name": "org-test5",
+    "description": "Opsera5",
+    "envCount": "2",
+    "numberOfLicenses": "2000",
+    "objectCount": 50000,
+    "orgName": "OpsEra Test",
+    "orgOwner": "Todd Barczak",
+    "orgOwnerEmail": "todd@opsera.io",
+    "active": "true"
+  },
+  {
+    "name": "org-test6",
+    "description": "Opsera6",
+    "envCount": "6",
+    "numberOfLicenses": "2000",
+    "objectCount": 50000,
+    "orgName": "OpsEra Test",
+    "orgOwner": "Todd Barczak",
+    "orgOwnerEmail": "todd@opsera.io",
+    "active": "true"
+  },
+  {
+    "name": "org-test7",
+    "description": "Opsera7",
+    "envCount": "7",
+    "numberOfLicenses": "2000",
+    "objectCount": 50000,
+    "orgName": "OpsEra Test",
+    "orgOwner": "Todd Barczak",
+    "orgOwnerEmail": "todd@opsera.io",
+    "active": "true"
+  },
+  {
+    "name": "org-test8",
+    "description": "Opsera8",
+    "envCount": "8",
+    "numberOfLicenses": "2000",
+    "objectCount": 50000,
+    "orgName": "OpsEra Test",
+    "orgOwner": "Todd Barczak",
+    "orgOwnerEmail": "todd@opsera.io",
+    "active": "true"
+  },
   ];
 
   // This is a function if you need to have an event happen when selecting a row (EG: opening a modal)
@@ -188,27 +188,27 @@ function TableImplementationDemo() {
       text: "No Filter",
       filterText: undefined
     },
-      {field: "objectCount",
-       matchPartial: false,
-       text: "1000 objects",
-       filterText: 1000
-      },
-    {field: "objectCount",
+    { field: "objectCount",
+      matchPartial: false,
+      text: "1000 objects",
+      filterText: 1000
+    },
+    { field: "objectCount",
       matchPartial: false,
       text: "3000 objects",
       filterText: 3000
     },
-    {field: "objectCount",
+    { field: "objectCount",
       matchPartial: false,
       text: "50000 objects",
       filterText: 50000
     },
-    {field: "objectCount",
+    { field: "objectCount",
       matchPartial: false,
       text: "60000 objects",
       filterText: 60000
     }
-      ];
+  ];
 
   return (
     
@@ -217,14 +217,14 @@ function TableImplementationDemo() {
 
       <div className="tool-filter mr-2 mt-1">
         { filterOptionList && <DropdownList
-            busy={Object.keys(filterOptionList).length == 1 ? true : false}
-            disabled={Object.keys(filterOptionList).length == 1 ? true : false}
-            data={filterOptionList}
-            valueField='filterText'
-            textField='text'
-            placeholder="Filter Example"
-            defaultValue={filterOption}
-            onChange={updateFilterOption}
+          busy={Object.keys(filterOptionList).length == 1 ? true : false}
+          disabled={Object.keys(filterOptionList).length == 1 ? true : false}
+          data={filterOptionList}
+          valueField='filterText'
+          textField='text'
+          placeholder="Filter Example"
+          defaultValue={filterOption}
+          onChange={updateFilterOption}
         />}
       </div>
 
