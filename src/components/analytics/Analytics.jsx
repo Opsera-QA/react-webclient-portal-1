@@ -16,24 +16,20 @@ import JiraIssuesCreatedByDateLineChart from "./charts/jiraIssuesCreatedByDateLi
 import DeploymentsStackedBarChart from "./charts/DeploymentsStackedBarChart";
 import CircleChart from "./charts/CircleChart";
 import JiraHealthBySprintBarChart from "./charts/jiraHealthBySprintBarChart";
-import GitlabMergeRequestsByUserChart from "./charts/GitlabMergeRequestsByUserChart";
 import SonarSecurityLineChart from "./charts/sonarSecurityLineChart";
 import JMeterHitsLineChart from "./charts/jmeterHitsLineChart";
 import JMeterErrorsLineChart from "./charts/jmeterErrorsLineChart";
 import JMeterThroughputLineChart from "./charts/jmeterThroughputLineChart";
 import JMeterResponseTimeLineChart from "./charts/jmeterResponseTimeLineChart";
 import JMeterResultsTable from "./metrics/jmeterResultsTable";
-import GitlabPlanCodeView from "./views/GitlabPlanCodeView";
+// import GitlabPlanCodeView from "./views/GitlabPlanCodeView";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
-import GitlabLastCommitToCodeByUser from "./charts/GitlabLastCommitToCodeByUser";
 // import GitlabMergeRequestsView from "./views/GitlabMergeRequestsView";
-import GitlabTimeTakenToCompleteMergeRequestReview from "./charts/GitlabTimeTakenToCompleteMergeRequestReview";
 // import GitlabMergeRequestTimeTakenBarChart from "./charts/GitlabMergeRequestTimeTakenBarChart";
-import GitlabTimeTakenToCompleteMergeRequestReviewTable from "./metrics/GitlabTimeTakenToCompleteMergeRequestReviewTable";
-import GitlabMrTitleTimeAuthorNoOfCommits from "./metrics/GitlabMrTitleTimeAuthorNoOfCommits";
+import SourceCodeView from "./views/SourceCode/SourceCodeView_developer";
 
 
 
@@ -436,30 +432,9 @@ function ChartView({ selection, persona, date }) {
     case "source_code":
       return (
         <>
-          {/* Wire-up each chart component here, stacking them on top of each other.  Please wrap each individual chart in their own div with "m-2" class providing some margin around it */}
-          <div className="d-flex">
-            <div className="align-self-stretch p-2 w-100">
-              <GitlabMergeRequestsByUserChart persona={persona} date={date}/>
-            </div>
-            <div className="align-self-stretch p-2 w-100">
-              {/* Self Contained Chart Component 2  */}    
-              <GitlabTimeTakenToCompleteMergeRequestReview persona={persona} date={date}/>          
-            </div>
-          </div>
-          <div className="d-flex">
-            <div className="align-self-stretch p-2 w-100">
-              <GitlabTimeTakenToCompleteMergeRequestReviewTable persona={persona} date={date}/>
-            </div>
-            <div className="align-self-stretch p-2 w-100">
-              {/* Self Contained Chart Component 2  */}      
-              <GitlabMrTitleTimeAuthorNoOfCommits persona={persona} date={date}/>
-                          
-            </div>
-          </div>
           <div className="mt-2">
-            <GitlabLastCommitToCodeByUser persona={persona} /> 
+            <SourceCodeView persona={persona} date={date}/>
           </div>
-          {/* <GitlabMergeRequestsView persona={persona} /> */}
         </>);
 
     default:
