@@ -59,7 +59,7 @@ function AdminTools(props) {
                 <Link to="/admin/registered_users"><FontAwesomeIcon icon={faUserCircle} fixedWidth /> Registered Users</Link>
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/api_demo"><FontAwesomeIcon icon={faLink} fixedWidth /> API Test</Link>
+                <Link to="/demo/api"><FontAwesomeIcon icon={faLink} fixedWidth /> API & Token Data</Link>
               </Col>                          
               
               <Col xs={12} md={6} lg={4} className="p-2">
@@ -75,7 +75,7 @@ function AdminTools(props) {
                 <Link to="/admin/template-editor"><FontAwesomeIcon icon={faStream} fixedWidth /> Template Editor</Link>
               </Col>  
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/ldap"><FontAwesomeIcon icon={faUsers} fixedWidth /> LDAP</Link>
+                <Link to="/accounts"><FontAwesomeIcon icon={faUsers} fixedWidth /> Account Management (LDAP)</Link>
               </Col>                                                  
             </Row>
           </div>

@@ -1,11 +1,11 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CustomTable from "components/common/table";
-import { format } from "date-fns";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
-function TemplateTable({ data, selectedRow }) {
+function JenkinsJobsTable({ data, selectedRow }) {
+
   const initialState = {
     pageIndex: 0,
     sortBy: [
@@ -14,7 +14,7 @@ function TemplateTable({ data, selectedRow }) {
         desc: false
       }
     ]
-  };  
+  };
 
   const columns = useMemo(
     () => [
@@ -27,48 +27,39 @@ function TemplateTable({ data, selectedRow }) {
         accessor: "description",
       },
       {
-        Header: "Created",
-        accessor: "createdAt",
+        Header: "Type",
+        accessor: "type",
         Cell: (props) => {
-          return props.value ? format(new Date(props.value), "yyyy-MM-dd") : "";
+          return props.value[0];
         },
-        class: "cell-center no-wrap-inline"
-      },                 
+      },     
       {
         Header: "Active",
         accessor: "active",
         Cell: (props) => {
           return props.value ?  <FontAwesomeIcon icon={faCheckCircle} className="green ml-3" /> :  <FontAwesomeIcon icon={faTimesCircle} className="red ml-3" />;
         },
-      },
+      },   
     ],
     []
   );
-
-  const noDataMessage = "No templates are currently available";
-
-  const rowStyling = (row) => {
-    return !row["values"].active ? " inactive-row" : "";
-  };
 
   return (
     <>
       <CustomTable 
         columns={columns} 
         data={data}
-        onRowSelect={selectedRow}
-        noDataMessage={noDataMessage}
-        rowStyling={rowStyling}
         initialState={initialState}
+        selectedRow={selectedRow}
       >
       </CustomTable>
     </>
   );
 }
 
-TemplateTable.propTypes = {
+JenkinsJobsTable.propTypes = {
   data: PropTypes.array,
-  selectedRow: PropTypes.func
+  rowInfo: PropTypes.func
 };
 
-export default TemplateTable;
+export default JenkinsJobsTable;

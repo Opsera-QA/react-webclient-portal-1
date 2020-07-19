@@ -27,7 +27,6 @@ import DeleteTools from "./components/admin/delete_tools/DeleteTools";
 import RegisteredUsers from "./components/admin/registered_users/RegisteredUsers";
 import ManageSystems from "./components/admin/manage_systems/ManageSystems";
 import ReportsRegistration from "./components/admin/analytics/ReportsRegistration";
-import ApiConnectionDemo from "./components/api_connector/ApiDemo";
 import Workflow from "./components/workflow/Workflow";
 import SystemStatus from "./components/admin/status/SystemStatus";
 import CustomerSystemStatus from "./components/admin/status/CustomerSystemStatus";
@@ -37,11 +36,15 @@ import ToolConfigurations from "./components/admin/tools/ToolConfigurations";
 import TagEditor from "./components/admin/tags/TagsEditor";
 import TemplateEditor from "./components/admin/template_editor/TemplateEditor";
 import OPBlueprintMain from "./components/blueprint/blueprint";
-import LdapDashboard from "./components/admin/ldap/LdapDashboard";
-import LdapContentView from "./components/admin/ldap/LdapContentView";
+import LdapDashboard from "./components/accounts/LdapDashboard";
+import LdapOrganizationsView from "./components/accounts/LdapOrganizationsView";
+import LdapAccountsView from "./components/accounts/LdapAccountsView";
 
 import FreeTrialRegistration from "./components/freeTrial/Registration";
-import FreeTrialLanding from "./components/freeTrial/Landing";
+import FreeTrialLanding from "./components/freeTrial/landing-page/Landing";
+
+import ApiConnectionDemo from "./components/api_connector/ApiDemo";
+import CommonTableDemo from "./components/common/samples/tableImplementation";
 
 const AppWithRouterAccess = () => {
   const history = useHistory();
@@ -116,9 +119,12 @@ const AppWithRouterAccess = () => {
               <SecureRoute path="/admin/tool-configurations" component={ToolConfigurations} />
               <SecureRoute path="/admin/tags" component={TagEditor} />
               <SecureRoute path="/admin/template-editor" component={TemplateEditor} />
-              <SecureRoute path="/admin/ldap" exact component={LdapDashboard} />
-              <SecureRoute path="/admin/ldap/:view" component={LdapContentView} />
-              <SecureRoute path="/api_demo" component={ApiConnectionDemo} />
+              <SecureRoute path="/accounts" exact component={LdapDashboard} />
+              <SecureRoute path="/accounts/organizations" exact component={LdapOrganizationsView} />
+              <SecureRoute path="/accounts/organizations/detail/:id" exact component={LdapAccountsView} />
+              <SecureRoute path="/demo/api" component={ApiConnectionDemo} />
+
+              <SecureRoute path="/demo/table" component={CommonTableDemo} />
 
               <Route path="/trial/registration" exact component={FreeTrialRegistration} />
               <Route path="/trial/landing" exact component={FreeTrialLanding} />
