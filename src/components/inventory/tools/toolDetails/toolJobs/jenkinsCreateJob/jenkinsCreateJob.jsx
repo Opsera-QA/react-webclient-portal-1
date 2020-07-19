@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Button, Modal, Row, Col, Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { axiosApiService } from "api/apiService";
@@ -16,12 +16,13 @@ import JobTypePerformanceTesting from "./job-type-performance-testing.js";
 import JenkinsJobTypeShellScript from "./job-type-shell-script.js";
 
 function JenkinsCreateJob(props) {
-  const { toolId, toolData, accessToken } = props;
+  const { toolId, toolData, accessToken, jobData } = props;
+  let toolDataSet = toolData;
   const [ jenkinsFormList, updateJenkinsForm] = useState({ ...JobTypeBuild });
-  const [ pipelineId, setPipelineId ]= useState("");
-  const [ formType, setFormType ] = useState("");
-  const [ pipelineList, setPipelineList] = useState([]);
-    
+  const [ formType, setFormType ] = useState("BUILD");
+  const [jobName, setJobName ] = useState("");
+  const [jobDescription, setJobDescription ] = useState("");
+
   const jobType = [
     {
       label: "Build",
@@ -62,7 +63,8 @@ function JenkinsCreateJob(props) {
   ];
 
   useEffect(() => {  
-    switch (formType.toUpperCase()) {        
+    switch (formType.toUpperCase()) {  
+          
     case "CODE-SCAN":  
     case "UNIT-TEST":   
     case "FUNCTIONAL-TEST":        
@@ -86,23 +88,49 @@ function JenkinsCreateJob(props) {
     default:
       updateJenkinsForm({ ...JobTypeBuild });
       break;
+    }    
+    //Check if data is available before update
+    if(Object.keys(jobData).length > 0){ updateFormWithData(); }
+    else {
+      clearData();
     }
-    
+
   }, [formType]);
 
-  useEffect(() => {  
-    getToolList();
-  }, []);
+  const updateFormWithData = () => {
+    setJobName(jobData.name);
+    setJobDescription(jobData.description);
 
-  const getToolList = async () => {
-    try {
-      //const toolResponse = await axiosApiService(accessToken).get("/regisformtry/types", {});
-      const pipelineResponse = await axiosApiService(accessToken).get("/pipelines", {});
-      setPipelineList(pipelineResponse.data.response.sort((a, b) => a.name.localeCompare(b.name)));
-    }
-    catch (err) {
-      console.log(err.message);
-    }
+    Object.keys(jenkinsFormList).map((item, i) => {
+      let validateInput = {
+        value: jobData.configuration[item] || ""
+      };
+      updateJenkinsForm(prevState => ({ 
+        ...prevState, 
+        [item]: { 
+          ...prevState[item],
+          ...validateInput
+        } 
+      }));
+    });
+  };
+
+
+  const clearData = () => {
+    setJobName("");
+    setJobDescription("");
+    Object.keys(jenkinsFormList).map((item, i) => {
+      let validateInput = {
+        value: ""
+      };
+      updateJenkinsForm(prevState => ({ 
+        ...prevState, 
+        [item]: { 
+          ...prevState[item],
+          ...validateInput
+        } 
+      }));
+    });
   };
 
   const handleFormChange = (jenkinsFormList, value) => {
@@ -135,11 +163,38 @@ function JenkinsCreateJob(props) {
     }
   };
 
-  const createJob = () => {
+  const updateJob = async (updateType) => {
     //Only extract the value filed before sending to the API
     let formData = Object.keys(jenkinsFormList).reduce((obj, item) => Object.assign(obj, { [item]: jenkinsFormList[item].value }), {});
-    console.log(formData);
-    console.log("Pipeline ID : " + pipelineId );
+    let payload = {
+      active: true,
+      configuration: formData,
+      description: jobDescription,
+      name: jobName,
+      type: formType.split()
+    };
+
+    //Check if job is edited/delete or new job
+    if(Object.keys(jobData).length > 0){
+      let index =  toolDataSet.jobs.indexOf(jobData);
+      if(updateType == "DELETE") {
+        toolDataSet.jobs.splice(index, 1);
+      }else {
+        toolDataSet.jobs[index] = payload;
+      }
+    }else {
+      (toolDataSet.jobs || (toolDataSet.jobs = [])).push(payload);
+    }
+
+    try {
+      const response = await axiosApiService(
+        accessToken
+      ).post("/registry/" + toolData._id + "/update", { ...toolDataSet });
+      console.log(response.data);
+      props.setJobAction("");
+    } catch (err) {
+      console.log(err.message);
+    }
   };
 
   return (
@@ -159,21 +214,34 @@ function JenkinsCreateJob(props) {
           </Col>
         </Form.Group>
 
-        {props.jobAction == "CREATE_ACCOUNT" && <Form.Group  controlId="formPlaintextEmail" className="mt-2 vertical-center-cols-in-row">
-          <Form.Label column sm="3">
-            Pipelines
-          </Form.Label>
-          <Col sm="9" className="text-right">
-            <Form.Control as="select" disabled={false} onChange={e => setPipelineId( e.target.value)}>
-              <option name="Select One" value="" disabled={true}>Select One</option>
-              {pipelineList.map((option, i) => (
-                <option key={i} value={option._id}>{option.name} - {option.createdAt ? format(new Date(option.createdAt), "yyyy-MM-dd") : ""}</option>
-              ))} 
-            </Form.Control>
-          </Col>
-        </Form.Group>}
+        {Object.keys(jobData).length > 0 && 
+        <Form.Group className="mt-2 vertical-center-cols-in-row pr-3" style={{ justifyContent: "flex-end" }}>
+          <Button variant="danger" size="sm" onClick={() => updateJob("DELETE")}> Delete Job</Button>
+        </Form.Group>
+        }
+
       </Form>
       <br />
+
+      <Form className="newToolFormContainer">
+        <Form.Group  controlId="formPlaintextEmail" className="mt-2 vertical-center-cols-in-row">
+          <Form.Label column sm="3">
+            Name
+          </Form.Label>
+          <Col sm="9" className="text-right">
+            <Form.Control value={jobName} onChange={e => setJobName(e.target.value)} />
+          </Col>
+        </Form.Group>
+        <Form.Group  controlId="formPlaintextEmail" className="mt-2 vertical-center-cols-in-row">
+          <Form.Label column sm="3">
+            Description
+          </Form.Label>
+          <Col sm="9" className="text-right">
+            <Form.Control value={jobDescription} onChange={e => setJobDescription(e.target.value)} />
+          </Col>
+        </Form.Group>
+      </Form>
+
       <Form className="newToolFormContainer">
         {Object.values(jenkinsFormList).map((formField, i) => {
           if(formField.toShow && formField.linkedId == undefined ) {
@@ -189,7 +257,7 @@ function JenkinsCreateJob(props) {
                 </Col>
               </Form.Group>
             );
-          } else if(jenkinsFormList[formField.linkedId].value === formField.linkedValue) {
+          } else if(formField.linkedId && jenkinsFormList[formField.linkedId].value === formField.linkedValue) {
             return(
               <Form.Group key={i} controlId="formPlaintextEmail" className="mt-2 vertical-center-cols-in-row">
                 <Form.Label column sm="3">
@@ -205,9 +273,11 @@ function JenkinsCreateJob(props) {
           } 
         })}
       </Form>
+
+
       <div className="text-right m-2">
         <Button size="sm" variant="secondary" onClick={() => props.setJobAction("")} className="mr-2"> Cancel</Button>
-        <Button size="sm" variant="primary" onClick={createJob}><FontAwesomeIcon icon={faSave} fixedWidth /> Save</Button>
+        <Button size="sm" variant="primary" onClick={updateJob}><FontAwesomeIcon icon={faSave} fixedWidth /> Save</Button>
       </div>
     </>
   );
