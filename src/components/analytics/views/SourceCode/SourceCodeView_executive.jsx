@@ -12,6 +12,7 @@ import GitlabTimeTakenToCompleteMergeRequestReview from "../../charts/GitlabTime
 import GitlabTimeTakenToCompleteMergeRequestReviewTable from "../../metrics/GitlabTimeTakenToCompleteMergeRequestReviewTable";
 import GitlabMrTitleTimeAuthorNoOfCommits from "../../metrics/GitlabMrTitleTimeAuthorNoOfCommits";
 import GitlabLastCommitToCodeByUser from "../../charts/GitlabLastCommitToCodeByUser";
+import GitlabMergeReqWithMaximumTime from "../../metrics/GitlabMergeReqWithMaximumTime";
 
 function SourceCodeView_executive ({ persona, date }) {
   const contextType = useContext(AuthContext);
@@ -110,8 +111,13 @@ function SourceCodeView_executive ({ persona, date }) {
             <GitlabMrTitleTimeAuthorNoOfCommits persona={persona} date={date}/>                        
           </div>
         </div>
+        <div className="d-flex">
+          <div className="align-self-stretch p-2 w-100">
+            <GitlabMergeReqWithMaximumTime date={date}/>
+          </div>          
+        </div>
         <div className="mt-2">
-          <GitlabLastCommitToCodeByUser persona={persona} /> 
+          <GitlabLastCommitToCodeByUser date={date} /> 
         </div>
       </>
     );}
