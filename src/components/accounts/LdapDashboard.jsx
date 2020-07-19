@@ -42,7 +42,7 @@ function LdapDashboard() {
               <Link to="/accounts/organizations"><FontAwesomeIcon icon={faSitemap} fixedWidth /> Organizations</Link>
             </Col>
             <Col xs={12} md={6} lg={4} className="p-2">
-              <Link to="/accounts/accounts"><FontAwesomeIcon icon={faUserCircle} fixedWidth /> Account</Link>
+              <Link to="/accounts/accounts"><FontAwesomeIcon icon={faUserCircle} fixedWidth /> Account*</Link>
             </Col>   
             <Col xs={12} md={6} lg={4} className="p-2">
               <Link to="/accounts/groups"><FontAwesomeIcon icon={faUserFriends} fixedWidth /> Groups</Link>
@@ -52,6 +52,10 @@ function LdapDashboard() {
             </Col>  
           </Row>
   
+
+          <div className="mt-5">For now this always starts at Organizations.  User clicks Organizations, they get list of Orgs they have permissions to see.
+  I'm assuming LDAP will have that eventually where it only shows what you can see. As Opsera user, I'd expect to see all orgs.  For an end user, 
+  they will not use that link, but instead go strait to Account where the back end LdapAccountsView figures out what Org they are.  For now the work is focused on Organizations and Accounts. </div>
   
         </div>
       </>

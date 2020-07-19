@@ -37,8 +37,8 @@ import TagEditor from "./components/admin/tags/TagsEditor";
 import TemplateEditor from "./components/admin/template_editor/TemplateEditor";
 import OPBlueprintMain from "./components/blueprint/blueprint";
 import LdapDashboard from "./components/accounts/LdapDashboard";
-import LdapContentView from "./components/accounts/LdapContentView";
-import LdapDetailView from "./components/accounts/LdapDetailView";
+import LdapOrganizationsView from "./components/accounts/LdapOrganizationsView";
+import LdapAccountsView from "./components/accounts/LdapAccountsView";
 
 import FreeTrialRegistration from "./components/freeTrial/Registration";
 import FreeTrialLanding from "./components/freeTrial/landing-page/Landing";
@@ -120,8 +120,8 @@ const AppWithRouterAccess = () => {
               <SecureRoute path="/admin/tags" component={TagEditor} />
               <SecureRoute path="/admin/template-editor" component={TemplateEditor} />
               <SecureRoute path="/accounts" exact component={LdapDashboard} />
-              <SecureRoute path="/accounts/:view" component={LdapContentView} />
-              <SecureRoute path="/accounts/:view/detail/:id" component={LdapDetailView} />
+              <SecureRoute path="/accounts/organizations" exact component={LdapOrganizationsView} />
+              <SecureRoute path="/accounts/organizations/detail/:id" exact component={LdapAccountsView} />
               <SecureRoute path="/demo/api" component={ApiConnectionDemo} />
 
               <SecureRoute path="/demo/table" component={CommonTableDemo} />
