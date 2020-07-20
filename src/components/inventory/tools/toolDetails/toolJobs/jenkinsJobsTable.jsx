@@ -50,7 +50,7 @@ function JenkinsJobsTable({ data, selectedRow }) {
         columns={columns} 
         data={data}
         initialState={initialState}
-        selectedRow={selectedRow}
+        onRowSelect={selectedRow}
       >
       </CustomTable>
     </>
