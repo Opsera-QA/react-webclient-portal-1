@@ -14,6 +14,7 @@ import ArgoToolConfiguration from "../forms/argo";
 import AnchoreToolConfiguration from "../forms/anchore";
 import SonarToolConfiguration from "../forms/sonar";
 import AWSToolConfiguration from "../forms/aws";
+import SFDCToolConfiguration from "../forms/sfdc";
 
 
 function ToolConfiguration(props) {
@@ -44,6 +45,7 @@ function ToolConfiguration(props) {
           {toolData.tool_identifier.toLowerCase() === "anchore-scan" ? <AnchoreToolConfiguration toolId={toolId} toolData={toolData} fnSaveChanges={saveToolConfiguration} fnSaveToVault={fnSaveToVault} /> : null }
           {toolData.tool_identifier.toLowerCase() === "sonar" ? <SonarToolConfiguration toolId={toolId} toolData={toolData} fnSaveChanges={saveToolConfiguration} fnSaveToVault={fnSaveToVault} /> : null }
           {toolData.tool_identifier.toLowerCase() === "aws_account" ? <AWSToolConfiguration toolId={toolId} toolData={toolData} fnSaveChanges={saveToolConfiguration} fnSaveToVault={fnSaveToVault} /> : null }
+          {toolData.tool_identifier.toLowerCase() === "sfdc-configurator" ? <SFDCToolConfiguration toolId={toolId} toolData={toolData} fnSaveChanges={saveToolConfiguration} fnSaveToVault={fnSaveToVault} /> : null }
           
         </div>
         : null}

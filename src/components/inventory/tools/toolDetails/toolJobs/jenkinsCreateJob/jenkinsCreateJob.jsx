@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Button, Modal, Row, Col, Form } from "react-bootstrap";
+import {  Button, ButtonGroup, ButtonToolbar, Col, Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { axiosApiService } from "api/apiService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave } from "@fortawesome/free-solid-svg-icons";
-import { format } from "date-fns";
+import { faTrash, faPen, faSave } from "@fortawesome/free-solid-svg-icons";
 import "components/inventory/tools/tools.css";
 
 import JobTypeBuild from "./job-type-build.js";
@@ -22,6 +21,8 @@ function JenkinsCreateJob(props) {
   const [ formType, setFormType ] = useState("BUILD");
   const [jobName, setJobName ] = useState("");
   const [jobDescription, setJobDescription ] = useState("");
+  const [viewForm, toggleViewForm ] = useState(true);
+
 
   const jobType = [
     {
@@ -98,11 +99,13 @@ function JenkinsCreateJob(props) {
   }, [formType]);
 
   const updateFormWithData = () => {
+    setFormType(jobData.type[0]);
     setJobName(jobData.name);
     setJobDescription(jobData.description);
 
     Object.keys(jenkinsFormList).map((item, i) => {
       let validateInput = {
+        disabled: viewForm ? true : false,
         value: jobData.configuration[item] || ""
       };
       updateJenkinsForm(prevState => ({ 
@@ -118,6 +121,7 @@ function JenkinsCreateJob(props) {
 
   const clearData = () => {
     setJobName("");
+    toggleViewForm(false);
     setJobDescription("");
     Object.keys(jenkinsFormList).map((item, i) => {
       let validateInput = {
@@ -163,7 +167,7 @@ function JenkinsCreateJob(props) {
     }
   };
 
-  const updateJob = async (updateType) => {
+  const updateJob = async () => {
     //Only extract the value filed before sending to the API
     let formData = Object.keys(jenkinsFormList).reduce((obj, item) => Object.assign(obj, { [item]: jenkinsFormList[item].value }), {});
     let payload = {
@@ -177,11 +181,7 @@ function JenkinsCreateJob(props) {
     //Check if job is edited/delete or new job
     if(Object.keys(jobData).length > 0){
       let index =  toolDataSet.jobs.indexOf(jobData);
-      if(updateType == "DELETE") {
-        toolDataSet.jobs.splice(index, 1);
-      }else {
-        toolDataSet.jobs[index] = payload;
-      }
+      toolDataSet.jobs[index] = payload;
     }else {
       (toolDataSet.jobs || (toolDataSet.jobs = [])).push(payload);
     }
@@ -197,15 +197,63 @@ function JenkinsCreateJob(props) {
     }
   };
 
+  const deleteJob = async () => {
+    //Check if job is edited/delete or new job
+    if(Object.keys(jobData).length > 0){
+      let index =  toolDataSet.jobs.indexOf(jobData);
+      toolDataSet.jobs.splice(index, 1);
+    }
+    try {
+      const response = await axiosApiService(
+        accessToken
+      ).post("/registry/" + toolData._id + "/update", { ...toolDataSet });
+      console.log(response.data);
+      props.setJobAction("");
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  const editJob = () => {
+    toggleViewForm(false);
+    Object.keys(jenkinsFormList).map((item, i) => {
+      let validateInput = {
+        disabled: false,
+      };
+      updateJenkinsForm(prevState => ({ 
+        ...prevState, 
+        [item]: { 
+          ...prevState[item],
+          ...validateInput
+        } 
+      }));
+    });
+  };
+
   return (
     <>
+
+      {viewForm && <ButtonToolbar className="justify-content-between my-2 ml-2 mr-2">
+        <ButtonGroup> 
+          <Button size="sm" className="mr-2" variant="primary" onClick= {() => { editJob(); }} >
+            <FontAwesomeIcon icon={faPen} fixedWidth style={{ cursor: "pointer" }} /> Edit Job 
+          </Button>
+        </ButtonGroup>
+        <ButtonGroup>
+          <Button size="sm" className="pull-right mr-2" variant="danger" onClick= {() => { deleteJob(); }} >
+            <FontAwesomeIcon icon={faTrash} fixedWidth style={{ cursor: "pointer" }} /> Delete Job
+          </Button>
+        </ButtonGroup>
+      </ButtonToolbar>}
+      <br />
+
       <Form className="newToolFormContainer">
         <Form.Group  controlId="formPlaintextEmail" className="mt-2 vertical-center-cols-in-row">
           <Form.Label column sm="3">
             Job Type
           </Form.Label>
           <Col sm="9" className="text-right">
-            <Form.Control as="select" disabled={false} onChange={e => setFormType( e.target.value)}>
+            <Form.Control as="select" disabled={viewForm} value={formType} onChange={e => setFormType( e.target.value)}>
               <option name="Select One" value="" disabled={true}>Select One</option>
               {jobType.map((option, i) => (
                 <option key={i} value={option.value}>{option.label}</option>
@@ -213,13 +261,6 @@ function JenkinsCreateJob(props) {
             </Form.Control>
           </Col>
         </Form.Group>
-
-        {Object.keys(jobData).length > 0 && 
-        <Form.Group className="mt-2 vertical-center-cols-in-row pr-3" style={{ justifyContent: "flex-end" }}>
-          <Button variant="danger" size="sm" onClick={() => updateJob("DELETE")}> Delete Job</Button>
-        </Form.Group>
-        }
-
       </Form>
       <br />
 
@@ -229,7 +270,7 @@ function JenkinsCreateJob(props) {
             Name
           </Form.Label>
           <Col sm="9" className="text-right">
-            <Form.Control value={jobName} onChange={e => setJobName(e.target.value)} />
+            <Form.Control value={jobName} disabled={viewForm} onChange={e => setJobName(e.target.value)} />
           </Col>
         </Form.Group>
         <Form.Group  controlId="formPlaintextEmail" className="mt-2 vertical-center-cols-in-row">
@@ -237,7 +278,7 @@ function JenkinsCreateJob(props) {
             Description
           </Form.Label>
           <Col sm="9" className="text-right">
-            <Form.Control value={jobDescription} onChange={e => setJobDescription(e.target.value)} />
+            <Form.Control value={jobDescription} disabled={viewForm} onChange={e => setJobDescription(e.target.value)} />
           </Col>
         </Form.Group>
       </Form>
@@ -277,7 +318,7 @@ function JenkinsCreateJob(props) {
 
       <div className="text-right m-2">
         <Button size="sm" variant="secondary" onClick={() => props.setJobAction("")} className="mr-2"> Cancel</Button>
-        <Button size="sm" variant="primary" onClick={updateJob}><FontAwesomeIcon icon={faSave} fixedWidth /> Save</Button>
+        {!viewForm && <Button size="sm" variant="primary" onClick={updateJob}><FontAwesomeIcon icon={faSave} fixedWidth /> Save</Button>}
       </div>
     </>
   );
@@ -286,7 +327,8 @@ function JenkinsCreateJob(props) {
 JenkinsCreateJob.propTypes = {
   jobAction: PropTypes.string,
   toolData: PropTypes.object,
-  accessToken: PropTypes.string
+  accessToken: PropTypes.string,
+  setJobAction: PropTypes.func
 };
 
 
