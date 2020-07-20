@@ -1,24 +1,19 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "contexts/AuthContext"; 
 import { Button, OverlayTrigger, Popover, Modal } from "react-bootstrap";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStepForward, faPlay, faSync, faSpinner, faStopCircle, faHistory, faPause, faFlag } from "@fortawesome/free-solid-svg-icons";
-
+import SfdcPipelineStart from "./wizards/sfdcPipelineStart";
 
 import "./workflows.css";
 
 function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, handleClose, handlePipelineWizardRequest }) {
-  const contextType = useContext(AuthContext);
-  
+
   
 
   useEffect(() => {
 
   }, []);
-
-
   
   const popover = (
     <Popover id="popover-basic">
@@ -27,10 +22,6 @@ function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, h
       </Popover.Content>
     </Popover>
   );
-
-  
-    
-
 
   return (
     <>
@@ -41,7 +32,9 @@ function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, h
         </Modal.Header>
         <Modal.Body>
 
-          {pipelineType !== "sfdc" && pipelineOrientation === "middle" &&<ConfirmResumePipeline pipelineId={pipelineId} handlePipelineWizardRequest={handlePipelineWizardRequest} />}
+          {pipelineType !== "sfdc" && pipelineOrientation === "middle" && <ConfirmResumePipeline pipelineId={pipelineId} handlePipelineWizardRequest={handlePipelineWizardRequest} />}
+
+          {pipelineType === "sfdc" && pipelineOrientation === "start" && <SfdcPipelineStart pipelineId={pipelineId} handlePipelineWizardRequest={handlePipelineWizardRequest} />}
 
         </Modal.Body>
         <Modal.Footer>
@@ -55,6 +48,8 @@ function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, h
   );
 
 }
+
+
 
 
 const ConfirmResumePipeline = ({ pipelineId, handlePipelineWizardRequest }) => {
@@ -71,7 +66,7 @@ const ConfirmResumePipeline = ({ pipelineId, handlePipelineWizardRequest }) => {
     <div className="flex-container">
       <div className="flex-container-top"></div>
       <div className="flex-container-content">
-        <div className="cn p-5">
+        <div className="p-5">
           <div className="mb-4">The requested pipeline stopped before it reached the end of its run.  This 
         may have happened due to a failed step or other error. Please review the pipeline logs if necessary.  
         Would you like to restart this pipeline from the beginning 
