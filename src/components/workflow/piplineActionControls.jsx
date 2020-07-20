@@ -4,6 +4,7 @@ import { AuthContext } from "contexts/AuthContext";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import Modal from "../common/modal";
 import ApprovalModal from "./approvalModal";
+import PipelineStartWizard from "./pipelineStartWizard";
 import PipelineHelpers from "./pipelineHelpers";
 import PipelineActions from "./actions";
 import socketIOClient from "socket.io-client";
@@ -22,6 +23,7 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
   const [stopPipeline, setStopPipeline] = useState(false);
   const [approval, setApproval] = useState(false);
   const [showApprovalModal, setShowApprovalModal] = useState(false);
+  const [wizardModal, setWizardModal] = useState({ show:false, pipelineType: "", pipelineId: "", pipelineOrientation: "" });
   const [infoModal, setInfoModal] = useState({ show:false, header: "", message: "", button: "OK" });
   const [error, setErrors] = useState();
   const endPointUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
@@ -84,19 +86,83 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
     setApproval(false);  
   };
 
-  const handleRunPipelineClick = async (pipelineId, oneStep) => {
-    setStartPipeline(true);
-    setWorkflowStatus("running");   
+
+
+
+  const launchPipelineStartWizard = (pipelineOrientation, pipelineType, pipelineId) => {
+    console.log("launching wizard");
+    console.log("pipelineOrientation ", pipelineOrientation);
+    console.log("pipelineType ", pipelineType);
+    console.log("pipelineId ", pipelineId);
+    setWizardModal({ show:true, pipelineType: pipelineType, pipelineId: pipelineId, pipelineOrientation: pipelineOrientation });
+  };
+
+  const handlePipelineStartWizardClose = () => {
+    console.log("closing wizard");
+    setWizardModal({ show:false, pipelineType: "", pipelineId: "", pipelineOrientation: "" });
+  };
+
+  const handlePipelineWizardRequest = async (pipelineId, restartBln) => {
+    if (restartBln) {
+      console.log("clearing pipeline activity and then starting over");
+      await cancelPipelineRun(pipelineId);
+    }
+    console.log("starting piepline", pipelineId);
+    await runPipeline(pipelineId);
+    
+    setWizardModal({ ...wizardModal, show: false });
+  }; 
+
+  const handleRunPipelineClick = async (pipelineId) => {
+    //check type of pipeline to determine if pre-flight wizard is required
+    // is pipeline at the beginning or stopped midway or end of prior?
+    const pipelineType = typeof pipeline.type !== "undefined" && pipeline.type[0] !== undefined ? pipeline.type[0] : ""; //for now type is just the first entry
+    console.log("pipelineType: ", pipelineType);
+    
+    let pipelineOrientation = "start";
+    //what step are we currently on in the pipeline: first, last or inbetween?
     if (pipeline.workflow.last_step && pipeline.workflow.last_step.step_id) {
       const stepIndex = PipelineHelpers.getStepIndex(pipeline, pipeline.workflow.last_step.step_id);
+      console.log("current resting step index: ", stepIndex);
       if (stepIndex+1 === Object.keys(pipeline.workflow.plan).length) {
-        //reset before starting
-        console.log("running a reset operation first");
-        await cancelPipelineRun(pipelineId);
+        pipelineOrientation = "end";
+      } else {
+        pipelineOrientation = "middle";
       }
+    } //if those steps don't exist, this is the start of the pipeline
+    console.log("pipelineOrientation: ", pipelineOrientation); //where is the pipeline in it's run to determine how to handle this start command
+
+    // introduce new modal.  If button is clicked and pipeline is NOT SFDC type and is at "start" orientation, then just run the code, 
+    // if pipeline orgientation is end and type is NOT SFDC, then trigger reset pipeline to clean out ata and then just run the code
+    // otherwise, trigger new modal wizard to have user confirm if they want to resume pipeline or start over, OR if SFDC, launch new wizard
+
+    if (pipelineType === "sfdc") { 
+      console.log("SFDC pipeline detected, launching wizrd");
+      launchPipelineStartWizard(pipelineOrientation, pipelineType, pipelineId);
+    } else {
+      console.log(`Non SFDC Pipeline detected, current pipeline orientation: ${pipelineOrientation}`);
+      
+      if (pipelineOrientation === "middle") {
+        //this is the middle, so pop the new modal to confirm user wants to resume or offer reset/restart
+        launchPipelineStartWizard(pipelineOrientation, pipelineType, pipelineId);
+
+      } else { //this is starting from beginning:
+        setStartPipeline(true);
+        setWorkflowStatus("running");
+
+        if (pipelineOrientation === "start") {
+          console.log("starting pipeline from scratch");
+          await runPipeline(pipelineId);
+        } else {
+          console.log("clearing pipeline activity and then starting over");
+          await cancelPipelineRun(pipelineId);
+          await runPipeline(pipelineId);
+        } 
+      }      
     }
-    await runPipeline(pipelineId, oneStep);         
   };
+
+
 
   const handleRefreshClick = async () => {
     await fetchData();
@@ -104,8 +170,6 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
     setTimeout(subscribeToTimer(), 5000); 
   };
   
-
-
   //action functions
   async function cancelPipelineRun(pipelineId) {
     setStopPipeline(true);
@@ -120,6 +184,8 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
 
   async function runPipeline(pipelineId) {
     const { getAccessToken } = contextType;
+    console.log("RUNNING PIPELINE; ", pipelineId);
+    
     const response = await PipelineActions.run(pipelineId, {}, getAccessToken);
     
     if (typeof(response.error) !== "undefined") {
@@ -136,10 +202,8 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
         setStartPipeline(false);
       }, 20000);
 
-    }   
+    }  
   }
-
-
 
 
   let tmpDataObject = {};
@@ -227,6 +291,8 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
 
   return (
     <>
+      {wizardModal.show && <PipelineStartWizard pipelineType={wizardModal.pipelineType} pipelineOrientation={wizardModal.pipelineOrientation} pipelineId={wizardModal.pipelineId} handleClose={handlePipelineStartWizardClose} handlePipelineWizardRequest={handlePipelineWizardRequest} />}
+      
       <div className="text-right" style={{ marginBottom: "5px" }}>
         {workflowStatus === "running" && 
         <>

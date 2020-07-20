@@ -573,3 +573,23 @@ a:hover, .active {
 {
   min-height:400px;
 }
+
+
+
+.flex-container {
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-container-top {
+  min-height:40px;
+}
+
+.flex-container-content {
+  flex: auto;
+}
+
+.flex-container-bottom {
+  height: 25px;
+}
