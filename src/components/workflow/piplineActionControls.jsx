@@ -16,6 +16,8 @@ import "./workflows.css";
 
 function PipelineActionControls({ pipeline, role, disabledActionState, fetchData, fetchActivityLogs, setParentWorkflowStatus }) {
   const contextType = useContext(AuthContext);
+  const { getAccessToken, featureFlagItemInProd } = useContext(AuthContext);
+
   const [workflowStatus, setWorkflowStatus] = useState(false);
   const [socketRunning, setSocketRunning] = useState(false);
   const [resetPipeline, setResetPipeline] = useState(false);
@@ -113,6 +115,7 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
     setWizardModal({ ...wizardModal, show: false });
   }; 
 
+  //TODO: WARNING FEATURE FLAG IN USE HERE!
   const handleRunPipelineClick = async (pipelineId) => {
     //check type of pipeline to determine if pre-flight wizard is required
     // is pipeline at the beginning or stopped midway or end of prior?
@@ -142,7 +145,7 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
     } else {
       console.log(`Non SFDC Pipeline detected, current pipeline orientation: ${pipelineOrientation}`);
       
-      if (pipelineOrientation === "middle") {
+      if (pipelineOrientation === "middle" && !featureFlagItemInProd()) {
         //this is the middle, so pop the new modal to confirm user wants to resume or offer reset/restart
         launchPipelineStartWizard(pipelineOrientation, pipelineType, pipelineId);
 
@@ -173,7 +176,7 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
   //action functions
   async function cancelPipelineRun(pipelineId) {
     setStopPipeline(true);
-    const { getAccessToken } = contextType;
+    //const { getAccessToken } = contextType;
     const response = await PipelineActions.cancel(pipelineId, getAccessToken);
     if (typeof(response.error) !== "undefined") {
       console.log(response.error);
@@ -183,7 +186,7 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
   }
 
   async function runPipeline(pipelineId) {
-    const { getAccessToken } = contextType;
+    //const { getAccessToken } = contextType;
     console.log("RUNNING PIPELINE; ", pipelineId);
     
     const response = await PipelineActions.run(pipelineId, {}, getAccessToken);

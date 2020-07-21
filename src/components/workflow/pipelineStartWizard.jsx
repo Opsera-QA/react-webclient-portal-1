@@ -18,7 +18,7 @@ function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, h
   const popover = (
     <Popover id="popover-basic">
       <Popover.Content>
-        All unsaved changes will be lost
+       Warning! Closing this window will prevent the pipeline from starting.
       </Popover.Content>
     </Popover>
   );
@@ -34,7 +34,7 @@ function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, h
 
           {pipelineType !== "sfdc" && pipelineOrientation === "middle" && <ConfirmResumePipeline pipelineId={pipelineId} handlePipelineWizardRequest={handlePipelineWizardRequest} />}
 
-          {pipelineType === "sfdc" && pipelineOrientation === "start" && <SfdcPipelineStart pipelineId={pipelineId} handlePipelineWizardRequest={handlePipelineWizardRequest} />}
+          {pipelineType === "sfdc" && pipelineOrientation === "start" && <SfdcPipelineStart pipelineId={pipelineId} handlePipelineWizardRequest={handlePipelineWizardRequest} handleClose={handleClose} />}
 
         </Modal.Body>
         <Modal.Footer>

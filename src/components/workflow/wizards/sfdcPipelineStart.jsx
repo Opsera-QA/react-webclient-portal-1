@@ -4,20 +4,41 @@ import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
 import { Button, OverlayTrigger, Popover, Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStepForward, faPlay, faSync, faSpinner, faStopCircle, faHistory, faPause, faFlag } from "@fortawesome/free-solid-svg-icons";
-
+import { faStepForward, faPlay, faSpinner, faTimes, faHistory, faPause, faFlag } from "@fortawesome/free-solid-svg-icons";
+import Moment from "moment";
+import momentLocalizer from "react-widgets-moment";
+import DateTimePicker from "react-widgets/lib/DateTimePicker";
+import DropdownList from "react-widgets/lib/DropdownList";
 import "../workflows.css";
 
 
-const SfdcPipelineStart = ({ pipelineId, handlePipelineWizardRequest }) => {
+const INITIAL_COMPONENT_TYPES_FORM = {
+  "accountId": "", //toolRegistry ID for SFDC Account
+  "customerId": "", //ssoUsersID
+  "lastCommitTimeStamp": "", //asOfDate value as string
+  "pipelineId": "", 
+  "stepId": "",
+  "componentTypes": []
+};
+
+const SfdcPipelineStart = ({ pipelineId, handlePipelineWizardRequest, handleClose }) => {
   const contextType = useContext(AuthContext);
   const { getAccessToken } = useContext(AuthContext);
   const [loading, setLoading] = useState(false); 
+  const [loadingRegistry, setLoadingRegistry] = useState(false); 
   const [error, setError] = useState(false); 
+  const [save, setSave] = useState(false);
+  const [registryData, setRegistryData] = useState([]);
   const [componentTypes, setComponentTypes] = useState([]);
+  const [componentTypeForm, setComponentTypeForm] = useState(INITIAL_COMPONENT_TYPES_FORM); 
+
+  Moment.locale("en");
+  momentLocalizer();
   
   useEffect(() => {
     loadData();
+    loadRegistryData();
+    setComponentTypeForm(INITIAL_COMPONENT_TYPES_FORM);
   }, []);
 
 
@@ -26,7 +47,7 @@ const SfdcPipelineStart = ({ pipelineId, handlePipelineWizardRequest }) => {
     let apiUrl = "/pipelines/sfdc/component-types";
 
     try {
-      const accessToken = await getAccessToken(); //this calls the persistent AuthContext state to get latest token (for passing to Node)
+      const accessToken = await getAccessToken();
       const response = await axiosApiService(accessToken).get(apiUrl, {});
       console.log(response.data);
       setComponentTypes(response.data);
@@ -38,6 +59,56 @@ const SfdcPipelineStart = ({ pipelineId, handlePipelineWizardRequest }) => {
     
   };
 
+  const loadRegistryData = async () => {
+    setLoadingRegistry(true);
+    const apiUrl = "/registry/properties/sfdc";
+
+    try {
+      const accessToken = await getAccessToken();
+      const response = await axiosApiService(accessToken).get(apiUrl, {});
+      console.log(response.data);
+      setRegistryData(response.data);
+    } catch (error) {
+      console.log("Error getting API Data: ", error);
+      setError(error);
+    }
+    setLoadingRegistry(false);
+    
+  };
+
+  const dateAsOf = (
+    <DateTimePicker
+      time={false} 
+      max={new Date()}
+      defaultValue={new Date()} 
+      onChange={value => handleAsOfDateChange({ value })}
+      initialValue={new Date()}
+    />
+    
+  );
+
+  
+
+  const handleAsOfDateChange = (value) => {
+    const date = Moment(value).format();
+    setComponentTypeForm({ ...componentTypeForm, lastCommitTimeStamp: date });
+  };
+
+  const handleSetAccount = (selectedOption) => {
+    setComponentTypeForm({ ...componentTypeForm, accountId: selectedOption.id });
+  };
+
+
+  const handleSubmitComponentTypes = () => {
+    console.log("submitting component types form");
+    const postBody = componentTypeForm;
+    postBody.pipelineId = pipelineId;
+    postBody.stepId = "xxx";  //TODO: Need to identify the step ID (first step in array if type is XXX)
+    
+    console.log("componentTypeForm: ", postBody);
+
+  };
+
   return (    
     <div className="ml-5">
       <div className="flex-container">
@@ -46,7 +117,15 @@ const SfdcPipelineStart = ({ pipelineId, handlePipelineWizardRequest }) => {
         
           <div className="h5">SalesForce Pipeline Run</div>
           <div className="text-muted">Select component types to include in this pipeline run.</div>
-          <div className="mx-5 mt-3">          
+          <div className="mx-5 mt-3">        
+            <div className="mb-3" style={{ display: "flex" }}>
+              <div style={{ flex: "50%" }}>{dateAsOf}</div>
+              <div style={{ flex: "50%" }}>
+                <AccountDropDown data={registryData} setAccount={handleSetAccount} />
+              </div>
+            </div>
+
+
             <div className="d-flex flex-wrap">
               {componentTypes.map((item, idx) => (
                 <div key={idx} className="p-2 w-25">
@@ -56,38 +135,49 @@ const SfdcPipelineStart = ({ pipelineId, handlePipelineWizardRequest }) => {
               ))} 
             </div>
 
-            {/* <ul className="nav nav-tabs w-100">
-              <li className="nav-item">
-                <div className="nav-link active">Accounts</div>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link">Account Details</a>
-              </li>
-            </ul> */}
           
-            {/* <Button variant="success" className="mr-2" size="sm"
-            onClick={() => {  setStart(true); handlePipelineWizardRequest(pipelineId, true); }}
-            disabled={false}>
-            {start ? <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> : 
-              <FontAwesomeIcon icon={faPlay} fixedWidth className="mr-1"/>}Start from Beginning</Button>
-
-          <Button variant="primary" className="ml-2" size="sm"
-            onClick={() => { setResume(true); handlePipelineWizardRequest(pipelineId, false);  }}
-            disabled={false}>
-            {resume ? <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> : 
-              <FontAwesomeIcon icon={faStepForward} fixedWidth className="mr-1"/>}Resume Existing Run</Button> */}
           </div>
         </div>
-        <div className="flex-container-bottom"></div>
+        <div className="flex-container-bottom pr-2 mt-3 mb-2 text-right">
+          <Button variant="success" size="sm"
+            onClick={() => {  setSave(true); handleSubmitComponentTypes(); }}
+            disabled={false}>
+            {save ? <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> : 
+              <FontAwesomeIcon icon={faStepForward} fixedWidth className="mr-1"/>}Next</Button>
+
+          <Button variant="secondary" size="sm" className="ml-2"
+            onClick={() => {  handleClose(); }}>
+            <FontAwesomeIcon icon={faTimes} fixedWidth className="mr-1"/>Cancel</Button>
+
+
+        </div>
       </div> 
     </div>   
   );
 };
 
 
+const AccountDropDown = ({ data, setAccount }) => {
+
+  return (
+    <DropdownList
+      data={data}
+      valueField='id'
+      textField='name'
+      onChange={setAccount}             
+    /> 
+  );
+};
+
 SfdcPipelineStart.propTypes = {
   pipelineId: PropTypes.string,
-  handlePipelineWizardRequest: PropTypes.func
+  handlePipelineWizardRequest: PropTypes.func,
+  handleClose: PropTypes.func
+};
+
+AccountDropDown.propTypes = {
+  data: PropTypes.array,
+  setAccount: PropTypes.func
 };
 
 export default SfdcPipelineStart;

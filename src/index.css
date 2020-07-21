@@ -591,5 +591,5 @@ a:hover, .active {
 }
 
 .flex-container-bottom {
-  height: 25px;
+  min-height: 25px;
 }
