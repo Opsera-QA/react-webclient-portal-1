@@ -2,14 +2,13 @@ import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext"; 
 import { axiosApiService } from "api/apiService";
-import { Button, OverlayTrigger, Popover, Row, Col } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStepForward, faPlay, faSpinner, faTimes, faHistory, faPause, faFlag } from "@fortawesome/free-solid-svg-icons";
+import { faStepForward, faSpinner, faTimes, faStepBackward } from "@fortawesome/free-solid-svg-icons";
 import Moment from "moment";
 import momentLocalizer from "react-widgets-moment";
 import DateTimePicker from "react-widgets/lib/DateTimePicker";
 import DropdownList from "react-widgets/lib/DropdownList";
-import Checkbox from "../../common/checkbox";
 import "../workflows.css";
 import LoadingDialog from "components/common/loading";
 import ErrorDialog from "components/common/error";
@@ -24,19 +23,17 @@ const INITIAL_COMPONENT_TYPES_FORM = {
   "componentTypes": []
 };
 
-const SfdcPipelineStart = ({ pipelineId, pipelineSteps, handlePipelineWizardRequest, handleClose }) => {
+const SfdcPipelineComponents = ({ pipelineId, stepId, setView, setModifiedFiles, handleClose, setSfdcComponentFilterObject }) => {
   const { getAccessToken } = useContext(AuthContext);
   const [loading, setLoading] = useState(false); 
   const [loadingRegistry, setLoadingRegistry] = useState(false); 
   const [error, setError] = useState(false); 
   const [configurationError, setConfigurationError] = useState(false); 
   const [save, setSave] = useState(false);
-  const [stepId, setStepId] = useState("");
+  
   const [registryData, setRegistryData] = useState([]);
   const [componentTypes, setComponentTypes] = useState([]);
-
   const [selectedComponentTypes, setSelectedComponentTypes] = useState([]);
-
   const [componentTypeForm, setComponentTypeForm] = useState(INITIAL_COMPONENT_TYPES_FORM); 
 
   Moment.locale("en");
@@ -48,29 +45,10 @@ const SfdcPipelineStart = ({ pipelineId, pipelineSteps, handlePipelineWizardRequ
     loadData();
     loadRegistryData();
     setComponentTypeForm(INITIAL_COMPONENT_TYPES_FORM);    
-    loadSfdcInitStep(pipelineSteps);
+   
   }, []);
 
-  //must find step ID of the Sfdc Jenkins Config step (typically first step and has step.tool.job_type set to "sfdc-ant")
-  const loadSfdcInitStep = async (steps)=> {
-    //find index of step that is jenkins & sfdc-ant type.  If none found, default to index 0
-
-    console.log(steps);
-
-    let stepArrayIndex = steps.findIndex(x => (x.tool && x.tool.job_type === "sfdc-ant" && x.tool.tool_identifier === "jenkins")); 
-    console.log(stepArrayIndex);
-    if (stepArrayIndex === -1) {
-      setError("Warning, this pipeline is missing the default SFDC Jenkins Step needed to run.  Please edit the workflow and add the SFDC Ant Job setting to allow this pipeline to run.");
-      setConfigurationError(true);
-    } else {
-      console.log("step ID: ", steps[stepArrayIndex]._id);
-      setStepId(steps[stepArrayIndex]._id);
-    }
-
-    
-  };
-
-
+  
   const loadData = async () => {
     setLoading(true);
     let apiUrl = "/pipelines/sfdc/component-types";
@@ -116,8 +94,6 @@ const SfdcPipelineStart = ({ pipelineId, pipelineSteps, handlePipelineWizardRequ
     
   );
 
-  
-
   const handleAsOfDateChange = (value) => {
     const date = Moment(value.value).toISOString();
     setAsOfDate(date);    
@@ -126,7 +102,6 @@ const SfdcPipelineStart = ({ pipelineId, pipelineSteps, handlePipelineWizardRequ
   const handleSetAccount = (selectedOption) => {
     setComponentTypeForm({ ...componentTypeForm, accountId: selectedOption._id });
   };
-
 
   const handleSubmitComponentTypes = () => {
     console.log("submitting component types form");
@@ -137,9 +112,9 @@ const SfdcPipelineStart = ({ pipelineId, pipelineSteps, handlePipelineWizardRequ
     postBody.componentTypes = selectedComponentTypes;
     
     console.log("componentTypeForm: ", postBody);
+    postComponentTypes(postBody);
+
   };
-
-
 
   const handleComponentCheck = (e) => {
     console.log(e.target.checked, e.target.name);
@@ -154,6 +129,32 @@ const SfdcPipelineStart = ({ pipelineId, pipelineSteps, handlePipelineWizardRequ
     setSelectedComponentTypes(options);
   };
 
+
+  //POSTING this should return the data for the next step!  So work that out
+  const postComponentTypes = async (data) => {
+    setSfdcComponentFilterObject(data);
+    const accessToken = await getAccessToken();
+    const apiUrl = "/pipelines/sfdc/modified-files";   //TODO: BUILD THIS OUTIN NODE
+    
+    try {
+      const result = await axiosApiService(accessToken).post(apiUrl, data);
+      setModifiedFiles(result.data);
+      console.log(result.data);
+
+      if (result.data.status === 500) {
+        console.log("Error getting API Data: ", result.data.message);
+        setError(result.data.message);
+      } else {
+        setView(2); //move to next view
+      }
+      //code to toggle view ot next screen
+    }
+    catch (err) {
+      console.log(err.message);
+      setError(error);
+    }
+  };
+
   return (    
     <div className="ml-5">
       <div className="flex-container">
@@ -163,7 +164,7 @@ const SfdcPipelineStart = ({ pipelineId, pipelineSteps, handlePipelineWizardRequ
           <div className="h5">SalesForce Pipeline Run</div>
           <div className="text-muted">Select component types to include in this pipeline run.</div>
 
-          {error && <div className="mt-5"><ErrorDialog error={error} /></div>}
+          {error && <div className="mt-3"><ErrorDialog error={error} /></div>}
           
           { !configurationError && 
           <>
@@ -195,13 +196,16 @@ const SfdcPipelineStart = ({ pipelineId, pipelineSteps, handlePipelineWizardRequ
           </>}
         </div>
         <div className="flex-container-bottom pr-2 mt-3 mb-2 text-right">
+          <Button variant="secondary" size="sm" className="mr-2" disabled={true}>
+            <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-1"/>Back</Button>
+
           <Button variant="success" size="sm"
             onClick={() => {  setSave(true); handleSubmitComponentTypes(); }}
             disabled={false}>
             {save ? <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> : 
               <FontAwesomeIcon icon={faStepForward} fixedWidth className="mr-1"/>}Next</Button>
 
-          <Button variant="secondary" size="sm" className="ml-2"
+          <Button variant="outline-secondary" size="sm" className="ml-2"
             onClick={() => {  handleClose(); }}>
             <FontAwesomeIcon icon={faTimes} fixedWidth className="mr-1"/>Cancel</Button>
 
@@ -224,11 +228,13 @@ const AccountDropDown = ({ data, setAccount, isLoading }) => {
   );
 };
 
-SfdcPipelineStart.propTypes = {
+SfdcPipelineComponents.propTypes = {
   pipelineId: PropTypes.string,
-  pipelineSteps: PropTypes.array,
-  handlePipelineWizardRequest: PropTypes.func,
-  handleClose: PropTypes.func
+  stepId: PropTypes.string,
+  setView: PropTypes.func,
+  setModifiedFiles: PropTypes.func,
+  handleClose: PropTypes.func,
+  setSfdcComponentFilterObject: PropTypes.func
 };
 
 AccountDropDown.propTypes = {
@@ -237,4 +243,4 @@ AccountDropDown.propTypes = {
   isLoading: PropTypes.bool
 };
 
-export default SfdcPipelineStart;
+export default SfdcPipelineComponents;
