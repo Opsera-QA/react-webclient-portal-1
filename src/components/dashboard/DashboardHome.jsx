@@ -23,6 +23,7 @@ import "react-date-range/dist/theme/default.css";
 import { Alert, OverlayTrigger, Tooltip, Row, Col } from "react-bootstrap";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 
+const INDICES = ["jenkins", "opsera-pipeline-step-summary"];
 const PERSONAS = [ { value: "developer", label: "Developer" }, { value: "manager", label: "Manager" }, { value: "executive", label: "Executive" }];
 const DATELABELS = [ { value: {
   start: "now-1h",
@@ -49,6 +50,7 @@ function DashboardHome() {
   const contextType = useContext(AuthContext);
   const [hasError, setErrors] = useState(false);
   const [data, setData] = useState([]);
+  const [index, setIndex] = useState([]);
   const [selection, setSelection] = useState("pipeline");
   const [persona, setPersona] = useState();
   const [loading, setLoading] = useState(false);
@@ -100,13 +102,16 @@ function DashboardHome() {
     try {
       const result = await axiosApiService(accessToken).get(apiUrl);     
       setData(result.data);
+      const indices = await axiosApiService(accessToken).post("/analytics/index", { "index": INDICES } );
+      let indicesList = indices.data && Array.isArray(indices.data) ? indices.data : [];
+      setIndex(indicesList); 
       let dataObject = result.data && result.data.profile.length > 0 ? result.data.profile[0] : {};
       let persona = dataObject.defaultPersona ? (dataObject.defaultPersona.length > 0) ? dataObject.defaultPersona : "developer" : "developer";
       
       setIsEnabled(dataObject.active !== undefined ? dataObject.active : false);
       setEnabledOn((dataObject.enabledToolsOn && dataObject.enabledToolsOn.length !== 0) ? true : false);
 
-      setPersona(persona);   
+      setPersona(persona);  
       setLoading(false);
     }
     catch (err) {
@@ -305,7 +310,7 @@ function DashboardHome() {
                   </Col>
                 </Row>
             
-                <DashboardView selection={selection} persona={persona} date={date}/>
+                <DashboardView selection={selection} persona={persona} date={date} index={index}/>
               </>
             }
             
@@ -317,18 +322,17 @@ function DashboardHome() {
   
 }
 
-function DashboardView({ selection, persona, date }) {
+function DashboardView({ selection, persona, date, index }) {
   useEffect(() => {
     console.log("CHANGE HAPPENED");
-  }, [selection, persona, date.start]);
-  console.log(date.start);
+  }, [selection, persona, date.start, index]);
 
   if (selection) {
     switch (selection) {
     case "logs":
       return <LogsDashboard persona={persona} />;
     case "pipeline":
-      return <PipelineDashboard_v2 persona={persona} date={date} />;
+      return <PipelineDashboard_v2 persona={persona} date={date} index={index}/>;
     case "secops_v2":
       return <SecOpsDashboard_v2 persona={persona} date={date}/>;
     case "quality_v2":
@@ -347,7 +351,8 @@ function DashboardView({ selection, persona, date }) {
 DashboardView.propTypes = {
   selection: PropTypes.string,
   persona: PropTypes.string, 
-  date: PropTypes.object
+  date: PropTypes.object,
+  index: PropTypes.object
 };
 
 export default DashboardHome;

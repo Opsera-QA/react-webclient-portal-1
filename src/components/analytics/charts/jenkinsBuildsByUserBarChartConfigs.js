@@ -43,6 +43,7 @@ export default {
     }
   ],
   axisBottom: {
+    "format": e => Math.floor(e) === e && e,
     "tickSize": 8,
     "tickPadding": 5,
     "tickRotation": 0,

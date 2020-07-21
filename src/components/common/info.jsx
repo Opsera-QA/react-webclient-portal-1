@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 function InformationDialog ({ message }) {
   return (
-    <div className="h-100 d-flex justify-content-center align-items-center min-content-message-dimension">
+    <div className="mt-1 mb-3">
       <div className="info-text">
         {message}
       </div>

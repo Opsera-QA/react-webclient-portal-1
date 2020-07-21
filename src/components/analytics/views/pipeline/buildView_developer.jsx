@@ -6,20 +6,23 @@ import { AuthContext } from "../../../../contexts/AuthContext";
 import { axiosApiService } from "../../../../api/apiService";
 import LoadingDialog from "../../../common/loading";
 import ErrorDialog from "../../../common/error";
+import InfoDialog from "../../../common/info";
 import SummaryCountBlocksView from "../summaryCountBlocksView";
 import JenkinsBuildDurationBarChart from "../../charts/jenkinsBuildDurationBarChart";
 import JenkinsBuildsByUserBarChart from "../../charts/jenkinsBuildsByUserBarChart";
 import JenkinsStatusByJobNameBarChart from "../../charts/jenkinsStatusByJobNameBarChart";
 import DeploymentFrequencyLineChart from "../../charts/deploymentFrequencyLineChart.jsx";
 import RecentBuildsTable from "../../metrics/recentBuildsTable.jsx";
-import OpseraPipelineStatus from "../../logs/opseraPipelineStatus";
 import OpseraPipelineByStatusBarChart from "../../charts/opseraPipelineByStatusBarChart";
+import OpseraBuildDurationBarChart from "../../charts/opseraBuildDurationBarChart";
+import OpseraBuildsByUserBarChart from "../../charts/opseraBuildsByUserBarChart";
+import OpseraRecentPipelineStatus from "../../metrics/recentPipelineRunsTable.jsx";
+import OpseraDeploymentFrequencyLineChart from "../../charts/opseraDeploymentFrequencyLineChart.jsx";
 
 
 
-
-
-function BuildView_Developer ({ persona, date }) {
+function BuildView_Developer ({ persona, date, index }) {
+  console.log(index);
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -45,7 +48,7 @@ function BuildView_Developer ({ persona, date }) {
     return () => {
       controller.abort();
     };
-  }, [date, persona]);
+  }, [date, persona, index]);
 
   async function fetchData() {
     setLoading(true);
@@ -92,7 +95,15 @@ function BuildView_Developer ({ persona, date }) {
         },
         {
           "request": "opseraPipelineFail",
-          "metric": "complexCount"
+          "metric": "count"
+        },
+        {
+          "request": "opseraDeployFailure",
+          "metric": "count"
+        },
+        {
+          "request": "opseraDeploySuccess",
+          "metric": "count"
         }
       ],
       startDate: date.start, 
@@ -108,6 +119,7 @@ function BuildView_Developer ({ persona, date }) {
       setLoading(false);
     }
     catch (err) {
+      console.log(err.message);
       setErrors(err);
       setLoading(false);
     }
@@ -115,30 +127,37 @@ function BuildView_Developer ({ persona, date }) {
 
   
   const buildSummaryCounts = (data) => {
-    const { opseraPipelineSuccess, opseraPipelineFail,  jenkinsBuildSuccess, jenkinsBuildFailure, jenkinsBuildAborted, jenkinsDeploySuccess, jenkinsDeployFailure, codeshipBuildSuccess, codeshipBuildFailure, codeshipBuildStopped } = data;
+    const { opseraPipelineSuccess, opseraPipelineFail,  jenkinsBuildSuccess, jenkinsBuildFailure, jenkinsBuildAborted, jenkinsDeploySuccess, jenkinsDeployFailure, 
+      codeshipBuildSuccess, codeshipBuildFailure, codeshipBuildStopped, opseraDeploySuccess, opseraDeployFailure } = data;
 
     let summaryCountsData = [];    
 
     if (jenkinsBuildSuccess.status === 200 && jenkinsBuildSuccess.data !== undefined) {
-      summaryCountsData.push({ name: "Successful Builds", value: jenkinsBuildSuccess.data[0].count, footer: "", status: "success" });
+      summaryCountsData.push({ name: "Successful Jenkins Builds", value: jenkinsBuildSuccess.data[0].count, footer: "", status: "success" });
     }
     if (jenkinsBuildFailure.status === 200 && jenkinsBuildFailure.data !== undefined) {
-      summaryCountsData.push({ name: "Failed Builds", value: jenkinsBuildFailure.data[0].count, footer: "", status: jenkinsBuildFailure.data[0].count > 0 ? "danger" : null });
+      summaryCountsData.push({ name: "Failed Jenkins Builds", value: jenkinsBuildFailure.data[0].count, footer: "", status: jenkinsBuildFailure.data[0].count > 0 ? "danger" : null });
     }
     if (jenkinsBuildAborted.status === 200 && jenkinsBuildAborted.data !== undefined) {
-      summaryCountsData.push({ name: "Aborted Builds", value: jenkinsBuildAborted.data[0].count, footer: "", status: jenkinsBuildAborted.data[0].count > 0 ? "warning" : null });
+      summaryCountsData.push({ name: "Aborted Jenkins Builds", value: jenkinsBuildAborted.data[0].count, footer: "", status: jenkinsBuildAborted.data[0].count > 0 ? "warning" : null });
     }    
     if (jenkinsDeploySuccess.status === 200 && jenkinsDeploySuccess.data !== undefined) {     
-      summaryCountsData.push({ name: "Successful Deployments", value: jenkinsDeploySuccess.data[0].count, footer: "", status: jenkinsDeploySuccess.data[0].count > 0 ? "success" : null });
+      summaryCountsData.push({ name: "Successful Jenkins Deployments", value: jenkinsDeploySuccess.data[0].count, footer: "", status: jenkinsDeploySuccess.data[0].count > 0 ? "success" : null });
     }
     if (jenkinsDeployFailure.status === 200 && jenkinsDeployFailure.data !== undefined) {
-      summaryCountsData.push({ name: "Failed Deployments", value: jenkinsDeployFailure.data[0].count, footer: "", status: jenkinsDeployFailure.data[0].count > 0 ? "danger" : null });
+      summaryCountsData.push({ name: "Failed Jenkins Deployments", value: jenkinsDeployFailure.data[0].count, footer: "", status: jenkinsDeployFailure.data[0].count > 0 ? "danger" : null });
     }
     if (opseraPipelineSuccess.status === 200 && opseraPipelineSuccess.data !== undefined) {
-      summaryCountsData.push({ name: "Successful Pipeline Runs", value: opseraPipelineSuccess.data[0].count, footer: "", status: "success" });
+      summaryCountsData.push({ name: "Successful Opsera Pipeline Runs", value: opseraPipelineSuccess.data[0].count, footer: "", status: "success" });
     }
     if (opseraPipelineFail.status === 200 && opseraPipelineFail.data !== undefined) {
-      summaryCountsData.push({ name: "Failed Pipeline Runs", value: opseraPipelineFail.data[0].count, footer: "", status: "danger" });
+      summaryCountsData.push({ name: "Failed Opsera Pipeline Runs", value: opseraPipelineFail.data[0].count, footer: "", status: "danger" });
+    }
+    if (opseraDeploySuccess.status === 200 && opseraDeploySuccess.data !== undefined) {
+      summaryCountsData.push({ name: "Successful Opsera Deployments", value: opseraDeploySuccess.data[0].count, footer: "", status: "success" });
+    }
+    if (opseraDeployFailure.status === 200 && opseraDeployFailure.data !== undefined) {
+      summaryCountsData.push({ name: "Failed Opsera Deployments", value: opseraDeployFailure.data[0].count, footer: "", status: "danger" });
     }
     if (codeshipBuildSuccess.status === 200 && codeshipBuildSuccess.data !== undefined) {
       summaryCountsData.push({ name: "CodeShip Success", value: codeshipBuildSuccess.data[0].count, footer: "", status: codeshipBuildSuccess.data[0].count > 0 ? "success" : null });
@@ -159,45 +178,65 @@ function BuildView_Developer ({ persona, date }) {
     return (<LoadingDialog />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
+  } else if (index.length === 0) {
+    return (
+      <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
+        <InfoDialog message="No activity data has been captured for this dashboard." />
+      </div>);
   } else {
     return (
       <>
         <SummaryCountBlocksView data={countBlockData} />
-        <div className="d-flex">
+        {index.includes("opsera-pipeline-step-summary") ? <div className="d-flex">
+          <div className="align-self-stretch p-2 w-100">
+            <OpseraBuildsByUserBarChart persona={persona}  date={date} />
+          </div>
+          <div className="align-self-stretch p-2 w-100">
+            <OpseraBuildDurationBarChart persona={persona}  date={date}/>            
+          </div>
+        </div> : ""}
+
+        {index.includes("opsera-pipeline-step-summary") ? <div className="d-flex">
+          <div className="align-self-stretch p-2 w-100">
+            <OpseraPipelineByStatusBarChart persona={persona} date={date}/>            
+          </div>
+          <div className="align-self-stretch p-2 w-100">
+            <OpseraDeploymentFrequencyLineChart persona={persona} date={date}/>
+          </div>
+        </div> : ""}
+        
+        {index.includes("opsera-pipeline-step-summary") ?
+          <div className="d-flex">
+            <div className="align-self-stretch p-2 w-100">
+              <OpseraRecentPipelineStatus persona={persona} date={date}/>
+            </div>
+          </div> : ""}
+
+
+        {index.includes("jenkins") ? <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
             <JenkinsBuildsByUserBarChart persona={persona} date={date}/>
           </div>
-
           <div className="align-self-stretch p-2 w-100">
             <JenkinsBuildDurationBarChart persona={persona} date={date} />
           </div>
-        </div>
+        </div> : ""}
 
-        <div className="d-flex">
+        {index.includes("jenkins") ? <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
             <JenkinsStatusByJobNameBarChart persona={persona} date={date}/>
           </div>
           <div className="align-self-stretch p-2 w-100">
-            <DeploymentFrequencyLineChart persona={persona} date={date}/>            
+            <DeploymentFrequencyLineChart persona={persona} date={date}/>
           </div>
-        </div>
+        </div> : ""}
 
-        <div className="d-flex">
+        {index.includes("jenkins") ? <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
             <RecentBuildsTable persona={persona} date={date}/>
           </div>
-          <div className="align-self-stretch p-2 w-100">
-            <OpseraPipelineByStatusBarChart persona={persona} date={date}/>            
-          </div>
-        </div>
+        </div> : ""}
 
-
-        <div className="d-flex">
-          <div className="align-self-stretch p-2 w-100">
-            <OpseraPipelineStatus persona={persona}  date={date}/>
-
-          </div>
-        </div>
       </>
     );}
 
@@ -209,7 +248,8 @@ function BuildView_Developer ({ persona, date }) {
 
 BuildView_Developer.propTypes = {
   persona: PropTypes.string,
-  date: PropTypes.object
+  date: PropTypes.object,
+  index: PropTypes.object
 };
 
 export default BuildView_Developer;

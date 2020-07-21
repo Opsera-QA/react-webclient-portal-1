@@ -33,7 +33,7 @@ function SummaryCountBlocksView( { data } ) {
           <div className="d-flex justify-content-center">  
           
             {data.map(function(item, index){
-              return <div key={ index } className="count-block m-2 w-100 text-center align-self-center" style={{ maxWidth: "250px" }}>
+              return <div key={ index } className="count-block m-2 w-100 text-center align-self-center" style={{ maxWidth: "250px", height: "150px" }}>
                 <div className="count-block-primary-text">{item.value}</div>
                 <div className={"count-block-subtext mt-2 "+ setStatusLevel(item.status)}>{item.name}</div>
                 {item.footer && <div className="count-block-footer w-100 text-muted mb-1">{item.footer}</div>}

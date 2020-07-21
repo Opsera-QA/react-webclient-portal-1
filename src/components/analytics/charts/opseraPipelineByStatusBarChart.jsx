@@ -91,7 +91,7 @@ function OpseraPipelineByStatusBarChar( { persona, date  } ) {
             <ResponsiveBar
               data={data ? data.data : []}
               keys={config.keys}
-              indexBy="name"
+              indexBy="pipeline_id"
               onClick={() => setShowModal(true)}
               margin={config.margin}
               padding={0.3}
