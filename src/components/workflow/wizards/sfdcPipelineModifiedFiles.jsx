@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext"; 
 import { axiosApiService } from "api/apiService";
@@ -9,6 +9,7 @@ import DropdownList from "react-widgets/lib/DropdownList";
 import "../workflows.css";
 import LoadingDialog from "components/common/loading";
 import ErrorDialog from "components/common/error";
+import CustomTable from "components/common/table";
 
 
 
@@ -45,7 +46,57 @@ const SfdcPipelineModifiedFiles = ({ pipelineId, stepId, handleClose, setView, m
     createJenkinsJob();
     
   };
-  
+
+
+
+
+  const initialState = {
+    pageIndex: 0,
+    sortBy: [
+      {
+        id: "name",
+        desc: false
+      }
+    ]
+  };
+
+  const rowStyling = (row) => {
+    return "";
+    // return !row["values"].active ? " inactive-row" : "";
+  };
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: "Component Type",
+        accessor: "componentType",
+      },
+      {
+        Header: "Committed File",
+        accessor: "committedFile",
+      },
+      {
+        Header: "Committed Time",
+        accessor: "committedTime"
+      },
+      {
+        Header: "Commit Action",
+        accessor: "commitAction"
+      }
+    ],
+    []
+  );
+
+  const onRowSelect = (selectedRow) => {
+    //first output the entire selected row value to see what you have
+    console.log(selectedRow);
+  /*   let itemId = selectedRow && selectedRow.values && selectedRow.values.name; //I'm not sure what a "ID" is for an entry in LDAP, so I'm choosing NAME for now, but please review that and set this to the unique ID value for the selected entry.
+    
+    console.log(selectedRow.values);
+    history.push("/accounts/"+view+"/detail/"+itemId); */
+  };
+
+
   return (    
     <div className="ml-5">
       <div className="flex-container">
@@ -59,23 +110,31 @@ const SfdcPipelineModifiedFiles = ({ pipelineId, stepId, handleClose, setView, m
           
           { !configurationError && 
           <>
-            <div className="mx-3 mt-3">        
+            {/* <div className="mx-3 mt-3">        
               <div className="mb-3" style={{ display: "flex" }}>
                 <div className="px-2" style={{ flex: "50%" }}>
                   <div className="text-muted pl-1 pb-1">Select Date Filter:</div>
                 </div>
                 <div className="px-2" style={{ flex: "50%" }}>
                   <div className="text-muted pl-1 pb-1">Select SalesForce Account (configured in Registry):</div>
-                  {/* <AccountDropDown data={registryData} setAccount={handleSetAccount} isLoading={loadingRegistry} /> */}
+                  
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className="mx-5 mt-3">  
               <div className="text-muted ">Select Component Types:</div>
               <div className="d-flex flex-wrap">
                 {loading ? <LoadingDialog size="sm" /> : 
                   <>
-                    {JSON.stringify(modifiedFiles, null, 2)}
+                    <CustomTable 
+                      columns={columns} 
+                      data={modifiedFiles}
+                      onRowSelect={onRowSelect}
+                      rowStyling={rowStyling}
+                      initialState={initialState}
+                      // tableFilter={tableFilter}
+                    >
+                    </CustomTable>
                   </> } 
               </div>          
             </div>
