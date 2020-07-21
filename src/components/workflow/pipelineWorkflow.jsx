@@ -209,16 +209,18 @@ const PipelineWorkflow = (props) => {
           </div> }
           
 
-          <ul className="nav nav-tabs w-100" style={{ borderBottom: "none" }}>
-            <li className="nav-item">
-              <Link className="nav-link" 
-                to={location => `/workflow/${data._id}`}>Summary</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link active" 
-                to={location => `/workflow/${data._id}/model`}>Workflow</Link>
-            </li>
-          </ul>
+          <div className="default-custom-tabs">
+            <ul className="nav nav-tabs w-100" style={{ borderBottom: "none" }}>
+              <li className="nav-item">
+                <Link className="nav-link" 
+                  to={location => `/workflow/${data._id}`}>Summary</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link active" 
+                  to={location => `/workflow/${data._id}/model`}>Workflow</Link>
+              </li>
+            </ul>
+          </div>
 
 
           <div className="workflow-container pl-2 max-content-module-width-50">
