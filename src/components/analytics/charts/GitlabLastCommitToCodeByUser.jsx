@@ -82,9 +82,9 @@ function GitlabLastCommitToCodeByUser({ date }) {
             <tbody>
               {data.gitlabLastCommitToCode.data.map(function (value, index) {
                 return <tr key = {index}>
-                  <td>{value["User name"]}</td>
-                  <td>{value["Merge Request Title"]}</td>
-                  <td>{value["Commit Title"]}</td>
+                  <td>{value["AuthorName"]}</td>
+                  <td>{value["MergeRequestTitle"]}</td>
+                  <td>{value["CommitTitle"]}</td>
                   <td>{format(new Date(value["Time"]), "yyyy-MM-dd', 'hh:mm a")}</td>                
                 </tr>;
               })

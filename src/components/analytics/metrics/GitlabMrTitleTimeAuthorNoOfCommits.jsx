@@ -80,7 +80,7 @@ function GitlabMrTitleTimeAuthorNoOfCommits({ date }) {
               <tr>
                 <th style={{ width: "5%" }}>Author Name</th>
                 <th style={{ width: "5%" }}>Merge Request Title</th>
-                <th style={{ width: "5%" }}>Merge Request Time Taken</th>
+                <th style={{ width: "5%" }}>Merge Request Time Taken (min)</th>
                 <th style={{ width: "5%" }}>Project Name</th>
                 <th style={{ width: "5%" }}>Push Time stamp</th>
                 <th style={{ width: "5%" }}>Number of Commits</th>

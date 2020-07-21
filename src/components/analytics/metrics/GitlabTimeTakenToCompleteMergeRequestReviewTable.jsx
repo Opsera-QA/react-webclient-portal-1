@@ -78,8 +78,8 @@ function JMeterResultsTable({ date }) {
               <tr>
                 <th style={{ width: "5%" }}>Author Name</th>
                 <th style={{ width: "5%" }}>Merge Request Title</th>
-                <th style={{ width: "5%" }}>Merge Request Time Taken</th>
-                <th style={{ width: "5%" }}>Push Time</th>
+                <th style={{ width: "5%" }}>Merge Req Time Taken (min)</th>
+                <th style={{ width: "5%" }}>Push Time (min)</th>
                 <th style={{ width: "5%" }}>Branch Name</th>
                 <th style={{ width: "5%" }}>Project Name</th>
               </tr>
