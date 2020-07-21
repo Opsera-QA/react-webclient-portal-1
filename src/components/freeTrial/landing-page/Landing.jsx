@@ -13,26 +13,29 @@ import FreeTrialLandingAnalytics from "./tabs/analytics-tab";
 function FreeTrialLanding() {
 
   const selectTab = (tabId) => {
+    console.log("tabId: " + tabId);
     document.getElementById(tabId).click();
   };
   
   return (
     <>
       <div className="max-content-width">
-        <Tabs defaultActiveKey="welcome">
-          <Tab id="welcome" eventKey="welcome" title="Welcome!">
-            <FreeTrialLandingWelcome setActiveTab={selectTab} />
-          </Tab>
-          <Tab id="platform" eventKey="platform" title="Platform">
-            <FreeTrialLandingPlatform />
-          </Tab>
-          <Tab id="pipeline" eventKey="pipeline" title="Pipeline">
-            <FreeTrialLandingPipeline />
-          </Tab>
-          <Tab id="analytics" eventKey="analytics" title="Analytics">
-            <FreeTrialLandingAnalytics />
-          </Tab>
-        </Tabs>
+        <div className="free-trial-tabs">
+          <Tabs id="free-trial-tabs" defaultActiveKey="welcome">
+            <Tab id="welcome" eventKey="welcome" title="Welcome!">
+              <FreeTrialLandingWelcome setActiveTab={selectTab} />
+            </Tab>
+            <Tab id="platform" eventKey="platform" title="Platform">
+              <FreeTrialLandingPlatform />
+            </Tab>
+            <Tab id="pipeline" eventKey="pipeline" title="Pipeline">
+              <FreeTrialLandingPipeline />
+            </Tab>
+            <Tab id="analytics" eventKey="analytics" title="Analytics">
+              <FreeTrialLandingAnalytics />
+            </Tab>
+          </Tabs>
+        </div>
       </div>
     </>
   );

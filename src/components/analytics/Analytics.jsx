@@ -32,7 +32,7 @@ import DropdownList from "react-widgets/lib/DropdownList";
 import SourceCodeView from "./views/SourceCode/SourceCodeView_developer";
 
 
-
+const INDICES = ["jenkins", "opsera-pipeline-step-summary"];
 const DATELABELS = [ { value: {
   start: "now-1h",
   end: "now"
@@ -57,6 +57,7 @@ function Analytics() {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
   const [data, setData] = useState({});
+  const [index, setIndex] = useState([]);
   const [loadingProfile, setLoadingProfile] = useState(false);
   const [token, setToken] = useState();
   const [selection, setSelection] = useState("pipeline");
@@ -193,6 +194,9 @@ function Analytics() {
 
       setData(profile && profile.data.profile[0]);
       console.log(profile && profile.data.profile[0]);
+      const indices = await axiosApiService(accessToken).post("/analytics/index", { "index": INDICES } );
+      let indicesList = indices.data && Array.isArray(indices.data) ? indices.data : [];
+      setIndex(indicesList); 
 
       if (typeof(data.profile) === "object" && data.profile.length === 0) {
         setErrors("Warning!  Profile settings associated with your account are incomplete.  Log searching will be unavailable until this is fixed.");
@@ -317,7 +321,7 @@ function Analytics() {
                   </Row>
                 </div>
                 <div className="mt-3">
-                  <ChartView token={token} selection={selection} persona={null} date={date} />
+                  <ChartView token={token} selection={selection} persona={null} date={date} index={index} />
                 </div>
               </div>
             </div>
@@ -330,9 +334,9 @@ function Analytics() {
 }
 
 
-function ChartView({ selection, persona, date }) {
+function ChartView({ selection, persona, date, index }) {
   useEffect(() => {
-  }, [selection, persona, date.start]);
+  }, [selection, persona, date.start, index]);
 
   if (selection) {
     switch (selection) {      
@@ -340,7 +344,7 @@ function ChartView({ selection, persona, date }) {
       return (
         <>
           <div className="mt-2">
-            <SummaryChartsView date={date}/>
+            <SummaryChartsView date={date} index={index}/>
           </div>
         </>);
 
@@ -447,7 +451,8 @@ function ChartView({ selection, persona, date }) {
 ChartView.propTypes = {
   selection: PropTypes.string,
   persona: PropTypes.string,
-  date: PropTypes.object
+  date: PropTypes.object,
+  index: PropTypes.object
 
 };
 

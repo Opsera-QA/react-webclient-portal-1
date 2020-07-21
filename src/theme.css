@@ -380,26 +380,92 @@ div.modal-footer {
 /* End Form Styling */
 
 
-/* Nav Tab Styling */
+/* Custom Tab Styling */
 .nav-tabs {
   border-bottom: none;
 }
 
-.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link {
+/* Default Custom Tab styling */
+.default-custom-tabs .nav-tabs .nav-item.show .nav-link, .default-custom-tabs .nav-tabs .nav-link {
   background: rgba(0,0,0,.05);
   color: #6c757d;
   border-bottom: none;
 }
 
-.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+.default-custom-tabs .nav-tabs .nav-item.show .nav-link, .default-custom-tabs .nav-tabs .nav-link.active {
   background: #1578dc;
   color: #fff;
   border-color: #1578dc;
 }
 
-.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link:hover {
+.default-custom-tabs .nav-tabs .nav-item.show .nav-link, .default-custom-tabs .nav-tabs .nav-link:hover {
   border-color: #1578dc;
 }
+/* End Default Custom Tab styling */
+
+/* Begin Step Tabs Styling */
+.step-tabs .nav-tabs > a.active, .step-tabs .nav-tabs > a.active:focus {
+  background: #1578dc;
+  color: #fff;
+}
+
+.step-tabs .nav-tabs > a.active:hover {
+  background: #0f3e84;
+  color: #fff;
+  border-color: #1578dc;
+}
+
+.step-tabs .nav-tabs > a {
+  padding: 10px 30px;
+  border-bottom: 5px solid #0f3e84;
+}
+
+.step-tabs .nav-tabs > a.active {
+  border-bottom: 5px solid #0f3e84;
+}
+
+.step-tabs .nav-tabs .nav-item.show .nav-link, .step-tabs .nav-tabs .nav-link:hover {
+  border-color: #1578dc;
+}
+
+.step-tabs .nav-tabs {
+  padding: 1px 15px 1px 1px;
+  background: rgba(0,0,0,.05);
+  color: #6c757d;
+  -webkit-clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 50%, calc(100% - 15px) 100%, 0 100%, 15px 50%);
+  clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 50%, calc(100% - 15px) 100%, 0 100%, 15px 50%);
+  display: inline-block;
+}
+
+.step-tabs a {
+  display: inline-block;
+  min-width:50px;
+  background: rgba(0,0,0,.05);
+  color: #6c757d;
+  text-decoration: none;
+  -webkit-clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 50%, calc(100% - 15px) 100%, 0 100%, 15px 50%);
+  clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 50%, calc(100% - 15px) 100%, 0 100%, 15px 50%);
+  padding: 0;
+  position: relative;
+  margin-right: -13px;
+}
+
+.step-tabs a#last {
+  -webkit-clip-path: polygon(0 0, calc(100% - 0px) 0, 100% 50%, calc(100% - 0px) 100%, 0 100%, 15px 50%);
+  clip-path: polygon(0 0, calc(100% - 0px) 0, 100% 50%, calc(100% - 0px) 100%, 0 100%, 15px 50%);
+}
+
+.step-tabs a:hover {
+  color: #fff;
+  background: #0f3e84;
+}
+
+.step-tabs a:first-child {
+  -webkit-clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 50%, calc(100% - 15px) 100%, 0 100%);
+  clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 50%, calc(100% - 15px) 100%, 0 100%);
+}
+/* End Step Tab Styling */
+
 
 .tabbed-content-block {
   border-radius: 0 5px 5px 5px;

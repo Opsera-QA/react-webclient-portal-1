@@ -232,14 +232,16 @@ class NewApplication extends React.PureComponent {
         <div>
           <h4>Platforms</h4>
 
-          <ul className="nav nav-tabs mt-3 mb-3">
-            <li className="nav-item">
-              <a className={"nav-link " + (!editTools ? "active" : "")} href="#" onClick={this.handleTabClick("new")}>Add New</a>
-            </li>
-            <li className="nav-item">
-              <a className={"nav-link " + (editTools ? "active" : "")} href="#" onClick={this.handleTabClick("edit")}>Edit Existing</a>
-            </li>
-          </ul>
+          <div className="default-custom-tabs">
+            <ul className="nav nav-tabs mt-3 mb-3">
+              <li className="nav-item">
+                <a className={"nav-link " + (!editTools ? "active" : "")} href="#" onClick={this.handleTabClick("new")}>Add New</a>
+              </li>
+              <li className="nav-item">
+                <a className={"nav-link " + (editTools ? "active" : "")} href="#" onClick={this.handleTabClick("edit")}>Edit Existing</a>
+              </li>
+            </ul>
+          </div>
 
           <div className="row m-2">
 

@@ -1,7 +1,6 @@
 export default {
   keys: [
-    "Successful",
-    "Failed"
+    "value"
   ],
   margin: {
     "top": 50,
@@ -53,13 +52,13 @@ export default {
     "legendOffset": 50
   },
   axisLeft: {
-    "format": d => d.substring(0, 12),
+    "format": d => d.substring(0, 6),
     "tickSize": 8,
     "tickPadding": 5,
     "tickRotation": 0,
-    "legend": "Build Tag",
+    "legend": "Users",
     "legendPosition": "middle",
-    "legendOffset": -100
+    "legendOffset": -80
   },
   legends: [
     {
@@ -67,7 +66,7 @@ export default {
       "anchor": "bottom-right",
       "direction": "column",
       "justify": false,
-      "translateX": 110,
+      "translateX": 120,
       "translateY": 0,
       "itemsSpacing": 2,
       "itemWidth": 100,

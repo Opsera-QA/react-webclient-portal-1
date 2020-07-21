@@ -84,7 +84,7 @@ function OverviewLanding() {
                 <div className="col-md h4 text-muted mb-4">Get started with OpsERA</div>
 
                 <div className="col-md px-2">
-                  <SummaryCountBlocksView data={summaryStats} />
+                  <SummaryCountBlocksView data={summaryStats} view="small" />
                 </div>
               </div>
             
