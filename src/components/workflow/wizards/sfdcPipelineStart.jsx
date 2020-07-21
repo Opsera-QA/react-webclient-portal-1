@@ -28,17 +28,19 @@ const SfdcPipelineStart = ({ pipelineId, handlePipelineWizardRequest, handleClos
   const [loadingRegistry, setLoadingRegistry] = useState(false); 
   const [error, setError] = useState(false); 
   const [save, setSave] = useState(false);
+  
   const [registryData, setRegistryData] = useState([]);
   const [componentTypes, setComponentTypes] = useState([]);
   const [componentTypeForm, setComponentTypeForm] = useState(INITIAL_COMPONENT_TYPES_FORM); 
 
   Moment.locale("en");
   momentLocalizer();
-  
+  const [asOfDate, setAsOfDate] = useState(Moment().format());
+
   useEffect(() => {
     loadData();
     loadRegistryData();
-    setComponentTypeForm(INITIAL_COMPONENT_TYPES_FORM);
+    setComponentTypeForm(INITIAL_COMPONENT_TYPES_FORM);    
   }, []);
 
 
@@ -90,12 +92,12 @@ const SfdcPipelineStart = ({ pipelineId, handlePipelineWizardRequest, handleClos
   
 
   const handleAsOfDateChange = (value) => {
-    const date = Moment(value).format();
-    setComponentTypeForm({ ...componentTypeForm, lastCommitTimeStamp: date });
+    const date = Moment(value.value).toISOString();
+    setAsOfDate(date);    
   };
 
   const handleSetAccount = (selectedOption) => {
-    setComponentTypeForm({ ...componentTypeForm, accountId: selectedOption.id });
+    setComponentTypeForm({ ...componentTypeForm, accountId: selectedOption._id });
   };
 
 
@@ -104,6 +106,7 @@ const SfdcPipelineStart = ({ pipelineId, handlePipelineWizardRequest, handleClos
     const postBody = componentTypeForm;
     postBody.pipelineId = pipelineId;
     postBody.stepId = "xxx";  //TODO: Need to identify the step ID (first step in array if type is XXX)
+    postBody.lastCommitTimeStamp = asOfDate;
     
     console.log("componentTypeForm: ", postBody);
 
@@ -117,15 +120,15 @@ const SfdcPipelineStart = ({ pipelineId, handlePipelineWizardRequest, handleClos
         
           <div className="h5">SalesForce Pipeline Run</div>
           <div className="text-muted">Select component types to include in this pipeline run.</div>
-          <div className="mx-5 mt-3">        
+          <div className="mx-3 mt-3">        
             <div className="mb-3" style={{ display: "flex" }}>
-              <div style={{ flex: "50%" }}>{dateAsOf}</div>
-              <div style={{ flex: "50%" }}>
+              <div className="px-2" style={{ flex: "50%" }}>{dateAsOf}</div>
+              <div className="px-2" style={{ flex: "50%" }}>
                 <AccountDropDown data={registryData} setAccount={handleSetAccount} />
               </div>
             </div>
-
-
+          </div>
+          <div className="mx-5 mt-3">  
             <div className="d-flex flex-wrap">
               {componentTypes.map((item, idx) => (
                 <div key={idx} className="p-2 w-25">
