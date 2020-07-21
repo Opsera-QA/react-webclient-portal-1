@@ -16,7 +16,7 @@ import { useHistory } from "react-router-dom";
 
 
 
-function OpseraPipelineStatus( { persona, date } ) {
+function OpseraPipelineStatusFailed( { persona, date } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -52,7 +52,7 @@ function OpseraPipelineStatus( { persona, date } ) {
     const postBody = {
       data: [
         { 
-          request: "opseraPipelineInfo",
+          request: "opseraPipelineInfoFailed",
           metric: "bar" 
         }
       ]
@@ -63,7 +63,7 @@ function OpseraPipelineStatus( { persona, date } ) {
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res.data.data[0].opseraPipelineInfo.data : [];
+      let dataObject = res && res.data ? res.data.data[0].opseraPipelineInfoFailed.data : [];
       console.log(dataObject);
       setData(dataObject);
       setLoading(false);
@@ -82,16 +82,16 @@ function OpseraPipelineStatus( { persona, date } ) {
   } else if (typeof data === "undefined" || data.length === 0) {
     return (
       ""
-     );
+    );
   } else if (data.length > 0 && Object.keys(data[0]).length === 0) {
     return (
       ""
-     );
+    );
   }
   else {
     return (
       <>
-        <div className="activity-label-text mb-2">Recent OpsERA Pipelines</div>
+        <div className="activity-label-text mb-2">Recent Failed OpsERA Pipelines</div>
         <MapActivityData data={data} className="mr-3 ml-3 p-4" />
         
       </>
@@ -118,21 +118,26 @@ const MapActivityData = (props) => {
 
   if (typeof data === "undefined" || data.length === 0) {
     return (
-     ""
+      ""
     );
   } else {
     return (
       <>
         { data.map((item, idx) => (
-          <Alert key={idx} variant={(item.status === "fail") ? "danger" : item.status}>
+          <Alert key={idx} variant={(item.status === "failure") ? "danger" : item.status}>
             <div className="row">
-                            {item.name !== "N/A" ? <div className="col"><strong> Pipeline: </strong> {item.name} </div> : ""}
-
-                          {/* <Button variant="outline-dark mr-3" size="sm" onClick={() => { goToPipeline(item.pipeline_id); }}><FontAwesomeIcon icon={faDraftingCompass} fixedWidth/>View Pipeline</Button> */}
+              {item.name !== "N/A" ? <div className="col"><strong> Pipeline: </strong> {item.pipeline_name} </div> : ""}
+              <div className="col" style={{
+                textAlign: "right"
+              }}><strong></strong>{item.timestamp}</div>
+              {/* <Button variant="outline-dark mr-3" size="sm" onClick={() => { goToPipeline(item.pipeline_id); }}><FontAwesomeIcon icon={faDraftingCompass} fixedWidth/>View Pipeline</Button> */}
 
             </div>
             <div className="row">
-            <div className="col"><strong> Pipeline ID: </strong>{item.pipeline_id}</div>
+              <div className="col"><strong> Pipeline ID: </strong>{item.pipeline_id}</div>
+            </div>
+            <div className="row">
+              <div className="col"><strong> Duration: </strong>{item.duration} Minutes</div>
             </div>
             <div className="row">
               {/* <div className="col">Version: {item["version"]}</div> */}
@@ -160,11 +165,11 @@ MapActivityData.propTypes = {
   type: PropTypes.string
 };
 
-OpseraPipelineStatus.propTypes = {
+OpseraPipelineStatusFailed.propTypes = {
   persona: PropTypes.string,
   searchQuery: PropTypes.string,
   filterType: PropTypes.string
 };
 
-export default OpseraPipelineStatus;
+export default OpseraPipelineStatusFailed;
 

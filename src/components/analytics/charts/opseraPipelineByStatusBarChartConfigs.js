@@ -44,6 +44,7 @@ export default {
     }
   ],
   axisBottom: {
+    "format": e => Math.floor(e) === e && e,
     "tickSize": 8,
     "tickPadding": 5,
     "tickRotation": 0,
@@ -52,7 +53,7 @@ export default {
     "legendOffset": 50
   },
   axisLeft: {
-    "format": d => d.substring(0, 12),
+    "format": d => /(?:(?!-).)*/.exec(d)[0].substring(0, 12),
     "tickSize": 8,
     "tickPadding": 5,
     "tickRotation": 0,

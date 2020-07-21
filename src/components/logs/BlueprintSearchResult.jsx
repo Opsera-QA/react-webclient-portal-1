@@ -25,8 +25,6 @@ function BlueprintSearchResult({ searchResults }) {
             {searchResults.map((item, idx) => (
               
               <div key={idx} className="console-text-invert">
-                <h3>Build: {item["full_name"]}</h3>
-                <b>Timestamp: {format(new Date(item["build_timestamp"]), "yyyy-MM-dd', 'hh:mm a")}</b>
                 <div>
                   <FontAwesomeIcon icon={faSearchPlus}
                     className="ml-1"
@@ -34,6 +32,8 @@ function BlueprintSearchResult({ searchResults }) {
                     style={{ cursor: "pointer", float: "right" }}
                     onClick= {() => { handleClick(item); }} />
                 </div>
+                <h3>Build: {item["full_name"]}</h3>
+                <b>Timestamp: {format(new Date(item["build_timestamp"]), "yyyy-MM-dd', 'hh:mm a")}</b>
                 <br></br>
                 {item["log"]}
               </div>

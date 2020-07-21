@@ -10,6 +10,10 @@ import SummaryCountBlocksView from "../summaryCountBlocksView";
 import TimeToRestoreBarChart from "../../charts/timeToRestoreBarChart.jsx";
 import PipelineSuccessLogs from "../../logs/pipelineSuccessLogs";
 import PipelineFailureLogs from "../../logs/pipelineFailureLogs";
+import OpseraPipelineStatusFailed from "../../logs/opseraPipelineStatusFailed";
+import OpseraPipelineStatusSuccess from "../../logs/opseraPipelineStatusSuccess";
+
+
 import { Row, Col } from "react-bootstrap";
 
 function OperationsView_Developer ({ persona }) {
@@ -94,6 +98,15 @@ function OperationsView_Developer ({ persona }) {
           <Row>
             <Col><PipelineSuccessLogs persona={persona}  /></Col>
             <Col><PipelineFailureLogs persona={persona}  /></Col>
+          </Row>
+        
+        </div>
+
+        <div className="mt-3">
+          <Row>
+            <Col><OpseraPipelineStatusSuccess persona={persona}  date={{ start: "now-30d", end: "now" }}/></Col>
+            <Col><OpseraPipelineStatusFailed persona={persona}  date={{ start: "now-30d", end: "now" }}/></Col>
+
           </Row>
         
         </div>
