@@ -7,7 +7,7 @@ function FreeTrialLandingPlatform() {
 
   return (
     <>
-      <div className="content-block">
+      <div className="tabbed-content-block">
         <div className="mt-3 ml-5 w-75">
           <Row>
             <Col xl="12">

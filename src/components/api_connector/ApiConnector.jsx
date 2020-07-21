@@ -41,32 +41,33 @@ class ApiConnector extends Component {
         <div>Configure connection information for various platform and pipeline supported tools.</div>
 
 
-        <ul className="nav nav-tabs mt-3">
-          <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "" ? "active" : "")} href="#" onClick={this.handleClick("")}>
-              <FontAwesomeIcon icon={faHome} className="mr-1"/> Home</a>
-          </li>
-          <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "github" ? "active" : "")} href="#" onClick={this.handleClick("github")}>
-              <FontAwesomeIcon icon={faGithub} className="mr-1"/> GitHub</a>
-          </li>
-          <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "gitlab" ? "active" : "")} href="#" onClick={this.handleClick("gitlab")}>
-              <FontAwesomeIcon icon={faGitlab} className="mr-1"/> GitLab</a>
-          </li>
-          <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "bitbucket" ? "active" : "")} href="#" onClick={this.handleClick("bitbucket")}>
-              <FontAwesomeIcon icon={faBitbucket} className="mr-1"/> Bitbucket</a>
-          </li>
-          <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "jira" ? "active" : "")} href="#" onClick={this.handleClick("jira")}>
-              <FontAwesomeIcon icon={faJira} className="mr-1"/> Jira</a>
-          </li>
-          <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "slack" ? "active" : "")} href="#" onClick={this.handleClick("slack")}>
-              <FontAwesomeIcon icon={faSlack} className="mr-1"/> Slack</a>
-          </li>
-          {/* <li className="nav-item">
+        <div className="default-custom-tabs">
+          <ul className="nav nav-tabs mt-3">
+            <li className="nav-item">
+              <a className={"nav-link " + (this.state.selection === "" ? "active" : "")} href="#" onClick={this.handleClick("")}>
+                <FontAwesomeIcon icon={faHome} className="mr-1"/> Home</a>
+            </li>
+            <li className="nav-item">
+              <a className={"nav-link " + (this.state.selection === "github" ? "active" : "")} href="#" onClick={this.handleClick("github")}>
+                <FontAwesomeIcon icon={faGithub} className="mr-1"/> GitHub</a>
+            </li>
+            <li className="nav-item">
+              <a className={"nav-link " + (this.state.selection === "gitlab" ? "active" : "")} href="#" onClick={this.handleClick("gitlab")}>
+                <FontAwesomeIcon icon={faGitlab} className="mr-1"/> GitLab</a>
+            </li>
+            <li className="nav-item">
+              <a className={"nav-link " + (this.state.selection === "bitbucket" ? "active" : "")} href="#" onClick={this.handleClick("bitbucket")}>
+                <FontAwesomeIcon icon={faBitbucket} className="mr-1"/> Bitbucket</a>
+            </li>
+            <li className="nav-item">
+              <a className={"nav-link " + (this.state.selection === "jira" ? "active" : "")} href="#" onClick={this.handleClick("jira")}>
+                <FontAwesomeIcon icon={faJira} className="mr-1"/> Jira</a>
+            </li>
+            <li className="nav-item">
+              <a className={"nav-link " + (this.state.selection === "slack" ? "active" : "")} href="#" onClick={this.handleClick("slack")}>
+                <FontAwesomeIcon icon={faSlack} className="mr-1"/> Slack</a>
+            </li>
+            {/* <li className="nav-item">
             <a className={"nav-link " + (this.state.selection === "jenkins" ? "active" : "")} href="#" onClick={this.handleClick("jenkins")}>Jenkins</a>
           </li>
           
@@ -86,10 +87,11 @@ class ApiConnector extends Component {
             <a className={"nav-link " + (this.state.selection === "twistlock" ? "active" : "")} href="#" onClick={this.handleClick("twistlock")}>Twistlock</a>
           </li> */}
 
-          {/* <li className="nav-item">
+            {/* <li className="nav-item">
             <a className="nav-link disabled" href="#">Disabled</a>
           </li> */}
-        </ul>
+          </ul>
+        </div>
         <div className="tabbed-content-block px-2 pt-3 pb-4">
 
           {this.state.selection === "github" && <GitHub />}

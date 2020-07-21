@@ -234,17 +234,18 @@ const PipelineOverviewSummary = (props) => {
           </div> }
 
 
-          
-          <ul className="nav nav-tabs w-100">
-            <li className="nav-item">
-              <Link className="nav-link active"
-                to={location => `/workflow/${data._id}`}>Summary</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link"
-                to={location => `/workflow/${data._id}/model`}>Workflow</Link>
-            </li>
-          </ul>
+          <div className="default-custom-tabs">
+            <ul className="nav nav-tabs w-100">
+              <li className="nav-item">
+                <Link className="nav-link active"
+                  to={location => `/workflow/${data._id}`}>Summary</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link"
+                  to={location => `/workflow/${data._id}/model`}>Workflow</Link>
+              </li>
+            </ul>
+          </div>
 
           <div className="mb-3 flat-top-content-block p-3">              
             <div className="mb-2 text-muted">
