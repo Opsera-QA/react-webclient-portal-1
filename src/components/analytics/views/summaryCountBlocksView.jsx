@@ -8,7 +8,7 @@ Expecting data in this format:
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 
-function SummaryCountBlocksView( { data } ) {
+function SummaryCountBlocksView( { data, view } ) {
 
   useEffect(() => {
     console.log("Rendering Blocks for data", data);
@@ -33,7 +33,8 @@ function SummaryCountBlocksView( { data } ) {
           <div className="d-flex justify-content-center">  
           
             {data.map(function(item, index){
-              return <div key={ index } className="count-block m-2 w-100 text-center align-self-center" style={{ maxWidth: "250px", height: "150px" }}>
+              return <div key={ index } className="count-block m-2 w-100 text-center align-self-center" 
+                style={view !== "small" ? { maxWidth: "250px", height: "150px" } : {}}>
                 <div className="count-block-primary-text">{item.value}</div>
                 <div className={"count-block-subtext mt-2 "+ setStatusLevel(item.status)}>{item.name}</div>
                 {item.footer && <div className="count-block-footer w-100 text-muted mb-1">{item.footer}</div>}
@@ -46,7 +47,8 @@ function SummaryCountBlocksView( { data } ) {
 }
 
 SummaryCountBlocksView.propTypes = {
-  data: PropTypes.array
+  data: PropTypes.array,
+  view: PropTypes.string
 };
 
 
