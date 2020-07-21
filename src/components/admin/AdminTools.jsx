@@ -8,7 +8,7 @@ import { faEdit, faHeartbeat, faTimes, faUserCircle, faLink, faChartBar, faWrenc
 
 function AdminTools(props) {
   const [administrator, setAdministrator] = useState(false);
-  const { getUserRecord } = useContext(AuthContext);
+  const { getUserRecord, featureFlagItemInProd } = useContext(AuthContext);
 
   useEffect(() => {
     isAdmin();
@@ -69,13 +69,13 @@ function AdminTools(props) {
                 <Link to="/admin/delete"><FontAwesomeIcon icon={faTimes} fixedWidth /> Delete Tools</Link>
               </Col>  
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/tags"><FontAwesomeIcon icon={faTags} fixedWidth /> Tags</Link>
+                <Link to={!featureFlagItemInProd() ? "/admin/tags" : "#"}><FontAwesomeIcon icon={faTags} fixedWidth /> Tags</Link>
               </Col> 
               <Col xs={12} md={6} lg={4} className="p-2">
                 <Link to="/admin/template-editor"><FontAwesomeIcon icon={faStream} fixedWidth /> Template Editor</Link>
               </Col>  
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/accounts"><FontAwesomeIcon icon={faUsers} fixedWidth /> Account Management (LDAP)</Link>
+                <Link to={!featureFlagItemInProd() ? "/accounts" : "#"}><FontAwesomeIcon icon={faUsers} fixedWidth /> Account Management (LDAP)</Link>
               </Col>                                                  
             </Row>
           </div>

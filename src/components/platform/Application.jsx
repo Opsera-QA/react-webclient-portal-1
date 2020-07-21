@@ -204,14 +204,16 @@ function Application(props) {
       <div>
         <h4>Platforms</h4>
 
-        <ul className="nav nav-tabs mt-3">
-          <li className="nav-item">
-            <a className={"nav-link " + (!showEditTools ? "active" : "")} href="#" onClick={handleTabClick}>Add New Platform</a>
-          </li>
-          <li className="nav-item">
-            <a className={"nav-link " + (showEditTools ? "active" : "")} href="#" onClick={handleTabClick}>Edit Existing Platform</a>
-          </li>
-        </ul>
+        <div className="default-custom-tabs">
+          <ul className="nav nav-tabs mt-3">
+            <li className="nav-item">
+              <a className={"nav-link " + (!showEditTools ? "active" : "")} href="#" onClick={handleTabClick}>Add New Platform</a>
+            </li>
+            <li className="nav-item">
+              <a className={"nav-link " + (showEditTools ? "active" : "")} href="#" onClick={handleTabClick}>Edit Existing Platform</a>
+            </li>
+          </ul>
+        </div>
         <div className="tabbed-content-block px-2 pt-3 pb-4">
           <div className="row m-2">
 

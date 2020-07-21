@@ -1,12 +1,11 @@
 export default {
   keys: [
-    "Successful",
-    "Failed"
+    "value"
   ],
   margin: {
     "top": 50,
     "right": 110,
-    "bottom": 80,
+    "bottom": 50,
     "left": 120
   },
   defs: [
@@ -32,7 +31,7 @@ export default {
   fill: [
     {
       "match": {
-        "id": "donut"
+        "id": "fries"
       },
       "id": "dots"
     },
@@ -44,22 +43,21 @@ export default {
     }
   ],
   axisBottom: {
-    "format": e => Math.floor(e) === e && e,
-    "tickSize": 8,
+    "format": d => /(?:(?!-).)*/.exec(d)[0],
+    "tickSize": 5,
     "tickPadding": 5,
     "tickRotation": 0,
-    "legend": "Number of Builds",
+    "legend": "Pipeline Run",
     "legendPosition": "middle",
-    "legendOffset": 50
+    "legendOffset": 32
   },
   axisLeft: {
-    "format": d => d.substring(0, 12),
-    "tickSize": 8,
+    "tickSize": 5,
     "tickPadding": 5,
     "tickRotation": 0,
-    "legend": "Build Tag",
+    "legend": "Duration (Minutes)",
     "legendPosition": "middle",
-    "legendOffset": -100
+    "legendOffset": -65
   },
   legends: [
     {
@@ -67,7 +65,7 @@ export default {
       "anchor": "bottom-right",
       "direction": "column",
       "justify": false,
-      "translateX": 110,
+      "translateX": 120,
       "translateY": 0,
       "itemsSpacing": 2,
       "itemWidth": 100,

@@ -4,7 +4,7 @@ import { ResponsiveBar } from "@nivo/bar";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
 import InfoDialog from "../../common/info";
-import config from "./jenkinsBuildDurationBarChartConfigs";
+import config from "./opseraBuildDurationBarChartConfigs";
 import "./charts.css";
 import ModalLogs from "../../common/modalLogs";
 import LoadingDialog from "../../common/loading";
@@ -13,12 +13,13 @@ import ErrorDialog from "../../common/error";
 
 
 
-function JenkinsBuildDurationBarChart( { persona, date } ) {
+function OpseraBuildDurationBarChart( { persona, date } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [exist, setExist] = useState(0);
 
 
   const fetchData = useCallback(async () => {
@@ -29,9 +30,8 @@ function JenkinsBuildDurationBarChart( { persona, date } ) {
     const postBody = {
       data: [
         {
-          "request": "jenkinsBuildDuration",
-          "metric": "bar",
-          "index": "jenkins-pipeline*"
+          "request": "opseraPipelineDuration",
+          "metric": "bar"
         }
       ], 
       startDate: date.start, 
@@ -40,7 +40,7 @@ function JenkinsBuildDurationBarChart( { persona, date } ) {
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res.data.data[0].jenkinsBuildDuration : [];
+      let dataObject = res && res.data ? res.data.data[0].opseraPipelineDuration : [];
       setData(dataObject);
       setLoading(false);
     }
@@ -87,7 +87,7 @@ function JenkinsBuildDurationBarChart( { persona, date } ) {
         <ModalLogs header="Build Duration" size="lg" jsonMessage={data ? data.data : []} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
 
         <div className="chart mb-3" style={{ height: "300px" }}>
-          <div className="chart-label-text">Jenkins: Build Duration</div>
+          <div className="chart-label-text">Opsera: Pipeline Duration</div>
           {(typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) ?
             <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
               <InfoDialog message="No Data is available for this chart at this time." />
@@ -97,7 +97,7 @@ function JenkinsBuildDurationBarChart( { persona, date } ) {
               data={data ? data.data : []}
               keys={config.keys}
               layout="vertical"
-              indexBy="key"
+              indexBy="item_number"
               onClick={() => setShowModal(true)}
               margin={config.margin}
               padding={0.3}
@@ -122,8 +122,6 @@ function JenkinsBuildDurationBarChart( { persona, date } ) {
               tooltip={({ data, value, color }) => (
                 <div>
                   <strong style={{ color }}>  Duration: </strong> {value} minutes <br></br>
-                  <strong style={{ color }}>  Build Number: </strong> {data.buildNum} <br></br>
-                  <strong style={{ color }}>  Job Name: </strong> {data.jobName} <br></br>
                 </div>
               )}
               theme={{
@@ -141,9 +139,10 @@ function JenkinsBuildDurationBarChart( { persona, date } ) {
   }
 }
 
-JenkinsBuildDurationBarChart.propTypes = {
+OpseraBuildDurationBarChart.propTypes = {
   data: PropTypes.object,
   persona: PropTypes.string
 };
 
-export default JenkinsBuildDurationBarChart;
+export default OpseraBuildDurationBarChart;
+
