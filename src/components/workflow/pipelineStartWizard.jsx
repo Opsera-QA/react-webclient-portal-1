@@ -7,7 +7,7 @@ import SfdcPipelineStart from "./wizards/sfdcPipelineStart";
 
 import "./workflows.css";
 
-function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, handleClose, handlePipelineWizardRequest }) {
+function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, pipelineSteps, handleClose, handlePipelineWizardRequest }) {
 
   
 
@@ -34,7 +34,7 @@ function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, h
 
           {pipelineType !== "sfdc" && pipelineOrientation === "middle" && <ConfirmResumePipeline pipelineId={pipelineId} handlePipelineWizardRequest={handlePipelineWizardRequest} />}
 
-          {pipelineType === "sfdc" && pipelineOrientation === "start" && <SfdcPipelineStart pipelineId={pipelineId} handlePipelineWizardRequest={handlePipelineWizardRequest} handleClose={handleClose} />}
+          {pipelineType === "sfdc" && pipelineOrientation === "start" && <SfdcPipelineStart pipelineId={pipelineId} pipelineSteps={pipelineSteps} handlePipelineWizardRequest={handlePipelineWizardRequest} handleClose={handleClose} />}
 
         </Modal.Body>
         <Modal.Footer>
@@ -99,6 +99,7 @@ PipelineStartWizard.propTypes = {
   pipelineType: PropTypes.string,
   pipelineId: PropTypes.string,
   pipelineOrientation: PropTypes.string,
+  pipelineSteps: PropTypes.array,
   handlePipelineWizardRequest: PropTypes.func,
   handleClose: PropTypes.func
 };
