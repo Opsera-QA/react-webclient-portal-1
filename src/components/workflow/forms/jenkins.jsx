@@ -159,6 +159,16 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
     [formData.repoId]
   );
   
+  useEffect(
+    () => {
+      if( formData.toolConfigId ) {
+        // console.log(jenkinsList[jenkinsList.findIndex(x => x.id === formData.toolConfigId)].accounts);
+        setAccountsList(jenkinsList[jenkinsList.findIndex(x => x.id === formData.toolConfigId)].accounts);
+      }
+    },
+    [jenkinsList]
+  );
+  
 
   const loadFormData = async (step) => {
     let { configuration, threshold, job_type } = step;
@@ -172,7 +182,6 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
         setThresholdValue(threshold.value);
       }
       if (typeof(job_type) !== "undefined") {
-        console.log(job_type);
         setJobType(job_type);
       }
     } else {
@@ -365,7 +374,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
   };
 
   console.log(formData);
-  console.log(accountsList);
+  // console.log(accountsList);
   
   const popover = (
     <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
