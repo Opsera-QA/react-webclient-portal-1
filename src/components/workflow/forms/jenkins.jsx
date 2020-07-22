@@ -102,11 +102,11 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
       async function fetchJenkinsDetails(service){
         setisJenkinsSearching(true);
         // Set results state
-        let results = await searchjenkinsList(service);
+        let results = await searchToolsList(service);
         console.log(results);
         const filteredList = results.filter(el => el.configuration !== undefined); //filter out items that do not have any configuration data!
         if(filteredList) {          
-          setjenkinsList(formatOptions(filteredList));
+          setjenkinsList(filteredList);
           setisJenkinsSearching(false);
         }
       }
@@ -123,11 +123,11 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
       async function fetchSFDCDetails(service){
         setisSFDCSearching(true);
         // Set results state
-        let results = await searchjenkinsList(service);
+        let results = await searchToolsList(service);
         console.log(results);
         const filteredList = results.filter(el => el.configuration !== undefined); //filter out items that do not have any configuration data!
         if(filteredList) {          
-          setSFDCList(formatOptions(filteredList));
+          setSFDCList(filteredList);
           setisSFDCSearching(false);
         }
       }
@@ -148,7 +148,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
         let results = await searchRepositories(service, gitToolId);
         if(results) {
           //console.log(results);
-          setRepoList(formatOptions(results));
+          setRepoList(results);
           setIsRepoSearching(false);
         }
       }
@@ -174,7 +174,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
         let results = await searchBranches(service, gitToolId, repoId);
         if(results) {
           //console.log(results);
-          setBranchList(formatOptions(results));
+          setBranchList(results);
           setIsBranchSearching(false);
         }
       }
@@ -237,7 +237,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
     }
   };
   
-  const searchjenkinsList = async (service) => {  
+  const searchToolsList = async (service) => {  
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
     const apiUrl = "/registry/properties/"+service;   // this is to get all the service accounts from tool registry
@@ -312,7 +312,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
     }
     if( selectedOption.accounts && selectedOption.jobs ) {
       setAccountsList(selectedOption.accounts);
-      setJobsList(formatOptions(selectedOption.jobs));
+      setJobsList(selectedOption.jobs);
     }
     setLoading(false);    
   };
@@ -470,20 +470,24 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
             Loading Jenkins accounts from registry</div>
           ) :(
             <>
-              {renderForm && jenkinsList && jenkinsList.length > 1 ? <>
+              {renderForm && jenkinsList && jenkinsList.length > 0 ? <>
                 <DropdownList
                   data={jenkinsList}
-                  value={formData.toolConfigId ? jenkinsList[jenkinsList.findIndex(x => x.id === formData.toolConfigId)] : jenkinsList[0]}
+                  value={ jenkinsList[jenkinsList.findIndex(x => x.id === formData.toolConfigId)] }
                   valueField='id'
-                  textField='name'
-                  defaultValue={formData.toolConfigId ? jenkinsList[jenkinsList.findIndex(x => x.id === formData.toolConfigId)] : jenkinsList[0]}
+                  textField='name' 
+                  placeholder= "Please select an account"
+                  // defaultValue={formData.toolConfigId ? jenkinsList[jenkinsList.findIndex(x => x.id === formData.toolConfigId)] : jenkinsList[0]}
                   onChange={handleJenkinsChange}             
                 /> 
+                { formData.jenkinsUrl && formData.jenkinsUrl.length > 1 && 
                 <div className="text-right pt-2">
                   <OverlayTrigger trigger="click" rootClose placement="left" overlay={JenkinsPopover}>
                     <Button variant="outline-dark" size="sm">Info</Button>
                   </OverlayTrigger>
                 </div>
+                } 
+                
               </> : <>
                 <div className="form-text text-muted p-2">
                   <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth/> 
@@ -510,8 +514,9 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
               data={JOB_OPTIONS}
               valueField='id'
               textField='label'
-              value={jobType ? JOB_OPTIONS[JOB_OPTIONS.findIndex(x => x.value === jobType)] : JOB_OPTIONS[0]}
-              defaultValue={jobType ? JOB_OPTIONS[JOB_OPTIONS.findIndex(x => x.value === jobType)] : JOB_OPTIONS[0]}
+              value={ JOB_OPTIONS[JOB_OPTIONS.findIndex(x => x.value === jobType)] }
+              // defaultValue={jobType ? JOB_OPTIONS[JOB_OPTIONS.findIndex(x => x.value === jobType)] : JOB_OPTIONS[0]}
+              placeholder= "Please select an account"
               onChange={handleJobChange}             
             /> : null }
         </Form.Group>
@@ -538,20 +543,24 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
             Loading SFDC accounts from registry</div>
             ) :(
               <>
-                {renderForm && sfdcList && sfdcList.length > 1 ? <>
+                {renderForm && sfdcList && sfdcList.length > 0 ? <>
                   <DropdownList
                     data={sfdcList}
-                    value={formData.sfdcToolId ? sfdcList[sfdcList.findIndex(x => x.id === formData.sfdcToolId)] : sfdcList[0]}
+                    value={sfdcList[sfdcList.findIndex(x => x.id === formData.sfdcToolId)]}
                     valueField='id'
                     textField='name'
-                    defaultValue={formData.sfdcToolId ? sfdcList[sfdcList.findIndex(x => x.id === formData.sfdcToolId)] : sfdcList[0]}
+                    // defaultValue={formData.sfdcToolId ? sfdcList[sfdcList.findIndex(x => x.id === formData.sfdcToolId)] : sfdcList[0]}
+                    placeholder= "Please select an account"
                     onChange={handleSFDCChange}             
                   /> 
+                  { formData.accountUsername && formData.accountUsername.length > 0 &&
                   <div className="text-right pt-2">
                     <OverlayTrigger trigger="click" rootClose placement="left" overlay={SFDCPopover}>
                       <Button variant="outline-dark" size="sm">Info</Button>
                     </OverlayTrigger>
                   </div>
+                  }
+                  
                 </> : <>
                   <div className="form-text text-muted p-2">
                     <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth/> 
@@ -578,7 +587,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
                 data={accountsList}
                 valueField='toolId'
                 textField='gitCredential'
-                value={accountsList ? accountsList[accountsList.findIndex(x => x.toolId === formData.gitToolId)] : accountsList[0]}
+                value={accountsList[accountsList.findIndex(x => x.toolId === formData.gitToolId)] }
                 // defaultValue={accountsList ? accountsList[accountsList.findIndex(x => x.toolId === formData.gitToolId)] : accountsList[0]}
                 placeholder= "Please select an account"
                 onChange={handleAccountChange}             
@@ -598,10 +607,11 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
               {repoList ?
                 <DropdownList
                   data={repoList} 
-                  value={formData.repository ? repoList[repoList.findIndex(x => x.name === formData.repository)] : repoList[0]}
+                  value={repoList[repoList.findIndex(x => x.name === formData.repository)]}
                   valueField='value'
-                  textField='name'
-                  defaultValue={formData.repository ? repoList[repoList.findIndex(x => x.name === formData.repository)] : repoList[0]}
+                  textField='name' 
+                  placeholder= "Please select an account"
+                  // defaultValue={formData.repository ? repoList[repoList.findIndex(x => x.name === formData.repository)] : repoList[0]}
                   onChange={handleRepoChange}             
                 /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> }
             </>
@@ -622,10 +632,10 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
               {branchList ?
                 <DropdownList
                   data={branchList} 
-                  value={formData.branch ? branchList[branchList.findIndex(x => x.value === formData.branch)] : branchList[0]}
+                  value={branchList[branchList.findIndex(x => x.value === formData.branch)]}
                   valueField='value'
                   textField='name'
-                  defaultValue={formData.branch ? branchList[branchList.findIndex(x => x.value === formData.branch)] : branchList[0]}
+                  // defaultValue={formData.branch ? branchList[branchList.findIndex(x => x.value === formData.branch)] : branchList[0]}
                   onChange={handleBranchChange}             
                 /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> }
             </>
