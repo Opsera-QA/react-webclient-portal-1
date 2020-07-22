@@ -15,10 +15,7 @@ import CustomTable from "components/common/table";
 
 
 const SfdcPipelineModifiedFiles = ({ pipelineId, stepId, handleClose, setView, modifiedFiles, createJenkinsJob }) => {
-  //const { getAccessToken } = useContext(AuthContext);
-  const [loading, setLoading] = useState(false); 
   const [error, setError] = useState(false); 
-  const [configurationError, setConfigurationError] = useState(false); 
   const [save, setSave] = useState(false);
   const [gitModified, setGitModified] = useState([]);
   const [sfdcModified, setSfdcModified] = useState([]);
@@ -26,7 +23,6 @@ const SfdcPipelineModifiedFiles = ({ pipelineId, stepId, handleClose, setView, m
   
   
   useEffect(() => {
-    setConfigurationError(false);
     console.log(modifiedFiles);
     setGitModified(modifiedFiles.gitModified);
     setSfdcModified(modifiedFiles.sfdcModified);
@@ -34,20 +30,12 @@ const SfdcPipelineModifiedFiles = ({ pipelineId, stepId, handleClose, setView, m
 
   
 
-
-  const handleSubmitComponentTypes = () => {
-  
-  };
-
   const handleApproveChanges = () => {
     //this needs to do the ifnal work writing data to the stepID above: checked compontents, other job data
 
     //trigger the jenkins job to create job
-    createJenkinsJob();
-    
+    createJenkinsJob();  
   };
-
-
 
 
   const initialState = {
@@ -108,8 +96,36 @@ const SfdcPipelineModifiedFiles = ({ pipelineId, stepId, handleClose, setView, m
 
           {error && <div className="mt-3"><ErrorDialog error={error} /></div>}
           
-          { !configurationError && 
+          { modifiedFiles && 
           <>
+            <div className="d-flex w-100">
+              <div className="col-5">
+                <CustomTable 
+                  columns={columns} 
+                  data={gitModified}
+                  onRowSelect={onRowSelect}
+                  rowStyling={rowStyling}
+                  initialState={initialState}
+                  // tableFilter={tableFilter}
+                >
+                </CustomTable>
+              </div>
+              <div className="col-2"></div>
+              <div className="col-5">
+                <CustomTable 
+                  columns={columns} 
+                  data={sfdcModified}
+                  onRowSelect={onRowSelect}
+                  rowStyling={rowStyling}
+                  initialState={initialState}
+                  // tableFilter={tableFilter}
+                >
+                </CustomTable>
+              </div>
+            </div>
+            
+            
+            
             {/* <div className="mx-3 mt-3">        
               <div className="mb-3" style={{ display: "flex" }}>
                 <div className="px-2" style={{ flex: "50%" }}>
@@ -121,33 +137,39 @@ const SfdcPipelineModifiedFiles = ({ pipelineId, stepId, handleClose, setView, m
                 </div>
               </div>
             </div> */}
+            
+            {/*   <div className="d-flex w-100">
+              <div className="col-3">1 piece</div>
+              <div className="col-6">2 pieces piece</div>
+              <div className="col-3">1 piece</div>
+            </div>
+            
             <div className="mx-5 mt-3">  
               <div className="text-muted ">Select Component Types:</div>
               <div className="d-flex flex-wrap">
                 
-                <>
-                  <CustomTable 
-                    columns={columns} 
-                    data={gitModified}
-                    onRowSelect={onRowSelect}
-                    rowStyling={rowStyling}
-                    initialState={initialState}
-                    // tableFilter={tableFilter}
-                  >
-                  </CustomTable>
+                <CustomTable 
+                  columns={columns} 
+                  data={gitModified}
+                  onRowSelect={onRowSelect}
+                  rowStyling={rowStyling}
+                  initialState={initialState}
+                  // tableFilter={tableFilter}
+                >
+                </CustomTable>
 
-                  <CustomTable 
-                    columns={columns} 
-                    data={sfdcModified}
-                    onRowSelect={onRowSelect}
-                    rowStyling={rowStyling}
-                    initialState={initialState}
-                    // tableFilter={tableFilter}
-                  >
-                  </CustomTable>
-                </> 
+                <CustomTable 
+                  columns={columns} 
+                  data={sfdcModified}
+                  onRowSelect={onRowSelect}
+                  rowStyling={rowStyling}
+                  initialState={initialState}
+                  // tableFilter={tableFilter}
+                >
+                </CustomTable>
+                
               </div>          
-            </div>
+            </div> */}
           </>}
         </div>
         <div className="flex-container-bottom pr-2 mt-3 mb-2 text-right">
@@ -188,7 +210,7 @@ SfdcPipelineModifiedFiles.propTypes = {
   pipelineId: PropTypes.string,
   stepId: PropTypes.string,
   setView: PropTypes.func,
-  modifiedFiles: PropTypes.array,
+  modifiedFiles: PropTypes.object,
   handleClose: PropTypes.func,
   createJenkinsJob: PropTypes.func
 };
