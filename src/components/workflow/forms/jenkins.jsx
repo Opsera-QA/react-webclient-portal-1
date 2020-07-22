@@ -9,6 +9,13 @@ import { axiosApiService } from "../../../api/apiService";
 import { Link } from "react-router-dom";
 import ErrorDialog from "../../common/error";
 
+const JOB_OPTIONS = [
+  { value: "", label: "Select One", isDisabled: "yes" },
+  { value: "job", label: "Custom Job" },
+  { value: "opsera-job", label: "Opsera Managed Jobs" },
+  { value: "sfdc-ant", label: "SFDC ANT Job" }
+];
+
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
   jobType: "BUILD", //hardcoded, every step wil have a hardcoded jobType is what i know needs to check with Todd.
@@ -20,13 +27,23 @@ const INITIAL_DATA = {
   jobName: "",
   dockerName: "",
   dockerTagName: "",
-  buildType: "gradle" //hardcoded now but needs to get it from a dropdown
+  buildType: "gradle", //hardcoded now but needs to get it from a dropdown
+
+  gitToolId: "",
+  repoId : "",
+  gitUrl:"",
+  sshUrl: "",
+  service: "",
+  gitCredential: "",
+  gitUserName : "",
+  repository: "",
+  branch: ""
 };
 
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
-function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentCallback, callbackSaveToVault }) {
+function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentCallback, callbackJobFunction, callbackSaveToVault }) {
 
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
@@ -36,8 +53,18 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
   const [loading, setLoading] = useState(false);
   const [jenkinsList, setjenkinsList] = useState([]);
   const [isJenkinsSearching, setisJenkinsSearching] = useState(false);
+  const [repoList, setRepoList] = useState([]);
+  const [isRepoSearching, setIsRepoSearching] = useState(false);
+  const [branchList, setBranchList] = useState([]);
+  const [isBranchSearching, setIsBranchSearching] = useState(false);
+    
+  const [accountsList, setAccountsList] = useState([]);
+  const [jobsList, setJobsList] = useState([]);
+  
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
+  
+  const [jobType, setJobType] = useState("");
 
   useEffect(() => {    
     const controller = new AbortController();
@@ -80,9 +107,61 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
     []
   );
   
+  // fetch repos
+  useEffect(
+    () => {
+      setErrors(false);
+      // setFormData({ ...formData, branch : "" });
+      async function fetchRepos(service, gitToolId){
+        setIsRepoSearching(true);
+        // Set results state
+        let results = await searchRepositories(service, gitToolId);
+        if(results) {
+          //console.log(results);
+          setRepoList(formatOptions(results));
+          setIsRepoSearching(false);
+        }
+      }
+      if (formData.service && formData.service.length > 0 && formData.gitToolId && formData.gitToolId.length > 0) {
+        // Fire off our API call
+        fetchRepos(formData.service, formData.gitToolId);
+      } else {
+        setIsRepoSearching(true);
+        setRepoList([{ value: "", name : "Select One",  isDisabled: "yes" }]);
+      }
+    },
+    [formData.service, formData.gitToolId]
+  );
+  
+  // fetch branches
+  useEffect(
+    () => {
+      setErrors(false);
+      // setFormData({ ...formData, branch : "" });
+      async function fetchBranches(service, gitToolId, repoId){
+        setIsBranchSearching(true);
+        // Set results state
+        let results = await searchBranches(service, gitToolId, repoId);
+        if(results) {
+          //console.log(results);
+          setBranchList(formatOptions(results));
+          setIsBranchSearching(false);
+        }
+      }
+      if (formData.service && formData.service.length > 0 && formData.gitToolId && formData.gitToolId.length > 0 && formData.repoId && formData.repoId.length > 0) {
+        // Fire off our API call
+        fetchBranches(formData.service, formData.gitToolId, formData.repoId);
+      } else {
+        setIsRepoSearching(true);
+        setBranchList([{ value: "", name : "Select One",  isDisabled: "yes" }]);
+      }
+    },
+    [formData.repoId]
+  );
+  
 
   const loadFormData = async (step) => {
-    let { configuration, threshold } = step;
+    let { configuration, threshold, job_type } = step;
     if (typeof(configuration) !== "undefined") {
 
       if (typeof(configuration) !== "undefined") {
@@ -92,8 +171,10 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
         setThresholdType(threshold.type);
         setThresholdValue(threshold.value);
       }
-
-
+      if (typeof(job_type) !== "undefined") {
+        console.log(job_type);
+        setJobType(job_type);
+      }
     } else {
       setFormData(INITIAL_DATA);
     }
@@ -108,7 +189,8 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
         threshold: {
           type: thresholdType,
           value: thresholdVal
-        }
+        },
+        job_type : jobType
       };
       console.log("item: ", item);
       setLoading(false);
@@ -127,7 +209,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
         let respObj = [];
         let arrOfObj = res.data;
         arrOfObj.map((item) => {
-          respObj.push({ "name" : item.name, "id" : item._id, "configuration" : item.configuration });
+          respObj.push({ "name" : item.name, "id" : item._id, "configuration" : item.configuration, "accounts": item.accounts, "jobs": item.jobs });
         });
         console.log(respObj);
         return respObj;
@@ -145,6 +227,10 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
     options.unshift({ value: "", name : "Select One",  isDisabled: "yes" });
     return options;
   };
+  // const formatAccountsOptions = (options) => {
+  //   options.unshift({ toolId: "", gitCredential : "Select One", gitUserName: "",  isDisabled: "yes" });
+  //   return options;
+  // };
 
   const validateRequiredFields = () => {
     let { toolConfigId, jenkinsUrl, jUserId, jAuthToken, jobName, buildType, dockerName, dockerTagName  } = formData;
@@ -167,18 +253,119 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
 
   const handleJenkinsChange = (selectedOption) => {
     setLoading(true);    
+    console.log(selectedOption);
     if (selectedOption.id && selectedOption.configuration) {
       setFormData({ ...formData, toolConfigId: selectedOption.id, 
         jenkinsUrl: selectedOption.configuration.jenkinsUrl, 
         jUserId: selectedOption.configuration.jUserId, 
         jenkinsPort: selectedOption.configuration.jenkinsPort, 
         jAuthToken: selectedOption.configuration.jAuthToken,
-        jobType : "BUILD"
+        gitToolId: "",
+        repoId : "",
+        gitUrl:"",
+        sshUrl: "",
+        service: "",
+        gitCredential: "",
+        gitUserName : "",
+        repository: "",
+        branch: ""
       });
+    }
+    if( selectedOption.accounts && selectedOption.jobs ) {
+      setAccountsList(selectedOption.accounts);
+      setJobsList(formatOptions(selectedOption.jobs));
     }
     setLoading(false);    
   };
+
+  const handleAccountChange = (selectedOption) => {
+    setFormData({ ...formData, gitToolId : selectedOption.toolId, gitCredential: selectedOption.gitCredential, gitUserName: selectedOption.gitUserName, service: selectedOption.service });
+  };
+
+  const handleRepoChange = (selectedOption) => {
+    setFormData({ ...formData, repository:selectedOption.name, repoId: selectedOption.id, gitUrl: selectedOption.httpUrl, sshUrl: selectedOption.sshUrl, branch: "" });  
+  };
+
+  const handleBranchChange = (selectedOption) => {
+    setFormData({ ...formData, branch: selectedOption.value });  
+  };
   
+  const handleJobChange = (selectedOption) => {
+    setErrors(false);
+    setJobType(selectedOption.value);  
+    if( selectedOption.value === "sfdc-ant" ) {
+      setFormData({ ...formData, jobName: "CREATE PACKAGE XML",
+        buildType: "Ant",
+        jobDescription: "PACKAGEXML_CREATION",
+        jobType: "CREATE PACKAGE XML" });
+    } else {
+      setFormData({ ...formData, jobName: "",
+        buildType: "gradle",
+        jobDescription: "",
+        jobType: "BUILD" });
+    }
+  };
+  
+  const searchRepositories = async (service, gitAccountId) => {  
+    const { getAccessToken } = contextType;
+    const accessToken = await getAccessToken();
+    const apiUrl = "/tools/properties";   
+    const postBody = {
+      tool : service,
+      metric : "getRepositories",
+      gitAccountId: gitAccountId
+    };
+    //console.log(postBody);
+    try {
+      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
+      if( res.data && res.data.data ) {
+        let arrOfObj = res.data.data;
+        return arrOfObj;
+      } else {
+        setErrors("Account information is missing or unavailable!  Please ensure the required account is registered and up to date in Tool Registry.");
+      }
+    }
+    catch (err) {
+      console.log(err.message);
+      setErrors(err.message);
+    }
+  };
+
+  const searchBranches = async (service, gitAccountId, repoId) => {  
+    const { getAccessToken } = contextType;
+    const accessToken = await getAccessToken();
+    const apiUrl = "/tools/properties";   
+    const postBody = {
+      tool : service,
+      metric : "getBranches",
+      gitAccountId: gitAccountId,
+      repoId : repoId
+    };
+    try {
+      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
+      if( res.data && res.data.data ) {
+        let arrOfObj = res.data.data;
+        if(arrOfObj) {
+          var result = arrOfObj.map(function(el) {
+            var o = Object.assign({});
+            o.value = el.toLowerCase();
+            o.name = el;
+            return o;
+          });
+          return result;
+        }
+      } else {
+        setErrors("Account information is missing or unavailable!  Please ensure the required account is registered and up to date in Tool Registry.");
+      }
+    }
+    catch (err) {
+      console.log(err.message);
+      setErrors(err.message);
+    }
+  };
+
+  console.log(formData);
+  console.log(accountsList);
   
   const popover = (
     <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
@@ -200,8 +387,6 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
       </Popover.Content>
     </Popover>
   );
-
-
 
   return (
     <>
@@ -251,11 +436,108 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
               a new Jenkins server in the 
           <Link to="/inventory/tools"> Tool Registry</Link> and add its configuration details. </div>}
 
+
+        <Form.Group controlId="formBasicEmail">
+          <Form.Label>Job Type*</Form.Label>
+          {jobType !== undefined ?
+            <DropdownList
+              data={JOB_OPTIONS}
+              valueField='id'
+              textField='label'
+              value={jobType ? JOB_OPTIONS[JOB_OPTIONS.findIndex(x => x.value === jobType)] : JOB_OPTIONS[0]}
+              defaultValue={jobType ? JOB_OPTIONS[JOB_OPTIONS.findIndex(x => x.value === jobType)] : JOB_OPTIONS[0]}
+              onChange={handleJobChange}             
+            /> : null }
+        </Form.Group>
+
+        {jobType === "job"  &&
         <Form.Group controlId="branchField">
           <Form.Label>Job Name*</Form.Label>
           <Form.Control maxLength="150" disabled={false} type="text" placeholder="" value={formData.jobName || ""} onChange={e => setFormData({ ...formData, jobName: e.target.value })} />
-        </Form.Group>
+        </Form.Group>}
 
+        {/* TODO: add jobs data here */}
+        {/* {jobType === "opsera-job"  &&
+        <>
+          <p>Create Job Form</p>
+        </>        
+        }
+
+        {jobType === "sfdc-ant"  &&
+        <>
+          <Button>Create Job</Button>
+        </>
+        } */}
+
+
+        {(formData.jenkinsUrl && jenkinsList.length > 1) &&                
+          <Form.Group controlId="formBasicEmail">
+            <Form.Label>Select Account*</Form.Label>
+            {accountsList.length < 1 &&  <div className="form-text text-muted p-2">
+              <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth/> 
+              No Credentials have been created for <span>{formData.jenkinsUrl}</span>.  Please go to 
+              <Link to="/inventory/tools"> Tool Registry</Link> and add credentials for this Jenkins in order to proceed. </div>
+            }
+            {accountsList !== undefined && accountsList.length > 0 ?
+              <DropdownList
+                data={accountsList}
+                valueField='toolId'
+                textField='gitCredential'
+                value={accountsList ? accountsList[accountsList.findIndex(x => x.toolId === formData.gitToolId)] : accountsList[0]}
+                // defaultValue={accountsList ? accountsList[accountsList.findIndex(x => x.toolId === formData.gitToolId)] : accountsList[0]}
+                placeholder= "Please select an account"
+                onChange={handleAccountChange}             
+              /> : null }
+          </Form.Group>
+        }
+        
+        {formData.service && formData.gitToolId && 
+        <Form.Group controlId="account"  className="mt-2">
+          <Form.Label>Select Repository*</Form.Label>
+          {isRepoSearching ? (
+            <div className="form-text text-muted mt-2 p-2">
+              <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> 
+              Loading repositories from registry</div>
+          ) :(
+            <>
+              {repoList ?
+                <DropdownList
+                  data={repoList} 
+                  value={formData.repository ? repoList[repoList.findIndex(x => x.name === formData.repository)] : repoList[0]}
+                  valueField='value'
+                  textField='name'
+                  defaultValue={formData.repository ? repoList[repoList.findIndex(x => x.name === formData.repository)] : repoList[0]}
+                  onChange={handleRepoChange}             
+                /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> }
+            </>
+          )}
+          {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
+        </Form.Group>  }
+
+        
+        {formData.service && formData.gitToolId && formData.repoId &&
+        <Form.Group controlId="account"  className="mt-2">
+          <Form.Label>Select Branch*</Form.Label>
+          {isBranchSearching ? (
+            <div className="form-text text-muted mt-2 p-2">
+              <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> 
+              Loading branches from selected repository</div>
+          ) :(
+            <>
+              {branchList ?
+                <DropdownList
+                  data={branchList} 
+                  value={formData.branch ? branchList[branchList.findIndex(x => x.value === formData.branch)] : branchList[0]}
+                  valueField='value'
+                  textField='name'
+                  defaultValue={formData.branch ? branchList[branchList.findIndex(x => x.value === formData.branch)] : branchList[0]}
+                  onChange={handleBranchChange}             
+                /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> }
+            </>
+          )}
+          {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
+        </Form.Group>  }
+       
         
         {(formData.jenkinsUrl && jenkinsList.length > 1) &&
         <Form.Group controlId="formBasicCheckbox" className="mt-4 ml-1">
