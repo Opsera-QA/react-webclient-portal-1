@@ -44,12 +44,12 @@ const SfdcPipelineModifiedFiles = ({ handleClose, setView, modifiedFiles, create
           
           { modifiedFiles && 
           <>
-            <div className="d-flex w-100">
-              <div className="col-7 list-item-container">
+            <div className="d-flex w-100 pr-2">
+              <div className="col-7 list-item-container mr-1">
                 <div className="h6 opsera-blue">GitLab Files</div>
-                {/* //gitModified.map */}
+                {(gitModified && gitModified.length === 0) && <div className="info-text mt-3">NO FILES</div>}
                 {typeof(gitModified) === "object" && gitModified.map((item, idx) => (
-                  <div key={idx} className="thick-list-item-container-green  w-100 force-text-wrap p-1">
+                  <div key={idx} className="thick-list-item-container-green  w-100 force-text-wrap">
                     {item.commitAction && item.commitAction === "added" && <FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1 green"/>}
                     {item.commitAction && item.commitAction === "modified" && <FontAwesomeIcon icon={faPen} fixedWidth className="mr-1 yellow"/>}
                     {item.commitAction && item.commitAction === "deleted" && <FontAwesomeIcon icon={faMinus} fixedWidth className="mr-1 dark-grey"/>}                    
@@ -61,7 +61,7 @@ const SfdcPipelineModifiedFiles = ({ handleClose, setView, modifiedFiles, create
               <div className="col-5 list-item-container">
                 <div className="h6 opsera-blue">SFDC Files</div>
                 {/* sfdcModified.map */}
-
+                {(sfdcModified && sfdcModified.length === 0) && <div className="info-text mt-3">NO FILES</div>}
                 {typeof(sfdcModified) === "object" && sfdcModified.map((item, idx) => (
                   <div key={idx} className="thick-list-item-container-green  w-100 force-text-wrap p-1">
                     {(item.commitAction && item.commitAction === "active") ? 
