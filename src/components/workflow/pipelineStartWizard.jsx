@@ -3,18 +3,13 @@ import PropTypes from "prop-types";
 import { Button, OverlayTrigger, Popover, Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStepForward, faPlay, faSync, faSpinner, faStopCircle, faHistory, faPause, faFlag } from "@fortawesome/free-solid-svg-icons";
-import SfdcPipelineStart from "./wizards/sfdcPipelineStart";
+import SfdcPipelineWizard from "./wizards/sfdcPipelineWizard";
 
 import "./workflows.css";
 
-function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, handleClose, handlePipelineWizardRequest }) {
+function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, pipelineSteps, handleClose, handlePipelineWizardRequest }) {
 
-  
-
-  useEffect(() => {
-
-  }, []);
-  
+    
   const popover = (
     <Popover id="popover-basic">
       <Popover.Content>
@@ -28,13 +23,15 @@ function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, h
       <Modal size="lg" show={true} onHide={handleClose} 
         className="tool-details-modal" id="dataManagerModal" backdrop="static">       
         <Modal.Header closeButton>
-          <Modal.Title>Pipeline Run Notice</Modal.Title>
+          <Modal.Title>Pipeline Start Wizard</Modal.Title>
         </Modal.Header>
         <Modal.Body>
 
-          {pipelineType !== "sfdc" && pipelineOrientation === "middle" && <ConfirmResumePipeline pipelineId={pipelineId} handlePipelineWizardRequest={handlePipelineWizardRequest} />}
+          {pipelineType !== "sfdc" && pipelineOrientation === "middle" && 
+            <ConfirmResumePipeline pipelineId={pipelineId} handlePipelineWizardRequest={handlePipelineWizardRequest} />}
 
-          {pipelineType === "sfdc" && pipelineOrientation === "start" && <SfdcPipelineStart pipelineId={pipelineId} handlePipelineWizardRequest={handlePipelineWizardRequest} handleClose={handleClose} />}
+          {pipelineType === "sfdc" && pipelineOrientation === "start" && 
+            <SfdcPipelineWizard pipelineId={pipelineId} pipelineSteps={pipelineSteps} handlePipelineWizardRequest={handlePipelineWizardRequest} handleClose={handleClose} />}
 
         </Modal.Body>
         <Modal.Footer>
@@ -99,6 +96,7 @@ PipelineStartWizard.propTypes = {
   pipelineType: PropTypes.string,
   pipelineId: PropTypes.string,
   pipelineOrientation: PropTypes.string,
+  pipelineSteps: PropTypes.array,
   handlePipelineWizardRequest: PropTypes.func,
   handleClose: PropTypes.func
 };

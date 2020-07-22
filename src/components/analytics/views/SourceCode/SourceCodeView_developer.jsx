@@ -60,6 +60,10 @@ function SourceCodeView_developer ({ persona, date }) {
         {
           "request": "gitlabTotalNumberOfCommits",
           "metric": "count"
+        },
+        {
+          "request": "gitlabTotalNumberOfMergeRequestsOpenedByUser",
+          "metric": "complexCount"
         }
       ],
       startDate: date.start, 
@@ -81,7 +85,7 @@ function SourceCodeView_developer ({ persona, date }) {
   }
   
   const buildSummaryCounts = (data) => {
-    const { gitlabTotalNumberOfCommits, gitlabTotalNumberOfBranches, gitlabTotalMergeRequestsPendingForReview } = data;
+    const { gitlabTotalNumberOfCommits, gitlabTotalNumberOfBranches, gitlabTotalMergeRequestsPendingForReview, gitlabTotalNumberOfMergeRequestsOpenedByUser } = data;
     let summaryCountsData = [];    
     if (gitlabTotalNumberOfCommits.status === 200 && gitlabTotalNumberOfCommits.data !== undefined) {
       summaryCountsData.push({ name: "Total Commits", value: gitlabTotalNumberOfCommits.data[0].count, footer: "", status: "" });
@@ -92,6 +96,9 @@ function SourceCodeView_developer ({ persona, date }) {
     if (gitlabTotalMergeRequestsPendingForReview.status === 200 && gitlabTotalMergeRequestsPendingForReview.data !== undefined) {
       summaryCountsData.push({ name: "Merge Requests Pending", value: gitlabTotalMergeRequestsPendingForReview.data[0].count, footer: "", status: gitlabTotalMergeRequestsPendingForReview.data[0].count > 0 ? "danger" : null });
     }    
+    if (gitlabTotalNumberOfMergeRequestsOpenedByUser.status === 200 && gitlabTotalNumberOfMergeRequestsOpenedByUser.data !== undefined) {
+      summaryCountsData.push({ name: "Merge Requests Opened", value: gitlabTotalNumberOfMergeRequestsOpenedByUser.data[0].count, footer: "", status: "" });
+    }  
     return summaryCountsData;
   };
 

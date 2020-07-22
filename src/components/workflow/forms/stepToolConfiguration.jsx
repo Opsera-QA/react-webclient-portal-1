@@ -52,6 +52,7 @@ function StepToolConfiguration( { data, editItem, parentCallback }) {
     let stepArrayIndex = getStepIndex(editItem.step_id); 
     plan[stepArrayIndex].tool.configuration = tool.configuration;
     plan[stepArrayIndex].tool.threshold = tool.threshold;
+    plan[stepArrayIndex].tool.job_type = tool.job_type;
     parentCallback(plan);
     setStepTool({});
   };
