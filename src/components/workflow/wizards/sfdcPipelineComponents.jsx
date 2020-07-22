@@ -184,7 +184,7 @@ const SfdcPipelineComponents = ({ pipelineId, stepId, setView, setModifiedFiles,
               <div className="d-flex flex-wrap">
                 {loading ? <LoadingDialog size="sm" /> : 
                   <>
-                    {componentTypes.map((item, idx) => (
+                    {typeof(componentTypes) === "object" && componentTypes.map((item, idx) => (
                       <div key={idx} className="p-2 w-25">
                         <input type="checkbox" className="form-check-input" id={idx} name={item} onClick={handleComponentCheck} />
                         <label className="form-check-label" htmlFor={idx}>{item}</label>
@@ -195,7 +195,7 @@ const SfdcPipelineComponents = ({ pipelineId, stepId, setView, setModifiedFiles,
             </div>
           </>}
         </div>
-        <div className="flex-container-bottom pr-2 mt-3 mb-2 text-right">
+        <div className="flex-container-bottom pr-2 mt-4 mb-2 text-right">
           <Button variant="secondary" size="sm" className="mr-2" disabled={true}>
             <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-1"/>Back</Button>
 
