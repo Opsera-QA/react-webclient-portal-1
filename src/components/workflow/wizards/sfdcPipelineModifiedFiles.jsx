@@ -33,7 +33,7 @@ const SfdcPipelineModifiedFiles = ({ handleClose, setView, modifiedFiles, create
   return (    
     <div className="ml-5">
       <div className="flex-container">
-        <div className="flex-container-top"> STEP 2</div>
+        <div className="flex-container-top"></div>
         <div className="flex-container-content">
         
           <div className="h5">SalesForce Pipeline Run: File Comparison</div>
@@ -49,7 +49,7 @@ const SfdcPipelineModifiedFiles = ({ handleClose, setView, modifiedFiles, create
                 <div className="h6 opsera-blue">GitLab Files</div>
                 {(gitModified && gitModified.length === 0) && <div className="info-text mt-3">NO FILES</div>}
                 {typeof(gitModified) === "object" && gitModified.map((item, idx) => (
-                  <div key={idx} className="thick-list-item-container-green  w-100 force-text-wrap">
+                  <div key={idx} className="thick-list-item-container-green  w-100 force-text-wrap p-1">
                     {item.commitAction && item.commitAction === "added" && <FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1 green"/>}
                     {item.commitAction && item.commitAction === "modified" && <FontAwesomeIcon icon={faPen} fixedWidth className="mr-1 yellow"/>}
                     {item.commitAction && item.commitAction === "deleted" && <FontAwesomeIcon icon={faMinus} fixedWidth className="mr-1 dark-grey"/>}                    
