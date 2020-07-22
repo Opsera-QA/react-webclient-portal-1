@@ -12,7 +12,7 @@ function LoadingDialog({ size }) {
   
   if (type === "sm") {
     return (
-      <div className="row" style={{ height:"250px" }}>
+      <div className="row" style={{ height:"250px", width: "100%" }}>
         <div className="col-sm-12 my-auto text-center">
           <Spinner as="span"
             animation="grow"

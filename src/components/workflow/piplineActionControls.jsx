@@ -123,7 +123,7 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
     console.log("pipelineType: ", pipelineType);
     
     let pipelineOrientation = "start";
-    //what step are we currently on in the pipeline: first, last or inbetween?
+    //what step are we currently on in the pipeline: first, last or middle?
     if (pipeline.workflow.last_step && pipeline.workflow.last_step.step_id) {
       const stepIndex = PipelineHelpers.getStepIndex(pipeline, pipeline.workflow.last_step.step_id);
       console.log("current resting step index: ", stepIndex);
@@ -294,7 +294,7 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
 
   return (
     <>
-      {wizardModal.show && <PipelineStartWizard pipelineType={wizardModal.pipelineType} pipelineOrientation={wizardModal.pipelineOrientation} pipelineId={wizardModal.pipelineId} handleClose={handlePipelineStartWizardClose} handlePipelineWizardRequest={handlePipelineWizardRequest} />}
+      {wizardModal.show && <PipelineStartWizard pipelineType={wizardModal.pipelineType} pipelineOrientation={wizardModal.pipelineOrientation} pipelineId={wizardModal.pipelineId} pipelineSteps={pipeline.workflow.plan} handleClose={handlePipelineStartWizardClose} handlePipelineWizardRequest={handlePipelineWizardRequest} />}
       
       <div className="text-right" style={{ marginBottom: "5px" }}>
         {workflowStatus === "running" && 
