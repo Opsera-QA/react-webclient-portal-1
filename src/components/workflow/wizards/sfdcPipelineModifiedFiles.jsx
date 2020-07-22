@@ -15,22 +15,22 @@ import CustomTable from "components/common/table";
 
 
 const SfdcPipelineModifiedFiles = ({ pipelineId, stepId, handleClose, setView, modifiedFiles, createJenkinsJob }) => {
-  const { getAccessToken } = useContext(AuthContext);
+  //const { getAccessToken } = useContext(AuthContext);
   const [loading, setLoading] = useState(false); 
   const [error, setError] = useState(false); 
   const [configurationError, setConfigurationError] = useState(false); 
   const [save, setSave] = useState(false);
+  const [gitModified, setGitModified] = useState([]);
+  const [sfdcModified, setSfdcModified] = useState([]);
   
   
-  
-
   
   useEffect(() => {
     setConfigurationError(false);
-    //loadData();
-    //loadRegistryData();
-    
-  }, []);
+    console.log(modifiedFiles);
+    setGitModified(modifiedFiles.gitModified);
+    setSfdcModified(modifiedFiles.sfdcModified);
+  }, [modifiedFiles]);
 
   
 
@@ -124,18 +124,28 @@ const SfdcPipelineModifiedFiles = ({ pipelineId, stepId, handleClose, setView, m
             <div className="mx-5 mt-3">  
               <div className="text-muted ">Select Component Types:</div>
               <div className="d-flex flex-wrap">
-                {loading ? <LoadingDialog size="sm" /> : 
-                  <>
-                    <CustomTable 
-                      columns={columns} 
-                      data={modifiedFiles}
-                      onRowSelect={onRowSelect}
-                      rowStyling={rowStyling}
-                      initialState={initialState}
-                      // tableFilter={tableFilter}
-                    >
-                    </CustomTable>
-                  </> } 
+                
+                <>
+                  <CustomTable 
+                    columns={columns} 
+                    data={gitModified}
+                    onRowSelect={onRowSelect}
+                    rowStyling={rowStyling}
+                    initialState={initialState}
+                    // tableFilter={tableFilter}
+                  >
+                  </CustomTable>
+
+                  <CustomTable 
+                    columns={columns} 
+                    data={sfdcModified}
+                    onRowSelect={onRowSelect}
+                    rowStyling={rowStyling}
+                    initialState={initialState}
+                    // tableFilter={tableFilter}
+                  >
+                  </CustomTable>
+                </> 
               </div>          
             </div>
           </>}

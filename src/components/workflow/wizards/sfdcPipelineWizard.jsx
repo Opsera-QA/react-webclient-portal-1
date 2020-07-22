@@ -43,7 +43,12 @@ const SfdcPipelineWizard = ({ pipelineId, pipelineSteps, handlePipelineWizardReq
 
     console.log(postBody);
 
-    // on complete of createJob API, 
+    //create jenkins job
+
+    //log create of jenkins job (check to see if API does it automatically)
+
+    // log approval of this data to the pipeline Acitivity log as new activity type
+    
     //trigger start of pipeline
 
     //close modal
