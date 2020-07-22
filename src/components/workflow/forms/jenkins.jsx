@@ -329,7 +329,15 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
   
 
   const handleAccountChange = (selectedOption) => {
-    setFormData({ ...formData, gitToolId : selectedOption.toolId, gitCredential: selectedOption.gitCredential, gitUserName: selectedOption.gitUserName, service: selectedOption.service });
+    setFormData({ ...formData, gitToolId : selectedOption.toolId, gitCredential: selectedOption.gitCredential, gitUserName: selectedOption.gitUserName, service: selectedOption.service,
+      repoId : "",
+      gitUrl:"",
+      sshUrl: "",
+      repository: "",
+      branch: "",
+      projectId: "",
+      defaultBranch: "",
+    });
   };
 
   const handleRepoChange = (selectedOption) => {
@@ -610,7 +618,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
                   value={repoList[repoList.findIndex(x => x.name === formData.repository)]}
                   valueField='value'
                   textField='name' 
-                  placeholder= "Please select an account"
+                  placeholder= "Please select a repository"
                   // defaultValue={formData.repository ? repoList[repoList.findIndex(x => x.name === formData.repository)] : repoList[0]}
                   onChange={handleRepoChange}             
                 /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> }
@@ -635,6 +643,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
                   value={branchList[branchList.findIndex(x => x.value === formData.branch)]}
                   valueField='value'
                   textField='name'
+                  placeholder= "Please select a branch"
                   // defaultValue={formData.branch ? branchList[branchList.findIndex(x => x.value === formData.branch)] : branchList[0]}
                   onChange={handleBranchChange}             
                 /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> }
