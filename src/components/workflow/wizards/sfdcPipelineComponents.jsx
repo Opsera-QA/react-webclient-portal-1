@@ -168,14 +168,14 @@ const SfdcPipelineComponents = ({ pipelineId, stepId, setView, setModifiedFiles,
           { !configurationError && 
           <>
             <div className="mx-3 mt-3">        
-              <div className="mb-3" style={{ display: "flex" }}>
+              <div className="mb-3 align-items-end" style={{ display: "flex" }}>
                 <div className="px-2" style={{ flex: "50%" }}>
                   <div className="text-muted pl-1 pb-1">Select Date Filter:</div>
                   {dateAsOf}</div>
                 <div className="px-2 text-right" style={{ flex: "50%" }}>
                   {/* <div className="text-muted pl-1 pb-1">Select SalesForce Account (configured in Registry):</div>
                   <AccountDropDown data={registryData} setAccount={handleSetAccount} isLoading={loadingRegistry} /> */}
-                  <Button variant="secondary" size="sm" className="mr-2 mt-2" disabled={true}>
+                  <Button variant="secondary" size="sm" className="mr-2" disabled={true}>
                     <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1"/>Select All</Button>
                 </div>
               </div>

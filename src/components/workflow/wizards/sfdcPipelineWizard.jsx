@@ -1,16 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
+import { AuthContext } from "contexts/AuthContext"; 
+import { axiosApiService } from "api/apiService";
 import SfdcPipelineComponents from "./sfdcPipelineComponents";
 import SfdcPipelineModifiedFiles from "./sfdcPipelineModifiedFiles";
 import ErrorDialog from "components/common/error";
 
 const SfdcPipelineWizard = ({ pipelineId, pipelineSteps, handlePipelineWizardRequest, handleClose }) => {
+  const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(false); 
   const [view, setView] = useState(1); 
-  const [modifiedFiles, setModifiedFiles] = useState([]);//need to pass this up the chain
+  const [modifiedFiles, setModifiedFiles] = useState([]);
   const [stepId, setStepId] = useState("");
+  const [stepToolConfigId, setStepToolConfigId] = useState("");
+  const [stepIndex, setStepIndex] = useState();
   const [sfdcComponentFilterObject, setSfdcComponentFilterObject] = useState({});
-  //trigger create jenkins job up here since it needs ot get data from step one.
+  
 
   useEffect(() => {
     loadSfdcInitStep(pipelineSteps);
@@ -26,14 +31,20 @@ const SfdcPipelineWizard = ({ pipelineId, pipelineSteps, handlePipelineWizardReq
     } else {
       console.log("step ID: ", steps[stepArrayIndex]._id);
       setStepId(steps[stepArrayIndex]._id);
+      setStepToolConfigId(steps[stepArrayIndex].tool.configuration.toolConfigId);
+      setStepIndex(stepArrayIndex);
     }
   };
 
   const createJenkinsJob = async () => {
-    //details here!
+    const accessToken = await getAccessToken();
     console.log(sfdcComponentFilterObject);
+    const apiUrl = `/registry/action/${stepToolConfigId}/createjob`;
 
     const postBody = {
+      jobId: "",
+      pipelineId: pipelineId,
+      stepId: stepId,
       buildParams: {
         stepId: sfdcComponentFilterObject.stepId,
         lastCommitTimeStamp: sfdcComponentFilterObject.lastCommitTimeStamp,
@@ -44,14 +55,43 @@ const SfdcPipelineWizard = ({ pipelineId, pipelineSteps, handlePipelineWizardReq
     console.log(postBody);
 
     //create jenkins job
+    let createJobResponse;
+    try {      
+      createJobResponse = await axiosApiService(accessToken).post(apiUrl, postBody);
+      console.log(createJobResponse);      
+    } catch (error) {
+      console.log("Error posting to API: ", error);
+      setError(error);
+    }
 
-    //log create of jenkins job (check to see if API does it automatically)
+    //post to pipeline acitivty log: 
+    const logPostBody = {
+      step_id: stepId,
+      run_count: null,
+      step_index: stepIndex,
+      tool_identifier: "sfdc-configurator",
+      step_name: "SFDC Modified Files Review",
+      step_configuration: postBody,
+      api_response: createJobResponse,
+      build_number: "",
+      message: "Modified files approved for pipeline",
+      status: "success",
+      action: "approve files for processing",
+    };
 
-    // log approval of this data to the pipeline Acitivity log as new activity type
+    const logApi = `/pipelines/${pipelineId}/activity`;
+    try {
+      const accessToken = await getAccessToken();
+      const response = await axiosApiService(accessToken).post(logApi, logPostBody);
+      console.log(response);      
+    } catch (error) {
+      console.log("Error posting to API: ", error);
+      setError(error);
+    }
     
-    //trigger start of pipeline
+    //trigger start of pipeline & close modal
+    handlePipelineWizardRequest(pipelineId, true);
 
-    //close modal
 
   };
 
@@ -71,8 +111,6 @@ const SfdcPipelineWizard = ({ pipelineId, pipelineSteps, handlePipelineWizardReq
 
         {view === 2 && 
           <SfdcPipelineModifiedFiles 
-            pipelineId={pipelineId} 
-            stepId={stepId} 
             handleClose={handleClose} 
             setView={setView} 
             modifiedFiles={modifiedFiles} 
