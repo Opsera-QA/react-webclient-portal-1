@@ -101,6 +101,7 @@ function JenkinsCreateAccount(props) {
     let payload = {
       service: platformType,
       credentailsToolId: account._id,
+      accountUserName: accountUserName,
       ...formData
     };
     try {
