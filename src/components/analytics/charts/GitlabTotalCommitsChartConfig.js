@@ -1,13 +1,15 @@
 export default {
   keys: [
-    "MergeRequestTimeTaken",
-    "PushCodeTime"
+    "Subtask",
+    "Story",
+    "Task",
+    "Bug"
   ],
   margin: {
     "top": 50,
-    "right": 110,
+    "right": 130,
     "bottom": 80,
-    "left": 115
+    "left": 100
   },
   defs: [
     {
@@ -44,40 +46,40 @@ export default {
     }
   ],
   axisBottom: {
-    "tickSize": 8,
-    "tickPadding": 5,
-    "tickRotation": 0,
-    "legend": "Time (In Minutes)",
+    "format": "%b %d",
+    "tickValues": "every 2 days",
+    "tickRotation": -65,
     "legendPosition": "middle",
     "legendOffset": 50
   },
   axisLeft: {
-    "format": d => d.substring(0, 12),
     "tickSize": 8,
     "tickPadding": 5,
     "tickRotation": 0,
-    "legend": "Author Name",
+    "legend": "Number of Issues",
     "legendPosition": "middle",
-    "legendOffset": -100
+    "legendOffset": -60
   },
   legends: [
     {
-      "dataFrom": "keys",
       "anchor": "bottom-right",
       "direction": "column",
-      "justify": true,
-      "translateX": 125,
-      "translateY": 62,
-      "itemsSpacing": 3,
-      "itemWidth": 110,
-      "itemHeight": 30,
-      "itemDirection": "bottom-to-top",
-      "itemOpacity": 0.85,
-      "symbolSize": 10,
+      "justify": false,
+      "translateX": 85,
+      "translateY": 0,
+      "itemsSpacing": 0,
+      "itemDirection": "left-to-right",
+      "itemWidth": 80,
+      "itemHeight": 20,
+      "itemOpacity": 0.75,
+      "symbolSize": 12,
+      "symbolShape": "circle",
+      "symbolBorderColor": "rgba(0, 0, 0, .5)",
       "effects": [
         {
           "on": "hover",
           "style": {
+            "itemBackground": "rgba(0, 0, 0, .03)",
             "itemOpacity": 1
           }
         }

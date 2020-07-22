@@ -73,7 +73,7 @@ function GitlabMrTitleTimeAuthorNoOfCommits({ date }) {
   } else {
     return (
       <>
-        <div className="chart-label-text">Gitlab: Merge-Request Title Time Author Number Of Commits</div>
+        <div className="">Gitlab: Merge-Request Title Time Author Number Of Commits</div>
         {data !== undefined && data.gitlabMergeReqTitleTimeAuthorNumberOfCommits.data.length > 0 ? 
           <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
             <thead>

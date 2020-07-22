@@ -70,24 +70,25 @@ function GitlabMergeReqWithMaximumTime({ date }) {
   } else {
     return (
       <>
-        <div className="chart-label-text">Gitlab: Merge-Request with Maximum Time</div>
+        {/* <div className="chart-label-text">Gitlab: Merge-Request with Maximum Time</div> */}
+        <div className="">Gitlab: Merge-Request with Maximum Time</div>
         {data !== undefined && data.gitlabMergeReqWithMaximumTime.data.length > 0 ? 
           <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
             <thead>
               <tr>
-                <th style={{ width: "5%" }}>Author Name</th>
-                <th style={{ width: "5%" }}>Merge Request Title</th>
-                <th style={{ width: "5%" }}>Merge Request Time Taken (min)</th>
                 <th style={{ width: "5%" }}>Project Name</th>                
+                <th style={{ width: "5%" }}>Merge Request Title</th>
+                <th style={{ width: "5%" }}>Merge Request Time Taken (min)</th>                
+                <th style={{ width: "5%" }}>Author Name</th>                
               </tr>
             </thead>
             <tbody>
               {data.gitlabMergeReqWithMaximumTime.data.map(function (value, index) {
                 return <tr key = {index}>
-                  <td>{value["AuthorName"]}</td>
+                  <td>{value["ProjectName"]}</td>                                                      
                   <td>{value["MergeRequestTitle"]}</td>
                   <td>{value["TimeTaken"]}</td>
-                  <td>{value["ProjectName"]}</td>                                    
+                  <td>{value["AuthorName"]}</td>
                 </tr>;
               })
               }

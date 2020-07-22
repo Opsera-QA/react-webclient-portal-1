@@ -71,7 +71,7 @@ function JMeterResultsTable({ date }) {
   } else {
     return (
       <>
-        <div className="chart-label-text">Gitlab: Time Taken To Complete Merge Request (Coding + Review)</div>
+        <div className="">Gitlab: Time Taken To Complete Merge Request (Coding + Review)</div>
         {data !== undefined && data.gitlabTimeTakenToCompleteMergeRequestReview.data.length > 0 ? 
           <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
             <thead>
