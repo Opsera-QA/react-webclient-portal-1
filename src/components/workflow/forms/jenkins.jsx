@@ -13,7 +13,7 @@ const JOB_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
   { value: "job", label: "Custom Job" },
   { value: "opsera-job", label: "Opsera Managed Jobs" },
-  { value: "sfdc-ant", label: "SFDC ANT Job" }
+  { value: "sfdc-ant", label: "SFDC Package Generation Job" }
 ];
 
 //This must match the form below and the data object expected.  Each tools' data object is different
