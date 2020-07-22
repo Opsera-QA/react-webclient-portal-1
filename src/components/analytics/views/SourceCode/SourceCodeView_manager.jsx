@@ -54,6 +54,10 @@ function SourceCodeView_manager ({ persona, date }) {
         {
           "request": "gitlabTotalMergeRequestsPendingForReview",
           "metric": "complexCount"
+        },
+        {
+          "request": "gitlabTotalNumberOfCommits",
+          "metric": "count"
         }
       ],
       startDate: date.start, 
@@ -75,8 +79,12 @@ function SourceCodeView_manager ({ persona, date }) {
   }
   
   const buildSummaryCounts = (data) => {
-    const { gitlabTotalNumberOfBranches, gitlabTotalMergeRequestsPendingForReview } = data;
+    const { gitlabTotalNumberOfCommits, gitlabTotalNumberOfBranches, gitlabTotalMergeRequestsPendingForReview } = data;
+    console.log(gitlabTotalNumberOfCommits);
     let summaryCountsData = [];    
+    if (gitlabTotalNumberOfCommits.status === 200 && gitlabTotalNumberOfCommits.data !== undefined) {
+      summaryCountsData.push({ name: "Total Commits", value: gitlabTotalNumberOfCommits.data[0].count, footer: "", status: "" });
+    }  
 
     if (gitlabTotalNumberOfBranches.status === 200 && gitlabTotalNumberOfBranches.data !== undefined) {
       summaryCountsData.push({ name: "Branches Created", value: gitlabTotalNumberOfBranches.data[0].count, footer: "", status: "" });

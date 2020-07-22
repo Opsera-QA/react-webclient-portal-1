@@ -58,6 +58,10 @@ function SourceCodeView_developer ({ persona, date }) {
           "metric": "complexCount"
         },
         {
+          "request": "gitlabTotalNumberOfCommits",
+          "metric": "count"
+        },
+        {
           "request": "gitlabTotalNumberOfMergeRequestsOpenedByUser",
           "metric": "complexCount"
         }
@@ -81,9 +85,11 @@ function SourceCodeView_developer ({ persona, date }) {
   }
   
   const buildSummaryCounts = (data) => {
-    const { gitlabTotalNumberOfBranches, gitlabTotalMergeRequestsPendingForReview, gitlabTotalNumberOfMergeRequestsOpenedByUser } = data;
+    const { gitlabTotalNumberOfCommits, gitlabTotalNumberOfBranches, gitlabTotalMergeRequestsPendingForReview, gitlabTotalNumberOfMergeRequestsOpenedByUser } = data;
     let summaryCountsData = [];    
-
+    if (gitlabTotalNumberOfCommits.status === 200 && gitlabTotalNumberOfCommits.data !== undefined) {
+      summaryCountsData.push({ name: "Total Commits", value: gitlabTotalNumberOfCommits.data[0].count, footer: "", status: "" });
+    }
     if (gitlabTotalNumberOfBranches.status === 200 && gitlabTotalNumberOfBranches.data !== undefined) {
       summaryCountsData.push({ name: "Branches Created", value: gitlabTotalNumberOfBranches.data[0].count, footer: "", status: "" });
     }
