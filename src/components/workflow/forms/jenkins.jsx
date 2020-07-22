@@ -25,6 +25,12 @@ const INITIAL_DATA = {
   jUserId: "",
   jAuthToken: "",
   jobName: "",
+
+  sfdcToolId: "",
+  accountUsername: "",
+  projectId: "",
+  defaultBranch: "",
+
   dockerName: "",
   dockerTagName: "",
   buildType: "gradle", //hardcoded now but needs to get it from a dropdown
@@ -57,7 +63,10 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
   const [isRepoSearching, setIsRepoSearching] = useState(false);
   const [branchList, setBranchList] = useState([]);
   const [isBranchSearching, setIsBranchSearching] = useState(false);
-    
+  
+  const [sfdcList, setSFDCList] = useState([]);
+  const [isSFDCSearching, setisSFDCSearching] = useState(false);
+  
   const [accountsList, setAccountsList] = useState([]);
   const [jobsList, setJobsList] = useState([]);
   
@@ -103,6 +112,27 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
       }
       // Fire off our API call
       fetchJenkinsDetails("jenkins");
+    },
+    []
+  );
+  
+  // search sfdc 
+  useEffect(
+    () => {
+      setErrors(false);
+      async function fetchSFDCDetails(service){
+        setisSFDCSearching(true);
+        // Set results state
+        let results = await searchjenkinsList(service);
+        console.log(results);
+        const filteredList = results.filter(el => el.configuration !== undefined); //filter out items that do not have any configuration data!
+        if(filteredList) {          
+          setSFDCList(formatOptions(filteredList));
+          setisSFDCSearching(false);
+        }
+      }
+      // Fire off our API call
+      fetchSFDCDetails("sfdc-configurator");
     },
     []
   );
@@ -287,16 +317,27 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
     setLoading(false);    
   };
 
+  
+  const handleSFDCChange = (selectedOption) => {
+    setLoading(true);    
+    console.log(selectedOption);
+    if (selectedOption.id && selectedOption.configuration) {
+      setFormData({ ...formData, sfdcToolId: selectedOption.id, accountUsername: selectedOption.configuration ? selectedOption.configuration.accountUsername : "" });
+    }
+    setLoading(false);    
+  };
+  
+
   const handleAccountChange = (selectedOption) => {
     setFormData({ ...formData, gitToolId : selectedOption.toolId, gitCredential: selectedOption.gitCredential, gitUserName: selectedOption.gitUserName, service: selectedOption.service });
   };
 
   const handleRepoChange = (selectedOption) => {
-    setFormData({ ...formData, repository:selectedOption.name, repoId: selectedOption.id, gitUrl: selectedOption.httpUrl, sshUrl: selectedOption.sshUrl, branch: "" });  
+    setFormData({ ...formData, repository:selectedOption.name, repoId: selectedOption.id,  projectId: selectedOption.id, gitUrl: selectedOption.httpUrl, sshUrl: selectedOption.sshUrl, branch: "" });  
   };
 
   const handleBranchChange = (selectedOption) => {
-    setFormData({ ...formData, branch: selectedOption.value });  
+    setFormData({ ...formData, branch: selectedOption.value, defaultBranch: selectedOption.value });  
   };
   
   const handleJobChange = (selectedOption) => {
@@ -308,7 +349,9 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
         jobDescription: "PACKAGEXML_CREATION",
         jobType: "CREATE PACKAGE XML" });
     } else {
-      setFormData({ ...formData, jobName: "",
+      setFormData({ ...formData,
+        sfdcToolId : "", accountUsername: "",
+        jobName: "",
         buildType: "gradle",
         jobDescription: "",
         jobType: "BUILD" });
@@ -376,7 +419,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
   console.log(formData);
   // console.log(accountsList);
   
-  const popover = (
+  const JenkinsPopover = (
     <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
       <Popover.Title as="h3">Tool Details</Popover.Title>
       <Popover.Content>
@@ -393,6 +436,20 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
           <div className="text-muted pr-1">User ID:</div>
           <div>{formData.jUserId || ""}</div>
         </div>        
+      </Popover.Content>
+    </Popover>
+  );
+
+  
+  const SFDCPopover = (
+    <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
+      <Popover.Title as="h3">Tool Details</Popover.Title>
+      <Popover.Content>
+        <div className="text-muted mb-2">Information below is from the selected Tool Registry item.  To changes these values, edit the entry in Tool Registry.</div>
+        <div className="mb-1">
+          <div className="text-muted pr-1">SFDC Account Username:</div>
+          <div>{formData.accountUsername || ""}</div>
+        </div>   
       </Popover.Content>
     </Popover>
   );
@@ -423,7 +480,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
                   onChange={handleJenkinsChange}             
                 /> 
                 <div className="text-right pt-2">
-                  <OverlayTrigger trigger="click" rootClose placement="left" overlay={popover}>
+                  <OverlayTrigger trigger="click" rootClose placement="left" overlay={JenkinsPopover}>
                     <Button variant="outline-dark" size="sm">Info</Button>
                   </OverlayTrigger>
                 </div>
@@ -470,13 +527,42 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
         <>
           <p>Create Job Form</p>
         </>        
-        }
+        }*/}
 
         {jobType === "sfdc-ant"  &&
-        <>
-          <Button>Create Job</Button>
-        </>
-        } */}
+          <Form.Group controlId="jenkinsList">
+            <Form.Label>Select SFDC Tool Credentials*</Form.Label>
+            {isSFDCSearching ? (
+              <div className="form-text text-muted mt-2 p-2">
+                <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> 
+            Loading SFDC accounts from registry</div>
+            ) :(
+              <>
+                {renderForm && sfdcList && sfdcList.length > 1 ? <>
+                  <DropdownList
+                    data={sfdcList}
+                    value={formData.sfdcToolId ? sfdcList[sfdcList.findIndex(x => x.id === formData.sfdcToolId)] : sfdcList[0]}
+                    valueField='id'
+                    textField='name'
+                    defaultValue={formData.sfdcToolId ? sfdcList[sfdcList.findIndex(x => x.id === formData.sfdcToolId)] : sfdcList[0]}
+                    onChange={handleSFDCChange}             
+                  /> 
+                  <div className="text-right pt-2">
+                    <OverlayTrigger trigger="click" rootClose placement="left" overlay={SFDCPopover}>
+                      <Button variant="outline-dark" size="sm">Info</Button>
+                    </OverlayTrigger>
+                  </div>
+                </> : <>
+                  <div className="form-text text-muted p-2">
+                    <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth/> 
+              No accounts have been registered for SFDC.  Please go to 
+                    <Link to="/inventory/tools"> Tool Registry</Link> and add an entry for this repository in order to proceed. </div>
+                </> }
+              </>
+
+            )}
+          </Form.Group>
+        } 
 
 
         {(formData.jenkinsUrl && jenkinsList.length > 1) &&                
