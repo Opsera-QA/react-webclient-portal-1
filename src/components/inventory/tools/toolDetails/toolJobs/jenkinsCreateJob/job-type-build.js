@@ -178,6 +178,58 @@ const JenkinsJobTypeBuild = {
     rules: {
       isRequired: false 
     }
+  },
+  jobType: {
+    label: "Job Type",
+    id: "jobType",
+    type: "select",
+    value: "",
+    options: [
+      {
+        name: "SFDC Create XML Package",
+        value: "CREATE PACKAGE XML"
+      },
+      {
+        name: "SFDC Validate XML Package",
+        value: "VALIDATE PACKAGE XML"
+      },
+      {
+        name: "SFDC Backup",
+        value: "SFDC BACK UP"
+      },
+      {
+        name: "SFDC Deploy (QA)",
+        value: "SFDC DEPLOY"
+      },
+      {
+        name: "SDFC Deploy (PROD)",
+        value: "SFDC FETCH AND DEPLOY"
+      },     
+    ],
+    toShow: true,
+    disabled: false,
+    touched: false,
+    isValid: false,
+    errorMessage: "",    
+    rules: {
+      isRequired: true 
+    }
+  }, 
+  rollbackBranchName: {
+    label: "Rollback Branch Name",
+    id: "rollbackBranchName",
+    type: "",
+    value: "",
+    linkedId: "jobType",
+    linkedValue: "SFDC BACK UP",    
+    toShow: true,
+    disabled: false,
+    touched: false,
+    isValid: false,
+    errorMessage: "",    
+    rules: {
+      isRequired: true 
+    }
   }
 };
 
