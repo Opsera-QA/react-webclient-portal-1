@@ -67,15 +67,6 @@ const SfdcPipelineWizard = ({ pipelineId, pipeline, handlePipelineWizardRequest,
       operationStatus = "failed";
     }
 
-    //TODO: update pipeline step with job name retruend from this call
-    /* createJobResponse = {
-      "status": "UPDATED",
-      "jobName":"build_stepid121",
-      "message": "Job Updated Successfully",
-      "buildNumber": 0
-    };  */
-
-
     //update data for pipeline workflow step!!!
     if (typeof(pipeline.workflow.plan[stepIndex].tool.configuration.jobName) === "string" && createJobResponse && createJobResponse.status === 200) {
       if (createJobResponse.message && createJobResponse.message.jobName && createJobResponse.message.jobName.length > 0) {
@@ -88,7 +79,6 @@ const SfdcPipelineWizard = ({ pipelineId, pipeline, handlePipelineWizardRequest,
       operationStatus = "failed";
     }
     
-
     //post to pipeline acitivty log: 
     const logPostBody = {
       step_id: stepId,
@@ -114,13 +104,11 @@ const SfdcPipelineWizard = ({ pipelineId, pipeline, handlePipelineWizardRequest,
       setError(error);
     }
     
-    //TODO: trigger refresh of pipeline object!!!
+    //trigger refresh of pipeline object!!!
     refreshPipelineData();
 
     //trigger start of pipeline & close modal
     handlePipelineWizardRequest(pipelineId, true);
-
-
   };
 
   if (error) {
