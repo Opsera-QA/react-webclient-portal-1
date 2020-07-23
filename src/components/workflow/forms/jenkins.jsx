@@ -620,7 +620,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
     <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
       <Popover.Title as="h3">Tool Details</Popover.Title>
       <Popover.Content>
-        <div className="text-muted mb-2">Information below is from the selected Tool Registry item.  To changes these values, edit the entry in Tool Registry.</div>
+        <div className="text-muted mb-2">Information below is from the selected Tool Registry item.  To changes these values, edit the entry in Tool Registry <Link to="/inventory/tools">here</Link>.</div>
         <div className="mb-1">
           <div className="text-muted pr-1">SFDC Account Username:</div>
           <div>{formData.accountUsername || ""}</div>
@@ -775,7 +775,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
               <OverlayTrigger
                 placement="top"
                 delay={{ show: 250, hide: 400 }}
-                overlay={renderTooltip({ message: "Configure Job Settings" })} >
+                overlay={renderTooltip({ message: "Configure Job Settings here" })} >
                 <FontAwesomeIcon icon={faCog}
                   style={{ cursor: "pointer" }}
                   className="text-muted mx-1" fixedWidth

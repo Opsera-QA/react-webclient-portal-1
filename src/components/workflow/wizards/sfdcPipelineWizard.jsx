@@ -69,8 +69,8 @@ const SfdcPipelineWizard = ({ pipelineId, pipeline, handlePipelineWizardRequest,
 
     //update data for pipeline workflow step!!!
     if (typeof(pipeline.workflow.plan[stepIndex].tool.configuration.jobName) === "string" && createJobResponse && createJobResponse.status === 200) {
-      if (createJobResponse.message && createJobResponse.message.jobName && createJobResponse.message.jobName.length > 0) {
-        pipeline.workflow.plan[stepIndex].tool.configuration.jobName = createJobResponse.message.jobName;
+      if (createJobResponse.data.message && createJobResponse.data.message.jobName && createJobResponse.data.message.jobName.length > 0) {
+        pipeline.workflow.plan[stepIndex].tool.configuration.jobName = createJobResponse.data.message.jobName;
         const savePipelineResponse = await PipelineActions.save(pipelineId, pipeline, getAccessToken);
         console.log("savePipelineResponse: ", savePipelineResponse);
       }
