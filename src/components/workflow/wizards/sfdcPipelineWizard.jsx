@@ -104,11 +104,13 @@ const SfdcPipelineWizard = ({ pipelineId, pipeline, handlePipelineWizardRequest,
       setError(error);
     }
     
-    //trigger refresh of pipeline object!!!
-    refreshPipelineData();
+    if (operationStatus === "success") {
+      //trigger refresh of pipeline object!!!
+      refreshPipelineData();
 
-    //trigger start of pipeline & close modal
-    handlePipelineWizardRequest(pipelineId, true);
+      //trigger start of pipeline & close modal
+      handlePipelineWizardRequest(pipelineId, true);
+    }    
   };
 
   if (error) {
