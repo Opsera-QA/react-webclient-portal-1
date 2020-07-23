@@ -1,8 +1,8 @@
 // This will be the landing page built based on OC-168.  
 // the content below is just copied from another landing page, so it needs to be updated to match new requirements.
 
-import React from "react";
-import { Tabs, Tab } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Row, Col } from "react-bootstrap";
 
 import "../freeTrial.css";
 import FreeTrialLandingWelcome from "./tabs/welcome-tab";
@@ -11,36 +11,67 @@ import FreeTrialLandingPipeline from "./tabs/pipeline-tab";
 import FreeTrialLandingAnalytics from "./tabs/analytics-tab";
 
 function FreeTrialLanding() {
+  const [tabSelection, setTabSelection] = useState("welcome");
 
-  const selectTab = (tabId) => {
-    console.log("tabId: " + tabId);
-    document.getElementById(tabId).click();
+  const handleTabClick = (tabSelection) => e => {
+    console.log(tabSelection);
+    e.preventDefault();
+    setTabSelection(tabSelection);
   };
   
   return (
     <>
       <div className="max-content-width">
-        <div className="free-trial-tabs">
-          <Tabs id="free-trial-tabs" defaultActiveKey="welcome">
-            <Tab id="welcome" eventKey="welcome" title="Welcome!">
-              <FreeTrialLandingWelcome setActiveTab={selectTab} />
-            </Tab>
-            <Tab id="platform" eventKey="platform" title="Platform">
-              <FreeTrialLandingPlatform />
-            </Tab>
-            <Tab id="pipeline" eventKey="pipeline" title="Pipeline">
-              <FreeTrialLandingPipeline />
-            </Tab>
-            <Tab id="analytics" eventKey="analytics" title="Analytics">
-              <FreeTrialLandingAnalytics />
-            </Tab>
-          </Tabs>
-        </div>
+        <Row>
+          <Col>
+            <div className="alternate-tabs">
+              <ul className="nav nav-tabs">
+                <li className="nav-item">
+                  <a className={"nav-link " + (tabSelection === "welcome" ? "active" : "")} onClick={handleTabClick("welcome")} href="#">Welcome</a>
+                </li>
+                <li className="nav-item"> 
+                  <a className={"nav-link " + (tabSelection === "platform" ? "active" : "")} onClick={handleTabClick("platform")} href="#">Platform</a>
+                </li>
+                <li className="nav-item">
+                  <a className={"nav-link " + (tabSelection === "pipeline" ? "active" : "")} onClick={handleTabClick("pipeline")} href="#">Pipeline</a>
+                </li>
+                <li className="nav-item">
+                  <a className={"nav-link " + (tabSelection === "analytics" ? "active" : "")} onClick={handleTabClick("analytics")} href="#">Analytics</a>
+                </li>
+              </ul>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <LandingView tabSelection={tabSelection} handleTabClick={handleTabClick}/>
+          </Col>
+        </Row>
       </div>
     </>
   );
-  // } 
+}
 
+
+function LandingView({ tabSelection, handleTabClick }) {
+  useEffect(() => {
+    console.log("CHANGE HAPPENED");
+  }, [tabSelection, handleTabClick]);
+
+  if (tabSelection) {
+    switch (tabSelection) {
+    case "welcome":
+      return <FreeTrialLandingWelcome handleTabClick={handleTabClick}/>;
+    case "platform":
+      return <FreeTrialLandingPlatform/>;
+    case "pipeline":
+      return <FreeTrialLandingPipeline/>;
+    case "analytics":
+      return <FreeTrialLandingAnalytics/>;
+    default:
+      return null;
+    }
+  }
 }
 
 export default FreeTrialLanding;
