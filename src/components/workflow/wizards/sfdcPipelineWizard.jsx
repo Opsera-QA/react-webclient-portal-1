@@ -86,7 +86,7 @@ const SfdcPipelineWizard = ({ pipelineId, pipeline, handlePipelineWizardRequest,
     //post to pipeline acitivty log: 
     const logPostBody = {
       step_id: stepId,
-      run_count: null,
+      run_count: pipeline.workflow.run_count + 1,
       step_index: stepIndex,
       tool_identifier: "sfdc-configurator",
       step_name: "SFDC Modified Files Review",

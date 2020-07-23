@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faSpinner, faTimes, faStepBackward, faPlus, faMinus, faPen, faCode } from "@fortawesome/free-solid-svg-icons";
 import "../workflows.css";
 import ErrorDialog from "components/common/error";
+import LoadingDialog from "components/common/loading";
 
 
 const SfdcPipelineModifiedFiles = ({ handleClose, setView, modifiedFiles, createJenkinsJob }) => {
@@ -41,6 +42,7 @@ const SfdcPipelineModifiedFiles = ({ handleClose, setView, modifiedFiles, create
           want to proceed with this operation.</div>
 
           {error && <div className="mt-3"><ErrorDialog error={error} /></div>}
+          {save && <LoadingDialog />}
           
           { modifiedFiles && 
           <>
@@ -81,7 +83,7 @@ const SfdcPipelineModifiedFiles = ({ handleClose, setView, modifiedFiles, create
 
           <Button variant="success" size="sm"
             onClick={() => {  setSave(true); handleApproveChanges(); }}
-            disabled={false}>
+            disabled={save}>
             {save ? <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> : 
               <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1"/>}Proceed</Button>
 
