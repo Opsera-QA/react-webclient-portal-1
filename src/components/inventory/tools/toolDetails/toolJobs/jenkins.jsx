@@ -24,7 +24,7 @@ function JenkinJobs({ toolData }) {
   return (
     <div className="pr-4 pl-4">
       <br />
-      {jobAction === "" &&
+      {/* {jobAction === "" && */}
       <Form className="newToolFormContainer">
         <Form.Group  controlId="formPlaintextEmail" className="mt-2 vertical-center-cols-in-row">
           <Form.Label column sm="3">
@@ -39,15 +39,15 @@ function JenkinJobs({ toolData }) {
           </Col>
         </Form.Group>
       </Form>
-      }
+      {/* } */}
       <br />
-
+      
       {(jobAction === "CREATE_ACCOUNT") && <> 
-        <JenkinsCreateAccount toolData={toolData} jobAction={jobAction} setJobAction={(action) => setJobAction(action)} />
+        <JenkinsCreateAccount toolId={toolData._id} toolData={toolData} jobAction={jobAction} setJobAction={(action) => setJobAction(action)} />
       </>}
 
       {(jobAction === "CREATE_JOB" ) && <> 
-        <JenkinsCreateJob toolData={toolData} jobAction={jobAction} setJobAction={(action) => setJobAction(action)} jobData={jobData} />
+        <JenkinsCreateJob toolId={toolData._id} toolData={toolData} jobAction={jobAction} setJobAction={(action) => setJobAction(action)} jobData={jobData} />
       </>}      
 
       {(jobAction === "" && toolData.jobs !== undefined ) && <> 
