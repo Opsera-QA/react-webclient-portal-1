@@ -31,7 +31,7 @@ function AdminTools(props) {
       {
         administrator &&
           <div className="max-content-width mt-1">
-            <h4>Administration Tools</h4>
+            {/* <h4>Administration Tools</h4> */}
             <div>Listed below are administration tools for the platform.</div>
 
             <Row className="mt-3 admin-tools">

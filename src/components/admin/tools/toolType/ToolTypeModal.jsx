@@ -93,7 +93,7 @@ function ToolTypeModal(props) {
     }
   };
 
-  const isFormValid = (formFieldList.name.value && formFieldList.identifier.value) ? true :false;
+  const isFormValid = (formFieldList.name.isValid && formFieldList.identifier.isValid) ? true :false;
 
   const createToolType = async () => {
     let formData = Object.keys(formFieldList).reduce((obj, key) => {
@@ -171,21 +171,23 @@ function ToolTypeModal(props) {
         <Modal.Title>{toolType} Tool Type</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+         
         <div>
           <ButtonToolbar className="justify-content-between my-2 ml-2 mr-2">
             <ButtonGroup>
-              <Button size="sm" className="ml-2 mr-2" variant={toolType === "View" ? "primary" : "secondary"} onClick={() => setToolType("View")}>Summary</Button>
-              <Button size="sm" className="mr-2" variant={toolType === "Edit" ? "primary" : "secondary"} onClick= {() => { editTool(); }} >
+              <Button size="sm" className="ml-2 mr-2" disabled={toolType == "New"} variant={toolType === "View" ? "primary" : "secondary"} onClick={() => setToolType("View")}>Summary</Button>
+              <Button size="sm" disabled={toolType !== "View"}  className="mr-2" variant={toolType === "Edit" ? "primary" : "secondary"} onClick= {() => { editTool(); }} >
                 <FontAwesomeIcon icon={faPen} fixedWidth /> Edit Tool Type
               </Button>
             </ButtonGroup>
             <ButtonGroup>
-              <Button size="sm" disabled={!canDelete || toolType !== "View"} className="pull-right mr-2" variant={canDelete ? "danger" : "secondary"} onClick= {() => { props.handleDeleteClick("toolType"); }} >
+              <Button size="sm" disabled={!canDelete || toolType !== "View"} className="pull-right mr-2" variant={canDelete ? "danger" : "secondary"} onClick= {() => { props.handleDeleteClick("toolType", toolData); }} >
                 <FontAwesomeIcon icon={faTrash} fixedWidth /> Delete Tool Type
               </Button>
             </ButtonGroup>
           </ButtonToolbar>
         </div>
+        
 
         {toolType === "View" && <ViewToolType toolData={toolData} toolId={props.toolId} />}
 
