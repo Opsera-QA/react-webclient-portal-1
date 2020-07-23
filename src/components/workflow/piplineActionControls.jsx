@@ -106,6 +106,7 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
 
   const handlePipelineWizardRequest = async (pipelineId, restartBln) => {
     setWizardModal({ ...wizardModal, show: false });
+    fetchActivityLogs();  
     if (restartBln) {
       console.log("clearing pipeline activity and then starting over");
       await cancelPipelineRun(pipelineId);
@@ -293,7 +294,7 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
 
   return (
     <>
-      {wizardModal.show && <PipelineStartWizard pipelineType={wizardModal.pipelineType} pipelineOrientation={wizardModal.pipelineOrientation} pipelineId={wizardModal.pipelineId} pipelineSteps={pipeline.workflow.plan} handleClose={handlePipelineStartWizardClose} handlePipelineWizardRequest={handlePipelineWizardRequest} />}
+      {wizardModal.show && <PipelineStartWizard pipelineType={wizardModal.pipelineType} pipelineOrientation={wizardModal.pipelineOrientation} pipelineId={wizardModal.pipelineId} pipeline={pipeline} handleClose={handlePipelineStartWizardClose} handlePipelineWizardRequest={handlePipelineWizardRequest} refreshPipelineData={fetchData} />}
       
       <div className="text-right" style={{ marginBottom: "5px" }}>
         {workflowStatus === "running" && 

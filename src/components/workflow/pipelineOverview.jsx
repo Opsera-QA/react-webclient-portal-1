@@ -59,7 +59,7 @@ function PipelineOverview({ id }) {
     const apiUrl =  `/pipelines/${id}`;   
     try {
       const pipeline = await axiosApiService(accessToken).get(apiUrl); 
-      console.log(pipeline.data);
+      console.log("Top level pipeline refresh: ", pipeline.data);
       if (pipeline && pipeline.data && pipeline.data.length > 0) {
         setData({
           ...data,

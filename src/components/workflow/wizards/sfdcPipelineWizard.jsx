@@ -5,8 +5,9 @@ import { axiosApiService } from "api/apiService";
 import SfdcPipelineComponents from "./sfdcPipelineComponents";
 import SfdcPipelineModifiedFiles from "./sfdcPipelineModifiedFiles";
 import ErrorDialog from "components/common/error";
+import PipelineActions from "../actions";
 
-const SfdcPipelineWizard = ({ pipelineId, pipelineSteps, handlePipelineWizardRequest, handleClose }) => {
+const SfdcPipelineWizard = ({ pipelineId, pipeline, handlePipelineWizardRequest, handleClose, refreshPipelineData }) => {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(false); 
   const [view, setView] = useState(1); 
@@ -18,7 +19,7 @@ const SfdcPipelineWizard = ({ pipelineId, pipelineSteps, handlePipelineWizardReq
   
 
   useEffect(() => {
-    loadSfdcInitStep(pipelineSteps);
+    loadSfdcInitStep(pipeline.workflow.plan);
   }, []);
 
   //must find step ID of the Sfdc Jenkins Config step (typically first step and has step.tool.job_type set to "sfdc-ant")
@@ -38,8 +39,8 @@ const SfdcPipelineWizard = ({ pipelineId, pipelineSteps, handlePipelineWizardReq
 
   const createJenkinsJob = async () => {
     const accessToken = await getAccessToken();
-    console.log(sfdcComponentFilterObject);
     const apiUrl = `/registry/action/${stepToolConfigId}/createjob`;
+    let operationStatus = "success";
 
     const postBody = {
       jobId: "",
@@ -58,15 +59,29 @@ const SfdcPipelineWizard = ({ pipelineId, pipelineSteps, handlePipelineWizardReq
     let createJobResponse;
     try {      
       createJobResponse = await axiosApiService(accessToken).post(apiUrl, postBody);
-      console.log(createJobResponse);      
+      console.log("createJobResponse: ", createJobResponse);      
     } catch (error) {
       console.log("Error posting to API: ", error);
       setError(error);
+      createJobResponse = error;
+      operationStatus = "failed";
     }
 
     //TODO: update pipeline step with job name retruend from this call
+    /* createJobResponse = {
+      "status": "UPDATED",
+      "jobName":"build_stepid121",
+      "message": "Job Updated Successfully",
+      "buildNumber": 0
+    };  */
 
 
+    //update data for pipeline workflow step!!!
+    if (typeof(pipeline.workflow.plan[stepIndex].tool.configuration.jobName) === "string" && createJobResponse && createJobResponse.jobName && createJobResponse.jobName.length > 0) {
+      pipeline.workflow.plan[stepIndex].tool.configuration.jobName = createJobResponse.jobName;
+      const savePipelineResponse = await PipelineActions.save(pipelineId, pipeline, getAccessToken);
+      console.log("savePipelineResponse: ", savePipelineResponse);
+    }
 
     //post to pipeline acitivty log: 
     const logPostBody = {
@@ -79,7 +94,7 @@ const SfdcPipelineWizard = ({ pipelineId, pipelineSteps, handlePipelineWizardReq
       api_response: createJobResponse,
       build_number: "",
       message: "Modified files approved for pipeline",
-      status: "success",
+      status: operationStatus,
       action: "approve files for processing",
     };
 
@@ -93,6 +108,9 @@ const SfdcPipelineWizard = ({ pipelineId, pipelineSteps, handlePipelineWizardReq
       setError(error);
     }
     
+    //TODO: trigger refresh of pipeline object!!!
+    await refreshPipelineData();
+
     //trigger start of pipeline & close modal
     handlePipelineWizardRequest(pipelineId, true);
 
@@ -125,9 +143,10 @@ const SfdcPipelineWizard = ({ pipelineId, pipelineSteps, handlePipelineWizardReq
 
 SfdcPipelineWizard.propTypes = {
   pipelineId: PropTypes.string,
-  pipelineSteps: PropTypes.array,
+  pipeline: PropTypes.object,
   handlePipelineWizardRequest: PropTypes.func,
-  handleClose: PropTypes.func
+  handleClose: PropTypes.func,
+  refreshPipelineData: PropTypes.func
 };
 
 export default SfdcPipelineWizard;
