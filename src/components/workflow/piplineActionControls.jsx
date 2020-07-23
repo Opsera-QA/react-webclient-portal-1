@@ -232,7 +232,7 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
       initializeSocket();
     }
     
-    if (socket.socket === undefined ) {
+    if (!socket || socket.socket === undefined ) {
       socket.emit("subscribeToPipelineActivity", 1000);
       socket.on("subscribeToPipelineActivity", dataObj => {
         console.log("Update from Websocket (staleRefreshCount: "+staleRefreshCount+"): ", dataObj);
