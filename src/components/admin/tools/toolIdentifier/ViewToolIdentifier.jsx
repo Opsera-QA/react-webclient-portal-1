@@ -26,9 +26,14 @@ function ViewToolIdentifier(props) {
                   {toolData._id}
                 </li>
                 <li className="list-group-item">
-                  <span className="pr-2 text-muted">Created:</span>
-                  {toolData.createdAt && format(new Date(toolData.createdAt), "yyyy-MM-dd")}
+                  <span className="pr-1 text-muted">Tool Identifier: </span>
+                  {toolData.identifier}
                 </li>
+                <li className="list-group-item">
+                  <span className="pr-1 text-muted">State: </span>
+                  {toolData.active ? "Active" : "Disabled"}
+                </li>                
+
               </ul>
             </Col>
             <Col>
@@ -38,13 +43,14 @@ function ViewToolIdentifier(props) {
                   {toolData.description}
                 </li>
                 <li className="list-group-item">
-                  <span className="pr-1 text-muted">Tool Identifier: </span>
-                  {toolData.identifier}
+                  <span className="pr-2 text-muted">Created:</span>
+                  {toolData.createdAt && format(new Date(toolData.createdAt), "yyyy-MM-dd")}
                 </li>
                 <li className="list-group-item">
-                  <span className="pr-1 text-muted">State: </span>
-                  {toolData.active ? "Active" : "Disabled"}
+                  <span className="pr-1 text-muted">Tool Type Identifier: </span>
+                  {toolData.tool_type_identifier}
                 </li>
+
               </ul>
             </Col>
           </Row>

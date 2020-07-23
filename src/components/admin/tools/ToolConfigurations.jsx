@@ -110,7 +110,11 @@ function ToolConfigurationsAdmin() {
     setPageLoading(false);
   };
 
-  const handleDeleteClick = (location) => {
+  const handleDeleteClick = (location, toolData) => {
+    
+    //If we create and immediately edit, we need to get toolData from the respective Modal
+    if(toolData !== undefined) setToolData(toolData);
+    
     if (location === "toolType") {
       setShowToolTypeDeleteModal(true);
     }
