@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { Form, Button, OverlayTrigger, Popover } from "react-bootstrap";
+import { Form, Button, OverlayTrigger, Popover, Tooltip } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave, faSpinner, faExclamationCircle, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
+import { faSave, faSpinner, faExclamationCircle, faExclamationTriangle, faCog } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
@@ -237,6 +237,19 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
     [formData.toolJobType]
   );
   
+  function renderTooltip(props) {
+    const { message } = props;
+    return (
+      <Tooltip id="button-tooltip" {...props}>
+        {message}
+      </Tooltip>
+    );
+  }
+
+  // take it to tool config edit page
+  const handleEditClick = () => {
+    
+  };
 
   const loadFormData = async (step) => {
     let { configuration, threshold, job_type } = step;
@@ -256,6 +269,31 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
       setFormData(INITIAL_DATA);
     }
   };
+  
+  const callbackCreateJobFunction = async (persistent) => {
+    if (validateRequiredFields()) {
+      setLoading(true);
+   
+      const item = {
+        configuration: formData,
+        threshold: {
+          type: thresholdType,
+          value: thresholdVal
+        },
+        job_type : jobType
+      };
+      console.log("item: ", item);
+      setLoading(false);
+
+
+      await parentCallback(item, persistent);
+      
+      await createJob();
+      
+      parentCallback(item, persistent);
+    }
+  };
+
   
   const callbackFunction = async () => {
     if (validateRequiredFields()) {
@@ -444,7 +482,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
     } else {
       setFormData({ ...formData,
         sfdcToolId : "", accountUsername: "",
-        jobName: "",
+        // jobName: "",
         buildType: "gradle",
         jobDescription: "",
         jobType: "BUILD",
@@ -550,10 +588,10 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
 
     //update data for pipeline workflow step!!!
     if ( createJobResponse && createJobResponse.status === 200) {
-      if (createJobResponse.message && createJobResponse.message.jobName && createJobResponse.message.jobName.length > 0) {
+      if (createJobResponse.data.message && createJobResponse.data.message.jobName && createJobResponse.data.message.jobName.length > 0) {
         // save jobName
-        setFormData({ ...formData, jobName:  createJobResponse.message.jobName });
-        callbackFunction();
+        setFormData({ ...formData, jobName:  createJobResponse.data.message.jobName });
+        // await callbackFunction();
       }
     } else if (createJobResponse.status !== 200) {
       setErrors("An error has occurred updating the Jenkins server with the job information.  This pipeline cannot proceed.  Please check the pipeline activity logs for more details.");
@@ -566,6 +604,8 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
   // console.log(formData.toolJobId);
   // console.log(formData.rollbackBranchName);
   console.log(formData);
+  console.log(formData.jobName);
+
   // console.log(formData.stepIdXML);
   // console.log(formData.sfdcDestToolId);
   
@@ -745,6 +785,16 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
             <div className="text-right pt-2">
               <OverlayTrigger trigger="click" rootClose placement="left" overlay={JobsPopover}>
                 <Button variant="outline-dark" size="sm">Info</Button>
+              </OverlayTrigger>
+              
+              <OverlayTrigger
+                placement="top"
+                delay={{ show: 250, hide: 400 }}
+                overlay={renderTooltip({ message: "Configure Job Settings" })} >
+                <FontAwesomeIcon icon={faCog}
+                  style={{ cursor: "pointer" }}
+                  className="text-muted mx-1" fixedWidth
+                  onClick={() => { handleEditClick(); }} />
               </OverlayTrigger>
               <Button variant="outline-dark" size="sm" onClick={createJob} >Create Job</Button>
             </div>
@@ -949,14 +999,21 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
         </Form.Group>
 
 
-      
-        <Button variant="primary" type="button"  className="mt-3"
-          onClick={() => { callbackFunction(); }}> 
-          {loading ? 
-            <><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> Saving</> :
-            <><FontAwesomeIcon icon={faSave} className="mr-1"/> Save</> }
-        </Button>
-      
+        {jobType === "opsera-job"  ? 
+          <Button variant="primary" type="button"  className="mt-3"
+            onClick={() => { callbackCreateJobFunction(true); }}> 
+            {loading ? 
+              <><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> Saving</> :
+              <><FontAwesomeIcon icon={faSave} className="mr-1"/>Create job and Save</> }
+          </Button> :
+          <Button variant="primary" type="button"  className="mt-3"
+            onClick={() => { callbackFunction(); }}> 
+            {loading ? 
+              <><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> Saving</> :
+              <><FontAwesomeIcon icon={faSave} className="mr-1"/> Save</> }
+          </Button>      
+        }
+     
         <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
       </Form>
     </>
