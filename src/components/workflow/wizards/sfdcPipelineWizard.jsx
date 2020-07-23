@@ -48,7 +48,7 @@ const SfdcPipelineWizard = ({ pipelineId, pipelineSteps, handlePipelineWizardReq
       buildParams: {
         stepId: sfdcComponentFilterObject.stepId,
         lastCommitTimeStamp: sfdcComponentFilterObject.lastCommitTimeStamp,
-        componentTypes: sfdcComponentFilterObject.componentTypes
+        componentTypes: JSON.stringify(sfdcComponentFilterObject.componentTypes)
       }
     };
 
@@ -63,6 +63,10 @@ const SfdcPipelineWizard = ({ pipelineId, pipelineSteps, handlePipelineWizardReq
       console.log("Error posting to API: ", error);
       setError(error);
     }
+
+    //TODO: update pipeline step with job name retruend from this call
+
+
 
     //post to pipeline acitivty log: 
     const logPostBody = {
