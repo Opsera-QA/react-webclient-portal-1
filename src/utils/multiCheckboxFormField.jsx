@@ -101,16 +101,16 @@ function MultiCheckboxFormField(props) {
         <tbody>
           {rowList.map((row, key) => {
             return <tr key={key}>
-              {formField.fields.map((field, key) => {
+              {formField.fields.map((field, key2) => {
                 return (
-                  <td key={key}>
-                    {field == "name" && <Form.Control defaultValue={row.name} disabled={props.isEditMode} type="text" size="sm" placeholder={"New " + `${field}`} onChange={e => updateCellData(e, row, field)} />}
+                  <td key={key2}>
+                    {field == "name" && <Form.Control defaultValue={row.name} disabled={key == 0 || props.isEditMode} type="text" size="sm" placeholder={"New " + `${field}`} onChange={e => updateCellData(e, row, field)} />}
                     {field == "value" && <Form.Check type="checkbox" checked={row.value} onChange={e => updateCheckedCell(e, row, field)} style={{ textAlign: "center", padding: 0, marginTop: "8px" }} />}
                   </td>
                 );
               })}
-              {formField.showEditButton && <td><Button variant="primary" size="sm" onClick={addRow}><FontAwesomeIcon icon={faPlus}/></Button></td>}
-              {formField.showEditButton && <td><Button variant={ Object.values(row)[0].length == 0 ? "outline-secondary" : "outline-danger"} size="sm" onClick={e => deleteRow(e, row)} ><FontAwesomeIcon icon={faTrash} /></Button></td>}
+              {!props.isEditMode && <td><Button variant="primary" size="sm" onClick={addRow}><FontAwesomeIcon icon={faPlus}/></Button></td>}
+              <td>{key > 0 && <Button variant={ Object.values(row)[0].length == 0 ? "outline-secondary" : "outline-danger"} size="sm" onClick={e => deleteRow(e, row)} ><FontAwesomeIcon icon={faTrash} /></Button>} </td>
             </tr>;
           })}
         </tbody>

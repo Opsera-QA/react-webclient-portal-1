@@ -4,7 +4,7 @@ import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStepForward, faSpinner, faTimes, faStepBackward } from "@fortawesome/free-solid-svg-icons";
+import { faStepForward, faSpinner, faTimes, faStepBackward, faCheck } from "@fortawesome/free-solid-svg-icons";
 import Moment from "moment";
 import momentLocalizer from "react-widgets-moment";
 import DateTimePicker from "react-widgets/lib/DateTimePicker";
@@ -15,7 +15,6 @@ import ErrorDialog from "components/common/error";
 
 
 const INITIAL_COMPONENT_TYPES_FORM = {
-  "accountId": "", //toolRegistry ID for SFDC Account
   "customerId": "", //ssoUsersID assgined at the Node layer
   "lastCommitTimeStamp": "", //asOfDate value as string
   "pipelineId": "", 
@@ -26,12 +25,12 @@ const INITIAL_COMPONENT_TYPES_FORM = {
 const SfdcPipelineComponents = ({ pipelineId, stepId, setView, setModifiedFiles, handleClose, setSfdcComponentFilterObject }) => {
   const { getAccessToken } = useContext(AuthContext);
   const [loading, setLoading] = useState(false); 
-  const [loadingRegistry, setLoadingRegistry] = useState(false); 
+  //const [loadingRegistry, setLoadingRegistry] = useState(false); 
   const [error, setError] = useState(false); 
   const [configurationError, setConfigurationError] = useState(false); 
   const [save, setSave] = useState(false);
   
-  const [registryData, setRegistryData] = useState([]);
+  //const [registryData, setRegistryData] = useState([]);
   const [componentTypes, setComponentTypes] = useState([]);
   const [selectedComponentTypes, setSelectedComponentTypes] = useState([]);
   const [componentTypeForm, setComponentTypeForm] = useState(INITIAL_COMPONENT_TYPES_FORM); 
@@ -43,7 +42,7 @@ const SfdcPipelineComponents = ({ pipelineId, stepId, setView, setModifiedFiles,
   useEffect(() => {
     setConfigurationError(false);
     loadData();
-    loadRegistryData();
+    //loadRegistryData();
     setComponentTypeForm(INITIAL_COMPONENT_TYPES_FORM);    
    
   }, []);
@@ -66,7 +65,7 @@ const SfdcPipelineComponents = ({ pipelineId, stepId, setView, setModifiedFiles,
     
   };
 
-  const loadRegistryData = async () => {
+  /* const loadRegistryData = async () => {
     setLoadingRegistry(true);
     const apiUrl = "/registry/properties/sfdc";
 
@@ -81,7 +80,7 @@ const SfdcPipelineComponents = ({ pipelineId, stepId, setView, setModifiedFiles,
     }
     setLoadingRegistry(false);
     
-  };
+  }; */
 
   const dateAsOf = (
     <DateTimePicker
@@ -99,10 +98,10 @@ const SfdcPipelineComponents = ({ pipelineId, stepId, setView, setModifiedFiles,
     setAsOfDate(date);    
   };
 
-  const handleSetAccount = (selectedOption) => {
+  /* const handleSetAccount = (selectedOption) => {
     setComponentTypeForm({ ...componentTypeForm, accountId: selectedOption._id });
   };
-
+ */
   const handleSubmitComponentTypes = () => {
     console.log("submitting component types form");
     const postBody = componentTypeForm;
@@ -169,13 +168,15 @@ const SfdcPipelineComponents = ({ pipelineId, stepId, setView, setModifiedFiles,
           { !configurationError && 
           <>
             <div className="mx-3 mt-3">        
-              <div className="mb-3" style={{ display: "flex" }}>
+              <div className="mb-3 align-items-end" style={{ display: "flex" }}>
                 <div className="px-2" style={{ flex: "50%" }}>
                   <div className="text-muted pl-1 pb-1">Select Date Filter:</div>
                   {dateAsOf}</div>
-                <div className="px-2" style={{ flex: "50%" }}>
-                  <div className="text-muted pl-1 pb-1">Select SalesForce Account (configured in Registry):</div>
-                  <AccountDropDown data={registryData} setAccount={handleSetAccount} isLoading={loadingRegistry} />
+                <div className="px-2 text-right" style={{ flex: "50%" }}>
+                  {/* <div className="text-muted pl-1 pb-1">Select SalesForce Account (configured in Registry):</div>
+                  <AccountDropDown data={registryData} setAccount={handleSetAccount} isLoading={loadingRegistry} /> */}
+                  <Button variant="secondary" size="sm" className="mr-2" disabled={true}>
+                    <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1"/>Select All</Button>
                 </div>
               </div>
             </div>
@@ -201,7 +202,7 @@ const SfdcPipelineComponents = ({ pipelineId, stepId, setView, setModifiedFiles,
 
           <Button variant="success" size="sm"
             onClick={() => {  setSave(true); handleSubmitComponentTypes(); }}
-            disabled={false}>
+            disabled={save}>
             {save ? <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> : 
               <FontAwesomeIcon icon={faStepForward} fixedWidth className="mr-1"/>}Next</Button>
 

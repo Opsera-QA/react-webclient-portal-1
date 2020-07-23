@@ -10,6 +10,7 @@ const templateEditorFormFields = {
     isValid: false,
     errorMessage: "",
     rules: {
+      minLength: 3,
       isRequired: true 
     }
   },
@@ -24,6 +25,7 @@ const templateEditorFormFields = {
     isValid: false,
     errorMessage: "",
     rules: {
+      minLength: 3, 
       isRequired: true 
     }
   },  

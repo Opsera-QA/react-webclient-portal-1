@@ -134,7 +134,7 @@ function FreeTrialSignup(props) {
     <div className="new-user-signup-form">
       <Form className="free-trial-form m-auto" noValidate onSubmit={signupSubmit} >
         <Card>
-          <Card.Header as="h5" className="new-user-header">Sign Up For OpsERA</Card.Header>
+          <Card.Header as="h5" className="new-user-header">Sign Up For Opsera</Card.Header>
           <Card.Body className="new-user-body p-3">
             { formMessage.length > 0 ? <p className="text-danger">{formMessage}</p> : null}
             <div className="formContainer">

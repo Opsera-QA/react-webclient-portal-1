@@ -195,7 +195,7 @@ function ToolIdentifierModal(props) {
   };
 
   const isFormValid =
-    formFieldList.name.value && formFieldList.identifier.value ? true : false;
+    formFieldList.name.isValid && formFieldList.identifier.isValid ? true : false;
 
   const updateToolIdentifier = async () => {
 
@@ -253,16 +253,17 @@ function ToolIdentifierModal(props) {
         <Modal.Title>{toolType} Tool Identifier</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+
         <div>
           <ButtonToolbar className="justify-content-between my-2 ml-2 mr-2">
             <ButtonGroup>
-              <Button size="sm" className="ml-2 mr-2" variant={toolType === "View" ? "primary" : "secondary"} onClick={() => setToolType("View")}>Summary</Button>
-              <Button size="sm" className="mr-2" variant={toolType === "Edit" ? "primary" : "secondary"} onClick= {() => { editTool(); }} >
+              <Button size="sm" className="ml-2 mr-2" disabled={toolType == "New"} variant={toolType === "View" ? "primary" : "secondary"} onClick={() => setToolType("View")}>Summary</Button>
+              <Button size="sm" className="mr-2" disabled={toolType !== "View"}  variant={toolType === "Edit" ? "primary" : "secondary"} onClick= {() => { editTool(); }} >
                 <FontAwesomeIcon icon={faPen} fixedWidth /> Edit Tool Identifier
               </Button>
             </ButtonGroup>
             <ButtonGroup>
-              <Button size="sm" disabled={!canDelete || toolType !== "View"} className="pull-right mr-2" variant={canDelete ? "danger" : "secondary"} onClick= {() => { props.handleDeleteClick("toolIdentifier"); }} >
+              <Button size="sm" disabled={!canDelete || toolType !== "View"} className="pull-right mr-2" variant={canDelete ? "danger" : "secondary"} onClick= {() => { props.handleDeleteClick("toolIdentifier", toolData); }} >
                 <FontAwesomeIcon icon={faTrash} fixedWidth /> Delete Tool Identifier
               </Button>
             </ButtonGroup>

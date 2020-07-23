@@ -182,7 +182,7 @@ function ToolPropertiesForm(props) {
     }
   };
 
-  const isFormValid = (formFieldList.name.value && formFieldList.tool_identifier.value) ? true :false;
+  const isFormValid = (formFieldList.name.isValid && formFieldList.tool_identifier.isValid) ? true :false;
   //const isFormModified = Object.values(formFieldList).some(x => (x.touched == true));
 
   const formFieldType = (formField) => {

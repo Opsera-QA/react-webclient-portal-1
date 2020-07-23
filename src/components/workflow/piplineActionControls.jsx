@@ -15,7 +15,7 @@ import { faFileAlt, faPlay, faSync, faSpinner, faStopCircle, faHistory, faPause,
 import "./workflows.css";
 
 function PipelineActionControls({ pipeline, role, disabledActionState, fetchData, fetchActivityLogs, setParentWorkflowStatus }) {
-  const contextType = useContext(AuthContext);
+  //const contextType = useContext(AuthContext);
   const { getAccessToken, featureFlagItemInProd } = useContext(AuthContext);
 
   const [workflowStatus, setWorkflowStatus] = useState(false);
@@ -105,14 +105,14 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
   };
 
   const handlePipelineWizardRequest = async (pipelineId, restartBln) => {
+    setWizardModal({ ...wizardModal, show: false });
+    fetchActivityLogs();  
     if (restartBln) {
       console.log("clearing pipeline activity and then starting over");
       await cancelPipelineRun(pipelineId);
     }
     console.log("starting piepline", pipelineId);
-    await runPipeline(pipelineId);
-    
-    setWizardModal({ ...wizardModal, show: false });
+    await runPipeline(pipelineId);    
   }; 
 
   //TODO: WARNING FEATURE FLAG IN USE HERE!
@@ -294,7 +294,7 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
 
   return (
     <>
-      {wizardModal.show && <PipelineStartWizard pipelineType={wizardModal.pipelineType} pipelineOrientation={wizardModal.pipelineOrientation} pipelineId={wizardModal.pipelineId} pipelineSteps={pipeline.workflow.plan} handleClose={handlePipelineStartWizardClose} handlePipelineWizardRequest={handlePipelineWizardRequest} />}
+      {wizardModal.show && <PipelineStartWizard pipelineType={wizardModal.pipelineType} pipelineOrientation={wizardModal.pipelineOrientation} pipelineId={wizardModal.pipelineId} pipeline={pipeline} handleClose={handlePipelineStartWizardClose} handlePipelineWizardRequest={handlePipelineWizardRequest} refreshPipelineData={fetchData} />}
       
       <div className="text-right" style={{ marginBottom: "5px" }}>
         {workflowStatus === "running" && 

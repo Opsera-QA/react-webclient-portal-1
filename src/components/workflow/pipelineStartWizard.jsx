@@ -7,7 +7,7 @@ import SfdcPipelineWizard from "./wizards/sfdcPipelineWizard";
 
 import "./workflows.css";
 
-function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, pipelineSteps, handleClose, handlePipelineWizardRequest }) {
+function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, pipeline, handleClose, handlePipelineWizardRequest, refreshPipelineData }) {
 
     
   const popover = (
@@ -30,8 +30,10 @@ function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, p
           {pipelineType !== "sfdc" && pipelineOrientation === "middle" && 
             <ConfirmResumePipeline pipelineId={pipelineId} handlePipelineWizardRequest={handlePipelineWizardRequest} />}
 
-          {pipelineType === "sfdc" && pipelineOrientation === "start" && 
-            <SfdcPipelineWizard pipelineId={pipelineId} pipelineSteps={pipelineSteps} handlePipelineWizardRequest={handlePipelineWizardRequest} handleClose={handleClose} />}
+          
+          {pipelineType === "sfdc" && pipelineOrientation === "middle" && <div className="info-text mt-3 pl-4">Warning!  This pipeline is in the middle of running.  If you proceed, this will cancel the running job and start the pipeline over.</div>}
+          {pipelineType === "sfdc" && 
+            <SfdcPipelineWizard pipelineId={pipelineId} pipeline={pipeline} handlePipelineWizardRequest={handlePipelineWizardRequest} handleClose={handleClose} refreshPipelineData={refreshPipelineData} />}
 
         </Modal.Body>
         <Modal.Footer>
@@ -95,9 +97,10 @@ ConfirmResumePipeline.propTypes = {
 PipelineStartWizard.propTypes = {
   pipelineType: PropTypes.string,
   pipelineId: PropTypes.string,
+  pipeline: PropTypes.object,
   pipelineOrientation: PropTypes.string,
-  pipelineSteps: PropTypes.array,
   handlePipelineWizardRequest: PropTypes.func,
-  handleClose: PropTypes.func
+  handleClose: PropTypes.func,
+  refreshPipelineData: PropTypes.func
 };
 export default PipelineStartWizard;
