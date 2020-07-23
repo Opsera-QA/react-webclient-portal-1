@@ -270,41 +270,17 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
     }
   };
   
-  /* const callbackCreateJobFunction = async (persistent) => {
-    if (validateRequiredFields()) {
-      setLoading(true);
-   
-      const item = {
-        configuration: formData,
-        threshold: {
-          type: thresholdType,
-          value: thresholdVal
-        },
-        job_type : jobType
-      };
-      console.log("item: ", item);
-      setLoading(false);
-
-
-      await parentCallback(item, persistent);
-      
-      await createJob();
-      
-      parentCallback(item, persistent);
-    }
-  }; */
-
   const handleCreateAndSave = async () => {
     //save the current settings of the step
     await callbackFunction(true);
     //trigger the createJob function
     await createJob();
     //complete normal save operation
-    //callbackFunction()
+    callbackFunction();
   };
-
   
   const callbackFunction = async (persistent) => {
+    console.log("saving data");
     if (validateRequiredFields()) {
       setLoading(true);
    
@@ -582,7 +558,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
       }
     };
 
-    console.log(postBody);
+    console.log("Creating Job: ", postBody);
 
     //create jenkins job
     let createJobResponse;
