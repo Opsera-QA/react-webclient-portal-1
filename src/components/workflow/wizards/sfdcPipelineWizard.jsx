@@ -109,7 +109,7 @@ const SfdcPipelineWizard = ({ pipelineId, pipeline, handlePipelineWizardRequest,
     }
     
     //TODO: trigger refresh of pipeline object!!!
-    await refreshPipelineData();
+    refreshPipelineData();
 
     //trigger start of pipeline & close modal
     handlePipelineWizardRequest(pipelineId, true);
