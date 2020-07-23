@@ -230,7 +230,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
 
   useEffect(
     () => {
-      if( formData.toolJobType.includes("SFDC") ) {
+      if(formData.toolJobType && formData.toolJobType.includes("SFDC") ) {
         setFormData({ ...formData, buildType: "ant" });
       }
     },
@@ -270,7 +270,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
     }
   };
   
-  const callbackCreateJobFunction = async (persistent) => {
+  /* const callbackCreateJobFunction = async (persistent) => {
     if (validateRequiredFields()) {
       setLoading(true);
    
@@ -292,10 +292,19 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
       
       parentCallback(item, persistent);
     }
+  }; */
+
+  const handleCreateAndSave = async () => {
+    //save the current settings of the step
+    await callbackFunction(true);
+    //trigger the createJob function
+    await createJob();
+    //complete normal save operation
+    //callbackFunction()
   };
 
   
-  const callbackFunction = async () => {
+  const callbackFunction = async (persistent) => {
     if (validateRequiredFields()) {
       setLoading(true);
    
@@ -309,7 +318,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
       };
       console.log("item: ", item);
       setLoading(false);
-      parentCallback(item);
+      parentCallback(item, persistent);
     }
   };
   
@@ -603,8 +612,8 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
   // console.log(formData.jobType);
   // console.log(formData.toolJobId);
   // console.log(formData.rollbackBranchName);
-  console.log(formData);
-  console.log(formData.jobName);
+  //console.log(formData);
+  //console.log(formData.jobName);
 
   // console.log(formData.stepIdXML);
   // console.log(formData.sfdcDestToolId);
@@ -796,7 +805,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
                   className="text-muted mx-1" fixedWidth
                   onClick={() => { handleEditClick(); }} />
               </OverlayTrigger>
-              <Button variant="outline-dark" size="sm" onClick={createJob} >Create Job</Button>
+              {/* <Button variant="outline-dark" size="sm" onClick={createJob} >Create Job</Button> */}
             </div>
             
           </>
@@ -1001,9 +1010,9 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
 
         {jobType === "opsera-job"  ? 
           <Button variant="primary" type="button"  className="mt-3"
-            onClick={() => { callbackCreateJobFunction(true); }}> 
+            onClick={() => { handleCreateAndSave(); }}> 
             {loading ? 
-              <><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> Saving</> :
+              <><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> Working</> :
               <><FontAwesomeIcon icon={faSave} className="mr-1"/>Create job and Save</> }
           </Button> :
           <Button variant="primary" type="button"  className="mt-3"

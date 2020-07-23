@@ -39,8 +39,11 @@ const PipelineWorkflowEditor = ({ editItem, data, closeEditorPanel, fetchPlan })
   const callbackFunctionTools = async (plan, persistent) => {
     data.workflow.plan = plan;
     await postData(data);
-    fetchPlan();
-    if (!persistent) {closeEditorPanel();}  
+    
+    if (!persistent) {
+      fetchPlan();
+      closeEditorPanel();
+    }  
   };
 
   const callbackConfigureStep = async (plan) => {
