@@ -77,11 +77,17 @@ const SfdcPipelineWizard = ({ pipelineId, pipeline, handlePipelineWizardRequest,
 
 
     //update data for pipeline workflow step!!!
-    if (typeof(pipeline.workflow.plan[stepIndex].tool.configuration.jobName) === "string" && createJobResponse && createJobResponse.jobName && createJobResponse.jobName.length > 0) {
-      pipeline.workflow.plan[stepIndex].tool.configuration.jobName = createJobResponse.jobName;
-      const savePipelineResponse = await PipelineActions.save(pipelineId, pipeline, getAccessToken);
-      console.log("savePipelineResponse: ", savePipelineResponse);
+    if (typeof(pipeline.workflow.plan[stepIndex].tool.configuration.jobName) === "string" && createJobResponse && createJobResponse.status === 200) {
+      if (createJobResponse.message && createJobResponse.message.jobName && createJobResponse.message.jobName.length > 0) {
+        pipeline.workflow.plan[stepIndex].tool.configuration.jobName = createJobResponse.message.jobName;
+        const savePipelineResponse = await PipelineActions.save(pipelineId, pipeline, getAccessToken);
+        console.log("savePipelineResponse: ", savePipelineResponse);
+      }
+    } else if (createJobResponse.status !== 200) {
+      setError("An error has occured updating the Jenkins server with the job information.  This pipeline cannot proceed.  Please check the pipeline activity logs for more details.");
+      operationStatus = "failed";
     }
+    
 
     //post to pipeline acitivty log: 
     const logPostBody = {

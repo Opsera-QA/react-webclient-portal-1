@@ -30,7 +30,9 @@ function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, p
           {pipelineType !== "sfdc" && pipelineOrientation === "middle" && 
             <ConfirmResumePipeline pipelineId={pipelineId} handlePipelineWizardRequest={handlePipelineWizardRequest} />}
 
-          {pipelineType === "sfdc" && pipelineOrientation === "start" && 
+          
+          {pipelineType === "sfdc" && pipelineOrientation === "middle" && <div className="info-text mt-3 pl-4">Warning!  This pipeline is in the middle of running.  If you proceed, this will cancel the running job and start the pipeline over.</div>}
+          {pipelineType === "sfdc" && 
             <SfdcPipelineWizard pipelineId={pipelineId} pipeline={pipeline} handlePipelineWizardRequest={handlePipelineWizardRequest} handleClose={handleClose} refreshPipelineData={refreshPipelineData} />}
 
         </Modal.Body>
