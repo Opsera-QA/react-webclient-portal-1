@@ -93,7 +93,7 @@ function ToolTypeModal(props) {
     }
   };
 
-  const isFormValid = (formFieldList.name.isValid && formFieldList.identifier.isValid) ? true :false;
+  const isFormValid = (formFieldList.name.value && formFieldList.identifier.value) ? true :false;
 
   const createToolType = async () => {
     let formData = Object.keys(formFieldList).reduce((obj, key) => {
