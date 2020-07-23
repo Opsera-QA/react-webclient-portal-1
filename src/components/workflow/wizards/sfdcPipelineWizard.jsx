@@ -84,7 +84,7 @@ const SfdcPipelineWizard = ({ pipelineId, pipeline, handlePipelineWizardRequest,
         console.log("savePipelineResponse: ", savePipelineResponse);
       }
     } else if (createJobResponse.status !== 200) {
-      setError("An error has occured updating the Jenkins server with the job information.  This pipeline cannot proceed.  Please check the pipeline activity logs for more details.");
+      setError("An error has occurred updating the Jenkins server with the job information.  This pipeline cannot proceed.  Please check the pipeline activity logs for more details.");
       operationStatus = "failed";
     }
     
