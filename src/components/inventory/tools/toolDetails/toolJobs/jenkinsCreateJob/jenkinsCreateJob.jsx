@@ -13,6 +13,7 @@ import JenkinsJobTypeDockerPush from "./job-type-docker-push.js";
 import JenkinsJobTypeSendToS3 from "./job-type-sent-to-s3.js";
 import JobTypePerformanceTesting from "./job-type-performance-testing.js";
 import JenkinsJobTypeShellScript from "./job-type-shell-script.js";
+import JobTypeSFDC from "./job-type-sfdc";
 
 function JenkinsCreateJob(props) {
   const { toolId, toolData, accessToken, jobData } = props;
@@ -28,6 +29,10 @@ function JenkinsCreateJob(props) {
     {
       label: "Build",
       value: "BUILD"
+    },
+    {
+      label: "SFDC Jobs",
+      value: "SFDC"
     },
     {
       label: "Code Scan",
@@ -65,7 +70,10 @@ function JenkinsCreateJob(props) {
 
   useEffect(() => {  
     switch (formType.toUpperCase()) {  
-          
+    
+    case "SFDC":        
+      updateJenkinsForm({ ...JobTypeSFDC });
+      break;    
     case "CODE-SCAN":  
     case "UNIT-TEST":   
     case "FUNCTIONAL-TEST":        
