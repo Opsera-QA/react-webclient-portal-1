@@ -5,9 +5,10 @@ import JenkinsCreateJob from "./jenkinsCreateJob/jenkinsCreateJob";
 
 import JenkinsJobsTable from "./jenkinsJobsTable";
 import "components/inventory/tools/tools.css";
+import PropTypes from "prop-types";
 
-function JenkinJobs(props) {
-  const { toolId, toolData, accessToken } = props;
+function JenkinJobs({ toolData }) {
+  
   const [ jobAction, setJobAction ] = useState("");
   const [ jobData, setJobData ] = useState({});
 
@@ -42,11 +43,11 @@ function JenkinJobs(props) {
       <br />
 
       {(jobAction === "CREATE_ACCOUNT") && <> 
-        <JenkinsCreateAccount {...props} jobAction={jobAction} setJobAction={(action) => setJobAction(action)} />
+        <JenkinsCreateAccount toolData={toolData} jobAction={jobAction} setJobAction={(action) => setJobAction(action)} />
       </>}
 
       {(jobAction === "CREATE_JOB" ) && <> 
-        <JenkinsCreateJob {...props} jobAction={jobAction} setJobAction={(action) => setJobAction(action)} jobData={jobData} />
+        <JenkinsCreateJob toolData={toolData} jobAction={jobAction} setJobAction={(action) => setJobAction(action)} jobData={jobData} />
       </>}      
 
       {(jobAction === "" && toolData.jobs !== undefined ) && <> 
@@ -58,5 +59,7 @@ function JenkinJobs(props) {
 }
 
 
-
+JenkinJobs.propTypes = {
+  toolData: PropTypes.object
+};
 export default JenkinJobs;

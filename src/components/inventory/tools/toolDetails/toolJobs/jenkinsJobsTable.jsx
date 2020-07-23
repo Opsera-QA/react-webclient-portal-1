@@ -59,7 +59,8 @@ function JenkinsJobsTable({ data, selectedRow }) {
 
 JenkinsJobsTable.propTypes = {
   data: PropTypes.array,
-  rowInfo: PropTypes.func
+  rowInfo: PropTypes.func,
+  selectedRow: PropTypes.func
 };
 
 export default JenkinsJobsTable;
