@@ -1,17 +1,18 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { ResponsiveBar } from "@nivo/bar";
 import { AuthContext } from "../../../contexts/AuthContext";
+import { ResponsiveBar } from "@nivo/bar";
 import { axiosApiService } from "../../../api/apiService";
-import InfoDialog from "../../common/info";
-import config from "./GitlabTimeTakenToCompleteMergeRequestReviewConfig";
-import "./charts.css";
-import ModalLogs from "../../common/modalLogs";
 import LoadingDialog from "../../common/loading";
 import ErrorDialog from "../../common/error";
+import config from "./GitlabMergeReqWithMaxTimeChartConfig";
+import "./charts.css";
+import InfoDialog from "../../common/info";
+import ModalLogs from "../../common/modalLogs";
 
 
-function GitlabTimeTakenToCompleteMergeRequestReview( { persona, date  } ) {
+
+function GitlabMergeReqWithMaxTimeChart( { persona, date }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -35,19 +36,18 @@ function GitlabTimeTakenToCompleteMergeRequestReview( { persona, date  } ) {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [date]);
 
-
-  const fetchData = async () => {
+  const fetchData = async() => {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
     const apiUrl = "/analytics/data";   
     const postBody = {
       data: [
-        {
-          "request": "gitlabTimeTakenToCompleteMergeRequestReview",
-          "metric": "bar"
+        { 
+          request: "gitlabMergeReqWithMaximumTime",
+          metric: "bar" 
         }
       ],
       startDate: date.start, 
@@ -56,7 +56,7 @@ function GitlabTimeTakenToCompleteMergeRequestReview( { persona, date  } ) {
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res.data.data[0].gitlabTimeTakenToCompleteMergeRequestReview : [];
+      let dataObject = res && res.data ? res.data.data[0].gitlabMergeReqWithMaximumTime : [];
       setData(dataObject);
       setLoading(false);
     }
@@ -66,35 +66,32 @@ function GitlabTimeTakenToCompleteMergeRequestReview( { persona, date  } ) {
       setErrors(err.message);
     }
   };
-  
+
   if(loading) {
     return (<LoadingDialog size="sm" />);
   } else if (error) {
-    return (<ErrorDialog  error={error} />);
-  // } else if (typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) {
-  //   return (<div style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}><ErrorDialog error="No Data is available for this chart at this time." /></div>);
-  } else {
+    return (<ErrorDialog  error={error} />);  
+  } else {  
     return (
-      <>
-      
-        <ModalLogs header="Gitlab Time Taken To Complete Merge-Request Review" size="lg" jsonMessage={data ? data.data : []} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
-
+      <>    
+        <ModalLogs header="Merge Requests by User" size="lg" jsonMessage={data.data} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
         <div className="chart mb-3" style={{ height: "300px" }}>
-          <div className="chart-label-text">Gitlab: Time Taken To Complete Merge Request</div>
-          {(typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) ?
+
+          <div className="chart-label-text">Gitlab: Merge-Request with Maximum Time</div>
+          {(typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) ? 
             <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
               <InfoDialog message="No Data is available for this chart at this time." />
             </div>
             :
             <ResponsiveBar
               data={data ? data.data : []}
-              keys={config.keys}
-              indexBy="AuthorName"
               onClick={() => setShowModal(true)}
+              keys={config.keys}
+              indexBy="ProjectName"
               margin={config.margin}
               padding={0.3}
               layout={"horizontal"}
-              colors={{ scheme: "set1" }}
+              colors={{ scheme: "spectral" }}
               borderColor={{ theme: "background" }}
               colorBy="id"
               defs={config.defs}
@@ -103,23 +100,16 @@ function GitlabTimeTakenToCompleteMergeRequestReview( { persona, date  } ) {
               axisRight={null}
               axisBottom={config.axisBottom}
               axisLeft={config.axisLeft}
-              enableLabel={false}
-              borderRadius={0}
               labelSkipWidth={12}
               labelSkipHeight={12}
+              enableLabel={false}
+              borderRadius={5}
               labelTextColor="inherit:darker(2)"
               animate={true}
               motionStiffness={90}
               borderWidth={2}
               motionDamping={15}
               legends={config.legends}
-              tooltip={({ indexValue, color, value, id }) => (
-                <div>
-                  <strong style={{ color }}>
-                Author Name: </strong> {indexValue}<br></br>
-                  <strong style={{ color }}> {id}: </strong> {value}
-                </div>
-              )}
               theme={{
                 tooltip: {
                   container: {
@@ -135,9 +125,8 @@ function GitlabTimeTakenToCompleteMergeRequestReview( { persona, date  } ) {
   }
 }
 
-GitlabTimeTakenToCompleteMergeRequestReview.propTypes = {
-  data: PropTypes.object,
+GitlabMergeReqWithMaxTimeChart.propTypes = {
   persona: PropTypes.string
 };
 
-export default GitlabTimeTakenToCompleteMergeRequestReview;
+export default GitlabMergeReqWithMaxTimeChart;

@@ -9,12 +9,14 @@ import ErrorDialog from "../../../common/error";
 import SummaryCountBlocksView from "../summaryCountBlocksView";
 import GitlabMergeRequestsByUserChart from "../../charts/GitlabMergeRequestsByUserChart";
 import GitlabTimeTakenToCompleteMergeRequestReview from "../../charts/GitlabTimeTakenToCompleteMergeRequestReview";
-import GitlabTimeTakenToCompleteMergeRequestReviewTable from "../../metrics/GitlabTimeTakenToCompleteMergeRequestReviewTable";
-import GitlabMrTitleTimeAuthorNoOfCommits from "../../metrics/GitlabMrTitleTimeAuthorNoOfCommits";
-import GitlabLastCommitToCodeByUser from "../../charts/GitlabLastCommitToCodeByUser";
-import GitlabMergeReqWithMaximumTime from "../../metrics/GitlabMergeReqWithMaximumTime";
+// import GitlabTimeTakenToCompleteMergeRequestReviewTable from "../../metrics/GitlabTimeTakenToCompleteMergeRequestReviewTable";
+// import GitlabMrTitleTimeAuthorNoOfCommits from "../../metrics/GitlabMrTitleTimeAuthorNoOfCommits";
+// import GitlabLastCommitToCodeByUser from "../../charts/GitlabLastCommitToCodeByUser";
+// import GitlabMergeReqWithMaximumTime from "../../metrics/GitlabMergeReqWithMaximumTime";
 import GitlabTotalCommitsChart from "../../charts/GitlabTotalCommitsChart";
 // import GitlabCommitCountByDeveloper from "../../metrics/GitlabCommitCountByDeveloper";
+import GitlabMergeReqWithMaxTimeChart from "../../charts/GitlabMergeReqWithMaxTimeChart";
+import GitlabMergedMergeReqCommitsCountTable from "../../metrics/GitlabMergedMergeReqCommitsCountTable";
 
 function SourceCodeView_developer ({ persona, date }) {
   const contextType = useContext(AuthContext);
@@ -123,24 +125,26 @@ function SourceCodeView_developer ({ persona, date }) {
             <GitlabTotalCommitsChart persona={persona} date={date}/>
           </div>
           <div className="align-self-stretch p-2 w-100">               
-            {/* <GitlabCommitCountByDeveloper date={date}/> */}
+            <GitlabMergeReqWithMaxTimeChart persona={persona} date={date}/>          
+            {/* <GitlabCommitCountByDeveloper date={date}/> */}            
           </div>
         </div>
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
-            <GitlabTimeTakenToCompleteMergeRequestReviewTable persona={persona} date={date}/>
+            {/* <GitlabTimeTakenToCompleteMergeRequestReviewTable persona={persona} date={date}/> */}
           </div>
           <div className="align-self-stretch p-2 w-100">               
-            <GitlabMrTitleTimeAuthorNoOfCommits persona={persona} date={date}/>                        
+            {/* <GitlabMrTitleTimeAuthorNoOfCommits persona={persona} date={date}/>                         */}
           </div>
         </div>
-        <div className="d-flex">
+        {/* <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
             <GitlabMergeReqWithMaximumTime date={date}/>
           </div>          
-        </div>
+        </div> */}
         <div className="mt-2">
-          <GitlabLastCommitToCodeByUser date={date} /> 
+          {/* <GitlabLastCommitToCodeByUser date={date} />  */}
+          <GitlabMergedMergeReqCommitsCountTable persona={persona} date={date}/>          
         </div>
       </>
     );}

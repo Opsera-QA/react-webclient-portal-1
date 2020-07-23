@@ -6,7 +6,7 @@ import InfoDialog from "../../common/info";
 import ErrorDialog from "../../common/error";
 import { Table }  from "react-bootstrap";
 
-function GitlabTimeTakenToCompleteMergeRequestReviewTable({ date }) {
+function GitlabMergedMergeReqCommitsCountTable({ date }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -82,17 +82,19 @@ function GitlabTimeTakenToCompleteMergeRequestReviewTable({ date }) {
                 <th style={{ width: "5%" }}>Push Time (min)</th>
                 <th style={{ width: "5%" }}>Branch Name</th>
                 <th style={{ width: "5%" }}>Project Name</th>
+                <th style={{ width: "5%" }}>Number of commits</th>
               </tr>
             </thead>
             <tbody>
               {data.gitlabTimeTakenToCompleteMergeRequestReview.data.map(function (value, index) {
                 return <tr key = {index}>
-                  <td>{value["key"]}</td>
+                  <td>{value["AuthorName"]}</td>
                   <td>{value["MergeRequestTitle"]}</td>
                   <td>{value["MergeRequestTimeTaken"]}</td>
                   <td>{value["PushCodeTime"]}</td>
                   <td>{value["BranchName"]}</td>
                   <td>{value["ProjectName"]}</td>
+                  <td>{value["TotalCommits"]}</td>
                 </tr>;
               })
               }
@@ -103,4 +105,4 @@ function GitlabTimeTakenToCompleteMergeRequestReviewTable({ date }) {
     );}
 }
 
-export default GitlabTimeTakenToCompleteMergeRequestReviewTable;
+export default GitlabMergedMergeReqCommitsCountTable;

@@ -1,4 +1,3 @@
-// Dashboard Planning tab, Persona Executives/Managers, Node Ticket AN-154
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../../contexts/AuthContext";
@@ -11,14 +10,12 @@ import "./charts.css";
 import InfoDialog from "../../common/info";
 import ModalLogs from "../../common/modalLogs";
 
-
 function GitlabMergeRequestsByUser( { persona, date } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
 
   useEffect(() => {    
     const controller = new AbortController();
@@ -38,7 +35,6 @@ function GitlabMergeRequestsByUser( { persona, date } ) {
       controller.abort();
     };
   }, [date]);
-
 
   const fetchData = async () => {
     setLoading(true);
@@ -69,14 +65,10 @@ function GitlabMergeRequestsByUser( { persona, date } ) {
     }
   };
 
-
-  //This needs to be more intelligent than just checking for precense of data.  Node can return a status 400 error from ES, and that would fail this.
   if(loading) {
     return (<LoadingDialog size="sm" />);
   } else if (error) {
-    return (<ErrorDialog  error={error} />);
-  // } else if (typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) {
-  //   return (<ErrorDialog  error="No Data is available for this chart at this time." />);
+    return (<ErrorDialog  error={error} />);  
   } else {    
     return (
       <>
