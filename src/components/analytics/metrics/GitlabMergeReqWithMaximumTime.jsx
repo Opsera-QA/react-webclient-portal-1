@@ -71,7 +71,7 @@ function GitlabMergeReqWithMaximumTime({ date }) {
     return (
       <>
         {/* <div className="chart-label-text">Gitlab: Merge-Request with Maximum Time</div> */}
-        <div className="">Gitlab: Merge-Request with Maximum Time</div>
+        <div className="">Merge-Request with Maximum Time</div>
         {data !== undefined && data.gitlabMergeReqWithMaximumTime.data.length > 0 ? 
           <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
             <thead>

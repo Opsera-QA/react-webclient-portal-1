@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useContext, useCallback } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../../contexts/AuthContext";
-import { ResponsiveLine } from "@nivo/line";
+import { ResponsiveCalendar } from "@nivo/calendar";
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/loading";
 import ErrorDialog from "../../common/error";
-import config from "./GitlabTotalCommitsChartConfig";
+import config from "./GitlabTotalCountOfMergeReqAndPushPerDayConfig";
 import "./charts.css";
 import InfoDialog from "../../common/info";
 import ModalLogs from "../../common/modalLogs";
 
-function GitlabTotalCommitsChart( { persona, date } ) {
+function GitlabTotalCountOfMergeReqAndPushPerDay( { persona, date } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -25,17 +25,17 @@ function GitlabTotalCommitsChart( { persona, date } ) {
     const postBody = {
       data: [
         { 
-          request: "gitlabTotalCommitsChart",
-          metric: "line" 
+          request: "gitlabTotalCountOfMergeReqAndPushPerDay",
+          metric: "calendar" 
         }
       ],
-      startDate: date.start, 
+      startDate: date.start,
       endDate: date.end
     };
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);      
-      let dataObject = res && res.data ? res.data.data[0].gitlabTotalCommitsChart : [];
+      let dataObject = res && res.data ? res.data.data[0].gitlabTotalCountOfMergeReqAndPushPerDay : [];
       setData(dataObject);
       setLoading(false);
     }
@@ -75,57 +75,37 @@ function GitlabTotalCommitsChart( { persona, date } ) {
     console.log(data.data);    
     return (
       <>
-        <ModalLogs header="Total Commits" size="lg" jsonMessage={data.data} dataType="line" show={showModal} setParentVisibility={setShowModal} />
+        <ModalLogs header="Merge Requests, Pushes and Comments" size="lg" jsonMessage={data.data} dataType="line" show={showModal} setParentVisibility={setShowModal} />
 
         <div className="chart mb-3" style={{ height: "300px" }}>
-          <div className="chart-label-text">Total Commits</div>
+          <div className="chart-label-text">Merge Requests, Pushes and Comments</div>
           {(typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) ?
             <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
               <InfoDialog message="No Data is available for this chart at this time." />
             </div>
             : 
-            <ResponsiveLine
-              data={data ? data.data : []}
-              onClick={() => setShowModal(true)}
-              margin={{ top: 40, right: 110, bottom: 70, left: 100 }}
-              xScale={{
-                type: "time",
-                format: "%Y-%m-%d"
-              }}
-              xFormat="time:%Y-%m-%d"
-              yScale={{
-                type: "linear",
-                stacked: false,
-              }}
-              axisLeft={config.axisLeft}
-              axisBottom={config.axisBottom}
-              pointSize={10}
-              pointBorderWidth={8}
-              pointLabel="y"
-              pointLabelYOffset={-12}
-              useMesh={true}
-              lineWidth={3.5}
+            <ResponsiveCalendar
+              data={data ? data.data[0].data : []}
+              from="2020-05-01"
+              to={new Date()}
+              emptyColor="#ededed"
+              colors={[ "#acd5f2", "#7fa8ca", "#537aa2", "#254e77" ]}
+              margin={{ top: 40, right: 40, bottom: 40, left: 40 }}              
+              yearSpacing={40}
+              monthBorderColor="#ffffff"
+              dayBorderWidth={2}
+              dayBorderColor="#ffffff"
               legends={config.legends}
-              colors={d=> d.color}
-              // onClick={function(node){console.log(node.id);}}
-              tooltip={( node ) => (
+              tooltip={({ day, value, color }) => (
                 <div style={{
-                  background: "white",
-                  padding: "9px 12px",
-                  border: "1px solid #ccc",
+                                    
                 }}>
-                  <strong> Date: </strong> {node.point.data.xFormatted} <br></br>
-                  <strong>  {node.point.serieId}: {node.point.data.yFormatted}  </strong>
+                  <strong>
+                    {day}: ({value} Commit Count)
+                  </strong>
                 </div>
-              )}
-              theme={{
-                tooltip: {
-                  container: {
-                    fontSize: "16px",
-                  },
-                },
-              }}
-            />
+              )}            
+            />          
           }
         </div>
       </>
@@ -133,8 +113,8 @@ function GitlabTotalCommitsChart( { persona, date } ) {
   }
 }
 
-GitlabTotalCommitsChart.propTypes = {
+GitlabTotalCountOfMergeReqAndPushPerDay.propTypes = {
   persona: PropTypes.string
 };
 
-export default GitlabTotalCommitsChart;
+export default GitlabTotalCountOfMergeReqAndPushPerDay;

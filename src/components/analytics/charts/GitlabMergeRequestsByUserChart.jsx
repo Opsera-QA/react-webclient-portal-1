@@ -76,7 +76,7 @@ function GitlabMergeRequestsByUser( { persona, date } ) {
 
         <div className="chart mb-3" style={{ height: "300px" }}>
 
-          <div className="chart-label-text">Gitlab: Merge Requests by User</div>
+          <div className="chart-label-text">Merge Requests by User</div>
           {(typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) ?
             <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
               <InfoDialog message="No Data is available for this chart at this time." />

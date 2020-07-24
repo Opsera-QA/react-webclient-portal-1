@@ -9,11 +9,15 @@ import ErrorDialog from "../../../common/error";
 import SummaryCountBlocksView from "../summaryCountBlocksView";
 import GitlabMergeRequestsByUserChart from "../../charts/GitlabMergeRequestsByUserChart";
 import GitlabTimeTakenToCompleteMergeRequestReview from "../../charts/GitlabTimeTakenToCompleteMergeRequestReview";
-import GitlabTimeTakenToCompleteMergeRequestReviewTable from "../../metrics/GitlabTimeTakenToCompleteMergeRequestReviewTable";
-import GitlabMrTitleTimeAuthorNoOfCommits from "../../metrics/GitlabMrTitleTimeAuthorNoOfCommits";
-import GitlabLastCommitToCodeByUser from "../../charts/GitlabLastCommitToCodeByUser";
-import GitlabMergeReqWithMaximumTime from "../../metrics/GitlabMergeReqWithMaximumTime";
-import GitlabCommitCountByDeveloper from "../../metrics/GitlabCommitCountByDeveloper";
+// import GitlabTimeTakenToCompleteMergeRequestReviewTable from "../../metrics/GitlabTimeTakenToCompleteMergeRequestReviewTable";
+// import GitlabMrTitleTimeAuthorNoOfCommits from "../../metrics/GitlabMrTitleTimeAuthorNoOfCommits";
+// import GitlabLastCommitToCodeByUser from "../../charts/GitlabLastCommitToCodeByUser";
+// import GitlabMergeReqWithMaximumTime from "../../metrics/GitlabMergeReqWithMaximumTime";
+import GitlabTotalCommitsChart from "../../charts/GitlabTotalCommitsChart";
+// import GitlabCommitCountByDeveloper from "../../metrics/GitlabCommitCountByDeveloper";
+import GitlabMergeReqWithMaxTimeChart from "../../charts/GitlabMergeReqWithMaxTimeChart";
+import GitlabMergedMergeReqCommitsCountTable from "../../metrics/GitlabMergedMergeReqCommitsCountTable";
+import GitlabTotalCountOfMergeReqAndPushPerDay from "../../charts/GitlabTotalCountOfMergeReqAndPushPerDay";
 
 function SourceCodeView_executive ({ persona, date }) {
   const contextType = useContext(AuthContext);
@@ -59,6 +63,10 @@ function SourceCodeView_executive ({ persona, date }) {
         {
           "request": "gitlabTotalNumberOfCommits",
           "metric": "count"
+        },
+        {
+          "request": "gitlabTotalNumberOfMergeRequestsOpenedByUser",
+          "metric": "complexCount"
         }
       ],
       startDate: date.start, 
@@ -80,7 +88,7 @@ function SourceCodeView_executive ({ persona, date }) {
   }
   
   const buildSummaryCounts = (data) => {
-    const { gitlabTotalNumberOfCommits, gitlabTotalNumberOfBranches, gitlabTotalMergeRequestsPendingForReview } = data;
+    const { gitlabTotalNumberOfCommits, gitlabTotalNumberOfBranches, gitlabTotalMergeRequestsPendingForReview, gitlabTotalNumberOfMergeRequestsOpenedByUser } = data;
     let summaryCountsData = [];    
     if (gitlabTotalNumberOfCommits.status === 200 && gitlabTotalNumberOfCommits.data !== undefined) {
       summaryCountsData.push({ name: "Total Commits", value: gitlabTotalNumberOfCommits.data[0].count, footer: "", status: "" });
@@ -91,6 +99,9 @@ function SourceCodeView_executive ({ persona, date }) {
     if (gitlabTotalMergeRequestsPendingForReview.status === 200 && gitlabTotalMergeRequestsPendingForReview.data !== undefined) {
       summaryCountsData.push({ name: "Merge Requests Pending", value: gitlabTotalMergeRequestsPendingForReview.data[0].count, footer: "", status: gitlabTotalMergeRequestsPendingForReview.data[0].count > 0 ? "danger" : null });
     }    
+    if (gitlabTotalNumberOfMergeRequestsOpenedByUser.status === 200 && gitlabTotalNumberOfMergeRequestsOpenedByUser.data !== undefined) {
+      summaryCountsData.push({ name: "Merge Requests Opened", value: gitlabTotalNumberOfMergeRequestsOpenedByUser.data[0].count, footer: "", status: "" });
+    }  
     return summaryCountsData;
   };
 
@@ -102,6 +113,15 @@ function SourceCodeView_executive ({ persona, date }) {
     return (
       <>
         <SummaryCountBlocksView data={countBlockData} />
+        
+        <div className="d-flex">
+          <div className="align-self-stretch p-2 w-100">
+            <GitlabTotalCountOfMergeReqAndPushPerDay persona={persona} date={date}/>
+          </div>
+          <div className="align-self-stretch p-2 w-100">
+            {/* Self Contained div */}
+          </div>
+        </div>
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
             <GitlabMergeRequestsByUserChart persona={persona} date={date}/>
@@ -112,22 +132,34 @@ function SourceCodeView_executive ({ persona, date }) {
         </div>
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
-            <GitlabTimeTakenToCompleteMergeRequestReviewTable persona={persona} date={date}/>
+            <GitlabTotalCommitsChart persona={persona} date={date}/>
           </div>
           <div className="align-self-stretch p-2 w-100">               
-            <GitlabMrTitleTimeAuthorNoOfCommits persona={persona} date={date}/>                        
+            <GitlabMergeReqWithMaxTimeChart persona={persona} date={date}/>          
+            {/* <GitlabCommitCountByDeveloper date={date}/> */}            
           </div>
         </div>
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
+            {/* <GitlabTimeTakenToCompleteMergeRequestReviewTable persona={persona} date={date}/> */}
+          </div>
+          <div className="align-self-stretch p-2 w-100">               
+            {/* <GitlabMrTitleTimeAuthorNoOfCommits persona={persona} date={date}/>                         */}
+          </div>
+        </div>
+        {/* <div className="d-flex">
+          <div className="align-self-stretch p-2 w-100">
             <GitlabMergeReqWithMaximumTime date={date}/>
-          </div>                    
+          </div>          
+        </div> */}
+        {/* <div className="d-flex">          
           <div className="align-self-stretch p-2 w-100">
             <GitlabCommitCountByDeveloper date={date}/>
           </div>    
-        </div>
+        </div> */}
         <div className="mt-2">
-          <GitlabLastCommitToCodeByUser date={date} /> 
+          {/* <GitlabLastCommitToCodeByUser date={date} />  */}
+          <GitlabMergedMergeReqCommitsCountTable persona={persona} date={date}/>          
         </div>
       </>
     );}

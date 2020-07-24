@@ -65,7 +65,7 @@ export default {
       "anchor": "bottom-right",
       "direction": "column",
       "justify": false,
-      "translateX": 85,
+      "translateX": 90,
       "translateY": 0,
       "itemsSpacing": 0,
       "itemDirection": "left-to-right",
