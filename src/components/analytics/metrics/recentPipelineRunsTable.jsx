@@ -31,7 +31,7 @@ function OpseraRecentPipelineStatus({ date }) {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [date]);
 
 
   async function fetchData() {
@@ -53,7 +53,7 @@ function OpseraRecentPipelineStatus({ date }) {
     
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);     
-      let dataObject = res && res.data ? res.data.data[0].opseraPipelineInfo.data : [];   
+      let dataObject = res && res.data ? res.data.data[0].opseraPipelineInfo : [];   
       console.log(dataObject);   
       setData(dataObject);
       setLoading(false);
@@ -75,10 +75,13 @@ function OpseraRecentPipelineStatus({ date }) {
       <>
         <div className="chart mb-3" style={{ height: "300px" }}>
           {/* <div className="chart-label-text">Opsera: Recent Pipeline Status</div> */}
-          {(typeof data !== "object" || data === undefined || data.length < 1) ?
+          {(typeof data !== "object" || data === undefined || Object.keys(data).length === 1 || data.status !== 200) ?
+          <>
+            <div className="chart-label-text">Opsera: Recent Pipeline Status</div>
             <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
               <InfoDialog message="No Data is available for this chart at this time." />
             </div>
+            </>
             :
             <div className="px-2 mt-2">
               <Table striped bordered hover size="sm" className="table-sm" style={{ fontSize:"small" }}>
@@ -95,7 +98,7 @@ function OpseraRecentPipelineStatus({ date }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map(function (value, index) {
+                  {data.data.map(function (value, index) {
                     let className = (value["status"] && value["status"].toLowerCase() === "failure") ? " red" : " green";
                     return <tr key = {index}>
                       <td className={className}>{ (value["pipeline_name"]) ? value["pipeline_name"] : "Unknown" }</td>
