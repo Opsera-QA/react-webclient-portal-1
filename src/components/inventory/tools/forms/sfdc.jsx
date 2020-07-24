@@ -12,6 +12,7 @@ const INITIAL_DATA = {
   accountUsername : "",
   sfdc_client_id: "", 
   sfdc_client_secret: "",
+  sfdc_token: "",
   sfdc_password: "",
 };
 
@@ -54,6 +55,11 @@ function SFDCToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVault
         newConfiguration.sfdc_password = await saveToVault(toolId, "sfdc", "password", "Vault SFDC password", newConfiguration.sfdc_password);
       }
 
+      if (typeof(newConfiguration.sfdc_token) === "string") {
+        // toolId, toolIdentifier, key, name, value
+        newConfiguration.sfdc_token = await saveToVault(toolId, "sfdc", "token", "Vault SFDC token", newConfiguration.sfdc_token);
+      }
+
       const item = {
         configuration: newConfiguration
       };
@@ -90,6 +96,12 @@ function SFDCToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVault
           return { ...formData,  sfdc_password: {} };
         });  
       } 
+
+      if(key === "token") {
+        setFormData(formData => {
+          return { ...formData,  sfdc_token: {} };
+        });  
+      }
       
       setFormMessage("ERROR: Something has gone wrong saving secure data to your vault.  Please try again or report the issue to OpsERA.");
       return "";
@@ -97,10 +109,11 @@ function SFDCToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVault
   };
 
   const validateRequiredFields = () => {
-    let {  accountUsername, sfdc_client_id, sfdc_client_secret, sfdc_password } = formData;
+    let {  accountUsername, sfdc_client_id, sfdc_client_secret, sfdc_token, sfdc_password } = formData;
     if ( accountUsername.length === 0 ||
       sfdc_client_id.length === 0 ||
       sfdc_client_secret.length === 0 ||
+      sfdc_token.length === 0 ||
       sfdc_password.length === 0 ) {
       setFormMessage("Required Fields Missing!");
       return false;
@@ -128,6 +141,11 @@ function SFDCToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVault
       <Form.Group controlId="awsRegion">
         <Form.Label>SFDC Client Secret*</Form.Label>
         <Form.Control maxLength="256" type="password" placeholder="" value={formData.sfdc_client_secret || ""} onChange={e => setFormData({ ...formData, sfdc_client_secret: e.target.value })} />
+      </Form.Group>
+
+      <Form.Group controlId="awsRegion">
+        <Form.Label>SFDC Token*</Form.Label>
+        <Form.Control maxLength="256" type="password" placeholder="" value={formData.sfdc_token || ""} onChange={e => setFormData({ ...formData, sfdc_token: e.target.value })} />
       </Form.Group>
 
       <Form.Group controlId="awsAccountId">

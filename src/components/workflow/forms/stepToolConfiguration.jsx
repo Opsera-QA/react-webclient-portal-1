@@ -48,13 +48,15 @@ function StepToolConfiguration( { data, editItem, parentCallback }) {
     return stepArrayIndex;
   };
 
-  const callbackFunction = (tool) => {
+  const callbackFunction = (tool, persistent) => {
     let stepArrayIndex = getStepIndex(editItem.step_id); 
     plan[stepArrayIndex].tool.configuration = tool.configuration;
     plan[stepArrayIndex].tool.threshold = tool.threshold;
     plan[stepArrayIndex].tool.job_type = tool.job_type;
-    parentCallback(plan);
-    setStepTool({});
+    parentCallback(plan, persistent);
+    if (!persistent) { //dont' close the view
+      setStepTool({});
+    }    
   };
 
   const saveToVault = async (postBody) => {

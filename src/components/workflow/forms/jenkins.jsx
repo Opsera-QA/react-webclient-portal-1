@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { Form, Button, OverlayTrigger, Popover } from "react-bootstrap";
+import { Form, Button, OverlayTrigger, Popover, Tooltip } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave, faSpinner, faExclamationCircle, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
+import { faSave, faSpinner, faExclamationCircle, faExclamationTriangle, faCog } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
@@ -25,6 +25,13 @@ const INITIAL_DATA = {
   jUserId: "",
   jAuthToken: "",
   jobName: "",
+
+  toolJobId : "",
+  toolJobType: "",
+  rollbackBranchName:"",
+  stepIdXML:"",
+  sfdcDestToolId: "",
+  destAccountUsername: "",
 
   sfdcToolId: "",
   accountUsername: "",
@@ -63,7 +70,8 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
   const [isRepoSearching, setIsRepoSearching] = useState(false);
   const [branchList, setBranchList] = useState([]);
   const [isBranchSearching, setIsBranchSearching] = useState(false);
-  
+  const [listOfSteps, setListOfSteps] = useState([]);
+
   const [sfdcList, setSFDCList] = useState([]);
   const [isSFDCSearching, setisSFDCSearching] = useState(false);
   
@@ -74,6 +82,18 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
   const [thresholdType, setThresholdType] = useState("");
   
   const [jobType, setJobType] = useState("");
+  
+  useEffect(()=> {
+    if( plan && stepId ) {
+      setListOfSteps(formatStepOptions(plan, stepId));
+    }
+  }, [plan, stepId]);
+
+  const formatStepOptions = (plan, stepId) => {
+    let STEP_OPTIONS = plan.slice(0, plan.findIndex( (element) => element._id === stepId));
+    STEP_OPTIONS.unshift({ _id: "", name : "Select One",  isDisabled: "yes" });
+    return STEP_OPTIONS;
+  };
 
   useEffect(() => {    
     const controller = new AbortController();
@@ -199,6 +219,37 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
     [jenkinsList]
   );
   
+  useEffect(
+    () => {
+      if( formData.toolConfigId ) {
+        setJobsList(jenkinsList[jenkinsList.findIndex(x => x.id === formData.toolConfigId)].jobs);
+      }
+    },
+    [jenkinsList]
+  );
+
+  useEffect(
+    () => {
+      if(formData.toolJobType && formData.toolJobType.includes("SFDC") ) {
+        setFormData({ ...formData, buildType: "ant" });
+      }
+    },
+    [formData.toolJobType]
+  );
+  
+  function renderTooltip(props) {
+    const { message } = props;
+    return (
+      <Tooltip id="button-tooltip" {...props}>
+        {message}
+      </Tooltip>
+    );
+  }
+
+  // take it to tool config edit page
+  const handleEditClick = () => {
+    
+  };
 
   const loadFormData = async (step) => {
     let { configuration, threshold, job_type } = step;
@@ -219,7 +270,17 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
     }
   };
   
-  const callbackFunction = async () => {
+  const handleCreateAndSave = async () => {
+    //save the current settings of the step
+    await callbackFunction(true);
+    //trigger the createJob function
+    await createJob();
+    //complete normal save operation
+    callbackFunction();
+  };
+  
+  const callbackFunction = async (persistent) => {
+    console.log("saving data");
     if (validateRequiredFields()) {
       setLoading(true);
    
@@ -233,7 +294,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
       };
       console.log("item: ", item);
       setLoading(false);
-      parentCallback(item);
+      parentCallback(item, persistent);
     }
   };
   
@@ -243,7 +304,6 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
     const apiUrl = "/registry/properties/"+service;   // this is to get all the service accounts from tool registry
     try {
       const res = await axiosApiService(accessToken).get(apiUrl);
-      console.log(res);
       if( res.data ) {
         let respObj = [];
         let arrOfObj = res.data;
@@ -262,10 +322,10 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
     }
   };
 
-  const formatOptions = (options) => {
-    options.unshift({ value: "", name : "Select One",  isDisabled: "yes" });
-    return options;
-  };
+  // const formatOptions = (options) => {
+  //   options.unshift({ value: "", name : "Select One",  isDisabled: "yes" });
+  //   return options;
+  // };
   // const formatAccountsOptions = (options) => {
   //   options.unshift({ toolId: "", gitCredential : "Select One", gitUserName: "",  isDisabled: "yes" });
   //   return options;
@@ -278,7 +338,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
       jenkinsUrl.length === 0 || 
       jUserId.length === 0 || 
       jAuthToken.length === 0 || 
-      jobName.length === 0 ||
+      // jobName.length === 0 ||
       (buildType === "docker" ?  dockerName.length === 0 || 
       dockerTagName.length === 0  : false )
     ) {
@@ -307,7 +367,19 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
         gitCredential: "",
         gitUserName : "",
         repository: "",
-        branch: ""
+        branch: "",
+        
+        toolJobId : "",
+        toolJobType: "",
+        rollbackBranchName:"",
+        stepIdXML:"",
+        sfdcDestToolId: "",
+        destAccountUsername: "",
+
+        sfdcToolId: "",
+        accountUsername: "",
+        projectId: "",
+        defaultBranch: "",
       });
     }
     if( selectedOption.accounts && selectedOption.jobs ) {
@@ -327,6 +399,34 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
     setLoading(false);    
   };
   
+  const handleDestinationSFDCChange = (selectedOption) => {
+    setLoading(true);    
+    console.log(selectedOption);
+    if (selectedOption.id && selectedOption.configuration) {
+      setFormData({ ...formData, sfdcDestToolId: selectedOption.id, destAccountUsername: selectedOption.configuration ? selectedOption.configuration.destAccountUsername : "" });
+    }
+    setLoading(false);    
+  };
+  
+  
+  const handleJobChange = (selectedOption) => {
+    setFormData({ ...formData,
+      toolJobId: selectedOption.id,   // this wont work for now
+    });
+    if( selectedOption.type.includes("SFDC") ) {
+      setFormData({ ...formData,
+        toolJobId: selectedOption._id,
+        toolJobType: selectedOption.type,
+        jobType: selectedOption.configuration.jobType,
+        rollbackBranchName: selectedOption.configuration.rollbackBranchName,
+        
+        stepIdXML:"",
+        sfdcDestToolId: "",
+        destAccountUsername: "",
+
+      });
+    }
+  };
 
   const handleAccountChange = (selectedOption) => {
     setFormData({ ...formData, gitToolId : selectedOption.toolId, gitCredential: selectedOption.gitCredential, gitUserName: selectedOption.gitUserName, service: selectedOption.service,
@@ -341,31 +441,51 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
   };
 
   const handleRepoChange = (selectedOption) => {
-    setFormData({ ...formData, repository:selectedOption.name, repoId: selectedOption.id,  projectId: selectedOption.id, gitUrl: selectedOption.httpUrl, sshUrl: selectedOption.sshUrl, branch: "" });  
+    setFormData({ ...formData, repository:selectedOption.name, repoId: selectedOption.id,  projectId: selectedOption.id, gitUrl: selectedOption.httpUrl, sshUrl: selectedOption.sshUrl, branch: "", defaultBranch: "", gitBranch: "" });  
   };
 
   const handleBranchChange = (selectedOption) => {
-    setFormData({ ...formData, branch: selectedOption.value, defaultBranch: selectedOption.value });  
+    setFormData({ ...formData, branch: selectedOption.value, defaultBranch: selectedOption.value, gitBranch: selectedOption.value });  
   };
   
-  const handleJobChange = (selectedOption) => {
+  const handleJobTypeChange = (selectedOption) => {
     setErrors(false);
     setJobType(selectedOption.value);  
     if( selectedOption.value === "sfdc-ant" ) {
       setFormData({ ...formData, jobName: "CREATE PACKAGE XML",
-        buildType: "Ant",
+        buildType: "ant",
         jobDescription: "PACKAGEXML_CREATION",
-        jobType: "CREATE PACKAGE XML" });
+        jobType: "CREATE PACKAGE XML",
+
+        toolJobId : "",
+        toolJobType: "",
+        rollbackBranchName:"",
+        stepIdXML:"",
+        sfdcDestToolId: "",
+      
+      });
     } else {
       setFormData({ ...formData,
         sfdcToolId : "", accountUsername: "",
-        jobName: "",
+        // jobName: "",
         buildType: "gradle",
         jobDescription: "",
-        jobType: "BUILD" });
+        jobType: "BUILD",
+      
+        toolJobId : "",
+        toolJobType: "",
+        rollbackBranchName:"",
+        stepIdXML:"",
+        sfdcDestToolId: "",
+      
+      });
     }
   };
   
+  const handleXMLStepChange = (selectedOption) => {
+    setFormData({ ...formData, stepIdXML: selectedOption._id });    
+  };
+
   const searchRepositories = async (service, gitAccountId) => {  
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
@@ -424,8 +544,55 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
     }
   };
 
-  console.log(formData);
-  // console.log(accountsList);
+  const createJob = async() => {
+    const { getAccessToken } = contextType;
+    const accessToken = await getAccessToken();
+    const apiUrl = `/registry/action/${formData.toolConfigId}/createjob`;
+
+    const postBody = {
+      jobId: "",
+      pipelineId: pipelineId,
+      stepId: stepId,
+      buildParams: {
+        stepId: formData.stepIdXML && formData.stepIdXML,
+      }
+    };
+
+    console.log("Creating Job: ", postBody);
+
+    //create jenkins job
+    let createJobResponse;
+    try {      
+      createJobResponse = await axiosApiService(accessToken).post(apiUrl, postBody);
+      console.log("createJobResponse: ", createJobResponse);      
+    } catch (error) {
+      console.log("Error posting to API: ", error);
+      setErrors(error);
+      createJobResponse = error;
+    }
+
+    //update data for pipeline workflow step!!!
+    if ( createJobResponse && createJobResponse.status === 200) {
+      if (createJobResponse.data.message && createJobResponse.data.message.jobName && createJobResponse.data.message.jobName.length > 0) {
+        // save jobName
+        setFormData({ ...formData, jobName:  createJobResponse.data.message.jobName });
+        // await callbackFunction();
+      }
+    } else if (createJobResponse.status !== 200) {
+      setErrors("An error has occurred updating the Jenkins server with the job information.  This pipeline cannot proceed.  Please check the pipeline activity logs for more details.");
+    }
+
+  };
+
+  // console.log(formData.toolJobType);
+  // console.log(formData.jobType);
+  // console.log(formData.toolJobId);
+  // console.log(formData.rollbackBranchName);
+  //console.log(formData);
+  //console.log(formData.jobName);
+
+  // console.log(formData.stepIdXML);
+  // console.log(formData.sfdcDestToolId);
   
   const JenkinsPopover = (
     <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
@@ -453,11 +620,49 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
     <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
       <Popover.Title as="h3">Tool Details</Popover.Title>
       <Popover.Content>
-        <div className="text-muted mb-2">Information below is from the selected Tool Registry item.  To changes these values, edit the entry in Tool Registry.</div>
+        <div className="text-muted mb-2">Information below is from the selected Tool Registry item.  To changes these values, edit the entry in Tool Registry <Link to="/inventory/tools">here</Link>.</div>
         <div className="mb-1">
           <div className="text-muted pr-1">SFDC Account Username:</div>
           <div>{formData.accountUsername || ""}</div>
         </div>   
+      </Popover.Content>
+    </Popover>
+  );
+  
+  const DestSFDCPopover = (
+    <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
+      <Popover.Title as="h3">Tool Details</Popover.Title>
+      <Popover.Content>
+        <div className="text-muted mb-2">Information below is from the selected Tool Registry item.  To changes these values, edit the entry in Tool Registry.</div>
+        <div className="mb-1">
+          <div className="text-muted pr-1">SFDC Account Username:</div>
+          <div>{formData.destAccountUsername || ""}</div>
+        </div>   
+      </Popover.Content>
+    </Popover>
+  );
+    
+  const JobsPopover = (
+    <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
+      <Popover.Title as="h3">Job Details</Popover.Title>
+      <Popover.Content>
+        <div className="text-muted mb-2">Information below is from the selected Tool Registry item.  To changes these values, edit the entry in Tool Registry.</div>
+        
+        <div className="mb-1">
+          <div className="text-muted pr-1">Tool Type:</div>
+          <div>{formData.toolJobType || ""}</div>
+        </div>
+        <div className="mb-1">
+          <div className="text-muted pr-1">Job Type:</div>
+          <div>{formData.jobType || ""}</div>
+        </div>
+        {formData.rollbackBranchName && formData.rollbackBranchName.length>0 &&
+         <div className="mb-1">
+           <div className="text-muted pr-1">Rollback Branch:</div>
+           <div>{formData.rollbackBranchName || ""}</div>
+         </div>  
+        }
+           
       </Popover.Content>
     </Popover>
   );
@@ -525,7 +730,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
               value={ JOB_OPTIONS[JOB_OPTIONS.findIndex(x => x.value === jobType)] }
               // defaultValue={jobType ? JOB_OPTIONS[JOB_OPTIONS.findIndex(x => x.value === jobType)] : JOB_OPTIONS[0]}
               placeholder= "Please select an account"
-              onChange={handleJobChange}             
+              onChange={handleJobTypeChange}             
             /> : null }
         </Form.Group>
 
@@ -536,13 +741,55 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
         </Form.Group>}
 
         {/* TODO: add jobs data here */}
-        {/* {jobType === "opsera-job"  &&
+        {jobType === "opsera-job"  &&
         <>
-          <p>Create Job Form</p>
-        </>        
-        }*/}
 
-        {jobType === "sfdc-ant"  &&
+          {(formData.jenkinsUrl && jenkinsList.length > 1) &&                
+          <Form.Group controlId="formBasicEmail">
+            <Form.Label>Select jobs*</Form.Label>
+            {jobsList.length < 1 &&  <div className="form-text text-muted p-2">
+              <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth/> 
+              No jobs have been created for <span>{formData.jenkinsUrl}</span>.  Please go to 
+              <Link to="/inventory/tools"> Tool Registry</Link> and add credentials for this Jenkins in order to proceed. </div>
+            }
+            {jobsList !== undefined && jobsList.length > 0 ?
+              <DropdownList
+                data={jobsList}
+                valueField='id'
+                textField='name'
+                value={jobsList[jobsList.findIndex(x => x._id === formData.toolJobId)] }
+                // defaultValue={accountsList ? accountsList[accountsList.findIndex(x => x.toolId === formData.gitToolId)] : accountsList[0]}
+                placeholder= "Please select a job"
+                onChange={handleJobChange}             
+              /> 
+              : null }
+          </Form.Group>
+          }
+          { formData.toolJobType && formData.toolJobType.length > 0 &&
+          <>
+            <div className="text-right pt-2">
+              <OverlayTrigger trigger="click" rootClose placement="left" overlay={JobsPopover}>
+                <Button variant="outline-dark" size="sm">Info</Button>
+              </OverlayTrigger>
+              
+              <OverlayTrigger
+                placement="top"
+                delay={{ show: 250, hide: 400 }}
+                overlay={renderTooltip({ message: "Configure Job Settings here" })} >
+                <FontAwesomeIcon icon={faCog}
+                  style={{ cursor: "pointer" }}
+                  className="text-muted mx-1" fixedWidth
+                  onClick={() => { handleEditClick(); }} />
+              </OverlayTrigger>
+              {/* <Button variant="outline-dark" size="sm" onClick={createJob} >Create Job</Button> */}
+            </div>
+            
+          </>
+          }
+        </>        
+        }
+
+        {jobType === "sfdc-ant" || formData.toolJobType.includes("SFDC")  &&
           <Form.Group controlId="jenkinsList">
             <Form.Label>Select SFDC Tool Credentials*</Form.Label>
             {isSFDCSearching ? (
@@ -651,6 +898,63 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
           )}
           {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
         </Form.Group>  }
+
+        {formData.jobType === "VALIDATE PACKAGE XML" || formData.jobType === "SFDC DEPLOY" ? (
+          <Form.Group controlId="s3Step">
+            <Form.Label>Generate XML Step Info*</Form.Label>
+            {listOfSteps ?
+              <DropdownList
+                data={listOfSteps}
+                value = {formData.stepIdXML ? listOfSteps[listOfSteps.findIndex(x => x._id === formData.stepIdXML)] : listOfSteps[0]}
+                valueField='_id'
+                textField='name'
+                placeholder="select step id for XML generation"
+                // defaultValue={formData.stepIdXML ? listOfSteps[listOfSteps.findIndex(x => x._id === formData.stepIdXML)] : listOfSteps[0]}
+                onChange={handleXMLStepChange}             
+              /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted ml-2" fixedWidth/> }
+          </Form.Group>) : (<></>)     
+        }
+
+        
+        {formData.jobType === "SFDC FETCH AND DEPLOY" &&
+        
+        <Form.Group controlId="jenkinsList">
+          <Form.Label>Select Destination SFDC Tool Credentials*</Form.Label>
+          {isSFDCSearching ? (
+            <div className="form-text text-muted mt-2 p-2">
+              <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> 
+            Loading SFDC accounts from registry</div>
+          ) :(
+            <>
+              {renderForm && sfdcList && sfdcList.length > 0 ? <>
+                <DropdownList
+                  data={sfdcList}
+                  value={sfdcList[sfdcList.findIndex(x => x.id === formData.sfdcDestToolId)]}
+                  valueField='id'
+                  textField='name'
+                  placeholder= "Please select an account"
+                  onChange={handleDestinationSFDCChange}             
+                /> 
+                { formData.destAccountUsername && formData.destAccountUsername.length > 0 &&
+                  <div className="text-right pt-2">
+                    <OverlayTrigger trigger="click" rootClose placement="left" overlay={DestSFDCPopover}>
+                      <Button variant="outline-dark" size="sm">Info</Button>
+                    </OverlayTrigger>
+                  </div>
+                }
+                  
+              </> : <>
+                <div className="form-text text-muted p-2">
+                  <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth/> 
+              No accounts have been registered for SFDC.  Please go to 
+                  <Link to="/inventory/tools"> Tool Registry</Link> and add an entry for this repository in order to proceed. </div>
+              </> }
+            </>
+
+          )}
+        </Form.Group>
+
+        }
        
         
         {(formData.jenkinsUrl && jenkinsList.length > 1) &&
@@ -680,27 +984,27 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
         </Form.Group>
 
 
-      
-        <Button variant="primary" type="button"  className="mt-3"
-          onClick={() => { callbackFunction(); }}> 
-          {loading ? 
-            <><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> Saving</> :
-            <><FontAwesomeIcon icon={faSave} className="mr-1"/> Save</> }
-        </Button>
-      
+        {jobType === "opsera-job"  ? 
+          <Button variant="primary" type="button"  className="mt-3"
+            onClick={() => { handleCreateAndSave(); }}> 
+            {loading ? 
+              <><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> Working</> :
+              <><FontAwesomeIcon icon={faSave} className="mr-1"/>Create job and Save</> }
+          </Button> :
+          <Button variant="primary" type="button"  className="mt-3"
+            onClick={() => { callbackFunction(); }}> 
+            {loading ? 
+              <><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> Saving</> :
+              <><FontAwesomeIcon icon={faSave} className="mr-1"/> Save</> }
+          </Button>      
+        }
+     
         <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
       </Form>
     </>
   );
 }
 
-JenkinsStepConfiguration.propTypes = {
-  data: PropTypes.object,
-  pipelineId: PropTypes.string,
-  stepId: PropTypes.string,
-  parentCallback: PropTypes.func,
-  callbackSaveToVault: PropTypes.func
-};
 
 export default JenkinsStepConfiguration;
 

@@ -232,61 +232,64 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
       initializeSocket();
     }
     
-    if (socket.socket === undefined ) {
-      socket.emit("subscribeToPipelineActivity", 1000);
-      socket.on("subscribeToPipelineActivity", dataObj => {
-        console.log("Update from Websocket (staleRefreshCount: "+staleRefreshCount+"): ", dataObj);
-        if (isEqual(dataObj, tmpDataObject)) {
-          staleRefreshCount++;
-        } else {
-          staleRefreshCount = 0;
-        }  
-        tmpDataObject = dataObj;
-        let status =  pipeline.workflow.last_step !== undefined && pipeline.workflow.last_step.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;
-        if (staleRefreshCount % 2 === 0) {
-          //console.log("divisible by 2 refresh");
-          fetchActivityLogs();
-        }
-
-        if (staleRefreshCount >= 20) {
-          console.log("closing connection due to stale data");
-          setWorkflowStatus("stopped");
-          setSocketRunning(false);
-          socket.close();
-          fetchActivityLogs();
-        } else {          
-          if (status === "stopped" && pipeline.workflow.last_step.running && pipeline.workflow.last_step.running.paused) {
-            setWorkflowStatus("paused");          
+    if (socket) {
+      if (socket.socket === undefined ) {
+        socket.emit("subscribeToPipelineActivity", 1000);
+        socket.on("subscribeToPipelineActivity", dataObj => {
+          console.log("Update from Websocket (staleRefreshCount: "+staleRefreshCount+"): ", dataObj);
+          if (isEqual(dataObj, tmpDataObject)) {
+            staleRefreshCount++;
           } else {
-            setWorkflowStatus(status);
+            staleRefreshCount = 0;
+          }  
+          tmpDataObject = dataObj;
+          let status =  pipeline.workflow.last_step !== undefined && pipeline.workflow.last_step.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;
+          if (staleRefreshCount % 2 === 0) {
+            //console.log("divisible by 2 refresh");
+            fetchActivityLogs();
           }
-        }
-           
-        if (typeof(dataObj) !== "undefined" && Object.keys(dataObj).length > 0) {
-          pipeline.workflow.last_step = dataObj;          
-        }
-
-        if (staleRefreshCount > 1 && status === "stopped") {
-          console.log("closing connection due to stopped status");
-          setWorkflowStatus("stopped");
-          setSocketRunning(false);
-          socket.close();
-          fetchActivityLogs();
-        }
+  
+          if (staleRefreshCount >= 20) {
+            console.log("closing connection due to stale data");
+            setWorkflowStatus("stopped");
+            setSocketRunning(false);
+            socket.close();
+            fetchActivityLogs();
+          } else {          
+            if (status === "stopped" && pipeline.workflow.last_step.running && pipeline.workflow.last_step.running.paused) {
+              setWorkflowStatus("paused");          
+            } else {
+              setWorkflowStatus(status);
+            }
+          }
+             
+          if (typeof(dataObj) !== "undefined" && Object.keys(dataObj).length > 0) {
+            pipeline.workflow.last_step = dataObj;          
+          }
+  
+          if (staleRefreshCount > 1 && status === "stopped") {
+            console.log("closing connection due to stopped status");
+            setWorkflowStatus("stopped");
+            setSocketRunning(false);
+            socket.close();
+            fetchActivityLogs();
+          }
+        });
+      }
+  
+      socket.on("disconnect", () => {
+        setWorkflowStatus("stopped");
+        setSocketRunning(false);
+      });
+  
+      socket.on("connect_error", function(err) {
+        console.log("Connection Error on Socket:", err);
+        setWorkflowStatus("stopped");
+        setSocketRunning(false);
+        socket.close();
       });
     }
-
-    socket.on("disconnect", () => {
-      setWorkflowStatus("stopped");
-      setSocketRunning(false);
-    });
-
-    socket.on("connect_error", function(err) {
-      console.log("Connection Error on Socket:", err);
-      setWorkflowStatus("stopped");
-      setSocketRunning(false);
-      socket.close();
-    });
+    
   };
 
   

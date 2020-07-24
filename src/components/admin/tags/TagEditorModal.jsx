@@ -98,7 +98,7 @@ function TagsEditorModal(props) {
     }
   };
 
-  const isFormValid = (formFieldList.key.isValid && formFieldList.value.isValid) ? true :false;
+  const isFormValid = (formFieldList.key.value && formFieldList.value.value) ? true :false;
 
   //Use a single function for create and update tag
   const updateTag = async () => {

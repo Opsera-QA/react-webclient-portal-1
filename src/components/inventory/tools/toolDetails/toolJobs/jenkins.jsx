@@ -5,9 +5,10 @@ import JenkinsCreateJob from "./jenkinsCreateJob/jenkinsCreateJob";
 
 import JenkinsJobsTable from "./jenkinsJobsTable";
 import "components/inventory/tools/tools.css";
+import PropTypes from "prop-types";
 
-function JenkinJobs(props) {
-  const { toolId, toolData, accessToken } = props;
+function JenkinJobs({ toolData }) {
+  
   const [ jobAction, setJobAction ] = useState("");
   const [ jobData, setJobData ] = useState({});
 
@@ -23,7 +24,7 @@ function JenkinJobs(props) {
   return (
     <div className="pr-4 pl-4">
       <br />
-      {jobAction === "" &&
+      {/* {jobAction === "" && */}
       <Form className="newToolFormContainer">
         <Form.Group  controlId="formPlaintextEmail" className="mt-2 vertical-center-cols-in-row">
           <Form.Label column sm="3">
@@ -38,15 +39,15 @@ function JenkinJobs(props) {
           </Col>
         </Form.Group>
       </Form>
-      }
+      {/* } */}
       <br />
-
+      
       {(jobAction === "CREATE_ACCOUNT") && <> 
-        <JenkinsCreateAccount {...props} jobAction={jobAction} setJobAction={(action) => setJobAction(action)} />
+        <JenkinsCreateAccount toolId={toolData._id} toolData={toolData} jobAction={jobAction} setJobAction={(action) => setJobAction(action)} />
       </>}
 
       {(jobAction === "CREATE_JOB" ) && <> 
-        <JenkinsCreateJob {...props} jobAction={jobAction} setJobAction={(action) => setJobAction(action)} jobData={jobData} />
+        <JenkinsCreateJob toolId={toolData._id} toolData={toolData} jobAction={jobAction} setJobAction={(action) => setJobAction(action)} jobData={jobData} />
       </>}      
 
       {(jobAction === "" && toolData.jobs !== undefined ) && <> 
@@ -58,5 +59,7 @@ function JenkinJobs(props) {
 }
 
 
-
+JenkinJobs.propTypes = {
+  toolData: PropTypes.object
+};
 export default JenkinJobs;

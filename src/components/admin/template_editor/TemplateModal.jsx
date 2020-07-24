@@ -131,7 +131,7 @@ function TemplateEditorModal({ showModal, type, templateId, data, closeModal, ha
     }
   };
 
-  const isFormValid = (formFieldList.name.isValid && formFieldList.description.isValid) ? true : false;
+  const isFormValid = (formFieldList.name.value && formFieldList.description.value) ? true : false;
 
   //Use a single function for create and update template
   const updateTemplate = async () => {
@@ -235,7 +235,6 @@ function TemplateEditorModal({ showModal, type, templateId, data, closeModal, ha
           <Modal.Title>{templateType} Template</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-
           <div>
             <ButtonToolbar className="justify-content-between my-2 ml-2 mr-2">
               <ButtonGroup>
@@ -245,7 +244,7 @@ function TemplateEditorModal({ showModal, type, templateId, data, closeModal, ha
                 </Button>
               </ButtonGroup>
               <ButtonGroup>
-                <Button size="sm" disabled={!canDelete || templateType !== "View"} className="pull-right mr-2" variant={canDelete ? "danger" : "secondary"} onClick= {() => { handleDelete(); }} >
+                <Button size="sm" disabled={templateType !== "View"} className="pull-right mr-2" variant={canDelete ? "danger" : "secondary"} onClick= {() => { handleDelete(); }} >
                   <FontAwesomeIcon icon={faTrash} fixedWidth style={{ cursor: "pointer" }} /> Delete Template
                 </Button>
               </ButtonGroup>
