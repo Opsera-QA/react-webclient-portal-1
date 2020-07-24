@@ -4,7 +4,7 @@ import { Form } from "react-bootstrap";
 import validate from "../../../utils/formValidation";
 import DropdownList from "react-widgets/lib/DropdownList";
 
-function SelectInput({ field, formData, setData, selectOptions }) {
+function SelectInput({ field, formData, setData, groupBy, selectOptions }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [isValid, setIsValid] = useState(true);
 
@@ -25,6 +25,8 @@ function SelectInput({ field, formData, setData, selectOptions }) {
               // TODO: Allow passing in valueField and textField
               valueField='value'
               textField='text'
+              filter='contains'
+              groupBy={groupBy}
               // TODO: Get initial value set and test when we replace one of the scenarios Todd mentioned
               defaultValue={selectOptions[0]}
               onChange={e => validateAndSetData(field, e.value)}
@@ -46,6 +48,7 @@ SelectInput.propTypes = {
   field: PropTypes.object,
   valueField: PropTypes.string,
   textField: PropTypes.string,
+  groupBy: PropTypes.string,
   formData: PropTypes.object
 };
 
