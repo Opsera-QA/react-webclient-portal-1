@@ -6,6 +6,7 @@ import { Form, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
+import { capitalizeFirstLetter } from "../../common/helpers/string-helpers";
 
 
 const INITIAL_DATA = {
@@ -195,47 +196,28 @@ function StepConfiguration( { data, stepId, parentCallback }) {
           <Form.Label>Step Name*</Form.Label>
           <Form.Control maxLength="50" type="text" disabled={!formData.active} placeholder="" value={formData.name || ""} onChange={e => setFormData({ ...formData, name: e.target.value })} />
         </Form.Group>
-        
-        <Form.Group controlId="tool"  className="mt-2">
-          <Form.Label>Tool Type*  {isToolTypeSearching && <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/>}</Form.Label>
-          {formData.type && formData.type.length > 0 && lockTool ? 
-            <>
-              <Form.Control maxLength="50" type="text" disabled={true} placeholder="" value={toolTypeList[toolTypeList.findIndex(x => x.identifier === formData.type)].name || ""} />              
-            </> :
-            <>
-              {toolTypeList.length > 0 &&
-                <DropdownList
-                  data={toolTypeList} 
-                  valueField='identifier'
-                  value={toolTypeList[toolTypeList.findIndex(x => x.identifier === formData.tool_type)]}
-                  disabled={!formData.active}
-                  textField='name'
-                  onChange={handleToolTypeChange}             
-                /> }
-              <Form.Text className="text-muted">Select tool type to get the list of all supported tools for it.</Form.Text>       
-            </> }                    
-        </Form.Group>        
-
         <Form.Group controlId="tool"  className="mt-2">
           <Form.Label>Tool*  {isToolListSearching && <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/>}</Form.Label>
-          {formData.tool_identifier && formData.tool_identifier.length > 0 && lockTool ? 
+          {formData.tool_identifier && formData.tool_identifier.length > 0 && lockTool ?
             <>
-              <Form.Control maxLength="50" type="text" disabled={true} placeholder="" 
+              <Form.Control maxLength="50" type="text" disabled={true} placeholder=""
                 value={toolList[toolList.findIndex(x => x.identifier === formData.tool_identifier)] && toolList[toolList.findIndex(x => x.identifier === formData.tool_identifier)].name || ""} />
             </> :
             <>
-              {toolList &&
-                <DropdownList
-                  data={toolList} 
-                  value={toolList[toolList.findIndex(x => x.identifier === formData.tool_identifier)]}
-                  valueField='identifier'
-                  disabled={!formData.active || !formData.tool_type}
-                  textField='name'
-                  onChange={handleToolIdentifierChange}             
-                /> }
+              <DropdownList
+                data={toolList}
+                valueField='identifier'
+                value={toolList[toolList.findIndex(x => x.identifier === formData.tool_identifier)]}
+                busy={(!formData.active) ? false : Object.keys(toolList).length == 0 ? true : false}
+                disabled={!formData.active}
+                textField='name'
+                filter='contains'
+                groupBy={tool => capitalizeFirstLetter(tool.tool_type_identifier, "-", "No Tool Type Identifier")}
+                onChange={handleToolIdentifierChange}
+              />
               <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text>
-            </>}                  
-        </Form.Group>        
+            </> }                    
+        </Form.Group>
       </div> 
       
       <Button variant="primary" type="button" disabled={isLoading}

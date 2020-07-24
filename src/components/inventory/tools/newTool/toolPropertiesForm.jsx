@@ -7,6 +7,8 @@ import TagInput from "utils/tagInput";
 import validate from "utils/formValidation";
 import newToolFormFields from "./new-tool-form-fields.js";
 import Loading from "components/common/loading";
+import { capitalizeFirstLetter } from "../../../common/helpers/string-helpers";
+import DropdownList from "react-widgets/lib/DropdownList";
 
 function ToolPropertiesForm(props) {
   const { type, accessToken, toolId, setActiveTab, getToolRegistryItem, setToolId, closeModal } = props;  
@@ -145,8 +147,8 @@ function ToolPropertiesForm(props) {
 
   };
 
-  const handleToolTypeUpdate = (value, formField) => {
-    let selectedToolType = tool_list.tool_identifier.find(function (o) { return o.identifier == value; });
+  const handleToolTypeUpdate = (selectedToolType) => {
+    console.log(JSON.stringify(selectedToolType));
 
     let tool_type_identifier = {        
       isValid: true,
@@ -159,6 +161,9 @@ function ToolPropertiesForm(props) {
       touched: true,
       value: selectedToolType.identifier
     };
+
+    console.log("Tool_Type_Identifier: " + JSON.stringify(tool_type_identifier));
+    console.log("tool_identifier: " + JSON.stringify(tool_identifier));
 
     updateFormFields(prevState => ({ 
       ...prevState, 
@@ -206,12 +211,18 @@ function ToolPropertiesForm(props) {
         onChange={e => handleFormChange(formField, e.target.value)}
       />;     
     case "select":
-      return <Form.Control as="select" disabled={formField.disabled} value={formField.value} onChange={e => handleToolTypeUpdate(e.target.value, formField)}>
-        <option name="Select One" value="" disabled={true}>Select One</option>
-        {tool_list[formField.id].map((option, i) => (
-          <option key={i} value={option.identifier}>{option.name}</option>
-        ))} 
-      </Form.Control>;
+      const toolIndex = tool_list.tool_identifier.findIndex(x => x.identifier === formField.value);
+      console.log("tool index: " + toolIndex);
+      return <DropdownList
+        data={tool_list.tool_identifier}
+        valueField='tool_identifier'
+        value={ toolIndex !== -1 ? tool_list.tool_identifier[toolIndex] : null}
+        busy={(!formField.active) ? false : Object.keys(tool_list).tool_identifier.length == 0 ? true : false}
+        disabled={formField.disabled}
+        textField='name'
+        filter='contains'
+        groupBy={tool => capitalizeFirstLetter(tool.tool_type_identifier, "-", "No Tool Type Identifier")}
+        onChange={handleToolTypeUpdate} />;
     case "tags":
       return <div className="pr-2 mr-1"><TagInput defaultValue={formField.value} onChange={data => handleFormChange(formField, data)} /></div>;
     case "multi":
@@ -221,6 +232,7 @@ function ToolPropertiesForm(props) {
     }
   };
 
+  // TODO: Convert to static form
   return (
     <>
       <div className="tool-content-block m-3 pt-2">

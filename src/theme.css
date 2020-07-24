@@ -663,23 +663,21 @@ div.modal-footer {
 /* Content Card 1 Styling */
 
 .content-card-1 {
-  clear: both;
-  overflow: hidden;
 }
 
-.content-card-1 > .content-block-header {
+.content-card-1 .content-block-header {
   background-color: #1578dc;
   color: #fff;
   line-height:2.4em;
   border-bottom: 5px solid #45a8fc;
 }
 
-.content-card-1 >  .content-block-body {
+.content-card-1  .content-block-body {
   background-color: #dee2e6;
   min-height: 150px;
 }
 
-.content-card-1 > .content-block-footer {
+.content-card-1 .content-block-footer {
   border-top: 5px solid #738192;
   background-color: #334152;
   padding-top: 1em;
@@ -693,23 +691,21 @@ div.modal-footer {
 /* Content Card 2 Styling */
 
 .content-card-2 {
-  clear: both;
-  overflow: hidden;
 }
 
-.content-card-2 > .content-block-header {
+.content-card-2 .content-block-header {
   background-color: #28a745;
   color: #fff;
   line-height:2.4em;
   border-bottom: 5px solid #0f3e84;
 }
 
-.content-card-2  > .content-block-body {
+.content-card-2 .content-block-body {
   background-color: #dee2e6;
   min-height: 150px;
 }
 
-.content-card-2 > .content-block-footer {
+.content-card-2 .content-block-footer {
   border-top: 5px solid #738192;
   background-color: #334152;
   padding-top: 1em;
@@ -723,23 +719,21 @@ div.modal-footer {
 /* Content Card 3 Styling */
 
 .content-card-3 {
-  clear: both;
-  overflow: hidden;
 }
 
-.content-card-3 > .content-block-header {
+.content-card-3 .content-block-header {
   background-color: #0f3e84;
   color: #fff;
   line-height:2.4em;
   border-bottom: 5px solid #3f6eb4;
 }
 
-.content-card-3 > .content-block-body {
+.content-card-3 .content-block-body {
   background-color: #dee2e6;
   min-height: 150px;
 }
 
-.content-card-3 > .content-block-footer {
+.content-card-3 .content-block-footer {
   border-top: 5px solid #738192;
   background-color: #334152;
   padding-top: 1em;

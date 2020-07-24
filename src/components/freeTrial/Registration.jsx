@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Button, Form, Row, Col, Card, Alert } from "react-bootstrap";
+import React, { useState } from "react";
+import { Button, Card, Form } from "react-bootstrap";
 import { ApiService } from "api/apiService";
 import { useHistory } from "react-router-dom";
-import { useOktaAuth } from "@okta/okta-react";
 import TextInput from "../common/input/text-input";
 import defaultSignupFormFields from "../user/signup-form-fields";
 
@@ -27,7 +26,6 @@ function FreeTrialSignup(props) {
   const history = useHistory();
   const [formMessage, setFormMessage] = useState("");
   const [ formData, setFormData] = useState(INITIAL_DATA);
-  const [ emailAlreadyExists, setEmailAlreadyExists ] = useState(false);
   const [ signupFormFields, updateFormFields ] = useState(defaultSignupFormFields);
 
 
@@ -65,17 +63,20 @@ function FreeTrialSignup(props) {
   const isEmailAvailable = async () => {
     console.log("checking email: " + formData.email);
     const apiCall = new ApiService("/users/check-email", {}, null, { email: formData.email });
-    await apiCall.post()
+    return await apiCall.post()
       .then(function (response) {
+        console.log("response in then: " + JSON.stringify(response));
         if (response.data) {
-          setEmailAlreadyExists(true);
           setFormMessage("Email address already exists.");
           return false;
         }
+        else {
+          return true;
+        }
       })
       .catch(function (error) {
+        console.log("response in catch: " + JSON.stringify(error));
         console.error(error);
-        setEmailAlreadyExists(false);
         return true;
       });
   };
@@ -93,11 +94,12 @@ function FreeTrialSignup(props) {
     console.log("formData: ", formData);
 
     //Check if the email is already exist in the system
-    await isEmailAvailable();
+    const isEmailAvailable = await isEmailAvailable();
+
     // console.log("Final Form Data: " + JSON.stringify(formData));
 
     //Only if form is valid, call API for sign up
-    if(isFormValid() && !emailAlreadyExists) {
+    if(isFormValid() && isEmailAvailable) {
       setLoading(true);
       const apiCall = new ApiService("/users/create", {}, null, formData);
       await apiCall.post()
