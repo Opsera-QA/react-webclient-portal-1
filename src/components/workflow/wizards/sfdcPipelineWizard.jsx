@@ -7,7 +7,7 @@ import SfdcPipelineModifiedFiles from "./sfdcPipelineModifiedFiles";
 import ErrorDialog from "components/common/error";
 import PipelineActions from "../actions";
 
-const SfdcPipelineWizard = ({ pipelineId, pipeline, handlePipelineWizardRequest, handleClose, refreshPipelineData }) => {
+const SfdcPipelineWizard = ({ pipelineId, pipeline, handlePipelineWizardRequest, handleClose, refreshPipelineActivityData }) => {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(false); 
   const [view, setView] = useState(1); 
@@ -104,13 +104,13 @@ const SfdcPipelineWizard = ({ pipelineId, pipeline, handlePipelineWizardRequest,
       setError(error);
     }
     
-    if (operationStatus === "success") {
-      //trigger refresh of pipeline object!!!
-      refreshPipelineData();
+    //if (operationStatus === "success") {
+    //trigger refresh of pipeline object!!!
+    await refreshPipelineActivityData();
 
-      //trigger start of pipeline & close modal
-      handlePipelineWizardRequest(pipelineId, true);
-    }    
+    //trigger start of pipeline & close modal
+    await handlePipelineWizardRequest(pipelineId, true);
+    //}    
   };
 
   if (error) {
@@ -142,7 +142,7 @@ SfdcPipelineWizard.propTypes = {
   pipeline: PropTypes.object,
   handlePipelineWizardRequest: PropTypes.func,
   handleClose: PropTypes.func,
-  refreshPipelineData: PropTypes.func
+  refreshPipelineActivityData: PropTypes.func
 };
 
 export default SfdcPipelineWizard;
