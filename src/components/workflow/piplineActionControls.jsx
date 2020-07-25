@@ -83,6 +83,7 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
     await fetchData();
     fetchActivityLogs();      
     setResetPipeline(false);
+    setStartPipeline(false);
   };
 
   const handleApprovalClick = () => {
@@ -174,6 +175,7 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
       setErrors(response.error);
     }   
     setStopPipeline(false);
+    setStartPipeline(false);
   }
 
   async function runPipeline(pipelineId) {
