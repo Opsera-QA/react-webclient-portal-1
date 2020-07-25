@@ -81,17 +81,16 @@ function StepToolConfiguration( { pipeline, editItem, parentCallback, reloadPare
       if (createJobResponse && createJobResponse.data.status === 200) {
         const { message } = createJobResponse.data;
         if (message && typeof(message.jobName) === "string" && message.jobName.length > 0) {
-          console.log("Updating JobName in Tool Configuration woth: ", message);
+          console.log("Updating JobName in Tool Configuration with: ", message);
           workflow.plan[stepIndex].tool.configuration.jobName = message.jobName;
-          pipelineResponse = await PipelineActions.save(pipeline._id, { workflow: workflow }, getAccessToken); 
-          console.log(`Saving of new job name to pipeline: ${pipeline._id} for toolId: ${toolId}`);
+          pipelineResponse = await PipelineActions.save(pipeline._id, { workflow: workflow }, getAccessToken);           
         }
         
         await reloadParentPipeline();
         closeEditorPanel();
 
       } else  {
-        const errorMsg = `Miroservice error reported creating the job for toolId: ${toolId}.  Error returned: ${JSON.stringify(createJobResponse.data, null, 2)}`;
+        const errorMsg = `Microservice error reported creating the job for toolId: ${toolId}.  Error returned: ${JSON.stringify(createJobResponse.data, null, 2)}`;
         console.log(errorMsg, pipelineResponse);
         setErrors(errorMsg);        
       }    
