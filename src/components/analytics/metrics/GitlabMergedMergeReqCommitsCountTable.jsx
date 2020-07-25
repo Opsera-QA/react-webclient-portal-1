@@ -41,7 +41,7 @@ function GitlabMergedMergeReqCommitsCountTable({ date }) {
     const postBody = {
       "data": [
         {
-          "request": "gitlabTimeTakenToCompleteMergeRequestReview",
+          "request": "gitlabTimeTakenToCompleteMergeRequestReviewAndPushTime",
           "metric": "bar"
         }        
       ]
@@ -66,35 +66,39 @@ function GitlabMergedMergeReqCommitsCountTable({ date }) {
     return (<LoadingDialog size="sm" />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
-  } else if (typeof data !== "object" || data.gitlabTimeTakenToCompleteMergeRequestReview === undefined || data.gitlabTimeTakenToCompleteMergeRequestReview.status !== 200) {
+  } else if (typeof data !== "object" || data.gitlabTimeTakenToCompleteMergeRequestReviewAndPushTime === undefined || data.gitlabTimeTakenToCompleteMergeRequestReviewAndPushTime.status !== 200) {
     return (<InfoDialog  message="No log activity has been captured for this dashboard yet." />);
   } else {
     return (
       <>
         <div className="">Time Taken To Complete Merge Request</div>
-        {data !== undefined && data.gitlabTimeTakenToCompleteMergeRequestReview.data.length > 0 ? 
+        {data !== undefined && data.gitlabTimeTakenToCompleteMergeRequestReviewAndPushTime.data.length > 0 ? 
           <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
             <thead>
               <tr>
-                <th style={{ width: "5%" }}>Author Name</th>
-                <th style={{ width: "5%" }}>Merge Request Title</th>
-                <th style={{ width: "5%" }}>Merge Req Time Taken (min)</th>
-                <th style={{ width: "5%" }}>Push Time (min)</th>
+                <th style={{ width: "5%" }}>Author Name</th>                
+                <th style={{ width: "4%" }}>Time taken to merge (Hours)</th>
+                <th style={{ width: "4%" }}>Push Time (Hours)</th>
                 <th style={{ width: "5%" }}>Branch Name</th>
-                <th style={{ width: "5%" }}>Project Name</th>
-                <th style={{ width: "5%" }}>Number of commits</th>
+                <th style={{ width: "5%" }}>Project Name</th>                
               </tr>
             </thead>
             <tbody>
-              {data.gitlabTimeTakenToCompleteMergeRequestReview.data.map(function (value, index) {
-                return <tr key = {index}>
-                  <td>{value["AuthorName"]}</td>
-                  <td>{value["MergeRequestTitle"]}</td>
+              {data.gitlabTimeTakenToCompleteMergeRequestReviewAndPushTime.data.map(function (value, index) {
+                return <tr key = {index}>                  
+                  <td>                                         
+                    <div>
+                      <span style={{ fontWeight: "bold" }}>
+                        { value["AuthorName"] } &nbsp;
+                      </span>                        
+                      <span title="Number of commits" style={{  boxSizing: "border-box", fontSize: "12px", margin: "1px", lineHeight: "20px", padding: "3px", border: "1px solid #dbdbdb", borderRadius: "100px", fontWeight: "400" }} className="">commits: {value["TotalCommits"]}</span>
+                    </div>                                                          
+                    <span style={{ color: "grey" }}>{ value["MergeRequestTitle"].length > 70 ? value["MergeRequestTitle"].substring(0, 50) + "..." : value["MergeRequestTitle"] }</span>
+                  </td>                  
                   <td>{value["MergeRequestTimeTaken"]}</td>
                   <td>{value["PushCodeTime"]}</td>
                   <td>{value["BranchName"]}</td>
-                  <td>{value["ProjectName"]}</td>
-                  <td>{value["TotalCommits"]}</td>
+                  <td>{value["ProjectName"]}</td>                  
                 </tr>;
               })
               }

@@ -46,7 +46,7 @@ function GitlabTimeTakenToCompleteMergeRequestReview( { persona, date  } ) {
     const postBody = {
       data: [
         {
-          "request": "gitlabTimeTakenToCompleteMergeRequestReview",
+          "request": "gitlabTimeTakenToCompleteMergeRequestReviewChart",
           "metric": "bar"
         }
       ],
@@ -56,7 +56,7 @@ function GitlabTimeTakenToCompleteMergeRequestReview( { persona, date  } ) {
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res.data.data[0].gitlabTimeTakenToCompleteMergeRequestReview : [];
+      let dataObject = res && res.data ? res.data.data[0].gitlabTimeTakenToCompleteMergeRequestReviewChart : [];
       setData(dataObject);
       setLoading(false);
     }
@@ -76,11 +76,10 @@ function GitlabTimeTakenToCompleteMergeRequestReview( { persona, date  } ) {
   } else {
     return (
       <>
-      
-        <ModalLogs header="Gitlab Time Taken To Complete Merge-Request Review" size="lg" jsonMessage={data ? data.data : []} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
+        <ModalLogs header="Time Taken To Complete Merge Request" size="lg" jsonMessage={data ? data.data : []} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
 
         <div className="chart mb-3" style={{ height: "300px" }}>
-          <div className="chart-label-text">Gitlab: Time Taken To Complete Merge Request</div>
+          <div className="chart-label-text">Time Taken To Complete Merge Request</div>
           {(typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) ?
             <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
               <InfoDialog message="No Data is available for this chart at this time." />
@@ -89,12 +88,12 @@ function GitlabTimeTakenToCompleteMergeRequestReview( { persona, date  } ) {
             <ResponsiveBar
               data={data ? data.data : []}
               keys={config.keys}
-              indexBy="AuthorName"
+              indexBy="AssigneeName"
               onClick={() => setShowModal(true)}
               margin={config.margin}
               padding={0.3}
               layout={"horizontal"}
-              colors={{ scheme: "set1" }}
+              colors={{ scheme: "dark2" }}
               borderColor={{ theme: "background" }}
               colorBy="id"
               defs={config.defs}
@@ -116,8 +115,8 @@ function GitlabTimeTakenToCompleteMergeRequestReview( { persona, date  } ) {
               tooltip={({ indexValue, color, value, id }) => (
                 <div>
                   <strong style={{ color }}>
-                Author Name: </strong> {indexValue}<br></br>
-                  <strong style={{ color }}> {id}: </strong> {value}
+                  Reviewer: </strong> {indexValue}<br></br>
+                  <strong style={{ color }}> {"Merge Request Time Taken"}: </strong> {value}
                 </div>
               )}
               theme={{

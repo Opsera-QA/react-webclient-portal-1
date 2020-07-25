@@ -46,7 +46,7 @@ export default {
     "tickSize": 8,
     "tickPadding": 5,
     "tickRotation": 0,
-    "legend": "Number of Merge Requests",
+    "legend": "Merge Requests",
     "legendPosition": "middle",
     "legendOffset": 50
   },
@@ -55,7 +55,7 @@ export default {
     "tickSize": 8,
     "tickPadding": 5,
     "tickRotation": 0,
-    "legend": "Users",
+    "legend": "Author",
     "legendPosition": "middle",
     "legendOffset": -72.5
   },

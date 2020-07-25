@@ -101,7 +101,7 @@ function GitlabTotalCountOfMergeReqAndPushPerDay( { persona, date } ) {
                                     
                 }}>
                   <strong>
-                    {day}: ({value} Commit Count)
+                    {day}: {value} Commit(s)
                   </strong>
                 </div>
               )}            

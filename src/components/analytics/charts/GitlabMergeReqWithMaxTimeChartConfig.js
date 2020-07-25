@@ -46,18 +46,18 @@ export default {
     "tickSize": 8,
     "tickPadding": 5,
     "tickRotation": 0,
-    "legend": "Time Taken per merge request",
+    "legend": "Time (Hours)",
     "legendPosition": "middle",
     "legendOffset": 50
   },
   axisLeft: {
-    "format": d => d.substring(0, 6),
+    "format": d => d.substring(0, 8),
     "tickSize": 8,
     "tickPadding": 5,
     "tickRotation": 0,
-    "legend": "Project Name",
+    "legend": "Project",
     "legendPosition": "middle",
-    "legendOffset": -72.5
+    "legendOffset": -75
   },
   legends: [
     {

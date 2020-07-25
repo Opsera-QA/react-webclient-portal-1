@@ -1,7 +1,6 @@
 export default {
   keys: [
-    "MergeRequestTimeTaken",
-    "PushCodeTime"
+    "MergeRequestTimeTaken"
   ],
   margin: {
     "top": 50,
@@ -47,7 +46,7 @@ export default {
     "tickSize": 8,
     "tickPadding": 5,
     "tickRotation": 0,
-    "legend": "Time (In Minutes)",
+    "legend": "Time (Hours)",
     "legendPosition": "middle",
     "legendOffset": 50
   },
@@ -56,7 +55,7 @@ export default {
     "tickSize": 8,
     "tickPadding": 5,
     "tickRotation": 0,
-    "legend": "Author Name",
+    "legend": "Reviewer",
     "legendPosition": "middle",
     "legendOffset": -95
   },
