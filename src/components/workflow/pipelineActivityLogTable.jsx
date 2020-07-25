@@ -28,7 +28,7 @@ function PipelineActivityLogTable({ data, isLoading, paginationOptions, selectRu
 
   simpleNumberLocalizer();
 
-  useEffect(() => {}, []);
+  // useEffect(() => {}, []);
   
   const getRowInfo = (row) => {
     setModalData(row);
@@ -105,27 +105,24 @@ function PipelineActivityLogTable({ data, isLoading, paginationOptions, selectRu
   return (
     <>
       <ModalActivityLogs header="Pipeline Activity Log" size="lg" jsonData={modalData} show={showModal} setParentVisibility={setShowModal} />
-      { isLoading 
-        ? <div className="h6 mt-4">Activity Log<FontAwesomeIcon icon={faSpinner} spin className="ml-1" fixedWidth/></div> 
-        : 
-        <>
-          <div className="mt-1 d-flex justify-content-between">
-            <div className="h6 mt-2 d-flex">Activity Log</div>
-            <div className="custom-table-filter pipeline-activity-filter">
-              {/*<NumberPicker*/}
-              {/*    type="number"*/}
-              {/*    placeholder={"Run Count"}*/}
-              {/*    // disabled={maxRunCount ? maxRunCount < 2 : false}*/}
-              {/*    value={currentRunCountFilter ? currentRunCountFilter : 1}*/}
-              {/*    className="max-content-width"*/}
-              {/*    onChange={selectRunCountFilter}*/}
-              {/*    min={1}*/}
-              {/*    // max={maxRunCount}*/}
-              {/*    />*/}
-            </div>
+      <>
+        <div className="mt-1 d-flex justify-content-between">
+          <div className="h6 mt-2 d-flex">Activity Log {isLoading && <FontAwesomeIcon icon={faSpinner} spin className="ml-1" fixedWidth/>}</div>
+          <div className="custom-table-filter pipeline-activity-filter">
+            {/*<NumberPicker*/}
+            {/*    type="number"*/}
+            {/*    placeholder={"Run Count"}*/}
+            {/*    // disabled={maxRunCount ? maxRunCount < 2 : false}*/}
+            {/*    value={currentRunCountFilter ? currentRunCountFilter : 1}*/}
+            {/*    className="max-content-width"*/}
+            {/*    onChange={selectRunCountFilter}*/}
+            {/*    min={1}*/}
+            {/*    // max={maxRunCount}*/}
+            {/*    />*/}
           </div>
-          {data &&
-            <>
+        </div>
+        {data &&
+            <> 
               <CustomTable 
                 columns={columns} 
                 data={data}
@@ -136,7 +133,7 @@ function PipelineActivityLogTable({ data, isLoading, paginationOptions, selectRu
               >
               </CustomTable>
             </>}
-        </>}
+      </>
     </>
   );
 }
