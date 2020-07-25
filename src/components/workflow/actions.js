@@ -55,6 +55,15 @@ pipelineActions.saveToVault = async (postBody, getAccessToken) => {
   return response;
 };
 
+pipelineActions.createJob = async (toolId, postBody, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/registry/action/${toolId}/createjob`;   
+  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
+    .then((result) =>  {return result;})
+    .catch(error => {return { error };});
+  return response;
+};
+
 pipelineActions.duplicate = async (pipelineId, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = `/pipelines/${pipelineId}/duplicate/`;   
