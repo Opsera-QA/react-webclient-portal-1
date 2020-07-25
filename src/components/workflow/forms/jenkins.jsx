@@ -276,7 +276,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
     //trigger the createJob function
     await createJob();
     //complete normal save operation
-    callbackFunction();
+    await callbackFunction();
   };
   
   const callbackFunction = async (persistent) => {
@@ -467,7 +467,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
     } else {
       setFormData({ ...formData,
         sfdcToolId : "", accountUsername: "",
-        // jobName: "",
+        jobName: "",
         buildType: "gradle",
         jobDescription: "",
         jobType: "BUILD",
@@ -620,7 +620,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
     <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
       <Popover.Title as="h3">Tool Details</Popover.Title>
       <Popover.Content>
-        <div className="text-muted mb-2">Information below is from the selected Tool Registry item.  To changes these values, edit the entry in Tool Registry <Link to="/inventory/tools">here</Link>.</div>
+        <div className="text-muted mb-2">Information below is from the selected Tool Registry item.  To changes these values, edit the entry in Tool Registry.</div>
         <div className="mb-1">
           <div className="text-muted pr-1">SFDC Account Username:</div>
           <div>{formData.accountUsername || ""}</div>
@@ -646,7 +646,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
     <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
       <Popover.Title as="h3">Job Details</Popover.Title>
       <Popover.Content>
-        <div className="text-muted mb-2">Information below is from the selected Tool Registry item.  To changes these values, edit the entry in Tool Registry.</div>
+        <div className="text-muted mb-2">Information below is from the selected Tool Registry item.  To changes these values, edit the entry in Tool Registry <Link to={"/inventory/tools/"+formData.toolConfigId}>here</Link>.</div>
         
         <div className="mb-1">
           <div className="text-muted pr-1">Tool Type:</div>
@@ -789,7 +789,7 @@ function JenkinsStepConfiguration( { stepTool, pipelineId, plan, stepId, parentC
         </>        
         }
 
-        {jobType === "sfdc-ant" || formData.toolJobType.includes("SFDC")  &&
+        {(jobType === "sfdc-ant" || formData.toolJobType.includes("SFDC"))  &&
           <Form.Group controlId="jenkinsList">
             <Form.Label>Select SFDC Tool Credentials*</Form.Label>
             {isSFDCSearching ? (

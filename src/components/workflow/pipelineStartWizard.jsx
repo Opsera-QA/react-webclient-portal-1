@@ -7,7 +7,7 @@ import SfdcPipelineWizard from "./wizards/sfdcPipelineWizard";
 
 import "./workflows.css";
 
-function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, pipeline, handleClose, handlePipelineWizardRequest, refreshPipelineData }) {
+function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, pipeline, handleClose, handlePipelineWizardRequest, refreshPipelineActivityData }) {
 
     
   const popover = (
@@ -33,7 +33,7 @@ function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, p
           
           {pipelineType === "sfdc" && pipelineOrientation === "middle" && <div className="info-text mt-3 pl-4">Warning!  This pipeline is in the middle of running.  If you proceed, this will cancel the running job and start the pipeline over.</div>}
           {pipelineType === "sfdc" && 
-            <SfdcPipelineWizard pipelineId={pipelineId} pipeline={pipeline} handlePipelineWizardRequest={handlePipelineWizardRequest} handleClose={handleClose} refreshPipelineData={refreshPipelineData} />}
+            <SfdcPipelineWizard pipelineId={pipelineId} pipeline={pipeline} handlePipelineWizardRequest={handlePipelineWizardRequest} handleClose={handleClose} refreshPipelineActivityData={refreshPipelineActivityData} />}
 
         </Modal.Body>
         <Modal.Footer>
@@ -101,6 +101,6 @@ PipelineStartWizard.propTypes = {
   pipelineOrientation: PropTypes.string,
   handlePipelineWizardRequest: PropTypes.func,
   handleClose: PropTypes.func,
-  refreshPipelineData: PropTypes.func
+  refreshPipelineActivityData: PropTypes.func
 };
 export default PipelineStartWizard;

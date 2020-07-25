@@ -39,11 +39,8 @@ function LdapDashboard() {
   
           <Row className="ml-5 mt-5" style={{ fontSize:"1rem" }}>
             <Col xs={12} md={6} lg={4} className="p-2">
-              <Link to="/accounts/organizations"><FontAwesomeIcon icon={faSitemap} fixedWidth /> Organizations</Link>
+              <Link to="/accounts/organizations"><FontAwesomeIcon icon={faSitemap} fixedWidth /> Organizations & Accounts</Link>
             </Col>
-            <Col xs={12} md={6} lg={4} className="p-2">
-              <Link to="/accounts/accounts"><FontAwesomeIcon icon={faUserCircle} fixedWidth /> Account*</Link>
-            </Col>   
             <Col xs={12} md={6} lg={4} className="p-2">
               <Link to="/accounts/groups"><FontAwesomeIcon icon={faUserFriends} fixedWidth /> Groups</Link>
             </Col>   

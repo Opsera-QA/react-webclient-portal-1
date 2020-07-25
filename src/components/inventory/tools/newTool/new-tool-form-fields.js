@@ -41,20 +41,20 @@ const newToolFormFields = {
       isRequired: true 
     }
   }, 
-  tool_type_identifier: {
-    label: "Tool Type",
-    id: "tool_type_identifier",
-    type: "select",
-    value: "",
-    toShow: true,
-    disabled: true,
-    touched: false,
-    isValid: false,
-    errorMessage: "",    
-    rules: {
-      isRequired: false 
-    }
-  }, 
+  // tool_type_identifier: {
+  //   label: "Tool Type",
+  //   id: "tool_type_identifier",
+  //   type: "select",
+  //   value: "",
+  //   toShow: true,
+  //   disabled: true,
+  //   touched: false,
+  //   isValid: false,
+  //   errorMessage: "",
+  //   rules: {
+  //     isRequired: false
+  //   }
+  // },
   compliance: {
     label: "Compliance",
     id: "compliance",

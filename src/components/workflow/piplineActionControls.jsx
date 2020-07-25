@@ -16,8 +16,7 @@ import "./workflows.css";
 
 function PipelineActionControls({ pipeline, role, disabledActionState, fetchData, fetchActivityLogs, setParentWorkflowStatus }) {
   //const contextType = useContext(AuthContext);
-  const { getAccessToken, featureFlagItemInProd } = useContext(AuthContext);
-
+  const { getAccessToken } = useContext(AuthContext);
   const [workflowStatus, setWorkflowStatus] = useState(false);
   const [socketRunning, setSocketRunning] = useState(false);
   const [resetPipeline, setResetPipeline] = useState(false);
@@ -30,12 +29,26 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
   const [error, setErrors] = useState();
   const endPointUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
 
+  let tmpDataObject = {};
+  let staleRefreshCount = 0;
+  let socket;
 
   useEffect(() => {    
     loadData(pipeline);
     setParentWorkflowStatus(workflowStatus);
-    analyzeWorkflowStatus(workflowStatus);
+    analyzeWorkflowStatus(workflowStatus);    
   }, [workflowStatus]);
+
+
+  useEffect(() => {    
+    if (startPipeline) {
+      console.log("Effect: Setting Start Pipeline True, Initializing Socket");
+      setWorkflowStatus("running");
+      subscribeToTimer(socket);    
+    } else {
+      setWorkflowStatus("stopped");
+    }
+  }, [startPipeline]);
 
 
   const analyzeWorkflowStatus = (workflowStatus) => {
@@ -54,15 +67,13 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
           setWorkflowStatus(status);
         }
         if (status === "running" && !socketRunning) {
-          subscribeToTimer();
+          subscribeToTimer(socket);
         }        
       } else {
         setWorkflowStatus("stopped");                
       }                    
     }
   };
-
-
 
   // button handlers
   const handleStopWorkflowClick = async (pipelineId) => {
@@ -84,12 +95,9 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
     setInfoModal({ show:true, header: "Approval Status", message: "Your approval action has been recorded in this pipeline's Activity Logs.  The pipeline will resume operations shortly.", button: "OK" });
     setWorkflowStatus("running");  
     await fetchData();
-    subscribeToTimer();  
+    subscribeToTimer(socket);
     setApproval(false);  
   };
-
-
-
 
   const launchPipelineStartWizard = (pipelineOrientation, pipelineType, pipelineId) => {
     console.log("launching wizard");
@@ -105,17 +113,15 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
   };
 
   const handlePipelineWizardRequest = async (pipelineId, restartBln) => {
+    console.log("handling pipeline run");
     setWizardModal({ ...wizardModal, show: false });
-    fetchActivityLogs();  
     if (restartBln) {
       console.log("clearing pipeline activity and then starting over");
       await cancelPipelineRun(pipelineId);
     }
-    console.log("starting piepline", pipelineId);
-    await runPipeline(pipelineId);    
+    await runPipeline(pipelineId);     
   }; 
 
-  //TODO: WARNING FEATURE FLAG IN USE HERE!
   const handleRunPipelineClick = async (pipelineId) => {
     //check type of pipeline to determine if pre-flight wizard is required
     // is pipeline at the beginning or stopped midway or end of prior?
@@ -132,27 +138,15 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
       } else {
         pipelineOrientation = "middle";
       }
-    } //if those steps don't exist, this is the start of the pipeline
-    console.log("pipelineOrientation: ", pipelineOrientation); //where is the pipeline in it's run to determine how to handle this start command
-
-    // introduce new modal.  If button is clicked and pipeline is NOT SFDC type and is at "start" orientation, then just run the code, 
-    // if pipeline orgientation is end and type is NOT SFDC, then trigger reset pipeline to clean out ata and then just run the code
-    // otherwise, trigger new modal wizard to have user confirm if they want to resume pipeline or start over, OR if SFDC, launch new wizard
+    }
 
     if (pipelineType === "sfdc") { 
-      console.log("SFDC pipeline detected, launching wizrd");
       launchPipelineStartWizard(pipelineOrientation, pipelineType, pipelineId);
     } else {
-      console.log(`Non SFDC Pipeline detected, current pipeline orientation: ${pipelineOrientation}`);
-      
-      if (pipelineOrientation === "middle" && !featureFlagItemInProd()) {
+      if (pipelineOrientation === "middle") {
         //this is the middle, so pop the new modal to confirm user wants to resume or offer reset/restart
         launchPipelineStartWizard(pipelineOrientation, pipelineType, pipelineId);
-
       } else { //this is starting from beginning:
-        setStartPipeline(true);
-        setWorkflowStatus("running");
-
         if (pipelineOrientation === "start") {
           console.log("starting pipeline from scratch");
           await runPipeline(pipelineId);
@@ -165,18 +159,15 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
     }
   };
 
-
-
   const handleRefreshClick = async () => {
     await fetchData();
     fetchActivityLogs();
-    setTimeout(subscribeToTimer(), 5000); 
+    subscribeToTimer(socket);
   };
   
   //action functions
   async function cancelPipelineRun(pipelineId) {
     setStopPipeline(true);
-    //const { getAccessToken } = contextType;
     const response = await PipelineActions.cancel(pipelineId, getAccessToken);
     if (typeof(response.error) !== "undefined") {
       console.log(response.error);
@@ -186,38 +177,16 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
   }
 
   async function runPipeline(pipelineId) {
-    //const { getAccessToken } = contextType;
     console.log("RUNNING PIPELINE; ", pipelineId);
-    
+    setStartPipeline(true);
     const response = await PipelineActions.run(pipelineId, {}, getAccessToken);
     
     if (typeof(response.error) !== "undefined") {
-      setWorkflowStatus("stopped");
-      console.log(response.error);
-      setErrors(response.error);
       setStartPipeline(false);
-    } else {    
-      setTimeout(function () {
-        subscribeToTimer();
-      }, 5000);      
-
-      setTimeout(function () {
-        setStartPipeline(false);
-      }, 20000);
-
-    }  
+      console.log(response.error);
+      setErrors(response.error);      
+    }
   }
-
-
-  let tmpDataObject = {};
-  let staleRefreshCount = 0;
-  let socket;
-  
-  const initializeSocket = () => {    
-    socket = socketIOClient(endPointUrl, { query: "pipelineId=" + pipeline._id });
-    console.log("Connected status before onConnect", socket.socket ? socket.socket.connected : socket.socket === undefined );
-    setSocketRunning(true);      
-  };
 
   const stopSocket = () => {   
     if (socket) {
@@ -227,68 +196,67 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
     }     
   };
 
-  const subscribeToTimer = () => {       
-    if (!socketRunning) {
-      initializeSocket();
-    }
+  const subscribeToTimer = (socket) => {         
+    console.log("initializingSocket"); 
+    socket = socketIOClient(endPointUrl, { query: "pipelineId=" + pipeline._id });
+    console.log("Connected status before onConnect", socket.socket ? socket.socket.connected : socket.socket === undefined );
     
-    if (socket) {
-      if (socket.socket === undefined ) {
-        socket.emit("subscribeToPipelineActivity", 1000);
-        socket.on("subscribeToPipelineActivity", dataObj => {
-          console.log("Update from Websocket (staleRefreshCount: "+staleRefreshCount+"): ", dataObj);
-          if (isEqual(dataObj, tmpDataObject)) {
-            staleRefreshCount++;
+    if (socket.socket === undefined ) {
+      socket.emit("subscribeToPipelineActivity", 1000);
+      socket.on("subscribeToPipelineActivity", dataObj => {
+        console.log("Update from Websocket (staleRefreshCount: "+staleRefreshCount+"): ", dataObj);
+        if (isEqual(dataObj, tmpDataObject)) {
+          staleRefreshCount++;
+        } else {
+          staleRefreshCount = 0;
+        }  
+        tmpDataObject = dataObj;
+        let status =  pipeline.workflow.last_step !== undefined && pipeline.workflow.last_step.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;
+        if (staleRefreshCount % 2 === 0) {
+          //console.log("divisible by 2 refresh");
+          fetchActivityLogs();
+        }
+  
+        if (staleRefreshCount >= 20) {
+          console.log("closing connection due to stale data");
+          setWorkflowStatus("stopped");
+          setSocketRunning(false);
+          socket.close();
+          fetchActivityLogs();
+        } else {          
+          if (status === "stopped" && pipeline.workflow.last_step.running && pipeline.workflow.last_step.running.paused) {
+            setWorkflowStatus("paused");          
           } else {
-            staleRefreshCount = 0;
-          }  
-          tmpDataObject = dataObj;
-          let status =  pipeline.workflow.last_step !== undefined && pipeline.workflow.last_step.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;
-          if (staleRefreshCount % 2 === 0) {
-            //console.log("divisible by 2 refresh");
-            fetchActivityLogs();
+            setWorkflowStatus(status);
           }
-  
-          if (staleRefreshCount >= 20) {
-            console.log("closing connection due to stale data");
-            setWorkflowStatus("stopped");
-            setSocketRunning(false);
-            socket.close();
-            fetchActivityLogs();
-          } else {          
-            if (status === "stopped" && pipeline.workflow.last_step.running && pipeline.workflow.last_step.running.paused) {
-              setWorkflowStatus("paused");          
-            } else {
-              setWorkflowStatus(status);
-            }
-          }
+        }
              
-          if (typeof(dataObj) !== "undefined" && Object.keys(dataObj).length > 0) {
-            pipeline.workflow.last_step = dataObj;          
-          }
+        if (typeof(dataObj) !== "undefined" && Object.keys(dataObj).length > 0) {
+          pipeline.workflow.last_step = dataObj;          
+        }
   
-          if (staleRefreshCount > 1 && status === "stopped") {
-            console.log("closing connection due to stopped status");
-            setWorkflowStatus("stopped");
-            setSocketRunning(false);
-            socket.close();
-            fetchActivityLogs();
-          }
-        });
-      }
-  
-      socket.on("disconnect", () => {
-        setWorkflowStatus("stopped");
-        setSocketRunning(false);
-      });
-  
-      socket.on("connect_error", function(err) {
-        console.log("Connection Error on Socket:", err);
-        setWorkflowStatus("stopped");
-        setSocketRunning(false);
-        socket.close();
+        if (staleRefreshCount > 1 && status === "stopped") {
+          console.log("closing connection due to stopped status");
+          setWorkflowStatus("stopped");
+          setSocketRunning(false);
+          socket.close();
+          fetchActivityLogs();
+        }
       });
     }
+  
+    socket.on("disconnect", () => {
+      setWorkflowStatus("stopped");
+      setSocketRunning(false);
+    });
+  
+    socket.on("connect_error", function(err) {
+      console.log("Connection Error on Socket:", err);
+      setWorkflowStatus("stopped");
+      setSocketRunning(false);
+      socket.close();
+    });
+    
     
   };
 
@@ -297,7 +265,7 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
 
   return (
     <>
-      {wizardModal.show && <PipelineStartWizard pipelineType={wizardModal.pipelineType} pipelineOrientation={wizardModal.pipelineOrientation} pipelineId={wizardModal.pipelineId} pipeline={pipeline} handleClose={handlePipelineStartWizardClose} handlePipelineWizardRequest={handlePipelineWizardRequest} refreshPipelineData={fetchData} />}
+      {wizardModal.show && <PipelineStartWizard pipelineType={wizardModal.pipelineType} pipelineOrientation={wizardModal.pipelineOrientation} pipelineId={wizardModal.pipelineId} pipeline={pipeline} handleClose={handlePipelineStartWizardClose} handlePipelineWizardRequest={handlePipelineWizardRequest} refreshPipelineActivityData={fetchActivityLogs} />}
       
       <div className="text-right" style={{ marginBottom: "5px" }}>
         {workflowStatus === "running" && 
@@ -318,10 +286,17 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
 
         {(workflowStatus === "stopped" || !workflowStatus) && 
         <>
-          <Button variant="success" className="mr-1" size="sm"
-            onClick={() => { handleRunPipelineClick(pipeline._id); }}
-            disabled={role !== "administrator" && role !== "user" || disabledActionState}>
-            { startPipeline ? <FontAwesomeIcon icon={faSpinner} fixedWidth spin className="mr-1"/> : <FontAwesomeIcon icon={faPlay} fixedWidth className="mr-1"/> }Start Pipeline</Button>
+          { startPipeline ? 
+            <Button variant="outline-secondary" className="mr-1" size="sm"
+              onClick={() => { handleRunPipelineClick(pipeline._id); }}
+              disabled={true}>
+              <FontAwesomeIcon icon={faSpinner} fixedWidth spin className="mr-1"/> Processing</Button>
+            :
+            <Button variant="success" className="mr-1" size="sm"
+              onClick={() => { handleRunPipelineClick(pipeline._id); }}
+              disabled={role !== "administrator" && role !== "user" || disabledActionState}>
+              <FontAwesomeIcon icon={faPlay} fixedWidth className="mr-1"/> Start Pipeline</Button>
+          }
         </>}
         
         <OverlayTrigger
