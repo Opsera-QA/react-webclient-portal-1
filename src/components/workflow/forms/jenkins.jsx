@@ -793,7 +793,7 @@ function JenkinsStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
 
         {(formData.service && formData.gitToolId) &&
         <Form.Group controlId="account" className="mt-2">
-          <Form.Label>Select Repository*</Form.Label>
+          <Form.Label>Repository*</Form.Label>
           {isRepoSearching ? (
             <div className="form-text text-muted mt-2 p-2">
               <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/>
@@ -806,8 +806,7 @@ function JenkinsStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
                   value={repoList[repoList.findIndex(x => x.name === formData.repository)]}
                   valueField='value'
                   textField='name'
-                  placeholder="Please select a repository"
-                  // defaultValue={formData.repository ? repoList[repoList.findIndex(x => x.name === formData.repository)] : repoList[0]}
+                  filter="contains"
                   onChange={handleRepoChange}
                 /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/>}
             </>
@@ -818,7 +817,7 @@ function JenkinsStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
 
         {(formData.service && formData.gitToolId && formData.repoId) &&
         <Form.Group controlId="account" className="mt-2">
-          <Form.Label>Select Branch*</Form.Label>
+          <Form.Label>Branch*</Form.Label>
           {isBranchSearching ? (
             <div className="form-text text-muted mt-2 p-2">
               <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/>
@@ -831,8 +830,7 @@ function JenkinsStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
                   value={branchList[branchList.findIndex(x => x.value === formData.branch)]}
                   valueField='value'
                   textField='name'
-                  placeholder="Please select a branch"
-                  // defaultValue={formData.branch ? branchList[branchList.findIndex(x => x.value === formData.branch)] : branchList[0]}
+                  filter="contains"
                   onChange={handleBranchChange}
                 /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/>}
             </>
@@ -849,8 +847,7 @@ function JenkinsStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
                 value={formData.stepIdXML ? listOfSteps[listOfSteps.findIndex(x => x._id === formData.stepIdXML)] : listOfSteps[0]}
                 valueField='_id'
                 textField='name'
-                placeholder="select step id for XML generation"
-                // defaultValue={formData.stepIdXML ? listOfSteps[listOfSteps.findIndex(x => x._id === formData.stepIdXML)] : listOfSteps[0]}
+                filter="contains"
                 onChange={handleXMLStepChange}
               /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted ml-2" fixedWidth/>}
           </Form.Group>) : (<></>)
@@ -859,11 +856,11 @@ function JenkinsStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
 
         {formData.jobType === "SFDC FETCH AND DEPLOY" &&
         <Form.Group controlId="jenkinsList">
-          <Form.Label>Select Destination SFDC Tool Credentials*</Form.Label>
+          <Form.Label>Destination SalesForce Credentials*</Form.Label>
           {isSFDCSearching ? (
             <div className="form-text text-muted mt-2 p-2">
               <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/>
-              Loading SFDC accounts from registry</div>
+              Loading SalesForce accounts from Tool Registry</div>
           ) : (
             <>
               {renderForm && sfdcList && sfdcList.length > 0 ? <>
@@ -872,7 +869,6 @@ function JenkinsStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
                   value={sfdcList[sfdcList.findIndex(x => x.id === formData.sfdcDestToolId)]}
                   valueField='id'
                   textField='name'
-                  placeholder="Please select an account"
                   filter="contains"
                   onChange={handleDestinationSFDCChange}
                 />
