@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Button, Form, OverlayTrigger, Popover, Tooltip } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExclamationCircle, faExclamationTriangle, faTimes, faSave, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faExclamationCircle, faExclamationTriangle, faTimes, faSave, faSpinner, faEllipsisH, faTools } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
@@ -587,10 +587,10 @@ function JenkinsStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
     if (data) {
       return (
         <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
-          <Popover.Title as="h3">Tool Details <FontAwesomeIcon icon={faTimes} className="fa-pull-right pointer" onClick={() => document.body.click()} /></Popover.Title>
+          <Popover.Title as="h3">Tool and Account Details <FontAwesomeIcon icon={faTimes} className="fa-pull-right pointer" onClick={() => document.body.click()} /></Popover.Title>
 
           <Popover.Content>
-            <div className="text-muted mb-2">Configuration details for this step are listed below. Tool and account
+            <div className="text-muted mb-2">Configuration details for this item are listed below. Tool and account
               specific settings are stored in the
             <Link to="/inventory/tools">Tool Registry</Link>. To add a new entry to a dropdown or update settings,
               make those changes there.
@@ -616,9 +616,13 @@ function JenkinsStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
       {error && <ErrorDialog error={error}/>}
 
       <Form>
-        {formMessage.length > 0 ? <p className="error-text">{formMessage}</p> : null}
         <Form.Group controlId="jenkinsList">
-          <Form.Label>Step Tool*</Form.Label>
+          <Form.Label className="w-100">Step Tool*
+            <OverlayTrigger trigger="click" rootClose placement="left"
+              overlay={RegistryPopover(jenkinsList[jenkinsList.findIndex(x => x.id === formData.toolConfigId)])}>
+              <FontAwesomeIcon icon={faEllipsisH} className="fa-pull-right pointer pr-1" onClick={() => document.body.click()} />
+            </OverlayTrigger>
+          </Form.Label>
           {isJenkinsSearching ? (
             <div className="form-text text-muted mt-2 p-2">
               <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/>
@@ -635,14 +639,6 @@ function JenkinsStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
                   filter="contains"
                   onChange={handleJenkinsChange}
                 />
-                {formData.jenkinsUrl && formData.jenkinsUrl.length > 1 &&
-                <div className="text-right pt-2">
-                  <OverlayTrigger trigger="click" rootClose placement="left"
-                    overlay={RegistryPopover(jenkinsList[jenkinsList.findIndex(x => x.id === formData.toolConfigId)])}>
-                    <Button variant="outline-dark" size="sm">Info</Button>
-                  </OverlayTrigger>
-                </div>
-                }
 
               </> : <>
                 <div className="form-text text-muted p-2">
@@ -656,6 +652,9 @@ function JenkinsStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
             </>
 
           )}
+          {formData.toolConfigId.length > 0 && <Form.Label className="mt-2 pl-1">
+            <Link to={"/inventory/tools/"+formData.toolConfigId}>
+              <FontAwesomeIcon icon={faTools} className="pr-1" /> View/edit this tool's Registry settings</Link></Form.Label>}
         </Form.Group>
 
         {/*{(!formData.toolConfigId && formData.jenkinsUrl) &&
@@ -666,7 +665,6 @@ function JenkinsStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
         a new Jenkins server in the
         <Link to="/inventory/tools"> Tool Registry</Link> and add its configuration details. </div>}
 */}
-
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Job Type*</Form.Label>
           {jobType !== undefined ?
@@ -675,11 +673,14 @@ function JenkinsStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
               valueField='id'
               textField='label'
               value={JOB_OPTIONS[JOB_OPTIONS.findIndex(x => x.value === jobType)]}
-              // defaultValue={jobType ? JOB_OPTIONS[JOB_OPTIONS.findIndex(x => x.value === jobType)] : JOB_OPTIONS[0]}
+              filter="contains"
               placeholder="Please select an account"
               onChange={handleJobTypeChange}
             /> : null}
         </Form.Group>
+
+        {formMessage.length > 0 ? <p className="info-text">{formMessage}</p> : null}
+
 
         {jobType === "job" &&
         <Form.Group controlId="branchField">
@@ -688,18 +689,16 @@ function JenkinsStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
             onChange={e => setFormData({ ...formData, jobName: e.target.value })}/>
         </Form.Group>}
 
-        {/* TODO: add jobs data here */}
         {jobType === "opsera-job" &&
         <>
-
           {(formData.jenkinsUrl && jenkinsList.length > 1) &&
           <Form.Group controlId="formBasicEmail">
-            <Form.Label>Select jobs*</Form.Label>
+            <Form.Label>Job*</Form.Label>
             {jobsList.length < 1 && <div className="form-text text-muted p-2">
               <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth/>
               No jobs have been created for <span>{formData.jenkinsUrl}</span>. Please go to
-              <Link to="/inventory/tools"> Tool Registry</Link> and add credentials for this Jenkins in order to
-              proceed. </div>
+              <Link to={"/inventory/tools/"+formData.toolConfigId}> Tool Registry</Link> and add credentials and register a job
+              for this Jenkins in order to proceed. </div>
             }
             {jobsList !== undefined && jobsList.length > 0 ?
               <DropdownList
@@ -708,7 +707,6 @@ function JenkinsStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
                 textField='name'
                 value={jobsList[jobsList.findIndex(x => x._id === formData.toolJobId)]}
                 filter="contains"
-                placeholder="Please select a job"
                 onChange={handleJobChange}
               />
               : null}
@@ -729,11 +727,17 @@ function JenkinsStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
 
         {(jobType === "sfdc-ant" || (formData.toolJobType && formData.toolJobType.includes("SFDC"))) &&
         <Form.Group controlId="jenkinsList">
-          <Form.Label>Select SFDC Tool Credentials*</Form.Label>
+
+          <Form.Label className="w-100">SalesForce Credentials*
+            <OverlayTrigger trigger="click" rootClose placement="left"
+              overlay={RegistryPopover(sfdcList[sfdcList.findIndex(x => x.id === formData.sfdcToolId)])}>
+              <FontAwesomeIcon icon={faEllipsisH} className="fa-pull-right pointer pr-1" onClick={() => document.body.click()} />
+            </OverlayTrigger>
+          </Form.Label>
           {isSFDCSearching ? (
             <div className="form-text text-muted mt-2 p-2">
               <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/>
-              Loading SFDC accounts from registry</div>
+              Loading SalesForce accounts from Tool Registry</div>
           ) : (
             <>
               {renderForm && sfdcList && sfdcList.length > 0 ? <>
@@ -743,23 +747,14 @@ function JenkinsStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
                   valueField='id'
                   textField='name'
                   filter="contains"
-                  placeholder="Please select an account"
                   onChange={handleSFDCChange}
                 />
-                {formData.accountUsername && formData.accountUsername.length > 0 &&
-                <div className="text-right pt-2">
-                  <OverlayTrigger trigger="click" rootClose placement="left"
-                    overlay={RegistryPopover(sfdcList[sfdcList.findIndex(x => x.id === formData.sfdcToolId)])}>
-                    <Button variant="outline-dark" size="sm">Info</Button>
-                  </OverlayTrigger>
-                </div>
-                }
 
               </> : <>
                 <div className="form-text text-muted p-2">
                   <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth/>
-                  No accounts have been registered for SFDC. Please go to
-                  <Link to="/inventory/tools"> Tool Registry</Link> and add an entry for this repository in order to
+                  No accounts have been registered for SalesForce. Please go to
+                  <Link to="/inventory/tools">Tool Registry</Link> and add a SalesForce (SFDC) Account entry in order to
                   proceed.
                 </div>
               </>}
@@ -772,7 +767,12 @@ function JenkinsStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
 
         {(formData.jenkinsUrl && jenkinsList.length > 1) &&
         <Form.Group controlId="formBasicEmail">
-          <Form.Label>Select Account*</Form.Label>
+          <Form.Label className="w-100">Account*
+            <OverlayTrigger trigger="click" rootClose placement="left"
+              overlay={RegistryPopover(accountsList[accountsList.findIndex(x => x.toolId === formData.gitToolId)])}>
+              <FontAwesomeIcon icon={faEllipsisH} className="fa-pull-right pointer pr-1" onClick={() => document.body.click()} />
+            </OverlayTrigger>
+          </Form.Label>
           {accountsList.length < 1 && <div className="form-text text-muted p-2">
             <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth/>
             No Credentials have been created for <span>{formData.jenkinsUrl}</span>. Please go to
@@ -785,8 +785,7 @@ function JenkinsStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
               valueField='toolId'
               textField='gitCredential'
               value={accountsList[accountsList.findIndex(x => x.toolId === formData.gitToolId)]}
-              // defaultValue={accountsList ? accountsList[accountsList.findIndex(x => x.toolId === formData.gitToolId)] : accountsList[0]}
-              placeholder="Please select an account"
+              filter="contains"
               onChange={handleAccountChange}
             /> : null}
         </Form.Group>
