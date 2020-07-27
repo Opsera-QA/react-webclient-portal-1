@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSitemap, faUserPlus, faUserFriends, faUser } from "@fortawesome/free-solid-svg-icons";
 
 
-function LdapDashboard() {
+function LdapCustomerOnboard() {
   const [administrator, setAdministrator] = useState(false);
   const [loading, setLoading] = useState(false);
   const { getUserRecord } = useContext(AuthContext);
@@ -21,7 +21,7 @@ function LdapDashboard() {
   const isAdmin = async () => {
     setLoading(true);
     const userInfo = await getUserRecord();
-    setAdministrator(userInfo.groups.includes("Admin"));    
+    setAdministrator(userInfo.groups.includes("Admin"));
     setLoading(false);
   };
 
@@ -32,33 +32,28 @@ function LdapDashboard() {
   } else {
     return (
       <>
-        
+        <nav aria-label="breadcrumb">
+          <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
+            <li className="breadcrumb-item">
+              <Link to="/accounts">Account Management</Link>
+            </li>
+            <li className="breadcrumb-item active">New Account</li>
+          </ol>
+        </nav>
+
+
         <div className="max-content-width ml-2 mt-1">
-          <h5>User and Account Management</h5>
-          <div>Manger organizations, accounts, groups and users from this dashboard.</div>
-  
-          <Row className="ml-5 mt-5" style={{ fontSize:"1rem" }}>
-            <Col xs={12} md={6} lg={4} className="p-2">
-              <Link to="/accounts/organizations"><FontAwesomeIcon icon={faSitemap} fixedWidth /> Organizations & Accounts</Link>
-            </Col>
-            <Col xs={12} md={6} lg={4} className="p-2">
-              <Link to="/accounts/groups"><FontAwesomeIcon icon={faUserFriends} fixedWidth /> Groups</Link>
-            </Col>   
-            <Col xs={12} md={6} lg={4} className="p-2">
-              <Link to="/accounts/users"><FontAwesomeIcon icon={faUser} fixedWidth /> Users</Link>
-            </Col>
-            <Col xs={12} md={6} lg={4} className="p-2">
-              <Link to="/accounts/create"><FontAwesomeIcon icon={faUserPlus} fixedWidth /> Customer Onboarding</Link>
-            </Col>
-          </Row>
+          <h5>New Customer Onboarding</h5>
+          <div>Please complete the form below in order to create the LDAP data needed to support a new customer Organization and Account.</div>
+
+          <div className="mt-4">Form data here... OC-357</div>
 
         </div>
       </>
     );
   }
 
-  
+
 }
 
-export default LdapDashboard;
-
+export default LdapCustomerOnboard;

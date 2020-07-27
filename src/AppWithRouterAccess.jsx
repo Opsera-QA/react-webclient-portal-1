@@ -39,6 +39,7 @@ import OPBlueprintMain from "./components/blueprint/blueprint";
 import LdapDashboard from "./components/accounts/LdapDashboard";
 import LdapOrganizationsView from "./components/accounts/LdapOrganizationsView";
 import LdapAccountsView from "./components/accounts/LdapAccountsView";
+import LdapCustomerOnboardView from "./components/accounts/LdapCustomerOnboard";
 
 import FreeTrialRegistration from "./components/freeTrial/Registration";
 import FreeTrialLanding from "./components/freeTrial/landing-page/Landing";
@@ -124,6 +125,8 @@ const AppWithRouterAccess = () => {
               <SecureRoute path="/accounts" exact component={LdapDashboard} />
               <SecureRoute path="/accounts/organizations" exact component={LdapOrganizationsView} />
               <SecureRoute path="/accounts/organizations/detail/:id" exact component={LdapAccountsView} />
+              <SecureRoute path="/accounts/create" exact component={LdapCustomerOnboardView} />
+
               <SecureRoute path="/demo/api" component={ApiConnectionDemo} />
 
               <SecureRoute path="/demo/table" component={CommonTableDemo} />

@@ -33,7 +33,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d67cbcf2-0da1-4bb4-802d-2a59efaf91f8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/accounts/LdapCustomerOnboard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AppWithRouterAccess.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppWithRouterAccess.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/accounts/LdapDashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/accounts/LdapDashboard.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +114,7 @@
       <workItem from="1595768927994" duration="7092000" />
       <workItem from="1595855928769" duration="191000" />
       <workItem from="1595856274068" duration="298000" />
-      <workItem from="1595857276510" duration="166000" />
+      <workItem from="1595857276510" duration="1860000" />
     </task>
     <task id="LOCAL-00001" summary="Update text">
       <created>1595700886162</created>
@@ -141,7 +144,14 @@
       <option name="project" value="LOCAL" />
       <updated>1595776254814</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Enable tracking of webstorm/idea project level settings">
+      <created>1595859220515</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1595859220515</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -177,7 +187,8 @@
     <MESSAGE value="Refactor &quot;info&quot; popup to render based on data passed into it to consolidate code." />
     <MESSAGE value="Improve UI around showing Tool registry info and links" />
     <MESSAGE value="Improve UI around showing Tool registry info and links (part 2)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improve UI around showing Tool registry info and links (part 2)" />
+    <MESSAGE value="Enable tracking of webstorm/idea project level settings" />
+    <option name="LAST_COMMIT_MESSAGE" value="Enable tracking of webstorm/idea project level settings" />
   </component>
   <component name="WindowStateProjectService">
     <state x="779" y="419" width="566" height="339" key="#Notifications" timestamp="1595700543124">
@@ -285,10 +296,10 @@
     </state>
     <state x="89" y="196" key="SettingsEditor/0.23.1792.1052@0.23.1792.1052" timestamp="1595769473158" />
     <state x="127" y="249" key="SettingsEditor/0.23.2560.1372@0.23.2560.1372" timestamp="1595856390142" />
-    <state width="500" height="400" key="SwitcherDM" timestamp="1595774354098">
+    <state width="500" height="400" key="SwitcherDM" timestamp="1595861833289">
       <screen x="0" y="23" width="1792" height="1052" />
     </state>
-    <state width="500" height="400" key="SwitcherDM/0.23.1792.1052@0.23.1792.1052" timestamp="1595774354098" />
+    <state width="500" height="400" key="SwitcherDM/0.23.1792.1052@0.23.1792.1052" timestamp="1595861833289" />
     <state width="500" height="445" key="SwitcherDM/0.23.2560.1372@0.23.2560.1372" timestamp="1595722796307" />
     <state x="491" y="179" width="598" height="735" key="find.popup" timestamp="1595770746017">
       <screen x="0" y="23" width="1792" height="1052" />
@@ -298,10 +309,10 @@
       <screen x="0" y="23" width="1792" height="1052" />
     </state>
     <state x="545" y="272" width="700" height="530" key="recent.locations.popup/0.23.1792.1052@0.23.1792.1052" timestamp="1595768879896" />
-    <state x="455" y="268" width="670" height="676" key="search.everywhere.popup" timestamp="1595776263255">
+    <state x="455" y="268" width="670" height="676" key="search.everywhere.popup" timestamp="1595861818958">
       <screen x="0" y="23" width="1792" height="1052" />
     </state>
-    <state x="455" y="268" width="670" height="676" key="search.everywhere.popup/0.23.1792.1052@0.23.1792.1052" timestamp="1595776263255" />
+    <state x="455" y="268" width="670" height="676" key="search.everywhere.popup/0.23.1792.1052@0.23.1792.1052" timestamp="1595861818958" />
     <state x="650" y="343" width="958" height="882" key="search.everywhere.popup/0.23.2560.1372@0.23.2560.1372" timestamp="1595722782878" />
   </component>
   <component name="XDebuggerManager">
