@@ -14,8 +14,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPen } from "@fortawesome/free-solid-svg-icons";
 import { format } from "date-fns";
 
-import MultiInputFormField from "utils/multiInputFormField";
-import MultiCheckboxFormField from "utils/multiCheckboxFormField";
+import MultiInputFormField from "components/common/input/multiInputFormField";
+import MultiCheckboxFormField from "components/common/input/multiCheckboxFormField";
 
 import TagInput from "utils/tagInput";
 import validate from "utils/formValidation";

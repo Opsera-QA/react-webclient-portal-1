@@ -6,7 +6,7 @@ import { axiosApiService } from "api/apiService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPen } from "@fortawesome/free-solid-svg-icons";
 
-import MultiInputFormField from "utils/multiInputFormField";
+import MultiInputFormField from "components/common/input/multiInputFormField";
 import TagInput from "utils/tagInput";
 import validate from "utils/formValidation";
 import toolTypeFormFields from "./tool-type-form-fields.js";

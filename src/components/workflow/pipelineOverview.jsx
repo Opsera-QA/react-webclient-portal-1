@@ -151,7 +151,7 @@ function PipelineOverview({ id }) {
         <div className="max-content-width">
           {typeof(data.pipeline) !== "undefined" && <PipelineActionControls pipeline={data.pipeline} disabledActionState={false} role={role} fetchData={fetchData} fetchActivityLogs={getActivityLogs} setParentWorkflowStatus={setWorkflowStatus} /> }
           {typeof(data.pipeline) !== "undefined" ? <PipelineOverviewSummary data={data.pipeline} parentCallback={callbackFunction} parentCallbackRefreshActivity={callbackRefreshActivity} role={role} stepStatus={stepStatus} parentWorkflowStatus={workflowStatus}  />  : null }
-          <PipelineActivityLogTable isLoading={logsIsLoading} currentRunCountFilter={runCount} selectRunCountFilter={selectRunCountFilter} data={activityData.pipelineData} paginationOptions={getPaginationOptions()}></PipelineActivityLogTable>
+          <PipelineActivityLogTable isLoading={logsIsLoading} currentRunCountFilter={runCount} selectRunCountFilter={selectRunCountFilter} data={activityData.pipelineData} paginationOptions={getPaginationOptions()} />
         </div>       
       </>
     );

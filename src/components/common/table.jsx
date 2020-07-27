@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
 import Pagination from "components/common/pagination";
 
-function CustomTable({ columns, data, noDataMessage, onRowSelect, rowStyling, initialState, tableFilter, paginationOptions }) {
+function CustomTable({ tableStyleName, columns, data, noDataMessage, onRowSelect, rowStyling, initialState, tableFilter, paginationOptions }) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -62,7 +62,7 @@ function CustomTable({ columns, data, noDataMessage, onRowSelect, rowStyling, in
       {/* <div className="table-title-bar mt-3 mr-1">
         <div className="table-title ml-2">Table header</div>
       </div> */}
-      <table className="custom-table mr-1" responsive="true" hover="true" {...getTableProps()}>
+      <table className={tableStyleName} responsive="true" hover="true" {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup, i) => (
             <tr key={i}  {...headerGroup.getHeaderGroupProps()}>
@@ -109,6 +109,7 @@ function CustomTable({ columns, data, noDataMessage, onRowSelect, rowStyling, in
 }
 
 CustomTable.propTypes = {
+  tableStyleName: PropTypes.string,
   columns: PropTypes.array,
   data: PropTypes.array,
   noDataMessage: PropTypes.string,
@@ -117,6 +118,10 @@ CustomTable.propTypes = {
   initialState: PropTypes.object,
   tableFilter: PropTypes.object,
   paginationOptions: PropTypes.object
+};
+
+CustomTable.defaultProps = {
+  tableStyleName: "custom-table"
 };
 
 export default CustomTable;
