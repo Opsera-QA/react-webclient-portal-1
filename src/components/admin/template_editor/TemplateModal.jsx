@@ -6,7 +6,7 @@ import { axiosApiService } from "api/apiService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPen } from "@fortawesome/free-solid-svg-icons";
 import TagInput from "utils/tagInput";
-import MultiInputFormField from "utils/multiInputFormField";
+import MultiInputFormField from "components/common/input/multiInputFormField";
 import validate from "utils/formValidation";
 import templateEditorFormFields from "./template-form-fields.js";
 import JSONInput from "react-json-editor-ajrm";

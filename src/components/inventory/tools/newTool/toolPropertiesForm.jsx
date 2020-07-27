@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Form, Col } from "react-bootstrap";
 import { axiosApiService } from "api/apiService";
 import PropTypes from "prop-types";
-import MultiInputFormField from "utils/multiInputFormField";
+import MultiInputFormField from "components/common/input/multiInputFormField";
 import TagInput from "utils/tagInput";
 import validate from "utils/formValidation";
 import newToolFormFields from "./new-tool-form-fields.js";

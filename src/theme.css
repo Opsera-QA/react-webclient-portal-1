@@ -217,7 +217,7 @@ a.text-primary:hover, a.text-primary:focus {
 
 .half-height {
   /* Adjust vh if we tighten up whitespace at the top of the app */
-  height: 35vh;
+  height: 40%;
 }
 
 .scroll-y {
@@ -231,6 +231,16 @@ a.text-primary:hover, a.text-primary:focus {
 
 
 /* Table Style Changes */
+.custom-table-filter {
+    font-size: .8em;
+    padding-bottom:1em;
+}
+
+.custom-table-filter .btn {
+    font-size: 1em;
+}
+
+/* Table Style 1 */
 .custom-table {
   /* border-radius: 5px; */
   /* border: 1px solid #d2d2d2; */
@@ -249,15 +259,6 @@ a.text-primary:hover, a.text-primary:focus {
 /*  overflow-x: hidden;*/
 /*}*/
 
-.custom-table-filter {
-  font-size: .8em;
-  padding-bottom:1em;
-}
-
-.custom-table-filter .btn {
-  font-size: 1em;
-}
-
 .custom-table th {
   background-color: #1578dc;
   color: #fff;
@@ -268,12 +269,7 @@ a.text-primary:hover, a.text-primary:focus {
   white-space: nowrap; 
 }
 
-.custom-table .cell-center {
-  text-align: center;
-  vertical-align: middle;
-}
-
-.table-title-bar {
+.custom-table .table-title-bar {
   color: #1578dc;
   line-height:2.4em;
   font-weight: bold;
@@ -281,36 +277,31 @@ a.text-primary:hover, a.text-primary:focus {
   width: 100%;
 }
 
-.table-row {
+.custom-table .table-row {
   margin-bottom: 2em;
   line-height:2em;
   border-bottom: 1px solid #dee2e6;
+}
+
+.custom-table .cell-center {
+    text-align: center;
+    vertical-align: middle;
 }
 
 .custom-table .table-row.even {
   background-color: rgba(0,0,0,.05);
 }
 
-.table-row.odd {
+.custom-table .table-row.odd {
   background-color: #fff;
 }
 
 .custom-table tr.odd.inactive-row {
-  /* background-color: rgba(4, 95, 200, 0.178); */
   opacity:.6;
 }
 
 .custom-table tr.even.inactive-row {
-  /* background-color: rgba(4, 95, 200, 0.178); */
   opacity:.6;
-}
-
-.custom-table td:hover {
-  /* color: white; */
-}
-
-.custom-table .table-row:hover .cell-icon {
-  /* color:white; */
 }
 
 .custom-table .table-row {
@@ -319,20 +310,91 @@ a.text-primary:hover, a.text-primary:focus {
 
 .custom-table .table-row:hover {
   background-color: #1578dc1f;
-  /* color: white; */
-  /* cursor: pointer; */
 }
-
-/*.custom-table .table-row.selected-row {*/
-/*  background-color: rgba(21, 120, 220, 0.58);*/
-/*  color: #010913;*/
-/*}*/
 
 .custom-table .table-footer {
   background-color: #fff;
   padding-top: 1em;
   height: 2em;
 }
+/* End Table Style 1 */
+
+/* Table Style 2 */
+.custom-table-2 {
+    font-size: .9em;
+    width: 100%;
+}
+
+/*.custom-table-2-table thead {*/
+/*  overflow-y: auto;*/
+/*  overflow-x: hidden;*/
+/*}*/
+
+/*.custom-table-2-table tbody {*/
+/*  overflow-y: scroll;*/
+/*  overflow-x: hidden;*/
+/*}*/
+
+.custom-table-2 th {
+    background-color: #2588ec;
+    border-bottom: 1px solid #3598fc;
+    color: #fff;
+    line-height:2.4em;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.custom-table-2 .table-title-bar {
+    color: #1578dc;
+    line-height:2.4em;
+    font-weight: bold;
+    background-color: #dee2e6;
+    width: 100%;
+}
+
+.custom-table-2 .table-row {
+    margin-bottom: 2em;
+    line-height:2em;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.custom-table-2 .cell-center {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.custom-table-2 .table-row.even {
+    background-color: rgba(0,0,0,.05);
+}
+
+.custom-table-2 .table-row.odd {
+    background-color: #fff;
+}
+
+.custom-table-2 tr.odd.inactive-row {
+    opacity:.6;
+}
+
+.custom-table-2 tr.even.inactive-row {
+    opacity:.6;
+}
+
+
+.custom-table-2 .table-row {
+    color: #334152;
+}
+
+.custom-table-2 .table-row:hover {
+    background-color: #1578dc1f;
+}
+
+.custom-table-2 .table-footer {
+    background-color: #1578dc1f;
+    padding-top: 1em;
+    height: 2em;
+}
+/* End Table Style 1 */
 
 /* End custom table styling */
 
@@ -660,6 +722,16 @@ div.modal-footer {
   border: 1px solid #d2d2d2;
 }
 
+.table-content-block {
+    border-radius: 5px;
+    border: 1px solid #1578dc;
+}
+
+.content-container {
+    border: 1px solid #45a8fc;
+    /*border-radius: .25rem;*/
+}
+
 /* Content Card 1 Styling */
 
 .content-card-1 {
@@ -742,6 +814,9 @@ div.modal-footer {
 .content-card-3 .content-block-body .content-image {
   height: 125px;
 }
-
-
 /* End Content Block Styling */
+
+/* Icon Styles */
+.delete-icon:hover {
+    color: #bb0000;
+}

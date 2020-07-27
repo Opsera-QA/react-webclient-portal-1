@@ -4,8 +4,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { format } from "date-fns";
 import CustomTable from "components/common/table";
+import { useHistory } from "react-router-dom";
 
-function TagsTable({ data, selectedRow }) {
+function TagsTable({ data }) {
+  const history = useHistory();
   const columns = useMemo(
     () => [
       {
@@ -44,6 +46,10 @@ function TagsTable({ data, selectedRow }) {
     []
   );
 
+  const onRowSelect = (rowData, type) => {
+    history.push("/admin/tags/" + rowData.original._id);
+  };
+
   const rowStyling = (row) => {
     return !row["values"].active ? " inactive-row" : "";
   };
@@ -60,14 +66,13 @@ function TagsTable({ data, selectedRow }) {
 
   return (
     <>
-      <CustomTable onRowSelect={selectedRow} data={data} rowStyling={rowStyling} columns={columns} initialState={initialState}></CustomTable>
+      <CustomTable onRowSelect={onRowSelect} data={data} rowStyling={rowStyling} columns={columns} initialState={initialState}></CustomTable>
     </>
   );
 }
 
 TagsTable.propTypes = {
   data: PropTypes.array,
-  selectedRow: PropTypes.func
 };
 
 export default TagsTable;
