@@ -32,21 +32,21 @@ const ldapUsersFormFields = {
     label: "First Name",
     id: "firstName",
     rules: {
-      // isRequired: true
+      isRequired: true
     }
   },
   lastName: {
     label: "Last Name",
     id: "lastName",
     rules: {
-      // isRequired: true
+      isRequired: true
     }
   },
   emailAddress: {
     label: "Email Address",
     id: "emailAddress",
     rules: {
-      // isRequired: true
+      isRequired: true
     }
   },
   division: {

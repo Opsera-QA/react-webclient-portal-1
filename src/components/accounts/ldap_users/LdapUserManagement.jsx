@@ -20,21 +20,34 @@ function LdapUserManagement() {
   const [ isOpseraUser, setOpseraUser] = useState(false);
   const [ pageLoading, setPageLoading ] = useState(true);
   const [ userList, setUserList ] = useState([]);
+  const [ currentOrganizationEmail, setCurrentOrganizationEmail ] = useState("");
   const [ organizationList, setOrganizationList ] = useState(undefined);
-  const [ organizationName, setOrganizationName ] = useState(id);
+  const [ organization, setOrganization ] = useState();
   const [showCreateUserModal, setShowCreateUserModal] = useState(false);
 
   useEffect(() => {  
-    isAdmin();
-    getUsers(id);
-    getOrganizations(organizationName);
-  }, [organizationName]);
+    loadData();
+  }, []);
 
-  const getUsers = async (id) => {
-    const response = await accountsActions.getOrganizationByName(id, getAccessToken);
-    console.log("GetUser response: " + JSON.stringify(response.data));
-    // TODO: Implement
-    // setUserList(response.data["users"]);
+  const loadData = async () => {
+    await isAdmin();
+    // await getOrganizations();
+    // await getUsers(userEmail);
+  };
+
+  const getUsers = async (userEmail) => {
+    if (userEmail != null) {
+      const response = await accountsActions.getOrganizationByEmail({ email: userEmail }, getAccessToken);
+
+      let organization = response.data;
+      // console.log("Organization name: " + organization.name);
+      setOrganization(organization);
+      // console.log("GetUser response: " + JSON.stringify(response.data));
+
+      if (organization != null) {
+        setUserList(organization["users"]);
+      }
+    }
   };
 
   const getOrganizations = async () => {
@@ -47,16 +60,10 @@ function LdapUserManagement() {
       response.data.map(organization =>
       {
         organization["orgAccounts"].map(orgAccount => {
-          // TODO: Remove when getUsers call works
-          // if (orgAccount["name"] === id) {
-          // setUserList(organization["orgAccounts"]);
-          console.log("orgAccounts: " + JSON.stringify(orgAccount));
-          // }
-
-          parsedOrganizationNames.push({ text: orgAccount["name"], groupId: organization["name"], id: orgAccount["name"] });
+          parsedOrganizationNames.push({ text: orgAccount["name"], groupId: organization["name"], id: organization["orgOwnerEmail"] });
         });
       });
-      console.log("Parsed Organization Names: " + JSON.stringify(parsedOrganizationNames));
+      // console.log("Parsed Organization Names: " + JSON.stringify(parsedOrganizationNames));
       setOrganizationList(parsedOrganizationNames);
     }
   };
@@ -66,6 +73,12 @@ function LdapUserManagement() {
 
     // TODO: Is there a better way to find if a user is Opsera?
     // console.log(JSON.stringify(userInfo.email));
+    // setUserEmail(userInfo.email);
+    await getUsers(userInfo.email);
+    setCurrentOrganizationEmail(userInfo.email);
+
+    console.log(userInfo);
+
     if (userInfo.email.endsWith("opsera.io")) {
       setOpseraUser(true);
       await getOrganizations();
@@ -82,7 +95,7 @@ function LdapUserManagement() {
   };
 
   const onModalClose = () => {
-    getUsers();
+    getUsers(currentOrganizationEmail);
     setShowCreateUserModal(false);
   };  
 
@@ -92,8 +105,8 @@ function LdapUserManagement() {
 
   const handleOrganizationChange = (selectedOption) => {
     console.log("Setting organization to: " + JSON.stringify(selectedOption));
-    // TODO: Should we just history.push?
-    setOrganizationName(selectedOption.id);
+    setCurrentOrganizationEmail(selectedOption.id);
+    getUsers(selectedOption.id);
   };
 
   return (
@@ -116,7 +129,7 @@ function LdapUserManagement() {
               <div className="tableDropdown mr-2">
                 {isOpseraUser && organizationList && <DropdownList
                   data={organizationList}
-                  value={organizationName}
+                  value={currentOrganizationEmail}
                   valueField='id'
                   textField='text'
                   placeholder="Select an Organization Account"
@@ -140,6 +153,7 @@ function LdapUserManagement() {
           </div>
 
           {showCreateUserModal ? <NewLdapUserModal
+            organizationName={organization.name}
             showModal={showCreateUserModal}
             onModalClose={onModalClose} /> : null }
         </>}

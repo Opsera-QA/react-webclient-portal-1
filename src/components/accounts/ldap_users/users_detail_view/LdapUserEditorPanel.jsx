@@ -11,11 +11,11 @@ import accountsActions from "../../accounts-actions";
 import ldapUsersFormFields from "../ldap-users-form-fields";
 
 const INITIAL_DATA = {
-  // name: "",
+  name: "",
   givenName: "",
   preferredName: "",
-  // firstName: "",
-  // lastName: "",
+  firstName: "",
+  lastName: "",
   emailAddress: "",
   division: "",
   team: "",
@@ -54,16 +54,16 @@ function LdapUserEditorPanel({ ldapUserData, newLdapUser, setLdapUserData, handl
   };
 
   const setFormField = (field, value) => {
-    console.log("Setting form field: " + field + " value: " + JSON.stringify(value));
+    // console.log("Setting form field: " + field + " value: " + JSON.stringify(value));
 
     if (value === ldapUserData[field])
     {
-      console.log("Removing " + field + " from change map");
+      // console.log("Removing " + field + " from change map");
       delete changeMap[field];
     }
     else
     {
-      console.log("Added " + field + " to change map: " + value);
+      // console.log("Added " + field + " to change map: " + value);
       changeMap[field] = value;
       setChangeMap({ ...changeMap });
     }
@@ -72,7 +72,7 @@ function LdapUserEditorPanel({ ldapUserData, newLdapUser, setLdapUserData, handl
     setFormData({ ...formData });
 
 
-    console.log("ChangeMap: " + JSON.stringify(changeMap));
+    // console.log("ChangeMap: " + JSON.stringify(changeMap));
 
     if (newLdapUser)
     {
@@ -84,15 +84,15 @@ function LdapUserEditorPanel({ ldapUserData, newLdapUser, setLdapUserData, handl
   //TODO: Check fields
   const isFormValid = true;
 
-  const createTag = async (newLdapUserData) => {
+  const createUser = async (newLdapUserData) => {
     console.log("Persisting new user to DB: " + JSON.stringify(newLdapUserData));
 
     if(isFormValid) {
-      let createTagResponse = await accountsActions.create(newLdapUserData, getAccessToken);
-      console.log("createTagResponse: ", JSON.stringify(createTagResponse));
+      let createUserResponse = await accountsActions.create({ user: newLdapUserData }, getAccessToken);
+      console.log("createUserResponse: ", JSON.stringify(createUserResponse));
 
-      if (createTagResponse.error != null) {
-        const errorMsg = `Microservice error reported creating the tag: ${newLdapUserData.key}.  Error returned: ${JSON.stringify(createTagResponse.error.message, null, 2)}`;
+      if (createUserResponse.error != null) {
+        const errorMsg = `Microservice error reported creating the user: ${newLdapUserData.key}.  Error returned: ${JSON.stringify(createUserResponse.error.message, null, 2)}`;
         console.log(errorMsg);
         setErrors(errorMsg);
       }
@@ -128,58 +128,67 @@ function LdapUserEditorPanel({ ldapUserData, newLdapUser, setLdapUserData, handl
           {error.length > 0 && <>
             <div className="pb-2 error-text">WARNING! An error has occurred saving your configuration: {error}</div>
           </>}
+          {/*TODO: Finalize Fields */}
           <Row>
             <Col>
-              <TextInput field={fields.givenName} setData={setFormField} formData={formData}/>
+              <TextInput field={fields.name} setData={setFormField} formData={formData} />
             </Col>
           </Row>
-          {/*TODO: Remove if name is one field*/}
-          {/*<Col>*/}
-          {/*  <TextInput field={fields.firstName} setData={setFormField} formData={formData} />*/}
-          {/*</Col>*/}
-          {/*<Col>*/}
-          {/*  <TextInput field={ fields.lastName } setData={setFormField} formData={formData}/>*/}
-          {/*</Col>*/}
+          {/*<Row>*/}
+          {/*  <Col>*/}
+          {/*    <TextInput field={fields.givenName} setData={setFormField} formData={formData}/>*/}
+          {/*  </Col>*/}
+          {/*</Row>*/}
+          {/*<Row>*/}
+          {/*  <Col>*/}
+          {/*    <TextInput field={fields.preferredName} setData={setFormField} formData={formData}/>*/}
+          {/*  </Col>*/}
+          {/*</Row>*/}
           <Row>
             <Col>
-              <TextInput field={fields.preferredName} setData={setFormField} formData={formData}/>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <TextInput field={ fields.emailAddress } setData={setFormField} formData={formData}/>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <TextInput field={ fields.division } setData={setFormField} formData={formData}/>
+              <TextInput field={fields.firstName} setData={setFormField} formData={formData} />
             </Col>
           </Row>
           <Row>
             <Col>
-              <TextInput field={ fields.team } setData={setFormField} formData={formData}/>
+              <TextInput field={fields.lastName} setData={setFormField} formData={formData}/>
             </Col>
           </Row>
+          <Row>
+            <Col>
+              <TextInput field={fields.emailAddress } setData={setFormField} formData={formData}/>
+            </Col>
+          </Row>
+          {/*<Row>*/}
+          {/*  <Col>*/}
+          {/*    <TextInput field={ fields.division } setData={setFormField} formData={formData}/>*/}
+          {/*  </Col>*/}
+          {/*</Row>*/}
+          {/*<Row>*/}
+          {/*  <Col>*/}
+          {/*    <TextInput field={ fields.team } setData={setFormField} formData={formData}/>*/}
+          {/*  </Col>*/}
+          {/*</Row>*/}
           <Row>
             <Col>
               <TextInput field={ fields.departmentName } setData={setFormField} formData={formData}/>
             </Col>
           </Row>
-          <Row>
-            <Col>
-              <TextInput field={ fields.title } setData={setFormField} formData={formData}/>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              {/*TODO: Make select, pull from /users/get-users/ and record _id for field*/}
-              {/* Make sure to pass in large number (1000) because of paging */}
-              <TextInput field={ fields.opseraId } setData={setFormField} formData={formData}/>
-            </Col>
-          </Row>
+          {/*<Row>*/}
+          {/*  <Col>*/}
+          {/*    <TextInput field={ fields.title } setData={setFormField} formData={formData}/>*/}
+          {/*  </Col>*/}
+          {/*</Row>*/}
+          {/*<Row>*/}
+          {/*  <Col>*/}
+          {/*    /!*TODO: Make select, pull from /users/get-users/ and record _id for field*!/*/}
+          {/*    /!* Make sure to pass in large number (1000) because of paging *!/*/}
+          {/*    <TextInput field={ fields.opseraId } setData={setFormField} formData={formData}/>*/}
+          {/*  </Col>*/}
+          {/*</Row>*/}
           <Row>
             <div className="ml-auto px-3">
-              {newLdapUser ? <Button size="sm" variant="primary" disabled={Object.keys(changeMap).length === 0} onClick={() => createTag(ldapUserData)}>Create LDAP User</Button>
+              {newLdapUser ? <Button size="sm" variant="primary" disabled={Object.keys(changeMap).length === 0} onClick={() => createUser(ldapUserData)}>Create LDAP User</Button>
                 : <Button size="sm" variant="primary" disabled={Object.keys(changeMap).length === 0} onClick={() => updateLdapUser(ldapUserData)}>Save changes</Button>
               }
             </div>
