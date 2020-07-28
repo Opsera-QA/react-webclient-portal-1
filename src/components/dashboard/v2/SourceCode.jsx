@@ -4,8 +4,7 @@ import SourceCodeView_developer from "../../analytics/views/SourceCodeView_devel
 import SourceCodeView_manager from "../../analytics/views/SourceCodeView_manager";
 import SourceCodeView_executive from "../../analytics/views/SourceCodeView_executive";
 
-function SecOpsDashboard( { persona, date } ) {
-  
+function SourceCode( { persona, date } ) {
   switch (persona) {
   case "developer":
     return <SourceCodeView_developer persona={persona} date={date} />;
@@ -21,10 +20,9 @@ function SecOpsDashboard( { persona, date } ) {
   }  
 }
 
-
-SecOpsDashboard.propTypes = {
+SourceCode.propTypes = {
   persona: PropTypes.string,
   date: PropTypes.object  
 };
 
-export default SecOpsDashboard;
+export default SourceCode;
