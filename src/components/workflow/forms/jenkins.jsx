@@ -236,14 +236,7 @@ function JenkinsStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
     [formData.toolJobType]
   );
 
-  function renderTooltip(props) {
-    const { message } = props;
-    return (
-      <Tooltip id="button-tooltip" {...props}>
-        {message}
-      </Tooltip>
-    );
-  }
+  // console.log(formData);
 
   const loadFormData = async (step) => {
     let { configuration, threshold, job_type } = step;
@@ -607,6 +600,15 @@ function JenkinsStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
             </>}
           </Popover.Content>
         </Popover>);
+    } else {
+      return (
+        <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
+          <Popover.Title as="h3">Tool and Account Details <FontAwesomeIcon icon={faTimes} className="fa-pull-right pointer" onClick={() => document.body.click()} /></Popover.Title>
+
+          <Popover.Content>
+            <div className="text-muted mb-2">Please select any tool/account to get the details.</div>
+          </Popover.Content>
+        </Popover>);
     }
   };
 
@@ -693,7 +695,12 @@ function JenkinsStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
         <>
           {(formData.jenkinsUrl && jenkinsList.length > 1) &&
           <Form.Group controlId="formBasicEmail">
-            <Form.Label>Job*</Form.Label>
+            <Form.Label  className="w-100">Job*
+              <OverlayTrigger trigger="click" rootClose placement="left"
+                overlay={RegistryPopover(jobsList[jobsList.findIndex(x => x._id === formData.toolJobId)])}>
+                <FontAwesomeIcon icon={faEllipsisH} className="fa-pull-right pointer pr-1" onClick={() => document.body.click()} />
+              </OverlayTrigger>
+            </Form.Label>
             {jobsList.length < 1 && <div className="form-text text-muted p-2">
               <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth/>
               No jobs have been created for <span>{formData.jenkinsUrl}</span>. Please go to
@@ -711,16 +718,6 @@ function JenkinsStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
               />
               : null}
           </Form.Group>
-          }
-          {(formData.toolJobType && formData.toolJobType.length > 0) &&
-          <>
-            <div className="text-right pt-2">
-              <OverlayTrigger trigger="click" rootClose placement="left"
-                overlay={RegistryPopover(jobsList[jobsList.findIndex(x => x._id === formData.toolJobId)])}>
-                <Button variant="outline-dark" size="sm">Info</Button>
-              </OverlayTrigger>
-            </div>
-          </>
           }
         </>
         }
