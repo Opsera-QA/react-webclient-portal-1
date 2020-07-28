@@ -46,7 +46,7 @@ function JenkinJobs({ toolData }) {
       </ButtonToolbar>
       </>}  
 
-      {(jobAction === "JOB_LIST" && toolData.jobs !== undefined ) && <> 
+      {(jobAction === "JOB_LIST" ) && <>
         <div className="my-1 text-right">
           <Button variant="primary" size="sm"  
             onClick={() => setJobAction("CREATE_JOB")}> 
@@ -57,7 +57,7 @@ function JenkinJobs({ toolData }) {
         <JenkinsJobsTable data={toolData.jobs} selectedRow={rowData => selectedJobRow(rowData)} />
       </>}
 
-      {(jobAction === "ACCOUNT_LIST" && toolData.accounts !== undefined ) && <> 
+      {(jobAction === "ACCOUNT_LIST") && <>
         <div className="my-1 text-right">
           <Button variant="primary" size="sm"  
             onClick={() => setJobAction("CREATE_ACCOUNT")}> 

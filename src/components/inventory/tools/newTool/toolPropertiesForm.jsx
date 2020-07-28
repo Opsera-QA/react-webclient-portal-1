@@ -162,9 +162,6 @@ function ToolPropertiesForm(props) {
       value: selectedToolType.identifier
     };
 
-    console.log("Tool_Type_Identifier: " + JSON.stringify(tool_type_identifier));
-    console.log("tool_identifier: " + JSON.stringify(tool_identifier));
-
     updateFormFields(prevState => ({ 
       ...prevState, 
       tool_type_identifier: {
@@ -212,14 +209,14 @@ function ToolPropertiesForm(props) {
       />;     
     case "select":
       const toolIndex = tool_list.tool_identifier.findIndex(x => x.identifier === formField.value);
-      console.log("tool index: " + toolIndex);
       return <DropdownList
         data={tool_list.tool_identifier}
         valueField='tool_identifier'
         value={ toolIndex !== -1 ? tool_list.tool_identifier[toolIndex] : null}
-        busy={(!formField.active) ? false : Object.keys(tool_list).tool_identifier.length == 0 ? true : false}
+        busy={(!formField.active) ? false : Object.keys(tool_list).tool_identifier.length === 0}
         disabled={formField.disabled}
         textField='name'
+
         filter='contains'
         groupBy={tool => capitalizeFirstLetter(tool.tool_type_identifier, "-", "No Tool Type Identifier")}
         onChange={handleToolTypeUpdate} />;
@@ -251,7 +248,7 @@ function ToolPropertiesForm(props) {
                       {formField.label} 
                       {formField.rules.isRequired && <span style={{ marginLeft:5, color: "#dc3545" }}>*</span>}
                     </Form.Label>
-                    <Col sm="10" className="text-right">
+                    <Col sm="10">
                       {formFieldType(formField)}
                       <Form.Control.Feedback type="invalid">{formField.errorMessage}</Form.Control.Feedback>
                     </Col>
