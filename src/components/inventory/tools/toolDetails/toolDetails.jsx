@@ -140,7 +140,7 @@ function ToolDetails(props) {
                       </>}
 
                     <Button size="sm" disabled={activeTab === "new" || activeTab === "edit"} className="mr-2" variant={activeTab === "connections" ? "primary" : "secondary"} onClick={() => setActiveTab("connections")}>Connections</Button>
-                    <Button size="sm" disabled={activeTab === "new" || activeTab === "edit" || featureFlagItemInProd()} className="mr-2" variant={activeTab === "jobs" ? "primary" : "secondary"} onClick={() => setActiveTab("jobs")}>Jobs</Button>
+                    <Button size="sm" disabled={activeTab === "new" || activeTab === "edit" || featureFlagItemInProd()} className="mr-2" variant={activeTab === "jobs" ? "primary" : "secondary"} onClick={() => setActiveTab("jobs")}>Jobs & Accounts</Button>
                     <Button size="sm" disabled={activeTab === "new" || activeTab === "edit" || featureFlagItemInProd()} className="mr-2" variant={activeTab === "logs" ? "primary" : "secondary"} onClick={() => setActiveTab("logs")}>Logs</Button>
                   </ButtonGroup>
                   <ButtonGroup>

@@ -1,14 +1,8 @@
+// TODO: put metadata on node server and pull down that way?
 const tagEditorFormFields = {
   key: {
     label: "Key",
     id: "key",
-    type: "",
-    toShow: true,
-    value: "",
-    disabled: false,
-    touched: false,
-    isValid: false,
-    errorMessage: "",
     rules: {
       isRequired: true 
     }
@@ -16,13 +10,6 @@ const tagEditorFormFields = {
   value: {
     label: "Value",
     id: "value",
-    type: "",
-    toShow: true,
-    value: "",
-    disabled: false,
-    touched: false,
-    isValid: false,
-    errorMessage: "",
     rules: {
       isRequired: true 
     }
@@ -46,13 +33,13 @@ const tagEditorFormFields = {
   active: {
     label: "Status",
     id: "active",
-    value: true,
-    type: "switch",
-    toShow: true,
-    disabled: false,
-    touched: false,
-    isValid: false,
-    errorMessage: "",    
+    // value: true,
+    // type: "switch",
+    // toShow: true,
+    // disabled: false,
+    // touched: false,
+    // isValid: false,
+    // errorMessage: "",
     rules: {
       isRequired: false 
     }

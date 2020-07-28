@@ -88,7 +88,7 @@ function MultiInputFormField(props) {
         <>
           <div className="d-flex">
             <div className="p-2"></div>
-            <div className="p-2 text-center text-muted">No Entires</div>
+            <div className="p-2 text-center text-muted">No Entries</div>
             <div className="ml-auto p-2 text-right mr-1"><Button variant="primary" size="sm" onClick={addRow}><FontAwesomeIcon icon={faPlus}/></Button></div>
           </div>
 

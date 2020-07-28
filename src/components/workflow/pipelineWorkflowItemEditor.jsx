@@ -13,7 +13,7 @@ import StepToolConfiguration from "./forms/stepToolConfiguration";
 import StepConfiguration from "./forms/stepConfiguration";
 
 
-const PipelineWorkflowEditor = ({ editItem, data, closeEditorPanel, fetchPlan }) => {
+const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPlan }) => {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
   const [loading, setLoading] = useState(false);
@@ -21,7 +21,7 @@ const PipelineWorkflowEditor = ({ editItem, data, closeEditorPanel, fetchPlan })
   async function postData(param) {
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = `/pipelines/${data._id}/update`;   
+    const apiUrl = `/pipelines/${pipeline._id}/update`;   
     try {
       await axiosApiService(accessToken).post(apiUrl, param);
     }
@@ -36,26 +36,23 @@ const PipelineWorkflowEditor = ({ editItem, data, closeEditorPanel, fetchPlan })
     closeEditorPanel();
   };
 
-  const callbackFunctionTools = async (plan, persistent) => {
-    data.workflow.plan = plan;
-    await postData(data);
-    
-    if (!persistent) {
-      fetchPlan();
-      closeEditorPanel();
-    }  
+  const callbackFunctionTools = async (plan) => {
+    pipeline.workflow.plan = plan;
+    await postData(pipeline);
+    await fetchPlan();
+    closeEditorPanel();    
   };
 
   const callbackConfigureStep = async (plan) => {
-    data.workflow.plan = plan;
-    await postData(data);
+    pipeline.workflow.plan = plan;
+    await postData(pipeline);
     fetchPlan();  
     closeEditorPanel();  
   };
 
   const callbackFunctionSource = async (source) => {
-    data.workflow.source = source;
-    await postData(data);
+    pipeline.workflow.source = source;
+    await postData(pipeline);
     fetchPlan();
     closeEditorPanel();  
   };
@@ -80,7 +77,7 @@ const PipelineWorkflowEditor = ({ editItem, data, closeEditorPanel, fetchPlan })
                 onClick={() => { handleCloseClick(); }} />
             </Col>
           </Row>
-          <SourceRepositoryConfig data={data} parentCallback={callbackFunctionSource} />          
+          <SourceRepositoryConfig data={pipeline} parentCallback={callbackFunctionSource} />          
         </>
       );
 
@@ -97,7 +94,7 @@ const PipelineWorkflowEditor = ({ editItem, data, closeEditorPanel, fetchPlan })
                 onClick={() => { handleCloseClick(); }} />
             </Col>
           </Row>
-          <StepNotificationConfig data={data} stepId={editItem.step_id} parentCallback={callbackFunctionTools} />
+          <StepNotificationConfig data={pipeline} stepId={editItem.step_id} parentCallback={callbackFunctionTools} />
         </>
       );
 
@@ -114,7 +111,7 @@ const PipelineWorkflowEditor = ({ editItem, data, closeEditorPanel, fetchPlan })
                 onClick={() => { handleCloseClick(); }} />
             </Col>
           </Row>            
-          <StepConfiguration data={data} stepId={editItem.step_id} parentCallback={callbackConfigureStep} /> 
+          <StepConfiguration data={pipeline} stepId={editItem.step_id} parentCallback={callbackConfigureStep} /> 
         </>
       );
 
@@ -131,7 +128,7 @@ const PipelineWorkflowEditor = ({ editItem, data, closeEditorPanel, fetchPlan })
                 onClick={() => { handleCloseClick(); }} />
             </Col>
           </Row> 
-          <StepToolConfiguration data={data} editItem={editItem} parentCallback={callbackFunctionTools} /> 
+          <StepToolConfiguration pipeline={pipeline} editItem={editItem} parentCallback={callbackFunctionTools} reloadParentPipeline={fetchPlan} closeEditorPanel={closeEditorPanel} /> 
         </>
       );
     }
@@ -142,7 +139,7 @@ const PipelineWorkflowEditor = ({ editItem, data, closeEditorPanel, fetchPlan })
 
 PipelineWorkflowEditor.propTypes = {
   editItem: PropTypes.object,
-  data: PropTypes.object,
+  pipeline: PropTypes.object,
   parentCallback: PropTypes.func,
   fetchPlan: PropTypes.func
 };

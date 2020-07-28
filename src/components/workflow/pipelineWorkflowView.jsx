@@ -94,7 +94,7 @@ function PipelineWorkflowView({ id }) {
               <Col md="auto"></Col>
               {editItem ?
                 <Col xs lg="4" className="workflow-editor-panel p-3">
-                  <PipelineWorkflowEditor editItem={editItem} data={data} closeEditorPanel={closeEditorPanel} fetchPlan={fetchPlan} /></Col>: null}
+                  <PipelineWorkflowEditor editItem={editItem} pipeline={data} closeEditorPanel={closeEditorPanel} fetchPlan={fetchPlan} /></Col>: null}
             </Row> : null}
 
           {data.length == 0 ?

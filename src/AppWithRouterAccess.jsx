@@ -33,18 +33,20 @@ import CustomerSystemStatus from "./components/admin/status/CustomerSystemStatus
 import Overview from "./components/landing/Overview";
 import Registration from "./components/landing/Registration";
 import ToolConfigurations from "./components/admin/tools/ToolConfigurations";
-import TagEditor from "./components/admin/tags/TagsEditor";
+import TagEditor from "./components/admin/tags/TagManagement";
 import TemplateEditor from "./components/admin/template_editor/TemplateEditor";
 import OPBlueprintMain from "./components/blueprint/blueprint";
 import LdapDashboard from "./components/accounts/LdapDashboard";
 import LdapOrganizationsView from "./components/accounts/LdapOrganizationsView";
 import LdapAccountsView from "./components/accounts/LdapAccountsView";
+import LdapCustomerOnboardView from "./components/accounts/LdapCustomerOnboard";
 
 import FreeTrialRegistration from "./components/freeTrial/Registration";
 import FreeTrialLanding from "./components/freeTrial/landing-page/Landing";
 
 import ApiConnectionDemo from "./components/api_connector/ApiDemo";
 import CommonTableDemo from "./components/common/samples/tableImplementation";
+import TagDetailView from "./components/admin/tags/tags_detail_view/TagDetailView";
 
 const AppWithRouterAccess = () => {
   const history = useHistory();
@@ -117,11 +119,14 @@ const AppWithRouterAccess = () => {
               <SecureRoute path="/admin/customerstatus" component={CustomerSystemStatus} />
               <SecureRoute path="/admin/analytics/reports-registration" component={ReportsRegistration} />
               <SecureRoute path="/admin/tool-configurations" component={ToolConfigurations} />
-              <SecureRoute path="/admin/tags" component={TagEditor} />
+              <SecureRoute path="/admin/tags" exact component={TagEditor} />
+              <SecureRoute path="/admin/tags/:id" exact component={TagDetailView} />
               <SecureRoute path="/admin/template-editor" component={TemplateEditor} />
               <SecureRoute path="/accounts" exact component={LdapDashboard} />
               <SecureRoute path="/accounts/organizations" exact component={LdapOrganizationsView} />
               <SecureRoute path="/accounts/organizations/detail/:id" exact component={LdapAccountsView} />
+              <SecureRoute path="/accounts/create" exact component={LdapCustomerOnboardView} />
+
               <SecureRoute path="/demo/api" component={ApiConnectionDemo} />
 
               <SecureRoute path="/demo/table" component={CommonTableDemo} />

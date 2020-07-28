@@ -16,6 +16,7 @@ function TextInput({ field, formData, setData }) {
 
   return (
     field &&
+    // TODO: Extract into regular inputs for easier maintenance/styling
     <>
       <Form.Group className="custom-text-input" controlId={field.id}>
         <Form.Label>

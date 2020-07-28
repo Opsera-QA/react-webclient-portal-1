@@ -114,7 +114,7 @@ const WelcomeView = () => {
           />
         </div>
         <div className="col-md-6 px-2 text-muted pt-5">
-        OpsERA's Advanced Orchestration Technology combined with our robust tools experience will enable you to build and manage various continuous integration 
+        Opsera's Advanced Orchestration Technology combined with our robust tools experience will enable you to build and manage various continuous integration
         and delivery as well as unique policy based pipelines saving you time and resources!
         </div>
         <div className="col-md px-2 text-muted"></div>

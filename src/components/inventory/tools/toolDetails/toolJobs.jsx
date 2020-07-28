@@ -5,11 +5,14 @@ import PropTypes from "prop-types";
 function ToolJobs({ toolData }) {
   return (
     <>
-      <div className="text-muted mx-4 mt-3">Save settings for custom jobs here.  These settings can then be re-used in pipeline steps to create jobs.  In OpsERA, 
-    managed jobs are created at the step level in pipeline.</div>
-      {toolData.tool_identifier.toLowerCase() === "jenkins" ? <JenkinJobs toolData={toolData} /> 
+      <div className="text-muted mt-4 mx-4">
+        <div className="h6">Opsera Managed Job and Account Creation</div>
+        Manage your tool&apos;s Jobs and Accounts in one location.  Save settings for custom jobs to be triggered in Pipeline steps (when configuring a pipeline) or create accounts to support those jobs right here. These settings can be entered once and reused across the Opsera platform.
+      </div>
+
+      {toolData.tool_identifier.toLowerCase() === "jenkins" ? <JenkinJobs toolData={toolData}/>
         :
-        <div className="text-center p-5 text-muted mt-5">Tool jobs: create / manage coming soon</div>  }
+        <div className="text-center p-5 text-muted mt-5">Opsera managed job creation is not currently available for this tool.</div>}
     </>
   );
 }
