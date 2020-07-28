@@ -820,3 +820,8 @@ div.modal-footer {
 .delete-icon:hover {
     color: #bb0000;
 }
+
+/* TODO: Create general table dropdown, but for now use this*/
+.tableDropdown {
+    min-width: 250px;
+}
