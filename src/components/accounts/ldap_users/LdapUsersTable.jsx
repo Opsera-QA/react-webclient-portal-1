@@ -23,7 +23,8 @@ function LdapUsersTable({ data }) {
   );
 
   const onRowSelect = (rowData, type) => {
-    history.push("/users/" + rowData.original._id);
+    // TODO: Update to ID or some sort of unique field if added
+    history.push("/accounts/users/" + rowData.original.emailAddress);
   };
 
   const rowStyling = (row) => {

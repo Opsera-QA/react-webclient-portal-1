@@ -87,10 +87,19 @@ accountsActions.getOrganizations = async (getAccessToken) => {
   return response;
 };
 
-accountsActions.getOrganizationByName = async (organizationName, getAccessToken) => {
+// accountsActions.getOrganizationByName = async (organizationName, getAccessToken) => {
+//   const accessToken = await getAccessToken();
+//   const apiUrl = `/users/account/organizations/${organizationName}`;
+//   const response = await axiosApiService(accessToken).get(apiUrl)
+//     .then((result) =>  {return result;})
+//     .catch(error => {return { error };});
+//   return response;
+// };
+
+accountsActions.getOrganizationByEmail = async (postBody, getAccessToken) => {
   const accessToken = await getAccessToken();
-  const apiUrl = `/users/account/organizations/${organizationName}`;
-  const response = await axiosApiService(accessToken).get(apiUrl)
+  const apiUrl = "/users/account/";
+  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
     .then((result) =>  {return result;})
     .catch(error => {return { error };});
   return response;
@@ -105,21 +114,11 @@ accountsActions.activateElk = async (userId, getAccessToken) => {
   return response;
 };
 
-accountsActions.getAccountByEmail = async (email, getAccessToken) => {
-  const accessToken = await getAccessToken();
-  const apiUrl = "/users/tools/activate-elk/";
-  const response = await axiosApiService(accessToken).post(apiUrl, email)
-    .then((result) =>  {return result;})
-    .catch(error => {return { error };});
-  return response;
-};
-
-
 // TODO: Should we have different queries for different posts?
 // TODO: should it be /users/?
 accountsActions.create = async (accountData, getAccessToken) => {
   const accessToken = await getAccessToken();
-  const apiUrl = "/user/account/create";
+  const apiUrl = "/users/account/create";
   const response = await axiosApiService(accessToken).post(apiUrl, accountData)
     .then((result) =>  {return result;})
     .catch(error => {return { error };});
