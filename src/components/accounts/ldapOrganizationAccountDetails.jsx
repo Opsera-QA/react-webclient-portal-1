@@ -20,6 +20,10 @@ const LdapOrganizationAccountDetails = (props) => {
         <Col lg className="py-1"><span className="text-muted mr-1">IDP Return Attributes:</span> {props.account.idpReturnAttributes}</Col>
         <Col lg className="py-1"><span className="text-muted mr-1">Entity ID:</span> {props.account.entityID}</Col>
       </Row>
+      <Row className="mt-3">
+        <Col lg className="py-1"><span className="text-muted mr-1">Users:</span> {props.account.users ? <EntityList data={props.account.users} /> : ""}</Col>
+        <Col lg className="py-1"><span className="text-muted mr-1">Groups:</span> {props.account.groups ? <EntityList data={props.account.groups} /> : ""}</Col>
+      </Row>
     </>
   );
   
@@ -27,6 +31,17 @@ const LdapOrganizationAccountDetails = (props) => {
 
 LdapOrganizationAccountDetails.propTypes = {
   account: PropTypes.object
+};
+
+const EntityList = (props) => {
+  return (
+    <ul className="list-group">
+      { props.data.map((entity) => <li className="list-group-item" key={entity.name}>{entity.name}</li>) }
+    </ul>
+  );
+};
+EntityList.propTypes = {
+  data: PropTypes.array
 };
 
 export default LdapOrganizationAccountDetails;
