@@ -9,7 +9,10 @@ import { faSave, faSpinner } from "@fortawesome/free-solid-svg-icons";
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
   accountUsername: "",
-  accountPassword: ""
+  accountPassword: "",
+  secretPrivateKey: "",
+  secretAccessTokenKey: "",
+  twoFactorAuthentication: false
 };
 
 
@@ -36,9 +39,15 @@ function GithubToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVaul
     if (validateRequiredFields()) {
       setIsSaving(true);
       let newConfiguration = formData;
-      
+     
       if (typeof(newConfiguration.accountPassword) === "string") {
-        newConfiguration.accountPassword = await saveToVault(toolId, toolData.tool_identifier, "accountPassword", "Vault Secured Key", newConfiguration.accountPassword);
+        newConfiguration.accountPassword = await saveToVault(toolId, toolData.tool_identifier, "", "Vault Secured Key", newConfiguration.accountPassword);
+      }  
+      if (typeof(newConfiguration.secretPrivateKey) === "string") {
+        newConfiguration.secretPrivateKey = await saveToVault(toolId, toolData.tool_identifier, "secretPrivateKey", "Vault Secured Key", newConfiguration.secretPrivateKey);
+      }
+      if (typeof(newConfiguration.secretAccessTokenKey) === "string") {
+        newConfiguration.secretAccessTokenKey = await saveToVault(toolId, toolData.tool_identifier, "secretAccessTokenKey", "Vault Secured Key", newConfiguration.secretAccessTokenKey);
       }
 
       const item = {
@@ -53,7 +62,12 @@ function GithubToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVaul
   const saveToVault = async (toolId, toolIdentifier, key, name, value) => {
     //const keyName = `${pipelineId}-${stepId}-${key}`;  //old keyname with pipelineID
     // const keyName = `${toolId}-${toolIdentifier}-${key}`;
-    const keyName = `${toolId}-${toolIdentifier}`;
+    let keyName = "";
+    if(key && key.length > 0) {
+      keyName = `${toolId}-${toolIdentifier}-${key}`;
+    } else {
+      keyName = `${toolId}-${toolIdentifier}`;
+    }
     const body = {
       "key": keyName,
       "value": value
@@ -62,22 +76,38 @@ function GithubToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVaul
     if (response.status === 200 ) {
       return { name: name, vaultKey: keyName };
     } else {
-      setFormData(formData => {
-        return { ...formData, password: {} };
-      });      
+      if( key.length > 0 ) {
+        setFormData(formData => {
+          return { ...formData, key: {} };
+        }); 
+      } else {
+        setFormData(formData => {
+          return { ...formData, accountPassword: {} };
+        }); 
+      }        
       setFormMessage("ERROR: Something has gone wrong saving secure data to your vault.  Please try again or report the issue to OpsERA.");
       return "";
     }
   };
 
   const validateRequiredFields = () => {
-    let { accountUsername, accountPassword } = formData;
-    if (accountPassword.length === 0 || accountUsername.length === 0 ) {
-      setFormMessage("Required Fields Missing!");
-      return false;
+    let { accountUsername, accountPassword, secretPrivateKey, secretAccessTokenKey, twoFactorAuthentication } = formData;
+    if(twoFactorAuthentication) {
+      if (secretPrivateKey.length === 0 || secretAccessTokenKey.length === 0 || accountUsername.length === 0  ) {
+        setFormMessage("Required Fields Missing!");
+        return false;
+      } else {
+        setFormMessage("");
+        return true;
+      }
     } else {
-      setFormMessage("");
-      return true;
+      if (accountPassword.length === 0 || accountUsername.length === 0  ) {
+        setFormMessage("Required Fields Missing!");
+        return false;
+      } else {
+        setFormMessage("");
+        return true;
+      }
     }
   };
 
@@ -90,12 +120,42 @@ function GithubToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVaul
         <Form.Control maxLength="100" type="text" placeholder="" value={formData.accountUsername || ""} onChange={e => setFormData({ ...formData, accountUsername: e.target.value })} />
       </Form.Group>
       
-      <Form.Group controlId="password">
-        <Form.Label>Password*</Form.Label>
-        <Form.Control maxLength="256" type="password" placeholder="" value={formData.accountPassword || ""} onChange={e => setFormData({ ...formData, accountPassword: e.target.value })} />            
-        <Form.Text className="text-muted">These credentials will be securely stored in vault.</Form.Text> 
-      </Form.Group>
 
+      {!formData.twoFactorAuthentication && 
+        <Form.Group controlId="password">
+          <Form.Label>Password*</Form.Label>
+          <Form.Control maxLength="256" type="password" placeholder="" value={formData.accountPassword || ""} onChange={e => setFormData({ ...formData, accountPassword: e.target.value })} />            
+          <Form.Text className="text-muted">These credentials will be securely stored in vault.</Form.Text> 
+        </Form.Group>
+      }
+
+      <Form.Group controlId="formBasicCheckbox" className="mt-4 ml-1">
+        <Form.Check type="checkbox" label="Is two-factor enabled?"
+          checked={formData.twoFactorAuthentication } onChange={() => setFormData({
+            ...formData,
+            twoFactorAuthentication: !formData.twoFactorAuthentication,
+            secretPrivateKey: "",
+            secretAccessTokenKey: ""
+          })}/>
+        {/* <Form.Text className="text-muted"></Form.Text>       */}
+
+      </Form.Group>
+      {formData.twoFactorAuthentication && 
+      <>
+        <Form.Group controlId="password">
+          <Form.Label>Private Key*</Form.Label>
+          <Form.Control maxLength="256" type="password" placeholder="" value={formData.secretPrivateKey || ""} onChange={e => setFormData({ ...formData, secretPrivateKey: e.target.value })} />            
+          <Form.Text className="text-muted">These credentials will be securely stored in vault.</Form.Text> 
+        </Form.Group>
+
+        <Form.Group controlId="password">
+          <Form.Label>Access Key*</Form.Label>
+          <Form.Control maxLength="256" type="password" placeholder="" value={formData.secretAccessTokenKey || ""} onChange={e => setFormData({ ...formData, secretAccessTokenKey: e.target.value })} />            
+          <Form.Text className="text-muted">These credentials will be securely stored in vault.</Form.Text> 
+        </Form.Group>
+      </>
+      }
+      
       <Button variant="primary" type="button" disabled={isSaving}
         onClick={() => { callbackFunction(); }}> 
         {isSaving ? <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> : <FontAwesomeIcon icon={faSave} className="mr-1"/>} Save
