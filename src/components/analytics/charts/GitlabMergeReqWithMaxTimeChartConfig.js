@@ -43,19 +43,20 @@ export default {
     }
   ],
   axisBottom: {
+    "format": d => d.substring(0, 8),
+    "tickSize": 8,
+    "tickPadding": 5,
+    "tickRotation": -45,
+    "legend": "Project",
+    "legendPosition": "middle",
+    "legendOffset": 60
+  },
+  axisLeft: {
+    // "format": d => d.substring(0, 8),
     "tickSize": 8,
     "tickPadding": 5,
     "tickRotation": 0,
     "legend": "Time (Hours)",
-    "legendPosition": "middle",
-    "legendOffset": 50
-  },
-  axisLeft: {
-    "format": d => d.substring(0, 8),
-    "tickSize": 8,
-    "tickPadding": 5,
-    "tickRotation": 0,
-    "legend": "Project",
     "legendPosition": "middle",
     "legendOffset": -75
   },

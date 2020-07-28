@@ -10,9 +10,7 @@ import "./charts.css";
 import InfoDialog from "../../common/info";
 import ModalLogs from "../../common/modalLogs";
 
-
-
-function GitlabMergeReqWithMaxTimeChart( { persona, date }) {
+function GitlabMergeReqWithMaxTimeChart( { persona, date } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -38,7 +36,7 @@ function GitlabMergeReqWithMaxTimeChart( { persona, date }) {
     };
   }, [date]);
 
-  const fetchData = async() => {
+  const fetchData = async () => {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
@@ -70,19 +68,19 @@ function GitlabMergeReqWithMaxTimeChart( { persona, date }) {
   if(loading) {
     return (<LoadingDialog size="sm" />);
   } else if (error) {
-    return (<ErrorDialog  error={error} />);  
-  } else {  
+    return (<ErrorDialog  error={error} />);
+  } else {
     return (
-      <>    
+      <>
         <ModalLogs header="Merge Request with Maximum Time" size="lg" jsonMessage={data.data} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
-        <div className="chart mb-3" style={{ height: "300px" }}>
 
+        <div className="chart mb-3" style={{ height: "300px" }}>
           <div className="chart-label-text">Merge Request with Maximum Time</div>
-          {(typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) ? 
+          {(typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) ?
             <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
               <InfoDialog message="No Data is available for this chart at this time." />
             </div>
-            :
+            : 
             <ResponsiveBar
               data={data ? data.data : []}
               onClick={() => setShowModal(true)}
@@ -90,7 +88,7 @@ function GitlabMergeReqWithMaxTimeChart( { persona, date }) {
               indexBy="ProjectName"
               margin={config.margin}
               padding={0.3}
-              layout={"horizontal"}
+              layout={"vertical"}
               colors={{ scheme: "spectral" }}
               borderColor={{ theme: "background" }}
               colorBy="id"

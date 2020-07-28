@@ -4,9 +4,9 @@ export default {
   ],
   margin: {
     "top": 50,
-    "right": 110,
-    "bottom": 50,
-    "left": 90
+    "right": 130,
+    "bottom": 80,
+    "left": 100
   },
   defs: [
     {
@@ -43,13 +43,13 @@ export default {
     }
   ],
   axisBottom: {
-    "format": d => d.substring(0, 12),
-    "tickSize": 5,
+    "format": d => d.substring(0, 8),
+    "tickSize": 8,
     "tickPadding": 5,
-    "tickRotation": 0,
+    "tickRotation": -45,
     "legend": "Project",
     "legendPosition": "middle",
-    "legendOffset": 32
+    "legendOffset": 60,        
   },
   axisLeft: {
     "tickSize": 5,

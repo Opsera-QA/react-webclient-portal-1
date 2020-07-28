@@ -18,6 +18,7 @@ import GitlabTotalCommitsChart from "../../charts/GitlabTotalCommitsChart";
 import GitlabMergeReqWithMaxTimeChart from "../../charts/GitlabMergeReqWithMaxTimeChart";
 import GitlabMergedMergeReqCommitsCountTable from "../../metrics/GitlabMergedMergeReqCommitsCountTable";
 import GitlabTotalCountOfMergeReqAndPushPerDay from "../../charts/GitlabTotalCountOfMergeReqAndPushPerDay";
+import GitlabTotalCommitsByUserAndDate from "../../charts/GitlabTotalCommitsByUserAndDate";
 
 function SourceCodeView_developer ({ persona, date }) {
   const contextType = useContext(AuthContext);
@@ -120,6 +121,7 @@ function SourceCodeView_developer ({ persona, date }) {
           </div>
           <div className="align-self-stretch p-2 w-100">
             {/* Self Contained div */}
+            <GitlabTotalCommitsByUserAndDate persona={persona} date={date}/>            
           </div>
         </div>
         <div className="d-flex">
