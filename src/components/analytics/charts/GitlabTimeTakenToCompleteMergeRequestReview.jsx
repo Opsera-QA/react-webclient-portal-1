@@ -5,12 +5,12 @@ import { ResponsiveBar } from "@nivo/bar";
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/loading";
 import ErrorDialog from "../../common/error";
-import config from "./GitlabMergeRequestsByUserChartConfig";
+import config from "./GitlabTimeTakenToCompleteMergeRequestReviewConfig";
 import "./charts.css";
 import InfoDialog from "../../common/info";
 import ModalLogs from "../../common/modalLogs";
 
-function GitlabMergeRequestsByUser( { persona, date } ) {
+function GitlabTimeTakenToCompleteMergeRequestReview( { persona, date } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -44,8 +44,8 @@ function GitlabMergeRequestsByUser( { persona, date } ) {
     const postBody = {
       data: [
         { 
-          request: "gitlabMergeRequestsByUser",
-          metric: "bar" 
+          request: "gitlabTimeTakenToCompleteMergeRequestReviewChart",
+          metric: "bar"
         }
       ],
       startDate: date.start, 
@@ -54,7 +54,7 @@ function GitlabMergeRequestsByUser( { persona, date } ) {
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res.data.data[0].gitlabMergeRequestsByUser : [];
+      let dataObject = res && res.data ? res.data.data[0].gitlabTimeTakenToCompleteMergeRequestReviewChart : [];
       setData(dataObject);
       setLoading(false);
     }
@@ -68,15 +68,15 @@ function GitlabMergeRequestsByUser( { persona, date } ) {
   if(loading) {
     return (<LoadingDialog size="sm" />);
   } else if (error) {
-    return (<ErrorDialog  error={error} />);  
-  } else {    
+    return (<ErrorDialog  error={error} />);
+  } else {
     return (
       <>
-        <ModalLogs header="Merge Requests by User" size="lg" jsonMessage={data.data} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
+        <ModalLogs header="Time Taken To Complete Merge Request" size="lg" jsonMessage={data.data} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
 
         <div className="chart mb-3" style={{ height: "300px" }}>
 
-          <div className="chart-label-text">Merge Requests by User</div>
+          <div className="chart-label-text">Time Taken To Complete Merge Request</div>
           {(typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) ?
             <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
               <InfoDialog message="No Data is available for this chart at this time." />
@@ -86,11 +86,11 @@ function GitlabMergeRequestsByUser( { persona, date } ) {
               data={data ? data.data : []}
               onClick={() => setShowModal(true)}
               keys={config.keys}
-              indexBy="user"
+              indexBy="AssigneeName"
               margin={config.margin}
               padding={0.3}
               layout={"horizontal"}
-              colors={{ scheme: "category10" }}
+              colors={{ scheme: "dark2" }}
               borderColor={{ theme: "background" }}
               colorBy="id"
               defs={config.defs}
@@ -109,6 +109,13 @@ function GitlabMergeRequestsByUser( { persona, date } ) {
               borderWidth={2}
               motionDamping={15}
               legends={config.legends}
+              tooltip={({ indexValue, color, value, id }) => (
+                <div>
+                  <strong style={{ color }}>
+                  Reviewer: </strong> {indexValue}<br></br>
+                  <strong style={{ color }}> {"Merge Request Time Taken"}: </strong> {value}
+                </div>
+              )}
               theme={{
                 tooltip: {
                   container: {
@@ -124,8 +131,8 @@ function GitlabMergeRequestsByUser( { persona, date } ) {
   }
 }
 
-GitlabMergeRequestsByUser.propTypes = {
+GitlabTimeTakenToCompleteMergeRequestReview.propTypes = {
   persona: PropTypes.string
 };
 
-export default GitlabMergeRequestsByUser;
+export default GitlabTimeTakenToCompleteMergeRequestReview;

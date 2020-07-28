@@ -16,18 +16,20 @@ import JiraIssuesCreatedByDateLineChart from "./charts/jiraIssuesCreatedByDateLi
 import DeploymentsStackedBarChart from "./charts/DeploymentsStackedBarChart";
 import CircleChart from "./charts/CircleChart";
 import JiraHealthBySprintBarChart from "./charts/jiraHealthBySprintBarChart";
-import GitlabMergeRequestsByUserChart from "./charts/GitlabMergeRequestsByUserChart";
 import SonarSecurityLineChart from "./charts/sonarSecurityLineChart";
 import JMeterHitsLineChart from "./charts/jmeterHitsLineChart";
 import JMeterErrorsLineChart from "./charts/jmeterErrorsLineChart";
 import JMeterThroughputLineChart from "./charts/jmeterThroughputLineChart";
 import JMeterResponseTimeLineChart from "./charts/jmeterResponseTimeLineChart";
 import JMeterResultsTable from "./metrics/jmeterResultsTable";
-import GitlabPlanCodeView from "./views/GitlabPlanCodeView";
+// import GitlabPlanCodeView from "./views/GitlabPlanCodeView";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
+// import GitlabMergeRequestsView from "./views/GitlabMergeRequestsView";
+// import GitlabMergeRequestTimeTakenBarChart from "./charts/GitlabMergeRequestTimeTakenBarChart";
+import SourceCodeView from "./views/SourceCode/SourceCodeView_developer";
 
 
 const INDICES = ["jenkins", "opsera-pipeline-step-summary"];
@@ -337,7 +339,7 @@ function ChartView({ selection, persona, date, index }) {
   }, [selection, persona, date.start, index]);
 
   if (selection) {
-    switch (selection) {
+    switch (selection) {      
     case "pipeline":
       return (
         <>
@@ -353,7 +355,7 @@ function ChartView({ selection, persona, date, index }) {
           <div className="mt-2">
             <ReliabilityMetricsCharts persona={persona} date={date}/>
           </div>
-          
+            
           <div className="d-flex">
             <div className="align-self-stretch p-2 w-100">
               <SonarSecurityLineChart persona={persona} sonarMeasure="vulnerabilities" date={date} />
@@ -370,7 +372,7 @@ function ChartView({ selection, persona, date, index }) {
               <SonarSecurityLineChart persona={persona} sonarMeasure="new_technical_debt" date={date} />
             </div>
           </div>
-
+  
         </>);
 
     case "software_development":
@@ -434,16 +436,9 @@ function ChartView({ selection, persona, date, index }) {
     case "source_code":
       return (
         <>
-          {/* Wire-up each chart component here, stacking them on top of each other.  Please wrap each individual chart in their own div with "m-2" class providing some margin around it */}
-          <div className="d-flex">
-            <div className="align-self-stretch p-2 w-100">
-              <GitlabMergeRequestsByUserChart persona={persona} date={date}/>
-            </div>
-            <div className="align-self-stretch p-2 w-100">
-              {/* Self Contained Chart Component 2  */}
-            </div>
+          <div className="mt-2">
+            <SourceCodeView persona={persona} date={date}/>
           </div>
-
         </>);
 
     default:

@@ -1,12 +1,10 @@
 export default {
-  keys: [
-    "Merge Requests"
-  ],
+  keys:["TimeTaken"],
   margin: {
     "top": 50,
     "right": 130,
-    "bottom": 80,
-    "left": 100
+    "bottom": 50,
+    "left": 80
   },
   defs: [
     {
@@ -31,7 +29,7 @@ export default {
   fill: [
     {
       "match": {
-        "id": "donut"
+        "id": "fries"
       },
       "id": "dots"
     },
@@ -43,21 +41,21 @@ export default {
     }
   ],
   axisBottom: {
-    "tickSize": 8,
+    "orient": "bottom",
+    "tickSize": 5,
     "tickPadding": 5,
-    "tickRotation": 0,
-    "legend": "Merge Requests",
-    "legendPosition": "middle",
-    "legendOffset": 50
+    "tickRotation": -20,
+    "legend": "Branch Name",
+    "legendOffset": 46,
+    "legendPosition": "middle"
   },
   axisLeft: {
-    "format": d => d.substring(0, 6),
-    "tickSize": 8,
+    "tickSize": 5,
     "tickPadding": 5,
     "tickRotation": 0,
-    "legend": "Author",
+    "legend": "Time taken (Minutes)",
     "legendPosition": "middle",
-    "legendOffset": -72.5
+    "legendOffset": -65
   },
   legends: [
     {
@@ -65,7 +63,7 @@ export default {
       "anchor": "bottom-right",
       "direction": "column",
       "justify": false,
-      "translateX": 110,
+      "translateX": 120,
       "translateY": 0,
       "itemsSpacing": 2,
       "itemWidth": 100,

@@ -1,12 +1,12 @@
 export default {
   keys: [
-    "Merge Requests"
+    "MergeRequestTimeTaken"
   ],
   margin: {
     "top": 50,
-    "right": 130,
+    "right": 110,
     "bottom": 80,
-    "left": 100
+    "left": 115
   },
   defs: [
     {
@@ -46,33 +46,33 @@ export default {
     "tickSize": 8,
     "tickPadding": 5,
     "tickRotation": 0,
-    "legend": "Merge Requests",
+    "legend": "Time (Hours)",
     "legendPosition": "middle",
     "legendOffset": 50
   },
   axisLeft: {
-    "format": d => d.substring(0, 6),
+    "format": d => d.substring(0, 12),
     "tickSize": 8,
     "tickPadding": 5,
     "tickRotation": 0,
-    "legend": "Author",
+    "legend": "Reviewer",
     "legendPosition": "middle",
-    "legendOffset": -72.5
+    "legendOffset": -97.5
   },
   legends: [
     {
       "dataFrom": "keys",
       "anchor": "bottom-right",
       "direction": "column",
-      "justify": false,
-      "translateX": 110,
-      "translateY": 0,
-      "itemsSpacing": 2,
-      "itemWidth": 100,
-      "itemHeight": 20,
-      "itemDirection": "left-to-right",
+      "justify": true,
+      "translateX": 125,
+      "translateY": 62,
+      "itemsSpacing": 3,
+      "itemWidth": 110,
+      "itemHeight": 30,
+      "itemDirection": "bottom-to-top",
       "itemOpacity": 0.85,
-      "symbolSize": 20,
+      "symbolSize": 10,
       "effects": [
         {
           "on": "hover",

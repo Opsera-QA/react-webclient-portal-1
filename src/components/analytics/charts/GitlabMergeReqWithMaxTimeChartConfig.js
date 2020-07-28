@@ -1,6 +1,6 @@
 export default {
   keys: [
-    "Merge Requests"
+    "TimeTaken"
   ],
   margin: {
     "top": 50,
@@ -43,21 +43,22 @@ export default {
     }
   ],
   axisBottom: {
+    "format": d => d.substring(0, 8),
     "tickSize": 8,
     "tickPadding": 5,
-    "tickRotation": 0,
-    "legend": "Merge Requests",
+    "tickRotation": -45,
+    "legend": "Project",
     "legendPosition": "middle",
-    "legendOffset": 50
+    "legendOffset": 60
   },
   axisLeft: {
-    "format": d => d.substring(0, 6),
+    // "format": d => d.substring(0, 8),
     "tickSize": 8,
     "tickPadding": 5,
     "tickRotation": 0,
-    "legend": "Author",
+    "legend": "Time (Hours)",
     "legendPosition": "middle",
-    "legendOffset": -72.5
+    "legendOffset": -75
   },
   legends: [
     {
@@ -65,7 +66,7 @@ export default {
       "anchor": "bottom-right",
       "direction": "column",
       "justify": false,
-      "translateX": 110,
+      "translateX": 120,
       "translateY": 0,
       "itemsSpacing": 2,
       "itemWidth": 100,
