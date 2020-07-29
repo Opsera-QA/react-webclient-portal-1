@@ -102,7 +102,7 @@ function GitlabTotalCountOfMergeReqAndPushPerDay( { persona, date } ) {
                                     
                 }}>
                   <strong>
-                    {day}: {value} Contributions(s)
+                    {day}: {value} Contribution(s)
                   </strong>
                 </div>
               )}            
