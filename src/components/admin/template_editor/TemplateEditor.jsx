@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useMemo } from "react";
 import Modal from "components/common/modal";
 import { Button } from "react-bootstrap";
-import { AuthContext } from "contexts/AuthContext"; 
+import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTimesCircle, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
@@ -14,9 +14,9 @@ import TemplateModal from "./TemplateModal";
 
 function TemplateEditor() {
   const { getUserRecord, getAccessToken } = useContext(AuthContext);
-  const [ isAdminCheck, setAdminStatus] = useState(false);
-  const [ pageLoading, setPageLoading ] = useState(true);
-  const [ templateList, setTemplateList ] = useState([]);
+  const [isAdminCheck, setAdminStatus] = useState(false);
+  const [pageLoading, setPageLoading] = useState(true);
+  const [templateList, setTemplateList] = useState([]);
   const [modalType, setModalType] = useState("View");
   const [templateId, setTemplateId] = useState("");
   const [templateData, setTemplateData] = useState({});
@@ -24,7 +24,7 @@ function TemplateEditor() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [canDelete, setCanDelete] = useState(true);
 
-  useEffect(() => {  
+  useEffect(() => {
     isAdmin();
     getTemplates();
   }, []);
@@ -34,11 +34,10 @@ function TemplateEditor() {
   const getTemplates = async () => {
     try {
       const accessToken = await getAccessToken();
-      const templateListResponse  = await axiosApiService(accessToken).get("/pipelines/workflows?hidden=true", {});
+      const templateListResponse = await axiosApiService(accessToken).get("/pipelines/workflows?hidden=true", {});
       console.log(templateListResponse.data);
       setTemplateList(templateListResponse.data);
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err.message);
     }
   };
@@ -66,7 +65,7 @@ function TemplateEditor() {
   const closeTemplateView = (toggleModal) => {
     getTemplates();
     toggleTemplateModal(toggleModal);
-  };  
+  };
 
   const createTemplate = () => {
     setModalType("New");
@@ -76,10 +75,9 @@ function TemplateEditor() {
   const deleteTemplate = async () => {
     try {
       const accessToken = await getAccessToken();
-      const response = await axiosApiService(accessToken).delete("/pipelines/workflows/"+ templateId, { });
+      const response = await axiosApiService(accessToken).delete("/pipelines/workflows/" + templateId, {});
       toggleTemplateModal(false);
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err.message);
     }
   };
@@ -99,42 +97,46 @@ function TemplateEditor() {
           <li className="breadcrumb-item">
             <Link to="/admin">Admin</Link>
           </li>
-          <li className="breadcrumb-item active">Template Management</li> 
+          <li className="breadcrumb-item active">Template Management</li>
         </ol>
       </nav>
 
-      {pageLoading ? <Loading size="sm" /> : null}
-      {(!isAdminCheck && !pageLoading)&& <ErrorDialog error={"You do not have access to view this page!"} />}
+      {pageLoading ? <Loading size="sm"/> : null}
+      {(!isAdminCheck && !pageLoading) && <ErrorDialog error={"You do not have access to view this page!"}/>}
       {isAdminCheck &&
       <>
         <div className="justify-content-between mb-1 d-flex">
           <h5>Template Management</h5>
           <div className="text-right">
-            <Button variant="primary" size="sm"  
-              onClick={() => { createTemplate(); }}> 
+            <Button variant="primary" size="sm"
+              onClick={() => {
+                createTemplate();
+              }}>
               <FontAwesomeIcon icon={faPlus} className="mr-1"/> New Template
             </Button>
-            <br />
+            <br/>
           </div>
         </div>
-      
-        <TemplatesTable selectedRow={rowData => selectedRow(rowData, "tool_type")} data={templateList} />
 
-        {showTemplateModal && <TemplateModal 
+        <TemplatesTable selectedRow={rowData => selectedRow(rowData, "tool_type")} data={templateList}/>
+
+        {showTemplateModal && <TemplateModal
           type={modalType}
           templateId={templateId}
           data={templateData}
           showModal={showTemplateModal}
           handleDelete={handleDeleteClick}
-          closeModal={(toggleModal) => closeTemplateView(toggleModal)}   /> }
-          
+          closeModal={(toggleModal) => closeTemplateView(toggleModal)}/>}
+
         {showDeleteModal && <Modal
           showModal={showDeleteModal}
           header="Confirm Template Delete"
           message="Warning! Data cannot be recovered once the template is deleted. Do you still want to proceed?"
           button="Confirm"
-          handleCancelModal={() => { setShowDeleteModal(false); }}
-          handleConfirmModal={() => deleteTemplate()} />}
+          handleCancelModal={() => {
+            setShowDeleteModal(false);
+          }}
+          handleConfirmModal={() => deleteTemplate()}/>}
       </>
       }
     </div>
