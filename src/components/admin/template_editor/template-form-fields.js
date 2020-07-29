@@ -56,7 +56,22 @@ const templateEditorFormFields = {
     rules: {
       isRequired: false 
     }
-  },   
+  },
+  account: { //TODO: This needs to be a dropdown for the LDAP account names
+    label: "Account",
+    id: "account",
+    type: "",
+    toShow: true,
+    value: "",
+    disabled: false,
+    touched: false,
+    isValid: false,
+    errorMessage: "",
+    rules: {
+      minLength: 3,
+      isRequired: true
+    }
+  },
   tags: {
     label: "Tags",
     id: "tags",
@@ -72,7 +87,7 @@ const templateEditorFormFields = {
     }
   }, 
   active: {
-    label: "",
+    label: "Status",
     id: "active",
     value: true,
     type: "switch",

@@ -30,6 +30,7 @@ function TemplateEditorModal({ showModal, type, templateId, data, closeModal, ha
     "description": "Create a new template from scratch.",
     "active": true,
     "roles": ["opsera", "everyone"],
+    "account": "",
     "plan": [
       {
         "tool": {},
@@ -240,12 +241,12 @@ function TemplateEditorModal({ showModal, type, templateId, data, closeModal, ha
               <ButtonGroup>
                 <Button size="sm" className="ml-2 mr-2"  disabled={templateType == "New"}  variant={templateType === "View" ? "primary" : "secondary"} onClick={() => setTemplateType("View")}>Summary</Button>   
                 <Button size="sm" className="mr-2"  disabled={templateType !== "View"} variant={templateType === "Edit" ? "primary" : "secondary"} onClick= {() => { editTemplate(); }} >
-                  <FontAwesomeIcon icon={faPen} fixedWidth style={{ cursor: "pointer" }} /> Edit Template
+                  <FontAwesomeIcon icon={faPen} fixedWidth style={{ cursor: "pointer" }} /> Edit
                 </Button>
               </ButtonGroup>
               <ButtonGroup>
                 <Button size="sm" disabled={templateType !== "View"} className="pull-right mr-2" variant={canDelete ? "danger" : "secondary"} onClick= {() => { handleDelete(); }} >
-                  <FontAwesomeIcon icon={faTrash} fixedWidth style={{ cursor: "pointer" }} /> Delete Template
+                  <FontAwesomeIcon icon={faTrash} fixedWidth style={{ cursor: "pointer" }} /> Delete
                 </Button>
               </ButtonGroup>
             </ButtonToolbar>

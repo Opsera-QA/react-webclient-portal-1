@@ -33,7 +33,11 @@ function TemplateTable({ data, selectedRow }) {
           return props.value ? format(new Date(props.value), "yyyy-MM-dd") : "";
         },
         class: "cell-center no-wrap-inline"
-      },                 
+      },
+      {
+        Header: "Account",
+        accessor: "account",
+      },
       {
         Header: "Active",
         accessor: "active",
