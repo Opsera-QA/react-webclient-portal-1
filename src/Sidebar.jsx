@@ -12,7 +12,8 @@ import "./sidebar.css";
 function Sidebar({ hideView }) {
   const contextType = useContext(AuthContext); 
   const { getUserRecord, authState } = contextType;
-  const [administrator, setAdministrator] = useState(false);
+  const [localAdministrator, setLocalAdministrator] = useState(false);
+  const [opseraAdministrator, setOpseraAdministrator] = useState(false);
   const [freeTrialUser, setFreeTrialUser] = useState(false);
   const [hideSideBar, setHideSideBar] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -20,7 +21,7 @@ function Sidebar({ hideView }) {
 
   useEffect(() => {    
     if (authState.isAuthenticated) {
-      checkAuthentication();    
+      checkAuthentication().then(r => console.log("authenticated"));
     }
     
   }, [authState]);
@@ -32,10 +33,15 @@ function Sidebar({ hideView }) {
   async function checkAuthentication ()  {
     setLoading(true);
     const user = await getUserRecord();
+
     if (user && authState.isAuthenticated) {
-      if (user.groups) {
-        setAdministrator(user.groups.includes("Admin"));
+      const { ldap, groups } = user;
+      if (groups) {
+        setLocalAdministrator(user.groups.includes("Admin"));
         setFreeTrialUser(user.groups.includes("Free Trial"));
+      }
+      if (ldap && ldap.domain === "opsera.io") { //checking for OpsERA account domain
+        setOpseraAdministrator(user.groups.includes("Admin"));
       }
     }     
     setLoading(false);
@@ -87,7 +93,7 @@ function Sidebar({ hideView }) {
                     <NavLink className="nav-link" activeClassName="chosen" to="/blueprint"><FontAwesomeIcon size="lg" icon={faLayerGroup} fixedWidth /> <span className="menu-text">Blueprints</span></NavLink>
                     <NavLink className="nav-link" activeClassName="chosen" to="/tools"><FontAwesomeIcon size="lg" icon={faLink} fixedWidth /> <span className="menu-text">API Tools</span></NavLink>
                     <NavLink className="nav-link" activeClassName="chosen" to="/update"><FontAwesomeIcon size="lg" icon={faDownload} fixedWidth /> <span className="menu-text">Updates</span></NavLink>
-                    {administrator && <NavLink className="nav-link" activeClassName="chosen" to="/admin"><FontAwesomeIcon size="lg" icon={faTools} fixedWidth /> <span className="menu-text">Admin Tools</span></NavLink>}
+                    {setOpseraAdministrator && <NavLink className="nav-link" activeClassName="chosen" to="/admin"><FontAwesomeIcon size="lg" icon={faTools} fixedWidth /> <span className="menu-text">Admin Tools</span></NavLink>}
                   </div>
                 </>}
             </div>
