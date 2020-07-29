@@ -12,11 +12,9 @@ import PipelineActionControls from "./piplineActionControls";
 
 
 function PipelineOverview({ id }) {
-  const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
   const [data, setData] = useState({});
   const [activityData, setActivityData] = useState({});
-  const [role, setRole] = useState("");
   const [stepStatus, setStepStatus] = useState({});
   const [loading, setLoading] = useState(false);
   const [logsIsLoading, setLogsIsLoading] = useState(false);
@@ -25,38 +23,66 @@ function PipelineOverview({ id }) {
   const [workflowStatus, setWorkflowStatus] = useState(false);
   const [runCount, setRunCount] = useState(1);
 
-  useEffect(() => {    
-    const controller = new AbortController();
-    const runEffect = async () => {
-      try {
-        setLoading(true);
-        await fetchData();      
-        setLoading(false);    
-      } catch (err) {
-        if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
-          return;
-        }        
+  /* Role based Access Controls */
+  const { getAccessToken, getUserRecord, featureFlagItemInProd, authState } = useContext(AuthContext);
+  const [opseraAdministrator, setOpseraAdministrator] = useState(false);
+  const [customerAccessRules, setCustomerAccessRules] = useState({});
+
+  async function checkAuthentication() {
+    const ssoUsersRecord = await getUserRecord();
+    if (ssoUsersRecord && authState.isAuthenticated) {
+      const { ldap, groups } = ssoUsersRecord;
+      if (groups) {
+        console.log(groups)
+        //calculate top role level for now
+        let role = "readonly";
+        if (groups.includes("Admin")) {
+          role = "administrator";
+        } else if (groups.includes("Power User")) {
+          role = "power_user";
+        } else if (groups.includes("User")) {
+          role = "user";
+        }
+
+        setCustomerAccessRules({
+          ...customerAccessRules,
+          Administrator: groups.includes("Admin"),
+          PowerUser: groups.includes("Power User"),
+          User: groups.includes("User"),
+          UserId: ssoUsersRecord._id,
+          Role: role
+        });
       }
-    };
+      if (ldap && ldap.domain === "opsera.io") { //checking for OpsERA account domain
+        setOpseraAdministrator(groups.includes("Admin"));
+      }
 
-    runEffect();
+    }
+  }
+  /* End Role based Access Controls */
 
-    return () => {
-      controller.abort();
-    };
+
+  useEffect(() => {
+    initComponent();
   }, []);
 
-  // Executed every time page number or page size changes
-  useEffect(() => {    
+
+  useEffect(() => {
+    // Executed every time page number or page size changes
     getActivityLogs();
   }, [currentPage, pageSize]);
 
+
+  const initComponent = async () => {
+    setLoading(true);
+    await checkAuthentication();
+    await fetchData();
+    setLoading(false);
+  };
+
   async function fetchData() {
-    const { getAccessToken, getUserRecord } = contextType;
     const accessToken = await getAccessToken();
-    const ssoUsersRecord = await getUserRecord();
-    const apiUrl =  `/pipelines/${id}`;   
+    const apiUrl =  `/pipelines/${id}`;
     try {
       const pipeline = await axiosApiService(accessToken).get(apiUrl); 
       console.log("Top level pipeline refresh: ", pipeline.data);
@@ -65,7 +91,14 @@ function PipelineOverview({ id }) {
           ...data,
           pipeline: pipeline && pipeline.data[0]
         });
-        setPipelineAttributes(pipeline && pipeline.data[0], ssoUsersRecord._id);      
+
+        if (pipeline && pipeline.data[0] && typeof(pipeline.data[0].workflow) !== "undefined") {
+          if (typeof(pipeline.data[0].workflow.last_step) !== "undefined") {
+            setStepStatus(pipeline.data[0].workflow.last_step);
+          } else {
+            setStepStatus({});
+          }
+        }
       } else {
         setErrors("Pipeline not found");  
       }      
@@ -81,7 +114,6 @@ function PipelineOverview({ id }) {
   };
 
   async function getActivityLogs() {
-    const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
     const apiUrl = `/pipelines/${id}/activity?page=${currentPage}&size=${pageSize}`;
     setLogsIsLoading(true);  
@@ -101,28 +133,6 @@ function PipelineOverview({ id }) {
   const gotoPage = (pageNumber, pageSize) => {
     setCurrentPage(pageNumber);
     setPageSize(pageSize);
-  };
-
-
-  //TODO: This role config has to be replaced with the new group LDAP, BUT role could still be used here,
-  //   maybe the function that set's the role is now driven by new logic???
-  const setPipelineAttributes = (pipeline, ssoUsersId) => {
-    if (typeof(pipeline.roles) !== "undefined") {
-      let userRoleObject = pipeline.roles.findIndex(x => x.user === ssoUsersId); 
-      if (userRoleObject >= 0) {
-        setRole(pipeline.roles[userRoleObject].role);
-      } else {
-        setRole("");
-      }
-    }  
-
-    if (typeof(pipeline.workflow) !== "undefined") {
-      if (typeof(pipeline.workflow.last_step) !== "undefined") {
-        setStepStatus(pipeline.workflow.last_step);
-      } else {
-        setStepStatus({});
-      }
-    }
   };
 
   const callbackFunction = async () => {
@@ -152,8 +162,8 @@ function PipelineOverview({ id }) {
     return (
       <>
         <div className="max-content-width">
-          {typeof(data.pipeline) !== "undefined" && <PipelineActionControls pipeline={data.pipeline} disabledActionState={false} role={role} fetchData={fetchData} fetchActivityLogs={getActivityLogs} setParentWorkflowStatus={setWorkflowStatus} /> }
-          {typeof(data.pipeline) !== "undefined" ? <PipelineOverviewSummary data={data.pipeline} parentCallback={callbackFunction} parentCallbackRefreshActivity={callbackRefreshActivity} role={role} stepStatus={stepStatus} parentWorkflowStatus={workflowStatus}  />  : null }
+          {typeof(data.pipeline) !== "undefined" && <PipelineActionControls pipeline={data.pipeline} disabledActionState={false} customerAccessRules={customerAccessRules} fetchData={fetchData} fetchActivityLogs={getActivityLogs} setParentWorkflowStatus={setWorkflowStatus} /> }
+          {typeof(data.pipeline) !== "undefined" ? <PipelineOverviewSummary data={data.pipeline} parentCallback={callbackFunction} parentCallbackRefreshActivity={callbackRefreshActivity} customerAccessRules={customerAccessRules} stepStatus={stepStatus} parentWorkflowStatus={workflowStatus}  />  : null }
           <PipelineActivityLogTable isLoading={logsIsLoading} currentRunCountFilter={runCount} selectRunCountFilter={selectRunCountFilter} data={activityData.pipelineData} paginationOptions={getPaginationOptions()} />
         </div>       
       </>

@@ -58,6 +58,7 @@ function ToolDetails(props) {
           ...customerAccessRules,
           Administrator: groups.includes("Admin"),
           PowerUser: groups.includes("Power User"),
+          User: groups.includes("User"),
           UserId: ssoUsersRecord._id,
         });
       }

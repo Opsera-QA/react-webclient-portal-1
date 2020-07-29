@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "contexts/AuthContext"; 
+import { AuthContext } from "contexts/AuthContext";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import Modal from "../common/modal";
 import ApprovalModal from "./approvalModal";
@@ -10,12 +10,20 @@ import PipelineActions from "./actions";
 import socketIOClient from "socket.io-client";
 import isEqual from "lodash.isequal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileAlt, faPlay, faSync, faSpinner, faStopCircle, faHistory, faPause, faFlag } from "@fortawesome/free-solid-svg-icons";
+import {
+  faFileAlt,
+  faPlay,
+  faSync,
+  faSpinner,
+  faStopCircle,
+  faHistory,
+  faPause,
+  faFlag,
+} from "@fortawesome/free-solid-svg-icons";
 
 import "./workflows.css";
 
-function PipelineActionControls({ pipeline, role, disabledActionState, fetchData, fetchActivityLogs, setParentWorkflowStatus }) {
-  //const contextType = useContext(AuthContext);
+function PipelineActionControls({ pipeline, customerAccessRules, disabledActionState, fetchData, fetchActivityLogs, setParentWorkflowStatus }) {
   const { getAccessToken } = useContext(AuthContext);
   const [workflowStatus, setWorkflowStatus] = useState(false);
   const [socketRunning, setSocketRunning] = useState(false);
@@ -24,8 +32,13 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
   const [stopPipeline, setStopPipeline] = useState(false);
   const [approval, setApproval] = useState(false);
   const [showApprovalModal, setShowApprovalModal] = useState(false);
-  const [wizardModal, setWizardModal] = useState({ show:false, pipelineType: "", pipelineId: "", pipelineOrientation: "" });
-  const [infoModal, setInfoModal] = useState({ show:false, header: "", message: "", button: "OK" });
+  const [wizardModal, setWizardModal] = useState({
+    show: false,
+    pipelineType: "",
+    pipelineId: "",
+    pipelineOrientation: "",
+  });
+  const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
   const [error, setErrors] = useState();
   const endPointUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
 
@@ -33,18 +46,57 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
   let staleRefreshCount = 0;
   let socket;
 
-  useEffect(() => {    
+  const authorizedAction = (action, owner) => {
+    if (customerAccessRules.Administrator) {
+      return true; //all actions are authorized to administrrator
+
+    } else if (owner && customerAccessRules.UserId === owner) {
+      return true; //owner can do all actions
+
+    } else if (customerAccessRules.PowerUser) {
+      switch (action) {
+      case "stop_pipeline_btn":
+        return true;
+      case "approve_step_btn":
+        return true;
+      case "start_pipeline_btn":
+        return true;
+      case "reset_pipeline_btn":
+        return true;
+      default:
+        return false; //all other options are disabled
+      }
+
+    } else if (customerAccessRules.User) {
+      switch (action) {
+      case "stop_pipeline_btn":
+        return true;
+      case "start_pipeline_btn":
+        return true;
+      case "reset_pipeline_btn":
+        return true;
+      default:
+        return false; //all other options are disabled
+      }
+
+    } else {
+      return false;
+    }
+  };
+
+
+  useEffect(() => {
     loadData(pipeline);
     setParentWorkflowStatus(workflowStatus);
-    analyzeWorkflowStatus(workflowStatus);    
+    analyzeWorkflowStatus(workflowStatus);
   }, [workflowStatus]);
 
 
-  useEffect(() => {    
+  useEffect(() => {
     if (startPipeline) {
       console.log("Effect: Setting Start Pipeline True, Initializing Socket");
       setWorkflowStatus("running");
-      subscribeToTimer(socket);    
+      subscribeToTimer(socket);
     } else {
       setWorkflowStatus("stopped");
     }
@@ -60,18 +112,18 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
   const loadData = (pipeline) => {
     if (pipeline.workflow !== undefined) {
       if (pipeline.workflow.last_step !== undefined) {
-        let status = pipeline.workflow.last_step.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;                 
+        let status = pipeline.workflow.last_step.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;
         if (status === "stopped" && pipeline.workflow.last_step.running && pipeline.workflow.last_step.running.paused) {
-          setWorkflowStatus("paused");          
+          setWorkflowStatus("paused");
         } else {
           setWorkflowStatus(status);
         }
         if (status === "running" && !socketRunning) {
           subscribeToTimer(socket);
-        }        
+        }
       } else {
-        setWorkflowStatus("stopped");                
-      }                    
+        setWorkflowStatus("stopped");
+      }
     }
   };
 
@@ -79,9 +131,9 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
   const handleStopWorkflowClick = async (pipelineId) => {
     setResetPipeline(true);
     setWorkflowStatus("stopped");
-    await cancelPipelineRun(pipelineId);    
+    await cancelPipelineRun(pipelineId);
     await fetchData();
-    fetchActivityLogs();      
+    fetchActivityLogs();
     setResetPipeline(false);
     setStartPipeline(false);
   };
@@ -89,15 +141,20 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
   const handleApprovalClick = () => {
     setApproval(true);
     stopSocket();
-    setShowApprovalModal(true);        
+    setShowApprovalModal(true);
   };
 
   const handleApprovalActivity = async () => {
-    setInfoModal({ show:true, header: "Approval Status", message: "Your approval action has been recorded in this pipeline's Activity Logs.  The pipeline will resume operations shortly.", button: "OK" });
-    setWorkflowStatus("running");  
+    setInfoModal({
+      show: true,
+      header: "Approval Status",
+      message: "Your approval action has been recorded in this pipeline's Activity Logs.  The pipeline will resume operations shortly.",
+      button: "OK",
+    });
+    setWorkflowStatus("running");
     await fetchData();
     subscribeToTimer(socket);
-    setApproval(false);  
+    setApproval(false);
   };
 
   const launchPipelineStartWizard = (pipelineOrientation, pipelineType, pipelineId) => {
@@ -105,12 +162,17 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
     console.log("pipelineOrientation ", pipelineOrientation);
     console.log("pipelineType ", pipelineType);
     console.log("pipelineId ", pipelineId);
-    setWizardModal({ show:true, pipelineType: pipelineType, pipelineId: pipelineId, pipelineOrientation: pipelineOrientation });
+    setWizardModal({
+      show: true,
+      pipelineType: pipelineType,
+      pipelineId: pipelineId,
+      pipelineOrientation: pipelineOrientation,
+    });
   };
 
   const handlePipelineStartWizardClose = () => {
     console.log("closing wizard");
-    setWizardModal({ show:false, pipelineType: "", pipelineId: "", pipelineOrientation: "" });
+    setWizardModal({ show: false, pipelineType: "", pipelineId: "", pipelineOrientation: "" });
   };
 
   const handlePipelineWizardRequest = async (pipelineId, restartBln) => {
@@ -120,28 +182,28 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
       console.log("clearing pipeline activity and then starting over");
       await cancelPipelineRun(pipelineId);
     }
-    await runPipeline(pipelineId);     
-  }; 
+    await runPipeline(pipelineId);
+  };
 
   const handleRunPipelineClick = async (pipelineId) => {
     //check type of pipeline to determine if pre-flight wizard is required
     // is pipeline at the beginning or stopped midway or end of prior?
     const pipelineType = typeof pipeline.type !== "undefined" && pipeline.type[0] !== undefined ? pipeline.type[0] : ""; //for now type is just the first entry
     console.log("pipelineType: ", pipelineType);
-    
+
     let pipelineOrientation = "start";
     //what step are we currently on in the pipeline: first, last or middle?
     if (pipeline.workflow.last_step && pipeline.workflow.last_step.step_id) {
       const stepIndex = PipelineHelpers.getStepIndex(pipeline, pipeline.workflow.last_step.step_id);
       console.log("current resting step index: ", stepIndex);
-      if (stepIndex+1 === Object.keys(pipeline.workflow.plan).length) {
+      if (stepIndex + 1 === Object.keys(pipeline.workflow.plan).length) {
         pipelineOrientation = "end";
       } else {
         pipelineOrientation = "middle";
       }
     }
 
-    if (pipelineType === "sfdc") { 
+    if (pipelineType === "sfdc") {
       launchPipelineStartWizard(pipelineOrientation, pipelineType, pipelineId);
     } else {
       if (pipelineOrientation === "middle") {
@@ -155,8 +217,8 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
           console.log("clearing pipeline activity and then starting over");
           await cancelPipelineRun(pipelineId);
           await runPipeline(pipelineId);
-        } 
-      }      
+        }
+      }
     }
   };
 
@@ -165,15 +227,15 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
     fetchActivityLogs();
     subscribeToTimer(socket);
   };
-  
+
   //action functions
   async function cancelPipelineRun(pipelineId) {
     setStopPipeline(true);
     const response = await PipelineActions.cancel(pipelineId, getAccessToken);
-    if (typeof(response.error) !== "undefined") {
+    if (typeof (response.error) !== "undefined") {
       console.log(response.error);
       setErrors(response.error);
-    }   
+    }
     setStopPipeline(false);
     setStartPipeline(false);
   }
@@ -182,61 +244,61 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
     console.log("RUNNING PIPELINE; ", pipelineId);
     setStartPipeline(true);
     const response = await PipelineActions.run(pipelineId, {}, getAccessToken);
-    
-    if (typeof(response.error) !== "undefined") {
+
+    if (typeof (response.error) !== "undefined") {
       setStartPipeline(false);
       console.log(response.error);
-      setErrors(response.error);      
+      setErrors(response.error);
     }
   }
 
-  const stopSocket = () => {   
+  const stopSocket = () => {
     if (socket) {
       socket.close();
       console.log("closing connection manually");
       setSocketRunning(false);
-    }     
+    }
   };
 
-  const subscribeToTimer = (socket) => {         
-    console.log("initializingSocket"); 
+  const subscribeToTimer = (socket) => {
+    console.log("initializingSocket");
     socket = socketIOClient(endPointUrl, { query: "pipelineId=" + pipeline._id });
-    console.log("Connected status before onConnect", socket.socket ? socket.socket.connected : socket.socket === undefined );
-    
-    if (socket.socket === undefined ) {
+    console.log("Connected status before onConnect", socket.socket ? socket.socket.connected : socket.socket === undefined);
+
+    if (socket.socket === undefined) {
       socket.emit("subscribeToPipelineActivity", 1000);
       socket.on("subscribeToPipelineActivity", dataObj => {
-        console.log("Update from Websocket (staleRefreshCount: "+staleRefreshCount+"): ", dataObj);
+        console.log("Update from Websocket (staleRefreshCount: " + staleRefreshCount + "): ", dataObj);
         if (isEqual(dataObj, tmpDataObject)) {
           staleRefreshCount++;
         } else {
           staleRefreshCount = 0;
-        }  
+        }
         tmpDataObject = dataObj;
-        let status =  pipeline.workflow.last_step !== undefined && pipeline.workflow.last_step.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;
+        let status = pipeline.workflow.last_step !== undefined && pipeline.workflow.last_step.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;
         if (staleRefreshCount % 2 === 0) {
           //console.log("divisible by 2 refresh");
           fetchActivityLogs();
         }
-  
+
         if (staleRefreshCount >= 20) {
           console.log("closing connection due to stale data");
           setWorkflowStatus("stopped");
           setSocketRunning(false);
           socket.close();
           fetchActivityLogs();
-        } else {          
+        } else {
           if (status === "stopped" && pipeline.workflow.last_step.running && pipeline.workflow.last_step.running.paused) {
-            setWorkflowStatus("paused");          
+            setWorkflowStatus("paused");
           } else {
             setWorkflowStatus(status);
           }
         }
-             
-        if (typeof(dataObj) !== "undefined" && Object.keys(dataObj).length > 0) {
-          pipeline.workflow.last_step = dataObj;          
+
+        if (typeof (dataObj) !== "undefined" && Object.keys(dataObj).length > 0) {
+          pipeline.workflow.last_step = dataObj;
         }
-  
+
         if (staleRefreshCount > 1 && status === "stopped") {
           console.log("closing connection due to stopped status");
           setWorkflowStatus("stopped");
@@ -246,83 +308,125 @@ function PipelineActionControls({ pipeline, role, disabledActionState, fetchData
         }
       });
     }
-  
+
     socket.on("disconnect", () => {
       setWorkflowStatus("stopped");
       setSocketRunning(false);
     });
-  
+
     socket.on("connect_error", function(err) {
       console.log("Connection Error on Socket:", err);
       setWorkflowStatus("stopped");
       setSocketRunning(false);
       socket.close();
     });
-    
-    
-  };
 
-  
+
+  };
 
 
   return (
     <>
-      {wizardModal.show && <PipelineStartWizard pipelineType={wizardModal.pipelineType} pipelineOrientation={wizardModal.pipelineOrientation} pipelineId={wizardModal.pipelineId} pipeline={pipeline} handleClose={handlePipelineStartWizardClose} handlePipelineWizardRequest={handlePipelineWizardRequest} refreshPipelineActivityData={fetchActivityLogs} />}
-      
+      {wizardModal.show &&
+      <PipelineStartWizard pipelineType={wizardModal.pipelineType} pipelineOrientation={wizardModal.pipelineOrientation}
+                           pipelineId={wizardModal.pipelineId} pipeline={pipeline}
+                           handleClose={handlePipelineStartWizardClose}
+                           handlePipelineWizardRequest={handlePipelineWizardRequest}
+                           refreshPipelineActivityData={fetchActivityLogs}/>}
+
       <div className="text-right" style={{ marginBottom: "5px" }}>
-        {workflowStatus === "running" && 
+        {workflowStatus === "running" &&
         <>
-          <Button variant="outline-dark" className="mr-1"  size="sm" disabled><FontAwesomeIcon icon={faSpinner} spin className="mr-1"/> Running</Button>
-          <Button variant="outline-danger" className="mr-1"  size="sm" onClick={() => { handleStopWorkflowClick(pipeline._id); }}
-            disabled={role !== "administrator" && role !== "user"}>
-            {stopPipeline ? <FontAwesomeIcon icon={faSpinner} spin className="mr-1"/> : <FontAwesomeIcon icon={faStopCircle} className="mr-1"/>}Stop</Button>
+          <Button variant="outline-dark"
+                  className="mr-1"
+                  size="sm"
+                  disabled>
+            <FontAwesomeIcon icon={faSpinner} spin className="mr-1"/> Running</Button>
+          <Button variant="outline-danger"
+                  className="mr-1"
+                  size="sm"
+                  onClick={() => {
+                    handleStopWorkflowClick(pipeline._id);
+                  }}
+                  disabled={!authorizedAction("stop_pipeline_btn", pipeline.owner)}>
+            {stopPipeline ?
+              <FontAwesomeIcon icon={faSpinner} spin className="mr-1"/> :
+              <FontAwesomeIcon icon={faStopCircle} className="mr-1"/>}Stop</Button>
         </>}
 
-        {workflowStatus === "paused" && 
+        {workflowStatus === "paused" &&
         <>
-          <Button variant="outline-warning" className="mr-1"  size="sm" disabled><FontAwesomeIcon icon={faPause} className="mr-1"/> Paused</Button>
-          <Button variant="warning" className="mr-1"  size="sm" onClick={() => { handleApprovalClick(); }}
-            disabled={role !== "administrator"}>
-            {approval ? <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> : <FontAwesomeIcon icon={faFlag} className="mr-1" fixedWidth/>}Approve Step</Button>
+          <Button variant="outline-warning" className="mr-1" size="sm" disabled>
+            <FontAwesomeIcon icon={faPause} className="mr-1"/> Paused</Button>
+          <Button variant="warning"
+                  className="mr-1"
+                  size="sm"
+                  onClick={() => {
+                    handleApprovalClick();
+                  }}
+                  disabled={!authorizedAction("approve_step_btn", pipeline.owner)}>
+            {approval ? <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> :
+              <FontAwesomeIcon icon={faFlag} className="mr-1" fixedWidth/>}Approve Step</Button>
         </>}
 
-        {(workflowStatus === "stopped" || !workflowStatus) && 
+        {(workflowStatus === "stopped" || !workflowStatus) &&
         <>
-          { startPipeline ? 
-            <Button variant="outline-secondary" className="mr-1" size="sm"
-              onClick={() => { handleRunPipelineClick(pipeline._id); }}
-              disabled={true}>
+          {startPipeline ?
+            <Button variant="outline-secondary"
+                    className="mr-1"
+                    size="sm"
+                    onClick={() => {
+                      handleRunPipelineClick(pipeline._id);
+                    }}
+                    disabled={true}>
               <FontAwesomeIcon icon={faSpinner} fixedWidth spin className="mr-1"/> Processing</Button>
             :
-            <Button variant="success" className="mr-1" size="sm"
-              onClick={() => { handleRunPipelineClick(pipeline._id); }}
-              disabled={role !== "administrator" && role !== "user" || disabledActionState}>
+            <Button variant="success"
+                    className="mr-1"
+                    size="sm"
+                    onClick={() => {
+                      handleRunPipelineClick(pipeline._id);
+                    }}
+                    disabled={!authorizedAction("start_pipeline_btn", pipeline.owner) || disabledActionState}>
               <FontAwesomeIcon icon={faPlay} fixedWidth className="mr-1"/> Start Pipeline</Button>
           }
         </>}
-        
+
         <OverlayTrigger
           placement="top"
           delay={{ show: 250, hide: 400 }}
-          overlay={renderTooltip({ message: "Restart pipeline from beginning as new run" })} >
-          <Button variant="outline-danger" className="mr-1"  size="sm" 
-            onClick={() => { handleStopWorkflowClick(pipeline._id); }}
-            disabled={role !== "administrator" && role !== "user" || disabledActionState}>
-            {resetPipeline ? <FontAwesomeIcon icon={faSpinner} fixedWidth spin className="mr-1"/> : <FontAwesomeIcon icon={faHistory} fixedWidth className="mr-1"/>}
+          overlay={renderTooltip({ message: "Restart pipeline from beginning as new run" })}>
+          <Button variant="outline-danger"
+                  className="mr-1"
+                  size="sm"
+                  onClick={() => {
+                    handleStopWorkflowClick(pipeline._id);
+                  }}
+                  disabled={!authorizedAction("reset_pipeline_btn", pipeline.owner) || disabledActionState}>
+            {resetPipeline ? <FontAwesomeIcon icon={faSpinner} fixedWidth spin className="mr-1"/> :
+              <FontAwesomeIcon icon={faHistory} fixedWidth className="mr-1"/>}
             Reset Pipeline</Button>
         </OverlayTrigger>
-              
+
         <OverlayTrigger
           placement="top"
           delay={{ show: 250, hide: 400 }}
-          overlay={renderTooltip({ message: "Refresh pipeline status" })} >
-          <Button variant="secondary" className="mr-1" size="sm" onClick={() => { handleRefreshClick(); }}>
-            <FontAwesomeIcon icon={faSync} fixedWidth/></Button>  
+          overlay={renderTooltip({ message: "Refresh pipeline status" })}>
+          <Button variant="secondary"
+                  className="mr-1"
+                  size="sm"
+                  onClick={() => {
+                    handleRefreshClick();
+                  }}>
+            <FontAwesomeIcon icon={faSync} fixedWidth/></Button>
         </OverlayTrigger>
-              
+
       </div>
-      {showApprovalModal && <ApprovalModal pipelineId={pipeline._id} visible={showApprovalModal} setVisible={setShowApprovalModal} refreshActivity={handleApprovalActivity} />}
-      {infoModal.show && <Modal header={infoModal.header} message={infoModal.message} button={infoModal.button} handleCancelModal={() => setInfoModal({ ...infoModal, show: false })}  />}
+      {showApprovalModal &&
+      <ApprovalModal pipelineId={pipeline._id} visible={showApprovalModal} setVisible={setShowApprovalModal}
+                     refreshActivity={handleApprovalActivity}/>}
+      {infoModal.show && <Modal header={infoModal.header} message={infoModal.message} button={infoModal.button}
+                                handleCancelModal={() => setInfoModal({ ...infoModal, show: false })}/>}
     </>);
 }
 
@@ -338,10 +442,10 @@ function renderTooltip(props) {
 
 PipelineActionControls.propTypes = {
   pipeline: PropTypes.object,
-  role: PropTypes.string,
+  customerAccessRules: PropTypes.object,
   disabledActionState: PropTypes.bool,
   fetchData: PropTypes.func,
   fetchActivityLogs: PropTypes.func,
-  setParentWorkflowStatus: PropTypes.func
+  setParentWorkflowStatus: PropTypes.func,
 };
 export default PipelineActionControls;

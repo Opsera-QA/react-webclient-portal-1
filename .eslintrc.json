@@ -30,12 +30,12 @@
          "paths": ["src"]
        }
      }
-    },
-    "rules": {
-        /*"indent": [ //have to disable as it conflicts with prettier
+    }
+    /*"rules": {
+        "indent": [ //have to disable as it conflicts with prettier
             "error",
             2
-        ],*/
+        ],
         "quotes": [
             "error",
             "double"
@@ -60,5 +60,5 @@
                 "after": true
             }
         ]
-    }
+    }*/
 }

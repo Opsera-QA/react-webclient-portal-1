@@ -15,7 +15,7 @@ import Modal from "../common/modal";
 import "./workflows.css";
 
 const PipelineWorkflow = (props) => {
-  const { data, fetchPlan, role, editItemId } = props;
+  const { pipeline, fetchPlan, customerAccessRules, editItemId } = props;
   const [error, setErrors] = useState();
   const [userInfo, setUserInfo] = useState();
   const [modalHeader, setModalHeader] = useState("");
@@ -29,27 +29,28 @@ const PipelineWorkflow = (props) => {
   const [accessToken, setAccessToken] = useState();
   const [infoModal, setInfoModal] = useState({ show:false, header: "", message: "", button: "OK" });
   const [isSavingPipeline, setIsSavingPipeline] = useState(false);
-  
-  //Feature Flag
-  const [previewRole, setPreviewRole] = useState(false);
-  const getRoles = async () => {
-    const { getIsPreviewRole } = contextType; 
-    //this returns true IF the Okta groups for user contains "Preview".  Please wrap display components in this.
-    const isPreviewRole = await getIsPreviewRole();
-    setPreviewRole(isPreviewRole);
-    if (isPreviewRole) {
-      console.log("Enabling Preview Feature Toggle. ", isPreviewRole);
-    }    
+
+
+  const authorizedAction = (action, owner) => {
+    if (customerAccessRules.Administrator) {
+      return true; //all actions are authorized to administrrator
+    } else if (owner && customerAccessRules.UserId === owner) {
+      return true; //owner can do all actions
+    } else if (customerAccessRules.PowerUser) {
+      return false;
+    } else if (customerAccessRules.User) {
+      return false;
+    } else {
+      return false;
+    }
   };
 
-
-  useEffect(() => {    
+    useEffect(() => {
     const controller = new AbortController();
     const runEffect = async () => {
       try {
-        await getRoles();
         await checkAuthentication();
-        await loadFormData(data);                
+        await loadFormData(pipeline);
       } catch (err) {
         if (err.name === "AbortError") {
           console.log("Request was canceled via controller.abort");
@@ -61,7 +62,7 @@ const PipelineWorkflow = (props) => {
     return () => {     
       controller.abort();      
     };
-  }, [data, editItemId]);
+  }, [pipeline, editItemId]);
 
   
   const loadFormData = async (pipeline) => {
@@ -69,7 +70,7 @@ const PipelineWorkflow = (props) => {
       setState({ items: pipeline.workflow.plan });
       setLastStep(pipeline.workflow.last_step);
       
-      if (pipeline !== undefined && pipeline.workflow.last_step !== undefined) {
+      if (pipeline.workflow.last_step !== undefined) {
         let status = pipeline.workflow.last_step.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;
 
         if (status === "stopped" && pipeline.workflow.last_step.running && pipeline.workflow.last_step.running.paused) {
@@ -133,12 +134,12 @@ const PipelineWorkflow = (props) => {
   const callbackFunctionEditItem = (item) => {
     window.scrollTo(0, 0);    
     setEditWorkflow(false);
-    item.id = data._id;
+    item.id = pipeline._id;
     fetchPlan(item);
   };
 
   async function updatePipeline(pipeline) {
-    const apiUrl = `/pipelines/${data._id}/update`;   
+    const apiUrl = `/pipelines/${pipeline._id}/update`;
     try {
       await axiosApiService(accessToken).post(apiUrl, pipeline);
     }
@@ -149,7 +150,7 @@ const PipelineWorkflow = (props) => {
   }
 
   const handleSourceEditClick = () => {
-    fetchPlan({ id: data._id, type: "source", item_id: "" });
+    fetchPlan({ id: pipeline._id, type: "source", item_id: "" });
   };
 
   const handleEditWorkflowClick = () => {
@@ -164,8 +165,8 @@ const PipelineWorkflow = (props) => {
   };
 
   const quietSavePlan = async () => {
-    console.log("saving plan: ", data.workflow.plan);
-    await updatePipeline(data);      
+    console.log("saving plan: ", pipeline.workflow.plan);
+    await updatePipeline(pipeline);
   };
 
   const handleViewSourceActivityLog = async (pipelineId, tool, stepId, activityId) => {
@@ -180,44 +181,48 @@ const PipelineWorkflow = (props) => {
   };
 
   const fetchActivityLogs = () => {
-    loadFormData(data);
+    loadFormData(pipeline);
   };
 
 
   return (
     <>      
       {error ? <ErrorDialog error={error} /> : null}
-      {typeof(data.workflow) !== "undefined" && data.workflow.hasOwnProperty("source") ? 
+      {typeof(pipeline.workflow) !== "undefined" && pipeline.workflow.hasOwnProperty("source") ?
         <>
           <div className="max-content-module-width-50" style={{ margin:"0", padding: "0" }}>     
-            <PipelineActionControls pipeline={data} disabledActionState={false} role={role} fetchData={fetchPlan} fetchActivityLogs={fetchActivityLogs} setParentWorkflowStatus={setWorkflowStatus} /> 
+            <PipelineActionControls pipeline={pipeline} disabledActionState={false} customerAccessRules={customerAccessRules} fetchData={fetchPlan} fetchActivityLogs={fetchActivityLogs} setParentWorkflowStatus={setWorkflowStatus} />
           </div>
+
+          {pipeline.owner !== customerAccessRules.UserId &&
+          <>
+            <div className="mb-2 w-100 max-charting-width info-text">
+              {customerAccessRules.Role === "administrator" && <>Administrator Access Role: Your account has full
+                access to this pipeline and its settings.</>}
+              {customerAccessRules.Role === "power_user" && <>Power User Role: Your account has elevated privileges to
+                this pipeline which include changing settings and running the pipeline.</>}
+              {customerAccessRules.Role === "user" && <>Standard User Role: Your account has basic access to this
+                pipeline which is limited to viewing and running pipeline operations only.</>}
+              {customerAccessRules.Role === "readonly" && <>Read Only Role: Your account does not have any privileges
+                associated with this pipeline. You are being temporarily granted Viewer permissions and will not be able to perform any
+                actions.</>}
+            </div>
+          </>
+          }
+
           <div className="mb-2 w-100 max-content-module-width-50">           
-            <div className="title-text-5">{data.name}</div>               
+            <div className="title-text-5">{pipeline.name}</div>
           </div>
-
-          { role === "user" &&<div className="mb-2 w-100 max-content-module-width-50">           
-            <div className="info-text">Limited Access Role.  Your account is a standard user and as such can view the pipeline and run it, but not change settings or approve actions.</div>     
-          </div> }
-
-          { role === "viewer" &&<div className="mb-2 w-100 max-content-module-width-50">           
-            <div className="info-text">Limited Access Role.  Your account is only able to view this pipeline.  You cannot perform any actions around it. </div>     
-          </div> }
-
-          { !role &&<div className="mb-2 w-100 max-content-module-width-50">           
-            <div className="info-text">Role Access Warning.  Your account does not have any roles associated with this pipeline.  You are being temporarily granted Viewer permissions and will not be able to perform any actions on this pipeline.</div>     
-          </div> }
-          
 
           <div className="default-custom-tabs">
             <ul className="nav nav-tabs w-100" style={{ borderBottom: "none" }}>
               <li className="nav-item">
                 <Link className="nav-link" 
-                  to={location => `/workflow/${data._id}`}>Summary</Link>
+                  to={location => `/workflow/${pipeline._id}`}>Summary</Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link active" 
-                  to={location => `/workflow/${data._id}/model`}>Workflow</Link>
+                  to={location => `/workflow/${pipeline._id}/model`}>Workflow</Link>
               </li>
             </ul>
           </div>
@@ -229,11 +234,11 @@ const PipelineWorkflow = (props) => {
                 placement="top"
                 delay={{ show: 250, hide: 400 }}
                 overlay={renderTooltip({ message: "View pipeline configuration" })} >
-                <Button variant="secondary" className="mr-1" size="sm" onClick= {() => { handleViewPipelineClick(data); }} >
+                <Button variant="secondary" className="mr-1" size="sm" onClick= {() => { handleViewPipelineClick(pipeline); }} >
                   <FontAwesomeIcon icon={faFileAlt} fixedWidth/></Button>
               </OverlayTrigger> 
                     
-              {role === "administrator" && <>
+              {authorizedAction("edit_workflow_btn", pipeline.owner) && <>
                 {editWorkflow ?
                   <Button variant="success" size="sm" onClick= {() => { handleDoneWorkflowEditsClick(); }} >
                     {isSavingPipeline ? 
@@ -246,7 +251,7 @@ const PipelineWorkflow = (props) => {
                     delay={{ show: 250, hide: 400 }}
                     overlay={renderTooltip({ message: "Edit workflow" })} >                  
                     <Button variant="secondary" size="sm" onClick= {() => { handleEditWorkflowClick(); }} 
-                      disabled={(workflowStatus && workflowStatus !== "stopped") || role !== "administrator"} >
+                      disabled={(workflowStatus && workflowStatus !== "stopped") || !authorizedAction("edit_workflow_btn", pipeline.owner)} >
                       <FontAwesomeIcon icon={faPen} fixedWidth/> </Button>                  
                   </OverlayTrigger>
                 }  </> }              
@@ -256,39 +261,39 @@ const PipelineWorkflow = (props) => {
 
             <div className="source workflow-module-container workflow-module-container-width-sm p-2">
               <div className="title-text-6 title-text-divider">Start of Workflow</div>
-              {!data.workflow.source.service ? <div className="mt-1">Source Repository</div> : null }
+              {!pipeline.workflow.source.service ? <div className="mt-1">Source Repository</div> : null }
               
-              {data.workflow.source.name ?
+              {pipeline.workflow.source.name ?
                 <div className="d-flex">
-                  <div className="p-1 upper-case-first"><span className="text-muted">Project:</span> {data.workflow.source.name}</div>            
+                  <div className="p-1 upper-case-first"><span className="text-muted">Project:</span> {pipeline.workflow.source.name}</div>
                 </div> : null }
-              {data.workflow.source.service ? 
+              {pipeline.workflow.source.service ?
                 <div className="d-flex mt-1">
                   <div className="upper-case-first">
                     <span className="text-muted small">
-                      <FontAwesomeIcon icon={faCubes} size="sm" fixedWidth className="mr-1"/>Service: {data.workflow.source.service}</span>                    
+                      <FontAwesomeIcon icon={faCubes} size="sm" fixedWidth className="mr-1"/>Service: {pipeline.workflow.source.service}</span>
                   </div>            
                 </div> : null }
 
-              {data.workflow.source.repository ? 
+              {pipeline.workflow.source.repository ?
                 <div className="d-flex">
                   <div className="upper-case-first">
                     <span className="text-muted small">
-                      <FontAwesomeIcon icon={faFileCode} size="sm" fixedWidth className="mr-1"/>Repository: {data.workflow.source.repository}</span>                    
+                      <FontAwesomeIcon icon={faFileCode} size="sm" fixedWidth className="mr-1"/>Repository: {pipeline.workflow.source.repository}</span>
                   </div>            
                 </div> : null }
-              {data.workflow.source.branch ? 
+              {pipeline.workflow.source.branch ?
                 <div className="d-flex">
                   <div className="upper-case-first">
                     <span className="text-muted small">
-                      <FontAwesomeIcon icon={faCodeBranch} size="sm" fixedWidth className="mr-1"/>Branch: {data.workflow.source.branch}</span>
+                      <FontAwesomeIcon icon={faCodeBranch} size="sm" fixedWidth className="mr-1"/>Branch: {pipeline.workflow.source.branch}</span>
                   </div>            
                 </div> : null }
 
               <div className="d-flex">
                 <div className="upper-case-first">
                   <span className="text-muted small">
-                    <FontAwesomeIcon icon={faClipboardCheck} size="sm" fixedWidth className="mr-1"/>Webhook Trigger: {data.workflow.source.trigger_active ? "Enabled": "Disabled"}</span></div>
+                    <FontAwesomeIcon icon={faClipboardCheck} size="sm" fixedWidth className="mr-1"/>Webhook Trigger: {pipeline.workflow.source.trigger_active ? "Enabled": "Disabled"}</span></div>
               </div>
                 
               <div className="d-flex align-items-end flex-row mt-1">
@@ -300,7 +305,7 @@ const PipelineWorkflow = (props) => {
                     <FontAwesomeIcon icon={faSearchPlus}
                       className="text-muted mr-2" fixedWidth
                       style={{ cursor: "pointer" }}
-                      onClick={() => { handleViewClick(data.workflow.source, "Step Settings"); }} />
+                      onClick={() => { handleViewClick(pipeline.workflow.source, "Step Settings"); }} />
                   </OverlayTrigger>
                   
                   {workflowStatus !== "running" ?
@@ -333,15 +338,16 @@ const PipelineWorkflow = (props) => {
             <div style={{ height: "40px" }}>&nbsp;</div>
 
             <div className="step-items workflow-module-container-width mx-auto">
-              <PipelineWorkflowItemList 
+              <PipelineWorkflowItemList
+                pipeline={pipeline}
                 items={state.items} 
                 lastStep={lastStep} 
                 editWorkflow={editWorkflow}
-                pipelineId={data._id} 
+                pipelineId={pipeline._id}
                 accessToken={accessToken}
                 setStateItems={setState}
-                fetchPlan={fetchPlan} 
-                role={role}
+                fetchPlan={fetchPlan}
+                customerAccessRules={customerAccessRules}
                 parentCallbackEditItem={callbackFunctionEditItem} 
                 quietSavePlan={quietSavePlan}
                 parentHandleViewSourceActivityLog={handleViewSourceActivityLog}
@@ -373,9 +379,9 @@ function renderTooltip(props) {
 }
 
 PipelineWorkflow.propTypes = {
-  data: PropTypes.object,
+  pipeline: PropTypes.object,
   fetchPlan: PropTypes.func,
-  role: PropTypes.string,
+  customerAccessRules: PropTypes.object,
   editItemId: PropTypes.string
 };
 export default PipelineWorkflow;

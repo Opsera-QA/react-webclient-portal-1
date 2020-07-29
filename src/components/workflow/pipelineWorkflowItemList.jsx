@@ -8,12 +8,12 @@ import PipelineWorkflowItem from "./pipelineWorkflowItem";
 import "./workflows.css";
 
 
-function PipelineWorkflowItemList({ items, lastStep, editWorkflow, pipelineId, accessToken, parentCallbackEditItem, parentHandleViewSourceActivityLog, setStateItems, quietSavePlan, fetchPlan, role, parentWorkflowStatus }) {
+function PipelineWorkflowItemList({ pipeline, items, lastStep, editWorkflow, pipelineId, accessToken, parentCallbackEditItem, parentHandleViewSourceActivityLog, setStateItems, quietSavePlan, fetchPlan, customerAccessRules, parentWorkflowStatus }) {
   const [isSaving, setIsSaving] = useState(false);
 
-  useEffect(() => {    
+  useEffect(() => {
   }, [items]);
-  
+
 
   const handleAddStep = async (itemId, index) => {
     console.log("Prior Step ID: ", itemId);
@@ -25,11 +25,11 @@ function PipelineWorkflowItemList({ items, lastStep, editWorkflow, pipelineId, a
       "notification": [],
       "name": "",
       "description": "",
-      "active": true
+      "active": true,
     };
     items.splice(index + 1, 0, newStep);
-    setStateItems({ items: items });   
-    await quietSavePlan(); 
+    setStateItems({ items: items });
+    await quietSavePlan();
     await fetchPlan();
     setIsSaving(false);
   };
@@ -45,11 +45,11 @@ function PipelineWorkflowItemList({ items, lastStep, editWorkflow, pipelineId, a
       "notification": item.notification,
       "name": "Copy of " + item.name,
       "description": item.description,
-      "active": true
+      "active": true,
     };
     items.splice(index + 1, 0, newStep);
-    setStateItems({ items: items });   
-    await quietSavePlan(); 
+    setStateItems({ items: items });
+    await quietSavePlan();
     await fetchPlan();
     setIsSaving(false);
   };
@@ -60,7 +60,7 @@ function PipelineWorkflowItemList({ items, lastStep, editWorkflow, pipelineId, a
     if (items.length === 0) {
       handleAddStep("", 0);
     } else {
-      await quietSavePlan();  
+      await quietSavePlan();
       await fetchPlan();
     }
     setStateItems({ items: items });
@@ -71,126 +71,136 @@ function PipelineWorkflowItemList({ items, lastStep, editWorkflow, pipelineId, a
   const handleMoveStep = async (itemId, index, direction) => {
     console.log("Prior Step ID: ", itemId);
     console.log("Prior Step index: ", index);
-        
+
     if (direction === "up" && index > 0) {
       console.log("Direction: ", direction);
       setIsSaving(true);
-      let cutOut = items.splice(index, 1) [0]; 
-      items.splice(index-1, 0, cutOut); 
-      await quietSavePlan();  
+      let cutOut = items.splice(index, 1) [0];
+      items.splice(index - 1, 0, cutOut);
+      await quietSavePlan();
       await fetchPlan();
       setIsSaving(false);
-    
+
     } else if (direction === "down" && index < items.length - 1) {
       console.log("Direction: ", direction);
       setIsSaving(true);
       let cutOut = items.splice(index, 1) [0];
-      items.splice(index+1, 0, cutOut); 
-      await quietSavePlan();  
+      items.splice(index + 1, 0, cutOut);
+      await quietSavePlan();
       await fetchPlan();
       setIsSaving(false);
-    }    
+    }
   };
 
   const setStepStatusClass = (last_step, item) => {
     const item_id = item._id;
-    let classString = "step-"+item_id;
-    
+    let classString = "step-" + item_id;
+
     if (item.tool === undefined || item.tool.configuration === undefined) {
       //set to warning state
       classString += " workflow-step-warning";
     } else if (!item.active) {
       classString += " workflow-step-disabled";
-    } else if (typeof(last_step) !== "undefined") {
-      if(typeof(last_step.success) !== "undefined" && last_step.success.step_id === item_id) {
+    } else if (typeof (last_step) !== "undefined") {
+      if (typeof (last_step.success) !== "undefined" && last_step.success.step_id === item_id) {
         classString += " workflow-step-success";
-      }
-      else if(typeof(last_step.running) !== "undefined" && last_step.running.step_id === item_id) {
+      } else if (typeof (last_step.running) !== "undefined" && last_step.running.step_id === item_id) {
         if (last_step.running.paused) {
           classString += " workflow-step-warning";
         } else {
           classString += " workflow-step-running";
-        }        
-      }
-      else if(typeof(last_step.failed) !== "undefined" && last_step.failed.step_id === item_id) {
+        }
+      } else if (typeof (last_step.failed) !== "undefined" && last_step.failed.step_id === item_id) {
         classString += " workflow-step-failure";
       }
     }
 
     return classString;
-  }; 
+  };
 
 
   return items.map((item, index) => (
     <div key={index} className={isSaving ? "fa-disabled" : ""}>
-      <div className={"mb-1 p-1 workflow-module-container workflow-module-container-width mx-auto " + setStepStatusClass(lastStep, item)}>
-        <PipelineWorkflowItem 
+      <div
+        className={"mb-1 p-1 workflow-module-container workflow-module-container-width mx-auto " + setStepStatusClass(lastStep, item)}>
+        <PipelineWorkflowItem
+          pipeline={pipeline}
           plan={items}
-          item={item} 
-          index={index}          
-          lastStep={lastStep} 
-          editWorkflow={editWorkflow} 
-          pipelineId={pipelineId} 
-          role={role}
+          item={item}
+          index={index}
+          lastStep={lastStep}
+          editWorkflow={editWorkflow}
+          pipelineId={pipelineId}
+          customerAccessRules={customerAccessRules}
           accessToken={accessToken}
-          parentCallbackEditItem={parentCallbackEditItem} 
+          parentCallbackEditItem={parentCallbackEditItem}
           deleteStep={deleteStep}
-          parentHandleViewSourceActivityLog={parentHandleViewSourceActivityLog} 
-          parentWorkflowStatus={parentWorkflowStatus} />
+          parentHandleViewSourceActivityLog={parentHandleViewSourceActivityLog}
+          parentWorkflowStatus={parentWorkflowStatus}/>
       </div>
 
       {editWorkflow ? <>
-        <div className={"text-center my-3 step-plus-"+ index}>    
-          <OverlayTrigger
-            placement="top"
-            delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip({ message: "Move previous step up" })} >
-            <FontAwesomeIcon icon={faCaretSquareUp} size="lg" 
-              fixedWidth 
-              className={index === 0 ? "fa-disabled" : "pointer green"} 
-              onClick= {() => { handleMoveStep(item._id, index, "up"); }} />
-          </OverlayTrigger> 
-          
-          <OverlayTrigger
-            placement="top"
-            delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip({ message: "Add new step below" })} >
-            <FontAwesomeIcon icon={faPlusSquare} 
-              size="lg" 
-              fixedWidth 
-              className="green pointer mx-1"
-              onClick= {() => { handleAddStep(item._id, index); }} />
-          </OverlayTrigger>
+          <div className={"text-center my-3 step-plus-" + index}>
+            <OverlayTrigger
+              placement="top"
+              delay={{ show: 250, hide: 400 }}
+              overlay={renderTooltip({ message: "Move previous step up" })}>
+              <FontAwesomeIcon icon={faCaretSquareUp} size="lg"
+                               fixedWidth
+                               className={index === 0 ? "fa-disabled" : "pointer green"}
+                               onClick={() => {
+                                 handleMoveStep(item._id, index, "up");
+                               }}/>
+            </OverlayTrigger>
 
-          <OverlayTrigger
-            placement="top"
-            delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip({ message: "Copy previous step" })} >
-            <FontAwesomeIcon icon={faCopy} 
-              size="lg" 
-              fixedWidth 
-              className="green pointer mx-1"
-              onClick= {() => { handleCopyStep(item, index); }} />
-          </OverlayTrigger>
-          
-          <OverlayTrigger
-            placement="top"
-            delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip({ message: "Move previous step down" })} >
-            <FontAwesomeIcon icon={faCaretSquareDown}  size="lg" 
-              fixedWidth 
-              className={index === items.length - 1 ? "fa-disabled" : "pointer green"} 
-              onClick= {() => { handleMoveStep(item._id, index, "down"); }} />
-          </OverlayTrigger>
-        </div>
-        <SteppedLineTo from={"step-"+item._id} to={"step-plus-"+index} delay={100} orientation="v" borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="top" />        
-      </>:       
+            <OverlayTrigger
+              placement="top"
+              delay={{ show: 250, hide: 400 }}
+              overlay={renderTooltip({ message: "Add new step below" })}>
+              <FontAwesomeIcon icon={faPlusSquare}
+                               size="lg"
+                               fixedWidth
+                               className="green pointer mx-1"
+                               onClick={() => {
+                                 handleAddStep(item._id, index);
+                               }}/>
+            </OverlayTrigger>
+
+            <OverlayTrigger
+              placement="top"
+              delay={{ show: 250, hide: 400 }}
+              overlay={renderTooltip({ message: "Copy previous step" })}>
+              <FontAwesomeIcon icon={faCopy}
+                               size="lg"
+                               fixedWidth
+                               className="green pointer mx-1"
+                               onClick={() => {
+                                 handleCopyStep(item, index);
+                               }}/>
+            </OverlayTrigger>
+
+            <OverlayTrigger
+              placement="top"
+              delay={{ show: 250, hide: 400 }}
+              overlay={renderTooltip({ message: "Move previous step down" })}>
+              <FontAwesomeIcon icon={faCaretSquareDown} size="lg"
+                               fixedWidth
+                               className={index === items.length - 1 ? "fa-disabled" : "pointer green"}
+                               onClick={() => {
+                                 handleMoveStep(item._id, index, "down");
+                               }}/>
+            </OverlayTrigger>
+          </div>
+          <SteppedLineTo from={"step-" + item._id} to={"step-plus-" + index} delay={100} orientation="v"
+                         borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="top"/>
+        </> :
         <>
-          <SteppedLineTo from={"step-"+item._id} to={"step-"+ index} delay={100} orientation="v" borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="bottom" />
-          <div style={{ height: "40px" }} className={"step-"+ index}>&nbsp;</div>
+          <SteppedLineTo from={"step-" + item._id} to={"step-" + index} delay={100} orientation="v"
+                         borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="bottom"/>
+          <div style={{ height: "40px" }} className={"step-" + index}>&nbsp;</div>
         </>
       }
-     
+
     </div>
   ));
 }
@@ -206,6 +216,7 @@ function renderTooltip(props) {
 
 
 PipelineWorkflowItemList.propTypes = {
+  pipeline: PropTypes.object,
   items: PropTypes.array,
   lastStep: PropTypes.object,
   editWorkflow: PropTypes.bool,
@@ -216,10 +227,9 @@ PipelineWorkflowItemList.propTypes = {
   setStateItems: PropTypes.func,
   quietSavePlan: PropTypes.func,
   fetchPlan: PropTypes.func,
-  role: PropTypes.string,
-  parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
+  customerAccessRules: PropTypes.object,
+  parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 };
-
 
 
 export default PipelineWorkflowItemList;
