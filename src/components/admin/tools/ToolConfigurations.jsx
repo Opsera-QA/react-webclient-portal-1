@@ -168,7 +168,7 @@ function ToolConfigurationsAdmin() {
       {pageLoading ? <Loading size="sm" /> : null} 
       {(!isAdminCheck && !pageLoading)&& <ErrorDialog error={"You do not have access to view this page!"} />}
       {isAdminCheck && 
-
+      
           <div className="default-custom-tabs">
             <Tabs defaultActiveKey="toolType" className="default-custom-tabs" id="uncontrolled-tab-example">
               <Tab eventKey="toolType" title="Tool Type">
