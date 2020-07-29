@@ -51,6 +51,10 @@ import LdapUserManagement from "./components/accounts/ldap_users/LdapUserManagem
 import LdapUserDetailView from "./components/accounts/ldap_users/users_detail_view/LdapUserDetailView";
 import AccountSettings from "./components/user/AccountSettings";
 
+import LdapGroupManagement from "./components/accounts/ldap_groups/LdapGroupManagement";
+import LdapGroupDetails from "./components/accounts/ldap_groups/ldap_group_detail/LdapGroupDetails";
+
+
 const AppWithRouterAccess = () => {
   const history = useHistory();
   const onAuthRequired = () => {
@@ -132,6 +136,9 @@ const AppWithRouterAccess = () => {
               <SecureRoute path="/accounts/users" exact component={LdapUserManagement} />
               <SecureRoute path="/accounts/users/details/:id" exact component={LdapUserDetailView} />
               <SecureRoute path="/accounts/create" exact component={LdapCustomerOnboardView} />
+
+              <SecureRoute path="/accounts/groups" exact component={LdapGroupManagement} />
+              <SecureRoute path="/accounts/groups/:name" exact component={LdapGroupDetails} />
 
               <SecureRoute path="/demo/api" component={ApiConnectionDemo} />
 
