@@ -125,6 +125,26 @@ accountsActions.create = async (accountData, getAccessToken) => {
   return response;
 };
 
+
+
+accountsActions.getGroup = async (groupData, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = "/users/account/group";
+  const response = await axiosApiService(accessToken).post(apiUrl, groupData)
+    .then((result) =>  {return result;})
+    .catch(error => {return { error };});
+  return response;
+};
+
+accountsActions.updateGroup = async (groupData, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = "/users/account/groups/update";
+  const response = await axiosApiService(accessToken).put(apiUrl, groupData)
+    .then((result) =>  {return result;})
+    .catch(error => {return { error };});
+  return response;
+};
+
 accountsActions.createGroup = async (groupData, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = "/users/account/groups/create";
