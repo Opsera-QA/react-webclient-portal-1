@@ -11,8 +11,8 @@ function Workflow() {
   const [itemId, setItemId] = useState({});
   const [selection, setSelection] = useState("myPipelines");
   let location = useLocation();
-    
-  useEffect( () => {
+
+  useEffect(() => {
     if (typeof id === "string") {
       if (id.match(/^[0-9a-fA-F]{24}$/)) {
         setItemId(id);
@@ -33,23 +33,8 @@ function Workflow() {
       setSelection("myPipelines");
     }
   }, [id, location]);
-  
-  /* const handleTabClick = param => e => {
-    setSelection(param);
-  }; */
-  /* 
-  const setPillClass = (item, selection) => {
-    if (selection === "myPipelines" || selection === "catalog") {
-      return "disabled";
-    }
 
-    if (selection === item) {
-      return "active";
-    } else {
-      return "";
-    }
-  };
- */
+
   return (
     <>
       <div className="max-content-width">
@@ -57,10 +42,8 @@ function Workflow() {
           {selection === "catalog" && "Pipelines Catalog"}
           {selection === "myPipelines" && "My Pipelines"}
           {(selection === "pipelineDetail" || selection === "workflowView") && "Pipeline"}
-
         </h4>
-        {/* <p>Configure your <b>C</b>ontinuous <b>I</b>ntegration and <b>C</b>ontinuous <b>D</b>elivery pipeline workflows below.</p> */}
-      
+
 
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
@@ -69,18 +52,18 @@ function Workflow() {
             </li>
             <li className={selection === "myPipelines" ? "breadcrumb-item active" : "breadcrumb-item"}>
               {selection !== "myPipelines" ? <><Link to="/workflow">My Pipelines</Link></> : <>My Pipelines</>}</li>
-            
-            {(selection === "pipelineDetail" || selection === "workflowView") && 
-            <li className="breadcrumb-item active">Pipeline</li> }
+
+            {(selection === "pipelineDetail" || selection === "workflowView") &&
+            <li className="breadcrumb-item active">Pipeline</li>}
           </ol>
         </nav>
 
       </div>
-      {itemId.length > 0 && selection === "pipelineDetail" ? <PipelineOverview id={itemId} /> : null } 
-      {itemId.length > 0 && selection === "workflowView" ? <PipelineWorkflowView id={itemId} /> : null } 
-      {itemId.length === 0 && selection === "catalog" ? <WorkflowCatalog id={itemId} /> : null } 
-      {itemId.length === 0 && selection === "myPipelines" ? <MyPipelines /> : null }
-             
+      {itemId.length > 0 && selection === "pipelineDetail" ? <PipelineOverview id={itemId}/> : null}
+      {itemId.length > 0 && selection === "workflowView" ? <PipelineWorkflowView id={itemId}/> : null}
+      {itemId.length === 0 && selection === "catalog" ? <WorkflowCatalog id={itemId}/> : null}
+      {itemId.length === 0 && selection === "myPipelines" ? <MyPipelines/> : null}
+
     </>
   );
 }

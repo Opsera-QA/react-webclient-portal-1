@@ -103,6 +103,9 @@ function PipelineOverview({ id }) {
     setPageSize(pageSize);
   };
 
+
+  //TODO: This role config has to be replaced with the new group LDAP, BUT role could still be used here,
+  //   maybe the function that set's the role is now driven by new logic???
   const setPipelineAttributes = (pipeline, ssoUsersId) => {
     if (typeof(pipeline.roles) !== "undefined") {
       let userRoleObject = pipeline.roles.findIndex(x => x.user === ssoUsersId); 
