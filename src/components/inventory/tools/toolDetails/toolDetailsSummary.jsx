@@ -106,6 +106,10 @@ function ToolDetails(props) {
                   {toolData._id}
                 </li>
                 <li className="list-group-item">
+                  <span className="pr-2 text-muted">Account:</span>
+                  {toolData.account || ""}
+                </li>
+                <li className="list-group-item">
                   <span className="pr-2 text-muted">Created:</span>
                   {toolData.createdAt && format(new Date(toolData.createdAt), "yyyy-MM-dd")}
                 </li>

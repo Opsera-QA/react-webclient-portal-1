@@ -21,7 +21,7 @@ function Sidebar({ hideView }) {
 
   useEffect(() => {    
     if (authState.isAuthenticated) {
-      checkAuthentication().then(r => console.log("authenticated"));
+      checkAuthentication();
     }
     const hideFeatureInProd = featureFlagItemInProd(); //returns true when in production
     setHideInProdFF(hideFeatureInProd);
@@ -38,11 +38,12 @@ function Sidebar({ hideView }) {
     if (user && authState.isAuthenticated) {
       const { ldap, groups } = user;
       if (groups) {
-        setLocalAdministrator(user.groups.includes("Admin"));
-        setFreeTrialUser(user.groups.includes("Free Trial"));
+        setLocalAdministrator(groups.includes("Admin"));
+        setFreeTrialUser(groups.includes("Free Trial"));
       }
+
       if (ldap && ldap.domain === "opsera.io") { //checking for OpsERA account domain
-        setOpseraAdministrator(user.groups.includes("Admin"));
+        setOpseraAdministrator(groups.includes("Admin"));
       }
     }     
     setLoading(false);
@@ -95,7 +96,7 @@ function Sidebar({ hideView }) {
                     {localAdministrator && <NavLink className="nav-link" activeClassName="chosen" to="/tools"><FontAwesomeIcon size="lg" icon={faLink} fixedWidth /> <span className="menu-text">API Tools</span></NavLink>}
                     {localAdministrator && <NavLink className="nav-link" activeClassName="chosen" to="/update"><FontAwesomeIcon size="lg" icon={faDownload} fixedWidth /> <span className="menu-text">Updates</span></NavLink>}
                     {(localAdministrator && !hideInProdFF) && <NavLink className="nav-link" activeClassName="chosen" to="/settings"><FontAwesomeIcon size="lg" icon={faCogs} fixedWidth /> <span className="menu-text">Settings</span></NavLink>}
-                    {setOpseraAdministrator && <NavLink className="nav-link" activeClassName="chosen" to="/admin"><FontAwesomeIcon size="lg" icon={faTools} fixedWidth /> <span className="menu-text">Admin Tools</span></NavLink>}
+                    {opseraAdministrator && <NavLink className="nav-link" activeClassName="chosen" to="/admin"><FontAwesomeIcon size="lg" icon={faTools} fixedWidth /> <span className="menu-text">Admin Tools</span></NavLink>}
                   </div>
                 </>}
             </div>
