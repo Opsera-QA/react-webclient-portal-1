@@ -19,7 +19,7 @@ function JenkinsCreateJob(props) {
   const { toolId, toolData, accessToken, jobData } = props;
   let toolDataSet = toolData;
   const [ jenkinsFormList, updateJenkinsForm] = useState({ ...JobTypeBuild });
-  const [ formType, setFormType ] = useState("BUILD");
+  const [ formType, setFormType ] = useState("");
   const [jobName, setJobName ] = useState("");
   const [jobDescription, setJobDescription ] = useState("");
   const [viewForm, toggleViewForm ] = useState(true);
@@ -68,9 +68,25 @@ function JenkinsCreateJob(props) {
     }             
   ];
 
-  useEffect(() => {  
-    switch (formType.toUpperCase()) {  
-    
+  useEffect(() => {   
+    //Check if data is available before update
+    if(Object.keys(jobData).length > 0){ 
+      handleFormTypeChange(jobData.type[0]);
+    }
+    else {
+      handleFormTypeChange("BUILD");
+      clearData();
+    }
+  }, []);
+
+  useEffect(() => {   
+    if(Object.keys(jobData).length > 0){ 
+      updateFormWithData();
+    } 
+  }, [formType]);
+
+  const handleFormTypeChange = (type) => {
+    switch (type.toUpperCase()) {  
     case "SFDC":        
       updateJenkinsForm({ ...JobTypeSFDC });
       break;    
@@ -93,24 +109,17 @@ function JenkinsCreateJob(props) {
       break;
     case "SEND-S3":
       updateJenkinsForm({ ...JenkinsJobTypeSendToS3 });
-      break;                  
-    default:
+      break; 
+    case "BUILD":
       updateJenkinsForm({ ...JobTypeBuild });
       break;
-    }    
-    //Check if data is available before update
-    if(Object.keys(jobData).length > 0){ updateFormWithData(); }
-    else {
-      clearData();
-    }
-
-  }, [formType]);
+    }   
+    setFormType(type);
+  }; 
 
   const updateFormWithData = () => {
-    setFormType(jobData.type[0]);
     setJobName(jobData.name);
     setJobDescription(jobData.description);
-
     Object.keys(jenkinsFormList).map((item, i) => {
       let validateInput = {
         disabled: viewForm ? true : false,
@@ -261,7 +270,7 @@ function JenkinsCreateJob(props) {
             Job Type
           </Form.Label>
           <Col sm="9" className="text-right">
-            <Form.Control as="select" disabled={viewForm} value={formType} onChange={e => setFormType( e.target.value)}>
+            <Form.Control as="select" disabled={viewForm} value={formType} onChange={e => handleFormTypeChange( e.target.value)}>
               <option name="Select One" value="" disabled={true}>Select One</option>
               {jobType.map((option, i) => (
                 <option key={i} value={option.value}>{option.label}</option>
@@ -292,7 +301,7 @@ function JenkinsCreateJob(props) {
       </Form>
 
       <Form className="newToolFormContainer">
-        {Object.values(jenkinsFormList).map((formField, i) => {
+        {jenkinsFormList && Object.values(jenkinsFormList).map((formField, i) => {
           if(formField.toShow && formField.linkedId == undefined ) {
             return(
               <Form.Group key={i} controlId="formPlaintextEmail" className="mt-2 vertical-center-cols-in-row">
