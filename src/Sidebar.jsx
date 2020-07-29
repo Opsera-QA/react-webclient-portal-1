@@ -5,25 +5,26 @@ import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClipboardList, faChartBar, faArchive, faColumns, faLink, faBox, faDownload, faHome, faTools, faAddressBook, faDraftingCompass, faLayerGroup, faLifeRing } from "@fortawesome/free-solid-svg-icons";
+import { faClipboardList, faChartBar, faArchive, faColumns, faLink, faBox, faDownload, faHome, faTools, faAddressBook, faDraftingCompass, faLayerGroup, faLifeRing, faCogs } from "@fortawesome/free-solid-svg-icons";
 import LoadingDialog from "./components/common/loading";
 import "./sidebar.css";
 
 function Sidebar({ hideView }) {
   const contextType = useContext(AuthContext); 
-  const { getUserRecord, authState } = contextType;
+  const { getUserRecord, authState, featureFlagItemInProd } = contextType;
   const [localAdministrator, setLocalAdministrator] = useState(false);
   const [opseraAdministrator, setOpseraAdministrator] = useState(false);
   const [freeTrialUser, setFreeTrialUser] = useState(false);
   const [hideSideBar, setHideSideBar] = useState(false);
   const [loading, setLoading] = useState(false);
-  
+  const [hideInProdFF, setHideInProdFF] = useState(false);
 
   useEffect(() => {    
     if (authState.isAuthenticated) {
       checkAuthentication().then(r => console.log("authenticated"));
     }
-    
+    const hideFeatureInProd = featureFlagItemInProd(); //returns true when in production
+    setHideInProdFF(hideFeatureInProd);
   }, [authState]);
 
   const handleToggleMenuClick = () => {
@@ -91,8 +92,9 @@ function Sidebar({ hideView }) {
                     <NavLink className="nav-link" activeClassName="chosen" to="/inventory/tools"><FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth /> <span className="menu-text">Inventory</span></NavLink>
                     <NavLink className="nav-link" activeClassName="chosen" to="/logs"><FontAwesomeIcon size="lg" icon={faArchive} fixedWidth /> <span className="menu-text">Logs</span></NavLink>
                     <NavLink className="nav-link" activeClassName="chosen" to="/blueprint"><FontAwesomeIcon size="lg" icon={faLayerGroup} fixedWidth /> <span className="menu-text">Blueprints</span></NavLink>
-                    <NavLink className="nav-link" activeClassName="chosen" to="/tools"><FontAwesomeIcon size="lg" icon={faLink} fixedWidth /> <span className="menu-text">API Tools</span></NavLink>
-                    <NavLink className="nav-link" activeClassName="chosen" to="/update"><FontAwesomeIcon size="lg" icon={faDownload} fixedWidth /> <span className="menu-text">Updates</span></NavLink>
+                    {localAdministrator && <NavLink className="nav-link" activeClassName="chosen" to="/tools"><FontAwesomeIcon size="lg" icon={faLink} fixedWidth /> <span className="menu-text">API Tools</span></NavLink>}
+                    {localAdministrator && <NavLink className="nav-link" activeClassName="chosen" to="/update"><FontAwesomeIcon size="lg" icon={faDownload} fixedWidth /> <span className="menu-text">Updates</span></NavLink>}
+                    {(localAdministrator && !hideInProdFF) && <NavLink className="nav-link" activeClassName="chosen" to="/settings"><FontAwesomeIcon size="lg" icon={faCogs} fixedWidth /> <span className="menu-text">Settings</span></NavLink>}
                     {setOpseraAdministrator && <NavLink className="nav-link" activeClassName="chosen" to="/admin"><FontAwesomeIcon size="lg" icon={faTools} fixedWidth /> <span className="menu-text">Admin Tools</span></NavLink>}
                   </div>
                 </>}
