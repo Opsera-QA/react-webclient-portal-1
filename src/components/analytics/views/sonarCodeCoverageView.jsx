@@ -4,11 +4,10 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/loading";
 import ErrorDialog from "../../common/error";
-import InfoDialog from "../../common/info";
 import SonarLinesToCoverBarChart from "../charts/sonarLinesToCoverBarChart";
 import SonarCodeCoverageBarChart from "../charts/sonarCodeCoverageBarChart";
 
-function CodeCoverageMetricsView( { persona, date } ) {
+function CodeCoverageMetricsView({ persona, date }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -33,7 +32,6 @@ function CodeCoverageMetricsView( { persona, date } ) {
     };
   }, [date]);
 
-
   const fetchData = async () => {
     setLoading(true);
     const { getAccessToken } = contextType;
@@ -55,14 +53,12 @@ function CodeCoverageMetricsView( { persona, date } ) {
       let dataObject = res && res.data ? res.data.data[0].sonarCodeCoverage : [];
       setData(dataObject);
       setLoading(false);
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err.message);
       setLoading(false);
       setErrors(err.message);
     }
   };
-
 
   console.log("Rendering Code Coverage Charts");
   console.log(data);
@@ -71,14 +67,6 @@ function CodeCoverageMetricsView( { persona, date } ) {
     return (<LoadingDialog size="sm" />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
-  } else if (typeof data !== "object" || Object.keys(data).length == 0 || data.status !== 200) {
-    return (
-      <div className="chart mb-3" style={{ height: "300px" }}>
-        <div className="chart-label-text">Sonar: Lines to Cover & Code Coverage</div>
-
-        <InfoDialog  message="No log activity has been captured for this dashboard yet." />
-      </div>
-    );
   } else {
     return (
       <>
@@ -97,6 +85,5 @@ function CodeCoverageMetricsView( { persona, date } ) {
 CodeCoverageMetricsView.propTypes = {
   persona: PropTypes.string
 };
-
 
 export default CodeCoverageMetricsView;
