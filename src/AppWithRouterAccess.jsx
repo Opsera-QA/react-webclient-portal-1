@@ -49,6 +49,11 @@ import CommonTableDemo from "./components/common/samples/tableImplementation";
 import TagDetailView from "./components/admin/tags/tags_detail_view/TagDetailView";
 import LdapUserManagement from "./components/accounts/ldap_users/LdapUserManagement";
 import LdapUserDetailView from "./components/accounts/ldap_users/users_detail_view/LdapUserDetailView";
+import AccountSettings from "./components/user/AccountSettings";
+
+import LdapGroupManagement from "./components/accounts/ldap_groups/LdapGroupManagement";
+import LdapGroupDetails from "./components/accounts/ldap_groups/ldap_group_detail/LdapGroupDetails";
+
 
 const AppWithRouterAccess = () => {
   const history = useHistory();
@@ -102,6 +107,7 @@ const AppWithRouterAccess = () => {
               <Route path="/registration" exact component={Registration} />
               <SecureRoute path="/overview" exact component={Overview} />
               <SecureRoute path="/profile" component={Profile} />
+              <SecureRoute path="/settings" component={AccountSettings} />
               <SecureRoute path="/inventory/:view?/:id?" component={Inventory} />
               <SecureRoute path="/dashboard" component={Dashboard} />
               <SecureRoute path="/tools/:id?" component={ApiConnector} />
@@ -130,6 +136,9 @@ const AppWithRouterAccess = () => {
               <SecureRoute path="/accounts/users" exact component={LdapUserManagement} />
               <SecureRoute path="/accounts/users/details/:id" exact component={LdapUserDetailView} />
               <SecureRoute path="/accounts/create" exact component={LdapCustomerOnboardView} />
+
+              <SecureRoute path="/accounts/groups" exact component={LdapGroupManagement} />
+              <SecureRoute path="/accounts/groups/:name" exact component={LdapGroupDetails} />
 
               <SecureRoute path="/demo/api" component={ApiConnectionDemo} />
 

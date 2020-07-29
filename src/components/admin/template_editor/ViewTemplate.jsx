@@ -38,6 +38,10 @@ function ViewTags( { templateId, templateData } ) {
                   <span className="pr-1 text-muted">State: </span>
                   {templateData.active ? "Active" : "Disabled"}
                 </li>
+                <li className="list-group-item">
+                  <span className="pr-1 text-muted">LDAP Account: </span>
+                  {templateData.account}
+                </li>
               </ul>
             </Col>
           </Row>

@@ -75,7 +75,7 @@ function Signup(props) {
   const cloudProviderRegions = [ { value: "us-east-2", text: "us-east-2" }];
 
   //Check if the email is already registered in the system
-  const isEmailAvailable = async () => {
+  const isEmailAvailableFunc = async () => {
     console.log("checking email: " + formData.email);
     const apiCall = new ApiService("/users/check-email", {}, null, { email: formData.email });
     return await apiCall.post()
@@ -115,7 +115,7 @@ function Signup(props) {
     console.log("formData: ", formData);
 
     //Check if the email is already exist in the system
-    const isEmailAvailable = await isEmailAvailable();
+    const isEmailAvailable = await isEmailAvailableFunc();
 
     //Only if form is valid, call API for signup 
     if(isFormValid() && isEmailAvailable) {

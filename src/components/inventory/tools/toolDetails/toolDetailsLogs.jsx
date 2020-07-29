@@ -33,11 +33,11 @@ function ToolLogs(props) {
 
   const columns = useMemo(
     () => [
-      {
+      /*{
         Header: "Run",
         accessor: "run_count",
         class: "cell-center no-wrap-inline"
-      },
+      },*/
       {
         Header: "Action",
         accessor: "action",

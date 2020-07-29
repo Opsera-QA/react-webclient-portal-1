@@ -96,6 +96,7 @@ function LdapAccountsView() {
 
           {error && <div className="absolute-center-content"><ErrorDialog align="center" error={error.message}></ErrorDialog></div>}
          
+         
           <div className="list-item-container">
             <LdapOrganizationDetails organization={ organization } />
             <ul className="nav nav-tabs w-100">
