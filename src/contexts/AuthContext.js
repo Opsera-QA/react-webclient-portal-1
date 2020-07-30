@@ -3,99 +3,139 @@ import { useOktaAuth } from "@okta/okta-react";
 import { axiosApiService } from "../api/apiService";
 
 const AuthContextProvider = (props) => {
-  const { authService, authState } = useOktaAuth();
-  const [userRecord, setUserRecord] = useState(null);
-  
-
-  useEffect(() => {    
-    if (authState.isAuthenticated) {
-      setUserState();
-    }    
-  }, [authState]);
+    const { authService, authState } = useOktaAuth();
+    const [userRecord, setUserRecord] = useState(null);
 
 
-  const setUserState = async () => {
-    const user = await _getUserProperties();    
-    setUserRecord(user);
-  };
-
-  const _getUserProperties = async () => {
-    const token = await authService.getAccessToken();
-    try {    
-      let apiUrl = "/users";
-      const response = await axiosApiService(token).get(apiUrl, {});
-      //console.log("getting user", response.data);
-      return response.data;
-    }
-    catch (err) {   
-      console.log("Error getting user data: " + err.message);    
-    }
-  };
-
-  const logoutUserContext = () => {
-    setUserRecord(null);
-    authService.clearAuthState();
-    return authService.logout("/");
-  };
-
-  const loginUserContext = () => {
-    return authService.login("/");
-  };
-
-  const getAccessToken = () => {
-    return authService.getAccessToken();
-  };
-
-  const getIsAuthenticated = async () => {
-    const authState = await authService.getAuthState();
-    return authState.isAuthenticated;
-  };
-
-  const getUserRecord = async () => {    //New LDAP derived getUsers Service
-    if (!userRecord || authState.isPending) {
-      await delay(2000);
-      if (authState.isAuthenticated && !userRecord) {
-        return await _getUserProperties();
+    useEffect(() => {
+      if (authState.isAuthenticated) {
+        setUserState();
       }
-    }
-    return userRecord; 
-  };
+    }, [authState]);
 
 
-  //TODO Review this with new LDAP serivces
-  const getIsPreviewRole = async (restrictProd) => {
-    const userInfo = await getUserRecord();    
-    console.log("Environment: ", process.env.REACT_APP_ENVIRONMENT);    
-    if (restrictProd && process.env.REACT_APP_ENVIRONMENT === "production") {
-      return false;
-    } else {
-      return userInfo.groups.includes("Preview");
-    }    
-  };
+    const setUserState = async () => {
+      const user = await _getUserProperties();
+      setUserRecord(user);
+    };
 
-  const featureFlagItemInProd = () => {
-    if (process.env.REACT_APP_ENVIRONMENT === "production") {
-      return true;
-    } else {
-      return false;
-    }
-  };
+    const _getUserProperties = async () => {
+      const token = await authService.getAccessToken();
+      try {
+        let apiUrl = "/users";
+        const response = await axiosApiService(token).get(apiUrl, {});
+        //console.log("getting user", response.data);
+        return response.data;
+      } catch (err) {
+        console.log("Error getting user data: " + err.message);
+      }
+    };
+
+    const logoutUserContext = () => {
+      setUserRecord(null);
+      authService.clearAuthState();
+      return authService.logout("/");
+    };
+
+    const loginUserContext = () => {
+      return authService.login("/");
+    };
+
+    const getAccessToken = () => {
+      return authService.getAccessToken();
+    };
+
+    const getIsAuthenticated = async () => {
+      const authState = await authService.getAuthState();
+      return authState.isAuthenticated;
+    };
+
+    const getUserRecord = async () => {    //New LDAP derived getUsers Service
+      if (!userRecord || authState.isPending) {
+        if (authState.isAuthenticated && !userRecord) {
+          return await _getUserProperties();
+        }
+      }
+      return userRecord;
+    };
 
 
-  return (
-    <AuthContext.Provider value={{
-      authState: authState,
-      logoutUserContext: logoutUserContext, 
-      loginUserContext: loginUserContext, 
-      getAccessToken: getAccessToken,
-      getIsPreviewRole: getIsPreviewRole, 
-      featureFlagItemInProd: featureFlagItemInProd,
-      getUserRecord: getUserRecord,
-      getIsAuthenticated: getIsAuthenticated }}>
-      {props.children}
-    </AuthContext.Provider>
-  );
-};
+    //TODO Review this with new LDAP serivces
+    const getIsPreviewRole = async (restrictProd) => {
+      const userInfo = await getUserRecord();
+      console.log("Environment: ", process.env.REACT_APP_ENVIRONMENT);
+      if (restrictProd && process.env.REACT_APP_ENVIRONMENT === "production") {
+        return false;
+      } else {
+        return userInfo.groups.includes("Preview");
+      }
+    };
+
+    const featureFlagItemInProd = () => {
+      if (process.env.REACT_APP_ENVIRONMENT === "production") {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
+    const setAccessRoles = async (user) => {
+      if (user && authState.isAuthenticated) {
+        let customerAccessRules = {};
+
+        const { ldap, groups } = user;
+        if (groups) {
+          console.log(groups);
+          //calculate top role level for now
+          let role = "readonly";
+          if (groups.includes("Admin")) {
+            role = "administrator";
+          } else if (groups.includes("Power User")) {
+            role = "power_user";
+          } else if (groups.includes("User")) {
+            role = "user";
+          }
+
+          customerAccessRules = {
+            ...customerAccessRules,
+            Administrator: groups.includes("Admin"),
+            PowerUser: groups.includes("Power User"),
+            User: groups.includes("User"),
+            UserId: user._id,
+            Role: role,
+          };
+        }
+        if (ldap && ldap.domain === "opsera.io") { //checking for OpsERA account domain
+          customerAccessRules = {
+            ...customerAccessRules,
+            OpseraAdministrator: groups.includes("Admin"),
+          };
+        }
+        return customerAccessRules;
+      } else {
+        console.log("unable to set user access rules: ", user);
+        console.log("authState.isAuthenticated: ", authState.isAuthenticated);
+      }
+    };
+
+
+    return (
+      <AuthContext.Provider value={{
+        authState: authState,
+        logoutUserContext: logoutUserContext,
+        loginUserContext: loginUserContext,
+        getAccessToken: getAccessToken,
+        getIsPreviewRole: getIsPreviewRole,
+        featureFlagItemInProd: featureFlagItemInProd,
+        getUserRecord: getUserRecord,
+        setAccessRoles: setAccessRoles,
+        getIsAuthenticated: getIsAuthenticated,
+      }}>
+        {props.children}
+      </AuthContext.Provider>
+    );
+  }
+;
 export const AuthContext = createContext();
 export default AuthContextProvider;
 

@@ -15,40 +15,8 @@ function PipelineWorkflowView({ id }) {
   const [editItem, setEditItem] = useState(false);
 
   /* Role based Access Controls */
-  const { getAccessToken, getUserRecord, authState } = useContext(AuthContext);
-  const [opseraAdministrator, setOpseraAdministrator] = useState(false);
+  const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
   const [customerAccessRules, setCustomerAccessRules] = useState({});
-  async function checkAuthentication() {
-    const ssoUsersRecord = await getUserRecord();
-    if (ssoUsersRecord && authState.isAuthenticated) {
-      const { ldap, groups } = ssoUsersRecord;
-      if (groups) {
-        //calculate top role level for now
-        let role = "readonly";
-        if (groups.includes("Admin")) {
-          role = "administrator";
-        } else if (groups.includes("Power User")) {
-          role = "power_user";
-        } else if (groups.includes("User")) {
-          role = "user";
-        }
-
-        setCustomerAccessRules({
-          ...customerAccessRules,
-          Administrator: groups.includes("Admin"),
-          PowerUser: groups.includes("Power User"),
-          User: groups.includes("User"),
-          UserId: ssoUsersRecord._id,
-          Role: role
-        });
-      }
-      if (ldap && ldap.domain === "opsera.io") { //checking for OpsERA account domain
-        setOpseraAdministrator(groups.includes("Admin"));
-      }
-
-    }
-  }
-  /* End Role based Access Controls */
 
 
 
@@ -58,7 +26,10 @@ function PipelineWorkflowView({ id }) {
   }, []);
 
   const initComponent = async () => {
-    await checkAuthentication();
+    const userRecord = await getUserRecord(); //RBAC Logic
+    const rules = await setAccessRoles(userRecord);
+    setCustomerAccessRules(rules); //set rules
+
     await fetchData();
   }
 

@@ -37,7 +37,6 @@ const INITIAL_FORM = {
 
 function ToolDetails(props) {
   const { toolId, fnEditTool, fnDeleteTool, setToolId, closeModal } = props;
-  const { getAccessToken, getUserRecord, featureFlagItemInProd, authState } = useContext(AuthContext);
   const [toolData, setToolData] = useState(INITIAL_FORM);
   const [errors, setErrors] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -45,28 +44,9 @@ function ToolDetails(props) {
   const handleClose = () => closeModal(false);
   const [activeTab, setActiveTab] = useState("summary");
 
-/* Role based Access Controls */
-  const [opseraAdministrator, setOpseraAdministrator] = useState(false);
+  /* Role based Access Controls */
+  const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
   const [customerAccessRules, setCustomerAccessRules] = useState({});
-
-  async function checkAuthentication() {
-    const ssoUsersRecord = await getUserRecord();
-    if (ssoUsersRecord && authState.isAuthenticated) {
-      const { ldap, groups } = ssoUsersRecord;
-      if (groups) {
-        setCustomerAccessRules({
-          ...customerAccessRules,
-          Administrator: groups.includes("Admin"),
-          PowerUser: groups.includes("Power User"),
-          User: groups.includes("User"),
-          UserId: ssoUsersRecord._id,
-        });
-      }
-      if (ldap && ldap.domain === "opsera.io") { //checking for OpsERA account domain
-        setOpseraAdministrator(groups.includes("Admin"));
-      }
-    }
-  }
 
   const authorizedAction = (action, owner) => {
     if (customerAccessRules.Administrator) {
@@ -95,7 +75,10 @@ function ToolDetails(props) {
 
 
   const initComponent = async () => {
-    await checkAuthentication();
+    const userRecord = await getUserRecord(); //RBAC Logic
+    const rules = await setAccessRoles(userRecord);
+    setCustomerAccessRules(rules);
+
     setToolData(INITIAL_FORM);
     if (toolId) {
       await getToolRegistryItem(toolId);
