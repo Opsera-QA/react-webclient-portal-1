@@ -12,19 +12,19 @@ import ldapUsersFormFields from "../ldap-users-form-fields";
 
 const INITIAL_DATA = {
   name: "",
-  givenName: "",
-  preferredName: "",
+  // givenName: "",
+  // preferredName: "",
   firstName: "",
   lastName: "",
   emailAddress: "",
-  division: "",
-  team: "",
-  title: "",
+  // division: "",
+  // team: "",
+  // title: "",
   departmentName: "",
-  opseraId: ""
+  // opseraId: ""
 };
 
-function LdapUserEditorPanel({ ldapUserData, newLdapUser, setLdapUserData, handleClose }) {
+function LdapUserEditorPanel({ ldapUserData, newLdapUser, setLdapUserData, handleClose, showButton }) {
   const [error, setErrors] = useState("");
   const { getAccessToken } = useContext(AuthContext);
   const [fields, setFields ] = useState({ ...ldapUsersFormFields });
@@ -33,22 +33,23 @@ function LdapUserEditorPanel({ ldapUserData, newLdapUser, setLdapUserData, handl
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    loadData(ldapUserData);
+    loadData();
   }, []);
 
-  const loadData = async (ldapUserData) => {
+  const loadData = async () => {
     setIsLoading(true);
-    await unpackLdapUserData(ldapUserData);
+    await unpackLdapUserData();
     setIsLoading(false);
   };
 
-  const unpackLdapUserData = async (ldapUserData) => {
+  const unpackLdapUserData = async () => {
     console.log("ldapUserData in unpackLdapUserData: " + JSON.stringify(ldapUserData));
     if (ldapUserData != null) {
-      setFormField("key", ldapUserData["key"] != null ? ldapUserData["key"] : "");
-      setFormField("value", ldapUserData["value"] != null ? ldapUserData["value"] : "");
-      setFormField("configuration", ldapUserData["configuration"] != null ? ldapUserData["configuration"] : {});
-      setFormField("active", ldapUserData["active"] != null ? ldapUserData["active"] : false);
+      setFormField("name", ldapUserData["name"] != null ? ldapUserData["name"] : "");
+      setFormField("firstName", ldapUserData["firstName"] != null ? ldapUserData["firstName"] : "");
+      setFormField("lastName", ldapUserData["lastName"] != null ? ldapUserData["lastName"] : "");
+      setFormField("emailAddress", ldapUserData["emailAddress"] != null ? ldapUserData["emailAddress"] : {});
+      setFormField("departmentName", ldapUserData["departmentName"] != null ? ldapUserData["departmentName"] : false);
     }
     setIsLoading(false);
   };
@@ -107,7 +108,7 @@ function LdapUserEditorPanel({ ldapUserData, newLdapUser, setLdapUserData, handl
       try {
         console.log("Persisting values in ChangeMap : " + JSON.stringify(changeMap));
         // TODO: Should this be 'Name'?
-        const response = await accountsActions.update(newLdapUserData._id, changeMap, getAccessToken);
+        const response = await accountsActions.updateUser(newLdapUserData.emailAddress, changeMap, getAccessToken);
         console.log("Response data: " + JSON.stringify(response.data));
         setLdapUserData({ ...response.data });
         setChangeMap({});
@@ -187,11 +188,13 @@ function LdapUserEditorPanel({ ldapUserData, newLdapUser, setLdapUserData, handl
           {/*  </Col>*/}
           {/*</Row>*/}
           <Row>
-            <div className="ml-auto px-3">
-              {newLdapUser ? <Button size="sm" variant="primary" disabled={Object.keys(changeMap).length === 0} onClick={() => createUser(ldapUserData)}>Create LDAP User</Button>
-                : <Button size="sm" variant="primary" disabled={Object.keys(changeMap).length === 0} onClick={() => updateLdapUser(ldapUserData)}>Save changes</Button>
-              }
-            </div>
+            { showButton &&
+              <div className="ml-auto px-3">
+                {newLdapUser ? <Button size="sm" variant="primary" disabled={Object.keys(changeMap).length === 0} onClick={() => createUser(ldapUserData)}>Create LDAP User</Button>
+                  : <Button size="sm" variant="primary" disabled={Object.keys(changeMap).length === 0} onClick={() => updateLdapUser(ldapUserData)}>Save changes</Button>
+                }
+              </div>
+            }
           </Row>
         </div>
       </>}
@@ -200,6 +203,7 @@ function LdapUserEditorPanel({ ldapUserData, newLdapUser, setLdapUserData, handl
 }
 
 LdapUserEditorPanel.propTypes = {
+  showButton: PropTypes.bool,
   ldapUserData: PropTypes.object,
   setLdapUserData: PropTypes.func,
   canDelete: PropTypes.bool,
@@ -208,6 +212,7 @@ LdapUserEditorPanel.propTypes = {
 };
 
 LdapUserEditorPanel.defaultProps = {
+  showButton: true,
   newLdapUser: false
 };
 

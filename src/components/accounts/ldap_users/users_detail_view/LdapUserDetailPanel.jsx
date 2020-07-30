@@ -43,12 +43,11 @@ function LdapUserDetailPanel({ ldapUserData, setLdapUserData, canDelete }) {
 function LdapDetailsView({ tabSelection, setLdapUserData, ldapUserData, canDelete }) {
   useEffect(() => {
     // console.log("CHANGE HAPPENED");
-  }, [tabSelection, ldapUserData]);
-
+  }, [tabSelection]);
   if (tabSelection) {
     switch (tabSelection) {
     case "editor":
-      return <LdapUserEditorPanel setTagData={setLdapUserData} tagData={ldapUserData} canDelete={canDelete} />;
+      return <LdapUserEditorPanel setLdapUserData={setLdapUserData} ldapUserData={ldapUserData} canDelete={canDelete} />;
     default:
       return null;
     }

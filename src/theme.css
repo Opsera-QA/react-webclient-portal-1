@@ -716,6 +716,12 @@ div.modal-footer {
 }
 /* End Input Styling */
 
+/* Multiple Item Text Input */
+.custom-item-input {
+    flex-basis: 67%;
+}
+/* End Multiple Item Text Input Styling */
+
 /* Content Block Styling */
 .content-block {
   border-radius: 5px;

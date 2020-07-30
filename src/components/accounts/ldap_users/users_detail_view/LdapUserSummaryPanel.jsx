@@ -31,8 +31,8 @@ function LdapUserSummaryPanel({ ldapUserData, setLdapUserData } ) {
   const deleteLdapUser = async (userData) => {
     try {
       // TODO: Should this be 'name'?
-      console.log("Deleting LDAP User: " + JSON.stringify(userData._id));
-      let response = await accountsActions.delete(userData._id, getAccessToken);
+      console.log("Deleting LDAP User: " + JSON.stringify(userData.emailAddress));
+      let response = await accountsActions.delete(userData.emailAddress, getAccessToken);
 
       console.log("Delete response: " + JSON.stringify(response));
       setShowDeleteModal(false);
@@ -64,21 +64,23 @@ function LdapUserSummaryPanel({ ldapUserData, setLdapUserData } ) {
 
   return (
     <>
+      {console.log(JSON.stringify(ldapUserData))}
       {showDeleteModal ? <Modal header="Confirm LDAP User Delete"
         message="Warning! Data cannot be recovered once this user is deleted. Do you still want to proceed?"
         button="Confirm"
         handleCancelModal={() => setShowDeleteModal(false)}
         handleConfirmModal={() => deleteLdapUser(ldapUserData)} /> : null}
-      { Object.keys(ldapUserData).length > 0  && <>
+      { ldapUserData && <>
         <div className="scroll-y pt-3 px-3">
 
           <div className="mb-3 flat-top-content-block p-3">
             <div className="mb-2 text-muted">
-              <OverlayTrigger
-                placement="top"
-                delay={{ show: 250, hide: 400 }}
-                overlay={renderTooltip({ message: "Delete this user" })} >
-                <FontAwesomeIcon icon={faTrash} className="pointer red float-right ml-3" onClick={() => {handleDeleteClick(ldapUserData);}}/></OverlayTrigger>
+              {/*TODO: Implement delete when needed*/}
+              {/*<OverlayTrigger*/}
+              {/*  placement="top"*/}
+              {/*  delay={{ show: 250, hide: 400 }}*/}
+              {/*  overlay={renderTooltip({ message: "Delete this user" })} >*/}
+              {/*  <FontAwesomeIcon icon={faTrash} className="pointer red float-right ml-3" onClick={() => {handleDeleteClick(ldapUserData);}}/></OverlayTrigger>*/}
               {/*TODO: Implement and add confirmation Modal?*/}
               {/*<OverlayTrigger*/}
               {/*  placement="top"*/}
@@ -99,9 +101,6 @@ function LdapUserSummaryPanel({ ldapUserData, setLdapUserData } ) {
               <Col>
                 <TextField field={fields["name"]} value={ldapUserData.name} />
               </Col>
-              <Col>
-                <TextField field={fields["departmentName"]} value={ldapUserData.departmentName} />
-              </Col>
             </Row>
             <Row>
               <Col>
@@ -114,6 +113,11 @@ function LdapUserSummaryPanel({ ldapUserData, setLdapUserData } ) {
               {/*  <DateField field="createdAt" value={tagData.createdAt} />*/}
               {/*</Col>*/}
             </Row>
+            <Row>
+              <Col>
+                <TextField field={fields["departmentName"]} value={ldapUserData.departmentName} />
+              </Col>
+            </Row>
           </div>
         </div>
       </>}
@@ -124,7 +128,7 @@ function LdapUserSummaryPanel({ ldapUserData, setLdapUserData } ) {
 LdapUserSummaryPanel.propTypes = {
   ldapUserData: PropTypes.object,
   fields: PropTypes.object,
-  setLdapUserData: PropTypes.func
+  setLdapUserData: PropTypes.func,
 };
 
 
