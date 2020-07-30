@@ -4,7 +4,7 @@ export const ldapCustomerOnboardFormFields = {
     label: "Opsera Customer Record",
     id: "opseraId",
     rules: {
-      // isRequired: true
+      isRequired: true
     }
   },
   //TODO: Confirm field labels
@@ -99,8 +99,16 @@ export const ldapCustomerOnboardFormFields = {
       // isRequired: true
     }
   },
+  users: {
+    label: "LDAP Users",
+    id: "users",
+    rules: {
+      // isRequired: true
+    }
+  },
 };
 
+// TODO: Use
 export const ldapCustomerOnboardUserFormFields = {
   name: {
     label: "User Name",
@@ -144,7 +152,7 @@ export const ldapCustomerOrgFormFields = {
     label: "Name",
     id: "name",
     rules: {
-      // isRequired: true
+      isRequired: true
     }
   },
   orgName: {
@@ -197,7 +205,7 @@ export const ldapCustomerOrgFormFields = {
     }
   },
   subscription: {
-    label: "Subscription",
+    label: "Subscriptions",
     id: "subscription",
     rules: {
       // isRequired: true

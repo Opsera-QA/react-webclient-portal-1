@@ -130,6 +130,7 @@ function LdapUserManagement() {
                 {isOpseraUser && organizationList && <DropdownList
                   data={organizationList}
                   value={currentOrganizationEmail}
+                  filter="contains"
                   valueField='id'
                   textField='text'
                   placeholder="Select an Organization Account"

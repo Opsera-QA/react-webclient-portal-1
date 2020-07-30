@@ -6,6 +6,7 @@ import Row from "react-bootstrap/Row";
 import { AuthContext } from "../../../contexts/AuthContext";
 import accountsActions from "../accounts-actions";
 import TextInput from "../../common/input/text-input";
+import Loading from "../../common/loading";
 import {
   ldapCustomerIdpAccountsFormFields,
   ldapCustomerOnboardFormFields,
@@ -13,6 +14,10 @@ import {
   ldapCustomerOrgFormFields
 } from "./ldap-customer-onboard-form-fields";
 import ToggleInput from "../../common/input/toggle-input";
+import SelectInput from "../../common/input/select-input";
+import DropdownList from "react-widgets/lib/DropdownList";
+import ItemInput from "../../common/input/item-input";
+import UserInput from "./user-input";
 
 const INITIAL_DATA = {
   opseraId: "",
@@ -27,9 +32,9 @@ const INITIAL_DATA = {
   configEntryType: "",
   entityID: "",
   isMultipleIDP: false,
-  idpReturnAttributes: {},
+  idpReturnAttributes: [],
   orgDomain: "",
-  users: [{}],
+  users: [],
   orgs: {
     description: "",
     envCount: "",
@@ -38,7 +43,7 @@ const INITIAL_DATA = {
     orgName: "",
     orgOwner: "",
     orgOwnerEmail: "",
-    subscription: {},
+    subscription: [],
   },
   idpAccounts: {
     name: "",
@@ -61,6 +66,8 @@ function LdapCustomerOnboardEditorPanel({ ldapUserData, newLdapUser, setLdapUser
   const [idpFields, setIdpFields ] = useState({ ...ldapCustomerIdpAccountsFormFields });
   const [ changeMap, setChangeMap] = useState({});
   const [ formData, setFormData] = useState(INITIAL_DATA);
+  const [ opseraUserList, setOpseraUsersList] = useState([]);
+  const [ currentOpseraUser, setCurrentOpseraUser ] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -68,7 +75,8 @@ function LdapCustomerOnboardEditorPanel({ ldapUserData, newLdapUser, setLdapUser
   }, []);
 
   const loadData = async (ldapUserData) => {
-    // setIsLoading(true);
+    setIsLoading(true);
+    await loadOpseraUsers();
     // await unpackLdapUserData(ldapUserData);
     setIsLoading(false);
   };
@@ -84,47 +92,70 @@ function LdapCustomerOnboardEditorPanel({ ldapUserData, newLdapUser, setLdapUser
     // setIsLoading(false);
   };
 
+
+  const loadOpseraUsers = async () => {
+    const response = await accountsActions.getUsers(getAccessToken);
+    // console.log("Opsera Users: \n" + JSON.stringify(response.data));
+
+    let parsedUserNames = [];
+    Object.keys(response.data["users"]).length > 0 && response.data["users"].map(user =>
+    {
+      parsedUserNames.push({ text: ("Name: " + user["firstName"] + " " + user["lastName"]),  id: user });
+    });
+    console.log("Parsed Organization Names: " + JSON.stringify(parsedUserNames));
+    setOpseraUsersList(parsedUserNames);
+  };
+
+  // TODO: If these will be used for editing, implement a change map
+  //Look at tag admin for example
   const setFormField = (field, value) => {
     console.log("Setting form field: " + field + " value: " + JSON.stringify(value));
-
-    if (value === ldapUserData[field])
-    {
-      console.log("Removing " + field + " from change map");
-      delete changeMap[field];
-    }
-    else
-    {
-      console.log("Added " + field + " to change map: " + value);
-      changeMap[field] = value;
-      setChangeMap({ ...changeMap });
-    }
-
     formData[field] = value;
     setFormData({ ...formData });
+  };
 
+  const setOrgFormField = (field, value) => {
+    console.log("Setting orgs form field: " + field + " value: " + JSON.stringify(value));
+    formData["orgs"][field] = value;
+    setFormData({ ...formData, orgs: formData["orgs"] });
+    console.log("FormData; " + JSON.stringify(formData));
+  };
 
-    console.log("ChangeMap: " + JSON.stringify(changeMap));
+  const setIdpFormField = (field, value) => {
+    console.log("Setting form field: " + field + " value: " + JSON.stringify(value));
+    formData["idpAccounts"][field] = value;
+    setFormData({ ...formData, idpAccounts: formData["idpAccounts"] });
+  };
 
-    // TODO: If we use this form for editing a user, uncomment this and make sure to pass in the boolean
-    // if (newLdapUser)
-    // {
-    ldapUserData[field] = value;
-    setLdapUserData({ ...ldapUserData });
-    // }
+  const addAdmin = (user) => {
+    let currentUsers = formData["users"];
+
+    let newUser = {
+      name: user.accountName,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      emailAddress: user.emailAddress,
+      departmentName: user.organizationName
+    };
+
+    // TODO: Check for existing admin and remove that
+    currentUsers.unshift(newUser);
+    setFormData({ ...formData, users: currentUsers });
+    console.log("Current Users: " + JSON.stringify(currentUsers));
   };
 
   //TODO: Check fields
   const isFormValid = true;
 
-  const createTag = async (newLdapUserData) => {
+  const createLdap = async (newLdapUserData) => {
     console.log("Persisting new user to DB: " + JSON.stringify(newLdapUserData));
 
     if(isFormValid) {
-      let createTagResponse = await accountsActions.create(newLdapUserData, getAccessToken);
-      console.log("createTagResponse: ", JSON.stringify(createTagResponse));
+      let createLdapResponse = await accountsActions.create(newLdapUserData, getAccessToken);
+      console.log("createLdapResponse: ", JSON.stringify(createLdapResponse));
 
-      if (createTagResponse.error != null) {
-        const errorMsg = `Microservice error reported creating the tag: ${newLdapUserData.key}.  Error returned: ${JSON.stringify(createTagResponse.error.message, null, 2)}`;
+      if (createLdapResponse.error != null) {
+        const errorMsg = `Microservice error reported creating the organization for : ${newLdapUserData.accountName}.  Error returned: ${JSON.stringify(createLdapResponse.error.message, null, 2)}`;
         console.log(errorMsg);
         setErrors(errorMsg);
       }
@@ -151,9 +182,21 @@ function LdapCustomerOnboardEditorPanel({ ldapUserData, newLdapUser, setLdapUser
 
   };
 
+  const handleOpseraUserChange = (selectedOption) => {
+    let option = selectedOption.id;
+    console.log("Setting opsera account to: " + JSON.stringify(selectedOption));
+    console.log("option.organizationName: " + option["organizationName"]);
+    setCurrentOpseraUser(option);
+    setOrgFormField("orgName", option["organizationName"]);
+    setOrgFormField("orgOwnerEmail", option["email"]);
+    setFormField("orgDomain", option["domain"]);
+    addAdmin(option);
+    // setUserFormField()
+  };
+
   return (
     <>
-      {/*{isLoading ? <Loading size="sm" /> : null}*/}
+      {isLoading ? <Loading size="sm" /> : null}
 
       {!isLoading && <>
         <div className="scroll-y full-height">
@@ -162,55 +205,62 @@ function LdapCustomerOnboardEditorPanel({ ldapUserData, newLdapUser, setLdapUser
           </>}
           <Row>
             <Col>
-              {/*TODO: Make select, pull from /users/get-users/ and record _id for field*/}
-              {/* Make sure to pass in large number (1000) because of paging */}
-              <TextInput field={ fields.opseraId } setData={setFormField} formData={formData}/>
+              <div className="custom-select-input">
+                <label className="mt-0"><span>{fields["opseraId"].label}{fields["opseraId"].rules.isRequired ? <span className="danger-red">*</span> : null } </span></label>
+                <DropdownList
+                  data={opseraUserList}
+                  valueField='value'
+                  textField='text'
+                  filter='contains'
+                  defaultValue={undefined}
+                  onChange={handleOpseraUserChange}
+                />
+              </div>
             </Col>
           </Row>
 
           {/*"org" portion TODO: Should we create separate panels?*/}
           <Row>
             <Col>
-              <TextInput field={ orgFields.description } setData={setFormField} formData={formData["orgs"]}/>
+              <TextInput field={ orgFields.description } setData={setOrgFormField} formData={formData["orgs"]}/>
             </Col>
           </Row>
           <Row>
             <Col>
-              <TextInput field={ orgFields.envCount } setData={setFormField} formData={formData["orgs"]}/>
+              <TextInput field={ orgFields.envCount } setData={setOrgFormField} formData={formData["orgs"]}/>
             </Col>
           </Row>
           <Row>
             <Col>
-              <TextInput field={ orgFields.numberOfLicenses } setData={setFormField} formData={formData["orgs"]}/>
+              <TextInput field={ orgFields.numberOfLicenses } setData={setOrgFormField} formData={formData["orgs"]}/>
             </Col>
           </Row>
           <Row>
             <Col>
-              <TextInput field={ orgFields.objectCount } setData={setFormField} formData={formData["orgs"]}/>
+              <TextInput field={ orgFields.objectCount } setData={setOrgFormField} formData={formData["orgs"]}/>
             </Col>
           </Row>
           <Row>
             <Col>
-              <TextInput field={ orgFields.orgName } setData={setFormField} formData={formData["orgs"]}/>
+              <TextInput field={ orgFields.orgName } setData={setOrgFormField} formData={formData["orgs"]}/>
             </Col>
           </Row>
           {/*Populate from dropdown TODO: Disable?*/}
           <Row>
             <Col>
-              <TextInput field={ orgFields.orgOwner } setData={setFormField} formData={formData["orgs"]}/>
+              <TextInput field={ orgFields.orgOwner } setData={setOrgFormField} formData={formData["orgs"]}/>
             </Col>
           </Row>
           <Row>
             <Col>
-              <TextInput field={ orgFields.orgOwnerEmail } setData={setFormField} formData={formData["orgs"]}/>
+              <TextInput field={ orgFields.orgOwnerEmail } setData={setOrgFormField} formData={formData["orgs"]}/>
             </Col>
           </Row>
-          {/*TODO: Make multi-entry like old tag ui*/}
-          {/*<Row>*/}
-          {/*  <Col>*/}
-          {/*    <TextInput field={ orgFields.subscription } setData={setFormField} formData={formData["org"]}/>*/}
-          {/*  </Col>*/}
-          {/*</Row>*/}
+          <Row>
+            <Col>
+              <ItemInput field={ orgFields.subscription } setData={setOrgFormField} formData={formData["orgs"]}/>
+            </Col>
+          </Row>
 
           {/*Top level fields*/}
           <Row>
@@ -268,24 +318,21 @@ function LdapCustomerOnboardEditorPanel({ ldapUserData, newLdapUser, setLdapUser
               <ToggleInput field={ fields.isMultipleIDP } setData={setFormField} formData={formData}/>
             </Col>
           </Row>
-
-          {/*TODO: Make multi-entry like old tag ui*/}
-          {/*<Row>*/}
-          {/*  <Col>*/}
-          {/*    <TextInput field={ fields.idpReturnAttributes } setData={setFormField} formData={formData}/>*/}
-          {/*  </Col>*/}
-          {/*</Row>*/}
           <Row>
             <Col>
-              <ToggleInput field={ fields.orgDomain } setData={setFormField} formData={formData}/>
+              <ItemInput field={ fields.idpReturnAttributes } setData={setFormField} formData={formData}/>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <TextInput field={ fields.orgDomain } setData={setFormField} formData={formData}/>
             </Col>
           </Row>
 
           {/*"Users" section*/}
           <Row>
             <Col>
-              {/* TODO: Make way to input multiple users*/}
-              {/*<ToggleInput field={ fields.users } setData={setFormField} formData={formData}/>*/}
+              <UserInput opseraUser={currentOpseraUser} field={ fields.users } setData={setFormField} formData={formData}/>
             </Col>
           </Row>
 
@@ -332,7 +379,7 @@ function LdapCustomerOnboardEditorPanel({ ldapUserData, newLdapUser, setLdapUser
           </Row>
           <Row>
             <div className="ml-auto px-3">
-              {newLdapUser ? <Button size="sm" variant="primary" disabled={Object.keys(changeMap).length === 0} onClick={() => createTag(ldapUserData)}>Create LDAP User</Button>
+              {newLdapUser ? <Button size="sm" variant="primary" onClick={() => createLdap(ldapUserData)}>Create LDAP User</Button>
                 : <Button size="sm" variant="primary" disabled={Object.keys(changeMap).length === 0} onClick={() => updateLdapUser(ldapUserData)}>Save changes</Button>
               }
             </div>
@@ -352,7 +399,7 @@ LdapCustomerOnboardEditorPanel.propTypes = {
 };
 
 LdapCustomerOnboardEditorPanel.defaultProps = {
-  newLdapUser: false
+  newLdapUser: true,
 };
 
 export default LdapCustomerOnboardEditorPanel;

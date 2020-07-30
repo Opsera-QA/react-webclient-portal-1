@@ -7,22 +7,22 @@ import LdapUserDetailPanel from "./LdapUserDetailPanel";
 import accountsActions from "../../accounts-actions";
 
 function LdapUserDetailView() {
+  const { id } = useParams();
   const { getUserRecord, getAccessToken } = useContext(AuthContext);
   const [ldapUserData, setLdapUserData] = useState(undefined);
-  const { id } = useParams();
   const [canDelete, setCanDelete] = useState(false);
   const [ isAdminCheck, setAdminStatus] = useState(false);
   const [error, setError] = useState(false); //if any errors on API call or anything else need to be shown to use, this is used
 
   useEffect(() => {
-    getLdapUser(id);
+    console.log("id: " + JSON.stringify(id));
     isAdmin(ldapUserData);
+    getLdapUser(id);
   }, []);
 
-  const getLdapUser = async (userId) => {
-    // TODO: Add LdapUser APi Call
-    const response = await accountsActions.getUser(userId, getAccessToken);
-    setLdapUserData(response.data.length > 0 ? response.data[0] : null);
+  const getLdapUser = async (userEmail) => {
+    const response = await accountsActions.getUserByEmail({ email: userEmail }, getAccessToken);
+    setLdapUserData(response.data);
   };
 
   // TODO: Remove if unnecessary
@@ -48,25 +48,25 @@ function LdapUserDetailView() {
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
           <li className="breadcrumb-item">
-            <Link to="/admin">Admin</Link>
+            <Link to="/accounts">Account Management</Link>
           </li>
           <li className="breadcrumb-item">
-            <Link to="/admin/tags">Tag Management</Link>
+            <Link to="/accounts/users">Users </Link>
           </li>
-          <li className="breadcrumb-item active">Tags</li>
+          <li className="breadcrumb-item active">User Details</li>
         </ol>
       </nav>
 
       {/*TODO: Add isLoading pinwheel*/}
       {ldapUserData &&
       <div className="content-container content-card-1 max-content-width ml-2">
-        <div className="pt-2 pl-2 content-block-header"><h5>LDAP User Details [{ldapUserData && ldapUserData.key}]</h5></div>
+        <div className="pt-2 pl-2 content-block-header"><h5>LDAP User Details [{ldapUserData && ldapUserData.name}]</h5></div>
         {error &&
         <div className="absolute-center-content"><ErrorDialog align="center" error={error.message}></ErrorDialog></div>}
         <div>
           <div>
             <div>
-              <LdapUserSummaryPanel tagData={ldapUserData}/>
+              <LdapUserSummaryPanel ldapUserData={ldapUserData}/>
             </div>
             <div>
               <LdapUserDetailPanel

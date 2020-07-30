@@ -21,19 +21,20 @@ const accountsActions = {};
 //   return response;
 // };
 //
-// accountsActions.updateUser = async (userId, postBody, getAccessToken) => {
-//   const accessToken = await getAccessToken();
-//   const apiUrl = `/users/${userId}/update/`;
-//   const response = await axiosApiService(accessToken).post(apiUrl, postBody)
-//     .then((result) =>  {return result;})
-//     .catch(error => {return { error };});
-//   return response;
-// };
+accountsActions.updateUser = async (userId, postBody, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/users/${userId}/update/`;
+  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
+    .then((result) =>  {return result;})
+    .catch(error => {return { error };});
+  return response;
+};
 
 // TODO: Add ?hidden=true if needed
+// TODO: add manual options
 accountsActions.getUsers = async (getAccessToken) => {
   const accessToken = await getAccessToken();
-  const apiUrl = "/users/get-users";
+  const apiUrl = "/users/get-users?page=1&size=10000`;";
   const response = await axiosApiService(accessToken).get(apiUrl)
     .then((result) =>  {return result;})
     .catch(error => {return { error };});
@@ -98,7 +99,16 @@ accountsActions.getOrganizations = async (getAccessToken) => {
 
 accountsActions.getOrganizationByEmail = async (postBody, getAccessToken) => {
   const accessToken = await getAccessToken();
-  const apiUrl = "/users/account/";
+  const apiUrl = "/users/account";
+  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
+    .then((result) =>  {return result;})
+    .catch(error => {return { error };});
+  return response;
+};
+
+accountsActions.getUserByEmail = async (postBody, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = "/users/account/user";
   const response = await axiosApiService(accessToken).post(apiUrl, postBody)
     .then((result) =>  {return result;})
     .catch(error => {return { error };});
