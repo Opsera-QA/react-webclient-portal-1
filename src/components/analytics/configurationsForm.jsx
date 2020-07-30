@@ -4,7 +4,7 @@ import { Accordion, Card, Form, Button, Row, Col } from "react-bootstrap";
 import ErrorDialog from "../common/error";
 import InfoDialog from "../common/info";
 import Modal from "../common/modal";
-import { ApiService } from "../../api/apiService";
+import { ApiService, axiosApiService } from "../../api/apiService";
 import { format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faAngleDown } from "@fortawesome/free-solid-svg-icons";
@@ -43,6 +43,7 @@ const TOOL_OPTIONS = [
 ];
 
 function ConfigurationsForm({ settings, token }) {
+  console.log(settings)
   const [state, setState] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     { loaded: true, showModal: false, error: null, info: null, messages: null, data: INITIAL_SETTINGS, editSettings: false }
@@ -56,11 +57,12 @@ function ConfigurationsForm({ settings, token }) {
     }
   }, [settings]);
 
-  function updateProfile() {
+  async function updateProfile() {
     let { data } = state;
     data.active = true;
+    data.enabledToolsOn = new Date().toISOString();
     setState({ ...state, data });
-    postData();
+    await postData(data);
   }
 
   function confirmDeactivation() {
@@ -69,28 +71,23 @@ function ConfigurationsForm({ settings, token }) {
     setState({ ...state, messages, showModal: true });
   }
 
-  function disableProfile() {
+  async function disableProfile() {
     let { data } = state;
     data.active = false;
     setState({ data, showModal: false });
-    postData();
+    await postData(data);
   }
 
-  function postData() {
+  async function postData(postBody) {
     setState({ loaded: false, error: null, info: null });
-    const body = state.data;
-    const apiCall = new ApiService("/analytics/update", {}, token, body);
-    apiCall.post()
-      .then(function (response) {
-        console.debug(response);
-        setState({ info : "Your analytics profile has been updated successfully." });
-      })
-      .catch(function (error) {
-        setState({ error: error });
-      }).finally(function () {
-        setState({ loaded: true });
-      });
+    console.log("postBody", postBody)
+    const apiUrl = `/analytics/profile/${settings._id}/update`;
+    const res = await axiosApiService(token).post(apiUrl, postBody);
+    console.log(res);
+    setState({ info : "Your analytics profile has been updated successfully." });
+    setState({ loaded: true });
   }
+
   function handleCancel() { setState({ showModal: false }); }
 
   function handleOptionChange(changeEvent) {
@@ -146,7 +143,8 @@ function ConfigurationsForm({ settings, token }) {
         handleCancelModal={handleCancel}
         handleConfirmModal={disableProfile} /> : null}
 
-      {!active || (enabledToolsOn && enabledToolsOn.length === 0) ?
+
+      {!settings.enabledToolsOn ?
         <Card>
           <Card.Body>
             <Card.Title>Getting Started</Card.Title>
@@ -181,7 +179,7 @@ function ConfigurationsForm({ settings, token }) {
               <Card.Body>
                 <Form>
                   <fieldset>
-                    <div className="mt-1 text-muted">Tools:</div>
+                    {/*<div className="mt-1 text-muted">Tools:</div>
                     <div key="checkbox-tools" className="mb-1 mt-2 p-2">
                       <Multiselect
                         data={TOOL_OPTIONS} 
@@ -192,7 +190,7 @@ function ConfigurationsForm({ settings, token }) {
                         defaultValue={enabledTools.length > 0 ? TOOL_OPTIONS.filter(e => enabledTools ? enabledTools.indexOf(e.value) !== -1 : TOOL_OPTIONS[0]) : []}
                         onChange={handleMultiSelectToolChange}             
                       />
-                    </div>
+                    </div>*/}
 
                     <div className="mt-3 text-muted">Workflow:</div>
                     <div key="inline-checkbox-workflow" className="mb-1 mt-2 p-2">

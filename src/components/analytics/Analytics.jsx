@@ -62,8 +62,6 @@ function Analytics() {
   const [token, setToken] = useState();
   const [selection, setSelection] = useState("pipeline");
   const [profile, setProfile] = useState({});
-  const [isEnabled, setIsEnabled] = useState(true);
-  const [enabledOn, setEnabledOn] = useState(true);
   const [label, setLabel] = useState("Last 3 Months");
   const [date, setDate] = useState({
     start: "now-90d",
@@ -173,14 +171,6 @@ function Analytics() {
   async function fetchData() {
     setLoadingProfile(true);
     const { getAccessToken } = contextType;  //getIsPreviewRole
-
-    //this returns true IF the Okta groups for user contains "Preview".  Please wrap display components in this.
-    /* const isPreviewRole = await getIsPreviewRole();
-    setPreviewRole(isPreviewRole);
-    if (isPreviewRole) {
-      console.log("Enabling Preview Feature Toggle. ", isPreviewRole);
-    } */
-
     const accessToken = await getAccessToken();
     const apiUrl = "/analytics/settings";
     setToken(accessToken);
@@ -188,8 +178,6 @@ function Analytics() {
       const profile = await axiosApiService(accessToken).get(apiUrl);
       console.log("Profile: ", profile.data);
       setProfile(profile.data);
-      setIsEnabled(profile.data.profile !== undefined && profile.data.profile.length > 0  ? profile.data.profile[0].active : false);
-      setEnabledOn(profile.data.profile !== undefined && profile.data.profile.length > 0 ? (profile.data.profile[0].enabledToolsOn && profile.data.profile[0].enabledToolsOn.length !== 0) ? true : false : false);
 
 
       setData(profile && profile.data.profile[0]);
@@ -230,7 +218,75 @@ function Analytics() {
       <>
         {loadingProfile ? <LoadingDialog size="lg" /> : null }
         {error ? <ErrorDialog error={error} /> : null}
-        { !isEnabled || !enabledOn || profile.esSearchApi === null || profile.vault !== 200 || profile.esSearchApi.status !== 200 ? 
+
+        { !profile.enabledToolsOn && <>
+          <div style={{ height: "250px" }} className="max-content-module-width-50">
+            <div className="max-content-width">
+              <h4>Analytics</h4>
+              <p>OpsERA provides users with access to a vast repository of logging and analytics.  Access all available
+                logging, reports and configurations around the OpsERA Analytics Platform or search your
+                currently configured logs repositories below.</p>
+            </div>
+            <div className="mt-1 max-content-width mb-1">
+              <ConfigurationsForm settings={data} token={token} />
+            </div>
+          </div>
+          </>}
+
+        { profile.enabledToolsOn && <>
+            <div className="mt-3">
+              <div className="max-content-width">
+                <h4>Analytics</h4>
+                <p>OpsERA provides users with access to a vast repository of logging and analytics.  Access all available
+                  logging, reports and configurations around the OpsERA Analytics Platform or search your
+                  currently configured logs repositories below.</p>
+              </div>
+              <div className="p-2 mt-1 max-content-width mb-1">
+                <ConfigurationsForm settings={data} token={token} />
+              </div>
+
+              <div className="p-2">
+
+                <div className="mt-1">
+                  <Row>
+
+                    <Col sm={8}>
+                      <ListGroup horizontal>
+                        <ListGroup.Item className={"pointer " + (selection === "pipeline" ? "active" : "")} onClick={handleTabClick("pipeline")}>Pipeline</ListGroup.Item>
+                        <ListGroup.Item className={"pointer " + (selection === "security" ? "active" : "")} onClick={handleTabClick("security")}>Security</ListGroup.Item>
+                        <ListGroup.Item className={"pointer " + (selection === "software_development" ? "active" : "")} onClick={handleTabClick("software_development")}>Software Development</ListGroup.Item>
+                        <ListGroup.Item className={"pointer " + (selection === "software_testing" ? "active" : "")} onClick={handleTabClick("software_testing")}>Software Testing</ListGroup.Item>
+                        <ListGroup.Item className={"pointer " + (selection === "source_code" ? "active" : "")} onClick={handleTabClick("source_code")}>Source Code</ListGroup.Item>
+                      </ListGroup>
+                    </Col>
+                    <Col sm={3}>
+                      <OverlayTrigger
+                        placement="top"
+                        delay={{ show: 250, hide: 250 }}
+                        overlay={renderTooltip}
+                      >
+                        <DropdownList filter
+                                      data={DATELABELS}
+                                      className="max-content-width"
+                                      valueComponent={ValueInput}
+                                      textField='label'
+                                      allowCreate="onFilter"
+                                      onCreate={handleCreate}
+                                      defaultValue={date ?  DATELABELS.find(o => o.value.start === date.start && o.value.end === date.end) : DATELABELS[5]}
+                                      onChange={handleDateChange}
+                        />
+                      </OverlayTrigger>
+                    </Col>
+                  </Row>
+                </div>
+                <div className="mt-3">
+                  <ChartView token={token} selection={selection} persona={null} date={date} index={index} />
+                </div>
+              </div>
+            </div>
+          </>}
+{/*
+        { !enabledOn || profile.esSearchApi === null || profile.vault !== 200 || profile.esSearchApi.status !== 200 ?
           <div style={{ height: "250px" }} className="max-content-module-width-50">
             <div className="max-content-width">
               <h4>Analytics</h4>
@@ -274,59 +330,8 @@ function Analytics() {
               </div>
             </div>
           </div> :
-          <>
-            <div className="mt-3">
-              <div className="max-content-width">
-                <h4>Analytics</h4>
-                <p>OpsERA provides users with access to a vast repository of logging and analytics.  Access all available
-           logging, reports and configurations around the OpsERA Analytics Platform or search your
-          currently configured logs repositories below.</p>
-              </div>
-              <div className="p-2 mt-1 max-content-width mb-1">
-                <ConfigurationsForm settings={data} token={token} />
-              </div>
-  
-              <div className="p-2">
-  
-                <div className="mt-1">
-                  <Row>
-                  
-                    <Col sm={8}>
-                      <ListGroup horizontal>
-                        <ListGroup.Item className={"pointer " + (selection === "pipeline" ? "active" : "")} onClick={handleTabClick("pipeline")}>Pipeline</ListGroup.Item>
-                        <ListGroup.Item className={"pointer " + (selection === "security" ? "active" : "")} onClick={handleTabClick("security")}>Security</ListGroup.Item>
-                        <ListGroup.Item className={"pointer " + (selection === "software_development" ? "active" : "")} onClick={handleTabClick("software_development")}>Software Development</ListGroup.Item>
-                        <ListGroup.Item className={"pointer " + (selection === "software_testing" ? "active" : "")} onClick={handleTabClick("software_testing")}>Software Testing</ListGroup.Item>
-                        <ListGroup.Item className={"pointer " + (selection === "source_code" ? "active" : "")} onClick={handleTabClick("source_code")}>Source Code</ListGroup.Item>
-                      </ListGroup>
-                    </Col>
-                    <Col sm={3}>
-                      <OverlayTrigger
-                        placement="top"
-                        delay={{ show: 250, hide: 250 }}
-                        overlay={renderTooltip}
-                      >
-                        <DropdownList filter
-                          data={DATELABELS} 
-                          className="max-content-width"
-                          valueComponent={ValueInput}
-                          textField='label'
-                          allowCreate="onFilter"
-                          onCreate={handleCreate}
-                          defaultValue={date ?  DATELABELS.find(o => o.value.start === date.start && o.value.end === date.end) : DATELABELS[5]}
-                          onChange={handleDateChange}             
-                        />
-                      </OverlayTrigger>
-                    </Col> 
-                  </Row>
-                </div>
-                <div className="mt-3">
-                  <ChartView token={token} selection={selection} persona={null} date={date} index={index} />
-                </div>
-              </div>
-            </div>
-          </>
-        }
+          */}
+
       </>
     );
   }
