@@ -28,7 +28,8 @@ function SelectInput({ field, formData, setData, groupBy, selectOptions }) {
               filter='contains'
               groupBy={groupBy}
               // TODO: Get initial value set and test when we replace one of the scenarios Todd mentioned
-              defaultValue={selectOptions[0]}
+              defaultValue={formData[field.id]}
+              placeholder="Select One"
               onChange={e => validateAndSetData(field, e.value)}
             />
             <div className="invalid-feedback">
