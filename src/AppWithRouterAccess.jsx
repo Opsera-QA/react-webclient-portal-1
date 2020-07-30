@@ -41,8 +41,8 @@ import LdapOrganizationsView from "./components/accounts/LdapOrganizationsView";
 import LdapAccountsView from "./components/accounts/LdapAccountsView";
 import LdapCustomerOnboardView from "./components/accounts/ldap_customer_onboard/LdapCustomerOnboard";
 
-import FreeTrialRegistration from "./components/freeTrial/Registration";
-import FreeTrialLanding from "./components/freeTrial/landing-page/Landing";
+import FreeTrialRegistration from "./components/free_trial/Registration";
+import FreeTrialLanding from "./components/free_trial/landing_page/Landing";
 
 import ApiConnectionDemo from "./components/api_connector/ApiDemo";
 import CommonTableDemo from "./components/common/samples/tableImplementation";
@@ -134,7 +134,7 @@ const AppWithRouterAccess = () => {
               <SecureRoute path="/accounts/organizations" exact component={LdapOrganizationsView} />
               <SecureRoute path="/accounts/organizations/detail/:id" exact component={LdapAccountsView} />
               <SecureRoute path="/accounts/users" exact component={LdapUserManagement} />
-              <SecureRoute path="/accounts/users/details/:id" exact component={LdapUserDetailView} />
+              <SecureRoute path="/accounts/users/:id" exact component={LdapUserDetailView} />
               <SecureRoute path="/accounts/create" exact component={LdapCustomerOnboardView} />
 
               <SecureRoute path="/accounts/groups" exact component={LdapGroupManagement} />

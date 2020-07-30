@@ -3,15 +3,12 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import ErrorDialog from "../../common/error";
 import LoadingDialog from "../../common/loading";
 import { Link } from "react-router-dom";
-import { Row, Col } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSitemap, faUserPlus, faUserFriends, faUser } from "@fortawesome/free-solid-svg-icons";
 import LdapCustomerOnboardEditorPanel from "./LdapCustomerOnboardEditorPanel";
 
 
 function LdapCustomerOnboard() {
   const [administrator, setAdministrator] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { getUserRecord } = useContext(AuthContext);
 
   useEffect(() => {
