@@ -402,7 +402,8 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
                                          className="text-muted mx-1" fixedWidth
                                          onClick={() => {
                                            handleEditClick("tool", item.tool, item._id);
-                                         }}/>
+                                         }}
+                        />
                       </OverlayTrigger>
                     </>
                     :
@@ -439,7 +440,8 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
         show={activityLogModal.slow}
         setParentVisibility={() => setActivityLogModal({ ...activityLogModal, show: false })}/>
 
-      {infoModal.show && <Modal header={infoModal.header} message={infoModal.message} button={infoModal.button} handleCancelModal={() => setInfoModal({ ...infoModal, show: false })}  />}
+      {infoModal.show && <Modal header={infoModal.header} message={infoModal.message} button={infoModal.button}
+                                handleCancelModal={() => setInfoModal({ ...infoModal, show: false })}/>}
 
       {showDeleteModal && <Modal header="Confirm Pipeline Step Delete"
                                  message="Warning! Data about this step cannot be recovered once it is deleted. Do you still want to proceed?"

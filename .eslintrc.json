@@ -5,8 +5,7 @@
     },
     "extends": [
         "prettier",
-        "plugin:react/recommended",
-        "eslint:recommended"
+        "plugin:react/recommended"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -32,8 +31,8 @@
          "paths": ["src"]
        }
      }
-    },
-    "rules": {
-        "prettier/prettier": ["error"]
     }
+    /*"rules": {
+        "prettier/prettier": ["error"]
+    }*/
 }
