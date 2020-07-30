@@ -22,13 +22,16 @@ function LdapAccountsView() {
   const [loading, setLoading] = useState(false); //this is how we toggle showing/hiding stuff when API calls or other functions are loading
   const [error, setError] = useState(false); //if any errors on API call or anything else need to be shown to use, this is used
 
-  const [organization, setOrganization] = useState({});
+  const [organization, setOrganization] = useState(null);
   const [activeTab, setActiveTab] = useState("accounts");
-  const [currentAccount, setCurrentAccount] = useState({});
+  const [currentAccount, setCurrentAccount] = useState(null);
 
   const handleTabClick = (event) => {
     event.preventDefault();
-    setActiveTab((activeTab === "accounts") ? "account-details" : "accounts");
+    if (currentAccount) { // Only changes tabs if their is a selected account
+      setActiveTab((activeTab === "accounts") ? "account-details" : "accounts");
+    }
+    
   };
 
   const handleAccountClick = (itemId) => {
@@ -110,9 +113,11 @@ function LdapAccountsView() {
 
             <div className="list-item-container">
               {
-                activeTab === "accounts" ?
-                  <LdapOrganizationAccounts accounts={ organization.orgAccounts } onClick={handleAccountClick} /> :
-                  <LdapOrganizationAccountDetails account={ currentAccount } />
+                ( organization ) ?
+                  activeTab === "accounts" ?
+                    <LdapOrganizationAccounts accounts={ organization.orgAccounts } onClick={handleAccountClick} /> :
+                    <LdapOrganizationAccountDetails account={ currentAccount } />
+                  : null
               }
             </div>
           </div>
