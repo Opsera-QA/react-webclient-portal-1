@@ -66,6 +66,9 @@ function LdapGroupDetails() {
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
           <li className="breadcrumb-item">
+            <Link to="/admin">Admin</Link>
+          </li> 
+          <li className="breadcrumb-item">
             <Link to="/accounts">Account Management</Link>
           </li> 
           <li className="breadcrumb-item"><Link to="/accounts/groups">Groups</Link></li>

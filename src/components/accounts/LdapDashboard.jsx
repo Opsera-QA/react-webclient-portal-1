@@ -32,7 +32,14 @@ function LdapDashboard() {
   } else {
     return (
       <>
-        
+      <nav aria-label="breadcrumb">
+        <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
+          <li className="breadcrumb-item">
+            <Link to="/admin">Admin</Link>
+          </li>           
+          <li className="breadcrumb-item active">User and Account Management</li>
+        </ol>
+      </nav>
         <div className="max-content-width ml-2 mt-1">
           <h5>User and Account Management</h5>
           <div>Manger organizations, accounts, groups and users from this dashboard.</div>
