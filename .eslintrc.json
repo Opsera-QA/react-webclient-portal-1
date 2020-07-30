@@ -4,8 +4,9 @@
         "es6": true
     },
     "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended"
+        "prettier",
+        "plugin:react/recommended",
+        "eslint:recommended"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -22,7 +23,8 @@
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
+        "prettier"
     ],
     "settings": {
      "import/resolver": {
@@ -30,35 +32,8 @@
          "paths": ["src"]
        }
      }
+    },
+    "rules": {
+        "prettier/prettier": ["error"]
     }
-    /*"rules": {
-        "indent": [ //have to disable as it conflicts with prettier
-            "error",
-            2
-        ],
-        "quotes": [
-            "error",
-            "double"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ],
-        "no-undef": "warn",
-        "object-curly-spacing": [
-            "error",
-            "always",
-            {
-                "arraysInObjects": true,
-                "objectsInObjects": true
-            }
-        ],
-        "comma-spacing": [
-            "error",
-            {
-                "before": false,
-                "after": true
-            }
-        ]
-    }*/
 }
