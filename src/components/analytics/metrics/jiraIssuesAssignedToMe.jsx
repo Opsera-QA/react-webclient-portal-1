@@ -1,16 +1,29 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, useMemo } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/loading";
 import InfoDialog from "../../common/info";
 import ErrorDialog from "../../common/error";
 import { Table }  from "react-bootstrap";
+import CustomTable from "components/common/table";
+
 
 function JiraIssuesAssignedToMe() {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const initialState = {
+    pageIndex: 0,
+    sortBy: [
+      {
+        id: "run_count",
+        desc: true
+      }
+    ]
+  }; 
+  const noDataMessage = "No Data is available for this chart at this time";
+
 
   useEffect(() => {    
     const controller = new AbortController();
@@ -58,52 +71,65 @@ function JiraIssuesAssignedToMe() {
       setLoading(false);
     }
   }
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: "Ticket Number",
+        accessor: "Issue Number",
+        class: "cell-center no-wrap-inline"
+      },
+      {
+        Header: "Issue Type",
+        accessor: "Issue Type",
+      },
+      {
+        Header: "Priority",
+        accessor: "Issue Priority",
+      },
+      {
+        Header: "Summary",
+        accessor: "Issue Name",
+      }
+    ],
+    []
+  );
   
   if(loading) {
     return (<LoadingDialog size="sm" />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
-  // } else if (typeof data !== "object" || data.jiraTicketsAssignedToMe === undefined || data.jiraTicketsAssignedToMe.status !== 200) {
-  //   return (<ErrorDialog  error="No Data is available for this chart at this time." />);
   } else {
     return (
+
       <>
-
-        <div className="chart mb-3 flex" style={{ height: "300px" }}>
-          <div className="chart-label-text">Jira: Issues Assigned To Me</div>
-          { (typeof data !== "object" || data.jiraTicketsAssignedToMe === undefined || data.jiraTicketsAssignedToMe.status !== 200) ?
-            <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
-              <InfoDialog message="No Data is available for this chart at this time." />
-            </div>
-            :
-            <div className="px-2">
-              <Table striped bordered hover className="mt-3 table-sm" style={{ fontSize:"small" }}>
-                <thead>
-                  <tr>
-                    <th style={{ width: "5%" }}>Ticket Number</th>
-                    <th style={{ width: "5%" }}>Issue Type</th>
-                    <th style={{ width: "5%" }}>Priority</th>
-                    <th style={{ width: "5%" }}>Summary</th>
-
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.jiraTicketsAssignedToMe.data.map(function (value, index) {
-                    return <tr key = {index}>
-                      <td>{value["Issue Number"]}</td>
-                      <td>{value["Issue Type"]}</td>
-                      <td>{value["Issue Priority"]}</td>
-                      <td>{value["Issue Name"]}</td>
-                    </tr>;
-                  })
-                  }
-                </tbody>
-              </Table> 
-            </div>
-          }
+      {(typeof data.jiraTicketsAssignedToMe !== "object" || data.jiraTicketsAssignedToMe === undefined || Object.keys(data.jiraTicketsAssignedToMe).length === 1 || data.jiraTicketsAssignedToMe.status !== 200) ?
+      <>
+        <div className="chart mb-3" style={{ height: "300px" }}>
+        <div className="chart-label-text">Jira: Issues Assigned To Me</div>
+          <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
+            <InfoDialog message="No Data is available for this chart at this time." />
+          </div>
         </div>
-
       </>
+  :
+    <>
+  <div className="d-flex justify-content-between">
+  <div className="h6 activity-label-text mb-2">Jira: Issues Assigned To Me</div>
+
+</div>
+      <CustomTable 
+        columns={columns} 
+        data={data.jiraTicketsAssignedToMe.data}
+        rowStyling={""}
+        noDataMessage={noDataMessage}
+        // initialState={initialState}
+        // paginationOptions={paginationOptions}
+      >
+      </CustomTable>
+    </>
+}
+</>
     );}
 }
 

@@ -24,7 +24,7 @@ import { Alert, OverlayTrigger, Tooltip, Row, Col } from "react-bootstrap";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import ConfigurationsForm from "../analytics/configurationsForm";
 
-const INDICES = ["jenkins", "opsera-pipeline-step-summary"];
+const INDICES = ["jenkins", "opsera-pipeline-step-summary", "jira", "sonar", "xunit", "junit", "jmeter", "heartbeat", "codeship", "gitlab"];
 const PERSONAS = [ { value: "developer", label: "Developer" }, { value: "manager", label: "Manager" }, { value: "executive", label: "Executive" }];
 const DATELABELS = [ { value: {
   start: "now-1h",
@@ -336,13 +336,13 @@ function DashboardView({ selection, persona, date, index }) {
     case "pipeline":
       return <PipelineDashboard_v2 persona={persona} date={date} index={index}/>;
     case "secops_v2":
-      return <SecOpsDashboard_v2 persona={persona} date={date}/>;
+      return <SecOpsDashboard_v2 persona={persona} date={date} index={index}/>;
     case "quality_v2":
-      return <QualityDashboard persona={persona} date={date}/>;
+      return <QualityDashboard persona={persona} date={date} index={index}/>;
     case "operations_v2":
-      return <OperationsDashboard persona={persona} />;
+      return <OperationsDashboard persona={persona} index={index}/>;
     case "planning":
-      return <PlanningDashboard persona={persona} date={date}/>;
+      return <PlanningDashboard persona={persona} date={date} index={index}/>;
     default:
       return null; 
     }

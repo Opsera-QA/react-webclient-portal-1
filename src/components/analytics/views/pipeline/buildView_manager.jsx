@@ -18,6 +18,8 @@ import OpseraBuildDurationBarChart from "../../charts/opseraBuildDurationBarChar
 import OpseraBuildsByUserBarChart from "../../charts/opseraBuildsByUserBarChart";
 import OpseraRecentPipelineStatus from "../../metrics/recentPipelineRunsTable.jsx";
 import OpseraDeploymentFrequencyLineChart from "../../charts/opseraDeploymentFrequencyLineChart.jsx";
+import {  Row } from "react-bootstrap";
+
 
 
 
@@ -176,11 +178,13 @@ function BuildView_Manager({ persona, date, index }) {
     return (<LoadingDialog />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
-  } else if (index.length === 0) {
+  } else if (!index.includes("opsera-pipeline-step-summary") && !index.includes("jenkins") && !index.includes("codeship")) {
     return (
-      <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
-        <InfoDialog message="No activity data has been captured for this dashboard." />
-      </div>);
+      <div className="mt-3 bordered-content-block p-3 max-content-width" style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}> 
+      <Row>
+          <InfoDialog message="No activity data has been captured for this dashboard. You must run a pipeline in order to activate pipeline metrics" />
+      </Row>
+    </div>);
   } else {
     return (
       <>

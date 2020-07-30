@@ -15,8 +15,13 @@ import JiraVelocityBarChart from "../../charts/jiraVelocityBarChart";
 import JiraIssuesAssignedToMe from "../../metrics/jiraIssuesAssignedToMe";
 import GitlabCommitsByRepositoryBarChart from "../../charts/gitlabCommitsByRepositoryBarChart";
 import GitlabLatestCommitTable from "../../metrics/gitlabLatestCommitTable";
+import InfoDialog from "../../../common/info";
+import { Row } from "react-bootstrap";
 
-function PlanningView_Developer ({ persona, date }) {
+
+
+
+function PlanningView_Developer ({ persona, date, index }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -41,7 +46,7 @@ function PlanningView_Developer ({ persona, date }) {
     return () => {
       controller.abort();
     };
-  }, [date, persona]);
+  }, [date, persona, index]);
 
   async function fetchData() {
     setLoading(true);
@@ -105,6 +110,15 @@ function PlanningView_Developer ({ persona, date }) {
     return (<LoadingDialog />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
+  } else if (!index.includes("jira") && !index.includes("gitlab")) {
+    return (
+    <div className="mt-3 bordered-content-block p-3 max-content-width" style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}> 
+    <Row>
+      <InfoDialog message="No activity data has been captured for this dashboard. In order to activate planning metrics contact support@opsera.io" />
+    </Row>
+    </div>
+      
+      );
   } else {
     return (
       <>
