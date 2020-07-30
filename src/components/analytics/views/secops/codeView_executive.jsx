@@ -13,10 +13,12 @@ import SonarCodeSmellsLineChart from "../../charts/sonarCodeSmellsLineChart";
 import SonarCodeCategoriesNO_VALUEPieChart from "../../charts/sonarCodeCategoriesNO_VALUEPieChart";
 import SonarCodeCategoriesOKPieChart from "../../charts/sonarCodeCategoriesOKPieChart";
 import TwistlockVulnerability from "../../charts/twistlockVulnerabilityLineChart";
+import {  Row } from "react-bootstrap";
 
 
 
-function CodeView_Executive ({ persona, date }) {
+
+function CodeView_Executive ({ persona, date, index }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -42,7 +44,7 @@ function CodeView_Executive ({ persona, date }) {
     return () => {
       controller.abort();
     };
-  }, [date, persona]);
+  }, [date, persona, index]);
 
   async function fetchData() {
     setLoading(true);
@@ -145,6 +147,21 @@ function CodeView_Executive ({ persona, date }) {
     return (<LoadingDialog />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
+  } else if (!index.includes("sonar")) {
+    return (
+      <div
+        className="mt-3 bordered-content-block p-3 max-content-width"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Row>
+          <InfoDialog message="No activity data has been captured for this dashboard. In order to activate secops metrics contact support@opsera.io" />
+        </Row>
+      </div>
+    );
   } else if (data === undefined || Object.keys(data).length == 0 || Object.values(data).every(element => Object.keys(element.data[0]).length === 0)
   || Object.values(data).every(element => element.status !== 200)) {
     return (<InfoDialog  message="No log activity has been captured for this dashboard yet." />);

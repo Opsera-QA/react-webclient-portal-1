@@ -8,9 +8,12 @@ import LoadingDialog from "../../../common/loading";
 import ErrorDialog from "../../../common/error";
 import SummaryCountBlocksView from "../summaryCountBlocksView";
 import TimeToRestoreBarChart from "../../charts/timeToRestoreBarChart.jsx";
+import InfoDialog from "../../../common/info";
+import {  Row } from "react-bootstrap";
 
 
-function OperationsView_Executive ({ persona }) {
+
+function OperationsView_Executive ({ persona, index }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -35,7 +38,7 @@ function OperationsView_Executive ({ persona }) {
     return () => {
       controller.abort();
     };
-  }, [persona]);
+  }, [persona, index]);
 
   async function fetchData() {
     setLoading(true);
@@ -84,11 +87,19 @@ function OperationsView_Executive ({ persona }) {
     return (<LoadingDialog />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
+  } else if (!index.includes("heartbeat") && !index.includes("opsera-pipeline-step-summary") && !index.includes("jenkins")) {
+    return (
+      <div className="mt-3 bordered-content-block p-3 max-content-width" style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}> 
+      <Row>
+          <InfoDialog message="No activity data has been captured for this dashboard. In order to activate operations metrics contact support@opsera.io" />
+      </Row>
+    </div>);
   } else {
     return (
       <> 
         <SummaryCountBlocksView data={countBlockData} />
 
+        {index.includes("heartbeat") && (
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
             <TimeToRestoreBarChart persona={persona}/>
@@ -97,6 +108,7 @@ function OperationsView_Executive ({ persona }) {
             {/* Self Contained Chart Component 2 */}
           </div>
         </div>
+        )}
 
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
