@@ -1,0 +1,9 @@
+.members-block {
+  border: 1px solid #ccc;
+  padding: 20px;
+}
+
+.members-title {
+  display: flex;
+  justify-content: space-between;
+}
