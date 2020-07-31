@@ -233,7 +233,7 @@ function DashboardHome() {
                       <ul className="list-group">
                         <li className="list-group-item d-flex justify-content-between align-items-center">
                     Your Analytics account must be enabled for yourself or your organization.
-                          {!profile.enabledToolsOn ?
+                          {profile.enabledToolsOn ?
                             <span className="badge badge-success badge-pill"><FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth /></span>  :
                             <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span> }
                         </li>
