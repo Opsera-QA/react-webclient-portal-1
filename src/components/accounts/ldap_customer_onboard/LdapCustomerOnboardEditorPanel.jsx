@@ -99,7 +99,7 @@ function LdapCustomerOnboardEditorPanel({ ldapUserData, newLdapUser, setLdapUser
     let parsedUserNames = [];
     Object.keys(response.data["users"]).length > 0 && response.data["users"].map(user =>
     {
-      parsedUserNames.push({ text: ("Name: " + user["firstName"] + " " + user["lastName"]),  id: user });
+      parsedUserNames.push({ text: (user["firstName"] + " " + user["lastName"])+ ": " + user["email"],  id: user });
     });
     console.log("Parsed Organization Names: " + JSON.stringify(parsedUserNames));
     setOpseraUsersList(parsedUserNames);
