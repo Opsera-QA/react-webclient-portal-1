@@ -102,8 +102,11 @@ function ConfigurationsForm({ settings, token }) {
   async function disableProfile() {
     let { data } = state;
     data.active = false;
+    data.enabledToolsOn = null;
+    data.disabledToolsOn = new Date().toISOString();
     setState({ data, showModal: false });
     await postData(data);
+    history.go(0);
   }
 
   async function postData(postBody) {
