@@ -26,6 +26,7 @@ function LdapGroupManage({ groupData, organization }) {
 
   const updateCheckedCell = (event, row) => {
     event.stopPropagation();
+    console.log(row)
     // let index = rowList.indexOf(row);
     //rowList[index][field] = event.target.checked;
   };
@@ -36,7 +37,7 @@ function LdapGroupManage({ groupData, organization }) {
         <Row>
           <Col xs={6}>
             <div className="members-block">
-              <div className="members-title">
+              <div className="members-title  mb-3">
                 <span>
                   <FontAwesomeIcon icon={faUser} fixedWidth className="mr-2" />
                   Not Members
@@ -46,10 +47,12 @@ function LdapGroupManage({ groupData, organization }) {
               <ul className="list-group my-1">
                 {Object.keys(organization.users).map((member, i) => {
                   return (
-                    <li key={i} className="list-group-item">
-                      <Form.Check type="checkbox" checked={member.value} onChange={e => updateCheckedCell(e, member)} style={{ textAlign: "center", padding: 0, marginTop: "8px" }} />
-                      <div>{organization.users[member].name}</div>
-                      <div className="text-muted">{organization.users[member].emailAddress}</div>
+                    <li key={i} className="member-list">
+                      <Form.Check type="checkbox" checked={member.value} onChange={e => updateCheckedCell(e, organization.users[member])} style={{ }} />
+                      <div className="ml-2">
+                        <div>{organization.users[member].name}</div>
+                        <div className="text-muted">{organization.users[member].emailAddress}</div>
+                      </div>
                     </li>
                   );
                 })}
@@ -58,7 +61,7 @@ function LdapGroupManage({ groupData, organization }) {
           </Col>
           <Col xs={6}>
             <div className="members-block">
-              <div className="members-title">
+              <div className="members-title mb-3">
                 <span>
                   <FontAwesomeIcon icon={faUser} fixedWidth className="mr-2" />
                   Members
@@ -68,9 +71,12 @@ function LdapGroupManage({ groupData, organization }) {
               <ul className="list-group my-1">
                 {Object.keys(groupData.members).map((member, i) => {
                   return (
-                    <li key={i} className="list-group-item">
+                    <li key={i} className="member-list">
+                      <div>
                       <div>{organization.users[member].name}</div>
                       <div className="text-muted">{organization.users[member].emailAddress}</div>
+                      </div>
+
                     </li>
                   );
                 })}

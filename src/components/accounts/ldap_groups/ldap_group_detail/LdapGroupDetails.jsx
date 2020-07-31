@@ -5,7 +5,7 @@ import Loading from "components/common/loading";
 import ErrorDialog from "components/common/error";
 import { Link, useParams } from "react-router-dom";
 import accountsActions from "components/accounts/accounts-actions.js";
-import TextField from "components/common/form-fields/text-field";
+import TextField from "components/common/form_fields/text-field";
 
 import LdapGroupMembership from "./LdapGroupMembership.jsx";
 import LdapGroupManage from "./LdapGroupManage.jsx";
