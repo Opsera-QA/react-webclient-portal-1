@@ -57,7 +57,7 @@ function UserInput({field, setData, formData}) {
             {formData[field.id].map((user, i) => (
               <Button key={user} variant="outline-secondary" className="mr-2" size="sm">
                 {user.administrator === true && "Admin: "}{user.firstName + " " + user.lastName}
-                {user.administrator === false &&
+                {user.administrator !== true &&
                 <span className="ml-2" onClick={() => {
                   removeUser(i);
                 }}><FontAwesomeIcon icon={faTimes} fixedWidth/></span>
@@ -67,7 +67,7 @@ function UserInput({field, setData, formData}) {
             <div className="text-right">
               <Button variant="primary" size="sm" onClick={() => setShowCreateUserModal(true)}
                       className="ml-3"><FontAwesomeIcon
-                icon={faPlus}/>Add LDAP User</Button>
+                icon={faPlus}/><span className="ml-2">Add LDAP User</span></Button>
             </div>
           </div>
           <Form.Control.Feedback type="invalid">

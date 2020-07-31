@@ -26,11 +26,11 @@ function ToggleInput({ field, formData, setData }) {
             </Form.Label>
             <Form.Check
               type="switch"
-              id="custom-switch"
+              id={field.id}
               checked={!!formData[field.id]}
               label="Active"
               placeholder="Please select"
-              onChange={e => {
+              onChange={() => {
                   setData(field.id, !formData[field.id]);
               }}
             />

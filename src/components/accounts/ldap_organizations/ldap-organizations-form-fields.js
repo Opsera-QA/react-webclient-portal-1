@@ -7,7 +7,7 @@ export const ldapOrganizationsFormFields = {
     }
   },
   name: {
-    label: "Name",
+    label: "Internal Name",
     id: "name",
     rules: {
       isRequired: true
@@ -17,15 +17,26 @@ export const ldapOrganizationsFormFields = {
     label: "Organization Name",
     id: "orgName",
     rules: {
-      // isRequired: true
-    }
+      isRequired: true
+    },
+    fieldText: "This field is populated by the Opsera Customer Record drop down"
   },
   orgOwner: {
-    label: "Organization Owner",
+    label: "Owner",
     id: "orgOwner",
     rules: {
-      // isRequired: true
-    }
+      isRequired: true
+    },
+    fieldText: "This field is populated by the Opsera Customer Record drop down"
+  },
+  orgOwnerEmail: {
+    label: "Owner Email",
+    id: "orgOwnerEmail",
+    rules: {
+      isRequired: true,
+      isEmail: true
+    },
+    fieldText: "This field is populated by the Opsera Customer Record drop down"
   },
   description: {
     label: "Description",
@@ -51,13 +62,6 @@ export const ldapOrganizationsFormFields = {
   objectCount: {
     label: "Object Count",
     id: "objectCount",
-    rules: {
-      // isRequired: true
-    }
-  },
-  orgOwnerEmail: {
-    label: "Owner Email",
-    id: "orgOwnerEmail",
     rules: {
       // isRequired: true
     }
