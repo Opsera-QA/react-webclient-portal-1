@@ -10,14 +10,14 @@ import "./charts.css";
 import InfoDialog from "../../common/info";
 import ModalLogs from "../../common/modalLogs";
 
-function GitlabMergeReqWithMaxTimeChart( { persona, date } ) {
+function GitlabMergeReqWithMaxTimeChart({ persona, date }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  useEffect(() => {    
+  useEffect(() => {
     const controller = new AbortController();
     const runEffect = async () => {
       try {
@@ -26,7 +26,7 @@ function GitlabMergeReqWithMaxTimeChart( { persona, date } ) {
         if (err.name === "AbortError") {
           console.log("Request was canceled via controller.abort");
           return;
-        }        
+        }
       }
     };
     runEffect();
@@ -40,16 +40,16 @@ function GitlabMergeReqWithMaxTimeChart( { persona, date } ) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";   
+    const apiUrl = "/analytics/data";
     const postBody = {
       data: [
-        { 
+        {
           request: "gitlabMergeReqWithMaximumTime",
-          metric: "bar" 
-        }
+          metric: "bar",
+        },
       ],
-      startDate: date.start, 
-      endDate: date.end
+      startDate: date.start,
+      endDate: date.end,
     };
 
     try {
@@ -57,30 +57,38 @@ function GitlabMergeReqWithMaxTimeChart( { persona, date } ) {
       let dataObject = res && res.data ? res.data.data[0].gitlabMergeReqWithMaximumTime : [];
       setData(dataObject);
       setLoading(false);
-    }
-    catch (err) {
-      console.log(err.message);
+    } catch (err) {
       setLoading(false);
       setErrors(err.message);
     }
   };
 
-  if(loading) {
-    return (<LoadingDialog size="sm" />);
+  if (loading) {
+    return <LoadingDialog size="sm" />;
   } else if (error) {
-    return (<ErrorDialog  error={error} />);
+    return <ErrorDialog error={error} />;
   } else {
     return (
       <>
-        <ModalLogs header="Merge Request with Maximum Time" size="lg" jsonMessage={data.data} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
+        <ModalLogs
+          header="Merge Request with Maximum Time"
+          size="lg"
+          jsonMessage={data.data}
+          dataType="bar"
+          show={showModal}
+          setParentVisibility={setShowModal}
+        />
 
         <div className="chart mb-3" style={{ height: "300px" }}>
           <div className="chart-label-text">Merge Request with Maximum Time</div>
-          {(typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) ?
-            <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
+          {typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200 ? (
+            <div
+              className="max-content-width p-5 mt-5"
+              style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+            >
               <InfoDialog message="No Data is available for this chart at this time." />
             </div>
-            : 
+          ) : (
             <ResponsiveBar
               data={data ? data.data : []}
               onClick={() => setShowModal(true)}
@@ -89,7 +97,7 @@ function GitlabMergeReqWithMaxTimeChart( { persona, date } ) {
               margin={config.margin}
               padding={0.3}
               layout={"vertical"}
-              colors={{ scheme: "spectral" }}
+              colors={{ scheme: "category10" }}
               borderColor={{ theme: "background" }}
               colorBy="id"
               defs={config.defs}
@@ -116,7 +124,7 @@ function GitlabMergeReqWithMaxTimeChart( { persona, date } ) {
                 },
               }}
             />
-          }
+          )}
         </div>
       </>
     );
@@ -124,7 +132,7 @@ function GitlabMergeReqWithMaxTimeChart( { persona, date } ) {
 }
 
 GitlabMergeReqWithMaxTimeChart.propTypes = {
-  persona: PropTypes.string
+  persona: PropTypes.string,
 };
 
 export default GitlabMergeReqWithMaxTimeChart;
