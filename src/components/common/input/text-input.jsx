@@ -15,6 +15,7 @@ function TextInput({ field, formData, setData, disabled }) {
   };
 
   return (
+
     field &&
     // TODO: Extract into regular inputs for easier maintenance/styling
     <>
@@ -30,6 +31,8 @@ function TextInput({ field, formData, setData, disabled }) {
           <div>{field.fieldText}</div>
         </Form.Text>
       </Form.Group>
+
+
     </>
   );
 }

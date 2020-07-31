@@ -11,7 +11,7 @@ function ItemInput({ field, setData, formData }) {
   const [textInput, setTextInput] = useState("");
 
   useEffect(() => {
-    setData(items);
+    setData(field.id, items);
   }, [items]);
 
   const removeItem = (i) => {
@@ -25,6 +25,7 @@ function ItemInput({ field, setData, formData }) {
         return;
       }
       setItems([...items, textInput]);
+      setData(items);
       setTextInput("");
     }
   };

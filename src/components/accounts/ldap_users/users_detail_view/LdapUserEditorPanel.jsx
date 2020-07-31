@@ -14,7 +14,7 @@ const INITIAL_DATA = {
   firstName: "",
   lastName: "",
   emailAddress: "",
-  referredName: "",
+  preferredName: "",
   division: "",
   teams: [],
   title: "",
