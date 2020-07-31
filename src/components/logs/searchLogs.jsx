@@ -11,8 +11,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import "./logs.css";
 import Moment from "moment";
-import "react-date-range/dist/styles.css"; 
-import "react-date-range/dist/theme/default.css"; 
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 import { DateRangePicker } from "react-date-range";
 import DropdownList from "react-widgets/lib/DropdownList";
 import Multiselect from "react-widgets/lib/Multiselect";
@@ -22,7 +22,7 @@ import CommitSearchResult from "./CommitSearchResult";
 import Pagination from "components/common/pagination";
 import { set } from "date-fns/esm";
 
-function SearchLogs (props) {
+function SearchLogs(props) {
   //const FILTER = [{ value: "pipeline", label: "Pipeline" }, { value: "metricbeat", label: "MetricBeat" }, { value: "twistlock", label: "TwistLock" }, { value: "blueprint", label: "Build Blueprint" }];
   const FILTER = props.tools;
   const contextType = useContext(AuthContext);
@@ -32,7 +32,7 @@ function SearchLogs (props) {
   const [noResults, setNoResults] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOptions, setFilters] = useState([]);
-  const [filterType, setFilterType] = useState("pipeline");
+  const [filterType, setFilterType] = useState("blueprint");
   const [multiFilter, setMultiFilter] = useState([]);
   const [jobFilter, setJobFilter] = useState("");
   const [pipelineFilter, setPipelineFilter] = useState("");
@@ -40,12 +40,14 @@ function SearchLogs (props) {
   const [stepFilter, setStepFilter] = useState("");
   const [calenderActivation, setCalenderActivation] = useState(false);
   const [submitted, submitClicked] = useState(false);
+  const [submittedSearchTerm, setSubmittedSearchTerm] = useState(null);
+
   const [date, setDate] = useState([
     {
       startDate: new Date(),
       endDate: addDays(new Date(), 7),
-      key: "selection"  
-    }
+      key: "selection",
+    },
   ]);
   const [calendar, setCalendar] = useState(false);
   const [target, setTarget] = useState(null);
@@ -56,29 +58,29 @@ function SearchLogs (props) {
   const [pageSize, setPageSize] = useState(10);
   const node = useRef();
 
-
-  const handleFormSubmit = e => {
+  const handleFormSubmit = (e) => {
     setCurrentPage(1);
     submitClicked(true);
+    setSubmittedSearchTerm(searchTerm);
     e.preventDefault();
-    setLogData([]);  
+    setLogData([]);
     let startDate = 0;
     let endDate = 0;
     if (date[0].startDate && date[0].endDate) {
       startDate = format(new Date(date[0].startDate), "yyyy-MM-dd");
       endDate = format(new Date(date[0].endDate), "yyyy-MM-dd");
-      
+
       if (startDate === endDate) {
         endDate = 0;
       }
-      if (calenderActivation === false ){
+      if (calenderActivation === false) {
         startDate = 0;
         endDate = 0;
       }
     }
 
     if (searchTerm) {
-      getSearchResults(startDate, endDate);    
+      getSearchResults(startDate, endDate);
     } else {
       setLoading(false);
       setLogData([]);
@@ -92,13 +94,12 @@ function SearchLogs (props) {
   };
 
   const cancelSearchClicked = () => {
-    
     setDate([
       {
         startDate: undefined,
         endDate: undefined,
-        key: "selection"  
-      }
+        key: "selection",
+      },
     ]);
     setCalendar(false);
     submitClicked(false);
@@ -112,6 +113,7 @@ function SearchLogs (props) {
     setPipelineFilter("");
     setStepFilter("");
     setNoResults(false);
+    setSubmittedSearchTerm(null);
   };
 
   const handleSelectChange = (selectedOption) => {
@@ -139,10 +141,10 @@ function SearchLogs (props) {
     }
     if (filterType === "opsera-pipeline") {
       if (pipelineFilter) {
-        filterArray.push({ "Pipeline": pipelineFilter.value });
+        filterArray.push({ Pipeline: pipelineFilter.value });
       }
       if (stepFilter) {
-        filterArray.push({ "Step": stepFilter.value });
+        filterArray.push({ Step: stepFilter.value });
       }
     }
     return filterArray;
@@ -154,14 +156,13 @@ function SearchLogs (props) {
   };
 
   // Executed every time page number or page size changes
-  useEffect(() => {   
-    if (searchTerm) { 
+  useEffect(() => {
+    if (searchTerm) {
       getSearchResults();
     }
   }, [currentPage, pageSize]);
 
   useEffect(() => {
-
     document.addEventListener("mousedown", handleClick);
 
     return () => {
@@ -169,7 +170,7 @@ function SearchLogs (props) {
     };
   }, []);
 
-  const handleClick = e => {
+  const handleClick = (e) => {
     if (node && node.current) {
       if (node.current.contains(e.target)) {
         return;
@@ -186,33 +187,36 @@ function SearchLogs (props) {
     let route = "/analytics/search";
     if (filterType === "blueprint") {
       route = "/analytics/blueprint";
-    } 
+    }
     const urlParams = {
       search: searchTerm,
-      date: (startDate !== 0 && endDate === 0) ? startDate : undefined,
-      start: (startDate !== 0 && endDate !== 0) ? startDate : undefined,
-      end: (startDate !== 0 && endDate !== 0) ? endDate : undefined,
+      date: startDate !== 0 && endDate === 0 ? startDate : undefined,
+      start: startDate !== 0 && endDate !== 0 ? startDate : undefined,
+      end: startDate !== 0 && endDate !== 0 ? endDate : undefined,
       filter: {
         index: filterType,
-        customFilter: getFormattedCustomFilters()
+        customFilter: getFormattedCustomFilters(),
       },
       page: currentPage,
-      size: pageSize
+      size: pageSize,
     };
     const apiCall = new ApiService(route, urlParams, accessToken);
-    await apiCall.get().then(result => {
-      let searchResults = [];
-      if (result) {
-        searchResults = result.data.hasOwnProperty("hits") && result.data.hits.hasOwnProperty("hits") ? result.data.hits : [];
-      }
-      if (searchResults.hits.length === 0) {
-        setNoResults(true);
-      } else {
-        setNoResults(false);
-      }
-      setLogData(searchResults);
-      setLoading(false);
-    })
+    await apiCall
+      .get()
+      .then((result) => {
+        let searchResults = [];
+        if (result) {
+          searchResults =
+            result.data.hasOwnProperty("hits") && result.data.hits.hasOwnProperty("hits") ? result.data.hits : [];
+        }
+        if (searchResults.hits.length === 0) {
+          setNoResults(true);
+        } else {
+          setNoResults(false);
+        }
+        setLogData(searchResults);
+        setLoading(false);
+      })
       .catch(function (error) {
         setLogData([]);
         setLoading(false);
@@ -225,14 +229,15 @@ function SearchLogs (props) {
     const accessToken = await getAccessToken();
     if (filterType === "blueprint") {
       const apiCall = new ApiService("/analytics/search/filter", {}, accessToken);
-      await apiCall.get()
-        .then(res => {
+      await apiCall
+        .get()
+        .then((res) => {
           let filterDataApiResponse = res.data.hits.hits;
           let formattedFilterData = [];
-         
+
           // In the API response, since react-widget can't process nested dataset. We need to add a property to group the dataset
           // We are adding 'type': which is label here to achieve groupBy in react-widget
-          filterDataApiResponse.forEach(filterGroup => {
+          filterDataApiResponse.forEach((filterGroup) => {
             filterGroup["options"].map((filters) => {
               filters["type"] = filterGroup["label"];
             });
@@ -240,39 +245,44 @@ function SearchLogs (props) {
             formattedFilterData.push(...filterGroup["options"]);
           });
           console.log(formattedFilterData);
-          // For Blueprint we only need Job Names  
+          // For Blueprint we only need Job Names
           if (filterType === "blueprint") {
-            setFilters(formattedFilterData.filter(filterSet => filterSet.type == "Job Names"));
+            setFilters(formattedFilterData.filter((filterSet) => filterSet.type == "Job Names"));
           } else {
             setFilters(formattedFilterData);
           }
         })
-        .catch(err => {
+        .catch((err) => {
           setFilters([]);
         });
     }
     if (filterType === "opsera-pipeline") {
       const apiCall = new ApiService("/pipelines", {}, accessToken);
-      await apiCall.get()
-        .then(res => {
+      await apiCall
+        .get()
+        .then((res) => {
           let formatArr = [];
           for (const item in res.data.response) {
             let stepsArr = [];
-            res.data.response[item].workflow.plan.forEach(step => stepsArr.push({ "label": step.name, "value": step._id }));
+            res.data.response[item].workflow.plan.forEach((step) =>
+              stepsArr.push({ label: step.name, value: step._id })
+            );
             formatArr.push({
-              "value": res.data.response[item]._id,
-              "label": res.data.response[item].name,
-              "steps": stepsArr
+              value: res.data.response[item]._id,
+              label: res.data.response[item].name,
+              steps: stepsArr,
             });
           }
-          let filterDataApiResponse = [{
-            label: "My Pipelines", 
-            options: formatArr
-          }];
+          let filterDataApiResponse = [
+            {
+              label: "My Pipelines",
+              options: formatArr,
+            },
+          ];
           let formattedFilterData = [];
           // In the API response, since react-widget can't process nested dataset. We need to add a property to group the dataset
           // We are adding 'type': which is label here to achieve groupBy in react-widget
-          filterDataApiResponse.forEach(filterGroup => {
+          filterDataApiResponse.forEach((filterGroup) => {
             filterGroup["options"].map((filters) => {
               filters["type"] = filterGroup["label"];
             });
@@ -281,21 +291,20 @@ function SearchLogs (props) {
             //Since we add type to the dataset, we only need 'options' for the dropdown
             formattedFilterData.push(...filterGroup["options"]);
           });
-          // For Blueprint we only need Job Names  
+          // For Blueprint we only need Job Names
           if (filterType === "blueprint") {
-            setFilters(formattedFilterData.filter(filterSet => filterSet.type == "Job Names"));
+            setFilters(formattedFilterData.filter((filterSet) => filterSet.type == "Job Names"));
           } else {
             setFilters(formattedFilterData);
           }
         })
-        .catch(err => {
+        .catch((err) => {
           setFilters([]);
         });
-
     }
   };
 
-  const toggleCalendar = event => {
+  const toggleCalendar = (event) => {
     setCalenderActivation(true);
     setCalendar(!calendar);
     setTarget(event.target);
@@ -325,7 +334,7 @@ function SearchLogs (props) {
     }
   };
 
-  const dateChange = item => {
+  const dateChange = (item) => {
     console.log(item);
     setDate([item.selection]);
     if (item.selection) {
@@ -345,8 +354,8 @@ function SearchLogs (props) {
       {
         startDate: undefined,
         endDate: undefined,
-        key: "selection"
-      }
+        key: "selection",
+      },
     ]);
     setSDate(undefined);
     setEDate(undefined);
@@ -360,40 +369,42 @@ function SearchLogs (props) {
   }, [filterType]);
 
   if (error) {
-    return (<ErrorDialog error={error} />);
+    return <ErrorDialog error={error} />;
   } else {
     return (
       <>
-        <div className="max-content-width" >
+        <div className="max-content-width">
           <Form onSubmit={handleFormSubmit}>
             <Row>
               <Col className="py-1">
                 <DropdownList
-                  data={Array.isArray(FILTER) ? FILTER : [{ "value": "pipeline", "label": "Pipeline" }]}  
-                  defaultValue={"pipeline"}
+                  data={Array.isArray(FILTER) ? FILTER : [{ value: "blueprint", label: "Build Blueprint" }]}
+                  defaultValue={"blueprint"}
                   className="basic-single"
-                  valueField='value'
-                  textField='label'
-                  filter='contains'
-                  onChange={handleSelectChange}             
+                  valueField="value"
+                  textField="label"
+                  filter="contains"
+                  onChange={handleSelectChange}
                 />
               </Col>
-              {filterType === "opsera-pipeline" ? <Col md={3} className="py-1">
-                {filterType === "opsera-pipeline" && 
-                  <DropdownList
-                    data={filterOptions} 
-                    busy={Object.keys(filterOptions).length == 0 ? true : false}
-                    disabled={Object.keys(filterOptions).length == 0 ? true : false}
-                    // disabled={true}
-                    valueField='value'
-                    textField='label'
-                    filter='contains'
-                    value={pipelineFilter}
-                    placeholder={"Select Pipeline Name"}
-                    onChange={opseraPipelineSelectChange} 
-                    onToggle={fetchFilterData}         
-                  />}
-                {/* {filterType === "blueprint" && 
+              {filterType === "opsera-pipeline" ? (
+                <Col md={3} className="py-1">
+                  {filterType === "opsera-pipeline" && (
+                    <DropdownList
+                      data={filterOptions}
+                      busy={Object.keys(filterOptions).length == 0 ? true : false}
+                      disabled={Object.keys(filterOptions).length == 0 ? true : false}
+                      // disabled={true}
+                      valueField="value"
+                      textField="label"
+                      filter="contains"
+                      value={pipelineFilter}
+                      placeholder={"Select Pipeline Name"}
+                      onChange={opseraPipelineSelectChange}
+                      onToggle={fetchFilterData}
+                    />
+                  )}
+                  {/* {filterType === "blueprint" && 
                   <DropdownList
                     data={filterOptions} 
                     busy={Object.keys(filterOptions).length == 0 ? true : false}
@@ -408,44 +419,81 @@ function SearchLogs (props) {
                     onToggle={fetchFilterData}         
                   />
                 } */}
-              </Col> : ""}
-              {filterType === "opsera-pipeline" ? 
+                </Col>
+              ) : (
+                ""
+              )}
+              {filterType === "opsera-pipeline" ? (
                 <Col className="py-1">
-                  {filterType === "opsera-pipeline" && 
-                  <DropdownList
-                    data={pipelineFilter.steps} 
-                    busy={Object.keys(filterOptions).length == 0 ? true : false}
-                    disabled={Object.keys(pipelineFilter).length == 0 ? true : false}
-                    // disabled={true}
-                    valueField='value'
-                    textField='label'
-                    filter='contains'
-                    value={stepFilter}
-                    placeholder={"Select Step"}
-                    onChange={setStepFilter}        
-                  />}
-                </Col> : ""}
-              <Col className="py-1" md={filterType === "opsera-pipeline" ? 3 : 9} >
-                <Form.Control placeholder={filterType === "blueprint" ? "Enter Build Number" : "Search logs"} value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
+                  {filterType === "opsera-pipeline" && (
+                    <DropdownList
+                      data={pipelineFilter.steps}
+                      busy={Object.keys(filterOptions).length == 0 ? true : false}
+                      disabled={Object.keys(pipelineFilter).length == 0 ? true : false}
+                      // disabled={true}
+                      valueField="value"
+                      textField="label"
+                      filter="contains"
+                      value={stepFilter}
+                      placeholder={"Select Step"}
+                      onChange={setStepFilter}
+                    />
+                  )}
+                </Col>
+              ) : (
+                ""
+              )}
+              <Col className="py-1" md={filterType === "opsera-pipeline" ? 3 : 9}>
+                <Form.Control
+                  placeholder={filterType === "blueprint" ? "Enter Build Number" : "Search logs"}
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
               </Col>
             </Row>
 
             <Row className="mt-2">
               <Col className="text-right">
-                <Button variant="outline-secondary" type="button" onClick={toggleCalendar} >
-                  <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth/>
-                  {(calendar && sDate || eDate) ? sDate + " - " + eDate : "Date Range"}</Button>
-                <Button variant="primary" className="ml-1" type="submit">Search</Button>
-                <Button variant="outline-secondary" className="ml-1" type="button" onClick={cancelSearchClicked}>Clear</Button>
-                
+                <Button variant="outline-secondary" type="button" onClick={toggleCalendar}>
+                  <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth />
+                  {(calendar && sDate) || eDate ? sDate + " - " + eDate : "Date Range"}
+                </Button>
+                <Button variant="primary" className="ml-1" type="submit">
+                  Search
+                </Button>
+                <Button variant="outline-secondary" className="ml-1" type="button" onClick={cancelSearchClicked}>
+                  Clear
+                </Button>
+
                 <Overlay
                   show={calendar}
                   target={target}
                   placement="bottom"
                   container={ref.current}
-                  containerPadding={20}  >
-                  <Popover className="max-content-width" >
-                    <Popover.Title><div style={{ display: "flex" }}><Button variant="outline-secondary" size="sm" type="button" style={{ marginRight: "auto" }} onClick={clearCalendar}>Clear</Button><Button variant="outline-secondary" size="sm" type="button" style={{ marginLeft: "auto" }} onClick={closeCalender}>X</Button></div>
+                  containerPadding={20}
+                >
+                  <Popover className="max-content-width">
+                    <Popover.Title>
+                      <div style={{ display: "flex" }}>
+                        <Button
+                          variant="outline-secondary"
+                          size="sm"
+                          type="button"
+                          style={{ marginRight: "auto" }}
+                          onClick={clearCalendar}
+                        >
+                          Clear
+                        </Button>
+                        <Button
+                          variant="outline-secondary"
+                          size="sm"
+                          type="button"
+                          style={{ marginLeft: "auto" }}
+                          onClick={closeCalender}
+                        >
+                          X
+                        </Button>
+                      </div>
                     </Popover.Title>
                     <Popover.Content ref={node}>
                       <DateRangePicker
@@ -462,15 +510,34 @@ function SearchLogs (props) {
                   </Popover>
                 </Overlay>
               </Col>
-            </Row>            
+            </Row>
           </Form>
         </div>
 
-        {Object.keys(logData).length > 0 && (filterType == "blueprint" ? <BlueprintSearchResult searchResults={logData.hits} /> : <LogSearchResult searchResults={logData.hits} />  )}
-        {Object.keys(logData).length > 0 && (filterType == "commit" ? <CommitSearchResult searchResults={logData.hits} /> : "")}
-        {Object.keys(logData).length > 0 && filterType != "blueprint" && filterType!== "commit" && !noResults? <Pagination total={logData.total.value || 30} currentPage={currentPage} pageSize={pageSize} onClick={(pageNumber, pageSize) => gotoPage(pageNumber, pageSize)} /> : ""}                
-        {(logData && logData.hits && Object.keys(logData.hits).length === 0 && searchTerm) && <InfoDialog  message="No results found." />}
-        {(!loading && !searchTerm && submitted) && <InfoDialog  message="Search term required." /> }
+        {loading && <LoadingDialog size="sm" />}
+
+        {Object.keys(logData).length > 0 &&
+          (filterType == "blueprint" ? (
+            <BlueprintSearchResult searchResults={logData.hits} />
+          ) : (
+            <LogSearchResult searchResults={logData.hits} submittedSearchTerm={submittedSearchTerm} />
+          ))}
+        {Object.keys(logData).length > 0 &&
+          (filterType == "commit" ? <CommitSearchResult searchResults={logData.hits} /> : "")}
+        {Object.keys(logData).length > 0 && filterType != "blueprint" && filterType !== "commit" && !noResults ? (
+          <Pagination
+            total={logData.total.value || 30}
+            currentPage={currentPage}
+            pageSize={pageSize}
+            onClick={(pageNumber, pageSize) => gotoPage(pageNumber, pageSize)}
+          />
+        ) : (
+          ""
+        )}
+        {logData && logData.hits && Object.keys(logData.hits).length === 0 && searchTerm && (
+          <InfoDialog message="No results found." />
+        )}
+        {!loading && !searchTerm && submitted && <InfoDialog message="Search term required." />}
       </>
     );
   }

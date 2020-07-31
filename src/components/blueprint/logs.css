@@ -20,6 +20,11 @@
   padding: 2px;
 }
 
+.react-highlighter-yellow{
+  background-color: yellow;
+  padding: 2px;
+}
+
 .multi-select-filters ul{
   display: inline;
 }

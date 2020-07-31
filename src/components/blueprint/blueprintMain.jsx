@@ -10,8 +10,8 @@ import { format, addDays } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar, faDraftingCompass, faDownload } from "@fortawesome/free-solid-svg-icons";
 import "./logs.css";
-import "react-date-range/dist/styles.css"; 
-import "react-date-range/dist/theme/default.css"; 
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 import { DateRangePicker } from "react-date-range";
 import DropdownList from "react-widgets/lib/DropdownList";
 import BlueprintSearchResult from "./BlueprintSearchResult";
@@ -19,12 +19,10 @@ import simpleNumberLocalizer from "react-widgets-simple-number";
 import NumberPicker from "react-widgets/lib/NumberPicker";
 import { useHistory } from "react-router-dom";
 
-
-
 let runCountFetch = {};
 let idFetch = {};
 
-function OPBlueprint (props) {
+function OPBlueprint(props) {
   //const FILTER = [{ value: "pipeline", label: "Pipeline" }, { value: "metricbeat", label: "MetricBeat" }, { value: "twistlock", label: "TwistLock" }, { value: "blueprint", label: "Build Blueprint" }];
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
@@ -41,7 +39,7 @@ function OPBlueprint (props) {
   //   {
   //     startDate: new Date(),
   //     endDate: addDays(new Date(), 7),
-  //     key: "selection"  
+  //     key: "selection"
   //   }
   // ]);
   // const [calendar, setCalendar] = useState(false);
@@ -57,23 +55,21 @@ function OPBlueprint (props) {
   const [disabledForm, setDisabledState] = useState(false);
   const [submittedRunCount, setSubmittedRunCount] = useState(null);
 
-
   simpleNumberLocalizer();
 
-
-  const handleFormSubmit = e => {
+  const handleFormSubmit = (e) => {
     submitClicked(true);
     setPipeIDError(false);
     setRunCountError(false);
     e.preventDefault();
-    setLogData([]);  
+    setLogData([]);
     setSubmittedRunCount(run_count);
     // let startDate = 0;
     // let endDate = 0;
     // if (date[0].startDate && date[0].endDate) {
     //   startDate = format(new Date(date[0].startDate), "yyyy-MM-dd");
     //   endDate = format(new Date(date[0].endDate), "yyyy-MM-dd");
-      
+
     //   if (startDate === endDate) {
     //     endDate = 0;
     //   }
@@ -83,10 +79,8 @@ function OPBlueprint (props) {
     //   }
     // }
 
-    // getSearchResults(startDate, endDate);    
-    getSearchResults();    
-
-
+    // getSearchResults(startDate, endDate);
+    getSearchResults();
   };
 
   const cancelSearchClicked = () => {
@@ -95,7 +89,7 @@ function OPBlueprint (props) {
     //   {
     //     startDate: undefined,
     //     endDate: undefined,
-    //     key: "selection"  
+    //     key: "selection"
     //   }
     // ]);
     // setCalendar(false);
@@ -111,7 +105,6 @@ function OPBlueprint (props) {
     setNoResults(false);
     setRunCount(null);
   };
-
 
   // useEffect(() => {
 
@@ -144,7 +137,6 @@ function OPBlueprint (props) {
     if (run_count === null || run_count === undefined || run_count === 0 || !multiFilter.value) {
       if (!multiFilter.value) {
         setPipeIDError(true);
-        
       }
       if (run_count === null || run_count === undefined || run_count === 0) {
         setRunCountError(true);
@@ -155,31 +147,31 @@ function OPBlueprint (props) {
         // date: (startDate !== 0 && endDate === 0) ? startDate : undefined,
         // start: (startDate !== 0 && endDate !== 0) ? startDate : undefined,
         // end: (startDate !== 0 && endDate !== 0) ? endDate : undefined,
-        run: run_count
-
+        run: run_count,
       };
 
       route = route + "/" + idFetch[multiFilter.value];
       const apiCall = new ApiService(route, urlParams, accessToken);
-      await apiCall.get().then(result => {
-        let searchResults = [];
-        if (result) {
-          searchResults = result.hasOwnProperty("data") ? result.data : [];
-        }
-        if (searchResults.length === 0) {
-          setNoResults(true);
+      await apiCall
+        .get()
+        .then((result) => {
+          let searchResults = [];
+          if (result) {
+            searchResults = result.hasOwnProperty("data") ? result.data : [];
+          }
+          if (searchResults.length === 0) {
+            setNoResults(true);
+            setLoading(false);
+          } else {
+            setNoResults(false);
+            setLogData(searchResults);
+          }
+          console.log(logData);
           setLoading(false);
-        } else {
-          setNoResults(false);
-          setLogData(searchResults);
-        }
-        console.log(logData);
-        setLoading(false);
-      })
+        })
         .catch(function (error) {
           setLogData([]);
           setLoading(false);
-          
         });
     }
   };
@@ -188,8 +180,9 @@ function OPBlueprint (props) {
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
     const apiCall = new ApiService("/pipelines", {}, accessToken);
-    await apiCall.get()
-      .then(res => {
+    await apiCall
+      .get()
+      .then((res) => {
         if (res.data.count > 0 || res.data.response.length > 0) {
           let formattedArray = [];
           for (let item in res.data.response) {
@@ -199,24 +192,26 @@ function OPBlueprint (props) {
               idFetch[res.data.response[item].name] = res.data.response[item]._id;
               formattedArray.push({ value: pipelineName, label: pipelineName });
             }
-            let filterDataApiResponse = [{
-              label: "My Pipelines", 
-              options: formattedArray
-            }];
+            let filterDataApiResponse = [
+              {
+                label: "My Pipelines",
+                options: formattedArray,
+              },
+            ];
             let formattedFilterData = [];
-            filterDataApiResponse.forEach(filterGroup => {
+            filterDataApiResponse.forEach((filterGroup) => {
               filterGroup["options"].map((filters) => {
                 filters["type"] = filterGroup["label"];
               });
               formattedFilterData.push(...filterGroup["options"]);
             });
             setFilters(formattedFilterData);
-          } 
+          }
         } else {
           setDisabledState(true);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         setFilters([]);
       });
   };
@@ -288,24 +283,24 @@ function OPBlueprint (props) {
   //   setEDate(undefined);
   // };
 
-  const pipelineSelect = item => {
+  const pipelineSelect = (item) => {
     setPipeIDError(false);
     setRunCountError(false);
     setMultiFilter(item);
     submitClicked(false);
   };
 
-  const runCountSelect = item => {
+  const runCountSelect = (item) => {
     setPipeIDError(false);
     setRunCountError(false);
     console.log(submitted);
-    setRunCount(item); 
+    setRunCount(item);
     // submitClicked(false);
   };
 
-  // const uniqueSteps = logdata => { 
+  // const uniqueSteps = logdata => {
   //   let arrayList = [];
-  //   for (let item in logdata.hits) { 
+  //   for (let item in logdata.hits) {
   //     arrayList.push(logdata.hits[item]._source.data.jobId);
   //   }
   //   if (arrayList.length > 0) {
@@ -321,9 +316,8 @@ function OPBlueprint (props) {
     history.push("/workflow/" + idFetch[multiFilter.value]);
   };
 
-
   if (error) {
-    return (<ErrorDialog error={error} />);
+    return <ErrorDialog error={error} />;
   } else {
     return (
       <>
@@ -333,40 +327,48 @@ function OPBlueprint (props) {
               <Col md={5} className="py-1">
                 <DropdownList
                   placeholder={"Select Opsera Pipeline"}
-                  data={filterOptions} 
-                  busy={(disabledForm) ? false : Object.keys(filterOptions).length == 0 ? true : false}
+                  data={filterOptions}
+                  busy={disabledForm ? false : Object.keys(filterOptions).length == 0 ? true : false}
                   disabled={Object.keys(filterOptions).length == 0 ? true : false}
-                  valueField='value'
-                  textField='label'
-                  filter='contains'
-                  value={(multiFilter.length === 0) ? null : multiFilter}
-                  onChange={pipelineSelect} 
+                  valueField="value"
+                  textField="label"
+                  filter="contains"
+                  value={multiFilter.length === 0 ? null : multiFilter}
+                  onChange={pipelineSelect}
                 />
               </Col>
               <Col md={4} className="py-1">
-                <NumberPicker 
+                <NumberPicker
                   type="number"
                   placeholder={"Run Count"}
                   disabled={disabledForm}
-                  value={(run_count) ? run_count : null}
+                  value={run_count ? run_count : null}
                   className="max-content-width"
                   onChange={runCountSelect}
                   min={0}
                 />
                 <Form.Text id="passwordHelpBlock" className="ml-1" muted>
-    Defaults to latest run of the selected pipeline. Enter custom if required.
+                  Defaults to latest run of the selected pipeline. Enter custom if required.
                 </Form.Text>
               </Col>
               <Col md={3}>
                 {/* <Button variant="outline-secondary" type="button" onClick={toggleCalendar}>
                   <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth/>
                   {(calendar && sDate || eDate) ? sDate + " - " + eDate : "Date Range"}</Button> */}
-                <Button variant="outline-secondary" className="float-right ml-2" type="button" onClick={cancelSearchClicked} disabled={disabledForm}>Clear</Button>
-                <Button variant="primary" className="float-right ml-2" type="submit" disabled={disabledForm}>Lookup</Button>
+                <Button
+                  variant="outline-secondary"
+                  className="float-right ml-2"
+                  type="button"
+                  onClick={cancelSearchClicked}
+                  disabled={disabledForm}
+                >
+                  Clear
+                </Button>
+                <Button variant="primary" className="float-right ml-2" type="submit" disabled={disabledForm}>
+                  Lookup
+                </Button>
               </Col>
 
-
-                
               {/* <Overlay
                   show={calendar}
                   target={target}
@@ -396,7 +398,6 @@ function OPBlueprint (props) {
           </Form>
         </div>
 
-
         {loading && <LoadingDialog size="sm" />}
 
         {/* {
@@ -410,82 +411,127 @@ function OPBlueprint (props) {
           </div> 
         } */}
 
-        {(!loading  && noResults && submitted && !runCountError && !pipeIDerror) && 
+        {!loading && noResults && submitted && !runCountError && !pipeIDerror && (
           <div style={{ height: "400px" }}>
             <div className="row h-100">
               <div className="col-sm-12 my-auto text-center max-content-width">
-                <div className="h6"><InfoDialog  message="No data been recorded for this pipeline run." /></div>   
+                <div className="h6">
+                  <InfoDialog message="No data been recorded for this pipeline run." />
+                </div>
               </div>
             </div>
-          </div> 
-        }
+          </div>
+        )}
 
-        {(!loading && runCountError && !pipeIDerror) && 
+        {!loading && runCountError && !pipeIDerror && (
           <div style={{ height: "400px" }}>
             <div className="row h-100">
               <div className="col-sm-12 my-auto text-center max-content-width">
-                <div className="h6"><InfoDialog  message="No Runs have been recorded for this pipeline." /></div>   
+                <div className="h6">
+                  <InfoDialog message="No Runs have been recorded for this pipeline." />
+                </div>
               </div>
             </div>
-          </div> 
-        }
+          </div>
+        )}
 
-        {(!loading  &&  runCountError && pipeIDerror) && 
+        {!loading && runCountError && pipeIDerror && (
           <div style={{ height: "400px" }}>
             <div className="row h-100">
               <div className="col-sm-12 my-auto text-center max-content-width">
-                <div className="h6"><InfoDialog  message="Please select a pipeline and associated run in order to see results." /></div>   
+                <div className="h6">
+                  <InfoDialog message="Please select a pipeline and associated run in order to see results." />
+                </div>
               </div>
             </div>
-          </div> 
-        }
+          </div>
+        )}
 
-        {( !loading  && pipeIDerror && !runCountError) && 
+        {!loading && pipeIDerror && !runCountError && (
           <div style={{ height: "400px" }}>
             <div className="row h-100">
               <div className="col-sm-12 my-auto text-center max-content-width">
-                <div className="h6"><InfoDialog  message="Please Select a pipeline in order to see results." /></div>   
+                <div className="h6">
+                  <InfoDialog message="Please Select a pipeline in order to see results." />
+                </div>
               </div>
             </div>
-          </div> 
-        }
+          </div>
+        )}
 
-        {( !loading  && disabledForm) && 
+        {!loading && disabledForm && (
           <div style={{ height: "400px" }}>
             <div className="row h-100">
               <div className="col-sm-12 my-auto text-center max-content-width">
-                <div className="h6"><InfoDialog  message="No pipeline activity available to report on" /></div>   
+                <div className="h6">
+                  <InfoDialog message="No pipeline activity available to report on" />
+                </div>
               </div>
             </div>
-          </div> 
-        }
+          </div>
+        )}
 
-
-        {submitted && logData.length > 0 ? 
+        {submitted && logData.length > 0 ? (
           <>
-            <div className="mt-3 bordered-content-block p-3 max-content-width"> 
+            <div className="mt-3 bordered-content-block p-3 max-content-width">
               <Row>
-                <Col><strong><div className="blueprint-title">  {(Object.keys(multiFilter).length > 0) ? multiFilter.value : "N/A"}</div></strong></Col>
-                <Button variant="outline-dark mr-3" size="sm" onClick={() => { goToPipeline(); }}><FontAwesomeIcon icon={faDraftingCompass} fixedWidth/>View Pipeline</Button>
+                <Col>
+                  <strong>
+                    <div className="blueprint-title">
+                      {" "}
+                      {Object.keys(multiFilter).length > 0 ? multiFilter.value : "N/A"}
+                    </div>
+                  </strong>
+                </Col>
+                <Button
+                  variant="outline-dark mr-3"
+                  size="sm"
+                  onClick={() => {
+                    goToPipeline();
+                  }}
+                >
+                  <FontAwesomeIcon icon={faDraftingCompass} fixedWidth />
+                  View Pipeline
+                </Button>
                 <OverlayTrigger
                   placement="top"
                   delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "Blueprint Export Coming Soon." })} >
-                  <Button variant="outline-secondary mr-3" size="sm" onClick={() => { goToPipeline(); }} disabled><FontAwesomeIcon icon={faDownload} fixedWidth/></Button>
+                  overlay={renderTooltip({ message: "Blueprint Export Coming Soon." })}
+                >
+                  <Button
+                    variant="outline-secondary mr-3"
+                    size="sm"
+                    onClick={() => {
+                      goToPipeline();
+                    }}
+                    disabled
+                  >
+                    <FontAwesomeIcon icon={faDownload} fixedWidth />
+                  </Button>
                 </OverlayTrigger>
-
               </Row>
               <hr />
               <Row className="mt-1">
-                <Col lg className="py-1"><span className="text-muted mr-1">ID:</span> {(Object.keys(multiFilter).length > 0 && Object.keys(idFetch).length) > 0 ? idFetch[multiFilter.value] : "N/A"}</Col>
-                <Col lg className="py-1"><span className="text-muted mr-1">Pipeline Run Count:</span> {submittedRunCount ? submittedRunCount : "N/A"}</Col>
-                <Col lg className="py-1"><span className="text-muted mr-1">Number of Steps:</span> {logData ? logData.length : "N/A"}</Col>
+                <Col lg className="py-1">
+                  <span className="text-muted mr-1">ID:</span>{" "}
+                  {(Object.keys(multiFilter).length > 0 && Object.keys(idFetch).length) > 0
+                    ? idFetch[multiFilter.value]
+                    : "N/A"}
+                </Col>
+                <Col lg className="py-1">
+                  <span className="text-muted mr-1">Pipeline Run Count:</span>{" "}
+                  {submittedRunCount ? submittedRunCount : "N/A"}
+                </Col>
+                <Col lg className="py-1">
+                  <span className="text-muted mr-1">Number of Steps:</span> {logData ? logData.length : "N/A"}
+                </Col>
               </Row>
             </div>
-            <BlueprintSearchResult searchResults={logData} />  
+            <BlueprintSearchResult searchResults={logData} />
           </>
-        
-          : "" }
+        ) : (
+          ""
+        )}
       </>
     );
   }
@@ -499,6 +545,5 @@ function renderTooltip(props) {
     </Tooltip>
   );
 }
-
 
 export default OPBlueprint;
