@@ -4,12 +4,13 @@ import { Accordion, Card, Form, Button, Row, Col } from "react-bootstrap";
 import ErrorDialog from "../common/error";
 import InfoDialog from "../common/info";
 import Modal from "../common/modal";
-import { ApiService, axiosApiService } from "../../api/apiService";
+import { axiosApiService } from "../../api/apiService";
 import { format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
-import Multiselect from "react-widgets/lib/Multiselect";
+//import Multiselect from "react-widgets/lib/Multiselect";
+import createHistory from 'history/createBrowserHistory'
 
 const INITIAL_SETTINGS = {
   dataUsage: "500",
@@ -26,11 +27,17 @@ const INITIAL_SETTINGS = {
   analyticsServerUrl: "",
   customerDB: {},
   allowData: false,
-  defaultPersona: ""
+  defaultPersona: "",
 };
 const ANALYTICS_TYPES = ["Infrastructure", "Pipeline"];
-const PERSONAS = [ { value: "developer", label: "Developer" }, { value: "manager", label: "Manager" }, { value: "executive", label: "Executive" }];
-const DATA_LIMITS = [{ Value: "0", Label: "Inactive" }, { Value: "500", Label: "500MB" }, { Value: "1", Label: "1GB" }, { Value: "2", Label: "2GB" }, { Value: "3", Label: "3GB" }];
+const PERSONAS = [{ value: "developer", label: "Developer" }, {
+  value: "manager",
+  label: "Manager",
+}, { value: "executive", label: "Executive" }];
+const DATA_LIMITS = [{ Value: "0", Label: "Inactive" }, { Value: "500", Label: "500MB" }, {
+  Value: "1",
+  Label: "1GB",
+}, { Value: "2", Label: "2GB" }, { Value: "3", Label: "3GB" }];
 const TOOL_OPTIONS = [
   { value: "Jenkins", label: "Jenkins" },
   { value: "Codeship", label: "Codeship" },
@@ -39,14 +46,25 @@ const TOOL_OPTIONS = [
   { value: "JMeter", label: "JMeter" },
   { value: "Selenium", label: "Selenium" },
   { value: "Sonar", label: "Sonar" },
-  { value: "Twistlock", label: "Twistlock" }
+  { value: "Twistlock", label: "Twistlock" },
 ];
 
 function ConfigurationsForm({ settings, token }) {
-  console.log(settings)
+
+  console.log(settings);
+
+  const history = createHistory();
   const [state, setState] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
-    { loaded: true, showModal: false, error: null, info: null, messages: null, data: INITIAL_SETTINGS, editSettings: false }
+    {
+      loaded: true,
+      showModal: false,
+      error: null,
+      info: null,
+      messages: null,
+      data: INITIAL_SETTINGS,
+      editSettings: false,
+    },
   );
 
   useEffect(() => {
@@ -58,11 +76,21 @@ function ConfigurationsForm({ settings, token }) {
   }, [settings]);
 
   async function updateProfile() {
+    setState({ error: null });
     let { data } = state;
-    data.active = true;
-    data.enabledToolsOn = new Date().toISOString();
-    setState({ ...state, data });
-    await postData(data);
+    let { profile } = settings;
+
+    if (!Array.isArray(profile) || !profile.length) {
+      await createProfile();
+    } else {
+      data.active = true;
+      data.enabledToolsOn = new Date().toISOString();
+      setState({ ...state, data });
+      await postData(data);
+    }
+
+    //this needs to trigger a full reload of app for now because so many queries checik on the status of this record.
+    history.go(0);
   }
 
   function confirmDeactivation() {
@@ -80,15 +108,26 @@ function ConfigurationsForm({ settings, token }) {
 
   async function postData(postBody) {
     setState({ loaded: false, error: null, info: null });
-    console.log("postBody", postBody)
+    console.log("postBody", postBody);
     const apiUrl = `/analytics/profile/${settings._id}/update`;
     const res = await axiosApiService(token).post(apiUrl, postBody);
     console.log(res);
-    setState({ info : "Your analytics profile has been updated successfully." });
+    setState({ info: "Your analytics profile has been updated successfully." });
     setState({ loaded: true });
   }
 
-  function handleCancel() { setState({ showModal: false }); }
+  async function createProfile() {
+    setState({ loaded: false, error: null, info: null });
+    const apiUrl = "/analytics/profile/create";
+    const res = await axiosApiService(token).post(apiUrl, {});
+    console.log(res);
+    setState({ info: "Your analytics profile has been created successfully." });
+    setState({ loaded: true });
+  }
+
+  function handleCancel() {
+    setState({ showModal: false });
+  }
 
   function handleOptionChange(changeEvent) {
     setState({ data: { ...state.data, dataUsage: changeEvent.target.value } });
@@ -118,7 +157,12 @@ function ConfigurationsForm({ settings, token }) {
   } */
 
   function handleMultiSelectToolChange(selectedOption) {
-    setState({ data: { ...state.data, enabledTools: selectedOption ? selectedOption.map(option => option.value) : {} } });
+    setState({
+      data: {
+        ...state.data,
+        enabledTools: selectedOption ? selectedOption.map(option => option.value) : {},
+      },
+    });
   }
 
   function handleSelectPersonaChange(selectedOption) {
@@ -134,43 +178,48 @@ function ConfigurationsForm({ settings, token }) {
   const { enabledTools, disabledToolsOn, active, enabledToolsOn, defaultPersona } = data;
   return (
     <div>
-      {error && <ErrorDialog error={error} />}
-      {info && <InfoDialog message={info} />}
+      {error && <ErrorDialog error={error}/>}
+      {info && <InfoDialog message={info}/>}
 
       {showModal ? <Modal header="Confirm Deactivation"
-        message={messages}
-        button="Confirm"
-        handleCancelModal={handleCancel}
-        handleConfirmModal={disableProfile} /> : null}
-
+                          message={messages}
+                          button="Confirm"
+                          handleCancelModal={handleCancel}
+                          handleConfirmModal={disableProfile}/> : null}
 
       {!settings.enabledToolsOn ?
         <Card>
           <Card.Body>
             <Card.Title>Getting Started</Card.Title>
             <Card.Subtitle className="mb-2 text-muted">
-              Welcome to the OpsERA Analytics Portal!  Here you can enable analytics for our supported tools and dashboards and metrics around your system`s activities.  Simply click the \
+              Welcome to the OpsERA Analytics Portal! Here you can enable analytics for our supported tools and
+              dashboards and metrics around your system`s activities. Simply click the \
               Activate Analytics button below and then begin configuring your dashboards!</Card.Subtitle>
+
             <div className="mt-4">
-              <Button variant="outline-primary" onClick={() => { updateProfile(); }}>Activate Analytics</Button>
+              <Button variant="outline-primary" onClick={() => {
+                updateProfile();
+              }}>Activate Analytics</Button>
             </div>
           </Card.Body>
         </Card>
         :
         <Accordion defaultActiveKey="1">
           <Card>
-            <Accordion.Toggle as={Card.Header} eventKey="0" >
-              <Row className="card-header-clickable" onClick={() => { handleClickSettings(); }}>
+            <Accordion.Toggle as={Card.Header} eventKey="0">
+              <Row className="card-header-clickable" onClick={() => {
+                handleClickSettings();
+              }}>
                 <Col><span className="h6">Analytics Settings</span></Col>
                 <Col className="text-right">
                   {(enabledToolsOn && !disabledToolsOn) &&
-                    <>
+                  <>
                       <span className="italic pr-3" style={{ fontSize: "smaller" }}>Enabled on&nbsp;
                         {format(new Date(enabledToolsOn), "yyyy-MM-dd', 'hh:mm a")}
                       </span>
-                    </>
+                  </>
                   }
-                  <FontAwesomeIcon icon={faAngleDown} fixedWidth size="lg" rotation={editSettings ? 180 : null} /></Col>
+                  <FontAwesomeIcon icon={faAngleDown} fixedWidth size="lg" rotation={editSettings ? 180 : null}/></Col>
               </Row>
 
             </Accordion.Toggle>
@@ -197,12 +246,12 @@ function ConfigurationsForm({ settings, token }) {
                       {
                         ANALYTICS_TYPES.map(item => (
                           <Form.Check inline
-                            type="checkbox"
-                            label={item}
-                            id={`WORKFLOW-TYPE-${item}`}
-                            checked={data.workflowType ? data.workflowType[item] : false}
-                            onChange={handleCheckBoxChange.bind(this, item)}
-                            key={item} />
+                                      type="checkbox"
+                                      label={item}
+                                      id={`WORKFLOW-TYPE-${item}`}
+                                      checked={data.workflowType ? data.workflowType[item] : false}
+                                      onChange={handleCheckBoxChange.bind(this, item)}
+                                      key={item}/>
                         ))
                       }
                     </div>
@@ -212,12 +261,12 @@ function ConfigurationsForm({ settings, token }) {
                       {
                         DATA_LIMITS.map(item => (
                           <Form.Check inline label={item.Label}
-                            checked={state.data.dataUsage.toString() === item.Value.toString()}
-                            onChange={handleOptionChange}
-                            value={item.Value.toString()}
-                            type="radio"
-                            id={`STORAGE-${item.Value}`}
-                            key={item.Value} />
+                                      checked={state.data.dataUsage.toString() === item.Value.toString()}
+                                      onChange={handleOptionChange}
+                                      value={item.Value.toString()}
+                                      type="radio"
+                                      id={`STORAGE-${item.Value}`}
+                                      key={item.Value}/>
                         ))
                       }
                     </div>
@@ -225,18 +274,22 @@ function ConfigurationsForm({ settings, token }) {
                     <div className="mt-3 text-muted">Default Persona:</div>
                     <div key="checkbox-persona" className="mb-3 mt-2 p-2">
                       <DropdownList
-                        data={PERSONAS} 
+                        data={PERSONAS}
                         className="basic-single"
                         valueField='value'
                         textField='label'
                         defaultValue={defaultPersona ? defaultPersona : PERSONAS[0]}
-                        onChange={handleSelectPersonaChange}             
+                        onChange={handleSelectPersonaChange}
                       />
                     </div>
 
                     <div className="text-right">
-                      <Button variant="outline-primary" className="mr-3" onClick={() => { updateProfile(); }}><FontAwesomeIcon icon={faSave} fixedWidth /> Save Settings</Button>
-                      <Button variant="outline-danger" onClick={() => { confirmDeactivation(); }}>Deactivate Analytics</Button>
+                      <Button variant="outline-primary" className="mr-3" onClick={() => {
+                        updateProfile();
+                      }}><FontAwesomeIcon icon={faSave} fixedWidth/> Save Settings</Button>
+                      <Button variant="outline-danger" onClick={() => {
+                        confirmDeactivation();
+                      }}>Deactivate Analytics</Button>
                     </div>
 
                   </fieldset>
@@ -251,8 +304,8 @@ function ConfigurationsForm({ settings, token }) {
 }
 
 ConfigurationsForm.propTypes = {
-  settings: PropTypes.object,
-  token: PropTypes.string
+  settings: PropTypes.array,
+  token: PropTypes.string,
 };
 
 export default ConfigurationsForm;
