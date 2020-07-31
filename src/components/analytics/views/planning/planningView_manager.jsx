@@ -12,30 +12,26 @@ import JiraIssuesByPriorityBarChart from "../../charts/jiraIssuesByPriorityBarCh
 import JiraHealthBySprintBarChart from "../../charts/jiraHealthBySprintBarChart";
 import JiraBurndownLineChart from "../../charts/jiraBurndownLineChart";
 import JiraVelocityBarChart from "../../charts/jiraVelocityBarChart";
+import InfoDialog from "../../../common/info";
+import { Row } from "react-bootstrap";
 
-
-
-
-
-
-function PlanningView_Manager ({ persona, date }) {
+function PlanningView_Manager({ persona, date, index }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
   const [countBlockData, setCountBlockData] = useState([]);
   const [data, setData] = useState([]);
-  
-  useEffect(() => {    
+
+  useEffect(() => {
     const controller = new AbortController();
     const runEffect = async () => {
       try {
         await fetchData();
-        
       } catch (err) {
         if (err.name === "AbortError") {
           console.log("Request was canceled via controller.abort");
           return;
-        }        
+        }
       }
     };
     runEffect();
@@ -43,71 +39,109 @@ function PlanningView_Manager ({ persona, date }) {
     return () => {
       controller.abort();
     };
-  }, [date, persona]);
+  }, [date, persona, index]);
 
   async function fetchData() {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";   
+    const apiUrl = "/analytics/data";
     const postBody = {
-      "data": [
+      data: [
         {
-          "request": "gitlabIssueOpen",
-          "metric": "count"
+          request: "gitlabIssueOpen",
+          metric: "count",
         },
         {
-          "request": "gitlabIssueClose",
-          "metric": "count"
+          request: "gitlabIssueClose",
+          metric: "count",
         },
         {
-          "request": "gitlabIssueDifference",
-          "metric": "difference"
-        }
+          request: "gitlabIssueDifference",
+          metric: "difference",
+        },
       ],
-      startDate: date.start, 
-      endDate: date.end
+      startDate: date.start,
+      endDate: date.end,
     };
-    
+
     try {
-      const res = await axiosApiService(accessToken).post(apiUrl, postBody);     
+      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res && res.data ? res.data.data[0] : [];
       setData(dataObject);
       const countsData = buildSummaryCounts(dataObject);
       setCountBlockData(countsData);
       setLoading(false);
-    }
-    catch (err) {
+    } catch (err) {
       setErrors(err);
       setLoading(false);
     }
   }
 
-
   //wire up JUSt for counts block at top.  Data below is sample
   const buildSummaryCounts = (data) => {
     const { gitlabIssueOpen, gitlabIssueClose, gitlabIssueDifference } = data;
 
-    let summaryCountsData = [];    
+    let summaryCountsData = [];
 
     if (gitlabIssueOpen.status === 200 && gitlabIssueOpen.data !== undefined) {
-      summaryCountsData.push({ name: "Total Issues Created", value: gitlabIssueOpen.data[0].count, footer: "Gitlab", status: gitlabIssueOpen.data[0].count > 0 ? "danger" : "success" });
+      summaryCountsData.push({
+        name: "Total Issues Created",
+        value: gitlabIssueOpen.data[0].count,
+        footer: "Gitlab",
+        status: gitlabIssueOpen.data[0].count > 0 ? "danger" : "success",
+      });
     }
-    if (gitlabIssueClose.status === 200 && gitlabIssueClose.data !== undefined) {
-      summaryCountsData.push({ name: "Issues Resolved", value: gitlabIssueClose.data[0].count, footer: "Gitlab", status : "success" });
+    if (
+      gitlabIssueClose.status === 200 &&
+      gitlabIssueClose.data !== undefined
+    ) {
+      summaryCountsData.push({
+        name: "Issues Resolved",
+        value: gitlabIssueClose.data[0].count,
+        footer: "Gitlab",
+        status: "success",
+      });
     }
-    if (gitlabIssueDifference.status === 200 && gitlabIssueDifference.data !== undefined) {
-      summaryCountsData.push({ name: "Average Resolution Time", value: gitlabIssueDifference.data[0].difference + " hrs", footer: "Gitlab", status: gitlabIssueDifference.data[0].difference > 5 ? "warning" : "success" });
+    if (
+      gitlabIssueDifference.status === 200 &&
+      gitlabIssueDifference.data !== undefined
+    ) {
+      gitlabIssueDifference.data[0].difference
+        ? summaryCountsData.push({
+            name: "Average Resolution Time (hrs)",
+            value: gitlabIssueDifference.data[0].difference,
+            footer: "Gitlab",
+            status:
+              gitlabIssueDifference.data[0].difference > 5
+                ? "warning"
+                : "success",
+          })
+        : console.log("time filter active");
     }
-    
+
     return summaryCountsData;
   };
 
-
-  if(loading) {
-    return (<LoadingDialog />);
+  if (loading) {
+    return <LoadingDialog />;
   } else if (error) {
-    return (<ErrorDialog  error={error} />);
+    return <ErrorDialog error={error} />;
+  } else if (!index.includes("jira") && !index.includes("gitlab")) {
+    return (
+      <div
+        className="mt-3 bordered-content-block p-3 max-content-width"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Row>
+          <InfoDialog message="No activity data has been captured for this dashboard. In order to activate planning metrics contact support@opsera.io" />
+        </Row>
+      </div>
+    );
   } else {
     return (
       <>
@@ -140,16 +174,12 @@ function PlanningView_Manager ({ persona, date }) {
           </div>
         </div>
       </>
-    );}
-
-
-
-
+    );
+  }
 }
 
-
 PlanningView_Manager.propTypes = {
-  persona: PropTypes.string
+  persona: PropTypes.string,
 };
 
 export default PlanningView_Manager;

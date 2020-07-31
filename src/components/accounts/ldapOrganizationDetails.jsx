@@ -42,23 +42,29 @@ const LdapOrganizationDetails = (props) => {
         </div>
         
         <hr></hr>
-
-        <Row className="mt-3">
-          <Col lg className="py-1"><span className="text-muted mr-1">Name:</span> {props.organization.orgName} ({props.organization.name})</Col>
-          <Col lg className="py-1"><span className="text-muted mr-1">Description:</span> {props.organization.description}</Col>
-        </Row>
-        <Row className="mt-3">
-          <Col lg className="py-1"><span className="text-muted mr-1">Environment Count:</span> {props.organization.envCount}</Col>
-          <Col lg className="py-1"><span className="text-muted mr-1">Licenses:</span> {props.organization.numberOfLicenses}</Col>
-        </Row>
-        <Row className="mt-3">
-          <Col lg className="py-1"><span className="text-muted mr-1">Objects:</span> {props.organization.objectCount}</Col>
-          <Col lg className="py-1"><span className="text-muted mr-1">Subscription:</span> { props.organization.subscription ? props.organization.subscription.toString() : "" }</Col>
-        </Row>
-        <Row className="mt-3">
-          <Col lg className="py-1"><span className="text-muted mr-1">Owner:</span> {props.organization.orgOwner}</Col>
-          <Col lg className="py-1"><span className="text-muted mr-1">Owner Email:</span> {props.organization.name}</Col>
-        </Row>
+        {
+          (props.organization) ? (
+            <>
+              <Row className="mt-3">
+                <Col lg className="py-1"><span className="text-muted mr-1">Name:</span> {props.organization.orgName} ({props.organization.name})</Col>
+                <Col lg className="py-1"><span className="text-muted mr-1">Description:</span> {props.organization.description}</Col>
+              </Row>
+              <Row className="mt-3">
+                <Col lg className="py-1"><span className="text-muted mr-1">Environment Count:</span> {props.organization.envCount}</Col>
+                <Col lg className="py-1"><span className="text-muted mr-1">Licenses:</span> {props.organization.numberOfLicenses}</Col>
+              </Row>
+              <Row className="mt-3">
+                <Col lg className="py-1"><span className="text-muted mr-1">Objects:</span> {props.organization.objectCount}</Col>
+                <Col lg className="py-1"><span className="text-muted mr-1">Subscription:</span> { props.organization.subscription ? props.organization.subscription.toString() : "" }</Col>
+              </Row>
+              <Row className="mt-3">
+                <Col lg className="py-1"><span className="text-muted mr-1">Owner:</span> {props.organization.orgOwner}</Col>
+                <Col lg className="py-1"><span className="text-muted mr-1">Owner Email:</span> {props.organization.name}</Col>
+              </Row>
+            </>)
+            : null
+        }
+        
       </div>
     </>
   );

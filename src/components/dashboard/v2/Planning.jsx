@@ -4,20 +4,20 @@ import PlanningView_Developer from "../../analytics/views/planning/planningView_
 import PlanningView_Manager from "../../analytics/views/planning/planningView_manager";
 import PlanningView_Executive from "../../analytics/views/planning/planningView_executive";
 
-function PlanningDashboard( { persona,  date } ) {
+function PlanningDashboard( { persona,  date, index } ) {
   
   switch (persona) {
   case "developer":
-    return <PlanningView_Developer persona={persona} date={date}/>;
+    return <PlanningView_Developer persona={persona} date={date} index={index}/>;
 
   case "manager":
-    return <PlanningView_Manager persona={persona} date={date}/>;
+    return <PlanningView_Manager persona={persona} date={date} index={index}/>;
 
   case "executive":
-    return <PlanningView_Executive persona={persona} date={date}/>;
+    return <PlanningView_Executive persona={persona} date={date} index={index}/>;
 
   default:
-    return <PlanningView_Developer persona={persona} date={date}/>;
+    return <PlanningView_Developer persona={persona} date={date} index={index}/>;
   }  
 }
 

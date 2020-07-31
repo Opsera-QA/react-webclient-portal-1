@@ -22,8 +22,9 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css"; 
 import { Alert, OverlayTrigger, Tooltip, Row, Col } from "react-bootstrap";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
+import ConfigurationsForm from "../analytics/configurationsForm";
 
-const INDICES = ["jenkins", "opsera-pipeline-step-summary"];
+const INDICES = ["jenkins", "opsera-pipeline-step-summary", "jira", "sonar", "xunit", "junit", "jmeter", "heartbeat", "codeship", "gitlab"];
 const PERSONAS = [ { value: "developer", label: "Developer" }, { value: "manager", label: "Manager" }, { value: "executive", label: "Executive" }];
 const DATELABELS = [ { value: {
   start: "now-1h",
@@ -53,6 +54,7 @@ function DashboardHome() {
   const [index, setIndex] = useState([]);
   const [selection, setSelection] = useState("pipeline");
   const [persona, setPersona] = useState();
+  const [token, setToken] = useState("");
   const [loading, setLoading] = useState(false);
   const [isEnabled, setIsEnabled] = useState(true);
   const [enabledOn, setEnabledOn] = useState(true);
@@ -89,15 +91,9 @@ function DashboardHome() {
     setLoading(true);
     const { getAccessToken } = contextType;  //getIsPreviewRole
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/settings";   
+    const apiUrl = "/analytics/settings";
+    setToken(accessToken)
 
-    //this returns true IF the Okta groups for user contains "Preview".  Please wrap display components in this.
-    /* const isPreviewRole = await getIsPreviewRole();
-    setPreviewRole(isPreviewRole); 
-    if (isPreviewRole) {
-      console.log("Enabling Preview Feature Toggle. ", isPreviewRole);
-      setSelection("pipeline_v2");
-    } */
 
     try {
       const result = await axiosApiService(accessToken).get(apiUrl);     
@@ -220,7 +216,13 @@ function DashboardHome() {
             </div>
 
             { hasError && <ErrorDialog error={hasError} className="max-content-width mt-4 mb-4" /> }
-            {console.log(data)}
+
+            {(data.profile && !data.profile[0].enabledToolsOn) &&
+            <div className="mt-1 max-content-width mb-1">
+              <ConfigurationsForm settings={data} token={token} />
+            </div> }
+
+
             { !isEnabled || !enabledOn || data.esSearchApi === null || data.vault !== 200 || data.esSearchApi.status !== 200 ? 
               <div style={{ height: "250px" }} className="max-content-module-width-50">
                 <div className="row h-100">
@@ -334,13 +336,13 @@ function DashboardView({ selection, persona, date, index }) {
     case "pipeline":
       return <PipelineDashboard_v2 persona={persona} date={date} index={index}/>;
     case "secops_v2":
-      return <SecOpsDashboard_v2 persona={persona} date={date}/>;
+      return <SecOpsDashboard_v2 persona={persona} date={date} index={index}/>;
     case "quality_v2":
-      return <QualityDashboard persona={persona} date={date}/>;
+      return <QualityDashboard persona={persona} date={date} index={index}/>;
     case "operations_v2":
-      return <OperationsDashboard persona={persona} />;
+      return <OperationsDashboard persona={persona} index={index}/>;
     case "planning":
-      return <PlanningDashboard persona={persona} date={date}/>;
+      return <PlanningDashboard persona={persona} date={date} index={index}/>;
     default:
       return null; 
     }

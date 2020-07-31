@@ -11,9 +11,11 @@ import SummaryCountBlocksView from "../summaryCountBlocksView";
 import XUnitMaxMinPercBarChart from "../../charts/xunitMaxMinPercBarChart";
 import XUnitTestDurationBarChart from "../../charts/xunitTestDurationBarChart";
 import TestResultsTable from "../../metrics/testResultsTable";
+import {  Row } from "react-bootstrap";
 
 
-function TestView_Developer ({ persona, date }) {
+
+function TestView_Developer ({ persona, date, index }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -178,9 +180,16 @@ function TestView_Developer ({ persona, date }) {
     return (<LoadingDialog />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
+  } else if (!index.includes("xunit") && !index.includes("jmeter") && !index.includes("junit")) {
+    return (
+      <div className="mt-3 bordered-content-block p-3 max-content-width" style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}> 
+      <Row>
+          <InfoDialog message="No activity data has been captured for this dashboard. In order to activate quality metrics contact support@opsera.io" />
+      </Row>
+    </div>);
   } else if (data === undefined || Object.keys(data).length == 0 || Object.values(data).every(element => Object.keys(element.data[0]).length === 0)
-  || Object.values(data).every(element => element.status !== 200)) {
-    return (<InfoDialog  message="No log activity has been captured for this dashboard yet." />);
+      || Object.values(data).every(element => element.status !== 200)) {
+        return (<InfoDialog  message="No log activity has been captured for this dashboard yet." />);
   } else {
     return (
       <>

@@ -42,6 +42,10 @@ function Sidebar({ hideView }) {
         setFreeTrialUser(groups.includes("Free Trial"));
       }
 
+      if (!ldap) { //for accounts that are not found in LDAP
+        setLocalAdministrator(true)
+      }
+
       if (ldap && ldap.domain === "opsera.io") { //checking for OpsERA account domain
         setOpseraAdministrator(groups.includes("Admin"));
       }
