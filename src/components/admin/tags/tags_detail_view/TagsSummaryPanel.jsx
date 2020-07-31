@@ -3,8 +3,8 @@ import { Row, Col, Table, OverlayTrigger, Tooltip } from "react-bootstrap";
 import PropTypes from "prop-types";
 
 import "components/inventory/tools/tools.css";
-import TextField from "../../../common/form-fields/text-field";
-import DateField from "../../../common/form-fields/date-field";
+import TextField from "../../../common/form_fields/text-field";
+import DateField from "../../../common/form_fields/date-field";
 import NameValueTable from "../../../common/table/nameValueTable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy, faFileAlt, faTrash } from "@fortawesome/free-solid-svg-icons";

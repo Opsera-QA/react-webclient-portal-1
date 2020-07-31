@@ -831,3 +831,10 @@ div.modal-footer {
 .tableDropdown {
     min-width: 250px;
 }
+
+/* Breadcrumb trail styling */
+.breadcrumb {
+    background-color: #fafafb;
+}
+
+/* End Breadcrumb trail styling */

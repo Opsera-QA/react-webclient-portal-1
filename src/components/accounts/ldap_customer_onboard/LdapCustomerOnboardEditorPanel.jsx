@@ -10,14 +10,13 @@ import Loading from "../../common/loading";
 import {
   ldapCustomerIdpAccountsFormFields,
   ldapCustomerOnboardFormFields,
-  ldapCustomerOnboardUserFormFields,
-  ldapCustomerOrgFormFields
 } from "./ldap-customer-onboard-form-fields";
 import ToggleInput from "../../common/input/toggle-input";
-import SelectInput from "../../common/input/select-input";
 import DropdownList from "react-widgets/lib/DropdownList";
 import ItemInput from "../../common/input/item-input";
 import UserInput from "./user-input";
+import ldapUsersFormFields from "../ldap_users/ldap-users-form-fields";
+import ldapOrganizationsFormFields from "../ldap_organizations/ldap-organizations-form-fields";
 
 const INITIAL_DATA = {
   opseraId: "",
@@ -61,8 +60,8 @@ function LdapCustomerOnboardEditorPanel({ ldapUserData, newLdapUser, setLdapUser
   const [error, setErrors] = useState("");
   const { getAccessToken } = useContext(AuthContext);
   const [fields, setFields ] = useState({ ...ldapCustomerOnboardFormFields });
-  const [userFields, setUserFields ] = useState({ ...ldapCustomerOnboardUserFormFields });
-  const [orgFields, setOrgFields ] = useState({ ...ldapCustomerOrgFormFields });
+  const [userFields, setUserFields ] = useState({ ...ldapUsersFormFields });
+  const [orgFields, setOrgFields ] = useState({ ...ldapOrganizationsFormFields });
   const [idpFields, setIdpFields ] = useState({ ...ldapCustomerIdpAccountsFormFields });
   const [ changeMap, setChangeMap] = useState({});
   const [ formData, setFormData] = useState(INITIAL_DATA);
@@ -135,11 +134,17 @@ function LdapCustomerOnboardEditorPanel({ ldapUserData, newLdapUser, setLdapUser
       firstName: user.firstName,
       lastName: user.lastName,
       emailAddress: user.emailAddress,
-      departmentName: user.organizationName
+      departmentName: user.organizationName,
+      administrator: true
     };
 
-    // TODO: Check for existing admin and remove that
-    currentUsers.unshift(newUser);
+    if (currentUsers[0] != null && currentUsers[0].administrator === true) {
+      currentUsers[0] = newUser;
+    }
+    else {
+      currentUsers.unshift(newUser);
+    }
+
     setFormData({ ...formData, users: currentUsers });
     console.log("Current Users: " + JSON.stringify(currentUsers));
   };
@@ -332,7 +337,7 @@ function LdapCustomerOnboardEditorPanel({ ldapUserData, newLdapUser, setLdapUser
           {/*"Users" section*/}
           <Row>
             <Col>
-              <UserInput opseraUser={currentOpseraUser} field={ fields.users } setData={setFormField} formData={formData}/>
+              <UserInput field={ fields.users } setData={setFormField} formData={formData}/>
             </Col>
           </Row>
 

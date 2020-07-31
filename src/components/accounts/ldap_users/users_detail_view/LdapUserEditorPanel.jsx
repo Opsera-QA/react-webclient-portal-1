@@ -5,23 +5,21 @@ import { AuthContext } from "contexts/AuthContext";
 import TextInput from "../../../common/input/text-input";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import ToggleInput from "../../../common/input/toggle-input";
 import Loading from "../../../common/loading";
 import accountsActions from "../../accounts-actions";
 import ldapUsersFormFields from "../ldap-users-form-fields";
 
 const INITIAL_DATA = {
   name: "",
-  // givenName: "",
-  // preferredName: "",
   firstName: "",
   lastName: "",
   emailAddress: "",
-  // division: "",
-  // team: "",
-  // title: "",
+  referredName: "",
+  division: "",
+  teams: [],
+  title: "",
   departmentName: "",
-  // opseraId: ""
+  site: ""
 };
 
 function LdapUserEditorPanel({ ldapUserData, newLdapUser, setLdapUserData, handleClose, showButton }) {
@@ -130,21 +128,18 @@ function LdapUserEditorPanel({ ldapUserData, newLdapUser, setLdapUserData, handl
             <div className="pb-2 error-text">WARNING! An error has occurred saving your configuration: {error}</div>
           </>}
           {/*TODO: Finalize Fields */}
+          {/*<Row>*/}
+          {/*  <Col>*/}
+          {/*    /!*TODO: Make select, pull from /users/get-users/ and record _id for field*!/*/}
+          {/*    /!* Make sure to pass in large number (1000) because of paging *!/*/}
+          {/*    <TextInput field={ fields.opseraId } setData={setFormField} formData={formData}/>*/}
+          {/*  </Col>*/}
+          {/*</Row>*/}
           <Row>
             <Col>
               <TextInput field={fields.name} setData={setFormField} formData={formData} />
             </Col>
           </Row>
-          {/*<Row>*/}
-          {/*  <Col>*/}
-          {/*    <TextInput field={fields.givenName} setData={setFormField} formData={formData}/>*/}
-          {/*  </Col>*/}
-          {/*</Row>*/}
-          {/*<Row>*/}
-          {/*  <Col>*/}
-          {/*    <TextInput field={fields.preferredName} setData={setFormField} formData={formData}/>*/}
-          {/*  </Col>*/}
-          {/*</Row>*/}
           <Row>
             <Col>
               <TextInput field={fields.firstName} setData={setFormField} formData={formData} />
@@ -157,36 +152,39 @@ function LdapUserEditorPanel({ ldapUserData, newLdapUser, setLdapUserData, handl
           </Row>
           <Row>
             <Col>
-              <TextInput field={fields.emailAddress } setData={setFormField} formData={formData}/>
+              <TextInput field={fields.preferredName} setData={setFormField} formData={formData}/>
             </Col>
           </Row>
-          {/*<Row>*/}
-          {/*  <Col>*/}
-          {/*    <TextInput field={ fields.division } setData={setFormField} formData={formData}/>*/}
-          {/*  </Col>*/}
-          {/*</Row>*/}
-          {/*<Row>*/}
-          {/*  <Col>*/}
-          {/*    <TextInput field={ fields.team } setData={setFormField} formData={formData}/>*/}
-          {/*  </Col>*/}
-          {/*</Row>*/}
+          <Row>
+            <Col>
+              <TextInput disabled={!newLdapUser} field={fields.emailAddress } setData={setFormField} formData={formData}/>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <TextInput field={ fields.division } setData={setFormField} formData={formData}/>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <TextInput field={ fields.teams } setData={setFormField} formData={formData}/>
+            </Col>
+          </Row>
           <Row>
             <Col>
               <TextInput field={ fields.departmentName } setData={setFormField} formData={formData}/>
             </Col>
           </Row>
-          {/*<Row>*/}
-          {/*  <Col>*/}
-          {/*    <TextInput field={ fields.title } setData={setFormField} formData={formData}/>*/}
-          {/*  </Col>*/}
-          {/*</Row>*/}
-          {/*<Row>*/}
-          {/*  <Col>*/}
-          {/*    /!*TODO: Make select, pull from /users/get-users/ and record _id for field*!/*/}
-          {/*    /!* Make sure to pass in large number (1000) because of paging *!/*/}
-          {/*    <TextInput field={ fields.opseraId } setData={setFormField} formData={formData}/>*/}
-          {/*  </Col>*/}
-          {/*</Row>*/}
+          <Row>
+            <Col>
+              <TextInput field={ fields.title } setData={setFormField} formData={formData}/>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <TextInput field={ fields.site } setData={setFormField} formData={formData}/>
+            </Col>
+          </Row>
           <Row>
             { showButton &&
               <div className="ml-auto px-3">

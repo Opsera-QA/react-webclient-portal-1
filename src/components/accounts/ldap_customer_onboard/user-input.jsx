@@ -7,7 +7,7 @@ import NewOnboardLdapUserModal from "./NewOnboardLdapUserModal";
 
 
 // TODO: If this can be useful elsewhere, make more generic
-function UserInput({field, setData, formData, opseraUser}) {
+function UserInput({field, setData, formData}) {
   const [showCreateUserModal, setShowCreateUserModal] = useState(false);
 
   useEffect(() => {
@@ -56,8 +56,8 @@ function UserInput({field, setData, formData, opseraUser}) {
           <div className="custom-item-input">
             {formData[field.id].map((user, i) => (
               <Button key={user} variant="outline-secondary" className="mr-2" size="sm">
-                {i === 0 && opseraUser != null && "Admin: "}{user.firstName + " " + user.lastName}
-                {(i > 0 || (i === 0 && opseraUser == null)) &&
+                {user.administrator === true && "Admin: "}{user.firstName + " " + user.lastName}
+                {user.administrator === false &&
                 <span className="ml-2" onClick={() => {
                   removeUser(i);
                 }}><FontAwesomeIcon icon={faTimes} fixedWidth/></span>
@@ -87,7 +87,6 @@ UserInput.propTypes = {
   setData: PropTypes.func,
   field: PropTypes.object,
   formData: PropTypes.object,
-  opseraUser: PropTypes.object
 };
 
 export default UserInput;
