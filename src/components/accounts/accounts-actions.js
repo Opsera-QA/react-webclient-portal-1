@@ -148,7 +148,7 @@ accountsActions.getGroup = async (groupData, getAccessToken) => {
 
 accountsActions.updateGroup = async (groupData, getAccessToken) => {
   const accessToken = await getAccessToken();
-  const apiUrl = "/users/account/groups/update";
+  const apiUrl = "/users/account/group/update";
   const response = await axiosApiService(accessToken).put(apiUrl, groupData)
     .then((result) =>  {return result;})
     .catch(error => {return { error };});
@@ -157,7 +157,7 @@ accountsActions.updateGroup = async (groupData, getAccessToken) => {
 
 accountsActions.createGroup = async (groupData, getAccessToken) => {
   const accessToken = await getAccessToken();
-  const apiUrl = "/users/account/groups/create";
+  const apiUrl = "/users/account/group/create";
   const response = await axiosApiService(accessToken).post(apiUrl, groupData)
     .then((result) =>  {return result;})
     .catch(error => {return { error };});
@@ -167,7 +167,7 @@ accountsActions.createGroup = async (groupData, getAccessToken) => {
 // TODO: Should this be broken into add/remove?
 accountsActions.modifyMemership = async (membershipData, getAccessToken) => {
   const accessToken = await getAccessToken();
-  const apiUrl = "/users/account/groups/modify-membership";
+  const apiUrl = "/users/account/group/modify-membership";
   const response = await axiosApiService(accessToken).post(apiUrl, membershipData)
     .then((result) =>  {return result;})
     .catch(error => {return { error };});
