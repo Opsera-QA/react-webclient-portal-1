@@ -1,11 +1,22 @@
 //PP-97 Deploy Step form for AWS Elastic Beanstalk
 //https://opsera.atlassian.net/wiki/spaces/OPSERA/pages/283935120/Code-Deployer
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Form, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSave,
+  faSpinner,
+  faExclamationCircle,
+  faExclamationTriangle,
+} from "@fortawesome/free-solid-svg-icons";
+import DropdownList from "react-widgets/lib/DropdownList";
+
+import { AuthContext } from "../../../contexts/AuthContext";
+import { axiosApiService } from "../../../api/apiService";
+import { Link } from "react-router-dom";
+
 
 const INITIAL_DATA = {
   // accessKey: "", 
@@ -17,6 +28,7 @@ const INITIAL_DATA = {
   commands: "",
   sshAction: "SSH Execution", // default it's ssh execution not empty anymore 
   // jenkins details if SSHaction is upload
+  toolConfigId: "",
   jenkinsUrl: "",
   jenkinsPort: "",
   jUserId: "",
@@ -31,11 +43,18 @@ const INITIAL_SSH_KEYFILE = {
 
 
 function SshUploadDeploy( { data, pipelineId, stepId, parentCallback, callbackSaveToVault }) {
+
+  const contextType = useContext(AuthContext);
+
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [formMessage, setFormMessage] = useState("");
   const [sshFileMessage, setSshFileMessage] = useState("");
   const [sshKeyFile, setSshKeyFile] = useState(INITIAL_SSH_KEYFILE);
   const [loading, setLoading] = useState(false);
+  const [error, setErrors] = useState(false);
+
+  const [jenkinsList, setjenkinsList] = useState([]);
+  const [isJenkinsSearching, setisJenkinsSearching] = useState(false);
 
   useEffect(() => {    
     const controller = new AbortController();
@@ -55,6 +74,58 @@ function SshUploadDeploy( { data, pipelineId, stepId, parentCallback, callbackSa
     };
   }, [data]);
 
+  useEffect(() => {
+    setErrors(false);
+    async function fetchJenkinsDetails(service) {
+      setisJenkinsSearching(true);
+      // Set results state
+      let results = await searchToolList(service);
+      if (results) {
+        console.log(results);
+        setjenkinsList(formatOptions(results));
+        setisJenkinsSearching(false);
+      }
+    }
+    // Fire off our API call
+    fetchJenkinsDetails("jenkins");
+  }, []);
+
+  
+  const searchToolList = async (service) => {
+    const { getAccessToken } = contextType;
+    const accessToken = await getAccessToken();
+    const apiUrl = "/registry/properties/" + service; // this is to get all the service accounts from tool registry
+    try {
+      const res = await axiosApiService(accessToken).get(apiUrl);
+      console.log(res);
+      if (res.data) {
+        let respObj = [];
+        let arrOfObj = res.data;
+        arrOfObj.map((item) => {
+          respObj.push({
+            name: item.name,
+            id: item._id,
+            configuration: item.configuration,
+          });
+        });
+        console.log(respObj);
+        return respObj;
+      } else {
+        setErrors(
+          "information is missing or unavailable!  Please ensure the required creds are registered and up to date in Tool Registry."
+        );
+      }
+    } catch (err) {
+      console.log(err.message);
+      setErrors(err.message);
+    }
+  };
+  
+  const formatOptions = (options) => {
+    options.unshift({ value: "", name: "Select One", isDisabled: "yes" });
+    return options;
+  };
+
   const loadFormData = async (step) => {    
     let { configuration } = step;
     if (typeof(configuration) !== "undefined") {
@@ -68,6 +139,25 @@ function SshUploadDeploy( { data, pipelineId, stepId, parentCallback, callbackSa
     } else {
       setFormData(INITIAL_DATA);
     }
+  };
+  
+  const handleJenkinsChange = (selectedOption) => {
+    setFormData({
+      ...formData,
+      toolConfigId: selectedOption.id ? selectedOption.id : "",
+      jenkinsUrl: selectedOption.configuration
+        ? selectedOption.configuration.jenkinsUrl
+        : "",
+      jUserId: selectedOption.configuration
+        ? selectedOption.configuration.jUserId
+        : "",
+      jenkinsPort: selectedOption.configuration
+        ? selectedOption.configuration.jenkinsPort
+        : "",
+      jAuthToken: selectedOption.configuration
+        ? selectedOption.configuration.jAuthToken
+        : "",
+    });
   };
 
   const callbackFunction = async () => {
@@ -230,32 +320,64 @@ function SshUploadDeploy( { data, pipelineId, stepId, parentCallback, callbackSa
 
       {formData.sshAction === "SSH File Upload" && 
       <>
-       
-        <Form.Group controlId="repoField">
-          <Form.Label>Jenkins Container URL*</Form.Label>
-          <Form.Control maxLength="100" type="text" placeholder="" value={formData.jenkinsUrl || ""} onChange={e => setFormData({ ...formData, jenkinsUrl: e.target.value })} />
+        <Form.Group controlId="jenkinsList">
+          <Form.Label>Select Jenkins Tool Configuration*</Form.Label>
+          {isJenkinsSearching ? (
+            <div className="form-text text-muted mt-2 p-2">
+              <FontAwesomeIcon
+                icon={faSpinner}
+                spin
+                className="text-muted mr-1"
+                fixedWidth
+              />
+              Loading Jenkins accounts from registry
+            </div>
+          ) : (
+            <>
+              {jenkinsList && jenkinsList.length > 1 ? (
+                <DropdownList
+                  data={jenkinsList}
+                  value={
+                    formData.toolConfigId
+                      ? jenkinsList[
+                          jenkinsList.findIndex(
+                            (x) => x.id === formData.toolConfigId
+                          )
+                        ]
+                      : jenkinsList[0]
+                  }
+                  valueField="id"
+                  textField="name"
+                  defaultValue={
+                    formData.toolConfigId
+                      ? jenkinsList[
+                          jenkinsList.findIndex(
+                            (x) => x.id === formData.toolConfigId
+                          )
+                        ]
+                      : jenkinsList[0]
+                  }
+                  onChange={handleJenkinsChange}
+                />
+              ) : (
+                <>
+                  <div className="form-text text-muted p-2">
+                    <FontAwesomeIcon
+                      icon={faExclamationCircle}
+                      className="text-muted mr-1"
+                      fixedWidth
+                    />
+                    No accounts have been registered for{" "}
+                    <span className="upper-case-first">{formData.service}</span>
+                    . Please go to
+                    <Link to="/inventory/tools"> Tool Registry</Link> and add an
+                    entry for this repository in order to proceed.{" "}
+                  </div>
+                </>
+              )}
+            </>
+          )}
         </Form.Group>
-
-        <Form.Group controlId="branchField">
-          <Form.Label>Jenkins Port</Form.Label>
-          <Form.Control maxLength="5" type="text" placeholder="" value={formData.jenkinsPort || ""} onChange={e => setFormData({ ...formData, jenkinsPort: e.target.value })} />
-        </Form.Group>
-        
-        <Form.Group controlId="branchField">
-          <Form.Label>Jenkins User ID*</Form.Label>
-          <Form.Control maxLength="50" type="text" placeholder="" value={formData.jUserId || ""} onChange={e => setFormData({ ...formData, jUserId: e.target.value })} />
-        </Form.Group>
-        
-        <Form.Group controlId="branchField">
-          <Form.Label>Jenkins Token*</Form.Label>
-          <Form.Control maxLength="500" type="password" placeholder="" value={formData.jAuthToken || ""} onChange={e => setFormData({ ...formData, jAuthToken: e.target.value })} />
-        </Form.Group>
-        
-        <Form.Group controlId="branchField">
-          <Form.Label>Job Name</Form.Label>
-          <Form.Control maxLength="150" type="text" placeholder="" value={formData.jobName || ""} onChange={e => setFormData({ ...formData, jobName: e.target.value })} />
-        </Form.Group>
-      
       </>
       }
 

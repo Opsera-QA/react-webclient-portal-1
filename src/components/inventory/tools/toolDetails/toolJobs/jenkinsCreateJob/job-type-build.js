@@ -83,22 +83,22 @@ const JenkinsJobTypeBuild = {
       isRequired: false 
     }
   },
-  buildToolVersion: {
-    label: "Build Tool Version",
-    id: "buildToolVersion",
-    type: "",
-    value: "",
-    linkedId: "buildType",
-    linkedValue: "gradle",      
-    toShow: true,
-    disabled: false,
-    touched: false,
-    isValid: false,
-    errorMessage: "",    
-    rules: {
-      isRequired: false 
-    }
-  },
+  // buildToolVersion: {
+  //   label: "Build Tool Version",
+  //   id: "buildToolVersion",
+  //   type: "",
+  //   value: "6.3",
+  //   linkedId: "buildType",
+  //   linkedValue: "gradle",      
+  //   toShow: true,
+  //   disabled: true,
+  //   touched: false,
+  //   isValid: false,
+  //   errorMessage: "",    
+  //   rules: {
+  //     isRequired: false 
+  //   }
+  // },
   gradleTask: {
     label: "Gradle Task",
     id: "gradleTask",

@@ -40,9 +40,14 @@ function AWSToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVault 
       setIsSaving(true);
       let newConfiguration = formData;
       
-      if (typeof(newConfiguration.sonarAuthToken) === "string") {
+      if (typeof(newConfiguration.secretKey) === "string") {
         newConfiguration.secretKey = await saveToVault(toolId, toolData.tool_identifier, "secretKey", "Vault Secured Key", newConfiguration.secretKey);
-        newConfiguration.accessKey = await saveToVault(toolId, toolData.tool_identifier, "secretKey", "Vault Secured Key", newConfiguration.accessKey);
+      }
+      if (typeof(newConfiguration.accessKey) === "string") {
+        newConfiguration.accessKey = await saveToVault(toolId, toolData.tool_identifier, "accessKey", "Vault Secured Key", newConfiguration.accessKey);
+      }
+      if (typeof(newConfiguration.awsAccountId) === "string") {
+        newConfiguration.awsAccountId = await saveToVault(toolId, toolData.tool_identifier, "awsAccountId", "Vault Secured Key", newConfiguration.awsAccountId);
       }
 
       const item = {
@@ -56,8 +61,7 @@ function AWSToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVault 
 
   const saveToVault = async (toolId, toolIdentifier, key, name, value) => {
     //const keyName = `${pipelineId}-${stepId}-${key}`;  //old keyname with pipelineID
-    // const keyName = `${toolId}-${toolIdentifier}-${key}`; 
-    const keyName = `${toolId}-${toolIdentifier}`; 
+    const keyName = `${toolId}-${toolIdentifier}-${key}`;
     const body = {
       "key": keyName,
       "value": value
@@ -67,7 +71,7 @@ function AWSToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVault 
       return { name: name, vaultKey: keyName };
     } else {
       setFormData(formData => {
-        return { ...formData, sonarAuthToken: {}, accessKey: {} };
+        return { ...formData, key: {} };
       });      
       setFormMessage("ERROR: Something has gone wrong saving secure data to your vault.  Please try again or report the issue to OpsERA.");
       return "";
@@ -95,7 +99,7 @@ function AWSToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVault 
       
       <Form.Group controlId="accessKey">
         <Form.Label>AWS Access Key ID*</Form.Label>
-        <Form.Control maxLength="256" type="text" placeholder="" value={formData.accessKey || ""} onChange={e => setFormData({ ...formData, accessKey: e.target.value })} />
+        <Form.Control maxLength="256" type="password" placeholder="" value={formData.accessKey || ""} onChange={e => setFormData({ ...formData, accessKey: e.target.value })} />
       </Form.Group>
      
       <Form.Group controlId="accessKey">
@@ -111,7 +115,7 @@ function AWSToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVault 
 
       <Form.Group controlId="awsAccountId">
         <Form.Label>AWS Account ID*</Form.Label>
-        <Form.Control maxLength="150" type="text" placeholder="" value={formData.awsAccountId || ""} onChange={e => setFormData({ ...formData, awsAccountId: e.target.value })} />
+        <Form.Control maxLength="150" type="password" placeholder="" value={formData.awsAccountId || ""} onChange={e => setFormData({ ...formData, awsAccountId: e.target.value })} />
       </Form.Group>
              
       <Button variant="primary" type="button" disabled={isSaving}
