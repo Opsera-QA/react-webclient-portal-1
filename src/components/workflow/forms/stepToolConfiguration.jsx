@@ -177,6 +177,7 @@ function StepToolConfiguration({
               stepTool={stepTool}
               parentCallback={callbackFunction}
               callbackSaveToVault={saveToVault}
+              createJob={createJob}
             />
           ) : null}
           {editItem.tool_name.toLowerCase() === "xunit" ? (
@@ -187,6 +188,7 @@ function StepToolConfiguration({
               stepTool={stepTool}
               parentCallback={callbackFunction}
               callbackSaveToVault={saveToVault}
+              createJob={createJob}
             />
           ) : null}
           {editItem.tool_name.toLowerCase() === "sonar" ? (
@@ -197,6 +199,7 @@ function StepToolConfiguration({
               stepTool={stepTool}
               parentCallback={callbackFunction}
               callbackSaveToVault={saveToVault}
+              createJob={createJob}
             />
           ) : null}
           {editItem.tool_name.toLowerCase() === "command-line" ? (
@@ -225,6 +228,7 @@ function StepToolConfiguration({
               stepTool={stepTool}
               parentCallback={callbackFunction}
               callbackSaveToVault={saveToVault}
+              createJob={createJob}
             />
           ) : null}
           {editItem.tool_name.toLowerCase() === "selenium" ? (
@@ -235,6 +239,7 @@ function StepToolConfiguration({
               stepTool={stepTool}
               parentCallback={callbackFunction}
               callbackSaveToVault={saveToVault}
+              createJob={createJob}
             />
           ) : null}
           {editItem.tool_name.toLowerCase() === "twistlock" ? (
@@ -245,6 +250,7 @@ function StepToolConfiguration({
               stepTool={stepTool}
               parentCallback={callbackFunction}
               callbackSaveToVault={saveToVault}
+              createJob={createJob}
             />
           ) : null}
           {editItem.tool_name.toLowerCase() === "aws-deploy" ? (
@@ -322,6 +328,7 @@ function StepToolConfiguration({
               stepTool={stepTool}
               parentCallback={callbackFunction}
               callbackSaveToVault={saveToVault}
+              createJob={createJob}
             />
           ) : null}
           {editItem.tool_name.toLowerCase() === "docker-push" ? (
@@ -332,6 +339,7 @@ function StepToolConfiguration({
               stepTool={stepTool}
               parentCallback={callbackFunction}
               callbackSaveToVault={saveToVault}
+              createJob={createJob}
             />
           ) : null}
           {editItem.tool_name.toLowerCase() === "argo" ? (
@@ -362,6 +370,7 @@ function StepToolConfiguration({
               stepTool={stepTool}
               parentCallback={callbackFunction}
               callbackSaveToVault={saveToVault}
+              createJob={createJob}
             />
           ) : null}
         </div>

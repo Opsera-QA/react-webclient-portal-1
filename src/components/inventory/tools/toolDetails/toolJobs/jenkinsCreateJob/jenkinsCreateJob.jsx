@@ -36,27 +36,27 @@ function JenkinsCreateJob(props) {
     },
     {
       label: "Code Scan",
-      value: "CODE-SCAN"
+      value: "CODE SCAN"
     },
     {
       label: "Unit Test",
-      value: "UNIT-TEST"
+      value: "UNIT TEST"
     },
     {
       label: "Functional Test",
-      value: "FUNCTIONAL-TEST"
+      value: "FUNCTIONAL TEST"
     },
     {
       label: "Performance Test",
-      value: "PERFORMANCE-TEST"
+      value: "PERFORMANCE TEST"
     },
     {
-      label: "Sell Script",
-      value: "SHELL-SCRIPT"
+      label: "Shell Script",
+      value: "SHELL SCRIPT"
     },
     {
       label: "Cypress Unit Test",
-      value: "CYPRESS-UNIT-TEST"
+      value: "CYPRESS UNIT TEST"
     },
     {
       label: "Docker",
@@ -64,7 +64,7 @@ function JenkinsCreateJob(props) {
     },
     {
       label: "Send to S3",
-      value: "SEND-S3"
+      value: "SEND S3"
     }             
   ];
 
@@ -90,24 +90,24 @@ function JenkinsCreateJob(props) {
     case "SFDC":        
       updateJenkinsForm({ ...JobTypeSFDC });
       break;    
-    case "CODE-SCAN":  
-    case "UNIT-TEST":   
-    case "FUNCTIONAL-TEST":        
+    case "CODE SCAN":  
+    case "UNIT TEST":   
+    case "FUNCTIONAL TEST":        
       updateJenkinsForm({ ...JobTypeCodeScan });
       break;   
-    case "PERFORMANCE-TEST":
+    case "PERFORMANCE TEST":
       updateJenkinsForm({ ...JobTypePerformanceTesting });
       break;             
-    case "SHELL-SCRIPT":
+    case "SHELL SCRIPT":
       updateJenkinsForm({ ...JenkinsJobTypeShellScript });
       break;
-    case "CYPRESS-UNIT-TEST":
+    case "CYPRESS UNIT TEST":
       updateJenkinsForm({ ...JenkinsJobTypeCypressUnitTesting });
       break;
     case "DOCKER":
       updateJenkinsForm({ ...JenkinsJobTypeDockerPush });
       break;
-    case "SEND-S3":
+    case "SEND S3":
       updateJenkinsForm({ ...JenkinsJobTypeSendToS3 });
       break; 
     case "BUILD":
