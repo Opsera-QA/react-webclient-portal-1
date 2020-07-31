@@ -1,22 +1,8 @@
 // TODO: put metadata on node server and pull down that way?
 const ldapUsersFormFields = {
-  _id: {
-    label: "ID",
-    id: "_id",
-    rules: {
-      // isRequired: true
-    }
-  },
   name: {
     label: "Account Name",
     id: "name",
-    rules: {
-      // isRequired: true
-    }
-  },
-  givenName: {
-    label: "Given Name",
-    id: "givenName",
     rules: {
       // isRequired: true
     }
@@ -56,9 +42,9 @@ const ldapUsersFormFields = {
       // isRequired: true
     }
   },
-  team: {
-    label: "Team",
-    id: "team",
+  teams: {
+    label: "Teams",
+    id: "teams",
     rules: {
       // isRequired: true
     }
@@ -77,6 +63,13 @@ const ldapUsersFormFields = {
       // isRequired: true
     }
   },
+  site: {
+    label: "Site",
+    id: "site",
+    rules: {
+      // isRequired: true
+    }
+  },
   opseraId: {
     label: "Opsera Customer Record",
     id: "opseraId",
@@ -84,13 +77,6 @@ const ldapUsersFormFields = {
       // isRequired: true
     }
   },
-  createdAt: {
-    label: "Create Time",
-    id: "createdAt",
-    rules: {
-      // isRequired: true
-    }
-  }
 };
 
 export default ldapUsersFormFields;

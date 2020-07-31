@@ -28,7 +28,7 @@ function LdapDashboard() {
   if (loading) {
     return (<LoadingDialog />);
   } else if (!administrator) {
-    return (<ErrorDialog align="center" error="Access Denied!  Your account does not have privileges to access this tool."></ErrorDialog>);
+    return (<ErrorDialog align="center" error="Access Denied!  Your account does not have privileges to access this tool."/>);
   } else {
     return (
       <>

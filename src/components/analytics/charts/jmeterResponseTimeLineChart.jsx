@@ -117,7 +117,7 @@ function JMeterResponseTimeLineChart( { persona, date } ) {
                 }}>
                   <strong style={{ color }}>
             Build ID: </strong> {point.data.x}<br></br>
-                  <strong style={{ color }}>  Response Time: </strong> {point.data.y}<br></br>
+                  <strong style={{ color }}>  Response Time: </strong> {point.data.y} ms<br></br>
                 </div>
               )}
               theme={{

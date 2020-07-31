@@ -77,10 +77,10 @@ function JMeterResultsTable({ date }) {
               <tr>
                 <th style={{ width: "5%" }}>Build ID</th>
                 <th style={{ width: "5%" }}>Test Case</th>
-                <th style={{ width: "5%" }}>Average Connect Time</th>
-                <th style={{ width: "5%" }}>Minimum Connect Time</th>
-                <th style={{ width: "5%" }}>Median Connect Time</th>
-                <th style={{ width: "5%" }}>Maximum Connect Time</th>
+                <th style={{ width: "5%" }}>Average Connect Time (ms)</th>
+                <th style={{ width: "5%" }}>Minimum Connect Time (ms)</th>
+                <th style={{ width: "5%" }}>Median Connect Time (ms)</th>
+                <th style={{ width: "5%" }}>Maximum Connect Time (ms)</th>
               </tr>
             </thead>
             <tbody>

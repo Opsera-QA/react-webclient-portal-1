@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Row, Col, Table, OverlayTrigger, Tooltip } from "react-bootstrap";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
-import TextField from "../../../common/form-fields/text-field";
+import TextField from "../../../common/form_fields/text-field";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
@@ -92,14 +92,14 @@ function LdapUserSummaryPanel({ ldapUserData, setLdapUserData } ) {
             <div className="pt-1"><hr/></div>
 
             <Row>
-              {/*<Col>*/}
-              {/*  <TextField field={fields["_id"]} value={tagData._id} />*/}
-              {/*</Col>*/}
               <Col>
                 <TextField field={fields["firstName"]} value={ldapUserData.firstName} />
               </Col>
               <Col>
                 <TextField field={fields["name"]} value={ldapUserData.name} />
+              </Col>
+              <Col>
+                <TextField field={fields["preferredName"]} value={ldapUserData.preferredName} />
               </Col>
             </Row>
             <Row>
@@ -109,15 +109,25 @@ function LdapUserSummaryPanel({ ldapUserData, setLdapUserData } ) {
               <Col>
                 <TextField field={fields["emailAddress"]} value={ldapUserData.emailAddress} />
               </Col>
-              {/*<Col>*/}
-              {/*  <DateField field="createdAt" value={tagData.createdAt} />*/}
-              {/*</Col>*/}
+              <Col>
+                <TextField field={fields["site"]} value={ldapUserData.site} />
+              </Col>
             </Row>
             <Row>
               <Col>
                 <TextField field={fields["departmentName"]} value={ldapUserData.departmentName} />
               </Col>
+              <Col>
+                <TextField field={fields["title"]} value={ldapUserData.title} />
+              </Col>
+              <Col />
             </Row>
+            {/*TODO: Determine teams and create teams-field-displayer*/}
+            {/*<Row>*/}
+            {/*  <Col>*/}
+            {/*    <TextField field={fields["teams"]} value={ldapUserData.teams} />*/}
+            {/*  </Col>*/}
+            {/*</Row>*/}
           </div>
         </div>
       </>}

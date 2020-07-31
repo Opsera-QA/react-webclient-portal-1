@@ -47,6 +47,9 @@ function LdapUserManagement() {
       if (organization != null) {
         setUserList(organization["users"]);
       }
+      else {
+        setUserList([]);
+      }
     }
   };
 

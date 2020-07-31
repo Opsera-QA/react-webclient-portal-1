@@ -8,7 +8,7 @@ import { format } from "date-fns";
 
 const Highlight = require("react-highlighter");
 
-function LogSearchResult({ searchResults }) {
+function LogSearchResult({ searchResults, submittedSearchTerm }) {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
 
@@ -17,7 +17,7 @@ function LogSearchResult({ searchResults }) {
     // if (param._source && param._source.data && param._source.data.tool_output) {
     //   try {
     //     param._source.data.tool_output = param._source.data.tool_output.join("\n");
-    //   } catch { 
+    //   } catch {
     //     console.log("Ignoring Parser");
     //   }
     // }
@@ -26,36 +26,79 @@ function LogSearchResult({ searchResults }) {
     setShowModal(true);
   };
 
-  return (   
+  const handleHighlightText = (item) => {
+    var thisStringItem = JSON.stringify(item, null, 2);
+    return thisStringItem.substring(
+      thisStringItem.lastIndexOf(submittedSearchTerm) - 500,
+      thisStringItem.lastIndexOf(submittedSearchTerm) + 500
+    );
+  };
+
+  return (
     <>
       {searchResults.map((item, idx) => (
         <div key={idx}>
           <Alert>
             <div className="row mb-3">
-              <FontAwesomeIcon icon={faSearchPlus}
+              <FontAwesomeIcon
+                icon={faSearchPlus}
                 className="mt-1"
                 size="sm"
                 style={{ cursor: "pointer", alignItems: "flex-end" }}
-                onClick= {() => { handleClick(item); }} />
-              <strong className="ml-2">{format(new Date(typeof(item._source["@timestamp"]) !== "undefined" ? item._source["@timestamp"] : null), "yyyy-MM-dd', 'hh:mm a")}</strong>
-              { (item._source.data) ? <strong className="ml-4">{typeof(item._source.data.buildVariables) !== "undefined" ? "Job Name: " + item._source.data.buildVariables.JOB_NAME : ""}</strong> : ""}
-              { (item._source.data) ? <strong className="ml-4">{typeof(item._source.data.buildNum) !== "undefined" ? "Build Number: " + item._source.data.buildNum : ""}</strong> : ""}
+                onClick={() => {
+                  handleClick(item);
+                }}
+              />
+              <strong className="ml-2">
+                {format(
+                  new Date(typeof item._source["@timestamp"] !== "undefined" ? item._source["@timestamp"] : null),
+                  "yyyy-MM-dd', 'hh:mm a"
+                )}
+              </strong>
+              {item._source.data ? (
+                <strong className="ml-4">
+                  {typeof item._source.data.buildVariables !== "undefined"
+                    ? "Job Name: " + item._source.data.buildVariables.JOB_NAME
+                    : ""}
+                </strong>
+              ) : (
+                ""
+              )}
+              {item._source.data ? (
+                <strong className="ml-4">
+                  {typeof item._source.data.buildNum !== "undefined"
+                    ? "Build Number: " + item._source.data.buildNum
+                    : ""}
+                </strong>
+              ) : (
+                ""
+              )}
             </div>
             <div className="row ml-2" style={{ lineHeight: 2 }}>
-              <Highlight matchClass="react-highlighter-lightgray" search={/".*?":/}>{JSON.stringify(item, null, 2).substring(0, 1000)}</Highlight>
+              <Highlight matchClass="react-highlighter-yellow" search={submittedSearchTerm}>
+                {/* {JSON.stringify(item, null, 2).substring(0, 1000)}*/}
+                {handleHighlightText(item)}
+              </Highlight>
             </div>
           </Alert>
-          <hr style={{ color: "#E5E7E9", backgroundColor: "#E5E7E9", borderColor : "#E5E7E9" }} />            
+          <hr style={{ color: "#E5E7E9", backgroundColor: "#E5E7E9", borderColor: "#E5E7E9" }} />
         </div>
       ))}
-      <ModalLogs header={modalMessage._index} size="lg" jsonMessage={modalMessage} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
+      <ModalLogs
+        header={modalMessage._index}
+        size="lg"
+        jsonMessage={modalMessage}
+        dataType="bar"
+        show={showModal}
+        setParentVisibility={setShowModal}
+      />
     </>
   );
 }
 
 LogSearchResult.propTypes = {
-  searchResults: PropTypes.array
+  searchResults: PropTypes.array,
+  submittedSearchTerm: PropTypes.string,
 };
-
 
 export default LogSearchResult;

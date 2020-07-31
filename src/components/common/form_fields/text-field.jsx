@@ -5,9 +5,9 @@ function TextField({ field, label, value }) {
   return (
     <>
       {field
-        ?   <><span className="mr-2">{field.label}:</span><span>{value}</span></>
+        ?   <><div className="my-2"><span className="text-muted mr-2">{field.label}:</span><span>{value}</span></div></>
       // TODO: When everything is equipped with fields, get rid of this
-        :   <><span className="text-muted mr-1">{label}:</span><span>{value}</span></>}
+        :   <><div className="my-2"><span className="text-muted mr-1">{label}:</span><span>{value}</span></div></>}
     </>
   );
 }
