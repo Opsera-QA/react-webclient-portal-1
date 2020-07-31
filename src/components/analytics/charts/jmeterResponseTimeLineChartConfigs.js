@@ -15,7 +15,7 @@ export default {
     tickValues: 5,
     tickPadding: 5,
     tickRotation: 0,
-    legend: "Response Time",
+    legend: "Response Time (ms)",
     legendOffset: -75,
     legendPosition: "middle",
   },

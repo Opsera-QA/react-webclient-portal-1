@@ -96,7 +96,7 @@ function OpseraPipelineByStatusBarChar( { persona, date  } ) {
               margin={config.margin}
               padding={0.3}
               layout={"horizontal"}
-              colors={{ scheme: "dark2" }}
+              colors={(bar) => bar.id === "Successful" ? "green" : "red"}
               borderColor={{ theme: "background" }}
               colorBy="id"
               defs={config.defs}
