@@ -219,7 +219,7 @@ function DashboardHome() {
 
             {(profile && !profile.enabledToolsOn) &&
             <div className="mt-1 max-content-width mb-1">
-              <ConfigurationsForm settings={data} token={token} />
+              <ConfigurationsForm settings={profile} token={token} />
             </div> }
 
 

@@ -179,7 +179,6 @@ function Analytics() {
       setSettingsData(profileResponse.data);
 
       if (!Array.isArray(profileResponse.data.profile) || profileResponse.data.profile.length > 0) {
-        console.log("setting PROFILE")
         setProfile(profileResponse.data.profile[0]); //set profile state as an object
 
         const indices = await axiosApiService(accessToken).post("/analytics/index", { "index": INDICES } );
@@ -209,17 +208,11 @@ function Analytics() {
     return (
       <LoadingDialog size="lg" />
     );
-  }
-  else if (error) {
-    return (
-      <ErrorDialog error={error}/>
-    );
   } else {
     return (
       <>
         {loadingProfile ? <LoadingDialog size="lg" /> : null }
         {error ? <ErrorDialog error={error} /> : null}
-
         { !profile.enabledToolsOn && <>
           <div style={{ height: "250px" }} className="max-content-module-width-50">
             <div className="max-content-width">
@@ -233,6 +226,8 @@ function Analytics() {
             </div>
           </div>
           </>}
+
+
 
         { profile.enabledToolsOn && <>
             <div className="mt-3">
