@@ -5,9 +5,9 @@ import { format } from "date-fns";
 function DateField({ field, label, value, dateFormat }) {
   return (
     <>
-      {field ?  <><span className="text-muted mr-1">{field.label}:</span><span> {value && format(new Date(value), dateFormat)}</span></>
+      {field ?  <><div className="my-2"><span className="text-muted mr-1">{field.label}:</span><span> {value && format(new Date(value), dateFormat)}</span></div></>
       // TODO: When everything is equipped with fields, get rid of this
-        :   <><span className="text-muted mr-1">{label}:</span><span> {value && format(new Date(value), dateFormat)}</span></>}
+        :   <><div className="my-2"><span className="text-muted mr-1">{label}:</span><span> {value && format(new Date(value), dateFormat)}</span></div></>}
     </>
   );
 }

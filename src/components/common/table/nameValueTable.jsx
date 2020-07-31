@@ -1,9 +1,5 @@
 import React, { useMemo } from "react";
-import { useTable, usePagination, useSortBy } from "react-table";
 import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
-import Pagination from "components/common/pagination";
 import CustomTable from "../table";
 
 // Note: I only made this because we have a lot of areas where we need to use the name/value tables so might as well reuse this.

@@ -37,8 +37,8 @@ import TagEditor from "./components/admin/tags/TagManagement";
 import TemplateEditor from "./components/admin/template_editor/TemplateEditor";
 import OPBlueprintMain from "./components/blueprint/blueprint";
 import LdapDashboard from "./components/accounts/LdapDashboard";
-import LdapOrganizationsView from "./components/accounts/LdapOrganizationsView";
-import LdapAccountsView from "./components/accounts/LdapAccountsView";
+import LdapOrganizationsView from "./components/accounts/ldap_organizations/LdapOrganizationManagement";
+import LdapOrganizationDetailView from "./components/accounts/ldap_organizations/organizations_detail_view/LdapOrganizationDetailView";
 import LdapCustomerOnboardView from "./components/accounts/ldap_customer_onboard/LdapCustomerOnboard";
 
 import FreeTrialRegistration from "./components/free_trial/Registration";
@@ -132,7 +132,7 @@ const AppWithRouterAccess = () => {
               <SecureRoute path="/admin/template-editor" component={TemplateEditor} />
               <SecureRoute path="/accounts" exact component={LdapDashboard} />
               <SecureRoute path="/accounts/organizations" exact component={LdapOrganizationsView} />
-              <SecureRoute path="/accounts/organizations/detail/:id" exact component={LdapAccountsView} />
+              <SecureRoute path="/accounts/organizations/detail/:id" exact component={LdapOrganizationDetailView} />
               <SecureRoute path="/accounts/users" exact component={LdapUserManagement} />
               <SecureRoute path="/accounts/users/:id" exact component={LdapUserDetailView} />
               <SecureRoute path="/accounts/create" exact component={LdapCustomerOnboardView} />

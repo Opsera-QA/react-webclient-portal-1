@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Form } from "react-bootstrap";
 import validate from "../../../utils/formValidation";
 
-function TextInput({ field, formData, setData }) {
+function TextInput({ field, formData, setData, disabled }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [isValid, setIsValid] = useState(true);
 
@@ -22,7 +22,7 @@ function TextInput({ field, formData, setData }) {
         <Form.Label>
           <span>{field.label}{field.rules.isRequired ? <span className="danger-red">*</span> : null } </span>
         </Form.Label>
-        <Form.Control type={field.type} value={formData[field.id] || ""}  isInvalid={!isValid} onChange={e => validateAndSetData(field, e.target.value)}/>
+        <Form.Control disabled={disabled} type={field.type} value={formData[field.id] || ""}  isInvalid={!isValid} onChange={e => validateAndSetData(field, e.target.value)}/>
         <Form.Control.Feedback type="invalid">
           <div>{errorMessage}</div>
         </Form.Control.Feedback>
@@ -37,7 +37,8 @@ function TextInput({ field, formData, setData }) {
 TextInput.propTypes = {
   setData: PropTypes.func,
   field: PropTypes.object,
-  formData: PropTypes.object
+  formData: PropTypes.object,
+  disabled: PropTypes.bool
 };
 
 export default TextInput;

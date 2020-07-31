@@ -8,8 +8,12 @@ const INITIAL_DATA = {
   name: "",
   firstName: "",
   lastName: "",
+  preferredName: "",
   emailAddress: "",
   departmentName: "",
+  teams: [],
+  division: "",
+  site: "",
 };
 
 function NewLdapUserModal({ onModalClose, showModal } ) {

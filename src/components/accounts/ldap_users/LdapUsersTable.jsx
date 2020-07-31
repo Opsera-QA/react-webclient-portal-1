@@ -13,10 +13,13 @@ function LdapUsersTable({ data }) {
     () => [
       // getTableTextColumn(fields["_id"]),
       getTableTextColumn(fields["name"]),
+      getTableTextColumn(fields["preferredName"]),
       getTableTextColumn(fields["firstName"]),
       getTableTextColumn(fields["lastName"]),
       getTableTextColumn(fields["emailAddress"]),
+      getTableTextColumn(fields["title"]),
       getTableTextColumn(fields["departmentName"]),
+      getTableTextColumn(fields["division"]),
       // getTableDateColumn(fields["createdAt"]),
     ],
     []

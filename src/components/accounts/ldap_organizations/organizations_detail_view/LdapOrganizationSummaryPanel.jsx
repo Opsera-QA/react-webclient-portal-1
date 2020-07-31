@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSitemap, faUserCircle, faUserFriends, faUser, faFileAlt, faPencilAlt, faTrash, faSave, faTimes, faCogs, faFlag, faCopy } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 
-const LdapOrganizationDetails = (props) => {
+const LdapOrganizationSummaryPanel = (props) => {
 
   function renderTooltip(props) {
     const { message } = props;
@@ -70,8 +70,8 @@ const LdapOrganizationDetails = (props) => {
   );
 };
 
-LdapOrganizationDetails.propTypes = {
+LdapOrganizationSummaryPanel.propTypes = {
   organization: PropTypes.object
 };
 
-export default LdapOrganizationDetails;
+export default LdapOrganizationSummaryPanel;
