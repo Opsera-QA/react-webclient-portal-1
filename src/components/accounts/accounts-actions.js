@@ -21,10 +21,10 @@ const accountsActions = {};
 //   return response;
 // };
 //
-accountsActions.updateUser = async (userId, postBody, getAccessToken) => {
+accountsActions.updateUser = async (postBody, getAccessToken) => {
   const accessToken = await getAccessToken();
-  const apiUrl = `/users/${userId}/update/`;
-  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
+  const apiUrl = "/users/account/user/update";
+  const response = await axiosApiService(accessToken).put(apiUrl, postBody)
     .then((result) =>  {return result;})
     .catch(error => {return { error };});
   return response;
