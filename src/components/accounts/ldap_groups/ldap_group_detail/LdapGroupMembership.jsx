@@ -1,13 +1,8 @@
 import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table";
-import { useHistory } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimesCircle, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import accountsActions from "components/accounts/accounts-actions.js";
 
-function LdapGroupMembership({ groupData, organization }) {
-  const history = useHistory();
+function LdapGroupMembership({ membership, organization }) {
 
   const columns = useMemo(
     () => [
@@ -53,13 +48,14 @@ function LdapGroupMembership({ groupData, organization }) {
 
   return (
     <>
-      <CustomTable data={groupData.members} rowStyling={rowStyling} columns={columns} initialState={initialState} />
+      <CustomTable data={membership} rowStyling={rowStyling} columns={columns} initialState={initialState} />
     </>
   );
 }
 
 LdapGroupMembership.propTypes = {
-  groupData: PropTypes.object,
+  membership: PropTypes.array,
+  organization: PropTypes.object
 };
 
 export default LdapGroupMembership;

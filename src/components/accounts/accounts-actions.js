@@ -105,7 +105,7 @@ accountsActions.updateOrganization = async (postBody, getAccessToken) => {
 //     .catch(error => {return { error };});
 //   return response;
 // };
-
+//TODO: Rename to getOrganizationByEmailOrDomain
 accountsActions.getOrganizationByEmail = async (postBody, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = "/users/account";

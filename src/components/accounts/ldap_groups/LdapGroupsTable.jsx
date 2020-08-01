@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
-function LdapGroupsTable({ data }) {
+function LdapGroupsTable({ data, domain }) {
   const history = useHistory();
 
   const columns = useMemo(
@@ -39,7 +39,7 @@ function LdapGroupsTable({ data }) {
   
   const onRowSelect = (rowData, type) => {
     console.log(rowData);
-    history.push("/accounts/groups/" + rowData.original.name);
+    history.push(`/accounts/groups/${domain}/${rowData.original.name}`);
   };
 
   const rowStyling = (row) => {
@@ -66,6 +66,7 @@ function LdapGroupsTable({ data }) {
 
 LdapGroupsTable.propTypes = {
   data: PropTypes.array,
+  domain: PropTypes.string
 };
 
 export default LdapGroupsTable;

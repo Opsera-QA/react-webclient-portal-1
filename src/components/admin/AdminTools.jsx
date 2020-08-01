@@ -3,7 +3,18 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { Link } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faHeartbeat, faTimes, faUserCircle, faLink, faChartBar, faWrench, faTags, faStream, faUsers } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEdit,
+  faHeartbeat,
+  faTimes,
+  faUserCircle,
+  faLink,
+  faChartBar,
+  faWrench,
+  faTags,
+  faStream,
+  faUsers,
+} from "@fortawesome/free-solid-svg-icons";
 
 
 function AdminTools(props) {
@@ -30,63 +41,67 @@ function AdminTools(props) {
     <>
       {
         administrator &&
-          <div className="max-content-width mt-1">
-            {/* <h4>Administration Tools</h4> */}
-            <div>Listed below are administration tools for the platform.</div>
-
+        <div className="max-content-width mt-1">
+          <h4>Administration Tools</h4>
+          <div>Listed below are administration tools for the platform.</div>
+          <div className="p-3">
             <Row className="mt-3 admin-tools">
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/systemstatus"><FontAwesomeIcon icon={faHeartbeat} fixedWidth /> System Status</Link>
+                <Link to="/admin/systemstatus"><FontAwesomeIcon icon={faHeartbeat} fixedWidth/> System Status</Link>
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/customerstatus"><FontAwesomeIcon icon={faHeartbeat} fixedWidth /> Customer System Status</Link>
-              </Col>   
+                <Link to="/admin/customerstatus"><FontAwesomeIcon icon={faHeartbeat} fixedWidth/> Customer System Status</Link>
+              </Col>
               {/* <Col xs={12} md={6} lg={4} className="p-2">
                <Link to="/admin/health"><FontAwesomeIcon icon={faHeartbeat} fixedWidth /> System Health Check</Link>
-               </Col> */}                                    
-           
-              <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/reports"><FontAwesomeIcon icon={faLink} fixedWidth /> Reports</Link>
-              </Col>
-              <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/analytics/reports-registration"><FontAwesomeIcon icon={faChartBar} fixedWidth /> Reports Registration</Link>
-              </Col>              
+               </Col> */}
 
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/manage_systems"><FontAwesomeIcon icon={faEdit} fixedWidth /> System Management</Link>
+                <Link to="/reports"><FontAwesomeIcon icon={faLink} fixedWidth/> Reports</Link>
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/registered_users"><FontAwesomeIcon icon={faUserCircle} fixedWidth /> Registered Users</Link>
+                <Link to="/admin/analytics/reports-registration"><FontAwesomeIcon icon={faChartBar} fixedWidth/> Reports
+                  Registration</Link>
+              </Col>
+
+              <Col xs={12} md={6} lg={4} className="p-2">
+                <Link to="/admin/manage_systems"><FontAwesomeIcon icon={faEdit} fixedWidth/> System Management</Link>
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/demo/api"><FontAwesomeIcon icon={faLink} fixedWidth /> API & Token Data</Link>
-              </Col>                          
-              
+                <Link to="/admin/registered_users"><FontAwesomeIcon icon={faUserCircle} fixedWidth/> Registered
+                  Users</Link>
+              </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/tool-configurations"><FontAwesomeIcon icon={faWrench} fixedWidth /> Tool Configurations</Link>
-              </Col>   
+                <Link to="/demo/api"><FontAwesomeIcon icon={faLink} fixedWidth/> API & Token Data</Link>
+              </Col>
+
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/delete"><FontAwesomeIcon icon={faTimes} fixedWidth /> Delete Tools</Link>
-              </Col>  
+                <Link to="/admin/tool-configurations"><FontAwesomeIcon icon={faWrench} fixedWidth/> Tool Configurations</Link>
+              </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to={!featureFlagItemInProd() ? "/admin/tags" : "#"}><FontAwesomeIcon icon={faTags} fixedWidth /> Tags</Link>
-              </Col> 
+                <Link to="/admin/delete"><FontAwesomeIcon icon={faTimes} fixedWidth/> Delete Tools</Link>
+              </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/template-editor"><FontAwesomeIcon icon={faStream} fixedWidth /> Template Editor</Link>
-              </Col>  
+                <Link to={!featureFlagItemInProd() ? "/admin/tags" : "#"}><FontAwesomeIcon icon={faTags}
+                                                                                           fixedWidth/> Tags</Link>
+              </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to={!featureFlagItemInProd() ? "/accounts" : "#"}><FontAwesomeIcon icon={faUsers} fixedWidth /> Account Management (LDAP)</Link>
-              </Col>                                                  
+                <Link to="/admin/template-editor"><FontAwesomeIcon icon={faStream} fixedWidth/> Template Editor</Link>
+              </Col>
+              <Col xs={12} md={6} lg={4} className="p-2">
+                <Link to={!featureFlagItemInProd() ? "/accounts" : "#"}><FontAwesomeIcon icon={faUsers}
+                                                                                         fixedWidth/> Account Management
+                  (LDAP)</Link>
+              </Col>
             </Row>
           </div>
+        </div>
       }
     </>
   );
 }
 
-AdminTools.propTypes = {
-
-};
+AdminTools.propTypes = {};
 
 
 export default AdminTools;

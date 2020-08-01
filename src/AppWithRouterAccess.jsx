@@ -138,7 +138,7 @@ const AppWithRouterAccess = () => {
               <SecureRoute path="/accounts/create" exact component={LdapCustomerOnboardView} />
 
               <SecureRoute path="/accounts/groups" exact component={LdapGroupManagement} />
-              <SecureRoute path="/accounts/groups/:name" exact component={LdapGroupDetails} />
+              <SecureRoute path="/accounts/groups/:domain/:name" exact component={LdapGroupDetails} />
 
               <SecureRoute path="/demo/api" component={ApiConnectionDemo} />
 

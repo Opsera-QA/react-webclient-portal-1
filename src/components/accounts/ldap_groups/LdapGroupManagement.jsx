@@ -23,6 +23,7 @@ function LdapGroupManagement() {
   const [ currentOrganizationEmail, setCurrentOrganizationEmail ] = useState("");
   const [ organizationList, setOrganizationList ] = useState(undefined);
   const [ organization, setOrganization ] = useState();
+  const [ orgDomain, setOrgDomain ] = useState("");
   const [showCreateGroupModal, setShowCreateGroupModal] = useState(false);
 
   useEffect(() => {  
@@ -31,18 +32,17 @@ function LdapGroupManagement() {
 
   const loadData = async () => {
     await isAdmin();
-    // await getOrganizations();
-    // await getUsers(userEmail);
   };
 
-  const getUsers = async (userEmail) => {
-    if (userEmail != null) {
-      const response = await accountsActions.getOrganizationByEmail({ email: userEmail }, getAccessToken);
+  const getUsers = async (ldapDomain) => {
+    if (ldapDomain != null) {
+      const response = await accountsActions.getOrganizationByEmail({ domain: ldapDomain }, getAccessToken);
       console.log(response);
       let organization = response.data;
       setOrganization(organization);
       if (organization != null) {
         setGroupList(organization["groups"]);
+        setOrgDomain(organization["orgDomain"]);
       }
     }
   };
@@ -50,7 +50,6 @@ function LdapGroupManagement() {
   const getOrganizations = async () => {
     const response = await accountsActions.getOrganizations(getAccessToken);
     console.log(response.data);
-
     if (response.data)
     {
       let parsedOrganizationNames = [];
@@ -67,30 +66,24 @@ function LdapGroupManagement() {
 
   const isAdmin = async () => {
     const userInfo = await getUserRecord();
-
-    // TODO: Is there a better way to find if a user is Opsera?
-    // console.log(JSON.stringify(userInfo.email));
-    // setUserEmail(userInfo.email);
-    await getUsers(userInfo.email);
     setCurrentOrganizationEmail(userInfo.email);
 
-    if (userInfo.email.endsWith("opsera.io")) {
+    const { ldap, groups } = userInfo;
+    if (ldap && ldap.domain === "opsera.io" && groups.includes("Admin")) { //checking for OpsERA account domain
       setOpseraUser(true);
+      setAdminStatus(true);
+      await getUsers(ldap.domain);
       await getOrganizations();
+
+    } else {
+      setAdminStatus(false);
     }
 
-    if (!userInfo.groups.includes("Admin")) {
-      //move out
-      setAdminStatus(false);
-    } else {
-      //do nothing
-      setAdminStatus(true);
-    }
     setPageLoading(false);
   };
 
   const onModalClose = () => {
-    getUsers(currentOrganizationEmail);
+    getUsers(orgDomain);
     setShowCreateGroupModal(false);
   };  
 
@@ -98,28 +91,32 @@ function LdapGroupManagement() {
     setShowCreateGroupModal(true);
   };
 
-  const handleOrganizationChange = (selectedOption) => {
+  const handleOrganizationChange = async (selectedOption) => {
     console.log("Setting organization to: " + JSON.stringify(selectedOption));
+    setPageLoading(true)
     setCurrentOrganizationEmail(selectedOption.id);
-    getUsers(selectedOption.id);
+    await getUsers(selectedOption.id);
+    setPageLoading(false)
   };
 
-  return (
-    <div> 
-      <nav aria-label="breadcrumb">
-        <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
-          <li className="breadcrumb-item">
-            <Link to="/admin">Admin</Link>
-          </li>           
-          <li className="breadcrumb-item">
-            <Link to="/accounts">Account Management</Link>
-          </li>
-          <li className="breadcrumb-item active">Groups</li>
-        </ol>
-      </nav>
-      {pageLoading ? <Loading size="sm" /> : null}
-      {(!isAdminCheck && !pageLoading) && <ErrorDialog error={"You do not have access to view this page!"} />}
-      {isAdminCheck &&
+  if (pageLoading) {
+    return (<Loading size="sm"/>);
+  } else {
+    return (
+      <div>
+        <nav aria-label="breadcrumb">
+          <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
+            <li className="breadcrumb-item">
+              <Link to="/admin">Admin</Link>
+            </li>
+            <li className="breadcrumb-item">
+              <Link to="/accounts">Account Management</Link>
+            </li>
+            <li className="breadcrumb-item active">Groups</li>
+          </ol>
+        </nav>
+        {(!isAdminCheck && !pageLoading) && <ErrorDialog error={"You do not have access to view this page!"}/>}
+        {(isAdminCheck && !pageLoading) &&
         <>
           <div className="justify-content-between mb-1 d-flex">
             <h5>Groups Management</h5>
@@ -137,27 +134,29 @@ function LdapGroupManagement() {
               </div>
               <div className="">
                 <Button variant="primary" size="sm"
-                  onClick={() => { createUser(); }}>
+                        onClick={() => {
+                          createUser();
+                        }}>
                   <FontAwesomeIcon icon={faPlus} className="mr-1"/>New Group
                 </Button>
               </div>
-              <br />
-              <br />
+              <br/>
+              <br/>
             </div>
           </div>
 
           <div className="full-height">
-            {groupList && <LdapGroupsTable data={groupList} />}
+            {groupList && <LdapGroupsTable data={groupList} domain={orgDomain}/>}
           </div>
 
           {showCreateGroupModal ? <NewLdapGroupModal
             organization={organization}
             showModal={showCreateGroupModal}
-            onModalClose={onModalClose} /> : null }
+            onModalClose={onModalClose}/> : null}
         </>}
-    </div>
-  );
-  
+      </div>
+    );
+  }
 
 }
 
