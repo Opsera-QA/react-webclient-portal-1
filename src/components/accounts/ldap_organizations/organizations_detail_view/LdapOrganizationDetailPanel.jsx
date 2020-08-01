@@ -74,7 +74,7 @@ function LdapOrganizationDetailsView({activeTab, setOrganization, organization, 
       case "organizationEditor":
         return <LdapOrganizationEditorPanel setLdapOrganizationData={setOrganization} ldapOrganizationData={organization} />;
       case "accountsTable":
-        return <LdapOrganizationAccountsTable data={organization.orgAccounts} onClick={handleAccountClick}/>;
+        return <LdapOrganizationAccountsTable data={organization} onClick={handleAccountClick}/>;
       case "accountDetails":
         return <LdapOrganizationAccountDetails account={currentAccount}/>;
       default:

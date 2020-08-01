@@ -35,13 +35,15 @@ function LdapOrganizationDetailView() {
 
   const loadData = async () => {
     //need to wire this up still
+
+    console.log("ID: " + id);
     setLoading(true);
     let apiUrl = `/users/account/organization/${id}`;
 
     try {
       const accessToken = await getAccessToken(); //this calls the persistent AuthContext state to get latest token (for passing to Node)
       const response = await axiosApiService(accessToken).post(apiUrl, {});
-      //console.log("[LdapOrganizationDetailView] Response: ", response.data);
+      console.log("[LdapOrganizationDetailView] Response: ", response.data);
       setOrganization(response.data);
     } catch (error) {
       console.log("Error getting API Data: ", error);
@@ -78,10 +80,10 @@ function LdapOrganizationDetailView() {
 
       {organization &&
       <div className="content-container content-card-1 max-content-width ml-2">
-        <div className="pt-2 pl-2 content-block-header"><h5>Organization
-          Details {organization && [organization.name]}</h5></div>
+        <div className="pt-2 pl-2 content-block-header">
+          <h5>Organization Details [{organization && organization.name}]</h5></div>
         <div>
-          <LdapOrganizationSummaryPanel organization={organization}/>
+          <LdapOrganizationSummaryPanel organization={organization} />
         </div>
         <div>
           <LdapOrganizationDetailPanel organization={organization} setOrganization={setOrganization} />
