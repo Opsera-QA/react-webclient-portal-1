@@ -89,18 +89,13 @@ function LdapGroupDetails() {
           <>
             <div className="content-container content-card-1 max-content-width ml-2">
               <div className="pt-2 pl-2 content-block-header">
-                <h5>Group Details: {groupData.name}</h5>
+                <h5>Group Details for {groupData.name}</h5>
               </div>
 
               <div>
                 <div>
                   <div className="scroll-y pt-3 px-3">
                     <div className="mb-3 flat-top-content-block p-3">
-                      <div className="mb-2 text-muted">TODO: Implement delete when needed</div>
-
-                      <div className="pt-1">
-                        <hr/>
-                      </div>
 
                       <Row>
                         <Col>
@@ -110,8 +105,8 @@ function LdapGroupDetails() {
                               {groupData.name}
                             </li>
                             <li className="list-group-item">
-                              <span className="pr-2 text-muted">External Sync Group: </span>
-                              {groupData.externalSyncGroup}
+                              <span className="pr-2 text-muted">Domain: </span>
+                              {domain}
                             </li>
                           </ul>
                         </Col>
@@ -124,6 +119,10 @@ function LdapGroupDetails() {
                             <li className="list-group-item">
                               <span className="pr-1 text-muted">State: </span>
                               {groupData.isSync ? "Active" : "Disabled"}
+                            </li>
+                            <li className="list-group-item">
+                              <span className="pr-2 text-muted">External Sync Group: </span>
+                              {groupData.externalSyncGroup}
                             </li>
                           </ul>
                         </Col>
