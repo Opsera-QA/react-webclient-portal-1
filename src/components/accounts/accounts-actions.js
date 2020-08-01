@@ -164,6 +164,15 @@ accountsActions.createGroup = async (groupData, getAccessToken) => {
   return response;
 };
 
+accountsActions.syncMembership = async (membershipData, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = "/users/account/group/sync-membership";
+  const response = await axiosApiService(accessToken).post(apiUrl, membershipData)
+    .then((result) =>  {return result;})
+    .catch(error => {return { error };});
+  return response;
+};
+
 // TODO: Should this be broken into add/remove?
 accountsActions.modifyMemership = async (membershipData, getAccessToken) => {
   const accessToken = await getAccessToken();

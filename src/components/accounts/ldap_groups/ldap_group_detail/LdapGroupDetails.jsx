@@ -18,22 +18,23 @@ function LdapGroupDetails() {
   const [pageLoading, setPageLoading] = useState(true);
   const [groupData, setGroupData] = useState([]);
   const [organization, setOrganization] = useState();
+  let userInfo = '';
 
   useEffect(() => {
     loadData();
   }, []);
 
   const loadData = async () => {
+    userInfo = await getUserRecord();
     await isAdmin();
   };
 
-  const getGroup = async (organization) => {
+  const getGroup = async (data) => {
     let payload = {
-      domain: organization.orgDomain,
+      domain: data ? data.orgDomain : organization.orgDomain,
       groupName: name,
     };
     const response = await accountsActions.getGroup(payload, getAccessToken);
-    console.log(response.data);
     setGroupData(response.data);
   };
 
@@ -47,7 +48,7 @@ function LdapGroupDetails() {
   };
 
   const isAdmin = async () => {
-    const userInfo = await getUserRecord();
+    
 
     // TODO: Is there a better way to find if a user is Opsera?
     await getUsers(userInfo.email);
@@ -134,7 +135,7 @@ function LdapGroupDetails() {
                     </Tab>
                     <Tab eventKey="Manage" title="Manage">
                       <div className="tabbed-content-block pt-4 pb-4">
-                        <LdapGroupManage groupData={groupData} organization={organization} />
+                        <LdapGroupManage groupData={groupData} organization={organization} getGroup={getGroup}/>
                       </div>
                     </Tab>
                     <Tab eventKey="Settings" title="Settings">
