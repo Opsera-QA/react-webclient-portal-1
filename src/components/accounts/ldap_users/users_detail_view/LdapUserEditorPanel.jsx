@@ -107,7 +107,6 @@ function LdapUserEditorPanel({ ldapUserData, newLdapUser, setLdapUserData, handl
         console.log("Persisting values in ChangeMap : " + JSON.stringify(changeMap));
 
         let domain = newLdapUserData.emailAddress.substring(newLdapUserData.emailAddress.lastIndexOf("@") + 1);
-        // TODO: Should this be 'Name'?
 
         const postBody = {
           domain: domain,

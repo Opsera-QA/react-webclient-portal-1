@@ -24,13 +24,13 @@ import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 const INITIAL_ORGANIZATION_DATA = {
   name: "",
   description: "",
-  envCount: "",
-  numberOfLicenses: "",
-  objectCount: "",
+  envCount: "5",
+  numberOfLicenses: "2000",
+  objectCount: "50000",
   orgName: "",
   orgOwner: "",
   orgOwnerEmail: "",
-  subscription: []
+  subscription: ["apps", "eventHooks"]
 };
 
 const INITIAL_ORGANIZATION_ACCOUNT_DATA = {
