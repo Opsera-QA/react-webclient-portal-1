@@ -6,6 +6,7 @@ import { axiosApiService } from "api/apiService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 import ldapGroupFormFields from "./ldap-groups-form-fields.js";
+import accountsActions from "components/accounts/accounts-actions.js";
 
 function NewLdapUserModal({ organization, onModalClose, showModal } ) {
   const { getAccessToken } = useContext(AuthContext);
@@ -79,17 +80,9 @@ function NewLdapUserModal({ organization, onModalClose, showModal } ) {
         ...formData
       }
     };
-    console.log(payload);
     if(isFormValid) {
-      try {
-        const accessToken = await getAccessToken();
-        const response = await axiosApiService(accessToken).post("/users/account/groups/create", payload );
-        console.log(response);
-        handleClose();
-      }
-      catch (err) {
-        console.log(err.message);
-      }
+      const response = await accountsActions.createGroup(payload, getAccessToken);
+      handleClose();
     }
   };
 

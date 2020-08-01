@@ -12,7 +12,6 @@ function LdapGroupSettings({ groupData, organization, onGroupUpdate } ) {
 
   useEffect(() => {   
     if(Object.keys(groupData).length > 0){ 
-      console.log(groupData);
       updateFormWithData();
     } 
   }, []);
@@ -90,7 +89,6 @@ function LdapGroupSettings({ groupData, organization, onGroupUpdate } ) {
         ...formData
       }
     };
-    console.log(payload);
     if(isFormValid) {
       const response = await accountsActions.updateGroup(payload, getAccessToken);
       console.log(response.data);

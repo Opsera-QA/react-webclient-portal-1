@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Form, Row, Col, Button } from "react-bootstrap";
+import { Form, Row, Col, Button, Alert } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faUser, faUserCircle } from "@fortawesome/free-solid-svg-icons";
@@ -10,30 +10,76 @@ import accountsActions from "components/accounts/accounts-actions.js";
 
 import "components/accounts/accounts.css";
 
-function LdapGroupManage({ groupData, organization }) {
+function LdapGroupManage({ groupData, organization, getGroup }) {
   const { name } = useParams();
   const { getUserRecord, getAccessToken } = useContext(AuthContext);
-  const [ nonMembers, setNonMembers ] = useState([]);
-  const [ Members, setMembers ] = useState([]);
+  const [allMembers, setAllMembers] = useState([...organization.users]);
+  const [membersList, addMemberToList] = useState([...groupData.members]);
+  const [showToast, toggleToast] = useState(false);
 
   useEffect(() => {
-    console.log(organization.users);
-    setNonMembers(organization.users);
-    setMembers(groupData.members);
+    toggleToast(false);
+    changeMemberStatus();
   }, []);
 
-  const updateMembers = () => {};
+  const changeMemberStatus = () => {
+    //If the group have members already, pre-select checkbox
+    allMembers.map((item, index) => {
+      if (membersList.find((member) => member.emailAddress === item.emailAddress) == undefined) {
+        item.isMember = false;
+      } else {
+        item.isMember = true;
+      }
+    });
+  };
+
+  const updateMembers = async () => {
+    let emailList = membersList.reduce((acc, item) => {
+      acc.push(item.emailAddress);
+      return acc;
+    }, []);
+    let payload = {
+      domain: organization.orgDomain,
+      groupName: name,
+      emails: emailList,
+    };
+    const response = await accountsActions.syncMembership(payload, getAccessToken);
+    toggleToast(true);
+    getGroup();
+  };
+
+  const toggleCheckbox = (row, state) => {
+    let allIndex = allMembers.findIndex((i) => i.emailAddress === row.emailAddress);
+    allMembers[allIndex].isMember = state;
+    setAllMembers([...allMembers]);
+  };
 
   const updateCheckedCell = (event, row) => {
     event.stopPropagation();
-    console.log(row)
-    // let index = rowList.indexOf(row);
-    //rowList[index][field] = event.target.checked;
+    if (membersList && membersList.length > 0) {
+      //If member is already added, remove; if not then add member to the "memberList"
+      if (membersList.find((member) => member.emailAddress === row.emailAddress) == undefined) {
+        addMemberToList((membersList) => membersList.concat(row));
+        toggleCheckbox(row, true);
+      } else {
+        //Remove from memberList
+        let index = membersList.findIndex((i) => i.emailAddress === row.emailAddress);
+        membersList.splice(index, 1);
+        addMemberToList([...membersList]);
+        toggleCheckbox(row, false);
+      }
+    } else {
+      toggleCheckbox(row, true);
+      addMemberToList([].concat(row));
+    }
   };
 
   return (
     <div>
       <div className="mb-3 pt-2">
+        {showToast && <Alert variant="success" onClose={() => toggleToast(false)} dismissible>
+          Group members updated successfully!
+        </Alert>}
         <Row>
           <Col xs={6}>
             <div className="members-block">
@@ -42,20 +88,26 @@ function LdapGroupManage({ groupData, organization }) {
                   <FontAwesomeIcon icon={faUser} fixedWidth className="mr-2" />
                   Not Members
                 </span>
-                <span>{organization.users.length} members</span>
+                <span>{allMembers.length} members</span>
               </div>
               <ul className="list-group my-1">
-                {Object.keys(organization.users).map((member, i) => {
-                  return (
-                    <li key={i} className="member-list">
-                      <Form.Check type="checkbox" checked={member.value} onChange={e => updateCheckedCell(e, organization.users[member])} style={{ }} />
-                      <div className="ml-2">
-                        <div>{organization.users[member].name}</div>
-                        <div className="text-muted">{organization.users[member].emailAddress}</div>
-                      </div>
-                    </li>
-                  );
-                })}
+                {allMembers &&
+                  Object.keys(allMembers).map((member, i) => {
+                    return (
+                      <li key={i} className="member-list">
+                        <Form.Check
+                          type="checkbox"
+                          checked={allMembers[member].isMember || false}
+                          onChange={(e) => updateCheckedCell(e, allMembers[member])}
+                          style={{}}
+                        />
+                        <div className="ml-2">
+                          <div>{allMembers[member].name}</div>
+                          <div className="text-muted">{allMembers[member].emailAddress}</div>
+                        </div>
+                      </li>
+                    );
+                  })}
               </ul>
             </div>
           </Col>
@@ -66,20 +118,20 @@ function LdapGroupManage({ groupData, organization }) {
                   <FontAwesomeIcon icon={faUser} fixedWidth className="mr-2" />
                   Members
                 </span>
-                <span>{groupData.members.length} members</span>
+                <span>{membersList ? membersList.length : 0} members</span>
               </div>
               <ul className="list-group my-1">
-                {Object.keys(groupData.members).map((member, i) => {
-                  return (
-                    <li key={i} className="member-list">
-                      <div>
-                      <div>{organization.users[member].name}</div>
-                      <div className="text-muted">{organization.users[member].emailAddress}</div>
-                      </div>
-
-                    </li>
-                  );
-                })}
+                {membersList &&
+                  Object.keys(membersList).map((member, i) => {
+                    return (
+                      <li key={i} className="member-list">
+                        <div>
+                          <div>{membersList[member].name}</div>
+                          <div className="text-muted">{membersList[member].emailAddress}</div>
+                        </div>
+                      </li>
+                    );
+                  })}
               </ul>
             </div>
             <div className="text-right m-2">
