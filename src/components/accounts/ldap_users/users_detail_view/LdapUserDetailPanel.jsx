@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 import LdapUserEditorPanel from "./LdapUserEditorPanel";
 
 function LdapUserDetailPanel({ ldapUserData, setLdapUserData, canDelete }) {
-  const [tabSelection, setTabSelection] = useState("editor");
+  const [tabSelection, setTabSelection] = useState("settings");
 
   const handleTabClick = (tabSelection) => e => {
     console.log(tabSelection);
@@ -22,7 +22,7 @@ function LdapUserDetailPanel({ ldapUserData, setLdapUserData, canDelete }) {
             <div className="default-custom-tabs">
               <ul className="nav nav-tabs">
                 <li className="nav-item">
-                  <a className={"nav-link " + (tabSelection === "editor" ? "active" : "")} onClick={handleTabClick("editor")} href="#">LDAP User Editor</a>
+                  <a className={"nav-link " + (tabSelection === "settings" ? "active" : "")} onClick={handleTabClick("settings")} href="#">Settings</a>
                 </li>
               </ul>
             </div>
@@ -46,7 +46,7 @@ function LdapDetailsView({ tabSelection, setLdapUserData, ldapUserData, canDelet
   }, [tabSelection]);
   if (tabSelection) {
     switch (tabSelection) {
-    case "editor":
+    case "settings":
       return <LdapUserEditorPanel setLdapUserData={setLdapUserData} ldapUserData={ldapUserData} canDelete={canDelete} />;
     default:
       return null;

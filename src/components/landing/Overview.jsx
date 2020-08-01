@@ -36,9 +36,9 @@ function OverviewLanding() {
       console.log("response.data: ", response.data);
       
       setSummaryStats([
-        { name: "Pipelines", value: response.data.pipelines, footer: null, status: null },
+        { name: "My Pipelines", value: response.data.pipelines, footer: null, status: null },
         { name: "Platforms", value: response.data.applications, footer: null, status: null },
-        { name: "Tools", value: response.data.tools.length, footer: null, status: null }]);
+        { name: "Registered Tools", value: response.data.tools, footer: null, status: null }]);
 
     }
     catch (err) {

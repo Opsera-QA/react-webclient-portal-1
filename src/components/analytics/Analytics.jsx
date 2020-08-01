@@ -56,7 +56,7 @@ const DATELABELS = [ { value: {
 function Analytics() {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
-  const [data, setData] = useState({});
+  const [settingsData, setSettingsData] = useState({});
   const [index, setIndex] = useState([]);
   const [loadingProfile, setLoadingProfile] = useState(false);
   const [token, setToken] = useState();
@@ -170,30 +170,30 @@ function Analytics() {
 
   async function fetchData() {
     setLoadingProfile(true);
-    const { getAccessToken } = contextType;  //getIsPreviewRole
+    const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
     const apiUrl = "/analytics/settings";
     setToken(accessToken);
     try {
-      const profile = await axiosApiService(accessToken).get(apiUrl);
-      console.log("Profile: ", profile.data);
-      setProfile(profile.data);
+      const profileResponse = await axiosApiService(accessToken).get(apiUrl);
+      setSettingsData(profileResponse.data);
 
+      if (!Array.isArray(profileResponse.data.profile) || profileResponse.data.profile.length > 0) {
+        setProfile(profileResponse.data.profile[0]); //set profile state as an object
 
-      setData(profile && profile.data.profile[0]);
-      console.log(profile && profile.data.profile[0]);
-      const indices = await axiosApiService(accessToken).post("/analytics/index", { "index": INDICES } );
-      let indicesList = indices.data && Array.isArray(indices.data) ? indices.data : [];
-      setIndex(indicesList); 
+        const indices = await axiosApiService(accessToken).post("/analytics/index", { "index": INDICES } );
+        let indicesList = indices.data && Array.isArray(indices.data) ? indices.data : [];
+        setIndex(indicesList);
 
-      if (typeof(data.profile) === "object" && data.profile.length === 0) {
+      } else {
         setErrors("Warning!  Profile settings associated with your account are incomplete.  Log searching will be unavailable until this is fixed.");
       }
+
 
       setLoadingProfile(false);
     }
     catch (err) {
-      console.log(err.message);
+      console.log(err);
       setLoadingProfile(false);
       setErrors(err.message);
     }
@@ -208,17 +208,11 @@ function Analytics() {
     return (
       <LoadingDialog size="lg" />
     );
-  }
-  else if (error) {
-    return (
-      <ErrorDialog error={error}/>
-    );
   } else {
     return (
       <>
         {loadingProfile ? <LoadingDialog size="lg" /> : null }
         {error ? <ErrorDialog error={error} /> : null}
-
         { !profile.enabledToolsOn && <>
           <div style={{ height: "250px" }} className="max-content-module-width-50">
             <div className="max-content-width">
@@ -228,10 +222,12 @@ function Analytics() {
                 currently configured logs repositories below.</p>
             </div>
             <div className="mt-1 max-content-width mb-1">
-              <ConfigurationsForm settings={data} token={token} />
+              <ConfigurationsForm settings={profile} token={token} />
             </div>
           </div>
           </>}
+
+
 
         { profile.enabledToolsOn && <>
             <div className="mt-3">
@@ -242,7 +238,7 @@ function Analytics() {
                   currently configured logs repositories below.</p>
               </div>
               <div className="p-2 mt-1 max-content-width mb-1">
-                <ConfigurationsForm settings={data} token={token} />
+                <ConfigurationsForm settings={profile} token={token} />
               </div>
 
               <div className="p-2">

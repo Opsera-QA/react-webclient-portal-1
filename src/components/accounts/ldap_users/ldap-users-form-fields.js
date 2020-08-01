@@ -77,6 +77,13 @@ const ldapUsersFormFields = {
       // isRequired: true
     }
   },
+  users: {
+    label: "LDAP Users",
+    id: "users",
+    rules: {
+      // isRequired: true
+    }
+  },
 };
 
 export default ldapUsersFormFields;

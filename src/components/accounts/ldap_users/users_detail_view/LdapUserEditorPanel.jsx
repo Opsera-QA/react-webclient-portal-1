@@ -14,7 +14,7 @@ const INITIAL_DATA = {
   firstName: "",
   lastName: "",
   emailAddress: "",
-  referredName: "",
+  preferredName: "",
   division: "",
   teams: [],
   title: "",
@@ -105,9 +105,22 @@ function LdapUserEditorPanel({ ldapUserData, newLdapUser, setLdapUserData, handl
     if(isFormValid) {
       try {
         console.log("Persisting values in ChangeMap : " + JSON.stringify(changeMap));
+
+        let domain = newLdapUserData.emailAddress.substring(newLdapUserData.emailAddress.lastIndexOf("@") + 1);
         // TODO: Should this be 'Name'?
-        const response = await accountsActions.updateUser(newLdapUserData.emailAddress, changeMap, getAccessToken);
-        console.log("Response data: " + JSON.stringify(response.data));
+
+        const postBody = {
+          domain: domain,
+          user: {
+            // emailAddress: newLdapUserData.emailAddress,
+            ...newLdapUserData,
+            ...changeMap
+          }
+        }
+        console.log("post body: " + JSON.stringify(postBody));
+
+        const response = await accountsActions.updateUser(postBody, getAccessToken);
+        console.log("Response data: " + JSON.stringify(response));
         setLdapUserData({ ...response.data });
         setChangeMap({});
       }
@@ -167,7 +180,7 @@ function LdapUserEditorPanel({ ldapUserData, newLdapUser, setLdapUserData, handl
           </Row>
           <Row>
             <Col>
-              <TextInput field={ fields.teams } setData={setFormField} formData={formData}/>
+              <TextInput disabled={true} field={ fields.teams } setData={setFormField} formData={formData}/>
             </Col>
           </Row>
           <Row>
