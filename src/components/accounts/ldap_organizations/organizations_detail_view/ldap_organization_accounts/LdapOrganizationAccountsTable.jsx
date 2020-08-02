@@ -27,7 +27,8 @@ function LdapOrganizationAccountsTable({ldapOrganizationAccounts, handleAccountC
   const columns = useMemo(
     () => [
       getTableTextColumn(fields["name"]),
-      getTableTextColumn(fields["org"]),
+      getTableTextColumn(fields["orgOwner"]),
+      getTableTextColumn(fields["orgOwnerEmail"]),
       getTableTextColumn(fields["accountName"]),
       // TODO: Create way to show administrator
       getTableTextColumn(fields["description"]),

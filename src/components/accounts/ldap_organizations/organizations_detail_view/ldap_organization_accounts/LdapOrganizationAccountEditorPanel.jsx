@@ -97,8 +97,7 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
     let parsedUserNames = [];
     Object.keys(response.data["users"]).length > 0 && response.data["users"].map(user => {
       let orgDomain = user.email.substring(user.email.lastIndexOf("@") + 1);
-      if (orgDomain === ldapOrganizationAccountData["orgDomain"]) {
-        console.log("Ldap org: " + JSON.stringify(ldapOrganization));
+      if (ldapOrganizationAccountData["orgDomain"].includes(orgDomain)) {
         parsedUserNames.push({text: (user["firstName"] + " " + user["lastName"]) + ": " + user["email"], id: user});
       }
     });
@@ -134,7 +133,7 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
   const isFormValid = true;
 
   const createOrganizationAccount = async (newLdapOrganizationData) => {
-    let ldapOrganizationAccount = {orgAccount: newLdapOrganizationData, orgDomain: newLdapOrganizationData.orgDomain};
+    let ldapOrganizationAccount = {orgAccount: newLdapOrganizationData};
     console.log("Persisting new organization account to DB: " + JSON.stringify(ldapOrganizationAccount));
 
     if (isFormValid) {
