@@ -1,7 +1,7 @@
 // TODO: put metadata on node server and pull down that way?
 const ldapUsersFormFields = {
   name: {
-    label: "Account Name",
+    label: "Full User Name",
     id: "name",
     rules: {
       // isRequired: true
