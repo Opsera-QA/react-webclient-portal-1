@@ -785,7 +785,7 @@ function JenkinsStepConfiguration({
               )}
             </>
           )}
-          {formData.toolConfigId.length > 0 && (
+          {formData.toolConfigId && formData.toolConfigId.length > 0 && (
             <Form.Label className="mt-2 pl-1">
               <Link to={"/inventory/tools/" + formData.toolConfigId}>
                 <FontAwesomeIcon icon={faTools} className="pr-1" /> View/edit
