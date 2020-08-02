@@ -7,7 +7,7 @@ export const ldapOrganizationAccountFormFields = {
     }
   },
   org: {
-    label: "Organization Name",
+    label: "LDAP Organization ID",
     id: "org",
     rules: {
       isRequired: true
@@ -30,14 +30,14 @@ export const ldapOrganizationAccountFormFields = {
     }
   },
   accountName: {
-    label: "Account Name",
+    label: "Common Account Name",
     id: "accountName",
     rules: {
       // isRequired: true
     }
   },
   name: {
-    label: "Internal Name",
+    label: "LDAP Org Account ID",
     id: "name",
     rules: {
       isRequired: true
