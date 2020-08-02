@@ -20,6 +20,7 @@ import {ldapCustomerIdpAccountsFormFields} from "./ldap-idp-account-form-fields"
 import {ldapOrganizationAccountFormFields} from "../ldap_organizations/ldap-organization-account-form-fields";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
+import {capitalizeFirstLetter} from "../../common/helpers/string-helpers";
 
 const INITIAL_ORGANIZATION_DATA = {
   name: "",
@@ -259,6 +260,7 @@ function LdapCustomerOnboardEditorPanel({ldapUserData, newLdapUser, setLdapUserD
                         valueField='value'
                         textField='text'
                         filter='contains'
+                        groupBy={user => capitalizeFirstLetter(user.id.organizationName, "-", "No Organization Name")}
                         defaultValue={undefined}
                         onChange={handleOpseraUserChange}
                       />

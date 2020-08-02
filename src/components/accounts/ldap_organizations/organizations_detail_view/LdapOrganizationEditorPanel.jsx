@@ -9,6 +9,7 @@ import accountsActions from "../../accounts-actions";
 import Loading from "../../../common/loading";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import TextInput from "../../../common/input/text-input";
+import {capitalizeFirstLetter} from "../../../common/helpers/string-helpers";
 
 const INITIAL_ORGANIZATION_DATA = {
   name: "",
@@ -62,12 +63,11 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, newLdapOrganization
 
   const loadOpseraUsers = async () => {
     const response = await accountsActions.getUsers(getAccessToken);
-    // console.log("Opsera Users: \n" + JSON.stringify(response.data));
+    console.log("Opsera Users: \n" + JSON.stringify(Object.keys(response.data)));
 
     let parsedUserNames = [];
-    Object.keys(response.data["users"]).length > 0 && response.data["users"].map(user =>
-    {
-      parsedUserNames.push({ text: ("Name: " + user["firstName"] + " " + user["lastName"]),  id: user });
+    Object.keys(response.data["users"]).length > 0 && response.data["users"].map(user => {
+      parsedUserNames.push({text: (user["firstName"] + " " + user["lastName"]) + ": " + user["email"], id: user});
     });
     console.log("Parsed Organization Names: " + JSON.stringify(parsedUserNames));
     setOpseraUsersList(parsedUserNames);
@@ -126,8 +126,7 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, newLdapOrganization
   const updateLdapOrganization = async () => {
     if(isFormValid) {
       try {
-        let orgDomain = ldapOrganizationData.orgOwnerEmail.substring(ldapOrganizationData.orgOwnerEmail.lastIndexOf("@") + 1);
-        let organizationUpdate = {orgDomain: orgDomain, ...changeMap};
+        let organizationUpdate = {name: ldapOrganizationData.name, ...changeMap};
         console.log("Persisting values in organizationUpdate : " + JSON.stringify(organizationUpdate));
         const response = await accountsActions.updateOrganization(organizationUpdate, getAccessToken);
         console.log("Response data: " + JSON.stringify(response.data));
@@ -168,6 +167,7 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, newLdapOrganization
                   valueField='value'
                   textField='text'
                   filter='contains'
+                  groupBy={user => capitalizeFirstLetter(user.id.organizationName, "-", "No Organization Name")}
                   defaultValue={undefined}
                   onChange={handleOpseraUserChange}
                 />
