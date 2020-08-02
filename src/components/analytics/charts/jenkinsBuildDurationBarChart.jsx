@@ -6,7 +6,7 @@ import { axiosApiService } from "../../../api/apiService";
 import InfoDialog from "../../common/info";
 import config from "./jenkinsBuildDurationBarChartConfigs";
 import "./charts.css";
-import ModalLogs from "../../common/modalLogs";
+import ModalLogs from "../../common/modal/modalLogs";
 import LoadingDialog from "../../common/loading";
 import ErrorDialog from "../../common/error";
 

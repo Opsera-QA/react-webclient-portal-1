@@ -6,8 +6,8 @@ import { LinkContainer } from "react-router-bootstrap";
 import { Row, Col, Button, OverlayTrigger, Tooltip, Form } from "react-bootstrap";
 import PipelineActions from "./actions";
 import { format } from "date-fns";
-import Modal from "../common/modal";
-import ModalActivityLogs from "../common/modalActivityLogs";
+import Modal from "../common/modal/modal";
+import ModalActivityLogs from "../common/modal/modalActivityLogs";
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {

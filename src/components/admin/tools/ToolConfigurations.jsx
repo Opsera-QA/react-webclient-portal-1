@@ -13,7 +13,7 @@ import ToolTypeModal from "./toolType/ToolTypeModal";
 
 import ToolIdentifierTable from "./toolIdentifier/ToolIdentifierTable";
 import ToolIdentifierModal from "./toolIdentifier/ToolIdentifierModal";
-import Modal from "../../common/modal";
+import Modal from "../../common/modal/modal";
 
 function ToolConfigurationsAdmin() {
   const { getUserRecord, getAccessToken } = useContext(AuthContext);

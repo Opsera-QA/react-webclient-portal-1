@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import { Button, Form, Col, Card, Alert } from "react-bootstrap";
-import Modal from "../common/modal";
+import Modal from "../common/modal/modal";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ApiService } from "../../api/apiService";
 import states from "./states";

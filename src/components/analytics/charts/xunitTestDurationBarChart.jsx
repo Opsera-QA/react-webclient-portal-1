@@ -6,7 +6,7 @@ import { ResponsiveBar } from "@nivo/bar";
 import ErrorDialog from "../../common/error";
 import LoadingDialog from "../../common/loading";
 import InfoDialog from "../../common/info";
-import ModalLogs from "../../common/modalLogs";
+import ModalLogs from "../../common/modal/modalLogs";
 import config from "./xunitTestDurationBarChartConfigs";
 import "./charts.css";
 

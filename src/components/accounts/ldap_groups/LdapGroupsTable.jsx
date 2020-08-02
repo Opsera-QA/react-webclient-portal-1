@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
-import CustomTable from "components/common/table";
+import CustomTable from "components/common/table/table";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle, faCheckCircle } from "@fortawesome/free-solid-svg-icons";

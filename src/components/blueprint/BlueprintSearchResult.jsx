@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Alert, Button, Row, Col, Nav } from "react-bootstrap";
 import TabContainer from "react-bootstrap/TabContainer";
-import ModalLogs from "components/common/modalLogs";
+import ModalLogs from "components/common/modal/modalLogs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus, faLayerGroup } from "@fortawesome/free-solid-svg-icons";
 import { format } from "date-fns";

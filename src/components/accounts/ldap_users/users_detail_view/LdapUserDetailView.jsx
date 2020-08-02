@@ -5,6 +5,7 @@ import ErrorDialog from "../../../common/error";
 import LdapUserSummaryPanel from "./LdapUserSummaryPanel";
 import LdapUserDetailPanel from "./LdapUserDetailPanel";
 import accountsActions from "../../accounts-actions";
+import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
 
 function LdapUserDetailView() {
   const { id } = useParams();
@@ -45,17 +46,7 @@ function LdapUserDetailView() {
 
   return (
     <>
-      <nav aria-label="breadcrumb">
-        <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
-          <li className="breadcrumb-item">
-            <Link to="/accounts">Account Management</Link>
-          </li>
-          <li className="breadcrumb-item">
-            <Link to="/accounts/users">Users </Link>
-          </li>
-          <li className="breadcrumb-item active">User Details</li>
-        </ol>
-      </nav>
+      <BreadcrumbTrail destination="ldapUserDetailView" />
 
       {/*TODO: Add isLoading pinwheel*/}
       {ldapUserData &&

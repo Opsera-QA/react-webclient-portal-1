@@ -1,6 +1,6 @@
 import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
-import CustomTable from "components/common/table";
+import CustomTable from "components/common/table/table";
 import {useHistory} from "react-router-dom";
 import {getTableDateColumn, getTableTextColumn} from "../../common/table/table-column-helpers";
 import ldapOrganizationsFormFields from "./ldap-organizations-form-fields";

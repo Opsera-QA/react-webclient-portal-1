@@ -3,7 +3,7 @@ import { axiosApiServiceMultiGet } from "../../api/apiService";
 import ErrorDialog from "../common/error";
 import LoadingDialog from "../common/loading";
 import { AuthContext } from "../../contexts/AuthContext";
-import Modal from "../common/modal";
+import Modal from "../common/modal/modal";
 import ReactJson from "react-json-view";
 import { Link } from "react-router-dom";
 

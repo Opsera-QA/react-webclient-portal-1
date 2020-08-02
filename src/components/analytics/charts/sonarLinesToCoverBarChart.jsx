@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
 import config from "./sonarCodeCoverageBarChartConfigs";
 import "./charts.css";
-import ModalLogs from "../../common/modalLogs";
+import ModalLogs from "../../common/modal/modalLogs";
 import InfoDialog from "../../common/info";
 
 function SonarLinesToCoverBarChart({ data, persona }) {

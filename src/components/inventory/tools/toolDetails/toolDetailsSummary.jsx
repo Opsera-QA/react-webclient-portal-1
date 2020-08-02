@@ -5,7 +5,7 @@ import { format } from "date-fns";
 import "./toolDetails.css";
 
 import "components/inventory/tools/tools.css";
-import CustomTable from "components/common/table";
+import CustomTable from "components/common/table/table";
 
 function ToolDetails(props) {
   const { toolData, closeModal } = props;

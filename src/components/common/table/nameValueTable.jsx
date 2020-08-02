@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
-import CustomTable from "../table";
+import CustomTable from "./table";
 
 // Note: I only made this because we have a lot of areas where we need to use the name/value tables so might as well reuse this.
 function NameValueTable({ tableStyleName, data, noDataMessage, label }) {

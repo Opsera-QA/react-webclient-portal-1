@@ -10,6 +10,7 @@ import TextField from "components/common/form_fields/text-field";
 import LdapGroupMembership from "./LdapGroupMembership.jsx";
 import LdapGroupManage from "./LdapGroupManage.jsx";
 import LdapGroupSettings from "./LdapGroupSettings.jsx";
+import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
 
 function LdapGroupDetails() {
   const { name, domain } = useParams();
@@ -65,21 +66,6 @@ function LdapGroupDetails() {
   } else {
     return (
       <div>
-        <nav aria-label="breadcrumb">
-          <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
-            <li className="breadcrumb-item">
-              <Link to="/admin">Admin</Link>
-            </li>
-            <li className="breadcrumb-item">
-              <Link to="/accounts">Account Management</Link>
-            </li>
-            <li className="breadcrumb-item">
-              <Link to="/accounts/groups">Groups</Link>
-            </li>
-            <li className="breadcrumb-item active">Group Details</li>
-          </ol>
-        </nav>
-
         {!isAdminCheck && !pageLoading && <ErrorDialog error={"You do not have access to view this page!"}/>}
         {isAdminCheck && !pageLoading && !groupData && <>
           <div className="info-text">No group data found.</div>
@@ -87,6 +73,7 @@ function LdapGroupDetails() {
 
         {(isAdminCheck && groupData) && (
           <>
+            <BreadcrumbTrail destination="ldapGroupDetailView" />
             <div className="content-container content-card-1 max-content-width ml-2">
               <div className="pt-2 pl-2 content-block-header">
                 <h5>Group Details for {groupData.name}</h5>

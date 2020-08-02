@@ -31,7 +31,13 @@ function LdapOrganizationAccountSummaryPanel({ldapOrganizationAccountData, setSh
       </div>
       <Row>
         <Col lg={6}>
-          <TextField field={fields["org"]} value={ldapOrganizationAccountData.org}/>
+          <TextField field={fields["orgOwner"]} value={ldapOrganizationAccountData.orgOwner}/>
+        </Col>
+        <Col lg={6}>
+          <TextField field={fields["orgOwnerEmail"]} value={ldapOrganizationAccountData.orgOwnerEmail}/>
+        </Col>
+        <Col lg={6}>
+          <TextField field={fields["administrator"]} value={ldapOrganizationAccountData.administrator}/>
         </Col>
         <Col lg={6}>
           <TextField field={fields["name"]} value={ldapOrganizationAccountData.name}/>

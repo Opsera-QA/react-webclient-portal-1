@@ -4,7 +4,7 @@ import { ResponsivePie } from "@nivo/pie";
 import ErrorDialog from "../../common/error";
 import config from "./sonarCodeCategoriesNO_VALUEPieChartConfigs";
 import "./charts.css";
-import ModalLogs from "../../common/modalLogs";
+import ModalLogs from "../../common/modal/modalLogs";
 
 
 function CodeCategoriesPieChart( { data, persona } ) {

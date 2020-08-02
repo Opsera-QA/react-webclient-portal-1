@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import CustomTable from "components/common/table";
+import CustomTable from "components/common/table/table";
 import { format } from "date-fns";
 import { faTimesCircle, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
