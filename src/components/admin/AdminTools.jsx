@@ -89,8 +89,8 @@ function AdminTools(props) {
                 <Link to="/admin/template-editor"><FontAwesomeIcon icon={faStream} fixedWidth/> Template Editor</Link>
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to={!featureFlagItemInProd() ? "/accounts" : "#"}><FontAwesomeIcon icon={faUsers}
-                                                                                         fixedWidth/> Account Management
+                <Link to={"/accounts"}><FontAwesomeIcon icon={faUsers}
+                                                        fixedWidth/> Account Management
                   (LDAP)</Link>
               </Col>
             </Row>
