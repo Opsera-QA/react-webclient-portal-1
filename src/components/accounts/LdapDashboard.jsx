@@ -42,9 +42,9 @@ function LdapDashboard() {
       </nav>
         <div className="max-content-width ml-2 mt-1">
           <h5>User and Account Management</h5>
-          <div>Manger organizations, accounts, groups and users from this dashboard.</div>
+          <div>Manage organizations, accounts, groups and users from this dashboard.</div>
   
-          <Row className="ml-5 mt-5" style={{ fontSize:"1rem" }}>
+          <Row className="ml-3 mt-3 admin-tools">
             <Col xs={12} md={6} lg={4} className="p-2">
               <Link to="/accounts/organizations"><FontAwesomeIcon icon={faSitemap} fixedWidth /> Organizations & Accounts</Link>
             </Col>

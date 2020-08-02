@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {useState, useEffect, useContext} from "react";
 import {Button, Form} from "react-bootstrap";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
@@ -35,14 +35,14 @@ const INITIAL_ORGANIZATION_ACCOUNT_DATA = {
   administrator: {}
 };
 
-function LdapOrganizationAccountEditorPanel({ ldapOrganizationAccountData,ldapOrganization, newLdapOrganizationAccount, setLdapOrganizationAccountData, setShowEditPanel, handleClose, handleBackButton }) {
+function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOrganization, newLdapOrganizationAccount, setLdapOrganizationAccountData, setShowEditPanel, handleClose, handleBackButton}) {
   const fields = ldapOrganizationAccountFormFields;
   const [error, setErrors] = useState("");
-  const { getAccessToken } = useContext(AuthContext);
-  const [ changeMap, setChangeMap] = useState({});
-  const [ formData, setFormData] = useState(INITIAL_ORGANIZATION_ACCOUNT_DATA);
-  const [ opseraUserList, setOpseraUsersList] = useState([]);
-  const [ currentOpseraUser, setCurrentOpseraUser ] = useState(undefined);
+  const {getAccessToken} = useContext(AuthContext);
+  const [changeMap, setChangeMap] = useState({});
+  const [formData, setFormData] = useState(INITIAL_ORGANIZATION_ACCOUNT_DATA);
+  const [opseraUserList, setOpseraUsersList] = useState([]);
+  const [currentOpseraUser, setCurrentOpseraUser] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -51,14 +51,13 @@ function LdapOrganizationAccountEditorPanel({ ldapOrganizationAccountData,ldapOr
 
   const loadData = async (ldapOrganizationAccountData) => {
     setIsLoading(true);
-    await loadOpseraUsers();
     await unpackLdapOrganizationAccountData(ldapOrganizationAccountData);
+    await loadOpseraUsers();
     setIsLoading(false);
   };
 
   const unpackLdapOrganizationAccountData = async (ldapOrganizationAccountData) => {
     console.log("ldapOrganizationAccountData in unpackLdapUserData: " + JSON.stringify(ldapOrganizationAccountData));
-
     if (ldapOrganizationAccountData != null) {
       setFormField("org", ldapOrganizationAccountData["org"] != null ? ldapOrganizationAccountData["org"] : "");
       setFormField("name", ldapOrganizationAccountData["name"] != null ? ldapOrganizationAccountData["name"] : "");
@@ -77,17 +76,30 @@ function LdapOrganizationAccountEditorPanel({ ldapOrganizationAccountData,ldapOr
       setFormField("orgDomain", ldapOrganizationAccountData["orgDomain"] != null ? ldapOrganizationAccountData["orgDomain"] : "");
       setFormField("administrator", ldapOrganizationAccountData["administrator"] != null ? ldapOrganizationAccountData["administrator"] : "");
     }
+
+    if (newLdapOrganizationAccount && ldapOrganization != null) {
+      let orgDomain = ldapOrganization.orgOwnerEmail.substring(ldapOrganization.orgOwnerEmail.lastIndexOf("@") + 1);
+      console.log("Parsed domain: " + JSON.stringify(orgDomain));
+      setFormField("orgDomain", orgDomain);
+      setFormField("name", ldapOrganization["name"] + "-acc");
+      setFormField("org", ldapOrganization["name"] != null ? ldapOrganization["name"] : "");
+    }
+
     setIsLoading(false);
   };
 
 
   const loadOpseraUsers = async () => {
     const response = await accountsActions.getUsers(getAccessToken);
-    // console.log("Opsera Users: \n" + JSON.stringify(response.data));
+    console.log("Opsera Users: \n" + JSON.stringify(response.data));
 
     let parsedUserNames = [];
     Object.keys(response.data["users"]).length > 0 && response.data["users"].map(user => {
-      parsedUserNames.push({text: (user["firstName"] + " " + user["lastName"]) + ": " + user["email"], id: user});
+      let orgDomain = user.email.substring(user.email.lastIndexOf("@") + 1);
+      if (orgDomain === ldapOrganizationAccountData["orgDomain"]) {
+        console.log("Ldap org: " + JSON.stringify(ldapOrganization));
+        parsedUserNames.push({text: (user["firstName"] + " " + user["lastName"]) + ": " + user["email"], id: user});
+      }
     });
     console.log("Parsed Organization Names: " + JSON.stringify(parsedUserNames));
     setOpseraUsersList(parsedUserNames);
@@ -96,28 +108,24 @@ function LdapOrganizationAccountEditorPanel({ ldapOrganizationAccountData,ldapOr
   const setFormField = (field, value) => {
     console.log("Setting form field: " + field + " value: " + JSON.stringify(value));
 
-    if (value === ldapOrganizationAccountData[field])
-    {
+    if (value === ldapOrganizationAccountData[field]) {
       console.log("Removing " + field + " from change map");
       delete changeMap[field];
-    }
-    else
-    {
+    } else {
       console.log("Added " + field + " to change map: " + value);
       changeMap[field] = value;
-      setChangeMap({ ...changeMap });
+      setChangeMap({...changeMap});
     }
 
     formData[field] = value;
-    setFormData({ ...formData });
+    setFormData({...formData});
 
 
     console.log("ChangeMap: " + JSON.stringify(changeMap));
 
-    if (newLdapOrganizationAccount)
-    {
+    if (newLdapOrganizationAccount) {
       ldapOrganizationAccountData[field] = value;
-      setLdapOrganizationAccountData({ ...ldapOrganizationAccountData });
+      setLdapOrganizationAccountData({...ldapOrganizationAccountData});
     }
   };
 
@@ -128,7 +136,7 @@ function LdapOrganizationAccountEditorPanel({ ldapOrganizationAccountData,ldapOr
     let ldapOrganizationAccount = {orgAccount: newLdapOrganizationData, orgDomain: newLdapOrganizationData.orgDomain};
     console.log("Persisting new organization account to DB: " + JSON.stringify(ldapOrganizationAccount));
 
-    if(isFormValid) {
+    if (isFormValid) {
       let createLdapOrganizationAccountResponse = await accountsActions.create(ldapOrganizationAccount, getAccessToken);
       console.log("createLdapResponse: ", JSON.stringify(createLdapOrganizationAccountResponse));
 
@@ -136,25 +144,22 @@ function LdapOrganizationAccountEditorPanel({ ldapOrganizationAccountData,ldapOr
         const errorMsg = `Microservice error reported creating the organization for : ${newLdapOrganizationData.accountName}.  Error returned: ${JSON.stringify(createLdapOrganizationAccountResponse.error.message, null, 2)}`;
         console.log(errorMsg);
         setErrors(errorMsg);
-      }
-      else {
+      } else {
         handleClose();
       }
     }
   };
 
   const updateLdapOrganizationAccount = async () => {
-    if(isFormValid) {
+    if (isFormValid) {
       try {
         let organizationUpdate = {orgDomain: formData.orgDomain, ...changeMap};
         console.log("Persisting values in organizationUpdate : " + JSON.stringify(organizationUpdate));
         const response = await accountsActions.updateOrganizationAccount(organizationUpdate, getAccessToken);
         console.log("Response data: " + JSON.stringify(response.data));
-        setLdapOrganizationAccountData({ ...response.data });
+        setLdapOrganizationAccountData(response.data);
         setChangeMap({});
-        handleBackButton();
-      }
-      catch (err) {
+      } catch (err) {
         console.log(err.message);
       }
     }
@@ -167,7 +172,6 @@ function LdapOrganizationAccountEditorPanel({ ldapOrganizationAccountData,ldapOr
       lastName: user.lastName,
       emailAddress: user.emailAddress,
       departmentName: user.organizationName,
-      administrator: true,
       preferredName: "",
       division: "",
       teams: ["team1"],
@@ -175,47 +179,51 @@ function LdapOrganizationAccountEditorPanel({ ldapOrganizationAccountData,ldapOr
       site: "Site1"
     };
 
-    setFormField(fields.administrator, newAdmin);
-    console.log("administrator: " + JSON.stringify(formData.administrator));
+    setFormField("administrator", {...newAdmin});
   };
 
   const handleOpseraUserChange = (selectedOption) => {
     let option = selectedOption.id;
     setCurrentOpseraUser(option);
-    let orgDomain = option.email.substring(option.email.lastIndexOf("@") + 1);
     console.log("Setting opsera account to: " + JSON.stringify(selectedOption));
     console.log("option.organizationName: " + option["organizationName"]);
     setFormField("orgOwner", option["firstName"] + " " + option["lastName"]);
     setFormField("orgOwnerEmail", option["email"]);
-    setFormField("orgDomain", orgDomain);
     addAdmin(option);
   };
 
   return (
     <>
-      {isLoading ? <Loading size="sm" /> : null}
+      {isLoading ? <Loading size="sm"/> : null}
 
       {!isLoading && <>
         <div className="scroll-y full-height">
-            <div className="mb-2 text-muted">
-              {/*TODO: Implement overlay*/}
-              {/*<OverlayTrigger*/}
-              {/*  placement="top"*/}
-              {/*  delay={{ show: 250, hide: 400 }}*/}
-              {/*  // overlay={renderTooltip({ message: "Edit this account" })}*/}
-              {/*>*/}
-              <FontAwesomeIcon icon={faCogs} className="pointer float-right ml-3" onClick={() => {setShowEditPanel(false);}}/>
-              {/*</OverlayTrigger>*/}
-            </div>
+          {!newLdapOrganizationAccount &&
+          <div className="mb-2 text-muted">
+            {/*TODO: Implement overlay*/}
+            {/*<OverlayTrigger*/}
+            {/*  placement="top"*/}
+            {/*  delay={{ show: 250, hide: 400 }}*/}
+            {/*  // overlay={renderTooltip({ message: "Edit this account" })}*/}
+            {/*>*/}
+            <FontAwesomeIcon icon={faCogs} className="pointer float-right ml-3" onClick={() => {
+              setShowEditPanel(false);
+            }}/>
+            {/*</OverlayTrigger>*/}
+          </div>
+          }
 
-          <div className="pt-1"><hr/></div>
+          <div className="pt-1">
+            <hr/>
+          </div>
           {error.length > 0 && <>
             <div className="pb-2 error-text">WARNING! An error has occurred saving your configuration: {error}</div>
           </>}
           <Row>
             <Col>
               <div className="custom-select-input">
-                <label className="mt-0"><span>{fields["opseraId"].label}{fields["opseraId"].rules.isRequired ? <span className="danger-red">*</span> : null } </span></label>
+                <label className="mt-0"><span>{fields["opseraId"].label}{fields["opseraId"].rules.isRequired ?
+                  <span className="danger-red">*</span> : null} </span></label>
                 <DropdownList
                   data={opseraUserList}
                   valueField='value'
@@ -229,136 +237,98 @@ function LdapOrganizationAccountEditorPanel({ ldapOrganizationAccountData,ldapOr
             </Col>
           </Row>
           <Row>
-            <Col>
-              <TextInput disabled={!newLdapOrganizationAccount} field={fields.org} setData={setFormField}
+            <Col lg={12}>
+              <TextInput disabled={true} field={fields.org} setData={setFormField}
                          formData={formData}/>
             </Col>
-          </Row>
-          <Row>
-            <Col>
-              <TextInput disabled={true} field={fields.orgDomain} setData={setFormField}
+            <Col lg={12}>
+              <TextInput disabled={!newLdapOrganizationAccount} field={fields.orgDomain} setData={setFormField}
                          formData={formData}/>
             </Col>
-          </Row>
-          <Row>
-            <Col>
+            <Col lg={12}>
               <TextInput field={fields.name} setData={setFormField}
                          formData={formData}/>
             </Col>
-          </Row>
-          <Row>
-            <Col>
+            <Col lg={12}>
               <TextInput field={fields.accountName} setData={setFormField}
                          formData={formData}/>
             </Col>
-          </Row>
-          <Row>
-            <Col>
+            <Col lg={12}>
               <TextInput field={fields.description} setData={setFormField}
                          formData={formData}/>
             </Col>
-          </Row>
-          <Row>
-            <Col>
+            <Col lg={12}>
               <TextInput disabled={true} field={fields.configEntryType} setData={setFormField}
                          formData={formData}/>
             </Col>
-          </Row>
-          <Row>
-            <Col>
+            <Col lg={12}>
               <TextInput disabled={true} field={fields.entityID} setData={setFormField}
                          formData={formData}/>
             </Col>
-          </Row>
-          <Row>
-            <Col>
+            <Col lg={12}>
               <TextInput disabled={true} field={fields.idpPostURL} setData={setFormField}
                          formData={formData}/>
             </Col>
-          </Row>
-          <Row>
-            <Col>
+            <Col lg={12}>
               <TextInput disabled={true} field={fields.idpVendor} setData={setFormField}
                          formData={formData}/>
             </Col>
-          </Row>
-          <Row>
             {/*<Col>*/}
             {/*  <ItemInput field={fields.idpReturnAttributes} setData={setFormField}*/}
             {/*             formData={formData}/>*/}
             {/*</Col>*/}
-          </Row>
-          <Row>
-            <Col>
+            <Col lg={12}>
               <ToggleInput disabled={true} field={fields.isMultipleIDP} setData={setFormField}
                            formData={formData}/>
             </Col>
-          </Row>
-          <Row>
-            <Col>
+            <Col lg={12}>
               <ToggleInput disabled={true} field={fields.localAuth} setData={setFormField}
                            formData={formData}/>
             </Col>
-          </Row>
-          <Row>
-            <Col>
+            <Col lg={12}>
               <ToggleInput disabled={true} field={fields.samlEnabled} setData={setFormField}
                            formData={formData}/>
             </Col>
-          </Row>
-          <Row>
-            <Col>
+            <Col lg={12}>
               <ToggleInput disabled={true} field={fields.oAuthEnabled} setData={setFormField}
                            formData={formData}/>
             </Col>
           </Row>
-          {/*<Row>*/}
-          {/*  <Col>*/}
-          {/*    /!*Show Admin User*!/*/}
-          {/*    <Form.Group className="custom-text-input" controlId={fields.administrator.id}>*/}
-          {/*      <Form.Label>*/}
-          {/*        <span>{fields.administrator.label}{fields.administrator.rules.isRequired ?*/}
-          {/*          <span className="danger-red">*</span> : null} </span>*/}
-          {/*      </Form.Label>*/}
-          {/*      <Form.Control disabled={true}*/}
-          {/*                    value={currentOpseraUser ? currentOpseraUser.firstName + " " + currentOpseraUser.lastName : ""}/>*/}
-          {/*      <Form.Text>*/}
-          {/*        <div>{fields.administrator.fieldText}</div>*/}
-          {/*      </Form.Text>*/}
-          {/*    </Form.Group>*/}
-          {/*  </Col>*/}
-          {/*</Row>*/}
-          <Row>
-            <div className="ml-auto px-3">
-              {newLdapOrganizationAccount ? <Button size="sm" variant="primary" onClick={() => createOrganizationAccount(ldapOrganizationAccountData)}>Create Account</Button>
-                : <>
-                  <Button size="sm" className="mr-2" variant="secondary" onClick={() => handleBackButton()}>Back to Accounts</Button>
-                  <Button size="sm" variant="primary" disabled={Object.keys(changeMap).length === 0} onClick={() => updateLdapOrganizationAccount()}>Save Changes</Button>
-                </>
-              }
-            </div>
-          </Row>
+            <Row>
+              <div className="ml-auto px-3">
+                {newLdapOrganizationAccount ? <Button size="sm" variant="primary"
+                                                      onClick={() => createOrganizationAccount(ldapOrganizationAccountData)}>Create
+                    Account</Button>
+                  : <>
+                    <Button size="sm" className="mr-2" variant="secondary" onClick={() => handleBackButton()}>Back to
+                      Accounts</Button>
+                    <Button size="sm" variant="primary" disabled={Object.keys(changeMap).length === 0}
+                            onClick={() => updateLdapOrganizationAccount()}>Save Changes</Button>
+                  </>
+                }
+              </div>
+            </Row>
         </div>
       </>}
-    </>
-  );
-}
+        </>
+        );
+      }
 
-LdapOrganizationAccountEditorPanel.propTypes = {
-  ldapOrganization: PropTypes.object,
-  ldapOrganizationAccountData: PropTypes.object,
-  setLdapOrganizationAccountData: PropTypes.func,
-  canDelete: PropTypes.bool,
-  newLdapOrganizationAccount: PropTypes.bool,
-  setShowEditPanel: PropTypes.func,
-  handleClose: PropTypes.func,
-  handleBackButton: PropTypes.func
-};
+      LdapOrganizationAccountEditorPanel.propTypes = {
+      ldapOrganization: PropTypes.object,
+      ldapOrganizationAccountData: PropTypes.object,
+      setLdapOrganizationAccountData: PropTypes.func,
+      canDelete: PropTypes.bool,
+      newLdapOrganizationAccount: PropTypes.bool,
+      setShowEditPanel: PropTypes.func,
+      handleClose: PropTypes.func,
+      handleBackButton: PropTypes.func
+    };
 
-LdapOrganizationAccountEditorPanel.defaultProps = {
-  newLdapOrganization: false,
-};
+      LdapOrganizationAccountEditorPanel.defaultProps = {
+      newLdapOrganizationAccount: false,
+    };
 
-export default LdapOrganizationAccountEditorPanel;
+      export default LdapOrganizationAccountEditorPanel;
 
 

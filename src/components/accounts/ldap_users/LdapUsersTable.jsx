@@ -47,7 +47,9 @@ function LdapUsersTable({ data }) {
 
   return (
     <>
-      <CustomTable onRowSelect={onRowSelect} data={data} rowStyling={rowStyling} columns={columns} initialState={initialState} />
+      <div className="table-content-block">
+        <CustomTable tableStyleName="custom-table-2" onRowSelect={onRowSelect} data={data} rowStyling={rowStyling} columns={columns} initialState={initialState} />
+      </div>
     </>
   );
 }

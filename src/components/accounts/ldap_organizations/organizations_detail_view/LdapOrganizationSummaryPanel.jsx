@@ -1,9 +1,5 @@
 import React from "react";
 import {Row, Col, OverlayTrigger, Tooltip} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 import TextField from "../../../common/form_fields/text-field";
 import ldapOrganizationsFormFields from "../ldap-organizations-form-fields";
@@ -34,24 +30,18 @@ function LdapOrganizationSummaryPanel({organization}) {
                     <Col lg={6}>
                       <TextField field={fields.description} value={organization.description} />
                     </Col>
-                  {/*</Row>
-                  <Row>*/}
                     <Col lg={6}>
                       <TextField field={fields.envCount} value={organization.envCount} />
                     </Col>
                     <Col lg={6}>
                       <TextField field={fields.numberOfLicenses} value={organization.numberOfLicenses} />
                     </Col>
-                  {/*</Row>
-                  <Row>*/}
                     <Col lg={6}>
                       <TextField field={fields.objectCount} value={organization.objectCount} />
                     </Col>
                     <Col lg={6}>
                       <TextField field={fields.name} value={organization.name} />
                     </Col>
-                  {/*</Row>
-                  <Row>*/}
                     <Col lg={6}>
                       <TextField field={fields.orgOwner} value={organization.orgOwner} />
                     </Col>

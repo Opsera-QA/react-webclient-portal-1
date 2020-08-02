@@ -24,7 +24,7 @@ const INITIAL_ORGANIZATION_ACCOUNT_DATA = {
   administrator: {}
 };
 
-function NewLdapAccountModal({ onModalClose, showModal, ldapOrganization } ) {
+function NewLdapAccountModal({ onModalClose, showModal, ldapOrganizationData } ) {
   const { getAccessToken } = useContext(AuthContext);
   const [ldapOrganizationAccountData, setLdapOrganizationAccountData] = useState(INITIAL_ORGANIZATION_ACCOUNT_DATA);
 
@@ -49,7 +49,7 @@ function NewLdapAccountModal({ onModalClose, showModal, ldapOrganization } ) {
         <Modal.Body>
           <div className="content-block m-3 full-height">
             <div className="p-3">
-              <LdapOrganizationAccountEditorPanel ldapOrganization={ldapOrganization} setLdapOrganizationAccountData={setLdapOrganizationAccountData} newLdapOrganizationAccount={true} handleClose={handleClose} ldapOrganizationAccountData={ldapOrganizationAccountData} />
+              <LdapOrganizationAccountEditorPanel ldapOrganization={ldapOrganizationData} setLdapOrganizationAccountData={setLdapOrganizationAccountData} newLdapOrganizationAccount={true} handleClose={handleClose} ldapOrganizationAccountData={ldapOrganizationAccountData} />
             </div>
           </div>
         </Modal.Body>
@@ -64,7 +64,7 @@ function NewLdapAccountModal({ onModalClose, showModal, ldapOrganization } ) {
 }
 
 NewLdapAccountModal.propTypes = {
-  ldapOrganization: PropTypes.object,
+  ldapOrganizationData: PropTypes.object,
   showModal: PropTypes.bool,
   onModalClose: PropTypes.func,
 };
