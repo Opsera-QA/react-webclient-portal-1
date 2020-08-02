@@ -4,8 +4,12 @@ import CustomTable from "../../../../common/table";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import {ldapOrganizationAccountFormFields} from "../../ldap-organization-account-form-fields";
+import {getTableTextColumn} from "../../../../common/table/table-column-helpers";
 
 function LdapOrganizationAccountsTable({ldapOrganizationAccounts, handleAccountClick, setShowCreateAccountModal}) {
+  let fields = ldapOrganizationAccountFormFields;
+
   const initialState = {
     pageIndex: 0,
     sortBy: [
@@ -22,25 +26,19 @@ function LdapOrganizationAccountsTable({ldapOrganizationAccounts, handleAccountC
 
   const columns = useMemo(
     () => [
-      {
-        Header: "Name",
-        accessor: "name",
-      },
-      {
-        Header: "Description",
-        accessor: "description",
-      },
-      {
-        Header: "Organization Domain",
-        accessor: "orgDomain"
-      }
+      getTableTextColumn(fields["name"]),
+      getTableTextColumn(fields["org"]),
+      getTableTextColumn(fields["accountName"]),
+      // TODO: Create way to show administrator
+      getTableTextColumn(fields["description"]),
+      getTableTextColumn(fields["orgDomain"]),
     ],
     []
   );
 
 
   const onRowSelect = (selectedRow) => {
-    handleAccountClick(selectedRow.values);
+    handleAccountClick(selectedRow.original);
   };
 
 

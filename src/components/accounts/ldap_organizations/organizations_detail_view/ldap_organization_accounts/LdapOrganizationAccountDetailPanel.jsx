@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import PropTypes from "prop-types";
-import LdapOrganizationAccountDetails from "./LdapOrganizationAccountDetails";
+import LdapOrganizationAccountSummaryPanel from "./LdapOrganizationAccountSummaryPanel";
 import LdapOrganizationAccountsTable from "./LdapOrganizationAccountsTable";
 import LdapOrganizationAccountEditorPanel from "./LdapOrganizationAccountEditorPanel";
 import NewLdapAccountModal from "./NewLdapAccountModal";
@@ -37,9 +37,10 @@ function LadpOrganizationAccountDetailPanel({ldapOrganizationData, loadData}) {
       <div className="pb-3 px-3">
         <Row>
           <Col>
+            {console.log("Current Account: " + JSON.stringify(currentAccount))}
               {currentAccount != null
                 ? showEditPanel ? <LdapOrganizationAccountEditorPanel setLdapOrganizationAccountData={setCurrentAccount} handleBackButton={handleBackButton} setShowEditPanel={setShowEditPanel} ldapOrganizationAccountData={currentAccount} />
-                                : <LdapOrganizationAccountDetails ldapOrganizationAccountData={currentAccount} handleBackButton={handleBackButton} setShowEditorPanel={setShowEditPanel}/>
+                                : <LdapOrganizationAccountSummaryPanel ldapOrganizationAccountData={currentAccount} handleBackButton={handleBackButton} setShowEditorPanel={setShowEditPanel}/>
                 : <LdapOrganizationAccountsTable setShowCreateAccountModal={setShowCreateAccountModal} ldapOrganizationAccounts={ldapOrganizationData["orgAccounts"]}
                                                  handleAccountClick={handleAccountClick} />}
           </Col>
