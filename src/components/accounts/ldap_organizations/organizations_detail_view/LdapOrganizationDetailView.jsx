@@ -34,14 +34,12 @@ function LdapOrganizationDetailView() {
   };
 
   const loadData = async () => {
-    //need to wire this up still
-
     console.log("ID: " + id);
     setLoading(true);
     let apiUrl = `/users/account/organization/${id}`;
 
     try {
-      const accessToken = await getAccessToken(); //this calls the persistent AuthContext state to get latest token (for passing to Node)
+      const accessToken = await getAccessToken();
       const response = await axiosApiService(accessToken).post(apiUrl, {});
       console.log("[LdapOrganizationDetailView] Response: ", response.data);
       setOrganization(response.data);
@@ -86,7 +84,7 @@ function LdapOrganizationDetailView() {
           <LdapOrganizationSummaryPanel organization={organization} />
         </div>
         <div>
-          <LdapOrganizationDetailPanel organization={organization} setOrganization={setOrganization} />
+          <LdapOrganizationDetailPanel organization={organization} setOrganization={setOrganization} loadData={loadData} />
         </div>
         <div className="content-block-footer" />
       </div>

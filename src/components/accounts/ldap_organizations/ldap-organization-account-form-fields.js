@@ -9,7 +9,6 @@ export const ldapOrganizationAccountFormFields = {
   org: {
     label: "Organization Name",
     id: "org",
-    fieldText: "This field is populated by the Opsera Customer Record drop down",
     rules: {
       isRequired: true
     }

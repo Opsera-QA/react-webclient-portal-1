@@ -51,6 +51,7 @@ function LdapOrganizationManagement() {
 
   const onModalClose = () => {
     setShowCreateOrganizationModal(false);
+    loadData();
   };
 
   const isAdmin = async () => {

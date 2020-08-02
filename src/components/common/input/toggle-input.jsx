@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Form } from "react-bootstrap";
 import validate from "../../../utils/formValidation";
 
-function ToggleInput({ field, formData, setData }) {
+function ToggleInput({ field, formData, setData, disabled }) {
     const [errorMessage, setErrorMessage] = useState("");
     const [isValid, setIsValid] = useState(true);
 
@@ -28,6 +28,7 @@ function ToggleInput({ field, formData, setData }) {
               type="switch"
               id={field.id}
               checked={!!formData[field.id]}
+              disabled={disabled}
               label="Active"
               placeholder="Please select"
               onChange={() => {
@@ -46,6 +47,7 @@ function ToggleInput({ field, formData, setData }) {
 }
 
 ToggleInput.propTypes = {
+  disabled: PropTypes.bool,
   setData: PropTypes.func,
   field: PropTypes.object,
   formData: PropTypes.object

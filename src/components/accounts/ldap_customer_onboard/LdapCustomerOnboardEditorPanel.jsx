@@ -512,7 +512,7 @@ function LdapCustomerOnboardEditorPanel({ldapUserData, newLdapUser, setLdapUserD
         <Row>
           <div className="ml-auto px-3">
             {/*{newLdapUser ?*/}
-              <Button size="sm" disabled={isSaving || hasSaved} variant="primary" onClick={() => createLdap()}>Create Account</Button>
+              <Button size="sm" disabled={true || isSaving || hasSaved} variant="primary" onClick={() => createLdap()}>Create Account</Button>
             {// : <Button size="sm" variant="primary" disabled={Object.keys(changeMap).length === 0}
               //           onClick={() => updateLdapAccount(ldapUserData)}>Save changes</Button>
             }

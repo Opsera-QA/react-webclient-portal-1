@@ -76,9 +76,9 @@ function LdapOrganizationSummaryPanel({organization}) {
                     <Col>
                       <TextField field={fields.objectCount} value={organization.objectCount} />
                     </Col>
-                    <Col>
-                      <TextField field={fields.subscription} value={organization.subscription} />
-                    </Col>
+                    {/*<Col>*/}
+                    {/*  <TextField field={fields.subscription} value={organization.subscription} />*/}
+                    {/*</Col>*/}
                   </Row>
                   <Row>
                     <Col>
@@ -91,7 +91,6 @@ function LdapOrganizationSummaryPanel({organization}) {
                 </>)
               : null
           }
-
         </div>
       </div>
     </>
