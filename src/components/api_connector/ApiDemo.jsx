@@ -111,10 +111,11 @@ function ApiDemo() {
           division: {user ? `${user.division}` : ""}<br/>
           domain: {user ? `${user.domain}` : ""}<br/>
           createdAt: {user ? `${user.createdAt}` : ""}<br/>
+          updatedAt: {user ? `${user.updatedAt}` : ""}<br/>
           ssoSystem: {user ? `${user.ssoSystem}` : ""}<br/>
           LDAP Account: {user ? `${JSON.stringify(user.ldap, null, 2)}` : ""}<br/>
-          Group Membership: {user ? `${JSON.stringify(user.groups, null, 2)}` : ""}
-
+          Group Membership: {user ? `${JSON.stringify(user.groups, null, 2)}` : ""}<br/>
+          LDAP SyncAt: {user ? `${user.ldapSyncAt}` : ""}
         </div>}
 
         {analyticsProfile !== undefined && <div className="mb-2">
