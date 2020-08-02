@@ -8,8 +8,7 @@ import LdapOrganizationAccountsTable from "./LdapOrganizationAccountsTable";
 import LdapOrganizationAccountEditorPanel from "./LdapOrganizationAccountEditorPanel";
 import NewLdapAccountModal from "./NewLdapAccountModal";
 
-function LdapOrganizationAccountDetailPanel({ldapOrganizationData, loadData}) {
-  const [currentAccount, setCurrentAccount] = useState(undefined);
+function LdapOrganizationAccountDetailPanel({ldapOrganizationData, ldapOrganizationAccounts, currentAccount, setCurrentAccount, loadData}) {
   const [showEditPanel, setShowEditPanel] = useState(false);
   const [showCreateAccountModal, setShowCreateAccountModal] = useState(false);
 
@@ -18,7 +17,6 @@ function LdapOrganizationAccountDetailPanel({ldapOrganizationData, loadData}) {
   };
 
   const handleBackButton = () => {
-    console.log("handling back");
     setCurrentAccount(undefined);
     setShowEditPanel(false);
   }
@@ -37,11 +35,10 @@ function LdapOrganizationAccountDetailPanel({ldapOrganizationData, loadData}) {
       <div className="pb-3 px-3">
         <Row>
           <Col>
-            {console.log("Current Account: " + JSON.stringify(currentAccount))}
               {currentAccount != null
                 ? showEditPanel ? <LdapOrganizationAccountEditorPanel setLdapOrganizationAccountData={setCurrentAccount} handleBackButton={handleBackButton} setShowEditPanel={setShowEditPanel} ldapOrganizationAccountData={currentAccount} />
                                 : <LdapOrganizationAccountSummaryPanel ldapOrganizationAccountData={currentAccount} handleBackButton={handleBackButton} setShowEditorPanel={setShowEditPanel}/>
-                : <LdapOrganizationAccountsTable setShowCreateAccountModal={setShowCreateAccountModal} ldapOrganizationAccounts={ldapOrganizationData["orgAccounts"]}
+                : <LdapOrganizationAccountsTable setShowCreateAccountModal={setShowCreateAccountModal} ldapOrganizationAccounts={ldapOrganizationAccounts}
                                                  handleAccountClick={handleAccountClick} />}
           </Col>
         </Row>
@@ -51,7 +48,10 @@ function LdapOrganizationAccountDetailPanel({ldapOrganizationData, loadData}) {
 }
 
 LdapOrganizationAccountDetailPanel.propTypes = {
+  ldapOrganizationAccounts: PropTypes.array,
   ldapOrganizationData: PropTypes.object,
+  currentAccount: PropTypes.object,
+  setCurrentAccount: PropTypes.func,
   loadData: PropTypes.func
 };
 

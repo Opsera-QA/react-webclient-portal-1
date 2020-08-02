@@ -4,7 +4,6 @@ import {useParams} from "react-router-dom";
 import {axiosApiService} from "api/apiService";
 import ErrorDialog from "../../../common/error";
 import LoadingDialog from "../../../common/loading";
-import {Link} from "react-router-dom";
 import LdapOrganizationSummaryPanel from "./LdapOrganizationSummaryPanel";
 
 import "../../accounts.css";
@@ -18,7 +17,8 @@ function LdapOrganizationDetailView() {
   const [userGroups, setUserGroups] = useState([]);
   const [loading, setLoading] = useState(false); //this is how we toggle showing/hiding stuff when API calls or other functions are loading
   const [error, setError] = useState(false); //if any errors on API call or anything else need to be shown to use, this is used
-  const [organization, setOrganization] = useState(null);
+  const [organization, setOrganization] = useState(undefined);
+  const [organizationAccounts, setOrganizationAccounts] = useState(undefined);
 
 
   useEffect(() => {
@@ -42,8 +42,10 @@ function LdapOrganizationDetailView() {
     try {
       const accessToken = await getAccessToken();
       const response = await axiosApiService(accessToken).post(apiUrl, {});
-      console.log("[LdapOrganizationDetailView] Response: ", response.data);
+      // console.log("[LdapOrganizationDetailView] Response: ", response.data);
       setOrganization(response.data);
+      setOrganizationAccounts(response.data["orgAccounts"]);
+      console.log("orgAccounts: " + JSON.stringify(response.data["orgAccounts"]));
     } catch (error) {
       console.log("Error getting API Data: ", error);
       setError(error);
@@ -75,7 +77,7 @@ function LdapOrganizationDetailView() {
           <LdapOrganizationSummaryPanel organization={organization} />
         </div>
         <div>
-          <LdapOrganizationDetailPanel organization={organization} setOrganization={setOrganization} loadData={loadData} />
+          <LdapOrganizationDetailPanel organizationAccounts={organizationAccounts} organization={organization} setOrganization={setOrganization} loadData={loadData} />
         </div>
         <div className="content-block-footer" />
       </div>

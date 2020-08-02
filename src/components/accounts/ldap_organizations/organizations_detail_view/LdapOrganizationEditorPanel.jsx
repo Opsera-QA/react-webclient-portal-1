@@ -130,7 +130,7 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, newLdapOrganization
         console.log("Persisting values in organizationUpdate : " + JSON.stringify(organizationUpdate));
         const response = await accountsActions.updateOrganization(organizationUpdate, getAccessToken);
         console.log("Response data: " + JSON.stringify(response.data));
-        setLdapOrganizationData({ ...response.data });
+        setLdapOrganizationData({ldapOrganizationData, ...response.data });
         setChangeMap({});
       }
       catch (err) {
