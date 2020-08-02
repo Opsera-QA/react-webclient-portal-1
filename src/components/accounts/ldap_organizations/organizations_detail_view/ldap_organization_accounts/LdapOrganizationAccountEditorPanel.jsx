@@ -13,6 +13,7 @@ import ItemInput from "../../../../common/input/item-input";
 import ToggleInput from "../../../../common/input/toggle-input";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCogs} from "@fortawesome/free-solid-svg-icons";
+import {capitalizeFirstLetter} from "../../../../common/helpers/string-helpers";
 
 const INITIAL_ORGANIZATION_ACCOUNT_DATA = {
   org: "",
@@ -147,7 +148,7 @@ function LdapOrganizationAccountEditorPanel({ ldapOrganizationAccountData,ldapOr
       try {
         let organizationUpdate = {orgDomain: formData.orgDomain, ...changeMap};
         console.log("Persisting values in organizationUpdate : " + JSON.stringify(organizationUpdate));
-        const response = await accountsActions.updateOrganization(organizationUpdate, getAccessToken);
+        const response = await accountsActions.updateOrganizationAccount(organizationUpdate, getAccessToken);
         console.log("Response data: " + JSON.stringify(response.data));
         setLdapOrganizationAccountData({ ...response.data });
         setChangeMap({});
@@ -220,6 +221,7 @@ function LdapOrganizationAccountEditorPanel({ ldapOrganizationAccountData,ldapOr
                   valueField='value'
                   textField='text'
                   filter='contains'
+                  groupBy={user => capitalizeFirstLetter(user.id.organizationName, "-", "No Organization Name")}
                   defaultValue={undefined}
                   onChange={handleOpseraUserChange}
                 />
