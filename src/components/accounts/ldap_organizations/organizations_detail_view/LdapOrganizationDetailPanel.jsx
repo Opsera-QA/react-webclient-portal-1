@@ -3,13 +3,11 @@ import PropTypes from "prop-types";
 
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import LdapOrganizationAccountsTable from "./LdapOrganizationAccountsTable";
-import LdapOrganizationAccountDetails from "./LdapOrganizationAccountDetails";
 import LdapOrganizationEditorPanel from "./LdapOrganizationEditorPanel";
+import LadpOrganizationAccountDetailPanel from "./ldap_organization_accounts/LdapOrganizationAccountDetailPanel";
 
-function LdapOrganizationDetailPanel({organization, setOrganization}) {
-  const [activeTab, setActiveTab] = useState("organizationEditor");
-  const [currentAccount, setCurrentAccount] = useState(null);
+function LdapOrganizationDetailPanel({organization, setOrganization, loadData}) {
+  const [activeTab, setActiveTab] = useState("accounts");
 
   const handleTabClick = (tabSelection) => e => {
     console.log(tabSelection);
@@ -17,16 +15,6 @@ function LdapOrganizationDetailPanel({organization, setOrganization}) {
     if (tabSelection) {
       setActiveTab(tabSelection);
     }
-  };
-
-  const handleAccountClick = (itemId) => {
-    console.log("[LdapOrganizationDetailView] handleAccountClick", itemId);
-    organization.orgAccounts.forEach((orgAccount) => {
-      if (orgAccount.name === itemId) {
-        setCurrentAccount(orgAccount);
-        setActiveTab("accountDetails");
-      }
-    });
   };
 
   return (
@@ -37,15 +25,12 @@ function LdapOrganizationDetailPanel({organization, setOrganization}) {
             <div className="default-custom-tabs">
               <ul className="nav nav-tabs">
                 <li className="nav-item">
+                  <a className={"nav-link " + (activeTab === "accounts" ? "active" : "")} href="#"
+                     onClick={handleTabClick("accounts")}>Accounts</a>
+                </li>
+                <li className="nav-item">
                   <a className={"nav-link " + (activeTab === "organizationEditor" ? "active" : "")}
-                     onClick={handleTabClick("organizationEditor")} href="#">Organization Editor</a>
-                </li>
-                <li className="nav-item">
-                  <a className={"nav-link " + (activeTab === "accountsTable" ? "active" : "")} href="#"
-                     onClick={handleTabClick("accountsTable")}>Accounts</a>
-                </li>
-                <li className="nav-item">
-                  <a  className={"nav-link " + (activeTab === "accountDetails" ? "active" : "")} href="#" onClick={handleTabClick(undefined)}>Account Details</a>
+                     onClick={handleTabClick("organizationEditor")} href="#">Settings</a>
                 </li>
               </ul>
             </div>
@@ -55,8 +40,7 @@ function LdapOrganizationDetailPanel({organization, setOrganization}) {
           <Col>
             <div className="tabbed-content-block">
               {organization &&
-              <LdapOrganizationDetailsView activeTab={activeTab} setOrganization={setOrganization} organization={organization}
-                               currentAccount={currentAccount} handleAccountClick={handleAccountClick}/>}
+              <LdapOrganizationDetailsView loadData={loadData} activeTab={activeTab} setOrganization={setOrganization} organization={organization}/>}
             </div>
           </Col>
         </Row>
@@ -65,7 +49,7 @@ function LdapOrganizationDetailPanel({organization, setOrganization}) {
   );
 }
 
-function LdapOrganizationDetailsView({activeTab, setOrganization, organization, handleAccountClick, currentAccount}) {
+function LdapOrganizationDetailsView({activeTab, setOrganization, organization, loadData}) {
   useEffect(() => {
     // console.log("CHANGE HAPPENED");
   }, [activeTab]);
@@ -73,10 +57,8 @@ function LdapOrganizationDetailsView({activeTab, setOrganization, organization, 
     switch (activeTab) {
       case "organizationEditor":
         return <LdapOrganizationEditorPanel setLdapOrganizationData={setOrganization} ldapOrganizationData={organization} />;
-      case "accountsTable":
-        return <LdapOrganizationAccountsTable data={organization} onClick={handleAccountClick}/>;
-      case "accountDetails":
-        return <LdapOrganizationAccountDetails account={currentAccount}/>;
+      case "accounts":
+        return <LadpOrganizationAccountDetailPanel loadData={loadData} ldapOrganizationData={organization} />;
       default:
         return null;
     }
@@ -84,6 +66,7 @@ function LdapOrganizationDetailsView({activeTab, setOrganization, organization, 
 }
 
 LdapOrganizationDetailPanel.propTypes = {
+  loadData: PropTypes.func,
   organization: PropTypes.object,
   setOrganization: PropTypes.func,
 };
