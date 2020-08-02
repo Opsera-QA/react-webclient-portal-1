@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { axiosApiService } from "../../api/apiService";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
-import Modal from "../common/modal";
+import Modal from "../common/modal/modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSearchPlus,
@@ -21,7 +21,7 @@ import {
   faBan,
   faTerminal,
 } from "@fortawesome/free-solid-svg-icons";
-import ModalActivityLogs from "../common/modalActivityLogs";
+import ModalActivityLogs from "../common/modal/modalActivityLogs";
 import ApprovalModal from "./approvalModal";
 import StepToolActivityView from "./stepToolActivityView";
 import { format } from "date-fns";

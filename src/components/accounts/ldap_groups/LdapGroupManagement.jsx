@@ -11,6 +11,7 @@ import LdapGroupsTable from "./LdapGroupsTable";
 import NewLdapGroupModal from "./NewLdapGroupModal";
 import DropdownList from "react-widgets/lib/DropdownList";
 import { capitalizeFirstLetter } from "components/common/helpers/string-helpers";
+import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
 
 
 function LdapGroupManagement() {
@@ -104,20 +105,10 @@ function LdapGroupManagement() {
   } else {
     return (
       <div>
-        <nav aria-label="breadcrumb">
-          <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
-            <li className="breadcrumb-item">
-              <Link to="/admin">Admin</Link>
-            </li>
-            <li className="breadcrumb-item">
-              <Link to="/accounts">Account Management</Link>
-            </li>
-            <li className="breadcrumb-item active">Groups</li>
-          </ol>
-        </nav>
         {(!isAdminCheck && !pageLoading) && <ErrorDialog error={"You do not have access to view this page!"}/>}
         {(isAdminCheck && !pageLoading) &&
         <>
+          <BreadcrumbTrail destination="ldapGroupManagement" />
           <div className="justify-content-between mb-1 d-flex">
             <h5>Groups Management</h5>
             <div className="d-flex">

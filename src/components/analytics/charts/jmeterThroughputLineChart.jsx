@@ -13,7 +13,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/loading";
 import InfoDialog from "../../common/info";
-import ModalLogs from "../../common/modalLogs";
+import ModalLogs from "../../common/modal/modalLogs";
 
 
 function JMeterThroughputLineChart( { persona, date } ) {

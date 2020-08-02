@@ -1,10 +1,10 @@
 import React, { useMemo, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import CustomTable from "components/common/table";
+import CustomTable from "components/common/table/table";
 import { faTimesCircle, faCheckCircle, faSearchPlus, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
-import ModalActivityLogs from "components/common/modalActivityLogs";
+import ModalActivityLogs from "components/common/modal/modalActivityLogs";
 import NumberPicker from "react-widgets/lib/NumberPicker";
 import simpleNumberLocalizer from "react-widgets-simple-number";
 

@@ -16,7 +16,6 @@ import {faCogs} from "@fortawesome/free-solid-svg-icons";
 import {capitalizeFirstLetter} from "../../../../common/helpers/string-helpers";
 
 const INITIAL_ORGANIZATION_ACCOUNT_DATA = {
-  org: "",
   name: "",
   localAuth: true,
   samlEnabled: true,
@@ -32,6 +31,8 @@ const INITIAL_ORGANIZATION_ACCOUNT_DATA = {
     "cn"],
   accountName: "",
   orgDomain: "",
+  orgOwner: "",
+  orgOwnerEmail: "",
   administrator: {}
 };
 
@@ -96,8 +97,7 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
     let parsedUserNames = [];
     Object.keys(response.data["users"]).length > 0 && response.data["users"].map(user => {
       let orgDomain = user.email.substring(user.email.lastIndexOf("@") + 1);
-      if (orgDomain === ldapOrganizationAccountData["orgDomain"]) {
-        console.log("Ldap org: " + JSON.stringify(ldapOrganization));
+      if (ldapOrganizationAccountData["orgDomain"].includes(orgDomain)) {
         parsedUserNames.push({text: (user["firstName"] + " " + user["lastName"]) + ": " + user["email"], id: user});
       }
     });
@@ -133,7 +133,7 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
   const isFormValid = true;
 
   const createOrganizationAccount = async (newLdapOrganizationData) => {
-    let ldapOrganizationAccount = {orgAccount: newLdapOrganizationData, orgDomain: newLdapOrganizationData.orgDomain};
+    let ldapOrganizationAccount = {orgAccount: newLdapOrganizationData};
     console.log("Persisting new organization account to DB: " + JSON.stringify(ldapOrganizationAccount));
 
     if (isFormValid) {
@@ -166,11 +166,12 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
   };
 
   const addAdmin = (user) => {
+    console.log("USER: " +JSON.stringify(user));
     let newAdmin = {
       name: user.accountName,
       firstName: user.firstName,
       lastName: user.lastName,
-      emailAddress: user.emailAddress,
+      emailAddress: user.email,
       departmentName: user.organizationName,
       preferredName: "",
       division: "",
@@ -238,7 +239,11 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
           </Row>
           <Row>
             <Col lg={12}>
-              <TextInput disabled={true} field={fields.org} setData={setFormField}
+              <TextInput disabled={true} field={fields.orgOwner} setData={setFormField}
+                         formData={formData}/>
+            </Col>
+            <Col lg={12}>
+              <TextInput disabled={true} field={fields.orgOwnerEmail} setData={setFormField}
                          formData={formData}/>
             </Col>
             <Col lg={12}>

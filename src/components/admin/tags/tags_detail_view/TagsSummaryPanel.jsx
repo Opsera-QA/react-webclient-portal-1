@@ -12,7 +12,7 @@ import { axiosApiService } from "../../../../api/apiService";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import adminTagsActions from "../admin-tags-actions";
-import Modal from "../../../common/modal";
+import Modal from "../../../common/modal/modal";
 
 function TagsSummaryPanel({ tagData, fields, setTagData } ) {
   const { getAccessToken } = useContext(AuthContext);

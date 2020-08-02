@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { format } from "date-fns";
-import CustomTable from "components/common/table";
+import CustomTable from "components/common/table/table";
 import { useHistory } from "react-router-dom";
 
 function TagsTable({ data }) {

@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../../../contexts/AuthContext";
-import Modal from "../../../common/modal";
+import Modal from "../../../common/modal/modal";
 import accountsActions from "../../accounts-actions";
 import ldapUsersFormFields from "../ldap-users-form-fields";
 

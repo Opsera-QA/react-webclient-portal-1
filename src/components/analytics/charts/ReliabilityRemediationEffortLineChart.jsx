@@ -12,7 +12,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
 import InfoDialog from "../../common/info";
-import ModalLogs from "../../common/modalLogs";
+import ModalLogs from "../../common/modal/modalLogs";
 
 
 import LoadingDialog from "../../common/loading";

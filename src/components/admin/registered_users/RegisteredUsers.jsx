@@ -6,7 +6,7 @@ import LoadingDialog from "../../common/loading";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { format } from "date-fns";
 //import InfoDialog from "../common/info";
-import Modal from "../../common/modal";
+import Modal from "../../common/modal/modal";
 import { ApiService, axiosApiService } from "../../../api/apiService";
 import { useTable, usePagination, useSortBy } from "react-table";
 import RegisteredUserTable from "./RegisteredUserTable";

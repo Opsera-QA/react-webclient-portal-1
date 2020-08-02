@@ -4,7 +4,7 @@ import { ResponsiveBar } from "@nivo/bar";
 import ErrorDialog from "../../common/error";
 import config from "./xunitMaxMinPercBarChartConfigs";
 import "./charts.css";
-import ModalLogs from "../../common/modalLogs";
+import ModalLogs from "../../common/modal/modalLogs";
 
 
 function XUnitMaxMinPercBarChart( { data, persona } ) {

@@ -9,6 +9,23 @@ export const ldapOrganizationAccountFormFields = {
   org: {
     label: "LDAP Organization ID",
     id: "org",
+    fieldText: "This field is populated by the Opsera Customer Record drop down",
+    rules: {
+      isRequired: true
+    }
+  },
+  orgOwner: {
+    label: "Account Owner",
+    id: "orgOwner",
+    fieldText: "This field is populated by the Opsera Customer Record drop down",
+    rules: {
+      isRequired: true
+    }
+  },
+  orgOwnerEmail: {
+    label: "Account Owner Email",
+    id: "orgOwnerEmail",
+    fieldText: "This field is populated by the Opsera Customer Record drop down",
     rules: {
       isRequired: true
     }
@@ -16,7 +33,6 @@ export const ldapOrganizationAccountFormFields = {
   orgDomain: {
     label: "Organization Domain",
     id: "orgDomain",
-    fieldText: "This field is populated by the Opsera Customer Record drop down",
     rules: {
       // isRequired: true
     }

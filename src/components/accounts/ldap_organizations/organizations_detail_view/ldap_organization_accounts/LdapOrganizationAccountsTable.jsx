@@ -1,6 +1,6 @@
 import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
-import CustomTable from "../../../../common/table";
+import CustomTable from "../../../../common/table/table";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
@@ -27,7 +27,8 @@ function LdapOrganizationAccountsTable({ldapOrganizationAccounts, handleAccountC
   const columns = useMemo(
     () => [
       getTableTextColumn(fields["name"]),
-      getTableTextColumn(fields["org"]),
+      getTableTextColumn(fields["orgOwner"]),
+      getTableTextColumn(fields["orgOwnerEmail"]),
       getTableTextColumn(fields["accountName"]),
       // TODO: Create way to show administrator
       getTableTextColumn(fields["description"]),

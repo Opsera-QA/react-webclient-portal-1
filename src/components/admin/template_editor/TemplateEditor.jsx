@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useMemo } from "react";
-import Modal from "components/common/modal";
+import Modal from "components/common/modal/modal";
 import { Button } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";

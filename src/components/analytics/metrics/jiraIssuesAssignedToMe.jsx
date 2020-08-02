@@ -5,7 +5,7 @@ import LoadingDialog from "../../common/loading";
 import InfoDialog from "../../common/info";
 import ErrorDialog from "../../common/error";
 import { Table }  from "react-bootstrap";
-import CustomTable from "components/common/table";
+import CustomTable from "components/common/table/table";
 
 
 function JiraIssuesAssignedToMe() {

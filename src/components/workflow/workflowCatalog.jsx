@@ -7,7 +7,7 @@ import { axiosApiService } from "../../api/apiService";
 import LoadingDialog from "../common/loading";
 import ErrorDialog from "../common/error";
 import InfoDialog from "../common/info";
-import ModalActivityLogs from "../common/modalActivityLogs";
+import ModalActivityLogs from "../common/modal/modalActivityLogs";
 import { format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faSearch } from "@fortawesome/free-solid-svg-icons";

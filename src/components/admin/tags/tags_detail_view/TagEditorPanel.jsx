@@ -15,7 +15,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import ToggleInput from "../../../common/input/toggle-input";
 import MultipleInput from "../../../common/input/multiple-input";
-import Modal from "../../../common/modal";
+import Modal from "../../../common/modal/modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import adminTagsActions from "../admin-tags-actions";
