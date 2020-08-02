@@ -64,7 +64,6 @@ function LdapUserSummaryPanel({ ldapUserData, setLdapUserData } ) {
 
   return (
     <>
-      {console.log(JSON.stringify(ldapUserData))}
       {showDeleteModal ? <Modal header="Confirm LDAP User Delete"
         message="Warning! Data cannot be recovered once this user is deleted. Do you still want to proceed?"
         button="Confirm"
@@ -72,62 +71,34 @@ function LdapUserSummaryPanel({ ldapUserData, setLdapUserData } ) {
         handleConfirmModal={() => deleteLdapUser(ldapUserData)} /> : null}
       { ldapUserData && <>
         <div className="scroll-y pt-3 px-3">
-
           <div className="mb-3 flat-top-content-block p-3">
-            <div className="mb-2 text-muted">
-              {/*TODO: Implement delete when needed*/}
-              {/*<OverlayTrigger*/}
-              {/*  placement="top"*/}
-              {/*  delay={{ show: 250, hide: 400 }}*/}
-              {/*  overlay={renderTooltip({ message: "Delete this user" })} >*/}
-              {/*  <FontAwesomeIcon icon={faTrash} className="pointer red float-right ml-3" onClick={() => {handleDeleteClick(ldapUserData);}}/></OverlayTrigger>*/}
-              {/*TODO: Implement and add confirmation Modal?*/}
-              {/*<OverlayTrigger*/}
-              {/*  placement="top"*/}
-              {/*  delay={{ show: 250, hide: 400 }}*/}
-              {/*  overlay={renderTooltip({ message: "Duplicate this tag configuration" })} >*/}
-              {/*  <FontAwesomeIcon icon={faCopy} className="pointer float-right ml-3" onClick={() => {duplicateTag(tagData);}}/></OverlayTrigger>*/}
-            </div>
-
-            <div className="pt-1"><hr/></div>
-
             <Row>
-              <Col>
+              <Col lg={6}>
                 <TextField field={fields["firstName"]} value={ldapUserData.firstName} />
               </Col>
-              <Col>
+              <Col lg={6}>
                 <TextField field={fields["name"]} value={ldapUserData.name} />
               </Col>
-              <Col>
+              <Col lg={6}>
                 <TextField field={fields["preferredName"]} value={ldapUserData.preferredName} />
               </Col>
-            </Row>
-            <Row>
-              <Col>
+              <Col lg={6}>
                 <TextField field={fields["lastName"]} value={ldapUserData.lastName} />
               </Col>
-              <Col>
+              <Col lg={6}>
                 <TextField field={fields["emailAddress"]} value={ldapUserData.emailAddress} />
               </Col>
-              <Col>
+              <Col lg={6}>
                 <TextField field={fields["site"]} value={ldapUserData.site} />
               </Col>
-            </Row>
-            <Row>
-              <Col>
+              <Col lg={6}>
                 <TextField field={fields["departmentName"]} value={ldapUserData.departmentName} />
               </Col>
-              <Col>
+              <Col lg={6}>
                 <TextField field={fields["title"]} value={ldapUserData.title} />
               </Col>
-              <Col />
             </Row>
-            {/*TODO: Determine teams and create teams-field-displayer*/}
-            {/*<Row>*/}
-            {/*  <Col>*/}
-            {/*    <TextField field={fields["teams"]} value={ldapUserData.teams} />*/}
-            {/*  </Col>*/}
-            {/*</Row>*/}
+
           </div>
         </div>
       </>}
