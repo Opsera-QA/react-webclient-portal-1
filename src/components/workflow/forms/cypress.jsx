@@ -822,7 +822,7 @@ function CypressStepConfiguration({
         {(formData.jobType === "CYPRESS UNIT TEST" ) && (
           <Form.Group controlId="jenkinsList">
             <Form.Label className="w-100">
-              Sonar Credentials*
+              Cypress Credentials*
               <OverlayTrigger
                 trigger="click"
                 rootClose
@@ -848,7 +848,7 @@ function CypressStepConfiguration({
                   className="text-muted mr-1"
                   fixedWidth
                 />
-                Loading SalesForce accounts from Tool Registry
+                Loading Cypress accounts from Tool Registry
               </div>
             ) : (
               <>
@@ -882,10 +882,10 @@ function CypressStepConfiguration({
                         className="text-muted mr-1"
                         fixedWidth
                       />
-                      No accounts have been registered for Code Scan. Please go
+                      No accounts have been registered for Cypress. Please go
                       to
                       <Link to="/inventory/tools">Tool Registry</Link> and add a
-                      Code Scan Account entry in order to proceed.
+                      Cypress Account entry in order to proceed.
                     </div>
                   </>
                 )}

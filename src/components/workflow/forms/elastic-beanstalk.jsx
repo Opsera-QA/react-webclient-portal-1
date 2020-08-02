@@ -1,12 +1,21 @@
 //PP-95 Deploy Step form for AWS Elastic Beanstalk
 //https://opsera.atlassian.net/wiki/spaces/OPSERA/pages/283935120/Code-Deployer
 
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, OverlayTrigger, Popover } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faSave, 
+  faSpinner,
+  faExclamationCircle,
+  faExclamationTriangle,
+  faTimes,
+  faEllipsisH,
+  faTools } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
+import { AuthContext } from "../../../contexts/AuthContext";
+import { axiosApiService } from "../../../api/apiService";
+import { Link } from "react-router-dom";
 
 const PLATFORM_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
@@ -25,6 +34,7 @@ const PLATFORM_OPTIONS = [
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
+  awsToolConfigId: "",
   accessKey: "",
   secretKey: "",
   bucketName: "",
@@ -42,12 +52,18 @@ const INITIAL_DATA = {
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
 function ElasticBeanstalkDeploy( { stepTool, pipelineId, plan, stepId, parentCallback, callbackSaveToVault }) {
+  const contextType = useContext(AuthContext);
+
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [formMessage, setFormMessage] = useState("");
   const [renderForm, setRenderForm] = useState(false);
   const [loading, setLoading] = useState(false);
   const [listOfSteps, setListOfSteps] = useState([]);
-
+  const [error, setErrors] = useState(false);
+  
+  const [awsList, setAwsList] = useState([]);
+  const [isAwsSearching, setIsAwsSearching] = useState(false);
+ 
   useEffect(()=> {
     if( plan && stepId ) {
       setListOfSteps(formatStepOptions(plan, stepId));
@@ -78,6 +94,29 @@ function ElasticBeanstalkDeploy( { stepTool, pipelineId, plan, stepId, parentCal
       controller.abort();      
     };
   }, [stepTool]);
+
+  
+  // search aws
+  useEffect(() => {
+    setErrors(false);
+
+    async function fetchAWSDetails(service) {
+      setIsAwsSearching(true);
+      // Set results state
+      let results = await searchToolsList(service);
+      //console.log(results);
+      const filteredList = results.filter(
+        (el) => el.configuration !== undefined
+      ); //filter out items that do not have any configuration data!
+      if (filteredList) {
+        setAwsList(filteredList);
+        setIsAwsSearching(false);
+      }
+    }
+
+    // Fire off our API call
+    fetchAWSDetails("aws_account");
+  }, []);
 
 
   const loadFormData = async (step) => {
@@ -126,6 +165,38 @@ function ElasticBeanstalkDeploy( { stepTool, pipelineId, plan, stepId, parentCal
     }
   };
 
+  //TODO: Refactor this into actions.jsx
+  const searchToolsList = async (service) => {
+    const { getAccessToken } = contextType;
+    const accessToken = await getAccessToken();
+    const apiUrl = "/registry/properties/" + service; // this is to get all the service accounts from tool registry
+    try {
+      const res = await axiosApiService(accessToken).get(apiUrl);
+      if (res.data) {
+        let respObj = [];
+        let arrOfObj = res.data;
+        arrOfObj.map((item) => {
+          respObj.push({
+            name: item.name,
+            id: item._id,
+            configuration: item.configuration,
+            accounts: item.accounts,
+            jobs: item.jobs,
+          });
+        });
+        //console.log(respObj);
+        return respObj;
+      } else {
+        setErrors(
+          "Jenkins information is missing or unavailable!  Please ensure the required Jenkins creds are registered and up to date in Tool Registry."
+        );
+      }
+    } catch (err) {
+      console.log(err.message);
+      setErrors(err.message);
+    }
+  };
+
   const validateRequiredFields = () => {
     let { accessKey, secretKey, regions, bucketName, port, ec2KeyName } = formData;
     if (
@@ -142,6 +213,30 @@ function ElasticBeanstalkDeploy( { stepTool, pipelineId, plan, stepId, parentCal
       return true;
     }
   };
+  
+  const handleAWSChange = (selectedOption) => {
+    setLoading(true);
+    //console.log(selectedOption);
+    if (selectedOption.id && selectedOption.configuration) {
+      setFormData({
+        ...formData,
+        awsToolConfigId: selectedOption.id ? selectedOption.id : "",
+        awsAccountId: selectedOption.configuration
+          ? selectedOption.configuration.awsAccountId
+          : "",
+        accessKey: selectedOption.configuration
+          ? selectedOption.configuration.accessKey
+          : "",
+        secretKey: selectedOption.configuration
+          ? selectedOption.configuration.secretKey
+          : "",
+        regions: selectedOption.configuration
+          ? selectedOption.configuration.regions
+          : "",
+      });
+    }
+    setLoading(false);
+  };
 
   const handlePlatformChange = (selectedOption) => {
     setFormData({ ...formData, platform: selectedOption.value });    
@@ -150,28 +245,143 @@ function ElasticBeanstalkDeploy( { stepTool, pipelineId, plan, stepId, parentCal
   const handleS3StepChange = (selectedOption) => {
     setFormData({ ...formData, s3StepId: selectedOption._id });    
   };
+
+  
+  const RegistryPopover = (data) => {
+    if (data) {
+      return (
+        <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
+          <Popover.Title as="h3">
+            Tool and Account Details{" "}
+            <FontAwesomeIcon
+              icon={faTimes}
+              className="fa-pull-right pointer"
+              onClick={() => document.body.click()}
+            />
+          </Popover.Title>
+
+          <Popover.Content>
+            <div className="text-muted mb-2">
+              Configuration details for this item are listed below. Tool and
+              account specific settings are stored in the
+              <Link to="/inventory/tools">Tool Registry</Link>. To add a new
+              entry to a dropdown or update settings, make those changes there.
+            </div>
+            {data.configuration && (
+              <>
+                {Object.entries(data.configuration).map(function (a) {
+                  return (
+                    <div key={a}>
+                      {a[1].length > 0 && (
+                        <>
+                          <span className="text-muted pr-1">{a[0]}: </span>{" "}
+                          {a[1]}
+                        </>
+                      )}
+                    </div>
+                  );
+                })}
+              </>
+            )}
+          </Popover.Content>
+        </Popover>
+      );
+    } else {
+      return (
+        <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
+          <Popover.Title as="h3">
+            Tool and Account Details{" "}
+            <FontAwesomeIcon
+              icon={faTimes}
+              className="fa-pull-right pointer"
+              onClick={() => document.body.click()}
+            />
+          </Popover.Title>
+
+          <Popover.Content>
+            <div className="text-muted mb-2">
+              Please select any tool/account to get the details.
+            </div>
+          </Popover.Content>
+        </Popover>
+      );
+    }
+  };
   
   return (
     <Form>
       { formMessage.length > 0 ? <p className="text-danger">{formMessage}</p> : null}
+<Form.Group controlId="jenkinsList">
+            <Form.Label className="w-100">
+              AWS Credentials*
+              <OverlayTrigger
+                trigger="click"
+                rootClose
+                placement="left"
+                overlay={RegistryPopover(
+                  awsList[
+                    awsList.findIndex((x) => x.id === formData.awsToolConfigId)
+                  ]
+                )}
+              >
+                <FontAwesomeIcon
+                  icon={faEllipsisH}
+                  className="fa-pull-right pointer pr-1"
+                  onClick={() => document.body.click()}
+                />
+              </OverlayTrigger>
+            </Form.Label>
+            {isAwsSearching ? (
+              <div className="form-text text-muted mt-2 p-2">
+                <FontAwesomeIcon
+                  icon={faSpinner}
+                  spin
+                  className="text-muted mr-1"
+                  fixedWidth
+                />
+                Loading AWS accounts from Tool Registry
+              </div>
+            ) : (
+              <>
+                {renderForm && awsList && awsList.length > 0 ? (
+                  <>
+                    <DropdownList
+                      data={awsList}
+                      value={
+                        awsList[
+                          awsList.findIndex(
+                            (x) => x.id === formData.awsToolConfigId
+                          )
+                        ]
+                      }
+                      valueField="id"
+                      textField="name"
+                      filter="contains"
+                      onChange={handleAWSChange}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <div className="form-text text-muted p-2">
+                      <FontAwesomeIcon
+                        icon={faExclamationCircle}
+                        className="text-muted mr-1"
+                        fixedWidth
+                      />
+                      No accounts have been registered for Code Scan. Please go
+                      to
+                      <Link to="/inventory/tools">Tool Registry</Link> and add a
+                      AWS Account entry in order to proceed.
+                    </div>
+                  </>
+                )}
+              </>
+            )}
+          </Form.Group>
 
-      <Form.Group controlId="accessKey">
-        <Form.Label>AWS Access Key ID*</Form.Label>
-        <Form.Control maxLength="256" type="text" placeholder="" value={formData.accessKey || ""} onChange={e => setFormData({ ...formData, accessKey: e.target.value })} />
-      </Form.Group>
-      <Form.Group controlId="secretKey">
-        <Form.Label>AWS Secret Access Key*</Form.Label>
-        <Form.Control maxLength="256" type="password" placeholder="" value={formData.secretKey || ""} onChange={e => setFormData({ ...formData, secretKey: e.target.value })} />
-        <Form.Text className="text-muted">AWS access keys consist of two parts: an access key ID and a secret access key. Both are required for automated deployments.</Form.Text> 
-      </Form.Group>
       <Form.Group controlId="bucketName">
         <Form.Label>S3 Bucket Name*</Form.Label>
         <Form.Control maxLength="150" type="text" placeholder="" value={formData.bucketName || ""} onChange={e => setFormData({ ...formData, bucketName: e.target.value })} />
-      </Form.Group>
-      <Form.Group controlId="regions">
-        <Form.Label>Region*</Form.Label>
-        <Form.Control maxLength="25" type="text" placeholder="" value={formData.regions || ""} onChange={e => setFormData({ ...formData, regions: e.target.value })} />
-        <Form.Text className="text-muted">Region where the S3 bucket resides.</Form.Text> 
       </Form.Group>
 
       <Form.Group controlId="ec2KeyName">

@@ -894,10 +894,10 @@ function S3StepConfiguration({
                         className="text-muted mr-1"
                         fixedWidth
                       />
-                      No accounts have been registered for Code Scan. Please go
+                      No accounts have been registered for AWS. Please go
                       to
                       <Link to="/inventory/tools">Tool Registry</Link> and add a
-                      Code Scan Account entry in order to proceed.
+                      AWS Account entry in order to proceed.
                     </div>
                   </>
                 )}
