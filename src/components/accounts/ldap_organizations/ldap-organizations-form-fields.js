@@ -7,21 +7,21 @@ export const ldapOrganizationsFormFields = {
     }
   },
   name: {
-    label: "Internal Name",
+    label: "LDAP Organization ID",
     id: "name",
     rules: {
       isRequired: true
     }
   },
   orgName: {
-    label: "Organization Name",
+    label: "Common Organization Name",
     id: "orgName",
     rules: {
       isRequired: true
     },
   },
   orgOwner: {
-    label: "Owner",
+    label: "Organization Owner/Contact",
     id: "orgOwner",
     rules: {
       isRequired: true

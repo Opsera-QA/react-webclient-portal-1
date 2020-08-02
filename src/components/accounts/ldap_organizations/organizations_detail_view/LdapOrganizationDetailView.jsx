@@ -79,7 +79,7 @@ function LdapOrganizationDetailView() {
       {organization &&
       <div className="content-container content-card-1 max-content-width ml-2">
         <div className="pt-2 pl-2 content-block-header">
-          <h5>Organization Details [{organization && organization.name}]</h5></div>
+          <h6>Organization Details [{organization && organization.name}]</h6></div>
         <div>
           <LdapOrganizationSummaryPanel organization={organization} />
         </div>

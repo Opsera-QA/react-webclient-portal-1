@@ -24,67 +24,38 @@ function LdapOrganizationSummaryPanel({organization}) {
     <>
       <div className="scroll-y pt-3 px-3">
         <div className="mb-3 flat-top-content-block p-3">
-          <div className="mb-2 text-muted">
-            <OverlayTrigger
-              placement="top"
-              delay={{show: 250, hide: 400}}
-              overlay={renderTooltip({message: "Delete this pipeline"})}>
-              <FontAwesomeIcon icon={faTrash} className="pointer red float-right ml-3" onClick={() => {
-              }}/></OverlayTrigger>
-
-            {/*<OverlayTrigger*/}
-            {/*  placement="top"*/}
-            {/*  delay={{show: 250, hide: 400}}*/}
-            {/*  overlay={renderTooltip({message: "Duplicate this pipeline configuration"})}>*/}
-            {/*  <FontAwesomeIcon icon={faCopy} className="pointer float-right ml-3" onClick={() => {*/}
-            {/*  }}/></OverlayTrigger>*/}
-
-            {/*<OverlayTrigger*/}
-            {/*  placement="top"*/}
-            {/*  delay={{show: 250, hide: 400}}*/}
-            {/*  overlay={renderTooltip({message: "View Pipeline Configurations"})}>*/}
-            {/*  <FontAwesomeIcon icon={faFileAlt}*/}
-            {/*                   className="float-right text-muted ml-3"*/}
-            {/*                   style={{cursor: "pointer"}}*/}
-            {/*                   onClick={() => {*/}
-            {/*                   }}/></OverlayTrigger>*/}
-          </div>
-
-          <div className="pt-1">
-            <hr/>
-          </div>
           {
             (organization) ? (
                 <>
-                  <Row className="mt-3">
-                    <Col>
+                  <Row className="mt-1">
+                    <Col lg={6}>
                       <TextField field={fields.orgName} value={organization.orgName} />
                     </Col>
-                    <Col>
+                    <Col lg={6}>
                       <TextField field={fields.description} value={organization.description} />
                     </Col>
-                  </Row>
-                  <Row>
-                    <Col>
+                  {/*</Row>
+                  <Row>*/}
+                    <Col lg={6}>
                       <TextField field={fields.envCount} value={organization.envCount} />
                     </Col>
-                    <Col>
+                    <Col lg={6}>
                       <TextField field={fields.numberOfLicenses} value={organization.numberOfLicenses} />
                     </Col>
-                  </Row>
-                  <Row>
-                    <Col>
+                  {/*</Row>
+                  <Row>*/}
+                    <Col lg={6}>
                       <TextField field={fields.objectCount} value={organization.objectCount} />
                     </Col>
-                    {/*<Col>*/}
-                    {/*  <TextField field={fields.subscription} value={organization.subscription} />*/}
-                    {/*</Col>*/}
-                  </Row>
-                  <Row>
-                    <Col>
+                    <Col lg={6}>
+                      <TextField field={fields.name} value={organization.name} />
+                    </Col>
+                  {/*</Row>
+                  <Row>*/}
+                    <Col lg={6}>
                       <TextField field={fields.orgOwner} value={organization.orgOwner} />
                     </Col>
-                    <Col>
+                    <Col lg={6}>
                       <TextField field={fields.orgOwnerEmail} value={organization.orgOwnerEmail} />
                     </Col>
                   </Row>
