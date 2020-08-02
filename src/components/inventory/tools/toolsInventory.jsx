@@ -2,7 +2,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { axiosApiService } from "api/apiService";
 import LoadingDialog from "components/common/loading";
-import Modal from "components/common/modal";
+import Modal from "components/common/modal/modal";
 import { AuthContext } from "contexts/AuthContext";
 import React, { useContext, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";

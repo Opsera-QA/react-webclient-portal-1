@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
-import Modal from "../common/modal";
+import Modal from "../common/modal/modal";
 import ApprovalModal from "./approvalModal";
 import PipelineStartWizard from "./pipelineStartWizard";
 import PipelineHelpers from "./pipelineHelpers";

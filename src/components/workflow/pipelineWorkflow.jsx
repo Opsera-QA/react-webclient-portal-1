@@ -8,10 +8,10 @@ import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus, faFileAlt, faCog, faPen, faSpinner, faCheck, faClipboardCheck, faCodeBranch, faFileCode, faCubes } from "@fortawesome/free-solid-svg-icons";
-import ModalActivityLogs from "../common/modalActivityLogs";
+import ModalActivityLogs from "../common/modal/modalActivityLogs";
 import PipelineWorkflowItemList from "./pipelineWorkflowItemList";
 import PipelineActionControls from "./piplineActionControls";
-import Modal from "../common/modal";
+import Modal from "../common/modal/modal";
 import "./workflows.css";
 
 const PipelineWorkflow = (props) => {

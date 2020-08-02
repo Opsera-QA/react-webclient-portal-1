@@ -11,7 +11,7 @@ import "./charts.css";
 import React, { useState } from "react";
 import LoadingDialog from "../../common/loading";
 import InfoDialog from "../../common/info";
-import ModalLogs from "../../common/modalLogs";
+import ModalLogs from "../../common/modal/modalLogs";
 
 function GitlabPlanCodeBarChart( { persona, data } ) {
   const [error, setErrors] = useState(false);

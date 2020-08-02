@@ -8,7 +8,7 @@ import ErrorDialog from "../../common/error";
 import config from "./GitlabMergeRequestsByUserChartConfig";
 import "./charts.css";
 import InfoDialog from "../../common/info";
-import ModalLogs from "../../common/modalLogs";
+import ModalLogs from "../../common/modal/modalLogs";
 
 function GitlabMergeRequestsByUser( { persona, date } ) {
   const contextType = useContext(AuthContext);

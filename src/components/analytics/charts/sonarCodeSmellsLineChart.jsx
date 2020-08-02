@@ -4,7 +4,7 @@ import { ResponsiveLine } from "@nivo/line";
 import ErrorDialog from "../../common/error";
 import config from "./sonarCodeSmellsLineChartConfigs";
 import "./charts.css";
-import ModalLogs from "../../common/modalLogs";
+import ModalLogs from "../../common/modal/modalLogs";
 
 
 function CodeSmellLineChart( { data, persona } ) {

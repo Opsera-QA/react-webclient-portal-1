@@ -13,7 +13,7 @@ import { line } from "d3-shape";
 import config from "./timeToRestoreBarChartConfigs";
 import "./charts.css";
 import InfoDialog from "../../common/info";
-import ModalLogs from "../../common/modalLogs";
+import ModalLogs from "../../common/modal/modalLogs";
 const lineColor = "rgba(200, 30, 15, 1)";
 const barColor = "#0095ff";
 

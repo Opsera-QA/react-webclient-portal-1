@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Accordion, Card, Form, Button, Row, Col } from "react-bootstrap";
 import ErrorDialog from "../common/error";
 import InfoDialog from "../common/info";
-import Modal from "../common/modal";
+import Modal from "../common/modal/modal";
 import { axiosApiService } from "../../api/apiService";
 import { format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

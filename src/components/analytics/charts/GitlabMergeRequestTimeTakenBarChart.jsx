@@ -6,7 +6,7 @@ import "./charts.css";
 import React, { useState } from "react";
 import LoadingDialog from "../../common/loading";
 import InfoDialog from "../../common/info";
-import ModalLogs from "../../common/modalLogs";
+import ModalLogs from "../../common/modal/modalLogs";
 
 function GitlabMergeRequestTimeTakenBarChart( { persona, data } ) {
   const [error] = useState(false);

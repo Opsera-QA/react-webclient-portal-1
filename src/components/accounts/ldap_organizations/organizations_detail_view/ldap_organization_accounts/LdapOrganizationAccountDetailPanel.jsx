@@ -8,7 +8,7 @@ import LdapOrganizationAccountsTable from "./LdapOrganizationAccountsTable";
 import LdapOrganizationAccountEditorPanel from "./LdapOrganizationAccountEditorPanel";
 import NewLdapAccountModal from "./NewLdapAccountModal";
 
-function LadpOrganizationAccountDetailPanel({ldapOrganizationData, loadData}) {
+function LdapOrganizationAccountDetailPanel({ldapOrganizationData, loadData}) {
   const [currentAccount, setCurrentAccount] = useState(undefined);
   const [showEditPanel, setShowEditPanel] = useState(false);
   const [showCreateAccountModal, setShowCreateAccountModal] = useState(false);
@@ -50,11 +50,11 @@ function LadpOrganizationAccountDetailPanel({ldapOrganizationData, loadData}) {
   );
 }
 
-LadpOrganizationAccountDetailPanel.propTypes = {
+LdapOrganizationAccountDetailPanel.propTypes = {
   ldapOrganizationData: PropTypes.object,
   loadData: PropTypes.func
 };
 
-export default LadpOrganizationAccountDetailPanel;
+export default LdapOrganizationAccountDetailPanel;
 
 

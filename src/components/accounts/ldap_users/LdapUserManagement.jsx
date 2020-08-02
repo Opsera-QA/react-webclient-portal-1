@@ -11,6 +11,7 @@ import LdapUsersTable from "./LdapUsersTable";
 import NewLdapUserModal from "./NewLdapUserModal";
 import DropdownList from "react-widgets/lib/DropdownList";
 import { capitalizeFirstLetter } from "../../common/helpers/string-helpers";
+import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
 
 
 function LdapUserManagement() {
@@ -113,15 +114,8 @@ function LdapUserManagement() {
   };
 
   return (
-    <div> 
-      <nav aria-label="breadcrumb">
-        <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
-          <li className="breadcrumb-item">
-            <Link to="/accounts">Account Management</Link>
-          </li>
-          <li className="breadcrumb-item active">Users</li>
-        </ol>
-      </nav>
+    <div>
+      <BreadcrumbTrail destination="ldapUserManagement" />
       {pageLoading ? <Loading size="sm" /> : null}
       {(!isAdminCheck && !pageLoading) && <ErrorDialog error={"You do not have access to view this page!"} />}
       {isAdminCheck &&

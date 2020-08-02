@@ -9,7 +9,7 @@ import { ResponsiveBar } from "@nivo/bar";
 // import ErrorDialog from "../../common/error";
 import config from "./sonarCodeCoverageBarChartConfigs";
 import "./charts.css";
-import ModalLogs from "../../common/modalLogs";
+import ModalLogs from "../../common/modal/modalLogs";
 import InfoDialog from "../../common/info";
 
 function SonarCodeCoverageBarChart( { data, persona } ) {

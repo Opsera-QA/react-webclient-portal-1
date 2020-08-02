@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Button, Form, Row, Col, Card, Alert } from "react-bootstrap";
-import Modal from "components/common/modal";
+import Modal from "components/common/modal/modal";
 import { AuthContext } from "contexts/AuthContext";  
 import { ApiService } from "api/apiService";
 import { useHistory } from "react-router-dom";

@@ -9,6 +9,7 @@ import LdapOrganizationSummaryPanel from "./LdapOrganizationSummaryPanel";
 
 import "../../accounts.css";
 import LdapOrganizationDetailPanel from "./LdapOrganizationDetailPanel";
+import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
 
 function LdapOrganizationDetailView() {
   const {id} = useParams();
@@ -59,17 +60,7 @@ function LdapOrganizationDetailView() {
   } else {
     return (
       <>
-      <nav aria-label="breadcrumb">
-        <ol className="breadcrumb" style={{backgroundColor: "#fafafb"}}>
-          <li className="breadcrumb-item">
-            <Link to="/accounts">Account Management</Link>
-          </li>
-          <li className="breadcrumb-item">
-            <Link to="/accounts/organizations">Organizations</Link>
-          </li>
-          <li className="breadcrumb-item active">Accounts</li>
-        </ol>
-      </nav>
+        <BreadcrumbTrail destination="ldapOrganizationDetailView" />
 
       <h5>Organization and Account Management</h5>
 

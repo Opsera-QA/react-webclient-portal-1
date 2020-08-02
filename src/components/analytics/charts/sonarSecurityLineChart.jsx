@@ -9,7 +9,7 @@ import LoadingDialog from "../../common/loading";
 import ErrorDialog from "../../common/error";
 import config from "./sonarSecurityLineChartConfigs";
 import InfoDialog from "../../common/info";
-import ModalLogs from "../../common/modalLogs";
+import ModalLogs from "../../common/modal/modalLogs";
 
 import "./charts.css";
 

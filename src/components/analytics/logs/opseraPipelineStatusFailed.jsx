@@ -7,7 +7,7 @@ import LoadingDialog from "../../common/loading";
 import ErrorDialog from "../../common/error";
 import { Alert, Button } from "react-bootstrap";
 import { format } from "date-fns";
-import Modal from "../../common/modal";
+import Modal from "../../common/modal/modal";
 import "./logs.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";

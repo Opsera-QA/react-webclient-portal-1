@@ -5,11 +5,11 @@
 */
 
 import React, { useState, useMemo } from "react";
-import CustomTable from "../table";
+import CustomTable from "../table/table";
 import { faTimesCircle, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
-import CustomModalDialog from "../modal";
+import CustomModalDialog from "../modal/modal";
 import { DropdownList } from "react-widgets";
 
 /*
