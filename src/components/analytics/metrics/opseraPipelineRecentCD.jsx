@@ -27,19 +27,19 @@ function OpseraRecentCDTable({ date }) {
         desc: true
       }
     ]
-  }; 
+  };
 
-  useEffect(() => {    
+  useEffect(() => {
     const controller = new AbortController();
     const runEffect = async () => {
       try {
         await fetchData();
-        
+
       } catch (err) {
         if (err.name === "AbortError") {
           console.log("Request was canceled via controller.abort");
           return;
-        }        
+        }
       }
     };
     runEffect();
@@ -54,23 +54,23 @@ function OpseraRecentCDTable({ date }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";   
+    const apiUrl = "/analytics/data";
     const postBody = {
       data: [
-        { 
+        {
           request: "opseraCDMetrics",
-          metric: "bar" 
+          metric: "bar"
         }
       ]
       ,
-      startDate: date.start, 
+      startDate: date.start,
       endDate: date.end
     };
-    
+
     try {
-      const res = await axiosApiService(accessToken).post(apiUrl, postBody);     
-      let dataObject = res && res.data ? res.data.data[0].opseraCDMetrics : [];   
-      console.log(dataObject);   
+      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
+      let dataObject = res && res.data ? res.data.data[0].opseraCDMetrics : [];
+      console.log(dataObject);
       setData(dataObject);
       setLoading(false);
     }
@@ -79,7 +79,7 @@ function OpseraRecentCDTable({ date }) {
       setLoading(false);
     }
   }
-  
+
   const columns = useMemo(
     () => [
       {
@@ -102,13 +102,13 @@ function OpseraRecentCDTable({ date }) {
       {
         Header: "Duration",
         accessor: "duration"
-      },      
+      },
       {
         Header: "Status",
         accessor: "status",
         Cell: (props) => {
-          return props.value ? 
-            (props.value === "failure" || props.value === "failed") 
+          return props.value ?
+            (props.value === "failure" || props.value === "failed")
               ? <><div style={{ display: "flex",  flexWrap: "nowrap" }}><div><FontAwesomeIcon icon={faTimesCircle} className="cell-icon red" /></div><div className="ml-1">{props.value}</div></div></>
               : <><div style={{ display: "flex",  flexWrap: "nowrap" }}><div><FontAwesomeIcon icon={faCheckCircle} className="cell-icon green" /></div><div className="ml-1">{props.value}</div></div></>
             : "unknown";
@@ -125,33 +125,32 @@ function OpseraRecentCDTable({ date }) {
   } else {
     return (
       <>
-          {(typeof data !== "object" || data === undefined || Object.keys(data).length === 1 || data.status !== 200) ?
+        {(typeof data !== "object" || data === undefined || Object.keys(data).length === 1 || data.status !== 200) ?
           <>
-                  <div className="chart mb-3" style={{ height: "300px" }}>
-
-                    <div className="chart-label-text">Opsera: CD Status</div>
-            <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
-              <InfoDialog message="No Data is available for this chart at this time." />
+            <div className="chart mb-3" style={{ height: "300px" }}>
+              <div className="chart-label-text">Opsera: CD Status</div>
+              <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
+                <InfoDialog message="No Data is available for this chart at this time." />
+              </div>
             </div>
-            </div>
-            </>
-            :
-              <>
-        <div className="mt-3 d-flex justify-content-between">
-            <div className="h6 activity-label-text mb-2">Opsera: CD Status</div>
+          </>
+          :
+          <>
+            <div className="mt-3 d-flex justify-content-between">
+              <div className="h6 activity-label-text mb-2">Opsera: CD Status</div>
 
-          </div>
-                <CustomTable 
-                  columns={columns} 
-                  data={data.data}
-                  rowStyling={""}
-                  noDataMessage={noDataMessage}
-                  // initialState={initialState}
-                  // paginationOptions={paginationOptions}
-                >
-                </CustomTable>
-              </>
-          }
+            </div>
+            <CustomTable
+              columns={columns}
+              data={data.data}
+              rowStyling={""}
+              noDataMessage={noDataMessage}
+              // initialState={initialState}
+              // paginationOptions={paginationOptions}
+            >
+            </CustomTable>
+          </>
+        }
       </>
     );}
 }
