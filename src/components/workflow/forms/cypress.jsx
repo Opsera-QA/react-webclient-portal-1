@@ -134,15 +134,17 @@ function CypressStepConfiguration({
       setisJenkinsSearching(true);
       // Set results state
       let results = await searchToolsList(service);
-      //console.log(results);
+      console.log(results);
       const filteredList = results.filter(
         (el) => el.configuration !== undefined
       ); //filter out items that do not have any configuration data!
       if (filteredList) {
+        console.log(filteredList)
         setJenkinsList(filteredList);
         setisJenkinsSearching(false);
       }
     }
+    console.log(jenkinsList);
 
     // Fire off our API call
     fetchJenkinsDetails("jenkins");
@@ -217,20 +219,24 @@ function CypressStepConfiguration({
       setAccountsList(
         jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ].accounts
+        ] ? jenkinsList[
+          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+        ].accounts : []
       );
     }
-  }, [jenkinsList]);
+  }, [jenkinsList, formData.toolConfigId]);
 
   useEffect(() => {
     if (formData.toolConfigId) {
       setJobsList(
         jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ].jobs
+        ] ? jenkinsList[
+          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+        ].jobs : []
       );
     }
-  }, [jenkinsList]);
+  }, [jenkinsList, formData.toolConfigId]);
 
   // search cypress
   useEffect(() => {

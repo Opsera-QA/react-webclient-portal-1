@@ -238,20 +238,26 @@ function SonarStepConfiguration({
       setAccountsList(
         jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ].accounts
+        ] ? 
+        jenkinsList[
+          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+        ].accounts : []
       );
     }
-  }, [jenkinsList]);
+  }, [jenkinsList, formData.toolConfigId]);
 
   useEffect(() => {
     if (formData.toolConfigId) {
       setJobsList(
         jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ].jobs
+        ] ? 
+        jenkinsList[
+          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+        ].jobs : []
       );
     }
-  }, [jenkinsList]);
+  }, [jenkinsList, formData.toolConfigId]);
 
   useEffect(() => {
     if (formData.toolJobType && formData.toolJobType.includes("SFDC")) {
