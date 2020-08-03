@@ -401,7 +401,7 @@ function JmeterStepConfiguration({
 
   const handleJobChange = (selectedOption) => {
     console.log(selectedOption)
-    if (selectedOption.type[0] === "PERFORMANCE TEST" ) {      
+    if (selectedOption.type[0] === "PERFORMANCE TESTING" ) {      
         setFormData({
           ...formData,
           toolJobId: selectedOption._id,

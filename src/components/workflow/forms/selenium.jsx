@@ -401,7 +401,7 @@ function SeleniumStepConfiguration({
 
   const handleJobChange = (selectedOption) => {
     console.log(selectedOption)
-    if (selectedOption.type[0] === "FUNCTIONAL TEST" ) {      
+    if (selectedOption.type[0] === "FUNCTIONAL TESTING" ) {      
         setFormData({
           ...formData,
           toolJobId: selectedOption._id,

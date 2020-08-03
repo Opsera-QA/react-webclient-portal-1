@@ -455,7 +455,7 @@ function DockerPushStepConfiguration({
 
   const handleJobChange = (selectedOption) => {
     console.log(selectedOption)
-    if (selectedOption.type[0] === "DOCKER" ) {      
+    if (selectedOption.type[0] === "DOCKER PUSH" ) {      
         setFormData({
           ...formData,
           toolJobId: selectedOption._id,

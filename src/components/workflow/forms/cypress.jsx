@@ -437,7 +437,7 @@ function CypressStepConfiguration({
   };
   const handleJobChange = (selectedOption) => {
     console.log(selectedOption)
-    if (selectedOption.type[0] === "CYPRESS UNIT TEST" ) {      
+    if (selectedOption.type[0] === "CYPRESS UNIT TESTING" ) {      
         setFormData({
           ...formData,
           toolJobId: selectedOption._id,
@@ -819,7 +819,7 @@ function CypressStepConfiguration({
         )}
 
         
-        {(formData.jobType === "CYPRESS UNIT TEST" ) && (
+        {(formData.jobType === "CYPRESS UNIT TESTING" ) && (
           <Form.Group controlId="jenkinsList">
             <Form.Label className="w-100">
               Cypress Credentials*

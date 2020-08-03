@@ -401,7 +401,7 @@ function JunitStepConfiguration({
 
   const handleJobChange = (selectedOption) => {
     console.log(selectedOption)
-    if (selectedOption.type[0] === "UNIT TEST" ) {      
+    if (selectedOption.type[0] === "UNIT TESTING" ) {      
         setFormData({
           ...formData,
           toolJobId: selectedOption._id,
