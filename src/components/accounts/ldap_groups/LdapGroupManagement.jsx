@@ -38,7 +38,6 @@ function LdapGroupManagement() {
   const getUsers = async (ldapDomain) => {
     if (ldapDomain != null) {
       const response = await accountsActions.getOrganizationByEmail({ domain: ldapDomain }, getAccessToken);
-      console.log(response);
       let organization = response.data;
       setOrganization(organization);
       if (organization != null) {
@@ -50,7 +49,6 @@ function LdapGroupManagement() {
 
   const getOrganizations = async () => {
     const response = await accountsActions.getOrganizations(getAccessToken);
-    console.log(response.data);
     if (response.data)
     {
       let parsedOrganizationNames = [];
@@ -93,7 +91,6 @@ function LdapGroupManagement() {
   };
 
   const handleOrganizationChange = async (selectedOption) => {
-    console.log("Setting organization to: " + JSON.stringify(selectedOption));
     setPageLoading(true)
     setCurrentOrganizationEmail(selectedOption.id);
     await getUsers(selectedOption.id);

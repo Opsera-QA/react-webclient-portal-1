@@ -38,7 +38,6 @@ function LdapGroupsTable({ data, domain }) {
   );
   
   const onRowSelect = (rowData, type) => {
-    console.log(rowData);
     history.push(`/accounts/groups/${domain}/${rowData.original.name}`);
   };
 
