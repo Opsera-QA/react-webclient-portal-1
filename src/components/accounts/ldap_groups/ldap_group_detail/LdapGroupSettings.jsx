@@ -91,7 +91,6 @@ function LdapGroupSettings({ groupData, organization, onGroupUpdate } ) {
     };
     if(isFormValid) {
       const response = await accountsActions.updateGroup(payload, getAccessToken);
-      console.log(response.data);
       onGroupUpdate(response.data);
     }
   };

@@ -31,6 +31,7 @@ function LdapGroupManage({ groupData, organization, getGroup }) {
         item.isMember = true;
       }
     });
+    setAllMembers([...allMembers]);
   };
 
   const updateMembers = async () => {

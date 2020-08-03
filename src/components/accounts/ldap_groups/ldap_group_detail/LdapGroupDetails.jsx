@@ -35,16 +35,13 @@ function LdapGroupDetails() {
     };
     const response = await accountsActions.getGroup(payload, getAccessToken);
     setGroupData(response.data);
-    console.log("groupData: ", response);
   };
 
   const getUsers = async (domain) => {
     if (domain != null) {
-      console.log(domain);
       const response = await accountsActions.getOrganizationByEmail({ domain: domain }, getAccessToken);
       let organization = response.data;
       setOrganization(organization);
-      console.log(organization);
     }
   };
 
