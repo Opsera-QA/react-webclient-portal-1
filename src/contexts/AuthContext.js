@@ -1,8 +1,9 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useOktaAuth } from "@okta/okta-react";
-import { axiosApiService } from "../api/apiService";
+import PropTypes from "prop-types";
 
 const AuthContextProvider = (props) => {
+    const { userData, refetchUserData } = props; //not implementing refrechUserData yet, but it would reload user object
     const { authService, authState } = useOktaAuth();
     const [userRecord, setUserRecord] = useState(null);
 
@@ -20,15 +21,7 @@ const AuthContextProvider = (props) => {
     };
 
     const _getUserProperties = async () => {
-      const token = await authService.getAccessToken();
-      try {
-        let apiUrl = "/users";
-        const response = await axiosApiService(token).get(apiUrl, {});
-        //console.log("getting user", response.data);
-        return response.data;
-      } catch (err) {
-        console.log("Error getting user data: " + err.message);
-      }
+      return userData;
     };
 
     const logoutUserContext = () => {
@@ -50,24 +43,17 @@ const AuthContextProvider = (props) => {
       return authState.isAuthenticated;
     };
 
-    const getUserRecord = async () => {    //New LDAP derived getUsers Service
-      if (!userRecord || authState.isPending) {
-        if (authState.isAuthenticated && !userRecord) {
-          return await _getUserProperties();
-        }
-      }
-      return userRecord;
+    const getUserRecord = async () => {
+      return userData;
     };
 
 
-    //TODO Review this with new LDAP serivces
     const getIsPreviewRole = async (restrictProd) => {
-      const userInfo = await getUserRecord();
       console.log("Environment: ", process.env.REACT_APP_ENVIRONMENT);
       if (restrictProd && process.env.REACT_APP_ENVIRONMENT === "production") {
         return false;
       } else {
-        return userInfo.groups.includes("Preview");
+        return userData.groups.includes("Preview");
       }
     };
 
@@ -136,10 +122,11 @@ const AuthContextProvider = (props) => {
     );
   }
 ;
+
+AuthContextProvider.propTypes = {
+  userData: PropTypes.object,
+  refetchUserData: PropTypes.func
+}
+
 export const AuthContext = createContext();
 export default AuthContextProvider;
-
-async function delay(ms) {
-  // return await for better async stack trace support in case of errors.
-  return await new Promise(resolve => setTimeout(resolve, ms));
-}
