@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, useMemo } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/loading";
@@ -6,12 +6,55 @@ import InfoDialog from "../../common/info";
 import ErrorDialog from "../../common/error";
 import { Table }  from "react-bootstrap";
 import { format } from "date-fns";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheckCircle, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import CustomTable from "../../common/table/table";
 
 function RecentBuildsTable({ date }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const noDataMessage = "No Data is available for this chart at this time";
+  const initialState = {
+    pageIndex: 0,
+    sortBy: [
+      {
+        id: "run_count",
+        desc: true
+      }
+    ]
+  };
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: "Project Name",
+        accessor: "data_projectName",
+        class: "cell-center no-wrap-inline"
+      },
+      {
+        Header: "Build Number",
+        accessor: "data_buildNum",
+      },
+      {
+        Header: "Completed At",
+        accessor: "timestamp",
+      },
+      {
+        Header: "Result",
+        accessor: "data_result",
+        Cell: (props) => {
+          return props.value ?
+            (props.value === "Failure" || props.value === "failed")
+              ? <><div style={{ display: "flex",  flexWrap: "nowrap" }}><div><FontAwesomeIcon icon={faTimesCircle} className="cell-icon red" /></div><div className="ml-1">{props.value}</div></div></>
+              : <><div style={{ display: "flex",  flexWrap: "nowrap" }}><div><FontAwesomeIcon icon={faCheckCircle} className="cell-icon green" /></div><div className="ml-1">{props.value}</div></div></>
+            : "unknown";
+        },
+      }
+    ],
+    []
+  );
 
   useEffect(() => {    
     const controller = new AbortController();
@@ -49,7 +92,7 @@ function RecentBuildsTable({ date }) {
     
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);     
-      let dataObject = res && res.data ? res.data : [];   
+      let dataObject = res && res.data ? res : [];
       console.log(dataObject);   
       setData(dataObject);
       setLoading(false);
@@ -68,48 +111,34 @@ function RecentBuildsTable({ date }) {
   //   return (<InfoDialog  message="No log activity has been captured for this dashboard yet." />);
   } else {
     return (
-      <>
-        <div className="chart mb-3" style={{ height: "300px" }}>
-          {/* <div className="chart-label-text">Jenkins: Recent Build Status</div> */}
-          {(typeof data !== "object" || data === undefined || data.length < 1) ?
+    <>
+      {(typeof data.data !== "object" || data.data === undefined || Object.keys(data.data).length === 1 || data.status !== 200) ?
+        <>
+          <div className="chart mb-3" style={{ height: "300px" }}>
+            <div className="chart-label-text">Jenkins: Recent Build Status</div>
             <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
               <InfoDialog message="No Data is available for this chart at this time." />
             </div>
-            :
-            <div className="px-2 mt-2">
-              <Table striped bordered hover size="sm" className="mt-4 table-sm" style={{ fontSize:"small" }}>
-                <thead>
-                  <tr>
-                    <th colSpan="4">Jenkins: Recent Build Status</th>
-                  </tr>
-                  <tr>
-                    <th style={{ width: "20%" }}>Project Name</th>
-                    <th style={{ width: "20%" }} className="text-center">Build Number</th>
-                    <th style={{ width: "20%" }} className="text-center">Completed At</th>
-                    {/* <th style={{ width: "20%" }} className="text-center">Duration</th> */}
-                    <th style={{ width: "20%" }} className="text-center">Result</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.map(function (value, index) {
-                    let className = (value["data_result"] && value["data_result"].toLowerCase() === "success") ? " green" : " red";
-                    return <tr key = {index}>
-                      <td className={className}>{ (value["data_projectName"]) ? value["data_projectName"] : "Unknown" }</td>
-                      <td className={"text-center" + className}>{ (value["data_buildNum"]) ? value["data_buildNum"] : "Unknown" }</td>
-                      <td className={"text-center" + className}>{ (value["timestamp"]) ? format(new Date(value["timestamp"]), "yyyy-MM-dd', 'hh:mm a"): "Unknown" }</td>
-                      {/* <td className={"text-center" + className}>{ (value["data_duration"]) ? value["data_duration"] : "0" } Seconds</td> */}
-                      <td className={"text-center upper-case-first" + className}>
-                        { (value["data_result"]) ? value["data_result"].toLowerCase() : "Failed"}
-                      </td>
-                    </tr>;
-                  })
-                  }
-                </tbody>
-              </Table>
-            </div>
-          }
-        </div>
-      </>
+          </div>
+        </>
+        :
+        <>
+          <div className="mt-3 d-flex justify-content-between">
+            <div className="h6 activity-label-text mb-2">Jenkins: Recent Build Status</div>
+
+          </div>
+          <CustomTable
+            columns={columns}
+            data={data.data}
+            rowStyling={""}
+            noDataMessage={noDataMessage}
+            // initialState={initialState}
+            // paginationOptions={paginationOptions}
+          >
+          </CustomTable>
+        </>
+      }
+    </>
     );}
 }
 

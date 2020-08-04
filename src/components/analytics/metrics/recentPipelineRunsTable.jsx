@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, useMemo } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/loading";
@@ -6,12 +6,25 @@ import InfoDialog from "../../common/info";
 import ErrorDialog from "../../common/error";
 import { Table } from "react-bootstrap";
 import { format } from "date-fns";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheckCircle, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import CustomTable from "../../common/table/table";
 
 function OpseraRecentPipelineStatus({ date }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const noDataMessage = "No Data is available for this chart at this time";
+  const initialState = {
+    pageIndex: 0,
+    sortBy: [
+      {
+        id: "run_count",
+        desc: true
+      }
+    ]
+  };
 
   useEffect(() => {
     const controller = new AbortController();
@@ -31,6 +44,40 @@ function OpseraRecentPipelineStatus({ date }) {
       controller.abort();
     };
   }, [date]);
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: "Run",
+        accessor: "run_count",
+        class: "cell-center no-wrap-inline"
+      },
+      {
+        Header: "Pipeline Name",
+        accessor: "pipeline_name",
+      },
+      {
+        Header: "Completed At",
+        accessor: "timestamp",
+      },
+      {
+        Header: "Duration (Mins)",
+        accessor: "duration",
+      },
+      {
+        Header: "Result",
+        accessor: "status",
+        Cell: (props) => {
+          return props.value ?
+            (props.value === "failure" || props.value === "failed")
+              ? <><div style={{ display: "flex",  flexWrap: "nowrap" }}><div><FontAwesomeIcon icon={faTimesCircle} className="cell-icon red" /></div><div className="ml-1">{props.value}</div></div></>
+              : <><div style={{ display: "flex",  flexWrap: "nowrap" }}><div><FontAwesomeIcon icon={faCheckCircle} className="cell-icon green" /></div><div className="ml-1">{props.value}</div></div></>
+            : "unknown";
+        },
+      }
+    ],
+    []
+  );
 
   async function fetchData() {
     setLoading(true);
@@ -69,100 +116,32 @@ function OpseraRecentPipelineStatus({ date }) {
   } else {
     return (
       <>
-        <div className="chart mb-3" style={{ height: "300px" }}>
-          {/* <div className="chart-label-text">Opsera: Recent Pipeline Status</div> */}
-          {typeof data !== "object" ||
-          data === undefined ||
-          Object.keys(data).length === 1 ||
-          data.status !== 200 ? (
-            <>
-              <div className="chart-label-text">
-                Opsera: Recent Pipeline Status
-              </div>
-              <div
-                className="max-content-width p-5 mt-5"
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
+        {(typeof data !== "object" || data === undefined || Object.keys(data).length === 1 || data.status !== 200) ?
+          <>
+            <div className="chart mb-3" style={{ height: "300px" }}>
+              <div className="chart-label-text">Opsera: Recent Pipeline Status</div>
+              <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
                 <InfoDialog message="No Data is available for this chart at this time." />
               </div>
-            </>
-          ) : (
-            <div className="px-2 mt-2">
-              <Table
-                striped
-                bordered
-                hover
-                size="sm"
-                className="table-sm"
-                style={{ fontSize: "small" }}
-              >
-                <thead>
-                  <tr>
-                    <th colSpan="5">Opsera: Recent Pipeline Status</th>
-                  </tr>
-                  <tr>
-                    <th style={{ width: "55%" }}>Pipeline Name</th>
-                    <th style={{ width: "5%" }} className="text-center">
-                      Run Count{" "}
-                    </th>
-                    <th style={{ width: "20%" }} className="text-center">
-                      Completed At
-                    </th>
-                    <th style={{ width: "10%" }} className="text-center">
-                      Duration (Mins)
-                    </th>
-                    <th style={{ width: "10%" }} className="text-center">
-                      Result
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.data.map(function (value, index) {
-                    let className =
-                      value["status"] &&
-                      value["status"].toLowerCase() === "failure"
-                        ? " red"
-                        : " green";
-                    return (
-                      <tr key={index}>
-                        <td className={className}>
-                          {value["pipeline_name"]
-                            ? value["pipeline_name"]
-                            : "Unknown"}
-                        </td>
-                        <td className={"text-center" + className}>
-                          {value["run_count"] ? value["run_count"] : "Unknown"}
-                        </td>
-                        <td className={"text-center" + className}>
-                          {value["timestamp"]
-                            ? format(
-                                new Date(value["timestamp"]),
-                                "yyyy-MM-dd', 'hh:mm a"
-                              )
-                            : "Unknown"}
-                        </td>
-                        <td className={"text-center" + className}>
-                          {value["duration"] ? value["duration"] : "0"}
-                        </td>
-                        <td
-                          className={"text-center upper-case-first" + className}
-                        >
-                          {value["status"]
-                            ? value["status"].toLowerCase()
-                            : "Failed"}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </Table>
             </div>
-          )}
-        </div>
+          </>
+          :
+          <>
+            <div className="mt-3 d-flex justify-content-between">
+              <div className="h6 activity-label-text mb-2">Opsera: Recent Pipeline Status</div>
+
+            </div>
+            <CustomTable
+              columns={columns}
+              data={data.data}
+              rowStyling={""}
+              noDataMessage={noDataMessage}
+              // initialState={initialState}
+              // paginationOptions={paginationOptions}
+            >
+            </CustomTable>
+          </>
+        }
       </>
     );
   }
