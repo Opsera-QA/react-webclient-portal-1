@@ -245,7 +245,7 @@ function CypressStepConfiguration({
   }, [formData.toolJobType]);
 
   useEffect(() => {
-    if (jobType === "opsera-job") {
+    if (jobType === "job") {
       setFormData({ ...formData, jobType : "CYPRESS UNIT TESTING" });
     }
   }, [jobType]);

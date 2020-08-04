@@ -266,7 +266,7 @@ function SonarStepConfiguration({
   }, [formData.toolJobType]);
 
   useEffect(() => {
-    if (jobType === "opsera-job") {
+    if (jobType === "job") {
       setFormData({ ...formData, jobType : "CODE SCAN" });
     }
   }, [jobType]);

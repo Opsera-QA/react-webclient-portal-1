@@ -130,7 +130,7 @@ function DockerPushStepConfiguration({
   }, [stepTool]);
 
   useEffect(() => {
-    if (jobType === "opsera-job") {
+    if (jobType === "-job") {
       setFormData({ ...formData, jobType : "DOCKER PUSH" });
     }
   }, [jobType]);

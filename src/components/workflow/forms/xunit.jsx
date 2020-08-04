@@ -236,7 +236,7 @@ function XunitStepConfiguration({
   }, [formData.toolJobType]);
 
   useEffect(() => {
-    if (jobType === "opsera-job") {
+    if (jobType === "job") {
       setFormData({ ...formData, jobType : "UNIT TEST" });
     }
   }, [jobType]);
