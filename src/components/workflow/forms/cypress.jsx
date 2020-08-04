@@ -238,28 +238,6 @@ function CypressStepConfiguration({
     }
   }, [jenkinsList, formData.toolConfigId]);
 
-  // search cypress
-  useEffect(() => {
-    setErrors(false);
-
-    async function fetchCypressDetails(service) {
-      setIsCypressSearching(true);
-      // Set results state
-      let results = await searchToolsList(service);
-      //console.log(results);
-      const filteredList = results.filter(
-        (el) => el.configuration !== undefined
-      ); //filter out items that do not have any configuration data!
-      if (filteredList) {
-        setCypressList(filteredList);
-        setIsCypressSearching(false);
-      }
-    }
-
-    // Fire off our API call
-    fetchCypressDetails("cypress");
-  }, []);
-
   useEffect(() => {
     if (formData.toolJobType && formData.toolJobType.includes("SFDC")) {
       setFormData({ ...formData, buildType: "ant" });
@@ -430,17 +408,6 @@ function CypressStepConfiguration({
     setLoading(false);
   };
 
-  const handleCypressChange = (selectedOption) => {
-    setLoading(true);
-    //console.log(selectedOption);
-    if (selectedOption.id && selectedOption.configuration) {
-      setFormData({
-        ...formData,
-        cypressToolConfigId: selectedOption.id,
-      });
-    }
-    setLoading(false);
-  };
   const handleJobChange = (selectedOption) => {
     console.log(selectedOption)
     if (selectedOption.type[0] === "CYPRESS UNIT TESTING" ) {      
@@ -824,81 +791,6 @@ function CypressStepConfiguration({
           </>
         )}
 
-        
-        {(formData.jobType === "CYPRESS UNIT TESTING" ) && (
-          <Form.Group controlId="jenkinsList">
-            <Form.Label className="w-100">
-              Cypress Credentials*
-              <OverlayTrigger
-                trigger="click"
-                rootClose
-                placement="left"
-                overlay={RegistryPopover(
-                  cypressList[
-                    cypressList.findIndex((x) => x.id === formData.cypressToolConfigId)
-                  ]
-                )}
-              >
-                <FontAwesomeIcon
-                  icon={faEllipsisH}
-                  className="fa-pull-right pointer pr-1"
-                  onClick={() => document.body.click()}
-                />
-              </OverlayTrigger>
-            </Form.Label>
-            {isCypressSearching ? (
-              <div className="form-text text-muted mt-2 p-2">
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
-                Loading Cypress accounts from Tool Registry
-              </div>
-            ) : (
-              <>
-                {renderForm && cypressList && cypressList.length > 0 ? (
-                  <>
-                    <DropdownList
-                      data={cypressList}
-                      value={
-                        cypressList[
-                          cypressList.findIndex(
-                            (x) => x.id === formData.cypressToolConfigId
-                          )
-                        ]
-                      }
-                      valueField="id"
-                      textField="name"
-                      filter="contains"
-                      onChange={handleCypressChange}
-                    />
-                    <br></br>
-                    <Form.Group controlId="projectKey">
-                      <Form.Label>Project Key*</Form.Label>
-                      <Form.Control maxLength="150" type="text" placeholder="" value={formData.projectKey || ""} onChange={e => setFormData({ ...formData, projectKey: e.target.value })} />
-                    </Form.Group>
-                  </>
-                ) : (
-                  <>
-                    <div className="form-text text-muted p-2">
-                      <FontAwesomeIcon
-                        icon={faExclamationCircle}
-                        className="text-muted mr-1"
-                        fixedWidth
-                      />
-                      No accounts have been registered for Cypress. Please go
-                      to
-                      <Link to="/inventory/tools">Tool Registry</Link> and add a
-                      Cypress Account entry in order to proceed.
-                    </div>
-                  </>
-                )}
-              </>
-            )}
-          </Form.Group>
-        )}
 
         {formData.jenkinsUrl && jenkinsList.length > 1 && (
           <Form.Group controlId="formBasicEmail">

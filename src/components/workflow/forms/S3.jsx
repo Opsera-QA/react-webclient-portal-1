@@ -238,20 +238,26 @@ function S3StepConfiguration({
       setAccountsList(
         jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ].accounts
+        ] ?
+        jenkinsList[
+          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+        ].accounts : []
       );
     }
-  }, [jenkinsList]);
+  }, [formData.toolConfigId]);
 
   useEffect(() => {
     if (formData.toolConfigId) {
       setJobsList(
         jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ].jobs
+        ] ? 
+        jenkinsList[
+          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+        ].jobs : []
       );
     }
-  }, [jenkinsList]);
+  }, [formData.toolConfigId]);
 
   useEffect(() => {
     if (formData.toolJobType && formData.toolJobType.includes("SFDC")) {
