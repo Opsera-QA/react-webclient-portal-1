@@ -214,26 +214,38 @@ function SeleniumStepConfiguration({
       setAccountsList(
         jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ].accounts
+        ] ? 
+        jenkinsList[
+          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+        ].accounts : []
       );
     }
-  }, [jenkinsList]);
+  }, [jenkinsList, formData.toolConfigId]);
 
   useEffect(() => {
     if (formData.toolConfigId) {
       setJobsList(
         jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ].jobs
+        ] ? 
+        jenkinsList[
+          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+        ].jobs : []
       );
     }
-  }, [jenkinsList]);
+  }, [jenkinsList, formData.toolConfigId]);
 
   useEffect(() => {
     if (formData.toolJobType && formData.toolJobType.includes("SFDC")) {
       setFormData({ ...formData, buildType: "ant" });
     }
   }, [formData.toolJobType]);
+  
+  useEffect(() => {
+    if (jobType === "job") {
+      setFormData({ ...formData, jobType : "FUNCTIONAL TESTING" });
+    }
+  }, [jobType]);
 
   console.log(formData);
   // console.log(jobsList);
@@ -401,7 +413,7 @@ function SeleniumStepConfiguration({
 
   const handleJobChange = (selectedOption) => {
     console.log(selectedOption)
-    if (selectedOption.type[0] === "FUNCTIONAL TEST" ) {      
+    if (selectedOption.type[0] === "FUNCTIONAL TESTING" ) {      
         setFormData({
           ...formData,
           toolJobId: selectedOption._id,

@@ -273,6 +273,7 @@ function StepToolConfiguration({
               stepTool={stepTool}
               parentCallback={callbackFunction}
               callbackSaveToVault={saveToVault}
+              createJob={createJob}
             />
           ) : null}
           {editItem.tool_name.toLowerCase() === "databricks-notebook" ? (

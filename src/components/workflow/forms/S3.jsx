@@ -238,26 +238,39 @@ function S3StepConfiguration({
       setAccountsList(
         jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ].accounts
+        ] ?
+        jenkinsList[
+          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+        ].accounts : []
       );
     }
-  }, [jenkinsList]);
+  }, [formData.toolConfigId]);
 
   useEffect(() => {
     if (formData.toolConfigId) {
       setJobsList(
         jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ].jobs
+        ] ? 
+        jenkinsList[
+          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+        ].jobs : []
       );
     }
-  }, [jenkinsList]);
+  }, [formData.toolConfigId]);
 
   useEffect(() => {
     if (formData.toolJobType && formData.toolJobType.includes("SFDC")) {
       setFormData({ ...formData, buildType: "ant" });
     }
   }, [formData.toolJobType]);
+
+  
+  useEffect(() => {
+    if (jobType === "job") {
+      setFormData({ ...formData, jobType : "SEND S3" });
+    }
+  }, [jobType]);
 
   console.log(formData);
   // console.log(jobsList);
@@ -314,6 +327,18 @@ function S3StepConfiguration({
     if (validateRequiredFields()) {
       setLoading(true);
 
+      let newConfiguration = formData;
+
+      if (typeof newConfiguration.secretKey === "string") {
+        newConfiguration.secretKey = await saveToVault(
+          pipelineId,
+          stepId,
+          "secretKey",
+          "Vault Secured Key",
+          newConfiguration.secretKey
+        );
+      }
+
       const item = {
         configuration: formData,
         threshold: {
@@ -325,6 +350,28 @@ function S3StepConfiguration({
       console.log("item: ", item);
       setLoading(false);
       parentCallback(item);
+    }
+  };
+
+
+  const saveToVault = async (pipelineId, stepId, key, name, value) => {
+    const keyName = `${pipelineId}-${stepId}-${key}`;
+    const body = {
+      key: keyName,
+      value: value,
+    };
+    const response = await callbackSaveToVault(body);
+    if (response.status === 200) {
+      return { name: name, vaultKey: keyName };
+    } else {
+      setFormData((formData) => {
+        return { ...formData, secretKey: {} };
+      });
+      setLoading(false);
+      setFormMessage(
+        "ERROR: Something has gone wrong saving secure data to your vault.  Please try again or report the issue to OpsERA."
+      );
+      return "";
     }
   };
 
@@ -358,6 +405,10 @@ function S3StepConfiguration({
       console.log(err.message);
       setErrors(err.message);
     }
+  };
+  
+  const handleBuildStepChange = (selectedOption) => {
+    setFormData({ ...formData, buildStepId: selectedOption._id });
   };
 
   const validateRequiredFields = () => {
@@ -832,6 +883,7 @@ function S3StepConfiguration({
         )}
 
         {(formData.jobType === "SEND S3" ) && (
+          <>
           <Form.Group controlId="jenkinsList">
             <Form.Label className="w-100">
               AWS Credentials*
@@ -880,11 +932,6 @@ function S3StepConfiguration({
                       filter="contains"
                       onChange={handleAWSChange}
                     />
-                    <br></br>
-                    <Form.Group controlId="projectKey">
-                      <Form.Label>S3 Url</Form.Label>
-                      <Form.Control maxLength="150" type="text" placeholder="" disabled value={formData.s3Url || ""} onChange={e => setFormData({ ...formData, s3Url: e.target.value })} />
-                    </Form.Group>
                   </>
                 ) : (
                   <>
@@ -894,178 +941,42 @@ function S3StepConfiguration({
                         className="text-muted mr-1"
                         fixedWidth
                       />
-                      No accounts have been registered for Code Scan. Please go
+                      No accounts have been registered for AWS. Please go
                       to
                       <Link to="/inventory/tools">Tool Registry</Link> and add a
-                      Code Scan Account entry in order to proceed.
+                      AWS Account entry in order to proceed.
                     </div>
                   </>
                 )}
               </>
             )}
           </Form.Group>
-        )}
-
-        {formData.jenkinsUrl && jenkinsList.length > 1 && (
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label className="w-100">
-              Account*
-              <OverlayTrigger
-                trigger="click"
-                rootClose
-                placement="left"
-                overlay={RegistryPopover(
-                  accountsList[
-                    accountsList.findIndex(
-                      (x) => x.toolId === formData.gitToolId
-                    )
-                  ]
-                )}
-              >
-                <FontAwesomeIcon
-                  icon={faEllipsisH}
-                  className="fa-pull-right pointer pr-1"
-                  onClick={() => document.body.click()}
-                />
-              </OverlayTrigger>
-            </Form.Label>
-            {accountsList.length < 1 && (
-              <div className="form-text text-muted p-2">
-                <FontAwesomeIcon
-                  icon={faExclamationCircle}
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
-                No Credentials have been created for{" "}
-                <span>{formData.jenkinsUrl}</span>. Please go to
-                <Link to="/inventory/tools"> Tool Registry</Link> and add
-                credentials for this Jenkins in order to proceed.
-              </div>
-            )}
-            {accountsList !== undefined && accountsList.length > 0 ? (
-              <DropdownList
-                data={accountsList}
-                valueField="toolId"
-                textField="gitCredential"
-                value={
-                  accountsList[
-                    accountsList.findIndex(
-                      (x) => x.toolId === formData.gitToolId
-                    )
-                  ]
-                }
-                filter="contains"
-                onChange={handleAccountChange}
-              />
-            ) : null}
-          </Form.Group>
-        )}
-
-        {formData.service && formData.gitToolId && (
-          <Form.Group controlId="account" className="mt-2">
-            <Form.Label>Repository*</Form.Label>
-            {isRepoSearching ? (
-              <div className="form-text text-muted mt-2 p-2">
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
-                Loading repositories from registry
-              </div>
-            ) : (
-              <>
-                {repoList ? (
-                  <DropdownList
-                    data={repoList}
-                    value={
-                      repoList[
-                        repoList.findIndex(
-                          (x) => x.name === formData.repository
-                        )
-                      ]
-                    }
-                    valueField="value"
-                    textField="name"
-                    filter="contains"
-                    onChange={handleRepoChange}
-                  />
-                ) : (
-                  <FontAwesomeIcon
-                    icon={faSpinner}
-                    spin
-                    className="text-muted mr-1"
-                    fixedWidth
-                  />
-                )}
-              </>
-            )}
-            {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
-          </Form.Group>
-        )}
-
-        {formData.service && formData.gitToolId && formData.repoId && (
-          <Form.Group controlId="account" className="mt-2">
-            <Form.Label>Branch*</Form.Label>
-            {isBranchSearching ? (
-              <div className="form-text text-muted mt-2 p-2">
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
-                Loading branches from selected repository
-              </div>
-            ) : (
-              <>
-                {branchList ? (
-                  <DropdownList
-                    data={branchList}
-                    value={
-                      branchList[
-                        branchList.findIndex((x) => x.value === formData.branch)
-                      ]
-                    }
-                    valueField="value"
-                    textField="name"
-                    filter="contains"
-                    onChange={handleBranchChange}
-                  />
-                ) : (
-                  <FontAwesomeIcon
-                    icon={faSpinner}
-                    spin
-                    className="text-muted mr-1"
-                    fixedWidth
-                  />
-                )}
-              </>
-            )}
-            {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
-          </Form.Group>
-        )}
-{/* 
-        {formData.jobType === "VALIDATE PACKAGE XML" ? (
-          <Form.Group controlId="s3Step">
-            <Form.Label>Generate XML Step Info*</Form.Label>
+            <Form.Group controlId="s3Step">
+            <Form.Label>Build Step Info*</Form.Label>
             {listOfSteps ? (
               <DropdownList
                 data={listOfSteps}
                 value={
-                  formData.stepIdXML
+                  formData.buildStepId
                     ? listOfSteps[
                         listOfSteps.findIndex(
-                          (x) => x._id === formData.stepIdXML
+                          (x) => x._id === formData.buildStepId
                         )
                       ]
                     : listOfSteps[0]
                 }
                 valueField="_id"
                 textField="name"
-                filter="contains"
-                onChange={handleXMLStepChange}
+                defaultValue={
+                  formData.buildStepId
+                    ? listOfSteps[
+                        listOfSteps.findIndex(
+                          (x) => x._id === formData.buildStepId
+                        )
+                      ]
+                    : listOfSteps[0]
+                }
+                onChange={handleBuildStepChange}
               />
             ) : (
               <FontAwesomeIcon
@@ -1076,70 +987,13 @@ function S3StepConfiguration({
               />
             )}
           </Form.Group>
-        ) : (
-          <></>
-        )} */}
-
-        {formData.jenkinsUrl && jenkinsList.length > 1 && (
-          <Form.Group controlId="formBasicCheckbox" className="mt-4 ml-1">
-            <Form.Check
-              type="checkbox"
-              label="Enable Docker Build Support"
-              checked={formData.buildType === "docker" ? true : false}
-              onChange={() =>
-                setFormData({
-                  ...formData,
-                  buildType:
-                    formData.buildType === "docker" ? "gradle" : "docker",
-                  dockerTagName: "",
-                  dockerName: "",
-                })
-              }
-            />
-            {/* <Form.Text className="text-muted"></Form.Text>       */}
+          
+          <Form.Group controlId="projectKey">
+            <Form.Label>S3 Url</Form.Label>
+            <Form.Control maxLength="150" type="text" placeholder="" disabled value={formData.s3Url || ""} onChange={e => setFormData({ ...formData, s3Url: e.target.value })} />
           </Form.Group>
-        )}
-
-        {formData.buildType === "docker" && (
-          <>
-            <Form.Group controlId="branchField">
-              <Form.Label>Docker Name*</Form.Label>
-              <Form.Control
-                maxLength="150"
-                type="text"
-                placeholder=""
-                value={formData.dockerName || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, dockerName: e.target.value })
-                }
-              />
-            </Form.Group>
-
-            <Form.Group controlId="branchField">
-              <Form.Label>Docker Tag*</Form.Label>
-              <Form.Control
-                maxLength="150"
-                type="text"
-                placeholder=""
-                value={formData.dockerTagName || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, dockerTagName: e.target.value })
-                }
-              />
-            </Form.Group>
           </>
         )}
-
-        <Form.Group controlId="threshold">
-          <Form.Label>Success Threshold</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder=""
-            value={thresholdVal || ""}
-            onChange={(e) => setThresholdValue(e.target.value)}
-            disabled={true}
-          />
-        </Form.Group>
 
         {jobType === "opsera-job" ? (
           <Button

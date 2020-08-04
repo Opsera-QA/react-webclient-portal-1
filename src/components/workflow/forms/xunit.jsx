@@ -235,6 +235,12 @@ function XunitStepConfiguration({
     }
   }, [formData.toolJobType]);
 
+  useEffect(() => {
+    if (jobType === "job") {
+      setFormData({ ...formData, jobType : "UNIT TEST" });
+    }
+  }, [jobType]);
+
   console.log(formData);
   // console.log(jobsList);
 

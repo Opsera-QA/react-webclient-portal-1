@@ -235,6 +235,15 @@ function TwistlockStepConfiguration ({
     }
   }, [formData.toolJobType]);
 
+  // jobtype not specified 
+
+  // useEffect(() => {
+  //   if (jobType === "job") {
+  //     setFormData({ ...formData, jobType : "" }); 
+  //   }
+  // }, [jobType]);
+
+
   console.log(formData);
   // console.log(jobsList);
 

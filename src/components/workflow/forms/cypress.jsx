@@ -134,15 +134,17 @@ function CypressStepConfiguration({
       setisJenkinsSearching(true);
       // Set results state
       let results = await searchToolsList(service);
-      //console.log(results);
+      console.log(results);
       const filteredList = results.filter(
         (el) => el.configuration !== undefined
       ); //filter out items that do not have any configuration data!
       if (filteredList) {
+        console.log(filteredList)
         setJenkinsList(filteredList);
         setisJenkinsSearching(false);
       }
     }
+    console.log(jenkinsList);
 
     // Fire off our API call
     fetchJenkinsDetails("jenkins");
@@ -217,48 +219,36 @@ function CypressStepConfiguration({
       setAccountsList(
         jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ].accounts
+        ] ? jenkinsList[
+          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+        ].accounts : []
       );
     }
-  }, [jenkinsList]);
+  }, [jenkinsList, formData.toolConfigId]);
 
   useEffect(() => {
     if (formData.toolConfigId) {
       setJobsList(
         jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ].jobs
+        ] ? jenkinsList[
+          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+        ].jobs : []
       );
     }
-  }, [jenkinsList]);
-
-  // search cypress
-  useEffect(() => {
-    setErrors(false);
-
-    async function fetchCypressDetails(service) {
-      setIsCypressSearching(true);
-      // Set results state
-      let results = await searchToolsList(service);
-      //console.log(results);
-      const filteredList = results.filter(
-        (el) => el.configuration !== undefined
-      ); //filter out items that do not have any configuration data!
-      if (filteredList) {
-        setCypressList(filteredList);
-        setIsCypressSearching(false);
-      }
-    }
-
-    // Fire off our API call
-    fetchCypressDetails("cypress");
-  }, []);
+  }, [jenkinsList, formData.toolConfigId]);
 
   useEffect(() => {
     if (formData.toolJobType && formData.toolJobType.includes("SFDC")) {
       setFormData({ ...formData, buildType: "ant" });
     }
   }, [formData.toolJobType]);
+
+  useEffect(() => {
+    if (jobType === "job") {
+      setFormData({ ...formData, jobType : "CYPRESS UNIT TESTING" });
+    }
+  }, [jobType]);
 
   console.log(formData);
   // console.log(jobsList);
@@ -424,20 +414,9 @@ function CypressStepConfiguration({
     setLoading(false);
   };
 
-  const handleCypressChange = (selectedOption) => {
-    setLoading(true);
-    //console.log(selectedOption);
-    if (selectedOption.id && selectedOption.configuration) {
-      setFormData({
-        ...formData,
-        cypressToolConfigId: selectedOption.id,
-      });
-    }
-    setLoading(false);
-  };
   const handleJobChange = (selectedOption) => {
     console.log(selectedOption)
-    if (selectedOption.type[0] === "CYPRESS UNIT TEST" ) {      
+    if (selectedOption.type[0] === "CYPRESS UNIT TESTING" ) {      
         setFormData({
           ...formData,
           toolJobId: selectedOption._id,
@@ -818,81 +797,6 @@ function CypressStepConfiguration({
           </>
         )}
 
-        
-        {(formData.jobType === "CYPRESS UNIT TEST" ) && (
-          <Form.Group controlId="jenkinsList">
-            <Form.Label className="w-100">
-              Sonar Credentials*
-              <OverlayTrigger
-                trigger="click"
-                rootClose
-                placement="left"
-                overlay={RegistryPopover(
-                  cypressList[
-                    cypressList.findIndex((x) => x.id === formData.cypressToolConfigId)
-                  ]
-                )}
-              >
-                <FontAwesomeIcon
-                  icon={faEllipsisH}
-                  className="fa-pull-right pointer pr-1"
-                  onClick={() => document.body.click()}
-                />
-              </OverlayTrigger>
-            </Form.Label>
-            {isCypressSearching ? (
-              <div className="form-text text-muted mt-2 p-2">
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
-                Loading SalesForce accounts from Tool Registry
-              </div>
-            ) : (
-              <>
-                {renderForm && cypressList && cypressList.length > 0 ? (
-                  <>
-                    <DropdownList
-                      data={cypressList}
-                      value={
-                        cypressList[
-                          cypressList.findIndex(
-                            (x) => x.id === formData.cypressToolConfigId
-                          )
-                        ]
-                      }
-                      valueField="id"
-                      textField="name"
-                      filter="contains"
-                      onChange={handleCypressChange}
-                    />
-                    <br></br>
-                    <Form.Group controlId="projectKey">
-                      <Form.Label>Project Key*</Form.Label>
-                      <Form.Control maxLength="150" type="text" placeholder="" value={formData.projectKey || ""} onChange={e => setFormData({ ...formData, projectKey: e.target.value })} />
-                    </Form.Group>
-                  </>
-                ) : (
-                  <>
-                    <div className="form-text text-muted p-2">
-                      <FontAwesomeIcon
-                        icon={faExclamationCircle}
-                        className="text-muted mr-1"
-                        fixedWidth
-                      />
-                      No accounts have been registered for Code Scan. Please go
-                      to
-                      <Link to="/inventory/tools">Tool Registry</Link> and add a
-                      Code Scan Account entry in order to proceed.
-                    </div>
-                  </>
-                )}
-              </>
-            )}
-          </Form.Group>
-        )}
 
         {formData.jenkinsUrl && jenkinsList.length > 1 && (
           <Form.Group controlId="formBasicEmail">
