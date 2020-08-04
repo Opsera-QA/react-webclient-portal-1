@@ -8,9 +8,13 @@ const axiosInstance = axios.create({
 
 const setInterceptorToken = (authToken) => {
   axiosInstance.interceptors.request.use(function (config) {
-    const token = "Bearer " + authToken;
-    config.headers.Authorization = token;
+    //const token = "Bearer " + authToken;
+    //config.headers.Authorization = token;
+    config.headers["authorization"] = `Bearer ${authToken}`;
+    config.headers["cache-control"] = `no-cache`;
     return config;
+  }, function(error) {
+    return Promise.reject(error);
   }, authToken);
 };
 
