@@ -240,6 +240,12 @@ function JmeterStepConfiguration({
       setFormData({ ...formData, buildType: "ant" });
     }
   }, [formData.toolJobType]);
+  
+  useEffect(() => {
+    if (jobType === "opsera-job") {
+      setFormData({ ...formData, jobType : "PERFORMANCE TESTING" });
+    }
+  }, [jobType]);
 
   console.log(formData);
   // console.log(jobsList);

@@ -265,6 +265,13 @@ function S3StepConfiguration({
     }
   }, [formData.toolJobType]);
 
+  
+  useEffect(() => {
+    if (jobType === "opsera-job") {
+      setFormData({ ...formData, jobType : "SEND S3" });
+    }
+  }, [jobType]);
+
   console.log(formData);
   // console.log(jobsList);
 

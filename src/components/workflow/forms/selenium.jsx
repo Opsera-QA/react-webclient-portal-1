@@ -240,6 +240,12 @@ function SeleniumStepConfiguration({
       setFormData({ ...formData, buildType: "ant" });
     }
   }, [formData.toolJobType]);
+  
+  useEffect(() => {
+    if (jobType === "opsera-job") {
+      setFormData({ ...formData, jobType : "FUNCTIONAL TESTING" });
+    }
+  }, [jobType]);
 
   console.log(formData);
   // console.log(jobsList);

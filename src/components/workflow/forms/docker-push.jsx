@@ -130,6 +130,12 @@ function DockerPushStepConfiguration({
   }, [stepTool]);
 
   useEffect(() => {
+    if (jobType === "opsera-job") {
+      setFormData({ ...formData, jobType : "DOCKER PUSH" });
+    }
+  }, [jobType]);
+
+  useEffect(() => {
     setErrors(false);
 
     async function fetchJenkinsDetails(service) {
