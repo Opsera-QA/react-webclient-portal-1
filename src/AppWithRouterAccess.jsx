@@ -102,10 +102,8 @@ const AppWithRouterAccess = () => {
   const enableSideBar = (path) => {
     if (path === "/login" || path === "/signup" || path === "/registration" || path === "/trial/registration") {
       setHideSideBar(true);
-      console.log("hide sidebar true");
     } else {
       setHideSideBar(false);
-      console.log("hide sidebar false");
     }
   };
 
@@ -121,7 +119,7 @@ const AppWithRouterAccess = () => {
           <Navbar hideAuthComponents={hideSideBar}/>
           <div className="container-fluid">
             <div className="d-flex flex-row">
-              {!hideSideBar && <Sidebar hideView={false}/>}
+              <Sidebar userData={data} hideSideBar={hideSideBar} />
 
               <div className="w-100 pt-4 pb-4">
                 <Route path="/" exact component={Home}/>
