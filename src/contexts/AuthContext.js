@@ -77,6 +77,8 @@ const AuthContextProvider = (props) => {
           let role = "readonly";
           if (groups.includes("Admin")) {
             role = "administrator";
+          } else if (groups.includes("Free Trial")) {
+            role = "free_trial";
           } else if (groups.includes("Power User")) {
             role = "power_user";
           } else if (groups.includes("User")) {
