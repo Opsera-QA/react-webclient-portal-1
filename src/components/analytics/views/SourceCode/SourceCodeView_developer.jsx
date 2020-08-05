@@ -97,10 +97,7 @@ function SourceCodeView_developer({ persona, date }) {
       gitlabTotalNumberOfMergeRequestsOpenedByUser,
     } = data;
     let summaryCountsData = [];
-    if (
-      gitlabTotalNumberOfCommits.status === 200 &&
-      gitlabTotalNumberOfCommits.data !== undefined
-    ) {
+    if (gitlabTotalNumberOfCommits.status === 200 && gitlabTotalNumberOfCommits.data !== undefined) {
       summaryCountsData.push({
         name: "Total Commits",
         value: gitlabTotalNumberOfCommits.data[0].count,
@@ -108,10 +105,7 @@ function SourceCodeView_developer({ persona, date }) {
         status: "",
       });
     }
-    if (
-      gitlabTotalNumberOfBranches.status === 200 &&
-      gitlabTotalNumberOfBranches.data !== undefined
-    ) {
+    if (gitlabTotalNumberOfBranches.status === 200 && gitlabTotalNumberOfBranches.data !== undefined) {
       summaryCountsData.push({
         name: "Branches Created",
         value: gitlabTotalNumberOfBranches.data[0].count,
@@ -127,10 +121,7 @@ function SourceCodeView_developer({ persona, date }) {
         name: "Merge Requests Pending",
         value: gitlabTotalMergeRequestsPendingForReview.data[0].count,
         footer: "",
-        status:
-          gitlabTotalMergeRequestsPendingForReview.data[0].count > 0
-            ? "danger"
-            : null,
+        status: gitlabTotalMergeRequestsPendingForReview.data[0].count > 0 ? "danger" : null,
       });
     }
     if (
@@ -158,10 +149,7 @@ function SourceCodeView_developer({ persona, date }) {
 
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
-            <GitlabTotalCountOfMergeReqAndPushPerDay
-              persona={persona}
-              date={date}
-            />
+            <GitlabTotalCountOfMergeReqAndPushPerDay persona={persona} date={date} />
           </div>
           <div className="align-self-stretch p-2 w-100">
             {/* Self Contained div */}
@@ -173,10 +161,7 @@ function SourceCodeView_developer({ persona, date }) {
             <GitlabMergeRequestsByUserChart persona={persona} date={date} />
           </div>
           <div className="align-self-stretch p-2 w-100">
-            <GitlabTimeTakenToCompleteMergeRequestReview
-              persona={persona}
-              date={date}
-            />
+            <GitlabTimeTakenToCompleteMergeRequestReview persona={persona} date={date} />
           </div>
         </div>
         <div className="d-flex">
@@ -203,10 +188,7 @@ function SourceCodeView_developer({ persona, date }) {
         </div> */}
         <div className="mt-2">
           {/* <GitlabLastCommitToCodeByUser date={date} />  */}
-          <GitlabMergedMergeReqCommitsCountTable
-            persona={persona}
-            date={date}
-          />
+          <GitlabMergedMergeReqCommitsCountTable persona={persona} date={date} />
         </div>
       </>
     );
