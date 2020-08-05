@@ -1,5 +1,4 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import LoginForm from "./LoginForm";
 import { useOktaAuth } from "@okta/okta-react";
@@ -10,9 +9,8 @@ const Login = ({ issuer }) => {
   if (authState.isPending) {
     return <div>Loading...</div>;
   }
-  return authState.isAuthenticated ?
-    <Redirect to={{ pathname: "/overview" }}/> :
-    <LoginForm issuer={issuer} />;
+
+  return <LoginForm issuer={issuer} />;
 };
 
 Login.propTypes = {

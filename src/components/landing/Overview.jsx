@@ -26,10 +26,12 @@ function OverviewLanding() {
   const getRoles = async () => {
     const user = await getUserRecord();
     userAccess = await setAccessRoles(user);
-    setAccessRoleData(userAccess.Role);
-    console.log(userAccess.Role);
-    if (userAccess.Role !== "free_trial") {
-      await loadData();
+    if (userAccess) {
+      setAccessRoleData(userAccess);
+      console.log(userAccess.Role);
+      if (userAccess.Role !== "free_trial") {
+        await loadData();
+      }
     }
     setUserInfo(user);
   };

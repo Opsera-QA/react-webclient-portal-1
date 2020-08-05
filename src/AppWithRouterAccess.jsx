@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Route, useHistory } from "react-router-dom";
 import { Security, SecureRoute, LoginCallback } from "@okta/okta-react";
-import useAxios from "axios-hooks";
+import useAxios, { configure } from 'axios-hooks'
 import AuthContextProvider from "./contexts/AuthContext";
 import LoadingDialog from "./components/common/loading";
 import Home from "./Home";
@@ -51,8 +51,7 @@ import AccountSettingsView from "./components/user/AccountSettings";
 import LdapGroupManagement from "./components/accounts/ldap_groups/LdapGroupManagement";
 import LdapGroupDetails from "./components/accounts/ldap_groups/ldap_group_detail/LdapGroupDetails";
 
-import axios from "axios";
-
+import Axios from "axios";
 const config = require("./config");
 
 const AppWithRouterAccess = () => {
@@ -71,6 +70,10 @@ const AppWithRouterAccess = () => {
     onAuthRequired: onAuthRequired,
   };
   const authClient = new OktaAuth(OKTA_CONFIG);
+
+  const axios = Axios.create({
+    baseURL: config.apiServerUrl,
+  })
   axios.interceptors.request.use(async (config) => {
       const tokenObject = await authClient.tokenManager.get("accessToken");
       if (tokenObject && tokenObject.accessToken) {
@@ -84,15 +87,24 @@ const AppWithRouterAccess = () => {
       return Promise.reject(error);
     },
   );
-
+  configure({ axios })
   const [{ data, loading, error }, refetch] = useAxios(
-    config.apiServerUrl + "/users",
+    "/users",
   );
   const [hideSideBar, setHideSideBar] = useState(false);
 
   useEffect(() => {
     enableSideBar(history.location.pathname);
   }, [data]);
+
+  useEffect(() => {
+    if (error) {
+      if (error.message.includes("401") && !hideSideBar) {
+        window.location = "/login"
+      }
+      console.log("Error loading user record: ", JSON.stringify(error));
+    }
+  }, [error]);
 
   const enableSideBar = (path) => {
     if (path === "/" || path === "/login" || path === "/signup" || path === "/registration" || path === "/trial/registration") {
@@ -102,9 +114,6 @@ const AppWithRouterAccess = () => {
     }
   };
 
-  if (error) {
-    console.log("Error loading user record: ", JSON.stringify(error));
-  }
 
   if (!data && loading) {
     return (<LoadingDialog/>);
