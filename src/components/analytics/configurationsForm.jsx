@@ -11,6 +11,7 @@ import { faSave, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
 //import Multiselect from "react-widgets/lib/Multiselect";
 import createHistory from "history/createBrowserHistory";
+//import { createBrowserHistory } from 'history'; //this needs to replace the above line
 
 const INITIAL_SETTINGS = {
   dataUsage: "500",

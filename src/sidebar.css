@@ -11,12 +11,6 @@
   /* font-size: 1rem; */
 }
 
-/*  Appending FontAwesome Icon to class
-.sidebar-menu .nav-link::after {
-  font-family: "FontAwesome";
-  content: "\f105";
-} */
-
 .sub-header {
   color: #0f3e84;
   text-transform: uppercase;

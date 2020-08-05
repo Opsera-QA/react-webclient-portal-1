@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "./contexts/AuthContext";
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
-import { Button } from "react-bootstrap";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faClipboardList,
@@ -20,7 +20,7 @@ import {
   faLifeRing,
   faCogs,
 } from "@fortawesome/free-solid-svg-icons";
-import LoadingDialog from "./components/common/loading";
+
 import "./sidebar.css";
 
 function Sidebar({ userData, hideSideBar }) {
@@ -174,25 +174,30 @@ const funcAccountAdminNav = (hideInProdFF) => {
 
 const funcFreeTrialNav = () => {
   return <>
-    <div className="sidebar-menu pt-3">
-      <NavLink className="nav-link" activeClassName="chosen" to="/overview">
-        <FontAwesomeIcon size="lg" icon={faHome} fixedWidth/> <span className="menu-text">Overview</span></NavLink>
+    <div className="w-20 pt-1 d-block">
+      <div className="sidebar-container sticky-top pb-5 pt-1 pl-1">
+      <div className="sidebar-menu pt-3">
+        <NavLink className="nav-link" activeClassName="chosen" to="/overview">
+          <FontAwesomeIcon size="lg" icon={faHome} fixedWidth/> <span className="menu-text">Overview</span></NavLink>
 
-      <div className="mt-4 mb-2 sub-header">Products</div>
-      <NavLink className="nav-link" activeClassName="chosen" to="/platform">
-        <FontAwesomeIcon size="lg" icon={faBox} fixedWidth/> <span className="menu-text">Platforms</span></NavLink>
-      <NavLink className="nav-link" activeClassName="chosen" to="/workflow">
-        <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
-        className="menu-text">Pipelines</span></NavLink>
-      <NavLink className="nav-link" activeClassName="chosen" to="/analytics">
-        <FontAwesomeIcon size="lg" icon={faChartBar} fixedWidth/> <span className="menu-text">Analytics</span></NavLink>
+        <div className="mt-4 mb-2 sub-header">Products</div>
+        <NavLink className="nav-link" activeClassName="chosen" to="/platform">
+          <FontAwesomeIcon size="lg" icon={faBox} fixedWidth/> <span className="menu-text">Platforms</span></NavLink>
+        <NavLink className="nav-link" activeClassName="chosen" to="/workflow">
+          <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
+          className="menu-text">Pipelines</span></NavLink>
+        <NavLink className="nav-link" activeClassName="chosen" to="/analytics">
+          <FontAwesomeIcon size="lg" icon={faChartBar} fixedWidth/> <span
+          className="menu-text">Analytics</span></NavLink>
 
-      <div className="mt-4 mb-2 sub-header">Resources</div>
-      <NavLink className="nav-link" activeClassName="chosen" to="/help">
-        <FontAwesomeIcon size="lg" icon={faLifeRing} fixedWidth/> <span className="menu-text">Help</span></NavLink>
-      <NavLink className="nav-link" activeClassName="chosen" to="/about">
-        <FontAwesomeIcon size="lg" icon={faAddressBook} fixedWidth/> <span
-        className="menu-text">Contact Us</span></NavLink>
+        <div className="mt-4 mb-2 sub-header">Resources</div>
+        <NavLink className="nav-link" activeClassName="chosen" to="/help">
+          <FontAwesomeIcon size="lg" icon={faLifeRing} fixedWidth/> <span className="menu-text">Help</span></NavLink>
+        <NavLink className="nav-link" activeClassName="chosen" to="/about">
+          <FontAwesomeIcon size="lg" icon={faAddressBook} fixedWidth/> <span
+          className="menu-text">Contact Us</span></NavLink>
+      </div>
+    </div>
     </div>
   </>;
 };
@@ -207,7 +212,7 @@ const funcDefaultNav = () => {
       </Button>
     </div>*/}
 
-    <div className={"w-20 pt-1 d-block"}>
+    <div className="w-20 pt-1 d-block">
       <div className="sidebar-container sticky-top pb-5 pt-1 pl-1">
         <div className="sidebar-menu pt-3">
           <NavLink className="nav-link" activeClassName="chosen" to="/overview">

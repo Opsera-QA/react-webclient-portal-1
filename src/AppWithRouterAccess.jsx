@@ -100,7 +100,7 @@ const AppWithRouterAccess = () => {
   }, [data]);
 
   const enableSideBar = (path) => {
-    if (path === "/login" || path === "/signup" || path === "/registration" || path === "/trial/registration") {
+    if (path === "/" || path === "/login" || path === "/signup" || path === "/registration" || path === "/trial/registration") {
       setHideSideBar(true);
     } else {
       setHideSideBar(false);
@@ -122,8 +122,10 @@ const AppWithRouterAccess = () => {
               <Sidebar userData={data} hideSideBar={hideSideBar} />
 
               <div className="w-100 pt-4 pb-4">
+
                 <Route path="/" exact component={Home}/>
-                {/* <Route path="/login" exact component={Login} /> */}
+                <SecureRoute path="/overview" exact component={Overview}/>
+
                 <Route path='/login' render={() => <Login issuer={OKTA_CONFIG.issuer}/>}/>
                 <Route path='/implicit/callback' component={LoginCallback}/>
 
@@ -131,9 +133,8 @@ const AppWithRouterAccess = () => {
                 <Route path="/about" exact component={About}/>
                 <Route path="/about/pricing" component={Pricing}/>
                 <Route path="/help" component={OnlineHelp}/>
-                {/* <Route path="/implicit/callback" component={ImplicitCallback} /> */}
                 <Route path="/registration" exact component={Registration}/>
-                <SecureRoute path="/overview" exact component={Overview}/>
+
                 <SecureRoute path="/profile" component={Profile}/>
                 <SecureRoute path="/settings" component={AccountSettingsView}/>
                 <SecureRoute path="/inventory/:view?/:id?" component={Inventory}/>

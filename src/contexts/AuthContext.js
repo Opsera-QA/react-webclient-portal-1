@@ -31,7 +31,8 @@ const AuthContextProvider = (props) => {
     };
 
     const loginUserContext = () => {
-      return authService.login("/");
+      refetchUserData();
+      return authService.login("/overview");
     };
 
     const getAccessToken = () => {
