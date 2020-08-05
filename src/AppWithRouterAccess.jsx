@@ -55,6 +55,7 @@ import LdapGroupManagement from "./components/accounts/ldap_groups/LdapGroupMana
 import LdapGroupDetails from "./components/accounts/ldap_groups/ldap_group_detail/LdapGroupDetails";
 
 import axios from "axios";
+
 const config = require("./config");
 
 const AppWithRouterAccess = () => {
@@ -77,10 +78,12 @@ const AppWithRouterAccess = () => {
   const authClient = new OktaAuth(OKTA_CONFIG);
 
   axios.interceptors.request.use(async (config) => {
-      const { accessToken } = await authClient.tokenManager.get("accessToken");
-      config.headers["authorization"] = `Bearer ${accessToken}`;
-      config.headers["cache-control"] = `no-cache`;
-      console.log("CONFIG: ", config);
+      const tokenObject = await authClient.tokenManager.get("accessToken");
+      if (tokenObject && tokenObject.accessToken) {
+        config.headers["authorization"] = `Bearer ${tokenObject.accessToken}`;
+        config.headers["cache-control"] = `no-cache`;
+        console.log("CONFIG: ", config);
+      }
       return config;
     },
 
@@ -109,9 +112,9 @@ const AppWithRouterAccess = () => {
 
   if (!data && loading) {
     return (<LoadingDialog/>);
-  /*} else if (error) {
-    console.log("ERROR: ", error);
-    return (<ErrorDialog error={error}/>);*/
+    /*} else if (error) {
+      console.log("ERROR: ", error);
+      return (<ErrorDialog error={error}/>);*/
   } else {
     return (
       <Security {...OKTA_CONFIG}>
@@ -119,7 +122,7 @@ const AppWithRouterAccess = () => {
           <Navbar hideAuthComponents={hideSideBar}/>
           <div className="container-fluid">
             <div className="d-flex flex-row">
-              <Sidebar userData={data} hideSideBar={hideSideBar} />
+              <Sidebar userData={data} hideSideBar={hideSideBar}/>
 
               <div className="w-100 pt-4 pb-4">
 
