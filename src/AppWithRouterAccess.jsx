@@ -65,7 +65,6 @@ const AppWithRouterAccess = () => {
   };
 
   const OktaAuth = require("@okta/okta-auth-js");
-
   const OKTA_CONFIG = {
     issuer: process.env.REACT_APP_OKTA_ISSUER,
     client_id: process.env.REACT_APP_OKTA_CLIENT_ID,
@@ -74,9 +73,7 @@ const AppWithRouterAccess = () => {
     disableHttpsCheck: false,
     onAuthRequired: onAuthRequired,
   };
-
   const authClient = new OktaAuth(OKTA_CONFIG);
-
   axios.interceptors.request.use(async (config) => {
       const tokenObject = await authClient.tokenManager.get("accessToken");
       if (tokenObject && tokenObject.accessToken) {
@@ -86,7 +83,6 @@ const AppWithRouterAccess = () => {
       }
       return config;
     },
-
     function(error) {
       return Promise.reject(error);
     },
@@ -95,7 +91,6 @@ const AppWithRouterAccess = () => {
   const [{ data, loading, error }, refetch] = useAxios(
     config.apiServerUrl + "/users",
   );
-
   const [hideSideBar, setHideSideBar] = useState(false);
 
   useEffect(() => {
@@ -110,11 +105,12 @@ const AppWithRouterAccess = () => {
     }
   };
 
+  if (error) {
+    console.log("Error loading user record: ", JSON.stringify(error));
+  }
+
   if (!data && loading) {
     return (<LoadingDialog/>);
-    /*} else if (error) {
-      console.log("ERROR: ", error);
-      return (<ErrorDialog error={error}/>);*/
   } else {
     return (
       <Security {...OKTA_CONFIG}>
@@ -125,7 +121,6 @@ const AppWithRouterAccess = () => {
               <Sidebar userData={data} hideSideBar={hideSideBar}/>
 
               <div className="w-100 pt-4 pb-4">
-
                 <Route path="/" exact component={Home}/>
                 <SecureRoute path="/overview" exact component={Overview}/>
 

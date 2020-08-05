@@ -83,7 +83,7 @@ function FreeTrialSignup(props) {
 
   const loadRegistrationResponse = () => {
     // eslint-disable-next-line react/prop-types
-    history.push("/trial/landing");
+    history.push("/registration");
   };
 
   //Final form submit

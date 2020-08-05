@@ -14,10 +14,13 @@ const setInterceptorToken = (authToken) => {
     config.headers["cache-control"] = `no-cache`;
     return config;
   }, function(error) {
-    return Promise.reject(error);
+    if (error.message.includes("401")){
+      window.location = "/login";
+    } else {
+      return Promise.reject(error);
+    }
   }, authToken);
 };
-
 
 export function axiosApiService (token) {
   setInterceptorToken(token);
