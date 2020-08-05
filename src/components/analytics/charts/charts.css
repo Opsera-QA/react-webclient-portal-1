@@ -9,49 +9,58 @@
   margin: 5px;
   padding: 5px;
   background-clip: border-box;
-  border: 1px solid rgba(0,0,0,.125);
-  border-radius: .25rem;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
 }
 
 .chart {
   background: white;
   /* box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); */
   transition: 0.3s;
-  border: 1px solid rgba(0,0,0,.125);
-  border-radius: .25rem;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
   padding-bottom: 20px;
- }
- 
- .chart:hover {
-   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-   color: #334152;
- }
+}
 
- .chart-label-text {
-   position: relative;
-   top: 10px;
-   left: 15px;
- }
+.chart:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  color: #334152;
+}
 
+.chart-label-text {
+  position: relative;
+  top: 10px;
+  left: 15px;
+}
 
 .count-container {
   height: 140px;
 }
 
- .count-block {
+.count-block {
   background: white;
   transition: 0.3s;
-  border: 1px solid rgba(0,0,0,.125);
-  border-radius: .25rem;
-  position:relative;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+  position: relative;
   padding: 3% 0;
 
   display: flex;
   align-items: center;
- }
+}
+
+.count-block-card-view {
+  background: white;
+  transition: 0.3s;
+  border-radius: 0.25rem;
+  position: relative;
+  padding: 3% 0;
+  display: flex;
+  align-items: center;
+}
 
 .count-block-primary-text {
-  font-size:2rem;
+  font-size: 2rem;
   font-weight: bold;
   line-height: 1.3rem;
   word-wrap: break-word;
@@ -59,7 +68,6 @@
 }
 
 .count-block-subtext {
-  
   line-height: 1.5rem;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -67,25 +75,21 @@
 
 .count-block-footer {
   /* position:absolute; */
-  bottom:0px;
+  bottom: 0px;
 }
 
-
-
-
-
- /*  Start dashboard box modules */
+/*  Start dashboard box modules */
 .metric-box {
   min-width: 120px;
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
-  border: 1px solid rgba(0,0,0,.125);
-  border-radius: .25rem;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
 }
 
 .metric-box-headertext {
-  font-size:80%;
+  font-size: 80%;
   font-weight: bold;
   line-height: 1.5rem;
   word-wrap: break-word;
@@ -93,14 +97,14 @@
 }
 
 .metric-box-subtext {
-  font-size:70%;
+  font-size: 70%;
   line-height: 1.5rem;
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
 
 .metric-box-footertext {
-  font-size:50%;
+  font-size: 50%;
   line-height: 1.5rem;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -108,14 +112,14 @@
 
 .box-metric {
   font-size: 2.43rem;
-    font-weight: 500;
-    font-family: "Avenir Next W01", "Lato", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    letter-spacing: 1px;
-    line-height: 1.2;
-    display: inline-block;
-    vertical-align: middle;
+  font-weight: 500;
+  font-family: "Avenir Next W01", "Lato", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: 1px;
+  line-height: 1.2;
+  display: inline-block;
+  vertical-align: middle;
 }
-
 
 /*  End dashboard box modules */
 
