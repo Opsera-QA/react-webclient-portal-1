@@ -4,8 +4,6 @@ import { Security, SecureRoute, LoginCallback } from "@okta/okta-react";
 import useAxios from "axios-hooks";
 import AuthContextProvider from "./contexts/AuthContext";
 import LoadingDialog from "./components/common/loading";
-import ErrorDialog from "components/common/error";
-
 import Home from "./Home";
 import Login from "./components/login/Login";
 import Navbar from "./Navbar";
@@ -44,7 +42,6 @@ import LdapOrganizationDetailView
   from "./components/accounts/ldap_organizations/organizations_detail_view/LdapOrganizationDetailView";
 import LdapCustomerOnboardView from "./components/accounts/ldap_customer_onboard/LdapCustomerOnboard";
 import FreeTrialRegistration from "./components/free_trial/Registration";
-import FreeTrialLanding from "./components/free_trial/landing_page/Landing";
 import ApiConnectionDemo from "./components/api_connector/ApiDemo";
 import CommonTableDemo from "./components/common/samples/tableImplementation";
 import TagDetailView from "./components/admin/tags/tags_detail_view/TagDetailView";
@@ -172,7 +169,6 @@ const AppWithRouterAccess = () => {
                 <SecureRoute path="/demo/table" component={CommonTableDemo}/>
 
                 <Route path="/trial/registration" exact component={FreeTrialRegistration}/>
-                <Route path="/trial/landing" exact component={FreeTrialLanding}/>
               </div>
             </div>
             <div className="row fixed-row-footer-bottom">
