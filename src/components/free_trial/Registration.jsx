@@ -94,12 +94,12 @@ function FreeTrialSignup(props) {
     console.log("formData: ", formData);
 
     //Check if the email is already exist in the system
-    const isEmailAvailable = await isEmailAvailable();
+    const emailIsAvailable = await isEmailAvailable();
 
     // console.log("Final Form Data: " + JSON.stringify(formData));
 
     //Only if form is valid, call API for sign up
-    if(isFormValid() && isEmailAvailable) {
+    if(isFormValid() && emailIsAvailable) {
       setLoading(true);
       const apiCall = new ApiService("/users/create", {}, null, formData);
       await apiCall.post()
