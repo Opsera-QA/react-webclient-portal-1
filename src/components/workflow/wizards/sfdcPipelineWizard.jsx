@@ -38,7 +38,7 @@ const SfdcPipelineWizard = ({ pipelineId, pipeline, handlePipelineWizardRequest,
   };
 
   const createJenkinsJob = async () => {
-    const accessToken = await getAccessToken();
+    const accessToken = await getAccessToken();   
     const apiUrl = `/registry/action/${stepToolConfigId}/createjob`;
     let operationStatus = "success";
 
@@ -49,7 +49,9 @@ const SfdcPipelineWizard = ({ pipelineId, pipeline, handlePipelineWizardRequest,
       buildParams: {
         stepId: sfdcComponentFilterObject.stepId,
         lastCommitTimeStamp: sfdcComponentFilterObject.lastCommitTimeStamp,
-        componentTypes: JSON.stringify(sfdcComponentFilterObject.componentTypes)
+        componentTypes: JSON.stringify(sfdcComponentFilterObject.componentTypes),
+        objectType: sfdcComponentFilterObject.objectType,
+        nameSpacePrefix: sfdcComponentFilterObject.nameSpacePrefix
       }
     };
 
