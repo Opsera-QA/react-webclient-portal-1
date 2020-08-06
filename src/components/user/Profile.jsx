@@ -93,7 +93,7 @@ function Profile() {
                 <td>Groups & Roles</td>
                 <td>
                   {user.groups !== undefined && user.groups.map((group) => {
-                    return <div key={group}>{group}</div>;
+                    return <div className="pb-1" key={group}>{group}</div>;
                   })}
                 </td>
               </tr>
