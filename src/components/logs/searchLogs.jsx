@@ -378,8 +378,8 @@ function SearchLogs(props) {
             <Row>
               <Col className="py-1">
                 <DropdownList
-                  data={Array.isArray(FILTER) ? FILTER : [{ value: "blueprint", label: "Build Blueprint" }]}
-                  defaultValue={"blueprint"}
+                  data={Array.isArray(FILTER) ? FILTER : []}
+                  defaultValue={Array.isArray(FILTER) ? FILTER[0] : []}
                   className="basic-single"
                   valueField="value"
                   textField="label"
