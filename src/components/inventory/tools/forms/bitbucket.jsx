@@ -8,6 +8,7 @@ import { faSave, faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
+  url: "https://api.bitbucket.org/",
   accountUsername: "",
   accountPassword: "",
   secretPrivateKey: "",
@@ -114,6 +115,11 @@ function BitbucketToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToV
   return (
     <Form>
       { formMessage.length > 0 ? <p className="error-text">{formMessage}</p> : null}
+
+      <Form.Group controlId="userName">
+        <Form.Label>Url*</Form.Label>
+        <Form.Control maxLength="100" type="text" placeholder="" value={formData.url || ""} onChange={e => setFormData({ ...formData, url: e.target.value })} />
+      </Form.Group>
 
       <Form.Group controlId="userName">
         <Form.Label>Username*</Form.Label>

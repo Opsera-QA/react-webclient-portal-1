@@ -8,6 +8,7 @@ import { faSave, faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
+  url: "https://gitlab.com/",
   accountUsername: "",
   accountPassword: "",
   secretPrivateKey: "",
@@ -116,6 +117,11 @@ function GitlabToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVaul
   return (
     <Form>
       { formMessage.length > 0 ? <p className="error-text">{formMessage}</p> : null}
+
+      <Form.Group controlId="userName">
+        <Form.Label>Url*</Form.Label>
+        <Form.Control maxLength="100" type="text" placeholder="" value={formData.url || ""} onChange={e => setFormData({ ...formData, url: e.target.value })} />
+      </Form.Group>
 
       <Form.Group controlId="userName">
         <Form.Label>Username*</Form.Label>
