@@ -11,13 +11,14 @@ import LdapGroupsTable from "./LdapGroupsTable";
 import NewLdapGroupModal from "./NewLdapGroupModal";
 import DropdownList from "react-widgets/lib/DropdownList";
 import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
+import LoadingDialog from "components/common/loading";
+import AccessDeniedDialog from "../../common/accessDeniedInfo";
 
 
 function LdapGroupManagement() {
   const { id } = useParams();
-  const { getUserRecord, getAccessToken } = useContext(AuthContext);
-  const [ isAdminCheck, setAdminStatus] = useState(false);
-  const [ isOpseraUser, setOpseraUser] = useState(false);
+  const [accessRoleData, setAccessRoleData] = useState({});
+  const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
   const [ pageLoading, setPageLoading ] = useState(true);
   const [ groupList, setGroupList ] = useState([]);
   const [ currentOrganizationEmail, setCurrentOrganizationEmail ] = useState("");
@@ -26,15 +27,21 @@ function LdapGroupManagement() {
   const [ orgDomain, setOrgDomain ] = useState("");
   const [showCreateGroupModal, setShowCreateGroupModal] = useState(false);
 
-  useEffect(() => {  
-    loadData();
+  useEffect(() => {
+    setPageLoading(true);
+    getRoles();
   }, []);
 
   const loadData = async () => {
-    await isAdmin();
+    const user = await getUserRecord();
+      const { ldap, groups } = user;
+        setCurrentOrganizationEmail(user.email);
+        await getGroups(ldap.domain);
+        await getOrganizations();
+    setPageLoading(false);
   };
 
-  const getUsers = async (ldapDomain) => {
+  const getGroups = async (ldapDomain) => {
     if (ldapDomain != null) {
         const response = await accountsActions.getOrganizationByEmail({ domain: ldapDomain }, getAccessToken);
         let ldapOrganizationData = response.data;
@@ -64,26 +71,20 @@ function LdapGroupManagement() {
     }
   };
 
-  const isAdmin = async () => {
-    const userInfo = await getUserRecord();
-    setCurrentOrganizationEmail(userInfo.email);
+  const getRoles = async () => {
+    const user = await getUserRecord();
+    const userRoleAccess = await setAccessRoles(user);
+    if (userRoleAccess) {
+      setAccessRoleData(userRoleAccess);
 
-    const { ldap, groups } = userInfo;
-    if (ldap && ldap.domain === "opsera.io" && groups.includes("Admin")) { //checking for OpsERA account domain
-      setOpseraUser(true);
-      setAdminStatus(true);
-      await getUsers(ldap.domain);
-      await getOrganizations();
-
-    } else {
-      setAdminStatus(false);
+      if (userRoleAccess["Administrator"] === true) {
+        loadData();
+      }
     }
-
-    setPageLoading(false);
   };
 
   const onModalClose = () => {
-    getUsers(orgDomain);
+    getGroups(orgDomain);
     setShowCreateGroupModal(false);
   };  
 
@@ -94,24 +95,25 @@ function LdapGroupManagement() {
   const handleOrganizationChange = async (selectedOption) => {
     setPageLoading(true)
     setCurrentOrganizationEmail(selectedOption.id);
-    await getUsers(selectedOption.id);
+    await getGroups(selectedOption.id);
     setPageLoading(false)
   };
 
-  if (pageLoading) {
-    return (<Loading size="sm"/>);
+  if (!accessRoleData || pageLoading) {
+    return (<LoadingDialog size="sm"/>);
+  } else if (accessRoleData.Administrator === false) {
+    return (<AccessDeniedDialog roleData={accessRoleData} />);
   } else {
     return (
       <div>
-        {(!isAdminCheck && !pageLoading) && <ErrorDialog error={"You do not have access to view this page!"}/>}
-        {(isAdminCheck && !pageLoading) &&
+        {!pageLoading &&
         <>
           <BreadcrumbTrail destination="ldapGroupManagement" />
           <div className="justify-content-between mb-1 d-flex">
             <h5>Groups Management</h5>
             <div className="d-flex">
               <div className="tableDropdown mr-2">
-                {isOpseraUser && organizationList && <DropdownList
+                {accessRoleData.OpseraAdministrator && organizationList && <DropdownList
                   data={organizationList}
                   value={currentOrganizationEmail}
                   valueField='id'
