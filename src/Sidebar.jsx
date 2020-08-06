@@ -44,11 +44,11 @@ function Sidebar({ userData, hideSideBar }) {
     const { ldap, groups } = userData;
 
     //first check for OPsera admin level
-    if (ldap && ldap.domain === "opsera.io" && groups.includes("Admin")) {
+    if (ldap && ldap.domain === "opsera.io" && (groups.includes("Admin") || groups.includes("Administrator"))) {
       //return Opsera Admin Component
       return funcOpseraAdminNav(hideInProdFF);
     } else {
-      if (groups.includes("Admin")) {
+      if (groups.includes("Admin") || groups.includes("Administrator")) {
         return funcAccountAdminNav(hideInProdFF);
       } else if (groups.includes("Free Trial")) {
         return funcFreeTrialNav();

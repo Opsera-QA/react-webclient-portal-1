@@ -67,7 +67,7 @@ const AuthContextProvider = (props) => {
     };
 
     const setAccessRoles = async (user) => {
-      if (user && authState.isAuthenticated) {
+      if (user) {
         let customerAccessRules = {};
 
         const { ldap, groups } = user;
