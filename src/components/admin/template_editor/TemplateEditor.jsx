@@ -61,7 +61,6 @@ function TemplateEditor() {
     toggleTemplateModal(true);
   };
 
-
   const closeTemplateView = (toggleModal) => {
     getTemplates();
     toggleTemplateModal(toggleModal);

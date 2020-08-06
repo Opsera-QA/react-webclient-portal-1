@@ -57,8 +57,8 @@ const templateEditorFormFields = {
       isRequired: false 
     }
   },
-  account: { //TODO: This needs to be a dropdown for the LDAP account names
-    label: "Account",
+  account: { //this should be a dropdown that lists Org Accounts (showing domain in UI) but saving orgAccount name in fields
+    label: "LDAP Account",
     id: "account",
     type: "",
     toShow: true,

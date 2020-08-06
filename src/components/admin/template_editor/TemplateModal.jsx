@@ -14,6 +14,8 @@ import locale    from "react-json-editor-ajrm/locale/en";
 import ViewTemplate from "./ViewTemplate";
 
 import "./template_editor.css";
+import DropdownList from "react-widgets/lib/DropdownList";
+import { capitalizeFirstLetter } from "../../common/helpers/string-helpers";
 
 function TemplateEditorModal({ showModal, type, templateId, data, closeModal, handleDelete }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -30,7 +32,7 @@ function TemplateEditorModal({ showModal, type, templateId, data, closeModal, ha
     "description": "Create a new template from scratch.",
     "active": true,
     "roles": ["opsera", "everyone"],
-    "account": "",
+    "account": "org-opsera-dnd-acc0",
     "plan": [
       {
         "tool": {},
@@ -119,7 +121,7 @@ function TemplateEditorModal({ showModal, type, templateId, data, closeModal, ha
         locale={locale}
         height="300px"
         width= "100%"
-      />; 
+      />;
     default:
       return (
         <Form.Control

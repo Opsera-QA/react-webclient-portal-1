@@ -90,7 +90,7 @@ function AdminTools(props) {
                                                                                            fixedWidth/> Tags</Link>
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/template-editor"><FontAwesomeIcon icon={faStream} fixedWidth/> Template Editor</Link>
+                <Link to="/admin/template-editor"><FontAwesomeIcon icon={faStream} fixedWidth/> Pipeline Templates Editor</Link>
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
                 <Link to={"/accounts"}><FontAwesomeIcon icon={faUsers}
