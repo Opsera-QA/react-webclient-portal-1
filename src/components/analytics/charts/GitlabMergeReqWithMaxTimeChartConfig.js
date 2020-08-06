@@ -56,7 +56,7 @@ export default {
     tickRotation: 0,
     legend: "Time (Hours)",
     legendPosition: "middle",
-    legendOffset: -75,
+    legendOffset: -65,
   },
   legends: [
     {
