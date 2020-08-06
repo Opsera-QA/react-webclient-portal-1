@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Form } from "react-bootstrap";
 import validate from "../../../utils/formValidation";
 import DropdownList from "react-widgets/lib/DropdownList";
 
@@ -44,7 +43,7 @@ function SelectInput({ field, formData, setData, groupBy, selectOptions }) {
 }
 
 SelectInput.propTypes = {
-  selectOptions: PropTypes.object,
+  selectOptions: PropTypes.array,
   setData: PropTypes.func,
   field: PropTypes.object,
   valueField: PropTypes.string,

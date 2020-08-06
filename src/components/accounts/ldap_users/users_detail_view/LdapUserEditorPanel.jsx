@@ -139,61 +139,35 @@ function LdapUserEditorPanel({ ldapUserData, newLdapUser, setLdapUserData, handl
           {error.length > 0 && <>
             <div className="pb-2 error-text">WARNING! An error has occurred saving your configuration: {error}</div>
           </>}
-          {/*TODO: Finalize Fields */}
-          {/*<Row>*/}
-          {/*  <Col>*/}
-          {/*    /!*TODO: Make select, pull from /users/get-users/ and record _id for field*!/*/}
-          {/*    /!* Make sure to pass in large number (1000) because of paging *!/*/}
-          {/*    <TextInput field={ fields.opseraId } setData={setFormField} formData={formData}/>*/}
-          {/*  </Col>*/}
-          {/*</Row>*/}
           <Row>
-            <Col>
+            <Col lg={12}>
               <TextInput field={fields.name} setData={setFormField} formData={formData} />
             </Col>
-          </Row>
-          <Row>
-            <Col>
+            <Col lg={12}>
               <TextInput field={fields.firstName} setData={setFormField} formData={formData} />
             </Col>
-          </Row>
-          <Row>
-            <Col>
+            <Col lg={12}>
               <TextInput field={fields.lastName} setData={setFormField} formData={formData}/>
             </Col>
-          </Row>
-          <Row>
-            <Col>
+            <Col lg={12}>
               <TextInput field={fields.preferredName} setData={setFormField} formData={formData}/>
             </Col>
-          </Row>
-          <Row>
-            <Col>
+            <Col lg={12}>
               <TextInput disabled={!newLdapUser} field={fields.emailAddress } setData={setFormField} formData={formData}/>
             </Col>
-          </Row>
-          <Row>
-            <Col>
+            <Col lg={12}>
               <TextInput field={ fields.division } setData={setFormField} formData={formData}/>
             </Col>
-          </Row>
-          <Row>
-            <Col>
+            <Col lg={12}>
               <TextInput disabled={true} field={ fields.teams } setData={setFormField} formData={formData}/>
             </Col>
-          </Row>
-          <Row>
-            <Col>
+            <Col lg={12}>
               <TextInput field={ fields.departmentName } setData={setFormField} formData={formData}/>
             </Col>
-          </Row>
-          <Row>
-            <Col>
+            <Col lg={12}>
               <TextInput field={ fields.title } setData={setFormField} formData={formData}/>
             </Col>
-          </Row>
-          <Row>
-            <Col>
+            <Col lg={12}>
               <TextInput field={ fields.site } setData={setFormField} formData={formData}/>
             </Col>
           </Row>

@@ -159,7 +159,7 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, newLdapOrganization
             <div className="pb-2 error-text">WARNING! An error has occurred saving your configuration: {error}</div>
           </>}
           <Row>
-            <Col>
+            <Col lg={12}>
               <div className="custom-select-input">
                 <label className="mt-0"><span>{fields["opseraId"].label}{fields["opseraId"].rules.isRequired ? <span className="danger-red">*</span> : null } </span></label>
                 <DropdownList
@@ -173,49 +173,31 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, newLdapOrganization
                 />
               </div>
             </Col>
-          </Row>
-          <Row>
-            <Col>
+            <Col lg={12}>
               <TextInput disabled={!newLdapOrganization} field={ fields.name } setData={setFormField} formData={formData}/>
             </Col>
-          </Row>
-          <Row>
-            <Col>
+            <Col lg={12}>
               <TextInput field={ fields.description } setData={setFormField} formData={formData}/>
             </Col>
-          </Row>
-          <Row>
-            <Col>
+            <Col lg={12}>
               <TextInput field={ fields.orgName } setData={setFormField} formData={formData}/>
             </Col>
-          </Row>
-          <Row>
-            <Col>
+            <Col lg={12}>
               <TextInput disabled={true} field={ fields.orgOwner } setData={setFormField} formData={formData}/>
             </Col>
-          </Row>
-          <Row>
-            <Col>
+            <Col lg={12}>
               <TextInput disabled={true} field={ fields.orgOwnerEmail } setData={setFormField} formData={formData}/>
             </Col>
-          </Row>
-          <Row>
-            <Col>
+            <Col lg={12}>
               <TextInput disabled={true} field={ fields.envCount } setData={setFormField} formData={formData}/>
             </Col>
-          </Row>
-          <Row>
-            <Col>
+            <Col lg={12}>
               <TextInput disabled={true} field={ fields.numberOfLicenses } setData={setFormField} formData={formData}/>
             </Col>
-          </Row>
-          <Row>
-            <Col>
+            <Col lg={12}>
               <TextInput disabled={true} field={ fields.objectCount } setData={setFormField} formData={formData}/>
             </Col>
-          </Row>
-          <Row>
-            <Col>
+            <Col lg={12}>
               <TextInput disabled={true} field={ fields.subscription } setData={setFormField} formData={formData}/>
               {/*<ItemInput disabled={true} field={ fields.subscription } setData={setFormField} formData={formData}/>*/}
             </Col>

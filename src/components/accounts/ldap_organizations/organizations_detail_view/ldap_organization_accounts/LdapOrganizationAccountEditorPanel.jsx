@@ -166,7 +166,7 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
   };
 
   const addAdmin = (user) => {
-    console.log("USER: " +JSON.stringify(user));
+    console.log("USER: " + JSON.stringify(user));
     let newAdmin = {
       name: user.accountName,
       firstName: user.firstName,
@@ -299,41 +299,41 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
                            formData={formData}/>
             </Col>
           </Row>
-            <Row>
-              <div className="ml-auto px-3">
-                {newLdapOrganizationAccount ? <Button size="sm" variant="primary"
-                                                      onClick={() => createOrganizationAccount(ldapOrganizationAccountData)}>Create
-                    Account</Button>
-                  : <>
-                    <Button size="sm" className="mr-2" variant="secondary" onClick={() => handleBackButton()}>Back to
-                      Accounts</Button>
-                    <Button size="sm" variant="primary" disabled={Object.keys(changeMap).length === 0}
-                            onClick={() => updateLdapOrganizationAccount()}>Save Changes</Button>
-                  </>
-                }
-              </div>
-            </Row>
+          <Row>
+            <div className="ml-auto px-3">
+              {newLdapOrganizationAccount ? <Button size="sm" variant="primary"
+                                                    onClick={() => createOrganizationAccount(ldapOrganizationAccountData)}>Create
+                  Account</Button>
+                : <>
+                  <Button size="sm" className="mr-2" variant="secondary" onClick={() => handleBackButton()}>Back to
+                    Accounts</Button>
+                  <Button size="sm" variant="primary" disabled={Object.keys(changeMap).length === 0}
+                          onClick={() => updateLdapOrganizationAccount()}>Save Changes</Button>
+                </>
+              }
+            </div>
+          </Row>
         </div>
       </>}
-        </>
-        );
-      }
+    </>
+  );
+}
 
-      LdapOrganizationAccountEditorPanel.propTypes = {
-      ldapOrganization: PropTypes.object,
-      ldapOrganizationAccountData: PropTypes.object,
-      setLdapOrganizationAccountData: PropTypes.func,
-      canDelete: PropTypes.bool,
-      newLdapOrganizationAccount: PropTypes.bool,
-      setShowEditPanel: PropTypes.func,
-      handleClose: PropTypes.func,
-      handleBackButton: PropTypes.func
-    };
+LdapOrganizationAccountEditorPanel.propTypes = {
+  ldapOrganization: PropTypes.object,
+  ldapOrganizationAccountData: PropTypes.object,
+  setLdapOrganizationAccountData: PropTypes.func,
+  canDelete: PropTypes.bool,
+  newLdapOrganizationAccount: PropTypes.bool,
+  setShowEditPanel: PropTypes.func,
+  handleClose: PropTypes.func,
+  handleBackButton: PropTypes.func
+};
 
-      LdapOrganizationAccountEditorPanel.defaultProps = {
-      newLdapOrganizationAccount: false,
-    };
+LdapOrganizationAccountEditorPanel.defaultProps = {
+  newLdapOrganizationAccount: false,
+};
 
-      export default LdapOrganizationAccountEditorPanel;
+export default LdapOrganizationAccountEditorPanel;
 
 

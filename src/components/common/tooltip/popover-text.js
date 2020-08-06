@@ -1,0 +1,1 @@
+export const unsavedChanges = "All unsaved changes will be lost";

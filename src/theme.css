@@ -767,6 +767,39 @@ div.modal-footer {
   height: 125px;
 }
 
+.content-card-1 .selected {
+   background-color: #65c8fc;
+   color: #fff;
+}
+
+.content-card-1 .even-row {
+    background-color: rgba(0,0,0,.05);
+    cursor: pointer;
+}
+
+.content-card-1 .odd-row .selected {
+    background: #1578dc;
+}
+
+.content-card-1 .even-row:hover {
+    background-color: #1578dc1f;
+}
+
+.content-card-1 .odd-row {
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.content-card-1 .odd-row:hover {
+    background-color: #1578dc1f;
+}
+
+.content-card-1 .footer {
+    background-color: #1578dc1f;
+    padding-top: 1em;
+    height: 2em;
+}
+
 /* Content Card 2 Styling */
 
 .content-card-2 {
@@ -836,6 +869,7 @@ div.modal-footer {
 /* Breadcrumb trail styling */
 .breadcrumb {
     background-color: #fafafb;
+    border-radius: .5rem;
 }
 
 /* End Breadcrumb trail styling */

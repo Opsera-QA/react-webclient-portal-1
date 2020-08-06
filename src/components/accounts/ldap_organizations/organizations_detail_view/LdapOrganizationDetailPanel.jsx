@@ -25,7 +25,7 @@ function LdapOrganizationDetailPanel({ organizationAccounts, organization, setOr
     <>
       <div className="pb-3 px-3">
         <Row>
-          <Col>
+          <Col lg={12}>
             <div className="default-custom-tabs">
               <ul className="nav nav-tabs">
                 <li className="nav-item">
@@ -39,9 +39,7 @@ function LdapOrganizationDetailPanel({ organizationAccounts, organization, setOr
               </ul>
             </div>
           </Col>
-        </Row>
-        <Row>
-          <Col>
+          <Col lg={12}>
             <div className="tabbed-content-block">
               {organization &&
               <LdapOrganizationDetailsView organizationAccounts={organizationAccounts} currentAccount={currentAccount} setCurrentAccount={setCurrentAccount} loadData={loadData} activeTab={activeTab} setOrganization={setOrganization} organization={organization}/>}
