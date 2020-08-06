@@ -18,13 +18,15 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
   }, [userData]);
 
   const getRoles = async (user) => {
-    //const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-    if (userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
+    if (user) {
+      const userRoleAccess = await setAccessRoles(user);
+      if (userRoleAccess) {
+        setAccessRoleData(userRoleAccess);
+      }
+      setFullName(user.firstName + " " + user.lastName);
+    } else {
+      setFullName("Unknown");
     }
-
-    setFullName(user.firstName + " " + user.lastName);
   };
 
   const login = function() {
