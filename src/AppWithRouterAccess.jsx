@@ -49,7 +49,7 @@ import LdapUserManagement from "./components/accounts/ldap_users/LdapUserManagem
 import LdapUserDetailView from "./components/accounts/ldap_users/users_detail_view/LdapUserDetailView";
 import AccountSettingsView from "./components/user/AccountSettings";
 import LdapGroupManagement from "./components/accounts/ldap_groups/LdapGroupManagement";
-import LdapGroupDetails from "./components/accounts/ldap_groups/ldap_group_detail/LdapGroupDetails";
+import LdapGroupDetailView from "./components/accounts/ldap_groups/ldap_group_detail/LdapGroupDetailView";
 
 import Axios from "axios";
 const config = require("./config");
@@ -171,7 +171,7 @@ const AppWithRouterAccess = () => {
                 <SecureRoute path="/accounts/create" exact component={LdapCustomerOnboardView}/>
 
                 <SecureRoute path="/accounts/groups" exact component={LdapGroupManagement}/>
-                <SecureRoute path="/accounts/groups/:domain/:name" exact component={LdapGroupDetails}/>
+                <SecureRoute path="/accounts/groups/:domain/:name" exact component={LdapGroupDetailView}/>
 
                 <SecureRoute path="/demo/api" component={ApiConnectionDemo}/>
 

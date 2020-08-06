@@ -20,6 +20,7 @@ function LdapUsersTable({ data }) {
       getTableTextColumn(fields["title"]),
       getTableTextColumn(fields["departmentName"]),
       getTableTextColumn(fields["division"]),
+      getTableTextColumn(fields["region"]),
       // getTableDateColumn(fields["createdAt"]),
     ],
     []

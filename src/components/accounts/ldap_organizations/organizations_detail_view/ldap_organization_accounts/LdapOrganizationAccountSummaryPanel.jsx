@@ -6,6 +6,8 @@ import {ldapOrganizationAccountFormFields} from "../../ldap-organization-account
 import ToggleField from "../../../../common/form_fields/toggle-field";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCogs} from "@fortawesome/free-solid-svg-icons";
+import LdapUsersTable from "../../../ldap_users/LdapUsersTable";
+import LdapGroupsTable from "../../../ldap_groups/LdapGroupsTable";
 
 function LdapOrganizationAccountSummaryPanel({ldapOrganizationAccountData, setShowEditorPanel, handleBackButton}) {
   let fields = ldapOrganizationAccountFormFields;
@@ -52,7 +54,8 @@ function LdapOrganizationAccountSummaryPanel({ldapOrganizationAccountData, setSh
           <TextField field={fields["idpPostURL"]} value={ldapOrganizationAccountData.idpPostURL}/>
         </Col>
         <Col lg={6}>
-          <TextField field={fields["idpReturnAttributes"]} value={ldapOrganizationAccountData.idpReturnAttributes}/>
+          {/*TODO: Find better way to show these*/}
+          <TextField field={fields["idpReturnAttributes"]} value={JSON.stringify(ldapOrganizationAccountData.idpReturnAttributes)}/>
         </Col>
         <Col lg={6}>
           <TextField field={fields["configEntryType"]} value={ldapOrganizationAccountData.configEntryType}/>
@@ -76,6 +79,18 @@ function LdapOrganizationAccountSummaryPanel({ldapOrganizationAccountData, setSh
         </Col>
       </Row>
       <Row>
+        <Col lg={12}>
+          <div className="mb-3">
+            <div className="text-center mb-1"><span className="text-muted mr-2">Users</span></div>
+            <LdapUsersTable data={ldapOrganizationAccountData.users} />
+          </div>
+        </Col>
+        <Col lg={12}>
+          <div className="mb-3">
+            <div className="text-center mb-1"><span className="text-muted mr-2">Groups</span></div>
+            {/*<LdapGroupsTable data={ldapOrganizationAccountData.users} />*/}
+          </div>
+        </Col>
         {/*<Col lg={12}>*/}
         {/*  <TextField field={fields["users"]} value={ldapOrganizationAccountData.users} />*/}
         {/*</Col>*/}

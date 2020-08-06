@@ -84,6 +84,13 @@ const ldapUsersFormFields = {
       // isRequired: true
     }
   },
+  region: {
+    label: "Region",
+    id: "region",
+    rules: {
+      // isRequired: true
+    }
+  },
 };
 
 export default ldapUsersFormFields;

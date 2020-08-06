@@ -10,7 +10,6 @@ import accountsActions from "components/accounts/accounts-actions.js";
 import LdapGroupsTable from "./LdapGroupsTable";
 import NewLdapGroupModal from "./NewLdapGroupModal";
 import DropdownList from "react-widgets/lib/DropdownList";
-import { capitalizeFirstLetter } from "components/common/helpers/string-helpers";
 import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
 
 
@@ -23,7 +22,7 @@ function LdapGroupManagement() {
   const [ groupList, setGroupList ] = useState([]);
   const [ currentOrganizationEmail, setCurrentOrganizationEmail ] = useState("");
   const [ organizationList, setOrganizationList ] = useState(undefined);
-  const [ organization, setOrganization ] = useState();
+  const [ ldapOrganizationData, setLdapOrganizationData ] = useState();
   const [ orgDomain, setOrgDomain ] = useState("");
   const [showCreateGroupModal, setShowCreateGroupModal] = useState(false);
 
@@ -37,15 +36,17 @@ function LdapGroupManagement() {
 
   const getUsers = async (ldapDomain) => {
     if (ldapDomain != null) {
-      const response = await accountsActions.getOrganizationByEmail({ domain: ldapDomain }, getAccessToken);
-      let organization = response.data;
-      setOrganization(organization);
-      if (organization != null) {
-        setGroupList(organization["groups"]);
-        setOrgDomain(organization["orgDomain"]);
+        const response = await accountsActions.getOrganizationByEmail({ domain: ldapDomain }, getAccessToken);
+        let ldapOrganizationData = response.data;
+        setLdapOrganizationData(ldapOrganizationData);
+
+        if (ldapOrganizationData != null)
+        {
+          setGroupList(ldapOrganizationData["groups"]);
+          setOrgDomain(ldapOrganizationData["orgDomain"]);
+        }
       }
-    }
-  };
+    };
 
   const getOrganizations = async () => {
     const response = await accountsActions.getOrganizations(getAccessToken);
@@ -86,7 +87,7 @@ function LdapGroupManagement() {
     setShowCreateGroupModal(false);
   };  
 
-  const createUser = () => {
+  const createGroup = () => {
     setShowCreateGroupModal(true);
   };
 
@@ -123,7 +124,7 @@ function LdapGroupManagement() {
               <div className="">
                 <Button variant="primary" size="sm"
                         onClick={() => {
-                          createUser();
+                          createGroup(ldapOrganizationData);
                         }}>
                   <FontAwesomeIcon icon={faPlus} className="mr-1"/>New Group
                 </Button>
@@ -138,7 +139,7 @@ function LdapGroupManagement() {
           </div>
 
           {showCreateGroupModal ? <NewLdapGroupModal
-            organization={organization}
+            ldapOrganizationData={ldapOrganizationData}
             showModal={showCreateGroupModal}
             onModalClose={onModalClose}/> : null}
         </>}

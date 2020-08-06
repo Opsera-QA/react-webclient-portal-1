@@ -61,6 +61,20 @@ const ldapGroupFormFields = {
       isRequired: false 
     }
   },
+  members: {
+    label: "User Count",
+    id: "members",
+    rules: {
+      isRequired: false
+    }
+  },
+  domain: {
+    label: "Domain",
+    id: "domain",
+    rules: {
+      isRequired: false
+    }
+  },
 };
 
 export default ldapGroupFormFields;

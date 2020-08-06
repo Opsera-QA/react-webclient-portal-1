@@ -2,7 +2,7 @@ import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/table";
 import {useHistory} from "react-router-dom";
-import {getTableDateColumn, getTableTextColumn} from "../../common/table/table-column-helpers";
+import {getTableTextColumn} from "../../common/table/table-column-helpers";
 import ldapOrganizationsFormFields from "./ldap-organizations-form-fields";
 
 function LdapOrganizationsTable({data, view}) {
@@ -26,26 +26,10 @@ function LdapOrganizationsTable({data, view}) {
     history.push(`/accounts/${view}/detail/${itemId}`);
   };
 
-  const rowStyling = (row) => {
-    return "";
-    // return !row["values"].active ? " inactive-row" : "";
-  };
-
-  const initialState = {
-    pageIndex: 0,
-    sortBy: [
-      {
-        id: "name",
-        desc: false
-      }
-    ]
-  };
-
   return (
     <>
       <div className="table-content-block">
-        <CustomTable tableStyleName="custom-table-2" onRowSelect={onRowSelect} data={data} rowStyling={rowStyling}
-                     columns={columns} initialState={initialState}/>
+        <CustomTable tableStyleName="custom-table-2" onRowSelect={onRowSelect} data={data} columns={columns} />
       </div>
     </>
   );

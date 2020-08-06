@@ -5,6 +5,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
 import Pagination from "components/common/pagination";
 
+export const defaultRowStyling = (row) => {
+  return "";
+};
+
+export const defaultInitialState = {
+  pageIndex: 0,
+  sortBy: [
+    {
+      id: "name",
+      desc: false
+    }
+  ]
+};
+
 function CustomTable({ tableStyleName, columns, data, noDataMessage, onRowSelect, rowStyling, initialState, tableFilter, paginationOptions }) {
   const {
     getTableProps,
@@ -98,7 +112,7 @@ function CustomTable({ tableStyleName, columns, data, noDataMessage, onRowSelect
         </tbody>
         <tfoot>
           <tr>
-            <td colSpan="8" className="table-footer">
+            <td colSpan="100%" className="table-footer">
               {paginationOptions && <Pagination total={paginationOptions.totalCount} currentPage={paginationOptions.currentPage} pageSize={paginationOptions.pageSize} onClick={(pageNumber, pageSize) => paginationOptions.gotoPageFn(pageNumber, pageSize)} />}
             </td>
           </tr>
@@ -121,7 +135,9 @@ CustomTable.propTypes = {
 };
 
 CustomTable.defaultProps = {
-  tableStyleName: "custom-table"
+  tableStyleName: "custom-table",
+  rowStyling: defaultRowStyling,
+  initialState: defaultInitialState
 };
 
 export default CustomTable;

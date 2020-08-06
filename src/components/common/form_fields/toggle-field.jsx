@@ -32,7 +32,7 @@ function ToggleField({field, value}) {
 
 ToggleField.propTypes = {
   label: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.bool,
   field: PropTypes.object,
 };
 

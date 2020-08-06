@@ -1,6 +1,6 @@
 .members-block {
   border: 1px solid #ccc;
-  padding: 20px;
+  /*padding: 20px;*/
 }
 
 .members-title {
@@ -12,5 +12,4 @@
   list-style: none;
   display: flex;
   justify-content: start;
-  margin: 8px 0px;
 }
