@@ -6,29 +6,26 @@ import { AuthContext } from "./contexts/AuthContext";
 import "./navbar.css";
 
 
-function HeaderNavBar({ hideAuthComponents }) {
+function HeaderNavBar({ hideAuthComponents, userData }) {
   const contextType = useContext(AuthContext);
-  const { getUserRecord, authState } = contextType;
+  const { authState, setAccessRoles } = contextType;
   const history = useHistory();
   const [fullName, setFullName] = useState("Unknown");
-  const [administrator, setAdministrator] = useState(false);
-  const [freeTrialUser, setFreeTrialUser] = useState(false);
+  const [accessRoleData, setAccessRoleData] = useState({});
   
   useEffect(() => {    
-    checkAuthentication();    
-  }, [authState]);
+    getRoles(userData);
+  }, [userData]);
 
+  const getRoles = async (user) => {
+    //const user = await getUserRecord();
+    const userRoleAccess = await setAccessRoles(user);
+    if (userRoleAccess) {
+      setAccessRoleData(userRoleAccess);
+    }
 
-  async function checkAuthentication ()  {
-    const user = await getUserRecord();
-    if (user && authState.isAuthenticated) {
-      if (user.groups) {
-        setAdministrator(user.groups.includes("Admin"));
-        setFullName(user.firstName + " " + user.lastName);   
-        setFreeTrialUser(user.groups.includes("Free Trial"));  
-      }
-    }     
-  }
+    setFullName(user.firstName + " " + user.lastName);
+  };
 
   const login = function() {
     const { loginUserContext } = contextType;
@@ -63,11 +60,11 @@ function HeaderNavBar({ hideAuthComponents }) {
           <NavDropdown title={fullName} id="basic-nav-dropdown" alignRight>
             <Link to="/profile" id="profile-button" className="dropdown-item nav-drop-down-item">Profile</Link>
             <NavDropdown.Divider />
-            {!freeTrialUser && <>
+
               <NavDropdown.Item href="https://opsera.atlassian.net/wiki/x/kIA5" target="_blank" className="nav-drop-down-item" id="kb-button">KnowledgeBase</NavDropdown.Item>
               <NavDropdown.Item href="https://opsera.atlassian.net/wiki/x/AQBYAw" target="_blank" className="nav-drop-down-item" id="request-help-button">Request Help</NavDropdown.Item>
               <NavDropdown.Divider />
-            </> }
+
             <NavDropdown.Item href="https://opsera.io/" target="_blank" className="nav-drop-down-item" id="about-opsera">OpsERA.io</NavDropdown.Item>
             <NavDropdown.Item href="" onClick={logout} className="nav-drop-down-item" id="logout-button">Logout</NavDropdown.Item>
           </NavDropdown>}
@@ -79,7 +76,8 @@ function HeaderNavBar({ hideAuthComponents }) {
 }
 
 HeaderNavBar.propTypes = {
-  hideAuthComponents: PropTypes.bool
+  hideAuthComponents: PropTypes.bool,
+  userData: PropTypes.object
 };
 
 export default HeaderNavBar;

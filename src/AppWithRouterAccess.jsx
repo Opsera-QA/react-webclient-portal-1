@@ -121,7 +121,7 @@ const AppWithRouterAccess = () => {
     return (
       <Security {...OKTA_CONFIG}>
         <AuthContextProvider userData={data} refetchUserData={refetch}>
-          <Navbar hideAuthComponents={hideSideBar}/>
+          <Navbar hideAuthComponents={hideSideBar} userData={data}/>
           <div className="container-fluid">
             <div className="d-flex flex-row">
               <Sidebar userData={data} hideSideBar={hideSideBar}/>

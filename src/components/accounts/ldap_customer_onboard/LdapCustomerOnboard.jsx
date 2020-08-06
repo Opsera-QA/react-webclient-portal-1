@@ -4,29 +4,29 @@ import ErrorDialog from "../../common/error";
 import LoadingDialog from "../../common/loading";
 import { Link } from "react-router-dom";
 import LdapCustomerOnboardEditorPanel from "./LdapCustomerOnboardEditorPanel";
+import AccessDeniedDialog from "../../common/accessDeniedInfo";
 
 
 function LdapCustomerOnboard() {
-  const [administrator, setAdministrator] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const { getUserRecord } = useContext(AuthContext);
+  const [accessRoleData, setAccessRoleData] = useState({});
+  const { getUserRecord, setAccessRoles } = useContext(AuthContext);
 
   useEffect(() => {
-    isAdmin();
+    getRoles();
   }, []);
 
-
-  const isAdmin = async () => {
-    setLoading(true);
-    const userInfo = await getUserRecord();
-    setAdministrator(userInfo.groups.includes("Admin"));
-    setLoading(false);
+  const getRoles = async () => {
+    const user = await getUserRecord();
+    const userRoleAccess = await setAccessRoles(user);
+    if (userRoleAccess) {
+      setAccessRoleData(userRoleAccess);
+    }
   };
 
-  if (loading) {
-    return (<LoadingDialog />);
-  } else if (!administrator) {
-    return (<ErrorDialog align="center" error="Access Denied!  Your account does not have privileges to access this tool."></ErrorDialog>);
+  if (!accessRoleData) {
+    return (<LoadingDialog size="sm"/>);
+  } else if (!accessRoleData.OpseraAdministrator) {
+    return (<AccessDeniedDialog roleData={accessRoleData}/>);
   } else {
     return (
       <>
@@ -42,10 +42,11 @@ function LdapCustomerOnboard() {
         <div className="content-container content-card-1 max-content-width ml-2">
           <div className="pt-2 pl-2 content-block-header"><h5>New Customer Onboarding</h5></div>
           <div className="scroll-y p-3">
-            <h6 className="text-center mb-3">Please complete the form below in order to create the LDAP data needed to support a new customer Organization and Account.</h6>
-            <LdapCustomerOnboardEditorPanel />
+            <h6 className="text-center mb-3">Please complete the form below in order to create the LDAP data needed to
+              support a new customer Organization and Account.</h6>
+            <LdapCustomerOnboardEditorPanel/>
           </div>
-          <div className="content-block-footer" />
+          <div className="content-block-footer"/>
         </div>
       </>
     );

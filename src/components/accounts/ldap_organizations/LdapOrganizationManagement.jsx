@@ -15,18 +15,19 @@ import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import NewLdapOrganizationModal from "./NewLdapOrganizationModal";
 import accountsActions from "../accounts-actions";
 import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
+import AccessDeniedDialog from "../../common/accessDeniedInfo";
 
 function LdapOrganizationManagement() {
-  const [administrator, setAdministrator] = useState(false);
-  const [userGroups, setUserGroups] = useState([]);
+  const [accessRoleData, setAccessRoleData] = useState({});
+  //const [userGroups, setUserGroups] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const {getUserRecord, getAccessToken} = useContext(AuthContext);
+  const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
   const [ldapOrganizationData, setLdapOrganizationData] = useState([]);
   const [showCreateOrganizationModal, setShowCreateOrganizationModal] = useState(false);
 
   useEffect(() => {
-    isAdmin();
+    getRoles();
     loadData();
   }, []);
 
@@ -55,17 +56,18 @@ function LdapOrganizationManagement() {
     loadData();
   };
 
-  const isAdmin = async () => {
-    const userInfo = await getUserRecord();
-    setUserGroups(userInfo.groups);
-    setAdministrator(userInfo.groups.includes("Admin"));
+  const getRoles = async () => {
+    const user = await getUserRecord();
+    const userRoleAccess = await setAccessRoles(user);
+    if (userRoleAccess) {
+      setAccessRoleData(userRoleAccess);
+    }
   };
 
-  if (loading) {
-    return (<LoadingDialog/>);
-  } else if (!administrator && !loading && userGroups.length > 0) {
-    return (<ErrorDialog align="center"
-                         error="Access Denied!  Your account does not have privileges to access this tool."></ErrorDialog>);
+  if (!accessRoleData || loading) {
+    return (<LoadingDialog size="sm"/>);
+  } else if (!accessRoleData.OpseraAdministrator) {
+    return (<AccessDeniedDialog roleData={accessRoleData} />);
   } else {
     return (
       <>

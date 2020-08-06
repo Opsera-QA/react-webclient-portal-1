@@ -1,35 +1,35 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
-import ErrorDialog from "../common/error";
 import LoadingDialog from "../common/loading";
 import { Link } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSitemap, faUserPlus, faUserFriends, faUser } from "@fortawesome/free-solid-svg-icons";
 import BreadcrumbTrail from "../common/navigation/breadcrumbTrail";
+import AccessDeniedDialog from "../common/accessDeniedInfo";
 
 
 function LdapDashboard() {
-  const [administrator, setAdministrator] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const { getUserRecord } = useContext(AuthContext);
+  const [accessRoleData, setAccessRoleData] = useState({});
+  const { getUserRecord, setAccessRoles } = useContext(AuthContext);
 
   useEffect(() => {
-    isAdmin();
+    getRoles();
   }, []);
 
-
-  const isAdmin = async () => {
-    setLoading(true);
-    const userInfo = await getUserRecord();
-    setAdministrator(userInfo.groups.includes("Admin"));    
-    setLoading(false);
+  const getRoles = async () => {
+    const user = await getUserRecord();
+    const userRoleAccess = await setAccessRoles(user);
+    if (userRoleAccess) {
+      setAccessRoleData(userRoleAccess);
+    }
   };
 
-  if (loading) {
-    return (<LoadingDialog />);
-  } else if (!administrator) {
-    return (<ErrorDialog align="center" error="Access Denied!  Your account does not have privileges to access this tool."/>);
+
+  if (!accessRoleData) {
+    return (<LoadingDialog size="sm"/>);
+  } else if (!accessRoleData.OpseraAdministrator) {
+    return (<AccessDeniedDialog roleData={accessRoleData} />);
   } else {
     return (
       <>

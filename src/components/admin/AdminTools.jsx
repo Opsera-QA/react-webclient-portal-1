@@ -15,32 +15,33 @@ import {
   faStream,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
+import AccessDeniedDialog from "../common/accessDeniedInfo";
+import LoadingDialog from "../common/loading";
 
 
 function AdminTools(props) {
-  const [administrator, setAdministrator] = useState(false);
-  const { getUserRecord, featureFlagItemInProd } = useContext(AuthContext);
+  const [accessRoleData, setAccessRoleData] = useState({});
+  const { getUserRecord, setAccessRoles, featureFlagItemInProd } = useContext(AuthContext);
 
   useEffect(() => {
-    isAdmin();
+    getRoles();
   }, []);
 
-  const isAdmin = async () => {
-    const userInfo = await getUserRecord();
-    console.log(userInfo);
-    setAdministrator(userInfo.groups.includes("Admin"));
-    if (!userInfo.groups.includes("Admin")) {
-      //move out
-      this.props.history.push("/");
-    } else {
-      //do nothing
+  const getRoles = async () => {
+    const user = await getUserRecord();
+    const userRoleAccess = await setAccessRoles(user);
+    if (userRoleAccess) {
+      setAccessRoleData(userRoleAccess);
     }
   };
 
-  return (
-    <>
-      {
-        administrator &&
+  if (!accessRoleData) {
+    return (<LoadingDialog size="sm"/>);
+  } else if (!accessRoleData.OpseraAdministrator) {
+    return (<AccessDeniedDialog roleData={accessRoleData} />);
+  } else {
+    return (
+      <>
         <div className="max-content-width mt-1">
           <h4>Administration Tools</h4>
           <div>Listed below are administration tools for the platform.</div>
@@ -50,7 +51,8 @@ function AdminTools(props) {
                 <Link to="/admin/systemstatus"><FontAwesomeIcon icon={faHeartbeat} fixedWidth/> System Status</Link>
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/customerstatus"><FontAwesomeIcon icon={faHeartbeat} fixedWidth/> Customer System Status</Link>
+                <Link to="/admin/customerstatus"><FontAwesomeIcon icon={faHeartbeat} fixedWidth/> Customer System
+                  Status</Link>
               </Col>
               {/* <Col xs={12} md={6} lg={4} className="p-2">
                <Link to="/admin/health"><FontAwesomeIcon icon={faHeartbeat} fixedWidth /> System Health Check</Link>
@@ -60,7 +62,8 @@ function AdminTools(props) {
                 <Link to="/reports"><FontAwesomeIcon icon={faLink} fixedWidth/> Reports</Link>
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/analytics/reports-registration"><FontAwesomeIcon icon={faChartBar} fixedWidth/> Reports
+                <Link to="/admin/analytics/reports-registration"><FontAwesomeIcon icon={faChartBar}
+                                                                                  fixedWidth/> Reports
                   Registration</Link>
               </Col>
 
@@ -76,7 +79,8 @@ function AdminTools(props) {
               </Col>
 
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/tool-configurations"><FontAwesomeIcon icon={faWrench} fixedWidth/> Tool Configurations</Link>
+                <Link to="/admin/tool-configurations"><FontAwesomeIcon icon={faWrench} fixedWidth/> Tool
+                  Configurations</Link>
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
                 <Link to="/admin/delete"><FontAwesomeIcon icon={faTimes} fixedWidth/> Delete Tools</Link>
@@ -96,9 +100,9 @@ function AdminTools(props) {
             </Row>
           </div>
         </div>
-      }
-    </>
-  );
+      </>
+    );
+  }
 }
 
 AdminTools.propTypes = {};

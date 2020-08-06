@@ -11,10 +11,12 @@ import { Link } from "react-router-dom";
 
 import TemplatesTable from "./TemplateTable";
 import TemplateModal from "./TemplateModal";
+import LoadingDialog from "components/common/loading";
+import AccessDeniedDialog from "../../common/accessDeniedInfo";
 
 function TemplateEditor() {
-  const { getUserRecord, getAccessToken } = useContext(AuthContext);
-  const [isAdminCheck, setAdminStatus] = useState(false);
+  const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
+  const [accessRoleData, setAccessRoleData] = useState({});
   const [pageLoading, setPageLoading] = useState(true);
   const [templateList, setTemplateList] = useState([]);
   const [modalType, setModalType] = useState("View");
@@ -25,13 +27,22 @@ function TemplateEditor() {
   const [canDelete, setCanDelete] = useState(true);
 
   useEffect(() => {
-    isAdmin();
+    getRoles();
     getTemplates();
   }, []);
+
+  const getRoles = async () => {
+    const user = await getUserRecord();
+    const userRoleAccess = await setAccessRoles(user);
+    if (userRoleAccess) {
+      setAccessRoleData(userRoleAccess);
+    }
+  };
 
 
   //ToolIdentifier
   const getTemplates = async () => {
+    setPageLoading(true);
     try {
       const accessToken = await getAccessToken();
       const templateListResponse = await axiosApiService(accessToken).get("/pipelines/workflows?hidden=true", {});
@@ -40,6 +51,7 @@ function TemplateEditor() {
     } catch (err) {
       console.log(err.message);
     }
+    setPageLoading(false);
   };
 
   const selectedRow = (rowData, type) => {
@@ -49,18 +61,6 @@ function TemplateEditor() {
     toggleTemplateModal(true);
   };
 
-  const isAdmin = async () => {
-    const userInfo = await getUserRecord();
-    console.log(userInfo);
-    if (!userInfo.groups.includes("Admin")) {
-      //move out
-      setAdminStatus(false);
-    } else {
-      //do nothing
-      setAdminStatus(true);
-    }
-    setPageLoading(false);
-  };
 
   const closeTemplateView = (toggleModal) => {
     getTemplates();
@@ -89,7 +89,12 @@ function TemplateEditor() {
     setShowDeleteModal(true);
   };
 
-  return (
+  if (!accessRoleData || pageLoading) {
+    return (<LoadingDialog size="sm"/>);
+  } else if (!accessRoleData.OpseraAdministrator) {
+    return (<AccessDeniedDialog roleData={accessRoleData} />);
+  } else {
+    return (
     <div>
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
@@ -100,46 +105,42 @@ function TemplateEditor() {
         </ol>
       </nav>
 
-      {pageLoading ? <Loading size="sm"/> : null}
-      {(!isAdminCheck && !pageLoading) && <ErrorDialog error={"You do not have access to view this page!"}/>}
-      {isAdminCheck &&
-      <>
-        <div className="justify-content-between mb-1 d-flex">
-          <h5>Template Management</h5>
-          <div className="text-right">
-            <Button variant="primary" size="sm"
-              onClick={() => {
-                createTemplate();
-              }}>
-              <FontAwesomeIcon icon={faPlus} className="mr-1"/> New Template
-            </Button>
-            <br/>
-          </div>
+      <div className="justify-content-between mb-1 d-flex">
+        <h5>Template Management</h5>
+        <div className="text-right">
+          <Button variant="primary" size="sm"
+                  onClick={() => {
+                    createTemplate();
+                  }}>
+            <FontAwesomeIcon icon={faPlus} className="mr-1"/> New Template
+          </Button>
+          <br/>
         </div>
+      </div>
 
-        <TemplatesTable selectedRow={rowData => selectedRow(rowData, "tool_type")} data={templateList}/>
+      <TemplatesTable selectedRow={rowData => selectedRow(rowData, "tool_type")} data={templateList}/>
 
-        {showTemplateModal && <TemplateModal
-          type={modalType}
-          templateId={templateId}
-          data={templateData}
-          showModal={showTemplateModal}
-          handleDelete={handleDeleteClick}
-          closeModal={(toggleModal) => closeTemplateView(toggleModal)}/>}
+      {showTemplateModal && <TemplateModal
+        type={modalType}
+        templateId={templateId}
+        data={templateData}
+        showModal={showTemplateModal}
+        handleDelete={handleDeleteClick}
+        closeModal={(toggleModal) => closeTemplateView(toggleModal)}/>}
 
-        {showDeleteModal && <Modal
-          showModal={showDeleteModal}
-          header="Confirm Template Delete"
-          message="Warning! Data cannot be recovered once the template is deleted. Do you still want to proceed?"
-          button="Confirm"
-          handleCancelModal={() => {
-            setShowDeleteModal(false);
-          }}
-          handleConfirmModal={() => deleteTemplate()}/>}
-      </>
-      }
+      {showDeleteModal && <Modal
+        showModal={showDeleteModal}
+        header="Confirm Template Delete"
+        message="Warning! Data cannot be recovered once the template is deleted. Do you still want to proceed?"
+        button="Confirm"
+        handleCancelModal={() => {
+          setShowDeleteModal(false);
+        }}
+        handleConfirmModal={() => deleteTemplate()}/>}
+
     </div>
   );
+}
 }
 
 export default TemplateEditor;

@@ -1,7 +1,7 @@
-import React, {useContext, useState, useEffect} from "react";
-import {AuthContext} from "../../../../contexts/AuthContext";
-import {useParams} from "react-router-dom";
-import {axiosApiService} from "api/apiService";
+import React, { useContext, useState, useEffect } from "react";
+import { AuthContext } from "../../../../contexts/AuthContext";
+import { useParams } from "react-router-dom";
+import { axiosApiService } from "api/apiService";
 import ErrorDialog from "../../../common/error";
 import LoadingDialog from "../../../common/loading";
 import LdapOrganizationSummaryPanel from "./LdapOrganizationSummaryPanel";
@@ -9,12 +9,12 @@ import LdapOrganizationSummaryPanel from "./LdapOrganizationSummaryPanel";
 import "../../accounts.css";
 import LdapOrganizationDetailPanel from "./LdapOrganizationDetailPanel";
 import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
+import AccessDeniedDialog from "../../../common/accessDeniedInfo";
 
 function LdapOrganizationDetailView() {
-  const {id} = useParams();
-  const {getUserRecord, getAccessToken} = useContext(AuthContext);
-  const [administrator, setAdministrator] = useState(false);
-  const [userGroups, setUserGroups] = useState([]);
+  const { id } = useParams();
+  const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
+  const [accessRoleData, setAccessRoleData] = useState({});
   const [loading, setLoading] = useState(false); //this is how we toggle showing/hiding stuff when API calls or other functions are loading
   const [error, setError] = useState(false); //if any errors on API call or anything else need to be shown to use, this is used
   const [organization, setOrganization] = useState(undefined);
@@ -22,16 +22,16 @@ function LdapOrganizationDetailView() {
 
 
   useEffect(() => {
-    isAdmin();
-
-    //on component render (or reload) trigger API call to get data
+    getRoles();
     loadData();
   }, []);
 
-  const isAdmin = async () => {
-    const userInfo = await getUserRecord();
-    setUserGroups(userInfo.groups);
-    setAdministrator(userInfo.groups.includes("Admin"));
+  const getRoles = async () => {
+    const user = await getUserRecord();
+    const userRoleAccess = await setAccessRoles(user);
+    if (userRoleAccess) {
+      setAccessRoleData(userRoleAccess);
+    }
   };
 
   const loadData = async () => {
@@ -54,37 +54,37 @@ function LdapOrganizationDetailView() {
 
   };
 
-  if (loading) {
-    return (<LoadingDialog/>);
-  } else if (!administrator && !loading && userGroups.length > 0) {
-    return (<ErrorDialog align="center"
-                         error="Access Denied!  Your account does not have privileges to access this tool."></ErrorDialog>);
+  if (!accessRoleData || loading) {
+    return (<LoadingDialog size="sm"/>);
+  } else if (!accessRoleData.OpseraAdministrator) {
+    return (<AccessDeniedDialog roleData={accessRoleData}/>);
   } else {
     return (
       <>
-        <BreadcrumbTrail destination="ldapOrganizationDetailView" />
+        <BreadcrumbTrail destination="ldapOrganizationDetailView"/>
 
-      <h5>Organization and Account Management</h5>
+        <h5>Organization and Account Management</h5>
 
-      {error &&
-      <div className="absolute-center-content"><ErrorDialog align="center" error={error.message}></ErrorDialog></div>}
+        {error &&
+        <div className="absolute-center-content"><ErrorDialog align="center" error={error.message}></ErrorDialog></div>}
 
-      {organization &&
-      <div className="content-container content-card-1 max-content-width ml-2">
-        <div className="pt-2 pl-2 content-block-header">
-          <h6>Organization Details [{organization && organization.name}]</h6></div>
-        <div>
-          <LdapOrganizationSummaryPanel organization={organization} />
+        {organization &&
+        <div className="content-container content-card-1 max-content-width ml-2">
+          <div className="pt-2 pl-2 content-block-header">
+            <h6>Organization Details [{organization && organization.name}]</h6></div>
+          <div>
+            <LdapOrganizationSummaryPanel organization={organization}/>
+          </div>
+          <div>
+            <LdapOrganizationDetailPanel organizationAccounts={organizationAccounts} organization={organization}
+                                         setOrganization={setOrganization} loadData={loadData}/>
+          </div>
+          <div className="content-block-footer"/>
         </div>
-        <div>
-          <LdapOrganizationDetailPanel organizationAccounts={organizationAccounts} organization={organization} setOrganization={setOrganization} loadData={loadData} />
-        </div>
-        <div className="content-block-footer" />
-      </div>
 
-      }
-  </> );
+        }
+      </>);
   }
-  }
+}
 
-  export default LdapOrganizationDetailView;
+export default LdapOrganizationDetailView;

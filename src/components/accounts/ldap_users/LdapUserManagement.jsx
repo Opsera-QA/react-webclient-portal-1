@@ -12,11 +12,14 @@ import NewLdapUserModal from "./NewLdapUserModal";
 import DropdownList from "react-widgets/lib/DropdownList";
 import { capitalizeFirstLetter } from "../../common/helpers/string-helpers";
 import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
+import LoadingDialog from "components/common/loading";
+import AccessDeniedDialog from "../../common/accessDeniedInfo";
 
 
 function LdapUserManagement() {
   const { id } = useParams();
-  const { getUserRecord, getAccessToken } = useContext(AuthContext);
+  const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
+  const [accessRoleData, setAccessRoleData] = useState({});
   const [ isAdminCheck, setAdminStatus] = useState(false);
   const [ isOpseraUser, setOpseraUser] = useState(false);
   const [ pageLoading, setPageLoading ] = useState(true);
@@ -31,7 +34,7 @@ function LdapUserManagement() {
   }, []);
 
   const loadData = async () => {
-    await isAdmin();
+    await getRoles();
     // await getOrganizations();
     // await getUsers(userEmail);
   };
@@ -72,31 +75,49 @@ function LdapUserManagement() {
     }
   };
 
-  const isAdmin = async () => {
-    const userInfo = await getUserRecord();
+  const getRoles = async () => {
+    setPageLoading(true)
+    const user = await getUserRecord();
+    const userRoleAccess = await setAccessRoles(user);
+    if (userRoleAccess) {
+      setAccessRoleData(userRoleAccess);
+    }
 
-    // TODO: Is there a better way to find if a user is Opsera?
-    // console.log(JSON.stringify(userInfo.email));
-    // setUserEmail(userInfo.email);
-    await getUsers(userInfo.email);
-    setCurrentOrganizationEmail(userInfo.email);
+    setCurrentOrganizationEmail(user.email);
+    await getUsers(user.email);
 
-    console.log(userInfo);
-
-    if (userInfo.email.endsWith("opsera.io")) {
-      setOpseraUser(true);
+    if (userRoleAccess.OpseraAdministrator) {
       await getOrganizations();
     }
-
-    if (!userInfo.groups.includes("Admin")) {
-      //move out
-      setAdminStatus(false);
-    } else {
-      //do nothing
-      setAdminStatus(true);
-    }
-    setPageLoading(false);
+    setPageLoading(false)
   };
+
+  /*
+    const isAdmin = async () => {
+      const userInfo = await getUserRecord();
+
+      // TODO: Is there a better way to find if a user is Opsera?
+      // console.log(JSON.stringify(userInfo.email));
+      // setUserEmail(userInfo.email);
+      await getUsers(userInfo.email);
+      setCurrentOrganizationEmail(userInfo.email);
+
+      console.log(userInfo);
+
+      if (userInfo.email.endsWith("opsera.io")) {
+        setOpseraUser(true);
+        await getOrganizations();
+      }
+
+      if (!userInfo.groups.includes("Admin")) {
+        //move out
+        setAdminStatus(false);
+      } else {
+        //do nothing
+        setAdminStatus(true);
+      }
+      setPageLoading(false);
+    };*/
 
   const onModalClose = () => {
     getUsers(currentOrganizationEmail);
@@ -113,51 +134,54 @@ function LdapUserManagement() {
     getUsers(selectedOption.id);
   };
 
-  return (
-    <div>
-      <BreadcrumbTrail destination="ldapUserManagement" />
-      {pageLoading ? <Loading size="sm" /> : null}
-      {(!isAdminCheck && !pageLoading) && <ErrorDialog error={"You do not have access to view this page!"} />}
-      {isAdminCheck &&
-        <>
-          <div className="justify-content-between mb-1 d-flex">
-            <h5>Users Management</h5>
-            <div className="d-flex">
-              <div className="tableDropdown mr-2">
-                {isOpseraUser && organizationList && <DropdownList
-                  data={organizationList}
-                  value={currentOrganizationEmail}
-                  filter="contains"
-                  valueField='id'
-                  textField='text'
-                  placeholder="Select an Organization Account"
-                  groupBy={org => org["groupId"]}
-                  onChange={handleOrganizationChange}
-                />}
-              </div>
-              <div className="mt-1">
-                <Button variant="primary" size="sm"
-                  onClick={() => { createUser(); }}>
-                  <FontAwesomeIcon icon={faPlus} className="mr-1"/>New User
-                </Button>
-              </div>
-              <br />
+  if (!accessRoleData || pageLoading) {
+    return (<LoadingDialog size="sm"/>);
+  } else if (!accessRoleData.OpseraAdministrator) {
+    return (<AccessDeniedDialog roleData={accessRoleData} />);
+  } else {
+    return (
+      <div>
+        <BreadcrumbTrail destination="ldapUserManagement"/>
+
+        <div className="justify-content-between mb-1 d-flex">
+          <h5>Users Management</h5>
+          <div className="d-flex">
+            <div className="tableDropdown mr-2">
+              {accessRoleData.OpseraAdministrator && organizationList && <DropdownList
+                data={organizationList}
+                value={currentOrganizationEmail}
+                filter="contains"
+                valueField='id'
+                textField='text'
+                placeholder="Select an Organization Account"
+                groupBy={org => org["groupId"]}
+                onChange={handleOrganizationChange}
+              />}
             </div>
+            <div className="mt-1">
+              <Button variant="primary" size="sm"
+                      onClick={() => {
+                        createUser();
+                      }}>
+                <FontAwesomeIcon icon={faPlus} className="mr-1"/>New User
+              </Button>
+            </div>
+            <br/>
           </div>
+        </div>
 
-          <div className="full-height">
-            {console.log("LdapUsersList: " + JSON.stringify(userList))}
-            {userList && <LdapUsersTable data={userList} />}
-          </div>
+        <div className="full-height">
+          {console.log("LdapUsersList: " + JSON.stringify(userList))}
+          {userList && <LdapUsersTable data={userList}/>}
+        </div>
 
-          {showCreateUserModal ? <NewLdapUserModal
-            organizationName={organization.name}
-            showModal={showCreateUserModal}
-            onModalClose={onModalClose} /> : null }
-        </>}
-    </div>
-  );
-  
+        {showCreateUserModal ? <NewLdapUserModal
+          organizationName={organization.name}
+          showModal={showCreateUserModal}
+          onModalClose={onModalClose}/> : null}
+      </div>
+    );
+  }
 
 }
 

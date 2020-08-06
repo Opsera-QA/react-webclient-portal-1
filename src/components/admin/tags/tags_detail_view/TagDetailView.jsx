@@ -8,16 +8,16 @@ import { AuthContext } from "../../../../contexts/AuthContext";
 import ErrorDialog from "../../../common/error";
 
 function TagDetailView() {
-  const { getUserRecord, getAccessToken } = useContext(AuthContext);
+  const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
+  const [accessRoleData, setAccessRoleData] = useState({});
   const [tagData, setTagData] = useState(undefined);
   const { id } = useParams();
   const [canDelete, setCanDelete] = useState(false);
-  const [ isAdminCheck, setAdminStatus] = useState(false);
   const [error, setError] = useState(false); //if any errors on API call or anything else need to be shown to use, this is used
 
   useEffect(() => {
     getTag(id);
-    isAdmin(tagData);
+    getRoles();
   }, []);
 
   const getTag = async (tagId) => {
@@ -25,23 +25,14 @@ function TagDetailView() {
     setTagData(response.data.length > 0 ? response.data[0] : null);
   };
 
-  // TODO: Remove if unnecessary
-  const isAdmin = async (data) => {
-    const userInfo = await getUserRecord();
-    if ((data && data.owner === userInfo._id) || userInfo.email.endsWith("@opsera.io")) {
-      setCanDelete(true);
-      // setCanEdit(true);
+  const getRoles = async () => {
+    const user = await getUserRecord();
+    const userRoleAccess = await setAccessRoles(user);
+    if (userRoleAccess) {
+      setAccessRoleData(userRoleAccess);
     }
-
-    if (!userInfo.groups.includes("Admin")) {
-      //move out
-      setAdminStatus(false);
-    } else {
-      //do nothing
-      setAdminStatus(true);
-    }
-    // setPageLoading(false);
   };
+
 
   return (
     <>
