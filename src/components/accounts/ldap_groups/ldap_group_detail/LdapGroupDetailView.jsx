@@ -8,24 +8,19 @@ import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
 import LdapGroupSummaryPanel from "./LdapGroupSummaryPanel";
 import LdapGroupDetailPanel from "./LdapGroupDetailPanel";
 import accountsActions from "../../accounts-actions";
+import AccessDeniedDialog from "../../../common/accessDeniedInfo";
 
 function LdapGroupDetailView() {
   const {name, domain} = useParams();
-  const {getUserRecord, getAccessToken} = useContext(AuthContext);
-  const [administrator, setAdministrator] = useState(false);
-  const [userGroups, setUserGroups] = useState([]);
-  const [loading, setLoading] = useState(false); //this is how we toggle showing/hiding stuff when API calls or other functions are loading
+  const [accessRoleData, setAccessRoleData] = useState({});
+  const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(false); //if any errors on API call or anything else need to be shown to use, this is used
   const [ldapOrganizationData, setLdapOrganizationData] = useState(undefined);
   const [ldapGroupData, setLdapGroupData] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    getRoles();
   }, []);
-
-  const loadData = async () => {
-    await isAdmin();
-  };
 
   const getGroup = async () => {
     let payload = {
@@ -36,7 +31,7 @@ function LdapGroupDetailView() {
     setLdapGroupData(response.data);
   };
 
-  const get = async (domain) => {
+  const getOrganization = async (domain) => {
     if (domain != null) {
       const response = await accountsActions.getOrganizationByEmail({domain: domain}, getAccessToken);
       let ldapOrganizationData = response.data;
@@ -44,24 +39,22 @@ function LdapGroupDetailView() {
     }
   };
 
-  const isAdmin = async () => {
-    const userInfo = await getUserRecord();
-    const {ldap, groups} = userInfo;
-    if (ldap && ldap.domain === "opsera.io" && groups.includes("Admin")) { //checking for OpsERA account domain
-      setAdministrator(true);
-      await get(domain);
+  const getRoles = async () => {
+    const user = await getUserRecord();
+    const userRoleAccess = await setAccessRoles(user);
+    if (userRoleAccess) {
+      setAccessRoleData(userRoleAccess);
+
+      if (userRoleAccess["Administrator"] === true)
+      await getOrganization(domain);
       await getGroup();
-    } else {
-      setAdministrator(false);
     }
-    setAdministrator(false);
   };
 
-  if (loading) {
-    return (<LoadingDialog/>);
-  } else if (!administrator && !loading && userGroups.length > 0) {
-    return (<ErrorDialog align="center"
-                         error="Access Denied!  Your account does not have privileges to access this tool."></ErrorDialog>);
+  if (!accessRoleData) {
+    return (<LoadingDialog size="sm"/>);
+  } else if (accessRoleData.Administrator === false) {
+    return (<AccessDeniedDialog roleData={accessRoleData} />);
   } else {
     return (
       <>
@@ -79,7 +72,7 @@ function LdapGroupDetailView() {
             </div>
             <div>
               <LdapGroupDetailPanel ldapGroupData={ldapGroupData} ldapOrganizationData={ldapOrganizationData}
-                                    setLdapGroupData={setLdapGroupData} loadData={loadData}/>
+                                    setLdapGroupData={setLdapGroupData} loadData={getRoles}/>
             </div>
             <div className="content-block-footer"/>
           </div>
