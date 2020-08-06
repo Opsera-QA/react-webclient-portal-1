@@ -25,32 +25,37 @@ import "./sidebar.css";
 
 function Sidebar({ userData, hideSideBar }) {
   const contextType = useContext(AuthContext);
-  const { featureFlagItemInProd } = contextType;
+  const { setAccessRoles, featureFlagItemInProd } = contextType;
   const [hideInProdFF, setHideInProdFF] = useState(false);
+  const [userAccessRoles, setuserAccessRoles] = useState({});
 
   useEffect(() => {
     const hideFeatureInProd = featureFlagItemInProd(); //returns true when in production
     setHideInProdFF(hideFeatureInProd);
+    loadAccessRoles(userData)
   }, [userData]);
 
-  const handleToggleMenuClick = () => {
-    //setHideSideBar(!hideSideBar);
+
+  const loadAccessRoles = async (user) => {
+    console.log(user)
+    const userAccess = await setAccessRoles(user);
+    console.log(userAccess)
+    setuserAccessRoles(userAccess);
   };
 
 
   if (hideSideBar) {
     return (<></>);
-  } else if (userData) {
-    const { ldap, groups } = userData;
+  } else if (userData && userAccessRoles) {
 
     //first check for OPsera admin level
-    if (ldap && ldap.domain === "opsera.io" && (groups.includes("Admin") || groups.includes("Administrator"))) {
+    if (userAccessRoles.OpseraAdministrator) {
       //return Opsera Admin Component
       return funcOpseraAdminNav(hideInProdFF);
     } else {
-      if (groups.includes("Admin") || groups.includes("Administrator")) {
+      if (userAccessRoles.Administrator) {
         return funcAccountAdminNav(hideInProdFF);
-      } else if (groups.includes("Free Trial")) {
+      } else if (userAccessRoles.Role === "free_trial") {
         return funcFreeTrialNav();
       } else {
         return funcDefaultNav();

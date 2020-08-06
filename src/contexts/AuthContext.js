@@ -75,21 +75,22 @@ const AuthContextProvider = (props) => {
           console.log(groups);
           //calculate top role level for now
           let role = "readonly";
-          if (groups.includes("Admin")) {
+
+          if (groups.includes("Administrators")) {
             role = "administrator";
           } else if (groups.includes("Free Trial")) {
             role = "free_trial";
-          } else if (groups.includes("Power User")) {
+          } else if (groups.includes("PowerUsers")) {
             role = "power_user";
-          } else if (groups.includes("User")) {
+          } else if (groups.includes("Users")) {
             role = "user";
           }
 
           customerAccessRules = {
             ...customerAccessRules,
-            Administrator: groups.includes("Admin"),
-            PowerUser: groups.includes("Power User"),
-            User: groups.includes("User"),
+            Administrator: groups.includes("Administrators"),
+            PowerUser: groups.includes("PowerUsers"),
+            User: groups.includes("Users"),
             UserId: user._id,
             Role: role,
           };
@@ -97,9 +98,10 @@ const AuthContextProvider = (props) => {
         if (ldap && ldap.domain === "opsera.io") { //checking for OpsERA account domain
           customerAccessRules = {
             ...customerAccessRules,
-            OpseraAdministrator: groups.includes("Admin"),
+            OpseraAdministrator: groups.includes("Administrators"),
           };
         }
+        console.log("customerAccessRules: ", customerAccessRules);
         return customerAccessRules;
       } else {
         console.log("unable to set user access rules: ", user);

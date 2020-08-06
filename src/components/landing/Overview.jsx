@@ -75,7 +75,7 @@ function OverviewLanding() {
 
   if (!accessRoleData) {
     return (<LoadingView size="sm" />)
-  } else if (accessRoleData === "free_trial") {
+  } else if (accessRoleData.Role === "free_trial") {
     return (<FreeTrialLandingView/>);
   } else {
     return (
