@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext"; 
 import { axiosApiService } from "api/apiService";
-import { Button } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStepForward, faSpinner, faTimes, faStepBackward, faCheck } from "@fortawesome/free-solid-svg-icons";
 import Moment from "moment";
@@ -19,7 +19,15 @@ const INITIAL_COMPONENT_TYPES_FORM = {
   "lastCommitTimeStamp": "", //asOfDate value as string
   "pipelineId": "", 
   "stepId": "", //assume for now it's the first
+  "nameSpacePrefix": "", // prefix
+  "objectType": "", // type of objs managed custom or all
   "componentTypes": []
+};
+
+const INITIAL_OBJECT_TYPES = {
+ "managed" : false,
+ "custom": false,
+ "all": false
 };
 
 const SfdcPipelineComponents = ({ pipelineId, stepId, setView, setModifiedFiles, handleClose, setSfdcComponentFilterObject }) => {
@@ -34,6 +42,8 @@ const SfdcPipelineComponents = ({ pipelineId, stepId, setView, setModifiedFiles,
   const [componentTypes, setComponentTypes] = useState([]);
   const [selectedComponentTypes, setSelectedComponentTypes] = useState([]);
   const [componentTypeForm, setComponentTypeForm] = useState(INITIAL_COMPONENT_TYPES_FORM); 
+  const [formData, setFormData] = useState(INITIAL_OBJECT_TYPES); 
+  const [nameSpacePrefix, setNameSpacePrefix] = useState("");
 
   Moment.locale("en");
   momentLocalizer();
@@ -97,18 +107,25 @@ const SfdcPipelineComponents = ({ pipelineId, stepId, setView, setModifiedFiles,
     const date = Moment(value.value).toISOString();
     setAsOfDate(date);    
   };
-
+   
   /* const handleSetAccount = (selectedOption) => {
     setComponentTypeForm({ ...componentTypeForm, accountId: selectedOption._id });
   };
  */
+
   const handleSubmitComponentTypes = () => {
-    console.log("submitting component types form");
+    console.log("submitting component types form");      
+    var keys = Object.keys(formData);
+    var filtered = keys.filter(function(key) {
+      return formData[key]
+    });
     const postBody = componentTypeForm;
     postBody.pipelineId = pipelineId;
     postBody.stepId = stepId;
     postBody.lastCommitTimeStamp = asOfDate;
     postBody.componentTypes = selectedComponentTypes;
+    postBody.objectType = filtered[0];
+    postBody.nameSpacePrefix = nameSpacePrefix;
     
     console.log("componentTypeForm: ", postBody);
     postComponentTypes(postBody);
@@ -172,6 +189,71 @@ const SfdcPipelineComponents = ({ pipelineId, stepId, setView, setModifiedFiles,
                 <div className="px-2" style={{ flex: "50%" }}>
                   <div className="text-muted pl-1 pb-1">Select Date Filter:</div>
                   {dateAsOf}</div>
+
+                  <div className="px-2">
+                  <Form.Group controlId="formBasicCheckbox" className="ml-1">
+                    <Form.Check
+                      type="checkbox"
+                      label="Managed"
+                      name="managed"
+                      checked={formData.managed ? formData.managed : false}
+                      onChange={(e) => 
+                        setFormData({
+                          ...formData,
+                          managed: e.target.checked,
+                          custom: false,
+                          all: false
+                        })
+                      }
+                    />
+                  </Form.Group>
+                  </div>
+                  
+                  <div className="px-2">
+                  <Form.Group controlId="formBasicCheckbox1" className="ml-1">
+                    <Form.Check
+                      type="checkbox"
+                      label="Custom"
+                      name="custom"
+                      checked={formData.custom ? formData.custom : false}
+                      onChange={(e) => 
+                        setFormData({
+                          ...formData,  
+                          managed: false,
+                          custom: e.target.checked,
+                          all: false
+                        })
+                      }
+                    />
+                  </Form.Group>
+                  </div>
+                  
+                  <div className="px-2">
+                  <Form.Group controlId="formBasicCheckbox2" className="ml-1">
+                    <Form.Check
+                      type="checkbox"
+                      label="All"
+                      name="all"
+                      checked={formData.all ? formData.all : false}
+                      onChange={(e) => 
+                        setFormData({
+                          ...formData,
+                          managed: false,
+                          custom: false,
+                          all: e.target.checked
+                        })
+                      }
+                    />  
+                  </Form.Group>
+                  </div>
+
+                  <div className="px-2" style={{ flex: "50%", width: "30%"  }}>
+                  <div className="text-muted pl-1 pb-1">Prefix:</div>
+                  <Form.Group controlId="nameSpacePrefix">
+                      <Form.Control maxLength="50" type="text" placeholder="" value={nameSpacePrefix || ""} onChange={e => setNameSpacePrefix(e.target.value)} />
+                    </Form.Group>
+                  </div>
+                 
                 <div className="px-2 text-right" style={{ flex: "50%" }}>
                   {/* <div className="text-muted pl-1 pb-1">Select SalesForce Account (configured in Registry):</div>
                   <AccountDropDown data={registryData} setAccount={handleSetAccount} isLoading={loadingRegistry} /> */}

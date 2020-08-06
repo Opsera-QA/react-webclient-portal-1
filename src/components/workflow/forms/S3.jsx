@@ -53,6 +53,7 @@ const INITIAL_DATA = {
   gitUrl: "",
   sshUrl: "",
   service: "",
+  bucketName: "",
   gitCredential: "",
   gitUserName: "",
   repository: "",
@@ -460,6 +461,7 @@ function S3StepConfiguration({
         gitUserName: "",
         repository: "",
         branch: "",
+        bucketName: "", 
         toolJobId: "",
         toolJobType: "",
         accountUsername: "",
@@ -950,6 +952,19 @@ function S3StepConfiguration({
                 )}
               </>
             )}
+            <Form.Group controlId="branchField">
+              <Form.Label>Bucket Name*</Form.Label>
+                <Form.Control
+                  maxLength="150"
+                  disabled={false}
+                  type="text"
+                  placeholder=""
+                  value={formData.bucketName || ""}
+                  onChange={(e) =>
+                    setFormData({ ...formData, bucketName: e.target.value })
+                  }
+                />
+          </Form.Group>
           </Form.Group>
             <Form.Group controlId="s3Step">
             <Form.Label>Build Step Info*</Form.Label>

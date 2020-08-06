@@ -485,15 +485,14 @@ function JenkinsStepConfiguration({
     //     destAccountUsername: "",
     //   });
     // }
-    switch (selectedOption.type) {
+    switch (selectedOption.type[0]) {
       case "SFDC":
         setFormData({
           ...formData,
           toolJobId: selectedOption._id,
           toolJobType: selectedOption.type,
           jobType: selectedOption.configuration.jobType,
-          rollbackBranchName: selectedOption.configuration.rollbackBranchName,
-
+          ...selectedOption.configuration,
           stepIdXML: "",
           sfdcDestToolId: "",
           destAccountUsername: "",
