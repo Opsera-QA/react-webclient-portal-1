@@ -30,8 +30,8 @@ function Sidebar({ userData, hideSideBar }) {
   const [userAccessRoles, setuserAccessRoles] = useState({});
 
   useEffect(() => {
-    const hideFeatureInProd = featureFlagItemInProd(); //returns true when in production
-    setHideInProdFF(hideFeatureInProd);
+    //const hideFeatureInProd = featureFlagItemInProd(); //returns true when in production
+    //setHideInProdFF(hideFeatureInProd);
     loadAccessRoles(userData)
   }, [userData]);
 
@@ -113,8 +113,8 @@ const funcOpseraAdminNav = (hideInProdFF) => {
           <NavLink className="nav-link" activeClassName="chosen" to="/update">
             <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span
             className="menu-text">Updates</span></NavLink>
-          {(!hideInProdFF) && <NavLink className="nav-link" activeClassName="chosen" to="/settings">
-            <FontAwesomeIcon size="lg" icon={faCogs} fixedWidth/> <span className="menu-text">Settings</span></NavLink>}
+          <NavLink className="nav-link" activeClassName="chosen" to="/settings">
+            <FontAwesomeIcon size="lg" icon={faCogs} fixedWidth/> <span className="menu-text">Settings</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/admin">
             <FontAwesomeIcon size="lg" icon={faTools} fixedWidth/> <span
             className="menu-text">Admin Tools</span></NavLink>
@@ -218,8 +218,8 @@ const funcAccountAdminNav = (hideInProdFF) => {
           <NavLink className="nav-link" activeClassName="chosen" to="/update">
             <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span
             className="menu-text">Updates</span></NavLink>
-          {(!hideInProdFF) && <NavLink className="nav-link" activeClassName="chosen" to="/settings">
-            <FontAwesomeIcon size="lg" icon={faCogs} fixedWidth/> <span className="menu-text">Settings</span></NavLink>}
+          <NavLink className="nav-link" activeClassName="chosen" to="/settings">
+            <FontAwesomeIcon size="lg" icon={faCogs} fixedWidth/> <span className="menu-text">Settings</span></NavLink>
 
         </div>
       </div>
