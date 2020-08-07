@@ -7,7 +7,7 @@ import LdapGroupEditorPanel from "./LdapGroupEditorPanel";
 import LdapGroupManagePanel from "./LdapGroupManagePanel";
 import LdapUsersTable from "../../ldap_users/LdapUsersTable";
 
-function LdapGroupDetailPanel({ ldapGroupData, setLdapGroupData, ldapOrganizationData, orgDomain, loadData }) {
+function LdapGroupDetailPanel({ currentUserEmail, ldapGroupData, setLdapGroupData, ldapOrganizationData, orgDomain, loadData }) {
   const [activeTab, setActiveTab] = useState("membership");
 
   const handleTabClick = (tabSelection) => e => {
@@ -43,7 +43,7 @@ function LdapGroupDetailPanel({ ldapGroupData, setLdapGroupData, ldapOrganizatio
           <Col lg={12}>
             <div className="tabbed-content-block">
               {ldapGroupData &&
-              <LdapGroupDetailsView ldapGroupData={ldapGroupData} orgDomain={orgDomain} setLdapGroupData={setLdapGroupData} loadData={loadData} activeTab={activeTab} ldapOrganizationData={ldapOrganizationData}/>}
+              <LdapGroupDetailsView currentUserEmail={currentUserEmail} ldapGroupData={ldapGroupData} orgDomain={orgDomain} setLdapGroupData={setLdapGroupData} loadData={loadData} activeTab={activeTab} ldapOrganizationData={ldapOrganizationData}/>}
             </div>
           </Col>
         </Row>
@@ -52,7 +52,7 @@ function LdapGroupDetailPanel({ ldapGroupData, setLdapGroupData, ldapOrganizatio
   );
 }
 
-function LdapGroupDetailsView({activeTab, ldapGroupData, orgDomain, setLdapGroupData, ldapOrganizationData, loadData}) {
+function LdapGroupDetailsView({activeTab, currentUserEmail, ldapGroupData, orgDomain, setLdapGroupData, ldapOrganizationData, loadData}) {
   useEffect(() => {
     // console.log("CHANGE HAPPENED");
   }, [activeTab]);
@@ -63,7 +63,7 @@ function LdapGroupDetailsView({activeTab, ldapGroupData, orgDomain, setLdapGroup
       case "manage":
         return <LdapGroupManagePanel ldapGroupData={ldapGroupData} ldapOrganizationData={ldapOrganizationData} loadData={loadData}/>;
       case "settings":
-        return <LdapGroupEditorPanel ldapGroupData={ldapGroupData} ldapOrganizationData={ldapOrganizationData} onGroupUpdate={(data) => setLdapGroupData(data)} />;
+        return <LdapGroupEditorPanel currentUserEmail={currentUserEmail} ldapGroupData={ldapGroupData} ldapOrganizationData={ldapOrganizationData} onGroupUpdate={(data) => setLdapGroupData(data)} />;
       default:
         return null;
     }
@@ -75,6 +75,7 @@ LdapGroupDetailPanel.propTypes = {
   setLdapGroupData: PropTypes.func,
   ldapOrganizationData: PropTypes.object,
   orgDomain: PropTypes.string,
+  currentUserEmail: PropTypes.string,
   loadData: PropTypes.func
 };
 

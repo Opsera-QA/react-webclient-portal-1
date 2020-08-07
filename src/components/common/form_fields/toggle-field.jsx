@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {Form} from "react-bootstrap";
 
 function ToggleField({field, value}) {
+  // TODO: Rewrite to be static
   return (
     field &&
     <>
@@ -14,7 +15,7 @@ function ToggleField({field, value}) {
           <Form.Check
             type="switch"
             disabled={true}
-            id={field.id}
+            id={field.id + "field"}
             checked={value}
             label="Active"
             placeholder="Please select"

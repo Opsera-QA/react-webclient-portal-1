@@ -21,13 +21,16 @@ function LdapGroupSummaryPanel({ldapGroupData, domain}) {
               <TextField field={fields.domain} value={domain}/>
             </Col>
             <Col lg={6}>
-              <TextField field={fields.configGroupType} value={ldapGroupData.configGroupType}/>
+              <TextField field={fields.groupType} value={ldapGroupData.groupType}/>
             </Col>
             <Col lg={6}>
               <TextField field={fields.externalSyncGroup} value={ldapGroupData.externalSyncGroup}/>
             </Col>
             <Col lg={6}>
               <ToggleField field={fields.isSync} value={ldapGroupData.isSync}/>
+            </Col>
+            <Col lg={6}>
+              <TextField field={fields.ownerEmail} value={ldapGroupData.ownerEmail}/>
             </Col>
           </Row>
           }
