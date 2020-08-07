@@ -9,7 +9,7 @@ import {
   getTableTextColumn
 } from "../../common/table/table-column-helpers";
 
-function LdapGroupsTable({ data, domain }) {
+function LdapGroupsTable({ groupData, orgDomain }) {
   let fields = ldapGroupFormFields;
   const history = useHistory();
 
@@ -24,21 +24,21 @@ function LdapGroupsTable({ data, domain }) {
   );
   
   const onRowSelect = (rowData, type) => {
-    history.push(`/accounts/groups/${domain}/${rowData.original.name}`);
+    history.push(`/accounts/${orgDomain}/groups/details/${rowData.original.name}`);
   };
 
   return (
     <>
       <div className="table-content-block">
-        <CustomTable tableStyleName="custom-table-2" onRowSelect={onRowSelect} data={data} columns={columns} />
+        <CustomTable tableStyleName="custom-table-2" onRowSelect={onRowSelect} data={groupData} columns={columns} />
       </div>
     </>
   );
 }
 
 LdapGroupsTable.propTypes = {
-  data: PropTypes.array,
-  domain: PropTypes.string
+  groupData: PropTypes.array,
+  orgDomain: PropTypes.string
 };
 
 export default LdapGroupsTable;

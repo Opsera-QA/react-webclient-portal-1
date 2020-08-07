@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Button } from "react-bootstrap";
-import { AuthContext } from "contexts/AuthContext"; 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import Loading from "components/common/loading";
-import ErrorDialog from "components/common/error";
-import { Link, useParams } from "react-router-dom";
+import React, {useState, useEffect, useContext} from "react";
+import {Button} from "react-bootstrap";
+import {AuthContext} from "contexts/AuthContext";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import {Link, useHistory, useParams} from "react-router-dom";
 import accountsActions from "components/accounts/accounts-actions.js";
 import LdapGroupsTable from "./LdapGroupsTable";
 import NewLdapGroupModal from "./NewLdapGroupModal";
@@ -13,18 +11,23 @@ import DropdownList from "react-widgets/lib/DropdownList";
 import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
 import LoadingDialog from "components/common/loading";
 import AccessDeniedDialog from "../../common/accessDeniedInfo";
+import {
+  getOrganizationByDomain,
+  getOrganizationByEmail,
+  getOrganizationList
+} from "../ldap_organizations/organization-functions";
 
 
 function LdapGroupManagement() {
-  const { id } = useParams();
+  const history = useHistory();
+  const {orgDomain} = useParams();
   const [accessRoleData, setAccessRoleData] = useState({});
-  const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
-  const [ pageLoading, setPageLoading ] = useState(true);
-  const [ groupList, setGroupList ] = useState([]);
-  const [ currentOrganizationEmail, setCurrentOrganizationEmail ] = useState("");
-  const [ organizationList, setOrganizationList ] = useState(undefined);
-  const [ ldapOrganizationData, setLdapOrganizationData ] = useState();
-  const [ orgDomain, setOrgDomain ] = useState("");
+  const {getUserRecord, setAccessRoles, getAccessToken} = useContext(AuthContext);
+  const [pageLoading, setPageLoading] = useState(true);
+  const [groupList, setGroupList] = useState([]);
+  const [currentOrganizationDomain, setCurrentOrganizationDomain] = useState("");
+  const [organizationList, setOrganizationList] = useState(undefined);
+  const [ldapOrganizationData, setLdapOrganizationData] = useState();
   const [showCreateGroupModal, setShowCreateGroupModal] = useState(false);
 
   useEffect(() => {
@@ -32,61 +35,50 @@ function LdapGroupManagement() {
     getRoles();
   }, []);
 
-  const loadData = async () => {
-    const user = await getUserRecord();
-      const { ldap, groups } = user;
-        setCurrentOrganizationEmail(user.email);
-        await getGroups(ldap.domain);
-        await getOrganizations();
-    setPageLoading(false);
+  const getGroupsByEmail = async (email) => {
+    let organization = await getOrganizationByEmail(email, getAccessToken);
+    setLdapOrganizationData(organization);
+    setGroupList(organization["groups"]);
   };
 
-  const getGroups = async (ldapDomain) => {
+  const getGroupsByDomain = async (ldapDomain) => {
     if (ldapDomain != null) {
-        const response = await accountsActions.getOrganizationByEmail({ domain: ldapDomain }, getAccessToken);
-        let ldapOrganizationData = response.data;
-        setLdapOrganizationData(ldapOrganizationData);
-
-        if (ldapOrganizationData != null)
-        {
-          setGroupList(ldapOrganizationData["groups"]);
-          setOrgDomain(ldapOrganizationData["orgDomain"]);
-        }
-      }
-    };
-
-  const getOrganizations = async () => {
-    const response = await accountsActions.getOrganizations(getAccessToken);
-    if (response.data)
-    {
-      let parsedOrganizationNames = [];
-      response.data.map(organization =>
-      {
-        organization["orgAccounts"].map(orgAccount => {
-          parsedOrganizationNames.push({ text: orgAccount["name"], groupId: organization["name"], id: organization["orgOwnerEmail"] });
-        });
-      });
-      // console.log("Parsed Organization Names: " + JSON.stringify(parsedOrganizationNames));
-      setOrganizationList(parsedOrganizationNames);
+      let organization = await getOrganizationByDomain(ldapDomain, getAccessToken);
+      setLdapOrganizationData(organization);
+      setGroupList(organization["groups"]);
     }
   };
 
   const getRoles = async () => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
+    const {ldap, groups} = user;
+
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
 
-      if (userRoleAccess["Administrator"] === true) {
-        loadData();
+      if (orgDomain != null && userRoleAccess.OpseraAdministrator) {
+        setCurrentOrganizationDomain(orgDomain);
+        await getGroupsByDomain(orgDomain);
+      } else if (userRoleAccess.Administrator === true && ldap.domain != null) {
+        history.push(`/accounts/${ldap.domain}/groups`);
+        setCurrentOrganizationDomain(ldap.domain);
+        await getGroupsByDomain(ldap.domain);
+      }
+
+      if (userRoleAccess.OpseraAdministrator) {
+        const organizationList = await getOrganizationList(getAccessToken);
+        setOrganizationList(organizationList);
       }
     }
+
+    setPageLoading(false);
   };
 
   const onModalClose = () => {
-    getGroups(orgDomain);
+    getGroupsByDomain(orgDomain);
     setShowCreateGroupModal(false);
-  };  
+  };
 
   const createGroup = () => {
     setShowCreateGroupModal(true);
@@ -94,28 +86,29 @@ function LdapGroupManagement() {
 
   const handleOrganizationChange = async (selectedOption) => {
     setPageLoading(true)
-    setCurrentOrganizationEmail(selectedOption.id);
-    await getGroups(selectedOption.id);
+    history.push(`/accounts/${selectedOption.id}/groups`);
+    setCurrentOrganizationDomain(selectedOption.id);
+    await getGroupsByDomain(selectedOption.id);
     setPageLoading(false)
   };
 
   if (!accessRoleData || pageLoading) {
     return (<LoadingDialog size="sm"/>);
-  } else if (accessRoleData.Administrator === false) {
-    return (<AccessDeniedDialog roleData={accessRoleData} />);
+  } else if (!accessRoleData.Administrator && !accessRoleData.OpseraAdministrator) {
+    return (<AccessDeniedDialog roleData={accessRoleData}/>);
   } else {
     return (
       <div>
         {!pageLoading &&
         <>
-          <BreadcrumbTrail destination="ldapGroupManagement" />
+          <BreadcrumbTrail destination={accessRoleData.OpseraAdministrator ? "ldapGroupManagementAdmin" : "ldapGroupManagement"} />
           <div className="justify-content-between mb-1 d-flex">
             <h5>Groups Management</h5>
             <div className="d-flex">
               <div className="tableDropdown mr-2">
                 {accessRoleData.OpseraAdministrator && organizationList && <DropdownList
                   data={organizationList}
-                  value={currentOrganizationEmail}
+                  value={currentOrganizationDomain}
                   valueField='id'
                   textField='text'
                   placeholder="Select an Organization Account"
@@ -137,7 +130,7 @@ function LdapGroupManagement() {
           </div>
 
           <div className="full-height">
-            {groupList && <LdapGroupsTable data={groupList} domain={orgDomain}/>}
+            {groupList && <LdapGroupsTable groupData={groupList} orgDomain={orgDomain}/>}
           </div>
 
           {showCreateGroupModal ? <NewLdapGroupModal

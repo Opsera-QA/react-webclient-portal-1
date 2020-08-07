@@ -23,7 +23,7 @@ function LdapOrganizationsTable({data, view}) {
     let itemId = selectedRow && selectedRow.values && selectedRow.values.name; //I'm not sure what a "ID" is for an entry in LDAP, so I'm choosing NAME for now, but please review that and set this to the unique ID value for the selected entry.
 
     console.log(selectedRow.values);
-    history.push(`/accounts/${view}/detail/${itemId}`);
+    history.push(`/accounts/organizations/details/${itemId}`);
   };
 
   return (

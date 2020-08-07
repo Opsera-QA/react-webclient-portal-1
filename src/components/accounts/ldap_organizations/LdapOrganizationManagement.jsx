@@ -5,8 +5,6 @@ import React, {useMemo, useContext, useState, useEffect} from "react";
 import {AuthContext} from "../../../contexts/AuthContext";
 import ErrorDialog from "../../common/error";
 import LoadingDialog from "../../common/loading";
-import {Link} from "react-router-dom";
-
 import "../accounts.css";
 import LdapOrganizationsTable from "./LdapOrganizationsTable";
 import {Button} from "react-bootstrap";
@@ -19,7 +17,6 @@ import AccessDeniedDialog from "../../common/accessDeniedInfo";
 
 function LdapOrganizationManagement() {
   const [accessRoleData, setAccessRoleData] = useState({});
-  //const [userGroups, setUserGroups] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
@@ -28,7 +25,6 @@ function LdapOrganizationManagement() {
 
   useEffect(() => {
     getRoles();
-    loadData();
   }, []);
 
 
@@ -61,6 +57,9 @@ function LdapOrganizationManagement() {
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
+      if (userRoleAccess.OpseraAdministrator) {
+        await loadData();
+      }
     }
   };
 
@@ -91,15 +90,7 @@ function LdapOrganizationManagement() {
 
         {error &&
         <div className="absolute-center-content"><ErrorDialog align="center" error={error.message}></ErrorDialog></div>}
-
-        {!error && !loading &&
-        <div className="mt-4">
-          <h6>Organizations</h6>
-
-          {/* // NEED to do this ldapOrganizationData check first because when the react component is initializing, there are some times where it's null and the chart blows up.   */}
-          {ldapOrganizationData && <LdapOrganizationsTable data={ldapOrganizationData} view="organizations"/>}
-
-        </div>}
+        {ldapOrganizationData && <LdapOrganizationsTable data={ldapOrganizationData} />}
 
         {showCreateOrganizationModal ? <NewLdapOrganizationModal
           showModal={showCreateOrganizationModal}

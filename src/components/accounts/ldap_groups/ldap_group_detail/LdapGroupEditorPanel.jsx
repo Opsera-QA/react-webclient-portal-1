@@ -115,10 +115,10 @@ function LdapGroupEditorPanel({ldapGroupData, ldapOrganizationData, onGroupUpdat
               : <TextInput disabled={true} field={fields.configGroupType} setData={setFormField} formData={formData} />}
           </Col>
           <Col lg={12}>
-            <TextInput field={fields.externalSyncGroup} setData={setFormField} formData={formData}/>
+            <TextInput disabled={formData.configGroupType === "Role"} field={fields.externalSyncGroup} setData={setFormField} formData={formData}/>
           </Col>
           <Col lg={12}>
-            <ToggleInput field={fields.isSync} setData={setFormField} formData={formData}/>
+            <ToggleInput disabled={formData.configGroupType === "Role"} field={fields.isSync} setData={setFormField} formData={formData}/>
           </Col>
         </Row>
         <Row>
