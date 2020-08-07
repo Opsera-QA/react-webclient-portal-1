@@ -124,7 +124,7 @@ function SearchLogs(props) {
     setJobFilter("");
     setPipelineFilter("");
     setStepFilter("");
-    setFilterType(selectedOption.value);
+    setFilterType(selectedOption);
   };
 
   const opseraPipelineSelectChange = (selectedOption) => {
