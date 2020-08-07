@@ -11,12 +11,13 @@ import accountsActions from "../../accounts-actions";
 import AccessDeniedDialog from "../../../common/accessDeniedInfo";
 
 function LdapGroupDetailView() {
-  const {name, domain} = useParams();
+  const {name, orgDomain} = useParams();
   const [accessRoleData, setAccessRoleData] = useState({});
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(false); //if any errors on API call or anything else need to be shown to use, this is used
   const [ldapOrganizationData, setLdapOrganizationData] = useState(undefined);
   const [ldapGroupData, setLdapGroupData] = useState(undefined);
+  const [pageLoading, setPageLoading] = useState(true);
 
   useEffect(() => {
     getRoles();
@@ -24,7 +25,7 @@ function LdapGroupDetailView() {
 
   const getGroup = async () => {
     let payload = {
-      domain: domain,
+      domain: orgDomain,
       groupName: name,
     };
     const response = await accountsActions.getGroup(payload, getAccessToken);
@@ -40,18 +41,20 @@ function LdapGroupDetailView() {
   };
 
   const getRoles = async () => {
+    setPageLoading(true);
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
 
       if (userRoleAccess["Administrator"] === true)
-      await getOrganization(domain);
+      await getOrganization(orgDomain);
       await getGroup();
     }
+    setPageLoading(false);
   };
 
-  if (!accessRoleData) {
+  if (!accessRoleData || pageLoading) {
     return (<LoadingDialog size="sm"/>);
   } else if (accessRoleData.Administrator === false) {
     return (<AccessDeniedDialog roleData={accessRoleData} />);
@@ -68,10 +71,10 @@ function LdapGroupDetailView() {
               <h6>Group Details [{ldapGroupData && ldapGroupData.name}]</h6>
             </div>
             <div>
-              <LdapGroupSummaryPanel ldapGroupData={ldapGroupData} domain={domain}/>
+              <LdapGroupSummaryPanel ldapGroupData={ldapGroupData} domain={orgDomain}/>
             </div>
             <div>
-              <LdapGroupDetailPanel ldapGroupData={ldapGroupData} ldapOrganizationData={ldapOrganizationData}
+              <LdapGroupDetailPanel orgDomain={orgDomain} ldapGroupData={ldapGroupData} ldapOrganizationData={ldapOrganizationData}
                                     setLdapGroupData={setLdapGroupData} loadData={getRoles}/>
             </div>
             <div className="content-block-footer"/>

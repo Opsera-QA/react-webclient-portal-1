@@ -10,7 +10,7 @@ import LoadingDialog from "../../../common/loading";
 import AccessDeniedDialog from "../../../common/accessDeniedInfo";
 
 function LdapUserDetailView() {
-  const { id } = useParams();
+  const { userEmail } = useParams();
   const [accessRoleData, setAccessRoleData] = useState({});
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
   const [ldapUserData, setLdapUserData] = useState(undefined);
@@ -18,7 +18,7 @@ function LdapUserDetailView() {
   const [error, setError] = useState(false); //if any errors on API call or anything else need to be shown to use, this is used
 
   useEffect(() => {
-    console.log("id: " + JSON.stringify(id));
+    console.log("userEmail: " + JSON.stringify(userEmail));
     getRoles();
   }, []);
 
@@ -34,7 +34,7 @@ function LdapUserDetailView() {
       setAccessRoleData(userRoleAccess);
 
       if (userRoleAccess["Administrator"] === true) {
-        await getLdapUser(id);
+        await getLdapUser(userEmail);
       }
     }
   };

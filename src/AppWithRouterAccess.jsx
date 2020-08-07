@@ -165,16 +165,14 @@ const AppWithRouterAccess = () => {
                 <SecureRoute path="/admin/template-editor" component={TemplateEditor}/>
                 <SecureRoute path="/accounts" exact component={LdapDashboard}/>
                 <SecureRoute path="/accounts/organizations" exact component={LdapOrganizationsView}/>
-                <SecureRoute path="/accounts/organizations/detail/:id" exact component={LdapOrganizationDetailView}/>
-                <SecureRoute path="/accounts/users" exact component={LdapUserManagement}/>
-                <SecureRoute path="/accounts/users/:id" exact component={LdapUserDetailView}/>
+                <SecureRoute path="/accounts/organizations/details/:id" exact component={LdapOrganizationDetailView}/>
+                <SecureRoute path="/accounts/:orgDomain?/users/" exact component={LdapUserManagement}/>
+                <SecureRoute path="/accounts/:orgDomain/users/details/:userEmail" exact component={LdapUserDetailView}/>
                 <SecureRoute path="/accounts/create" exact component={LdapCustomerOnboardView}/>
-
-                <SecureRoute path="/accounts/groups" exact component={LdapGroupManagement}/>
-                <SecureRoute path="/accounts/groups/:domain/:name" exact component={LdapGroupDetailView}/>
+                <SecureRoute path="/accounts/:orgDomain?/groups/" exact component={LdapGroupManagement}/>
+                <SecureRoute path="/accounts/:orgDomain/groups/details/:name" exact component={LdapGroupDetailView}/>
 
                 <SecureRoute path="/demo/api" component={ApiConnectionDemo}/>
-
                 <SecureRoute path="/demo/table" component={CommonTableDemo}/>
 
                 <Route path="/trial/registration" exact component={FreeTrialRegistration}/>

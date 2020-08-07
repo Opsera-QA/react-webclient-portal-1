@@ -3,15 +3,14 @@ import PropTypes from "prop-types";
 import CustomTable from "components/common/table/table";
 import { useHistory } from "react-router-dom";
 import ldapUsersFormFields from "./ldap-users-form-fields";
-import { getTableDateColumn, getTableTextColumn } from "../../common/table/table-column-helpers";
+import { getTableTextColumn } from "../../common/table/table-column-helpers";
 
-function LdapUsersTable({ data }) {
+function LdapUsersTable({ userData, orgDomain }) {
   const history = useHistory();
   const [fields, setFields ] = useState({ ...ldapUsersFormFields });
 
   const columns = useMemo(
     () => [
-      // getTableTextColumn(fields["_id"]),
       getTableTextColumn(fields["name"]),
       getTableTextColumn(fields["preferredName"]),
       getTableTextColumn(fields["firstName"]),
@@ -21,42 +20,26 @@ function LdapUsersTable({ data }) {
       getTableTextColumn(fields["departmentName"]),
       getTableTextColumn(fields["division"]),
       getTableTextColumn(fields["region"]),
-      // getTableDateColumn(fields["createdAt"]),
     ],
     []
   );
 
   const onRowSelect = (rowData, type) => {
-    // TODO: Update to ID or some sort of unique field if added
-    history.push("/accounts/users/" + rowData.original.emailAddress);
-  };
-
-  const rowStyling = (row) => {
-    return "";
-    // return !row["values"].active ? " inactive-row" : "";
-  };
-
-  const initialState = {
-    pageIndex: 0,
-    sortBy: [
-      {
-        id: "name",
-        desc: false
-      }
-    ]
+    history.push(`/accounts/${orgDomain}/users/details/${rowData.original.emailAddress}`);
   };
 
   return (
     <>
       <div className="table-content-block">
-        <CustomTable tableStyleName="custom-table-2" onRowSelect={onRowSelect} data={data} rowStyling={rowStyling} columns={columns} initialState={initialState} />
+        <CustomTable tableStyleName="custom-table-2" onRowSelect={onRowSelect} data={userData} columns={columns} />
       </div>
     </>
   );
 }
 
 LdapUsersTable.propTypes = {
-  data: PropTypes.array,
+  userData: PropTypes.array,
+  orgDomain: PropTypes.string
 };
 
 export default LdapUsersTable;

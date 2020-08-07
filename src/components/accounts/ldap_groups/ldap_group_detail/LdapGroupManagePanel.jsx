@@ -120,10 +120,6 @@ function LdapGroupManagePanel({ldapGroupData, ldapOrganizationData, loadData}) {
 
   if (isLoading) {
     return (<LoadingDialog/>);
-    // }
-    // else if (!administrator && !loading && userGroups.length > 0) {
-    //   return (<ErrorDialog align="center"
-    //                        error="Access Denied!  Your account does not have privileges to access this tool."></ErrorDialog>);
   } else {
     return (<>
       <div>

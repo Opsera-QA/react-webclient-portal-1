@@ -3,11 +3,11 @@ import React, {useEffect, useState} from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import PropTypes from "prop-types";
-import LdapUsersTable from "../../ldap_users/LdapUsersTable";
 import LdapGroupEditorPanel from "./LdapGroupEditorPanel";
 import LdapGroupManagePanel from "./LdapGroupManagePanel";
+import LdapUsersTable from "../../ldap_users/LdapUsersTable";
 
-function LdapGroupDetailPanel({ ldapGroupData, setLdapGroupData, ldapOrganizationData, loadData }) {
+function LdapGroupDetailPanel({ ldapGroupData, setLdapGroupData, ldapOrganizationData, orgDomain, loadData }) {
   const [activeTab, setActiveTab] = useState("membership");
 
   const handleTabClick = (tabSelection) => e => {
@@ -43,7 +43,7 @@ function LdapGroupDetailPanel({ ldapGroupData, setLdapGroupData, ldapOrganizatio
           <Col lg={12}>
             <div className="tabbed-content-block">
               {ldapGroupData &&
-              <LdapGroupDetailsView ldapGroupData={ldapGroupData} setLdapGroupData={setLdapGroupData} loadData={loadData} activeTab={activeTab} ldapOrganizationData={ldapOrganizationData}/>}
+              <LdapGroupDetailsView ldapGroupData={ldapGroupData} orgDomain={orgDomain} setLdapGroupData={setLdapGroupData} loadData={loadData} activeTab={activeTab} ldapOrganizationData={ldapOrganizationData}/>}
             </div>
           </Col>
         </Row>
@@ -52,14 +52,14 @@ function LdapGroupDetailPanel({ ldapGroupData, setLdapGroupData, ldapOrganizatio
   );
 }
 
-function LdapGroupDetailsView({activeTab, ldapGroupData, setLdapGroupData, ldapOrganizationData, loadData}) {
+function LdapGroupDetailsView({activeTab, ldapGroupData, orgDomain, setLdapGroupData, ldapOrganizationData, loadData}) {
   useEffect(() => {
     // console.log("CHANGE HAPPENED");
   }, [activeTab]);
   if (activeTab) {
     switch (activeTab) {
       case "membership":
-        return <LdapUsersTable data={ldapGroupData.members} />;
+        return <LdapUsersTable orgDomain={orgDomain} userData={ldapGroupData.members} />;
       case "manage":
         return <LdapGroupManagePanel ldapGroupData={ldapGroupData} ldapOrganizationData={ldapOrganizationData} loadData={loadData}/>;
       case "settings":
@@ -74,6 +74,7 @@ LdapGroupDetailPanel.propTypes = {
   ldapGroupData: PropTypes.object,
   setLdapGroupData: PropTypes.func,
   ldapOrganizationData: PropTypes.object,
+  orgDomain: PropTypes.string,
   loadData: PropTypes.func
 };
 
