@@ -53,7 +53,7 @@ function ErrorDialog({ error, align, type }) {
       <div className="row h-100">
         <div className="col-sm-12 my-auto text-center">
           <div className="error-text">
-            {state.message} {(statusCode === 401 || state.message.includes("401")) &&
+            {state.message} {(statusCode === 401 || (state.message && state.message.includes("401"))) &&
           <span className="ml-1"><a href="#" onClick={() => {
             login();
           }}>Click here to refresh login.</a></span>}
@@ -65,7 +65,7 @@ function ErrorDialog({ error, align, type }) {
     return (
       <div className="mx-3 my-3 max-content-module-width-50">
         <div className="error-text">
-          {state.message} {(statusCode === 401 || state.message.includes("401")) &&
+          {state.message} {(statusCode === 401 || (state.message && state.message.includes("401"))) &&
         <span className="ml-1"><a href="#" onClick={() => {
           login();
         }}>Click here to refresh login.</a></span>}
