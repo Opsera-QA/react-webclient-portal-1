@@ -24,7 +24,7 @@ function Logs() {
   const [enabledOn, setEnabledOn] = useState(true);
   const INDICES = [
     "jenkins",
-    "opsera-pipeline-step-summary",
+    "opsera-pipeline",
     "jira",
     "sonar",
     "xunit",
