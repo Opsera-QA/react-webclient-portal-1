@@ -10,7 +10,7 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
   const contextType = useContext(AuthContext);
   const { authState, setAccessRoles } = contextType;
   const history = useHistory();
-  const [fullName, setFullName] = useState("Unknown");
+  const [fullName, setFullName] = useState("User Profile");
   const [accessRoleData, setAccessRoleData] = useState({});
   
   useEffect(() => {    
@@ -25,7 +25,7 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
       }
       setFullName(user.firstName + " " + user.lastName);
     } else {
-      setFullName("Unknown");
+      setFullName("User Profile");
     }
   };
 
