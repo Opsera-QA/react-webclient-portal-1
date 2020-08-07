@@ -7,12 +7,13 @@ import {unsavedChanges} from "../../common/tooltip/popover-text";
 
 const INITIAL_GROUP_DATA = {
   name: "",
-  configGroupType: ["Role"],
-  externalSyncGroup: "",
+  groupType: "user",
+  // TODO: Set Default Value When user groups can use it
+  externalSyncGroup: undefined,
   isSync: true,
 };
 
-function NewLdapUserModal({ ldapOrganizationData, onModalClose, showModal } ) {
+function NewLdapUserModal({ ldapOrganizationData, currentUserEmail, onModalClose, showModal } ) {
   const [ldapGroupData, setLdapGroupData] = useState(INITIAL_GROUP_DATA);
 
   const handleClose = () => {
@@ -28,7 +29,7 @@ function NewLdapUserModal({ ldapOrganizationData, onModalClose, showModal } ) {
         <Modal.Body>
           <div className="content-block m-3 full-height">
             <div className="p-3">
-              <LdapGroupEditorPanel ldapGroupData={ldapGroupData} newLdapGroup={true} handleClose={handleClose} ldapOrganizationData={ldapOrganizationData} />
+              <LdapGroupEditorPanel currentUserEmail={currentUserEmail} ldapGroupData={ldapGroupData} newLdapGroup={true} handleClose={handleClose} ldapOrganizationData={ldapOrganizationData} />
             </div>
           </div>
         </Modal.Body>
@@ -44,6 +45,7 @@ function NewLdapUserModal({ ldapOrganizationData, onModalClose, showModal } ) {
 
 NewLdapUserModal.propTypes = {
   ldapOrganizationData: PropTypes.object,
+  currentUserEmail: PropTypes.string,
   showModal: PropTypes.bool,
   onModalClose: PropTypes.func,
 };

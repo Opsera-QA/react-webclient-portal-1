@@ -17,6 +17,7 @@ function LdapGroupDetailView() {
   const [error, setError] = useState(false); //if any errors on API call or anything else need to be shown to use, this is used
   const [ldapOrganizationData, setLdapOrganizationData] = useState(undefined);
   const [ldapGroupData, setLdapGroupData] = useState(undefined);
+  const [currentUserEmail, setCurrentUserEmail] = useState(undefined);
   const [pageLoading, setPageLoading] = useState(true);
 
   useEffect(() => {
@@ -43,6 +44,7 @@ function LdapGroupDetailView() {
   const getRoles = async () => {
     setPageLoading(true);
     const user = await getUserRecord();
+    setCurrentUserEmail(user.email);
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
@@ -75,7 +77,7 @@ function LdapGroupDetailView() {
             </div>
             <div>
               <LdapGroupDetailPanel orgDomain={orgDomain} ldapGroupData={ldapGroupData} ldapOrganizationData={ldapOrganizationData}
-                                    setLdapGroupData={setLdapGroupData} loadData={getRoles}/>
+                                    currentUserEmail={currentUserEmail} setLdapGroupData={setLdapGroupData} loadData={getRoles}/>
             </div>
             <div className="content-block-footer"/>
           </div>

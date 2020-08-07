@@ -28,6 +28,7 @@ function LdapGroupManagement() {
   const [currentOrganizationDomain, setCurrentOrganizationDomain] = useState("");
   const [organizationList, setOrganizationList] = useState(undefined);
   const [ldapOrganizationData, setLdapOrganizationData] = useState();
+  const [currentUserEmail, setCurrentUserEmail] = useState(undefined);
   const [showCreateGroupModal, setShowCreateGroupModal] = useState(false);
 
   useEffect(() => {
@@ -53,6 +54,7 @@ function LdapGroupManagement() {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
     const {ldap, groups} = user;
+    setCurrentUserEmail(user.email);
 
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
@@ -136,6 +138,7 @@ function LdapGroupManagement() {
           {showCreateGroupModal ? <NewLdapGroupModal
             ldapOrganizationData={ldapOrganizationData}
             showModal={showCreateGroupModal}
+            currentUserEmail={currentUserEmail}
             onModalClose={onModalClose}/> : null}
         </>}
       </div>

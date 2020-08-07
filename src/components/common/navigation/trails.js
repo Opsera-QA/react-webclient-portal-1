@@ -22,12 +22,12 @@ const trails = {
 
   // LDAP Users Administration
   ldapUserManagementAdmin: {parent: "ldapDashboard", destination: {name: "ldapUserManagement", path: ldapUserManagement, label: "Users"}},
-  ldapUserManagement: {parent: "accountSettings", destination: {name: "ldapUserManagement", path: ldapUserManagement, label: "Organizations"}},
+  ldapUserManagement: {parent: "accountSettings", destination: {name: "ldapUserManagement", path: ldapUserManagement, label: "Users"}},
   ldapUserDetailView: {parent: "ldapUserManagement", destination: {name: "ldapUserDetailView", path: ldapUserDetailView, label: "User Details"}},
 
   // LDAP Groups Administration
   ldapGroupManagementAdmin: {parent: "ldapDashboard", destination: {name: "ldapGroupManagement", path: ldapGroupManagement, label: "Groups"}},
-  ldapGroupManagement: {parent: "accountSettings", destination: {name: "ldapGroupManagement", path: ldapGroupManagement, label: "Organizations"}},
+  ldapGroupManagement: {parent: "accountSettings", destination: {name: "ldapGroupManagement", path: ldapGroupManagement, label: "Groups"}},
   ldapGroupDetailView: {parent: "ldapGroupManagement", destination: {name: "ldapGroupDetailView", path: ldapGroupDetailView, label: "Group Details"}},
 
   // Ldap Organizations Administration

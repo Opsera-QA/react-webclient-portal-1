@@ -13,9 +13,9 @@ const ldapGroupFormFields = {
       isRequired: true 
     }
   },
-  configGroupType: {
-    label: "Config Group Type",
-    id: "configGroupType",
+  groupType: {
+    label: "Group Type",
+    id: "groupType",
     type: "select",
     toShow: true,
     value: "",
@@ -71,6 +71,13 @@ const ldapGroupFormFields = {
   domain: {
     label: "Domain",
     id: "domain",
+    rules: {
+      isRequired: false
+    }
+  },
+  ownerEmail: {
+    label: "Owner Email",
+    id: "ownerEmail",
     rules: {
       isRequired: false
     }

@@ -11,18 +11,18 @@ import SelectInput from "../../../common/input/select-input";
 
 const INITIAL_GROUP_DATA = {
   name: "",
-  configGroupType: [],
+  groupType: "user",
   externalSyncGroup: "",
   isSync: true,
 };
 
-function LdapGroupEditorPanel({ldapGroupData, ldapOrganizationData, onGroupUpdate, newLdapGroup, handleClose}) {
+function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, ldapOrganizationData, onGroupUpdate, newLdapGroup, handleClose}) {
   const fields = ldapGroupFormFields;
   const {getAccessToken} = useContext(AuthContext);
   const [error, setErrors] = useState("");
   const [formData, setFormData] = useState(INITIAL_GROUP_DATA);
   const [changeMap, setChangeMap] = useState({});
-  const groupTypeOptions = ["Project", "Tag", "Custom"]
+  const groupTypeOptions = [{value: "project", text: "project"},{value: "tag", text: "tag"},{value: "user", text: "user"}];
 
   useEffect(() => {
     loadData();
@@ -38,7 +38,7 @@ function LdapGroupEditorPanel({ldapGroupData, ldapOrganizationData, onGroupUpdat
     console.log("ldapGroupData in unpackLdapGroupData: " + JSON.stringify(ldapGroupData));
     if (ldapGroupData != null) {
       setFormField("name", formData["name"] != null ? ldapGroupData["name"] : "");
-      setFormField("configGroupType", formData["configGroupType"] != null ? ldapGroupData["configGroupType"] : "");
+      setFormField("groupType", formData["groupType"] != null ? ldapGroupData["groupType"] : "");
       setFormField("externalSyncGroup", formData["externalSyncGroup"] != null ? ldapGroupData["externalSyncGroup"] : "");
       setFormField("isSync", formData["isSync"] != null ? ldapGroupData["isSync"] : true);
     }
@@ -74,11 +74,14 @@ function LdapGroupEditorPanel({ldapGroupData, ldapOrganizationData, onGroupUpdat
 
   const createGroup = async () => {
     let payload = {
-      "domain": ldapOrganizationData.orgDomain,
-      "group": {
-        ...formData
+      domain: ldapOrganizationData.orgDomain,
+      group: {
+        ...formData,
+        ownerEmail: currentUserEmail,
       }
     };
+
+    // console.log("Payload: " + JSON.stringify(payload));
     if (isFormValid) {
       const response = await accountsActions.createGroup(payload, getAccessToken);
       handleClose();
@@ -86,6 +89,7 @@ function LdapGroupEditorPanel({ldapGroupData, ldapOrganizationData, onGroupUpdat
   };
 
 
+  // TODO: Only send changemap and name for group
   const updateGroup = async () => {
     let payload = {
       "domain": ldapOrganizationData.orgDomain,
@@ -94,8 +98,10 @@ function LdapGroupEditorPanel({ldapGroupData, ldapOrganizationData, onGroupUpdat
       }
     };
     if (isFormValid) {
+      console.log("Payload: " + JSON.stringify(payload));
       const response = await accountsActions.updateGroup(payload, getAccessToken);
       onGroupUpdate(response.data);
+      console.log("Response: " + JSON.stringify(response.data));
     }
   };
 
@@ -110,15 +116,15 @@ function LdapGroupEditorPanel({ldapGroupData, ldapOrganizationData, onGroupUpdat
             <TextInput disabled={!newLdapGroup} field={fields.name} setData={setFormField} formData={formData}/>
           </Col>
           <Col lg={12}>
-            {formData.configGroupType == null || groupTypeOptions.includes(formData.configGroupType)
-              ? <SelectInput field={fields.configGroupType} setData={setFormField} formData={formData} selectOptions={groupTypeOptions}/>
-              : <TextInput disabled={true} field={fields.configGroupType} setData={setFormField} formData={formData} />}
+            {newLdapGroup
+              ? <SelectInput field={fields.groupType} setData={setFormField} formData={formData} selectOptions={groupTypeOptions}/>
+              : <TextInput disabled={true} field={fields.groupType} setData={setFormField} formData={formData} />}
           </Col>
           <Col lg={12}>
-            <TextInput disabled={formData.configGroupType === "Role"} field={fields.externalSyncGroup} setData={setFormField} formData={formData}/>
+            <TextInput disabled={formData.groupType !== "project"} field={fields.externalSyncGroup} setData={setFormField} formData={formData}/>
           </Col>
           <Col lg={12}>
-            <ToggleInput disabled={formData.configGroupType === "Role"} field={fields.isSync} setData={setFormField} formData={formData}/>
+            <ToggleInput disabled={formData.groupType === "role"} field={fields.isSync} setData={setFormField} formData={formData}/>
           </Col>
         </Row>
         <Row>
@@ -136,6 +142,7 @@ function LdapGroupEditorPanel({ldapGroupData, ldapOrganizationData, onGroupUpdat
 
 LdapGroupEditorPanel.propTypes = {
   newLdapGroup: PropTypes.bool,
+  currentUserEmail: PropTypes.string,
   ldapGroupData: PropTypes.object,
   ldapOrganizationData: PropTypes.object,
   onGroupUpdate: PropTypes.func,
