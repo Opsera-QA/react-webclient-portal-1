@@ -16,14 +16,14 @@ import "components/accounts/accounts.css";
 import PropTypes from "prop-types";
 import UserPanel from "../../../common/panels/user_panel/usersPanel";
 import LoadingDialog from "../../../common/loading";
-import ErrorDialog from "../../../common/error";
+import {getSuccessToast} from "../../../common/toasts/toasts";
 
 function LdapGroupManagePanel({ldapGroupData, ldapOrganizationData, loadData}) {
   const {name} = useParams();
   const {getUserRecord, getAccessToken} = useContext(AuthContext);
   const [members, setMembers] = useState([]);
   const [nonMembers, setNonMembers] = useState([]);
-  const [showToast, toggleToast] = useState(false);
+  const [showToast, setShowToast] = useState(false);
   const [selectedMembers, setSelectedMembers] = useState([]);
   const [selectedNonMembers, setSelectedNonMembers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -114,7 +114,7 @@ function LdapGroupManagePanel({ldapGroupData, ldapOrganizationData, loadData}) {
       emails: emailList,
     };
     const response = await accountsActions.syncMembership(payload, getAccessToken);
-    toggleToast(true);
+    setShowToast(true);
     loadData();
   };
 
@@ -124,9 +124,7 @@ function LdapGroupManagePanel({ldapGroupData, ldapOrganizationData, loadData}) {
     return (<>
       <div>
         <div className="mb-3">
-          {showToast && <Alert variant="success" onClose={() => toggleToast(false)} dismissible>
-            Group members updated successfully!
-          </Alert>}
+          {showToast && getSuccessToast("Group Members Saved Successfully", setShowToast)}
           <Row>
             <Col xs={5}>
               <div className="mb-2 text-right">

@@ -32,6 +32,39 @@ const validate = (value, field) => {
   return { isValid, errorMessage };
 };
 
+export const fieldValidation = (value, field) => {
+  let isValid = true;
+  let errorMessages = [];
+
+  if (field.minLength != null) {
+    isValid = isValid && minLengthValidator(value, field.minLength);
+    errorMessages.push("The value has to be at least " + field.minLength + " characters long.");
+  }
+
+  if (field.maxLength != null) {
+    isValid = isValid && maxLengthValidator(value, field.maxLength);
+    errorMessages.push("The value has to be "+ field.maxLength +" characters or fewer.");
+  }
+
+  if (field.isRequired != null) {
+    isValid = isValid && requiredValidator(value);
+    errorMessages.push("This field is required.");
+  }
+
+  if (field.isEmail != null) {
+    isValid = isValid && validateEmail(value);
+    errorMessages.push("The email address given is not valid.");
+  }
+
+  // TODO: Pass to function that deals with multiple formats
+  if (field.format != null) {
+    isValid = isValid && isAlphaNumeric(value);
+    errorMessages.push("No special characters are allowed.");
+  }
+  return { fieldIsValid: isValid, errorMessages: errorMessages };
+};
+
+
 const minLengthValidator = (value, minLength) => {
   if (value.length > 0) {
     return value.length >= minLength;

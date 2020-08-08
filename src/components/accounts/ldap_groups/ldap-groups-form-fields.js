@@ -85,3 +85,56 @@ const ldapGroupFormFields = {
 };
 
 export default ldapGroupFormFields;
+
+
+export const ldapGroupFormFieldsArray = [
+  {
+    label: "Name",
+    id: "name",
+    rules: {
+      isRequired: true
+    }
+  },
+  {
+    label: "Group Type",
+    id: "groupType",
+    rules: {
+      isRequired: false
+    }
+  },
+  {
+    label: "External Sync Group",
+    id: "externalSyncGroup",
+    rules: {
+      isRequired: false
+    }
+  },
+  {
+    label: "Sync",
+    id: "isSync",
+    rules: {
+      isRequired: false
+    }
+  },
+  {
+    label: "User Count",
+    id: "members",
+    rules: {
+      isRequired: false
+    }
+  },
+  {
+    label: "Domain",
+    id: "domain",
+    rules: {
+      isRequired: false
+    }
+  },
+  {
+    label: "Owner Email",
+    id: "ownerEmail",
+    rules: {
+      isRequired: false
+    }
+  }
+]

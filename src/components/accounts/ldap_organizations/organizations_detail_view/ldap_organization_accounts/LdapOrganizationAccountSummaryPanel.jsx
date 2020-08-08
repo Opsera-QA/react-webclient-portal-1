@@ -88,15 +88,9 @@ function LdapOrganizationAccountSummaryPanel({ldapOrganizationAccountData, setSh
         <Col lg={12}>
           <div className="mb-3">
             <div className="text-center mb-1"><span className="text-muted mr-2">Groups</span></div>
-            <LdapGroupsTable orgDomain={ldapOrganizationAccountData.orgDomain} data={ldapOrganizationAccountData.gr} />
+            <LdapGroupsTable orgDomain={ldapOrganizationAccountData.orgDomain} groupData={ldapOrganizationAccountData.groups} />
           </div>
         </Col>
-        {/*<Col lg={12}>*/}
-        {/*  <TextField field={fields["users"]} value={ldapOrganizationAccountData.users} />*/}
-        {/*</Col>*/}
-        {/*<Col lg={12}>*/}
-        {/*  <TextField field={fields["groups"]} value={ldapOrganizationAccountData.groups} />*/}
-        {/*</Col>*/}
       </Row>
       <Row>
           <div className="ml-auto">
