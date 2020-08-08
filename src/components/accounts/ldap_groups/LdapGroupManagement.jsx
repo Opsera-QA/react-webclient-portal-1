@@ -103,7 +103,7 @@ function LdapGroupManagement() {
       <div>
         {!pageLoading &&
         <>
-          <BreadcrumbTrail destination={accessRoleData.OpseraAdministrator ? "ldapGroupManagementAdmin" : "ldapGroupManagement"} />
+          <BreadcrumbTrail destination={"ldapGroupManagement"} />
           <div className="justify-content-between mb-1 d-flex">
             <h5>Groups Management</h5>
             <div className="d-flex">

@@ -8,6 +8,7 @@ import Row from "react-bootstrap/Row";
 import Loading from "../../../common/loading";
 import accountsActions from "../../accounts-actions";
 import ldapUsersFormFields from "../ldap-users-form-fields";
+import {getFromValidationErrorToast, getPersistToast} from "../../../common/toasts/toasts";
 
 const INITIAL_DATA = {
   name: "",
@@ -23,11 +24,12 @@ const INITIAL_DATA = {
 };
 
 function LdapUserEditorPanel({ ldapUserData, newLdapUser, setLdapUserData, handleClose, showButton }) {
-  const [error, setErrors] = useState("");
   const { getAccessToken } = useContext(AuthContext);
   const [fields, setFields ] = useState({ ...ldapUsersFormFields });
   const [ changeMap, setChangeMap] = useState({});
   const [ formData, setFormData] = useState(INITIAL_DATA);
+  const [showToast, setShowToast] = useState(false);
+  const [toast, setToast] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -92,12 +94,20 @@ function LdapUserEditorPanel({ ldapUserData, newLdapUser, setLdapUserData, handl
 
       if (createUserResponse.error != null) {
         const errorMsg = `Microservice error reported creating the user: ${newLdapUserData.key}.  Error returned: ${JSON.stringify(createUserResponse.error.message, null, 2)}`;
-        console.log(errorMsg);
-        setErrors(errorMsg);
+        console.error(errorMsg);
+        let toast = getPersistToast(false, "create", "user", errorMsg, setShowToast);
+        setToast(toast);
+        setShowToast(true);
       }
       else {
         handleClose();
       }
+    }
+    else {
+        // TODO: Wire errors up
+        let toast = getFromValidationErrorToast("", setShowToast);
+        setToast(toast);
+        setShowToast(true);
     }
   };
 
@@ -122,6 +132,9 @@ function LdapUserEditorPanel({ ldapUserData, newLdapUser, setLdapUserData, handl
         console.log("Response data: " + JSON.stringify(response));
         setLdapUserData({ ...response.data });
         setChangeMap({});
+        let toast = getPersistToast(true, "update", "User", undefined, setShowToast);
+        setToast(toast);
+        setShowToast(true);
       }
       catch (err) {
         console.log(err.message);
@@ -136,9 +149,7 @@ function LdapUserEditorPanel({ ldapUserData, newLdapUser, setLdapUserData, handl
 
       {!isLoading && <>
         <div className="scroll-y full-height">
-          {error.length > 0 && <>
-            <div className="pb-2 error-text">WARNING! An error has occurred saving your configuration: {error}</div>
-          </>}
+          {showToast && toast}
           <Row>
             <Col lg={12}>
               <TextInput field={fields.name} setData={setFormField} formData={formData} />

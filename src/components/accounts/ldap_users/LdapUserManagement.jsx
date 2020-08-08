@@ -99,7 +99,7 @@ function LdapUserManagement() {
   } else {
     return (
       <div>
-        <BreadcrumbTrail destination={accessRoleData.OpseraAdministrator ? "ldapUserManagementAdmin" : "ldapUserManagement"} />
+        <BreadcrumbTrail destination={"ldapUserManagement"} />
         <div className="justify-content-between mb-1 d-flex">
           <h5>Users Management</h5>
           <div className="d-flex">

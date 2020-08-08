@@ -10,6 +10,7 @@ import Loading from "../../../common/loading";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import TextInput from "../../../common/input/text-input";
 import {capitalizeFirstLetter} from "../../../common/helpers/string-helpers";
+import {getFromValidationErrorToast, getPersistToast} from "../../../common/toasts/toasts";
 
 const INITIAL_ORGANIZATION_DATA = {
   name: "",
@@ -24,13 +25,14 @@ const INITIAL_ORGANIZATION_DATA = {
 };
 
 function LdapOrganizationEditorPanel({ ldapOrganizationData, newLdapOrganization, setLdapOrganizationData, handleClose }) {
-  const [error, setErrors] = useState("");
   const { getAccessToken } = useContext(AuthContext);
   const [fields, setOrgFields ] = useState({ ...ldapOrganizationsFormFields });
   const [ changeMap, setChangeMap] = useState({});
   const [ formData, setFormData] = useState(INITIAL_ORGANIZATION_DATA);
   const [ opseraUserList, setOpseraUsersList] = useState([]);
   const [ currentOpseraUser, setCurrentOpseraUser ] = useState(undefined);
+  const [toast, setToast] = useState({});
+  const [showToast, setShowToast] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -114,12 +116,19 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, newLdapOrganization
 
       if (createLdapOrganizationResponse.error != null) {
         const errorMsg = `Microservice error reported creating the organization for : ${newLdapOrganizationData.accountName}.  Error returned: ${JSON.stringify(createLdapOrganizationResponse.error.message, null, 2)}`;
-        console.log(errorMsg);
-        setErrors(errorMsg);
+        let toast = getPersistToast(false, "create", "user", errorMsg, setShowToast);
+        setToast(toast);
+        setShowToast(true);
       }
       else {
         handleClose();
       }
+    }
+    else {
+      // TODO: Wire errors up
+      let toast = getFromValidationErrorToast("", setShowToast);
+      setToast(toast);
+      setShowToast(true);
     }
   };
 
@@ -132,12 +141,23 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, newLdapOrganization
         console.log("Response data: " + JSON.stringify(response.data));
         setLdapOrganizationData({ldapOrganizationData, ...response.data });
         setChangeMap({});
+        let toast = getPersistToast(true, "update", "Organization", undefined, setShowToast);
+        setToast(toast);
+        setShowToast(true);
       }
       catch (err) {
         console.log(err.message);
+        let toast = getFromValidationErrorToast("", setShowToast);
+        setToast(toast);
+        setShowToast(true);
       }
     }
-
+    else {
+      // TODO: Wire errors up
+      let toast = getFromValidationErrorToast("", setShowToast);
+      setToast(toast);
+      setShowToast(true);
+    }
   };
 
   const handleOpseraUserChange = (selectedOption) => {
@@ -155,9 +175,7 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, newLdapOrganization
 
       {!isLoading && <>
         <div className="scroll-y full-height">
-          {error.length > 0 && <>
-            <div className="pb-2 error-text">WARNING! An error has occurred saving your configuration: {error}</div>
-          </>}
+          {showToast && toast}
           <Row>
             <Col lg={12}>
               <div className="custom-select-input">

@@ -8,6 +8,12 @@ import TextInput from "../../../common/input/text-input";
 import Row from "react-bootstrap/Row";
 import ToggleInput from "../../../common/input/toggle-input";
 import SelectInput from "../../../common/input/select-input";
+import {
+  getErrorToast,
+  getFromValidationErrorToast,
+  getPersistToast,
+  getSuccessToast
+} from "../../../common/toasts/toasts";
 
 const INITIAL_GROUP_DATA = {
   name: "",
@@ -21,7 +27,9 @@ function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, ldapOrganization
   const {getAccessToken} = useContext(AuthContext);
   const [error, setErrors] = useState("");
   const [formData, setFormData] = useState(INITIAL_GROUP_DATA);
+  const [showToast, setShowToast] = useState(false);
   const [changeMap, setChangeMap] = useState({});
+  const [toast, setToast] = useState({});
   const groupTypeOptions = [{value: "project", text: "project"},{value: "tag", text: "tag"},{value: "user", text: "user"}];
 
   useEffect(() => {
@@ -86,6 +94,12 @@ function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, ldapOrganization
       const response = await accountsActions.createGroup(payload, getAccessToken);
       handleClose();
     }
+    else {
+      // TODO: Wire errors up
+      let toast = getFromValidationErrorToast("", setShowToast);
+      setToast(toast);
+      setShowToast(true);
+    }
   };
 
 
@@ -102,15 +116,16 @@ function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, ldapOrganization
       const response = await accountsActions.updateGroup(payload, getAccessToken);
       onGroupUpdate(response.data);
       console.log("Response: " + JSON.stringify(response.data));
+      let toast = getPersistToast(true, "update", "Group member", undefined, setShowToast);
+      setToast(toast);
+      setShowToast(true);
     }
   };
 
   return (
     <>
       <div className="p-3">
-        {error.length > 0 && <>
-          <div className="pb-2 error-text">WARNING! An error has occurred saving your configuration: {error}</div>
-        </>}
+        {showToast && toast}
         <Row>
           <Col lg={12}>
             <TextInput disabled={!newLdapGroup} field={fields.name} setData={setFormField} formData={formData}/>

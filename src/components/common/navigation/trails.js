@@ -21,12 +21,10 @@ const trails = {
   accountSettings: {parent: undefined, destination: {name: "accountSettings", path: accountSettings, label: "Account Settings"}},
 
   // LDAP Users Administration
-  ldapUserManagementAdmin: {parent: "ldapDashboard", destination: {name: "ldapUserManagement", path: ldapUserManagement, label: "Users"}},
   ldapUserManagement: {parent: "accountSettings", destination: {name: "ldapUserManagement", path: ldapUserManagement, label: "Users"}},
   ldapUserDetailView: {parent: "ldapUserManagement", destination: {name: "ldapUserDetailView", path: ldapUserDetailView, label: "User Details"}},
 
   // LDAP Groups Administration
-  ldapGroupManagementAdmin: {parent: "ldapDashboard", destination: {name: "ldapGroupManagement", path: ldapGroupManagement, label: "Groups"}},
   ldapGroupManagement: {parent: "accountSettings", destination: {name: "ldapGroupManagement", path: ldapGroupManagement, label: "Groups"}},
   ldapGroupDetailView: {parent: "ldapGroupManagement", destination: {name: "ldapGroupDetailView", path: ldapGroupDetailView, label: "Group Details"}},
 
