@@ -40,9 +40,9 @@ function SummaryCountBlocksView({ data, view }) {
                   <div
                     key={index}
                     className="count-block-card-view ml-1 mr-1 w-50 text-center align-self-center"
-                    style={view !== "small" ? { maxWidth: "250px", height: "150px" } : { maxWidth: "150px" }}
+                    style={view !== "small" ? { maxWidth: "150px", height: "150px" } : { maxWidth: "150px" }}
                   >
-                    <Card style={{ width: "100%" }}>
+                    <Card style={{ width: "100%", height: "120px" }}>
                       <Card.Body>
                         <Card.Title className="count-block-primary-text" style={{ fontSize: "25px" }}>
                           {item.value}
@@ -50,8 +50,8 @@ function SummaryCountBlocksView({ data, view }) {
                         <Card.Text className={"count-block-subtext mt-2 " + setStatusLevel(item.status)}>
                           {item.name}
                         </Card.Text>
-                        {item.footer && <Card.Text className="w-100 text-muted mb-1">{item.footer}</Card.Text>}
                       </Card.Body>
+                      {item.footer && <Card.Text className="w-100 text-muted mb-1">{item.footer}</Card.Text>}
                     </Card>
                   </div>
                 );
