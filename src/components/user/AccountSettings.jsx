@@ -39,10 +39,10 @@ function AccountSettings() {
 
           <Row className="ml-3 mt-3 admin-tools">
             <Col xs={12} md={6} lg={4} className="p-2">
-              <Link to="/accounts/groups"><FontAwesomeIcon icon={faUserFriends} fixedWidth />Groups</Link>
+              <Link to="/accounts/groups"><FontAwesomeIcon icon={faUserFriends} fixedWidth /> Groups</Link>
             </Col>
             <Col xs={12} md={6} lg={4} className="p-2">
-              <Link to="/accounts/users"><FontAwesomeIcon icon={faUser} fixedWidth />Users</Link>
+              <Link to="/accounts/users"><FontAwesomeIcon icon={faUser} fixedWidth /> Users</Link>
             </Col>
           </Row>
         </div>
