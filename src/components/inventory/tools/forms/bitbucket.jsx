@@ -150,7 +150,7 @@ function BitbucketToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToV
       <>
         <Form.Group controlId="password">
           <Form.Label>Private Key*</Form.Label>
-          <Form.Control maxLength="256" type="password" placeholder="" value={formData.secretPrivateKey || ""} onChange={e => setFormData({ ...formData, secretPrivateKey: e.target.value })} />            
+          <Form.Control as="textarea" type="password" placeholder="" style={{WebkitTextSecurity: 'disc'}}  value={formData.secretPrivateKey || ""} onChange={e => setFormData({ ...formData, secretPrivateKey: e.target.value })} />            
           <Form.Text className="text-muted">These credentials will be securely stored in vault.</Form.Text> 
         </Form.Group>
 

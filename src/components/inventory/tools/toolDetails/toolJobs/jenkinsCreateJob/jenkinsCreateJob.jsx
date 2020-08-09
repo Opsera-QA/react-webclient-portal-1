@@ -61,11 +61,7 @@ function JenkinsCreateJob(props) {
     {
       label: "Docker Push",
       value: "DOCKER PUSH"
-    },
-    {
-      label: "Send to S3",
-      value: "SEND S3"
-    }             
+    }           
   ];
 
   useEffect(() => {   

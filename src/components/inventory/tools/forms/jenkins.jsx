@@ -41,7 +41,7 @@ function JenkinsToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVa
       let newConfiguration = formData;
       
       if (typeof(newConfiguration.jAuthToken) === "string") {
-        newConfiguration.secretKey = await saveToVault(toolId, toolData.tool_identifier, "secretKey", "Vault Secured Key", newConfiguration.jAuthToken);
+        newConfiguration.jAuthToken = await saveToVault(toolId, toolData.tool_identifier, "jAuthToken", "Vault Secured Key", newConfiguration.jAuthToken);
       }
 
       const item = {
@@ -84,7 +84,7 @@ function JenkinsToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVa
     }
   };
 
-
+console.log(formData)
 
   return (
     <Form>

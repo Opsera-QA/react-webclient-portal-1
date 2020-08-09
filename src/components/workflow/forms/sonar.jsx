@@ -1084,56 +1084,6 @@ function SonarStepConfiguration({
           <></>
         )} */}
 
-        {formData.jenkinsUrl && jenkinsList.length > 1 && (
-          <Form.Group controlId="formBasicCheckbox" className="mt-4 ml-1">
-            <Form.Check
-              type="checkbox"
-              label="Enable Docker Build Support"
-              checked={formData.buildType === "docker" ? true : false}
-              onChange={() =>
-                setFormData({
-                  ...formData,
-                  buildType:
-                    formData.buildType === "docker" ? "gradle" : "docker",
-                  dockerTagName: "",
-                  dockerName: "",
-                })
-              }
-            />
-            {/* <Form.Text className="text-muted"></Form.Text>       */}
-          </Form.Group>
-        )}
-
-        {formData.buildType === "docker" && (
-          <>
-            <Form.Group controlId="branchField">
-              <Form.Label>Docker Name*</Form.Label>
-              <Form.Control
-                maxLength="150"
-                type="text"
-                placeholder=""
-                value={formData.dockerName || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, dockerName: e.target.value })
-                }
-              />
-            </Form.Group>
-
-            <Form.Group controlId="branchField">
-              <Form.Label>Docker Tag*</Form.Label>
-              <Form.Control
-                maxLength="150"
-                type="text"
-                placeholder=""
-                value={formData.dockerTagName || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, dockerTagName: e.target.value })
-                }
-              />
-            </Form.Group>
-          </>
-        )}
-
         <Form.Group controlId="threshold">
           <Form.Label>Success Threshold</Form.Label>
           <Form.Control

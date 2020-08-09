@@ -23,23 +23,17 @@ import { axiosApiService } from "../../../api/apiService";
 import { Link } from "react-router-dom";
 import ErrorDialog from "../../common/error";
 
-const JOB_OPTIONS = [
-  { value: "", label: "Select One", isDisabled: "yes" },
-  { value: "job", label: "Custom Job" },
-  { value: "opsera-job", label: "Opsera Managed Jobs" }
-];
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
-  jobType: "", //hardcoded, every step wil have a hardcoded jobType is what i know needs to check with Todd.
+  jobType: "SEND S3", 
   toolConfigId: "",
   jenkinsUrl: "",
   jenkinsPort: "",
   jUserId: "",
   jAuthToken: "",
   jobName: "",
-  toolJobId: "",
-  toolJobType: "",
+  
   projectKey: "",
  
   accountUsername: "",
@@ -91,7 +85,6 @@ function S3StepConfiguration({
   const [jobsList, setJobsList] = useState([]);
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
-  const [jobType, setJobType] = useState("");
 
   useEffect(() => {
     if (plan && stepId) {
@@ -171,68 +164,6 @@ function S3StepConfiguration({
     fetchAWSDetails("aws_account");
   }, []);
 
-  // fetch repos
-  useEffect(() => {
-    setErrors(false);
-
-    // setFormData({ ...formData, branch : "" });
-    async function fetchRepos(service, gitToolId) {
-      setIsRepoSearching(true);
-      // Set results state
-      let results = await searchRepositories(service, gitToolId);
-      if (results) {
-        //console.log(results);
-        setRepoList(results);
-        setIsRepoSearching(false);
-      }
-    }
-
-    if (
-      formData.service &&
-      formData.service.length > 0 &&
-      formData.gitToolId &&
-      formData.gitToolId.length > 0
-    ) {
-      // Fire off our API call
-      fetchRepos(formData.service, formData.gitToolId);
-    } else {
-      setIsRepoSearching(true);
-      setRepoList([{ value: "", name: "Select One", isDisabled: "yes" }]);
-    }
-  }, [formData.service, formData.gitToolId]);
-
-  // fetch branches
-  useEffect(() => {
-    setErrors(false);
-
-    // setFormData({ ...formData, branch : "" });
-    async function fetchBranches(service, gitToolId, repoId) {
-      setIsBranchSearching(true);
-      // Set results state
-      let results = await searchBranches(service, gitToolId, repoId);
-      if (results) {
-        //console.log(results);
-        setBranchList(results);
-        setIsBranchSearching(false);
-      }
-    }
-
-    if (
-      formData.service &&
-      formData.service.length > 0 &&
-      formData.gitToolId &&
-      formData.gitToolId.length > 0 &&
-      formData.repoId &&
-      formData.repoId.length > 0
-    ) {
-      // Fire off our API call
-      fetchBranches(formData.service, formData.gitToolId, formData.repoId);
-    } else {
-      setIsRepoSearching(true);
-      setBranchList([{ value: "", name: "Select One", isDisabled: "yes" }]);
-    }
-  }, [formData.repoId]);
-
   useEffect(() => {
     if (formData.toolConfigId) {
       // console.log(jenkinsList[jenkinsList.findIndex(x => x.id === formData.toolConfigId)].accounts);
@@ -246,38 +177,11 @@ function S3StepConfiguration({
       );
     }
   }, [formData.toolConfigId]);
-
-  useEffect(() => {
-    if (formData.toolConfigId) {
-      setJobsList(
-        jenkinsList[
-          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ] ? 
-        jenkinsList[
-          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ].jobs : []
-      );
-    }
-  }, [formData.toolConfigId]);
-
-  useEffect(() => {
-    if (formData.toolJobType && formData.toolJobType.includes("SFDC")) {
-      setFormData({ ...formData, buildType: "ant" });
-    }
-  }, [formData.toolJobType]);
-
   
-  useEffect(() => {
-    if (jobType === "job") {
-      setFormData({ ...formData, jobType : "SEND S3" });
-    }
-  }, [jobType]);
-
   console.log(formData);
-  // console.log(jobsList);
 
   const loadFormData = async (step) => {
-    let { configuration, threshold, job_type } = step;
+    let { configuration, threshold } = step;
     if (typeof configuration !== "undefined") {
       if (typeof configuration !== "undefined") {
         setFormData(configuration);
@@ -286,40 +190,8 @@ function S3StepConfiguration({
         setThresholdType(threshold.type);
         setThresholdValue(threshold.value);
       }
-      if (typeof job_type !== "undefined") {
-        setJobType(job_type);
-      }
     } else {
       setFormData(INITIAL_DATA);
-    }
-  };
-
-  const handleCreateAndSave = async (pipelineId, stepId, toolId) => {
-    console.log("saving and creating job for toolID: ", toolId);
-    if (validateRequiredFields() && toolId) {
-      setLoading(true);
-
-      const createJobPostBody = {
-        jobId: "",
-        pipelineId: pipelineId,
-        stepId: stepId,
-        buildParams: {
-          stepId: formData.stepIdXML && formData.stepIdXML,
-        },
-      };
-      console.log("createJobPostBody: ", createJobPostBody);
-
-      const toolConfiguration = {
-        configuration: formData,
-        threshold: {
-          type: thresholdType,
-          value: thresholdVal,
-        },
-        job_type: jobType,
-      };
-      console.log("item: ", toolConfiguration);
-
-      await createJob(toolId, toolConfiguration, stepId, createJobPostBody);
     }
   };
 
@@ -346,7 +218,6 @@ function S3StepConfiguration({
           type: thresholdType,
           value: thresholdVal,
         },
-        job_type: jobType,
       };
       console.log("item: ", item);
       setLoading(false);
@@ -452,26 +323,8 @@ function S3StepConfiguration({
         jUserId: selectedOption.configuration.jUserId,
         jenkinsPort: selectedOption.configuration.jenkinsPort,
         jAuthToken: selectedOption.configuration.jAuthToken,
-        gitToolId: "",
-        repoId: "",
-        gitUrl: "",
-        sshUrl: "",
-        service: "",
-        gitCredential: "",
-        gitUserName: "",
-        repository: "",
-        branch: "",
-        bucketName: "", 
-        toolJobId: "",
-        toolJobType: "",
-        accountUsername: "",
-        projectId: "",
-        defaultBranch: "",
+        bucketName: "",
       });
-    }
-    if (selectedOption.accounts && selectedOption.jobs) {
-      setAccountsList(selectedOption.accounts);
-      setJobsList(selectedOption.jobs);
     }
     setLoading(false);
   };
@@ -498,142 +351,6 @@ function S3StepConfiguration({
       });
     }
     setLoading(false);
-  };
-
-  const handleJobChange = (selectedOption) => {
-    console.log(selectedOption)
-    if (selectedOption.type[0] === "SEND S3" ) {      
-        setFormData({
-          ...formData,
-          toolJobId: selectedOption._id,
-          toolJobType: selectedOption.type,
-          jobType: selectedOption.type[0],
-          ...selectedOption.configuration,
-          buildToolVersion: "6.3",
-          projectKey:"",
-          buildArgs: {},
-        });
-    } else {
-      setErrors("Selected Job is not a S3 Job!  Please ensure the selected job has S3 job configurations.");
-      console.log("not a S3 job")
-    }
-  };
-
-  const handleAccountChange = (selectedOption) => {
-    setFormData({
-      ...formData,
-      gitToolId: selectedOption.toolId,
-      gitCredential: selectedOption.gitCredential,
-      gitUserName: selectedOption.gitUserName,
-      service: selectedOption.service,
-      repoId: "",
-      gitUrl: "",
-      sshUrl: "",
-      repository: "",
-      branch: "",
-      projectId: "",
-      defaultBranch: "",
-    });
-  };
-
-  const handleRepoChange = (selectedOption) => {
-    setFormData({
-      ...formData,
-      repository: selectedOption.name,
-      repoId: selectedOption.id,
-      projectId: selectedOption.id,
-      gitUrl: selectedOption.httpUrl,
-      sshUrl: selectedOption.sshUrl,
-      branch: "",
-      defaultBranch: "",
-      gitBranch: "",
-    });
-  };
-
-  const handleBranchChange = (selectedOption) => {
-    setFormData({
-      ...formData,
-      branch: selectedOption.value,
-      defaultBranch: selectedOption.value,
-      gitBranch: selectedOption.value,
-    });
-  };
-
-  const handleJobTypeChange = (selectedOption) => {
-    setErrors(false);
-    setJobType(selectedOption.value);
-      setFormData({
-        ...formData,
-        awsToolConfigId: "",
-        jobName: "",
-        buildType: "", 
-        jobDescription: "",
-        jobType: "",
-        toolJobId: "",
-        toolJobType: "",
-      });
-  };
-
-  //todo: the api needs to be moved to actions.jsx
-  const searchRepositories = async (service, gitAccountId) => {
-    const { getAccessToken } = contextType;
-    const accessToken = await getAccessToken();
-    const apiUrl = "/tools/properties";
-    const postBody = {
-      tool: service,
-      metric: "getRepositories",
-      gitAccountId: gitAccountId,
-    };
-    //console.log(postBody);
-    try {
-      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      if (res.data && res.data.data) {
-        let arrOfObj = res.data.data;
-        return arrOfObj;
-      } else {
-        setErrors(
-          "Account information is missing or unavailable!  Please ensure the required account is registered and up to date in Tool Registry."
-        );
-      }
-    } catch (err) {
-      console.log(err.message);
-      setErrors(err.message);
-    }
-  };
-
-  //todo: the api needs to be moved to actions.jsx
-  const searchBranches = async (service, gitAccountId, repoId) => {
-    const { getAccessToken } = contextType;
-    const accessToken = await getAccessToken();
-    const apiUrl = "/tools/properties";
-    const postBody = {
-      tool: service,
-      metric: "getBranches",
-      gitAccountId: gitAccountId,
-      repoId: repoId,
-    };
-    try {
-      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      if (res.data && res.data.data) {
-        let arrOfObj = res.data.data;
-        if (arrOfObj) {
-          var result = arrOfObj.map(function (el) {
-            var o = Object.assign({});
-            o.value = el.toLowerCase();
-            o.name = el;
-            return o;
-          });
-          return result;
-        }
-      } else {
-        setErrors(
-          "Account information is missing or unavailable!  Please ensure the required account is registered and up to date in Tool Registry."
-        );
-      }
-    } catch (err) {
-      console.log(err.message);
-      setErrors(err.message);
-    }
   };
 
   const RegistryPopover = (data) => {
@@ -780,109 +497,9 @@ function S3StepConfiguration({
           )}
         </Form.Group>
 
-        {/*{(!formData.toolConfigId && formData.jenkinsUrl) &&
-      <div className="form-text text-muted mb-3">
-        <FontAwesomeIcon icon={faExclamationTriangle} className="mr-1 yellow" fixedWidth/>
-        Unregistered Tool settings in use. The settings below can be used in this step, but cannot be updated. You
-        must register
-        a new Jenkins server in the
-        <Link to="/inventory/tools"> Tool Registry</Link> and add its configuration details. </div>}
-*/}
-        <Form.Group controlId="formBasicEmail">
-          <Form.Label>Job Type*</Form.Label>
-          {jobType !== undefined ? (
-            <DropdownList
-              data={JOB_OPTIONS}
-              valueField="id"
-              textField="label"
-              value={
-                JOB_OPTIONS[JOB_OPTIONS.findIndex((x) => x.value === jobType)]
-              }
-              filter="contains"
-              placeholder="Please select an account"
-              onChange={handleJobTypeChange}
-            />
-          ) : null}
-        </Form.Group>
-
         {formMessage.length > 0 ? (
           <p className="info-text">{formMessage}</p>
         ) : null}
-
-        {jobType === "job" && (
-          <Form.Group controlId="branchField">
-            <Form.Label>Job Name*</Form.Label>
-            <Form.Control
-              maxLength="150"
-              disabled={false}
-              type="text"
-              placeholder=""
-              value={formData.jobName || ""}
-              onChange={(e) =>
-                setFormData({ ...formData, jobName: e.target.value })
-              }
-            />
-          </Form.Group>
-        )}
-
-        {jobType === "opsera-job" && (
-          <>
-            {formData.jenkinsUrl && jenkinsList.length > 1 && (
-              <Form.Group controlId="formBasicEmail">
-                <Form.Label className="w-100">
-                  Job*
-                  <OverlayTrigger
-                    trigger="click"
-                    rootClose
-                    placement="left"
-                    overlay={RegistryPopover(
-                      jobsList[
-                        jobsList.findIndex((x) => x._id === formData.toolJobId)
-                      ]
-                    )}
-                  >
-                    <FontAwesomeIcon
-                      icon={faEllipsisH}
-                      className="fa-pull-right pointer pr-1"
-                      onClick={() => document.body.click()}
-                    />
-                  </OverlayTrigger>
-                </Form.Label>
-                {jobsList.length < 1 && (
-                  <div className="form-text text-muted p-2">
-                    <FontAwesomeIcon
-                      icon={faExclamationCircle}
-                      className="text-muted mr-1"
-                      fixedWidth
-                    />
-                    No jobs have been created for{" "}
-                    <span>{formData.jenkinsUrl}</span>. Please go to
-                    <Link to={"/inventory/tools/" + formData.toolConfigId}>
-                      {" "}
-                      Tool Registry
-                    </Link>{" "}
-                    and add credentials and register a job for this Jenkins in
-                    order to proceed.{" "}
-                  </div>
-                )}
-                {jobsList !== undefined && jobsList.length > 0 ? (
-                  <DropdownList
-                    data={jobsList}
-                    valueField="id"
-                    textField="name"
-                    value={
-                      jobsList[
-                        jobsList.findIndex((x) => x._id === formData.toolJobId)
-                      ]
-                    }
-                    filter="contains"
-                    onChange={handleJobChange}
-                  />
-                ) : null}
-              </Form.Group>
-            )}
-          </>
-        )}
 
         {(formData.jobType === "SEND S3" ) && (
           <>
@@ -1010,33 +627,7 @@ function S3StepConfiguration({
           </>
         )}
 
-        {jobType === "opsera-job" ? (
-          <Button
-            variant="primary"
-            type="button"
-            className="mt-3"
-            onClick={() => {
-              handleCreateAndSave(pipelineId, stepId, formData.toolConfigId);
-            }}
-          >
-            {loading ? (
-              <>
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="mr-1"
-                  fixedWidth
-                />{" "}
-                Working
-              </>
-            ) : (
-              <>
-                <FontAwesomeIcon icon={faSave} className="mr-1" />
-                Create Job and Save
-              </>
-            )}
-          </Button>
-        ) : (
+        {/* no create job for s3 */}
           <Button
             variant="primary"
             type="button"
@@ -1061,7 +652,6 @@ function S3StepConfiguration({
               </>
             )}
           </Button>
-        )}
 
         <small className="form-text text-muted mt-2 text-right">
           * Required Fields
