@@ -1222,7 +1222,7 @@ function JenkinsStepConfiguration({
             )}
           </Form.Group>
         )}
-
+{/* 
         {formData.jenkinsUrl && jenkinsList.length > 1 && (
           <Form.Group controlId="formBasicCheckbox" className="mt-4 ml-1">
             <Form.Check
@@ -1232,6 +1232,7 @@ function JenkinsStepConfiguration({
               onChange={() =>
                 setFormData({
                   ...formData,
+                  jobType : "BUILD",
                   buildType:
                     formData.buildType === "docker" ? "gradle" : "docker",
                   dockerTagName: "",
@@ -1239,10 +1240,9 @@ function JenkinsStepConfiguration({
                 })
               }
             />
-            {/* <Form.Text className="text-muted"></Form.Text>       */}
           </Form.Group>
-        )}
-
+        )} */}
+{/* 
         {formData.buildType === "docker" && (
           <>
             <Form.Group controlId="branchField">
@@ -1271,7 +1271,7 @@ function JenkinsStepConfiguration({
               />
             </Form.Group>
           </>
-        )}
+        )} */}
 
         <Form.Group controlId="threshold">
           <Form.Label>Success Threshold</Form.Label>

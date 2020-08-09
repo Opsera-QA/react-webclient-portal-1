@@ -151,12 +151,12 @@ function GitlabToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVaul
       <>
         <Form.Group controlId="password">
           <Form.Label>Private Key*</Form.Label>
-          <Form.Control maxLength="256" type="password" placeholder="" value={formData.secretPrivateKey || ""} onChange={e => setFormData({ ...formData, secretPrivateKey: e.target.value })} />            
+          <Form.Control as="textarea" type="password" style={{WebkitTextSecurity: 'disc'}} placeholder="" value={formData.secretPrivateKey || ""} onChange={e => setFormData({ ...formData, secretPrivateKey: e.target.value })} />            
           <Form.Text className="text-muted">These credentials will be securely stored in vault.</Form.Text> 
         </Form.Group>
 
         <Form.Group controlId="password">
-          <Form.Label>Access Key*</Form.Label>
+          <Form.Label>Access Token*</Form.Label>
           <Form.Control maxLength="256" type="password" placeholder="" value={formData.secretAccessTokenKey || ""} onChange={e => setFormData({ ...formData, secretAccessTokenKey: e.target.value })} />            
           <Form.Text className="text-muted">These credentials will be securely stored in vault.</Form.Text> 
         </Form.Group>
