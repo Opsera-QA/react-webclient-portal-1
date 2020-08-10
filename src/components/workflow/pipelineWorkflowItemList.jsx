@@ -69,8 +69,6 @@ function PipelineWorkflowItemList({ pipeline, items, lastStep, editWorkflow, pip
 
 
   const handleMoveStep = async (itemId, index, direction) => {
-    console.log("Prior Step ID: ", itemId);
-    console.log("Prior Step index: ", index);
 
     if (direction === "up" && index > 0) {
       console.log("Direction: ", direction);
@@ -144,10 +142,10 @@ function PipelineWorkflowItemList({ pipeline, items, lastStep, editWorkflow, pip
             <OverlayTrigger
               placement="top"
               delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltip({ message: "Move previous step up" })}>
+              overlay={renderTooltip({ message: "Move lower step up one position" })}>
               <FontAwesomeIcon icon={faCaretSquareUp} size="lg"
                                fixedWidth
-                               className={index === 0 ? "fa-disabled" : "pointer green"}
+                               className={index === 0 ? "fa-disabled" : "pointer dark-blue"}
                                onClick={() => {
                                  handleMoveStep(item._id, index, "up");
                                }}/>
@@ -156,11 +154,11 @@ function PipelineWorkflowItemList({ pipeline, items, lastStep, editWorkflow, pip
             <OverlayTrigger
               placement="top"
               delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltip({ message: "Add new step below" })}>
+              overlay={renderTooltip({ message: "Add new step here" })}>
               <FontAwesomeIcon icon={faPlusSquare}
                                size="lg"
                                fixedWidth
-                               className="green pointer mx-1"
+                               className="green pointer ml-2 mr-1"
                                onClick={() => {
                                  handleAddStep(item._id, index);
                                }}/>
@@ -173,7 +171,7 @@ function PipelineWorkflowItemList({ pipeline, items, lastStep, editWorkflow, pip
               <FontAwesomeIcon icon={faCopy}
                                size="lg"
                                fixedWidth
-                               className="green pointer mx-1"
+                               className="yellow pointer ml-1 mr-2"
                                onClick={() => {
                                  handleCopyStep(item, index);
                                }}/>
@@ -182,17 +180,15 @@ function PipelineWorkflowItemList({ pipeline, items, lastStep, editWorkflow, pip
             <OverlayTrigger
               placement="top"
               delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltip({ message: "Move previous step down" })}>
+              overlay={renderTooltip({ message: "Move upper step down one position" })}>
               <FontAwesomeIcon icon={faCaretSquareDown} size="lg"
                                fixedWidth
-                               className={index === items.length - 1 ? "fa-disabled" : "pointer green"}
+                               className={index === items.length - 1 ? "fa-disabled" : "pointer dark-blue"}
                                onClick={() => {
                                  handleMoveStep(item._id, index, "down");
                                }}/>
             </OverlayTrigger>
           </div>
-          <SteppedLineTo from={"step-" + item._id} to={"step-plus-" + index} delay={100} orientation="v"
-                         borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="top"/>
         </> :
         <>
           <SteppedLineTo from={"step-" + item._id} to={"step-" + index} delay={100} orientation="v"

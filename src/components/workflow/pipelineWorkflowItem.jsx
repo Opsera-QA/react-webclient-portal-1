@@ -19,10 +19,10 @@ import {
   faTimesCircle,
   faTrash,
   faBan,
-  faTerminal,
+  faTerminal, faToolbox,
 } from "@fortawesome/free-solid-svg-icons";
 import ModalActivityLogs from "../common/modal/modalActivityLogs";
-import ApprovalModal from "./approvalModal";
+//import ApprovalModal from "./approvalModal";
 import StepToolActivityView from "./stepToolActivityView";
 import { format } from "date-fns";
 import "./workflows.css";
@@ -123,6 +123,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
   };
 
   const handleViewClick = (data, header) => {
+    console.log("HERE?");
     setActivityLogModal({ show: true, header: header, message: data, button: "OK" });
   };
 
@@ -169,9 +170,9 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
   return (
     <>
       <div>
-        <div className="title-text-6 upper-case-first ml-1 mt-1 title-text-divider">
+        <div className="title-text-6 upper-case-first ml-1 mt-1">
           <span
-            className="text-muted mr-1">Step {index + 1}:</span> {toolProperties.type ? toolProperties.type.name : null}
+            className="text-muted mr-1">{item.name || "Un-configured Step"}</span>
           <div className="float-right text-right">
             {stepConfigured === true && editWorkflow === false ?
               <>
@@ -302,20 +303,13 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
           </div>
         </div>
 
-        <div className="d-flex flex-row mb-1 mt-2">
-          <div className="pl-1 workflow-module-text-flex-basis text-muted">Name:</div>
-          <div className="pl-1">{item.name}</div>
-          <div className="flex-grow-1"></div>
+
+        <div className="p-1 text-muted small">
+          <FontAwesomeIcon icon={faToolbox} size="sm" fixedWidth
+                           className="mr-1"/> Tool: {toolProperties.name || ""}
         </div>
 
-        <div className="d-flex flex-row mb-1">
-          <div className="pl-1 workflow-module-text-flex-basis text-muted">Tool:</div>
-          <div className="pl-1 upper-case-first">
-            {toolProperties.name ? toolProperties.name : ""}</div>
-          <div className="flex-grow-1"></div>
-        </div>
-
-        {item.last_status && Object.keys(item.last_status).length > 0 && typeof (item.last_status.data) === "object" ?
+        {/*{item.last_status && Object.keys(item.last_status).length > 0 && typeof (item.last_status.data) === "object" ?
           <div>
             {item.last_status.updatedAt ? <div className="pl-1 text-muted small">Last status
               on {format(new Date(item.last_status.updatedAt), "hh:mm a 'on' MMM dd yyyy'")}:</div> : null}
@@ -327,109 +321,106 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
                 }
               })}
             </div>
-          </div> : null}
+          </div> : null}*/}
 
+        <div className="p-1 text-muted small">
+          <FontAwesomeIcon icon={faIdBadge} size="sm" fixedWidth
+                           className="mr-1"/>ID: {item._id}</div>
 
-        {stepConfigured === true ?
-          <div className="d-flex align-items-end flex-row">
-            <div className="p-1"><span className="text-muted small">
-              <FontAwesomeIcon icon={faIdBadge} size="sm" fixedWidth className="mr-1"/>ID: {item._id}</span></div>
-            <div className="p-2"></div>
-            <div className="flex-grow-1 p-1 text-right">
-              {!editWorkflow ?
+        <div className="p-1 text-right">
+          {stepConfigured === true &&
+          <>
+            {!editWorkflow &&
+            <>
+              <OverlayTrigger
+                placement="top"
+                delay={{ show: 250, hide: 400 }}
+                overlay={renderTooltip({ message: "View Settings" })}>
+                <FontAwesomeIcon icon={faSearchPlus} //settings!
+                                 className="text-muted mx-1" fixedWidth
+                                 style={{ cursor: "pointer" }}
+                                 onClick={() => {
+                                   handleViewClick(item, "Step Settings");
+                                 }}/>
+              </OverlayTrigger>
+
+              {itemState !== "running" ?
                 <>
                   <OverlayTrigger
                     placement="top"
                     delay={{ show: 250, hide: 400 }}
-                    overlay={renderTooltip({ message: "View Settings" })}>
-                    <FontAwesomeIcon icon={faSearchPlus} //settings!
+                    overlay={renderTooltip({ message: "View Step Activity Logs" })}>
+                    <FontAwesomeIcon icon={faArchive}
                                      className="text-muted mx-1" fixedWidth
                                      style={{ cursor: "pointer" }}
                                      onClick={() => {
-                                       handleViewClick(item, "Step Settings");
+                                       parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id);
+                                     }}/>
+                  </OverlayTrigger>
+                </>
+                :
+                <>
+                  {toolProperties.properties && toolProperties.properties.isLiveStream && <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip({ message: "View Running Tool Activity (if available)" })}>
+                    <FontAwesomeIcon icon={faTerminal}
+                                     className="green mx-1" fixedWidth
+                                     style={{ cursor: "pointer" }}
+                                     onClick={() => {
+                                       setShowToolActivity(true);
+                                     }}/>
+                  </OverlayTrigger>}
+                </>}
+
+              {parentWorkflowStatus !== "running" ?
+                <>
+                  <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip({ message: "Configure Step Notification and Approval Rules" })}>
+                    <FontAwesomeIcon icon={faEnvelope}
+                                     style={{ cursor: "pointer" }}
+                                     className="text-muted mx-1" fixedWidth
+                                     onClick={() => {
+                                       handleEditClick("notification", item.tool, item._id);
                                      }}/>
                   </OverlayTrigger>
 
-                  {itemState !== "running" ?
-                    <>
-                      <OverlayTrigger
-                        placement="top"
-                        delay={{ show: 250, hide: 400 }}
-                        overlay={renderTooltip({ message: "View Step Activity Logs" })}>
-                        <FontAwesomeIcon icon={faArchive}
-                                         className="text-muted mx-1" fixedWidth
-                                         style={{ cursor: "pointer" }}
-                                         onClick={() => {
-                                           parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id);
-                                         }}/>
-                      </OverlayTrigger>
-                    </>
-                    :
-                    <>
-                      {toolProperties.properties && toolProperties.properties.isLiveStream && <OverlayTrigger
-                        placement="top"
-                        delay={{ show: 250, hide: 400 }}
-                        overlay={renderTooltip({ message: "View Running Tool Activity (if available)" })}>
-                        <FontAwesomeIcon icon={faTerminal}
-                                         className="green mx-1" fixedWidth
-                                         style={{ cursor: "pointer" }}
-                                         onClick={() => {
-                                           setShowToolActivity(true);
-                                         }}/>
-                      </OverlayTrigger>}
-                    </>}
+                  <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip({ message: "Configure Step Settings" })}>
+                    <FontAwesomeIcon icon={faCog}
+                                     style={{ cursor: "pointer" }}
+                                     className="text-muted mx-1" fixedWidth
+                                     onClick={() => {
+                                       handleEditClick("tool", item.tool, item._id);
+                                     }}
+                    />
+                  </OverlayTrigger>
+                </>
+                :
+                <>
+                  <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip({ message: "Cannot access settings while pipeline is running" })}>
+                    <FontAwesomeIcon icon={faEnvelope}
+                                     className="text-muted mx-1" fixedWidth/>
+                  </OverlayTrigger>
 
-                  {parentWorkflowStatus !== "running" ?
-                    <>
-                      <OverlayTrigger
-                        placement="top"
-                        delay={{ show: 250, hide: 400 }}
-                        overlay={renderTooltip({ message: "Configure Step Notification and Approval Rules" })}>
-                        <FontAwesomeIcon icon={faEnvelope}
-                                         style={{ cursor: "pointer" }}
-                                         className="text-muted mx-1" fixedWidth
-                                         onClick={() => {
-                                           handleEditClick("notification", item.tool, item._id);
-                                         }}/>
-                      </OverlayTrigger>
-
-                      <OverlayTrigger
-                        placement="top"
-                        delay={{ show: 250, hide: 400 }}
-                        overlay={renderTooltip({ message: "Configure Step Settings" })}>
-                        <FontAwesomeIcon icon={faCog}
-                                         style={{ cursor: "pointer" }}
-                                         className="text-muted mx-1" fixedWidth
-                                         onClick={() => {
-                                           handleEditClick("tool", item.tool, item._id);
-                                         }}
-                        />
-                      </OverlayTrigger>
-                    </>
-                    :
-                    <>
-                      <OverlayTrigger
-                        placement="top"
-                        delay={{ show: 250, hide: 400 }}
-                        overlay={renderTooltip({ message: "Cannot access settings while pipeline is running" })}>
-                        <FontAwesomeIcon icon={faEnvelope}
-                                         className="text-muted mx-1" fixedWidth/>
-                      </OverlayTrigger>
-
-                      <OverlayTrigger
-                        placement="top"
-                        delay={{ show: 250, hide: 400 }}
-                        overlay={renderTooltip({ message: "Cannot access settings while pipeline is running" })}>
-                        <FontAwesomeIcon icon={faCog}
-                                         className="text-muted mx-1" fixedWidth/>
-                      </OverlayTrigger>
-                    </>}
-
-
-                </> : null}
-            </div>
-          </div> : null}
-
+                  <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip({ message: "Cannot access settings while pipeline is running" })}>
+                    <FontAwesomeIcon icon={faCog}
+                                     className="text-muted mx-1" fixedWidth/>
+                  </OverlayTrigger>
+                </>}
+            </>}
+          </>}
+        </div>
       </div>
 
       <ModalActivityLogs
@@ -437,7 +428,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
         size="lg"
         jsonData={activityLogModal.message}
         liveStreamObject={activityLogModal.liveData}
-        show={activityLogModal.slow}
+        show={activityLogModal.show}
         setParentVisibility={() => setActivityLogModal({ ...activityLogModal, show: false })}/>
 
       {infoModal.show && <Modal header={infoModal.header} message={infoModal.message} button={infoModal.button}
