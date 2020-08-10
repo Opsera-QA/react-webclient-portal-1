@@ -23,8 +23,8 @@ export const getPersistToast = (success, action, type, message, toggleToast) => 
   }
 };
 
-export const getFromValidationErrorToast = (errors, toggleToast) => {
-  return getErrorToast(`WARNING! There are errors in your form: ${errors}`, toggleToast);
+export const getFromValidationErrorToast = (toggleToast) => {
+  return getErrorToast(`WARNING! There are errors in your form`, toggleToast);
 };
 
 export const getSuccessToast = (message, toggleToast) => {

@@ -1,10 +1,12 @@
 // TODO: put metadata on node server and pull down that way?
+
+// TODO: Remove when finishing customer onboard
 const ldapUsersFormFields = {
   name: {
     label: "Full User Name",
     id: "name",
     rules: {
-      // isRequired: true
+      isRequired: true
     }
   },
   preferredName: {
@@ -94,3 +96,71 @@ const ldapUsersFormFields = {
 };
 
 export default ldapUsersFormFields;
+
+export const ldapUsersMetaData = {
+  idProperty: "name",
+  fields: [
+    {
+      label: "Full User Name",
+      id: "name",
+      isRequired: true
+    },
+    {
+      label: "Preferred Name",
+      id: "preferredName",
+      rules: {
+        // isRequired: true
+      }
+    },
+    {
+      label: "First Name",
+      id: "firstName",
+      isRequired: true
+    },
+    {
+      label: "Last Name",
+      id: "lastName",
+      isRequired: true
+    },
+    {
+      label: "Email Address",
+      id: "emailAddress",
+      isRequired: true
+    },
+    {
+      label: "Division",
+      id: "division",
+    },
+    {
+      label: "Teams",
+      id: "teams",
+    },
+    {
+      label: "Department Name",
+      id: "departmentName",
+    },
+    {
+      label: "Title",
+      id: "title",
+    },
+    {
+      label: "Site",
+      id: "site",
+    },
+    // opseraId: {
+    //   label: "Opsera Customer Record",
+    //   id: "opseraId",
+    //   rules: {
+    //     // isRequired: true
+    //   }
+    // },
+    {
+      label: "LDAP Users",
+      id: "users",
+    },
+    {
+      label: "Region",
+      id: "region",
+    },
+  ]
+};

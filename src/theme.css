@@ -7,7 +7,7 @@
   max-width: 1200px !important;
 }
 
-.fa-disabled { 
+.fa-disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
@@ -266,7 +266,7 @@ a.text-primary:hover, a.text-primary:focus {
   border-bottom: 1px solid gray;
   text-align: center;
   vertical-align: middle;
-  white-space: nowrap; 
+  white-space: nowrap;
 }
 
 .custom-table .table-title-bar {
@@ -686,6 +686,7 @@ div.modal-footer {
 .custom-text-input .invalid-feedback {
   flex-basis: 100%;
   text-align: right;
+  display: inline-block;
 }
 /* End Text Input Styling */
 
@@ -873,3 +874,18 @@ div.modal-footer {
 }
 
 /* End Breadcrumb trail styling */
+
+/* Detail View Styling */
+.detail-view-body {
+    min-height: 60vh;
+}
+
+.detail-view-body .detail-view-summary {
+    min-height: 30vh;
+}
+
+.detail-view-body .detail-view-detail-panel {
+    min-height: 30vh;
+}
+
+/* End Detail View Styling */

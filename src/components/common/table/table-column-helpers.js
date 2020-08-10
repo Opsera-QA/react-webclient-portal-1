@@ -12,6 +12,13 @@ const getTableAccessor = (field) => {
   return field["id"];
 };
 
+export const getTableTextColumnWithoutField = (header, accessor) => {
+  return {
+    Header: header,
+    accessor: accessor
+  };
+};
+
 export const getTableTextColumn = (field) => {
   return {
     Header: getTableHeader(field),
@@ -46,6 +53,17 @@ export const getTableArrayCountColumn = (field) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
+    Cell: (props) => {
+      return props.value.length;
+    },
+    class: "no-wrap-inline"
+  };
+};
+
+export const getCountColumnWithoutField = (header, accessor) => {
+  return {
+    Header: header,
+    accessor: accessor,
     Cell: (props) => {
       return props.value.length;
     },

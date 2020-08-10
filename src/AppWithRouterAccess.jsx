@@ -165,12 +165,12 @@ const AppWithRouterAccess = () => {
                 <SecureRoute path="/admin/template-editor" component={TemplateEditor}/>
                 <SecureRoute path="/accounts" exact component={LdapDashboard}/>
                 <SecureRoute path="/accounts/organizations" exact component={LdapOrganizationsView}/>
-                <SecureRoute path="/accounts/organizations/details/:id" exact component={LdapOrganizationDetailView}/>
+                <SecureRoute path="/accounts/organizations/details/:organizationName" exact component={LdapOrganizationDetailView}/>
                 <SecureRoute path="/accounts/:orgDomain?/users/" exact component={LdapUserManagement}/>
                 <SecureRoute path="/accounts/:orgDomain/users/details/:userEmail" exact component={LdapUserDetailView}/>
                 <SecureRoute path="/accounts/create" exact component={LdapCustomerOnboardView}/>
                 <SecureRoute path="/accounts/:orgDomain?/groups/" exact component={LdapGroupManagement}/>
-                <SecureRoute path="/accounts/:orgDomain/groups/details/:name" exact component={LdapGroupDetailView}/>
+                <SecureRoute path="/accounts/:orgDomain/groups/details/:groupName" exact component={LdapGroupDetailView}/>
 
                 <SecureRoute path="/demo/api" component={ApiConnectionDemo}/>
                 <SecureRoute path="/demo/table" component={CommonTableDemo}/>

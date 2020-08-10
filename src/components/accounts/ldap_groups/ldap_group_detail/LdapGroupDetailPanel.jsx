@@ -7,7 +7,7 @@ import LdapGroupEditorPanel from "./LdapGroupEditorPanel";
 import LdapGroupManagePanel from "./LdapGroupManagePanel";
 import LdapUsersTable from "../../ldap_users/LdapUsersTable";
 
-function LdapGroupDetailPanel({ currentUserEmail, ldapGroupData, setLdapGroupData, ldapOrganizationData, orgDomain, loadData }) {
+function LdapGroupDetailPanel({ ldapGroupDto, currentUserEmail, ldapGroupData, setLdapGroupData, ldapOrganizationData, orgDomain, loadData }) {
   const [activeTab, setActiveTab] = useState("membership");
 
   const handleTabClick = (tabSelection) => e => {
@@ -41,7 +41,7 @@ function LdapGroupDetailPanel({ currentUserEmail, ldapGroupData, setLdapGroupDat
             </div>
           </Col>
           <Col lg={12}>
-            <div className="tabbed-content-block">
+            <div className="tabbed-content-block detail-view-detail-panel">
               {ldapGroupData &&
               <LdapGroupDetailsView currentUserEmail={currentUserEmail} ldapGroupData={ldapGroupData} orgDomain={orgDomain} setLdapGroupData={setLdapGroupData} loadData={loadData} activeTab={activeTab} ldapOrganizationData={ldapOrganizationData}/>}
             </div>
@@ -61,9 +61,9 @@ function LdapGroupDetailsView({activeTab, currentUserEmail, ldapGroupData, orgDo
       case "membership":
         return <LdapUsersTable orgDomain={orgDomain} userData={ldapGroupData.members} />;
       case "manage":
-        return <LdapGroupManagePanel ldapGroupData={ldapGroupData} ldapOrganizationData={ldapOrganizationData} loadData={loadData}/>;
+        return <LdapGroupManagePanel ldapGroupData={ldapGroupData.data} ldapOrganizationData={ldapOrganizationData} loadData={loadData}/>;
       case "settings":
-        return <LdapGroupEditorPanel currentUserEmail={currentUserEmail} ldapGroupData={ldapGroupData} ldapOrganizationData={ldapOrganizationData} onGroupUpdate={(data) => setLdapGroupData(data)} />;
+        return <LdapGroupEditorPanel currentUserEmail={currentUserEmail} setLdapGroupData={setLdapGroupData} ldapGroupData={ldapGroupData} ldapOrganizationData={ldapOrganizationData} />;
       default:
         return null;
     }

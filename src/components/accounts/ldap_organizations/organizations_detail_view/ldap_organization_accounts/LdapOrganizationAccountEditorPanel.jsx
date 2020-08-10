@@ -9,159 +9,109 @@ import accountsActions from "../../../accounts-actions";
 import TextInput from "../../../../common/input/text-input";
 import Loading from "../../../../common/loading";
 import {AuthContext} from "../../../../../contexts/AuthContext";
-import ItemInput from "../../../../common/input/item-input";
 import ToggleInput from "../../../../common/input/toggle-input";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCogs} from "@fortawesome/free-solid-svg-icons";
 import {capitalizeFirstLetter} from "../../../../common/helpers/string-helpers";
-
-const INITIAL_ORGANIZATION_ACCOUNT_DATA = {
-  name: "",
-  localAuth: true,
-  samlEnabled: true,
-  oAuthEnabled: true,
-  idpPostURL: "https://testurl.com",
-  idpVendor: "OKTA",
-  configEntryType: "Not sure",
-  entityID: "https://dev-842100.oktapreview.com",
-  description: "",
-  isMultipleIDP: false,
-  idpReturnAttributes: [
-    "mail",
-    "cn"],
-  accountName: "",
-  orgDomain: "",
-  orgOwner: "",
-  orgOwnerEmail: "",
-  administrator: {}
-};
+import {getFromValidationErrorToast, getPersistToast} from "../../../../common/toasts/toasts";
+import DtoTextInput from "../../../../common/input/dto_input/dto-text-input";
+import Model, {DataState} from "../../../../../core/data_model/model";
+import DtoToggleInput from "../../../../common/input/dto_input/dto-toggle-input";
 
 function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOrganization, newLdapOrganizationAccount, setLdapOrganizationAccountData, setShowEditPanel, handleClose, handleBackButton}) {
-  const fields = ldapOrganizationAccountFormFields;
-  const [error, setErrors] = useState("");
   const {getAccessToken} = useContext(AuthContext);
-  const [changeMap, setChangeMap] = useState({});
-  const [formData, setFormData] = useState(INITIAL_ORGANIZATION_ACCOUNT_DATA);
+  const [ldapOrganizationAccountDataDto, setLdapOrganizationAccountDataDto] = useState({});
   const [opseraUserList, setOpseraUsersList] = useState([]);
   const [currentOpseraUser, setCurrentOpseraUser] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
+  const [showToast, setShowToast] = useState(false);
+  const [toast, setToast] = useState({});
 
   useEffect(() => {
-    loadData(ldapOrganizationAccountData);
+    loadData();
   }, []);
 
-  const loadData = async (ldapOrganizationAccountData) => {
+  const loadData = async () => {
     setIsLoading(true);
-    await unpackLdapOrganizationAccountData(ldapOrganizationAccountData);
-    await loadOpseraUsers();
+    await unpackLdapOrganizationAccountData();
     setIsLoading(false);
   };
 
-  const unpackLdapOrganizationAccountData = async (ldapOrganizationAccountData) => {
-    console.log("ldapOrganizationAccountData in unpackLdapUserData: " + JSON.stringify(ldapOrganizationAccountData));
-    if (ldapOrganizationAccountData != null) {
-      setFormField("org", ldapOrganizationAccountData["org"] != null ? ldapOrganizationAccountData["org"] : "");
-      setFormField("name", ldapOrganizationAccountData["name"] != null ? ldapOrganizationAccountData["name"] : "");
-      setFormField("localAuth", ldapOrganizationAccountData["localAuth"] != null ? ldapOrganizationAccountData["localAuth"] : "");
-      setFormField("samlEnabled", ldapOrganizationAccountData["samlEnabled"] != null ? ldapOrganizationAccountData["samlEnabled"] : "");
-      setFormField("oAuthEnabled", ldapOrganizationAccountData["oAuthEnabled"] != null ? ldapOrganizationAccountData["oAuthEnabled"] : "");
-      setFormField("idpPostURL", ldapOrganizationAccountData["idpPostURL"] != null ? ldapOrganizationAccountData["idpPostURL"] : "");
-      setFormField("idpVendor", ldapOrganizationAccountData["idpVendor"] != null ? ldapOrganizationAccountData["idpVendor"] : "");
-      setFormField("configEntryType", ldapOrganizationAccountData["configEntryType"] != null ? ldapOrganizationAccountData["configEntryType"] : "");
-      setFormField("entityID", ldapOrganizationAccountData["entityID"] != null ? ldapOrganizationAccountData["entityID"] : "");
-      setFormField("orgOwnerEmail", ldapOrganizationAccountData["orgOwnerEmail"] != null ? ldapOrganizationAccountData["orgOwnerEmail"] : "");
-      setFormField("description", ldapOrganizationAccountData["description"] != null ? ldapOrganizationAccountData["description"] : "");
-      setFormField("isMultipleIDP", ldapOrganizationAccountData["isMultipleIDP"] != null ? ldapOrganizationAccountData["isMultipleIDP"] : "");
-      setFormField("idpReturnAttributes", ldapOrganizationAccountData["idpReturnAttributes"] != null ? ldapOrganizationAccountData["idpReturnAttributes"] : "");
-      setFormField("accountName", ldapOrganizationAccountData["accountName"] != null ? ldapOrganizationAccountData["accountName"] : "");
-      setFormField("orgDomain", ldapOrganizationAccountData["orgDomain"] != null ? ldapOrganizationAccountData["orgDomain"] : "");
-      setFormField("administrator", ldapOrganizationAccountData["administrator"] != null ? ldapOrganizationAccountData["administrator"] : "");
-    }
-
-    if (newLdapOrganizationAccount && ldapOrganization != null) {
+  const unpackLdapOrganizationAccountData = async () => {
+    let ldapOrganizationAccountDataDto = ldapOrganizationAccountData;
+    if (ldapOrganizationAccountDataDto.isNew() && ldapOrganization != null) {
       let orgDomain = ldapOrganization.orgOwnerEmail.substring(ldapOrganization.orgOwnerEmail.lastIndexOf("@") + 1);
       console.log("Parsed domain: " + JSON.stringify(orgDomain));
-      setFormField("orgDomain", orgDomain);
-      setFormField("name", ldapOrganization["name"] + "-acc");
-      setFormField("org", ldapOrganization["name"] != null ? ldapOrganization["name"] : "");
+      ldapOrganizationAccountDataDto.setData("orgDomain", orgDomain);
+      ldapOrganizationAccountDataDto.setData("name", ldapOrganization["name"] + "-acc");
+      ldapOrganizationAccountDataDto.setData("org", ldapOrganization["name"] != null ? ldapOrganization["name"] : "");
     }
 
-    setIsLoading(false);
+    setLdapOrganizationAccountDataDto(ldapOrganizationAccountDataDto);
+    await loadOpseraUsers(ldapOrganizationAccountDataDto);
   };
 
 
-  const loadOpseraUsers = async () => {
+  // TODO: Pull into general helper
+  const loadOpseraUsers = async (ldapOrganizationAccountDataDto) => {
     const response = await accountsActions.getUsers(getAccessToken);
-    console.log("Opsera Users: \n" + JSON.stringify(response.data));
+    // console.log("Opsera Users: \n" + JSON.stringify(response.data));
 
     let parsedUserNames = [];
     Object.keys(response.data["users"]).length > 0 && response.data["users"].map(user => {
       let orgDomain = user.email.substring(user.email.lastIndexOf("@") + 1);
-      if (ldapOrganizationAccountData["orgDomain"].includes(orgDomain)) {
+      if (ldapOrganizationAccountData.isNew() || ldapOrganizationAccountDataDto["orgDomain"].includes(orgDomain)) {
         parsedUserNames.push({text: (user["firstName"] + " " + user["lastName"]) + ": " + user["email"], id: user});
       }
     });
-    console.log("Parsed Organization Names: " + JSON.stringify(parsedUserNames));
+    // console.log("Parsed Organization Names: " + JSON.stringify(parsedUserNames));
     setOpseraUsersList(parsedUserNames);
   };
 
-  const setFormField = (field, value) => {
-    console.log("Setting form field: " + field + " value: " + JSON.stringify(value));
+  const createOrganizationAccount = async () => {
+    console.log("Persisting new organization account to DB: " + JSON.stringify(ldapOrganizationAccountDataDto));
 
-    if (value === ldapOrganizationAccountData[field]) {
-      console.log("Removing " + field + " from change map");
-      delete changeMap[field];
-    } else {
-      console.log("Added " + field + " to change map: " + value);
-      changeMap[field] = value;
-      setChangeMap({...changeMap});
-    }
-
-    formData[field] = value;
-    setFormData({...formData});
-
-
-    console.log("ChangeMap: " + JSON.stringify(changeMap));
-
-    if (newLdapOrganizationAccount) {
-      ldapOrganizationAccountData[field] = value;
-      setLdapOrganizationAccountData({...ldapOrganizationAccountData});
-    }
-  };
-
-  //TODO: Check fields
-  const isFormValid = true;
-
-  const createOrganizationAccount = async (newLdapOrganizationData) => {
-    let ldapOrganizationAccount = {orgAccount: newLdapOrganizationData};
-    console.log("Persisting new organization account to DB: " + JSON.stringify(ldapOrganizationAccount));
-
-    if (isFormValid) {
-      let createLdapOrganizationAccountResponse = await accountsActions.create(ldapOrganizationAccount, getAccessToken);
-      console.log("createLdapResponse: ", JSON.stringify(createLdapOrganizationAccountResponse));
+    if (ldapOrganizationAccountDataDto.isModelValid()) {
+      let createLdapOrganizationAccountResponse = await accountsActions.createOrganizationAccount(ldapOrganizationAccountDataDto, getAccessToken);
+      console.log("createLdapOrganizationAccountResponse: ", JSON.stringify(createLdapOrganizationAccountResponse));
 
       if (createLdapOrganizationAccountResponse.error != null) {
-        const errorMsg = `Microservice error reported creating the organization for : ${newLdapOrganizationData.accountName}.  Error returned: ${JSON.stringify(createLdapOrganizationAccountResponse.error.message, null, 2)}`;
+        const errorMsg = `Microservice error reported creating the organization for : ${ldapOrganizationAccountDataDto["accountName"]}.  Error returned: ${JSON.stringify(createLdapOrganizationAccountResponse.error.message, null, 2)}`;
         console.log(errorMsg);
-        setErrors(errorMsg);
+        let toast = getPersistToast(false, "create", "account", errorMsg, setShowToast);
+        setToast(toast);
+        setShowToast(true);
       } else {
         handleClose();
       }
     }
+    else {
+      let toast = getFromValidationErrorToast(setShowToast);
+      setToast(toast);
+      setShowToast(true);
+    }
   };
 
   const updateLdapOrganizationAccount = async () => {
-    if (isFormValid) {
+    if (ldapOrganizationAccountDataDto.isModelValid()) {
       try {
-        let organizationUpdate = {orgDomain: formData.orgDomain, ...changeMap};
-        console.log("Persisting values in organizationUpdate : " + JSON.stringify(organizationUpdate));
-        const response = await accountsActions.updateOrganizationAccount(organizationUpdate, getAccessToken);
-        console.log("Response data: " + JSON.stringify(response.data));
-        setLdapOrganizationAccountData(response.data);
-        setChangeMap({});
+        console.log("Persisting values in updateLdapOrganizationAccount : " + JSON.stringify(ldapOrganizationAccountDataDto.data));
+        const updateOrganizationAccountResponse = await accountsActions.updateOrganizationAccount(ldapOrganizationAccountDataDto, getAccessToken);
+        console.log("updateOrganizationAccountResponse data: " + JSON.stringify(updateOrganizationAccountResponse.data));
+        let toast = getPersistToast(true, "update", "Account", undefined, setShowToast);
+        setToast(toast);
+        setShowToast(true);
+        let updatedDto = new Model(updateOrganizationAccountResponse.data, ldapOrganizationAccountDataDto.metaData, false);
+        setLdapOrganizationAccountData(updatedDto);
+        setLdapOrganizationAccountDataDto(updatedDto);
       } catch (err) {
         console.log(err.message);
       }
+    }
+    else {
+      let toast = getFromValidationErrorToast(setShowToast);
+      setToast(toast);
+      setShowToast(true);
     }
   };
 
@@ -180,7 +130,8 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
       site: "Site1"
     };
 
-    setFormField("administrator", {...newAdmin});
+    ldapOrganizationAccountDataDto.setData("administrator", {...newAdmin});
+    setLdapOrganizationAccountDataDto({...ldapOrganizationAccountDataDto});
   };
 
   const handleOpseraUserChange = (selectedOption) => {
@@ -188,8 +139,9 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
     setCurrentOpseraUser(option);
     console.log("Setting opsera account to: " + JSON.stringify(selectedOption));
     console.log("option.organizationName: " + option["organizationName"]);
-    setFormField("orgOwner", option["firstName"] + " " + option["lastName"]);
-    setFormField("orgOwnerEmail", option["email"]);
+    ldapOrganizationAccountDataDto.setData("orgOwner", option["firstName"] + " " + option["lastName"]);
+    ldapOrganizationAccountDataDto.setData("orgOwnerEmail", option["email"]);
+    setLdapOrganizationAccountDataDto({...ldapOrganizationAccountDataDto});
     addAdmin(option);
   };
 
@@ -198,6 +150,7 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
       {isLoading ? <Loading size="sm"/> : null}
 
       {!isLoading && <>
+
         <div className="scroll-y full-height">
           {!newLdapOrganizationAccount &&
           <div className="mb-2 text-muted">
@@ -217,14 +170,11 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
           <div className="pt-1">
             <hr/>
           </div>
-          {error.length > 0 && <>
-            <div className="pb-2 error-text">WARNING! An error has occurred saving your configuration: {error}</div>
-          </>}
+          {showToast && toast}
           <Row>
             <Col>
               <div className="custom-select-input">
-                <label className="mt-0"><span>{fields["opseraId"].label}{fields["opseraId"].rules.isRequired ?
-                  <span className="danger-red">*</span> : null} </span></label>
+                <label className="mt-0"><span>Opsera Customer Record<span className="danger-red">*</span></span></label>
                 <DropdownList
                   data={opseraUserList}
                   valueField='value'
@@ -239,75 +189,74 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
           </Row>
           <Row>
             <Col lg={12}>
-              <TextInput disabled={true} field={fields.orgOwner} setData={setFormField}
-                         formData={formData}/>
+              <DtoTextInput disabled={!ldapOrganizationAccountDataDto.isNew()} fieldName={"orgOwner"} dataObject={ldapOrganizationAccountDataDto}
+                            setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <TextInput disabled={true} field={fields.orgOwnerEmail} setData={setFormField}
-                         formData={formData}/>
+              <DtoTextInput disabled={true} fieldName={"orgOwnerEmail"} dataObject={ldapOrganizationAccountDataDto}
+                            setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <TextInput disabled={!newLdapOrganizationAccount} field={fields.orgDomain} setData={setFormField}
-                         formData={formData}/>
+              <DtoTextInput disabled={!ldapOrganizationAccountDataDto.isNew()} fieldName={"orgDomain"} dataObject={ldapOrganizationAccountDataDto}
+                            setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <TextInput field={fields.name} setData={setFormField}
-                         formData={formData}/>
+              <DtoTextInput fieldName={"name"} dataObject={ldapOrganizationAccountDataDto}
+                            setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <TextInput field={fields.accountName} setData={setFormField}
-                         formData={formData}/>
+              <DtoTextInput fieldName={"accountName"} dataObject={ldapOrganizationAccountDataDto}
+                            setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <TextInput field={fields.description} setData={setFormField}
-                         formData={formData}/>
+              <DtoTextInput fieldName={"description"} dataObject={ldapOrganizationAccountDataDto}
+                            setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <TextInput disabled={true} field={fields.configEntryType} setData={setFormField}
-                         formData={formData}/>
+              <DtoTextInput disabled={true} fieldName={"configEntryType"} dataObject={ldapOrganizationAccountDataDto}
+                            setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <TextInput disabled={true} field={fields.entityID} setData={setFormField}
-                         formData={formData}/>
+              <DtoTextInput disabled={true} fieldName={"entityID"} dataObject={ldapOrganizationAccountDataDto}
+                            setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <TextInput disabled={true} field={fields.idpPostURL} setData={setFormField}
-                         formData={formData}/>
+              <DtoTextInput disabled={true} fieldName={"idpPostURL"} dataObject={ldapOrganizationAccountDataDto}
+                            setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <TextInput disabled={true} field={fields.idpVendor} setData={setFormField}
-                         formData={formData}/>
+              <DtoTextInput disabled={true} fieldName={"idpVendor"} dataObject={ldapOrganizationAccountDataDto}
+                            setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             {/*<Col>*/}
             {/*  <ItemInput field={fields.idpReturnAttributes} setData={setFormField}*/}
             {/*             formData={formData}/>*/}
             {/*</Col>*/}
             <Col lg={12}>
-              <ToggleInput disabled={true} field={fields.isMultipleIDP} setData={setFormField}
-                           formData={formData}/>
+              <DtoToggleInput disabled={true} fieldName={"isMultipleIDP"} dataObject={ldapOrganizationAccountDataDto}
+                            setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <ToggleInput disabled={true} field={fields.localAuth} setData={setFormField}
-                           formData={formData}/>
+              <DtoToggleInput disabled={true} fieldName={"localAuth"} dataObject={ldapOrganizationAccountDataDto}
+                           setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <ToggleInput disabled={true} field={fields.samlEnabled} setData={setFormField}
-                           formData={formData}/>
+              <DtoToggleInput disabled={true} fieldName={"samlEnabled"} dataObject={ldapOrganizationAccountDataDto}
+                           setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <ToggleInput disabled={true} field={fields.oAuthEnabled} setData={setFormField}
-                           formData={formData}/>
+              <DtoToggleInput disabled={true} fieldName={"oAuthEnabled"} dataObject={ldapOrganizationAccountDataDto}
+                           setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
           </Row>
           <Row>
             <div className="ml-auto px-3">
-              {newLdapOrganizationAccount ? <Button size="sm" variant="primary"
-                                                    onClick={() => createOrganizationAccount(ldapOrganizationAccountData)}>Create
-                  Account</Button>
-                : <>
-                  <Button size="sm" className="mr-2" variant="secondary" onClick={() => handleBackButton()}>Back to
-                    Accounts</Button>
-                  <Button size="sm" variant="primary" disabled={Object.keys(changeMap).length === 0}
+              {ldapOrganizationAccountDataDto.isNew()
+                ? <Button size="sm" variant="primary" onClick={() => createOrganizationAccount()}>Create Account</Button>
+                :
+                <>
+                  <Button size="sm" className="mr-2" variant="secondary" onClick={() => handleBackButton()}>Back to Accounts</Button>
+                  <Button size="sm" variant="primary" disabled={ldapOrganizationAccountDataDto.dataState === DataState.LOADED}
                           onClick={() => updateLdapOrganizationAccount()}>Save Changes</Button>
                 </>
               }

@@ -4,44 +4,29 @@ import CustomTable from "../../../../common/table/table";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
-import {ldapOrganizationAccountFormFields} from "../../ldap-organization-account-form-fields";
+import {
+  ldapOrganizationAccountMetaData
+} from "../../ldap-organization-account-form-fields";
 import {getTableTextColumn} from "../../../../common/table/table-column-helpers";
 
 function LdapOrganizationAccountsTable({ldapOrganizationAccounts, handleAccountClick, setShowCreateAccountModal}) {
-  let fields = ldapOrganizationAccountFormFields;
-
-  const initialState = {
-    pageIndex: 0,
-    sortBy: [
-      {
-        id: "name",
-        desc: false
-      }
-    ]
-  };
-
-  const rowStyling = (row) => {
-    return "";
-  };
+  let fields = ldapOrganizationAccountMetaData.fields;
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(fields["name"]),
-      getTableTextColumn(fields["orgOwner"]),
-      getTableTextColumn(fields["orgOwnerEmail"]),
-      getTableTextColumn(fields["accountName"]),
-      // TODO: Create way to show administrator
-      getTableTextColumn(fields["description"]),
-      getTableTextColumn(fields["orgDomain"]),
+      getTableTextColumn(fields.find(field => { return field.id === "name"})),
+      getTableTextColumn(fields.find(field => { return field.id === "orgOwner"})),
+      getTableTextColumn(fields.find(field => { return field.id === "orgOwnerEmail"})),
+      getTableTextColumn(fields.find(field => { return field.id === "accountName"})),
+      getTableTextColumn(fields.find(field => { return field.id === "description"})),
+      getTableTextColumn(fields.find(field => { return field.id === "orgDomain"})),
     ],
     []
   );
 
-
   const onRowSelect = (selectedRow) => {
     handleAccountClick(selectedRow.original);
   };
-
 
   return (
     <>
@@ -60,8 +45,6 @@ function LdapOrganizationAccountsTable({ldapOrganizationAccounts, handleAccountC
             columns={columns}
             data={ldapOrganizationAccounts}
             onRowSelect={onRowSelect}
-            rowStyling={rowStyling}
-            initialState={initialState}
             tableStyleName="custom-table-2"
           />
         </div>
