@@ -64,7 +64,7 @@ function ToolConfigurationSelect( { data, editItem, parentCallback }) {
 
   return (
     <Form>
-      { error && <ErrorDialog error={error} className="mt-3 mb-3" /> }
+      {error && <ErrorDialog error={error} align={"top"} setError={setErrors}/>}
 
       <Form.Group controlId="toolSelect">
         <Form.Text className="text-muted mb-2 mt-1">

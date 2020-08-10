@@ -77,7 +77,6 @@ function AnchoreStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
       // Set results state
       let results = await searchCypressList(service);
       if (results) {
-        console.log(results);
         setCypressList(formatOptions(results));
         setIsCypressSearching(false);
       }
@@ -112,7 +111,7 @@ function AnchoreStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
           value: thresholdVal,
         },
       };
-      console.log("item: ", item);
+
       setLoading(false);
       parentCallback(item);
     }
@@ -124,14 +123,13 @@ function AnchoreStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
     const apiUrl = "/registry/properties/" + service; // this is to get all the service accounts from tool registry
     try {
       const res = await axiosApiService(accessToken).get(apiUrl);
-      console.log(res);
       if (res.data) {
         let respObj = [];
         let arrOfObj = res.data;
         arrOfObj.map((item) => {
           respObj.push({ name: item.name, id: item._id, configuration: item.configuration });
         });
-        console.log(respObj);
+
         return respObj;
       } else {
         setErrors(
@@ -139,7 +137,6 @@ function AnchoreStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
         );
       }
     } catch (err) {
-      console.log(err.message);
       setErrors(err.message);
     }
   };
@@ -176,7 +173,6 @@ function AnchoreStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
       accountPassword: selectedOption.configuration ? selectedOption.configuration.accountPassword : "",
     });
   };
-  console.log(formData);
 
   const handleECRStepChange = (selectedOption) => {
     setFormData({ ...formData, ecrPushStepId: selectedOption._id });
@@ -184,7 +180,7 @@ function AnchoreStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
 
   return (
     <>
-      {error && <ErrorDialog error={error} />}
+      {error && <ErrorDialog error={error} align={"top"} setError={setErrors}/>}
       <Form>
         {formMessage.length > 0 ? <p className="error-text">{formMessage}</p> : null}
 

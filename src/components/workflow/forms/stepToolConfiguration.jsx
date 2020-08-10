@@ -97,7 +97,6 @@ function StepToolConfiguration({
         createJobPostBody,
         getAccessToken
       );
-      console.log("createJobResponse: ", createJobResponse);
 
       if (createJobResponse && createJobResponse.data.status === 200) {
         const { message } = createJobResponse.data;
@@ -106,7 +105,6 @@ function StepToolConfiguration({
           typeof message.jobName === "string" &&
           message.jobName.length > 0
         ) {
-          console.log("Updating JobName in Tool Configuration with: ", message);
           workflow.plan[stepIndex].tool.configuration.jobName = message.jobName;
           pipelineResponse = await PipelineActions.save(
             pipeline._id,
@@ -118,19 +116,17 @@ function StepToolConfiguration({
         await reloadParentPipeline();
         closeEditorPanel();
       } else {
-        const errorMsg = `Microservice error reported creating the job for toolId: ${toolId}.  Error returned: ${JSON.stringify(
+        const errorMsg = `Service Unavailable. Error reported creating the job for toolId: ${toolId}.  Error returned: ${JSON.stringify(
           createJobResponse.data,
           null,
           2
         )}`;
-        console.log(errorMsg, pipelineResponse);
         setErrors(errorMsg);
       }
     } catch (error) {
       const errorMsg = `Error Creating and Saving Job Configuration for toolId: ${toolId} on $pipeline: ${
         pipeline._id
       }.  Error reported: ${JSON.stringify(error, null, 2)}`;
-      console.log(errorMsg);
       setErrors(errorMsg);
     }
   };
@@ -147,14 +143,8 @@ function StepToolConfiguration({
         <Link to="/inventory/tools">Tool Registry</Link>.
       </div>
 
-      {error && (
-        <>
-          <div className="mt-2 error-text">
-            WARNING! An error has occurred saving your configuration:
-          </div>
-          <ErrorDialog error={error} />
-        </>
-      )}
+      {error && <ErrorDialog error={error} align={"top"} setError={setErrors}/>}
+
 
       {typeof stepTool !== "undefined" && !error ? (
         <div className="ml-1 mt-3">

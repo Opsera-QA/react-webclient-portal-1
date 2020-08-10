@@ -124,7 +124,7 @@ function JunitStepConfiguration({
     };
   }, [stepTool]);
 
-  useEffect(() => {
+  useEffect( () => {
     setErrors(false);
 
     async function fetchJenkinsDetails(service) {
@@ -156,7 +156,6 @@ function JunitStepConfiguration({
       // Set results state
       let results = await searchRepositories(service, gitToolId);
       if (results) {
-        //console.log(results);
         setRepoList(results);
         setIsRepoSearching(false);
       }
@@ -247,8 +246,6 @@ function JunitStepConfiguration({
     }
   }, [jobType]);
 
-  console.log(formData);
-  // console.log(jobsList);
 
   const loadFormData = async (step) => {
     let { configuration, threshold, job_type } = step;
@@ -269,7 +266,6 @@ function JunitStepConfiguration({
   };
 
   const handleCreateAndSave = async (pipelineId, stepId, toolId) => {
-    console.log("saving and creating job for toolID: ", toolId);
     if (validateRequiredFields() && toolId) {
       setLoading(true);
 
@@ -281,7 +277,6 @@ function JunitStepConfiguration({
           stepId: formData.stepIdXML && formData.stepIdXML,
         },
       };
-      console.log("createJobPostBody: ", createJobPostBody);
 
       const toolConfiguration = {
         configuration: formData,
@@ -291,14 +286,12 @@ function JunitStepConfiguration({
         },
         job_type: jobType,
       };
-      console.log("item: ", toolConfiguration);
 
       await createJob(toolId, toolConfiguration, stepId, createJobPostBody);
     }
   };
 
   const callbackFunction = async () => {
-    console.log("saving data");
     if (validateRequiredFields()) {
       setLoading(true);
 
@@ -310,7 +303,6 @@ function JunitStepConfiguration({
         },
         job_type: jobType,
       };
-      console.log("item: ", item);
       setLoading(false);
       parentCallback(item);
     }
@@ -343,7 +335,6 @@ function JunitStepConfiguration({
         );
       }
     } catch (err) {
-      console.log(err.message);
       setErrors(err.message);
     }
   };
@@ -426,7 +417,6 @@ function JunitStepConfiguration({
         });
     } else {
       setErrors("Selected Job is not a Unit test Job!  Please ensure the selected job has JUnit configurations.");
-      console.log("not a unit test job")
     }
   };
 
@@ -502,7 +492,7 @@ function JunitStepConfiguration({
         return arrOfObj;
       } else {
         setErrors(
-          "Account information is missing or unavailable!  Please ensure the required account is registered and up to date in Tool Registry."
+          "Service Unavailable.  Please try again or report this issue."
         );
       }
     } catch (err) {
@@ -537,7 +527,7 @@ function JunitStepConfiguration({
         }
       } else {
         setErrors(
-          "Account information is missing or unavailable!  Please ensure the required account is registered and up to date in Tool Registry."
+          "Service Unavailable.  Please try again or report this issue."
         );
       }
     } catch (err) {
@@ -609,7 +599,7 @@ function JunitStepConfiguration({
 
   return (
     <>
-      {error && <ErrorDialog error={error} />}
+      {error && <ErrorDialog error={error} align={"top"} setError={setErrors}/>}
 
       <Form>
         <Form.Group controlId="jenkinsList">

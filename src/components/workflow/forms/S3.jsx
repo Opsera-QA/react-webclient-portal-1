@@ -219,7 +219,6 @@ function S3StepConfiguration({
           value: thresholdVal,
         },
       };
-      console.log("item: ", item);
       setLoading(false);
       parentCallback(item);
     }
@@ -416,7 +415,7 @@ function S3StepConfiguration({
 
   return (
     <>
-      {error && <ErrorDialog error={error} />}
+      {error && <ErrorDialog error={error} align={"top"} setError={setErrors}/>}
 
       <Form>
         <Form.Group controlId="jenkinsList">

@@ -190,11 +190,10 @@ function SFDCStepConfiguration( { stepTool, pipelineId, plan, stepId, parentCall
         });
         return respObj;
       } else {
-        setErrors("Account information is missing or unavailable!  Please ensure the required account is registered and up to date in Tool Registry.");
+        setErrors("Service Unavailable.  Please try again or report this issue.");
       }
     }
     catch (err) {
-      //console.log(err.message);
       setErrors(err.message);
     }
   };
@@ -214,8 +213,8 @@ function SFDCStepConfiguration( { stepTool, pipelineId, plan, stepId, parentCall
       if( res.data && res.data.data ) {
         let arrOfObj = res.data.data;
         if(arrOfObj) {
-          var result = arrOfObj.map(function(el) {
-            var o = Object.assign({});
+          let result = arrOfObj.map(function(el) {
+            let o = Object.assign({});
             o.value = el.toLowerCase();
             o.name = el;
             return o;
@@ -223,11 +222,10 @@ function SFDCStepConfiguration( { stepTool, pipelineId, plan, stepId, parentCall
           return result;
         }
       } else {
-        setErrors("Account information is missing or unavailable!  Please ensure the required account is registered and up to date in Tool Registry.");
+        setErrors("Service Unavailable.  Please try again or report this issue.");
       }
     }
     catch (err) {
-      console.log(err.message);
       setErrors(err.message);
     }
   };
@@ -273,21 +271,18 @@ function SFDCStepConfiguration( { stepTool, pipelineId, plan, stepId, parentCall
     const apiUrl = "/registry/properties/"+service;   // this is to get all the service accounts from tool registry
     try {
       const res = await axiosApiService(accessToken).get(apiUrl);
-      console.log(res);
       if( res.data ) {
         let respObj = [];
         let arrOfObj = res.data;
         arrOfObj.map((item) => {
           respObj.push({ "name" : item.name, "id" : item._id, "configuration" : item.configuration });
         });
-        console.log(respObj);
         return respObj;
       } else {
         setErrors("Jenkins information is missing or unavailable!  Please ensure the required Jenkins creds are registered and up to date in Tool Registry.");
       }
     }
     catch (err) {
-      console.log(err.message);
       setErrors(err.message);
     }
   };
@@ -356,9 +351,8 @@ function SFDCStepConfiguration( { stepTool, pipelineId, plan, stepId, parentCall
 
   return (
     <>
-      {error && 
-        <ErrorDialog  error={error} />
-      }
+      {error && <ErrorDialog error={error} align={"top"} setError={setErrors}/>}
+
       <Form>
         { formMessage.length > 0 ? <p className="error-text">{formMessage}</p> : null}
 

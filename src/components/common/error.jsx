@@ -1,7 +1,10 @@
 import React, { useReducer, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { Alert } from "react-bootstrap";
-import { AuthContext } from "../../contexts/AuthContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faSave,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
 
 /**
  * @param {*} { error, align, type }
@@ -10,8 +13,8 @@ import { AuthContext } from "../../contexts/AuthContext";
  * type: passes the "variant" value from Bootstrap of danger, warning, info, etc.
  * @returns
  */
-function ErrorDialog({ error, align, type }) {
-  const contextType = useContext(AuthContext);
+function ErrorDialog({ error, align, type, setError }) {
+  //const contextType = useContext(AuthContext);
   const [state, setState] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     { message: null, detail: null, statusCode: null, alignment: "inline", variant: "danger" },
@@ -21,6 +24,12 @@ function ErrorDialog({ error, align, type }) {
     //const { loginUserContext } = contextType;
     //loginUserContext();
     window.location = "/login";
+  };
+
+  const clearError = () => {
+    setError(() => {
+      return false;
+    });
   };
 
   useEffect(() => {
@@ -36,7 +45,6 @@ function ErrorDialog({ error, align, type }) {
       error = "Undefined";
     }
 
-    console.log("ERROR", error);
     setState({
       message: messageBody ? messageBody : error,
       detail: JSON.stringify(error),
@@ -61,6 +69,19 @@ function ErrorDialog({ error, align, type }) {
         </div>
       </div>
     );
+  } else if (alignment === "top") {
+    return (
+      <div className="w-100 error-block top-error-block">
+        <div className="float-right ml-1">
+          <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
+            clearError();
+          }}/></div>
+        {state.message} {(statusCode === 401 || (state.message && state.message.includes("401"))) &&
+      <span className="ml-1"><a href="#" onClick={() => {
+        login();
+      }}>Click here to refresh login.</a></span>}
+      </div>
+    );
   } else {
     return (
       <div className="mx-3 my-3 max-content-module-width-50">
@@ -83,6 +104,7 @@ ErrorDialog.propTypes = {
   ]),
   align: PropTypes.string,
   type: PropTypes.string,
+  setError: PropTypes.func
 };
 
 

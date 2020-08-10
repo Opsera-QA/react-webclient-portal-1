@@ -104,7 +104,7 @@ function JenkinsStepConfiguration({
   const formatStepOptions = (plan, stepId) => {
     let STEP_OPTIONS = plan.slice(
       0,
-      plan.findIndex((element) => element._id === stepId)
+      plan.findIndex((element) => element._id === stepId),
     );
     STEP_OPTIONS.unshift({ _id: "", name: "Select One", isDisabled: "yes" });
     return STEP_OPTIONS;
@@ -137,13 +137,14 @@ function JenkinsStepConfiguration({
       setisJenkinsSearching(true);
       // Set results state
       let results = await searchToolsList(service);
-      //console.log(results);
-      const filteredList = results.filter(
-        (el) => el.configuration !== undefined
-      ); //filter out items that do not have any configuration data!
-      if (filteredList) {
-        setJenkinsList(filteredList);
-        setisJenkinsSearching(false);
+      if (results) {
+        const filteredList = results.filter(
+          (el) => el.configuration !== undefined,
+        ); //filter out items that do not have any configuration data!
+        if (filteredList) {
+          setJenkinsList(filteredList);
+          setisJenkinsSearching(false);
+        }
       }
     }
 
@@ -157,15 +158,16 @@ function JenkinsStepConfiguration({
 
     async function fetchSFDCDetails(service) {
       setisSFDCSearching(true);
-      // Set results state
       let results = await searchToolsList(service);
-      //console.log(results);
-      const filteredList = results.filter(
-        (el) => el.configuration !== undefined
-      ); //filter out items that do not have any configuration data!
-      if (filteredList) {
-        setSFDCList(filteredList);
-        setisSFDCSearching(false);
+
+      if (results) {
+        const filteredList = results.filter(
+          (el) => el.configuration !== undefined,
+        ); //filter out items that do not have any configuration data!
+        if (filteredList) {
+          setSFDCList(filteredList);
+          setisSFDCSearching(false);
+        }
       }
     }
 
@@ -241,23 +243,23 @@ function JenkinsStepConfiguration({
       setAccountsList(
         jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ] ? 
-        jenkinsList[
-          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ].accounts : []
+          ] ?
+          jenkinsList[
+            jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+            ].accounts : [],
       );
     }
-  }, [ jenkinsList, formData.toolConfigId]);
+  }, [jenkinsList, formData.toolConfigId]);
 
   useEffect(() => {
     if (formData.toolConfigId) {
       setJobsList(
         jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ] ? 
-        jenkinsList[
-          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ].jobs : []
+          ] ?
+          jenkinsList[
+            jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+            ].jobs : [],
       );
     }
   }, [jenkinsList, formData.toolConfigId]);
@@ -268,8 +270,6 @@ function JenkinsStepConfiguration({
     }
   }, [formData.toolJobType]);
 
-  console.log(formData);
-  // console.log(jobsList);
 
   const loadFormData = async (step) => {
     let { configuration, threshold, job_type } = step;
@@ -337,14 +337,13 @@ function JenkinsStepConfiguration({
     }
   };
 
-  //TODO: Refactor this into actions.jsx
   const searchToolsList = async (service) => {
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
     const apiUrl = "/registry/properties/" + service; // this is to get all the service accounts from tool registry
     try {
       const res = await axiosApiService(accessToken).get(apiUrl);
-      if (res.data) {
+      if (res.data && res.status === 200) {
         let respObj = [];
         let arrOfObj = res.data;
         arrOfObj.map((item) => {
@@ -360,11 +359,10 @@ function JenkinsStepConfiguration({
         return respObj;
       } else {
         setErrors(
-          "Jenkins information is missing or unavailable!  Please ensure the required Jenkins creds are registered and up to date in Tool Registry."
+          "Jenkins information is missing or unavailable!  Please ensure the required Jenkins creds are registered and up to date in Tool Registry.",
         );
       }
     } catch (err) {
-      console.log(err.message);
       setErrors(err.message);
     }
   };
@@ -486,33 +484,33 @@ function JenkinsStepConfiguration({
     //   });
     // }
     switch (selectedOption.type[0]) {
-      case "SFDC":
-        setFormData({
-          ...formData,
-          toolJobId: selectedOption._id,
-          toolJobType: selectedOption.type,
-          jobType: selectedOption.configuration.jobType,
-          ...selectedOption.configuration,
-          stepIdXML: "",
-          sfdcDestToolId: "",
-          destAccountUsername: "",
-        });
-        break;
-      default:
-        setFormData({
-          ...formData,
-          toolJobId: selectedOption._id,
-          toolJobType: selectedOption.type,
-          jobType: selectedOption.type[0],
-          ...selectedOption.configuration,
-          rollbackBranchName: "",
-          stepIdXML: "",
-          sfdcDestToolId: "",
-          destAccountUsername: "",
-          buildToolVersion: "6.3",
-          buildArgs: {},
-        });
-        break;
+    case "SFDC":
+      setFormData({
+        ...formData,
+        toolJobId: selectedOption._id,
+        toolJobType: selectedOption.type,
+        jobType: selectedOption.configuration.jobType,
+        ...selectedOption.configuration,
+        stepIdXML: "",
+        sfdcDestToolId: "",
+        destAccountUsername: "",
+      });
+      break;
+    default:
+      setFormData({
+        ...formData,
+        toolJobId: selectedOption._id,
+        toolJobType: selectedOption.type,
+        jobType: selectedOption.type[0],
+        ...selectedOption.configuration,
+        rollbackBranchName: "",
+        stepIdXML: "",
+        sfdcDestToolId: "",
+        destAccountUsername: "",
+        buildToolVersion: "6.3",
+        buildArgs: {},
+      });
+      break;
     }
   };
 
@@ -612,7 +610,7 @@ function JenkinsStepConfiguration({
         return arrOfObj;
       } else {
         setErrors(
-          "Account information is missing or unavailable!  Please ensure the required account is registered and up to date in Tool Registry."
+          "Service Unavailable.  Please try again or report this issue.",
         );
       }
     } catch (err) {
@@ -637,7 +635,7 @@ function JenkinsStepConfiguration({
       if (res.data && res.data.data) {
         let arrOfObj = res.data.data;
         if (arrOfObj) {
-          var result = arrOfObj.map(function (el) {
+          var result = arrOfObj.map(function(el) {
             var o = Object.assign({});
             o.value = el.toLowerCase();
             o.name = el;
@@ -647,7 +645,7 @@ function JenkinsStepConfiguration({
         }
       } else {
         setErrors(
-          "Account information is missing or unavailable!  Please ensure the required account is registered and up to date in Tool Registry."
+          "Service Unavailable.  Please try again or report this issue.",
         );
       }
     } catch (err) {
@@ -678,7 +676,7 @@ function JenkinsStepConfiguration({
             </div>
             {data.configuration && (
               <>
-                {Object.entries(data.configuration).map(function (a) {
+                {Object.entries(data.configuration).map(function(a) {
                   return (
                     <div key={a}>
                       {a[1].length > 0 && (
@@ -719,7 +717,7 @@ function JenkinsStepConfiguration({
 
   return (
     <>
-      {error && <ErrorDialog error={error} />}
+      {error && <ErrorDialog error={error} align={"top"} setError={setErrors}/>}
 
       <Form>
         <Form.Group controlId="jenkinsList">
@@ -732,7 +730,7 @@ function JenkinsStepConfiguration({
               overlay={RegistryPopover(
                 jenkinsList[
                   jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-                ]
+                  ],
               )}
             >
               <FontAwesomeIcon
@@ -761,9 +759,9 @@ function JenkinsStepConfiguration({
                     value={
                       jenkinsList[
                         jenkinsList.findIndex(
-                          (x) => x.id === formData.toolConfigId
+                          (x) => x.id === formData.toolConfigId,
                         )
-                      ]
+                        ]
                     }
                     valueField="id"
                     textField="name"
@@ -793,7 +791,7 @@ function JenkinsStepConfiguration({
           {formData.toolConfigId && formData.toolConfigId.length > 0 && (
             <Form.Label className="mt-2 pl-1">
               <Link to={"/inventory/tools/" + formData.toolConfigId}>
-                <FontAwesomeIcon icon={faTools} className="pr-1" /> View/edit
+                <FontAwesomeIcon icon={faTools} className="pr-1"/> View/edit
                 this tool's Registry settings
               </Link>
             </Form.Label>
@@ -858,7 +856,7 @@ function JenkinsStepConfiguration({
                     overlay={RegistryPopover(
                       jobsList[
                         jobsList.findIndex((x) => x._id === formData.toolJobId)
-                      ]
+                        ],
                     )}
                   >
                     <FontAwesomeIcon
@@ -893,7 +891,7 @@ function JenkinsStepConfiguration({
                     value={
                       jobsList[
                         jobsList.findIndex((x) => x._id === formData.toolJobId)
-                      ]
+                        ]
                     }
                     filter="contains"
                     onChange={handleJobChange}
@@ -916,7 +914,7 @@ function JenkinsStepConfiguration({
                 overlay={RegistryPopover(
                   sfdcList[
                     sfdcList.findIndex((x) => x.id === formData.sfdcToolId)
-                  ]
+                    ],
                 )}
               >
                 <FontAwesomeIcon
@@ -945,9 +943,9 @@ function JenkinsStepConfiguration({
                       value={
                         sfdcList[
                           sfdcList.findIndex(
-                            (x) => x.id === formData.sfdcToolId
+                            (x) => x.id === formData.sfdcToolId,
                           )
-                        ]
+                          ]
                       }
                       valueField="id"
                       textField="name"
@@ -986,9 +984,9 @@ function JenkinsStepConfiguration({
                 overlay={RegistryPopover(
                   accountsList[
                     accountsList.findIndex(
-                      (x) => x.toolId === formData.gitToolId
+                      (x) => x.toolId === formData.gitToolId,
                     )
-                  ]
+                    ],
                 )}
               >
                 <FontAwesomeIcon
@@ -1019,9 +1017,9 @@ function JenkinsStepConfiguration({
                 value={
                   accountsList[
                     accountsList.findIndex(
-                      (x) => x.toolId === formData.gitToolId
+                      (x) => x.toolId === formData.gitToolId,
                     )
-                  ]
+                    ]
                 }
                 filter="contains"
                 onChange={handleAccountChange}
@@ -1051,9 +1049,9 @@ function JenkinsStepConfiguration({
                     value={
                       repoList[
                         repoList.findIndex(
-                          (x) => x.name === formData.repository
+                          (x) => x.name === formData.repository,
                         )
-                      ]
+                        ]
                     }
                     valueField="value"
                     textField="name"
@@ -1095,7 +1093,7 @@ function JenkinsStepConfiguration({
                     value={
                       branchList[
                         branchList.findIndex((x) => x.value === formData.branch)
-                      ]
+                        ]
                     }
                     valueField="value"
                     textField="name"
@@ -1126,9 +1124,9 @@ function JenkinsStepConfiguration({
                 value={
                   formData.stepIdXML
                     ? listOfSteps[
-                        listOfSteps.findIndex(
-                          (x) => x._id === formData.stepIdXML
-                        )
+                      listOfSteps.findIndex(
+                        (x) => x._id === formData.stepIdXML,
+                      )
                       ]
                     : listOfSteps[0]
                 }
@@ -1172,9 +1170,9 @@ function JenkinsStepConfiguration({
                       value={
                         sfdcList[
                           sfdcList.findIndex(
-                            (x) => x.id === formData.sfdcDestToolId
+                            (x) => x.id === formData.sfdcDestToolId,
                           )
-                        ]
+                          ]
                       }
                       valueField="id"
                       textField="name"
@@ -1182,26 +1180,26 @@ function JenkinsStepConfiguration({
                       onChange={handleDestinationSFDCChange}
                     />
                     {formData.destAccountUsername &&
-                      formData.destAccountUsername.length > 0 && (
-                        <div className="text-right pt-2">
-                          <OverlayTrigger
-                            trigger="click"
-                            rootClose
-                            placement="left"
-                            overlay={RegistryPopover(
-                              sfdcList[
-                                sfdcList.findIndex(
-                                  (x) => x.id === formData.sfdcDestToolId
-                                )
-                              ]
-                            )}
-                          >
-                            <Button variant="outline-dark" size="sm">
-                              Info
-                            </Button>
-                          </OverlayTrigger>
-                        </div>
-                      )}
+                    formData.destAccountUsername.length > 0 && (
+                      <div className="text-right pt-2">
+                        <OverlayTrigger
+                          trigger="click"
+                          rootClose
+                          placement="left"
+                          overlay={RegistryPopover(
+                            sfdcList[
+                              sfdcList.findIndex(
+                                (x) => x.id === formData.sfdcDestToolId,
+                              )
+                              ],
+                          )}
+                        >
+                          <Button variant="outline-dark" size="sm">
+                            Info
+                          </Button>
+                        </OverlayTrigger>
+                      </div>
+                    )}
                   </>
                 ) : (
                   <>
@@ -1222,7 +1220,7 @@ function JenkinsStepConfiguration({
             )}
           </Form.Group>
         )}
-{/* 
+        {/*
         {formData.jenkinsUrl && jenkinsList.length > 1 && (
           <Form.Group controlId="formBasicCheckbox" className="mt-4 ml-1">
             <Form.Check
@@ -1242,7 +1240,7 @@ function JenkinsStepConfiguration({
             />
           </Form.Group>
         )} */}
-{/* 
+        {/*
         {formData.buildType === "docker" && (
           <>
             <Form.Group controlId="branchField">
@@ -1305,7 +1303,7 @@ function JenkinsStepConfiguration({
               </>
             ) : (
               <>
-                <FontAwesomeIcon icon={faSave} className="mr-1" />
+                <FontAwesomeIcon icon={faSave} className="mr-1"/>
                 Create Job and Save
               </>
             )}
@@ -1331,7 +1329,7 @@ function JenkinsStepConfiguration({
               </>
             ) : (
               <>
-                <FontAwesomeIcon icon={faSave} className="mr-1" /> Save
+                <FontAwesomeIcon icon={faSave} className="mr-1"/> Save
               </>
             )}
           </Button>

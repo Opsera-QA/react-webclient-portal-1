@@ -480,7 +480,6 @@ function DockerPushStepConfiguration({
         });
     } else {
       setErrors("Selected Job is not a Docker push Job!  Please ensure the selected job has Docker configurations.");
-      console.log("not a Docker push job")
     }
   };
 
@@ -557,7 +556,7 @@ function DockerPushStepConfiguration({
         return arrOfObj;
       } else {
         setErrors(
-          "Account information is missing or unavailable!  Please ensure the required account is registered and up to date in Tool Registry."
+          "Service Unavailable.  Please try again or report this issue."
         );
       }
     } catch (err) {
@@ -592,7 +591,7 @@ function DockerPushStepConfiguration({
         }
       } else {
         setErrors(
-          "Account information is missing or unavailable!  Please ensure the required account is registered and up to date in Tool Registry."
+          "Service Unavailable.  Please try again or report this issue."
         );
       }
     } catch (err) {
@@ -664,7 +663,7 @@ function DockerPushStepConfiguration({
 
   return (
     <>
-      {error && <ErrorDialog error={error} />}
+      {error && <ErrorDialog error={error} align={"top"} setError={setErrors}/>}
 
       <Form>
         <Form.Group controlId="jenkinsList">

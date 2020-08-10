@@ -84,7 +84,6 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
         // Set results state
         let results = await searchSpinnakerList(service);
         if(results) {
-          console.log(results);
           setSpinnakerList(formatOptions(results));
           setIsSpinnakerSearching(false);
         } else {
@@ -92,11 +91,7 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
         }
       }
       
-      // Fire off our API call
       fetchSpinnakerDetails("spinnaker");
-      // } else {
-      //   setSpinnakerList([{ value: "", name : "Select One",  isDisabled: "yes" }]);
-      // }
     },
     []
   );
@@ -118,7 +113,6 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
       const item = {
         configuration: formData
       };
-      console.log("item: ", item);
       setLoading(false);
       parentCallback(item);
     }
@@ -130,7 +124,6 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
     const apiUrl = "/registry/properties/"+service;   // this is to get all the service accounts from tool registry
     try {
       const res = await axiosApiService(accessToken).get(apiUrl);
-      console.log(res);
       if( res.data ) {
         let respObj = [];
         let arrOfObj = res.data;
@@ -140,7 +133,7 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
         console.log(respObj);
         return respObj;
       } else {
-        setErrors("Data is missing!");
+        setErrors("Spinnaker information is missing or unavailable!  Please ensure the required details are registered and up to date in Tool Registry.");
       }
     }
     catch (err) {
@@ -165,19 +158,18 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
       if( res.data && res.data.data ) {
         let arrOfObj = res.data.data;
         if(arrOfObj) {
-          var result = arrOfObj.map(function(el) {
-            var o = Object.assign({}, el);
+          let result = arrOfObj.map(function(el) {
+            let o = Object.assign({}, el);
             o.value = el.name;
             return o;
           });
           return result;
         }
       } else {
-        setErrors("Data is missing!");
+        setErrors("Service Unavailable.  Please try again or report this issue.");
       }
     }
     catch (err) {
-      console.log(err.message);
       setErrors(err.message);
     }
   };
@@ -205,11 +197,10 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
           return result;
         }
       } else {
-        setErrors("Data is missing!");
+        setErrors("Service Unavailable.  Please try again or report this issue.");
       }
     }
     catch (err) {
-      console.log(err.message);
       setErrors(err.message);
     }
   };
@@ -292,9 +283,8 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
 
   return (
     <>
-      {error && 
-        <ErrorDialog  error={error} />
-      }
+      {error && <ErrorDialog error={error} align={"top"} setError={setErrors}/>}
+
       <Form>
         { formMessage.length > 0 ? <p className="text-danger">{formMessage}</p> : null}
 

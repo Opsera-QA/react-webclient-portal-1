@@ -26,7 +26,7 @@ import ErrorDialog from "../../common/error";
 const JOB_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
   { value: "job", label: "Custom Job" },
-  { value: "opsera-job", label: "Opsera Managed Jobs" }
+  { value: "opsera-job", label: "Opsera Managed Jobs" },
 ];
 
 //This must match the form below and the data object expected.  Each tools' data object is different
@@ -40,7 +40,7 @@ const INITIAL_DATA = {
   jobName: "",
   toolJobId: "",
   toolJobType: "",
- 
+
   accountUsername: "",
   projectId: "",
   defaultBranch: "",
@@ -82,10 +82,10 @@ function CypressStepConfiguration({
   const [branchList, setBranchList] = useState([]);
   const [isBranchSearching, setIsBranchSearching] = useState(false);
   const [listOfSteps, setListOfSteps] = useState([]);
-  
+
   const [cypressList, setCypressList] = useState([]);
   const [isCypressSearching, setIsCypressSearching] = useState(false);
-  
+
   const [accountsList, setAccountsList] = useState([]);
   const [jobsList, setJobsList] = useState([]);
   const [thresholdVal, setThresholdValue] = useState("");
@@ -101,7 +101,7 @@ function CypressStepConfiguration({
   const formatStepOptions = (plan, stepId) => {
     let STEP_OPTIONS = plan.slice(
       0,
-      plan.findIndex((element) => element._id === stepId)
+      plan.findIndex((element) => element._id === stepId),
     );
     STEP_OPTIONS.unshift({ _id: "", name: "Select One", isDisabled: "yes" });
     return STEP_OPTIONS;
@@ -127,24 +127,21 @@ function CypressStepConfiguration({
     };
   }, [stepTool]);
 
+
   useEffect(() => {
     setErrors(false);
 
     async function fetchJenkinsDetails(service) {
       setisJenkinsSearching(true);
-      // Set results state
       let results = await searchToolsList(service);
-      console.log(results);
       const filteredList = results.filter(
-        (el) => el.configuration !== undefined
+        (el) => el.configuration !== undefined,
       ); //filter out items that do not have any configuration data!
       if (filteredList) {
-        console.log(filteredList)
         setJenkinsList(filteredList);
         setisJenkinsSearching(false);
       }
     }
-    console.log(jenkinsList);
 
     // Fire off our API call
     fetchJenkinsDetails("jenkins");
@@ -155,7 +152,6 @@ function CypressStepConfiguration({
   useEffect(() => {
     setErrors(false);
 
-    // setFormData({ ...formData, branch : "" });
     async function fetchRepos(service, gitToolId) {
       setIsRepoSearching(true);
       // Set results state
@@ -181,17 +177,16 @@ function CypressStepConfiguration({
     }
   }, [formData.service, formData.gitToolId]);
 
+
   // fetch branches
   useEffect(() => {
     setErrors(false);
 
-    // setFormData({ ...formData, branch : "" });
     async function fetchBranches(service, gitToolId, repoId) {
       setIsBranchSearching(true);
       // Set results state
       let results = await searchBranches(service, gitToolId, repoId);
       if (results) {
-        //console.log(results);
         setBranchList(results);
         setIsBranchSearching(false);
       }
@@ -213,30 +208,32 @@ function CypressStepConfiguration({
     }
   }, [formData.repoId]);
 
+
   useEffect(() => {
     if (formData.toolConfigId) {
-      // console.log(jenkinsList[jenkinsList.findIndex(x => x.id === formData.toolConfigId)].accounts);
       setAccountsList(
         jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ] ? jenkinsList[
+          ] ? jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ].accounts : []
+          ].accounts : [],
       );
     }
   }, [jenkinsList, formData.toolConfigId]);
+
 
   useEffect(() => {
     if (formData.toolConfigId) {
       setJobsList(
         jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ] ? jenkinsList[
+          ] ? jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ].jobs : []
+          ].jobs : [],
       );
     }
   }, [jenkinsList, formData.toolConfigId]);
+
 
   useEffect(() => {
     if (formData.toolJobType && formData.toolJobType.includes("SFDC")) {
@@ -244,14 +241,13 @@ function CypressStepConfiguration({
     }
   }, [formData.toolJobType]);
 
+
   useEffect(() => {
     if (jobType === "job") {
-      setFormData({ ...formData, jobType : "CYPRESS UNIT TESTING" });
+      setFormData({ ...formData, jobType: "CYPRESS UNIT TESTING" });
     }
   }, [jobType]);
 
-  console.log(formData);
-  // console.log(jobsList);
 
   const loadFormData = async (step) => {
     let { configuration, threshold, job_type } = step;
@@ -272,7 +268,6 @@ function CypressStepConfiguration({
   };
 
   const handleCreateAndSave = async (pipelineId, stepId, toolId) => {
-    console.log("saving and creating job for toolID: ", toolId);
     if (validateRequiredFields() && toolId) {
       setLoading(true);
 
@@ -284,7 +279,6 @@ function CypressStepConfiguration({
           stepId: formData.stepIdXML && formData.stepIdXML,
         },
       };
-      console.log("createJobPostBody: ", createJobPostBody);
 
       const toolConfiguration = {
         configuration: formData,
@@ -294,14 +288,12 @@ function CypressStepConfiguration({
         },
         job_type: jobType,
       };
-      console.log("item: ", toolConfiguration);
 
       await createJob(toolId, toolConfiguration, stepId, createJobPostBody);
     }
   };
 
   const callbackFunction = async () => {
-    console.log("saving data");
     if (validateRequiredFields()) {
       setLoading(true);
 
@@ -313,7 +305,6 @@ function CypressStepConfiguration({
         },
         job_type: jobType,
       };
-      console.log("item: ", item);
       setLoading(false);
       parentCallback(item);
     }
@@ -342,11 +333,10 @@ function CypressStepConfiguration({
         return respObj;
       } else {
         setErrors(
-          "Jenkins information is missing or unavailable!  Please ensure the required Jenkins creds are registered and up to date in Tool Registry."
+          "Jenkins information is missing or unavailable!  Please ensure the required Jenkins creds are registered and up to date in Tool Registry.",
         );
       }
     } catch (err) {
-      console.log(err.message);
       setErrors(err.message);
     }
   };
@@ -367,7 +357,6 @@ function CypressStepConfiguration({
       jenkinsUrl.length === 0 ||
       jUserId.length === 0 ||
       jAuthToken.length === 0 ||
-      // jobName.length === 0 ||
       (buildType === "docker"
         ? dockerName.length === 0 || dockerTagName.length === 0
         : false)
@@ -415,21 +404,20 @@ function CypressStepConfiguration({
   };
 
   const handleJobChange = (selectedOption) => {
-    console.log(selectedOption)
-    if (selectedOption.type[0] === "CYPRESS UNIT TESTING" ) {      
-        setFormData({
-          ...formData,
-          toolJobId: selectedOption._id,
-          toolJobType: selectedOption.type,
-          jobType: selectedOption.type[0],
-          ...selectedOption.configuration,
-          buildToolVersion: "6.3",
-          projectKey:"",
-          buildArgs: {},
-        });
+    console.log(selectedOption);
+    if (selectedOption.type[0] === "CYPRESS UNIT TESTING") {
+      setFormData({
+        ...formData,
+        toolJobId: selectedOption._id,
+        toolJobType: selectedOption.type,
+        jobType: selectedOption.type[0],
+        ...selectedOption.configuration,
+        buildToolVersion: "6.3",
+        projectKey: "",
+        buildArgs: {},
+      });
     } else {
       setErrors("Selected Job is not a Unit test Job!  Please ensure the selected job has Cypress configurations.");
-      console.log("not a cypress unit test job")
     }
   };
 
@@ -476,15 +464,15 @@ function CypressStepConfiguration({
   const handleJobTypeChange = (selectedOption) => {
     setErrors(false);
     setJobType(selectedOption.value);
-      setFormData({
-        ...formData,
-        jobName: "",
-        buildType: "", 
-        jobDescription: "",
-        jobType: "",
-        toolJobId: "",
-        toolJobType: "",
-      });
+    setFormData({
+      ...formData,
+      jobName: "",
+      buildType: "",
+      jobDescription: "",
+      jobType: "",
+      toolJobId: "",
+      toolJobType: "",
+    });
   };
 
   //todo: the api needs to be moved to actions.jsx
@@ -505,11 +493,10 @@ function CypressStepConfiguration({
         return arrOfObj;
       } else {
         setErrors(
-          "Account information is missing or unavailable!  Please ensure the required account is registered and up to date in Tool Registry."
+          "Service Unavailable.  Please try again or report this issue.",
         );
       }
     } catch (err) {
-      console.log(err.message);
       setErrors(err.message);
     }
   };
@@ -530,8 +517,8 @@ function CypressStepConfiguration({
       if (res.data && res.data.data) {
         let arrOfObj = res.data.data;
         if (arrOfObj) {
-          var result = arrOfObj.map(function (el) {
-            var o = Object.assign({});
+          let result = arrOfObj.map(function(el) {
+            let o = Object.assign({});
             o.value = el.toLowerCase();
             o.name = el;
             return o;
@@ -540,11 +527,10 @@ function CypressStepConfiguration({
         }
       } else {
         setErrors(
-          "Account information is missing or unavailable!  Please ensure the required account is registered and up to date in Tool Registry."
+          "Service Unavailable.  Please try again or report this issue.",
         );
       }
     } catch (err) {
-      console.log(err.message);
       setErrors(err.message);
     }
   };
@@ -571,7 +557,7 @@ function CypressStepConfiguration({
             </div>
             {data.configuration && (
               <>
-                {Object.entries(data.configuration).map(function (a) {
+                {Object.entries(data.configuration).map(function(a) {
                   return (
                     <div key={a}>
                       {a[1].length > 0 && (
@@ -612,7 +598,7 @@ function CypressStepConfiguration({
 
   return (
     <>
-      {error && <ErrorDialog error={error} />}
+      {error && <ErrorDialog error={error} align={"top"} setError={setErrors}/>}
 
       <Form>
         <Form.Group controlId="jenkinsList">
@@ -625,7 +611,7 @@ function CypressStepConfiguration({
               overlay={RegistryPopover(
                 jenkinsList[
                   jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-                ]
+                  ],
               )}
             >
               <FontAwesomeIcon
@@ -654,9 +640,9 @@ function CypressStepConfiguration({
                     value={
                       jenkinsList[
                         jenkinsList.findIndex(
-                          (x) => x.id === formData.toolConfigId
+                          (x) => x.id === formData.toolConfigId,
                         )
-                      ]
+                        ]
                     }
                     valueField="id"
                     textField="name"
@@ -686,21 +672,13 @@ function CypressStepConfiguration({
           {formData.toolConfigId.length > 0 && (
             <Form.Label className="mt-2 pl-1">
               <Link to={"/inventory/tools/" + formData.toolConfigId}>
-                <FontAwesomeIcon icon={faTools} className="pr-1" /> View/edit
-                this tool's Registry settings
+                <FontAwesomeIcon icon={faTools} className="pr-1"/> View/edit
+                this tool&#39;s Registry settings
               </Link>
             </Form.Label>
           )}
         </Form.Group>
 
-        {/*{(!formData.toolConfigId && formData.jenkinsUrl) &&
-      <div className="form-text text-muted mb-3">
-        <FontAwesomeIcon icon={faExclamationTriangle} className="mr-1 yellow" fixedWidth/>
-        Unregistered Tool settings in use. The settings below can be used in this step, but cannot be updated. You
-        must register
-        a new Jenkins server in the
-        <Link to="/inventory/tools"> Tool Registry</Link> and add its configuration details. </div>}
-*/}
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Job Type*</Form.Label>
           {jobType !== undefined ? (
@@ -751,7 +729,7 @@ function CypressStepConfiguration({
                     overlay={RegistryPopover(
                       jobsList[
                         jobsList.findIndex((x) => x._id === formData.toolJobId)
-                      ]
+                        ],
                     )}
                   >
                     <FontAwesomeIcon
@@ -786,7 +764,7 @@ function CypressStepConfiguration({
                     value={
                       jobsList[
                         jobsList.findIndex((x) => x._id === formData.toolJobId)
-                      ]
+                        ]
                     }
                     filter="contains"
                     onChange={handleJobChange}
@@ -809,9 +787,9 @@ function CypressStepConfiguration({
                 overlay={RegistryPopover(
                   accountsList[
                     accountsList.findIndex(
-                      (x) => x.toolId === formData.gitToolId
+                      (x) => x.toolId === formData.gitToolId,
                     )
-                  ]
+                    ],
                 )}
               >
                 <FontAwesomeIcon
@@ -842,9 +820,9 @@ function CypressStepConfiguration({
                 value={
                   accountsList[
                     accountsList.findIndex(
-                      (x) => x.toolId === formData.gitToolId
+                      (x) => x.toolId === formData.gitToolId,
                     )
-                  ]
+                    ]
                 }
                 filter="contains"
                 onChange={handleAccountChange}
@@ -874,9 +852,9 @@ function CypressStepConfiguration({
                     value={
                       repoList[
                         repoList.findIndex(
-                          (x) => x.name === formData.repository
+                          (x) => x.name === formData.repository,
                         )
-                      ]
+                        ]
                     }
                     valueField="value"
                     textField="name"
@@ -918,7 +896,7 @@ function CypressStepConfiguration({
                     value={
                       branchList[
                         branchList.findIndex((x) => x.value === formData.branch)
-                      ]
+                        ]
                     }
                     valueField="value"
                     textField="name"
@@ -971,7 +949,7 @@ function CypressStepConfiguration({
               </>
             ) : (
               <>
-                <FontAwesomeIcon icon={faSave} className="mr-1" />
+                <FontAwesomeIcon icon={faSave} className="mr-1"/>
                 Create Job and Save
               </>
             )}
@@ -997,7 +975,7 @@ function CypressStepConfiguration({
               </>
             ) : (
               <>
-                <FontAwesomeIcon icon={faSave} className="mr-1" /> Save
+                <FontAwesomeIcon icon={faSave} className="mr-1"/> Save
               </>
             )}
           </Button>

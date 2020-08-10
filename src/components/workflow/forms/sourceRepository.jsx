@@ -177,7 +177,7 @@ function SourceRepositoryConfig( { data, parentCallback }) {
         return respObj;
       } else {
         console.log(res);
-        setErrors("Service Unavailable.  Please try again or report this issue.");
+        setErrors("An error has occurred looking up accounts in the Tool Registry.  Please ensure accounts are registered or report this issue.");
       }
     }
     catch (err) {
@@ -223,6 +223,9 @@ function SourceRepositoryConfig( { data, parentCallback }) {
 
   return (
     <>
+
+      {error && <ErrorDialog error={error} align={"top"} setError={setErrors}/>}
+
       <Form>
         { formMessage.length > 0 ? <p className="error-text">{formMessage}</p> : null}
         <div className="text-muted mb-3">Configure default settings for this pipeline.</div>
@@ -332,8 +335,6 @@ function SourceRepositoryConfig( { data, parentCallback }) {
             <Form.Text className="text-muted">Optional security key/token configured in Source Repository to ensure secure webhook communication.</Form.Text>
           </Form.Group>
         </> }
-
-        {error && <ErrorDialog error={error} /> }
       
         <Button variant="primary" type="button" className="mt-2" disabled={error || isRepoSearching || isAccountSearching}
           onClick={() => { callbackFunction(); }}> 

@@ -235,18 +235,6 @@ function TwistlockStepConfiguration ({
     }
   }, [formData.toolJobType]);
 
-  // jobtype not specified 
-
-  // useEffect(() => {
-  //   if (jobType === "job") {
-  //     setFormData({ ...formData, jobType : "" }); 
-  //   }
-  // }, [jobType]);
-
-
-  console.log(formData);
-  // console.log(jobsList);
-
   const loadFormData = async (step) => {
     let { configuration, threshold, job_type } = step;
     if (typeof configuration !== "undefined") {
@@ -266,7 +254,6 @@ function TwistlockStepConfiguration ({
   };
 
   const handleCreateAndSave = async (pipelineId, stepId, toolId) => {
-    console.log("saving and creating job for toolID: ", toolId);
     if (validateRequiredFields() && toolId) {
       setLoading(true);
 
@@ -278,7 +265,6 @@ function TwistlockStepConfiguration ({
           stepId: formData.stepIdXML && formData.stepIdXML,
         },
       };
-      console.log("createJobPostBody: ", createJobPostBody);
 
       const toolConfiguration = {
         configuration: formData,
@@ -288,14 +274,12 @@ function TwistlockStepConfiguration ({
         },
         job_type: jobType,
       };
-      console.log("item: ", toolConfiguration);
 
       await createJob(toolId, toolConfiguration, stepId, createJobPostBody);
     }
   };
 
   const callbackFunction = async () => {
-    console.log("saving data");
     if (validateRequiredFields()) {
       setLoading(true);
 
@@ -307,7 +291,6 @@ function TwistlockStepConfiguration ({
         },
         job_type: jobType,
       };
-      console.log("item: ", item);
       setLoading(false);
       parentCallback(item);
     }
@@ -340,7 +323,6 @@ function TwistlockStepConfiguration ({
         );
       }
     } catch (err) {
-      console.log(err.message);
       setErrors(err.message);
     }
   };
@@ -500,7 +482,7 @@ function TwistlockStepConfiguration ({
         return arrOfObj;
       } else {
         setErrors(
-          "Account information is missing or unavailable!  Please ensure the required account is registered and up to date in Tool Registry."
+          "Service Unavailable.  Please try again or report this issue."
         );
       }
     } catch (err) {
@@ -525,8 +507,8 @@ function TwistlockStepConfiguration ({
       if (res.data && res.data.data) {
         let arrOfObj = res.data.data;
         if (arrOfObj) {
-          var result = arrOfObj.map(function (el) {
-            var o = Object.assign({});
+          let result = arrOfObj.map(function (el) {
+            let o = Object.assign({});
             o.value = el.toLowerCase();
             o.name = el;
             return o;
@@ -535,7 +517,7 @@ function TwistlockStepConfiguration ({
         }
       } else {
         setErrors(
-          "Account information is missing or unavailable!  Please ensure the required account is registered and up to date in Tool Registry."
+          "Service Unavailable.  Please try again or report this issue."
         );
       }
     } catch (err) {
@@ -607,7 +589,7 @@ function TwistlockStepConfiguration ({
 
   return (
     <>
-      {error && <ErrorDialog error={error} />}
+      {error && <ErrorDialog error={error} align={"top"} setError={setErrors}/>}
 
       <Form>
         <Form.Group controlId="jenkinsList">

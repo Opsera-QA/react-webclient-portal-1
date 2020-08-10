@@ -269,7 +269,6 @@ function JmeterStepConfiguration({
   };
 
   const handleCreateAndSave = async (pipelineId, stepId, toolId) => {
-    console.log("saving and creating job for toolID: ", toolId);
     if (validateRequiredFields() && toolId) {
       setLoading(true);
 
@@ -281,7 +280,6 @@ function JmeterStepConfiguration({
           stepId: formData.stepIdXML && formData.stepIdXML,
         },
       };
-      console.log("createJobPostBody: ", createJobPostBody);
 
       const toolConfiguration = {
         configuration: formData,
@@ -291,7 +289,6 @@ function JmeterStepConfiguration({
         },
         job_type: jobType,
       };
-      console.log("item: ", toolConfiguration);
 
       await createJob(toolId, toolConfiguration, stepId, createJobPostBody);
     }
@@ -335,7 +332,6 @@ function JmeterStepConfiguration({
             jobs: item.jobs,
           });
         });
-        //console.log(respObj);
         return respObj;
       } else {
         setErrors(
@@ -343,7 +339,6 @@ function JmeterStepConfiguration({
         );
       }
     } catch (err) {
-      console.log(err.message);
       setErrors(err.message);
     }
   };
@@ -426,7 +421,6 @@ function JmeterStepConfiguration({
         });
     } else {
       setErrors("Selected Job is not a Performance test Job!  Please ensure the selected job has Jmeter configurations.");
-      console.log("not a performance test job")
     }
   };
 
@@ -502,7 +496,7 @@ function JmeterStepConfiguration({
         return arrOfObj;
       } else {
         setErrors(
-          "Account information is missing or unavailable!  Please ensure the required account is registered and up to date in Tool Registry."
+          "Service Unavailable.  Please try again or report this issue."
         );
       }
     } catch (err) {
@@ -527,8 +521,8 @@ function JmeterStepConfiguration({
       if (res.data && res.data.data) {
         let arrOfObj = res.data.data;
         if (arrOfObj) {
-          var result = arrOfObj.map(function (el) {
-            var o = Object.assign({});
+          let result = arrOfObj.map(function (el) {
+            let o = Object.assign({});
             o.value = el.toLowerCase();
             o.name = el;
             return o;
@@ -537,7 +531,7 @@ function JmeterStepConfiguration({
         }
       } else {
         setErrors(
-          "Account information is missing or unavailable!  Please ensure the required account is registered and up to date in Tool Registry."
+          "Service Unavailable.  Please try again or report this issue."
         );
       }
     } catch (err) {
@@ -609,7 +603,7 @@ function JmeterStepConfiguration({
 
   return (
     <>
-      {error && <ErrorDialog error={error} />}
+      {error && <ErrorDialog error={error} align={"top"} setError={setErrors}/>}
 
       <Form>
         <Form.Group controlId="jenkinsList">
