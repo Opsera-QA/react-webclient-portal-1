@@ -111,10 +111,13 @@ function SourceRepositoryConfig( { data, parentCallback }) {
   };
 
   const handleAccountChange = (selectedOption) => {
+    //on change, always clear error state
+    setErrors(false)
     setFormData({ ...formData, accountId: selectedOption.id ? selectedOption.id : "", username: selectedOption.configuration ? selectedOption.configuration.accountUsername : "",  password: selectedOption.configuration ? selectedOption.configuration.accountPassword : "", repository: "" });
   };
   
   const handleRepoChange = (selectedOption) => {
+    setErrors(false)
     setFormData({ ...formData, repository: selectedOption.value, branch: "" });  
   };
  
@@ -129,7 +132,7 @@ function SourceRepositoryConfig( { data, parentCallback }) {
         password: password,
         repository: repository,
         branch: branch,
-        key: key, 
+        key: key,
         trigger_active: trigger_active
       };
 
@@ -173,7 +176,8 @@ function SourceRepositoryConfig( { data, parentCallback }) {
         });
         return respObj;
       } else {
-        setErrors("Account information is missing or unavailable!  Please ensure the required account is registered and up to date in Tool Registry.");
+        console.log(res);
+        setErrors("Service Unavailable.  Please try again or report this issue.");
       }
     }
     catch (err) {
@@ -197,16 +201,17 @@ function SourceRepositoryConfig( { data, parentCallback }) {
       if( res.data && res.data.data ) {
         let arrOfObj = res.data.data;
         if(arrOfObj) {
-          var result = arrOfObj.map(function(el) {
-            var o = Object.assign({});
-            o.value = el.toLowerCase();
-            o.name = el;
-            return o;
+          let result = arrOfObj.map(function(el) {
+              let o = Object.assign({});
+              o.value = el.id;
+              o.name = el.name;
+              return o;
           });
           return result;
         }
       } else {
-        setErrors("Account information is missing or unavailable!  Please ensure the required account is registered and up to date in Tool Registry.");
+        console.log(res);
+        setErrors("Service Unavailable.  Please try again or report this issue.");
       }
     }
     catch (err) {
@@ -218,16 +223,13 @@ function SourceRepositoryConfig( { data, parentCallback }) {
 
   return (
     <>
-      {error && 
-        <ErrorDialog  error={error} />
-      }
       <Form>
         { formMessage.length > 0 ? <p className="error-text">{formMessage}</p> : null}
-      
-        <Form.Group controlId="repoField">
-          <Form.Label>Step Name</Form.Label>
+        <div className="text-muted mb-3">Configure default settings for this pipeline.</div>
+        {/*<Form.Group controlId="repoField">
+          <Form.Label>Name</Form.Label>
           <Form.Control maxLength="150" type="text" placeholder="" value={formData.name || ""} onChange={e => setFormData({ ...formData, name: e.target.value })} />
-        </Form.Group>
+        </Form.Group>*/}
 
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Platform*</Form.Label>
@@ -244,10 +246,10 @@ function SourceRepositoryConfig( { data, parentCallback }) {
         {formData.service && 
         <Form.Group controlId="account"  className="mt-2">
           <Form.Label>Select Account*</Form.Label>
-          {isAccountSearching ? (
+          {(isAccountSearching && !error) ? (
             <div className="form-text text-muted mt-2 p-2">
               <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> 
-              Loading accounts from registry</div>
+              Loading accounts from tool registry</div>
           ) :(
             <>
               {accountList && accountList.length > 1 ? 
@@ -270,23 +272,19 @@ function SourceRepositoryConfig( { data, parentCallback }) {
           {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
         </Form.Group> }
         
-        {formData.username && formData.password  &&
+        {formData.accountId  &&
         <>
           <Form.Group controlId="userName">
             <Form.Label>Account</Form.Label>
             <Form.Control maxLength="75" type="text" disabled placeholder="Username" value={formData.username || ""} onChange={e => setFormData({ ...formData, username: e.target.value })} />
-          </Form.Group> 
-          {/* <Form.Group controlId="password">
-            <Form.Label>Password</Form.Label>
-            <Form.Control maxLength="75" type="password" disabled placeholder="Password" value={formData.password || ""} onChange={e => setFormData({ ...formData, password: e.target.value })} />
-          </Form.Group>  */}
+          </Form.Group>
         </>
         }
          
         {formData.service && formData.accountId && 
         <Form.Group controlId="account"  className="mt-2">
           <Form.Label>Select Repository*</Form.Label>
-          {isRepoSearching ? (
+          {(isRepoSearching && !error) ? (
             <div className="form-text text-muted mt-2 p-2">
               <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> 
               Loading repositories from registry</div>
@@ -334,8 +332,10 @@ function SourceRepositoryConfig( { data, parentCallback }) {
             <Form.Text className="text-muted">Optional security key/token configured in Source Repository to ensure secure webhook communication.</Form.Text>
           </Form.Group>
         </> }
+
+        {error && <ErrorDialog error={error} /> }
       
-        <Button variant="primary" type="button" className="mt-2"
+        <Button variant="primary" type="button" className="mt-2" disabled={error || isRepoSearching || isAccountSearching}
           onClick={() => { callbackFunction(); }}> 
           <FontAwesomeIcon icon={faSave} className="mr-1"/> Save
         </Button>

@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import ErrorDialog from "../common/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus, faFileAlt, faCog, faPen, faSpinner, faCheck, faClipboardCheck, faCodeBranch, faFileCode, faCubes } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faFileAlt, faCog, faPen, faSpinner, faCheck, faClipboardCheck, faCode, faFileCode, faCubes } from "@fortawesome/free-solid-svg-icons";
 import ModalActivityLogs from "../common/modal/modalActivityLogs";
 import PipelineWorkflowItemList from "./pipelineWorkflowItemList";
 import PipelineActionControls from "./piplineActionControls";
@@ -71,7 +71,7 @@ const PipelineWorkflow = (props) => {
       setLastStep(pipeline.workflow.last_step);
       
       if (pipeline.workflow.last_step !== undefined) {
-        let status = pipeline.workflow.last_step.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;
+        let status = Object.prototype.hasOwnProperty.call(pipeline.workflow.last_step, "status") ? pipeline.workflow.last_step.status : false;
 
         if (status === "stopped" && pipeline.workflow.last_step.running && pipeline.workflow.last_step.running.paused) {
           setWorkflowStatus("paused");
@@ -229,7 +229,7 @@ const PipelineWorkflow = (props) => {
 
 
           <div className="workflow-container pl-2 max-content-module-width-50">
-            <div className="pr-1 my-2 text-right">
+            <div className="pr-1 my-2 text-right float-right">
               <OverlayTrigger
                 placement="top"
                 delay={{ show: 250, hide: 400 }}
@@ -259,9 +259,9 @@ const PipelineWorkflow = (props) => {
             </div>
 
 
-            <div className="source workflow-module-container workflow-module-container-width-sm p-2">
-              <div className="title-text-6 title-text-divider">Start of Workflow</div>
-              {!pipeline.workflow.source.service ? <div className="mt-1">Source Repository</div> : null }
+            <div className="source workflow-module-container workflow-module-container-width-sm p-2 mt-2">
+              <div className="title-text-6">Start of Workflow</div>
+              {/*{!pipeline.workflow.source.service ? <div className="mt-1">Source Repository</div> : null }
               
               {pipeline.workflow.source.name ?
                 <div className="d-flex">
@@ -288,13 +288,21 @@ const PipelineWorkflow = (props) => {
                     <span className="text-muted small">
                       <FontAwesomeIcon icon={faCodeBranch} size="sm" fixedWidth className="mr-1"/>Branch: {pipeline.workflow.source.branch}</span>
                   </div>            
-                </div> : null }
+                </div> : null }*/}
 
+              {pipeline.workflow.source.trigger_active &&
               <div className="d-flex">
                 <div className="upper-case-first">
                   <span className="text-muted small">
                     <FontAwesomeIcon icon={faClipboardCheck} size="sm" fixedWidth className="mr-1"/>Webhook Trigger: {pipeline.workflow.source.trigger_active ? "Enabled": "Disabled"}</span></div>
-              </div>
+              </div> }
+
+              {pipeline.workflow.source.service &&
+              <div className="d-flex">
+                <div className="upper-case-first">
+                  <span className="text-muted small">
+                    <FontAwesomeIcon icon={faCode} size="sm" fixedWidth className="mr-1"/>Source Repository: {pipeline.workflow.source.service }</span></div>
+              </div> }
                 
               <div className="d-flex align-items-end flex-row mt-1">
                 <div className="ml-auto text-right">
@@ -313,7 +321,7 @@ const PipelineWorkflow = (props) => {
                       <OverlayTrigger
                         placement="top"
                         delay={{ show: 250, hide: 400 }}
-                        overlay={renderTooltip({ message: "Configure Source Repository" })} >
+                        overlay={renderTooltip({ message: "Configure Pipeline Level Settings" })} >
                         <FontAwesomeIcon icon={faCog}
                           style={{ cursor: "pointer" }}
                           className="text-muted" fixedWidth
