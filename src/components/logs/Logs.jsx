@@ -39,11 +39,11 @@ function Logs() {
     const controller = new AbortController();
     const runEffect = async () => {
       try {
-        console.log("FETCHING DATA");
+        // console.log("FETCHING DATA");
         await fetchData();
       } catch (err) {
         if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
+          // console.log("Request was canceled via controller.abort");
           return;
         }
       }
@@ -71,11 +71,12 @@ function Logs() {
       const tools = await axiosApiService(accessToken).post("/analytics/index", { index: INDICES });
       const listOfTools = tools.data && Array.isArray(tools.data) ? tools.data : [];
       if (listOfTools.includes("jenkins")) listOfTools.push("blueprint");
+      listOfTools.sort();
 
-      console.log("Profile: ", profile);
+      // console.log("Profile: ", profile);
       setData(profile && profile.data.profile[0]);
-      setTools(listOfTools.sort());
-      console.log(profile && profile.data.profile[0]);
+      setTools(listOfTools);
+      // console.log(profile && profile.data.profile[0]);
 
       if (typeof data.profile === "object" && data.profile.length === 0) {
         setErrors(
@@ -85,7 +86,7 @@ function Logs() {
 
       setLoadingProfile(false);
     } catch (err) {
-      console.log(err.message);
+      // console.log(err.message);
       setLoadingProfile(false);
       setErrors(err.message);
     }

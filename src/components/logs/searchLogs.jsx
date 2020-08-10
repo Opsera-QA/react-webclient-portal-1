@@ -244,7 +244,7 @@ function SearchLogs(props) {
             //Since we add type to the dataset, we only need 'options' for the dropdown
             formattedFilterData.push(...filterGroup["options"]);
           });
-          console.log(formattedFilterData);
+          // console.log(formattedFilterData);
           // For Blueprint we only need Job Names
           if (filterType === "blueprint") {
             setFilters(formattedFilterData.filter((filterSet) => filterSet.type == "Job Names"));
@@ -286,7 +286,7 @@ function SearchLogs(props) {
             filterGroup["options"].map((filters) => {
               filters["type"] = filterGroup["label"];
             });
-            console.log(filterDataApiResponse);
+            // console.log(filterDataApiResponse);
 
             //Since we add type to the dataset, we only need 'options' for the dropdown
             formattedFilterData.push(...filterGroup["options"]);
@@ -335,7 +335,6 @@ function SearchLogs(props) {
   };
 
   const dateChange = (item) => {
-    console.log(item);
     setDate([item.selection]);
     if (item.selection) {
       let startDate = format(item.selection.startDate, "MM/dd");
