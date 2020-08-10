@@ -26,7 +26,6 @@ function ToolConfiguration(props) {
     console.log("new toolData: ", toolData);
     
     fnSaveChanges(toolData);
-
   };
   
 

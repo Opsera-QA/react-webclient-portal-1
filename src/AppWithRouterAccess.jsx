@@ -14,6 +14,7 @@ import About from "./components/about/About";
 import Pricing from "./components/about/Pricing";
 import OnlineHelp from "./components/about/Help";
 import Inventory from "./components/inventory/Inventory";
+import ToolDetailsNew from "./components/inventory/tools/toolDetails/toolDetailsNew";
 import Signup from "./components/user/Signup";
 import ApiConnector from "./components/api_connector/ApiConnector";
 import Pipeline from "./components/pipeline/index";
@@ -141,7 +142,8 @@ const AppWithRouterAccess = () => {
 
                 <SecureRoute path="/profile" component={Profile}/>
                 <SecureRoute path="/settings" component={AccountSettingsView}/>
-                <SecureRoute path="/inventory/:view?/:id?" component={Inventory}/>
+                <SecureRoute path="/inventory/:view" exact component={Inventory}/>
+                <SecureRoute path="/inventory/tools/detail/:id" exact component={ToolDetailsNew}/>
                 <SecureRoute path="/dashboard" component={Dashboard}/>
                 <SecureRoute path="/tools/:id?" component={ApiConnector}/>
                 <SecureRoute path="/pipeline" component={Pipeline}/>

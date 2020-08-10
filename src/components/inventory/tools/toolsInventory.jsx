@@ -2,16 +2,15 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { axiosApiService } from "api/apiService";
 import LoadingDialog from "components/common/loading";
-import Modal from "components/common/modal/modal";
 import { AuthContext } from "contexts/AuthContext";
 import React, { useContext, useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
-import { useHistory, useParams } from "react-router-dom";
-import ToolDetails from "./toolDetails/toolDetails"; //tool summary view
+import { Button, OverlayTrigger, Popover, Modal } from "react-bootstrap";
+import { useHistory, useParams } from "react-router-dom"; //tool summary view
 import "./tools.css";
 import ToolsTable from "./toolsTable";
 import { DropdownList } from "react-widgets";
 import { createFilterOptionList } from "utils/tableHelpers";
+import NewToolForm from "./newTool/newToolForm"
 
 function ToolInventory () {
   let history = useHistory();
@@ -64,6 +63,14 @@ function ToolInventory () {
     getToolRegistryList(null);
   };
 
+  const popover = (
+    <Popover id="popover-basic">
+      <Popover.Content>
+        All unsaved changes will be lost
+      </Popover.Content>
+    </Popover>
+  );
+
   const getToolRegistryList = async () => {
     try {
       setLoading(true);
@@ -86,9 +93,10 @@ function ToolInventory () {
   };
     
   const viewTool = (rowData) => {
-    history.push(`/inventory/tools/${rowData.original._id}`);
-    setToolId(rowData.original._id);
-    toggleViewModal(true);
+    history.push(`/inventory/tools/detail/${rowData.original._id}`);
+    //history.push(`/inventory/tools/${rowData.original._id}`);
+    //setToolId(rowData.original._id);
+    //toggleViewModal(true);
   };
 
   const handleNewEntryClick = () => {
@@ -122,8 +130,21 @@ function ToolInventory () {
   return (
     <>
       <div className="tabbed-content-block">
-        <ToolDetails showModal={isViewModal} closeModal={(toggleModal) => closeViewModal(toggleModal)} toolId={toolId} fnEditTool={handleEditClick} fnDeleteTool={handleDeleteClick} setToolId={setToolId}/>
-      
+
+      <Modal size="lg" show={isViewModal} onHide={closeViewModal} className="tool-details-modal" id="dataManagerModal">
+        <Modal.Header closeButton>
+          <Modal.Title className="upper-case-first">New Tool Type</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <NewToolForm type="new" closeModal={() => closeViewModal()} toolId={toolId} fnEditTool={handleEditClick} fnDeleteTool={handleDeleteClick} setToolId={setToolId} />
+        </Modal.Body>
+        <Modal.Footer>
+          <OverlayTrigger trigger={["hover", "hover"]} placement="top" overlay={popover}>
+            <Button size="sm" variant="secondary" onClick={closeViewModal}>Close</Button>
+          </OverlayTrigger>
+        </Modal.Footer>
+      </Modal>
+
         {/* TODO: Refactor to be more like edit modal above */}
         {showDeleteModal ? <Modal showModal={showDeleteModal} header="Confirm Tool Delete"
           message="Warning! This may impact running pipelines.  Deleting this record would stop any associated pipelines from running.  Data cannot be recovered once the tool is deleted. Do you still want to proceed?"

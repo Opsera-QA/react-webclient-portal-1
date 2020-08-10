@@ -33,23 +33,23 @@ function JenkinsCreateAccount(props) {
     },
   ];
 
-  useEffect(() => {  
-    if(platformType !== "") {
-      getPlatformData();
-    }
-  }, [platformType]);
 
-  useEffect(() => {  
-    if(platformType !== "") {
-      getAccountData();
-    }
-  }, [accountType]);
+  const updatePlatform = (data) => {
+    setPlatformType(data)
+    getPlatformData(data);
+  }
 
-  const getPlatformData = async () => {
+  const updateAccount = (data) => {
+    setAccountType(data);
+    getAccountData()
+  }
+
+  const getPlatformData = async (data) => {
     try {
-      const platformResponse = await axiosApiService(accessToken).get("/registry/properties/" + platformType, {});
-      console.log(platformResponse.data);
+      const platformResponse = await axiosApiService(accessToken).get("/registry/properties/" + data, {});
       setAccountList(platformResponse.data.sort((a, b) => a.name.localeCompare(b.name)));
+      setAccountType(platformResponse.data[0].name)
+      getAccountData();
     }
     catch (err) {
       console.log(err.message);
@@ -57,8 +57,8 @@ function JenkinsCreateAccount(props) {
   };
 
   const getAccountData =  () => {
-    if(accountType !== "") {
-      let account = accountList.find(x => x.name === accountType);
+    let account = accountList.find(x => x.name === accountType);
+    if(account.configuration != undefined) {
       setAccountUserName(account.configuration.accountUsername);
     }else {
       setAccountUserName("");
@@ -106,7 +106,6 @@ function JenkinsCreateAccount(props) {
     };
     try {
       const response = await axiosApiService(accessToken).post("/registry/action/"+ toolId + "/createcredential", { ...payload });
-      console.log(response.data);
       props.setJobAction("");
     }
     catch (err) {
@@ -122,7 +121,7 @@ function JenkinsCreateAccount(props) {
             Platform
           </Form.Label>
           <Col sm="9" className="text-right">
-            <Form.Control as="select" disabled={false} value={platformType} onChange={e => setPlatformType( e.target.value)}>
+            <Form.Control as="select" disabled={false} value={platformType} onChange={e => updatePlatform( e.target.value)}>
               <option name="Select One" value="" disabled={true}>Select One</option>
               {platformList.map((option, i) => (
                 <option key={i} value={option.value}>{option.label}</option>
@@ -135,7 +134,9 @@ function JenkinsCreateAccount(props) {
             Select Account
           </Form.Label>
           <Col sm="9" className="text-right">
-            <Form.Control as="select" disabled={false} value={accountType} onChange={e => setAccountType(e.target.value)}>
+            <Form.Control as="select" disabled={false} value={accountType} onChange={e => {
+              updateAccount(e.target.value)
+            }}>
               <option name="Select One" value="" disabled={true}>Select One</option>
               {accountList.map((option, i) => (
                 <option key={i} value={option.name}>{option.name}</option>
