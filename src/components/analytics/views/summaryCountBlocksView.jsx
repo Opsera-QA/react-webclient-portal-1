@@ -14,7 +14,7 @@ import CardGroup from "react-bootstrap/CardGroup";
 
 function SummaryCountBlocksView({ data, view }) {
   useEffect(() => {
-    console.log("Rendering Blocks for data", data);
+    // console.log("Rendering Blocks for data", data);
   }, [data]);
 
   const setStatusLevel = (status) => {
@@ -42,7 +42,7 @@ function SummaryCountBlocksView({ data, view }) {
                     className="count-block-card-view ml-1 mr-1 w-50 text-center align-self-center"
                     style={view !== "small" ? { maxWidth: "150px", height: "150px" } : { maxWidth: "150px" }}
                   >
-                    <Card style={{ width: "100%", height: "120px" }}>
+                    <Card style={view !== "small" ? { width: "100%", height: "135px" } : { width: "100%" }}>
                       <Card.Body>
                         <Card.Title className="count-block-primary-text" style={{ fontSize: "25px" }}>
                           {item.value}
