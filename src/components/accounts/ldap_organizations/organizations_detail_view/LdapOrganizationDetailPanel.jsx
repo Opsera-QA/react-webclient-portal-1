@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 import LdapOrganizationEditorPanel from "./LdapOrganizationEditorPanel";
 import LadpOrganizationAccountDetailPanel from "./ldap_organization_accounts/LdapOrganizationAccountDetailPanel";
 
-function LdapOrganizationDetailPanel({ organizationAccounts, organization, setOrganization, loadData}) {
+function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationData, setLdapOrganizationData, loadData}) {
   const [activeTab, setActiveTab] = useState("accounts");
   const [currentAccount, setCurrentAccount] = useState(undefined);
 
@@ -23,7 +23,7 @@ function LdapOrganizationDetailPanel({ organizationAccounts, organization, setOr
 
   return (
     <>
-      <div className="pb-3 px-3">
+      <div className="pb-3 px-3 h-50">
         <Row>
           <Col lg={12}>
             <div className="default-custom-tabs">
@@ -40,9 +40,9 @@ function LdapOrganizationDetailPanel({ organizationAccounts, organization, setOr
             </div>
           </Col>
           <Col lg={12}>
-            <div className="tabbed-content-block">
-              {organization &&
-              <LdapOrganizationDetailsView organizationAccounts={organizationAccounts} currentAccount={currentAccount} setCurrentAccount={setCurrentAccount} loadData={loadData} activeTab={activeTab} setOrganization={setOrganization} organization={organization}/>}
+            <div className="tabbed-content-block detail-view-detail-panel">
+              {ldapOrganizationData &&
+              <LdapOrganizationDetailsView organizationAccounts={organizationAccounts} currentAccount={currentAccount} setCurrentAccount={setCurrentAccount} loadData={loadData} activeTab={activeTab} setLdapOrganizationData={setLdapOrganizationData} ldapOrganizationData={ldapOrganizationData}/>}
             </div>
           </Col>
         </Row>
@@ -51,16 +51,16 @@ function LdapOrganizationDetailPanel({ organizationAccounts, organization, setOr
   );
 }
 
-function LdapOrganizationDetailsView({activeTab, setCurrentAccount, currentAccount, setOrganization, organization, loadData, organizationAccounts}) {
+function LdapOrganizationDetailsView({activeTab, setCurrentAccount, currentAccount, setLdapOrganizationData, ldapOrganizationData, loadData, organizationAccounts}) {
   useEffect(() => {
     // console.log("CHANGE HAPPENED");
   }, [activeTab]);
   if (activeTab) {
     switch (activeTab) {
       case "organizationEditor":
-        return <LdapOrganizationEditorPanel setLdapOrganizationData={setOrganization} ldapOrganizationData={organization} />;
+        return <LdapOrganizationEditorPanel setLdapOrganizationData={setLdapOrganizationData} ldapOrganizationData={ldapOrganizationData} />;
       case "accounts":
-        return <LadpOrganizationAccountDetailPanel ldapOrganizationAccounts={organizationAccounts} loadData={loadData} currentAccount={currentAccount} setCurrentAccount={setCurrentAccount} ldapOrganizationData={organization} />;
+        return <LadpOrganizationAccountDetailPanel ldapOrganizationAccounts={organizationAccounts} loadData={loadData} currentAccount={currentAccount} setCurrentAccount={setCurrentAccount} ldapOrganizationData={ldapOrganizationData} />;
       default:
         return null;
     }
@@ -72,8 +72,8 @@ LdapOrganizationDetailPanel.propTypes = {
   currentAccount: PropTypes.object,
   organizationAccounts: PropTypes.array,
   loadData: PropTypes.func,
-  organization: PropTypes.object,
-  setOrganization: PropTypes.func,
+  ldapOrganizationData: PropTypes.object,
+  setLdapOrganizationData: PropTypes.func,
 };
 
 export default LdapOrganizationDetailPanel;

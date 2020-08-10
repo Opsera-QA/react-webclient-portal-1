@@ -2,23 +2,26 @@ import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/table";
 import { useHistory } from "react-router-dom";
-import ldapGroupFormFields from "./ldap-groups-form-fields";
+import {ldapGroupMetaData} from "./ldap-groups-metadata";
 import {
-  getTableArrayCountColumn,
+  getCountColumnWithoutField,
   getTableBooleanIconColumn,
   getTableTextColumn
 } from "../../common/table/table-column-helpers";
 
 function LdapGroupsTable({ groupData, orgDomain }) {
-  let fields = ldapGroupFormFields;
+  let fields = ldapGroupMetaData.fields;
   const history = useHistory();
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(fields.name),
-      getTableTextColumn(fields.externalSyncGroup),
-      getTableArrayCountColumn(fields.members),
-      getTableBooleanIconColumn(fields.isSync)
+      getTableTextColumn(fields.find(field => { return field.id === "name"})),
+      getTableTextColumn(fields.find(field => { return field.id === "externalSyncGroup"})),
+      getTableTextColumn(fields.find(field => { return field.id === "groupType"})),
+      // TODO: Determine the best way to keep fields that shouldn't be included in regular metadata?
+      //  Maybe we have an extraFields parameter
+      getCountColumnWithoutField("Members", "members"),
+      getTableBooleanIconColumn(fields.find(field => { return field.id === "isSync"}))
     ],
     []
   );

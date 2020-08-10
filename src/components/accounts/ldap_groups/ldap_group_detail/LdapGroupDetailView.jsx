@@ -9,12 +9,13 @@ import LdapGroupSummaryPanel from "./LdapGroupSummaryPanel";
 import LdapGroupDetailPanel from "./LdapGroupDetailPanel";
 import accountsActions from "../../accounts-actions";
 import AccessDeniedDialog from "../../../common/accessDeniedInfo";
+import {ldapGroupMetaData} from "../ldap-groups-metadata";
+import Model from "../../../../core/data_model/model";
 
 function LdapGroupDetailView() {
-  const {name, orgDomain} = useParams();
+  const {groupName, orgDomain} = useParams();
   const [accessRoleData, setAccessRoleData] = useState({});
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
-  const [error, setError] = useState(false); //if any errors on API call or anything else need to be shown to use, this is used
   const [ldapOrganizationData, setLdapOrganizationData] = useState(undefined);
   const [ldapGroupData, setLdapGroupData] = useState(undefined);
   const [currentUserEmail, setCurrentUserEmail] = useState(undefined);
@@ -25,12 +26,8 @@ function LdapGroupDetailView() {
   }, []);
 
   const getGroup = async () => {
-    let payload = {
-      domain: orgDomain,
-      groupName: name,
-    };
-    const response = await accountsActions.getGroup(payload, getAccessToken);
-    setLdapGroupData(response.data);
+    const response = await accountsActions.getGroup(orgDomain, groupName, getAccessToken);
+    setLdapGroupData(new Model(response.data, ldapGroupMetaData, false));
   };
 
   const getOrganization = async (domain) => {
@@ -50,7 +47,7 @@ function LdapGroupDetailView() {
       setAccessRoleData(userRoleAccess);
 
       if (userRoleAccess["Administrator"] === true)
-      await getOrganization(orgDomain);
+        await getOrganization(orgDomain);
       await getGroup();
     }
     setPageLoading(false);
@@ -63,8 +60,6 @@ function LdapGroupDetailView() {
   } else {
     return (
       <>
-        {error &&
-        <div className="absolute-center-content"><ErrorDialog align="center" error={error.message}></ErrorDialog></div>}
         {ldapOrganizationData && ldapGroupData &&
         <div className="max-content-width">
           <BreadcrumbTrail destination="ldapGroupDetailView"/>
@@ -72,12 +67,14 @@ function LdapGroupDetailView() {
             <div className="pt-2 pl-2 content-block-header">
               <h6>Group Details [{ldapGroupData && ldapGroupData.name}]</h6>
             </div>
-            <div>
-              <LdapGroupSummaryPanel ldapGroupData={ldapGroupData} domain={orgDomain}/>
-            </div>
-            <div>
-              <LdapGroupDetailPanel orgDomain={orgDomain} ldapGroupData={ldapGroupData} ldapOrganizationData={ldapOrganizationData}
-                                    currentUserEmail={currentUserEmail} setLdapGroupData={setLdapGroupData} loadData={getRoles}/>
+            <div className="detail-view-body">
+              <div>
+                <LdapGroupSummaryPanel ldapGroupData={ldapGroupData} domain={orgDomain}/>
+              </div>
+              <div>
+                <LdapGroupDetailPanel orgDomain={orgDomain} ldapGroupData={ldapGroupData} ldapOrganizationData={ldapOrganizationData}
+                                      currentUserEmail={currentUserEmail} setLdapGroupData={setLdapGroupData} loadData={getRoles}/>
+              </div>
             </div>
             <div className="content-block-footer"/>
           </div>

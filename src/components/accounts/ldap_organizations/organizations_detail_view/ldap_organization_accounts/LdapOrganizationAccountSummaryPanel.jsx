@@ -1,17 +1,14 @@
 import React from "react";
-import {OverlayTrigger, Row, Col, Button} from "react-bootstrap";
+import { Row, Col, Button} from "react-bootstrap";
 import PropTypes from "prop-types";
-import TextField from "../../../../common/form_fields/text-field";
-import {ldapOrganizationAccountFormFields} from "../../ldap-organization-account-form-fields";
-import ToggleField from "../../../../common/form_fields/toggle-field";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCogs} from "@fortawesome/free-solid-svg-icons";
 import LdapUsersTable from "../../../ldap_users/LdapUsersTable";
 import LdapGroupsTable from "../../../ldap_groups/LdapGroupsTable";
+import DtoTextField from "../../../../common/form_fields/dto_form_fields/dto-text-field";
+import DtoToggleField from "../../../../common/form_fields/dto_form_fields/dto-toggle-field";
 
 function LdapOrganizationAccountSummaryPanel({ldapOrganizationAccountData, setShowEditorPanel, handleBackButton}) {
-  let fields = ldapOrganizationAccountFormFields;
-
   return (
     ldapOrganizationAccountData &&
     <>
@@ -33,62 +30,63 @@ function LdapOrganizationAccountSummaryPanel({ldapOrganizationAccountData, setSh
       </div>
       <Row>
         <Col lg={6}>
-          <TextField field={fields["orgOwner"]} value={ldapOrganizationAccountData.orgOwner}/>
+          <DtoTextField dataObject={ldapOrganizationAccountData} fieldName={"orgOwner"} />
         </Col>
         <Col lg={6}>
-          <TextField field={fields["orgOwnerEmail"]} value={ldapOrganizationAccountData.orgOwnerEmail}/>
+          <DtoTextField dataObject={ldapOrganizationAccountData} fieldName={"orgOwnerEmail"} />
         </Col>
         <Col lg={6}>
-          <TextField field={fields["name"]} value={ldapOrganizationAccountData.name}/>
+          <DtoTextField dataObject={ldapOrganizationAccountData} fieldName={"name"} />
         </Col>
         <Col lg={6}>
-          <TextField field={fields["accountName"]} value={ldapOrganizationAccountData.accountName}/>
+          <DtoTextField dataObject={ldapOrganizationAccountData} fieldName={"accountName"} />
         </Col>
         <Col lg={6}>
-          <TextField field={fields["description"]} value={ldapOrganizationAccountData.description}/>
+          <DtoTextField dataObject={ldapOrganizationAccountData} fieldName={"description"} />
         </Col>
         <Col lg={6}>
-          <TextField field={fields["idpVendor"]} value={ldapOrganizationAccountData.idpVendor}/>
+          <DtoTextField dataObject={ldapOrganizationAccountData} fieldName={"idpVendor"} />
         </Col>
         <Col lg={6}>
-          <TextField field={fields["idpPostURL"]} value={ldapOrganizationAccountData.idpPostURL}/>
+          <DtoTextField dataObject={ldapOrganizationAccountData} fieldName={"idpPostURL"} />
         </Col>
         <Col lg={6}>
+          <DtoTextField dataObject={ldapOrganizationAccountData} fieldName={"idpReturnAttributes"} />
           {/*TODO: Find better way to show these*/}
-          <TextField field={fields["idpReturnAttributes"]} value={JSON.stringify(ldapOrganizationAccountData.idpReturnAttributes)}/>
         </Col>
         <Col lg={6}>
-          <TextField field={fields["configEntryType"]} value={ldapOrganizationAccountData.configEntryType}/>
+          <DtoTextField dataObject={ldapOrganizationAccountData} fieldName={"configEntryType"} />
         </Col>
         <Col lg={6}>
-          <TextField field={fields["entityID"]} value={ldapOrganizationAccountData.entityID}/>
+          <DtoTextField dataObject={ldapOrganizationAccountData} fieldName={"entityID"} />
         </Col>
       </Row>
       <Row>
         <Col lg={6}>
-          <ToggleField field={fields["isMultipleIDP"]} value={ldapOrganizationAccountData.isMultipleIDP}/>
+          <DtoToggleField fieldName={"isMultipleIDP"} dataObject={ldapOrganizationAccountData} />
         </Col>
         <Col lg={6}>
-          <ToggleField field={fields["localAuth"]} value={ldapOrganizationAccountData.localAuth}/>
+          <DtoToggleField fieldName={"localAuth"} dataObject={ldapOrganizationAccountData} />
         </Col>
         <Col lg={6}>
-          <ToggleField field={fields["samlEnabled"]} value={ldapOrganizationAccountData.isMultipleIDP}/>
+          <DtoToggleField fieldName={"samlEnabled"} dataObject={ldapOrganizationAccountData} />
         </Col>
         <Col lg={6}>
-          <ToggleField field={fields["oAuthEnabled"]} value={ldapOrganizationAccountData.localAuth}/>
+          <DtoToggleField fieldName={"oAuthEnabled"} dataObject={ldapOrganizationAccountData} />
         </Col>
       </Row>
       <Row>
         <Col lg={12}>
           <div className="mb-3">
             <div className="text-center mb-1"><span className="text-muted mr-2">Users</span></div>
-            <LdapUsersTable orgDomain={ldapOrganizationAccountData.orgDomain} userData={ldapOrganizationAccountData.users} />
+            {console.log("ldapOrganizationAccountData: " + JSON.stringify(ldapOrganizationAccountData))}
+            <LdapUsersTable orgDomain={ldapOrganizationAccountData["orgDomain"]} userData={ldapOrganizationAccountData.getData("users")} />
           </div>
         </Col>
         <Col lg={12}>
           <div className="mb-3">
             <div className="text-center mb-1"><span className="text-muted mr-2">Groups</span></div>
-            <LdapGroupsTable orgDomain={ldapOrganizationAccountData.orgDomain} groupData={ldapOrganizationAccountData.groups} />
+            <LdapGroupsTable orgDomain={ldapOrganizationAccountData["orgDomain"]} groupData={ldapOrganizationAccountData.getData("groups")} />
           </div>
         </Col>
       </Row>

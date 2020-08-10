@@ -1,4 +1,4 @@
-import {fieldValidation} from "../../utils/formValidation";
+import {fieldValidation, validateData, validateField} from "./modelValidation";
 
 export const DataState = {
   LOADED: 0,
@@ -24,7 +24,7 @@ export class Model {
     }
 
     if (this.metaData != null) {
-      console.log("This.metadata: " + JSON.stringify(Object.keys(this.metaData.fields)));
+      // console.log("This.metadata: " + JSON.stringify(Object.keys(this.metaData.fields)));
       // this.id = this.metaData.idProperty;
       for (const field of this.metaData.fields) {
         let id = field.id;
@@ -39,36 +39,39 @@ export class Model {
         return this.data[id];
       },
       set: (newValue) => {
-        if (this.data[id] !== newValue) {
-          this.propertyChange(id, newValue, this.data[id]);
+        if (this.getData(id) !== newValue) {
+          this.propertyChange(id, newValue, this.getData(id));
           this.data[id] = newValue;
         }
       }
     })
   }
 
-  validateData = () => {
-    let errors = {};
-    let errorCount = 0;
-
-    // TODO: Get for loop working without this when metadata is properly implemented
-    for (const field of this.metaData.fields) {
-      errorCount = this.validateField(field, errors, errorCount);
-    }
-    if (errorCount < 1) {
-      return true;
-    }
-    return errors;
+  getData = (fieldName) => {
+    return this.data[fieldName];
   }
 
-  validateField = (field, errors, errorCount) => {
-    const validationErrors = fieldValidation(this.data[field.id], field);
-    if (validationErrors.errorMessages != null) {
-      errors[field.name] = validationErrors.errorMessages;
-      errorCount += 1;
+  setData = (fieldName, newValue) => {
+    if (this.getData(fieldName) !== newValue) {
+      this.propertyChange(fieldName, newValue, this.getData(fieldName));
+      this.data[fieldName] = newValue;
     }
+  }
 
-    return errorCount;
+  isModelValid = () => {
+    let isValid = validateData(this.data, this.metaData.fields);
+
+    console.log("isValid: " + JSON.stringify(isValid));
+
+    return isValid === true ? isValid : isValid;
+  }
+
+  isFieldValid = (fieldName) => {
+    let isValid = validateField(this.data, this.getFieldById(fieldName), {});
+
+    console.log("isValid: " + JSON.stringify(isValid));
+
+    return isValid === true ? isValid : isValid;
   }
 
   propertyChange = (id, newValue, oldValue) => {
@@ -76,7 +79,7 @@ export class Model {
       console.log("Field added to change map: " + id);
       console.log("oldValue: " + oldValue);
       console.log("newValue: " + newValue);
-      this.changeMap.set(id, newValue);
+      this.changeMap.set(id, oldValue);
 
       if (this.dataState !== DataState.NEW) {
         this.dataState = DataState.CHANGED;
@@ -92,6 +95,11 @@ export class Model {
       }
     }
   };
+
+  // TODO: Only send changemap for updates after getting everything else working
+  getPersistData = () => {
+    return this.data;
+  }
 
   isNew = () => {
     return this.newModel;

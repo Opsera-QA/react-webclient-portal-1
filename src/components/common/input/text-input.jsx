@@ -32,7 +32,13 @@ function TextInput({ field, formData, setData, disabled }) {
         </Form.Text>
       </Form.Group>
 
-
+      {/*TODO: make this input generic and extend dto stuff from it*/}
+      {/*<div className="form-group custom-text-input">*/}
+      {/*  <label>{label}</label>*/}
+      {/*  <input disabled={disabled} type="text" value={value}  onChange={e => setDataFunction("", e.target.value)}/>*/}
+      {/*  <div className="invalid-feedback">{errorMessage}</div>*/}
+      {/*  <small className="text-muted form-text"><div>{formText}</div></small>*/}
+      {/*</div>*/}
     </>
   );
 }

@@ -1,27 +1,30 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import { useParams } from "react-router-dom";
-import { axiosApiService } from "api/apiService";
 import ErrorDialog from "../../../common/error";
 import LoadingDialog from "../../../common/loading";
 import LdapOrganizationSummaryPanel from "./LdapOrganizationSummaryPanel";
 
 import "../../accounts.css";
-import LdapOrganizationDetailPanel from "./LdapOrganizationDetailPanel";
 import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
 import AccessDeniedDialog from "../../../common/accessDeniedInfo";
+import Model from "../../../../core/data_model/model";
+import {ldapOrganizationMetaData} from "../ldap-organizations-form-fields";
+import accountsActions from "../../accounts-actions";
+import LdapOrganizationDetailPanel from "./LdapOrganizationDetailPanel";
 
 function LdapOrganizationDetailView() {
-  const { id } = useParams();
+  const { organizationName } = useParams();
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState({});
   const [loading, setLoading] = useState(false); //this is how we toggle showing/hiding stuff when API calls or other functions are loading
   const [error, setError] = useState(false); //if any errors on API call or anything else need to be shown to use, this is used
-  const [organization, setOrganization] = useState(undefined);
+  const [ldapOrganizationData, setLdapOrganizationData] = useState(undefined);
   const [organizationAccounts, setOrganizationAccounts] = useState(undefined);
 
 
   useEffect(() => {
+    setLoading(true);
     getRoles();
     loadData();
   }, []);
@@ -35,15 +38,12 @@ function LdapOrganizationDetailView() {
   };
 
   const loadData = async () => {
-    console.log("ID: " + id);
-    setLoading(true);
-    let apiUrl = `/users/account/organization/${id}`;
+    console.log("organizationName: " + organizationName);
 
     try {
-      const accessToken = await getAccessToken();
-      const response = await axiosApiService(accessToken).post(apiUrl, {});
+      const response = await accountsActions.getOrganizationByName(organizationName, getAccessToken);
       // console.log("[LdapOrganizationDetailView] Response: ", response.data);
-      setOrganization(response.data);
+      setLdapOrganizationData(new Model(response.data, ldapOrganizationMetaData, false));
       setOrganizationAccounts(response.data["orgAccounts"]);
       console.log("orgAccounts: " + JSON.stringify(response.data["orgAccounts"]));
     } catch (error) {
@@ -51,7 +51,6 @@ function LdapOrganizationDetailView() {
       setError(error);
     }
     setLoading(false);
-
   };
 
   if (!accessRoleData || loading) {
@@ -68,16 +67,20 @@ function LdapOrganizationDetailView() {
         {error &&
         <div className="absolute-center-content"><ErrorDialog align="center" error={error.message}></ErrorDialog></div>}
 
-        {organization &&
+        {ldapOrganizationData &&
         <div className="content-container content-card-1 max-content-width ml-2">
           <div className="pt-2 pl-2 content-block-header">
-            <h6>Organization Details [{organization && organization.name}]</h6></div>
-          <div>
-            <LdapOrganizationSummaryPanel organization={organization}/>
+            <h6>Organization Details [{ldapOrganizationData && ldapOrganizationData["name"]}]</h6>
           </div>
-          <div>
-            <LdapOrganizationDetailPanel organizationAccounts={organizationAccounts} organization={organization}
-                                         setOrganization={setOrganization} loadData={loadData}/>
+          <div className="detail-view-body">
+            <div>
+              <LdapOrganizationSummaryPanel ldapOrganizationData={ldapOrganizationData}/>
+            </div>
+            <div>
+              <LdapOrganizationDetailPanel organizationAccounts={organizationAccounts}
+                                           ldapOrganizationData={ldapOrganizationData}
+                                           setLdapOrganizationData={setLdapOrganizationData} loadData={loadData}/>
+            </div>
           </div>
           <div className="content-block-footer"/>
         </div>

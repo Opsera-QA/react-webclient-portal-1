@@ -7,13 +7,15 @@ import LdapOrganizationAccountSummaryPanel from "./LdapOrganizationAccountSummar
 import LdapOrganizationAccountsTable from "./LdapOrganizationAccountsTable";
 import LdapOrganizationAccountEditorPanel from "./LdapOrganizationAccountEditorPanel";
 import NewLdapAccountModal from "./NewLdapAccountModal";
+import {ldapOrganizationAccountMetaData} from "../../ldap-organization-account-form-fields";
+import Model from "../../../../../core/data_model/model";
 
 function LdapOrganizationAccountDetailPanel({ldapOrganizationData, ldapOrganizationAccounts, currentAccount, setCurrentAccount, loadData}) {
   const [showEditPanel, setShowEditPanel] = useState(false);
   const [showCreateAccountModal, setShowCreateAccountModal] = useState(false);
 
   const handleAccountClick = (orgAccount) => {
-    setCurrentAccount(orgAccount);
+    setCurrentAccount(new Model(orgAccount, ldapOrganizationAccountMetaData, false));
   };
 
   const handleBackButton = () => {
@@ -38,8 +40,7 @@ function LdapOrganizationAccountDetailPanel({ldapOrganizationData, ldapOrganizat
               {currentAccount != null
                 ? showEditPanel ? <LdapOrganizationAccountEditorPanel setLdapOrganizationAccountData={setCurrentAccount} handleBackButton={handleBackButton} setShowEditPanel={setShowEditPanel} ldapOrganizationAccountData={currentAccount} />
                                 : <LdapOrganizationAccountSummaryPanel ldapOrganizationAccountData={currentAccount} handleBackButton={handleBackButton} setShowEditorPanel={setShowEditPanel}/>
-                : <LdapOrganizationAccountsTable setShowCreateAccountModal={setShowCreateAccountModal} ldapOrganizationAccounts={ldapOrganizationAccounts}
-                                                 handleAccountClick={handleAccountClick} />}
+                : <LdapOrganizationAccountsTable setShowCreateAccountModal={setShowCreateAccountModal} ldapOrganizationAccounts={ldapOrganizationAccounts} handleAccountClick={handleAccountClick} />}
           </Col>
         </Row>
       </div>

@@ -16,7 +16,7 @@ import "components/accounts/accounts.css";
 import PropTypes from "prop-types";
 import UserPanel from "../../../common/panels/user_panel/usersPanel";
 import LoadingDialog from "../../../common/loading";
-import {getSuccessToast} from "../../../common/toasts/toasts";
+import {getErrorToast, getSuccessToast} from "../../../common/toasts/toasts";
 
 function LdapGroupManagePanel({ldapGroupData, ldapOrganizationData, loadData}) {
   const {name} = useParams();
@@ -24,6 +24,7 @@ function LdapGroupManagePanel({ldapGroupData, ldapOrganizationData, loadData}) {
   const [members, setMembers] = useState([]);
   const [nonMembers, setNonMembers] = useState([]);
   const [showToast, setShowToast] = useState(false);
+  const [toast, setToast] = useState("");
   const [selectedMembers, setSelectedMembers] = useState([]);
   const [selectedNonMembers, setSelectedNonMembers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -104,18 +105,21 @@ function LdapGroupManagePanel({ldapGroupData, ldapOrganizationData, loadData}) {
   };
 
   const updateMembers = async () => {
-    let emailList = members.reduce((acc, item) => {
-      acc.push(item.emailAddress);
-      return acc;
-    }, []);
-    let payload = {
-      domain: ldapOrganizationData.orgDomain,
-      groupName: name,
-      emails: emailList,
-    };
-    const response = await accountsActions.syncMembership(payload, getAccessToken);
-    setShowToast(true);
-    loadData();
+    try {
+      let emailList = members.reduce((acc, item) => {
+        acc.push(item.emailAddress);
+        return acc;
+      }, []);
+      const syncMembershipResponse = await accountsActions.syncMembership(ldapOrganizationData, ldapGroupData.name, emailList, getAccessToken);
+      // console.log("syncMembershipResponse: " + JSON.stringify(syncMembershipResponse));
+      // TODO: Refresh data without reloading the page
+      loadData();
+    }
+    catch (error) {
+      let errorToast = getErrorToast(error.message, setShowToast);
+      setToast(errorToast);
+      setShowToast(true);
+    }
   };
 
   if (isLoading) {

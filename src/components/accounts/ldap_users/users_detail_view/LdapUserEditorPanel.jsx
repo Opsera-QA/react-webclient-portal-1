@@ -2,33 +2,18 @@ import React, { useState, useEffect, useContext } from "react";
 import { Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
-import TextInput from "../../../common/input/text-input";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Loading from "../../../common/loading";
 import accountsActions from "../../accounts-actions";
-import ldapUsersFormFields from "../ldap-users-form-fields";
 import {getFromValidationErrorToast, getPersistToast} from "../../../common/toasts/toasts";
+import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
+import Model, {DataState} from "../../../../core/data_model/model";
 
-const INITIAL_DATA = {
-  name: "",
-  firstName: "",
-  lastName: "",
-  emailAddress: "",
-  preferredName: "",
-  division: "",
-  teams: [],
-  title: "",
-  departmentName: "",
-  site: ""
-};
-
-function LdapUserEditorPanel({ ldapUserData, newLdapUser, setLdapUserData, handleClose, showButton }) {
+function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, handleClose, showButton }) {
   const { getAccessToken } = useContext(AuthContext);
-  const [fields, setFields ] = useState({ ...ldapUsersFormFields });
-  const [ changeMap, setChangeMap] = useState({});
-  const [ formData, setFormData] = useState(INITIAL_DATA);
   const [showToast, setShowToast] = useState(false);
+  const [ldapUserDataDto, setLdapUserDataDto] = useState({});
   const [toast, setToast] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
@@ -38,62 +23,18 @@ function LdapUserEditorPanel({ ldapUserData, newLdapUser, setLdapUserData, handl
 
   const loadData = async () => {
     setIsLoading(true);
-    await unpackLdapUserData();
+    setLdapUserDataDto(ldapUserData);
     setIsLoading(false);
   };
 
-  const unpackLdapUserData = async () => {
-    console.log("ldapUserData in unpackLdapUserData: " + JSON.stringify(ldapUserData));
-    if (ldapUserData != null) {
-      setFormField("name", ldapUserData["name"] != null ? ldapUserData["name"] : "");
-      setFormField("firstName", ldapUserData["firstName"] != null ? ldapUserData["firstName"] : "");
-      setFormField("lastName", ldapUserData["lastName"] != null ? ldapUserData["lastName"] : "");
-      setFormField("emailAddress", ldapUserData["emailAddress"] != null ? ldapUserData["emailAddress"] : {});
-      setFormField("departmentName", ldapUserData["departmentName"] != null ? ldapUserData["departmentName"] : false);
-    }
-    setIsLoading(false);
-  };
+  const createLdapUser = async () => {
+    console.log("Persisting new user to DB: " + JSON.stringify(ldapUserDataDto.data));
 
-  const setFormField = (field, value) => {
-    // console.log("Setting form field: " + field + " value: " + JSON.stringify(value));
-
-    if (value === ldapUserData[field])
-    {
-      // console.log("Removing " + field + " from change map");
-      delete changeMap[field];
-    }
-    else
-    {
-      // console.log("Added " + field + " to change map: " + value);
-      changeMap[field] = value;
-      setChangeMap({ ...changeMap });
-    }
-
-    formData[field] = value;
-    setFormData({ ...formData });
-
-
-    // console.log("ChangeMap: " + JSON.stringify(changeMap));
-
-    if (newLdapUser)
-    {
-      ldapUserData[field] = value;
-      setLdapUserData({ ...ldapUserData });
-    }
-  };
-
-  //TODO: Check fields
-  const isFormValid = true;
-
-  const createUser = async (newLdapUserData) => {
-    console.log("Persisting new user to DB: " + JSON.stringify(newLdapUserData));
-
-    if(isFormValid) {
-      let createUserResponse = await accountsActions.create({ user: newLdapUserData }, getAccessToken);
-      console.log("createUserResponse: ", JSON.stringify(createUserResponse));
+    if (ldapUserDataDto.isModelValid()) {
+      let createUserResponse = await accountsActions.createUser(ldapUserDataDto, getAccessToken);
 
       if (createUserResponse.error != null) {
-        const errorMsg = `Microservice error reported creating the user: ${newLdapUserData.key}.  Error returned: ${JSON.stringify(createUserResponse.error.message, null, 2)}`;
+        const errorMsg = `Microservice error reported creating the user: ${ldapUserDataDto["name"]}.  Error returned: ${JSON.stringify(createUserResponse.error.message, null, 2)}`;
         console.error(errorMsg);
         let toast = getPersistToast(false, "create", "user", errorMsg, setShowToast);
         setToast(toast);
@@ -104,34 +45,20 @@ function LdapUserEditorPanel({ ldapUserData, newLdapUser, setLdapUserData, handl
       }
     }
     else {
-        // TODO: Wire errors up
-        let toast = getFromValidationErrorToast("", setShowToast);
-        setToast(toast);
-        setShowToast(true);
+      let toast = getFromValidationErrorToast(setShowToast);
+      setToast(toast);
+      setShowToast(true);
     }
   };
 
-  const updateLdapUser = async (newLdapUserData) => {
-    if(isFormValid) {
+  const updateLdapUser = async () => {
+    if(ldapUserDataDto.isModelValid()) {
       try {
-        console.log("Persisting values in ChangeMap : " + JSON.stringify(changeMap));
-
-        let domain = newLdapUserData.emailAddress.substring(newLdapUserData.emailAddress.lastIndexOf("@") + 1);
-
-        const postBody = {
-          domain: domain,
-          user: {
-            // emailAddress: newLdapUserData.emailAddress,
-            ...newLdapUserData,
-            ...changeMap
-          }
-        }
-        console.log("post body: " + JSON.stringify(postBody));
-
-        const response = await accountsActions.updateUser(postBody, getAccessToken);
-        console.log("Response data: " + JSON.stringify(response));
-        setLdapUserData({ ...response.data });
-        setChangeMap({});
+        const response = await accountsActions.updateUser(orgDomain, ldapUserDataDto, getAccessToken);
+        // console.log("Response data: " + JSON.stringify(response));
+        let updatedDto = new Model(response.data, ldapUserDataDto.metaData, false);
+        setLdapUserDataDto(updatedDto);
+        setLdapUserData(updatedDto);
         let toast = getPersistToast(true, "update", "User", undefined, setShowToast);
         setToast(toast);
         setShowToast(true);
@@ -152,41 +79,41 @@ function LdapUserEditorPanel({ ldapUserData, newLdapUser, setLdapUserData, handl
           {showToast && toast}
           <Row>
             <Col lg={12}>
-              <TextInput field={fields.name} setData={setFormField} formData={formData} />
+              <DtoTextInput disabled={!ldapUserDataDto.isNew()} setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"name"} />
             </Col>
             <Col lg={12}>
-              <TextInput field={fields.firstName} setData={setFormField} formData={formData} />
+              <DtoTextInput setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"firstName"} />
             </Col>
             <Col lg={12}>
-              <TextInput field={fields.lastName} setData={setFormField} formData={formData}/>
+              <DtoTextInput setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"lastName"} />
             </Col>
             <Col lg={12}>
-              <TextInput field={fields.preferredName} setData={setFormField} formData={formData}/>
+              <DtoTextInput setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"preferredName"} />
             </Col>
             <Col lg={12}>
-              <TextInput disabled={!newLdapUser} field={fields.emailAddress } setData={setFormField} formData={formData}/>
+              <DtoTextInput disabled={!ldapUserDataDto.isNew()} setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"emailAddress"} />
             </Col>
             <Col lg={12}>
-              <TextInput field={ fields.division } setData={setFormField} formData={formData}/>
+              <DtoTextInput setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"division"} />
             </Col>
             <Col lg={12}>
-              <TextInput disabled={true} field={ fields.teams } setData={setFormField} formData={formData}/>
+              <DtoTextInput disabled={true} setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"teams"} />
             </Col>
             <Col lg={12}>
-              <TextInput field={ fields.departmentName } setData={setFormField} formData={formData}/>
+              <DtoTextInput setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"departmentName"} />
             </Col>
             <Col lg={12}>
-              <TextInput field={ fields.title } setData={setFormField} formData={formData}/>
+              <DtoTextInput setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"title"} />
             </Col>
             <Col lg={12}>
-              <TextInput field={ fields.site } setData={setFormField} formData={formData}/>
+              <DtoTextInput setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"site"} />
             </Col>
           </Row>
           <Row>
             { showButton &&
               <div className="ml-auto px-3">
-                {newLdapUser ? <Button size="sm" variant="primary" disabled={Object.keys(changeMap).length === 0} onClick={() => createUser(ldapUserData)}>Create LDAP User</Button>
-                  : <Button size="sm" variant="primary" disabled={Object.keys(changeMap).length === 0} onClick={() => updateLdapUser(ldapUserData)}>Save changes</Button>
+                {ldapUserDataDto.isNew() ? <Button size="sm" variant="primary" disabled={false} onClick={() => createLdapUser()}>Create LDAP User</Button>
+                  : <Button size="sm" variant="primary" disabled={ldapUserDataDto.dataState === DataState.LOADED} onClick={() => updateLdapUser()}>Save changes</Button>
                 }
               </div>
             }
@@ -199,10 +126,9 @@ function LdapUserEditorPanel({ ldapUserData, newLdapUser, setLdapUserData, handl
 
 LdapUserEditorPanel.propTypes = {
   showButton: PropTypes.bool,
+  orgDomain: PropTypes.string,
   ldapUserData: PropTypes.object,
   setLdapUserData: PropTypes.func,
-  canDelete: PropTypes.bool,
-  newLdapUser: PropTypes.bool,
   handleClose: PropTypes.func
 };
 

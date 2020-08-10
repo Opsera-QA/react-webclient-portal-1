@@ -14,7 +14,7 @@ import ToggleInput from "../../common/input/toggle-input";
 import DropdownList from "react-widgets/lib/DropdownList";
 import ItemInput from "../../common/input/item-input";
 import UserInput from "./user-input";
-import ldapUsersFormFields from "../ldap_users/ldap-users-form-fields";
+import ldapUsersMetadata from "../ldap_users/ldap-users-metadata";
 import ldapOrganizationsFormFields from "../ldap_organizations/ldap-organizations-form-fields";
 import {ldapCustomerIdpAccountsFormFields} from "./ldap-idp-account-form-fields";
 import {ldapOrganizationAccountFormFields} from "../ldap_organizations/ldap-organization-account-form-fields";
@@ -441,7 +441,7 @@ function LdapCustomerOnboardEditorPanel({ldapUserData, newLdapUser, setLdapUserD
               <div className="p-3">
                 <Row>
                   <Col>
-                    <UserInput field={ ldapUsersFormFields.users } setData={setUsersFormField} formData={usersFormData}/>
+                    <UserInput field={ ldapUsersMetadata.users } setData={setUsersFormField} formData={usersFormData}/>
                   </Col>
                 </Row>
               </div>

@@ -1,36 +1,36 @@
 import React from "react";
 import {Row, Col} from "react-bootstrap";
-import TextField from "../../../common/form_fields/text-field";
-import ldapGroupFormFields from "../ldap-groups-form-fields";
-import ToggleField from "../../../common/form_fields/toggle-field";
 import PropTypes from "prop-types";
+import DtoTextField from "../../../common/form_fields/dto_form_fields/dto-text-field";
+import DtoToggleField from "../../../common/form_fields/dto_form_fields/dto-toggle-field";
+import TextField from "../../../common/form_fields/text-field";
 
 function LdapGroupSummaryPanel({ldapGroupData, domain}) {
-  let fields = ldapGroupFormFields;
 
   return (
     <>
       <div className="scroll-y pt-3 px-3">
-        <div className="mb-3 flat-top-content-block p-3">
+        <div className="mb-3 flat-top-content-block p-3 detail-view-summary">
           {ldapGroupData &&
           <Row>
             <Col lg={6}>
-              <TextField field={fields.name} value={ldapGroupData.name}/>
+              <DtoTextField dataObject={ldapGroupData} fieldName={"name"} />
             </Col>
             <Col lg={6}>
-              <TextField field={fields.domain} value={domain}/>
+              {/*TODO: Pull through orgObject with its metadata once set up*/}
+              <TextField label={"Domain"} value={domain} />
             </Col>
             <Col lg={6}>
-              <TextField field={fields.groupType} value={ldapGroupData.groupType}/>
+              <DtoTextField dataObject={ldapGroupData} fieldName={"groupType"} />
             </Col>
             <Col lg={6}>
-              <TextField field={fields.externalSyncGroup} value={ldapGroupData.externalSyncGroup}/>
+              <DtoTextField dataObject={ldapGroupData} fieldName={"externalSyncGroup"} />
             </Col>
             <Col lg={6}>
-              <ToggleField field={fields.isSync} value={ldapGroupData.isSync}/>
+              <DtoToggleField dataObject={ldapGroupData} fieldName={"isSync"} />
             </Col>
             <Col lg={6}>
-              <TextField field={fields.ownerEmail} value={ldapGroupData.ownerEmail}/>
+              <DtoTextField dataObject={ldapGroupData} fieldName={"ownerEmail"} />
             </Col>
           </Row>
           }
@@ -42,6 +42,7 @@ function LdapGroupSummaryPanel({ldapGroupData, domain}) {
 
 LdapGroupSummaryPanel.propTypes = {
   ldapGroupData: PropTypes.object,
+  ldapGroupDto: PropTypes.object,
   domain: PropTypes.string,
 };
 

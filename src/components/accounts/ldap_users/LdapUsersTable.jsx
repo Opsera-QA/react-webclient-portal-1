@@ -1,27 +1,27 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/table";
 import { useHistory } from "react-router-dom";
-import ldapUsersFormFields from "./ldap-users-form-fields";
+import {ldapUsersMetaData} from "./ldap-users-metadata";
 import { getTableTextColumn } from "../../common/table/table-column-helpers";
 
 function LdapUsersTable({ userData, orgDomain }) {
+  const fields = ldapUsersMetaData.fields;
   const history = useHistory();
-  const [fields, setFields ] = useState({ ...ldapUsersFormFields });
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(fields["name"]),
-      getTableTextColumn(fields["preferredName"]),
-      getTableTextColumn(fields["firstName"]),
-      getTableTextColumn(fields["lastName"]),
-      getTableTextColumn(fields["emailAddress"]),
-      getTableTextColumn(fields["title"]),
-      getTableTextColumn(fields["departmentName"]),
-      getTableTextColumn(fields["division"]),
-      getTableTextColumn(fields["region"]),
+      getTableTextColumn(fields.find(field => { return field.id === "name"})),
+      getTableTextColumn(fields.find(field => { return field.id === "preferredName"})),
+      getTableTextColumn(fields.find(field => { return field.id === "firstName"})),
+      getTableTextColumn(fields.find(field => { return field.id === "lastName"})),
+      getTableTextColumn(fields.find(field => { return field.id === "emailAddress"})),
+      getTableTextColumn(fields.find(field => { return field.id === "title"})),
+      getTableTextColumn(fields.find(field => { return field.id === "departmentName"})),
+      getTableTextColumn(fields.find(field => { return field.id === "division"})),
+      getTableTextColumn(fields.find(field => { return field.id === "region"})),
     ],
-    []
+    [fields]
   );
 
   const onRowSelect = (rowData, type) => {

@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import LdapUserEditorPanel from "./LdapUserEditorPanel";
 
-function LdapUserDetailPanel({ ldapUserData, setLdapUserData, canDelete }) {
+function LdapUserDetailPanel({ ldapUserData, setLdapUserData, orgDomain }) {
   const [tabSelection, setTabSelection] = useState("settings");
 
   const handleTabClick = (tabSelection) => e => {
@@ -30,8 +30,8 @@ function LdapUserDetailPanel({ ldapUserData, setLdapUserData, canDelete }) {
         </Row>
         <Row>
           <Col>
-            <div className="tabbed-content-block">
-              {ldapUserData && <LdapDetailsView tabSelection={tabSelection} setLdapUserData={setLdapUserData} ldapUserData={ldapUserData} canDelete={canDelete} /> }
+            <div className="tabbed-content-block detail-view-detail-panel">
+              {ldapUserData && <LdapDetailsView tabSelection={tabSelection} setLdapUserData={setLdapUserData} ldapUserData={ldapUserData} orgDomain={orgDomain} /> }
             </div>
           </Col>
         </Row>
@@ -40,14 +40,14 @@ function LdapUserDetailPanel({ ldapUserData, setLdapUserData, canDelete }) {
   );
 }
 
-function LdapDetailsView({ tabSelection, setLdapUserData, ldapUserData, canDelete }) {
+function LdapDetailsView({ tabSelection, setLdapUserData, ldapUserData, orgDomain }) {
   useEffect(() => {
     // console.log("CHANGE HAPPENED");
   }, [tabSelection]);
   if (tabSelection) {
     switch (tabSelection) {
     case "settings":
-      return <LdapUserEditorPanel setLdapUserData={setLdapUserData} ldapUserData={ldapUserData} canDelete={canDelete} />;
+      return <LdapUserEditorPanel setLdapUserData={setLdapUserData} ldapUserData={ldapUserData} orgDomain={orgDomain} />;
     default:
       return null;
     }
@@ -57,7 +57,7 @@ function LdapDetailsView({ tabSelection, setLdapUserData, ldapUserData, canDelet
 LdapUserDetailPanel.propTypes = {
   ldapUserData: PropTypes.object,
   setLdapUserData: PropTypes.func,
-  canDelete: PropTypes.bool
+  orgDomain: PropTypes.string
 };
 
 export default LdapUserDetailPanel;

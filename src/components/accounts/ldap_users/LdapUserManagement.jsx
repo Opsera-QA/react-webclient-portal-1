@@ -4,14 +4,12 @@ import {AuthContext} from "contexts/AuthContext";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {Link, useHistory, useParams} from "react-router-dom";
-import accountsActions from "../accounts-actions";
 import LdapUsersTable from "./LdapUsersTable";
 import NewLdapUserModal from "./NewLdapUserModal";
 import DropdownList from "react-widgets/lib/DropdownList";
 import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
 import LoadingDialog from "components/common/loading";
 import AccessDeniedDialog from "../../common/accessDeniedInfo";
-import LdapOrganizationsTable from "../ldap_organizations/LdapOrganizationsTable";
 import {
   getOrganizationByDomain,
   getOrganizationByEmail,
