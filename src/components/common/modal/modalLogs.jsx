@@ -4,24 +4,20 @@ import { Button, Modal } from "react-bootstrap";
 
 import ReactJson from "react-json-view";
 
-
 function ModalLogsDialog({ header, size, jsonMessage, dataType, show, setParentVisibility }) {
   const [showModal, setShowModal] = useState(false);
-  
+
   useEffect(() => {
-    console.log("show: ", show);
-    console.log("DATA", jsonMessage);
+    // console.log("show: ", show);
+    // console.log("DATA", jsonMessage);
     setShowModal(show);
   }, [jsonMessage, show]);
 
-
-
   const handleClose = () => {
-    console.log("CLOSING!");
+    // console.log("CLOSING!");
     setShowModal(false);
     setParentVisibility(false);
   };
-
 
   return (
     <>
@@ -30,7 +26,9 @@ function ModalLogsDialog({ header, size, jsonMessage, dataType, show, setParentV
           <Modal.Title>{header}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="pre"> <ReactJson src={jsonMessage} displayDataTypes={false} />  </div>             
+          <div className="pre">
+            <ReactJson src={jsonMessage} displayDataTypes={false} />
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => handleClose()}>
@@ -38,19 +36,17 @@ function ModalLogsDialog({ header, size, jsonMessage, dataType, show, setParentV
           </Button>
         </Modal.Footer>
       </Modal>
-     
     </>
   );
 }
 
-  
 ModalLogsDialog.propTypes = {
   header: PropTypes.string,
-  size: PropTypes.string,  
+  size: PropTypes.string,
   jsonMessage: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   dataType: PropTypes.string,
   show: PropTypes.bool,
-  setParentVisibility: PropTypes.func
+  setParentVisibility: PropTypes.func,
 };
 
 export default ModalLogsDialog;
