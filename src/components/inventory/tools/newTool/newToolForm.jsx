@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Form, Col } from "react-bootstrap";
+import { Button, Form, Col, Modal, ButtonToolbar, Popover, OverlayTrigger } from "react-bootstrap";
 import { axiosApiService } from "api/apiService";
 import PropTypes from "prop-types";
 import MultiInputFormField from "components/common/input/multiInputFormField";
@@ -10,8 +10,8 @@ import Loading from "components/common/loading";
 import { capitalizeFirstLetter } from "../../../common/helpers/string-helpers";
 import DropdownList from "react-widgets/lib/DropdownList";
 
-function ToolPropertiesForm(props) {
-  const { type, accessToken, toolId, setActiveTab, getToolRegistryItem, setToolId, closeModal } = props;  
+function NewToolForm(props) {
+  const { type, accessToken, toolId, setActiveTab, getToolRegistryItem, setToolId, toolData } = props;  
   const [errors, setErrors] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [ formFieldList, updateFormFields ] = useState({ ...newToolFormFields });
@@ -81,7 +81,6 @@ function ToolPropertiesForm(props) {
         const response = await axiosApiService(accessToken).post("/registry/create", { ...formData });
         setToolId(response.data._id);
         getToolRegistryItem(response.data._id);
-        setActiveTab("summary");
       }
       catch (err) {
         isNameValid();
@@ -115,7 +114,6 @@ function ToolPropertiesForm(props) {
     try {
       await axiosApiService(accessToken).post("/registry/"+ toolId + "/update", { ...formData });
       getToolRegistryItem(toolId);
-      setActiveTab("summary");
     }
     catch (err) {
       setErrors(err.message);
@@ -175,15 +173,6 @@ function ToolPropertiesForm(props) {
     }));
   };
 
-  const handleCancel = (toolId, type) => {
-    if (type === "new") {
-      closeModal(false);
-    } else {
-      getToolRegistryItem(toolId);
-      setActiveTab("summary");
-    }
-  };
-
   const isFormValid = (formFieldList.name.value && formFieldList.tool_identifier.value) ? true :false;
   //const isFormModified = Object.values(formFieldList).some(x => (x.touched == true));
 
@@ -231,7 +220,6 @@ function ToolPropertiesForm(props) {
 
   // TODO: Convert to static form
   return (
-    <>
       <div className="tool-content-block m-3 pt-2">
 
         {errors && <div className="error-text">Error Reported: {errors}</div>}
@@ -259,26 +247,23 @@ function ToolPropertiesForm(props) {
           </Form>
           <div className="text-right m-2">
             <Button size="sm" variant="primary" onClick={type == "new" ? createNewTool : updateTool} disabled={!isFormValid}>Save changes</Button>
-            <Button size="sm" className="ml-1" variant="secondary" onClick={() => handleCancel(toolId, type)}>Cancel</Button>
           </div>
         </>}
       </div>
-    </>
   );
 }
 
 
-ToolPropertiesForm.propTypes = {
+NewToolForm.propTypes = {
   type: PropTypes.string,
   toolId:  PropTypes.string,
   accessToken: PropTypes.string,
   setActiveTab: PropTypes.func,
   getToolRegistryItem: PropTypes.func,
   toolData: PropTypes.object,
-  setToolId: PropTypes.func,
-  closeModal: PropTypes.func
+  setToolId: PropTypes.func
 };
 
 
 
-export default ToolPropertiesForm;
+export default NewToolForm;

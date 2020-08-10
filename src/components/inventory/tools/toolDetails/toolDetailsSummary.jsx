@@ -115,7 +115,7 @@ function ToolDetails(props) {
                 </li>
                 <li className="list-group-item">
                   <span className="pr-2 text-muted">Tags: </span>
-                  {toolData.tags.map((tag, index) => { 
+                  {toolData.tags && toolData.tags.map((tag, index) => { 
                     return(`${tag}` );
                   })}
                 </li>
