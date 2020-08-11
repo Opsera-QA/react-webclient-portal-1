@@ -211,17 +211,24 @@ const PipelineWorkflow = (props) => {
     } else {
       setZoomValue(zoomValue => zoomValue - 1);
     }
-  }
+  };
 
   return (
     <>
       {error ? <ErrorDialog error={error}/> : null}
-      {typeof (pipeline.workflow) !== "undefined" && pipeline.workflow.hasOwnProperty("source") ?
+      {typeof (pipeline.workflow) !== "undefined" && Object.prototype.hasOwnProperty.call(pipeline.workflow, "source") ?
         <>
-          <div className="max-content-width" style={{ margin: "0", padding: "0" }}>
-            <PipelineActionControls pipeline={pipeline} disabledActionState={false}
-                                    customerAccessRules={customerAccessRules} fetchData={fetchPlan}
-                                    fetchActivityLogs={fetchActivityLogs} setParentWorkflowStatus={setWorkflowStatus}/>
+          <div className="max-content-width w-100 d-flex mb-1">
+            <div className="flex-fill">
+              <div className="title-text-5">{pipeline.name}</div>
+            </div>
+
+            <div className="align-content-end">
+              <PipelineActionControls pipeline={pipeline} disabledActionState={false}
+                                      customerAccessRules={customerAccessRules} fetchData={fetchPlan}
+                                      fetchActivityLogs={fetchActivityLogs}
+                                      setParentWorkflowStatus={setWorkflowStatus}/>
+            </div>
           </div>
 
           {pipeline.owner !== customerAccessRules.UserId &&
@@ -241,79 +248,75 @@ const PipelineWorkflow = (props) => {
           </>
           }
 
-          <div className="mb-2 w-100 max-content-width">
-            <div className="title-text-5">{pipeline.name}</div>
-          </div>
+          <div className="max-content-width">
+            <div className="pr-1 text-right float-right">
+              <Button variant="secondary"
+                      className="mr-1"
+                      size="sm"
+                      disabled={zoomValue >= 3}
+                      onClick={() => {
+                        handleZoomClick(zoomValue, "in");
+                      }}>
+                <FontAwesomeIcon icon={faSearchPlus} fixedWidth/></Button>
 
-<div className="max-content-width">
-          <div className="pr-1 text-right float-right">
-            <Button variant="secondary"
-                    className="mr-1"
-                    size="sm"
-                    disabled={zoomValue >= 3}
-                    onClick={() => {
-              handleZoomClick(zoomValue,"in");
-            }}>
-              <FontAwesomeIcon icon={faSearchPlus} fixedWidth/></Button>
-
-            <Button variant="secondary"
-                    className="mr-1"
-                    size="sm"
-                    disabled={zoomValue <= 1}
-                    onClick={() => {
-              handleZoomClick(zoomValue,"out");
-            }}>
-              <FontAwesomeIcon icon={faSearchMinus} fixedWidth/></Button>
+              <Button variant="secondary"
+                      className="mr-1"
+                      size="sm"
+                      disabled={zoomValue <= 1}
+                      onClick={() => {
+                        handleZoomClick(zoomValue, "out");
+                      }}>
+                <FontAwesomeIcon icon={faSearchMinus} fixedWidth/></Button>
 
 
-            <OverlayTrigger
-              placement="top"
-              delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltip({ message: "View pipeline configuration" })}>
-              <Button variant="secondary" className="mr-1" size="sm" onClick={() => {
-                handleViewPipelineClick(pipeline);
-              }}>
-                <FontAwesomeIcon icon={faFileAlt} fixedWidth/></Button>
-            </OverlayTrigger>
-
-            {authorizedAction("edit_workflow_btn", pipeline.owner) && <>
-              {editWorkflow ?
-                <Button variant="success" size="sm" onClick={() => {
-                  handleDoneWorkflowEditsClick();
+              <OverlayTrigger
+                placement="top"
+                delay={{ show: 250, hide: 400 }}
+                overlay={renderTooltip({ message: "View pipeline configuration" })}>
+                <Button variant="secondary" className="mr-1" size="sm" onClick={() => {
+                  handleViewPipelineClick(pipeline);
                 }}>
-                  {isSavingPipeline ?
-                    <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/> :
-                    <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1"/>}
-                  Done</Button>
-                :
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "Edit workflow" })}>
-                  <Button variant="secondary" size="sm"
-                          onClick={() => {
-                            handleEditWorkflowClick();
-                          }}
-                          disabled={(workflowStatus && workflowStatus !== "stopped") || !authorizedAction("edit_workflow_btn", pipeline.owner)}>
-                    <FontAwesomeIcon icon={faPen} fixedWidth/> </Button>
-                </OverlayTrigger>
-              }  </>}
+                  <FontAwesomeIcon icon={faFileAlt} fixedWidth/></Button>
+              </OverlayTrigger>
 
-          </div>
+              {authorizedAction("edit_workflow_btn", pipeline.owner) && <>
+                {editWorkflow ?
+                  <Button variant="success" size="sm" onClick={() => {
+                    handleDoneWorkflowEditsClick();
+                  }}>
+                    {isSavingPipeline ?
+                      <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/> :
+                      <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1"/>}
+                    Done</Button>
+                  :
+                  <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip({ message: "Edit workflow" })}>
+                    <Button variant="secondary" size="sm"
+                            onClick={() => {
+                              handleEditWorkflowClick();
+                            }}
+                            disabled={(workflowStatus && workflowStatus !== "stopped") || !authorizedAction("edit_workflow_btn", pipeline.owner)}>
+                      <FontAwesomeIcon icon={faPen} fixedWidth/> </Button>
+                  </OverlayTrigger>
+                }  </>}
 
-          <div className="default-custom-tabs">
-            <ul className="nav nav-tabs" style={{ borderBottom: "none" }}>
-              <li className="nav-item">
-                <Link className="nav-link"
-                      to={location => `/workflow/${pipeline._id}`}>Summary</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link active"
-                      to={location => `/workflow/${pipeline._id}/model`}>Workflow</Link>
-              </li>
-            </ul>
+            </div>
+
+            <div className="default-custom-tabs">
+              <ul className="nav nav-tabs" style={{ borderBottom: "none" }}>
+                <li className="nav-item">
+                  <Link className="nav-link"
+                        to={location => `/workflow/${pipeline._id}`}>Summary</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link active"
+                        to={location => `/workflow/${pipeline._id}/model`}>Workflow</Link>
+                </li>
+              </ul>
+            </div>
           </div>
-</div>
 
           <div className={"workflow-container max-content-width pl-2" + (zoomValue > 2 && " scale-120-container")}>
             <div className={setZoomClass(zoomValue)}>

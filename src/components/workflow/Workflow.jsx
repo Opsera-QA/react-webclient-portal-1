@@ -38,13 +38,6 @@ function Workflow() {
   return (
     <>
       <div className="max-content-width">
-        <h4>
-          {selection === "catalog" && "Pipelines Catalog"}
-          {selection === "myPipelines" && "My Pipelines"}
-          {(selection === "pipelineDetail" || selection === "workflowView") && "Pipeline"}
-        </h4>
-
-
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
             <li className={selection === "catalog" ? "breadcrumb-item active" : "breadcrumb-item"}>
@@ -57,6 +50,11 @@ function Workflow() {
             <li className="breadcrumb-item active">Pipeline</li>}
           </ol>
         </nav>
+        <h4>
+          {selection === "catalog" && "Pipeline Templates Catalog"}
+          {selection === "myPipelines" && "My Pipelines"}
+          {(selection === "pipelineDetail" || selection === "workflowView") && "Pipeline"}
+        </h4>
 
       </div>
       {itemId.length > 0 && selection === "pipelineDetail" ? <PipelineOverview id={itemId}/> : null}
