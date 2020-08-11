@@ -12,12 +12,15 @@ import { useTable, usePagination, useSortBy } from "react-table";
 import RegisteredUserTable from "./RegisteredUserTable";
 import Pagination from "components/common/pagination";
 import { Link } from "react-router-dom";
+import { getOrganizationList } from "../../accounts/ldap_organizations/organization-functions";
+import AccessDeniedDialog from "../../common/accessDeniedInfo";
 
 function RegisteredUsers() {
   const Auth = useContext(AuthContext);
   let history = useHistory();
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const [accessRoleData, setAccessRoleData] = useState({});
 
   const [state, setState] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
@@ -31,12 +34,12 @@ function RegisteredUsers() {
       messages: null,
       deployingElk: false,
       accessToken: null,
-      userInfo: null
-    }
+      userInfo: null,
+    },
   );
 
   // Executed every time page number or page size changes
-  useEffect(() => {   
+  useEffect(() => {
     loadPage();
   }, [currentPage, pageSize]);
 
@@ -47,27 +50,29 @@ function RegisteredUsers() {
   };
 
   async function loadPage() {
-    await checkUserData();
+    await getRoles();
+    //await checkUserData();
     getApiData();
   }
 
-  async function checkUserData() {
-    const { authenticated, getUserRecord, getAccessToken } = Auth;    
-    const accessToken = await getAccessToken();
-    const userInfo = await getUserRecord();
-    setState({ accessToken: accessToken, userInfo: userInfo, authenticated: authenticated });
-    if (userInfo) {
-      setState({ administrator: userInfo.groups.includes("Admin") });
-    }
 
-    if (!userInfo.groups.includes("Admin")) {
-      //move out
-      history.push("/");
-    } 
+  const getRoles = async () => {
+    const { getUserRecord, setAccessRoles } = Auth;
+    const user = await getUserRecord();
+    const userRoleAccess = await setAccessRoles(user);
+    if (userRoleAccess) {
+      setAccessRoleData(userRoleAccess);
+    }
+  };
+
+
+  function handleDeletePress(userId) {
+    setState({ confirm: true, delUserId: userId });
   }
 
-  function handleDeletePress(userId) { setState({ confirm: true, delUserId: userId }); }
-  function handleCancel() { setState({ confirm: false, delUserId: "" }); }
+  function handleCancel() {
+    setState({ confirm: false, delUserId: "" });
+  }
 
   function handleConfirm() {
     const { delUserId } = state;
@@ -91,16 +96,15 @@ function RegisteredUsers() {
 
   async function deployElkStack(id) {
     const { accessToken } = state;
-    const apiUrl = `/users/tools/activate-elk/${id}`;         
+    const apiUrl = `/users/tools/activate-elk/${id}`;
     try {
-      const response = await axiosApiService(accessToken).get(apiUrl);      
+      const response = await axiosApiService(accessToken).get(apiUrl);
       //console.log(response);    
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err.message);
       setState({
         error: err,
-        fetching: false
+        fetching: false,
       });
     }
   }
@@ -108,90 +112,99 @@ function RegisteredUsers() {
   function deactivateUser(userId, accessToken, userInfo) {
     const apiCall = new ApiService("/users/deactivate-user", null, accessToken, { userId: userId });
     apiCall.post()
-      .then(function (response) {
+      .then(function(response) {
         setState({
           deactivate: response.data,
           error: null,
-          fetching: false
+          fetching: false,
         });
       })
-      .catch(function (error) {
+      .catch(function(error) {
         setState({
           error: error,
-          fetching: false
+          fetching: false,
         });
       });
 
   }
 
-  function getApiData() {    
+  function getApiData() {
     const { accessToken } = state;
     const urlParams = {
       page: currentPage,
-      size: pageSize
+      size: pageSize,
     };
     const apiCall = new ApiService("/users/get-users", urlParams, accessToken);
     apiCall.get()
-      .then(function (response) {
+      .then(function(response) {
         //console.log(response.data);
         setState({
           userData: response.data.users,
           error: null,
-          fetching: false
+          fetching: false,
         });
       })
-      .catch(function (error) {
+      .catch(function(error) {
         setState({
           error: error,
-          fetching: false
+          fetching: false,
         });
       });
   }
 
   const { userData, error, fetching, confirm, administrator, deployingElk } = state;
 
-  return (
-    <>
-      {
-        administrator &&
-        <div>
+  if (!accessRoleData) {
+    return (<LoadingDialog size="sm"/>);
+  } else if (!accessRoleData.OpseraAdministrator) {
+    return (<AccessDeniedDialog roleData={accessRoleData}/>);
+  } else {
+    return (
 
-          {/* <h4>Administration Tools</h4> */}
+      <div>
 
-          <nav aria-label="breadcrumb">
-            <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
-              <li className="breadcrumb-item">
-                <Link to="/admin">Admin</Link>
-              </li>
-              <li className="breadcrumb-item active">Registered Users</li> 
-            </ol>
-          </nav>     
+        <h4>Administration Tools</h4>
 
-          <h5>Registered Users</h5>  
-          <br />
+        <nav aria-label="breadcrumb">
+          <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
+            <li className="breadcrumb-item">
+              <Link to="/admin">Admin</Link>
+            </li>
+            <li className="breadcrumb-item active">Registered Users</li>
+          </ol>
+        </nav>
 
-          {error ? <ErrorDialog error={error} /> : null}
-          {fetching && <LoadingDialog />}
+        <h5>Registered Users</h5>
+        <br/>
 
-          {confirm ? <Modal header="Confirm Deactivation"
-            message="Warning! Data cannot be recovered once a User is deactivated. Do you still want to proceed?"
-            button="Confirm"
-            handleCancelModal={handleCancel}
-            handleConfirmModal={handleConfirm} /> : null}
+        {error ? <ErrorDialog error={error}/> : null}
+        {fetching && <LoadingDialog/>}
 
-          {Object.keys(userData).length > 0 && <RegisteredUserTable 
-            data={userData} 
-            deployingElk={deployingElk} 
-            handleDeletePress={(id) => { handleDeletePress(id); }} 
-            handleDeployElkStack={(id) => {handleDeployElkStack(id);}} />}
+        {confirm ? <Modal header="Confirm Deactivation"
+                          message="Warning! Data cannot be recovered once a User is deactivated. Do you still want to proceed?"
+                          button="Confirm"
+                          handleCancelModal={handleCancel}
+                          handleConfirmModal={handleConfirm}/> : null}
 
-          {Object.keys(userData).length > 0 && <Pagination total={userData.count || 30} currentPage={currentPage} pageSize={pageSize} onClick={(pageNumber, pageSize) => gotoPage(pageNumber, pageSize)} /> }
+        {Object.keys(userData).length > 0 && <RegisteredUserTable
+          data={userData}
+          deployingElk={deployingElk}
+          handleDeletePress={(id) => {
+            handleDeletePress(id);
+          }}
+          handleDeployElkStack={(id) => {
+            handleDeployElkStack(id);
+          }}/>}
 
-          <br />
-        </div>
-      }
-    </>
-  );
+        {Object.keys(userData).length > 0 &&
+        <Pagination total={userData.count || 30} currentPage={currentPage} pageSize={pageSize}
+                    onClick={(pageNumber, pageSize) => gotoPage(pageNumber, pageSize)}/>}
+
+
+      </div>
+
+    );
+  }
 }
 
 

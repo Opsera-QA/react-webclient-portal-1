@@ -157,7 +157,7 @@ const AppWithRouterAccess = () => {
                 <SecureRoute path="/admin" exact component={AdminTools}/>
                 <SecureRoute path="/admin/delete" component={DeleteTools}/>
                 <SecureRoute path="/admin/manage_systems" component={ManageSystems}/>
-                <SecureRoute path="/admin/registered_users" component={RegisteredUsers}/>
+                <SecureRoute path="/admin/registered-users" component={RegisteredUsers}/>
                 <SecureRoute path="/admin/systemstatus" component={SystemStatus}/>
                 <SecureRoute path="/admin/customerstatus" component={CustomerSystemStatus}/>
                 <SecureRoute path="/admin/analytics/reports-registration" component={ReportsRegistration}/>

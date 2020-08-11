@@ -71,7 +71,7 @@ function AdminTools(props) {
                 <Link to="/admin/manage_systems"><FontAwesomeIcon icon={faEdit} fixedWidth/> System Management</Link>
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/registered_users"><FontAwesomeIcon icon={faUserCircle} fixedWidth/> Registered
+                <Link to="/admin/registered-users"><FontAwesomeIcon icon={faUserCircle} fixedWidth/> Registered
                   Users</Link>
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
