@@ -218,7 +218,7 @@ const PipelineWorkflow = (props) => {
       {error ? <ErrorDialog error={error}/> : null}
       {typeof (pipeline.workflow) !== "undefined" && pipeline.workflow.hasOwnProperty("source") ?
         <>
-          <div className="max-content-module-width-50" style={{ margin: "0", padding: "0" }}>
+          <div className="max-content-width" style={{ margin: "0", padding: "0" }}>
             <PipelineActionControls pipeline={pipeline} disabledActionState={false}
                                     customerAccessRules={customerAccessRules} fetchData={fetchPlan}
                                     fetchActivityLogs={fetchActivityLogs} setParentWorkflowStatus={setWorkflowStatus}/>
@@ -241,11 +241,11 @@ const PipelineWorkflow = (props) => {
           </>
           }
 
-          <div className="mb-2 w-100 max-content-module-width-50">
+          <div className="mb-2 w-100 max-content-width">
             <div className="title-text-5">{pipeline.name}</div>
           </div>
 
-
+<div className="max-content-width">
           <div className="pr-1 text-right float-right">
             <Button variant="secondary"
                     className="mr-1"
@@ -313,9 +313,9 @@ const PipelineWorkflow = (props) => {
               </li>
             </ul>
           </div>
+</div>
 
-
-          <div className={"workflow-container pl-2" + (zoomValue > 2 && " scale-120-container")}>
+          <div className={"workflow-container max-content-width pl-2" + (zoomValue > 2 && " scale-120-container")}>
             <div className={setZoomClass(zoomValue)}>
               <div className="source workflow-module-container workflow-module-container-width p-2 mt-2  mx-auto">
                 <div className="title-text-6">Start of Workflow</div>
