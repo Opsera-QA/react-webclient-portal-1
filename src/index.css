@@ -609,3 +609,29 @@ a:hover, .active {
 .flex-container-bottom {
     min-height: 25px;
 }
+
+.scale-80 {
+    transform: scale(.80);
+    transform-origin: top center;
+    padding: 15px;
+    margin-top:10px;
+    margin-left:20px;
+}
+
+.scale-100 {
+    padding: 15px;
+    margin-top:10px;
+}
+
+.scale-120 {
+    padding: 15px;
+    margin-top:10px;
+    transform: scaleX(1.2);
+    transform-origin: top center;
+
+}
+
+.scale-120-container {
+    transform: scaleY(1.2);
+    transform-origin: top;
+}
