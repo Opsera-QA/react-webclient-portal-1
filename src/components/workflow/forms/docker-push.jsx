@@ -393,11 +393,11 @@ function DockerPushStepConfiguration({
       toolConfigId.length === 0 ||
       jenkinsUrl.length === 0 ||
       jUserId.length === 0 ||
-      jAuthToken.length === 0 ||
+      jAuthToken.length === 0
       // jobName.length === 0 ||
-      (buildType === "docker"
-        ? dockerName.length === 0 || dockerTagName.length === 0
-        : false)
+      // (buildType === "docker"
+      //   ? dockerName.length === 0 || dockerTagName.length === 0
+      //   : false)
     ) {
       setFormMessage("Required Fields Missing!");
       return false;
