@@ -1,26 +1,23 @@
 import React, { useReducer, useEffect, useState, useContext, useMemo } from "react";
-import { Table, Row, Col, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import ErrorDialog from "../../common/error";
 import LoadingDialog from "../../common/loading";
 import { AuthContext } from "../../../contexts/AuthContext";
-import { format } from "date-fns";
-//import InfoDialog from "../common/info";
 import Modal from "../../common/modal/modal";
 import { ApiService, axiosApiService } from "../../../api/apiService";
-import { useTable, usePagination, useSortBy } from "react-table";
 import RegisteredUserTable from "./RegisteredUserTable";
 import Pagination from "components/common/pagination";
 import { Link } from "react-router-dom";
-import { getOrganizationList } from "../../accounts/ldap_organizations/organization-functions";
+
 import AccessDeniedDialog from "../../common/accessDeniedInfo";
 
 function RegisteredUsers() {
-  const Auth = useContext(AuthContext);
   let history = useHistory();
+  const Auth = useContext(AuthContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [accessRoleData, setAccessRoleData] = useState({});
+  const { getUserRecord, setAccessRoles, getAccessToken } = Auth;
 
   const [state, setState] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
@@ -33,35 +30,37 @@ function RegisteredUsers() {
       error: null,
       messages: null,
       deployingElk: false,
-      accessToken: null,
       userInfo: null,
     },
   );
 
   // Executed every time page number or page size changes
   useEffect(() => {
-    loadPage();
+    getApiData();
   }, [currentPage, pageSize]);
 
+  useEffect(() => {
+    getRoles();
+  }, []);
 
   const gotoPage = (pageNumber, pageSize) => {
     setCurrentPage(pageNumber);
     setPageSize(pageSize);
   };
 
-  async function loadPage() {
-    await getRoles();
-    //await checkUserData();
-    getApiData();
-  }
-
 
   const getRoles = async () => {
-    const { getUserRecord, setAccessRoles } = Auth;
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
+
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
+    }
+
+    if (userRoleAccess.OpseraAdministrator) {
+      getApiData();
+    } else {
+      history.push("/");
     }
   };
 
@@ -81,8 +80,8 @@ function RegisteredUsers() {
   }
 
   function handleDeactivateUser(userId) {
-    const { accessToken, userInfo } = state;
-    deactivateUser(userId, accessToken, userInfo);
+    const { userInfo } = state;
+    deactivateUser(userId, userInfo);
   }
 
   async function handleDeployElkStack(userId) {
@@ -95,7 +94,7 @@ function RegisteredUsers() {
   }
 
   async function deployElkStack(id) {
-    const { accessToken } = state;
+    const accessToken = await getAccessToken();
     const apiUrl = `/users/tools/activate-elk/${id}`;
     try {
       const response = await axiosApiService(accessToken).get(apiUrl);
@@ -109,7 +108,8 @@ function RegisteredUsers() {
     }
   }
 
-  function deactivateUser(userId, accessToken, userInfo) {
+  async function deactivateUser(userId, userInfo) {
+    const accessToken = await getAccessToken();
     const apiCall = new ApiService("/users/deactivate-user", null, accessToken, { userId: userId });
     apiCall.post()
       .then(function(response) {
@@ -128,8 +128,8 @@ function RegisteredUsers() {
 
   }
 
-  function getApiData() {
-    const { accessToken } = state;
+  async function getApiData() {
+    const accessToken = await getAccessToken();
     const urlParams = {
       page: currentPage,
       size: pageSize,
@@ -152,7 +152,7 @@ function RegisteredUsers() {
       });
   }
 
-  const { userData, error, fetching, confirm, administrator, deployingElk } = state;
+  const { userData, error, fetching, confirm, deployingElk } = state;
 
   if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
