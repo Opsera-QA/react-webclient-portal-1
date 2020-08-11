@@ -194,8 +194,13 @@ function StepToolConfiguration({
           ) : null}
           {editItem.tool_name.toLowerCase() === "command-line" ? (
             <CommandLineStepConfiguration
-              data={stepTool}
+              pipelineId={pipeline._id}
+              plan={pipeline.workflow.plan}
+              stepId={stepId}
+              stepTool={stepTool}
               parentCallback={callbackFunction}
+              callbackSaveToVault={saveToVault}
+              createJob={createJob}
             />
           ) : null}
           {editItem.tool_name.toLowerCase() === "npm" ? (
