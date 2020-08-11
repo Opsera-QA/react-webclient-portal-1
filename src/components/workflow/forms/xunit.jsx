@@ -344,12 +344,22 @@ function XunitStepConfiguration({
       dockerName,
       dockerTagName,
     } = formData;
-    if (
+    
+    if(jobType === "job") {
+      if(jobName.length === 0) {
+      setFormMessage("Required Fields Missing!");
+      return false
+      } else {
+        setFormMessage("");
+        return true
+      }
+    }
+    else  {
+      if (
       toolConfigId.length === 0 ||
       jenkinsUrl.length === 0 ||
       jUserId.length === 0 ||
       jAuthToken.length === 0 ||
-      // jobName.length === 0 ||
       (buildType === "docker"
         ? dockerName.length === 0 || dockerTagName.length === 0
         : false)
@@ -360,6 +370,7 @@ function XunitStepConfiguration({
       setFormMessage("");
       return true;
     }
+  }
   };
 
   //todo: can this use the initial value const above to reset everything?  Right now this means we have ot maintain the values in two places.
@@ -701,7 +712,7 @@ function XunitStepConfiguration({
           <p className="info-text">{formMessage}</p>
         ) : null}
 
-        {jobType === "job" && (
+        {jobType === "job" ? (
           <Form.Group controlId="branchField">
             <Form.Label>Job Name*</Form.Label>
             <Form.Control
@@ -715,8 +726,9 @@ function XunitStepConfiguration({
               }
             />
           </Form.Group>
-        )}
-
+        ) : 
+        <>
+        
         {jobType === "opsera-job" && (
           <>
             {formData.jenkinsUrl && jenkinsList.length > 1 && (
@@ -927,6 +939,8 @@ function XunitStepConfiguration({
             disabled={true}
           />
         </Form.Group>
+        </>
+        }
 
         {jobType === "opsera-job" ? (
           <Button

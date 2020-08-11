@@ -130,7 +130,7 @@ function DockerPushStepConfiguration({
   }, [stepTool]);
 
   useEffect(() => {
-    if (jobType === "-job") {
+    if (jobType === "job") {
       setFormData({ ...formData, jobType : "DOCKER PUSH" });
     }
   }, [jobType]);
@@ -389,6 +389,17 @@ function DockerPushStepConfiguration({
       dockerName,
       dockerTagName,
     } = formData;
+
+    if(jobType === "job") {
+      if(jobName.length === 0) {
+      setFormMessage("Required Fields Missing!");
+      return false
+      } else {
+        setFormMessage("");
+        return true
+      }
+    }
+    else  {
     if (
       toolConfigId.length === 0 ||
       jenkinsUrl.length === 0 ||
@@ -405,6 +416,7 @@ function DockerPushStepConfiguration({
       setFormMessage("");
       return true;
     }
+  }
   };
 
   //todo: can this use the initial value const above to reset everything?  Right now this means we have ot maintain the values in two places.
@@ -773,7 +785,7 @@ function DockerPushStepConfiguration({
           <p className="info-text">{formMessage}</p>
         ) : null}
 
-        {jobType === "job" && (
+        {jobType === "job" ? (
           <Form.Group controlId="branchField">
             <Form.Label>Job Name*</Form.Label>
             <Form.Control
@@ -787,8 +799,8 @@ function DockerPushStepConfiguration({
               }
             />
           </Form.Group>
-        )}
-
+        ) : 
+        <>
         {jobType === "opsera-job" && (
           <>
             {formData.jenkinsUrl && jenkinsList.length > 1 && (
@@ -1138,6 +1150,8 @@ function DockerPushStepConfiguration({
             disabled={true}
           />
         </Form.Group>
+        </>
+        }
 
         {jobType === "opsera-job" ? (
           <Button

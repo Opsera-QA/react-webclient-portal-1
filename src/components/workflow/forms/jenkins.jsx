@@ -378,6 +378,17 @@ function JenkinsStepConfiguration({
       dockerName,
       dockerTagName,
     } = formData;
+
+    if(jobType === "job") {
+      if(jobName.length === 0) {
+      setFormMessage("Required Fields Missing!");
+      return false
+      } else {
+        setFormMessage("");
+        return true
+      }
+    }
+    else  {
     if (
       toolConfigId.length === 0 ||
       jenkinsUrl.length === 0 ||
@@ -394,6 +405,7 @@ function JenkinsStepConfiguration({
       setFormMessage("");
       return true;
     }
+  }
   };
 
   //todo: can this use the initial value const above to reset everything?  Right now this means we have ot maintain the values in two places.
@@ -827,7 +839,7 @@ function JenkinsStepConfiguration({
           <p className="info-text">{formMessage}</p>
         ) : null}
 
-        {jobType === "job" && (
+        {jobType === "job" ? (
           <Form.Group controlId="branchField">
             <Form.Label>Job Name*</Form.Label>
             <Form.Control
@@ -841,9 +853,9 @@ function JenkinsStepConfiguration({
               }
             />
           </Form.Group>
-        )}
-
-        {jobType === "opsera-job" && (
+        ) : 
+        <>
+           {jobType === "opsera-job" && (
           <>
             {formData.jenkinsUrl && jenkinsList.length > 1 && (
               <Form.Group controlId="formBasicEmail">
@@ -1281,6 +1293,8 @@ function JenkinsStepConfiguration({
             disabled={true}
           />
         </Form.Group>
+        </>
+        }
 
         {jobType === "opsera-job" ? (
           <Button
