@@ -860,8 +860,8 @@ function DockerPushStepConfiguration({
           </>
         )}
 
-        {(formData.jobType === "DOCKER" ) && (
-          <Form.Group controlId="jenkinsList">
+        {(formData.jobType === "DOCKER PUSH" ) && (
+          <Form.Group controlId="awsList">
             <Form.Label className="w-100">
               AWS Credentials*
               <OverlayTrigger
