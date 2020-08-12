@@ -9,9 +9,10 @@ import newToolFormFields from "./new-tool-form-fields.js";
 import Loading from "components/common/loading";
 import { capitalizeFirstLetter } from "../../../common/helpers/string-helpers";
 import DropdownList from "react-widgets/lib/DropdownList";
+import ErrorDialog from "../../../common/error";
 
 function NewToolForm(props) {
-  const { type, accessToken, toolId, setActiveTab, getToolRegistryItem, setToolId, toolData } = props;  
+  const { type, accessToken, toolId, setActiveTab, getToolRegistryItem, setToolId, toolData, toggleViewModal } = props;
   const [errors, setErrors] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [ formFieldList, updateFormFields ] = useState({ ...newToolFormFields });
@@ -50,7 +51,6 @@ function NewToolForm(props) {
     }
     catch (err) {
       setErrors(err.message);
-      console.log(err.message);
       setIsLoading(false);
     }
   };
@@ -67,7 +67,6 @@ function NewToolForm(props) {
     }
     catch (err) {
       setErrors(err.message);
-      console.log(err.message);
     }
   };
 
@@ -77,14 +76,17 @@ function NewToolForm(props) {
       return obj;
     }, {});
     if(isFormValid) {
-      try {
+      //try {
         const response = await axiosApiService(accessToken).post("/registry/create", { ...formData });
         setToolId(response.data._id);
-        getToolRegistryItem(response.data._id);
-      }
+        //getToolRegistryItem(response.data._id);
+
+        //close modal...
+        toggleViewModal(false);
+      /*}
       catch (err) {
-        isNameValid();
-      }
+        //isNameValid();
+      }*/
     }
   };
 
@@ -117,7 +119,6 @@ function NewToolForm(props) {
     }
     catch (err) {
       setErrors(err.message);
-      console.log(err.message);
     }
   };
 
@@ -146,7 +147,6 @@ function NewToolForm(props) {
   };
 
   const handleToolTypeUpdate = (selectedToolType) => {
-    console.log(JSON.stringify(selectedToolType));
 
     let tool_type_identifier = {        
       isValid: true,
@@ -222,7 +222,9 @@ function NewToolForm(props) {
   return (
       <div className="tool-content-block m-3 pt-2">
 
-        {errors && <div className="error-text">Error Reported: {errors}</div>}
+
+        {errors && <ErrorDialog error={errors} align={"top"} setError={setErrors}/>}
+
         {isLoading ? <Loading size="sm" /> : null}
           
         {!isLoading && <>

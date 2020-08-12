@@ -57,7 +57,6 @@ function ToolInventory () {
       toggleViewModal(false);
     }
     catch (err) {
-      console.log(err.message);
       setErrors(err.message);
     }
     getToolRegistryList(null);
@@ -105,9 +104,13 @@ function ToolInventory () {
   };
 
 
-  const closeViewModal = () => {
+  const closeViewModal = async () => {
     toggleViewModal(false);
-    history.push("/inventory/tools");
+    if (toolId) {
+      history.push("/inventory/tools/detail/" + toolId);
+    } else {
+      await getToolList();
+    }
   };
 
   const updateFilterOption = (filterOption) => {
@@ -115,16 +118,12 @@ function ToolInventory () {
   };
   
   const getToolList = async () => {
-    try {
+    setLoading(true)
       const accessToken = await getAccessToken();
       const toolResponse = await axiosApiService(accessToken).get("/registry/tools", {});
       setToolList(toolResponse.data);
       setFilterOptionList(createFilterOptionList(toolResponse.data, "tool_identifier", "name", "identifier", false));
-    }
-    catch (err) {
-      setErrors(err.message);
-      console.log(err.message);
-    }
+    setLoading(false)
   };
 
   return (
@@ -136,7 +135,7 @@ function ToolInventory () {
           <Modal.Title className="upper-case-first">New Tool Type</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <NewToolForm type="new" closeModal={() => closeViewModal()} toolId={toolId} fnEditTool={handleEditClick} fnDeleteTool={handleDeleteClick} setToolId={setToolId} />
+          <NewToolForm type="new" toggleViewModal={closeViewModal} toolId={toolId} fnEditTool={handleEditClick} fnDeleteTool={handleDeleteClick} setToolId={setToolId} />
         </Modal.Body>
         <Modal.Footer>
           <OverlayTrigger trigger={["hover", "hover"]} placement="top" overlay={popover}>
@@ -172,10 +171,11 @@ function ToolInventory () {
             />}
           </div>
         </div>
-        {isLoading && <LoadingDialog />}
+
         {errors && <div className="error-text">Error Reported: {errors}</div>}
       
         {toolRegistryList && <ToolsTable tableFilter={filterOption} onRowSelect={viewTool} data={toolRegistryList} />}
+        {isLoading && <LoadingDialog size={"sm"} />}
       </div>
     </>
   );  
