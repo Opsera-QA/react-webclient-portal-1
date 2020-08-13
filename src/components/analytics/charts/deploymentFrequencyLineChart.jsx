@@ -14,9 +14,7 @@ import LoadingDialog from "../../common/loading";
 import InfoDialog from "../../common/info";
 import ModalLogs from "../../common/modal/modalLogs";
 
-
-
-function MaintainabilityLineChart( { persona, date } ) {
+function MaintainabilityLineChart({ persona, date }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -27,16 +25,16 @@ function MaintainabilityLineChart( { persona, date } ) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";   
+    const apiUrl = "/analytics/data";
     const postBody = {
       data: [
-        { 
+        {
           request: "successfulDeploymentFrequency",
-          metric: "stacked" 
-        }
+          metric: "stacked",
+        },
       ],
-      startDate: date.start, 
-      endDate: date.end
+      startDate: date.start,
+      endDate: date.end,
     };
 
     try {
@@ -44,24 +42,23 @@ function MaintainabilityLineChart( { persona, date } ) {
       let dataObject = res && res.data ? res.data.data[0].successfulDeploymentFrequency : [];
       setData(dataObject);
       setLoading(false);
-    }
-    catch (err) {
-      console.log(err.message);
+    } catch (err) {
+      // console.log(err.message);
       setLoading(false);
       setErrors(err.message);
     }
-  }, [contextType]);
-  
-  useEffect(() => {    
+  }, [contextType, date]);
+
+  useEffect(() => {
     const controller = new AbortController();
     const runEffect = async () => {
       try {
         await fetchData();
       } catch (err) {
         if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
+          // console.log("Request was canceled via controller.abort");
           return;
-        }        
+        }
       }
     };
     runEffect();
@@ -71,39 +68,43 @@ function MaintainabilityLineChart( { persona, date } ) {
     };
   }, [fetchData, date]);
 
-
-  console.log("Rendering Dep Frequency Charts");
-
-  console.log(data);
-
-  if(loading) {
-    return (<LoadingDialog size="sm" />);
+  if (loading) {
+    return <LoadingDialog size="sm" />;
   } else if (error) {
-    return (<ErrorDialog  error={error} />);
-  // } else if (typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) {
-  //   return (<div style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}><ErrorDialog error="No Data is available for this chart at this time." /></div>);
+    return <ErrorDialog error={error} />;
+    // } else if (typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) {
+    //   return (<div style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}><ErrorDialog error="No Data is available for this chart at this time." /></div>);
   } else {
     return (
       <>
-        <ModalLogs header="Deployments Graph" size="lg" jsonMessage={data.data} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
+        <ModalLogs
+          header="Deployments Graph"
+          size="lg"
+          jsonMessage={data.data}
+          dataType="bar"
+          show={showModal}
+          setParentVisibility={setShowModal}
+        />
 
         <div className="chart mb-3" style={{ height: "300px" }}>
           <div className="chart-label-text">Jenkins: Deployment Frequency</div>
-          {(typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) ?
-            <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
+          {typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200 ? (
+            <div
+              className="max-content-width p-5 mt-5"
+              style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+            >
               <InfoDialog message="No Data is available for this chart at this time." />
             </div>
-            :
+          ) : (
             <ResponsiveLine
               data={data ? data.data : []}
               onClick={() => setShowModal(true)}
-
               indexBy="date"
               margin={{ top: 50, right: 110, bottom: 80, left: 120 }}
               xScale={{
                 type: "time",
                 format: "%Y-%m-%d",
-                precision: "day"
+                precision: "day",
               }}
               yScale={{ type: "linear", min: 0, max: "auto", stacked: false }}
               axisTop={null}
@@ -117,14 +118,16 @@ function MaintainabilityLineChart( { persona, date } ) {
               useMesh={true}
               lineWidth={3.5}
               legends={config.legends}
-              colors={d=> d.color}
+              colors={(d) => d.color}
               tooltip={({ point, color }) => (
-                <div style={{
-                  background: "white",
-                  padding: "9px 12px",
-                  border: "1px solid #ccc",
-                }}>
-                  <strong style={{ color }}>  Number of Deployments: </strong> {point.data.y}
+                <div
+                  style={{
+                    background: "white",
+                    padding: "9px 12px",
+                    border: "1px solid #ccc",
+                  }}
+                >
+                  <strong style={{ color }}> Number of Deployments: </strong> {point.data.y}
                 </div>
               )}
               theme={{
@@ -135,14 +138,14 @@ function MaintainabilityLineChart( { persona, date } ) {
                 },
               }}
             />
-          }
+          )}
         </div>
       </>
     );
   }
 }
 MaintainabilityLineChart.propTypes = {
-  persona: PropTypes.string
+  persona: PropTypes.string,
 };
 
 export default MaintainabilityLineChart;
