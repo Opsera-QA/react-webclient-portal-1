@@ -116,6 +116,13 @@ a:hover, .active {
     font-size: 1.2rem;
 }
 
+.blueprint-step-title { 
+  font-weight: 500;
+  line-height: 1.4;
+  font-size: 1rem;
+  color: #000000
+}
+
 .absolute-center-content {
     max-width: 400px;
     max-height: 200px;

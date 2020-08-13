@@ -8,7 +8,7 @@ import ErrorDialog from "components/common/error";
 import { Form, Button, Overlay, Popover, Row, Col, Tooltip, OverlayTrigger } from "react-bootstrap";
 import { format, addDays } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendar, faDraftingCompass, faDownload } from "@fortawesome/free-solid-svg-icons";
+import { faCalendar, faDraftingCompass, faDownload, faSearchPlus} from "@fortawesome/free-solid-svg-icons";
 import "./logs.css";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
@@ -18,6 +18,7 @@ import BlueprintSearchResult from "./BlueprintSearchResult";
 import simpleNumberLocalizer from "react-widgets-simple-number";
 import NumberPicker from "react-widgets/lib/NumberPicker";
 import { useHistory } from "react-router-dom";
+
 
 let runCountFetch = {};
 let idFetch = {};
@@ -54,6 +55,8 @@ function OPBlueprint(props) {
   const history = useHistory();
   const [disabledForm, setDisabledState] = useState(false);
   const [submittedRunCount, setSubmittedRunCount] = useState(null);
+  const [xmlData, setXMLData] = useState(false);
+  const [XMLDisabled, setXMLDisable] = useState("disabled");
 
   simpleNumberLocalizer();
 
@@ -80,10 +83,18 @@ function OPBlueprint(props) {
     // }
 
     // getSearchResults(startDate, endDate);
+    setXMLData(false);
+    if (run_count === runCountFetch[multiFilter.value]) {
+      setXMLDisable("enabled")
+    } else {
+      setXMLDisable("disabled")
+    }
     getSearchResults();
   };
 
   const cancelSearchClicked = () => {
+    setXMLData(false);
+    setXMLDisable("disabled");
     setSubmittedRunCount(null);
     // setDate([
     //   {
@@ -125,13 +136,10 @@ function OPBlueprint(props) {
   // };
 
   const getSearchResults = async () => {
-    console.log(run_count);
     setLoading(true);
     setLogData([]);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    console.log(run_count);
-    console.log(multiFilter);
     let route = "/analytics/blueprint/pipeline";
 
     if (run_count === null || run_count === undefined || run_count === 0 || !multiFilter.value) {
@@ -156,8 +164,10 @@ function OPBlueprint(props) {
         .get()
         .then((result) => {
           let searchResults = [];
+          let xmlFile = false;
           if (result) {
-            searchResults = result.hasOwnProperty("data") ? result.data : [];
+            searchResults = result.hasOwnProperty("data") ? result.data.data : [];
+            xmlFile = result.hasOwnProperty("data") ? result.data.xml ?  result.data.xml : false : false;
           }
           if (searchResults.length === 0) {
             setNoResults(true);
@@ -165,8 +175,8 @@ function OPBlueprint(props) {
           } else {
             setNoResults(false);
             setLogData(searchResults);
+            if (xmlFile) setXMLData(xmlFile);
           }
-          console.log(logData);
           setLoading(false);
         })
         .catch(function (error) {
@@ -226,7 +236,7 @@ function OPBlueprint(props) {
   }, []);
 
   // const toggleCalendar = event => {
-  //   console.log(multiFilter);
+
   //   setCalenderActivation(true);
   //   setCalendar(!calendar);
   //   setTarget(event.target);
@@ -257,7 +267,7 @@ function OPBlueprint(props) {
   // };
 
   // const dateChange = item => {
-  //   console.log(item);
+
   //   setDate([item.selection]);
   //   if (item.selection) {
   //     let startDate = format(item.selection.startDate, "MM/dd");
@@ -293,10 +303,11 @@ function OPBlueprint(props) {
   const runCountSelect = (item) => {
     setPipeIDError(false);
     setRunCountError(false);
-    console.log(submitted);
     setRunCount(item);
     // submitClicked(false);
   };
+
+
 
   // const uniqueSteps = logdata => {
   //   let arrayList = [];
@@ -478,7 +489,7 @@ function OPBlueprint(props) {
                 <Col>
                   <strong>
                     <div className="blueprint-title">
-                      {" "}
+                      
                       {Object.keys(multiFilter).length > 0 ? multiFilter.value : "N/A"}
                     </div>
                   </strong>
@@ -493,13 +504,17 @@ function OPBlueprint(props) {
                   <FontAwesomeIcon icon={faDraftingCompass} fixedWidth />
                   View Pipeline
                 </Button>
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "Blueprint Export Coming Soon." })}
-                >
+
+                            <OverlayTrigger
+            overlay={
+              <Tooltip id="tooltip-disabled">
+                Blueprint Export Coming Soon.
+              </Tooltip>
+            }
+          >
+            <span className="mr-3">
                   <Button
-                    variant="outline-secondary mr-3"
+                    variant="outline-secondary"
                     size="sm"
                     onClick={() => {
                       goToPipeline();
@@ -508,18 +523,19 @@ function OPBlueprint(props) {
                   >
                     <FontAwesomeIcon icon={faDownload} fixedWidth />
                   </Button>
+                  </span>
                 </OverlayTrigger>
               </Row>
               <hr />
               <Row className="mt-1">
                 <Col lg className="py-1">
-                  <span className="text-muted mr-1">ID:</span>{" "}
+                  <span className="text-muted mr-1">ID:</span>
                   {(Object.keys(multiFilter).length > 0 && Object.keys(idFetch).length) > 0
                     ? idFetch[multiFilter.value]
                     : "N/A"}
                 </Col>
                 <Col lg className="py-1">
-                  <span className="text-muted mr-1">Pipeline Run Count:</span>{" "}
+                  <span className="text-muted mr-1">Pipeline Run Count:</span>
                   {submittedRunCount ? submittedRunCount : "N/A"}
                 </Col>
                 <Col lg className="py-1">
@@ -527,7 +543,11 @@ function OPBlueprint(props) {
                 </Col>
               </Row>
             </div>
-            <BlueprintSearchResult searchResults={logData} />
+            <BlueprintSearchResult searchResults={{
+              data: logData,
+              xmlData: xmlData,
+              xmlModal: XMLDisabled
+            }}/>
           </>
         ) : (
           ""
