@@ -8,13 +8,15 @@ import { format } from "date-fns";
 import "components/inventory/tools/tools.css";
 
 import jenkinsCreateAccountFormFields from "./jenkins-create-account-form-fields.js";
+import DropdownList from "react-widgets/lib/DropdownList";
+import {capitalizeFirstLetter} from "../../../../../common/helpers/string-helpers";
 
 
 function JenkinsCreateAccount(props) {
   const { toolId, toolData, accessToken } = props;
   const [ platformType, setPlatformType ] = useState("");
   const [ accountList, setAccountList ] = useState([]);
-  const [ accountType, setAccountType ] = useState({});
+  const [ account, setAccount ] = useState(undefined);
   const [accountUserName, setAccountUserName] = useState("");
   const [ jenkinsCreateAccountFormList, updateJenkinsCreateAccountForm] = useState({ ...jenkinsCreateAccountFormFields });
 
@@ -40,29 +42,46 @@ function JenkinsCreateAccount(props) {
   }
 
   const updateAccount = (data) => {
-    setAccountType(data);
-    getAccountData()
+    console.log("update account: " + JSON.stringify(data));
+    setAccount(data);
+    getAccountData(data)
   }
 
   const getPlatformData = async (data) => {
     try {
       const platformResponse = await axiosApiService(accessToken).get("/registry/properties/" + data, {});
-      setAccountList(platformResponse.data.sort((a, b) => a.name.localeCompare(b.name)));
-      setAccountType(platformResponse.data[0].name)
-      getAccountData();
+      console.log("Platform Response: " + JSON.stringify(platformResponse));
+      let accountList = [];
+
+      platformResponse.data.map(account => {
+        // console.log("account.configuration: " + JSON.stringify(account.configuration));
+        // console.log("account.configuration.accountUsername: " + JSON.stringify(account.configuration.accountUsername));
+        if (account.configuration != null && account.configuration.accountUsername != null) {
+          console.log("account.configuration: " + JSON.stringify(account.configuration));
+          accountList.push(account);
+        }
+      });
+
+
+      let newAccount = accountList.length > 0 ? accountList[0] : undefined;
+
+      if (newAccount != null)
+      {
+        console.log("new account: " + JSON.stringify(newAccount));
+        setAccount(newAccount);
+        getAccountData(newAccount);
+      }
+
+      setAccountList(accountList);
     }
     catch (err) {
       console.log(err.message);
     }
   };
 
-  const getAccountData =  () => {
-    let account = accountList.find(x => x.name === accountType);
-    if(account.configuration != undefined) {
-      setAccountUserName(account.configuration.accountUsername);
-    }else {
-      setAccountUserName("");
-    }
+  const getAccountData = (account) => {
+    console.log("account: " + JSON.stringify(account));
+    setAccountUserName(account.configuration.accountUsername);
   };
 
   const handleFormChange = (jenkinsFormList, value) => {
@@ -96,7 +115,6 @@ function JenkinsCreateAccount(props) {
   };
 
   const createJob = async () => {
-    let account = accountList.find(x => x.name === accountType);
     let formData = Object.keys(jenkinsCreateAccountFormList).reduce((obj, item) => Object.assign(obj, { [item]: jenkinsCreateAccountFormList[item].value }), {});
     let payload = {
       service: platformType,
@@ -134,28 +152,24 @@ function JenkinsCreateAccount(props) {
             Select Account
           </Form.Label>
           <Col sm="9" className="text-right">
-            <Form.Control as="select" disabled={false} value={accountType} onChange={e => {
-              updateAccount(e.target.value)
-            }}>
-              <option name="Select One" value="" disabled={true}>Select One</option>
-              {accountList.map((option, i) => (
-                <option key={i} value={option.name}>{option.name}</option>
-              ))} 
-            </Form.Control>
+            <DropdownList
+              data={accountList}
+              textField='name'
+              filter='contains'
+              value={account}
+              onChange={updateAccount}
+            />
           </Col>
-        </Form.Group>   
+        </Form.Group>
 
-        {Object.keys(accountType).length > 0 && (
-          <Form.Group controlId="formPlaintextEmail" className="mt-2 vertical-center-cols-in-row">
-            <Form.Label column sm="3">
+        <Form.Group controlId="formPlaintextEmail" className="mt-2 vertical-center-cols-in-row">
+          <Form.Label column sm="3">
             Account
-            </Form.Label>
-            <Col sm="9" className="text-right">
-              <Form.Control value={accountUserName} disabled={true} />
-            </Col>
-          </Form.Group>   
-        )}
- 
+          </Form.Label>
+          <Col sm="9" className="text-right">
+            <Form.Control value={accountUserName} disabled={true}/>
+          </Col>
+        </Form.Group>
       </Form>
       <Form className="newToolFormContainer">
         
