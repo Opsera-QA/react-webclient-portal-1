@@ -76,14 +76,14 @@ function DtoMultipleInput({dataObject, setDataObject, fieldName, fields}) {
     event.stopPropagation();
     let newRowList = rowList
     let index = newRowList.indexOf(row);
-    console.log("index: " + index);
+    // console.log("index: " + index);
     newRowList[index][innerField] = event.target.value;
     setRowList([...newRowList]);
     let newDataObject = dataObject;
     // newDataObject.setData(fieldName, newRowList.reduce((obj, item) => Object.assign(obj, {[item.name]: item.value})));
     newDataObject.setData(fieldName, newRowList);
 
-    console.log("newDataObject: " + JSON.stringify(newDataObject.getData(fieldName)));
+    // console.log("newDataObject: " + JSON.stringify(newDataObject.getData(fieldName)));
     setDataObject({...newDataObject});
   };
 
