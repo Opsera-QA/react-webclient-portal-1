@@ -1,4 +1,8 @@
 // TODO: Find better way to make paths
+import {Link} from "react-router-dom";
+import React from "react";
+
+// Admin Paths
 const admin = "admin";
 const ldapDashboard = "accounts"
 const accountSettings = "settings"
@@ -9,10 +13,15 @@ const ldapGroupDetailView = ldapUserManagement;
 const ldapOrganizationManagement = ldapDashboard + "/organizations"
 const ldapOrganizationDetailView = ldapUserManagement;
 
-
-
+//Inventory (Tool Registry) paths
+const toolRegistry = "inventory/tools";
+const toolDetailView = toolRegistry + "/details";
 
 const trails = {
+  // Inventory
+  toolRegistry: {parent: undefined, destination: {name: "toolRegistry", path: toolRegistry, label: "Tool Registry"}},
+  toolDetailView: {parent: "toolRegistry", destination: {name: "toolDetailView", path: toolDetailView, label: "Tool Details"}},
+
   // Administration
   admin: {parent: undefined, destination: {name: "admin", path: admin, label: "Administration"}},
 

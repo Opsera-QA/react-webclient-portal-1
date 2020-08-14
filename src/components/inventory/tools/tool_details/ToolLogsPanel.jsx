@@ -9,14 +9,15 @@ import { format } from "date-fns";
 import ReactJson from "react-json-view";
 import "components/inventory/tools/tools.css";
 
-function ToolLogs(props) {
-  const { toolId, toolData, accessToken } = props;
+function ToolLogsPanel(props) {
+  const { toolData, accessToken } = props;
   const [logCount, setLogCount] = useState(0);
   const [logData, setLogData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(25);
+
   const initialState = {
     pageIndex: 0,
     sortBy: [
@@ -80,7 +81,7 @@ function ToolLogs(props) {
           return props["row"]["values"].action !== "automation task" ? 
             <FontAwesomeIcon icon={faSearchPlus}
               style={{ cursor: "pointer" }}
-              onClick= {() => { selectRow(props, props.row, props.row["index"]); }} /> : null; 
+              onClick= {() => { selectRow(props, props.row, props.row["index"]); }} /> : null;
         }
       },
     ],
@@ -94,7 +95,7 @@ function ToolLogs(props) {
 
   const getToolLog = async () => {
     try {
-      const apiUrl = `/registry/log/${toolId}?page=${currentPage}&size=${pageSize}`;
+      const apiUrl = `/registry/log/${toolData.getData("_id")}?page=${currentPage}&size=${pageSize}`;
       const tool_logs = await axiosApiService(accessToken).get(apiUrl, {});
       setLogCount(tool_logs.data.count);
       setLogData(tool_logs.data.data);
@@ -126,42 +127,43 @@ function ToolLogs(props) {
     setCurrentPage(pageNumber);
     setPageSize(pageSize);
   };
-  
+
   return (
     <>
-      <div className="p-3 text-muted mt-3">
-        <CustomTable 
-          columns={columns} 
+      <div className="table-content-block">
+        <CustomTable
+          columns={columns}
           data={logData}
           initialState={initialState}
           paginationOptions={getPaginationOptions()}
+          tableStyleName="custom-table-2"
         >
         </CustomTable>
-        <Modal show={showModal} size="lg" onHide={() => setShowModal(false)}>
-          <Modal.Header closeButton>
-            <Modal.Title>Tool Details Log</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <div className="m-3">
-              <ReactJson src={modalData} displayDataTypes={false} />               
-            </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
       </div>
+      <Modal show={showModal} size="lg" onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Tool Details Log</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="m-3">
+            <ReactJson src={modalData} displayDataTypes={false}/>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }
 
-ToolLogs.propTypes = {
+ToolLogsPanel.propTypes = {
   toolId: PropTypes.string,
   toolData: PropTypes.object,
   accessToken: PropTypes.string
 };
 
 
-export default ToolLogs;
+export default ToolLogsPanel;

@@ -6,17 +6,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPen, faSave } from "@fortawesome/free-solid-svg-icons";
 import "components/inventory/tools/tools.css";
 
-import JobTypeBuild from "./job-type-build.js";
-import JobTypeCodeScan from "./job-type-code-scan.js";
-import JenkinsJobTypeCypressUnitTesting from "./job-type-cypress-unit-testing.js";
-import JenkinsJobTypeDockerPush from "./job-type-docker-push.js";
-import JenkinsJobTypeSendToS3 from "./job-type-sent-to-s3.js";
-import JobTypePerformanceTesting from "./job-type-performance-testing.js";
-import JenkinsJobTypeShellScript from "./job-type-shell-script.js";
-import JobTypeSFDC from "./job-type-sfdc";
+import JobTypeBuild from "../job-type-build.js";
+import JobTypeCodeScan from "../job-type-code-scan.js";
+import JenkinsJobTypeCypressUnitTesting from "../job-type-cypress-unit-testing.js";
+import JenkinsJobTypeDockerPush from "../job-type-docker-push.js";
+import JenkinsJobTypeSendToS3 from "../job-type-sent-to-s3.js";
+import JobTypePerformanceTesting from "../job-type-performance-testing.js";
+import JenkinsJobTypeShellScript from "../job-type-shell-script.js";
+import JobTypeSFDC from "../job-type-sfdc";
+import {jobTypes} from "../jenkins-job-metadata";
+import {AuthContext} from "../../../../../../../../contexts/AuthContext";
 
-function JenkinsCreateJob(props) {
-  const { toolId, toolData, accessToken, jobData } = props;
+function JenkinsJobEditorPanel({ toolData, jobData, handleClose }) {
+  const { getAccessToken } = useContext(AuthContext);
   let toolDataSet = toolData;
   const [ jenkinsFormList, updateJenkinsForm] = useState({ ...JobTypeBuild });
   const [ formType, setFormType ] = useState("");
@@ -24,48 +26,9 @@ function JenkinsCreateJob(props) {
   const [jobDescription, setJobDescription ] = useState("");
   const [viewForm, toggleViewForm ] = useState(true);
 
-
-  const jobType = [
-    {
-      label: "Build",
-      value: "BUILD"
-    },
-    {
-      label: "SFDC Jobs",
-      value: "SFDC"
-    },
-    {
-      label: "Code Scan",
-      value: "CODE SCAN"
-    },
-    {
-      label: "Unit Test",
-      value: "UNIT TESTING"
-    },
-    {
-      label: "Functional Test",
-      value: "FUNCTIONAL TESTING"
-    },
-    {
-      label: "Performance Test",
-      value: "PERFORMANCE TESTING"
-    },
-    {
-      label: "Shell Script",
-      value: "SHELL SCRIPT"
-    },
-    {
-      label: "Cypress Unit Test",
-      value: "CYPRESS UNIT TESTING"
-    },
-    {
-      label: "Docker Push",
-      value: "DOCKER PUSH"
-    }           
-  ];
-
   useEffect(() => {   
     //Check if data is available before update
+    console.log("jobData: " + JSON.stringify(jobData));
     if(Object.keys(jobData).length > 0){ 
       handleFormTypeChange(jobData.type[0]);
     }
@@ -119,7 +82,7 @@ function JenkinsCreateJob(props) {
     Object.keys(jenkinsFormList).map((item, i) => {
       let validateInput = {
         disabled: viewForm ? true : false,
-        value: jobData.configuration[item] || ""
+        value: jobData.configuration && jobData.configuration[item] || ""
       };
       updateJenkinsForm(prevState => ({ 
         ...prevState, 
@@ -201,10 +164,14 @@ function JenkinsCreateJob(props) {
 
     try {
       const response = await axiosApiService(
-        accessToken
-      ).post("/registry/" + toolData._id + "/update", { ...toolDataSet });
+        getAccessToken
+      ).post("/registry/" + toolData["_id"] + "/update", { ...toolDataSet });
       console.log(response.data);
-      props.setJobAction("");
+
+      if (handleClose)
+      {
+        handleClose(response.data);
+      }
     } catch (err) {
       console.log(err.message);
     }
@@ -218,10 +185,14 @@ function JenkinsCreateJob(props) {
     }
     try {
       const response = await axiosApiService(
-        accessToken
-      ).post("/registry/" + toolData._id + "/update", { ...toolDataSet });
+        getAccessToken
+      ).post("/registry/" + toolData["_id"] + "/update", { ...toolDataSet });
       console.log(response.data);
-      props.setJobAction("");
+
+      if (handleClose)
+      {
+        handleClose(response.data);
+      }
     } catch (err) {
       console.log(err.message);
     }
@@ -268,7 +239,7 @@ function JenkinsCreateJob(props) {
           <Col sm="9" className="text-right">
             <Form.Control as="select" disabled={viewForm} value={formType} onChange={e => handleFormTypeChange( e.target.value)}>
               <option name="Select One" value="" disabled={true}>Select One</option>
-              {jobType.map((option, i) => (
+              {jobTypes.map((option, i) => (
                 <option key={i} value={option.value}>{option.label}</option>
               ))} 
             </Form.Control>
@@ -330,19 +301,21 @@ function JenkinsCreateJob(props) {
 
 
       <div className="text-right m-2">
-        <Button size="sm" variant="secondary" onClick={() => props.setJobAction("")} className="mr-2"> Cancel</Button>
-        {!viewForm && <Button size="sm" variant="primary" onClick={updateJob}><FontAwesomeIcon icon={faSave} fixedWidth /> Save</Button>}
+        {!handleClose && !viewForm && <Button size="sm" variant="secondary" onClick={() => toggleViewForm(false)} className="mr-2">Cancel</Button>}
+        {!viewForm && <Button size="sm" variant="primary" onClick={updateJob}><FontAwesomeIcon icon={faSave} fixedWidth />Save Job</Button>}
       </div>
     </>
   );
 }
 
-JenkinsCreateJob.propTypes = {
+JenkinsJobEditorPanel.propTypes = {
   jobAction: PropTypes.string,
   toolData: PropTypes.object,
+  jobData: PropTypes.object,
   accessToken: PropTypes.string,
-  setJobAction: PropTypes.func
+  setJobAction: PropTypes.func,
+  handleClose: PropTypes.func
 };
 
 
-export default JenkinsCreateJob;
+export default JenkinsJobEditorPanel;

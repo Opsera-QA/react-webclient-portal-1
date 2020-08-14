@@ -12,7 +12,6 @@ import {ldapUsersMetaData} from "../ldap-users-metadata";
 
 function LdapUserDetailView() {
   const {userEmail, orgDomain} = useParams();
-  // const { userEmail } = useParams();
   const [accessRoleData, setAccessRoleData] = useState({});
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
   const [ldapUserData, setLdapUserData] = useState(undefined);
@@ -23,6 +22,7 @@ function LdapUserDetailView() {
 
   const getLdapUser = async (userEmail) => {
     const response = await accountsActions.getUserByEmail(userEmail, getAccessToken);
+    console.log("response: " + JSON.stringify(response.data));
     setLdapUserData(new Model(response.data, ldapUsersMetaData, false));
   };
 

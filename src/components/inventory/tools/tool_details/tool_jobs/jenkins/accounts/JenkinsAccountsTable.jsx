@@ -38,13 +38,16 @@ function JenkinsAccountsTable({ data, selectedRow }) {
 
   return (
     <>
-      <CustomTable 
-        columns={columns} 
-        data={data}
-        initialState={initialState}
-        onRowSelect={selectedRow}
-      >
-      </CustomTable>
+      <div className="table-content-block">
+        <CustomTable
+          columns={columns}
+          data={data}
+          initialState={initialState}
+          onRowSelect={selectedRow}
+          tableStyleName={"custom-table-2"}
+        >
+        </CustomTable>
+      </div>
     </>
   );
 }

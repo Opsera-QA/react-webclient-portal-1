@@ -112,7 +112,7 @@ function CustomTable({ tableStyleName, columns, data, noDataMessage, onRowSelect
         </tbody>
         <tfoot>
           <tr>
-            <td colSpan="100%" className="table-footer">
+            <td colSpan="100%" className="px-2 pt-2 table-footer">
               {paginationOptions && <Pagination total={paginationOptions.totalCount} currentPage={paginationOptions.currentPage} pageSize={paginationOptions.pageSize} onClick={(pageNumber, pageSize) => paginationOptions.gotoPageFn(pageNumber, pageSize)} />}
             </td>
           </tr>
@@ -137,7 +137,8 @@ CustomTable.propTypes = {
 CustomTable.defaultProps = {
   tableStyleName: "custom-table",
   rowStyling: defaultRowStyling,
-  initialState: defaultInitialState
+  initialState: defaultInitialState,
+  data: []
 };
 
 export default CustomTable;

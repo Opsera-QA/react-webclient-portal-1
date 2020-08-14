@@ -1,13 +1,9 @@
-// This is where the custom ToolsConfiguration.configuration form will reside for this tool.
-
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Form, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faSpinner } from "@fortawesome/free-solid-svg-icons";
 
-
-//This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
   jenkinsUrl: "",
   jenkinsPort: "",
@@ -15,9 +11,6 @@ const INITIAL_DATA = {
   jAuthToken: ""
 };
 
-
-//data is JUST the tool object passed from parent component, that's returned through parent Callback
-// ONLY allow changing of the configuration and threshold properties of "tool"!
 function JenkinsToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVault }) {
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [formMessage, setFormMessage] = useState("");

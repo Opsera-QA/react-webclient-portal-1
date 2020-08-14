@@ -5,16 +5,6 @@ import CustomTable from "./table";
 // Note: I only made this because we have a lot of areas where we need to use the name/value tables so might as well reuse this.
 function NameValueTable({ tableStyleName, data, noDataMessage, label }) {
 
-  const initialState = {
-    pageIndex: 0,
-    sortBy: [
-      {
-        id: "name",
-        desc: false
-      }
-    ]
-  };
-
   const columns = useMemo(
     () => [
       {
@@ -31,7 +21,6 @@ function NameValueTable({ tableStyleName, data, noDataMessage, label }) {
 
   const parseEmptyRows = (data) => {
     let parsedRows = [];
-
     if (data && data.length > 0)
     {
       data.map((row, index) => {
@@ -46,13 +35,12 @@ function NameValueTable({ tableStyleName, data, noDataMessage, label }) {
 
   return (
     <>
-      <div><span className="text-muted">{label}</span></div>
-      <div className="table-content-block">
+      <div className="text-center pb-1"><span className="text-muted">{label}</span></div>
+      <div className="table-content-block mb-3">
         <CustomTable
           tableStyleName={tableStyleName}
           columns={columns}
           data={parseEmptyRows(data)}
-          initialState={initialState}
           noDataMessage={noDataMessage}
         />
       </div>
@@ -67,5 +55,9 @@ NameValueTable.propTypes = {
   data: PropTypes.array,
   noDataMessage: PropTypes.string
 };
+
+NameValueTable.defaultProps = {
+  tableStyleName: "custom-table-2"
+}
 
 export default NameValueTable;

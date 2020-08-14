@@ -745,6 +745,13 @@ div.modal-footer {
 .content-card-1 {
 }
 
+/*TODO: Style differently*/
+/*.content-card-1 .flat-top-content-block {*/
+    /*border: 1px solid #8fa4ba;*/
+    /*border-bottom-right-radius: 5px;*/
+    /*border-bottom-left-radius: 5px;*/
+/*}*/
+
 .content-card-1 .content-block-header {
   background-color: #1578dc;
   color: #fff;
@@ -867,6 +874,10 @@ div.modal-footer {
     min-width: 250px;
 }
 
+.multi-input-button {
+    width:32px;
+}
+
 /* Breadcrumb trail styling */
 .breadcrumb {
     background-color: #fafafb;
@@ -874,6 +885,17 @@ div.modal-footer {
 }
 
 /* End Breadcrumb trail styling */
+
+/* Action Bar styling */
+.action-bar {
+    font-size: 20px;
+}
+
+.action-bar-icon:hover {
+    color: #0f3e84;
+}
+
+/* End Action Bar styling */
 
 /* Detail View Styling */
 .detail-view-body {
