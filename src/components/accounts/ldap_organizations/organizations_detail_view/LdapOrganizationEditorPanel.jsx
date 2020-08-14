@@ -45,11 +45,11 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganization
   };
 
   const createOrganization = async (newLdapOrganizationData) => {
-    console.log("Persisting new organization to DB: " + JSON.stringify(ldapOrganizationDataDto));
+    // console.log("Persisting new organization to DB: " + JSON.stringify(ldapOrganizationDataDto));
 
     if(ldapOrganizationDataDto.isModelValid()) {
       let createLdapOrganizationResponse = await accountsActions.createOrganization(ldapOrganizationDataDto, getAccessToken);
-      console.log("createLdapResponse: ", JSON.stringify(createLdapOrganizationResponse));
+      // console.log("createLdapResponse: ", JSON.stringify(createLdapOrganizationResponse));
 
       if (createLdapOrganizationResponse.error != null) {
         const errorMsg = `Microservice error reported creating the organization for : ${newLdapOrganizationData.accountName}.  Error returned: ${JSON.stringify(createLdapOrganizationResponse.error.message, null, 2)}`;
@@ -99,8 +99,8 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganization
   const handleOpseraUserChange = (selectedOption) => {
     let option = selectedOption.id;
     setCurrentOpseraUser(option);
-    console.log("Setting opsera account to: " + JSON.stringify(selectedOption));
-    console.log("option.organizationName: " + option["organizationName"]);
+    // console.log("Setting opsera account to: " + JSON.stringify(selectedOption));
+    // console.log("option.organizationName: " + option["organizationName"]);
     ldapOrganizationDataDto.setData("orgOwner", option["firstName"] + " " + option["lastName"]);
     ldapOrganizationDataDto.setData("orgOwnerEmail", option["email"]);
     setLdapOrganizationDataDto({...ldapOrganizationDataDto});

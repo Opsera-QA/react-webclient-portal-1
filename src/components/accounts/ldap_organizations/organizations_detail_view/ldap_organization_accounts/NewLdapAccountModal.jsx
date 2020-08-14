@@ -1,11 +1,9 @@
 import React, {useState, useEffect} from "react";
-import { Button, Modal } from "react-bootstrap";
 import PropTypes from "prop-types";
 import LdapOrganizationAccountEditorPanel from "./LdapOrganizationAccountEditorPanel";
-import TooltipWrapper from "../../../../common/tooltip/tooltipWrapper";
-import {unsavedChanges} from "../../../../common/tooltip/popover-text";
 import Model from "../../../../../core/data_model/model";
 import {ldapOrganizationAccountMetaData} from "../../ldap-organization-account-form-fields";
+import CreateModal from "../../../../common/modal/CreateModal";
 
 const INITIAL_ORGANIZATION_ACCOUNT_DATA = {
   org: "",
@@ -40,23 +38,9 @@ function NewLdapAccountModal({ onModalClose, showModal, ldapOrganizationData } )
 
   return (
     <>
-      <Modal size="lg" show={showModal} onHide={handleClose} backdrop="static">
-        <Modal.Header closeButton>
-          <Modal.Title>Create New Organization Account</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="content-block m-3 full-height">
-            <div className="p-3">
-              {ldapOrganizationAccountData && <LdapOrganizationAccountEditorPanel ldapOrganization={ldapOrganizationData} setLdapOrganizationAccountData={setLdapOrganizationAccountData} handleClose={handleClose} ldapOrganizationAccountData={ldapOrganizationAccountData} />}
-            </div>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <TooltipWrapper innerText={unsavedChanges}>
-            <Button size="sm" variant="secondary" onClick={handleClose}>Close</Button>
-          </TooltipWrapper>
-        </Modal.Footer>
-      </Modal>
+      <CreateModal handleCancelModal={handleClose} objectType={"Organization Account"} showModal={showModal} >
+        {ldapOrganizationAccountData && <LdapOrganizationAccountEditorPanel ldapOrganization={ldapOrganizationData} setLdapOrganizationAccountData={setLdapOrganizationAccountData} handleClose={handleClose} ldapOrganizationAccountData={ldapOrganizationAccountData} />}
+      </CreateModal>
     </>
   );
 }

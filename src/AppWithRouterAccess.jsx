@@ -14,7 +14,6 @@ import About from "./components/about/About";
 import Pricing from "./components/about/Pricing";
 import OnlineHelp from "./components/about/Help";
 import Inventory from "./components/inventory/Inventory";
-import ToolDetailsNew from "./components/inventory/tools/toolDetails/toolDetailsNew";
 import Signup from "./components/user/Signup";
 import ApiConnector from "./components/api_connector/ApiConnector";
 import Pipeline from "./components/pipeline/index";
@@ -53,6 +52,7 @@ import LdapGroupManagement from "./components/accounts/ldap_groups/LdapGroupMana
 import LdapGroupDetailView from "./components/accounts/ldap_groups/ldap_group_detail/LdapGroupDetailView";
 
 import Axios from "axios";
+import ToolDetailView from "./components/inventory/tools/tool_details/ToolDetailView";
 const config = require("./config");
 
 const AppWithRouterAccess = () => {
@@ -143,7 +143,7 @@ const AppWithRouterAccess = () => {
                 <SecureRoute path="/profile" component={Profile}/>
                 <SecureRoute path="/settings" component={AccountSettingsView}/>
                 <SecureRoute path="/inventory/:view" exact component={Inventory}/>
-                <SecureRoute path="/inventory/tools/detail/:id" exact component={ToolDetailsNew}/>
+                <SecureRoute path="/inventory/tools/details/:id" exact component={ToolDetailView}/>
                 <SecureRoute path="/dashboard" component={Dashboard}/>
                 <SecureRoute path="/tools/:id?" component={ApiConnector}/>
                 <SecureRoute path="/pipeline" component={Pipeline}/>
@@ -154,6 +154,8 @@ const AppWithRouterAccess = () => {
                 <SecureRoute path="/blueprint" exact component={OPBlueprintMain}/>
                 <SecureRoute path="/reports" exact component={Reports}/>
                 <SecureRoute path="/update" component={Update}/>
+
+                {/* Administration Pages */}
                 <SecureRoute path="/admin" exact component={AdminTools}/>
                 <SecureRoute path="/admin/delete" component={DeleteTools}/>
                 <SecureRoute path="/admin/manage_systems" component={ManageSystems}/>
@@ -165,6 +167,8 @@ const AppWithRouterAccess = () => {
                 <SecureRoute path="/admin/tags" exact component={TagEditor}/>
                 <SecureRoute path="/admin/tags/:id" exact component={TagDetailView}/>
                 <SecureRoute path="/admin/template-editor" component={TemplateEditor}/>
+
+                {/* Ldap Account Pages */}
                 <SecureRoute path="/accounts" exact component={LdapDashboard}/>
                 <SecureRoute path="/accounts/organizations" exact component={LdapOrganizationsView}/>
                 <SecureRoute path="/accounts/organizations/details/:organizationName" exact component={LdapOrganizationDetailView}/>
