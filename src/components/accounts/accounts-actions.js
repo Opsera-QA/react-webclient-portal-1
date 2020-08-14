@@ -1,9 +1,4 @@
-import {
-  axiosApiService
-} from "../../api/apiService";
-import {
-  getPersistToast
-} from "../common/toasts/toasts";
+import { axiosApiService } from "../../api/apiService";
 
 const accountsActions = {};
 
@@ -49,12 +44,10 @@ accountsActions.updateUser = async (orgDomain, ldapUserDataDto, getAccessToken) 
 
 accountsActions.createUser = async (ldapUserDataDto, getAccessToken) => {
   let postData = {
-    "user": {
       ...ldapUserDataDto.getPersistData()
-    }
   }
   const accessToken = await getAccessToken();
-  const apiUrl = "/users/account/onboard";
+  const apiUrl = "/users/account/user/create";
   const response = await axiosApiService(accessToken).post(apiUrl, postData)
     .then((result) => {
       return result;
@@ -175,10 +168,10 @@ accountsActions.getOrganizations = async (getAccessToken) => {
 
 accountsActions.createOrganizationAccount = async (ldapOrganizationAccountDataDto, getAccessToken) => {
   let postData = {
-    orgAccount: ldapOrganizationAccountDataDto.getPersistData()
+    ...ldapOrganizationAccountDataDto.getPersistData()
   }
   const accessToken = await getAccessToken();
-  const apiUrl = "/users/account/onboard";
+  const apiUrl = "/users/account/create";
   const response = await axiosApiService(accessToken).post(apiUrl, postData)
     .then((result) => {
       return result;
@@ -211,12 +204,10 @@ accountsActions.updateOrganizationAccount = async (ldapOrganizationAccountDataDt
 
 accountsActions.createOrganization = async (ldapOrganizationDataDto, getAccessToken) => {
   let postBody = {
-    organization: {
       ...ldapOrganizationDataDto.getPersistData(),
-    }
   }
   const accessToken = await getAccessToken();
-  const apiUrl = "/users/account/onboard";
+  const apiUrl = "/users/account/organization/create";
   const response = await axiosApiService(accessToken).post(apiUrl, postBody)
     .then((result) => {
       return result;
