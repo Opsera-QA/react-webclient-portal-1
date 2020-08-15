@@ -11,7 +11,7 @@ import Model, {DataState} from "../../../../core/data_model/model";
 import DtoSelectInput from "../../../common/input/dto_input/dto-select-input";
 import DtoToggleInput from "../../../common/input/dto_input/dto-toggle-input";
 import DtoMultipleInput from "../../../common/input/dto_input/dto-multiple-input";
-import DtoItemInput from "../../../common/input/dto_input/dto-item-input";
+import DtoItemInput from "../../../common/input/dto_input/item-displayer/dto-item-input";
 import toolsActions from "../tools-actions";
 
 function ToolTypeEditorPanel({ toolData, setToolData, handleClose }) {

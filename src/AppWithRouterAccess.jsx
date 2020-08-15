@@ -34,7 +34,7 @@ import Overview from "./components/landing/Overview";
 import Registration from "./components/landing/Registration";
 import ToolConfigurations from "./components/admin/tools/ToolConfigurations";
 import TagEditor from "./components/admin/tags/TagManagement";
-import TemplateEditor from "./components/admin/template_editor/TemplateEditor";
+import TemplateManagement from "./components/admin/template_editor/TemplateManagement";
 import OPBlueprintMain from "./components/blueprint/blueprint";
 import LdapDashboard from "./components/accounts/LdapDashboard";
 import LdapOrganizationsView from "./components/accounts/ldap_organizations/LdapOrganizationManagement";
@@ -53,6 +53,7 @@ import LdapGroupDetailView from "./components/accounts/ldap_groups/ldap_group_de
 
 import Axios from "axios";
 import ToolDetailView from "./components/inventory/tools/tool_details/ToolDetailView";
+import TemplateDetailView from "./components/admin/template_editor/template_detail_view/TemplateDetailView";
 const config = require("./config");
 
 const AppWithRouterAccess = () => {
@@ -166,7 +167,8 @@ const AppWithRouterAccess = () => {
                 <SecureRoute path="/admin/tool-configurations" component={ToolConfigurations}/>
                 <SecureRoute path="/admin/tags" exact component={TagEditor}/>
                 <SecureRoute path="/admin/tags/:id" exact component={TagDetailView}/>
-                <SecureRoute path="/admin/template-editor" component={TemplateEditor}/>
+                <SecureRoute path="/admin/templates" exact component={TemplateManagement}/>
+                <SecureRoute path="/admin/templates/details/:templateId" exact component={TemplateDetailView}/>
 
                 {/* Ldap Account Pages */}
                 <SecureRoute path="/accounts" exact component={LdapDashboard}/>

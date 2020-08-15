@@ -13,6 +13,7 @@ import {useHistory} from "react-router-dom";
 import NameValueTable from "../../../common/table/nameValueTable";
 import TextField from "../../../common/form_fields/text-field";
 import DtoItemDisplayer from "../../../common/input/dto_input/item-displayer/dto-item-displayer";
+import DtoItemField from "../../../common/form_fields/dto_form_fields/dto-item-field";
 
 function ToolSummaryPanel({ toolData, setToolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -122,7 +123,7 @@ function ToolSummaryPanel({ toolData, setToolData }) {
               <DtoTextField dataObject={toolData} fieldName={"description"} />
             </Col>
             <Col lg={6}>
-              <DtoItemDisplayer dataObject={toolData} fieldName={"tags"} />
+              <DtoItemField dataObject={toolData} fieldName={"tags"} />
             </Col>
             <Col lg={6}>
               <NameValueTable data={toolData["licensing"]} label={toolData.getFieldById("licensing").label} />

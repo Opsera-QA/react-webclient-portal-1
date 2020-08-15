@@ -1,6 +1,10 @@
 import accountsActions from "../accounts-actions";
 
 export const getOrganizationList = async (getAccessToken) => {
+  return getOrganizationDropdownList("orgDomain", getAccessToken);
+};
+
+export const getOrganizationDropdownList = async (valueField, getAccessToken) => {
   const response = await accountsActions.getOrganizations(getAccessToken);
   if (response.data) {
     let parsedOrganizationNames = [];
@@ -9,7 +13,7 @@ export const getOrganizationList = async (getAccessToken) => {
         parsedOrganizationNames.push({
           text: orgAccount["name"] + ": " + orgAccount["orgDomain"],
           groupId: organization["name"],
-          id: orgAccount["orgDomain"]
+          id: orgAccount[valueField]
         });
       });
     });

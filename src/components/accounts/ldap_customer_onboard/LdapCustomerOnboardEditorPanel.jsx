@@ -16,7 +16,7 @@ import ItemInput from "../../common/input/item-input";
 import UserInput from "./user-input";
 import ldapUsersMetadata from "../ldap_users/ldap-users-metadata";
 import ldapOrganizationsFormFields from "../ldap_organizations/ldap-organizations-form-fields";
-import {ldapCustomerIdpAccountsFormFields} from "./ldap-idp-account-form-fields";
+import {ldapIdpAccountsMetaData} from "../ldap_organizations/organizations_detail_view/idp_accounts/ldap-idp-account-form-fields";
 import {ldapOrganizationAccountFormFields} from "../ldap_organizations/ldap-organization-account-form-fields";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
@@ -75,7 +75,7 @@ function LdapCustomerOnboardEditorPanel({ldapUserData, newLdapUser, setLdapUserD
   const [miscFields, setMiscFields] = useState({...ldapCustomerOnboardFormFields});
   const [orgFields, setOrgFields] = useState({...ldapOrganizationsFormFields});
   const [orgAccountFields, setOrgAccountFields] = useState({...ldapOrganizationAccountFormFields});
-  const [idpFields, setIdpFields] = useState({...ldapCustomerIdpAccountsFormFields});
+  const [idpFields, setIdpFields] = useState({...ldapIdpAccountsMetaData.fields});
   // TODO: Implement changemap if we will be editing but for now don't
   // const [changeMap, setChangeMap] = useState({});
   const [organizationFormData, setOrganizationFormData] = useState(INITIAL_ORGANIZATION_DATA);

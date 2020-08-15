@@ -20,7 +20,7 @@ function DtoSelectInput({ fieldName, dataObject, setDataObject, groupBy, selectO
   return (
     field &&
         <>
-          <div className="custom-select-input form-group mx-2">
+          <div className="custom-select-input form-group m-2">
             <label><span>{field.label}{field.isRequired ? <span className="danger-red">*</span> : null } </span></label>
             <DropdownList
               data={selectOptions}
@@ -30,7 +30,7 @@ function DtoSelectInput({ fieldName, dataObject, setDataObject, groupBy, selectO
               groupBy={groupBy}
               defaultValue={dataObject.getData(fieldName)}
               placeholder={placeholderText}
-              onChange={e => setDataFunction ? setDataFunction(field.id, e) : validateAndSetData(field.id, e.value)}
+              onChange={e => setDataFunction ? setDataFunction(field.id, e) : validateAndSetData(field.id, e[valueField])}
             />
             <div className="invalid-feedback">
               <div>{errorMessage}</div>
@@ -60,6 +60,7 @@ DtoSelectInput.propTypes = {
 DtoSelectInput.defaultProps = {
   valueField: "value",
   textField: "text",
+  groupBy: "groupId",
   filter: "contains",
   placeholderText: "Select One"
 }
