@@ -1,9 +1,9 @@
-// TODO: Find better way to make paths
-import {Link} from "react-router-dom";
-import React from "react";
-
 // Admin Paths
 const admin = "admin";
+const templateManagement = admin + "/templates"
+const templateDetailView = templateManagement + "/details/"
+
+// Ldap paths
 const ldapDashboard = "accounts"
 const accountSettings = "settings"
 const ldapUserManagement = ldapDashboard + "/users"
@@ -24,6 +24,8 @@ const trails = {
 
   // Administration
   admin: {parent: undefined, destination: {name: "admin", path: admin, label: "Administration"}},
+  templateManagement: {parent: "admin", destination: {name: "templateManagement", path: templateManagement, label: "Template Management"}},
+  templateDetailView: {parent: "templateManagement", destination: {name: "templateDetailView", path: templateDetailView, label: "Template Details"}},
 
   // LDAP Administration
   ldapDashboard: {parent: "admin", destination: {name: "ldapDashboard", path: ldapDashboard, label: "User and Account Management"}},

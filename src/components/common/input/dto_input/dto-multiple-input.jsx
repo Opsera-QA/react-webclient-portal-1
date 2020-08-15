@@ -100,7 +100,7 @@ function DtoMultipleInput({dataObject, setDataObject, fieldName, fields}) {
       // TODO: Extract into regular inputs for easier maintenance/styling
       // TODO: Make custom-toggle-input css
       <>
-        <Form.Group className="custom-text-input mx-2" controlId={field.id}>
+        <Form.Group className="custom-text-input m-2" controlId={field.id}>
           <Form.Label>
             <span>{field.label}{field.isRequired ? <span className="danger-red">*</span> : null}</span>
           </Form.Label>

@@ -25,28 +25,25 @@ function DtoToggleInput({ fieldName, dataObject, setDataObject, disabled }) {
         // TODO: Extract into regular inputs for easier maintenance/styling
         // TODO: Make custom-toggle-input css
         <>
-          <Form.Group className="custom-text-input" controlId={field.id}>
-            <Form.Label>
-              <span>{field.label}{field.isRequired ? <span className="danger-red">*</span> : null }</span>
-            </Form.Label>
+          <div className="form-group custom-text-input m-2">
+            <label>{field.label}{field.isRequired ?
+              <span className="danger-red">*</span> : null}</label>
             <Form.Check
               type="switch"
               id={field.id}
               checked={!!dataObject.getData(fieldName)}
               disabled={disabled}
-              label="Active"
+              label={!!dataObject.getData(fieldName) ? "Active" : "Inactive"}
               placeholder="Please select"
               onChange={() => {
                   validateAndSetData(field.id, !dataObject.getData(fieldName));
               }}
             />
-            <Form.Control.Feedback type="invalid">
-              <div>{errorMessage}</div>
-            </Form.Control.Feedback>
-            <Form.Text className="text-muted">
+            <div className="invalid-feedback">{errorMessage}</div>
+            <small className="text-muted form-text">
               <div>{field.formText}</div>
-            </Form.Text>
-          </Form.Group>
+            </small>
+          </div>
         </>
   );
 }

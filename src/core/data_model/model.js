@@ -43,7 +43,8 @@ export class Model {
           this.propertyChange(id, newValue, this.getData(id));
           this.data[id] = newValue;
         }
-      }
+      },
+      // configurable: true
     })
   }
 

@@ -166,6 +166,24 @@ accountsActions.getOrganizations = async (getAccessToken) => {
   return response;
 };
 
+accountsActions.createIdpAccount = async (ldapIdpAccountDataDto, getAccessToken) => {
+  let postData = {
+    ...ldapIdpAccountDataDto.getPersistData()
+  }
+  const accessToken = await getAccessToken();
+  const apiUrl = "/users/account/idp/create";
+  const response = await axiosApiService(accessToken).post(apiUrl, postData)
+    .then((result) => {
+      return result;
+    })
+    .catch(error => {
+      return {
+        error
+      };
+    });
+  return response;
+};
+
 accountsActions.createOrganizationAccount = async (ldapOrganizationAccountDataDto, getAccessToken) => {
   let postData = {
     ...ldapOrganizationAccountDataDto.getPersistData()

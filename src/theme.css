@@ -690,6 +690,30 @@ div.modal-footer {
 }
 /* End Text Input Styling */
 
+/* Mutliselect input styling */
+.custom-multiselect-input {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.custom-multiselect-input label {
+    flex-basis: 33%;
+    margin-top: .5em;
+}
+
+.custom-multiselect-input .rw-widget {
+    flex-basis: 67%;
+}
+
+.custom-multiselect-input .rw-multiselect-tag {
+    margin-top: .25em;
+    vertical-align: middle;
+    height: .25em;
+    margin-bottom: .25em;
+}
+
+/* End Mutliselect input styling */
+
 /* Select Input styling */
 .custom-select-input {
   display: flex;
