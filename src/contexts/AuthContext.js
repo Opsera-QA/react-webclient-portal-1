@@ -7,7 +7,6 @@ const AuthContextProvider = (props) => {
     const { authService, authState } = useOktaAuth();
     const [userRecord, setUserRecord] = useState(null);
 
-
     useEffect(() => {
       if (authState.isAuthenticated) {
         setUserState();
@@ -34,6 +33,11 @@ const AuthContextProvider = (props) => {
       refetchUserData();
       return authService.login("/overview");
     };
+
+  const renewUserToken = () => {
+    refetchUserData();
+    return authService.login("/overview");
+  };
 
     const getAccessToken = () => {
       return authService.getAccessToken();
@@ -118,6 +122,7 @@ const AuthContextProvider = (props) => {
         authState: authState,
         logoutUserContext: logoutUserContext,
         loginUserContext: loginUserContext,
+        renewUserToken: renewUserToken,
         getAccessToken: getAccessToken,
         getIsPreviewRole: getIsPreviewRole,
         featureFlagItemInProd: featureFlagItemInProd,
