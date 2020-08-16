@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Route, useHistory } from "react-router-dom";
 import { Security, SecureRoute, LoginCallback } from "@okta/okta-react";
-import useAxios, { configure } from 'axios-hooks'
+import useAxios, { configure } from "axios-hooks";
 import AuthContextProvider from "./contexts/AuthContext";
 import LoadingDialog from "./components/common/loading";
 import Home from "./Home";
@@ -53,12 +53,18 @@ import LdapGroupManagement from "./components/accounts/ldap_groups/LdapGroupMana
 import LdapGroupDetailView from "./components/accounts/ldap_groups/ldap_group_detail/LdapGroupDetailView";
 
 import Axios from "axios";
+
 const config = require("./config");
 
 const AppWithRouterAccess = () => {
+  const [hideSideBar, setHideSideBar] = useState(false);
   const history = useHistory();
   const onAuthRequired = () => {
-    history.push("/login");
+    //history.push("/login");
+    console.log("AppWithRouterAccess.jsx: How is this getting called?");
+    window.location = "/login";
+
+    //window.location.reload();
   };
 
   const OktaAuth = require("@okta/okta-auth-js");
@@ -71,16 +77,16 @@ const AppWithRouterAccess = () => {
     onAuthRequired: onAuthRequired,
   };
   const authClient = new OktaAuth(OKTA_CONFIG);
-
   const axios = Axios.create({
     baseURL: config.apiServerUrl,
-  })
+  });
   axios.interceptors.request.use(async (config) => {
+      console.log("getting new AccessToken for request interceptor");
       const tokenObject = await authClient.tokenManager.get("accessToken");
       if (tokenObject && tokenObject.accessToken) {
         config.headers["authorization"] = `Bearer ${tokenObject.accessToken}`;
         config.headers["cache-control"] = `no-cache`;
-        console.log("CONFIG: ", config);
+        console.log("CONFIG: ", config.headers);
       }
       return config;
     },
@@ -88,11 +94,12 @@ const AppWithRouterAccess = () => {
       return Promise.reject(error);
     },
   );
-  configure({ axios })
+  configure({ axios });
   const [{ data, loading, error }, refetch] = useAxios(
     "/users",
   );
-  const [hideSideBar, setHideSideBar] = useState(false);
+
+
 
   useEffect(() => {
     enableSideBar(history.location.pathname);
@@ -101,11 +108,13 @@ const AppWithRouterAccess = () => {
   useEffect(() => {
     if (error) {
       if (error.message.includes("401") && !hideSideBar) {
-        window.location = "/login"
+        window.location = "/login";
       }
       console.log("Error loading user record: ", JSON.stringify(error));
     }
   }, [error]);
+
+
 
   const enableSideBar = (path) => {
     if (path === "/" || path === "/login" || path === "/signup" || path === "/registration" || path === "/trial/registration") {
@@ -116,12 +125,28 @@ const AppWithRouterAccess = () => {
   };
 
 
+  //TODO: Look at this for a smoother refresh of expried token experience?
+  const refreshToken = () => {
+    console.log("refreshtoken function call")
+    authClient.session.refresh()
+      .then(function(session) {
+        // existing session is now refreshed
+        console.log("refreshing token and then refetch users: ", session);
+        refetch(); //refretch users service (with hopefully updated accessToken)
+      })
+      .catch(function(err) {
+        // there was a problem refreshing (the user may not have an existing session)
+        console.log("error refreshing token: ", err);
+      });
+  };
+
+
   if (!data && loading) {
     return (<LoadingDialog/>);
   } else {
     return (
       <Security {...OKTA_CONFIG}>
-        <AuthContextProvider userData={data} refetchUserData={refetch}>
+        <AuthContextProvider userData={data} refetchUserData={refreshToken}>
           <Navbar hideAuthComponents={hideSideBar} userData={data}/>
           <div className="container-fluid">
             <div className="d-flex flex-row">
@@ -167,12 +192,14 @@ const AppWithRouterAccess = () => {
                 <SecureRoute path="/admin/template-editor" component={TemplateEditor}/>
                 <SecureRoute path="/accounts" exact component={LdapDashboard}/>
                 <SecureRoute path="/accounts/organizations" exact component={LdapOrganizationsView}/>
-                <SecureRoute path="/accounts/organizations/details/:organizationName" exact component={LdapOrganizationDetailView}/>
+                <SecureRoute path="/accounts/organizations/details/:organizationName" exact
+                             component={LdapOrganizationDetailView}/>
                 <SecureRoute path="/accounts/:orgDomain?/users/" exact component={LdapUserManagement}/>
                 <SecureRoute path="/accounts/:orgDomain/users/details/:userEmail" exact component={LdapUserDetailView}/>
                 <SecureRoute path="/accounts/create" exact component={LdapCustomerOnboardView}/>
                 <SecureRoute path="/accounts/:orgDomain?/groups/" exact component={LdapGroupManagement}/>
-                <SecureRoute path="/accounts/:orgDomain/groups/details/:groupName" exact component={LdapGroupDetailView}/>
+                <SecureRoute path="/accounts/:orgDomain/groups/details/:groupName" exact
+                             component={LdapGroupDetailView}/>
 
                 <SecureRoute path="/demo/api" component={ApiConnectionDemo}/>
                 <SecureRoute path="/demo/table" component={CommonTableDemo}/>
