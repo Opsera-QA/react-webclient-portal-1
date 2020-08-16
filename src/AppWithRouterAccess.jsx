@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Route, useHistory } from "react-router-dom";
 import { Security, SecureRoute, LoginCallback } from "@okta/okta-react";
-import useAxios, { configure } from "axios-hooks";
+import useAxios, { configure } from 'axios-hooks'
 import AuthContextProvider from "./contexts/AuthContext";
 import LoadingDialog from "./components/common/loading";
 import Home from "./Home";
@@ -14,7 +14,6 @@ import About from "./components/about/About";
 import Pricing from "./components/about/Pricing";
 import OnlineHelp from "./components/about/Help";
 import Inventory from "./components/inventory/Inventory";
-import ToolDetailsNew from "./components/inventory/tools/toolDetails/toolDetailsNew";
 import Signup from "./components/user/Signup";
 import ApiConnector from "./components/api_connector/ApiConnector";
 import Pipeline from "./components/pipeline/index";
@@ -35,7 +34,7 @@ import Overview from "./components/landing/Overview";
 import Registration from "./components/landing/Registration";
 import ToolConfigurations from "./components/admin/tools/ToolConfigurations";
 import TagEditor from "./components/admin/tags/TagManagement";
-import TemplateEditor from "./components/admin/template_editor/TemplateEditor";
+import TemplateManagement from "./components/admin/template_editor/TemplateManagement";
 import OPBlueprintMain from "./components/blueprint/blueprint";
 import LdapDashboard from "./components/accounts/LdapDashboard";
 import LdapOrganizationsView from "./components/accounts/ldap_organizations/LdapOrganizationManagement";
@@ -51,19 +50,19 @@ import LdapUserDetailView from "./components/accounts/ldap_users/users_detail_vi
 import AccountSettingsView from "./components/user/AccountSettings";
 import LdapGroupManagement from "./components/accounts/ldap_groups/LdapGroupManagement";
 import LdapGroupDetailView from "./components/accounts/ldap_groups/ldap_group_detail/LdapGroupDetailView";
+import ToolDetailView from "./components/inventory/tools/tool_details/ToolDetailView";
+import TemplateDetailView from "./components/admin/template_editor/template_detail_view/TemplateDetailView";
+
 
 import Axios from "axios";
-
 const config = require("./config");
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
   const history = useHistory();
   const onAuthRequired = () => {
-    //history.push("/login");
     console.log("AppWithRouterAccess.jsx: How is this getting called?");
     window.location = "/login";
-
     //window.location.reload();
   };
 
@@ -98,7 +97,6 @@ const AppWithRouterAccess = () => {
   const [{ data, loading, error }, refetch] = useAxios(
     "/users",
   );
-
 
 
   useEffect(() => {
@@ -170,7 +168,7 @@ const AppWithRouterAccess = () => {
                 <SecureRoute path="/profile" component={Profile}/>
                 <SecureRoute path="/settings" component={AccountSettingsView}/>
                 <SecureRoute path="/inventory/:view" exact component={Inventory}/>
-                <SecureRoute path="/inventory/tools/detail/:id" exact component={ToolDetailsNew}/>
+                <SecureRoute path="/inventory/tools/details/:id" exact component={ToolDetailView}/>
                 <SecureRoute path="/dashboard" component={Dashboard}/>
                 <SecureRoute path="/tools/:id?" component={ApiConnector}/>
                 <SecureRoute path="/pipeline" component={Pipeline}/>
@@ -181,6 +179,8 @@ const AppWithRouterAccess = () => {
                 <SecureRoute path="/blueprint" exact component={OPBlueprintMain}/>
                 <SecureRoute path="/reports" exact component={Reports}/>
                 <SecureRoute path="/update" component={Update}/>
+
+                {/* Administration Pages */}
                 <SecureRoute path="/admin" exact component={AdminTools}/>
                 <SecureRoute path="/admin/delete" component={DeleteTools}/>
                 <SecureRoute path="/admin/manage_systems" component={ManageSystems}/>
@@ -191,22 +191,24 @@ const AppWithRouterAccess = () => {
                 <SecureRoute path="/admin/tool-configurations" component={ToolConfigurations}/>
                 <SecureRoute path="/admin/tags" exact component={TagEditor}/>
                 <SecureRoute path="/admin/tags/:id" exact component={TagDetailView}/>
-                <SecureRoute path="/admin/template-editor" component={TemplateEditor}/>
+                <SecureRoute path="/admin/templates" exact component={TemplateManagement}/>
+                <SecureRoute path="/admin/templates/details/:templateId" exact component={TemplateDetailView}/>
+
+                {/* Ldap Account Pages */}
                 <SecureRoute path="/accounts" exact component={LdapDashboard}/>
                 <SecureRoute path="/accounts/organizations" exact component={LdapOrganizationsView}/>
-                <SecureRoute path="/accounts/organizations/details/:organizationName" exact
-                             component={LdapOrganizationDetailView}/>
+                <SecureRoute path="/accounts/organizations/details/:organizationName" exact component={LdapOrganizationDetailView}/>
                 <SecureRoute path="/accounts/:orgDomain?/users/" exact component={LdapUserManagement}/>
                 <SecureRoute path="/accounts/:orgDomain/users/details/:userEmail" exact component={LdapUserDetailView}/>
                 <SecureRoute path="/accounts/create" exact component={LdapCustomerOnboardView}/>
                 <SecureRoute path="/accounts/:orgDomain?/groups/" exact component={LdapGroupManagement}/>
-                <SecureRoute path="/accounts/:orgDomain/groups/details/:groupName" exact
-                             component={LdapGroupDetailView}/>
+                <SecureRoute path="/accounts/:orgDomain/groups/details/:groupName" exact component={LdapGroupDetailView}/>
 
                 <SecureRoute path="/demo/api" component={ApiConnectionDemo}/>
                 <SecureRoute path="/demo/table" component={CommonTableDemo}/>
 
                 <Route path="/trial/registration" exact component={FreeTrialRegistration}/>
+
               </div>
             </div>
             <div className="row fixed-row-footer-bottom">
