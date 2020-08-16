@@ -34,10 +34,10 @@ const AuthContextProvider = (props) => {
       return authService.login("/overview");
     };
 
-  const renewUserToken = () => {
-    refetchUserData();
-    return authService.login("/overview");
-  };
+    const renewUserToken = () => {
+      refetchUserData();
+      return authService.login("/overview");
+    };
 
     const getAccessToken = () => {
       return authService.getAccessToken();
@@ -138,8 +138,8 @@ const AuthContextProvider = (props) => {
 
 AuthContextProvider.propTypes = {
   userData: PropTypes.object,
-  refetchUserData: PropTypes.func
-}
+  refetchUserData: PropTypes.func,
+};
 
 export const AuthContext = createContext();
 export default AuthContextProvider;

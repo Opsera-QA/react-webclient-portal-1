@@ -108,6 +108,7 @@ const AppWithRouterAccess = () => {
   useEffect(() => {
     if (error) {
       if (error.message.includes("401") && !hideSideBar) {
+        console.log("useEffect on error with 401, auto refreshing...")
         window.location = "/login";
       }
       console.log("Error loading user record: ", JSON.stringify(error));
@@ -125,9 +126,9 @@ const AppWithRouterAccess = () => {
   };
 
 
-  //TODO: Look at this for a smoother refresh of expried token experience?
+  //TODO: Review this logic for a few days in dev.  Does it improve the user experience around a token expiration?
   const refreshToken = () => {
-    console.log("refreshtoken function call")
+    console.log("refreshToken function call")
     authClient.session.refresh()
       .then(function(session) {
         // existing session is now refreshed
@@ -137,6 +138,7 @@ const AppWithRouterAccess = () => {
       .catch(function(err) {
         // there was a problem refreshing (the user may not have an existing session)
         console.log("error refreshing token: ", err);
+        window.location = "/login";
       });
   };
 
