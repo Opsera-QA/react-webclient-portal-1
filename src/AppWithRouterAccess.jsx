@@ -55,8 +55,6 @@ import TemplateDetailView from "./components/admin/template_editor/template_deta
 
 
 import Axios from "axios";
-import ToolDetailView from "./components/inventory/tools/tool_details/ToolDetailView";
-import TemplateDetailView from "./components/admin/template_editor/template_detail_view/TemplateDetailView";
 const config = require("./config");
 
 const AppWithRouterAccess = () => {
