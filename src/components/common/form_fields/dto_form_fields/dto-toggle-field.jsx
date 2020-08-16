@@ -18,7 +18,7 @@ function DtoToggleField({dataObject, fieldName}) {
             disabled={true}
             id={field.id + "field"}
             checked={dataObject.getData(fieldName)}
-            label="Active"
+            label={dataObject.getData(fieldName) ? "Active" : "Inactive"}
             placeholder="Please select"
             onChange={() => {
             }}

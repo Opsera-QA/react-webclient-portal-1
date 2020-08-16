@@ -16,10 +16,10 @@ export const validateField = (data, field, errors) => {
   const validationErrors = fieldValidation(data[field.id], field);
   if (validationErrors != null) {
     errors[field.id] = validationErrors;
-    console.log("validationErrors.errorMessages: " + JSON.stringify(validationErrors));
+    // console.log("validationErrors.errorMessages: " + JSON.stringify(validationErrors));
   }
 
-  console.log("Returning Errors: " + JSON.stringify(errors));
+  // console.log("Returning Errors: " + JSON.stringify(errors));
   return errors;
 }
 
@@ -27,8 +27,8 @@ export const fieldValidation = (value, field) => {
   let isValid = true;
   let errorMessages = [];
 
-  console.log("In field validation for: " + JSON.stringify(value));
-  console.log("field: " + JSON.stringify(field));
+  // console.log("In field validation for: " + JSON.stringify(value));
+  // console.log("field: " + JSON.stringify(field));
 
   if (field.minLength != null) {
     if (!minLengthValidator(value, field.minLength))

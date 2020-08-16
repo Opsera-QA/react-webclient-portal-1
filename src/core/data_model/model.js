@@ -43,7 +43,8 @@ export class Model {
           this.propertyChange(id, newValue, this.getData(id));
           this.data[id] = newValue;
         }
-      }
+      },
+      // configurable: true
     })
   }
 
@@ -52,16 +53,14 @@ export class Model {
   }
 
   setData = (fieldName, newValue) => {
-    if (this.getData(fieldName) !== newValue) {
       this.propertyChange(fieldName, newValue, this.getData(fieldName));
       this.data[fieldName] = newValue;
-    }
   }
 
   isModelValid = () => {
     let isValid = validateData(this.data, this.metaData.fields);
 
-    console.log("isValid: " + JSON.stringify(isValid));
+    //console.log("isValid: " + JSON.stringify(isValid));
 
     return isValid === true ? isValid : isValid;
   }
@@ -69,16 +68,16 @@ export class Model {
   isFieldValid = (fieldName) => {
     let isValid = validateField(this.data, this.getFieldById(fieldName), {});
 
-    console.log("isValid: " + JSON.stringify(isValid));
+    //console.log("isValid: " + JSON.stringify(isValid));
 
     return isValid === true ? isValid : isValid;
   }
 
   propertyChange = (id, newValue, oldValue) => {
     if (!this.changeMap.has(id)) {
-      console.log("Field added to change map: " + id);
-      console.log("oldValue: " + oldValue);
-      console.log("newValue: " + newValue);
+      // console.log("Field added to change map: " + id);
+      // console.log("oldValue: " + JSON.stringify(oldValue));
+      // console.log("newValue: " + JSON.stringify(newValue));
       this.changeMap.set(id, oldValue);
 
       if (this.dataState !== DataState.NEW) {
@@ -87,7 +86,7 @@ export class Model {
     }
     else if (this.changeMap.get(id) === newValue
          || (this.changeMap.get(id) === null && newValue === null)) {
-      console.log("Fieldname removed from change map: " + id);
+      // console.log("Fieldname removed from change map: " + id);
       this.changeMap.delete(id);
 
       if (this.changeMap.size === 0 && this.dataState === DataState.CHANGED) {

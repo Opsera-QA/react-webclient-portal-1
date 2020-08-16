@@ -690,6 +690,30 @@ div.modal-footer {
 }
 /* End Text Input Styling */
 
+/* Mutliselect input styling */
+.custom-multiselect-input {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.custom-multiselect-input label {
+    flex-basis: 33%;
+    margin-top: .5em;
+}
+
+.custom-multiselect-input .rw-widget {
+    flex-basis: 67%;
+}
+
+.custom-multiselect-input .rw-multiselect-tag {
+    margin-top: .25em;
+    vertical-align: middle;
+    height: .25em;
+    margin-bottom: .25em;
+}
+
+/* End Mutliselect input styling */
+
 /* Select Input styling */
 .custom-select-input {
   display: flex;
@@ -744,6 +768,13 @@ div.modal-footer {
 
 .content-card-1 {
 }
+
+/*TODO: Style differently*/
+/*.content-card-1 .flat-top-content-block {*/
+    /*border: 1px solid #8fa4ba;*/
+    /*border-bottom-right-radius: 5px;*/
+    /*border-bottom-left-radius: 5px;*/
+/*}*/
 
 .content-card-1 .content-block-header {
   background-color: #1578dc;
@@ -867,6 +898,10 @@ div.modal-footer {
     min-width: 250px;
 }
 
+.multi-input-button {
+    width:32px;
+}
+
 /* Breadcrumb trail styling */
 .breadcrumb {
     background-color: #fafafb;
@@ -874,6 +909,17 @@ div.modal-footer {
 }
 
 /* End Breadcrumb trail styling */
+
+/* Action Bar styling */
+.action-bar {
+    font-size: 20px;
+}
+
+.action-bar-icon:hover {
+    color: #0f3e84;
+}
+
+/* End Action Bar styling */
 
 /* Detail View Styling */
 .detail-view-body {

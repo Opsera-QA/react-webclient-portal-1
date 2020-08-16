@@ -83,9 +83,9 @@ function PlatformInventory () {
                 className="application-select"
                 data={data} 
                 valueField='name'
-                busy={loading} 
+                busy={loading}
                 textField='name'
-                onChange={handleDropdownChange}             
+                onChange={handleDropdownChange}
               /> : null }
           </div>
         }

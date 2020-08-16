@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import DropdownList from "react-widgets/lib/DropdownList";
 
-function DtoSelectInput({ fieldName, dataObject, setDataObject, groupBy, selectOptions }) {
+function DtoSelectInput({ fieldName, dataObject, setDataObject, groupBy, selectOptions, valueField, textField, filter, placeholderText, setDataFunction}) {
   const [errorMessage, setErrorMessage] = useState("");
   const [isValid, setIsValid] = useState(true);
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -20,18 +20,17 @@ function DtoSelectInput({ fieldName, dataObject, setDataObject, groupBy, selectO
   return (
     field &&
         <>
-          <div className="custom-select-input form-group">
+          <div className="custom-select-input form-group m-2">
             <label><span>{field.label}{field.isRequired ? <span className="danger-red">*</span> : null } </span></label>
             <DropdownList
               data={selectOptions}
-              // TODO: Allow passing in valueField and textField
-              valueField='value'
-              textField='text'
-              filter='contains'
+              valueField={valueField}
+              textField={textField}
+              filter={filter}
               groupBy={groupBy}
               defaultValue={dataObject.getData(fieldName)}
-              placeholder="Select One"
-              onChange={e => validateAndSetData(field.id, e.value)}
+              placeholder={placeholderText}
+              onChange={e => setDataFunction ? setDataFunction(field.id, e) : validateAndSetData(field.id, e[valueField])}
             />
             <div className="invalid-feedback">
               <div>{errorMessage}</div>
@@ -49,7 +48,21 @@ DtoSelectInput.propTypes = {
   setDataObject: PropTypes.func,
   fieldName: PropTypes.string,
   groupBy: PropTypes.string,
-  dataObject: PropTypes.object
+  dataObject: PropTypes.object,
+  valueField: PropTypes.string,
+  textField: PropTypes.string,
+  filter: PropTypes.string,
+  value: PropTypes.func,
+  placeholderText: PropTypes.string,
+  setDataFunction: PropTypes.func
 };
+
+DtoSelectInput.defaultProps = {
+  valueField: "value",
+  textField: "text",
+  groupBy: "groupId",
+  filter: "contains",
+  placeholderText: "Select One"
+}
 
 export default DtoSelectInput;

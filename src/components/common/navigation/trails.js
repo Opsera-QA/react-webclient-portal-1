@@ -1,5 +1,9 @@
-// TODO: Find better way to make paths
+// Admin Paths
 const admin = "admin";
+const templateManagement = admin + "/templates"
+const templateDetailView = templateManagement + "/details/"
+
+// Ldap paths
 const ldapDashboard = "accounts"
 const accountSettings = "settings"
 const ldapUserManagement = ldapDashboard + "/users"
@@ -9,12 +13,19 @@ const ldapGroupDetailView = ldapUserManagement;
 const ldapOrganizationManagement = ldapDashboard + "/organizations"
 const ldapOrganizationDetailView = ldapUserManagement;
 
-
-
+//Inventory (Tool Registry) paths
+const toolRegistry = "inventory/tools";
+const toolDetailView = toolRegistry + "/details";
 
 const trails = {
+  // Inventory
+  toolRegistry: {parent: undefined, destination: {name: "toolRegistry", path: toolRegistry, label: "Tool Registry"}},
+  toolDetailView: {parent: "toolRegistry", destination: {name: "toolDetailView", path: toolDetailView, label: "Tool Details"}},
+
   // Administration
   admin: {parent: undefined, destination: {name: "admin", path: admin, label: "Administration"}},
+  templateManagement: {parent: "admin", destination: {name: "templateManagement", path: templateManagement, label: "Template Management"}},
+  templateDetailView: {parent: "templateManagement", destination: {name: "templateDetailView", path: templateDetailView, label: "Template Details"}},
 
   // LDAP Administration
   ldapDashboard: {parent: "admin", destination: {name: "ldapDashboard", path: ldapDashboard, label: "User and Account Management"}},

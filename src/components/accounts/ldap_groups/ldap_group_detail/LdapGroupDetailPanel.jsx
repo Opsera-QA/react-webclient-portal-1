@@ -7,7 +7,7 @@ import LdapGroupEditorPanel from "./LdapGroupEditorPanel";
 import LdapGroupManagePanel from "./LdapGroupManagePanel";
 import LdapUsersTable from "../../ldap_users/LdapUsersTable";
 
-function LdapGroupDetailPanel({ ldapGroupDto, currentUserEmail, ldapGroupData, setLdapGroupData, ldapOrganizationData, orgDomain, loadData }) {
+function LdapGroupDetailPanel({ currentUserEmail, ldapGroupData, setLdapGroupData, ldapOrganizationData, orgDomain, loadData }) {
   const [activeTab, setActiveTab] = useState("membership");
 
   const handleTabClick = (tabSelection) => e => {

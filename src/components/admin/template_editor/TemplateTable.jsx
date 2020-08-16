@@ -1,20 +1,16 @@
-import React, { useMemo } from "react";
+import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CustomTable from "components/common/table/table";
 import { format } from "date-fns";
-import { faTimesCircle, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import {faTimesCircle, faCheckCircle, faPlus} from "@fortawesome/free-solid-svg-icons";
+import {useHistory} from "react-router-dom";
+import {Button} from "react-bootstrap";
+import NewTemplateModal from "./NewTemplateModal";
 
-function TemplateTable({ data, selectedRow }) {
-  const initialState = {
-    pageIndex: 0,
-    sortBy: [
-      {
-        id: "name",
-        desc: false
-      }
-    ]
-  };  
+function TemplateTable({ data, loadData }) {
+  const [showCreateTemplateModal, setShowCreateTemplateModal] = useState(false);
+  const history = useHistory();
 
   const columns = useMemo(
     () => [
@@ -55,24 +51,52 @@ function TemplateTable({ data, selectedRow }) {
     return !row["values"].active ? " inactive-row" : "";
   };
 
+  const selectedRow = (rowData, type) => {
+    history.push(`/admin/templates/details/${rowData.original._id}`);
+  };
+
+  const handleClose = () => {
+    setShowCreateTemplateModal(false)
+    loadData();
+  };
+
+  const createTemplate = () => {
+    setShowCreateTemplateModal(true);
+  };
+
   return (
     <>
-      <CustomTable 
-        columns={columns} 
-        data={data}
-        onRowSelect={selectedRow}
-        noDataMessage={noDataMessage}
-        rowStyling={rowStyling}
-        initialState={initialState}
-      >
-      </CustomTable>
+      {showCreateTemplateModal && <NewTemplateModal onModalClose={handleClose} showModal={showCreateTemplateModal}/>}
+      <div className="justify-content-between mb-1 d-flex">
+        <h5>Template Management</h5>
+        <div className="text-right">
+          <Button variant="primary" size="sm"
+                  onClick={() => {
+                    createTemplate();
+                  }}>
+            <FontAwesomeIcon icon={faPlus} className="mr-1"/> New Template
+          </Button>
+          <br/>
+        </div>
+      </div>
+      <div className="table-content-block">
+        <CustomTable
+          columns={columns}
+          data={data}
+          onRowSelect={selectedRow}
+          noDataMessage={noDataMessage}
+          rowStyling={rowStyling}
+          tableStyleName="custom-table-2"
+        >
+        </CustomTable>
+      </div>
     </>
   );
 }
 
 TemplateTable.propTypes = {
   data: PropTypes.array,
-  selectedRow: PropTypes.func
+  loadData: PropTypes.func
 };
 
 export default TemplateTable;

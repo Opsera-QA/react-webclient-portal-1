@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Row, Col, Button} from "react-bootstrap";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -7,8 +7,11 @@ import LdapUsersTable from "../../../ldap_users/LdapUsersTable";
 import LdapGroupsTable from "../../../ldap_groups/LdapGroupsTable";
 import DtoTextField from "../../../../common/form_fields/dto_form_fields/dto-text-field";
 import DtoToggleField from "../../../../common/form_fields/dto_form_fields/dto-toggle-field";
+import LdapIdpAccountSummaryPanel from "../idp_accounts/LdapIdpAccountSummaryPanel";
+import LdapIdpAccountEditorPanel from "../idp_accounts/LdapIdpAccountEditorPanel";
 
-function LdapOrganizationAccountSummaryPanel({ldapOrganizationAccountData, setShowEditorPanel, handleBackButton}) {
+function LdapOrganizationAccountSummaryPanel({ldapOrganizationAccountData, ldapIdpAccountData, setShowEditorPanel, handleBackButton}) {
+  const [showIdpEditPanel, setShowIdpEditPanel] = useState(false);
   return (
     ldapOrganizationAccountData &&
     <>
@@ -89,9 +92,23 @@ function LdapOrganizationAccountSummaryPanel({ldapOrganizationAccountData, setSh
             <LdapGroupsTable orgDomain={ldapOrganizationAccountData["orgDomain"]} groupData={ldapOrganizationAccountData.getData("groups")} />
           </div>
         </Col>
+        <Col lg={12}>
+          <div className="content-container content-card-1 mb-3">
+            <div className="pt-2 pl-2 content-block-header">
+              <h6>Idp Account Details</h6>
+            </div>
+            <div>
+              {showIdpEditPanel || ldapIdpAccountData.isNew()
+                ? <LdapIdpAccountEditorPanel ldapOrganizationAccountData={ldapOrganizationAccountData} ldapIdpAccountData={ldapIdpAccountData} />
+                : <LdapIdpAccountSummaryPanel ldapIdpAccountData={ldapIdpAccountData} />
+              }
+            </div>
+            <div className="content-block-footer" />
+          </div>
+        </Col>
       </Row>
       <Row>
-          <div className="ml-auto">
+          <div className="ml-auto mr-3">
             <Button size="sm" variant="secondary" onClick={() => handleBackButton()}>Back to Accounts</Button>
           </div>
       </Row>
@@ -101,6 +118,7 @@ function LdapOrganizationAccountSummaryPanel({ldapOrganizationAccountData, setSh
 
 LdapOrganizationAccountSummaryPanel.propTypes = {
   ldapOrganizationAccountData: PropTypes.object,
+  ldapIdpAccountData: PropTypes.object,
   setShowEditorPanel: PropTypes.func,
   handleBackButton: PropTypes.func
 };
