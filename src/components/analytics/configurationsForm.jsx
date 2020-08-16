@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
 //import Multiselect from "react-widgets/lib/Multiselect";
-import createHistory from "history/createBrowserHistory";
+//import createHistory from "history/createBrowserHistory";
 //import { createBrowserHistory } from 'history'; //this needs to replace the above line
 
 const INITIAL_SETTINGS = {
@@ -56,7 +56,7 @@ const TOOL_OPTIONS = [
 
 function ConfigurationsForm({ settings, token }) {
   const [profileSettings, setProfileSettings] = useState({});
-  const history = createHistory();
+  //const history = createHistory();
   const [state, setState] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
@@ -92,7 +92,7 @@ function ConfigurationsForm({ settings, token }) {
       await postData(data);
     }
     //this needs to trigger a full reload of app for now because so many queries checik on the status of this record.
-    history.go(0);
+    window.location.reload();
   }
 
 
@@ -116,7 +116,7 @@ function ConfigurationsForm({ settings, token }) {
     data.disabledToolsOn = new Date().toISOString();
     setState({ data, showModal: false });
     await postData(data);
-    history.go(0);
+    window.location.reload();
   }
 
   async function postData(postBody) {
