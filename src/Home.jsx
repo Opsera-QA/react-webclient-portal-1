@@ -5,20 +5,18 @@ import { Row, Col, Button, Card } from "react-bootstrap";
 
 function Home() {
   const contextType = useContext(AuthContext);
-  //const { authState } = contextType;
+  const { authState } = contextType;
   const history = useHistory();
 
   useEffect(() => {
-    //getStatus();
+    getStatus();
   }, []);
 
-/*
   const getStatus = async () => {
     if (authState.isAuthenticated) {
       history.push("/overview");
     }
   };
-*/
 
   const login = () => {
     const { loginUserContext } = contextType;
