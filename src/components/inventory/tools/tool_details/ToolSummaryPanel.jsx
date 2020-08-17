@@ -27,7 +27,7 @@ function ToolSummaryPanel({ toolData, setToolData }) {
       },
       {
         Header: "Email",
-        accessor: "value",
+        accessor: "email",
       },
       {
         Header: "ID",
@@ -138,13 +138,13 @@ function ToolSummaryPanel({ toolData, setToolData }) {
               <NameValueTable data={toolData["projects"]} label={toolData.getFieldById("projects").label} />
             </Col>
             <Col lg={6}>
-              {getTable(toolData["contacts"], contactsColumns, "Contacts")}
-            </Col>
-            <Col lg={6}>
               <NameValueTable data={toolData["applications"]} label={toolData.getFieldById("applications").label} />
             </Col>
             <Col lg={6}>
               <NameValueTable data={toolData["organization"]} label={toolData.getFieldById("organization").label} />
+            </Col>
+            <Col lg={6}>
+              {getTable(toolData["contacts"], contactsColumns, "Contacts")}
             </Col>
           </Row>
         </div>

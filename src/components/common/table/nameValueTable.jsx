@@ -15,7 +15,7 @@ const fields = {
 }
 
 // Note: I only made this because we have a lot of areas where we need to use the name/value tables so might as well reuse this.
-function NameValueTable({ tableStyleName, data, noDataMessage, label, valueFormat }) {
+function NameValueTable({ tableStyleName, data, noDataMessage, label, valueFormat, showHeaderText }) {
 
   const columns = useMemo(
     () => [
@@ -48,6 +48,7 @@ function NameValueTable({ tableStyleName, data, noDataMessage, label, valueForma
           columns={columns}
           data={parseEmptyRows(data)}
           noDataMessage={noDataMessage}
+          showHeaderText={showHeaderText}
         />
       </div>
     </>
@@ -59,13 +60,15 @@ NameValueTable.propTypes = {
   tableStyleName: PropTypes.string,
   label: PropTypes.string,
   data: PropTypes.array,
+  showHeaderText: PropTypes.bool,
   noDataMessage: PropTypes.string,
   valueFormat: PropTypes.string
 };
 
 NameValueTable.defaultProps = {
   tableStyleName: "custom-table-2",
-  valueFormat: "text"
+  valueFormat: "text",
+  showHeaderText: false,
 }
 
 export default NameValueTable;

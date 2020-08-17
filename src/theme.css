@@ -345,6 +345,10 @@ a.text-primary:hover, a.text-primary:focus {
     white-space: nowrap;
 }
 
+.custom-table-2 .no-header-text {
+    height: 2em;
+}
+
 .custom-table-2 .table-title-bar {
     color: #1578dc;
     line-height:2.4em;
@@ -662,11 +666,30 @@ div.modal-footer {
 }
 
 .custom-text-input label {
+  margin-top: .25em;
   flex-basis: 33%;
 }
 
 .custom-text-input input {
   flex-basis: 67%;
+  height: 30px;
+}
+
+.custom-text-input .button-add {
+    margin-top: -2px;
+    font-size: 20px;
+}
+
+.custom-text-input .button-delete {
+    font-size: 18px;
+}
+
+.custom-text-input .button-add:hover {
+    color: #1a4e79;
+}
+
+.custom-text-input .button-delete:hover {
+    color: #ac0515;
 }
 
 .custom-text-input select {
@@ -723,11 +746,15 @@ div.modal-footer {
 
 .custom-select-input label {
   flex-basis: 33%;
-  margin-top: .5em;
+  margin-top: .25em;
 }
 
 .custom-select-input .rw-widget {
   flex-basis: 67%;
+}
+
+.custom-select-input .rw-widget-input {
+    height: 30px;
 }
 
 .custom-select-input .form-text {

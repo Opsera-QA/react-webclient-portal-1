@@ -14,7 +14,7 @@ import DtoMultipleInput from "../../../common/input/dto_input/dto-multiple-input
 import DtoItemInput from "../../../common/input/dto_input/item-displayer/dto-item-input";
 import toolsActions from "../tools-actions";
 
-function ToolTypeEditorPanel({ toolData, setToolData, handleClose }) {
+function ToolEditorPanel({ toolData, setToolData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const [showToast, setShowToast] = useState(false);
   const [toolDataDto, setToolDataDto] = useState({});
@@ -45,8 +45,8 @@ function ToolTypeEditorPanel({ toolData, setToolData, handleClose }) {
     }
   };
 
-  const createToolType = async () => {
-    console.log("Persisting new tool type to DB: " + JSON.stringify(toolDataDto.data));
+  const createTool = async () => {
+    // console.log("Persisting new tool to DB: " + JSON.stringify(toolDataDto.data));
 
     if (toolDataDto.isModelValid()) {
       let createToolTypeResponse = await toolsActions.createTool(toolDataDto, getAccessToken);
@@ -68,13 +68,13 @@ function ToolTypeEditorPanel({ toolData, setToolData, handleClose }) {
     }
   };
 
-  const updateToolType = async () => {
+  const updateTool = async () => {
     if(toolDataDto.isModelValid()) {
       try {
-        console.log("Attempting to update: " + JSON.stringify(toolDataDto.data));
+        // console.log("Attempting to update: " + JSON.stringify(toolDataDto.data));
         let response = await toolsActions.updateTool(toolDataDto, getAccessToken);
         // getToolRegistryItem(toolId);
-        console.log("response: " + JSON.stringify(response));
+        // console.log("response: " + JSON.stringify(response));
         let updatedDto = new Model(response.data, toolDataDto.metaData, false);
         setToolDataDto(updatedDto);
         setToolData(updatedDto);
@@ -130,7 +130,7 @@ function ToolTypeEditorPanel({ toolData, setToolData, handleClose }) {
           {showToast && toast}
           <Row>
             <Col lg={6}>
-              <DtoTextInput disabled={!toolDataDto.isNew()} setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"name"} />
+              <DtoTextInput setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"name"} />
             </Col>
             <Col lg={6}>
               <DtoTextInput disabled={true} setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"compliance"} />
@@ -148,7 +148,7 @@ function ToolTypeEditorPanel({ toolData, setToolData, handleClose }) {
               <DtoMultipleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fields={["name", "value"]} fieldName={"projects"} />
             </Col>
             <Col lg={6}>
-              <DtoMultipleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fields={["name", "email", "user_id"]} fieldName={"contacts"} />
+              <DtoMultipleInput disabledFields={["user_id"]} setDataObject={setToolDataDto} dataObject={toolDataDto} fields={["name", "email", "user_id"]} fieldName={"contacts"} />
             </Col>
             <Col lg={6}>
               <DtoMultipleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fields={["name", "value"]} fieldName={"applications"} />
@@ -165,8 +165,8 @@ function ToolTypeEditorPanel({ toolData, setToolData, handleClose }) {
           </Row>
           <Row>
               <div className="ml-auto px-3">
-                {toolDataDto.isNew() ? <Button size="sm" variant="primary" disabled={false} onClick={() => createToolType()}>Create Tool Type</Button>
-                  : <Button size="sm" variant="primary" disabled={toolDataDto.dataState === DataState.LOADED} onClick={() => updateToolType()}>Save changes</Button>}
+                {toolDataDto.isNew() ? <Button size="sm" variant="primary" disabled={false} onClick={() => createTool()}>Create Tool</Button>
+                  : <Button size="sm" variant="primary" disabled={toolDataDto.dataState === DataState.LOADED} onClick={() => updateTool()}>Save changes</Button>}
               </div>
             }
           </Row>
@@ -176,12 +176,12 @@ function ToolTypeEditorPanel({ toolData, setToolData, handleClose }) {
   );
 }
 
-ToolTypeEditorPanel.propTypes = {
+ToolEditorPanel.propTypes = {
   toolData: PropTypes.object,
   setToolData: PropTypes.func,
   handleClose: PropTypes.func
 };
 
-export default ToolTypeEditorPanel;
+export default ToolEditorPanel;
 
 

@@ -6,7 +6,7 @@ import Model from "../../../core/data_model/model";
 import {unsavedChanges} from "../../common/tooltip/popover-text";
 import TooltipWrapper from "../../common/tooltip/tooltipWrapper";
 import toolMetadata from "./tool-metadata";
-import ToolTypeEditorPanel from "./tool_details/ToolTypeEditorPanel";
+import ToolEditorPanel from "./tool_details/ToolEditorPanel";
 import CreateModal from "../../common/modal/CreateModal";
 import LdapOrganizationAccountEditorPanel
   from "../../accounts/ldap_organizations/organizations_detail_view/ldap_organization_accounts/LdapOrganizationAccountEditorPanel";
@@ -30,7 +30,7 @@ const INITIAL_TOOL_DATA = {
   tags: []
 };
 
-function NewToolTypeModal({ onModalClose, showModal } ) {
+function NewToolModal({ onModalClose, showModal } ) {
   const { getAccessToken } = useContext(AuthContext);
   const [toolData, loadData] = useState(undefined);
 
@@ -44,18 +44,18 @@ function NewToolTypeModal({ onModalClose, showModal } ) {
 
   return (
     <>
-      <CreateModal handleCancelModal={handleClose} objectType={"Tool Type"} showModal={showModal} >
-        {toolData && <ToolTypeEditorPanel loadData={loadData} handleClose={handleClose} toolData={toolData} />}
+      <CreateModal handleCancelModal={handleClose} objectType={"Tool"} showModal={showModal} >
+        {toolData && <ToolEditorPanel loadData={loadData} handleClose={handleClose} toolData={toolData} />}
       </CreateModal>
     </>
   );
 }
 
-NewToolTypeModal.propTypes = {
+NewToolModal.propTypes = {
   showModal: PropTypes.bool,
   onModalClose: PropTypes.func,
 };
 
-export default NewToolTypeModal;
+export default NewToolModal;
 
 

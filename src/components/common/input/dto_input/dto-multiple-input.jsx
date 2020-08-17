@@ -5,7 +5,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus, faTimes, faTrash} from "@fortawesome/free-solid-svg-icons";
 
 // TODO: Rewrite and rename after refactoring
-function DtoMultipleInput({dataObject, setDataObject, fieldName, fields}) {
+function DtoMultipleInput({dataObject, setDataObject, fieldName, fields, disabledFields}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   const [isValid, setIsValid] = useState(true);
@@ -18,10 +18,18 @@ function DtoMultipleInput({dataObject, setDataObject, fieldName, fields}) {
   //We are computing the number of rows required based on the data from API
   const prePopulateData = () => {
     let currentData = dataObject.getData(fieldName);
-    setRowList([
-      ...currentData
-    ]);
+    if(currentData && Object.keys(currentData).length > 0) {
+      setRowList([...currentData]);
+    }
   };
+
+  const updateData = (newRowList) => {
+    setRowList([...newRowList]);
+    let newDataObject = dataObject;
+    newDataObject.setData(fieldName, [...newRowList]);
+    console.log("dataObject.getData(fieldName): " + JSON.stringify(newDataObject.getData(fieldName)));
+    setDataObject({...newDataObject});
+  }
 
   //Add new row to the table
   const addRow = () => {
@@ -33,17 +41,8 @@ function DtoMultipleInput({dataObject, setDataObject, fieldName, fields}) {
       newRow[field] = "";
     })
 
-    console.log("New row: " + JSON.stringify(newRow));
-
     newRowList.push(newRow);
-
-    console.log("New newRowList: " + JSON.stringify(newRowList));
-    setRowList([...newRowList]);
-
-    let newDataObject = dataObject;
-    // console.log("RowList: " + JSON.stringify(rowList.reduce((obj, item) => Object.assign(obj, {[item.name]: item.value}))));
-    newDataObject.setData(fieldName, newRowList.reduce((obj, item) => Object.assign(obj, {[item.name]: item.value}), {}));
-    setDataObject({...newDataObject});
+    updateData(newRowList);
   };
 
   //Find index of deleted row and update the master list
@@ -52,11 +51,7 @@ function DtoMultipleInput({dataObject, setDataObject, fieldName, fields}) {
     let newRowList = rowList
     let index = newRowList.indexOf(row);
     newRowList.splice(index, 1);
-    setRowList([...newRowList]);
-    let newDataObject = dataObject;
-    // console.log("RowList: " + JSON.stringify(rowList.reduce((obj, item) => Object.assign(obj, {[item.name]: item.value}))));
-    newDataObject.setData(fieldName, newRowList.reduce((obj, item) => Object.assign(obj, {[item.name]: item.value}), {}));
-    setDataObject({...newDataObject});
+    updateData(newRowList);
   };
 
   const updateCellData = (event, row, field, innerField) => {
@@ -65,13 +60,7 @@ function DtoMultipleInput({dataObject, setDataObject, fieldName, fields}) {
     let index = newRowList.indexOf(row);
     // console.log("index: " + index);
     newRowList[index][innerField] = event.target.value;
-    setRowList([...newRowList]);
-    let newDataObject = dataObject;
-    // newDataObject.setData(fieldName, newRowList.reduce((obj, item) => Object.assign(obj, {[item.name]: item.value})));
-    newDataObject.setData(fieldName, newRowList);
-
-    // console.log("newDataObject: " + JSON.stringify(newDataObject.getData(fieldName)));
-    setDataObject({...newDataObject});
+    updateData(newRowList);
   };
 
   // TODO: remove or enable, if (un)necessary
@@ -88,9 +77,7 @@ function DtoMultipleInput({dataObject, setDataObject, fieldName, fields}) {
       // TODO: Make custom-toggle-input css
       <>
         <Form.Group className="custom-text-input m-2" controlId={field.id}>
-          <Form.Label>
-            <span>{field.label}{field.isRequired ? <span className="danger-red">*</span> : null}</span>
-          </Form.Label>
+          <label><span>{field.label}{field.isRequired ? <span className="danger-red">*</span> : null}</span></label>
           {rowList && rowList.length > 0 ?
             <>
               <Table borderless={true} size="sm" style={{marginBottom: "0"}}>
@@ -98,7 +85,7 @@ function DtoMultipleInput({dataObject, setDataObject, fieldName, fields}) {
                 {rowList.map((row, key) => {
                   return <tr key={key}>
                     {fields.map((innerField, key) => {
-                      return <td key={key}><Form.Control defaultValue={row[innerField]} type="text" size="sm"
+                      return <td key={key}><Form.Control defaultValue={row[innerField]} disabled={disabledFields.includes(innerField)} type="text" size="sm"
                                                          placeholder={"New " + `${innerField}`}
                                                          onChange={e => updateCellData(e, row, field, innerField)}/>
                       </td>;
@@ -111,7 +98,7 @@ function DtoMultipleInput({dataObject, setDataObject, fieldName, fields}) {
                 <tr>
                   {fields.map((row, i) => { return <td key={i} /> })}
                   <td className="text-right">
-                    <Button className="multi-input-button" variant="outline-primary" size="sm" onClick={addRow}><FontAwesomeIcon icon={faPlus}/></Button>
+                    <Button className="multi-input-button" variant="link" size="sm" onClick={addRow}><FontAwesomeIcon icon={faPlus}/></Button>
                   </td>
                 </tr>
                 </tbody>
@@ -121,9 +108,8 @@ function DtoMultipleInput({dataObject, setDataObject, fieldName, fields}) {
 
               <div className="w-100">
                 <div className="d-flex flex-row-reverse">
-                  <div className="text-right mr-1"><Button variant="primary" size="sm"
-                                                           onClick={addRow}><FontAwesomeIcon
-                    icon={faPlus}/></Button></div>
+                  <div className="text-right mr-1">
+                    <Button className="btn-add" variant="link" size="sm" onClick={addRow}><FontAwesomeIcon icon={faPlus}/></Button></div>
                   <div className="text-muted mr-2 mt-1">No Entries</div>
                 </div>
               </div>
@@ -145,7 +131,12 @@ DtoMultipleInput.propTypes = {
   setDataObject: PropTypes.func,
   dataObject: PropTypes.object,
   fields: PropTypes.array,
+  disabledFields: PropTypes.array,
   fieldName: PropTypes.string
 };
+
+DtoMultipleInput.defaultProps = {
+  disabledFields: []
+}
 
 export default DtoMultipleInput;
