@@ -36,7 +36,6 @@ function TemplateSummaryPanel({templateData, setTemplateData}) {
         console.log(err.message);
       }
     }
-
   };
 
   const handleBackButton = () => {

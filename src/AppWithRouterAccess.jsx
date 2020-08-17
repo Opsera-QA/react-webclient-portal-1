@@ -32,7 +32,6 @@ import SystemStatus from "./components/admin/status/SystemStatus";
 import CustomerSystemStatus from "./components/admin/status/CustomerSystemStatus";
 import Overview from "./components/landing/Overview";
 import Registration from "./components/landing/Registration";
-import ToolConfigurations from "./components/admin/tools/ToolConfigurations";
 import TagEditor from "./components/admin/tags/TagManagement";
 import TemplateManagement from "./components/admin/template_editor/TemplateManagement";
 import OPBlueprintMain from "./components/blueprint/blueprint";
@@ -52,8 +51,10 @@ import LdapGroupManagement from "./components/accounts/ldap_groups/LdapGroupMana
 import LdapGroupDetailView from "./components/accounts/ldap_groups/ldap_group_detail/LdapGroupDetailView";
 import ToolDetailView from "./components/inventory/tools/tool_details/ToolDetailView";
 import TemplateDetailView from "./components/admin/template_editor/template_detail_view/TemplateDetailView";
-
-
+import ToolManagement from "./components/admin/tools/ToolManagement";
+import ToolTypeDetailView from "./components/admin/tools/tool_type/tool_type_detail_view/ToolTypeDetailView";
+import ToolIdentifierDetailView
+  from "./components/admin/tools/tool_identifier/tool_identifier_detail_view/ToolIdentifierDetailView";
 import Axios from "axios";
 const config = require("./config");
 
@@ -188,7 +189,9 @@ const AppWithRouterAccess = () => {
                 <SecureRoute path="/admin/systemstatus" component={SystemStatus}/>
                 <SecureRoute path="/admin/customerstatus" component={CustomerSystemStatus}/>
                 <SecureRoute path="/admin/analytics/reports-registration" component={ReportsRegistration}/>
-                <SecureRoute path="/admin/tool-configurations" component={ToolConfigurations}/>
+                <SecureRoute path="/admin/tools/:tabKey?" exact component={ToolManagement}/>
+                <SecureRoute path="/admin/tools/types/details/:toolTypeId" exact component={ToolTypeDetailView}/>
+                <SecureRoute path="/admin/tools/identifiers/details/:toolIdentifierId" exact component={ToolIdentifierDetailView}/>
                 <SecureRoute path="/admin/tags" exact component={TagEditor}/>
                 <SecureRoute path="/admin/tags/:id" exact component={TagDetailView}/>
                 <SecureRoute path="/admin/templates" exact component={TemplateManagement}/>

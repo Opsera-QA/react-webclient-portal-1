@@ -1,20 +1,26 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "./table";
+import {getTableBooleanIconColumn, getTableTextColumn, getValueColumn} from "./table-column-helpers";
+
+const fields = {
+  name: {
+    label: "Name",
+    id: "name"
+  },
+  value: {
+    label: "Value",
+    id: "value"
+  }
+}
 
 // Note: I only made this because we have a lot of areas where we need to use the name/value tables so might as well reuse this.
-function NameValueTable({ tableStyleName, data, noDataMessage, label }) {
+function NameValueTable({ tableStyleName, data, noDataMessage, label, valueFormat }) {
 
   const columns = useMemo(
     () => [
-      {
-        Header: "Name",
-        accessor: "name",
-      },
-      {
-        Header: "Value",
-        accessor: "value",
-      },
+      getTableTextColumn(fields["name"]),
+      getValueColumn(fields["value"], valueFormat)
     ],
     []
   );
@@ -53,11 +59,13 @@ NameValueTable.propTypes = {
   tableStyleName: PropTypes.string,
   label: PropTypes.string,
   data: PropTypes.array,
-  noDataMessage: PropTypes.string
+  noDataMessage: PropTypes.string,
+  valueFormat: PropTypes.string
 };
 
 NameValueTable.defaultProps = {
-  tableStyleName: "custom-table-2"
+  tableStyleName: "custom-table-2",
+  valueFormat: "text"
 }
 
 export default NameValueTable;
