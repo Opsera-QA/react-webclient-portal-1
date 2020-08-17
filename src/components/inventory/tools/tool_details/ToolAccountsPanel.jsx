@@ -17,7 +17,7 @@ function ToolAccountsPanel({ toolData, loadData }) {
     <>
       <div className="text-muted p-2">
         <div className="h6">Opsera Managed Account Creation</div>
-        <div className="mb-3"><span>Add account credentials to support jobs right here. These settings can be entered once and reused across the Opsera platform.</span></div>
+        <div className="mb-3">Register account credentials in the tool for use in pipelines.</div>
         {toolData && getAccountPanel(toolData["tool_identifier"].toLowerCase(), loadData)}
       </div>
     </>

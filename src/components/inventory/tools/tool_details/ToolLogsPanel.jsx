@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect, useContext } from "react";
 import { Button, Modal, Row, Col } from "react-bootstrap";
-import PropTypes from "prop-types"; 
+import PropTypes from "prop-types";
 import { axiosApiService } from "api/apiService";
 import CustomTable from "components/common/table/table";
 import { faTimesCircle, faCheckCircle, faSearchPlus, faSpinner } from "@fortawesome/free-solid-svg-icons";
@@ -23,14 +23,14 @@ function ToolLogsPanel(props) {
     sortBy: [
       {
         id: "run_count",
-        desc: true
+        desc: true,
       },
       {
         id: "createdAt",
-        desc: true
-      }
-    ]
-  };  
+        desc: true,
+      },
+    ],
+  };
 
   const columns = useMemo(
     () => [
@@ -49,16 +49,26 @@ function ToolLogsPanel(props) {
       },
       {
         Header: "Tool",
-        accessor: "tool_identifier"
-      },      
+        accessor: "tool_identifier",
+      },
       {
         Header: "Status",
         accessor: "status",
         Cell: (props) => {
-          return props.value ? 
-            (props.value === "failure" || props.value === "failed") 
-              ? <><div style={{ display: "flex",  flexWrap: "nowrap" }}><div><FontAwesomeIcon icon={faTimesCircle} className="cell-icon red" /></div><div className="ml-1">{props.value}</div></div></>
-              : <><div style={{ display: "flex",  flexWrap: "nowrap" }}><div><FontAwesomeIcon icon={faCheckCircle} className="cell-icon green" /></div><div className="ml-1">{props.value}</div></div></>
+          return props.value ?
+            (props.value === "failure" || props.value === "failed")
+              ? <>
+                <div style={{ display: "flex", flexWrap: "nowrap" }}>
+                  <div><FontAwesomeIcon icon={faTimesCircle} className="cell-icon red"/></div>
+                  <div className="ml-1">{props.value}</div>
+                </div>
+              </>
+              : <>
+                <div style={{ display: "flex", flexWrap: "nowrap" }}>
+                  <div><FontAwesomeIcon icon={faCheckCircle} className="cell-icon green"/></div>
+                  <div className="ml-1">{props.value}</div>
+                </div>
+              </>
             : "unknown";
         },
       },
@@ -72,24 +82,26 @@ function ToolLogsPanel(props) {
         Cell: (props) => {
           return format(new Date(props.value), "yyyy-MM-dd', 'hh:mm a");
         },
-        class: "no-wrap-inline"
+        class: "no-wrap-inline",
       },
       {
         Header: "Info",
         accessor: "row",
         Cell: (props) => {
-          return props["row"]["values"].action !== "automation task" ? 
+          return props["row"]["values"].action !== "automation task" ?
             <FontAwesomeIcon icon={faSearchPlus}
-              style={{ cursor: "pointer" }}
-              onClick= {() => { selectRow(props, props.row, props.row["index"]); }} /> : null;
-        }
+                             style={{ cursor: "pointer" }}
+                             onClick={() => {
+                               selectRow(props, props.row, props.row["index"]);
+                             }}/> : null;
+        },
       },
     ],
-    []
-  );  
+    [],
+  );
 
   // Executed every time page number or page size changes
-  useEffect(() => {    
+  useEffect(() => {
     getToolLog();
   }, [currentPage, pageSize]);
 
@@ -99,8 +111,7 @@ function ToolLogsPanel(props) {
       const tool_logs = await axiosApiService(accessToken).get(apiUrl, {});
       setLogCount(tool_logs.data.count);
       setLogData(tool_logs.data.data);
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err.message);
     }
   };
@@ -119,7 +130,7 @@ function ToolLogsPanel(props) {
       pageSize: pageSize,
       totalCount: logCount,
       currentPage: currentPage,
-      gotoPageFn: gotoPage
+      gotoPageFn: gotoPage,
     };
   };
 
@@ -130,6 +141,12 @@ function ToolLogsPanel(props) {
 
   return (
     <>
+      <div className="text-muted p-2">
+        <div className="h6">Tool Management Logs</div>
+        <div className="mb-3">View log activity for actions performed by Opsera against this tool. This includes
+          creation or deletion of jobs as well as registering accounts.
+        </div>
+      </div>
       <div className="table-content-block">
         <CustomTable
           columns={columns}
@@ -162,7 +179,7 @@ function ToolLogsPanel(props) {
 ToolLogsPanel.propTypes = {
   toolId: PropTypes.string,
   toolData: PropTypes.object,
-  accessToken: PropTypes.string
+  accessToken: PropTypes.string,
 };
 
 
