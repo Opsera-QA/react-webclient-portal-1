@@ -21,6 +21,7 @@ const INITIAL_COMPONENT_TYPES_FORM = {
   "stepId": "", //assume for now it's the first
   "nameSpacePrefix": "", // prefix
   "objectType": "", // type of objs managed custom or all
+  "retrieveFilesFromSFDC": "",
   "componentTypes": []
 };
 
@@ -37,6 +38,7 @@ const SfdcPipelineComponents = ({ pipelineId, stepId, setView, setModifiedFiles,
   const [error, setError] = useState(false); 
   const [configurationError, setConfigurationError] = useState(false); 
   const [save, setSave] = useState(false);
+  const [fromSFDC, setFromSFDC] = useState(false);
   
   //const [registryData, setRegistryData] = useState([]);
   const [componentTypes, setComponentTypes] = useState([]);
@@ -94,9 +96,9 @@ const SfdcPipelineComponents = ({ pipelineId, stepId, setView, setModifiedFiles,
 
   const dateAsOf = (
     <DateTimePicker
-      time={false} 
+      time={true} 
       max={new Date()}
-      defaultValue={new Date()} 
+      defaultValue={new Date(new Date().setHours(0,0,0,0))} 
       onChange={value => handleAsOfDateChange({ value })}
       initialValue={new Date()}
     />
@@ -126,6 +128,7 @@ const SfdcPipelineComponents = ({ pipelineId, stepId, setView, setModifiedFiles,
     postBody.componentTypes = selectedComponentTypes;
     postBody.objectType = filtered[0];
     postBody.nameSpacePrefix = nameSpacePrefix;
+    postBody.retrieveFilesFromSFDC = fromSFDC;
     
     console.log("componentTypeForm: ", postBody);
     postComponentTypes(postBody);
@@ -186,7 +189,7 @@ const SfdcPipelineComponents = ({ pipelineId, stepId, setView, setModifiedFiles,
           <>
             <div className="mx-3 mt-3">        
               <div className="mb-3 align-items-end" style={{ display: "flex" }}>
-                <div className="px-2" style={{ flex: "50%" }}>
+                <div className="px-2" style={{ flex: "70%" }}>
                   <div className="text-muted pl-1 pb-1">Select Date Filter:</div>
                   {dateAsOf}</div>
 
@@ -253,6 +256,23 @@ const SfdcPipelineComponents = ({ pipelineId, stepId, setView, setModifiedFiles,
                       <Form.Control maxLength="50" type="text" placeholder="" value={nameSpacePrefix || ""} onChange={e => setNameSpacePrefix(e.target.value)} />
                     </Form.Group>
                   </div>
+
+                 {nameSpacePrefix && nameSpacePrefix.length > 0 &&
+                  <div className="px-2">
+                  <Form.Group controlId="formBasicCheckbox3" className="ml-1">
+                    <Form.Check
+                      type="checkbox"
+                      label="Retrieve from SFDC"
+                      name="fromSFDC"
+                      checked={fromSFDC ? fromSFDC : false}
+                      onChange={(e) => 
+                        setFromSFDC(e.target.checked)
+                      }
+                    />  
+                  </Form.Group>
+                  </div>
+                 }
+                 
                  
                 <div className="px-2 text-right" style={{ flex: "50%" }}>
                   {/* <div className="text-muted pl-1 pb-1">Select SalesForce Account (configured in Registry):</div>

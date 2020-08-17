@@ -83,9 +83,6 @@ function CypressStepConfiguration({
   const [isBranchSearching, setIsBranchSearching] = useState(false);
   const [listOfSteps, setListOfSteps] = useState([]);
 
-  const [cypressList, setCypressList] = useState([]);
-  const [isCypressSearching, setIsCypressSearching] = useState(false);
-
   const [accountsList, setAccountsList] = useState([]);
   const [jobsList, setJobsList] = useState([]);
   const [thresholdVal, setThresholdValue] = useState("");
