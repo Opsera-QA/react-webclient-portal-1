@@ -51,6 +51,7 @@ const SfdcPipelineWizard = ({ pipelineId, pipeline, handlePipelineWizardRequest,
         lastCommitTimeStamp: sfdcComponentFilterObject.lastCommitTimeStamp,
         componentTypes: JSON.stringify(sfdcComponentFilterObject.componentTypes),
         objectType: sfdcComponentFilterObject.objectType,
+        retrieveFilesFromSFDC: sfdcComponentFilterObject.retrieveFilesFromSFDC,
         nameSpacePrefix: sfdcComponentFilterObject.nameSpacePrefix
       }
     };
