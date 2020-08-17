@@ -14,6 +14,7 @@ import {
   faTags,
   faStream,
   faUsers,
+  faFileInvoice
 } from "@fortawesome/free-solid-svg-icons";
 import AccessDeniedDialog from "../common/accessDeniedInfo";
 import LoadingDialog from "../common/loading";
@@ -88,6 +89,12 @@ function AdminTools(props) {
               <Col xs={12} md={6} lg={4} className="p-2">
                 <Link to={!featureFlagItemInProd() ? "/admin/tags" : "#"}><FontAwesomeIcon icon={faTags}
                                                                                            fixedWidth/> Tags</Link>
+              </Col>
+              <Col xs={12} md={6} lg={4} className="p-2">
+                <Link to={!featureFlagItemInProd() ? "/admin/kpis" : "#"}><FontAwesomeIcon icon={faFileInvoice} fixedWidth/> KPI</Link>
+              </Col>              
+              <Col xs={12} md={6} lg={4} className="p-2">
+                <Link to="/admin/template-editor"><FontAwesomeIcon icon={faStream} fixedWidth/> Pipeline Templates Editor</Link>
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
                 <Link to="/admin/templates"><FontAwesomeIcon icon={faStream} fixedWidth/> Pipeline Templates Editor</Link>

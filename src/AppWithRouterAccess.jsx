@@ -33,6 +33,9 @@ import CustomerSystemStatus from "./components/admin/status/CustomerSystemStatus
 import Overview from "./components/landing/Overview";
 import Registration from "./components/landing/Registration";
 import TagEditor from "./components/admin/tags/TagManagement";
+import TagDetailView from "./components/admin/tags/tags_detail_view/TagDetailView";
+import KpiEditor from "./components/admin/kpi_editor/KpiEditor";
+import KpiDetailView from "./components/admin/kpi_editor/kpi_detail_view/KpiDetailView";
 import TemplateManagement from "./components/admin/template_editor/TemplateManagement";
 import OPBlueprintMain from "./components/blueprint/blueprint";
 import LdapDashboard from "./components/accounts/LdapDashboard";
@@ -43,7 +46,6 @@ import LdapCustomerOnboardView from "./components/accounts/ldap_customer_onboard
 import FreeTrialRegistration from "./components/free_trial/Registration";
 import ApiConnectionDemo from "./components/api_connector/ApiDemo";
 import CommonTableDemo from "./components/common/samples/tableImplementation";
-import TagDetailView from "./components/admin/tags/tags_detail_view/TagDetailView";
 import LdapUserManagement from "./components/accounts/ldap_users/LdapUserManagement";
 import LdapUserDetailView from "./components/accounts/ldap_users/users_detail_view/LdapUserDetailView";
 import AccountSettingsView from "./components/user/AccountSettings";
@@ -194,6 +196,8 @@ const AppWithRouterAccess = () => {
                 <SecureRoute path="/admin/tools/identifiers/details/:toolIdentifierId" exact component={ToolIdentifierDetailView}/>
                 <SecureRoute path="/admin/tags" exact component={TagEditor}/>
                 <SecureRoute path="/admin/tags/:id" exact component={TagDetailView}/>
+                <SecureRoute path="/admin/kpis" exact component={KpiEditor}/> 
+                <SecureRoute path="/admin/kpis/:id" exact component={KpiDetailView}/>                 
                 <SecureRoute path="/admin/templates" exact component={TemplateManagement}/>
                 <SecureRoute path="/admin/templates/details/:templateId" exact component={TemplateDetailView}/>
 
