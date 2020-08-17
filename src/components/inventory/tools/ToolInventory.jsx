@@ -69,7 +69,7 @@ function ToolInventory () {
   } else {
     return (
       <>
-        <div className="tabbed-content-block">
+        <div className="content-block-top">
           {errors && <div className="error-text">Error Reported: {errors}</div>}
           {toolRegistryList && <ToolsTable filterOptionList={filterOptionList} data={toolRegistryList}/>}
         </div>

@@ -2,11 +2,11 @@ import React from "react";
 import { Tab, Tabs } from "react-bootstrap";
 import PlatformInventory from "./platform/platformInventory";
 import ToolInventory from "./tools/ToolInventory";
-import { useHistory } from "react-router-dom";
+//import { useHistory } from "react-router-dom";
 import BreadcrumbTrail from "../common/navigation/breadcrumbTrail";
 
 function Inventory () {
-  const history = useHistory();
+//  const history = useHistory();
 
   return (
     <div className="max-content-width">
@@ -18,7 +18,7 @@ function Inventory () {
           <Tab eventKey="tools" title="Tools">
             <ToolInventory />
           </Tab>
-          <Tab eventKey="platform" title="Platform" onClick={() => { history.push("/inventory");}}>
+          <Tab eventKey="platform" title="Platform">
             <PlatformInventory />
           </Tab>        
         </Tabs>

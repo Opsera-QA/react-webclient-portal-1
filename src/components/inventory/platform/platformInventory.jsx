@@ -66,7 +66,7 @@ function PlatformInventory () {
     return (<ErrorDialog error={error} />);
   } else {
     return (
-      <div className="tabbed-content-block px-2 pt-3 pb-4">
+      <div className="content-block-top px-2 pt-3 pb-4">
         {!loading && data && data.length === 0 ? 
           <>
             <div className="mt-3 max-content-module-width-50">
