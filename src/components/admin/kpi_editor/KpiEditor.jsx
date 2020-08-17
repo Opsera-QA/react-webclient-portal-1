@@ -14,8 +14,8 @@ import AccessDeniedDialog from "components/common/accessDeniedInfo";
 function KpiEditor() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState({});
-  const [ pageLoading, setPageLoading ] = useState(true);
-  const [ KpiList, setKpiList ] = useState([]);
+  const [pageLoading, setPageLoading] = useState(true);
+  const [KpiList, setKpiList] = useState([]);
   const [showTagModal, setShowTagModal] = useState(false);
 
   useEffect(() => {
@@ -24,11 +24,10 @@ function KpiEditor() {
   }, []);
 
   const getTags = async () => {
-    setPageLoading(true)
+    setPageLoading(true);
     const response = await KpiActions.getKpis(getAccessToken);
-    console.log(response.data)
     setKpiList(response.data);
-    setPageLoading(false)
+    setPageLoading(false);
   };
 
   const getRoles = async () => {
@@ -42,7 +41,7 @@ function KpiEditor() {
   const onModalClose = () => {
     getTags();
     setShowTagModal(false);
-  };  
+  };
 
   const createTag = () => {
     setShowTagModal(true);
@@ -51,11 +50,11 @@ function KpiEditor() {
   if (!accessRoleData || pageLoading) {
     return (<LoadingDialog size="sm"/>);
   } else if (!accessRoleData.OpseraAdministrator || !accessRoleData.Administrator) {
-    return (<AccessDeniedDialog roleData={accessRoleData} />);
+    return (<AccessDeniedDialog roleData={accessRoleData}/>);
   } else {
 
     return (
-      <div>
+      <div className="max-content-width">
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
             <li className="breadcrumb-item">
@@ -64,26 +63,26 @@ function KpiEditor() {
             <li className="breadcrumb-item active">KPI Editor</li>
           </ol>
         </nav>
-          <div className="justify-content-between mb-1 d-flex">
-            <h5>KPI Management</h5>
-            <div className="text-right">
-              <Button variant="primary" size="sm"
-                      onClick={() => {
-                        createTag();
-                      }}>
-                <FontAwesomeIcon icon={faPlus} className="mr-1"/>New KPI
-              </Button>
-              <br/>
-            </div>
-          </div>
 
-          <div className="full-height">
-            {KpiList && <KpiTable data={KpiList}/>}
-          </div>
+        <h5>KPI Management</h5>
+        <div className="text-muted">Listed below are registered charts for the Analytics platform. Each chart or KPI
+          corresponds to a data point in the analytics platform.
+        </div>
+        <div className="text-right mb-1">
+          <Button variant="primary" size="sm"
+                  onClick={() => {
+                    createTag();
+                  }}>
+            <FontAwesomeIcon icon={faPlus} className="mr-1"/>New KPI
+          </Button>
+        </div>
+        <div className="full-height">
+          {KpiList && <KpiTable data={KpiList}/>}
+        </div>
 
-          {showTagModal ? <NewKpiModal
-            showModal={showTagModal}
-            onModalClose={onModalClose}/> : null}
+        {showTagModal ? <NewKpiModal
+          showModal={showTagModal}
+          onModalClose={onModalClose}/> : null}
 
       </div>
     );

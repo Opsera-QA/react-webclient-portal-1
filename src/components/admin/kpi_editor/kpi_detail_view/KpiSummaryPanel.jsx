@@ -74,42 +74,34 @@ function KpiSummaryPanel({ kpiData, fields, setKpiData } ) {
         <div className="scroll-y pt-3 px-3">
 
           <div className="mb-3 flat-top-content-block p-3">
-            <div className="mb-2 text-muted">
+            {/*<div className="mb-2 text-muted">
               <OverlayTrigger
                 placement="top"
                 delay={{ show: 250, hide: 400 }}
                 overlay={renderTooltip({ message: "Delete this KPI" })} >
                 <FontAwesomeIcon icon={faTrash} className="delete-icon pointer red float-right ml-3" onClick={() => {handleDeleteClick(kpiData);}}/></OverlayTrigger>
-              {/*TODO: Implement and add confirmation Modal?*/}
-              {/*<OverlayTrigger*/}
-              {/*  placement="top"*/}
-              {/*  delay={{ show: 250, hide: 400 }}*/}
-              {/*  overlay={renderTooltip({ message: "Duplicate this tag configuration" })} >*/}
-              {/*  <FontAwesomeIcon icon={faCopy} className="pointer float-right ml-3" onClick={() => {duplicateTag(kpiData);}}/></OverlayTrigger>*/}
             </div>
 
             <div className="pt-1"><hr/></div>
-
+*/}
             <Row>
-              <Col>
-                <TextField label="KPI ID" value={kpiData._id} />
-              </Col>
-              <Col>
+              <Col md={4}>
                 <TextField label="Name" value={kpiData.name} />
               </Col>
-              <Col>
+              <Col md={4}>
+                <TextField label="KPI ID" value={kpiData._id} />
+              </Col>
+              <Col md={4}>
                 <DateField label="Created" value={kpiData.createdAt} />
               </Col>
-            </Row>
-            <Row>
-              <Col>
-               <TextField label="Description" value={kpiData.description} />
-              </Col>
-              <Col>
+              <Col md={4}>
                 <TextField label="Tool Identifier" value={kpiData.tool_identifier.map((data) => { return <Button className="mr-2" variant="primary" size="sm">{capitalizeFirstLetter(data)}</Button> })} />
               </Col>
-              <Col>
+              <Col md={4}>
                 <TextField label="State" value={kpiData.active ? "Active" : "Disabled"} />
+              </Col>
+              <Col md={12}>
+                <TextField label="Description" value={kpiData.description} />
               </Col>
             </Row>
           </div>

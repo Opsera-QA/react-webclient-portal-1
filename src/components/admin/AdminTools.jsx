@@ -91,7 +91,7 @@ function AdminTools(props) {
                                                                                            fixedWidth/> Tags</Link>
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to={!featureFlagItemInProd() ? "/admin/kpis" : "#"}><FontAwesomeIcon icon={faFileInvoice} fixedWidth/> KPI</Link>
+                <Link to={!featureFlagItemInProd() ? "/admin/kpis" : "#"}><FontAwesomeIcon icon={faFileInvoice} fixedWidth/> KPI Management</Link>
               </Col>              
               <Col xs={12} md={6} lg={4} className="p-2">
                 <Link to="/admin/template-editor"><FontAwesomeIcon icon={faStream} fixedWidth/> Pipeline Templates Editor</Link>
