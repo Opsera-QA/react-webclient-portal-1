@@ -9,24 +9,20 @@ import DtoTextField from "../../../../common/form_fields/dto_form_fields/dto-tex
 import DtoToggleField from "../../../../common/form_fields/dto_form_fields/dto-toggle-field";
 import LdapIdpAccountSummaryPanel from "../idp_accounts/LdapIdpAccountSummaryPanel";
 import LdapIdpAccountEditorPanel from "../idp_accounts/LdapIdpAccountEditorPanel";
+import DtoItemField from "../../../../common/form_fields/dto_form_fields/dto-item-field";
+import TooltipWrapper from "../../../../common/tooltip/tooltipWrapper";
 
-function LdapOrganizationAccountSummaryPanel({ldapOrganizationAccountData, ldapIdpAccountData, setShowEditorPanel, handleBackButton}) {
+function LdapOrganizationAccountSummaryPanel({ldapOrganizationAccountData, ldapIdpAccountData, setLdapIdpAccountData, setShowEditorPanel, handleBackButton}) {
   const [showIdpEditPanel, setShowIdpEditPanel] = useState(false);
   return (
     ldapOrganizationAccountData &&
     <>
       <div className="mb-2 text-muted">
-        {/*TODO: Implement overlay*/}
-        {/*<OverlayTrigger*/}
-        {/*  placement="top"*/}
-        {/*  delay={{ show: 250, hide: 400 }}*/}
-        {/*  // overlay={renderTooltip({ message: "Edit this account" })}*/}
-        {/*>*/}
-        <FontAwesomeIcon icon={faCogs} className="pointer float-right ml-3" onClick={() => {
-          setShowEditorPanel(true);
-        }}/>
-        {/*</OverlayTrigger>*/}
-        {console.log("ldapOrganizationAccountData: " + JSON.stringify(ldapOrganizationAccountData))}
+        <TooltipWrapper innerText={"Edit this Account"}>
+          <FontAwesomeIcon icon={faCogs} className="pointer float-right ml-3" onClick={() => {
+            setShowEditorPanel(true);
+          }}/>
+        </TooltipWrapper>
         <div className="pt-1">
           <hr/>
         </div>
@@ -54,8 +50,7 @@ function LdapOrganizationAccountSummaryPanel({ldapOrganizationAccountData, ldapI
           <DtoTextField dataObject={ldapOrganizationAccountData} fieldName={"idpPostURL"} />
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={ldapOrganizationAccountData} fieldName={"idpReturnAttributes"} />
-          {/*TODO: Find better way to show these*/}
+          <DtoItemField dataObject={ldapOrganizationAccountData} fieldName={"idpReturnAttributes"} />
         </Col>
         <Col lg={6}>
           <DtoTextField dataObject={ldapOrganizationAccountData} fieldName={"configEntryType"} />
@@ -99,8 +94,8 @@ function LdapOrganizationAccountSummaryPanel({ldapOrganizationAccountData, ldapI
             </div>
             <div>
               {showIdpEditPanel || ldapIdpAccountData.isNew()
-                ? <LdapIdpAccountEditorPanel ldapOrganizationAccountData={ldapOrganizationAccountData} ldapIdpAccountData={ldapIdpAccountData} />
-                : <LdapIdpAccountSummaryPanel ldapIdpAccountData={ldapIdpAccountData} />
+                ? <LdapIdpAccountEditorPanel setLdapIdpAccountData={setLdapIdpAccountData} setShowIdpEditPanel={setShowIdpEditPanel} ldapOrganizationAccountData={ldapOrganizationAccountData} ldapIdpAccountData={ldapIdpAccountData} />
+                : <LdapIdpAccountSummaryPanel ldapIdpAccountData={ldapIdpAccountData} setShowIdpEditPanel={setShowIdpEditPanel} />
               }
             </div>
             <div className="content-block-footer" />
@@ -118,6 +113,7 @@ function LdapOrganizationAccountSummaryPanel({ldapOrganizationAccountData, ldapI
 
 LdapOrganizationAccountSummaryPanel.propTypes = {
   ldapOrganizationAccountData: PropTypes.object,
+  setLdapIdpAccountData: PropTypes.func,
   ldapIdpAccountData: PropTypes.object,
   setShowEditorPanel: PropTypes.func,
   handleBackButton: PropTypes.func

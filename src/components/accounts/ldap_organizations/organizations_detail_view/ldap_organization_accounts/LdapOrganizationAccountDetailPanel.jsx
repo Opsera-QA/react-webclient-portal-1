@@ -9,7 +9,7 @@ import LdapOrganizationAccountEditorPanel from "./LdapOrganizationAccountEditorP
 import NewLdapAccountModal from "./NewLdapAccountModal";
 import {ldapOrganizationAccountMetaData} from "../../ldap-organization-account-form-fields";
 import Model from "../../../../../core/data_model/model";
-import {ldapIdpAccountsMetaData} from "../idp_accounts/ldap-idp-account-form-fields";
+import {ldapIdpAccountsMetaData} from "../idp_accounts/ldap-idp-account-metadata";
 
 const INITIAL_IDP_ACCOUNT_DATA = {
   name: "",
@@ -60,7 +60,7 @@ function LdapOrganizationAccountDetailPanel({ldapOrganizationData, ldapOrganizat
           <Col>
               {currentAccount != null
                 ? showEditPanel ? <LdapOrganizationAccountEditorPanel setLdapOrganizationAccountData={setCurrentAccount} handleBackButton={handleBackButton} setShowEditPanel={setShowEditPanel} ldapOrganizationAccountData={currentAccount} />
-                                : <LdapOrganizationAccountSummaryPanel ldapOrganizationAccountData={currentAccount} handleBackButton={handleBackButton} ldapIdpAccountData={ldapIdpAccountData} setShowEditorPanel={setShowEditPanel}/>
+                                : <LdapOrganizationAccountSummaryPanel ldapOrganizationAccountData={currentAccount} handleBackButton={handleBackButton} ldapIdpAccountData={ldapIdpAccountData} setLdapIdpAccountData={setLdapIdpAccountData} setShowEditorPanel={setShowEditPanel}/>
                 : <LdapOrganizationAccountsTable setShowCreateAccountModal={setShowCreateAccountModal} ldapOrganizationAccounts={ldapOrganizationAccounts} handleAccountClick={handleAccountClick} />}
           </Col>
         </Row>

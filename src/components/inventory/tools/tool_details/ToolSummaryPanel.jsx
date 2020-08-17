@@ -43,6 +43,7 @@ function ToolSummaryPanel({ toolData, setToolData }) {
         <div className="text-center pb-1"><span className="text-muted">{object}</span></div>
         <div className="table-content-block mb-3">
           <CustomTable
+            showHeaderText={false}
             columns={tableColumns}
             data={parseEmptyRows(data)}
             noDataMessage={"No " + object + " are assigned to this tool."}
