@@ -70,3 +70,17 @@ export const getCountColumnWithoutField = (header, accessor) => {
     class: "no-wrap-inline"
   };
 };
+
+export const getValueColumn = (field, valueFormat) => {
+  switch (valueFormat) {
+    case "boolean":
+      return getTableBooleanIconColumn(field);
+    case "date":
+      return getTableDateColumn(field);
+    case "count":
+      return getTableArrayCountColumn(field);
+    case "text":
+    default:
+      return getTableTextColumn(field);
+  }
+}

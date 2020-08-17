@@ -29,7 +29,6 @@ function TemplateDetailView() {
     }
   };
 
-  // TODO: Add handleBackButton, handleActiveToggle
   const getRoles = async () => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);

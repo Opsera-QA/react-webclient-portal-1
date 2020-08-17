@@ -1,12 +1,7 @@
 import React, { useState, useEffect, useContext, useMemo } from "react";
-import { Button } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext";
-import { axiosApiService } from "api/apiService";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faTimesCircle, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
 import TemplatesTable from "./TemplateTable";
-import TemplateModal from "./template_detail_view/TemplateEditorPanel";
 import LoadingDialog from "components/common/loading";
 import AccessDeniedDialog from "../../common/accessDeniedInfo";
 import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
@@ -31,8 +26,6 @@ function TemplateManagement() {
     }
   };
 
-
-  //ToolIdentifier
   const getTemplates = async () => {
     setPageLoading(true);
     try {

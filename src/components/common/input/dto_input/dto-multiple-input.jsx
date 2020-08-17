@@ -17,20 +17,7 @@ function DtoMultipleInput({dataObject, setDataObject, fieldName, fields}) {
 
   //We are computing the number of rows required based on the data from API
   const prePopulateData = () => {
-    let rows = [];
     let currentData = dataObject.getData(fieldName);
-    // console.log("fieldName: " + fieldName);
-    // console.log("CurrentData: " + JSON.stringify(currentData));
-    // if (currentData) {
-    //   Object.keys(currentData).map((data, index) => {
-    //     console.log("Data: " + data);
-    //     let row = {};
-    //     fields.map((field, key) => {
-    //       row[field] = data[index][field];
-    //     });
-    //     rows.push(row);
-    //   });
-    // }
     setRowList([
       ...currentData
     ]);

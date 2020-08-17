@@ -2,6 +2,9 @@
 const admin = "admin";
 const templateManagement = admin + "/templates"
 const templateDetailView = templateManagement + "/details/"
+const toolManagement = admin + "/tools"
+const toolTypeDetailView = toolManagement + "types/details/"
+const toolIdentifierDetailView = toolManagement + "identifiers/details/"
 
 // Ldap paths
 const ldapDashboard = "accounts"
@@ -26,6 +29,9 @@ const trails = {
   admin: {parent: undefined, destination: {name: "admin", path: admin, label: "Administration"}},
   templateManagement: {parent: "admin", destination: {name: "templateManagement", path: templateManagement, label: "Template Management"}},
   templateDetailView: {parent: "templateManagement", destination: {name: "templateDetailView", path: templateDetailView, label: "Template Details"}},
+  toolManagement: {parent: "admin", destination: {name: "toolManagement", path: toolManagement, label: "Tool Management"}},
+  toolTypeDetailView: {parent: "toolManagement", destination: {name: "toolTypeDetailView", path: toolTypeDetailView, label: "Tool Type Details"}},
+  toolIdentifierDetailView: {parent: "toolManagement", destination: {name: "toolIdentifierDetailView", path: toolIdentifierDetailView, label: "Tool Identifier Details"}},
 
   // LDAP Administration
   ldapDashboard: {parent: "admin", destination: {name: "ldapDashboard", path: ldapDashboard, label: "User and Account Management"}},

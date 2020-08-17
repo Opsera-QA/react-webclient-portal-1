@@ -79,7 +79,7 @@ function AdminTools(props) {
               </Col>
 
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/tool-configurations"><FontAwesomeIcon icon={faWrench} fixedWidth/> Tool
+                <Link to="/admin/tools"><FontAwesomeIcon icon={faWrench} fixedWidth/> Tool
                   Configurations</Link>
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
