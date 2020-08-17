@@ -21,7 +21,7 @@ function BreadcrumbTrail({destination}) {
 
   return (
     <>
-      <nav className="ml-2" aria-label="breadcrumb">
+      <nav aria-label="breadcrumb">
         {getBreadcrumbTrail(destination)}
       </nav>
     </>
