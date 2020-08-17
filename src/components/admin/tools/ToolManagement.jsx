@@ -72,7 +72,7 @@ function ToolManagement() {
         <div className="default-custom-tabs">
           <Tabs defaultActiveKey={tabKey != null && tabKey === "identifiers" ? tabKey : "types"} className="default-custom-tabs" id="uncontrolled-tab-example">
             <Tab eventKey="types" title="Tool Type">
-              <div className="tool-content-block p-3">
+              <div className="tabbed-content-block p-3">
                 <ToolTypeTable loadData={loadData} data={toolTypeList}/>
               </div>
             </Tab>

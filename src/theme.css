@@ -579,8 +579,8 @@ div.modal-footer {
 /* End Alternate Tab Styling */
 
 .tabbed-content-block {
-  border-radius: 0 5px 5px 5px;
-  border: 1px solid #d2d2d2;
+  /*border-radius: 0 5px 5px 5px;*/
+  border-top: 1px solid #d2d2d2;
   padding: 1em;
   color: #334152;
 }
