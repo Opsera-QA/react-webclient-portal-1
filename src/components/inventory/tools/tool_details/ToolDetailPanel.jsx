@@ -5,7 +5,7 @@ import Row from "react-bootstrap/Row";
 import PropTypes from "prop-types";
 import ToolJobsPanel from "./ToolJobsPanel";
 import ToolLogsPanel from "./ToolLogsPanel";
-import ToolTypeEditorPanel from "./ToolTypeEditorPanel";
+import ToolEditorPanel from "./ToolEditorPanel";
 import ToolConfigurationPanel from "./ToolConfigurationPanel";
 import ToolAccountsPanel from "./ToolAccountsPanel";
 
@@ -79,7 +79,7 @@ function ToolDetailsView({activeTab, toolData, setToolData, loadData}) {
       case "logs":
         return <ToolLogsPanel toolData={toolData} />;
       case "settings":
-        return <ToolTypeEditorPanel toolData={toolData} setToolData={setToolData} loadData={loadData} />;
+        return <ToolEditorPanel toolData={toolData} setToolData={setToolData} loadData={loadData} />;
       default:
         return null;
     }

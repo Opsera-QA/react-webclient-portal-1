@@ -23,7 +23,7 @@ export class Model {
       this.dataState = DataState.NEW;
     }
 
-    if (this.metaData != null) {
+    if (this.metaData != null && this.data && this.data instanceof Object) {
       // console.log("This.metadata: " + JSON.stringify(Object.keys(this.metaData.fields)));
       // this.id = this.metaData.idProperty;
       for (const field of this.metaData.fields) {

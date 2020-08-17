@@ -29,11 +29,12 @@ function DtoToggleInput({ fieldName, dataObject, setDataObject, disabled }) {
             <label>{field.label}{field.isRequired ?
               <span className="danger-red">*</span> : null}</label>
             <Form.Check
+              className="ml-auto"
               type="switch"
               id={field.id}
               checked={!!dataObject.getData(fieldName)}
               disabled={disabled}
-              label={!!dataObject.getData(fieldName) ? "Active" : "Inactive"}
+              label={dataObject.getData(fieldName) ? "Active" : "Inactive"}
               placeholder="Please select"
               onChange={() => {
                   validateAndSetData(field.id, !dataObject.getData(fieldName));

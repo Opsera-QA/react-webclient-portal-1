@@ -8,7 +8,7 @@ import {
 } from "../../common/table/table-column-helpers";
 import toolMetadata from "./tool-metadata";
 import {useHistory} from "react-router-dom";
-import NewToolTypeModal from "./NewToolTypeModal";
+import NewToolModal from "./NewToolModal";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
@@ -49,13 +49,13 @@ function ToolsTable({ data, filterOptionList }) {
 
   return (
     <>
-      {showCreateToolModal && <NewToolTypeModal onModalClose={setShowCreateToolModal} showModal={showCreateToolModal}/>}
+      {showCreateToolModal && <NewToolModal onModalClose={setShowCreateToolModal} showModal={showCreateToolModal}/>}
 
       <div className="custom-table-filter d-flex flex-row-reverse">
         <div className="my-1 text-right">
           <Button variant="primary" size="sm"
                   onClick={() => { createNewTool(); }}>
-            <FontAwesomeIcon icon={faPlus} className="mr-1"/> New Tool Type
+            <FontAwesomeIcon icon={faPlus} className="mr-1"/> New Tool
           </Button>
           <br />
         </div>

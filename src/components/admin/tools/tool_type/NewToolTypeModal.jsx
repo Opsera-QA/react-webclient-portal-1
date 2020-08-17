@@ -26,7 +26,7 @@ function NewToolTypeModal({ onModalClose, showModal } ) {
 
   return (
     <>
-      <CreateModal handleCancelModal={handleClose} objectType={"Template"} showModal={showModal} >
+      <CreateModal handleCancelModal={handleClose} objectType={"Tool Type"} showModal={showModal} >
         {toolTypeData && <ToolTypeEditorPanel setToolTypeData={setToolTypeData} handleClose={handleClose} toolTypeData={toolTypeData} />}
       </CreateModal>
     </>
