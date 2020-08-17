@@ -297,11 +297,11 @@ const SfdcPipelineComponents = ({ pipelineId, stepId, setView, setModifiedFiles,
             {save ? <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> :
               <FontAwesomeIcon icon={faStepForward} fixedWidth className="mr-1"/>}Next</Button>
 
-          <Button variant="outline-secondary" size="sm" className="ml-2"
+          {/*<Button variant="outline-secondary" size="sm" className="ml-2"
                   onClick={() => {
                     handleClose();
                   }}>
-            <FontAwesomeIcon icon={faTimes} fixedWidth className="mr-1"/>Cancel</Button>
+            <FontAwesomeIcon icon={faTimes} fixedWidth className="mr-1"/>Cancel</Button>*/}
 
         </div>
       </div>
