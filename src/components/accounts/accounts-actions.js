@@ -2,25 +2,6 @@ import { axiosApiService } from "../../api/apiService";
 
 const accountsActions = {};
 
-// TODO: Implement
-// accountsActions.deleteUser = async (userId, getAccessToken) => {
-//   const accessToken = await getAccessToken();
-//   const apiUrl = `/users/${userId}`;
-//   const response = await axiosApiService(accessToken).delete(apiUrl, {})
-//     .then((result) =>  {return result;})
-//     .catch(error => {return error;});
-//   return response;
-// };
-//
-// accountsActions.rollbackUser = async (userId, getAccessToken) => {
-//   const accessToken = await getAccessToken();
-//   const apiUrl = `/users/${userId}/reset/`;
-//   const response = await axiosApiService(accessToken).get(apiUrl)
-//     .then((result) =>  {return result;})
-//     .catch(error => {return { error };});
-//   return response;
-// };
-//
 accountsActions.updateUser = async (orgDomain, ldapUserDataDto, getAccessToken) => {
   const postBody = {
     domain: orgDomain,
@@ -60,8 +41,6 @@ accountsActions.createUser = async (ldapUserDataDto, getAccessToken) => {
   return response;
 };
 
-// TODO: Add ?hidden=true if needed
-// TODO: add manual options
 accountsActions.getUsers = async (getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = "/users/get-users?page=1&size=10000`;";
@@ -110,17 +89,6 @@ accountsActions.getUserByEmail = async (email, getAccessToken) => {
   return response;
 };
 
-// Not sure what to call this or what it's for
-// accountsActions.getUsers = async (getAccessToken) => {
-//   const accessToken = await getAccessToken();
-//   const apiUrl = "/users";
-//   const response = await axiosApiService(accessToken).get(apiUrl)
-//     .then((result) =>  {return result;})
-//     .catch(error => {return { error };});
-//   return response;
-// };
-
-// TODO: Modify if incorrect
 accountsActions.getUser = async (userId, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = `/users/${userId}`;
@@ -173,6 +141,25 @@ accountsActions.createIdpAccount = async (ldapIdpAccountDataDto, getAccessToken)
   const accessToken = await getAccessToken();
   const apiUrl = "/users/account/idp/create";
   const response = await axiosApiService(accessToken).post(apiUrl, postData)
+    .then((result) => {
+      return result;
+    })
+    .catch(error => {
+      return {
+        error
+      };
+    });
+  return response;
+};
+
+accountsActions.updateIdpAccount = async (ldapIdpAccountDataDto,ldapOrganizationAccountData, getAccessToken) => {
+  let postData = {
+    ...ldapIdpAccountDataDto.getPersistData(),
+    // domain: ldapOrganizationAccountData.getData("orgDomain")
+  }
+  const accessToken = await getAccessToken();
+  const apiUrl = "/users/account/idp/update";
+  const response = await axiosApiService(accessToken).put(apiUrl, postData)
     .then((result) => {
       return result;
     })

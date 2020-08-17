@@ -659,6 +659,22 @@ div.modal-footer {
 }
 /* End Sign Up Form Styling */
 
+/* Text Field Styling */
+.custom-text-field {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.custom-text-field label {
+    flex-basis: 33%;
+}
+
+.custom-text-field input {
+    flex-basis: 67%;
+    height: 30px;
+}
+/* End Text Field Styling */
+
 /* Text Input styling */
 .custom-text-input {
   display: flex;
