@@ -81,13 +81,12 @@ function OverviewLanding() {
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
     if (tabSelection === 0) {
-      loadPipelines();
-    } else if (tabSelection === 1) {
       loadPlatforms();
+    } else if (tabSelection === 1) {
+      loadPipelines();
     } else {
       loadRegistry();
     }
-
   };
 
   if (!accessRoleData) {
