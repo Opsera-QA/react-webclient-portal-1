@@ -659,7 +659,7 @@ div.modal-footer {
 /* End Sign Up Form Styling */
 
 /* Text Field Styling */
-.custom-text-field {
+/*.custom-text-field {
     display: flex;
     flex-wrap: wrap;
 }
@@ -671,10 +671,12 @@ div.modal-footer {
 .custom-text-field input {
     flex-basis: 67%;
     height: 30px;
-}
+}*/
 /* End Text Field Styling */
 
 /* Text Input styling */
+/*TODO: Please review all the custom-text classes below to see if they are still needed */
+/*
 .custom-text-input {
   display: flex;
   flex-wrap: wrap;
@@ -725,11 +727,11 @@ div.modal-footer {
   flex-basis: 100%;
   text-align: right;
   display: inline-block;
-}
+}*/
 /* End Text Input Styling */
 
 /* Mutliselect input styling */
-.custom-multiselect-input {
+/*.custom-multiselect-input {
     display: flex;
     flex-wrap: wrap;
 }
@@ -748,12 +750,12 @@ div.modal-footer {
     vertical-align: middle;
     height: .25em;
     margin-bottom: .25em;
-}
+}*/
 
 /* End Mutliselect input styling */
 
 /* Select Input styling */
-.custom-select-input {
+/*.custom-select-input {
   display: flex;
   flex-wrap: wrap;
   margin-bottom: 1rem;
@@ -781,13 +783,13 @@ div.modal-footer {
 .custom-select-input .invalid-feedback {
   flex-basis: 100%;
   text-align: right;
-}
+}*/
 /* End Input Styling */
 
 /* Multiple Item Text Input */
-.custom-item-input {
+/*.custom-item-input {
     flex-basis: 67%;
-}
+}*/
 /* End Multiple Item Text Input Styling */
 
 /* Content Block Styling */
