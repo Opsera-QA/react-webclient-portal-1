@@ -6,7 +6,7 @@ import { Row, Col, Badge } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import SummaryCountBlocksView from "../analytics/views/summaryCountBlocksView";
 import FreeTrialLandingView from "../free_trial/landing_page/Landing";
-import LoadingView from "../common/loading"
+import LoadingView from "../common/loading";
 import "./landing.css";
 
 function OverviewLanding() {
@@ -45,8 +45,8 @@ function OverviewLanding() {
       setStatsData(response.data);
 
       setSummaryStats([
-        { name: "My Pipelines", value: response.data.pipelines, footer: null, status: null },
         { name: "Platforms", value: response.data.applications, footer: null, status: null },
+        { name: "My Pipelines", value: response.data.pipelines, footer: null, status: null },
         { name: "Registered Tools", value: response.data.tools, footer: null, status: null },
       ]);
     } catch (err) {
@@ -57,6 +57,11 @@ function OverviewLanding() {
   const loadPlatforms = () => {
     // eslint-disable-next-line react/prop-types
     history.push("/platform");
+  };
+
+  const loadRegistry = () => {
+    // eslint-disable-next-line react/prop-types
+    history.push("/inventory/tools");
   };
 
   const loadPipelines = (id) => {
@@ -73,8 +78,20 @@ function OverviewLanding() {
     history.push("/analytics");
   };
 
+  const handleTabClick = (tabSelection) => e => {
+    e.preventDefault();
+    if (tabSelection === 0) {
+      loadPipelines();
+    } else if (tabSelection === 1) {
+      loadPlatforms();
+    } else {
+      loadRegistry();
+    }
+
+  };
+
   if (!accessRoleData) {
-    return (<LoadingView size="sm" />)
+    return (<LoadingView size="sm"/>);
   } else if (accessRoleData.Role === "free_trial") {
     return (<FreeTrialLandingView/>);
   } else {
@@ -83,18 +100,27 @@ function OverviewLanding() {
         <div className="mt-3 ml-5">
           <Row>
             <Col xl="12">
-              <div style={{ maxWidth: "1025px" }}>
-                <div className="h5 mb-3">Welcome back {userInfo && userInfo.name ? userInfo.name : null}!</div>
-
-                <div className="row mx-n2 mt-2" style={{ minWidth: "820px" }}>
-                  <div className="col-md h4 text-muted mb-4">Get started with OpsERA</div>
-
-                  <div className="col-md px-2">
-                    <SummaryCountBlocksView data={summaryStats} view="small"/>
-                  </div>
+              <div className="max-content-width">
+                <div className="alternate-tabs text-right">
+                  <ul className="nav nav-tabs mb-2">
+                    {
+                      summaryStats &&
+                      summaryStats.map(function(item, index) {
+                        return (<>
+                          <li className="nav-item">
+                            <a className={"nav-link"} href="#" onClick={handleTabClick(index)}>{item.name}: {item.value}</a>
+                          </li>
+                        </>);
+                      })
+                    }
+                  </ul>
                 </div>
 
-                <div className="row mx-n2 mt-3" style={{ minWidth: "820px" }}>
+                <div className="h4 text-muted mb-5">Welcome
+                  back {userInfo && userInfo.firstName ? userInfo.firstName : null}!
+                </div>
+
+                <div className="row mx-n2 mt-3">
                   <div className="col-md px-2 landing-content-module">
                     <img
                       alt="OpsERA"
@@ -132,7 +158,7 @@ function OverviewLanding() {
                     />
                   </div>
                 </div>
-                <div className="row mx-n2 mt-4" style={{ minWidth: "820px" }}>
+                <div className="row mx-n2 mt-4">
                   <div className="col-md px-2 landing-content-module">
                     <div className="h5">Platform</div>
                     <div className="text-muted pr-2">
