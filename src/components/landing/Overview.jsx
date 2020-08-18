@@ -105,11 +105,11 @@ function OverviewLanding() {
                     {
                       summaryStats &&
                       summaryStats.map(function(item, index) {
-                        return (<>
-                          <li className="nav-item">
+                        return (
+                          <li className="nav-item" key={index}>
                             <a className={"nav-link"} href="#" onClick={handleTabClick(index)}>{item.name}: {item.value}</a>
                           </li>
-                        </>);
+                        );
                       })
                     }
                   </ul>
