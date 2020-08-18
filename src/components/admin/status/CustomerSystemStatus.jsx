@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useContext } from "react";
+import React, { useReducer, useEffect, useContext, useState } from "react";
 import { Table, Row, Col } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthContext";
@@ -11,6 +11,8 @@ const Status = ({ color }) =>  <svg height="20" width="20"><circle cx="10" cy="1
 function CustomerSystemStatus() {
   
   const Auth = useContext(AuthContext);
+  const [accessRoleData, setAccessRoleData] = useState({});
+  const { getUserRecord, setAccessRoles } = Auth;
   let history = useHistory();
   
   const [state, setState] = useReducer(
@@ -20,25 +22,27 @@ function CustomerSystemStatus() {
     }
   );
 
-  useEffect(() => {
-    const { authenticated, getUserRecord } = Auth;
-    // function get the user data from okta and checks if the user is admin or not.
-    async function checkUserData() {
-      const userInfo = await getUserRecord();
-      setState({ authenticated: authenticated });
-      if (userInfo) {
-        setState({ administrator: userInfo.groups.includes("Admin") });
-      }
 
-      if (!userInfo.groups.includes("Admin")) {
-        //move out
-        history.push("/");
-      } else {
-        // add any api calls if needed
-      }
-    }
-    checkUserData();
+  useEffect(() => {
+    getRoles();
   }, []);
+
+
+  const getRoles = async () => {
+    const user = await getUserRecord();
+    const userRoleAccess = await setAccessRoles(user);
+
+    if (userRoleAccess) {
+      setAccessRoleData(userRoleAccess);
+    }
+
+    if (userRoleAccess.OpseraAdministrator) {
+      //await getStatus();  this will call funciton to load data..
+    } else {
+      history.push("/");
+    }
+  };
+
 
   return (
     <div className="mt-3 max-content-width">
