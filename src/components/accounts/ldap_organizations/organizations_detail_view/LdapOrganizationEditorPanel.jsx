@@ -115,7 +115,7 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganization
           {showToast && toast}
           <Row>
             <Col lg={12}>
-              <div className="custom-select-input">
+              <div className="p-2">
                 <label className="mt-0"><span>Opsera Customer Record<span className="danger-red">*</span></span></label>
                 <DropdownList
                   data={opseraUserList}
