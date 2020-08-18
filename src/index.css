@@ -157,6 +157,10 @@ a:hover, .active {
     max-width: 1450px; /* 1250px*/
 }
 
+.max-content-width-1080 {
+    max-width: 1080px;
+}
+
 .max-charting-width {
     max-width: 80vw;
 }
