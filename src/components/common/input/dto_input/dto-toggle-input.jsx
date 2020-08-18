@@ -25,7 +25,7 @@ function DtoToggleInput({ fieldName, dataObject, setDataObject, disabled }) {
         // TODO: Extract into regular inputs for easier maintenance/styling
         // TODO: Make custom-toggle-input css
         <>
-          <div className="form-group custom-text-input m-2">
+          <div className="form-group m-2">
             <label>{field.label}{field.isRequired ?
               <span className="danger-red">*</span> : null}</label>
             <Form.Check
