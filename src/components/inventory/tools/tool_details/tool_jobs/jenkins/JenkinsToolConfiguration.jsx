@@ -12,7 +12,7 @@ const INITIAL_DATA = {
   jPassword: "",
   proxyUserName: "",
   proxyPassword: "",
-  isProxyEnable: ""
+  proxyEnable: ""
 };
 
 function JenkinsToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVault }) {
@@ -77,8 +77,8 @@ function JenkinsToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVa
   };
 
   const validateRequiredFields = () => {
-    let { jenkinsUrl, jUserId, jAuthToken, isProxyEnable, jPassword, proxyUserName, proxyPassword } = formData;
-    if(isProxyEnable) {
+    let { jenkinsUrl, jUserId, jAuthToken, proxyEnable, jPassword, proxyUserName, proxyPassword } = formData;
+    if(proxyEnable) {
       if (jenkinsUrl.length === 0 || jUserId.length === 0 || jPassword.length === 0 || proxyPassword.length === 0 || proxyUserName.length === 0  ) {
         setFormMessage("Required Fields Missing!");
         return false;
@@ -116,7 +116,7 @@ console.log(formData)
         <Form.Control maxLength="50" type="text" placeholder="" value={formData.jUserId || ""} onChange={e => setFormData({ ...formData, jUserId: e.target.value })} />
       </Form.Group>
 
-      {!formData.isProxyEnable &&
+      {!formData.proxyEnable &&
       <Form.Group controlId="branchField">
         <Form.Label>Jenkins Token*</Form.Label>
         <Form.Control maxLength="500" type="password" placeholder="" value={formData.jAuthToken || ""} onChange={e => setFormData({ ...formData, jAuthToken: e.target.value })} />
@@ -127,17 +127,17 @@ console.log(formData)
         <Form.Check
           type="checkbox"
           label="is proxy enabled?"
-          name="isProxyEnable"
-          checked={formData.isProxyEnable ? formData.isProxyEnable : false}
+          name="proxyEnable"
+          checked={formData.proxyEnable ? formData.proxyEnable : false}
           onChange={(e) => 
             setFormData({
               ...formData,
-              isProxyEnable: e.target.checked
+              proxyEnable: e.target.checked
             })
           }
         />
       </Form.Group>   
-      {formData.isProxyEnable && 
+      {formData.proxyEnable && 
       <>
        <Form.Group controlId="branchField">
         <Form.Label>Proxy Username*</Form.Label>
