@@ -51,37 +51,39 @@ function ToolsTable({ data, filterOptionList }) {
     <>
       {showCreateToolModal && <NewToolModal onModalClose={setShowCreateToolModal} showModal={showCreateToolModal}/>}
 
-      <div className="custom-table-filter d-flex flex-row-reverse">
-        <div className="my-1 text-right">
-          <Button variant="primary" size="sm"
-                  onClick={() => { createNewTool(); }}>
-            <FontAwesomeIcon icon={faPlus} className="mr-1"/> New Tool
-          </Button>
-          <br />
+      <div className="p-2">
+        <div className="custom-table-filter d-flex flex-row-reverse">
+          <div className="mb-1 text-right">
+            <Button variant="primary" size="sm"
+                    onClick={() => { createNewTool(); }}>
+              <FontAwesomeIcon icon={faPlus} className="mr-1"/> New Tool
+            </Button>
+            <br />
+          </div>
+          <div className="tool-filter mr-2">
+            { filterOptionList && <DropdownList
+              busy={Object.keys(filterOptionList).length === 1}
+              disabled={Object.keys(filterOptionList).length === 1}
+              data={filterOptionList}
+              valueField='filterText'
+              textField='text'
+              filter="contains"
+              defaultValue={tableFilter}
+              onChange={updateFilterOption}
+            />}
+          </div>
         </div>
-        <div className="tool-filter mr-2 mt-1">
-          { filterOptionList && <DropdownList
-            busy={Object.keys(filterOptionList).length === 1}
-            disabled={Object.keys(filterOptionList).length === 1}
-            data={filterOptionList}
-            valueField='filterText'
-            textField='text'
-            filter="contains"
-            defaultValue={tableFilter}
-            onChange={updateFilterOption}
-          />}
+        <div className="table-content-block">
+          <CustomTable
+            columns={columns}
+            data={data}
+            onRowSelect={onRowSelect}
+            rowStyling={rowStyling}
+            tableFilter={tableFilter}
+            tableStyleName="custom-table-2"
+          >
+          </CustomTable>
         </div>
-      </div>
-      <div className="table-content-block">
-        <CustomTable
-          columns={columns}
-          data={data}
-          onRowSelect={onRowSelect}
-          rowStyling={rowStyling}
-          tableFilter={tableFilter}
-          tableStyleName="custom-table-2"
-        >
-        </CustomTable>
       </div>
     </>
   );

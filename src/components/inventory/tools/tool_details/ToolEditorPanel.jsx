@@ -133,13 +133,13 @@ function ToolEditorPanel({ toolData, setToolData, handleClose }) {
               <DtoTextInput setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"name"} />
             </Col>
             <Col lg={6}>
-              <DtoTextInput disabled={true} setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"compliance"} />
-            </Col>
-            <Col lg={6}>
               <DtoSelectInput setDataFunction={handleToolIdentifierChange} setDataObject={setToolDataDto} textField={"name"} valueField={"identifier"} dataObject={toolDataDto} groupBy={"tool_type_identifier"} selectOptions={toolList} fieldName={"tool_identifier"} />
             </Col>
-            <Col lg={6}>
+            <Col lg={12}>
               <DtoTextInput setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"description"} />
+            </Col>
+            <Col lg={6}>
+              <DtoTextInput disabled={true} setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"compliance"} />
             </Col>
             <Col lg={6}>
               <DtoMultipleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fields={["name", "value"]} fieldName={"location"} />
