@@ -6,7 +6,7 @@ const toolMetadata = {
       id: "_id",
     },
     {
-      label: "Configuration Name",
+      label: "Tool Name",
       id: "name",
       isRequired: true
     },

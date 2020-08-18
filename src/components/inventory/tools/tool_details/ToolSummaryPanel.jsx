@@ -19,57 +19,6 @@ function ToolSummaryPanel({ toolData, setToolData }) {
   const { getAccessToken } = useContext(AuthContext);
   const history = useHistory();
 
-  const contactsColumns = useMemo(
-    () => [
-      {
-        Header: "Name",
-        accessor: "name",
-      },
-      {
-        Header: "Email",
-        accessor: "email",
-      },
-      {
-        Header: "ID",
-        accessor: "user_id",
-      },
-    ],
-    []
-  );
-
-  const getTable = (data, tableColumns, object) => {
-    return (
-      <>
-        <div className="text-center pb-1"><span className="text-muted">{object}</span></div>
-        <div className="table-content-block mb-3">
-          <CustomTable
-            showHeaderText={false}
-            columns={tableColumns}
-            data={parseEmptyRows(data)}
-            noDataMessage={"No " + object + " are assigned to this tool."}
-            tableStyleName="custom-table-2"
-          >
-          </CustomTable>
-        </div>
-      </>
-    );
-  };
-
-  const parseEmptyRows = (data) => {
-    let parsedRows = [];
-
-    if (data && data.length > 0)
-    {
-      data.map((row, index) => {
-        if (row["name"] || row["value"]) {
-          parsedRows.push(row);
-        }
-      });
-    }
-
-    return parsedRows;
-  };
-
   const toggleToolType = async () => {
     if(toolData.isModelValid()) {
       try {
@@ -125,27 +74,6 @@ function ToolSummaryPanel({ toolData, setToolData }) {
             </Col>
             <Col lg={6}>
               <DtoItemField dataObject={toolData} fieldName={"tags"} />
-            </Col>
-            <Col lg={6}>
-              <NameValueTable data={toolData["licensing"]} label={toolData.getFieldById("licensing").label} />
-            </Col>
-            <Col lg={6}>
-              <NameValueTable data={toolData["compliance"]} label={toolData.getFieldById("compliance").label} />
-            </Col>
-            <Col lg={6}>
-              <NameValueTable data={toolData["location"]} label={toolData.getFieldById("location").label} />
-            </Col>
-            <Col lg={6}>
-              <NameValueTable data={toolData["projects"]} label={toolData.getFieldById("projects").label} />
-            </Col>
-            <Col lg={6}>
-              <NameValueTable data={toolData["applications"]} label={toolData.getFieldById("applications").label} />
-            </Col>
-            <Col lg={6}>
-              <NameValueTable data={toolData["organization"]} label={toolData.getFieldById("organization").label} />
-            </Col>
-            <Col lg={6}>
-              {getTable(toolData["contacts"], contactsColumns, "Contacts")}
             </Col>
           </Row>
         </div>

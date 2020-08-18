@@ -233,7 +233,6 @@ a.text-primary:hover, a.text-primary:focus {
 /* Table Style Changes */
 .custom-table-filter {
     font-size: .8em;
-    padding-bottom:1em;
 }
 
 .custom-table-filter .btn {
@@ -795,6 +794,11 @@ div.modal-footer {
 .content-block {
   border-radius: 5px;
   border: 1px solid #d2d2d2;
+}
+
+.content-block-collapse {
+    border-radius: 5px;
+    background-color: rgba(0,0,0,.05);
 }
 
 .content-block-top {

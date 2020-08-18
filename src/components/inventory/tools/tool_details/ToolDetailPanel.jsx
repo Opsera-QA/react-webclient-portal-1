@@ -8,9 +8,10 @@ import ToolLogsPanel from "./ToolLogsPanel";
 import ToolEditorPanel from "./ToolEditorPanel";
 import ToolConfigurationPanel from "./ToolConfigurationPanel";
 import ToolAccountsPanel from "./ToolAccountsPanel";
+import ToolAttributesPanel from "./ToolAttributesPanel";
 
 function ToolDetailPanel({ toolData, setToolData, loadData }) {
-  const [activeTab, setActiveTab] = useState("configuration");
+  const [activeTab, setActiveTab] = useState("attributes");
 
   const handleTabClick = (tabSelection) => e => {
     console.log(tabSelection);
@@ -28,6 +29,10 @@ function ToolDetailPanel({ toolData, setToolData, loadData }) {
             <div className="default-custom-tabs">
               <ul className="nav nav-tabs">
                 <li className="nav-item">
+                  <a className={"nav-link " + (activeTab === "attributes" ? "active" : "")} href="#"
+                     onClick={handleTabClick("attributes")}>Attributes</a>
+                </li>
+                <li className="nav-item">
                   <a className={"nav-link " + (activeTab === "configuration" ? "active" : "")} href="#"
                      onClick={handleTabClick("configuration")}>Configuration</a>
                 </li>
@@ -40,11 +45,11 @@ function ToolDetailPanel({ toolData, setToolData, loadData }) {
                      onClick={handleTabClick("accounts")}>Accounts</a>
                 </li>
                 <li className="nav-item">
-                  <a className={"nav-link " + (activeTab === "logs" ? "active" : "")}
+                  <a className={"nav-link " + (activeTab === "logs" ? "active" : "")} href="#"
                      onClick={handleTabClick("logs")}>Logs</a>
                 </li>
                 <li className="nav-item">
-                  <a className={"nav-link " + (activeTab === "settings" ? "active" : "")}
+                  <a className={"nav-link " + (activeTab === "settings" ? "active" : "")} href="#"
                      onClick={handleTabClick("settings")}>Settings</a>
                 </li>
               </ul>
@@ -68,8 +73,8 @@ function ToolDetailsView({activeTab, toolData, setToolData, loadData}) {
   }, [activeTab]);
   if (activeTab) {
     switch (activeTab) {
-      // case "membership":
-      //   return <ToolPropertiesForm type="edit" toolData={toolData} getToolRegistryItem={loadData} />
+      case "attributes":
+        return <ToolAttributesPanel toolData={toolData} />
       case "configuration":
         return <ToolConfigurationPanel toolData={toolData} loadData={loadData} />;
       case "jobs":

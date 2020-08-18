@@ -3,17 +3,9 @@ import PropTypes from "prop-types";
 import CustomTable from "components/common/table/table";
 import { format } from "date-fns";
 
-function PlatformToolsTable({ data, rowInfo }) {
-  const initialState = {
-    pageIndex: 0,
-    sortBy: [
-      {
-        id: "name",
-        desc: false
-      }
-    ]
-  };
+function PlatformToolsTable({ data }) {
 
+  // TODO: Pull from metadata
   const columns = useMemo(
     () => [
       {
@@ -56,12 +48,13 @@ function PlatformToolsTable({ data, rowInfo }) {
 
   return (
     <>
+      <div className="table-content-block">
       <CustomTable 
         columns={columns} 
         data={data}
-        initialState={initialState}
-      >
-      </CustomTable>
+        tableStyleName="custom-table-2"
+      />
+      </div>
     </>
   );
 }

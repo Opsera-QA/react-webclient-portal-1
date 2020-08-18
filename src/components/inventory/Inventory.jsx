@@ -1,12 +1,9 @@
 import React, { useState } from "react";
-import { Tab, Tabs } from "react-bootstrap";
 import PlatformInventory from "./platform/platformInventory";
 import ToolInventory from "./tools/ToolInventory";
-//import { useHistory } from "react-router-dom";
 import BreadcrumbTrail from "../common/navigation/breadcrumbTrail";
 
 function Inventory() {
-//  const history = useHistory();
   const [tabView, setTabView] = useState("tools");
 
   const handleTabClick = (tabSelection) => e => {
@@ -22,7 +19,7 @@ function Inventory() {
         one centralized inventory.</p>
 
       <div className="alternate-tabs">
-        <ul className="nav nav-tabs mb-2">
+        <ul className="nav nav-tabs">
           <li className="nav-item">
             <a className={"nav-link " + (tabView === "tools" ? "active" : "")} href="#" onClick={handleTabClick("tools")}>Tools</a>
           </li>
@@ -31,28 +28,10 @@ function Inventory() {
           </li>
         </ul>
       </div>
-
-      {tabView === "tools" &&
-      <>
-        <ToolInventory/>
-      </>}
-
-      {tabView === "platform" &&
-      <>
-        <PlatformInventory/>
-      </>}
-
-      {/*<div className="default-custom-tabs">
-        <Tabs defaultActiveKey="tools" id="tool-inventory-tabs">
-          <Tab eventKey="tools" title="Tools">
-            <ToolInventory />
-          </Tab>
-          <Tab eventKey="platform" title="Platform">
-            <PlatformInventory />
-          </Tab>        
-        </Tabs>
-      </div>*/}
-
+      <div className="content-block-collapse">
+        {tabView === "tools" && <><ToolInventory/></>}
+        {tabView === "platform" && <><PlatformInventory/></>}
+      </div>
     </div>
   );
 }

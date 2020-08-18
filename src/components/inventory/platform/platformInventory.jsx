@@ -66,17 +66,17 @@ function PlatformInventory () {
     return (<ErrorDialog error={error} />);
   } else {
     return (
-      <div className="content-block-top px-2 pt-3 pb-4">
+      <div className="h-50 p-2">
         {!loading && data && data.length === 0 ? 
           <>
-            <div className="mt-3 max-content-module-width-50">
+            <div className="mt-3">
               <Alert variant="secondary">
                 No applications are currently configured for the system.
               </Alert>
             </div>
           </>:
 
-          <div className="custom-table-filter d-flex mt-2 mb-3 mx-2">
+          <div className="custom-table-filter d-flex my-1 ml-2 mr-1">
             <span className="formLabel mt-1">Application: </span>
             {renderForm ?
               <DropdownList
@@ -93,10 +93,9 @@ function PlatformInventory () {
         <div>
           {key && Object.keys(key).length > 0 ? 
             <>
-              {Object.keys(key.tools).length > 0 ? 
-                <PlatformToolsTable data={key.tools}></PlatformToolsTable>
-                : 
-                <div className="max-content-module-width-50"><Alert variant="secondary">No tools are currently configured for this application.</Alert></div> }
+              {Object.keys(key.tools).length > 0
+                ? <PlatformToolsTable data={key.tools} />
+                : <div className="mt-2"><Alert variant="secondary">No tools are currently configured for this application.</Alert></div> }
             </>
             : null }
         </div>
