@@ -23,10 +23,10 @@ function DtoTextInput({fieldName, dataObject, setDataObject, disabled}) {
   return (
     <>
       {dataObject &&
-      <div className="form-group custom-text-input m-2">
+      <div className="form-group m-2">
         <label>{field.label}{field.isRequired ?
           <span className="danger-red">*</span> : null}</label>
-        <input disabled={disabled} defaultValue={dataObject.getData(fieldName)}
+        <input disabled={disabled} defaultValue={dataObject.getData(fieldName)} className="form-control"
                onChange={e => validateAndSetData(fieldName, e.target.value)}/>
         <div className="invalid-feedback">{errorMessage}</div>
         <small className="text-muted form-text">

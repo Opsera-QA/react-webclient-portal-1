@@ -20,7 +20,7 @@ function DtoSelectInput({ fieldName, dataObject, setDataObject, groupBy, selectO
   return (
     field &&
         <>
-          <div className="custom-select-input m-2">
+          <div className="m-2">
             <label><span>{field.label}{field.isRequired ? <span className="danger-red">*</span> : null } </span></label>
             <DropdownList
               data={selectOptions}
