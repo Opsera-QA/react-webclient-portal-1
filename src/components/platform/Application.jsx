@@ -6,6 +6,7 @@ import LogManagement from "./LogManagement";
 import RepositoryManagement from "./RepositoryManagement";
 import SAST from "./SAST";
 import Monitoring from "./Monitoring";
+import Kubernetes from "./Kubernetes";
 import InfoDialog from "components/common/info";
 import { NewAppContext } from "./context";
 import { ApiService } from "api/apiService";
@@ -14,11 +15,12 @@ import SuccessDialog from "components/common/success";
 import { handleError, isAlphaNumeric } from "utils/helpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWrench, faClipboardList } from "@fortawesome/free-solid-svg-icons";
-
+import { AuthContext } from "contexts/AuthContext";
 
 function Application(props) {
   const { data, saving, gotoInventory, token, user, reset, setAppDetails, appid, setState } = useContext(NewAppContext);
-
+  const { featureFlagItemInProd } = useContext(AuthContext);
+  const envIsProd = featureFlagItemInProd();
   const [dropdownData, setDropdownData] = useState([]);
   const [showEditTools, toggleEditTools] = useState(false);
   const [applicationDetails, setApplicationDetails] = useState({ data: {}, tools: [] });
@@ -299,6 +301,7 @@ function Application(props) {
                 <LogManagement app={applicationDetails.data} tools={applicationDetails.tools} />
                 <RepositoryManagement app={applicationDetails.data} tools={applicationDetails.tools} />
                 <Monitoring app={applicationDetails.data} tools={applicationDetails.tools} />
+                {!envIsProd && <Kubernetes app={applicationDetails.data} tools={applicationDetails.tools} />}                
               </CardColumns>
               <div className="text-right">
                 <Button variant="outline-primary" onClick={cancelTools} disabled={Object.keys(data).length == 0} className="m-2">
