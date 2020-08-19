@@ -189,7 +189,7 @@ function AnchoreStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
           {isCypressSearching ? (
             <div className="form-text text-muted mt-2 p-2">
               <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth />
-              Loading anchore accounts from registry
+              Loading Anchor accounts from registry
             </div>
           ) : (
             <>

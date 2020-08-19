@@ -25,6 +25,7 @@ import CypressStepConfiguration from "./cypress";
 import DockerPushStepConfiguration from "./docker-push";
 import ArgoCDStepConfiguration from "./argocd";
 import AnchoreStepConfiguration from "./anchore";
+import AnchoreIntegratorStepConfiguration from "./anchore-integrator";
 import SFDCStepConfiguration from "./sfdc";
 import ErrorDialog from "components/common/error";
 
@@ -350,6 +351,18 @@ function StepToolConfiguration({
           ) : null}
           {editItem.tool_name.toLowerCase() === "anchore-scan" ? (
             <AnchoreStepConfiguration
+              pipelineId={pipeline._id}
+              plan={pipeline.workflow.plan}
+              stepId={stepId}
+              stepTool={stepTool}
+              parentCallback={callbackFunction}
+              callbackSaveToVault={saveToVault}
+            />
+          ) : null}
+
+          {/*TODO: New Anchor step which is NOT setup yet.  This is related to OC-317/OC-391*/}
+          {editItem.tool_name.toLowerCase() === "anchore-integrator" ? (
+            <AnchoreIntegratorStepConfiguration
               pipelineId={pipeline._id}
               plan={pipeline.workflow.plan}
               stepId={stepId}
