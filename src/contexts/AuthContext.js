@@ -10,9 +10,6 @@ const AuthContextProvider = (props) => {
       clientId: ssoConfiguration.client_id,
       redirectUri: ssoConfiguration.redirect_uri,
     });
-    const { token, tokenManager } = authClient;
-    //console.log(authClient);
-    //console.log(ssoConfiguration);
 
     const logoutUserContext = () => {
       authClient.closeSession();
@@ -24,26 +21,30 @@ const AuthContextProvider = (props) => {
       window.location = "/overview";
     };
 
-    const renewUserToken = async () => {
+    const renewUserToken = () => {
       refetchUserData();
     };
 
     const getAccessToken = async () => {
-      const idToken = await token.getWithoutPrompt();
-      const { tokens } = idToken;
-      return tokens.accessToken.value;
+      if (!getIsAuthenticated) {
+        console.log("!getAccessToken");
+        renewUserToken();
+        return;
+      }
+      //const idToken = await token.getWithoutPrompt();
+      //const { tokens } = idToken;
+      //return tokens.accessToken.value;
+      const tokenObject = await authClient.tokenManager.get("accessToken");
+      if (!tokenObject) {
+        console.log("!tokenObject");
+        renewUserToken(); //todo: this may need to redirect to login?
+        return;
+      }
+      return tokenObject.accessToken;
     };
 
     const getIsAuthenticated = async () => {
       const session = await authClient.session.exists();
-
-      //const tokenProperties = await token.getWithoutPrompt();
-      //const {tokens} = tokenProperties;
-      //console.log(tokenProperties);
-
-      //const idToken = await tokenManager.get('idToken');
-      //console.log(authClient.tokenManager)
-
       return session;
     };
 
