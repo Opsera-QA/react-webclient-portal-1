@@ -61,6 +61,7 @@ const INITIAL_DATA = {
   gitUserName: "",
   repository: "",
   branch: "",
+  buildArgs: {},
 };
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
@@ -372,7 +373,6 @@ function JenkinsStepConfiguration({
       toolConfigId,
       jenkinsUrl,
       jUserId,
-      jAuthToken,
       jobName,
       buildType,
       dockerName,
@@ -393,8 +393,6 @@ function JenkinsStepConfiguration({
       toolConfigId.length === 0 ||
       jenkinsUrl.length === 0 ||
       jUserId.length === 0 ||
-      jAuthToken.length === 0 ||
-      // jobName.length === 0 ||
       (buildType === "docker"
         ? dockerName.length === 0 || dockerTagName.length === 0
         : false)
@@ -418,7 +416,7 @@ function JenkinsStepConfiguration({
         jenkinsUrl: selectedOption.configuration.jenkinsUrl,
         jUserId: selectedOption.configuration.jUserId,
         jenkinsPort: selectedOption.configuration.jenkinsPort,
-        jAuthToken: selectedOption.configuration.jAuthToken,
+        // jAuthToken: selectedOption.configuration.jAuthToken,
         gitToolId: "",
         repoId: "",
         gitUrl: "",
@@ -506,6 +504,7 @@ function JenkinsStepConfiguration({
         stepIdXML: "",
         sfdcDestToolId: "",
         destAccountUsername: "",
+        buildArgs: {},
       });
       break;
     default:
@@ -810,14 +809,6 @@ function JenkinsStepConfiguration({
           )}
         </Form.Group>
 
-        {/*{(!formData.toolConfigId && formData.jenkinsUrl) &&
-      <div className="form-text text-muted mb-3">
-        <FontAwesomeIcon icon={faExclamationTriangle} className="mr-1 yellow" fixedWidth/>
-        Unregistered Tool settings in use. The settings below can be used in this step, but cannot be updated. You
-        must register
-        a new Jenkins server in the
-        <Link to="/inventory/tools"> Tool Registry</Link> and add its configuration details. </div>}
-*/}
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Job Type*</Form.Label>
           {jobType !== undefined ? (
@@ -1157,6 +1148,23 @@ function JenkinsStepConfiguration({
             )}
           </Form.Group>
         ) : (
+          <></>
+        )}
+
+      {formData.jobType === "SFDC BACK UP" ? (
+          <Form.Group controlId="branchName">
+            <Form.Label>Rollback Branch Name*</Form.Label>
+              <Form.Control
+                maxLength="50"
+                type="text"
+                placeholder=""
+                value={formData.rollbackBranchName || ""}
+                onChange={(e) =>
+                  setFormData({ ...formData, rollbackBranchName: e.target.value })
+                }
+              />
+          </Form.Group>
+          ) : (
           <></>
         )}
 
