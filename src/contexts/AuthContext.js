@@ -13,6 +13,7 @@ const AuthContextProvider = (props) => {
 
     const logoutUserContext = () => {
       authClient.closeSession();
+      authClient.tokenManager.clear();
       window.location = "/";
     };
 
@@ -29,12 +30,15 @@ const AuthContextProvider = (props) => {
       if (!getIsAuthenticated) {
         console.log("!getAccessToken");
         renewUserToken();
+        //window.location = "/login"; //if not authenticated, may just need to take user to login page
+        //window.location.reload(); //possibly just trigger a reload which may be better?
         return;
       }
       //const idToken = await token.getWithoutPrompt();
       //const { tokens } = idToken;
       //return tokens.accessToken.value;
       const tokenObject = await authClient.tokenManager.get("accessToken");
+      console.log(tokenObject);
       if (!tokenObject) {
         console.log("!tokenObject");
         renewUserToken(); //todo: this may need to redirect to login?

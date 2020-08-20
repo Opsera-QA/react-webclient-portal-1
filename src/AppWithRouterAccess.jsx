@@ -134,7 +134,8 @@ const AppWithRouterAccess = () => {
       .then(function(session) {
         // existing session is now refreshed
         console.log("refreshing token and then refetch users: ", session);
-        refetch(); //refretch users service (with hopefully updated accessToken)
+        refetch();
+        //window.location.reload();
       })
       .catch(function(err) {
         // there was a problem refreshing (the user may not have an existing session)
