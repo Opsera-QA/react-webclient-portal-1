@@ -2,15 +2,16 @@
 import React, { useState, useEffect } from "react";
 import OktaAuth from "@okta/okta-auth-js";
 import PropTypes from "prop-types";
-import { useOktaAuth } from "@okta/okta-react";
+//import { useOktaAuth } from "@okta/okta-react";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { axiosApiService } from "../../api/apiService";
 
 
+
 const LoginForm = ({ issuer }) => {
-  const { authService } = useOktaAuth();
+  //const { authService } = useOktaAuth();
   const [sessionToken, setSessionToken] = useState();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -34,7 +35,33 @@ const LoginForm = ({ issuer }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    const oktaAuth = new OktaAuth({ issuer: issuer });
+
+    const authClient = new OktaAuth({
+      issuer: issuer,
+      clientId: process.env.REACT_APP_OKTA_CLIENT_ID,
+      redirectUri: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI
+    });
+    authClient.signIn({ username, password })
+      .then(function(transaction) {
+        if (transaction.status === 'SUCCESS') {
+          authClient.token.getWithRedirect({
+            sessionToken: transaction.sessionToken,
+            responseType: 'id_token'
+          });
+
+
+          //authClient.session.setCookieAndRedirect(transaction.sessionToken, process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI); // Sets a cookie on redirect
+        } else {
+          throw 'We cannot handle the ' + transaction.status + ' status';
+        }
+      })
+      .catch(function(err) {
+        console.error(err);
+        setErrorMessage(err.message);
+        setLoading(false);
+      });
+
+    /*const oktaAuth = new OktaAuth({ issuer: issuer });
     oktaAuth.signIn({ username, password })
       .then(res => {
         setLoading(false);
@@ -49,7 +76,7 @@ const LoginForm = ({ issuer }) => {
         console.log("Found an error", err);
         setErrorMessage(err.message);
         setLoading(false);
-      });
+      });*/
   };
 
   const handleUsernameChange = (e) => {

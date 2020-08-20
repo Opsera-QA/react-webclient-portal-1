@@ -41,7 +41,10 @@ const AuthContextProvider = (props) => {
       console.log(tokenObject);
       if (!tokenObject) {
         console.log("!tokenObject");
-        renewUserToken(); //todo: this may need to redirect to login?
+        //renewUserToken(); //todo: this may need to redirect to login?
+        await authClient.token.getWithRedirect({
+          responseType: 'id_token'
+        });
         return;
       }
       return tokenObject.accessToken;
