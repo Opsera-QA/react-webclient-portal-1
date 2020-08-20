@@ -39,8 +39,7 @@ const SfdcPipelineWizard = ({ pipelineId, pipeline, handlePipelineWizardRequest,
 
   const createJenkinsJob = async () => {
     const accessToken = await getAccessToken();   
-    const apiUrl = `/registry/action/${stepToolConfigId}/createjob`;
-    let operationStatus = "success";
+    const apiUrl = `/pipelines/sfdc/set-jobs`
 
     const postBody = {
       jobId: "",
@@ -58,7 +57,7 @@ const SfdcPipelineWizard = ({ pipelineId, pipeline, handlePipelineWizardRequest,
 
     console.log(postBody);
 
-    //create jenkins job
+    //create jenkins job and automate job creation/updation of validate and deploy jobs
     let createJobResponse;
     try {      
       createJobResponse = await axiosApiService(accessToken).post(apiUrl, postBody);
@@ -67,53 +66,15 @@ const SfdcPipelineWizard = ({ pipelineId, pipeline, handlePipelineWizardRequest,
       console.log("Error posting to API: ", error);
       setError(error);
       createJobResponse = error;
-      operationStatus = "failed";
     }
 
-    //update data for pipeline workflow step!!!
-    if (typeof(pipeline.workflow.plan[stepIndex].tool.configuration.jobName) === "string" && createJobResponse && createJobResponse.status === 200) {
-      if (createJobResponse.data.message && createJobResponse.data.message.jobName && createJobResponse.data.message.jobName.length > 0) {
-        pipeline.workflow.plan[stepIndex].tool.configuration.jobName = createJobResponse.data.message.jobName;
-        const savePipelineResponse = await PipelineActions.save(pipelineId, pipeline, getAccessToken);
-        console.log("savePipelineResponse: ", savePipelineResponse);
-      }
-    } else if (createJobResponse.status !== 200) {
-      setError("An error has occurred updating the Jenkins server with the job information.  This pipeline cannot proceed.  Please check the pipeline activity logs for more details.");
-      operationStatus = "failed";
-    }
-    
-    //post to pipeline acitivty log: 
-    const logPostBody = {
-      step_id: stepId,
-      run_count: pipeline.workflow.run_count + 1,
-      step_index: stepIndex,
-      tool_identifier: "sfdc-configurator",
-      step_name: "SFDC Modified Files Review",
-      step_configuration: postBody,
-      api_response: createJobResponse,
-      build_number: "",
-      message: "Modified files approved for pipeline",
-      status: operationStatus,
-      action: "approve files for processing",
-    };
-
-    const logApi = `/pipelines/${pipelineId}/activity`;
-    try {
-      const accessToken = await getAccessToken();
-      const response = await axiosApiService(accessToken).post(logApi, logPostBody);
-      console.log(response);      
-    } catch (error) {
-      console.log("Error posting to API: ", error);
-      setError(error);
-    }
-    
-    //if (operationStatus === "success") {
+    if (createJobResponse && createJobResponse.data && createJobResponse.data.message === "success") {
     //trigger refresh of pipeline object!!!
     await refreshPipelineActivityData();
 
     //trigger start of pipeline & close modal
     await handlePipelineWizardRequest(pipelineId, true);
-    //}    
+    }    
   };
 
   if (error) {

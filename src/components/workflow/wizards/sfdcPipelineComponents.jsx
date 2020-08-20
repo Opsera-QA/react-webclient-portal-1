@@ -53,7 +53,7 @@ const SfdcPipelineComponents = ({ pipelineId, stepId, setView, setModifiedFiles,
 
   Moment.locale("en");
   momentLocalizer();
-  const [asOfDate, setAsOfDate] = useState(Moment().format());
+  const [asOfDate, setAsOfDate] = useState( Moment(new Date(new Date().setHours(0, 0, 0, 0))).toISOString() );
 
   useEffect(() => {
     setConfigurationError(false);
@@ -85,9 +85,8 @@ const SfdcPipelineComponents = ({ pipelineId, stepId, setView, setModifiedFiles,
       max={new Date()}
       defaultValue={new Date(new Date().setHours(0, 0, 0, 0))}
       onChange={value => handleAsOfDateChange({ value })}
-      initialValue={new Date()}
+      initialValue={new Date(new Date().setHours(0, 0, 0, 0))}
     />
-
   );
 
   const handleAsOfDateChange = (value) => {

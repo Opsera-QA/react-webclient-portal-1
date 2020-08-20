@@ -135,22 +135,22 @@ const JenkinsJobTypeBuild = {
       isRequired: false 
     }
   },
-  buildArgs: {
-    label: "Build Args",
-    id: "buildArgs",
-    type: "",
-    value: "",
-    linkedId: "buildType",
-    linkedValue: "docker",      
-    toShow: true,
-    disabled: false,
-    touched: false,
-    isValid: false,
-    errorMessage: "",    
-    rules: {
-      isRequired: false 
-    }
-  },
+  // buildArgs: {
+  //   label: "Build Args",
+  //   id: "buildArgs",
+  //   type: "",
+  //   value: "",
+  //   linkedId: "buildType",
+  //   linkedValue: "docker",      
+  //   toShow: true,
+  //   disabled: false,
+  //   touched: false,
+  //   isValid: false,
+  //   errorMessage: "",    
+  //   rules: {
+  //     isRequired: false 
+  //   }
+  // },
 };
 
 export default JenkinsJobTypeBuild;

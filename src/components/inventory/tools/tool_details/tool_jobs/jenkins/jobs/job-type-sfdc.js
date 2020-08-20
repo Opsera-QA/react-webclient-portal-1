@@ -39,22 +39,22 @@ const JobTypeSFDC = {
       isRequired: true 
     }
   }, 
-  rollbackBranchName: {
-    label: "Rollback Branch Name",
-    id: "rollbackBranchName",
-    type: "",
-    value: "",
-    linkedId: "jobType",
-    linkedValue: "SFDC BACK UP",    
-    toShow: true,
-    disabled: false,
-    touched: false,
-    isValid: false,
-    errorMessage: "",    
-    rules: {
-      isRequired: true 
-    }
-  }
+  // rollbackBranchName: {
+  //   label: "Rollback Branch Name",
+  //   id: "rollbackBranchName",
+  //   type: "",
+  //   value: "",
+  //   linkedId: "jobType",
+  //   linkedValue: "SFDC BACK UP",    
+  //   toShow: true,
+  //   disabled: false,
+  //   touched: false,
+  //   isValid: false,
+  //   errorMessage: "",    
+  //   rules: {
+  //     isRequired: true 
+  //   }
+  // }
 };
 
 export default JobTypeSFDC;
