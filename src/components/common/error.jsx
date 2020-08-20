@@ -1,6 +1,6 @@
 import React, { useReducer, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import {AuthContext} from "contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSave,
@@ -23,13 +23,8 @@ function ErrorDialog({ error, align, type, setError }) {
 
   const login = function() {
     const { renewUserToken } = contextType;
-    //loginUserContext();
-    console.log("Error.jsx: TODD, try to wire this up to refresh token/reload user data?")
+    console.log("Error.jsx: triggering login/renewuserToken function");
     renewUserToken();
-
-    //window.location.reload();
-    //window.location = "/login";
-
   };
 
   const clearError = () => {
@@ -110,7 +105,7 @@ ErrorDialog.propTypes = {
   ]),
   align: PropTypes.string,
   type: PropTypes.string,
-  setError: PropTypes.func
+  setError: PropTypes.func,
 };
 
 

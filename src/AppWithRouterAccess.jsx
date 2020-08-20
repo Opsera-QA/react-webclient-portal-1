@@ -58,32 +58,33 @@ import ToolTypeDetailView from "./components/admin/tools/tool_type/tool_type_det
 import ToolIdentifierDetailView
   from "./components/admin/tools/tool_identifier/tool_identifier_detail_view/ToolIdentifierDetailView";
 import Axios from "axios";
+const OktaAuth = require("@okta/okta-auth-js");
 const config = require("./config");
+
+const onAuthRequired = () => {
+  console.log("AppWithRouterAccess.jsx: handling onAuthRequired function?");
+  window.location = "/login";
+};
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
   const history = useHistory();
-  const onAuthRequired = () => {
-    console.log("AppWithRouterAccess.jsx: How is this getting called?");
-    window.location = "/login";
-    //window.location.reload();
-  };
 
-  const OktaAuth = require("@okta/okta-auth-js");
   const OKTA_CONFIG = {
     issuer: process.env.REACT_APP_OKTA_ISSUER,
     client_id: process.env.REACT_APP_OKTA_CLIENT_ID,
     redirect_uri: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
-    pkce: true,
     disableHttpsCheck: false,
     onAuthRequired: onAuthRequired,
   };
-  const authClient = new OktaAuth(OKTA_CONFIG);
+
+  const authClient = new OktaAuth({ issuer: OKTA_CONFIG.issuer, clientId: OKTA_CONFIG.client_id, redirectUri: OKTA_CONFIG.redirect_uri });
   const axios = Axios.create({
     baseURL: config.apiServerUrl,
   });
+
   axios.interceptors.request.use(async (config) => {
-      console.log("getting new AccessToken for request interceptor");
+      console.log("getting token from TokenManager for users request interceptor");
       const tokenObject = await authClient.tokenManager.get("accessToken");
       if (tokenObject && tokenObject.accessToken) {
         config.headers["authorization"] = `Bearer ${tokenObject.accessToken}`;
@@ -127,7 +128,6 @@ const AppWithRouterAccess = () => {
   };
 
 
-  //TODO: Review this logic for a few days in dev.  Does it improve the user experience around a token expiration?
   const refreshToken = () => {
     console.log("refreshToken function call")
     authClient.session.refresh()
@@ -149,7 +149,7 @@ const AppWithRouterAccess = () => {
   } else {
     return (
       <Security {...OKTA_CONFIG}>
-        <AuthContextProvider userData={data} refetchUserData={refreshToken}>
+        <AuthContextProvider userData={data} refetchUserData={refreshToken} ssoConfiguration={OKTA_CONFIG}>
           <Navbar hideAuthComponents={hideSideBar} userData={data}/>
           <div className="container-fluid">
             <div className="d-flex flex-row">

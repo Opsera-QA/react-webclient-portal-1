@@ -37,9 +37,7 @@ function Sidebar({ userData, hideSideBar }) {
 
 
   const loadAccessRoles = async (user) => {
-    console.log(user)
     const userAccess = await setAccessRoles(user);
-    console.log(userAccess)
     setuserAccessRoles(userAccess);
   };
 
@@ -47,10 +45,7 @@ function Sidebar({ userData, hideSideBar }) {
   if (hideSideBar) {
     return (<></>);
   } else if (userData && userAccessRoles) {
-
-    //first check for OPsera admin level
     if (userAccessRoles.OpseraAdministrator) {
-      //return Opsera Admin Component
       return funcOpseraAdminNav(hideInProdFF);
     } else {
       if (userAccessRoles.Administrator) {

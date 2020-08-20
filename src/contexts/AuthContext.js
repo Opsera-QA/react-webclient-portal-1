@@ -1,51 +1,50 @@
 import React, { createContext, useState, useEffect } from "react";
-import { useOktaAuth } from "@okta/okta-react";
+import OktaAuth from "@okta/okta-auth-js";
 import PropTypes from "prop-types";
 
 const AuthContextProvider = (props) => {
-    const { userData, refetchUserData } = props; //not implementing refrechUserData yet, but it would reload user object
-    const { authService, authState } = useOktaAuth();
-    const [userRecord, setUserRecord] = useState(null);
+    const { userData, refetchUserData, ssoConfiguration } = props;
 
-    useEffect(() => {
-      if (authState.isAuthenticated) {
-        setUserState();
-      }
-    }, [authState]);
-
-
-    const setUserState = async () => {
-      const user = await _getUserProperties();
-      setUserRecord(user);
-    };
-
-    const _getUserProperties = async () => {
-      return userData;
-    };
+    const authClient = new OktaAuth({
+      issuer: ssoConfiguration.issuer,
+      clientId: ssoConfiguration.client_id,
+      redirectUri: ssoConfiguration.redirect_uri,
+    });
+    const { token, tokenManager } = authClient;
+    //console.log(authClient);
+    //console.log(ssoConfiguration);
 
     const logoutUserContext = () => {
-      setUserRecord(null);
-      authService.clearAuthState();
-      return authService.logout("/");
+      authClient.closeSession();
+      window.location = "/";
     };
 
     const loginUserContext = () => {
       refetchUserData();
-      return authService.login("/overview");
+      window.location = "/overview";
     };
 
-    const renewUserToken = () => {
+    const renewUserToken = async () => {
       refetchUserData();
-      return authService.login("/overview");
     };
 
-    const getAccessToken = () => {
-      return authService.getAccessToken();
+    const getAccessToken = async () => {
+      const idToken = await token.getWithoutPrompt();
+      const { tokens } = idToken;
+      return tokens.accessToken.value;
     };
 
     const getIsAuthenticated = async () => {
-      const authState = await authService.getAuthState();
-      return authState.isAuthenticated;
+      const session = await authClient.session.exists();
+
+      //const tokenProperties = await token.getWithoutPrompt();
+      //const {tokens} = tokenProperties;
+      //console.log(tokenProperties);
+
+      //const idToken = await tokenManager.get('idToken');
+      //console.log(authClient.tokenManager)
+
+      return session;
     };
 
     const getUserRecord = async () => {
@@ -76,8 +75,6 @@ const AuthContextProvider = (props) => {
 
         const { ldap, groups } = user;
         if (groups) {
-          console.log(groups);
-          //calculate top role level for now
           let role = "readonly";
 
           if (groups.includes("Administrators")) {
@@ -108,18 +105,16 @@ const AuthContextProvider = (props) => {
             OpseraAdministrator: groups.includes("Administrators"),
           };
         }
-        console.log("customerAccessRules: ", customerAccessRules);
+        console.table(customerAccessRules);
         return customerAccessRules;
       } else {
         console.log("unable to set user access rules: ", user);
-        console.log("authState.isAuthenticated: ", authState.isAuthenticated);
       }
     };
 
 
     return (
       <AuthContext.Provider value={{
-        authState: authState,
         logoutUserContext: logoutUserContext,
         loginUserContext: loginUserContext,
         renewUserToken: renewUserToken,
@@ -139,6 +134,7 @@ const AuthContextProvider = (props) => {
 AuthContextProvider.propTypes = {
   userData: PropTypes.object,
   refetchUserData: PropTypes.func,
+  ssoConfiguration: PropTypes.object,
 };
 
 export const AuthContext = createContext();

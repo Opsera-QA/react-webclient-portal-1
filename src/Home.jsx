@@ -5,7 +5,7 @@ import { Row, Col, Button, Card } from "react-bootstrap";
 
 function Home() {
   const contextType = useContext(AuthContext);
-  const { authState } = contextType;
+  const { getIsAuthenticated } = contextType;
   const history = useHistory();
 
   useEffect(() => {
@@ -13,7 +13,8 @@ function Home() {
   }, []);
 
   const getStatus = async () => {
-    if (authState.isAuthenticated) {
+    const isAuthentication = await getIsAuthenticated();
+    if (isAuthentication) {
       history.push("/overview");
     }
   };

@@ -8,10 +8,11 @@ import "./navbar.css";
 
 function HeaderNavBar({ hideAuthComponents, userData }) {
   const contextType = useContext(AuthContext);
-  const { authState, setAccessRoles } = contextType;
+  const { setAccessRoles } = contextType;
   const history = useHistory();
   const [fullName, setFullName] = useState("User Profile");
-  const [accessRoleData, setAccessRoleData] = useState({});
+  const [accessRoleData, setAccessRoleData] = useState(null);
+
   
   useEffect(() => {    
     getRoles(userData);
@@ -56,9 +57,9 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
       <Navbar.Toggle aria-controls="basic-navbar-nav"/>
       <Navbar.Collapse id="basic-navbar-nav">
         {!hideAuthComponents && <Nav className="ml-auto">
-          { !authState.isAuthenticated && <Button variant="success" className="mr-2" onClick={gotoSignUp}>Sign Up</Button>}
-          { !authState.isAuthenticated && <Button variant="outline-success" onClick={login}>Login</Button>}
-          { authState.isAuthenticated && 
+          { !accessRoleData && <Button variant="success" className="mr-2" onClick={gotoSignUp}>Sign Up</Button>}
+          { !accessRoleData && <Button variant="outline-success" onClick={login}>Login</Button>}
+          { accessRoleData &&
           <NavDropdown title={fullName} id="basic-nav-dropdown" alignRight>
             <Link to="/profile" id="profile-button" className="dropdown-item nav-drop-down-item">Profile</Link>
             <NavDropdown.Divider />

@@ -104,6 +104,7 @@ function Profile() {
                   <div className="pb-1"><span className="text-muted mr-2">Organization:</span> {user.ldap.organization}</div>
                   <div className="pb-1"><span className="text-muted mr-2">Account:</span> {user.ldap.account}</div>
                   <div className="pb-1"><span className="text-muted mr-2">Domain:</span> {user.ldap.domain}</div>
+                  <div className="pb-1"><span className="text-muted mr-2">Division:</span> {user.ldap.division}</div>
                   <div className="pb-1"><span className="text-muted mr-2">Account Owner:</span> {user.ldap.orgAccountOwnerEmail}</div>
                 </td>
               </tr>}
