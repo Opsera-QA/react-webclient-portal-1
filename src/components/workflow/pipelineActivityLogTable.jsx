@@ -122,16 +122,18 @@ function PipelineActivityLogTable({ data, isLoading, paginationOptions, selectRu
           </div>
         </div>
         {data &&
-            <> 
-              <CustomTable 
-                columns={columns} 
-                data={data}
-                rowStyling={rowStyling}
-                noDataMessage={noDataMessage}
-                initialState={initialState}
-                paginationOptions={paginationOptions}
-              >
-              </CustomTable>
+            <>
+              <div className="table-content-block">
+                <CustomTable
+                  columns={columns}
+                  data={data}
+                  rowStyling={rowStyling}
+                  noDataMessage={noDataMessage}
+                  initialState={initialState}
+                  tableStyleName="custom-table-2"
+                  paginationOptions={paginationOptions}
+                />
+              </div>
             </>}
       </>
     </>

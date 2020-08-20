@@ -52,7 +52,6 @@ function CustomTable({ tableStyleName, columns, data, noDataMessage, onRowSelect
 
   const getRowClassNames = (index, row) => {
     let rowClassNames = "table-row";
-    rowClassNames += index % 2 == 0 ? " even" : " odd";
     rowClassNames += onRowSelect ? " pointer" : "";
     rowClassNames += rowStyling ? rowStyling(row) : "";  
     return rowClassNames;

@@ -287,19 +287,7 @@ a.text-primary:hover, a.text-primary:focus {
     vertical-align: middle;
 }
 
-.custom-table .table-row.even {
-  background-color: rgba(0,0,0,.05);
-}
-
-.custom-table .table-row.odd {
-  background-color: #fff;
-}
-
-.custom-table tr.odd.inactive-row {
-  opacity:.6;
-}
-
-.custom-table tr.even.inactive-row {
+.custom-table tr.inactive-row {
   opacity:.6;
 }
 
@@ -323,16 +311,6 @@ a.text-primary:hover, a.text-primary:focus {
     font-size: .9em;
     width: 100%;
 }
-
-/*.custom-table-2-table thead {*/
-/*  overflow-y: auto;*/
-/*  overflow-x: hidden;*/
-/*}*/
-
-/*.custom-table-2-table tbody {*/
-/*  overflow-y: scroll;*/
-/*  overflow-x: hidden;*/
-/*}*/
 
 .custom-table-2 th {
     background-color: #2588ec;
@@ -359,7 +337,9 @@ a.text-primary:hover, a.text-primary:focus {
 .custom-table-2 .table-row {
     margin-bottom: 2em;
     line-height:2em;
-    border-bottom: 1px solid #dee2e6;
+    border-bottom: 1px solid #cdd1d5;
+    color: #334152;
+    background-color: #fff;
 }
 
 .custom-table-2 .cell-center {
@@ -367,25 +347,8 @@ a.text-primary:hover, a.text-primary:focus {
     vertical-align: middle;
 }
 
-.custom-table-2 .table-row.even {
-    background-color: rgba(0,0,0,.05);
-}
-
-.custom-table-2 .table-row.odd {
-    background-color: #fff;
-}
-
-.custom-table-2 tr.odd.inactive-row {
+.custom-table-2 tr.inactive-row {
     opacity:.6;
-}
-
-.custom-table-2 tr.even.inactive-row {
-    opacity:.6;
-}
-
-
-.custom-table-2 .table-row {
-    color: #334152;
 }
 
 .custom-table-2 .table-row:hover {

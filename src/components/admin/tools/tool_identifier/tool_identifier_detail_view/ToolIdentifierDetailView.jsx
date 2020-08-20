@@ -52,7 +52,7 @@ function ToolIdentifierDetailView() {
         {toolIdentifierData &&
         <div className="content-container content-card-1 max-content-width ml-2">
           <div className="pt-2 pl-2 content-block-header">
-            <h5>Tool Type Details [{toolIdentifierData.getData("name")}]</h5>
+            <h5>Tool Identifier Details [{toolIdentifierData.getData("name")}]</h5>
           </div>
           <div className="detail-view-body">
             <div>

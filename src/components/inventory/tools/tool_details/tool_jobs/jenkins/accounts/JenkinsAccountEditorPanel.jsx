@@ -8,11 +8,11 @@ import "components/inventory/tools/tools.css";
 
 import {platformList} from "./jenkins-create-account-metadata";
 import DropdownList from "react-widgets/lib/DropdownList";
-import TextField from "../../../../../../common/form_fields/text-field";
 import {AuthContext} from "../../../../../../../contexts/AuthContext";
 import Loading from "../../../../../../common/loading";
 import DtoTextInput from "../../../../../../common/input/dto_input/dto-text-input";
-import DtoTextField from "../../../../../../common/form_fields/dto_form_fields/dto-text-field";
+import TextInput from "../../../../../../common/input/text-input";
+import TextField from "../../../../../../common/form_fields/text-field";
 
 
 function JenkinsAccountEditorPanel({ toolData, jenkinsAccountData, handleClose }) {
@@ -91,36 +91,31 @@ function JenkinsAccountEditorPanel({ toolData, jenkinsAccountData, handleClose }
       <div className="scroll-y full-height">
         <Row>
           <Col lg={12}>
-            <Form.Group controlId="formPlaintextEmail" className="mt-2 vertical-center-cols-in-row">
-              <Form.Label column sm="4">
-                Platform
-              </Form.Label>
-              <Col sm="8" className="text-right">
-                  <DropdownList
-                    data={platformList}
-                    textField='label'
-                    filter='contains'
-                    value={platformType}
-                    onChange={updatePlatform}
-                  />
-              </Col>
-            </Form.Group>
+            <div className="m-2">
+              <label><span>Platform <span className="danger-red">*</span></span></label>
+              <DropdownList
+                data={platformList}
+                value={platformType}
+                textField='label'
+                filter='contains'
+                placeholder={'Select a Platform'}
+                onChange={updatePlatform}
+              />
+            </div>
           </Col>
           <Col lg={12}>
-            <Form.Group controlId="formPlaintextEmail" className="mt-2 vertical-center-cols-in-row">
-              <Form.Label column sm="4">
-                Select Account
-              </Form.Label>
-              <Col sm="8" className="text-right">
-                <DropdownList
-                  data={accountList}
-                  textField='name'
-                  filter='contains'
-                  value={account}
-                  onChange={updateAccount}
-                />
-              </Col>
-            </Form.Group>
+            <div className="m-2">
+              <label><span>Platform <span className="danger-red">*</span></span></label>
+              <DropdownList
+                data={accountList}
+                value={account}
+                disabled={accountList == null || accountList.length === 0}
+                textField='name'
+                filter='contains'
+                placeholder={'Select an Account'}
+                onChange={updateAccount}
+              />
+            </div>
           </Col>
           <Col lg={12}>
             <DtoTextInput fieldName={"credentialsId"} dataObject={jenkinsAccountDataDto} setDataObject={setJenkinsAccountDataDto} />
@@ -129,10 +124,8 @@ function JenkinsAccountEditorPanel({ toolData, jenkinsAccountData, handleClose }
             <DtoTextInput fieldName={"credentialsDescription"} dataObject={jenkinsAccountDataDto} setDataObject={setJenkinsAccountDataDto} />
           </Col>
           <Col lg={12}>
-            <div className="">
-              <div className="py-3 mx-3">
-                <div className="custom-text-input"><label>Account</label><span>{account && account.configuration.accountUsername}</span></div>
-              </div>
+            <div className="m-2">
+              <div className="custom-text-field"><label className="mr-2">Account:</label><span>{account && account.configuration.accountUsername}</span></div>
             </div>
           </Col>
         </Row>
