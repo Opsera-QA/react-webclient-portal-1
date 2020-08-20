@@ -30,17 +30,14 @@ function Sidebar({ userData, hideSideBar }) {
   const [userAccessRoles, setuserAccessRoles] = useState({});
 
   useEffect(() => {
-    //const hideFeatureInProd = featureFlagItemInProd(); //returns true when in production
-    //setHideInProdFF(hideFeatureInProd);
     loadAccessRoles(userData)
+    console.log(userData)
   }, [userData]);
-
 
   const loadAccessRoles = async (user) => {
     const userAccess = await setAccessRoles(user);
     setuserAccessRoles(userAccess);
   };
-
 
   if (hideSideBar) {
     return (<></>);
@@ -164,6 +161,8 @@ const funcAccountPowerUserNav = (hideInProdFF) => {
           <NavLink className="nav-link" activeClassName="chosen" to="/update">
             <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span
             className="menu-text">Updates</span></NavLink>
+          <NavLink className="nav-link" activeClassName="chosen" to="/settings">
+            <FontAwesomeIcon size="lg" icon={faCogs} fixedWidth/> <span className="menu-text">Settings</span></NavLink>
         </div>
       </div>
     </div>

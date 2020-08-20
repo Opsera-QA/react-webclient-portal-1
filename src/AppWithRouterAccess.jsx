@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Route, useHistory } from "react-router-dom";
 import { Security, SecureRoute, LoginCallback } from "@okta/okta-react";
-import useAxios, { configure } from 'axios-hooks'
+import useAxios, { configure } from "axios-hooks";
 import AuthContextProvider from "./contexts/AuthContext";
 import LoadingDialog from "./components/common/loading";
 import Home from "./Home";
@@ -58,6 +58,7 @@ import ToolTypeDetailView from "./components/admin/tools/tool_type/tool_type_det
 import ToolIdentifierDetailView
   from "./components/admin/tools/tool_identifier/tool_identifier_detail_view/ToolIdentifierDetailView";
 import Axios from "axios";
+
 const OktaAuth = require("@okta/okta-auth-js");
 const config = require("./config");
 
@@ -78,7 +79,11 @@ const AppWithRouterAccess = () => {
     onAuthRequired: onAuthRequired,
   };
 
-  const authClient = new OktaAuth({ issuer: OKTA_CONFIG.issuer, clientId: OKTA_CONFIG.client_id, redirectUri: OKTA_CONFIG.redirect_uri });
+  const authClient = new OktaAuth({
+    issuer: OKTA_CONFIG.issuer,
+    clientId: OKTA_CONFIG.client_id,
+    redirectUri: OKTA_CONFIG.redirect_uri,
+  });
   const axios = Axios.create({
     baseURL: config.apiServerUrl,
   });
@@ -110,13 +115,12 @@ const AppWithRouterAccess = () => {
   useEffect(() => {
     if (error) {
       if (error.message.includes("401") && !hideSideBar) {
-        console.log("useEffect on error with 401, auto refreshing...")
+        console.log("useEffect on error with 401, auto refreshing...");
         window.location = "/login";
       }
       console.log("Error loading user record: ", JSON.stringify(error));
     }
   }, [error]);
-
 
 
   const enableSideBar = (path) => {
@@ -129,9 +133,20 @@ const AppWithRouterAccess = () => {
 
 
   const refreshToken = () => {
-    console.log("refreshToken function call")
-    authClient.session.refresh()
-      .then(function(session) {
+    console.log("AppW/RouterAccess: refreshToken function call");
+
+    authClient.token.getWithRedirect({
+      responseType: "id_token",
+    }).then(function(res) {
+      console.log(res);
+      refetch();
+    }).catch(function(err) {
+      // handle AuthSdkError (AuthSdkError will be thrown if app is in OAuthCallback state)
+      console.error(err);
+      window.location = "/login";
+    });
+
+    /*authClient.session.refresh().then(function(session) {
         // existing session is now refreshed
         console.log("refreshing token and then refetch users: ", session);
         refetch();
@@ -141,7 +156,7 @@ const AppWithRouterAccess = () => {
         // there was a problem refreshing (the user may not have an existing session)
         console.log("error refreshing token: ", err);
         window.location = "/login";
-      });
+      });*/
   };
 
 
@@ -150,7 +165,7 @@ const AppWithRouterAccess = () => {
   } else {
     return (
       <Security {...OKTA_CONFIG}>
-        <AuthContextProvider userData={data} refetchUserData={refreshToken} ssoConfiguration={OKTA_CONFIG}>
+        <AuthContextProvider userData={data} refreshToken={refreshToken}>
           <Navbar hideAuthComponents={hideSideBar} userData={data}/>
           <div className="container-fluid">
             <div className="d-flex flex-row">
@@ -160,7 +175,7 @@ const AppWithRouterAccess = () => {
                 <Route path="/" exact component={Home}/>
                 <SecureRoute path="/overview" exact component={Overview}/>
 
-                <Route path='/login' render={() => <Login issuer={OKTA_CONFIG.issuer}/>}/>
+                <Route path='/login' render={() => <Login/>}/>
                 <Route path='/implicit/callback' component={LoginCallback}/>
 
                 <Route path="/signup" exact component={Signup}/>
@@ -194,23 +209,26 @@ const AppWithRouterAccess = () => {
                 <SecureRoute path="/admin/analytics/reports-registration" component={ReportsRegistration}/>
                 <SecureRoute path="/admin/tools/:tabKey?" exact component={ToolManagement}/>
                 <SecureRoute path="/admin/tools/types/details/:toolTypeId" exact component={ToolTypeDetailView}/>
-                <SecureRoute path="/admin/tools/identifiers/details/:toolIdentifierId" exact component={ToolIdentifierDetailView}/>
+                <SecureRoute path="/admin/tools/identifiers/details/:toolIdentifierId" exact
+                             component={ToolIdentifierDetailView}/>
                 <SecureRoute path="/admin/tags" exact component={TagEditor}/>
                 <SecureRoute path="/admin/tags/:id" exact component={TagDetailView}/>
-                <SecureRoute path="/admin/kpis" exact component={KpiEditor}/> 
-                <SecureRoute path="/admin/kpis/:id" exact component={KpiDetailView}/>                 
+                <SecureRoute path="/admin/kpis" exact component={KpiEditor}/>
+                <SecureRoute path="/admin/kpis/:id" exact component={KpiDetailView}/>
                 <SecureRoute path="/admin/templates" exact component={TemplateManagement}/>
                 <SecureRoute path="/admin/templates/details/:templateId" exact component={TemplateDetailView}/>
 
                 {/* Ldap Account Pages */}
                 <SecureRoute path="/accounts" exact component={LdapDashboard}/>
                 <SecureRoute path="/accounts/organizations" exact component={LdapOrganizationsView}/>
-                <SecureRoute path="/accounts/organizations/details/:organizationName" exact component={LdapOrganizationDetailView}/>
+                <SecureRoute path="/accounts/organizations/details/:organizationName" exact
+                             component={LdapOrganizationDetailView}/>
                 <SecureRoute path="/accounts/:orgDomain?/users/" exact component={LdapUserManagement}/>
                 <SecureRoute path="/accounts/:orgDomain/users/details/:userEmail" exact component={LdapUserDetailView}/>
                 <SecureRoute path="/accounts/create" exact component={LdapCustomerOnboardView}/>
                 <SecureRoute path="/accounts/:orgDomain?/groups/" exact component={LdapGroupManagement}/>
-                <SecureRoute path="/accounts/:orgDomain/groups/details/:groupName" exact component={LdapGroupDetailView}/>
+                <SecureRoute path="/accounts/:orgDomain/groups/details/:groupName" exact
+                             component={LdapGroupDetailView}/>
 
                 <SecureRoute path="/demo/api" component={ApiConnectionDemo}/>
                 <SecureRoute path="/demo/table" component={CommonTableDemo}/>

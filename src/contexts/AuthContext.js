@@ -1,14 +1,14 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext } from "react";
 import OktaAuth from "@okta/okta-auth-js";
 import PropTypes from "prop-types";
 
 const AuthContextProvider = (props) => {
-    const { userData, refetchUserData, ssoConfiguration } = props;
+    const { userData, refreshToken, } = props;
 
     const authClient = new OktaAuth({
-      issuer: ssoConfiguration.issuer,
-      clientId: ssoConfiguration.client_id,
-      redirectUri: ssoConfiguration.redirect_uri,
+      issuer: process.env.REACT_APP_OKTA_ISSUER,
+      clientId: process.env.REACT_APP_OKTA_CLIENT_ID,
+      redirectUri: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
     });
 
     const logoutUserContext = () => {
@@ -18,30 +18,30 @@ const AuthContextProvider = (props) => {
     };
 
     const loginUserContext = () => {
-      refetchUserData();
-      window.location = "/overview";
+      window.location = "/login";
     };
 
     const renewUserToken = () => {
-      refetchUserData();
+      refreshToken();
     };
 
-    const getAccessToken = async () => {
+
+  //const idToken = await token.getWithoutPrompt();
+  //const { tokens } = idToken;
+  //return tokens.accessToken.value;
+
+  const getAccessToken = async () => {
       if (!getIsAuthenticated) {
-        console.log("!getAccessToken");
-        renewUserToken();
-        //window.location = "/login"; //if not authenticated, may just need to take user to login page
+        console.log("!getAccessToken: redirecting to login");
+        window.location = "/login"; //if not authenticated, may just need to take user to login page
         //window.location.reload(); //possibly just trigger a reload which may be better?
         return;
       }
-      //const idToken = await token.getWithoutPrompt();
-      //const { tokens } = idToken;
-      //return tokens.accessToken.value;
+
       const tokenObject = await authClient.tokenManager.get("accessToken");
       console.log(tokenObject);
       if (!tokenObject) {
         console.log("!tokenObject");
-        //renewUserToken(); //todo: this may need to redirect to login?
         await authClient.token.getWithRedirect({
           responseType: 'id_token'
         });
@@ -58,7 +58,6 @@ const AuthContextProvider = (props) => {
     const getUserRecord = async () => {
       return userData;
     };
-
 
     const getIsPreviewRole = async (restrictProd) => {
       console.log("Environment: ", process.env.REACT_APP_ENVIRONMENT);
@@ -141,8 +140,7 @@ const AuthContextProvider = (props) => {
 
 AuthContextProvider.propTypes = {
   userData: PropTypes.object,
-  refetchUserData: PropTypes.func,
-  ssoConfiguration: PropTypes.object,
+  refreshToken: PropTypes.func,
 };
 
 export const AuthContext = createContext();

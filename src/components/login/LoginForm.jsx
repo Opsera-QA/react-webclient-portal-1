@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from "react";
 import OktaAuth from "@okta/okta-auth-js";
-import PropTypes from "prop-types";
+//import PropTypes from "prop-types";
 //import { useOktaAuth } from "@okta/okta-react";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,10 +9,9 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { axiosApiService } from "../../api/apiService";
 
 
-
-const LoginForm = ({ issuer }) => {
+const LoginForm = () => {
   //const { authService } = useOktaAuth();
-  const [sessionToken, setSessionToken] = useState();
+  //const [sessionToken, setSessionToken] = useState();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [resetEmailAddress, setResetEmailAddress] = useState("");
@@ -37,7 +36,7 @@ const LoginForm = ({ issuer }) => {
     setLoading(true);
 
     const authClient = new OktaAuth({
-      issuer: issuer,
+      issuer: process.env.REACT_APP_OKTA_ISSUER,
       clientId: process.env.REACT_APP_OKTA_CLIENT_ID,
       redirectUri: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI
     });
@@ -48,9 +47,6 @@ const LoginForm = ({ issuer }) => {
             sessionToken: transaction.sessionToken,
             responseType: 'id_token'
           });
-
-
-          //authClient.session.setCookieAndRedirect(transaction.sessionToken, process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI); // Sets a cookie on redirect
         } else {
           throw 'We cannot handle the ' + transaction.status + ' status';
         }
@@ -144,10 +140,10 @@ const LoginForm = ({ issuer }) => {
   };
 
 
-  if (sessionToken) {
+  /*if (sessionToken) {
     // Hide form while sessionToken is converted into id/access tokens
     return null;
-  }
+  }*/
 
   //domainForm and resetLogin forms should be rendered here as their own "return (<DomainForm />)" and "return (<ResetLogin />)"
 
@@ -267,9 +263,5 @@ const LoginForm = ({ issuer }) => {
     );}
 };
 
-
-LoginForm.propTypes = {
-  issuer: PropTypes.string
-};
 
 export default LoginForm;
