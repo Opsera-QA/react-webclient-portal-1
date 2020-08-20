@@ -39,7 +39,6 @@ const AuthContextProvider = (props) => {
       }
 
       const tokenObject = await authClient.tokenManager.get("accessToken");
-      console.log(tokenObject);
       if (!tokenObject) {
         console.log("!tokenObject");
         await authClient.token.getWithRedirect({

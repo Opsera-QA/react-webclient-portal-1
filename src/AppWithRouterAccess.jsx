@@ -89,12 +89,12 @@ const AppWithRouterAccess = () => {
   });
 
   axios.interceptors.request.use(async (config) => {
-      console.log("getting token from TokenManager for users request interceptor");
+      console.log("Users Interceptor: getting token from TokenManager for users request interceptor");
       const tokenObject = await authClient.tokenManager.get("accessToken");
       if (tokenObject && tokenObject.accessToken) {
         config.headers["authorization"] = `Bearer ${tokenObject.accessToken}`;
         config.headers["cache-control"] = `no-cache`;
-        console.log("CONFIG: ", config.headers);
+        console.debug("CONFIG: ", config.headers);
       }
       return config;
     },
@@ -107,7 +107,6 @@ const AppWithRouterAccess = () => {
     "/users",
   );
 
-
   useEffect(() => {
     enableSideBar(history.location.pathname);
   }, [data]);
@@ -118,7 +117,7 @@ const AppWithRouterAccess = () => {
         console.log("useEffect on error with 401, auto refreshing...");
         window.location = "/login";
       }
-      console.log("Error loading user record: ", JSON.stringify(error));
+      console.error(error.message);
     }
   }, [error]);
 
@@ -130,7 +129,6 @@ const AppWithRouterAccess = () => {
       setHideSideBar(false);
     }
   };
-
 
   const refreshToken = () => {
     console.log("AppW/RouterAccess: refreshToken function call");
