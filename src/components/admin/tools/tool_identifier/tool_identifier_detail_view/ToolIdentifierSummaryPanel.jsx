@@ -52,10 +52,10 @@ function ToolIdentifierSummaryPanel({toolIdentifierData, setToolIdentifierData})
               <DtoTextField dataObject={toolIdentifierData} fieldName={"name"}/>
             </Col>
             <Col lg={6}>
-              <DtoTextField dataObject={toolIdentifierData} fieldName={"description"}/>
+              <DtoTextField dataObject={toolIdentifierData} fieldName={"identifier"}/>
             </Col>
             <Col lg={6}>
-              <DtoTextField dataObject={toolIdentifierData} fieldName={"identifier"}/>
+              <DtoTextField dataObject={toolIdentifierData} fieldName={"description"}/>
             </Col>
             <Col lg={6}>
               <DtoTextField dataObject={toolIdentifierData} fieldName={"tool_type_identifier"}/>

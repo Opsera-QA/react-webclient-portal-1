@@ -29,7 +29,7 @@ function DtoToggleInput({ fieldName, dataObject, setDataObject, disabled }) {
             <label>{field.label}{field.isRequired ?
               <span className="danger-red">*</span> : null}</label>
             <Form.Check
-              className="ml-auto"
+              className="pt-2"
               type="switch"
               id={field.id}
               checked={!!dataObject.getData(fieldName)}

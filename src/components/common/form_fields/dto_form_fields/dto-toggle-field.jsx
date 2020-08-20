@@ -8,7 +8,7 @@ function DtoToggleField({dataObject, fieldName}) {
   return (
     dataObject &&
     <>
-      <div className="my-2 custom-text-field">
+      <div className="my-2 custom-text-field d-flex">
           <label><span className="text-muted mr-2">{field.label}:</span></label>
           <Form.Check
             type="switch"

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import {OverlayTrigger, Tooltip} from "react-bootstrap";
+import {Form, OverlayTrigger, Tooltip} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCopy, faToggleOn, faToggleOff, faTrash, faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 

@@ -34,7 +34,8 @@ function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData, 
 
   const getToolList = async () => {
     try {
-      const toolResponse = await toolTypeActions.getToolTypes(getAccessToken, false)
+      const toolResponse = await toolTypeActions.getToolTypes(getAccessToken, false);
+      console.log("Tool List: " + JSON.stringify(toolResponse.data))
       setToolList(toolResponse.data);
     } catch (err) {
       console.log(err.message);
@@ -91,16 +92,19 @@ function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData, 
           {showToast && toast}
           <Row>
             <Col lg={6}>
-              <DtoTextInput disabled={!toolIdentifierDataDto.isNew()} fieldName={"name"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto}/>
+              <DtoTextInput fieldName={"name"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto}/>
             </Col>
             <Col lg={6}>
               <DtoToggleInput fieldName={"active"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto}/>
             </Col>
-            <Col lg={6}>
+            <Col lg={12}>
               <DtoTextInput fieldName={"description"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto}/>
             </Col>
             <Col lg={6}>
-              <DtoSelectInput textField={"name"} valueField={"identifier"}  fieldName={"identifier"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto} selectOptions={toolList}/>
+              <DtoTextInput fieldName={"identifier"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto}/>
+            </Col>
+            <Col lg={6}>
+              <DtoSelectInput textField={"name"} valueField={"identifier"} fieldName={"tool_type_identifier"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto} selectOptions={toolList}/>
             </Col>
             <Col lg={6}>
               <DtoItemInput fieldName={"tags"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto}/>
