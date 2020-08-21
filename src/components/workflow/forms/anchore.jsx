@@ -13,8 +13,8 @@ import ErrorDialog from "../../common/error";
 const INITIAL_DATA = {
   anchoreToolConfigId: "",
   toolURL: "",
-  accountaccountUsername: "",
-  accountaccountPassword: "",
+  accountUsername: "",
+  accountPassword: "",
   jobType: "anchore scan", //hardcoded for now
   ecrPushStepId: "",
   dockerImageUrl: "",
@@ -133,7 +133,7 @@ function AnchoreStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
         return respObj;
       } else {
         setErrors(
-          "Cypress information is missing or unavailable!  Please ensure the required Cypress creds are registered and up to date in Tool Registry."
+          "Anchore information is missing or unavailable!  Please ensure the required Anchore creds are registered and up to date in Tool Registry."
         );
       }
     } catch (err) {

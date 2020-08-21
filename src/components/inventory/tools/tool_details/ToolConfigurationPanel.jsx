@@ -9,6 +9,7 @@ import SpinnakerToolConfiguration from "../forms/spinnaker";
 import CypressToolConfiguration from "../forms/cypress";
 import ArgoToolConfiguration from "../forms/argo";
 import AnchoreToolConfiguration from "../forms/anchore";
+import AnchoreIntegratorToolConfiguration from "../forms/anchore-integrator";
 import SonarToolConfiguration from "../forms/sonar";
 import AWSToolConfiguration from "../forms/aws";
 import SFDCToolConfiguration from "../forms/sfdc";
@@ -67,6 +68,8 @@ function ToolConfigurationPanel({ toolData }) {
         return <ArgoToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
       case "anchore-scan":
         return <AnchoreToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
+      case "anchore-integrator":
+        return <AnchoreIntegratorToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
       case "sonar":
         return <SonarToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
       case "aws_account":

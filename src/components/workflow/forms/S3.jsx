@@ -27,31 +27,9 @@ import ErrorDialog from "../../common/error";
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
   jobType: "SEND S3", 
-  toolConfigId: "",
-  jenkinsUrl: "",
-  jenkinsPort: "",
-  jUserId: "",
-  jAuthToken: "",
-  jobName: "",
-  
-  projectKey: "",
- 
-  accountUsername: "",
-  projectId: "",
-  defaultBranch: "",
-  dockerName: "",
-  dockerTagName: "",
-  buildType: "gradle", //hardcoded now but needs to get it from a dropdown
-  gitToolId: "",
-  repoId: "",
-  gitUrl: "",
-  sshUrl: "",
-  service: "",
+  awsToolConfigId: "",
+  buildStepId: "",
   bucketName: "",
-  gitCredential: "",
-  gitUserName: "",
-  repository: "",
-  branch: "",
 };
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
@@ -71,18 +49,10 @@ function S3StepConfiguration({
   const [formMessage, setFormMessage] = useState("");
   const [renderForm, setRenderForm] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [jenkinsList, setJenkinsList] = useState([]);
-  const [isJenkinsSearching, setisJenkinsSearching] = useState(false);
-  const [repoList, setRepoList] = useState([]);
-  const [isRepoSearching, setIsRepoSearching] = useState(false);
-  const [branchList, setBranchList] = useState([]);
-  const [isBranchSearching, setIsBranchSearching] = useState(false);
   const [listOfSteps, setListOfSteps] = useState([]);
   
   const [awsList, setAwsList] = useState([]);
   const [isAwsSearching, setIsAwsSearching] = useState(false);
-  const [accountsList, setAccountsList] = useState([]);
-  const [jobsList, setJobsList] = useState([]);
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
 
@@ -121,27 +91,6 @@ function S3StepConfiguration({
     };
   }, [stepTool]);
 
-  useEffect(() => {
-    setErrors(false);
-
-    async function fetchJenkinsDetails(service) {
-      setisJenkinsSearching(true);
-      // Set results state
-      let results = await searchToolsList(service);
-      //console.log(results);
-      const filteredList = results.filter(
-        (el) => el.configuration !== undefined
-      ); //filter out items that do not have any configuration data!
-      if (filteredList) {
-        setJenkinsList(filteredList);
-        setisJenkinsSearching(false);
-      }
-    }
-
-    // Fire off our API call
-    fetchJenkinsDetails("jenkins");
-  }, []);
-
   // search aws
   useEffect(() => {
     setErrors(false);
@@ -164,20 +113,6 @@ function S3StepConfiguration({
     fetchAWSDetails("aws_account");
   }, []);
 
-  useEffect(() => {
-    if (formData.toolConfigId) {
-      // console.log(jenkinsList[jenkinsList.findIndex(x => x.id === formData.toolConfigId)].accounts);
-      setAccountsList(
-        jenkinsList[
-          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ] ?
-        jenkinsList[
-          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ].accounts : []
-      );
-    }
-  }, [formData.toolConfigId]);
-  
   console.log(formData);
 
   const loadFormData = async (step) => {
@@ -200,18 +135,6 @@ function S3StepConfiguration({
     if (validateRequiredFields()) {
       setLoading(true);
 
-      let newConfiguration = formData;
-
-      if (typeof newConfiguration.secretKey === "string") {
-        newConfiguration.secretKey = await saveToVault(
-          pipelineId,
-          stepId,
-          "secretKey",
-          "Vault Secured Key",
-          newConfiguration.secretKey
-        );
-      }
-
       const item = {
         configuration: formData,
         threshold: {
@@ -221,28 +144,6 @@ function S3StepConfiguration({
       };
       setLoading(false);
       parentCallback(item);
-    }
-  };
-
-
-  const saveToVault = async (pipelineId, stepId, key, name, value) => {
-    const keyName = `${pipelineId}-${stepId}-${key}`;
-    const body = {
-      key: keyName,
-      value: value,
-    };
-    const response = await callbackSaveToVault(body);
-    if (response.status === 200) {
-      return { name: name, vaultKey: keyName };
-    } else {
-      setFormData((formData) => {
-        return { ...formData, secretKey: {} };
-      });
-      setLoading(false);
-      setFormMessage(
-        "ERROR: Something has gone wrong saving secure data to your vault.  Please try again or report the issue to OpsERA."
-      );
-      return "";
     }
   };
 
@@ -269,7 +170,7 @@ function S3StepConfiguration({
         return respObj;
       } else {
         setErrors(
-          "Jenkins information is missing or unavailable!  Please ensure the required Jenkins creds are registered and up to date in Tool Registry."
+          "Tool information is missing or unavailable!  Please ensure the required creds are registered and up to date in Tool Registry."
         );
       }
     } catch (err) {
@@ -284,24 +185,14 @@ function S3StepConfiguration({
 
   const validateRequiredFields = () => {
     let {
-      toolConfigId,
-      jenkinsUrl,
-      jUserId,
-      jAuthToken,
-      jobName,
-      buildType,
-      dockerName,
-      dockerTagName,
+      awsToolConfigId,
+      buildStepId,
+      bucketName,
     } = formData;
     if (
-      toolConfigId.length === 0 ||
-      jenkinsUrl.length === 0 ||
-      jUserId.length === 0 ||
-      jAuthToken.length === 0 ||
-      // jobName.length === 0 ||
-      (buildType === "docker"
-        ? dockerName.length === 0 || dockerTagName.length === 0
-        : false)
+      awsToolConfigId.length === 0 ||
+      buildStepId.length === 0 ||
+      bucketName.length === 0 
     ) {
       setFormMessage("Required Fields Missing!");
       return false;
@@ -309,23 +200,6 @@ function S3StepConfiguration({
       setFormMessage("");
       return true;
     }
-  };
-
-  //todo: can this use the initial value const above to reset everything?  Right now this means we have ot maintain the values in two places.
-  const handleJenkinsChange = (selectedOption) => {
-    setLoading(true);
-    if (selectedOption.id && selectedOption.configuration) {
-      setFormData({
-        ...formData,
-        toolConfigId: selectedOption.id,
-        jenkinsUrl: selectedOption.configuration.jenkinsUrl,
-        jUserId: selectedOption.configuration.jUserId,
-        jenkinsPort: selectedOption.configuration.jenkinsPort,
-        jAuthToken: selectedOption.configuration.jAuthToken,
-        bucketName: "",
-      });
-    }
-    setLoading(false);
   };
 
   const handleAWSChange = (selectedOption) => {
@@ -418,91 +292,14 @@ function S3StepConfiguration({
       {error && <ErrorDialog error={error} align={"top"} setError={setErrors}/>}
 
       <Form>
-        <Form.Group controlId="jenkinsList">
-          <Form.Label className="w-100">
-            Step Tool*
-            <OverlayTrigger
-              trigger="click"
-              rootClose
-              placement="left"
-              overlay={RegistryPopover(
-                jenkinsList[
-                  jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-                ]
-              )}
-            >
-              <FontAwesomeIcon
-                icon={faEllipsisH}
-                className="fa-pull-right pointer pr-1"
-                onClick={() => document.body.click()}
-              />
-            </OverlayTrigger>
-          </Form.Label>
-          {isJenkinsSearching ? (
-            <div className="form-text text-muted mt-2 p-2">
-              <FontAwesomeIcon
-                icon={faSpinner}
-                spin
-                className="text-muted mr-1"
-                fixedWidth
-              />
-              Loading Jenkins accounts from registry
-            </div>
-          ) : (
-            <>
-              {renderForm && jenkinsList && jenkinsList.length > 0 ? (
-                <>
-                  <DropdownList
-                    data={jenkinsList}
-                    value={
-                      jenkinsList[
-                        jenkinsList.findIndex(
-                          (x) => x.id === formData.toolConfigId
-                        )
-                      ]
-                    }
-                    valueField="id"
-                    textField="name"
-                    placeholder="Please select an account"
-                    filter="contains"
-                    onChange={handleJenkinsChange}
-                  />
-                </>
-              ) : (
-                <>
-                  <div className="form-text text-muted p-2">
-                    <FontAwesomeIcon
-                      icon={faExclamationCircle}
-                      className="text-muted mr-1"
-                      fixedWidth
-                    />
-                    No accounts have been registered for{" "}
-                    <span className="upper-case-first">{formData.service}</span>
-                    . Please go to
-                    <Link to="/inventory/tools"> Tool Registry</Link> and add an
-                    entry for this repository in order to proceed.
-                  </div>
-                </>
-              )}
-            </>
-          )}
-          {formData.toolConfigId && formData.toolConfigId.length > 0 && (
-            <Form.Label className="mt-2 pl-1">
-              <Link to={"/inventory/tools/" + formData.toolConfigId}>
-                <FontAwesomeIcon icon={faTools} className="pr-1" /> View/edit
-                this tool's Registry settings
-              </Link>
-            </Form.Label>
-          )}
-        </Form.Group>
-
+        
         {formMessage.length > 0 ? (
           <p className="info-text">{formMessage}</p>
         ) : null}
 
         {(formData.jobType === "SEND S3" ) && (
           <>
-          <Form.Group controlId="jenkinsList">
+          <Form.Group controlId="awsList">
             <Form.Label className="w-100">
               AWS Credentials*
               <OverlayTrigger
@@ -568,6 +365,7 @@ function S3StepConfiguration({
                 )}
               </>
             )}
+            </Form.Group>
             <Form.Group controlId="branchField">
               <Form.Label>Bucket Name*</Form.Label>
                 <Form.Control
@@ -580,7 +378,6 @@ function S3StepConfiguration({
                     setFormData({ ...formData, bucketName: e.target.value })
                   }
                 />
-          </Form.Group>
           </Form.Group>
             <Form.Group controlId="s3Step">
             <Form.Label>Build Step Info*</Form.Label>
