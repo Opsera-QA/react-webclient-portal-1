@@ -31,8 +31,7 @@ function Sidebar({ userData, hideSideBar }) {
 
   useEffect(() => {
     loadAccessRoles(userData)
-    console.log(userData)
-  }, [userData]);
+  }, [userData, hideSideBar]);
 
   const loadAccessRoles = async (user) => {
     const userAccess = await setAccessRoles(user);
@@ -56,6 +55,7 @@ function Sidebar({ userData, hideSideBar }) {
       }
     }
   } else {
+    console.log("else")
     return (<></>);
   }
 
