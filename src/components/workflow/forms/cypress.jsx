@@ -172,7 +172,7 @@ function CypressStepConfiguration({
       setIsRepoSearching(true);
       setRepoList([{ value: "", name: "Select One", isDisabled: "yes" }]);
     }
-  }, [formData.service, formData.gitToolId]);
+  }, [formData.service, formData.gitToolId, formData.gitCredential]);
 
 
   // fetch branches
@@ -772,6 +772,7 @@ function CypressStepConfiguration({
                     valueField="id"
                     textField="name"
                     value={
+                      jobsList && jobsList.length > 0 &&
                       jobsList[
                         jobsList.findIndex((x) => x._id === formData.toolJobId)
                         ]
@@ -797,7 +798,7 @@ function CypressStepConfiguration({
                 overlay={RegistryPopover(
                   accountsList[
                     accountsList.findIndex(
-                      (x) => x.toolId === formData.gitToolId,
+                      (x) => x.gitCredential === formData.gitCredential,
                     )
                     ],
                 )}
@@ -825,9 +826,10 @@ function CypressStepConfiguration({
             {accountsList !== undefined && accountsList.length > 0 ? (
               <DropdownList
                 data={accountsList}
-                valueField="toolId"
+                valueField="gitCredential"
                 textField="gitCredential"
-                value={
+                defaultValue={
+                  accountsList && accountsList.length > 0 &&
                   accountsList[
                     accountsList.findIndex(
                       (x) => x.toolId === formData.gitToolId,

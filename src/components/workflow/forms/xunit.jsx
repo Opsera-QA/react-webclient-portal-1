@@ -174,7 +174,7 @@ function XunitStepConfiguration({
       setIsRepoSearching(true);
       setRepoList([{ value: "", name: "Select One", isDisabled: "yes" }]);
     }
-  }, [formData.service, formData.gitToolId]);
+  }, [formData.service, formData.gitToolId, formData.gitCredential]);
 
   // fetch branches
   useEffect(() => {
@@ -799,7 +799,7 @@ function XunitStepConfiguration({
                 overlay={RegistryPopover(
                   accountsList[
                     accountsList.findIndex(
-                      (x) => x.toolId === formData.gitToolId
+                      (x) => x.gitCredential === formData.gitCredential
                     )
                   ]
                 )}
@@ -827,12 +827,13 @@ function XunitStepConfiguration({
             {accountsList !== undefined && accountsList.length > 0 ? (
               <DropdownList
                 data={accountsList}
-                valueField="toolId"
+                valueField="gitCredential"
                 textField="gitCredential"
-                value={
+                defaultValue={
+                  accountsList && accountsList.length > 0 &&
                   accountsList[
                     accountsList.findIndex(
-                      (x) => x.toolId === formData.gitToolId
+                      (x) => x.gitCredential === formData.gitCredential
                     )
                   ]
                 }
