@@ -12,7 +12,7 @@ const AuthContextProvider = (props) => {
     });
 
     const logoutUserContext = () => {
-      authClient.closeSession();
+      //authClient.closeSession();
       authClient.tokenManager.clear();
       window.location = "/";
     };
@@ -41,9 +41,11 @@ const AuthContextProvider = (props) => {
       }
 
       const tokenObject = await authClient.tokenManager.get("accessToken");
-      console.debug(tokenObject);
+      if (tokenObject.accessToken) {
+        console.debug(tokenObject.tokenType + ": " +tokenObject.accessToken.substring(0, 50));
+      }
 
-      if (!tokenObject) {
+      if (!tokenObject.accessToken) {
         console.log("!tokenObject");
         //token object isn't found, so get new one
         try {
@@ -64,8 +66,21 @@ const AuthContextProvider = (props) => {
     };
 
     const getIsAuthenticated = async () => {
-      const session = await authClient.session.exists();
-      return session;
+      //TODO: Look at current token to see if it's still valid, DONT use session exists
+      const tokenObject = await authClient.tokenManager.get("accessToken");
+
+      if (!tokenObject || !tokenObject.accessToken) {
+        console.debug("token not found in tokenManager: isAuthenticated: false")
+        return false;
+      } else {
+        console.debug("token exists: isAuthenticated: true")
+        return true;
+      }
+
+      //what if tokenManager removes expired token?
+
+      //const session = await authClient.session.exists();
+      //return session;
     };
 
     const getUserRecord = async () => {

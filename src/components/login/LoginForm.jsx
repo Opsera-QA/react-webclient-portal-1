@@ -56,23 +56,6 @@ const LoginForm = () => {
         setErrorMessage(err.message);
         setLoading(false);
       });
-
-    /*const oktaAuth = new OktaAuth({ issuer: issuer });
-    oktaAuth.signIn({ username, password })
-      .then(res => {
-        setLoading(false);
-        setErrorMessage(false);
-        setMessage(false);
-        const sessionToken = res.sessionToken;
-        setSessionToken(sessionToken);
-        // sessionToken is a one-use token, so make sure this is only called once
-        authService.redirect({ sessionToken });        
-      })
-      .catch(err => {
-        console.log("Found an error", err);
-        setErrorMessage(err.message);
-        setLoading(false);
-      });*/
   };
 
   const handleUsernameChange = (e) => {

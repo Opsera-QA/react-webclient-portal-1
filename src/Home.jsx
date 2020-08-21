@@ -15,7 +15,7 @@ function Home() {
   const getStatus = async () => {
     const isAuthentication = await getIsAuthenticated();
     if (isAuthentication) {
-      history.push("/overview");
+      window.location = "/overview";
     }
   };
 

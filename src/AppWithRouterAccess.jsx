@@ -89,14 +89,19 @@ const AppWithRouterAccess = () => {
   });
 
   axios.interceptors.request.use(async (config) => {
-      console.log("Users Interceptor: getting token from TokenManager for users request interceptor");
-      const tokenObject = await authClient.tokenManager.get("accessToken");
-      if (tokenObject && tokenObject.accessToken) {
-        config.headers["authorization"] = `Bearer ${tokenObject.accessToken}`;
-        config.headers["cache-control"] = `no-cache`;
-        console.debug("CONFIG: ", config.headers);
+      try {
+        const tokenObject = await authClient.tokenManager.get("accessToken");
+        if (tokenObject && tokenObject.accessToken) {
+          config.headers["authorization"] = `Bearer ${tokenObject.accessToken}`;
+          config.headers["cache-control"] = `no-cache`;
+          console.debug("Setting Token Header: ", tokenObject.accessToken.substring(0, 50));
+        }
+        return config;
+      } catch (err) {
+        console.error("Error in authClient.tokenManager via Users Axios.interceptors");
+        console.error(err);
+        window.location = "/login";
       }
-      return config;
     },
     function(error) {
       return Promise.reject(error);
@@ -144,18 +149,6 @@ const AppWithRouterAccess = () => {
       console.error(err);
       window.location = "/login";
     });
-
-    /*authClient.session.refresh().then(function(session) {
-        // existing session is now refreshed
-        console.log("refreshing token and then refetch users: ", session);
-        refetch();
-        //window.location.reload();
-      })
-      .catch(function(err) {
-        // there was a problem refreshing (the user may not have an existing session)
-        console.log("error refreshing token: ", err);
-        window.location = "/login";
-      });*/
   };
 
 
