@@ -50,7 +50,7 @@ function DtoItemInput({dataObject, setDataObject, fieldName}) {
     field &&
     <>
       <div className="m-2 form-group">
-        <div className="custom-text-input">
+        <div className="custom-text-input pr-2">
           <label><span>{field.label}{field.isRequired ? <span className="danger-red">*</span> : null} </span></label>
           <InputGroup className="custom-item-input">
             <FormControl
@@ -60,7 +60,7 @@ function DtoItemInput({dataObject, setDataObject, fieldName}) {
               onChange={e => setTextInput(e.target.value)}
               onKeyDown={inputKeyDown}
             />
-            <Button className="button button-add ml-3 py-0 px-1" variant="link" onClick={addItem} ><FontAwesomeIcon
+            <Button className="button btn-link btn-sm ml-3 py-0 pl-1 pr-2" variant="link" onClick={addItem} ><FontAwesomeIcon
               icon={faPlus}/></Button>
           </InputGroup>
           {/*<div className="invalid-feedback">{errorMessage}</div>*/}
