@@ -58,32 +58,55 @@ import ToolTypeDetailView from "./components/admin/tools/tool_type/tool_type_det
 import ToolIdentifierDetailView
   from "./components/admin/tools/tool_identifier/tool_identifier_detail_view/ToolIdentifierDetailView";
 import Axios from "axios";
-
 const OktaAuth = require("@okta/okta-auth-js");
 const config = require("./config");
 
 const onAuthRequired = () => {
-  console.log("AppWithRouterAccess.jsx: handling onAuthRequired function?");
   window.location = "/login";
 };
+
+const OKTA_CONFIG = {
+  issuer: process.env.REACT_APP_OKTA_ISSUER,
+  client_id: process.env.REACT_APP_OKTA_CLIENT_ID,
+  redirect_uri: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
+  disableHttpsCheck: false,
+  onAuthRequired: onAuthRequired,
+};
+
+const authClient = new OktaAuth({
+  issuer: OKTA_CONFIG.issuer,
+  clientId: OKTA_CONFIG.client_id,
+  redirectUri: OKTA_CONFIG.redirect_uri,
+});
+
+// Triggered when a token has expired
+authClient.tokenManager.on("expired", function(key, expiredToken) {
+  console.log("Token with key", key, " has expired:");
+  console.log(expiredToken);
+});
+// Triggered when a token has been renewed
+authClient.tokenManager.on("renewed", function(key, newToken, oldToken) {
+  console.log("Token with key", key, "has been renewed");
+  console.log("Old token:", oldToken);
+  console.log("New token:", newToken);
+});
+// Triggered when an OAuthError is returned via the API (typically during token renew)
+authClient.tokenManager.on("error", function(err) {
+  console.log("TokenManager error:", err);
+  // err.name
+  // err.message
+  // err.errorCode
+  // err.errorSummary
+  // err.tokenKey
+  // err.accessToken
+});
+
+
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
   const history = useHistory();
 
-  const OKTA_CONFIG = {
-    issuer: process.env.REACT_APP_OKTA_ISSUER,
-    client_id: process.env.REACT_APP_OKTA_CLIENT_ID,
-    redirect_uri: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
-    disableHttpsCheck: false,
-    onAuthRequired: onAuthRequired,
-  };
-
-  const authClient = new OktaAuth({
-    issuer: OKTA_CONFIG.issuer,
-    clientId: OKTA_CONFIG.client_id,
-    redirectUri: OKTA_CONFIG.redirect_uri,
-  });
   const axios = Axios.create({
     baseURL: config.apiServerUrl,
   });
@@ -100,7 +123,7 @@ const AppWithRouterAccess = () => {
       } catch (err) {
         console.error("Error in authClient.tokenManager via Users Axios.interceptors");
         console.error(err);
-        window.location = "/login";
+        //window.location = "/login";
       }
     },
     function(error) {
@@ -120,12 +143,11 @@ const AppWithRouterAccess = () => {
     if (error) {
       if (error.message.includes("401") && !hideSideBar) {
         console.log("useEffect on error with 401, auto refreshing...");
-        window.location = "/login";
+        //window.location = "/login";
       }
       console.error(error.message);
     }
   }, [error]);
-
 
   const enableSideBar = (path) => {
     if (path === "/" || path === "/login" || path === "/signup" || path === "/registration" || path === "/trial/registration") {
@@ -147,7 +169,7 @@ const AppWithRouterAccess = () => {
       // handle AuthSdkError (AuthSdkError will be thrown if app is in OAuthCallback state)
       console.error("Error in getWithRedirect via refreshToken");
       console.error(err);
-      window.location = "/login";
+      //window.location = "/login";
     });
   };
 
@@ -157,7 +179,7 @@ const AppWithRouterAccess = () => {
   } else {
     return (
       <Security {...OKTA_CONFIG}>
-        <AuthContextProvider userData={data} refreshToken={refreshToken}>
+        <AuthContextProvider userData={data} refreshToken={refreshToken} authClient={authClient}>
           <Navbar hideAuthComponents={hideSideBar} userData={data}/>
           <div className="container-fluid">
             <div className="d-flex flex-row">
@@ -167,7 +189,7 @@ const AppWithRouterAccess = () => {
                 <Route path="/" exact component={Home}/>
                 <SecureRoute path="/overview" exact component={Overview}/>
 
-                <Route path='/login' render={() => <Login/>}/>
+                <Route path='/login' render={() => <Login />}/>
                 <Route path='/implicit/callback' component={LoginCallback}/>
 
                 <Route path="/signup" exact component={Signup}/>

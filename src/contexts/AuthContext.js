@@ -3,13 +3,36 @@ import OktaAuth from "@okta/okta-auth-js";
 import PropTypes from "prop-types";
 
 const AuthContextProvider = (props) => {
-    const { userData, refreshToken } = props;
+    const { userData, refreshToken, authClient } = props;
 
-    const authClient = new OktaAuth({
+/*    const authClient = new OktaAuth({
       issuer: process.env.REACT_APP_OKTA_ISSUER,
       clientId: process.env.REACT_APP_OKTA_CLIENT_ID,
       redirectUri: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
     });
+
+
+    // Triggered when a token has expired
+    authClient.tokenManager.on("expired", function(key, expiredToken) {
+      console.log("Token with key", key, " has expired:");
+      console.log(expiredToken);
+    });
+    // Triggered when a token has been renewed
+    authClient.tokenManager.on("renewed", function(key, newToken, oldToken) {
+      console.log("Token with key", key, "has been renewed");
+      console.log("Old token:", oldToken);
+      console.log("New token:", newToken);
+    });
+    // Triggered when an OAuthError is returned via the API (typically during token renew)
+    authClient.tokenManager.on("error", function(err) {
+      console.log("TokenManager error:", err);
+      // err.name
+      // err.message
+      // err.errorCode
+      // err.errorSummary
+      // err.tokenKey
+      // err.accessToken
+    });*/
 
     const logoutUserContext = () => {
       //authClient.closeSession();
@@ -25,27 +48,24 @@ const AuthContextProvider = (props) => {
       refreshToken();
     };
 
-
-    // TODO: Consider replacing line 50 with this logic if that doesn't help!
-    //const idToken = await token.getWithoutPrompt();
-    //const { tokens } = idToken;
-    //return tokens.accessToken.value;
-
     const getAccessToken = async () => {
-      // user isn't authenticated
-      if (!getIsAuthenticated) {
+      const isAuthenticated = await getIsAuthenticated();
+      console.log(isAuthenticated)
+      if (!isAuthenticated) {
         console.log("!getAccessToken: redirecting to login");
         window.location = "/login"; //if not authenticated, may just need to take user to login page
-        //window.location.reload(); //possibly just trigger a reload which may be better?
-        return;
+        return false;
       }
 
       const tokenObject = await authClient.tokenManager.get("accessToken");
       if (tokenObject.accessToken) {
-        console.debug(tokenObject.tokenType + ": " +tokenObject.accessToken.substring(0, 50));
+        console.debug(tokenObject.tokenType + ": " + tokenObject.accessToken.substring(0, 50));
+        return tokenObject.accessToken;
+      } else {
+        return false;
       }
 
-      if (!tokenObject.accessToken) {
+      /*if (!tokenObject.accessToken) {
         console.log("!tokenObject");
         //token object isn't found, so get new one
         try {
@@ -61,26 +81,17 @@ const AuthContextProvider = (props) => {
           console.error(err);
           window.location = "/login";
         }
-      }
-      return tokenObject.accessToken;
+      }*/
+
     };
 
+
+
+
     const getIsAuthenticated = async () => {
-      //TODO: Look at current token to see if it's still valid, DONT use session exists
-      const tokenObject = await authClient.tokenManager.get("accessToken");
-
-      if (!tokenObject || !tokenObject.accessToken) {
-        console.debug("token not found in tokenManager: isAuthenticated: false")
-        return false;
-      } else {
-        console.debug("token exists: isAuthenticated: true")
-        return true;
-      }
-
-      //what if tokenManager removes expired token?
-
-      //const session = await authClient.session.exists();
-      //return session;
+      const idToken = await authClient.tokenManager.get("idToken");
+      const accessToken = await authClient.tokenManager.get("accessToken");
+      return !!(idToken && accessToken);
     };
 
     const getUserRecord = async () => {
@@ -169,6 +180,7 @@ const AuthContextProvider = (props) => {
 AuthContextProvider.propTypes = {
   userData: PropTypes.object,
   refreshToken: PropTypes.func,
+  authClient: PropTypes.object
 };
 
 export const AuthContext = createContext();

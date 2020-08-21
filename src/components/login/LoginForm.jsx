@@ -1,8 +1,7 @@
 
 import React, { useState, useEffect } from "react";
 import OktaAuth from "@okta/okta-auth-js";
-//import PropTypes from "prop-types";
-//import { useOktaAuth } from "@okta/okta-react";
+import { useOktaAuth } from "@okta/okta-react";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
@@ -10,8 +9,7 @@ import { axiosApiService } from "../../api/apiService";
 
 
 const LoginForm = () => {
-  //const { authService } = useOktaAuth();
-  //const [sessionToken, setSessionToken] = useState();
+  const { authService } = useOktaAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [resetEmailAddress, setResetEmailAddress] = useState("");
@@ -40,22 +38,23 @@ const LoginForm = () => {
       clientId: process.env.REACT_APP_OKTA_CLIENT_ID,
       redirectUri: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI
     });
+
+    //const oktaAuth = new OktaAuth({ issuer: issuer });
     authClient.signIn({ username, password })
-      .then(function(transaction) {
-        if (transaction.status === 'SUCCESS') {
-          authClient.token.getWithRedirect({
-            sessionToken: transaction.sessionToken,
-            responseType: 'id_token'
-          });
-        } else {
-          throw 'We cannot handle the ' + transaction.status + ' status';
-        }
+      .then(res => {
+        setLoading(false);
+        setErrorMessage(false);
+        setMessage(false);
+        const sessionToken = res.sessionToken;
+        // sessionToken is a one-use token, so make sure this is only called once
+        authService.redirect({ sessionToken });
       })
-      .catch(function(err) {
-        console.error(err);
+      .catch(err => {
+        console.log("Found an error", err);
         setErrorMessage(err.message);
         setLoading(false);
       });
+
   };
 
   const handleUsernameChange = (e) => {

@@ -22,9 +22,10 @@ function ErrorDialog({ error, align, type, setError }) {
   );
 
   const login = function() {
-    const { renewUserToken } = contextType;
-    console.log("Error.jsx: triggering login/renewuserToken function");
-    renewUserToken();
+    //const { renewUserToken } = contextType;
+    console.log("Error.jsx: triggering login function in error.jsx (window reload)");
+    //renewUserToken();
+    window.location.reload();
   };
 
   const clearError = () => {
