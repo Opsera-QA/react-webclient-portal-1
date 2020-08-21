@@ -140,6 +140,7 @@ const AppWithRouterAccess = () => {
       refetch();
     }).catch(function(err) {
       // handle AuthSdkError (AuthSdkError will be thrown if app is in OAuthCallback state)
+      console.error("Error in getWithRedirect via refreshToken");
       console.error(err);
       window.location = "/login";
     });

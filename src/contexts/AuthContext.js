@@ -3,7 +3,7 @@ import OktaAuth from "@okta/okta-auth-js";
 import PropTypes from "prop-types";
 
 const AuthContextProvider = (props) => {
-    const { userData, refreshToken, } = props;
+    const { userData, refreshToken } = props;
 
     const authClient = new OktaAuth({
       issuer: process.env.REACT_APP_OKTA_ISSUER,
@@ -26,11 +26,13 @@ const AuthContextProvider = (props) => {
     };
 
 
-  //const idToken = await token.getWithoutPrompt();
-  //const { tokens } = idToken;
-  //return tokens.accessToken.value;
+    // TODO: Consider replacing line 50 with this logic if that doesn't help!
+    //const idToken = await token.getWithoutPrompt();
+    //const { tokens } = idToken;
+    //return tokens.accessToken.value;
 
-  const getAccessToken = async () => {
+    const getAccessToken = async () => {
+      // user isn't authenticated
       if (!getIsAuthenticated) {
         console.log("!getAccessToken: redirecting to login");
         window.location = "/login"; //if not authenticated, may just need to take user to login page
@@ -39,12 +41,24 @@ const AuthContextProvider = (props) => {
       }
 
       const tokenObject = await authClient.tokenManager.get("accessToken");
+      console.debug(tokenObject);
+
       if (!tokenObject) {
         console.log("!tokenObject");
-        await authClient.token.getWithRedirect({
-          responseType: 'id_token'
-        });
-        return;
+        //token object isn't found, so get new one
+        try {
+          const response = await authClient.token.getWithRedirect({
+            responseType: 'id_token'
+          });
+          console.log("response in try block getAccessToken: ", response)
+          //todo: I think I will need to NOW lookup token again..
+          return false; //hopefully this will not blow up the requests..
+        }
+        catch (err) {
+          console.error("Error in getAccessToken via AuthContext");
+          console.error(err);
+          window.location = "/login";
+        }
       }
       return tokenObject.accessToken;
     };

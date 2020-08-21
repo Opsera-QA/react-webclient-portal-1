@@ -23,46 +23,52 @@ import {
 
 import "./sidebar.css";
 
+const hiddenNav = () => {
+  return <></>;
+};
+
 function Sidebar({ userData, hideSideBar }) {
   const contextType = useContext(AuthContext);
-  const { setAccessRoles, featureFlagItemInProd } = contextType;
-  const [hideInProdFF, setHideInProdFF] = useState(false);
-  const [userAccessRoles, setuserAccessRoles] = useState({});
+  const { setAccessRoles } = contextType;
+  const [renderOutput, setRenderOutput] = useState(hiddenNav);
+
 
   useEffect(() => {
-    loadAccessRoles(userData)
+    loadAccessRoles(userData);
   }, [userData, hideSideBar]);
 
   const loadAccessRoles = async (user) => {
-    const userAccess = await setAccessRoles(user);
-    setuserAccessRoles(userAccess);
+    const userAccessRoles = await setAccessRoles(user);
+
+    if (hideSideBar) {
+      setRenderOutput(hiddenNav);
+    } else if (userData && userAccessRoles) {
+      const renderFn = chooseRenderState(userAccessRoles);
+      setRenderOutput(renderFn);
+    }
   };
 
-  if (hideSideBar) {
-    return (<></>);
-  } else if (userData && userAccessRoles) {
-    if (userAccessRoles.OpseraAdministrator) {
-      return funcOpseraAdminNav(hideInProdFF);
+  const chooseRenderState = (accessRole) => {
+    if (accessRole.OpseraAdministrator) {
+      return funcOpseraAdminNav;
     } else {
-      if (userAccessRoles.Administrator) {
-        return funcAccountAdminNav(hideInProdFF);
-      } else if (userAccessRoles.Role === "power_user") {
+      if (accessRole.Administrator) {
+        return funcAccountAdminNav;
+      } else if (accessRole.Role === "power_user") {
         return funcAccountPowerUserNav();
-      } else if (userAccessRoles.Role === "free_trial") {
-        return funcFreeTrialNav();
+      } else if (accessRole.Role === "free_trial") {
+        return funcFreeTrialNav;
       } else {
-        return funcDefaultNav();
+        return funcDefaultNav;
       }
     }
-  } else {
-    console.log("else")
-    return (<></>);
-  }
+  };
 
+  return renderOutput;
 }
 
 
-const funcOpseraAdminNav = (hideInProdFF) => {
+const funcOpseraAdminNav = () => {
   return <>
     {/*<div className="d-block d-md-none pt-1 mr-2">
       <Button variant="outline-primary" onClick={handleToggleMenuClick}>
@@ -75,7 +81,8 @@ const funcOpseraAdminNav = (hideInProdFF) => {
       <div className="sidebar-container sticky-top pb-5 pt-1 pl-1">
         <div className="sidebar-menu pt-3">
           <NavLink className="nav-link" activeClassName="chosen" to="/overview">
-            <FontAwesomeIcon size="lg" icon={faHome} fixedWidth/> <span className="menu-text">Overview</span></NavLink>
+            <FontAwesomeIcon size="lg" icon={faHome} fixedWidth/> <span
+            className="menu-text">Overview</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" exact to="/dashboard">
             <FontAwesomeIcon size="lg" icon={faColumns} fixedWidth/> <span className="menu-text">Dashboards</span>
             <div className="caret"></div>
@@ -83,7 +90,8 @@ const funcOpseraAdminNav = (hideInProdFF) => {
 
           <div className="mt-4 mb-2 sub-header">Products</div>
           <NavLink className="nav-link" activeClassName="chosen" to="/platform">
-            <FontAwesomeIcon size="lg" icon={faBox} fixedWidth/> <span className="menu-text">Platforms</span></NavLink>
+            <FontAwesomeIcon size="lg" icon={faBox} fixedWidth/> <span
+            className="menu-text">Platforms</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/workflow">
             <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
             className="menu-text">Pipelines</span></NavLink>
@@ -93,7 +101,8 @@ const funcOpseraAdminNav = (hideInProdFF) => {
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
           <NavLink className="nav-link" activeClassName="chosen" to="/inventory/tools">
-            <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span className="menu-text">Tool Registry</span></NavLink>
+            <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
+            className="menu-text">Tool Registry</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/logs">
             <FontAwesomeIcon size="lg" icon={faArchive} fixedWidth/> <span className="menu-text">Logs</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/blueprint">
@@ -101,12 +110,14 @@ const funcOpseraAdminNav = (hideInProdFF) => {
             className="menu-text">Blueprints</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/tools">
-            <FontAwesomeIcon size="lg" icon={faLink} fixedWidth/> <span className="menu-text">API Tools</span></NavLink>
+            <FontAwesomeIcon size="lg" icon={faLink} fixedWidth/> <span
+            className="menu-text">API Tools</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/update">
             <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span
             className="menu-text">Updates</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/settings">
-            <FontAwesomeIcon size="lg" icon={faCogs} fixedWidth/> <span className="menu-text">Settings</span></NavLink>
+            <FontAwesomeIcon size="lg" icon={faCogs} fixedWidth/> <span
+            className="menu-text">Settings</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/admin">
             <FontAwesomeIcon size="lg" icon={faTools} fixedWidth/> <span
             className="menu-text">Admin Tools</span></NavLink>
@@ -117,8 +128,7 @@ const funcOpseraAdminNav = (hideInProdFF) => {
   </>;
 };
 
-
-const funcAccountPowerUserNav = (hideInProdFF) => {
+const funcAccountPowerUserNav = () => {
   return <>
     {/*<div className="d-block d-md-none pt-1 mr-2">
       <Button variant="outline-primary" onClick={handleToggleMenuClick}>
@@ -131,7 +141,8 @@ const funcAccountPowerUserNav = (hideInProdFF) => {
       <div className="sidebar-container sticky-top pb-5 pt-1 pl-1">
         <div className="sidebar-menu pt-3">
           <NavLink className="nav-link" activeClassName="chosen" to="/overview">
-            <FontAwesomeIcon size="lg" icon={faHome} fixedWidth/> <span className="menu-text">Overview</span></NavLink>
+            <FontAwesomeIcon size="lg" icon={faHome} fixedWidth/> <span
+            className="menu-text">Overview</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" exact to="/dashboard">
             <FontAwesomeIcon size="lg" icon={faColumns} fixedWidth/> <span className="menu-text">Dashboards</span>
             <div className="caret"></div>
@@ -139,7 +150,8 @@ const funcAccountPowerUserNav = (hideInProdFF) => {
 
           <div className="mt-4 mb-2 sub-header">Products</div>
           <NavLink className="nav-link" activeClassName="chosen" to="/platform">
-            <FontAwesomeIcon size="lg" icon={faBox} fixedWidth/> <span className="menu-text">Platforms</span></NavLink>
+            <FontAwesomeIcon size="lg" icon={faBox} fixedWidth/> <span
+            className="menu-text">Platforms</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/workflow">
             <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
             className="menu-text">Pipelines</span></NavLink>
@@ -149,7 +161,8 @@ const funcAccountPowerUserNav = (hideInProdFF) => {
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
           <NavLink className="nav-link" activeClassName="chosen" to="/inventory/tools">
-            <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span className="menu-text">Tool Registry</span></NavLink>
+            <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
+            className="menu-text">Tool Registry</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/logs">
             <FontAwesomeIcon size="lg" icon={faArchive} fixedWidth/> <span className="menu-text">Logs</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/blueprint">
@@ -157,19 +170,21 @@ const funcAccountPowerUserNav = (hideInProdFF) => {
             className="menu-text">Blueprints</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/tools">
-            <FontAwesomeIcon size="lg" icon={faLink} fixedWidth/> <span className="menu-text">API Tools</span></NavLink>
+            <FontAwesomeIcon size="lg" icon={faLink} fixedWidth/> <span
+            className="menu-text">API Tools</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/update">
             <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span
             className="menu-text">Updates</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/settings">
-            <FontAwesomeIcon size="lg" icon={faCogs} fixedWidth/> <span className="menu-text">Settings</span></NavLink>
+            <FontAwesomeIcon size="lg" icon={faCogs} fixedWidth/> <span
+            className="menu-text">Settings</span></NavLink>
         </div>
       </div>
     </div>
   </>;
 };
 
-const funcAccountAdminNav = (hideInProdFF) => {
+const funcAccountAdminNav = () => {
   return <>
     {/*<div className="d-block d-md-none pt-1 mr-2">
       <Button variant="outline-primary" onClick={handleToggleMenuClick}>
@@ -182,7 +197,8 @@ const funcAccountAdminNav = (hideInProdFF) => {
       <div className="sidebar-container sticky-top pb-5 pt-1 pl-1">
         <div className="sidebar-menu pt-3">
           <NavLink className="nav-link" activeClassName="chosen" to="/overview">
-            <FontAwesomeIcon size="lg" icon={faHome} fixedWidth/> <span className="menu-text">Overview</span></NavLink>
+            <FontAwesomeIcon size="lg" icon={faHome} fixedWidth/> <span
+            className="menu-text">Overview</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" exact to="/dashboard">
             <FontAwesomeIcon size="lg" icon={faColumns} fixedWidth/> <span className="menu-text">Dashboards</span>
             <div className="caret"></div>
@@ -190,7 +206,8 @@ const funcAccountAdminNav = (hideInProdFF) => {
 
           <div className="mt-4 mb-2 sub-header">Products</div>
           <NavLink className="nav-link" activeClassName="chosen" to="/platform">
-            <FontAwesomeIcon size="lg" icon={faBox} fixedWidth/> <span className="menu-text">Platforms</span></NavLink>
+            <FontAwesomeIcon size="lg" icon={faBox} fixedWidth/> <span
+            className="menu-text">Platforms</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/workflow">
             <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
             className="menu-text">Pipelines</span></NavLink>
@@ -200,7 +217,8 @@ const funcAccountAdminNav = (hideInProdFF) => {
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
           <NavLink className="nav-link" activeClassName="chosen" to="/inventory/tools">
-            <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span className="menu-text">Tool Registry</span></NavLink>
+            <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
+            className="menu-text">Tool Registry</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/logs">
             <FontAwesomeIcon size="lg" icon={faArchive} fixedWidth/> <span className="menu-text">Logs</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/blueprint">
@@ -208,50 +226,53 @@ const funcAccountAdminNav = (hideInProdFF) => {
             className="menu-text">Blueprints</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/tools">
-            <FontAwesomeIcon size="lg" icon={faLink} fixedWidth/> <span className="menu-text">API Tools</span></NavLink>
+            <FontAwesomeIcon size="lg" icon={faLink} fixedWidth/> <span
+            className="menu-text">API Tools</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/update">
             <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span
             className="menu-text">Updates</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/settings">
-            <FontAwesomeIcon size="lg" icon={faCogs} fixedWidth/> <span className="menu-text">Settings</span></NavLink>
+            <FontAwesomeIcon size="lg" icon={faCogs} fixedWidth/> <span
+            className="menu-text">Settings</span></NavLink>
 
         </div>
       </div>
     </div>
   </>;
 };
-
 
 const funcFreeTrialNav = () => {
   return <>
     <div className="w-20 pt-1 d-block">
       <div className="sidebar-container sticky-top pb-5 pt-1 pl-1">
-      <div className="sidebar-menu pt-3">
-        <NavLink className="nav-link" activeClassName="chosen" to="/overview">
-          <FontAwesomeIcon size="lg" icon={faHome} fixedWidth/> <span className="menu-text">Overview</span></NavLink>
+        <div className="sidebar-menu pt-3">
+          <NavLink className="nav-link" activeClassName="chosen" to="/overview">
+            <FontAwesomeIcon size="lg" icon={faHome} fixedWidth/> <span
+            className="menu-text">Overview</span></NavLink>
 
-        <div className="mt-4 mb-2 sub-header">Products</div>
-        <NavLink className="nav-link" activeClassName="chosen" to="/platform">
-          <FontAwesomeIcon size="lg" icon={faBox} fixedWidth/> <span className="menu-text">Platforms</span></NavLink>
-        <NavLink className="nav-link" activeClassName="chosen" to="/workflow">
-          <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
-          className="menu-text">Pipelines</span></NavLink>
-        <NavLink className="nav-link" activeClassName="chosen" to="/analytics">
-          <FontAwesomeIcon size="lg" icon={faChartBar} fixedWidth/> <span
-          className="menu-text">Analytics</span></NavLink>
+          <div className="mt-4 mb-2 sub-header">Products</div>
+          <NavLink className="nav-link" activeClassName="chosen" to="/platform">
+            <FontAwesomeIcon size="lg" icon={faBox} fixedWidth/> <span
+            className="menu-text">Platforms</span></NavLink>
+          <NavLink className="nav-link" activeClassName="chosen" to="/workflow">
+            <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
+            className="menu-text">Pipelines</span></NavLink>
+          <NavLink className="nav-link" activeClassName="chosen" to="/analytics">
+            <FontAwesomeIcon size="lg" icon={faChartBar} fixedWidth/> <span
+            className="menu-text">Analytics</span></NavLink>
 
-        <div className="mt-4 mb-2 sub-header">Resources</div>
-        <NavLink className="nav-link" activeClassName="chosen" to="/help">
-          <FontAwesomeIcon size="lg" icon={faLifeRing} fixedWidth/> <span className="menu-text">Help</span></NavLink>
-        <NavLink className="nav-link" activeClassName="chosen" to="/about">
-          <FontAwesomeIcon size="lg" icon={faAddressBook} fixedWidth/> <span
-          className="menu-text">Contact Us</span></NavLink>
+          <div className="mt-4 mb-2 sub-header">Resources</div>
+          <NavLink className="nav-link" activeClassName="chosen" to="/help">
+            <FontAwesomeIcon size="lg" icon={faLifeRing} fixedWidth/> <span
+            className="menu-text">Help</span></NavLink>
+          <NavLink className="nav-link" activeClassName="chosen" to="/about">
+            <FontAwesomeIcon size="lg" icon={faAddressBook} fixedWidth/> <span
+            className="menu-text">Contact Us</span></NavLink>
+        </div>
       </div>
-    </div>
     </div>
   </>;
 };
-
 
 const funcDefaultNav = () => {
   return <>
@@ -266,7 +287,8 @@ const funcDefaultNav = () => {
       <div className="sidebar-container sticky-top pb-5 pt-1 pl-1">
         <div className="sidebar-menu pt-3">
           <NavLink className="nav-link" activeClassName="chosen" to="/overview">
-            <FontAwesomeIcon size="lg" icon={faHome} fixedWidth/> <span className="menu-text">Overview</span></NavLink>
+            <FontAwesomeIcon size="lg" icon={faHome} fixedWidth/> <span
+            className="menu-text">Overview</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" exact to="/dashboard">
             <FontAwesomeIcon size="lg" icon={faColumns} fixedWidth/> <span className="menu-text">Dashboards</span>
             <div className="caret"></div>
@@ -274,7 +296,8 @@ const funcDefaultNav = () => {
 
           <div className="mt-4 mb-2 sub-header">Products</div>
           <NavLink className="nav-link" activeClassName="chosen" to="/platform">
-            <FontAwesomeIcon size="lg" icon={faBox} fixedWidth/> <span className="menu-text">Platforms</span></NavLink>
+            <FontAwesomeIcon size="lg" icon={faBox} fixedWidth/> <span
+            className="menu-text">Platforms</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/workflow">
             <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
             className="menu-text">Pipelines</span></NavLink>
@@ -284,7 +307,8 @@ const funcDefaultNav = () => {
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
           <NavLink className="nav-link" activeClassName="chosen" to="/inventory/tools">
-            <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span className="menu-text">Inventory</span></NavLink>
+            <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
+            className="menu-text">Inventory</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/logs">
             <FontAwesomeIcon size="lg" icon={faArchive} fixedWidth/> <span className="menu-text">Logs</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/blueprint">
