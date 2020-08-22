@@ -93,6 +93,7 @@ authClient.tokenManager.on("renewed", function(key, newToken, oldToken) {
 // Triggered when an OAuthError is returned via the API (typically during token renew)
 authClient.tokenManager.on("error", function(err) {
   console.log("TokenManager error:", err);
+  window.location.reload(false)
   // err.name
   // err.message
   // err.errorCode
@@ -159,8 +160,11 @@ const AppWithRouterAccess = () => {
 
   const refreshToken = () => {
     console.log("AppW/RouterAccess: refreshToken function call");
+    refetch();
 
-    authClient.token.getWithRedirect({
+    // if refretch failes, just do this:  window.location.reload(false);
+
+    /*authClient.token.getWithRedirect({
       responseType: "id_token",
     }).then(function(res) {
       console.log(res);
@@ -170,7 +174,7 @@ const AppWithRouterAccess = () => {
       console.error("Error in getWithRedirect via refreshToken");
       console.error(err);
       //window.location = "/login";
-    });
+    });*/
   };
 
 

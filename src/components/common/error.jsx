@@ -22,10 +22,10 @@ function ErrorDialog({ error, align, type, setError }) {
   );
 
   const login = function() {
-    //const { renewUserToken } = contextType;
+    const { renewUserToken } = contextType;
     console.log("Error.jsx: triggering login function in error.jsx (window reload)");
-    //renewUserToken();
-    window.location.reload();
+    renewUserToken(); //what should this do?  will getWithRedirect work or throw crash?
+    //window.location.reload(false); //using this worked without errors so fall back to this (or last commit) if need
   };
 
   const clearError = () => {
