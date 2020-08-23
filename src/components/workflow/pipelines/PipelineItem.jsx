@@ -69,7 +69,16 @@ const PipelineItem = ({item}) => {
   // TODO: Deal with multiple categories when we get there
   const getFirstCategory = () => {
     const type = item.type;
-    return type != null && type.length > 0 ? type[0] : "Generic Pipeline";
+    switch (type[0]) {
+    case "sfdc":
+      return "SalesForce"
+    case "ai-ml":
+      return "AI/ML"
+    case "sdlc":
+      return "SDLC"
+    default:
+      return ""
+    }
   }
 
   return (
@@ -80,7 +89,7 @@ const PipelineItem = ({item}) => {
             <div>
               {item.name}
             </div>
-            <div className="ml-auto mr-1">
+            <div className="ml-auto mr-1 text-muted small upper-case-first">
               {getFirstCategory()}
             </div>
           </div>

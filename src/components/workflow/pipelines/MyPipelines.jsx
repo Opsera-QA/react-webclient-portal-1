@@ -1,13 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
-import ErrorDialog from "../../common/status_notifications/error";
+import ErrorDialog from "components/common/status_notifications/error";
 import "../workflows.css";
-import LoadingDialog from "../../common/status_notifications/loading";
+import LoadingDialog from "components/common/status_notifications/loading";
 import PipelinesView from "./PipelinesView";
 
 function MyPipelines() {
   const [errors, setErrors] = useState();
   const [loading, setLoading] = useState(false);
-  const [currentTab, setCurrentTab] = useState("all");
+  const [currentTab, setCurrentTab] = useState("owner");
   
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();

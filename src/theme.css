@@ -157,7 +157,7 @@ button.bg-primary:focus {
 
 /* active*/
 .nav-pills .nav-item .active {
-  background-color:#1578dc;
+  background-color: #1578dc;
   color: white;
 }
 
@@ -201,7 +201,7 @@ a.text-primary:hover, a.text-primary:focus {
 }
 
 
-.dropdown-menu  .dropdown-item:hover {
+.dropdown-menu .dropdown-item:hover {
   color: #fff;
   background-color: #343a4080;
 }
@@ -232,11 +232,11 @@ a.text-primary:hover, a.text-primary:focus {
 
 /* Table Style Changes */
 .custom-table-filter {
-    font-size: .8em;
+  font-size: .8em;
 }
 
 .custom-table-filter .btn {
-    font-size: 1em;
+  font-size: 1em;
 }
 
 /* Table Style 1 */
@@ -245,7 +245,7 @@ a.text-primary:hover, a.text-primary:focus {
   /* border: 1px solid #d2d2d2; */
   font-size: .9em;
   width: 100%;
-  margin-bottom:2em;
+  margin-bottom: 2em;
 }
 
 /*.custom-table thead {*/
@@ -261,7 +261,7 @@ a.text-primary:hover, a.text-primary:focus {
 .custom-table th {
   background-color: #1578dc;
   color: #fff;
-  line-height:2.4em;
+  line-height: 2.4em;
   border-bottom: 1px solid gray;
   text-align: center;
   vertical-align: middle;
@@ -270,7 +270,7 @@ a.text-primary:hover, a.text-primary:focus {
 
 .custom-table .table-title-bar {
   color: #1578dc;
-  line-height:2.4em;
+  line-height: 2.4em;
   font-weight: bold;
   background-color: #dee2e6;
   width: 100%;
@@ -278,17 +278,17 @@ a.text-primary:hover, a.text-primary:focus {
 
 .custom-table .table-row {
   margin-bottom: 2em;
-  line-height:2em;
+  line-height: 2em;
   border-bottom: 1px solid #dee2e6;
 }
 
 .custom-table .cell-center {
-    text-align: center;
-    vertical-align: middle;
+  text-align: center;
+  vertical-align: middle;
 }
 
 .custom-table tr.inactive-row {
-  opacity:.6;
+  opacity: .6;
 }
 
 .custom-table .table-row {
@@ -304,62 +304,64 @@ a.text-primary:hover, a.text-primary:focus {
   padding-top: 1em;
   height: 2em;
 }
+
 /* End Table Style 1 */
 
 /* Table Style 2 */
 .custom-table-2 {
-    font-size: .9em;
-    width: 100%;
+  font-size: .9em;
+  width: 100%;
 }
 
 .custom-table-2 th {
-    background-color: #2588ec;
-    border-bottom: 1px solid #3598fc;
-    color: #fff;
-    line-height:2.4em;
-    text-align: center;
-    vertical-align: middle;
-    white-space: nowrap;
+  background-color: #2588ec;
+  border-bottom: 1px solid #3598fc;
+  color: #fff;
+  line-height: 2.4em;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
 }
 
 .custom-table-2 .no-header-text {
-    height: 2em;
+  height: 2em;
 }
 
 .custom-table-2 .table-title-bar {
-    color: #1578dc;
-    line-height:2.4em;
-    font-weight: bold;
-    background-color: #dee2e6;
-    width: 100%;
+  color: #1578dc;
+  line-height: 2.4em;
+  font-weight: bold;
+  background-color: #dee2e6;
+  width: 100%;
 }
 
 .custom-table-2 .table-row {
-    margin-bottom: 2em;
-    line-height:2em;
-    border-bottom: 1px solid #cdd1d5;
-    color: #334152;
-    background-color: #fff;
+  margin-bottom: 2em;
+  line-height: 2em;
+  border-bottom: 1px solid #cdd1d5;
+  color: #334152;
+  background-color: #fff;
 }
 
 .custom-table-2 .cell-center {
-    text-align: center;
-    vertical-align: middle;
+  text-align: center;
+  vertical-align: middle;
 }
 
 .custom-table-2 tr.inactive-row {
-    opacity:.6;
+  opacity: .6;
 }
 
 .custom-table-2 .table-row:hover {
-    background-color: #1578dc1f;
+  background-color: #1578dc1f;
 }
 
 .custom-table-2 .table-footer {
-    background-color: #1578dc1f;
-    padding-top: 1em;
-    height: 2em;
+  background-color: #1578dc1f;
+  padding-top: 1em;
+  height: 2em;
 }
+
 /* End Table Style 1 */
 
 /* End custom table styling */
@@ -398,6 +400,7 @@ div.modal-footer {
   background-color: #dee2e6;
   min-height: 2em;
 }
+
 /* End custom modal styling */
 
 /* Form Styling */
@@ -405,6 +408,7 @@ div.modal-footer {
   color: #334152;
   font-size: 1.25em;
 }
+
 /* End Form Styling */
 
 
@@ -415,7 +419,7 @@ div.modal-footer {
 
 /* Default Custom Tab styling */
 .default-custom-tabs .nav-tabs .nav-item.show .nav-link, .default-custom-tabs .nav-tabs .nav-link {
-  background: rgba(0,0,0,.05);
+  background: rgba(0, 0, 0, .05);
   color: #6c757d;
   border-bottom: none;
 }
@@ -429,6 +433,7 @@ div.modal-footer {
 .default-custom-tabs .nav-tabs .nav-item.show .nav-link, .default-custom-tabs .nav-tabs .nav-link:hover {
   border-color: #1578dc;
 }
+
 /* End Default Custom Tab styling */
 
 /* Begin Step Tabs Styling */
@@ -458,7 +463,7 @@ div.modal-footer {
 
 .step-tabs .nav-tabs {
   padding: 1px 15px 1px 1px;
-  background: rgba(0,0,0,.05);
+  background: rgba(0, 0, 0, .05);
   color: #6c757d;
   -webkit-clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 50%, calc(100% - 15px) 100%, 0 100%, 15px 50%);
   clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 50%, calc(100% - 15px) 100%, 0 100%, 15px 50%);
@@ -467,8 +472,8 @@ div.modal-footer {
 
 .step-tabs li {
   display: inline-block;
-  min-width:50px;
-  background: rgba(0,0,0,.05);
+  min-width: 50px;
+  background: rgba(0, 0, 0, .05);
   color: #6c757d;
   text-decoration: none;
   -webkit-clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 50%, calc(100% - 15px) 100%, 0 100%, 15px 50%);
@@ -492,6 +497,7 @@ div.modal-footer {
   -webkit-clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 50%, calc(100% - 15px) 100%, 0 100%);
   clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 50%, calc(100% - 15px) 100%, 0 100%);
 }
+
 /* End Step Tab Styling */
 
 /* Alternate Tab Styling */
@@ -509,7 +515,7 @@ div.modal-footer {
 .alternate-tabs .nav-tabs > li a {
   padding: 10px 30px;
   border-bottom: 5px solid #0f3e84;
-  background: rgba(0,0,0,.05);
+  background: rgba(0, 0, 0, .05);
   color: #6c757d;
 }
 
@@ -546,6 +552,7 @@ div.modal-footer {
   padding: 1em;
   color: #334152;
 }
+
 /* End Nav Tab Styling */
 
 /* Sign Up Form Styling */
@@ -619,6 +626,7 @@ div.modal-footer {
   margin-top: .2em;
   min-height: 2em;
 }
+
 /* End Sign Up Form Styling */
 
 /* Text Field Styling */
@@ -762,8 +770,9 @@ div.modal-footer {
 }
 
 .content-block-collapse {
-    border-radius: 5px;
-    background-color: rgba(161, 216, 255, .2);
+  border-radius: 5px;
+  background-color: rgba(203, 205, 205, 0.2);
+  min-height: 50vh;
 }
 
 .content-block-top {
@@ -772,13 +781,13 @@ div.modal-footer {
 }
 
 .table-content-block {
-    border-radius: 5px;
-    border: 1px solid #d2d2d2;
+  border-radius: 5px;
+  border: 1px solid #d2d2d2;
 }
 
 .content-container {
-    border: 1px solid #45a8fc;
-    /*border-radius: .25rem;*/
+  border: 1px solid #45a8fc;
+  /*border-radius: .25rem;*/
 }
 
 /* Content Card 1 Styling */
@@ -788,19 +797,19 @@ div.modal-footer {
 
 /*TODO: Style differently*/
 /*.content-card-1 .flat-top-content-block {*/
-    /*border: 1px solid #8fa4ba;*/
-    /*border-bottom-right-radius: 5px;*/
-    /*border-bottom-left-radius: 5px;*/
+/*border: 1px solid #8fa4ba;*/
+/*border-bottom-right-radius: 5px;*/
+/*border-bottom-left-radius: 5px;*/
 /*}*/
 
 .content-card-1 .content-block-header {
   background-color: #1578dc;
   color: #fff;
-  line-height:2.4em;
+  line-height: 2.4em;
   border-bottom: 5px solid #45a8fc;
 }
 
-.content-card-1  .content-block-body {
+.content-card-1 .content-block-body {
   background-color: #dee2e6;
   min-height: 150px;
 }
@@ -817,36 +826,36 @@ div.modal-footer {
 }
 
 .content-card-1 .selected {
-   background-color: #65c8fc;
-   color: #fff;
+  background-color: #65c8fc;
+  color: #fff;
 }
 
 .content-card-1 .even-row {
-    background-color: rgba(0,0,0,.05);
-    cursor: pointer;
+  background-color: rgba(0, 0, 0, .05);
+  cursor: pointer;
 }
 
 .content-card-1 .odd-row .selected {
-    background: #1578dc;
+  background: #1578dc;
 }
 
 .content-card-1 .even-row:hover {
-    background-color: #1578dc1f;
+  background-color: #1578dc1f;
 }
 
 .content-card-1 .odd-row {
-    background-color: #fff;
-    cursor: pointer;
+  background-color: #fff;
+  cursor: pointer;
 }
 
 .content-card-1 .odd-row:hover {
-    background-color: #1578dc1f;
+  background-color: #1578dc1f;
 }
 
 .content-card-1 .footer {
-    background-color: #1578dc1f;
-    padding-top: 1em;
-    height: 2em;
+  background-color: #1578dc1f;
+  padding-top: 1em;
+  height: 2em;
 }
 
 /* Content Card 2 Styling */
@@ -857,7 +866,7 @@ div.modal-footer {
 .content-card-2 .content-block-header {
   background-color: #28a745;
   color: #fff;
-  line-height:2.4em;
+  line-height: 2.4em;
   border-bottom: 5px solid #0f3e84;
 }
 
@@ -885,7 +894,7 @@ div.modal-footer {
 .content-card-3 .content-block-header {
   background-color: #0f3e84;
   color: #fff;
-  line-height:2.4em;
+  line-height: 2.4em;
   border-bottom: 5px solid #3f6eb4;
 }
 
@@ -900,55 +909,57 @@ div.modal-footer {
   padding-top: 1em;
   height: 1.5em;
 }
+
 .content-card-3 .content-block-body .content-image {
   height: 125px;
 }
+
 /* End Content Block Styling */
 
 /* Icon Styles */
 .delete-icon:hover {
-    color: #bb0000;
+  color: #bb0000;
 }
 
 /* TODO: Create general table dropdown, but for now use this*/
 .tableDropdown {
-    min-width: 250px;
+  min-width: 250px;
 }
 
 .multi-input-button {
-    width:32px;
+  width: 32px;
 }
 
 /* Breadcrumb trail styling */
 .breadcrumb {
-    background-color: #fafafb;
-    border-radius: .5rem;
+  background-color: #fafafb;
+  border-radius: .5rem;
 }
 
 /* End Breadcrumb trail styling */
 
 /* Action Bar styling */
 .action-bar {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 .action-bar-icon:hover {
-    color: #0f3e84;
+  color: #0f3e84;
 }
 
 /* End Action Bar styling */
 
 /* Detail View Styling */
 .detail-view-body {
-    min-height: 60vh;
+  min-height: 60vh;
 }
 
 .detail-view-body .detail-view-summary {
-    min-height: 30vh;
+  min-height: 30vh;
 }
 
 .detail-view-body .detail-view-detail-panel {
-    min-height: 30vh;
+  min-height: 30vh;
 }
 
 /* End Detail View Styling */

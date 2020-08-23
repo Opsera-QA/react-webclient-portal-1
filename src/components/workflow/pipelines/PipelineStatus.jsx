@@ -5,11 +5,12 @@ import TooltipWrapper from "../../common/tooltip/tooltipWrapper";
 
 function PipelineStatus({ icon, innerText, statusText }) {
   return (
-    <>
+    <><div className="d-flex justify-content-end">
       <TooltipWrapper innerText={innerText}>
-        <FontAwesomeIcon style={{"fontSize": "30px"}} icon={icon} className={statusText === "Running" ? "fa-spin mr-2" : "mr-2"}/>
+        <FontAwesomeIcon size="lg" icon={icon} className={statusText === "Running" ? "fa-spin mr-2" : "mr-2"}/>
       </TooltipWrapper>
-      <span className="mt-1 float-right">{statusText}</span>
+      <div className="text-muted">{statusText}</div>
+    </div>
     </>
   );
 }

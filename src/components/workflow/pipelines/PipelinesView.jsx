@@ -1,13 +1,14 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import { AuthContext } from "../../../contexts/AuthContext";
-import ErrorDialog from "../../common/status_notifications/error";
+import ErrorDialog from "components/common/status_notifications/error";
 import Pagination from "components/common/pagination";
 import "../workflows.css";
 import PipelineItem from "./PipelineItem";
 import PropTypes from "prop-types";
 import pipelineActions from "../pipeline-actions";
-import LoadingDialog from "../../common/status_notifications/loading";
+import LoadingDialog from "components/common/status_notifications/loading";
+import InfoDialog from "components/common/status_notifications/info";
 import PipelineWelcomeView from "./PipelineWelcomeView";
 
 function PipelinesView({ currentTab }) {
@@ -30,7 +31,6 @@ function PipelinesView({ currentTab }) {
 
     try {
       const pipelinesResponse = await pipelineActions.getPipelines(currentPage, pageSize, sortOption, currentTab, getAccessToken);
-      console.log("pipelinesResponse: " + JSON.stringify(pipelinesResponse));
       setData(pipelinesResponse.data);
     }
     catch (error)
@@ -53,16 +53,18 @@ function PipelinesView({ currentTab }) {
     setSortOption(sortOption);
   };
 
-  if (loading) {
+  if (loading || data.response == null) {
     return (<LoadingDialog size="sm"/>);
   } else if (errors) {
     return (<ErrorDialog error={errors}/>);
+  } else if (data && data.count === 0 && currentTab === "owner")  {
+    return (<><PipelineWelcomeView /></>)
   } else {
     return (
       <>
         <div className="px-2 max-content-width">
-          { data && data.count === 0 || data.response == null ?
-            <PipelineWelcomeView />
+          { (data && data.count === 0) ?
+            <div className="my-5"><InfoDialog message="No pipelines found" /></div>
             :
             <div className="mb-4">
               <Pagination total={data.count} currentPage={currentPage} pageSize={pageSize} location="top"
