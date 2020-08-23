@@ -4,11 +4,11 @@ import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import { axiosApiService } from "../../../../api/apiService";
-import LoadingDialog from "../../../common/loading";
-import ErrorDialog from "../../../common/error";
+import LoadingDialog from "../../../common/status_notifications/loading";
+import ErrorDialog from "../../../common/status_notifications/error";
 import SummaryCountBlocksView from "../summaryCountBlocksView";
 import TimeToRestoreBarChart from "../../charts/timeToRestoreBarChart.jsx";
-import InfoDialog from "../../../common/info";
+import InfoDialog from "../../../common/status_notifications/info";
 import {  Row } from "react-bootstrap";
 
 

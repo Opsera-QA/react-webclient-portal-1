@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
-import ErrorDialog from "../../common/error";
+import ErrorDialog from "../../common/status_notifications/error";
 import "../charts/charts.css";
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
-import LoadingDialog from "../../common/loading";
+import LoadingDialog from "../../common/status_notifications/loading";
 import GitlabMergeRequestTimeTakenBarChart from "../charts/GitlabMergeRequestTimeTakenBarChart";
 
 

@@ -17,8 +17,8 @@ import momentLocalizer from "react-widgets-moment";
 import DateTimePicker from "react-widgets/lib/DateTimePicker";
 import DropdownList from "react-widgets/lib/DropdownList";
 import "../workflows.css";
-import LoadingDialog from "components/common/loading";
-import ErrorDialog from "components/common/error";
+import LoadingDialog from "components/common/status_notifications/loading";
+import ErrorDialog from "components/common/status_notifications/error";
 
 
 const INITIAL_COMPONENT_TYPES_FORM = {

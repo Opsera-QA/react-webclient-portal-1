@@ -15,7 +15,7 @@ import Modal from "components/common/modal/modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import KpiActions from "../kpi-editor-actions";
-import Loading from "components/common/loading";
+import Loading from "components/common/status_notifications/loading";
 
 const INITIAL_DATA = {
   "name": "",

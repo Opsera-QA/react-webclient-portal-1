@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
-import LoadingDialog from "../../../../common/loading";
-import AccessDeniedDialog from "../../../../common/accessDeniedInfo";
+import LoadingDialog from "../../../../common/status_notifications/loading";
+import AccessDeniedDialog from "../../../../common/status_notifications/accessDeniedInfo";
 import BreadcrumbTrail from "../../../../common/navigation/breadcrumbTrail";
 import {AuthContext} from "../../../../../contexts/AuthContext";
 import toolTypeActions from "../../tool-management-actions";

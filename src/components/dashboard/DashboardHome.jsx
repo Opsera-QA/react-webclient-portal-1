@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../contexts/AuthContext";
 import { axiosApiService } from "../../api/apiService";
-import ErrorDialog from "../../components/common/error";
+import ErrorDialog from "../common/status_notifications/error";
 import DropdownList from "react-widgets/lib/DropdownList";
 // import PipelineDashboard from "../../components/dashboard/Pipeline";
 // import SecOpsDashboard from "../../components/dashboard/SecOps";
 // import TestingDashboard from "../../components/dashboard/Testing";
 import LogsDashboard from "../../components/dashboard/Logs";
-import LoadingDialog from "../../components/common/loading";
+import LoadingDialog from "../common/status_notifications/loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faQuestion } from "@fortawesome/free-solid-svg-icons";
 

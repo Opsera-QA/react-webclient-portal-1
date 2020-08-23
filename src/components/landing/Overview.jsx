@@ -6,7 +6,7 @@ import { Row, Col, Badge } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import SummaryCountBlocksView from "../analytics/views/summaryCountBlocksView";
 import FreeTrialLandingView from "../free_trial/landing_page/Landing";
-import LoadingView from "../common/loading";
+import LoadingView from "../common/status_notifications/loading";
 import "./landing.css";
 
 function OverviewLanding() {

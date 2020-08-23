@@ -13,11 +13,14 @@ import AnchoreIntegratorToolConfiguration from "../forms/anchore-integrator";
 import SonarToolConfiguration from "../forms/sonar";
 import AWSToolConfiguration from "../forms/aws";
 import SFDCToolConfiguration from "../forms/sfdc";
-import PipelineActions from "../../../workflow/actions";
+import PipelineActions from "../../../workflow/pipeline-actions";
 import {AuthContext} from "../../../../contexts/AuthContext";
 import {axiosApiService} from "../../../../api/apiService";
 import JenkinsToolConfiguration from "./tool_jobs/jenkins/JenkinsToolConfiguration";
-import {getPersistToast} from "../../../common/toasts/toasts";
+import {
+  getUpdateFailureResultDialog,
+  getUpdateSuccessResultDialog
+} from "../../../common/toasts/toasts";
 
 
 function ToolConfigurationPanel({ toolData }) {
@@ -27,20 +30,21 @@ function ToolConfigurationPanel({ toolData }) {
 
   const saveToolConfiguration = async (configurationItem) => {
     let newToolData = toolData;
-    // console.log("saving configuration item: ",  configurationItem.configuration);
     newToolData["configuration"] = configurationItem.configuration;
     
-    // console.log("newToolData: " + JSON.stringify(newToolData))
     const accessToken = await getAccessToken();
     const apiUrl = `/registry/${newToolData._id}/update`;
     try {
       let response = await axiosApiService(accessToken).post(apiUrl, newToolData.data);
-      let toast = getPersistToast(true, "update", "Tool Configuration", undefined, setShowToast);
+      let toast = getUpdateSuccessResultDialog( "Tool Configuration", setShowToast, "detailPanelTop");
       setToast(toast);
       setShowToast(true);
       // console.log("response: " + JSON.stringify(response));
-    } catch (err) {
-      console.log(err.message);
+    } catch (error) {
+      let toast = getUpdateFailureResultDialog("Tool Type", error.message, setShowToast, "detailPanelTop");
+      setToast(toast);
+      setShowToast(true);
+      console.error(error.message);
     }
   };
 
@@ -77,7 +81,7 @@ function ToolConfigurationPanel({ toolData }) {
       case "sfdc-configurator":
         return <SFDCToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
       default:
-        return null;
+        return <div className="text-center p-5 text-muted mt-5">Configuration is not currently available for this tool.</div>
     }
   }
   
@@ -85,7 +89,7 @@ function ToolConfigurationPanel({ toolData }) {
   return (
     <div className="m-2">
       {showToast && toast}
-      <div className="text-muted pb-3">Enter tool specific configuration information below.  These settings will be used in pipelines</div>
+      <div className="text-muted pb-3">Enter tool specific configuration information below.  These settings will be used for pipelines.</div>
       {toolData && getConfiguation(toolData.getData("tool_identifier").toLowerCase()) }
     </div>
   );

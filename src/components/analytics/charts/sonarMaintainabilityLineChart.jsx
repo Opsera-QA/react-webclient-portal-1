@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { ResponsiveLine } from "@nivo/line";
-import ErrorDialog from "../../common/error";
+import ErrorDialog from "../../common/status_notifications/error";
 import config from "./sonarMaintainabilityLineChartConfigs";
 import "./charts.css";
 import ModalLogs from "../../common/modal/modalLogs";

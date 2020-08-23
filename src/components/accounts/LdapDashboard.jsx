@@ -1,12 +1,12 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
-import LoadingDialog from "../common/loading";
+import LoadingDialog from "../common/status_notifications/loading";
 import { Link } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSitemap, faUserPlus, faUserFriends, faUser } from "@fortawesome/free-solid-svg-icons";
 import BreadcrumbTrail from "../common/navigation/breadcrumbTrail";
-import AccessDeniedDialog from "../common/accessDeniedInfo";
+import AccessDeniedDialog from "../common/status_notifications/accessDeniedInfo";
 
 
 function LdapDashboard() {

@@ -5,8 +5,8 @@ import LdapUserSummaryPanel from "./LdapUserSummaryPanel";
 import LdapUserDetailPanel from "./LdapUserDetailPanel";
 import accountsActions from "../../accounts-actions";
 import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
-import LoadingDialog from "../../../common/loading";
-import AccessDeniedDialog from "../../../common/accessDeniedInfo";
+import LoadingDialog from "../../../common/status_notifications/loading";
+import AccessDeniedDialog from "../../../common/status_notifications/accessDeniedInfo";
 import Model from "../../../../core/data_model/model";
 import {ldapUsersMetaData} from "../ldap-users-metadata";
 

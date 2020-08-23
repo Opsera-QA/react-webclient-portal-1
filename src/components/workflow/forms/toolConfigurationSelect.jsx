@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { Link } from "react-router-dom";
 import { axiosApiService } from "../../../api/apiService";
-import ErrorDialog from "../../common/error";
+import ErrorDialog from "../../common/status_notifications/error";
 import Select from "react-select";
 import { Form, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

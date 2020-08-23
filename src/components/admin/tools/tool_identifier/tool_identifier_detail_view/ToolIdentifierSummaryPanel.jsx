@@ -26,7 +26,7 @@ function ToolIdentifierSummaryPanel({toolIdentifierData, setToolIdentifierData})
         let response = await toolTypeActions.updateToolIdentifier({...newToolIdentifierData}, getAccessToken);
         let updatedDto = new Model(response.data, toolIdentifierData.metaData, false);
         setToolIdentifierData(updatedDto);
-        // let toast = getPersistToast(true, "update", "User", undefined, setShowToast);
+        // let toast = getPersistResultDialog(true, "update", "User", undefined, setShowToast);
         // setToast(toast);
         // setShowToast(true);
       }

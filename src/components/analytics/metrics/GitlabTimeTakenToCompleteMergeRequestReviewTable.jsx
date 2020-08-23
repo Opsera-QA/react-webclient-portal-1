@@ -1,9 +1,9 @@
 import React, { useEffect, useContext, useState } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
-import LoadingDialog from "../../common/loading";
-import InfoDialog from "../../common/info";
-import ErrorDialog from "../../common/error";
+import LoadingDialog from "../../common/status_notifications/loading";
+import InfoDialog from "../../common/status_notifications/info";
+import ErrorDialog from "../../common/status_notifications/error";
 import { Table }  from "react-bootstrap";
 
 function GitlabTimeTakenToCompleteMergeRequestReviewTable({ date }) {

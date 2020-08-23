@@ -15,8 +15,8 @@ import accountsActions from "components/accounts/accounts-actions.js";
 import "components/accounts/accounts.css";
 import PropTypes from "prop-types";
 import UserPanel from "../../../common/panels/user_panel/usersPanel";
-import LoadingDialog from "../../../common/loading";
-import {getErrorToast, getSuccessToast} from "../../../common/toasts/toasts";
+import LoadingDialog from "../../../common/status_notifications/loading";
+import {getErrorDialog, getSuccessDialog} from "../../../common/toasts/toasts";
 
 function LdapGroupManagePanel({ldapGroupData, ldapOrganizationData, loadData}) {
   const {name} = useParams();
@@ -116,7 +116,7 @@ function LdapGroupManagePanel({ldapGroupData, ldapOrganizationData, loadData}) {
       loadData();
     }
     catch (error) {
-      let errorToast = getErrorToast(error.message, setShowToast);
+      let errorToast = getErrorDialog(error.message, setShowToast);
       setToast(errorToast);
       setShowToast(true);
     }
@@ -128,7 +128,7 @@ function LdapGroupManagePanel({ldapGroupData, ldapOrganizationData, loadData}) {
     return (<>
       <div>
         <div className="mb-3">
-          {showToast && getSuccessToast("Group Members Saved Successfully", setShowToast)}
+          {showToast && getSuccessDialog("Group Members Saved Successfully", setShowToast)}
           <Row>
             <Col xs={5}>
               <div className="mb-2 text-right">

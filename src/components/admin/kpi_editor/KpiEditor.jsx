@@ -8,8 +8,8 @@ import { Link } from "react-router-dom";
 import KpiTable from "./KpiTable";
 import KpiActions from "./kpi-editor-actions";
 import NewKpiModal from "./NewKpiModal";
-import LoadingDialog from "components/common/loading";
-import AccessDeniedDialog from "components/common/accessDeniedInfo";
+import LoadingDialog from "components/common/status_notifications/loading";
+import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
 
 function KpiEditor() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);

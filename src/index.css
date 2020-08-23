@@ -521,10 +521,21 @@ a:hover, .active {
     padding: 5px;
 }
 
+.success-block {
+    background-color: green;
+    color: #fff;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
 .error-block {
     background-color: #dc3545;
     color: #fff;
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.top-dialog-detail-panel-block {
+    padding: 1em;
+    border-radius: 5px;
 }
 
 .top-error-block {

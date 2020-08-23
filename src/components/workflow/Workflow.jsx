@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams, useLocation } from "react-router-dom";
-import MyPipelines from "./myPipelines";
-import PipelineOverview from "./pipelineOverview";
-import PipelineWorkflowView from "./pipelineWorkflowView";
+import MyPipelines from "./pipelines/MyPipelines";
+import PipelineOverview from "./pipelines/pipeline_details/pipelineOverview";
+import PipelineWorkflowView from "./pipelines/pipeline_details/workflow/pipelineWorkflowView";
 import WorkflowCatalog from "./workflowCatalog";
 import "./workflows.css";
 

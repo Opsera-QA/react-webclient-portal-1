@@ -4,7 +4,7 @@ import { AuthContext } from "../../../contexts/AuthContext";  //REact Context AP
 import { ApiService } from "../../../api/apiService";
 import UserInfo from "./UserInfo";
 import SearchInput from "./SearchInput";
-import ErrorDialog from "../../common/error";
+import ErrorDialog from "../../common/status_notifications/error";
 import Tools from "../delete_tools/Tools";
 import { Link } from "react-router-dom";
 

@@ -1,7 +1,7 @@
 import React, { useReducer, useEffect, useState, useContext, useMemo } from "react";
 import { useHistory } from "react-router-dom";
-import ErrorDialog from "../../common/error";
-import LoadingDialog from "../../common/loading";
+import ErrorDialog from "../../common/status_notifications/error";
+import LoadingDialog from "../../common/status_notifications/loading";
 import { AuthContext } from "../../../contexts/AuthContext";
 import Modal from "../../common/modal/modal";
 import { ApiService, axiosApiService } from "../../../api/apiService";
@@ -9,7 +9,7 @@ import RegisteredUserTable from "./RegisteredUserTable";
 import Pagination from "components/common/pagination";
 import { Link } from "react-router-dom";
 
-import AccessDeniedDialog from "../../common/accessDeniedInfo";
+import AccessDeniedDialog from "../../common/status_notifications/accessDeniedInfo";
 
 function RegisteredUsers() {
   let history = useHistory();

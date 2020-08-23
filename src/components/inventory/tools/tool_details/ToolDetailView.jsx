@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
-import LoadingDialog from "../../../common/loading";
+import LoadingDialog from "../../../common/status_notifications/loading";
 import Model from "../../../../core/data_model/model";
 import ToolSummaryPanel from "./ToolSummaryPanel";
 import inventoryActions from "../../inventory-actions";

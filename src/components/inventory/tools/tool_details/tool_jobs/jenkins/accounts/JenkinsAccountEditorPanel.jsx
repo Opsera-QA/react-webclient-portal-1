@@ -2,20 +2,22 @@ import React, {useState, useEffect, useContext} from "react";
 import { Button, Modal, Row, Col, Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { axiosApiService } from "api/apiService";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave } from "@fortawesome/free-solid-svg-icons";
 import "components/inventory/tools/tools.css";
 
 import {platformList} from "./jenkins-create-account-metadata";
 import DropdownList from "react-widgets/lib/DropdownList";
 import {AuthContext} from "../../../../../../../contexts/AuthContext";
-import Loading from "../../../../../../common/loading";
 import DtoTextInput from "../../../../../../common/input/dto_input/dto-text-input";
-import TextInput from "../../../../../../common/input/text-input";
-import TextField from "../../../../../../common/form_fields/text-field";
+import LoadingDialog from "../../../../../../common/status_notifications/loading";
+import SaveButton from "../../../../../../common/buttons/SaveButton";
+import {
+  getCreateSuccessResultDialog,
+  getFormValidationErrorDialog, getLoadingErrorDialog,
+  getUpdateFailureResultDialog
+} from "../../../../../../common/toasts/toasts";
 
 
-function JenkinsAccountEditorPanel({ toolData, jenkinsAccountData, handleClose }) {
+function JenkinsAccountEditorPanel({ toolData, jenkinsAccountData }) {
   const { getAccessToken } = useContext(AuthContext);
   const [ platformType, setPlatformType ] = useState("");
   const [jenkinsAccountDataDto, setJenkinsAccountDataDto] = useState(undefined);
@@ -23,6 +25,7 @@ function JenkinsAccountEditorPanel({ toolData, jenkinsAccountData, handleClose }
   const [ account, setAccount ] = useState(undefined);
   const [showToast, setShowToast] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [toast, setToast] = useState({});
 
   useEffect(() => {
     loadData();
@@ -63,31 +66,47 @@ function JenkinsAccountEditorPanel({ toolData, jenkinsAccountData, handleClose }
 
       setAccountList(accountList);
     }
-    catch (err) {
-      console.log(err.message);
+    catch (error) {
+      let toast = getLoadingErrorDialog(error.message, setShowToast, "top");
+      setToast(toast);
+      setShowToast(true);
+      console.error(error.message);
     }
   };
 
   const createJenkinsAccount = async () => {
-    let payload = {
-      service: platformType,
-      credentailsToolId: account._id,
-      accountUserName: account.configuration.accountUsername,
-      ...jenkinsAccountDataDto.getPersistData()
-    };
-    try {
-      const response = await axiosApiService(getAccessToken).post("/registry/action/"+ toolData["_id"] + "/createcredential", { ...payload });
-      console.log("Response from server: " + JSON.stringify(response));
-      handleClose();
+    if(jenkinsAccountDataDto.isModelValid()) {
+      let payload = {
+        service: platformType,
+        credentailsToolId: account._id,
+        accountUserName: account.configuration.accountUsername,
+        ...jenkinsAccountDataDto.getPersistData()
+      };
+      try {
+        const response = await axiosApiService(getAccessToken).post("/registry/action/" + toolData["_id"] + "/createcredential", {...payload});
+        let toast = getCreateSuccessResultDialog("Jenkins Account Credentials", setShowToast, "top");
+        setToast(toast);
+        setShowToast(true);
+      } catch (error) {
+        let toast = getUpdateFailureResultDialog("Jenkins Account Credentials", error.message, setShowToast, "detailPanelTop");
+        setToast(toast);
+        setShowToast(true);
+        console.error(error.message);
+      }
     }
-    catch (err) {
-      console.log(err.message);
+    else {
+      let toast = getFormValidationErrorDialog(setShowToast);
+      setToast(toast);
+      setShowToast(true);
     }
   };
 
-  return (
-    <>
-      {isLoading ? <Loading size="sm" /> :
+  if (isLoading) {
+    return (<LoadingDialog size="sm"/>);
+  } else {
+    return (
+      <>
+        {showToast && toast}
       <div className="scroll-y full-height">
         <Row>
           <Col lg={12}>
@@ -129,21 +148,20 @@ function JenkinsAccountEditorPanel({ toolData, jenkinsAccountData, handleClose }
             </div>
           </Col>
         </Row>
-
-        <div className="text-right m-2">
-          <Button size="sm" variant="primary" onClick={createJenkinsAccount}>
-            <FontAwesomeIcon icon={faSave} fixedWidth/>Add Credentials
-          </Button>
-        </div>
-      </div>}
+        <Row>
+          <div className="ml-auto mt-3 px-3">
+            <SaveButton recordDto={jenkinsAccountDataDto} altButtonText={"Add Jenkins Credentials"} type={"Jenkins Account Credentials"} createRecord={createJenkinsAccount} />
+          </div>
+        </Row>
+      </div>
     </>
   );
+  }
 }
 
 JenkinsAccountEditorPanel.propTypes = {
   toolData: PropTypes.object,
   jenkinsAccountData: PropTypes.object,
-  handleClose: PropTypes.func,
 };
 
 

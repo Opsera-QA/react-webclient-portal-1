@@ -4,8 +4,8 @@ import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
 import SfdcPipelineComponents from "./sfdcPipelineComponents";
 import SfdcPipelineModifiedFiles from "./sfdcPipelineModifiedFiles";
-import ErrorDialog from "components/common/error";
-import PipelineActions from "../actions";
+import ErrorDialog from "components/common/status_notifications/error";
+import PipelineActions from "../pipeline-actions";
 
 const SfdcPipelineWizard = ({ pipelineId, pipeline, handlePipelineWizardRequest, handleClose, refreshPipelineActivityData }) => {
   const { getAccessToken } = useContext(AuthContext);

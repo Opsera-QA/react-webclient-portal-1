@@ -1,16 +1,16 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "../../contexts/AuthContext"; 
-import { axiosApiService } from "../../api/apiService";
-import LoadingDialog from "../common/loading";
-import ErrorDialog from "../common/error";
+import { AuthContext } from "../../../../../contexts/AuthContext";
+import { axiosApiService } from "../../../../../api/apiService";
+import LoadingDialog from "../../../../common/status_notifications/loading";
+import ErrorDialog from "../../../../common/status_notifications/error";
 import { Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import SourceRepositoryConfig from "./forms/sourceRepository";
-import StepNotificationConfig from "./forms/notifications";
-import StepToolConfiguration from "./forms/stepToolConfiguration";
-import StepConfiguration from "./forms/stepConfiguration";
+import SourceRepositoryConfig from "../../../forms/sourceRepository";
+import StepNotificationConfig from "../../../forms/notifications";
+import StepToolConfiguration from "../../../forms/stepToolConfiguration";
+import StepConfiguration from "../../../forms/stepConfiguration";
 
 
 const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPlan }) => {

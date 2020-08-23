@@ -1,16 +1,21 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import DropdownList from "react-widgets/lib/DropdownList";
 import accountsActions from "../../accounts-actions";
-import Loading from "../../../common/loading";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import {capitalizeFirstLetter} from "../../../common/helpers/string-helpers";
-import {getFromValidationErrorToast, getPersistToast} from "../../../common/toasts/toasts";
+import {
+  getCreateFailureResultDialog,
+  getCreateSuccessResultDialog,
+  getFormValidationErrorDialog,
+  getUpdateFailureResultDialog, getUpdateSuccessResultDialog
+} from "../../../common/toasts/toasts";
 import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
 import Model, {DataState} from "../../../../core/data_model/model";
+import LoadingDialog from "../../../common/status_notifications/loading";
+import SaveButton from "../../../common/buttons/SaveButton";
 
 function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganizationData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -34,35 +39,29 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganization
 
   const loadOpseraUsers = async () => {
     const response = await accountsActions.getUsers(getAccessToken);
-    // console.log("Opsera Users: \n" + JSON.stringify(Object.keys(response.data)));
-
     let parsedUserNames = [];
     Object.keys(response.data["users"]).length > 0 && response.data["users"].map(user => {
       parsedUserNames.push({text: (user["firstName"] + " " + user["lastName"]) + ": " + user["email"], id: user});
     });
-    // console.log("Parsed Organization Names: " + JSON.stringify(parsedUserNames));
     setOpseraUsersList(parsedUserNames);
   };
 
-  const createOrganization = async (newLdapOrganizationData) => {
-    // console.log("Persisting new organization to DB: " + JSON.stringify(ldapOrganizationDataDto));
-
+  const createOrganization = async () => {
     if(ldapOrganizationDataDto.isModelValid()) {
-      let createLdapOrganizationResponse = await accountsActions.createOrganization(ldapOrganizationDataDto, getAccessToken);
-      // console.log("createLdapResponse: ", JSON.stringify(createLdapOrganizationResponse));
-
-      if (createLdapOrganizationResponse.error != null) {
-        const errorMsg = `Microservice error reported creating the organization for : ${newLdapOrganizationData.accountName}.  Error returned: ${JSON.stringify(createLdapOrganizationResponse.error.message, null, 2)}`;
-        let toast = getPersistToast(false, "create", "user", errorMsg, setShowToast);
+      try {
+        let createLdapOrganizationResponse = await accountsActions.createOrganization(ldapOrganizationDataDto, getAccessToken);
+        let toast = getCreateSuccessResultDialog("Organization", setShowToast, "top");
         setToast(toast);
         setShowToast(true);
-      }
-      else {
-        handleClose();
+      } catch (error) {
+        let toast = getCreateFailureResultDialog("Organization", error.message, setShowToast, "top");
+        setToast(toast);
+        setShowToast(true);
+        console.error(error.message);
       }
     }
     else {
-      let toast = getFromValidationErrorToast(setShowToast);
+      let toast = getFormValidationErrorDialog(setShowToast);
       setToast(toast);
       setShowToast(true);
     }
@@ -71,26 +70,22 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganization
   const updateLdapOrganization = async () => {
     if(ldapOrganizationDataDto.isModelValid()) {
       try {
-        let updateOrganizationResponse = await accountsActions.updateOrganization(ldapOrganizationDataDto, getAccessToken);
-        console.log("Response data: " + JSON.stringify(updateOrganizationResponse.data));
-        // setLdapOrganizationData({ldapOrganizationData, ...response.data });
-        let toast = getPersistToast(true, "update", "Organization", undefined, setShowToast);
-        setToast(toast);
-        setShowToast(true);
-        let updatedDto = new Model(updateOrganizationResponse.data, ldapOrganizationDataDto.metaData, false);
-        setLdapOrganizationData(updatedDto);
+          let updateOrganizationResponse = await accountsActions.updateOrganization(ldapOrganizationDataDto, getAccessToken);
+          let toast = getUpdateSuccessResultDialog( "Organization", setShowToast, "detailPanelTop");
+          setToast(toast);
+          setShowToast(true);
+          let updatedDto = new Model(updateOrganizationResponse.data, ldapOrganizationDataDto.metaData, false);
+          setLdapOrganizationData(updatedDto);
         setLdapOrganizationDataDto(updatedDto);
+        } catch (error) {
+          let toast = getUpdateFailureResultDialog("Organization", error.message, setShowToast, "detailPanelTop");
+          setToast(toast);
+          setShowToast(true);
+          console.error(error.message);
+        }
       }
-      catch (err) {
-        console.log(err.message);
-        let toast = getFromValidationErrorToast("", setShowToast);
-        setToast(toast);
-        setShowToast(true);
-      }
-    }
     else {
-      // TODO: Wire errors up
-      let toast = getFromValidationErrorToast("", setShowToast);
+      let toast = getFormValidationErrorDialog(setShowToast);
       setToast(toast);
       setShowToast(true);
     }
@@ -99,18 +94,16 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganization
   const handleOpseraUserChange = (selectedOption) => {
     let option = selectedOption.id;
     setCurrentOpseraUser(option);
-    // console.log("Setting opsera account to: " + JSON.stringify(selectedOption));
-    // console.log("option.organizationName: " + option["organizationName"]);
     ldapOrganizationDataDto.setData("orgOwner", option["firstName"] + " " + option["lastName"]);
     ldapOrganizationDataDto.setData("orgOwnerEmail", option["email"]);
     setLdapOrganizationDataDto({...ldapOrganizationDataDto});
   };
 
-  return (
-    <>
-      {isLoading ? <Loading size="sm" /> : null}
-
-      {!isLoading && <>
+  if (isLoading) {
+    return (<LoadingDialog size="sm"/>);
+  } else {
+    return (
+      <>
         <div className="scroll-y full-height">
           {showToast && toast}
           <Row>
@@ -154,20 +147,18 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganization
             </Col>
             <Col lg={12}>
               <DtoTextInput disabled={true} fieldName={"subscription"} dataObject={ldapOrganizationDataDto} setDataObject={setLdapOrganizationDataDto}/>
-              {/*<ItemInput disabled={true} field={ fields.subscription } setData={setFormField} formData={formData}/>*/}
             </Col>
           </Row>
           <Row>
-            <div className="ml-auto px-3">
-              {ldapOrganizationDataDto.isNew() ? <Button size="sm" variant="primary" onClick={() => createOrganization(ldapOrganizationData)}>Create Organization</Button>
-                : <Button size="sm" variant="primary" disabled={ldapOrganizationDataDto.dataState === DataState.LOADED} onClick={() => updateLdapOrganization()}>Save Changes</Button>
-              }
+            <div className="ml-auto mt-3 px-3">
+              <SaveButton recordDto={ldapOrganizationDataDto} createRecord={createOrganization}
+                          updateRecord={updateLdapOrganization} type={"Organization"}/>
             </div>
           </Row>
         </div>
-      </>}
-    </>
-  );
+      </>
+    );
+  }
 }
 
 LdapOrganizationEditorPanel.propTypes = {

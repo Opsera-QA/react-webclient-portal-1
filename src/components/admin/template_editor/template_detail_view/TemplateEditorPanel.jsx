@@ -2,9 +2,9 @@ import React, { useState, useEffect, useContext } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext";
 import Model, {DataState} from "../../../../core/data_model/model";
-import {getFromValidationErrorToast, getPersistToast} from "../../../common/toasts/toasts";
+import {getFormValidationErrorDialog, getPersistResultDialog} from "../../../common/toasts/toasts";
 import templateActions from "../template-actions";
-import Loading from "../../../common/loading";
+import Loading from "../../../common/status_notifications/loading";
 import PropTypes from "prop-types";
 import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
 import DtoItemInput from "../../../common/input/dto_input/item-displayer/dto-item-input";
@@ -51,7 +51,7 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
         let updatedDto = new Model(response.data, templateDataDto.metaData, false);
         setTemplateDataDto(updatedDto);
         setTemplateData(updatedDto);
-        let toast = getPersistToast(true, "update", "Template", undefined, setShowToast);
+        let toast = getPersistResultDialog(true, "update", "Template", undefined, setShowToast);
         setToast(toast);
         setShowToast(true);
       }
@@ -60,7 +60,7 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
       }
     }
     else {
-      let toast = getFromValidationErrorToast(setShowToast);
+      let toast = getFormValidationErrorDialog(setShowToast);
       setToast(toast);
       setShowToast(true);
     }
@@ -83,7 +83,7 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
       }
     }
     else {
-      let toast = getFromValidationErrorToast(setShowToast);
+      let toast = getFormValidationErrorDialog(setShowToast);
       setToast(toast);
       setShowToast(true);
     }

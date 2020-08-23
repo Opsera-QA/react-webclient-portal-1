@@ -1,8 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { axiosApiService } from "../../api/apiService";
+import { axiosApiService } from "../../../../../api/apiService";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
-import Modal from "../common/modal/modal";
+import Modal from "../../../../common/modal/modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSearchPlus,
@@ -21,11 +21,11 @@ import {
   faBan,
   faTerminal, faToolbox,
 } from "@fortawesome/free-solid-svg-icons";
-import ModalActivityLogs from "../common/modal/modalActivityLogs";
+import ModalActivityLogs from "../../../../common/modal/modalActivityLogs";
 //import ApprovalModal from "./approvalModal";
 import StepToolActivityView from "./stepToolActivityView";
 import { format } from "date-fns";
-import "./workflows.css";
+import "../../../workflows.css";
 
 
 const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineId, accessToken, editWorkflow, parentCallbackEditItem, deleteStep, parentHandleViewSourceActivityLog, customerAccessRules, parentWorkflowStatus }) => {

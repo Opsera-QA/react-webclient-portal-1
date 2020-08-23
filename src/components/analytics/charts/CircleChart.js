@@ -4,13 +4,13 @@
 // Persona - Developer/Manager/Executive
 
 import PropTypes from "prop-types";
-import ErrorDialog from "../../common/error";
+import ErrorDialog from "../../common/status_notifications/error";
 import "./charts.css";
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
-import LoadingDialog from "../../common/loading";
-import InfoDialog from "../../common/info";
+import LoadingDialog from "../../common/status_notifications/loading";
+import InfoDialog from "../../common/status_notifications/info";
 
 function CircleChart( { persona, date } ) {
   const contextType = useContext(AuthContext);

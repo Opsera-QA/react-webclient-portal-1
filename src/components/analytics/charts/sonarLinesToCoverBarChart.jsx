@@ -9,7 +9,7 @@ import { ResponsiveBar } from "@nivo/bar";
 import config from "./sonarCodeCoverageBarChartConfigs";
 import "./charts.css";
 import ModalLogs from "../../common/modal/modalLogs";
-import InfoDialog from "../../common/info";
+import InfoDialog from "../../common/status_notifications/info";
 
 function SonarLinesToCoverBarChart({ data, persona }) {
   const [showModal, setShowModal] = useState(false);

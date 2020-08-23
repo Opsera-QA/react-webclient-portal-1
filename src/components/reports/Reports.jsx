@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { Form, Tooltip, OverlayTrigger, Button, Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import ErrorDialog from "../common/error";
+import ErrorDialog from "../common/status_notifications/error";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext"; //New AuthContext State 
 import { ApiService } from "../../api/apiService";

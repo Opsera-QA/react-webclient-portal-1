@@ -5,14 +5,17 @@ import {AuthContext} from "contexts/AuthContext";
 import accountsActions from "components/accounts/accounts-actions.js";
 import Row from "react-bootstrap/Row";
 import {
-  getFromValidationErrorToast,
-  getPersistToast,
+  getCreateFailureResultDialog,
+  getCreateSuccessResultDialog,
+  getFormValidationErrorDialog,
+  getUpdateFailureResultDialog, getUpdateSuccessResultDialog,
 } from "../../../common/toasts/toasts";
 import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
 import DtoSelectInput from "../../../common/input/dto_input/dto-select-input";
 import DtoToggleInput from "../../../common/input/dto_input/dto-toggle-input";
 import Model, {DataState} from "../../../../core/data_model/model";
-import LoadingDialog from "../../../common/loading";
+import LoadingDialog from "../../../common/status_notifications/loading";
+import SaveButton from "../../../common/buttons/SaveButton";
 
 function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, ldapOrganizationData, setLdapGroupData, handleClose}) {
   const {getAccessToken} = useContext(AuthContext);
@@ -20,7 +23,7 @@ function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, ldapOrganization
   const [showToast, setShowToast] = useState(false);
   const [toast, setToast] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const groupTypeOptions = [{value: "project", text: "project"},{value: "tag", text: "tag"},{value: "user", text: "user"}];
+  const groupTypeOptions = [{value: "project", text: "project", groupId: "Group Types"},{value: "tag", text: "tag", groupId: "Group Types"},{value: "user", text: "user", groupId: "Group Types"}];
 
   useEffect(() => {
     loadData();
@@ -34,11 +37,20 @@ function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, ldapOrganization
 
   const createGroup = async () => {
     if (ldapGroupDataDto.isModelValid()) {
-      const response = await accountsActions.createGroup(ldapOrganizationData, ldapGroupDataDto, currentUserEmail, getAccessToken);
-      handleClose();
+      try {
+        const response = await accountsActions.createGroup(ldapOrganizationData, ldapGroupDataDto, currentUserEmail, getAccessToken);
+        let toast = getCreateSuccessResultDialog("Group", setShowToast, "top");
+        setToast(toast);
+        setShowToast(true);
+      } catch (error) {
+        let toast = getCreateFailureResultDialog("Group", error.message, setShowToast, "top");
+        setToast(toast);
+        setShowToast(true);
+        console.error(error.message);
+      }
     }
     else {
-      let toast = getFromValidationErrorToast(setShowToast);
+      let toast = getFormValidationErrorDialog(setShowToast);
       setToast(toast);
       setShowToast(true);
     }
@@ -46,18 +58,23 @@ function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, ldapOrganization
 
   const updateGroup = async () => {
     if (ldapGroupDataDto.isModelValid()) {
-      // console.log("Payload: " + JSON.stringify(payload));
-      const response = await accountsActions.updateGroup(ldapOrganizationData, ldapGroupDataDto, getAccessToken);
-      // console.log("Response: " + JSON.stringify(response.data));
-      let toast = getPersistToast(true, "update", "Group member", undefined, setShowToast);
-      let updatedDto = new Model(response.data, ldapGroupDataDto.metaData, false);
-      setLdapGroupData(updatedDto);
-      setLdapGroupDataDto(updatedDto);
-      setToast(toast);
-      setShowToast(true);
+      try {
+        const response = await accountsActions.updateGroup(ldapOrganizationData, ldapGroupDataDto, getAccessToken);
+        let toast = getUpdateSuccessResultDialog("Group", undefined, setShowToast);
+        let updatedDto = new Model(response.data, ldapGroupDataDto.metaData, false);
+        setLdapGroupData(updatedDto);
+        setLdapGroupDataDto(updatedDto);
+        setToast(toast);
+        setShowToast(true);
+      } catch (error) {
+        let toast = getUpdateFailureResultDialog("Group", error.message, setShowToast, "detailPanelTop");
+        setToast(toast);
+        setShowToast(true);
+        console.error(error.message);
+      }
     }
     else {
-      let toast = getFromValidationErrorToast(setShowToast);
+      let toast = getFormValidationErrorDialog(setShowToast);
       setToast(toast);
       setShowToast(true);
     }
@@ -94,11 +111,9 @@ function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, ldapOrganization
               </Col>
             </Row>
             <Row>
-              <div className="ml-auto px-3">
-                {ldapGroupDataDto.isNew() ? <Button size="sm" variant="primary" onClick={() => createGroup()}>Create Group</Button>
-                  : <Button size="sm" variant="primary" disabled={ldapGroupDataDto.dataState === DataState.LOADED}
-                            onClick={() => updateGroup()}>Save Changes</Button>
-                }
+              <div className="ml-auto mt-3 px-3">
+                <SaveButton recordDto={ldapGroupDataDto} createRecord={createGroup}
+                            updateRecord={updateGroup} type={"Group"}/>
               </div>
             </Row>
           </>

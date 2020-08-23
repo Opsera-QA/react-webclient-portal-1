@@ -1,9 +1,10 @@
 // This is where the custom ToolsConfiguration.configuration form will reside for this tool.
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Form, Button } from "react-bootstrap";
+import {Form, Button, Row} from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import {getFormValidationErrorDialog} from "../../../common/toasts/toasts";
 
 
 //This must match the form below and the data object expected.  Each tools' data object is different
@@ -21,8 +22,9 @@ const INITIAL_DATA = {
 // ONLY allow changing of the configuration and threshold properties of "tool"!
 function GitlabToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVault }) {
   const [formData, setFormData] = useState(INITIAL_DATA);
-  const [formMessage, setFormMessage] = useState("");
   const [isSaving, setIsSaving] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toast, setToast] = useState({});
 
   useEffect(() => {
     if (typeof(toolData) !== "undefined") {
@@ -85,8 +87,7 @@ function GitlabToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVaul
         setFormData(formData => {
           return { ...formData, accountPassword: {} };
         }); 
-      }     
-      setFormMessage("ERROR: Something has gone wrong saving secure data to your vault.  Please try again or report the issue to OpsERA.");
+      }
       return "";
     }
   };
@@ -95,18 +96,20 @@ function GitlabToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVaul
     let { accountUsername, accountPassword, secretPrivateKey, secretAccessTokenKey, twoFactorAuthentication } = formData;
     if(twoFactorAuthentication) {
       if (secretPrivateKey.length === 0 || secretAccessTokenKey.length === 0 || accountUsername.length === 0  ) {
-        setFormMessage("Required Fields Missing!");
+        let toast = getFormValidationErrorDialog(setShowToast);
+        setToast(toast);
+        setShowToast(true);
         return false;
       } else {
-        setFormMessage("");
         return true;
       }
     } else {
       if (accountPassword.length === 0 || accountUsername.length === 0  ) {
-        setFormMessage("Required Fields Missing!");
+        let toast = getFormValidationErrorDialog(setShowToast);
+        setToast(toast);
+        setShowToast(true);
         return false;
       } else {
-        setFormMessage("");
         return true;
       }
     }
@@ -116,7 +119,7 @@ function GitlabToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVaul
 
   return (
     <Form>
-      { formMessage.length > 0 ? <p className="error-text">{formMessage}</p> : null}
+      {showToast && toast}
 
       <Form.Group controlId="userName">
         <Form.Label>Url*</Form.Label>
@@ -162,11 +165,18 @@ function GitlabToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVaul
         </Form.Group>
       </>
       }
-      
-      <Button variant="primary" type="button" disabled={isSaving}
-        onClick={() => { callbackFunction(); }}> 
-        {isSaving ? <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> : <FontAwesomeIcon icon={faSave} className="mr-1"/>} Save
-      </Button>
+
+      {/*TODO: Replace with SaveButton once converted to using data model*/}
+      <Row>
+        <div className="ml-auto mt-3 px-3">
+          <div className="d-flex">
+            {isSaving &&
+            <div className="text-center mr-3 mt-1"><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>Saving is in progress</div>}
+            <Button size="sm" variant="primary" disabled={isSaving} onClick={() => callbackFunction()}><FontAwesomeIcon
+              icon={faSave} fixedWidth className="mr-2"/>Save Changes</Button>
+          </div>
+        </div>
+      </Row>
       
       <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
     </Form>

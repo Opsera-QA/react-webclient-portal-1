@@ -21,7 +21,7 @@ import DropdownList from "react-widgets/lib/DropdownList";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
 import { Link } from "react-router-dom";
-import ErrorDialog from "../../common/error";
+import ErrorDialog from "../../common/status_notifications/error";
 
 const JOB_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },

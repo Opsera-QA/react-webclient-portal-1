@@ -30,7 +30,7 @@ function ToolSummaryPanel({ toolData, setToolData }) {
         // console.log("response: " + JSON.stringify(response));
         let updatedDto = new Model(response.data, toolData.metaData, false);
         setToolData(updatedDto);
-        // let toast = getPersistToast(true, "update", "User", undefined, setShowToast);
+        // let toast = getPersistResultDialog(true, "update", "User", undefined, setShowToast);
         // setToast(toast);
         // setShowToast(true);
       }

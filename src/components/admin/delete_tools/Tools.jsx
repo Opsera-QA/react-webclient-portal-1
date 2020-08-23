@@ -4,7 +4,7 @@ import { Button } from "react-bootstrap";
 import { format } from "date-fns";
 import { AuthContext } from "../../../contexts/AuthContext";  //REact Context API Code for User Authentication
 import { ApiService } from "../../../api/apiService";
-import ErrorDialog from "../../common/error";
+import ErrorDialog from "../../common/status_notifications/error";
 import Modal from "../../common/modal/modal";
 
 class Tools extends Component {

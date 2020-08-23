@@ -8,8 +8,8 @@ import { Link } from "react-router-dom";
 import TagsTable from "./TagsTable";
 import adminTagsActions from "./admin-tags-actions";
 import NewTagModal from "./NewTagModal";
-import LoadingDialog from "components/common/loading";
-import AccessDeniedDialog from "../../common/accessDeniedInfo";
+import LoadingDialog from "components/common/status_notifications/loading";
+import AccessDeniedDialog from "../../common/status_notifications/accessDeniedInfo";
 
 function TagManagement() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);

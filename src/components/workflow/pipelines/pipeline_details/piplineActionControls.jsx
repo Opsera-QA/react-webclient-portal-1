@@ -2,11 +2,11 @@ import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
-import Modal from "../common/modal/modal";
-import ApprovalModal from "./approvalModal";
+import Modal from "../../../common/modal/modal";
+import ApprovalModal from "../../approvalModal";
 import PipelineStartWizard from "./pipelineStartWizard";
-import PipelineHelpers from "./pipelineHelpers";
-import PipelineActions from "./actions";
+import PipelineHelpers from "../../pipelineHelpers";
+import PipelineActions from "../../pipeline-actions";
 import socketIOClient from "socket.io-client";
 import isEqual from "lodash.isequal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -21,7 +21,7 @@ import {
   faFlag,
 } from "@fortawesome/free-solid-svg-icons";
 
-import "./workflows.css";
+import "../../workflows.css";
 
 function PipelineActionControls({ pipeline, customerAccessRules, disabledActionState, fetchData, fetchActivityLogs, setParentWorkflowStatus }) {
   const { getAccessToken } = useContext(AuthContext);

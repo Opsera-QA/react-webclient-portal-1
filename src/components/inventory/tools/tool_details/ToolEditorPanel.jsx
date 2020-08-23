@@ -4,8 +4,12 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import Loading from "../../../common/loading";
-import {getFromValidationErrorToast, getPersistToast} from "../../../common/toasts/toasts";
+import {
+  getCreateFailureResultDialog, getCreateSuccessResultDialog,
+  getFormValidationErrorDialog,
+  getLoadingErrorDialog,
+  getUpdateFailureResultDialog, getUpdateSuccessResultDialog
+} from "../../../common/toasts/toasts";
 import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
 import Model, {DataState} from "../../../../core/data_model/model";
 import DtoSelectInput from "../../../common/input/dto_input/dto-select-input";
@@ -13,13 +17,16 @@ import DtoToggleInput from "../../../common/input/dto_input/dto-toggle-input";
 import DtoMultipleInput from "../../../common/input/dto_input/dto-multiple-input";
 import DtoItemInput from "../../../common/input/dto_input/item-displayer/dto-item-input";
 import toolsActions from "../tools-actions";
+import SaveButton from "../../../common/buttons/SaveButton";
+import LoadingDialog from "../../../common/status_notifications/loading";
 
-function ToolEditorPanel({ toolData, setToolData, handleClose }) {
+function ToolEditorPanel({ toolData, setToolData }) {
   const { getAccessToken } = useContext(AuthContext);
   const [showToast, setShowToast] = useState(false);
   const [toolDataDto, setToolDataDto] = useState({});
   const [toast, setToast] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [loadingError, setLoadingError] = useState(false);
   const [ toolList, setToolList ] = useState([]);
 
   useEffect(() => {
@@ -39,30 +46,32 @@ function ToolEditorPanel({ toolData, setToolData, handleClose }) {
       const toolResponse = await toolsActions.getTools(getAccessToken);
       setToolList(toolResponse.data);
     }
-    catch (err) {
-      // setErrors(err.message);
-      console.log(err.message);
+    catch (error) {
+      let toast = getLoadingErrorDialog(error.message, setShowToast, "top");
+      setToast(toast);
+      setShowToast(true);
+      setLoadingError(true);
+      console.error(error.message);
     }
   };
 
   const createTool = async () => {
-    // console.log("Persisting new tool to DB: " + JSON.stringify(toolDataDto.data));
-
     if (toolDataDto.isModelValid()) {
-      let createToolTypeResponse = await toolsActions.createTool(toolDataDto, getAccessToken);
-      if (createToolTypeResponse.error != null) {
-        const errorMsg = `Microservice error reported creating the tool: ${toolDataDto["name"]}.  Error returned: ${JSON.stringify(createToolTypeResponse.error.message, null, 2)}`;
-        console.error(errorMsg);
-        let toast = getPersistToast(false, "create", "user", errorMsg, setShowToast);
+      try {
+        let createToolTypeResponse = await toolsActions.createTool(toolDataDto, getAccessToken);
+        let toast = getCreateSuccessResultDialog("Tool", setShowToast, "detailPanelTop");
         setToast(toast);
         setShowToast(true);
       }
-      else {
-        handleClose();
+      catch (error) {
+        let toast = getCreateFailureResultDialog("Tool", error.message, setShowToast, "top");
+        setToast(toast);
+        setShowToast(true);
+        console.error(error.message);
       }
     }
     else {
-      let toast = getFromValidationErrorToast(setShowToast);
+      let toast = getFormValidationErrorDialog(setShowToast);
       setToast(toast);
       setShowToast(true);
     }
@@ -71,23 +80,23 @@ function ToolEditorPanel({ toolData, setToolData, handleClose }) {
   const updateTool = async () => {
     if(toolDataDto.isModelValid()) {
       try {
-        // console.log("Attempting to update: " + JSON.stringify(toolDataDto.data));
         let response = await toolsActions.updateTool(toolDataDto, getAccessToken);
-        // getToolRegistryItem(toolId);
-        // console.log("response: " + JSON.stringify(response));
         let updatedDto = new Model(response.data, toolDataDto.metaData, false);
         setToolDataDto(updatedDto);
         setToolData(updatedDto);
-        let toast = getPersistToast(true, "update", "Tool Type", undefined, setShowToast);
+        let toast = getUpdateSuccessResultDialog("Tool", setShowToast, "detailPanelTop");
         setToast(toast);
         setShowToast(true);
       }
-      catch (err) {
-        console.log(err.message);
+      catch (error) {
+        let toast = getUpdateFailureResultDialog("Tool", error.message, setShowToast, "detailPanelTop", "detailPanelTop");
+        setToast(toast);
+        setShowToast(true);
+        console.error(error.message);
       }
     }
     else {
-      let toast = getFromValidationErrorToast(setShowToast);
+      let toast = getFormValidationErrorDialog(setShowToast);
       setToast(toast);
       setShowToast(true);
     }
@@ -121,22 +130,26 @@ function ToolEditorPanel({ toolData, setToolData, handleClose }) {
     setToolDataDto({...newDataObject});
   };
 
-  return (
-    <>
-      {isLoading ? <Loading size="sm" /> : null}
-
-      {!isLoading && <>
+  if (isLoading) {
+    return (<LoadingDialog size="sm"/>);
+  } else if (loadingError) {
+    return (<span>{showToast && toast}</span>);
+  } else {
+    return (
+      <>
+        {showToast && toast}
         <div className="scroll-y full-height p-2">
-          {showToast && toast}
           <Row>
             <Col lg={6}>
-              <DtoTextInput setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"name"} />
+              <DtoTextInput setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"name"}/>
             </Col>
             <Col lg={6}>
-              <DtoSelectInput setDataFunction={handleToolIdentifierChange} setDataObject={setToolDataDto} textField={"name"} valueField={"identifier"} dataObject={toolDataDto} groupBy={"tool_type_identifier"} selectOptions={toolList} fieldName={"tool_identifier"} />
+              <DtoSelectInput setDataFunction={handleToolIdentifierChange} setDataObject={setToolDataDto}
+                              textField={"name"} valueField={"identifier"} dataObject={toolDataDto}
+                              groupBy={"tool_type_identifier"} selectOptions={toolList} fieldName={"tool_identifier"}/>
             </Col>
             <Col lg={12}>
-              <DtoTextInput setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"description"} />
+              <DtoTextInput setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"description"}/>
             </Col>
             <Col lg={6}>
               <DtoTextInput disabled={true} setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"compliance"} />
@@ -157,29 +170,27 @@ function ToolEditorPanel({ toolData, setToolData, handleClose }) {
               <DtoMultipleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fields={["name", "value"]} fieldName={"organization"} />
             </Col>
             <Col lg={6}>
-              <DtoToggleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"active"} />
+              <DtoToggleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"active"}/>
             </Col>
             <Col lg={6}>
-              <DtoItemInput setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"tags"} />
+              <DtoItemInput setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"tags"}/>
             </Col>
           </Row>
           <Row>
-              <div className="ml-auto px-3">
-                {toolDataDto.isNew() ? <Button size="sm" variant="primary" disabled={false} onClick={() => createTool()}>Create Tool</Button>
-                  : <Button size="sm" variant="primary" disabled={toolDataDto.dataState === DataState.LOADED} onClick={() => updateTool()}>Save changes</Button>}
-              </div>
+            <div className="ml-auto mt-3 px-3">
+              <SaveButton recordDto={toolDataDto} createRecord={createTool} updateRecord={updateTool} type={"Tool"}/>
+            </div>
             }
           </Row>
         </div>
-      </>}
-    </>
-  );
+      </>
+    );
+  }
 }
 
 ToolEditorPanel.propTypes = {
   toolData: PropTypes.object,
   setToolData: PropTypes.func,
-  handleClose: PropTypes.func
 };
 
 export default ToolEditorPanel;

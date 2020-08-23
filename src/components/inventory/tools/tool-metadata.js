@@ -23,7 +23,7 @@ const toolMetadata = {
       id: "owner_name",
     },
     {
-      label: "Tool",
+      label: "Tool Identifier",
       id: "tool_identifier",
     },
     {

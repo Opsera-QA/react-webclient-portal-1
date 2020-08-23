@@ -1,8 +1,8 @@
 import React, { useReducer, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Accordion, Card, Form, Button, Row, Col } from "react-bootstrap";
-import ErrorDialog from "../common/error";
-import InfoDialog from "../common/info";
+import ErrorDialog from "../common/status_notifications/error";
+import InfoDialog from "../common/status_notifications/info";
 import Modal from "../common/modal/modal";
 import { axiosApiService } from "../../api/apiService";
 import { format } from "date-fns";

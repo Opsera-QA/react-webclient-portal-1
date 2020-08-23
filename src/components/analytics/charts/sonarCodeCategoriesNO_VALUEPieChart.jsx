@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { ResponsivePie } from "@nivo/pie";
-import ErrorDialog from "../../common/error";
+import ErrorDialog from "../../common/status_notifications/error";
 import config from "./sonarCodeCategoriesNO_VALUEPieChartConfigs";
 import "./charts.css";
 import ModalLogs from "../../common/modal/modalLogs";

@@ -5,7 +5,7 @@ import TagDetailPanel from "./TagDetailPanel";
 import { Link, useParams } from "react-router-dom";
 import adminTagsActions from "../admin-tags-actions";
 import { AuthContext } from "../../../../contexts/AuthContext";
-import ErrorDialog from "../../../common/error";
+import ErrorDialog from "../../../common/status_notifications/error";
 
 function TagDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);

@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext"; //New AuthContext State
 import { axiosApiService } from "../../api/apiService";
-import ErrorDialog from "../common/error";
-import LoadingDialog from "../common/loading";
+import ErrorDialog from "../common/status_notifications/error";
+import LoadingDialog from "../common/status_notifications/loading";
 import { Alert } from "react-bootstrap";
 import SearchLogs from "./searchLogs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

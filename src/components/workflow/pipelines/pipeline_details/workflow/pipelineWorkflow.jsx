@@ -1,11 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { axiosApiService } from "../../api/apiService";
-import { AuthContext } from "../../contexts/AuthContext";
+import { axiosApiService } from "../../../../../api/apiService";
+import { AuthContext } from "../../../../../contexts/AuthContext";
 import { SteppedLineTo } from "react-lineto";
 import { Link } from "react-router-dom";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
-import ErrorDialog from "../common/error";
+import ErrorDialog from "../../../../common/status_notifications/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSearchPlus,
@@ -19,11 +19,11 @@ import {
   faFileCode,
   faCubes, faSearchMinus,
 } from "@fortawesome/free-solid-svg-icons";
-import ModalActivityLogs from "../common/modal/modalActivityLogs";
+import ModalActivityLogs from "../../../../common/modal/modalActivityLogs";
 import PipelineWorkflowItemList from "./pipelineWorkflowItemList";
-import PipelineActionControls from "./piplineActionControls";
-import Modal from "../common/modal/modal";
-import "./workflows.css";
+import PipelineActionControls from "../piplineActionControls";
+import Modal from "../../../../common/modal/modal";
+import "../../../workflows.css";
 
 const PipelineWorkflow = (props) => {
   const { pipeline, fetchPlan, customerAccessRules, editItemId } = props;

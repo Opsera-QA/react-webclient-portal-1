@@ -16,8 +16,8 @@ import {
   faUsers,
   faFileInvoice
 } from "@fortawesome/free-solid-svg-icons";
-import AccessDeniedDialog from "../common/accessDeniedInfo";
-import LoadingDialog from "../common/loading";
+import AccessDeniedDialog from "../common/status_notifications/accessDeniedInfo";
+import LoadingDialog from "../common/status_notifications/loading";
 
 
 function AdminTools(props) {

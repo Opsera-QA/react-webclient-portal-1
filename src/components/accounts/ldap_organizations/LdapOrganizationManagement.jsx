@@ -3,8 +3,8 @@
 
 import React, {useMemo, useContext, useState, useEffect} from "react";
 import {AuthContext} from "../../../contexts/AuthContext";
-import ErrorDialog from "../../common/error";
-import LoadingDialog from "../../common/loading";
+import ErrorDialog from "../../common/status_notifications/error";
+import LoadingDialog from "../../common/status_notifications/loading";
 import "../accounts.css";
 import LdapOrganizationsTable from "./LdapOrganizationsTable";
 import {Button} from "react-bootstrap";
@@ -13,7 +13,7 @@ import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import NewLdapOrganizationModal from "./NewLdapOrganizationModal";
 import accountsActions from "../accounts-actions";
 import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
-import AccessDeniedDialog from "../../common/accessDeniedInfo";
+import AccessDeniedDialog from "../../common/status_notifications/accessDeniedInfo";
 
 function LdapOrganizationManagement() {
   const [accessRoleData, setAccessRoleData] = useState({});
