@@ -5,14 +5,14 @@
 
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
-import ErrorDialog from "../../common/error";
+import ErrorDialog from "../../common/status_notifications/error";
 import config from "./DeploymentsStackedBarChartConfigs";
 import "./charts.css";
 import React, { useState, useEffect, useContext, useCallback } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
-import LoadingDialog from "../../common/loading";
-import InfoDialog from "../../common/info";
+import LoadingDialog from "../../common/status_notifications/loading";
+import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
 
 function DeploymentsStackedBarChart({ persona, date }) {

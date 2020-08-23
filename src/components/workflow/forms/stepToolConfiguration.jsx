@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import PipelineActions from "../actions";
+import PipelineActions from "../pipeline-actions";
 import { AuthContext } from "../../../contexts/AuthContext";
 import JenkinsConfiguration from "./jenkins";
 import JunitStepConfiguration from "./junit";
@@ -27,7 +27,7 @@ import ArgoCDStepConfiguration from "./argocd";
 import AnchoreStepConfiguration from "./anchore";
 import AnchoreIntegratorStepConfiguration from "./anchore-integrator";
 import SFDCStepConfiguration from "./sfdc";
-import ErrorDialog from "components/common/error";
+import ErrorDialog from "components/common/status_notifications/error";
 
 function StepToolConfiguration({
   pipeline,

@@ -4,11 +4,19 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import Loading from "../../../common/loading";
+import Loading from "../../../common/status_notifications/loading";
 import accountsActions from "../../accounts-actions";
-import {getFromValidationErrorToast, getPersistToast} from "../../../common/toasts/toasts";
+import {
+  getCreateFailureResultDialog,
+  getCreateSuccessResultDialog,
+  getFormValidationErrorDialog,
+  getPersistResultDialog, getUpdateFailureResultDialog, getUpdateSuccessResultDialog
+} from "../../../common/toasts/toasts";
 import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
 import Model, {DataState} from "../../../../core/data_model/model";
+import toolTypeActions from "../../../admin/tools/tool-management-actions";
+import LoadingDialog from "../../../common/status_notifications/loading";
+import SaveButton from "../../../common/buttons/SaveButton";
 
 function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, handleClose, showButton }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -28,24 +36,22 @@ function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, handleC
   };
 
   const createLdapUser = async () => {
-    console.log("Persisting new user to DB: " + JSON.stringify(ldapUserDataDto.data));
-
     if (ldapUserDataDto.isModelValid()) {
-      let createUserResponse = await accountsActions.createUser(ldapUserDataDto, getAccessToken);
 
-      if (createUserResponse.error != null) {
-        const errorMsg = `Microservice error reported creating the user: ${ldapUserDataDto["name"]}.  Error returned: ${JSON.stringify(createUserResponse.error.message, null, 2)}`;
-        console.error(errorMsg);
-        let toast = getPersistToast(false, "create", "user", errorMsg, setShowToast);
+      try {
+        let createUserResponse = await accountsActions.createUser(ldapUserDataDto, getAccessToken);
+        let toast = getCreateSuccessResultDialog("User", setShowToast, "top");
         setToast(toast);
         setShowToast(true);
-      }
-      else {
-        handleClose();
+      } catch (error) {
+        let toast = getCreateFailureResultDialog("User", error.message, setShowToast, "top");
+        setToast(toast);
+        setShowToast(true);
+        console.error(error.message);
       }
     }
     else {
-      let toast = getFromValidationErrorToast(setShowToast);
+      let toast = getFormValidationErrorDialog(setShowToast);
       setToast(toast);
       setShowToast(true);
     }
@@ -55,37 +61,38 @@ function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, handleC
     if(ldapUserDataDto.isModelValid()) {
       try {
         const response = await accountsActions.updateUser(orgDomain, ldapUserDataDto, getAccessToken);
-        // console.log("Response data: " + JSON.stringify(response));
         let updatedDto = new Model(response.data, ldapUserDataDto.metaData, false);
         setLdapUserDataDto(updatedDto);
         setLdapUserData(updatedDto);
-        let toast = getPersistToast(true, "update", "User", undefined, setShowToast);
+        let toast = getUpdateSuccessResultDialog( "User", setShowToast, "detailPanelTop");
         setToast(toast);
         setShowToast(true);
-      }
-      catch (err) {
-        console.log(err.message);
+      } catch (error) {
+        let toast = getUpdateFailureResultDialog("Tool Type", error.message, setShowToast, "detailPanelTop");
+        setToast(toast);
+        setShowToast(true);
+        console.error(error.message);
       }
     }
 
   };
 
-  return (
-    <>
-      {isLoading ? <Loading size="sm" /> : null}
-
-      {!isLoading && <>
+  if (isLoading) {
+    return (<LoadingDialog size="sm"/>);
+  } else {
+    return (
+      <>
+        {showToast && toast}
         <div className="scroll-y full-height">
-          {showToast && toast}
           <Row>
             <Col lg={12}>
               <DtoTextInput disabled={!ldapUserDataDto.isNew()} setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"name"} />
             </Col>
             <Col lg={12}>
-              <DtoTextInput setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"firstName"} />
+              <DtoTextInput setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"firstName"}/>
             </Col>
             <Col lg={12}>
-              <DtoTextInput setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"lastName"} />
+              <DtoTextInput setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"lastName"}/>
             </Col>
             <Col lg={12}>
               <DtoTextInput setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"preferredName"} />
@@ -94,7 +101,7 @@ function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, handleC
               <DtoTextInput disabled={!ldapUserDataDto.isNew()} setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"emailAddress"} />
             </Col>
             <Col lg={12}>
-              <DtoTextInput setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"division"} />
+              <DtoTextInput setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"division"}/>
             </Col>
             <Col lg={12}>
               <DtoTextInput disabled={true} setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"teams"} />
@@ -103,25 +110,22 @@ function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, handleC
               <DtoTextInput setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"departmentName"} />
             </Col>
             <Col lg={12}>
-              <DtoTextInput setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"title"} />
+              <DtoTextInput setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"title"}/>
             </Col>
             <Col lg={12}>
-              <DtoTextInput setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"site"} />
+              <DtoTextInput setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"site"}/>
             </Col>
           </Row>
           <Row>
-            { showButton &&
-              <div className="ml-auto px-3">
-                {ldapUserDataDto.isNew() ? <Button size="sm" variant="primary" disabled={false} onClick={() => createLdapUser()}>Create LDAP User</Button>
-                  : <Button size="sm" variant="primary" disabled={ldapUserDataDto.dataState === DataState.LOADED} onClick={() => updateLdapUser()}>Save changes</Button>
-                }
-              </div>
-            }
+            <div className="ml-auto mt-3 px-3">
+              <SaveButton recordDto={ldapUserDataDto} createRecord={createLdapUser}
+                          updateRecord={updateLdapUser} type={"User"}/>
+            </div>
           </Row>
         </div>
-      </>}
-    </>
-  );
+      </>
+    );
+  }
 }
 
 LdapUserEditorPanel.propTypes = {

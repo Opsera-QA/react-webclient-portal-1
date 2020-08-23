@@ -4,8 +4,8 @@ import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faSpinner, faTimes, faStepBackward, faPlus, faMinus, faPen, faCode } from "@fortawesome/free-solid-svg-icons";
 import "../workflows.css";
-import ErrorDialog from "components/common/error";
-import LoadingDialog from "components/common/loading";
+import ErrorDialog from "components/common/status_notifications/error";
+import LoadingDialog from "components/common/status_notifications/loading";
 
 
 const SfdcPipelineModifiedFiles = ({ handleClose, setView, modifiedFiles, createJenkinsJob }) => {

@@ -5,8 +5,8 @@ import { AuthContext } from "contexts/AuthContext";
 import ToolTypeTable from "./tool_type/ToolTypeTable";
 
 import ToolIdentifierTable from "./tool_identifier/ToolIdentifierTable";
-import LoadingDialog from "components/common/loading";
-import AccessDeniedDialog from "../../common/accessDeniedInfo";
+import LoadingDialog from "components/common/status_notifications/loading";
+import AccessDeniedDialog from "../../common/status_notifications/accessDeniedInfo";
 import toolTypeActions from "./tool-management-actions";
 import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
 import {useParams} from "react-router-dom";

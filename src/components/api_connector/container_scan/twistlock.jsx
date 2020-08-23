@@ -3,7 +3,7 @@ import { Button, Form, Col, Card, Alert } from "react-bootstrap";
 import { apiServerUrl } from "../../../config";
 import { AuthContext } from "../../../contexts/AuthContext";  //REact Context API Code for User Authentication
 import { ApiService } from "../../../api/apiService";
-import LoadingDialog from "../../common/loading";
+import LoadingDialog from "../../common/status_notifications/loading";
 
 function Twistlock() {
 

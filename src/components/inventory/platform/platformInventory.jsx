@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Form, Alert } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
-import ErrorDialog from "components/common/error";
+import ErrorDialog from "components/common/status_notifications/error";
 //import LoadingDialog from "../common/loading";
 import DropdownList from "react-widgets/lib/DropdownList";
 import PlatformToolsTable from "./platformToolsTable.jsx";

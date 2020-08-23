@@ -3,7 +3,7 @@ import { Button, Form, Col, Card, Alert } from "react-bootstrap";
 import { AuthContext } from "../../../contexts/AuthContext";  //REact Context API Code for User Authentication
 import { ApiService } from "../../../api/apiService";
 import { apiServerUrl } from "../../../config";
-import LoadingDialog from "../../common/loading";
+import LoadingDialog from "../../common/status_notifications/loading";
 
 // const devState = {
 //   jiraUrl: "https://opseratest.atlassian.net",

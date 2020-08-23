@@ -25,7 +25,7 @@ function ToolTypeSummaryPanel({toolTypeData, setToolTypeData}) {
         let response = await toolTypeActions.updateToolType({...newToolTypeData}, getAccessToken);
         let updatedDto = new Model(response.data, toolTypeData.metaData, false);
         setToolTypeData(updatedDto);
-        // let toast = getPersistToast(true, "update", "User", undefined, setShowToast);
+        // let toast = getPersistResultDialog(true, "update", "User", undefined, setShowToast);
         // setToast(toast);
         // setShowToast(true);
       }

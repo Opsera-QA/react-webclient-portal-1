@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faCopy, faSpinner, faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
-import ErrorDialog from "../../common/error";
+import ErrorDialog from "../../common/status_notifications/error";
 
 //value maps to the tool_identifer string used for each tool
 const SERVICE_OPTIONS = [

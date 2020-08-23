@@ -3,7 +3,7 @@ import { Route, useHistory } from "react-router-dom";
 import { Security, SecureRoute, LoginCallback } from "@okta/okta-react";
 import useAxios, { configure } from "axios-hooks";
 import AuthContextProvider from "./contexts/AuthContext";
-import LoadingDialog from "./components/common/loading";
+import LoadingDialog from "./components/common/status_notifications/loading";
 import Home from "./Home";
 import Login from "./components/login/Login";
 import Navbar from "./Navbar";

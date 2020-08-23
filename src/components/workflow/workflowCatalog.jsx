@@ -4,9 +4,9 @@ import { Card, Row, Col, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext"; //New AuthContext State 
 import { axiosApiService } from "../../api/apiService";
-import LoadingDialog from "../common/loading";
-import ErrorDialog from "../common/error";
-import InfoDialog from "../common/info";
+import LoadingDialog from "../common/status_notifications/loading";
+import ErrorDialog from "../common/status_notifications/error";
+import InfoDialog from "../common/status_notifications/info";
 import ModalActivityLogs from "../common/modal/modalActivityLogs";
 import { format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

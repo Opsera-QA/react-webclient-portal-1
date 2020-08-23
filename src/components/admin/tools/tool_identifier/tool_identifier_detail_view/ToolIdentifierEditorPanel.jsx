@@ -2,22 +2,28 @@ import React, { useState, useEffect, useContext, useMemo } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
-import { axiosApiService } from "api/apiService";
-import Loading from "../../../../common/loading";
 import DtoTextInput from "../../../../common/input/dto_input/dto-text-input";
 import DtoToggleInput from "../../../../common/input/dto_input/dto-toggle-input";
 import DtoItemInput from "../../../../common/input/dto_input/item-displayer/dto-item-input";
 import Model, {DataState} from "../../../../../core/data_model/model";
 import toolTypeActions from "../../tool-management-actions";
-import {getFromValidationErrorToast, getPersistToast} from "../../../../common/toasts/toasts";
+import {
+  getCreateFailureResultDialog, getCreateSuccessResultDialog,
+  getFormValidationErrorDialog, getLoadingErrorDialog,
+  getUpdateFailureResultDialog,
+  getUpdateSuccessResultDialog
+} from "../../../../common/toasts/toasts";
 import DtoSelectInput from "../../../../common/input/dto_input/dto-select-input";
 import DtoPropertiesInput from "../../../../common/input/dto_input/dto-properties-input";
+import SaveButton from "../../../../common/buttons/SaveButton";
+import LoadingDialog from "../../../../common/status_notifications/loading";
 
-function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData, handleClose} ) {
-  const { getAccessToken } = useContext(AuthContext);
+function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData} ) {
+  const {getAccessToken} = useContext(AuthContext);
   const [toolList, setToolList] = useState([]);
   const [toolIdentifierDataDto, setToolIdentifierDataDto] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [loadingError, setLoadingError] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toast, setToast] = useState({});
 
@@ -35,61 +41,72 @@ function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData, 
   const getToolList = async () => {
     try {
       const toolResponse = await toolTypeActions.getToolTypes(getAccessToken, false);
-      console.log("Tool List: " + JSON.stringify(toolResponse.data))
       setToolList(toolResponse.data);
-    } catch (err) {
-      console.log(err.message);
+    } catch (error) {
+      let toast = getLoadingErrorDialog(error.message, setShowToast, "top");
+      setToast(toast);
+      setShowToast(true);
+      setLoadingError(true);
+      console.error(error.message);
     }
   };
 
   const createToolIdentifier = async () => {
-    if(toolIdentifierDataDto.isModelValid()) {
+    if (toolIdentifierDataDto.isModelValid()) {
       try {
         const response = await toolTypeActions.createToolIdentifier(toolIdentifierDataDto, getAccessToken);
-        let toast = getPersistToast(true, "update", "Tool Identifier", undefined, setShowToast);
+        let toast = getCreateSuccessResultDialog("Tool Identifier", setShowToast, "top");
         setToast(toast);
         setShowToast(true);
-        handleClose();
-      } catch (err) {
-        console.log(err.message);
+        let updatedDto = new Model(response.data, toolIdentifierDataDto.metaData, false);
+        setToolIdentifierData(updatedDto);
+        setToolIdentifierDataDto(updatedDto);
+      } catch (error) {
+        let toast = getCreateFailureResultDialog("Tool Identifier", error.message, setShowToast, "top");
+        setToast(toast);
+        setShowToast(true);
+        console.error(error.message);
       }
-    }
-    else {
-      let toast = getFromValidationErrorToast(setShowToast);
+    } else {
+      let toast = getFormValidationErrorDialog(setShowToast);
       setToast(toast);
       setShowToast(true);
     }
   };
 
   const updateToolIdentifier = async () => {
-    if(toolIdentifierDataDto.isModelValid()) {
+    if (toolIdentifierDataDto.isModelValid()) {
       try {
         const response = await toolTypeActions.updateToolIdentifier(toolIdentifierDataDto, getAccessToken);
         console.log("Response.data: " + JSON.stringify(response));
-        let toast = getPersistToast(true, "update", "Tool Type", undefined, setShowToast);
+        let toast = getUpdateSuccessResultDialog("Tool Identifier", setShowToast, "detailPanelTop");
         setToast(toast);
         setShowToast(true);
         let updatedDto = new Model(response.data, toolIdentifierDataDto.metaData, false);
         setToolIdentifierData(updatedDto);
         setToolIdentifierDataDto(updatedDto);
-      } catch (err) {
-        console.log(err.message);
+      } catch (error) {
+        let toast = getUpdateFailureResultDialog("Tool Identifier", error.message, setShowToast, "detailPanelTop");
+        setToast(toast);
+        setShowToast(true);
+        console.error(error.message);
       }
-    }
-    else {
-      let toast = getFromValidationErrorToast(setShowToast);
+    } else {
+      let toast = getFormValidationErrorDialog(setShowToast);
       setToast(toast);
       setShowToast(true);
     }
   };
 
-  return (
-    <>
-      {isLoading ? <Loading size="sm"/> : null}
-
-      {!isLoading && <>
+  if (isLoading) {
+    return (<LoadingDialog size="sm"/>);
+  } else if (loadingError) {
+    return (<span>{showToast && toast}</span>);
+  } else {
+    return (
+      <>
+        {showToast && toast}
         <div className="mx-2 my-3">
-          {showToast && toast}
           <Row>
             <Col lg={6}>
               <DtoTextInput fieldName={"name"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto}/>
@@ -114,23 +131,19 @@ function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData, 
             </Col>
           </Row>
           <Row>
-            <div className="ml-auto m-3 px-3">
-              {toolIdentifierDataDto.isNew()
-                ? <Button size="sm" variant="primary" onClick={() => createToolIdentifier()}>Create Tool Identifier</Button>
-                : <Button size="sm" variant="primary" disabled={toolIdentifierDataDto.dataState === DataState.LOADED}
-                          onClick={() => updateToolIdentifier()}>Save Changes</Button>
-              }
+            <div className="ml-auto mt-3 px-3">
+              <SaveButton recordDto={toolIdentifierDataDto} createRecord={createToolIdentifier}
+                          updateRecord={updateToolIdentifier} type={"Tool Identifier"}/>
             </div>
           </Row>
         </div>
-      </>}
-    </>
-  );
+      </>
+    );
+  }
 }
 
 ToolIdentifierEditorPanel.propTypes = {
   toolIdentifierData: PropTypes.object,
-  handleClose: PropTypes.func,
   setToolIdentifierData: PropTypes.func
 };
 

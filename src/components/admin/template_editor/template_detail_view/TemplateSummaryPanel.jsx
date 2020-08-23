@@ -28,7 +28,7 @@ function TemplateSummaryPanel({templateData, setTemplateData}) {
         let response = await templateActions.updateTemplate({...newTemplateData}, getAccessToken);
         let updatedDto = new Model(response.data, templateData.metaData, false);
         setTemplateData(updatedDto);
-        // let toast = getPersistToast(true, "update", "User", undefined, setShowToast);
+        // let toast = getPersistResultDialog(true, "update", "User", undefined, setShowToast);
         // setToast(toast);
         // setShowToast(true);
       }

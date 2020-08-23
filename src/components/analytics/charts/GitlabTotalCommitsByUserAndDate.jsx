@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { ResponsiveHeatMap } from "@nivo/heatmap";
 import { axiosApiService } from "../../../api/apiService";
-import LoadingDialog from "../../common/loading";
-import ErrorDialog from "../../common/error";
+import LoadingDialog from "../../common/status_notifications/loading";
+import ErrorDialog from "../../common/status_notifications/error";
 import config from "./GitlabTotalCommitsByUserAndDateConfig";
 import "./charts.css";
-import InfoDialog from "../../common/info";
+import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
 
 function GitlabTotalCommitsByUserAndDate({ persona, date }) {

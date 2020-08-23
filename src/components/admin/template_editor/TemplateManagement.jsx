@@ -2,8 +2,8 @@ import React, { useState, useEffect, useContext, useMemo } from "react";
 import { AuthContext } from "contexts/AuthContext";
 
 import TemplatesTable from "./TemplateTable";
-import LoadingDialog from "components/common/loading";
-import AccessDeniedDialog from "../../common/accessDeniedInfo";
+import LoadingDialog from "components/common/status_notifications/loading";
+import AccessDeniedDialog from "../../common/status_notifications/accessDeniedInfo";
 import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
 import templateActions from "./template-actions";
 

@@ -1,5 +1,5 @@
 import { axiosApiService } from "api/apiService";
-import LoadingDialog from "components/common/loading";
+import LoadingDialog from "components/common/status_notifications/loading";
 import { AuthContext } from "contexts/AuthContext";
 import React, { useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";

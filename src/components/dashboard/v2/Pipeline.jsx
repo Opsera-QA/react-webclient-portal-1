@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import InfoDialog from "../../common/info";
+import InfoDialog from "../../common/status_notifications/info";
 import BuildView_Developer from "../../analytics/views/pipeline/buildView_developer";
 import BuildView_Manager from "../../analytics/views/pipeline/buildView_manager";
 import BuildView_Executive from "../../analytics/views/pipeline/buildView_executive";

@@ -1,12 +1,29 @@
 import { axiosApiService } from "../../api/apiService";
 const pipelineActions = {};
 
+pipelineActions.getPipelines = async (currentPage, pageSize, sortOption, type, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  let apiUrl = `/pipelines?page=${currentPage}&size=${pageSize}&sort=${sortOption.name}&order=${sortOption.order}`;
+
+  console.log("Type: " + JSON.stringify(type))
+  if (type != null && type !== "all") {
+    apiUrl += `&type=${type}`;
+  }
+
+  // console.log("Api url: " + JSON.stringify(apiUrl))
+  const response = await axiosApiService(accessToken).get(apiUrl)
+    .then((result) =>  {return result;})
+    // TODO: Always throw error for easier catching on page
+    .catch(error => {throw error;});
+  return response;
+};
+
 pipelineActions.delete = async (pipelineId, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = `/pipelines/${pipelineId}/delete`;  
   const response = await axiosApiService(accessToken).delete(apiUrl)
     .then((result) =>  {return result;})
-    .catch(error => {return error;});
+    .catch(error => {throw error;});
   return response;
 };
 

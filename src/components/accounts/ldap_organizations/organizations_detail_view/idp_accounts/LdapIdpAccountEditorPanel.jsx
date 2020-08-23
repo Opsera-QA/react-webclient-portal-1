@@ -4,9 +4,9 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import accountsActions from "../../../accounts-actions";
-import Loading from "../../../../common/loading";
+import Loading from "../../../../common/status_notifications/loading";
 import {AuthContext} from "../../../../../contexts/AuthContext";
-import {getFromValidationErrorToast, getPersistToast} from "../../../../common/toasts/toasts";
+import {getFormValidationErrorDialog, getPersistResultDialog} from "../../../../common/toasts/toasts";
 import DtoTextInput from "../../../../common/input/dto_input/dto-text-input";
 import Model, {DataState} from "../../../../../core/data_model/model";
 import TooltipWrapper from "../../../../common/tooltip/tooltipWrapper";
@@ -54,7 +54,7 @@ function LdapIdpAccountEditorPanel({ldapOrganizationAccountData, ldapIdpAccountD
       if (createLdapIdpAccountResponse.error != null) {
         const errorMsg = `Microservice error reported creating the organization for : ${ldapIdpAccountDataDto["name"]}.  Error returned: ${JSON.stringify(createLdapIdpAccountResponse.error.message, null, 2)}`;
         console.log(errorMsg);
-        let toast = getPersistToast(false, "create", "account", errorMsg, setShowToast);
+        let toast = getPersistResultDialog(false, "create", "account", errorMsg, setShowToast);
         setToast(toast);
         setShowToast(true);
       } else {
@@ -64,7 +64,7 @@ function LdapIdpAccountEditorPanel({ldapOrganizationAccountData, ldapIdpAccountD
       }
     }
     else {
-      let toast = getFromValidationErrorToast(setShowToast);
+      let toast = getFormValidationErrorDialog(setShowToast);
       setToast(toast);
       setShowToast(true);
     }
@@ -75,7 +75,7 @@ function LdapIdpAccountEditorPanel({ldapOrganizationAccountData, ldapIdpAccountD
       try {
         const updateIdpAccountResponse = await accountsActions.updateIdpAccount(ldapIdpAccountDataDto, ldapOrganizationAccountData, getAccessToken);
         console.log("updateIdpAccountResponse: ", JSON.stringify(updateIdpAccountResponse));
-        let toast = getPersistToast(true, "update", "Account", undefined, setShowToast);
+        let toast = getPersistResultDialog(true, "update", "Account", undefined, setShowToast);
         setToast(toast);
         setShowToast(true);
         // let updatedDto = new Model(updateIdpAccountResponse.data, ldapIdpAccountDataDto.metaData, false);
@@ -86,7 +86,7 @@ function LdapIdpAccountEditorPanel({ldapOrganizationAccountData, ldapIdpAccountD
       }
     }
     else {
-      let toast = getFromValidationErrorToast(setShowToast);
+      let toast = getFormValidationErrorDialog(setShowToast);
       setToast(toast);
       setShowToast(true);
     }
@@ -116,25 +116,25 @@ function LdapIdpAccountEditorPanel({ldapOrganizationAccountData, ldapIdpAccountD
               <DtoTextInput disabled={true} fieldName={"domain"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <DtoTextInput disabled={true} fieldName={"idpRedirectURI"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
+              <DtoTextInput fieldName={"idpRedirectURI"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <DtoTextInput disabled={true} fieldName={"clientID"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
+              <DtoTextInput fieldName={"clientID"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <DtoTextInput disabled={true} fieldName={"issuer"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
+              <DtoTextInput fieldName={"issuer"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <DtoTextInput disabled={true} fieldName={"baseUrl"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
+              <DtoTextInput fieldName={"baseUrl"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <DtoTextInput disabled={true} fieldName={"idpVendor"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
+              <DtoTextInput fieldName={"idpVendor"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <DtoTextInput disabled={true} fieldName={"configEntryType"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
+              <DtoTextInput fieldName={"configEntryType"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <DtoTextInput disabled={false} fieldName={"idpNameIDMapping"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
+              <DtoTextInput fieldName={"idpNameIDMapping"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
             </Col>
           </Row>
           <Row>

@@ -6,7 +6,7 @@ import { faSave, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
-import ErrorDialog from "../../common/error";
+import ErrorDialog from "../../common/status_notifications/error";
 
 
 //This must match the form below and the data object expected.  Each tools' data object is different

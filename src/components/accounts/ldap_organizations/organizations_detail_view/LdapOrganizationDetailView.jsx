@@ -1,13 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import { useParams } from "react-router-dom";
-import ErrorDialog from "../../../common/error";
-import LoadingDialog from "../../../common/loading";
+import ErrorDialog from "../../../common/status_notifications/error";
+import LoadingDialog from "../../../common/status_notifications/loading";
 import LdapOrganizationSummaryPanel from "./LdapOrganizationSummaryPanel";
 
 import "../../accounts.css";
 import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
-import AccessDeniedDialog from "../../../common/accessDeniedInfo";
+import AccessDeniedDialog from "../../../common/status_notifications/accessDeniedInfo";
 import Model from "../../../../core/data_model/model";
 import {ldapOrganizationMetaData} from "../ldap-organizations-form-fields";
 import accountsActions from "../../accounts-actions";

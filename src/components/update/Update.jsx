@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 import PropTypes from "prop-types";
-import LoadingDialog from "../common/loading";
-import ErrorDialog from "../common/error";
+import LoadingDialog from "../common/status_notifications/loading";
+import ErrorDialog from "../common/status_notifications/error";
 import { AuthContext } from "../../contexts/AuthContext"; //New AuthContext State 
 import { ApiService } from "../../api/apiService";
 

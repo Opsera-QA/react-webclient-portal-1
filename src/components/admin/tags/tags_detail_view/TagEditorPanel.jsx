@@ -19,7 +19,7 @@ import Modal from "../../../common/modal/modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import adminTagsActions from "../admin-tags-actions";
-import Loading from "../../../common/loading";
+import Loading from "../../../common/status_notifications/loading";
 
 const INITIAL_DATA = {
   key: "",

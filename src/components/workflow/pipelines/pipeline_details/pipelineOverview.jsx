@@ -4,10 +4,10 @@ import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
 import PipelineOverviewSummary from "./pipelineOverviewSummary";
 import PipelineActivityLogTable from "./pipelineActivityLogTable";
-import LoadingDialog from "components/common/loading";
-import ErrorDialog from "components/common/error";
-import InfoDialog from "components/common/info";
-import "./workflows.css";
+import LoadingDialog from "components/common/status_notifications/loading";
+import ErrorDialog from "components/common/status_notifications/error";
+import InfoDialog from "components/common/status_notifications/info";
+import "../../workflows.css";
 import PipelineActionControls from "./piplineActionControls";
 
 

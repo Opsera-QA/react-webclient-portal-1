@@ -3,7 +3,7 @@ import { Table, Row, Col, Alert, ListGroup } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { ApiService } from "../../../api/apiService";
-import LoadingDialog from "../../common/loading";
+import LoadingDialog from "../../common/status_notifications/loading";
 import { Link } from "react-router-dom";
 
 const Status = ({ color }) =>  <svg height="20" width="20"><circle cx="10" cy="10" r="10" fill={color} /></svg>;

@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
-import InfoDialog from "../../common/info";
+import InfoDialog from "../../common/status_notifications/info";
 import config from "./opseraPipelineByStatusBarChartConfigs";
 import "./charts.css";
 import ModalLogs from "../../common/modal/modalLogs";
-import LoadingDialog from "../../common/loading";
-import ErrorDialog from "../../common/error";
+import LoadingDialog from "../../common/status_notifications/loading";
+import ErrorDialog from "../../common/status_notifications/error";
 
 
 function OpseraPipelineByStatusBarChar( { persona, date  } ) {

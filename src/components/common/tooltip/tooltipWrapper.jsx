@@ -24,7 +24,8 @@ function TooltipWrapper({ innerText, children }) {
 }
 
 TooltipWrapper.propTypes = {
-  innerText: PropTypes.string
+  innerText: PropTypes.string,
+  children: PropTypes.any
 };
 
 export default TooltipWrapper;

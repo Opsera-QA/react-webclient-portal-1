@@ -5,7 +5,7 @@ import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusSquare, faCaretSquareDown, faCaretSquareUp, faCopy } from "@fortawesome/free-solid-svg-icons";
 import PipelineWorkflowItem from "./pipelineWorkflowItem";
-import "./workflows.css";
+import "../../../workflows.css";
 
 
 function PipelineWorkflowItemList({ pipeline, items, lastStep, editWorkflow, pipelineId, accessToken, parentCallbackEditItem, parentHandleViewSourceActivityLog, setStateItems, quietSavePlan, fetchPlan, customerAccessRules, parentWorkflowStatus }) {

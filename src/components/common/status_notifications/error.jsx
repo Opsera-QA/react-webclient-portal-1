@@ -71,7 +71,25 @@ function ErrorDialog({ error, align, type, setError }) {
         </div>
       </div>
     );
-  } else if (alignment === "top") {
+  }
+  else if (alignment === "detailPanelTop") {
+    return (
+      <div className="row error-block top-dialog-detail-panel-block m-2">
+        <div className="col-sm-12 my-auto text-center">
+          <div className="float-right ml-1">
+            <FontAwesomeIcon icon={faTimes} style={{cursor: "pointer"}} onClick={() => {
+              clearError();
+            }}/>
+          </div>
+          {state.message} {(statusCode === 401 || (state.message && state.message.includes("401"))) &&
+          <span className="ml-1"><a href="#" onClick={() => {
+            login();
+          }}>Click here to refresh login.</a></span>}
+        </div>
+      </div>
+    );
+  }
+  else if (alignment === "top") {
     return (
       <div className="w-100 error-block top-error-block">
         <div className="float-right ml-1">

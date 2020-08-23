@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ErrorDialog from "../../common/error";
+import ErrorDialog from "../../common/status_notifications/error";
 
 // eslint-disable-next-line no-unused-vars
 function TestingCounts( { data, persona } ) {

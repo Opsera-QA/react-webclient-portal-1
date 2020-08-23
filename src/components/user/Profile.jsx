@@ -3,8 +3,8 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { ApiService } from "../../api/apiService";
 import { Table, Card } from "react-bootstrap";
 import ConfigurationsForm from "../analytics/configurationsForm";
-import LoadingDialog from "../common/loading";
-import ErrorDialog from "../common/error";
+import LoadingDialog from "../common/status_notifications/loading";
+import ErrorDialog from "../common/status_notifications/error";
 
 function Profile() {
   const contextType = useContext(AuthContext);

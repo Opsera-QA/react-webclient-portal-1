@@ -9,8 +9,8 @@ import LdapGroupsTable from "./LdapGroupsTable";
 import NewLdapGroupModal from "./NewLdapGroupModal";
 import DropdownList from "react-widgets/lib/DropdownList";
 import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
-import LoadingDialog from "components/common/loading";
-import AccessDeniedDialog from "../../common/accessDeniedInfo";
+import LoadingDialog from "components/common/status_notifications/loading";
+import AccessDeniedDialog from "../../common/status_notifications/accessDeniedInfo";
 import {
   getOrganizationByDomain,
   getOrganizationByEmail,

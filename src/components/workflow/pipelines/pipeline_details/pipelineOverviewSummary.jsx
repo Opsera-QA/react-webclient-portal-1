@@ -1,14 +1,14 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "../../contexts/AuthContext";
+import { AuthContext } from "../../../../contexts/AuthContext";
 import { useHistory, Link } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { Row, Col, Button, OverlayTrigger, Tooltip, Form } from "react-bootstrap";
-import PipelineActions from "./actions";
+import PipelineActions from "../../pipeline-actions";
 import { format } from "date-fns";
-import Modal from "../common/modal/modal";
-import ModalActivityLogs from "../common/modal/modalActivityLogs";
-import ErrorDialog from "../common/error";
+import Modal from "../../../common/modal/modal";
+import ModalActivityLogs from "../../../common/modal/modalActivityLogs";
+import ErrorDialog from "../../../common/status_notifications/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFileAlt,
@@ -20,10 +20,10 @@ import {
   faFlag,
   faCopy,
 } from "@fortawesome/free-solid-svg-icons";
-import "./workflows.css";
-import SchedulerWidget from "../common/schedulerWidget";
-import PipelineHelpers from "./pipelineHelpers";
-import EditToolModal from "./editToolModal";
+import "../../workflows.css";
+import SchedulerWidget from "../../../common/schedulerWidget";
+import PipelineHelpers from "../../pipelineHelpers";
+import EditToolModal from "../../editToolModal";
 
 const INITIAL_FORM_DATA = {
   name: "",

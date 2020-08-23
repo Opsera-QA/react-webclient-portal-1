@@ -8,8 +8,8 @@ import LdapUsersTable from "./LdapUsersTable";
 import NewLdapUserModal from "./NewLdapUserModal";
 import DropdownList from "react-widgets/lib/DropdownList";
 import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
-import LoadingDialog from "components/common/loading";
-import AccessDeniedDialog from "../../common/accessDeniedInfo";
+import LoadingDialog from "components/common/status_notifications/loading";
+import AccessDeniedDialog from "../../common/status_notifications/accessDeniedInfo";
 import {
   getOrganizationByDomain,
   getOrganizationByEmail,

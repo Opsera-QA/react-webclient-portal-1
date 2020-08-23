@@ -5,7 +5,7 @@ import KpiDetailPanel from "./KpiDetailPanel";
 import { Link, useParams } from "react-router-dom";
 import KpiTagsActions from "../kpi-editor-actions";
 import { AuthContext } from "contexts/AuthContext";
-import ErrorDialog from "components/common/error";
+import ErrorDialog from "components/common/status_notifications/error";
 
 function KpiDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
