@@ -97,10 +97,10 @@ const PipelineItem = ({item}) => {
         </Card.Title>
         <Card.Body className="pt-0 pb-2">
           <Row className="pipeline-card-text">
-            <Col lg={9} className="my-auto pb-1">
-              <div>{getFormattedDescription()}</div>
+            <Col lg={9} className="pb-1">
+              <div className="text-muted">{getFormattedDescription()}</div>
             </Col>
-            <Col lg={3} className="my-auto">
+            <Col lg={3} className="">
               <div className="text-right">
                 {getPipelineStatusField()}
               </div>

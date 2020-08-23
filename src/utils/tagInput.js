@@ -43,7 +43,7 @@ function TagInput(props) {
   };
 
   return (
-    <div>
+    <div className="pt-4 px-4">
       <div style={{ display: "flex", flexWrap: "wrap" }}>
         {tags.map((tag, i) => (
           <Button key={tag}variant="outline-secondary" style={{ marginRight: 10, marginBottom: 10 }} size="sm">
