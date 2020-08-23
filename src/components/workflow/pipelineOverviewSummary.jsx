@@ -231,7 +231,8 @@ const PipelineOverviewSummary = (props) => {
                 {customerAccessRules.Role === "user" && <>Standard User Role: Your account has basic access to this
                   pipeline which is limited to viewing and running pipeline operations only.</>}
                 {customerAccessRules.Role === "readonly" && <>Read Only Role: Your account does not have any privileges
-                  associated with this pipeline. You are being temporarily granted Viewer permissions and will not be able to perform any
+                  associated with this pipeline. You are being temporarily granted Viewer permissions and will not be
+                  able to perform any
                   actions.</>}
               </div>
             </>
@@ -445,6 +446,10 @@ const PipelineOverviewSummary = (props) => {
                   handleSavePropertyClick(data._id, tags, "tags");
                 }}/>}
               </Col>
+              <Col lg className="py-1"><span className="text-muted mr-1">Type:</span> <span
+                className="upper-case-all">
+                {data.type && data.type.map((item, idx) => (<span key={idx}>{item}, </span>))}
+              </span></Col>
             </Row>
 
             <Row className="row-content-spacing">
@@ -479,6 +484,7 @@ const PipelineOverviewSummary = (props) => {
                                      }}/> : null}
                 </Col>
               }
+              <Col lg className="py-1"><span className="text-muted mr-1">Org Account:</span> {data.account}</Col>
             </Row>
 
             {_configuredToolsCount(data.workflow.plan) === 0 &&
