@@ -17,7 +17,7 @@ function AccountSettings() {
   }, []);
 
   const getRoles = async () => {
-    const user = await getUserRecord();;
+    const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
@@ -27,7 +27,7 @@ function AccountSettings() {
 
   if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
-  } else if (!accessRoleData.Administrator && !accessRoleData.OpseraAdministrator) {
+  } else if (!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator) {
     return (<AccessDeniedDialog roleData={accessRoleData} />);
   } else {
     return (
