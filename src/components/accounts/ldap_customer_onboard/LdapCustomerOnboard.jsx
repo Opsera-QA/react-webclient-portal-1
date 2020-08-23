@@ -1,10 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
-import ErrorDialog from "../../common/error";
-import LoadingDialog from "../../common/loading";
+import LoadingDialog from "components/common/status_notifications/loading";
 import { Link } from "react-router-dom";
 import LdapCustomerOnboardEditorPanel from "./LdapCustomerOnboardEditorPanel";
-import AccessDeniedDialog from "../../common/accessDeniedInfo";
+import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
 
 
 function LdapCustomerOnboard() {

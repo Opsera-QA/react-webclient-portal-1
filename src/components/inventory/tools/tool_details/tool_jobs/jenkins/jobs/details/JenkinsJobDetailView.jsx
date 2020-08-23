@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useContext, useMemo } from "react";
-import { Link, useParams } from "react-router-dom";
-import { AuthContext } from "../../../../contexts/AuthContext";
+import React, { useState, useEffect} from "react";
 import JenkinsJobSummaryPanel from "./JenkinsJobSummaryPanel";
 import JenkinsJobDetailPanel from "./JenkinsJobDetailPanel";
-import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
-import LoadingDialog from "../../../common/loading";
+import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
+import LoadingDialog from "components/common/status_notifications/loading";
 
 function JenkinsJobDetailView() {
   const [jenkinsJobData, setJenkinsJobData] = useState(undefined);

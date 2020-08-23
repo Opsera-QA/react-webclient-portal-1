@@ -5,8 +5,8 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import {AuthContext} from "../../../contexts/AuthContext";
 import accountsActions from "../accounts-actions";
-import TextInput from "../../common/input/text-input";
-import Loading from "../../common/loading";
+import TextInput from "components/common/input/text-input";
+import Loading from "components/common/status_notifications/loading";
 import {
   ldapCustomerOnboardFormFields,
 } from "./ldap-customer-onboard-form-fields";
