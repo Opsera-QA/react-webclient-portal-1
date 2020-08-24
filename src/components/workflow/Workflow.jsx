@@ -3,7 +3,6 @@ import { Link, useParams, useLocation } from "react-router-dom";
 import MyPipelines from "./pipelines/MyPipelines";
 import PipelineOverview from "./pipelines/pipeline_details/pipelineOverview";
 import PipelineWorkflowView from "./pipelines/pipeline_details/workflow/pipelineWorkflowView";
-import WorkflowCatalog from "./workflowCatalog";
 import "./workflows.css";
 
 function Workflow() {
