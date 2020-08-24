@@ -74,14 +74,14 @@ function BlueprintSearchResult({ searchResults }) {
             <Row>
               <Col lg className="py-1">
                 <span className="text-muted mr-1">Step Name:</span>
-                <span className="console-text-invert max-content-width">{makeUpper(item.start.step_name)}</span>
+                <span className="console-text-invert-modal mb-1 max-content-width">{makeUpper(item.start.step_name)}</span>
               </Col>
             </Row>
             {item.start.step_name === "approval" ? (
               <Row>
                 <Col lg className="py-1">
                   <span className="text-muted mr-1">Requested At:</span>
-                  <span className="console-text-invert max-content-width">{item.start.timestamp}</span>
+                  <span className="console-text-invert-modal mb-1 max-content-width">{item.start.timestamp}</span>
                 </Col>
               </Row>
             ) : (
@@ -89,13 +89,13 @@ function BlueprintSearchResult({ searchResults }) {
                 <Row>
                   <Col lg className="py-1">
                     <span className="text-muted mr-1">Requested At:</span>
-                    <span className="console-text-invert max-content-width">{item.current.timestamp}</span>
+                    <span className="console-text-invert-modal mb-1 max-content-width">{item.current.timestamp}</span>
                   </Col>
                 </Row>
                 <Row>
                   <Col lg className="py-1">
                     <span className="text-muted mr-1">Response Message:</span>
-                    <span className="console-text-invert max-content-width">{item.current.message}</span>
+                    <span className="console-text-invert-modal mb-1 max-content-width">{item.current.message}</span>
                   </Col>
                 </Row>
                 <Row>
@@ -113,37 +113,35 @@ function BlueprintSearchResult({ searchResults }) {
                 <Row>
                   <Col lg className="py-1">
                     <span className="text-muted mr-1">Approved At:</span>
-                    <span className="console-text-invert max-content-width">{item.current.timestamp}</span>
+                    <span className="console-text-invert-modal mb-1 max-content-width">{item.current.timestamp}</span>
                   </Col>
                 </Row>
                 <Row>
                   <Col lg className="py-1">
                     <span className="text-muted mr-1">Approver:</span>
-                    <span className="console-text-invert max-content-width">{item.current.approver}</span>
+                    <span className="console-text-invert-modal mb-1 max-content-width">{item.current.approver}</span>
                   </Col>
                 </Row>
                 <Row>
                   <Col lg className="py-1">
-                    <span className="text-muted mr-1">Duration:</span>
-                    <span className="console-text-invert max-content-width">{item.current.duration} hours</span>
+                    <span className="text-muted mr-1">Duration:</span>  
+                    <span className="console-text-invert-modal mb-1 max-content-width">{item.current.duration} hours</span>
                   </Col>
                 </Row>
                 <Row>
                   <Col lg className="py-1">
                     <span className="text-muted mr-1">Approval Message:</span>
-                    <span className="console-text-invert max-content-width">{item.current.message}</span>
+                    <span className="console-text-invert-modal mb-1 max-content-width">{item.current.message}</span>
                   </Col>
                 </Row>
               </>
             )}
-            {item.start.step_name === "approval" && item.current.status === "pending" && (
               <Row>
                 <Col lg className="py-1">
-                  <span className="text-muted mr-1">Time Since Request:</span>
-                  <span className="console-text-invert max-content-width">{item.current.duration} hours</span>
+                  <span className="text-muted mr-1">Status:</span>
+                  <span className="console-text-invert-modal mb-1 max-content-width">{makeUpper(item.current.status)}</span>
                 </Col>
               </Row>
-            )}
           </div>
         </>
       );
