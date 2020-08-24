@@ -13,7 +13,7 @@ const INITIAL_DATA = {
   jPassword: "",
   proxyUserName: "",
   proxyPassword: "",
-  proxyEnable: ""
+  proxyEnable: false
 };
 
 function JenkinsToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVault }) {
@@ -100,7 +100,7 @@ function JenkinsToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVa
     }
   };
 
-console.log(formData)
+// console.log(formData)
 
   return (
     <Form>
@@ -130,11 +130,15 @@ console.log(formData)
           type="checkbox"
           label="is proxy enabled?"
           name="proxyEnable"
-          checked={formData.proxyEnable ? formData.proxyEnable : false}
-          onChange={(e) => 
+          checked={formData.proxyEnable}
+          onChange={() => 
             setFormData({
               ...formData,
-              proxyEnable: e.target.checked
+              proxyEnable: !formData.proxyEnable,
+              jAuthToken: "",
+              jPassword: "",
+              proxyUserName: "",
+              proxyPassword: ""
             })
           }
         />
