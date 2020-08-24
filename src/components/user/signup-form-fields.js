@@ -75,7 +75,7 @@ const defaultSignupFormFields = {
     }
   },
   domain: {
-    label: "New Resource Subdomain Name",
+    label: "Resource Subdomain Name",
     id: "domain",
     fieldText: "When new resources are created for this account, this will be the default sub-domain name used when building DNS records.",
     rules: {

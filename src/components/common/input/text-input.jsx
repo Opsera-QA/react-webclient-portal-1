@@ -19,7 +19,7 @@ function TextInput({ field, formData, setData, disabled }) {
     field &&
     // TODO: Extract into regular inputs for easier maintenance/styling
     <>
-      <Form.Group className="custom-text-input" controlId={field.id}>
+      <Form.Group controlId={field.id}>
         <Form.Label>
           <span>{field.label}{field.rules.isRequired ? <span className="danger-red">*</span> : null } </span>
         </Form.Label>
