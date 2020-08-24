@@ -22,7 +22,7 @@ import adminTagsActions from "../admin-tags-actions";
 import Loading from "../../../common/status_notifications/loading";
 
 const INITIAL_DATA = {
-  key: "",
+  type: "",
   value: "",
   configuration: {},
   active: false,
@@ -31,9 +31,9 @@ const INITIAL_DATA = {
 function TagEditorPanel({ tagData, newTag, setTagData, handleClose }) {
   const [error, setErrors] = useState("");
   const { getAccessToken } = useContext(AuthContext);
-  const [formFieldList, updateFormFields ] = useState({ ...tagEditorFormFields });
-  const [ changeMap, setChangeMap] = useState({});
-  const [ formData, setFormData] = useState(INITIAL_DATA);
+  const [formFieldList, updateFormFields] = useState({ ...tagEditorFormFields });
+  const [changeMap, setChangeMap] = useState({});
+  const [formData, setFormData] = useState(INITIAL_DATA);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -47,9 +47,8 @@ function TagEditorPanel({ tagData, newTag, setTagData, handleClose }) {
   };
 
   const unpackTagData = async (tagData) => {
-    console.log("TagData in unpackTagData: " + JSON.stringify(tagData));
     if (tagData != null) {
-      setFormField("key", tagData["key"] != null ? tagData["key"] : "");
+      setFormField("type", tagData["type"] != null ? tagData["type"] : "");
       setFormField("value", tagData["value"] != null ? tagData["value"] : "");
       setFormField("configuration", tagData["configuration"] != null ? tagData["configuration"] : {});
       setFormField("active", tagData["active"] != null ? tagData["active"] : false);
@@ -58,28 +57,16 @@ function TagEditorPanel({ tagData, newTag, setTagData, handleClose }) {
   };
 
   const setFormField = (field, value) => {
-    console.log("Setting form field: " + field + " value: " + JSON.stringify(value));
-
-    if (value === tagData[field])
-    {
-      console.log("Removing " + field + " from change map");
+    if (value === tagData[field]) {
       delete changeMap[field];
-    }
-    else
-    {
-      console.log("Added " + field + " to change map: " + value);
+    } else {
       changeMap[field] = value;
       setChangeMap({ ...changeMap });
     }
-
     formData[field] = value;
     setFormData({ ...formData });
 
-
-    console.log("ChangeMap: " + JSON.stringify(changeMap));
-
-    if (newTag)
-    {
+    if (newTag) {
       tagData[field] = value;
       setTagData({ ...tagData });
     }
@@ -89,33 +76,24 @@ function TagEditorPanel({ tagData, newTag, setTagData, handleClose }) {
   const isFormValid = true;
 
   const createTag = async (newFormData) => {
-    console.log("Persisting new tag to DB: " + JSON.stringify(newFormData));
-
-    if(isFormValid) {
+    if (isFormValid) {
       let createTagResponse = await adminTagsActions.create(newFormData, getAccessToken);
-      console.log("createTagResponse: ", JSON.stringify(createTagResponse));
-
       if (createTagResponse.error != null) {
         const errorMsg = `Microservice error reported creating the tag: ${newFormData.key}.  Error returned: ${JSON.stringify(createTagResponse.error.message, null, 2)}`;
-        console.log(errorMsg);
         setErrors(errorMsg);
-      }
-      else {
+      } else {
         handleClose();
       }
     }
   };
 
   const updateTag = async (newTagData) => {
-    if(isFormValid) {
+    if (isFormValid) {
       try {
-        console.log("Persisting values in ChangeMap : " + JSON.stringify(changeMap));
         const response = await adminTagsActions.update(newTagData._id, changeMap, getAccessToken);
-        console.log("Response data: " + JSON.stringify(response.data));
         setTagData({ ...response.data });
         setChangeMap({});
-      }
-      catch (err) {
+      } catch (err) {
         console.log(err.message);
       }
     }
@@ -124,7 +102,7 @@ function TagEditorPanel({ tagData, newTag, setTagData, handleClose }) {
 
   return (
     <>
-      {isLoading ? <Loading size="sm" /> : null}
+      {isLoading ? <Loading size="sm"/> : null}
 
       {!isLoading && <>
         <div className="scroll-y full-height">
@@ -133,24 +111,26 @@ function TagEditorPanel({ tagData, newTag, setTagData, handleClose }) {
           </>}
           <Row>
             <Col>
-              <TextInput field={formFieldList.key} setData={setFormField} formData={formData}/>
+              <TextInput field={formFieldList.type} setData={setFormField} formData={formData}/>
             </Col>
             <Col>
-              <ToggleInput field={formFieldList.active} setData={setFormField} formData={formData} />
+              <ToggleInput field={formFieldList.active} setData={setFormField} formData={formData}/>
             </Col>
           </Row>
           <Row>
             <Col>
-              <TextInput field={ formFieldList.value } setData={setFormField} formData={formData}/>
+              <TextInput field={formFieldList.value} setData={setFormField} formData={formData}/>
             </Col>
             <Col>
-              <MultipleInput field={ formFieldList.configuration } setData={setFormField} formData={formData}/>
+              <MultipleInput field={formFieldList.configuration} setData={setFormField} formData={formData}/>
             </Col>
           </Row>
           <Row>
             <div className="ml-auto px-3">
-              {newTag ? <Button size="sm" variant="primary" disabled={Object.keys(changeMap).length === 0} onClick={() => createTag(tagData)}>Create Tag</Button>
-                : <Button size="sm" variant="primary" disabled={Object.keys(changeMap).length === 0} onClick={() => updateTag(tagData)}>Save changes</Button>
+              {newTag ? <Button size="sm" variant="primary" disabled={Object.keys(changeMap).length === 0}
+                                onClick={() => createTag(tagData)}>Create Tag</Button>
+                : <Button size="sm" variant="primary" disabled={Object.keys(changeMap).length === 0}
+                          onClick={() => updateTag(tagData)}>Save changes</Button>
               }
             </div>
           </Row>
@@ -165,11 +145,11 @@ TagEditorPanel.propTypes = {
   setTagData: PropTypes.func,
   canDelete: PropTypes.bool,
   newTag: PropTypes.bool,
-  handleClose: PropTypes.func
+  handleClose: PropTypes.func,
 };
 
 TagEditorPanel.defaultProps = {
-  newTag: false
+  newTag: false,
 };
 
 export default TagEditorPanel;

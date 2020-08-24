@@ -13,7 +13,7 @@ function TagDetailView() {
   const [tagData, setTagData] = useState(undefined);
   const { id } = useParams();
   const [canDelete, setCanDelete] = useState(false);
-  const [error, setError] = useState(false); //if any errors on API call or anything else need to be shown to use, this is used
+  const [error, setErrors] = useState(false);
 
   useEffect(() => {
     getTag(id);
@@ -21,8 +21,12 @@ function TagDetailView() {
   }, []);
 
   const getTag = async (tagId) => {
-    const response = await adminTagsActions.get(tagId, getAccessToken);
-    setTagData(response.data.length > 0 ? response.data[0] : null);
+    try {
+      const response = await adminTagsActions.get(tagId, getAccessToken);
+      setTagData(response.data);
+    } catch (e) {
+      setErrors(e)
+    }
   };
 
   const getRoles = async () => {
@@ -48,12 +52,12 @@ function TagDetailView() {
         </ol>
       </nav>
 
-      {/*TODO: Add isLoading pinwheel*/}
+      {error && <ErrorDialog error={error} align={"top"} setError={setErrors}/>}
+
       {tagData &&
       <div className="content-container content-card-1 max-content-width ml-2">
-        <div className="pt-2 pl-2 content-block-header"><h5>Tag Details [{tagData && tagData.key}]</h5></div>
-        {error &&
-        <div className="absolute-center-content"><ErrorDialog align="center" error={error.message}></ErrorDialog></div>}
+        <div className="pt-2 pl-2 content-block-header"><h5>Tag Details [{tagData && tagData.type}]</h5></div>
+
         <div>
           <div>
             <div>

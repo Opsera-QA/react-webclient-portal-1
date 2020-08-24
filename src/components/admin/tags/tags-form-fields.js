@@ -1,8 +1,8 @@
 // TODO: put metadata on node server and pull down that way?
 const tagEditorFormFields = {
   key: {
-    label: "Key",
-    id: "key",
+    label: "Type",
+    id: "type",
     rules: {
       isRequired: true 
     }

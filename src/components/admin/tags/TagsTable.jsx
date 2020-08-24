@@ -11,17 +11,13 @@ function TagsTable({ data }) {
   const columns = useMemo(
     () => [
       {
-        Header: "Key",
-        accessor: "key",
+        Header: "Type",
+        accessor: "type",
       },
       {
         Header: "Value",
         accessor: "value",
       },      
-      {
-        Header: "Owner",
-        accessor: "owner_name",
-      },   
       {
         Header: "Account",
         accessor: "account",
@@ -58,7 +54,7 @@ function TagsTable({ data }) {
     pageIndex: 0,
     sortBy: [
       {
-        id: "key",
+        id: "type",
         desc: false
       }
     ]
