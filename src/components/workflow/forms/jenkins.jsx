@@ -422,7 +422,7 @@ function JenkinsStepConfiguration({
 
   const handleJenkinsChange = (selectedOption) => {
     if (!selectedOption.configuration) {
-      setErrors("Configuration missing for tool!  This Jenkins tool does not have a configuration value set and cannot be used at this time.  Please go into Tool Registry and add connection information in order for Opsera to work with this tool.")
+      setErrors("Connection information missing for this tool!  This Jenkins tool does not have connection details defined in its Tool Registry record.  Please go into Tool Registry and add connection information in order for Opsera to work with this tool.")
       return;
     }
 
