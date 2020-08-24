@@ -127,7 +127,7 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
               {templateDataDto.isNew()
                 ? <Button size="sm" variant="primary" onClick={() => createTemplate()}>Create Template</Button>
                 : <Button size="sm" variant="primary" disabled={templateDataDto.dataState === DataState.LOADED}
-                          onClick={() => updateTemplate()}>Save Changes</Button>
+                          onClick={() => updateTemplate()}>Save</Button>
               }
             </div>
           </Row>

@@ -110,7 +110,7 @@ function AnchoreIntegratorToolConfiguration({ toolData, toolId, fnSaveChanges, f
             {isSaving &&
             <div className="text-center mr-3 mt-1"><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>Saving is in progress</div>}
             <Button size="sm" variant="primary" disabled={isSaving} onClick={() => callbackFunction()}><FontAwesomeIcon
-              icon={faSave} fixedWidth className="mr-2"/>Save Changes</Button>
+              icon={faSave} fixedWidth className="mr-2"/>Save</Button>
           </div>
         </div>
       </Row>

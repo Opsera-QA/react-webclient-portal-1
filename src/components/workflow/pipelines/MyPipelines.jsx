@@ -3,15 +3,16 @@ import ErrorDialog from "components/common/status_notifications/error";
 import "../workflows.css";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PipelinesView from "./PipelinesView";
+import WorkflowCatalog from "../workflowCatalog";
 
 function MyPipelines() {
   const [errors, setErrors] = useState();
   const [loading, setLoading] = useState(false);
-  const [currentTab, setCurrentTab] = useState("owner");
+  const [activeTab, setActiveTab] = useState("owner");
   
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
-    setCurrentTab(tabSelection);
+    setActiveTab(tabSelection);
   };
 
   if (loading) {
@@ -26,34 +27,58 @@ function MyPipelines() {
             <div className="alternate-tabs">
               <ul className="nav nav-tabs">
                 <li className="nav-item">
-                  <a className={"nav-link " + (currentTab === "all" ? "active" : "")} href="#"
+                  <a className={"nav-link " + (activeTab === "catalog" ? "active" : "")} href="#"
+                     onClick={handleTabClick("catalog")}>Catalog</a>
+                </li>
+                <li className="nav-item">
+                  <a className={"nav-link " + (activeTab === "all" ? "active" : "")} href="#"
                      onClick={handleTabClick("all")}>All</a>
                 </li>
                 <li className="nav-item">
-                  <a className={"nav-link " + (currentTab === "owner" ? "active" : "")} href="#"
+                  <a className={"nav-link " + (activeTab === "owner" ? "active" : "")} href="#"
                      onClick={handleTabClick("owner")}>My Pipelines</a>
                 </li>
                 <li className="nav-item">
-                  <a className={"nav-link " + (currentTab === "sdlc" ? "active" : "")} href="#"
+                  <a className={"nav-link " + (activeTab === "sdlc" ? "active" : "")} href="#"
                      onClick={handleTabClick("sdlc")}>Software Development</a>
                 </li>
                 <li className="nav-item">
-                  <a className={"nav-link " + (currentTab === "ai-ml" ? "active" : "")} href="#"
+                  <a className={"nav-link " + (activeTab === "ai-ml" ? "active" : "")} href="#"
                      onClick={handleTabClick("ai-ml")}>AI/ML</a>
                 </li>
                 <li className="nav-item">
-                  <a className={"nav-link " + (currentTab === "sfdc" ? "active" : "")} href="#"
+                  <a className={"nav-link " + (activeTab === "sfdc" ? "active" : "")} href="#"
                      onClick={handleTabClick("sfdc")}>SalesForce</a>
                 </li>
               </ul>
             </div>
             <div className="content-block-collapse px-3 pt-2">
-              <PipelinesView currentTab={currentTab}/>
+              <PipelinesTabView activeTab={activeTab} setActiveTab={setActiveTab}/>
             </div>
           </>
         </div>
       </>
     );
+  }
+}
+
+function PipelinesTabView({activeTab, setActiveTab}) {
+  useEffect(() => {
+    // console.log("CHANGE HAPPENED");
+  }, [activeTab]);
+  if (activeTab) {
+    switch (activeTab) {
+      case "catalog":
+        return <WorkflowCatalog />
+      case "all":
+      case "owner":
+      case "sdlc":
+      case "ai-ml":
+      case "sfdc":
+        return <PipelinesView currentTab={activeTab} setActiveTab={setActiveTab}/>;
+      default:
+        return null;
+    }
   }
 }
 

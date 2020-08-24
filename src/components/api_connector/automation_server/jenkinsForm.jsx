@@ -347,7 +347,7 @@ function JenkinsForm() {
               </Form.Row>
               
               
-              <Button id="save-button" disabled={!isEnabled} variant="outline-primary" className="mr-2 mt-3" type="submit">{update ? "Save Changes" : "Connect"}</Button>
+              <Button id="save-button" disabled={!isEnabled} variant="outline-primary" className="mr-2 mt-3" type="submit">{update ? "Save" : "Connect"}</Button>
               <div className="text-muted mt-3 mb-2 italic">* Required Fields</div>
             </Form>
           }

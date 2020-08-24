@@ -141,7 +141,7 @@ function LdapIdpAccountEditorPanel({ldapOrganizationAccountData, ldapIdpAccountD
             <div className="ml-auto m-3 px-3">
               {ldapIdpAccountDataDto.isNew()
                 ? <Button size="sm" variant="primary" onClick={() => createIdpAccount()}>Create Idp Account</Button>
-                : <Button size="sm" variant="primary" disabled={ldapIdpAccountDataDto.dataState === DataState.LOADED} onClick={() => updateLdapIdpAccount()}>Save Changes</Button>
+                : <Button size="sm" variant="primary" disabled={ldapIdpAccountDataDto.dataState === DataState.LOADED} onClick={() => updateLdapIdpAccount()}>Save</Button>
               }
             </div>
           </Row>

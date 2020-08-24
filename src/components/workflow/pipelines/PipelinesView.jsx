@@ -11,7 +11,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import PipelineWelcomeView from "./PipelineWelcomeView";
 
-function PipelinesView({ currentTab }) {
+function PipelinesView({ currentTab, setActiveTab }) {
   const { getAccessToken } = useContext(AuthContext);
   const [errors, setErrors] = useState();
   const [data, setData] = useState([]);
@@ -58,7 +58,7 @@ function PipelinesView({ currentTab }) {
   } else if (errors) {
     return (<ErrorDialog error={errors}/>);
   } else if (data && data.count === 0 && currentTab === "owner")  {
-    return (<><PipelineWelcomeView /></>)
+    return (<><PipelineWelcomeView setActiveTab={setActiveTab} /></>)
   } else {
     return (
       <>
@@ -88,7 +88,8 @@ function PipelinesView({ currentTab }) {
 }
 
 PipelinesView.propTypes = {
-  currentTab: PropTypes.string
+  currentTab: PropTypes.string,
+  setActiveTab: PropTypes.func
 }
 
 export default PipelinesView;

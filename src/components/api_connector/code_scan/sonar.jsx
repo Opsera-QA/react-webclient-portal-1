@@ -229,7 +229,7 @@ function Sonar() {
               </Form.Group>
 
               <div className="text-muted mt-2 mb-2 italic">Please Note: All fields are required for connectivity.</div>
-              <Button id="save-button" disabled={!isEnabled} variant="outline-primary" className="mr-2" type="submit">{update ? "Save Changes" : "Connect"}</Button>
+              <Button id="save-button" disabled={!isEnabled} variant="outline-primary" className="mr-2" type="submit">{update ? "Save" : "Connect"}</Button>
               {/* <Button id="cancel-button" variant="outline-secondary" className="mr-2" type="button" onClick={this.cancel}>Cancel</Button> */}
             </Form>
           }
