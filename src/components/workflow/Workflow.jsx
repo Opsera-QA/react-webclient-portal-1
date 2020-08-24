@@ -44,23 +44,19 @@ function Workflow() {
               {selection !== "catalog" ? <><Link to="/workflow/catalog">Catalog</Link></> : <>Catalog</>}
             </li>
             <li className={selection === "myPipelines" ? "breadcrumb-item active" : "breadcrumb-item"}>
-              {selection !== "myPipelines" ? <><Link to="/workflow">My Pipelines</Link></> : <>My Pipelines</>}</li>
+              {selection !== "myPipelines" ? <><Link to="/workflow">Pipelines</Link></> : <>Pipelines</>}</li>
 
             {(selection === "pipelineDetail" || selection === "workflowView") &&
-            <li className="breadcrumb-item active">Pipeline</li>}
+            <li className="breadcrumb-item active">Detail View</li>}
           </ol>
         </nav>
-        <h4>
-          {selection === "catalog" && "Pipeline Templates Catalog"}
-          {selection === "myPipelines" && "My Pipelines"}
-          {(selection === "pipelineDetail" || selection === "workflowView") && "Pipeline"}
-        </h4>
 
+        <h4>Pipelines</h4>
       </div>
       {itemId.length > 0 && selection === "pipelineDetail" ? <PipelineOverview id={itemId}/> : null}
       {itemId.length > 0 && selection === "workflowView" ? <PipelineWorkflowView id={itemId}/> : null}
-      {itemId.length === 0 && selection === "catalog" ? <WorkflowCatalog id={itemId}/> : null}
-      {itemId.length === 0 && selection === "myPipelines" ? <MyPipelines/> : null}
+      {((itemId.length === 0 && selection === "myPipelines") || selection === "catalog") ?
+        <MyPipelines view={selection}/> : null}
 
     </>
   );

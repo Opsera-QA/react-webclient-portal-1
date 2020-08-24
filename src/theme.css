@@ -501,6 +501,9 @@ div.modal-footer {
 /* End Step Tab Styling */
 
 /* Alternate Tab Styling */
+.alternate-tabs .nav-tabs .nav-item {
+  margin-right:2px;
+}
 
 .alternate-tabs .nav-tabs > li a.active, .alternate-tabs .nav-tabs > li a.active:focus {
   background: #1578dc;

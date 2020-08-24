@@ -14,7 +14,6 @@ function ToolDetailPanel({ toolData, setToolData, loadData }) {
   const [activeTab, setActiveTab] = useState("attributes");
 
   const handleTabClick = (tabSelection) => e => {
-    console.log(tabSelection);
     e.preventDefault();
     if (tabSelection) {
       setActiveTab(tabSelection);

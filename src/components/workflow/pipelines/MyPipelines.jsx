@@ -4,12 +4,21 @@ import "../workflows.css";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PipelinesView from "./PipelinesView";
 import WorkflowCatalog from "../workflowCatalog";
+import PropTypes from "prop-types";
 
-function MyPipelines() {
+function MyPipelines({ view }) {
   const [errors, setErrors] = useState();
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("owner");
-  
+
+  useEffect(() => {
+    if (view === "catalog") {
+      setActiveTab(view);
+    } else {
+      setActiveTab("owner");
+    }
+  }, []);
+
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
     setActiveTab(tabSelection);
@@ -18,10 +27,10 @@ function MyPipelines() {
   if (loading) {
     return (<LoadingDialog size="sm"/>);
   } else if (errors) {
-    return (<ErrorDialog error={errors} />);
+    return (<ErrorDialog error={errors}/>);
   } else {
     return (
-      <>        
+      <>
         <div className="px-2 max-content-width">
           <>
             <div className="alternate-tabs">
@@ -62,24 +71,28 @@ function MyPipelines() {
   }
 }
 
-function PipelinesTabView({activeTab, setActiveTab}) {
+function PipelinesTabView({ activeTab, setActiveTab }) {
   useEffect(() => {
     // console.log("CHANGE HAPPENED");
   }, [activeTab]);
   if (activeTab) {
     switch (activeTab) {
-      case "catalog":
-        return <WorkflowCatalog />
-      case "all":
-      case "owner":
-      case "sdlc":
-      case "ai-ml":
-      case "sfdc":
-        return <PipelinesView currentTab={activeTab} setActiveTab={setActiveTab}/>;
-      default:
-        return null;
+    case "catalog":
+      return <WorkflowCatalog/>;
+    case "all":
+    case "owner":
+    case "sdlc":
+    case "ai-ml":
+    case "sfdc":
+      return <PipelinesView currentTab={activeTab} setActiveTab={setActiveTab}/>;
+    default:
+      return null;
     }
   }
 }
+
+MyPipelines.propTypes = {
+  view: PropTypes.string,
+};
 
 export default MyPipelines;

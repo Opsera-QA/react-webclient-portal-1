@@ -26,7 +26,7 @@ import ErrorDialog from "../../common/status_notifications/error";
 const JOB_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
   { value: "job", label: "Custom Job" },
-  { value: "opsera-job", label: "Opsera Managed Jobs" }
+  { value: "opsera-job", label: "Opsera Managed Jobs" },
 ];
 
 //This must match the form below and the data object expected.  Each tools' data object is different
@@ -41,7 +41,7 @@ const INITIAL_DATA = {
   toolJobId: "",
   toolJobType: "",
   projectKey: "",
- 
+
   accountUsername: "",
   projectId: "",
   defaultBranch: "",
@@ -83,7 +83,7 @@ function SonarStepConfiguration({
   const [branchList, setBranchList] = useState([]);
   const [isBranchSearching, setIsBranchSearching] = useState(false);
   const [listOfSteps, setListOfSteps] = useState([]);
-  
+
   const [sonarList, setSonarList] = useState([]);
   const [isSonarSearching, setIsSonarSearching] = useState(false);
   const [accountsList, setAccountsList] = useState([]);
@@ -101,7 +101,7 @@ function SonarStepConfiguration({
   const formatStepOptions = (plan, stepId) => {
     let STEP_OPTIONS = plan.slice(
       0,
-      plan.findIndex((element) => element._id === stepId)
+      plan.findIndex((element) => element._id === stepId),
     );
     STEP_OPTIONS.unshift({ _id: "", name: "Select One", isDisabled: "yes" });
     return STEP_OPTIONS;
@@ -132,16 +132,10 @@ function SonarStepConfiguration({
 
     async function fetchJenkinsDetails(service) {
       setisJenkinsSearching(true);
-      // Set results state
       let results = await searchToolsList(service);
-      //console.log(results);
-      const filteredList = results.filter(
-        (el) => el.configuration !== undefined
-      ); //filter out items that do not have any configuration data!
-      if (filteredList) {
-        setJenkinsList(filteredList);
-        setisJenkinsSearching(false);
-      }
+      setJenkinsList(results);
+      setisJenkinsSearching(false);
+
     }
 
     // Fire off our API call
@@ -158,7 +152,7 @@ function SonarStepConfiguration({
       let results = await searchToolsList(service);
       //console.log(results);
       const filteredList = results.filter(
-        (el) => el.configuration !== undefined
+        (el) => el.configuration !== undefined,
       ); //filter out items that do not have any configuration data!
       if (filteredList) {
         setSonarList(filteredList);
@@ -238,10 +232,10 @@ function SonarStepConfiguration({
       setAccountsList(
         jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ] ? 
-        jenkinsList[
-          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ].accounts : []
+          ] ?
+          jenkinsList[
+            jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+            ].accounts : [],
       );
     }
   }, [jenkinsList, formData.toolConfigId]);
@@ -251,10 +245,10 @@ function SonarStepConfiguration({
       setJobsList(
         jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ] ? 
-        jenkinsList[
-          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ].jobs : []
+          ] ?
+          jenkinsList[
+            jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+            ].jobs : [],
       );
     }
   }, [jenkinsList, formData.toolConfigId]);
@@ -267,7 +261,7 @@ function SonarStepConfiguration({
 
   useEffect(() => {
     if (jobType === "job") {
-      setFormData({ ...formData, jobType : "CODE SCAN" });
+      setFormData({ ...formData, jobType: "CODE SCAN" });
     }
   }, [jobType]);
 
@@ -356,7 +350,7 @@ function SonarStepConfiguration({
         return respObj;
       } else {
         setErrors(
-          "Jenkins information is missing or unavailable!  Please ensure the required Jenkins creds are registered and up to date in Tool Registry."
+          "Jenkins information is missing or unavailable!  Please ensure the required Jenkins creds are registered and up to date in Tool Registry.",
         );
       }
     } catch (err) {
@@ -377,38 +371,41 @@ function SonarStepConfiguration({
       dockerTagName,
     } = formData;
 
-    if(jobType === "job") {
-      if(jobName.length === 0) {
-      setFormMessage("Required Fields Missing!");
-      return false
+    if (jobType === "job") {
+      if (jobName.length === 0) {
+        setFormMessage("Required Fields Missing!");
+        return false;
       } else {
         setFormMessage("");
-        return true
+        return true;
+      }
+    } else {
+      if (
+        toolConfigId.length === 0 ||
+        jenkinsUrl.length === 0 ||
+        jUserId.length === 0 ||
+        jAuthToken.length === 0 ||
+        // jobName.length === 0 ||
+        (buildType === "docker"
+          ? dockerName.length === 0 || dockerTagName.length === 0
+          : false)
+      ) {
+        setFormMessage("Required Fields Missing!");
+        return false;
+      } else {
+        setFormMessage("");
+        return true;
       }
     }
-    else  {
-    if (
-      toolConfigId.length === 0 ||
-      jenkinsUrl.length === 0 ||
-      jUserId.length === 0 ||
-      jAuthToken.length === 0 ||
-      // jobName.length === 0 ||
-      (buildType === "docker"
-        ? dockerName.length === 0 || dockerTagName.length === 0
-        : false)
-    ) {
-      setFormMessage("Required Fields Missing!");
-      return false;
-    } else {
-      setFormMessage("");
-      return true;
-    }
-  }
   };
 
   //todo: can this use the initial value const above to reset everything?  Right now this means we have ot maintain the values in two places.
   const handleJenkinsChange = (selectedOption) => {
-    setLoading(true);
+    if (!selectedOption.configuration) {
+      setErrors("Connection information missing for this tool!  This Jenkins tool does not have connection details defined in its Tool Registry record.  Please go into Tool Registry and add connection information in order for Opsera to work with this tool.")
+      return;
+    }
+
     if (selectedOption.id && selectedOption.configuration) {
       setFormData({
         ...formData,
@@ -437,12 +434,9 @@ function SonarStepConfiguration({
       setAccountsList(selectedOption.accounts);
       setJobsList(selectedOption.jobs);
     }
-    setLoading(false);
   };
 
   const handleSonarChange = (selectedOption) => {
-    setLoading(true);
-    //console.log(selectedOption);
     if (selectedOption.id && selectedOption.configuration) {
       setFormData({
         ...formData,
@@ -453,22 +447,21 @@ function SonarStepConfiguration({
         // sonarAuthToken: selectedOption.configuration ? selectedOption.configuration.sonarAuthToken : ""
       });
     }
-    setLoading(false);
   };
 
   const handleJobChange = (selectedOption) => {
-    console.log(selectedOption)
-    if (selectedOption.type[0] === "CODE SCAN" ) {      
-        setFormData({
-          ...formData,
-          toolJobId: selectedOption._id,
-          toolJobType: selectedOption.type,
-          jobType: selectedOption.type[0],
-          ...selectedOption.configuration,
-          buildToolVersion: "6.3",
-          projectKey:"",
-          buildArgs: {},
-        });
+    console.log(selectedOption);
+    if (selectedOption.type[0] === "CODE SCAN") {
+      setFormData({
+        ...formData,
+        toolJobId: selectedOption._id,
+        toolJobType: selectedOption.type,
+        jobType: selectedOption.type[0],
+        ...selectedOption.configuration,
+        buildToolVersion: "6.3",
+        projectKey: "",
+        buildArgs: {},
+      });
     } else {
       setErrors("Selected Job is not a Sonar Job!  Please ensure the selected job has sonar code configurations.");
     }
@@ -517,16 +510,16 @@ function SonarStepConfiguration({
   const handleJobTypeChange = (selectedOption) => {
     setErrors(false);
     setJobType(selectedOption.value);
-      setFormData({
-        ...formData,
-        sonarToolConfigId: "",
-        jobName: "",
-        buildType: "", 
-        jobDescription: "",
-        jobType: "",
-        toolJobId: "",
-        toolJobType: "",
-      });
+    setFormData({
+      ...formData,
+      sonarToolConfigId: "",
+      jobName: "",
+      buildType: "",
+      jobDescription: "",
+      jobType: "",
+      toolJobId: "",
+      toolJobType: "",
+    });
   };
 
   //todo: the api needs to be moved to actions.jsx
@@ -547,7 +540,7 @@ function SonarStepConfiguration({
         return arrOfObj;
       } else {
         setErrors(
-          "Service Unavailable.  Please try again or report this issue."
+          "Service Unavailable.  Please try again or report this issue.",
         );
       }
     } catch (err) {
@@ -572,7 +565,7 @@ function SonarStepConfiguration({
       if (res.data && res.data.data) {
         let arrOfObj = res.data.data;
         if (arrOfObj) {
-          let result = arrOfObj.map(function (el) {
+          let result = arrOfObj.map(function(el) {
             let o = Object.assign({});
             o.value = el.toLowerCase();
             o.name = el;
@@ -582,7 +575,7 @@ function SonarStepConfiguration({
         }
       } else {
         setErrors(
-          "Service Unavailable.  Please try again or report this issue."
+          "Service Unavailable.  Please try again or report this issue.",
         );
       }
     } catch (err) {
@@ -612,7 +605,7 @@ function SonarStepConfiguration({
             </div>
             {data.configuration && (
               <>
-                {Object.entries(data.configuration).map(function (a) {
+                {Object.entries(data.configuration).map(function(a) {
                   return (
                     <div key={a}>
                       {a[1].length > 0 && (
@@ -666,7 +659,7 @@ function SonarStepConfiguration({
               overlay={RegistryPopover(
                 jenkinsList[
                   jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-                ]
+                  ],
               )}
             >
               <FontAwesomeIcon
@@ -695,9 +688,9 @@ function SonarStepConfiguration({
                     value={
                       jenkinsList[
                         jenkinsList.findIndex(
-                          (x) => x.id === formData.toolConfigId
+                          (x) => x.id === formData.toolConfigId,
                         )
-                      ]
+                        ]
                     }
                     valueField="id"
                     textField="name"
@@ -727,7 +720,7 @@ function SonarStepConfiguration({
           {formData.toolConfigId && formData.toolConfigId.length > 0 && (
             <Form.Label className="mt-2 pl-1">
               <Link to={"/inventory/tools/" + formData.toolConfigId}>
-                <FontAwesomeIcon icon={faTools} className="pr-1" /> View/edit
+                <FontAwesomeIcon icon={faTools} className="pr-1"/> View/edit
                 this tool's Registry settings
               </Link>
             </Form.Label>
@@ -764,35 +757,93 @@ function SonarStepConfiguration({
         ) : null}
 
         {jobType === "job" ? (
-          <Form.Group controlId="branchField">
-            <Form.Label>Job Name*</Form.Label>
-            <Form.Control
-              maxLength="150"
-              disabled={false}
-              type="text"
-              placeholder=""
-              value={formData.jobName || ""}
-              onChange={(e) =>
-                setFormData({ ...formData, jobName: e.target.value })
-              }
-            />
-          </Form.Group>
-        ) : 
-        <>
-        {jobType === "opsera-job" && (
+            <Form.Group controlId="branchField">
+              <Form.Label>Job Name*</Form.Label>
+              <Form.Control
+                maxLength="150"
+                disabled={false}
+                type="text"
+                placeholder=""
+                value={formData.jobName || ""}
+                onChange={(e) =>
+                  setFormData({ ...formData, jobName: e.target.value })
+                }
+              />
+            </Form.Group>
+          ) :
           <>
-            {formData.jenkinsUrl && jenkinsList.length > 1 && (
-              <Form.Group controlId="formBasicEmail">
+            {jobType === "opsera-job" && (
+              <>
+                {formData.jenkinsUrl && jenkinsList.length > 1 && (
+                  <Form.Group controlId="formBasicEmail">
+                    <Form.Label className="w-100">
+                      Job*
+                      <OverlayTrigger
+                        trigger="click"
+                        rootClose
+                        placement="left"
+                        overlay={RegistryPopover(
+                          jobsList[
+                            jobsList.findIndex((x) => x._id === formData.toolJobId)
+                            ],
+                        )}
+                      >
+                        <FontAwesomeIcon
+                          icon={faEllipsisH}
+                          className="fa-pull-right pointer pr-1"
+                          onClick={() => document.body.click()}
+                        />
+                      </OverlayTrigger>
+                    </Form.Label>
+                    {jobsList.length < 1 && (
+                      <div className="form-text text-muted p-2">
+                        <FontAwesomeIcon
+                          icon={faExclamationCircle}
+                          className="text-muted mr-1"
+                          fixedWidth
+                        />
+                        No jobs have been created for{" "}
+                        <span>{formData.jenkinsUrl}</span>. Please go to
+                        <Link to={"/inventory/tools/" + formData.toolConfigId}>
+                          {" "}
+                          Tool Registry
+                        </Link>{" "}
+                        and add credentials and register a job for this Jenkins in
+                        order to proceed.{" "}
+                      </div>
+                    )}
+                    {jobsList !== undefined && jobsList.length > 0 ? (
+                      <DropdownList
+                        data={jobsList}
+                        valueField="id"
+                        textField="name"
+                        value={
+                          jobsList && jobsList.length > 0 &&
+                          jobsList[
+                            jobsList.findIndex((x) => x._id === formData.toolJobId)
+                            ]
+                        }
+                        filter="contains"
+                        onChange={handleJobChange}
+                      />
+                    ) : null}
+                  </Form.Group>
+                )}
+              </>
+            )}
+
+            {(formData.jobType === "CODE SCAN") && (
+              <Form.Group controlId="jenkinsList">
                 <Form.Label className="w-100">
-                  Job*
+                  Sonar Credentials*
                   <OverlayTrigger
                     trigger="click"
                     rootClose
                     placement="left"
                     overlay={RegistryPopover(
-                      jobsList[
-                        jobsList.findIndex((x) => x._id === formData.toolJobId)
-                      ]
+                      sonarList[
+                        sonarList.findIndex((x) => x.id === formData.sonarToolConfigId)
+                        ],
                     )}
                   >
                     <FontAwesomeIcon
@@ -802,260 +853,203 @@ function SonarStepConfiguration({
                     />
                   </OverlayTrigger>
                 </Form.Label>
-                {jobsList.length < 1 && (
+                {isSonarSearching ? (
+                  <div className="form-text text-muted mt-2 p-2">
+                    <FontAwesomeIcon
+                      icon={faSpinner}
+                      spin
+                      className="text-muted mr-1"
+                      fixedWidth
+                    />
+                    Loading Sonar accounts from Tool Registry
+                  </div>
+                ) : (
+                  <>
+                    {renderForm && sonarList && sonarList.length > 0 ? (
+                      <>
+                        <DropdownList
+                          data={sonarList}
+                          value={
+                            sonarList[
+                              sonarList.findIndex(
+                                (x) => x.id === formData.sonarToolConfigId,
+                              )
+                              ]
+                          }
+                          valueField="id"
+                          textField="name"
+                          filter="contains"
+                          onChange={handleSonarChange}
+                        />
+                        <br></br>
+                        <Form.Group controlId="projectKey">
+                          <Form.Label>Project Key*</Form.Label>
+                          <Form.Control maxLength="150" type="text" placeholder="" value={formData.projectKey || ""}
+                                        onChange={e => setFormData({ ...formData, projectKey: e.target.value })}/>
+                        </Form.Group>
+                      </>
+                    ) : (
+                      <>
+                        <div className="form-text text-muted p-2">
+                          <FontAwesomeIcon
+                            icon={faExclamationCircle}
+                            className="text-muted mr-1"
+                            fixedWidth
+                          />
+                          No accounts have been registered for Code Scan. Please go
+                          to
+                          <Link to="/inventory/tools">Tool Registry</Link> and add a
+                          Code Scan Account entry in order to proceed.
+                        </div>
+                      </>
+                    )}
+                  </>
+                )}
+              </Form.Group>
+            )}
+
+            {formData.jenkinsUrl && jenkinsList.length > 1 && (
+              <Form.Group controlId="formBasicEmail">
+                <Form.Label className="w-100">
+                  Account*
+                  <OverlayTrigger
+                    trigger="click"
+                    rootClose
+                    placement="left"
+                    overlay={RegistryPopover(
+                      accountsList[
+                        accountsList.findIndex(
+                          (x) => x.gitCredential === formData.gitCredential,
+                        )
+                        ],
+                    )}
+                  >
+                    <FontAwesomeIcon
+                      icon={faEllipsisH}
+                      className="fa-pull-right pointer pr-1"
+                      onClick={() => document.body.click()}
+                    />
+                  </OverlayTrigger>
+                </Form.Label>
+                {accountsList.length < 1 && (
                   <div className="form-text text-muted p-2">
                     <FontAwesomeIcon
                       icon={faExclamationCircle}
                       className="text-muted mr-1"
                       fixedWidth
                     />
-                    No jobs have been created for{" "}
+                    No Credentials have been created for{" "}
                     <span>{formData.jenkinsUrl}</span>. Please go to
-                    <Link to={"/inventory/tools/" + formData.toolConfigId}>
-                      {" "}
-                      Tool Registry
-                    </Link>{" "}
-                    and add credentials and register a job for this Jenkins in
-                    order to proceed.{" "}
+                    <Link to="/inventory/tools"> Tool Registry</Link> and add
+                    credentials for this Jenkins in order to proceed.
                   </div>
                 )}
-                {jobsList !== undefined && jobsList.length > 0 ? (
+                {accountsList !== undefined && accountsList.length > 0 ? (
                   <DropdownList
-                    data={jobsList}
-                    valueField="id"
-                    textField="name"
-                    value={
-                      jobsList && jobsList.length > 0 &&
-                      jobsList[
-                        jobsList.findIndex((x) => x._id === formData.toolJobId)
-                      ]
+                    data={accountsList}
+                    valueField="gitCredential"
+                    textField="gitCredential"
+                    defaultValue={
+                      accountsList && accountsList.length > 0 &&
+                      accountsList[
+                        accountsList.findIndex(
+                          (x) => x.gitCredential === formData.gitCredential,
+                        )
+                        ]
                     }
                     filter="contains"
-                    onChange={handleJobChange}
+                    onChange={handleAccountChange}
                   />
                 ) : null}
               </Form.Group>
             )}
-          </>
-        )}
 
-        {(formData.jobType === "CODE SCAN" ) && (
-          <Form.Group controlId="jenkinsList">
-            <Form.Label className="w-100">
-              Sonar Credentials*
-              <OverlayTrigger
-                trigger="click"
-                rootClose
-                placement="left"
-                overlay={RegistryPopover(
-                  sonarList[
-                    sonarList.findIndex((x) => x.id === formData.sonarToolConfigId)
-                  ]
-                )}
-              >
-                <FontAwesomeIcon
-                  icon={faEllipsisH}
-                  className="fa-pull-right pointer pr-1"
-                  onClick={() => document.body.click()}
-                />
-              </OverlayTrigger>
-            </Form.Label>
-            {isSonarSearching ? (
-              <div className="form-text text-muted mt-2 p-2">
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
-                Loading Sonar accounts from Tool Registry
-              </div>
-            ) : (
-              <>
-                {renderForm && sonarList && sonarList.length > 0 ? (
-                  <>
-                    <DropdownList
-                      data={sonarList}
-                      value={
-                        sonarList[
-                          sonarList.findIndex(
-                            (x) => x.id === formData.sonarToolConfigId
-                          )
-                        ]
-                      }
-                      valueField="id"
-                      textField="name"
-                      filter="contains"
-                      onChange={handleSonarChange}
+            {formData.service && formData.gitToolId && (
+              <Form.Group controlId="account" className="mt-2">
+                <Form.Label>Repository*</Form.Label>
+                {isRepoSearching ? (
+                  <div className="form-text text-muted mt-2 p-2">
+                    <FontAwesomeIcon
+                      icon={faSpinner}
+                      spin
+                      className="text-muted mr-1"
+                      fixedWidth
                     />
-                    <br></br>
-                    <Form.Group controlId="projectKey">
-                      <Form.Label>Project Key*</Form.Label>
-                      <Form.Control maxLength="150" type="text" placeholder="" value={formData.projectKey || ""} onChange={e => setFormData({ ...formData, projectKey: e.target.value })} />
-                    </Form.Group>
-                  </>
+                    Loading repositories from registry
+                  </div>
                 ) : (
                   <>
-                    <div className="form-text text-muted p-2">
+                    {repoList ? (
+                      <DropdownList
+                        data={repoList}
+                        value={
+                          repoList[
+                            repoList.findIndex(
+                              (x) => x.name === formData.repository,
+                            )
+                            ]
+                        }
+                        valueField="value"
+                        textField="name"
+                        filter="contains"
+                        onChange={handleRepoChange}
+                      />
+                    ) : (
                       <FontAwesomeIcon
-                        icon={faExclamationCircle}
+                        icon={faSpinner}
+                        spin
                         className="text-muted mr-1"
                         fixedWidth
                       />
-                      No accounts have been registered for Code Scan. Please go
-                      to
-                      <Link to="/inventory/tools">Tool Registry</Link> and add a
-                      Code Scan Account entry in order to proceed.
-                    </div>
+                    )}
                   </>
                 )}
-              </>
+                {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
+              </Form.Group>
             )}
-          </Form.Group>
-        )}
 
-        {formData.jenkinsUrl && jenkinsList.length > 1 && (
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label className="w-100">
-              Account*
-              <OverlayTrigger
-                trigger="click"
-                rootClose
-                placement="left"
-                overlay={RegistryPopover(
-                  accountsList[
-                    accountsList.findIndex(
-                      (x) => x.gitCredential === formData.gitCredential
-                    )
-                  ]
-                )}
-              >
-                <FontAwesomeIcon
-                  icon={faEllipsisH}
-                  className="fa-pull-right pointer pr-1"
-                  onClick={() => document.body.click()}
-                />
-              </OverlayTrigger>
-            </Form.Label>
-            {accountsList.length < 1 && (
-              <div className="form-text text-muted p-2">
-                <FontAwesomeIcon
-                  icon={faExclamationCircle}
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
-                No Credentials have been created for{" "}
-                <span>{formData.jenkinsUrl}</span>. Please go to
-                <Link to="/inventory/tools"> Tool Registry</Link> and add
-                credentials for this Jenkins in order to proceed.
-              </div>
-            )}
-            {accountsList !== undefined && accountsList.length > 0 ? (
-              <DropdownList
-                data={accountsList}
-                valueField="gitCredential"
-                textField="gitCredential"
-                defaultValue={
-                  accountsList && accountsList.length > 0 &&
-                  accountsList[
-                    accountsList.findIndex(
-                      (x) => x.gitCredential === formData.gitCredential
-                    )
-                  ]
-                }
-                filter="contains"
-                onChange={handleAccountChange}
-              />
-            ) : null}
-          </Form.Group>
-        )}
-
-        {formData.service && formData.gitToolId && (
-          <Form.Group controlId="account" className="mt-2">
-            <Form.Label>Repository*</Form.Label>
-            {isRepoSearching ? (
-              <div className="form-text text-muted mt-2 p-2">
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
-                Loading repositories from registry
-              </div>
-            ) : (
-              <>
-                {repoList ? (
-                  <DropdownList
-                    data={repoList}
-                    value={
-                      repoList[
-                        repoList.findIndex(
-                          (x) => x.name === formData.repository
-                        )
-                      ]
-                    }
-                    valueField="value"
-                    textField="name"
-                    filter="contains"
-                    onChange={handleRepoChange}
-                  />
+            {formData.service && formData.gitToolId && formData.repoId && (
+              <Form.Group controlId="account" className="mt-2">
+                <Form.Label>Branch*</Form.Label>
+                {isBranchSearching ? (
+                  <div className="form-text text-muted mt-2 p-2">
+                    <FontAwesomeIcon
+                      icon={faSpinner}
+                      spin
+                      className="text-muted mr-1"
+                      fixedWidth
+                    />
+                    Loading branches from selected repository
+                  </div>
                 ) : (
-                  <FontAwesomeIcon
-                    icon={faSpinner}
-                    spin
-                    className="text-muted mr-1"
-                    fixedWidth
-                  />
+                  <>
+                    {branchList ? (
+                      <DropdownList
+                        data={branchList}
+                        value={
+                          branchList[
+                            branchList.findIndex((x) => x.value === formData.branch)
+                            ]
+                        }
+                        valueField="value"
+                        textField="name"
+                        filter="contains"
+                        onChange={handleBranchChange}
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={faSpinner}
+                        spin
+                        className="text-muted mr-1"
+                        fixedWidth
+                      />
+                    )}
+                  </>
                 )}
-              </>
+                {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
+              </Form.Group>
             )}
-            {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
-          </Form.Group>
-        )}
-
-        {formData.service && formData.gitToolId && formData.repoId && (
-          <Form.Group controlId="account" className="mt-2">
-            <Form.Label>Branch*</Form.Label>
-            {isBranchSearching ? (
-              <div className="form-text text-muted mt-2 p-2">
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
-                Loading branches from selected repository
-              </div>
-            ) : (
-              <>
-                {branchList ? (
-                  <DropdownList
-                    data={branchList}
-                    value={
-                      branchList[
-                        branchList.findIndex((x) => x.value === formData.branch)
-                      ]
-                    }
-                    valueField="value"
-                    textField="name"
-                    filter="contains"
-                    onChange={handleBranchChange}
-                  />
-                ) : (
-                  <FontAwesomeIcon
-                    icon={faSpinner}
-                    spin
-                    className="text-muted mr-1"
-                    fixedWidth
-                  />
-                )}
-              </>
-            )}
-            {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
-          </Form.Group>
-        )}
-{/* 
+            {/*
         {formData.jobType === "VALIDATE PACKAGE XML" ? (
           <Form.Group controlId="s3Step">
             <Form.Label>Generate XML Step Info*</Form.Label>
@@ -1089,17 +1083,17 @@ function SonarStepConfiguration({
           <></>
         )} */}
 
-        <Form.Group controlId="threshold">
-          <Form.Label>Success Threshold</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder=""
-            value={thresholdVal || ""}
-            onChange={(e) => setThresholdValue(e.target.value)}
-            disabled={true}
-          />
-        </Form.Group>
-        </>
+            <Form.Group controlId="threshold">
+              <Form.Label>Success Threshold</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder=""
+                value={thresholdVal || ""}
+                onChange={(e) => setThresholdValue(e.target.value)}
+                disabled={true}
+              />
+            </Form.Group>
+          </>
         }
 
         {jobType === "opsera-job" ? (
@@ -1123,7 +1117,7 @@ function SonarStepConfiguration({
               </>
             ) : (
               <>
-                <FontAwesomeIcon icon={faSave} className="mr-1" />
+                <FontAwesomeIcon icon={faSave} className="mr-1"/>
                 Create Job and Save
               </>
             )}
@@ -1149,7 +1143,7 @@ function SonarStepConfiguration({
               </>
             ) : (
               <>
-                <FontAwesomeIcon icon={faSave} className="mr-1" /> Save
+                <FontAwesomeIcon icon={faSave} className="mr-1"/> Save
               </>
             )}
           </Button>
