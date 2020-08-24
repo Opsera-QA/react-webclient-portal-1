@@ -3,8 +3,8 @@ import ErrorDialog from "components/common/status_notifications/error";
 import "../workflows.css";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PipelinesView from "./PipelinesView";
-import WorkflowCatalog from "../workflowCatalog";
 import PropTypes from "prop-types";
+import WorkflowCatalog from "../catalog/WorkflowCatalog";
 
 function MyPipelines({ view }) {
   const [errors, setErrors] = useState();
