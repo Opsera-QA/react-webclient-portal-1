@@ -62,7 +62,7 @@ function PipelinesView({ currentTab }) {
   } else {
     return (
       <>
-        <div className="px-2 max-content-width">
+        <div className="px-2 max-content-width" style={{minWidth:"505px"}}>
           { (data && data.count === 0) ?
             <div className="my-5"><InfoDialog message="No pipelines found" /></div>
             :
@@ -72,7 +72,7 @@ function PipelinesView({ currentTab }) {
                           onClick={(pageNumber, pageSize, sortOption) => sortPage(pageNumber, sortOption)}/>
               <Row>
                 {data.response.map((item, idx) => (
-                  <Col key={idx} lg={6} className="p-2">
+                  <Col key={idx} xl={6} lg={10} md={12} className="p-2">
                     <PipelineItem item={item}/>
                   </Col>
                 ))}

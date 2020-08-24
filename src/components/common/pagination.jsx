@@ -73,11 +73,11 @@ function PaginationComponent(props) {
     <>
       { props.total > 10 ?
         <Row className="pagination-block small">
-          <Col xs={3} className="page-summary">Results {countOffset} - {countOffsetUpper} of {props.total}</Col>
+          <Col className="page-summary">Results {countOffset} - {countOffsetUpper} of {props.total}</Col>
           { location === "top" ?
             <>
-              <Col xs={6}></Col>
-              <Col xs={3} className="justify-content-right">     
+              <Col></Col>
+              <Col className="justify-content-right">
                 <DropdownList
                   data={sortOptionList} 
                   valueField='value'
@@ -89,7 +89,7 @@ function PaginationComponent(props) {
             </>
             : 
             <>
-              <Col xs={6}>
+              <Col>
                 <Pagination disabled={props.total < props.pageSize} className="justify-content-center">
                   <Pagination.Item  disabled={currentPage > totalPagesArray.slice(0)[0] ? false : true} onClick={() => gotoPage(totalPagesArray.slice(0)[0])}>First</Pagination.Item>
                   <Pagination.Item  disabled={currentPage > totalPagesArray.slice(0)[0] ? false : true} onClick={() => gotoPage(currentPage - 1)}>Previous</Pagination.Item>
@@ -108,7 +108,7 @@ function PaginationComponent(props) {
                   <Pagination.Item disabled={currentPage < totalPagesArray.slice(-1)[0] ? false : true} onClick={() => gotoPage(totalPagesArray.slice(-1)[0])}>Last</Pagination.Item>
                 </Pagination>  
               </Col>
-              <Col xs={3} className="justify-content-right">     
+              <Col className="justify-content-right">
                 <DropdownList
                   data={pageSizeList} 
                   valueField='value'

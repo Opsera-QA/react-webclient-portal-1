@@ -89,7 +89,7 @@ const PipelineItem = ({item}) => {
             <div>
               {item.name}
             </div>
-            <div className="ml-auto mr-1 text-muted small upper-case-first">
+            <div className="ml-auto mr-1 text-muted small upper-case-first d-none d-md-block">
               {getFirstCategory()}
             </div>
           </div>
@@ -97,31 +97,27 @@ const PipelineItem = ({item}) => {
         </Card.Title>
         <Card.Body className="pt-0 pb-2">
           <Row className="pipeline-card-text">
-            <Col lg={9} className="pb-1">
+            <Col className="pb-1">
               <div className="text-muted">{getFormattedDescription()}</div>
             </Col>
-            <Col lg={3} className="">
+            <Col className="">
               <div className="text-right">
                 {getPipelineStatusField()}
               </div>
             </Col>
           </Row>
-          <Row className="d-flex">
-            <Col lg={3} className="mt-auto">
-              <Button variant="primary" size="sm" className="pl-2 mb-1 btn-block" onClick={handleDetailsClick(item._id)}>
+          <Row>
+            <Col className="mt-auto">
+              <Button variant="primary" size="sm" className="pl-2 mb-1 btn-block w-50" onClick={handleDetailsClick(item._id)}>
                 <FontAwesomeIcon icon={faSearch} className="mr-1"/>View</Button>
             </Col>
-            <Col lg={5} className="mt-auto">
+            <Col>
               <div className="text-right">
                 {item.workflow.schedule !== undefined && item.workflow.schedule.start_date !== null &&
-                <small className="text-muted">
-                  <FontAwesomeIcon icon={faClock} size="sm" fixedWidth className="mr-1"/> Scheduled for  &nbsp;
-                  {format(new Date(item.workflow.schedule.start_date), "yyyy-MM-dd', 'hh:mm a")}</small>
+                <div className="small">
+                  <span className="text-muted mr-2 pb-1"><FontAwesomeIcon icon={faClock} size="sm" fixedWidth className="mr-1"/> Scheduled: </span>
+                  {format(new Date(item.workflow.schedule.start_date), "yyyy-MM-dd', 'hh:mm a")}</div>
                 }
-              </div>
-            </Col>
-            <Col lg={4}>
-              <div className="mt-auto text-right">
                 <div><small><span className="text-muted mr-2 pb-1">Updated:</span><span
                   className="">{item.updatedAt && format(new Date(item.updatedAt), "yyyy-MM-dd', 'hh:mm a")}</span></small>
                 </div>
