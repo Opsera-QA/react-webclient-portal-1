@@ -24,7 +24,7 @@ function CreateModal({ children, objectType, showModal, handleCancelModal }) {
         </Modal.Body>
         <Modal.Footer>
           <TooltipWrapper innerText={unsavedChanges}>
-            <Button size="sm" variant="secondary" onClick={handleClose}>Cancel {objectType} Creation</Button>
+            <Button size="sm" variant="secondary" onClick={handleClose}>Close</Button>
           </TooltipWrapper>
         </Modal.Footer>
       </Modal>
