@@ -131,6 +131,8 @@ function JenkinsStepConfiguration({
     };
   }, [stepTool]);
 
+
+
   useEffect(() => {
     setErrors(false);
 
@@ -139,19 +141,16 @@ function JenkinsStepConfiguration({
       // Set results state
       let results = await searchToolsList(service);
       if (results) {
-        const filteredList = results.filter(
-          (el) => el.configuration !== undefined,
-        ); //filter out items that do not have any configuration data!
-        if (filteredList) {
-          setJenkinsList(filteredList);
+          setJenkinsList(results);
           setisJenkinsSearching(false);
-        }
       }
     }
 
-    // Fire off our API call
     fetchJenkinsDetails("jenkins");
   }, []);
+
+
+
 
   // search sfdc
   useEffect(() => {
@@ -238,6 +237,8 @@ function JenkinsStepConfiguration({
     }
   }, [formData.repoId]);
 
+
+
   useEffect(() => {
     if (formData.toolConfigId) {
       // console.log(jenkinsList[jenkinsList.findIndex(x => x.id === formData.toolConfigId)].accounts);
@@ -249,8 +250,18 @@ function JenkinsStepConfiguration({
             jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
             ].accounts : [],
       );
+
+      setJobsList(
+        jenkinsList[
+          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+          ] ?
+          jenkinsList[
+            jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+            ].jobs : [],
+      );
     }
   }, [jenkinsList, formData.toolConfigId]);
+/*
 
   useEffect(() => {
     if (formData.toolConfigId) {
@@ -264,6 +275,9 @@ function JenkinsStepConfiguration({
       );
     }
   }, [jenkinsList, formData.toolConfigId]);
+*/
+
+
 
   useEffect(() => {
     if (formData.toolJobType && formData.toolJobType.includes("SFDC")) {
@@ -406,8 +420,12 @@ function JenkinsStepConfiguration({
   }
   };
 
-  //todo: can this use the initial value const above to reset everything?  Right now this means we have ot maintain the values in two places.
   const handleJenkinsChange = (selectedOption) => {
+    if (!selectedOption.configuration) {
+      setErrors("Configuration missing for tool!  This Jenkins tool does not have a configuration value set and cannot be used at this time.  Please go into Tool Registry and add conneciton information in order for Opsera to work with this tool.")
+      return;
+    }
+
     setLoading(true);
     if (selectedOption.id && selectedOption.configuration) {
       setFormData({
@@ -733,7 +751,7 @@ function JenkinsStepConfiguration({
       <Form>
         <Form.Group controlId="jenkinsList">
           <Form.Label className="w-100">
-            Step Tool*
+            Tool*
             <OverlayTrigger
               trigger="click"
               rootClose
