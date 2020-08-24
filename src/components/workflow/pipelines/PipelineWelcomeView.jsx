@@ -1,10 +1,10 @@
-import {LinkContainer} from "react-router-bootstrap";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlay} from "@fortawesome/free-solid-svg-icons";
 import React from "react";
+import PropTypes from "prop-types";
 
-const PipelineWelcomeView = () => {
+function PipelineWelcomeView ({ setActiveTab }) {
   return (
     <div className="pb-3">
       <div className="h5 mb-3 mt-4">Welcome to OpsERA Pipelines!</div>
@@ -28,14 +28,16 @@ const PipelineWelcomeView = () => {
         <div className="col-md px-2 landing-content-module">
           <div className="text-muted mb-3">
             At this time you do not have any pipelines configured for this section.  Please visit the Catalog in order to add a workflow template to your pipeline.</div>
-          <LinkContainer to={"/workflow/catalog"}>
-            <Button variant="success" className="px-2">
+            <Button variant="success" className="px-2" onClick={() => setActiveTab("catalog")}>
               <FontAwesomeIcon icon={faPlay} className="mr-1" fixedWidth/>Get Started!</Button>
-          </LinkContainer>
         </div>
       </div>
     </div>
   );
-};
+}
+
+PipelineWelcomeView.propTypes = {
+  setActiveTab: PropTypes.func
+}
 
 export default PipelineWelcomeView;

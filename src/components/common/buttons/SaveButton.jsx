@@ -36,7 +36,7 @@ function SaveButton({recordDto, type, createRecord, updateRecord, altButtonText}
       <>
         <div className="d-flex">
           {isSaving && <div className="text-center mr-3 mt-1"><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>Saving is in progress</div>}
-          <Button size="sm" variant="primary" disabled={isSaving || recordDto.dataState === DataState.LOADED} onClick={() => persistRecord(updateRecord)}><FontAwesomeIcon icon={faSave} fixedWidth className="mr-2"/>Save Changes</Button>
+          <Button size="sm" variant="primary" disabled={isSaving || recordDto.dataState === DataState.LOADED} onClick={() => persistRecord(updateRecord)}><FontAwesomeIcon icon={faSave} fixedWidth className="mr-2"/>Save</Button>
         </div>
       </>
     );
