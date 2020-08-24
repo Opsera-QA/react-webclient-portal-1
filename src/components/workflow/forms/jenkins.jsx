@@ -422,11 +422,11 @@ function JenkinsStepConfiguration({
 
   const handleJenkinsChange = (selectedOption) => {
     if (!selectedOption.configuration) {
-      setErrors("Configuration missing for tool!  This Jenkins tool does not have a configuration value set and cannot be used at this time.  Please go into Tool Registry and add conneciton information in order for Opsera to work with this tool.")
+      setErrors("Configuration missing for tool!  This Jenkins tool does not have a configuration value set and cannot be used at this time.  Please go into Tool Registry and add connection information in order for Opsera to work with this tool.")
       return;
     }
 
-    setLoading(true);
+    //setLoading(true);
     if (selectedOption.id && selectedOption.configuration) {
       setFormData({
         ...formData,
@@ -460,11 +460,11 @@ function JenkinsStepConfiguration({
       setAccountsList(selectedOption.accounts);
       setJobsList(selectedOption.jobs);
     }
-    setLoading(false);
+    //setLoading(false);
   };
 
   const handleSFDCChange = (selectedOption) => {
-    setLoading(true);
+    //setLoading(true);
     //console.log(selectedOption);
     if (selectedOption.id && selectedOption.configuration) {
       setFormData({
@@ -475,11 +475,11 @@ function JenkinsStepConfiguration({
           : "",
       });
     }
-    setLoading(false);
+    //setLoading(false);
   };
 
   const handleDestinationSFDCChange = (selectedOption) => {
-    setLoading(true);
+    //setLoading(true);
     //console.log(selectedOption);
     if (selectedOption.id && selectedOption.configuration) {
       setFormData({
@@ -490,7 +490,7 @@ function JenkinsStepConfiguration({
           : "",
       });
     }
-    setLoading(false);
+    //setLoading(false);
   };
 
   const handleJobChange = (selectedOption) => {

@@ -34,7 +34,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData }) {
                 </li>
                 <li className="nav-item">
                   <a className={"nav-link " + (activeTab === "configuration" ? "active" : "")} href="#"
-                     onClick={handleTabClick("configuration")}>Configuration</a>
+                     onClick={handleTabClick("configuration")}>Connection</a>
                 </li>
                 <li className="nav-item">
                   <a className={"nav-link " + (activeTab === "jobs" ? "active" : "")} href="#"
