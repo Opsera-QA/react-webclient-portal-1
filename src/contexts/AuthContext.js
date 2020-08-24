@@ -5,35 +5,6 @@ import PropTypes from "prop-types";
 const AuthContextProvider = (props) => {
     const { userData, refreshToken, authClient } = props;
 
-/*    const authClient = new OktaAuth({
-      issuer: process.env.REACT_APP_OKTA_ISSUER,
-      clientId: process.env.REACT_APP_OKTA_CLIENT_ID,
-      redirectUri: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
-    });
-
-
-    // Triggered when a token has expired
-    authClient.tokenManager.on("expired", function(key, expiredToken) {
-      console.log("Token with key", key, " has expired:");
-      console.log(expiredToken);
-    });
-    // Triggered when a token has been renewed
-    authClient.tokenManager.on("renewed", function(key, newToken, oldToken) {
-      console.log("Token with key", key, "has been renewed");
-      console.log("Old token:", oldToken);
-      console.log("New token:", newToken);
-    });
-    // Triggered when an OAuthError is returned via the API (typically during token renew)
-    authClient.tokenManager.on("error", function(err) {
-      console.log("TokenManager error:", err);
-      // err.name
-      // err.message
-      // err.errorCode
-      // err.errorSummary
-      // err.tokenKey
-      // err.accessToken
-    });*/
-
     const logoutUserContext = () => {
       //authClient.closeSession();
       authClient.tokenManager.clear();
@@ -143,6 +114,7 @@ const AuthContextProvider = (props) => {
             User: groups.includes("Users"),
             UserId: user._id,
             Role: role,
+            Type: ldap.type
           };
         }
         if (ldap && ldap.domain === "opsera.io") { //checking for OpsERA account domain
