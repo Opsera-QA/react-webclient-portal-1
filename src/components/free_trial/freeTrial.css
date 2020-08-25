@@ -2,3 +2,7 @@
 .landing-content-module {
   min-width: 220px;
 }
+
+.signupForm {
+    width: 500px;
+}
