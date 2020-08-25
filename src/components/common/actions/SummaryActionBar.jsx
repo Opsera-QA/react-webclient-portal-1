@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {Form, OverlayTrigger, Tooltip} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCopy, faToggleOn, faToggleOff, faTrash, faArrowLeft} from "@fortawesome/free-solid-svg-icons";
+import {faCopy, faToggleOn, faToggleOff, faTrash, faArrowLeft, faFileAlt} from "@fortawesome/free-solid-svg-icons";
 
-function SummaryActionBar({itemName, handleBackButton, handleDuplicateClick, handleDeleteClick, handleActiveToggle, status}) {
+function SummaryActionBar({itemName, itemId, handleBackButton, handleDuplicateClick, handleDeleteClick, handleActiveToggle, handleViewClick, data, status}) {
   // TODO: Move to helper
   function renderTooltip(message) {
     return (
@@ -26,12 +26,17 @@ function SummaryActionBar({itemName, handleBackButton, handleDuplicateClick, han
             placement="top"
             delay={{ show: 250, hide: 400 }}
             overlay={renderTooltip(`Delete this ${itemName}`)} >
-            <FontAwesomeIcon icon={faTrash} className="delete-icon pointer red float-right ml-3" onClick={() => {handleDeleteClick();}}/></OverlayTrigger> }
+            <FontAwesomeIcon icon={faTrash} className="delete-icon pointer red float-right ml-3" onClick={() => {handleDeleteClick(itemId);}}/></OverlayTrigger> }
           {handleDuplicateClick && <OverlayTrigger
             placement="top"
             delay={{ show: 250, hide: 400 }}
             overlay={renderTooltip(`Duplicate this ${itemName} configuration`)} >
-            <FontAwesomeIcon icon={faCopy} className="pointer float-right ml-3" onClick={() => {handleDuplicateClick();}}/></OverlayTrigger> }
+            <FontAwesomeIcon icon={faCopy} className="pointer float-right ml-3" onClick={() => {handleDuplicateClick(itemId);}}/></OverlayTrigger> }
+          {handleViewClick && <OverlayTrigger
+            placement="top"
+            delay={{ show: 250, hide: 400 }}
+            overlay={renderTooltip(`View ${itemName} Configurations`)} >
+            <FontAwesomeIcon icon={faFileAlt} className={"action-bar-icon pointer float-right ml-3" + (status ? " opsera-blue" : " dark-grey")} onClick={() => {handleViewClick(data);}}/></OverlayTrigger>}
           {handleActiveToggle && <OverlayTrigger
             placement="top"
             delay={{ show: 250, hide: 400 }}
@@ -48,8 +53,11 @@ SummaryActionBar.propTypes = {
   handleDuplicateClick: PropTypes.func,
   handleBackButton: PropTypes.func,
   handleActiveToggle: PropTypes.func,
+  handleViewClick: PropTypes.func,
+  data: PropTypes.object,
   status: PropTypes.bool,
   itemName: PropTypes.string,
+  itemId: PropTypes.string,
 };
 
 export default SummaryActionBar;
