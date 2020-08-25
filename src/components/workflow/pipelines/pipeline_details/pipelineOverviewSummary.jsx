@@ -36,7 +36,7 @@ const INITIAL_FORM_DATA = {
 let PIPELINE_TYPES = [
   { id: "sfdc", name: "SalesForce" },
   { id: "sdlc", name: "Software Development" },
-  { id: "ai-ml", name: "AT/ML" },
+  { id: "ai-ml", name: "Machine Learning (AI)" },
 ];
 
 
@@ -233,7 +233,7 @@ const PipelineOverviewSummary = (props) => {
       case "sfdc":
         return "SalesForce";
       case "ai-ml":
-        return "AI/ML";
+        return "Machine Learning (AI)";
       case "sdlc":
         return "Software Development";
       default:

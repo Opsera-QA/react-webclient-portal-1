@@ -73,7 +73,7 @@ const PipelineItem = ({item}) => {
     case "sfdc":
       return "SalesForce"
     case "ai-ml":
-      return "AI/ML"
+      return "Machine Learning (AI)"
     case "sdlc":
       return "Software Development"
     default:

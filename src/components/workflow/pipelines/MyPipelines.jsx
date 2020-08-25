@@ -53,7 +53,7 @@ function MyPipelines({ view }) {
                 </li>
                 <li className="nav-item">
                   <a className={"nav-link " + (activeTab === "ai-ml" ? "active" : "")} href="#"
-                     onClick={handleTabClick("ai-ml")}>AI/ML</a>
+                     onClick={handleTabClick("ai-ml")}>Machine Learning (AI)</a>
                 </li>
                 <li className="nav-item">
                   <a className={"nav-link " + (activeTab === "sfdc" ? "active" : "")} href="#"
