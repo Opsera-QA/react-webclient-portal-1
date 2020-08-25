@@ -25,6 +25,7 @@ import SchedulerWidget from "../../../common/schedulerWidget";
 import PipelineHelpers from "../../pipelineHelpers";
 import EditToolModal from "../../editToolModal";
 import DropdownList from "react-widgets/lib/DropdownList";
+import SummaryActionBar from "../../../common/actions/SummaryActionBar";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -40,8 +41,8 @@ let PIPELINE_TYPES = [
 ];
 
 
-const PipelineOverviewSummary = (props) => {
-    const { data, customerAccessRules, parentWorkflowStatus } = props;
+function PipelineOverviewSummaryPanel ({ data, customerAccessRules, parentWorkflowStatus }) {
+    // const { data, customerAccessRules, parentWorkflowStatus } = props;
     const contextType = useContext(AuthContext);
     const [error, setErrors] = useState();
     const [showModal, setShowModal] = useState(false);
@@ -241,6 +242,9 @@ const PipelineOverviewSummary = (props) => {
       }
     };
 
+    const handleBackButton = () => {
+      history.push("/workflow")
+    }
 
     return (
       <>
@@ -322,33 +326,15 @@ const PipelineOverviewSummary = (props) => {
 
             <div className="mb-3 flat-top-content-block p-3">
               <div className="mb-2 text-muted">
-                {authorizedAction("delete_pipeline_btn", data.owner) &&
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "Delete this pipeline" })}>
-                  <FontAwesomeIcon icon={faTrash} className="pointer red float-right ml-3" onClick={() => {
-                    handleDeleteClick(data._id);
-                  }}/></OverlayTrigger>}
-
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "Duplicate this pipeline configuration" })}>
-                  <FontAwesomeIcon icon={faCopy} className="pointer float-right ml-3" onClick={() => {
-                    handleCopyPipeline(data._id);
-                  }}/></OverlayTrigger>
-
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "View Pipeline Configurations" })}>
-                  <FontAwesomeIcon icon={faFileAlt}
-                                   className="float-right text-muted ml-3"
-                                   style={{ cursor: "pointer" }}
-                                   onClick={() => {
-                                     handleViewClick(data);
-                                   }}/></OverlayTrigger>
+                <SummaryActionBar
+                                  itemId={data._id}
+                                  itemName={"Pipeline"}
+                                  data={data}
+                                  handleBackButton={handleBackButton}
+                                  handleDeleteClick={authorizedAction("delete_pipeline_btn", data.owner) ? handleDeleteClick : undefined}
+                                  handleDuplicateClick={handleCopyPipeline}
+                                  handleViewClick={handleViewClick}
+                />
 
                 {editDescription ?
                   <>
@@ -613,9 +599,9 @@ function renderTooltip(props) {
 }
 
 
-PipelineOverviewSummary.propTypes = {
+PipelineOverviewSummaryPanel.propTypes = {
   data: PropTypes.object,
   customerAccessRules: PropTypes.object,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 };
-export default PipelineOverviewSummary;
+export default PipelineOverviewSummaryPanel;

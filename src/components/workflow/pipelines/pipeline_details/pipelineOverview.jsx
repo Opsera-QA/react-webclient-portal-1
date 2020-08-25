@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
-import PipelineOverviewSummary from "./pipelineOverviewSummary";
+import PipelineOverviewSummary from "./PipelineOverviewSummaryPanel";
 import PipelineActivityLogTable from "./pipelineActivityLogTable";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
