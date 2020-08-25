@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
-import { Button } from "react-bootstrap";
+import { Button, Form, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faSpinner, faTimes, faStepBackward, faPlus, faMinus, faPen, faCode } from "@fortawesome/free-solid-svg-icons";
 import "../workflows.css";
@@ -13,6 +13,7 @@ const SfdcPipelineModifiedFiles = ({ handleClose, setView, modifiedFiles, create
   const [save, setSave] = useState(false);
   const [gitModified, setGitModified] = useState([]);
   const [sfdcModified, setSfdcModified] = useState([]);
+  const [fromSFDC, setFromSFDC] = useState(false);
   
   
   
@@ -28,7 +29,7 @@ const SfdcPipelineModifiedFiles = ({ handleClose, setView, modifiedFiles, create
     //this needs to do the ifnal work writing data to the stepID above: checked compontents, other job data
 
     //trigger the jenkins job to create job
-    createJenkinsJob();  
+    createJenkinsJob(fromSFDC);  
   };
 
   return (    
@@ -40,7 +41,20 @@ const SfdcPipelineModifiedFiles = ({ handleClose, setView, modifiedFiles, create
           <div className="h5">SalesForce Pipeline Run: File Comparison</div>
           <div className="text-muted mb-4">Listed below are the files with changes impacted in this pipeline run.  Please confirm that you 
           want to proceed with this operation.</div>
-
+          <div className="px-2">
+            <Form.Group controlId="nameSpacePrefix">
+              <Form.Check
+                type="checkbox"
+                label="Push From SFDC"
+                name="fromSFDC"
+                // disabled={!sfdcComponentFilterObject.nameSpacePrefix || sfdcComponentFilterObject.nameSpacePrefix.length === 0}
+                checked={fromSFDC ? fromSFDC : false}
+                onChange={(e) =>
+                  setFromSFDC(e.target.checked)
+                }
+              />
+                  </Form.Group>
+          </div>
           {error && <div className="mt-3"><ErrorDialog error={error} /></div>}
           {save && <LoadingDialog />}
           
@@ -77,6 +91,20 @@ const SfdcPipelineModifiedFiles = ({ handleClose, setView, modifiedFiles, create
           </>}
         </div>
         <div className="flex-container-bottom pr-2 mt-3 mb-2 text-right">
+        <div className="px-2">
+            <Form.Group controlId="nameSpacePrefix">
+              <Form.Check
+                type="checkbox"
+                label="Push From SFDC"
+                name="fromSFDC"
+                // disabled={!sfdcComponentFilterObject.nameSpacePrefix || sfdcComponentFilterObject.nameSpacePrefix.length === 0}
+                checked={fromSFDC ? fromSFDC : false}
+                onChange={(e) =>
+                  setFromSFDC(e.target.checked)
+                }
+              />
+            </Form.Group>
+          </div>
           <Button variant="secondary" size="sm" className="mr-2"
             onClick={() => {  setView(1); }}>
             <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-1"/>Back</Button>

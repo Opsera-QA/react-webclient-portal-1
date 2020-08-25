@@ -37,7 +37,7 @@ const SfdcPipelineWizard = ({ pipelineId, pipeline, handlePipelineWizardRequest,
     }
   };
 
-  const createJenkinsJob = async () => {
+  const createJenkinsJob = async (fromSFDC) => {
     const accessToken = await getAccessToken();   
     const apiUrl = `/pipelines/sfdc/set-jobs`
 
@@ -50,7 +50,7 @@ const SfdcPipelineWizard = ({ pipelineId, pipeline, handlePipelineWizardRequest,
         lastCommitTimeStamp: sfdcComponentFilterObject.lastCommitTimeStamp,
         componentTypes: JSON.stringify(sfdcComponentFilterObject.componentTypes),
         objectType: sfdcComponentFilterObject.objectType,
-        retrieveFilesFromSFDC: sfdcComponentFilterObject.retrieveFilesFromSFDC,
+        retrieveFilesFromSFDC: fromSFDC,
         nameSpacePrefix: sfdcComponentFilterObject.nameSpacePrefix
       }
     };

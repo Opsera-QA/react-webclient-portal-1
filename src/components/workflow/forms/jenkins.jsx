@@ -909,7 +909,7 @@ function JenkinsStepConfiguration({
                     data={jobsList}
                     valueField="id"
                     textField="name"
-                    value={
+                    defaultValue={
                       jobsList && jobsList.length > 0 &&
                       jobsList[
                         jobsList.findIndex((x) => x._id === formData.toolJobId)
