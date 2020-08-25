@@ -9,7 +9,7 @@ function Home() {
   const history = useHistory();
 
   useEffect(() => {
-    getStatus();
+    //getStatus();
   }, []);
 
   const getStatus = async () => {

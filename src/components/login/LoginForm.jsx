@@ -1,11 +1,11 @@
-
 import React, { useState, useEffect } from "react";
 import OktaAuth from "@okta/okta-auth-js";
 import { useOktaAuth } from "@okta/okta-react";
-import { Button } from "react-bootstrap";
+import { Button, Row, Col, Card } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { axiosApiService } from "../../api/apiService";
+import { useHistory } from "react-router-dom";
 
 
 const LoginForm = () => {
@@ -20,13 +20,13 @@ const LoginForm = () => {
   const [viewType, setViewType] = useState("domain"); //login, reset or domain
 
 
-  useEffect(() => {   
+  useEffect(() => {
     if (viewType !== "login") {
       setUsername("");
-    } 
+    }
     setLookupAccountEmail("");
     setPassword("");
-    setResetEmailAddress("");     
+    setResetEmailAddress("");
   }, [viewType]);
 
   const handleSubmit = (e) => {
@@ -36,7 +36,7 @@ const LoginForm = () => {
     const authClient = new OktaAuth({
       issuer: process.env.REACT_APP_OKTA_ISSUER,
       clientId: process.env.REACT_APP_OKTA_CLIENT_ID,
-      redirectUri: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI
+      redirectUri: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
     });
 
     //const oktaAuth = new OktaAuth({ issuer: issuer });
@@ -76,28 +76,28 @@ const LoginForm = () => {
   const handleResetPasswordSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const apiUrl = "/users/forgot-password";   
+    const apiUrl = "/users/forgot-password";
     const params = { "email": resetEmailAddress };
     await axiosApiService().post(apiUrl, params)
-      .then(response => { 
+      .then(response => {
         console.log("response: ", response);
         setLoading(false);
         setErrorMessage(false);
         setMessage(response.data.message);
-        setViewType("login");     
+        setViewType("login");
       })
-      .catch(err => { 
+      .catch(err => {
         console.log(err.response);
         setLoading(false);
         setErrorMessage(err.response.data.message);
-        setMessage(false);                
+        setMessage(false);
       });
   };
-  
+
   const handleDomainLookupSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const apiUrl = "/users/account-by-domain";   
+    const apiUrl = "/users/account-by-domain";
     const params = { "email": lookupAccountEmail };
     /* await axiosApiService().post(apiUrl, params)
       .then(response => { 
@@ -122,67 +122,69 @@ const LoginForm = () => {
   };
 
 
-  /*if (sessionToken) {
-    // Hide form while sessionToken is converted into id/access tokens
-    return null;
-  }*/
-
-  //domainForm and resetLogin forms should be rendered here as their own "return (<DomainForm />)" and "return (<ResetLogin />)"
-
   if (viewType === "login") {
     return (
-      <div className="d-flex align-items-center justify-content-center" style={{ minHeight:"500px" }}>
-        <div className="auth-box-w">
-          <div className="logo-w">
-            <a href="index.html"><img alt="" src="img/opsera_logo_120x118.png" /></a>
+      <Row>
+        <Col md={5} className="p-4"><WelcomeMessage/></Col>
+        <Col>
+          <div className="d-flex align-items-center justify-content-center">
+            <div className="auth-box-w">
+              <div className="logo-w">
+                <a href="index.html"><img alt="" src="img/opsera_logo_120x118.png"/></a>
+              </div>
+              <h4 className="auth-header">
+                Sign in
+              </h4>
+              {errorMessage && <div className="mx-2 error-text">{errorMessage}</div>}
+              {message && <div className="mx-2 info-text">{message}</div>}
+              <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                  <label htmlFor="username">Email Address</label>
+                  <input className="form-control"
+                         id="username" type="text"
+                         value={username}
+                         onChange={handleUsernameChange}/>
+                  <div className="pre-icon os-icon os-icon-user-male-circle"></div>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="password">Password</label>
+                  <input className="form-control"
+                         id="password" type="password"
+                         value={password}
+                         onChange={handlePasswordChange}/>
+                  <div className="pre-icon os-icon os-icon-fingerprint"></div>
+                </div>
+                <div className="buttons-w">
+                  <Button variant="success" className="w-100 mb-3" type="submit" disabled={!username || !password}>
+                    {loading && <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth/>}
+                    Log In</Button>
+                </div>
+                <div className="text-center">
+                  <Button variant="link" size="sm"
+                          onClick={() => {
+                            setViewType("reset");
+                          }}>Forgot Password</Button>
+                </div>
+              </form>
+            </div>
           </div>
-          <h4 className="auth-header">
-          Sign in
-          </h4>
-          {errorMessage && <div className="mx-2 error-text">{errorMessage}</div>}
-          {message && <div className="mx-2 info-text">{message}</div>}
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="username">Email Address</label>
-              <input className="form-control"
-                id="username" type="text"
-                value={username}
-                onChange={handleUsernameChange} />
-              <div className="pre-icon os-icon os-icon-user-male-circle"></div>
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Password</label>        
-              <input className="form-control"
-                id="password" type="password"
-                value={password}
-                onChange={handlePasswordChange} />
-              <div className="pre-icon os-icon os-icon-fingerprint"></div>
-            </div>
-            <div className="buttons-w">
-              <Button variant="success" className="w-100 mb-3" type="submit" disabled={!username || !password}>
-                {loading && <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth />}
-               Log In</Button>
-            </div>
-            <div className="text-center">
-              <Button variant="link" size="sm" 
-                onClick={() => { setViewType("reset"); }}>Forgot Password</Button>
-            </div>
-          </form>
-        </div>
-      </div>
-    );}
+        </Col>
+      </Row>
+
+    );
+  }
 
   if (viewType === "reset") {
     return (
-      <div className="d-flex align-items-center justify-content-center" style={{ minHeight:"500px" }}>
+      <div className="d-flex align-items-center justify-content-center" style={{ minHeight: "500px" }}>
         <div className="auth-box-w">
           <div className="logo-w">
-            <a href="index.html"><img alt="" src="img/opsera_logo_120x118.png" /></a>
+            <a href="index.html"><img alt="" src="img/opsera_logo_120x118.png"/></a>
           </div>
           <h4 className="auth-header">
-          Reset Password
+            Reset Password
           </h4>
-          
+
           {errorMessage && <div className="mx-2 error-text">{errorMessage}</div>}
           {message && <div className="mx-2 info-text">{message}</div>}
 
@@ -190,60 +192,101 @@ const LoginForm = () => {
             <div className="form-group">
               <label htmlFor="username">Email Address</label>
               <input className="form-control"
-                id="username" type="text"
-                value={resetEmailAddress}
-                onChange={handleResetEmailChange} />
+                     id="username" type="text"
+                     value={resetEmailAddress}
+                     onChange={handleResetEmailChange}/>
               <div className="pre-icon os-icon os-icon-user-male-circle"></div>
             </div>
-            
+
             <div className="buttons-w">
               <Button variant="success" className="w-100 mb-3" type="submit" disabled={!resetEmailAddress}>
-                {loading && <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth />}
-                 Reset Password</Button>
+                {loading && <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth/>}
+                Reset Password</Button>
             </div>
             <div className="text-center">
-              <Button variant="link" size="sm" 
-                onClick={() => { setViewType("login"); }}>Login Form</Button>
+              <Button variant="link" size="sm"
+                      onClick={() => {
+                        setViewType("login");
+                      }}>Login Form</Button>
             </div>
           </form>
         </div>
       </div>
-    );}
+    );
+  }
 
   if (viewType === "domain") {
     return (
-      <div className="d-flex align-items-center justify-content-center" style={{ minHeight:"500px" }}>
-        <div className="auth-box-w">
-          <div className="logo-w">
-            <a href="index.html"><img alt="" src="img/opsera_logo_120x118.png" /></a>
-          </div>
-          <h4 className="auth-header">
-            Sign in
-          </h4>
-            
-          {errorMessage && <div className="mx-2 error-text">{errorMessage}</div>}
-          {message && <div className="mx-2 info-text">{message}</div>}
-  
-          <form onSubmit={handleDomainLookupSubmit}>
-            <div className="form-group">
-              <label htmlFor="username">Email Address</label>
-              <input className="form-control"
-                id="username" type="text"
-                value={lookupAccountEmail}
-                onChange={handleLookupAccountEmailChange} />
-              <div className="pre-icon os-icon os-icon-user-male-circle"></div>
+      <Row>
+        <Col md={5} className="p-4"><WelcomeMessage/></Col>
+        <Col>
+          <div className="d-flex align-items-center justify-content-center" >
+            <div className="auth-box-w">
+              <div className="logo-w">
+                <a href="index.html"><img alt="" src="img/opsera_logo_120x118.png"/></a>
+              </div>
+              <h4 className="auth-header">
+                Sign in
+              </h4>
+
+              {errorMessage && <div className="mx-2 error-text">{errorMessage}</div>}
+              {message && <div className="mx-2 info-text">{message}</div>}
+
+              <form onSubmit={handleDomainLookupSubmit}>
+                <div className="form-group">
+                  <label htmlFor="username">Email Address</label>
+                  <input className="form-control"
+                         id="username" type="text"
+                         value={lookupAccountEmail}
+                         onChange={handleLookupAccountEmailChange}/>
+                  <div className="pre-icon os-icon os-icon-user-male-circle"></div>
+                </div>
+
+                <div className="buttons-w">
+                  <Button variant="success" className="w-100 mb-3" type="submit" disabled={!lookupAccountEmail}>
+                    {loading && <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth/>}
+                    Next</Button>
+                </div>
+              </form>
             </div>
-              
-            <div className="buttons-w">
-              <Button variant="success" className="w-100 mb-3" type="submit" disabled={!lookupAccountEmail}>
-                {loading && <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth />}
-                   Next</Button>
-            </div>            
-          </form>
-        </div>
-      </div>
-    );}
+          </div>
+        </Col>
+      </Row>
+    );
+  }
 };
 
+
+const WelcomeMessage = () => {
+  const history = useHistory();
+  const gotoSignUp = () => {
+    history.push("/signup");
+  };
+
+  return (
+    <div className="ml-4">
+    <h2 className="mb-3 bd-text-purple-bright">Welcome to Opsera!</h2>
+    <div style={{ fontSize: "1.1rem" }}>
+      Opsera’s vision is to enable and empower the developers, operations and release teams by giving the
+      flexibility in selecting the various DevOps
+      functional tools, build the pipeline with quality and security gates.
+    </div>
+    <div style={{ fontSize: "1.1rem" }} className="mt-3">Opsera provides out of the box monitoring dashboard,
+      giving an end to end visibility of DevOps landscape metrics
+      via an intelligent dashboard to improve the Agility, Operational excellence and help them to track
+      security and compliance metrics.
+    </div>
+
+    <div className="row mx-n2 mt-4">
+      <div className="col-md px-2">
+        <Button variant="success" className="btn-lg w-100 mb-3" onClick={gotoSignUp}>Register an Account</Button>
+      </div>
+      {/*<div className="col-md px-2">
+        <Button variant="outline-success" className="btn-lg w-100 mb-3" onClick={login}>Log In</Button>
+      </div>*/}
+    </div>
+  </div>
+  );
+};
 
 export default LoginForm;

@@ -152,7 +152,7 @@ const AppWithRouterAccess = () => {
   }, [error]);
 
   const enableSideBar = (path) => {
-    if (path === "/" || path === "/login" || path === "/signup" || path === "/registration" || path === "/trial/registration") {
+    if (path === "/login" || path === "/signup" || path === "/registration" || path === "/trial/registration") {
       setHideSideBar(true);
     } else {
       setHideSideBar(false);
@@ -160,22 +160,7 @@ const AppWithRouterAccess = () => {
   };
 
   const refreshToken = () => {
-    console.log("AppW/RouterAccess: refreshToken function call");
     refetch();
-
-    // if refretch failes, just do this:  window.location.reload(false);
-
-    /*authClient.token.getWithRedirect({
-      responseType: "id_token",
-    }).then(function(res) {
-      console.log(res);
-      refetch();
-    }).catch(function(err) {
-      // handle AuthSdkError (AuthSdkError will be thrown if app is in OAuthCallback state)
-      console.error("Error in getWithRedirect via refreshToken");
-      console.error(err);
-      //window.location = "/login";
-    });*/
   };
 
 
@@ -191,8 +176,8 @@ const AppWithRouterAccess = () => {
               <Sidebar userData={data} hideSideBar={hideSideBar}/>
 
               <div className="w-100 pt-4 pb-4">
-                <Route path="/" exact component={Home}/>
-                <SecureRoute path="/overview" exact component={Overview}/>
+                <Route path="/welcome" exact component={Home}/>
+                <SecureRoute path="/" exact component={Overview}/>
 
                 <Route path='/login' render={() => <Login />}/>
                 <Route path='/implicit/callback' component={LoginCallback}/>
