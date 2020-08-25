@@ -29,7 +29,6 @@ const INITIAL_DATA = {
   accountUsername: "",
   accountPassword: "",
   ecrPushStepId: "",
-  awsToolConfigId: "",
 };
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
@@ -43,9 +42,6 @@ function AnchoreIntegratorStepConfiguration({ stepTool, pipelineId, plan, stepId
   const [loading, setLoading] = useState(false);
   const [anchoreList, setAnchoreList] = useState([]);
   const [isAnchoreSearching, setIsAnchoreSearching] = useState(false);
-  
-  const [awsList, setAwsList] = useState([]);
-  const [isAwsSearching, setIsAwsSearching] = useState(false);
 
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
@@ -85,28 +81,6 @@ function AnchoreIntegratorStepConfiguration({ stepTool, pipelineId, plan, stepId
       controller.abort();
     };
   }, [stepTool]);
-
-  // search aws
-  useEffect(() => {
-    setErrors(false);
-
-    async function fetchAWSDetails(service) {
-      setIsAwsSearching(true);
-      // Set results state
-      let results = await searchToolsList(service);
-      //console.log(results);
-      const filteredList = results.filter(
-        (el) => el.configuration !== undefined
-      ); //filter out items that do not have any configuration data!
-      if (filteredList) {
-        setAwsList(filteredList);
-        setIsAwsSearching(false);
-      }
-    }
-
-    // Fire off our API call
-    fetchAWSDetails("aws_account");
-  }, []);
 
   useEffect(() => {
     setErrors(false);
@@ -194,12 +168,11 @@ function AnchoreIntegratorStepConfiguration({ stepTool, pipelineId, plan, stepId
   };
 
   const validateRequiredFields = () => {
-    let { anchoreToolConfigId, anchoreUrl, accountUsername, accountPassword, ecrPushStepId, awsToolConfigId } = formData;
+    let { anchoreToolConfigId, anchoreUrl, accountUsername, accountPassword, ecrPushStepId } = formData;
     if (
       anchoreToolConfigId.length === 0 ||
       anchoreUrl.length === 0 ||
-      ecrPushStepId.length === 0 ||
-      awsToolConfigId.length === 0
+      ecrPushStepId.length === 0 
     ) {
       setFormMessage("Required Fields Missing!");
       return false;
@@ -223,30 +196,6 @@ function AnchoreIntegratorStepConfiguration({ stepTool, pipelineId, plan, stepId
     setFormData({ ...formData, ecrPushStepId: selectedOption._id });
   };
   
-  const handleAWSChange = (selectedOption) => {
-    setLoading(true);
-    //console.log(selectedOption);
-    if (selectedOption.id && selectedOption.configuration) {
-      setFormData({
-        ...formData,
-        awsToolConfigId: selectedOption.id ? selectedOption.id : "",
-        awsAccountId: selectedOption.configuration
-          ? selectedOption.configuration.awsAccountId
-          : "",
-        accessKey: selectedOption.configuration
-          ? selectedOption.configuration.accessKey
-          : "",
-        secretKey: selectedOption.configuration
-          ? selectedOption.configuration.secretKey
-          : "",
-        regions: selectedOption.configuration
-          ? selectedOption.configuration.regions
-          : "",
-      });
-    }
-    setLoading(false);
-  };
-
   const RegistryPopover = (data) => {
     if (data) {
       return (
@@ -398,73 +347,6 @@ console.log(formData)
             {" "}
             {formData.anchoreUrl  ? (
               <>
-               <Form.Group controlId="awsList">
-                <Form.Label className="w-100">
-                  AWS Credentials*
-                  <OverlayTrigger
-                    trigger="click"
-                    rootClose
-                    placement="left"
-                    overlay={RegistryPopover(
-                      awsList[
-                        awsList.findIndex((x) => x.id === formData.awsToolConfigId)
-                      ]
-                    )}
-                  >
-                    <FontAwesomeIcon
-                      icon={faEllipsisH}
-                      className="fa-pull-right pointer pr-1"
-                      onClick={() => document.body.click()}
-                    />
-                  </OverlayTrigger>
-                </Form.Label>
-                {isAwsSearching ? (
-                  <div className="form-text text-muted mt-2 p-2">
-                    <FontAwesomeIcon
-                      icon={faSpinner}
-                      spin
-                      className="text-muted mr-1"
-                      fixedWidth
-                    />
-                    Loading AWS accounts from Tool Registry
-                  </div>
-                ) : (
-                  <>
-                    {renderForm && awsList && awsList.length > 0 ? (
-                      <>
-                        <DropdownList
-                          data={awsList}
-                          value={
-                            awsList[
-                              awsList.findIndex(
-                                (x) => x.id === formData.awsToolConfigId
-                              )
-                            ]
-                          }
-                          valueField="id"
-                          textField="name"
-                          filter="contains"
-                          onChange={handleAWSChange}
-                        />
-                      </>
-                    ) : (
-                      <>
-                        <div className="form-text text-muted p-2">
-                          <FontAwesomeIcon
-                            icon={faExclamationCircle}
-                            className="text-muted mr-1"
-                            fixedWidth
-                          />
-                          No accounts have been registered for AWS. Please go
-                          to
-                          <Link to="/inventory/tools">Tool Registry</Link> and add a
-                          AWS Account entry in order to proceed.
-                        </div>
-                      </>
-                    )}
-                  </>
-                )}
-                </Form.Group>
                <Form.Group controlId="ecrStep">
                   <Form.Label>ECR Push Step*</Form.Label>
                   {listOfSteps ? (
