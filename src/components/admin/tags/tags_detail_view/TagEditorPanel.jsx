@@ -1,150 +1,123 @@
-import React, { useState, useEffect, useContext } from "react";
-import {
-  Button,
-  ButtonGroup, ButtonToolbar,
-  Popover,
-} from "react-bootstrap";
+import React, {useState, useContext, useEffect} from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
-import { axiosApiService } from "api/apiService";
-
-import validate from "utils/formValidation";
-import tagEditorFormFields from "../tags-form-fields.js";
-import TextInput from "../../../common/input/text-input";
-import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import ToggleInput from "../../../common/input/toggle-input";
-import MultipleInput from "../../../common/input/multiple-input";
-import Modal from "../../../common/modal/modal";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import adminTagsActions from "../admin-tags-actions";
-import Loading from "../../../common/status_notifications/loading";
+import LoadingDialog from "../../../common/status_notifications/loading";
+import {
+  getCreateFailureResultDialog,
+  getCreateSuccessResultDialog,
+  getFormValidationErrorDialog, getUpdateFailureResultDialog, getUpdateSuccessResultDialog
+} from "../../../common/toasts/toasts";
+import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
+import DtoToggleInput from "../../../common/input/dto_input/dto-toggle-input";
+import DtoMultipleInput from "../../../common/input/dto_input/dto-multiple-input";
+import SaveButton from "../../../common/buttons/SaveButton";
+import Col from "react-bootstrap/Col";
+import Model from "../../../../core/data_model/model";
+import DtoMultiselectInput from "../../../common/input/dto_input/dto-multiselect-input";
+import DtoSelectInput from "../../../common/input/dto_input/dto-select-input";
 
-const INITIAL_DATA = {
-  type: "",
-  value: "",
-  configuration: {},
-  active: false,
-};
-
-function TagEditorPanel({ tagData, newTag, setTagData, handleClose }) {
-  const [error, setErrors] = useState("");
+function TagEditorPanel({ tagData, setTagData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
-  const [formFieldList, updateFormFields] = useState({ ...tagEditorFormFields });
-  const [changeMap, setChangeMap] = useState({});
-  const [formData, setFormData] = useState(INITIAL_DATA);
+  const [tagDataDto, setTagDataDto] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [showToast, setShowToast] = useState(false);
+  const [toast, setToast] = useState({});
 
   useEffect(() => {
-    loadData(tagData);
+    loadData();
   }, []);
 
-  const loadData = async (tagData) => {
+  const loadData = async () => {
     setIsLoading(true);
-    await unpackTagData(tagData);
+    setTagDataDto(tagData);
     setIsLoading(false);
   };
 
-  const unpackTagData = async (tagData) => {
-    if (tagData != null) {
-      setFormField("type", tagData["type"] != null ? tagData["type"] : "");
-      setFormField("value", tagData["value"] != null ? tagData["value"] : "");
-      setFormField("configuration", tagData["configuration"] != null ? tagData["configuration"] : {});
-      setFormField("active", tagData["active"] != null ? tagData["active"] : false);
-    }
-    setIsLoading(false);
-  };
-
-  const setFormField = (field, value) => {
-    if (value === tagData[field]) {
-      delete changeMap[field];
-    } else {
-      changeMap[field] = value;
-      setChangeMap({ ...changeMap });
-    }
-    formData[field] = value;
-    setFormData({ ...formData });
-
-    if (newTag) {
-      tagData[field] = value;
-      setTagData({ ...tagData });
-    }
-  };
-
-  //TODO: Check fields
-  const isFormValid = true;
-
-  const createTag = async (newFormData) => {
-    if (isFormValid) {
-      let createTagResponse = await adminTagsActions.create(newFormData, getAccessToken);
-      if (createTagResponse.error != null) {
-        const errorMsg = `Microservice error reported creating the tag: ${newFormData.key}.  Error returned: ${JSON.stringify(createTagResponse.error.message, null, 2)}`;
-        setErrors(errorMsg);
-      } else {
-        handleClose();
-      }
-    }
-  };
-
-  const updateTag = async (newTagData) => {
-    if (isFormValid) {
+  const createTag = async () => {
+    if (tagDataDto.isModelValid()) {
       try {
-        const response = await adminTagsActions.update(newTagData._id, changeMap, getAccessToken);
-        setTagData({ ...response.data });
-        setChangeMap({});
-      } catch (err) {
-        console.log(err.message);
+        let createTagResponse = await adminTagsActions.create(tagDataDto, getAccessToken);
+        let toast = getCreateSuccessResultDialog("Tag", setShowToast, "top");
+        setToast(toast);
+        setShowToast(true);
+        let updatedDto = new Model(createTagResponse.data, tagDataDto.metaData, false);
+        setTagDataDto(updatedDto);
+        setTagData(updatedDto);
+      } catch (error) {
+        let toast = getCreateFailureResultDialog("Tag", error.message, setShowToast, "top");
+        setToast(toast);
+        setShowToast(true);
+        console.error(error.message);
       }
+    } else {
+      let toast = getFormValidationErrorDialog(setShowToast);
+      setToast(toast);
+      setShowToast(true);
     }
-
   };
 
-  return (
-    <>
-      {isLoading ? <Loading size="sm"/> : null}
+  const updateTag = async () => {
+    if (tagDataDto.isModelValid()) {
+      try {
+        const response = await adminTagsActions.update(tagDataDto, getAccessToken);
+        let toast = getUpdateSuccessResultDialog("Tag", setShowToast, "detailPanelTop");
+        setToast(toast);
+        setShowToast(true);
+        let updatedDto = new Model(response.data, tagDataDto.metaData, false);
+        setTagDataDto(updatedDto);
+        setTagData(updatedDto);
+      } catch (error) {
+        let toast = getUpdateFailureResultDialog("Tag", error.message, setShowToast, "detailPanelTop");
+        setToast(toast);
+        setShowToast(true);
+        console.error(error.message);
+      }
+    } else {
+      let toast = getFormValidationErrorDialog(setShowToast);
+      setToast(toast);
+      setShowToast(true);
+    }
+  };
 
-      {!isLoading && <>
-        <div className="scroll-y full-height">
-          {error.length > 0 && <>
-            <div className="pb-2 error-text">WARNING! An error has occurred saving your configuration: {error}</div>
-          </>}
+  if (isLoading) {
+    return (<LoadingDialog size="sm"/>);
+  } else {
+    return (
+      <>
+        {showToast && toast}
+        <div className="mx-2 my-3">
           <Row>
             <Col>
-              <TextInput field={formFieldList.type} setData={setFormField} formData={formData}/>
+              <DtoTextInput fieldName={"type"} setDataObject={setTagDataDto} dataObject={tagDataDto}/>
             </Col>
             <Col>
-              <ToggleInput field={formFieldList.active} setData={setFormField} formData={formData}/>
+              <DtoToggleInput fieldName={"active"} setDataObject={setTagDataDto} dataObject={tagDataDto} />
             </Col>
           </Row>
           <Row>
             <Col>
-              <TextInput field={formFieldList.value} setData={setFormField} formData={formData}/>
+              <DtoTextInput fieldName={"value"} setDataObject={setTagDataDto} dataObject={tagDataDto}/>
             </Col>
             <Col>
-              <MultipleInput field={formFieldList.configuration} setData={setFormField} formData={formData}/>
+              <DtoMultipleInput dataObject={tagDataDto} setDataObject={setTagDataDto} fields={["name", "value"]} fieldName={"configuration"} />
             </Col>
           </Row>
           <Row>
-            <div className="ml-auto px-3">
-              {newTag ? <Button size="sm" variant="primary" disabled={Object.keys(changeMap).length === 0}
-                                onClick={() => createTag(tagData)}>Create Tag</Button>
-                : <Button size="sm" variant="primary" disabled={Object.keys(changeMap).length === 0}
-                          onClick={() => updateTag(tagData)}>Save changes</Button>
-              }
+            <div className="ml-auto mt-3 px-3">
+              <SaveButton recordDto={tagDataDto} createRecord={createTag} updateRecord={updateTag} type={"Tag"} />
             </div>
           </Row>
         </div>
-      </>}
-    </>
-  );
+      </>
+    );
+  }
 }
 
 TagEditorPanel.propTypes = {
   tagData: PropTypes.object,
   setTagData: PropTypes.func,
-  canDelete: PropTypes.bool,
-  newTag: PropTypes.bool,
   handleClose: PropTypes.func,
 };
 

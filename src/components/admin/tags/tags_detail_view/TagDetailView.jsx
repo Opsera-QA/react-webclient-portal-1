@@ -6,6 +6,9 @@ import { Link, useParams } from "react-router-dom";
 import adminTagsActions from "../admin-tags-actions";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import ErrorDialog from "../../../common/status_notifications/error";
+import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
+import Model from "../../../../core/data_model/model";
+import tagEditorMetadata from "../tags-form-fields";
 
 function TagDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -23,7 +26,7 @@ function TagDetailView() {
   const getTag = async (tagId) => {
     try {
       const response = await adminTagsActions.get(tagId, getAccessToken);
-      setTagData(response.data);
+      setTagData(new Model(response.data, tagEditorMetadata, false));
     } catch (e) {
       setErrors(e)
     }
@@ -40,20 +43,8 @@ function TagDetailView() {
 
   return (
     <>
-      <nav aria-label="breadcrumb">
-        <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
-          <li className="breadcrumb-item">
-            <Link to="/admin">Admin</Link>
-          </li>
-          <li className="breadcrumb-item">
-            <Link to="/admin/tags">Tag Management</Link>
-          </li>
-          <li className="breadcrumb-item active">Tags</li>
-        </ol>
-      </nav>
-
+      <BreadcrumbTrail destination={"tagDetailView"} />
       {error && <ErrorDialog error={error} align={"top"} setError={setErrors}/>}
-
       {tagData &&
       <div className="content-container content-card-1 max-content-width ml-2">
         <div className="pt-2 pl-2 content-block-header"><h5>Tag Details [{tagData && tagData.type}]</h5></div>
@@ -61,7 +52,7 @@ function TagDetailView() {
         <div>
           <div>
             <div>
-              <TagsSummaryPanel tagData={tagData}/>
+              <TagsSummaryPanel tagData={tagData} setTagData={setTagData} />
             </div>
             <div>
               <TagDetailPanel
