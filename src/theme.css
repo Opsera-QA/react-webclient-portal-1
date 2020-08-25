@@ -12,6 +12,10 @@
   cursor: not-allowed;
 }
 
+.invalid-feedback {
+    display: block;
+}
+
 /*  Buttons  */
 
 .btn-link {

@@ -53,8 +53,8 @@ export const getPersistResultDialog = (success, action, type, message, toggleToa
   }
 };
 
-export const getFormValidationErrorDialog = (toggleToast) => {
-  return <ErrorDialog error={`WARNING! There are errors in your form`} align={"top"} setError={toggleToast}/>
+export const getFormValidationErrorDialog = (toggleToast, alignment = "top") => {
+  return getErrorDialog(`WARNING! There are errors in your form`, toggleToast, alignment);
 };
 
 export const getSuccessDialog = (message, toggleToast, alignment) => {
