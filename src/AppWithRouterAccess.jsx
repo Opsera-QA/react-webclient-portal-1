@@ -176,7 +176,7 @@ const AppWithRouterAccess = () => {
               <Sidebar userData={data} hideSideBar={hideSideBar}/>
 
               <div className="w-100 pt-4 pb-4">
-                <Route path="/welcome" exact component={Home}/>
+                {/*<Route path="/welcome" exact component={Home}/>*/}
                 <SecureRoute path="/" exact component={Overview}/>
 
                 <Route path='/login' render={() => <Login />}/>
