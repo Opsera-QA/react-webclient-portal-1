@@ -1,53 +1,35 @@
-// Admin Paths
-const admin = "admin";
-const templateManagement = admin + "/templates"
-const templateDetailView = templateManagement + "/details/"
-const toolManagement = admin + "/tools"
-const toolTypeDetailView = toolManagement + "types/details/"
-const toolIdentifierDetailView = toolManagement + "identifiers/details/"
-
-// Ldap paths
-const ldapDashboard = "accounts"
-const accountSettings = "settings"
-const ldapUserManagement = ldapDashboard + "/users"
-const ldapUserDetailView = ldapUserManagement;
-const ldapGroupManagement = ldapDashboard + "/groups"
-const ldapGroupDetailView = ldapUserManagement;
-const ldapOrganizationManagement = ldapDashboard + "/organizations"
-const ldapOrganizationDetailView = ldapUserManagement;
-
-//Inventory (Tool Registry) paths
-const toolRegistry = "inventory/tools";
-const toolDetailView = toolRegistry + "/details";
+import paths from "./paths";
 
 const trails = {
   // Inventory
-  toolRegistry: {parent: undefined, destination: {name: "toolRegistry", path: toolRegistry, label: "Tool Registry"}},
-  toolDetailView: {parent: "toolRegistry", destination: {name: "toolDetailView", path: toolDetailView, label: "Tool Details"}},
+  toolRegistry: {parent: undefined, destination: {name: "toolRegistry", path: paths.toolRegistry, label: "Tool Registry"}},
+  toolDetailView: {parent: "toolRegistry", destination: {name: "toolDetailView", path: paths.toolDetailView, label: "Tool Details"}},
 
   // Administration
-  admin: {parent: undefined, destination: {name: "admin", path: admin, label: "Administration"}},
-  templateManagement: {parent: "admin", destination: {name: "templateManagement", path: templateManagement, label: "Template Management"}},
-  templateDetailView: {parent: "templateManagement", destination: {name: "templateDetailView", path: templateDetailView, label: "Template Details"}},
-  toolManagement: {parent: "admin", destination: {name: "toolManagement", path: toolManagement, label: "Tool Management"}},
-  toolTypeDetailView: {parent: "toolManagement", destination: {name: "toolTypeDetailView", path: toolTypeDetailView, label: "Tool Type Details"}},
-  toolIdentifierDetailView: {parent: "toolManagement", destination: {name: "toolIdentifierDetailView", path: toolIdentifierDetailView, label: "Tool Identifier Details"}},
+  admin: {parent: undefined, destination: {name: "admin", path: paths.admin, label: "Administration"}},
+  templateManagement: {parent: "admin", destination: {name: "templateManagement", path: paths.templateManagement, label: "Template Management"}},
+  templateDetailView: {parent: "templateManagement", destination: {name: "templateDetailView", path: paths.templateDetailView, label: "Template Details"}},
+  toolManagement: {parent: "admin", destination: {name: "toolManagement", path: paths.toolManagement, label: "Tool Management"}},
+  toolTypeDetailView: {parent: "toolManagement", destination: {name: "toolTypeDetailView", path: paths.toolTypeDetailView, label: "Tool Type Details"}},
+  toolIdentifierDetailView: {parent: "toolManagement", destination: {name: "toolIdentifierDetailView", path: paths.toolIdentifierDetailView, label: "Tool Identifier Details"}},
+  tagManagement: {parent: "admin", destination: {name: "tagManagement", path: paths.tagManagement, label: "Tag Management"}},
+  tagDetailView: {parent: "tagManagement", destination: {name: "tagDetailView", path: paths.tagDetailView, label: "Tag Details"}},
 
   // LDAP Administration
-  ldapDashboard: {parent: "admin", destination: {name: "ldapDashboard", path: ldapDashboard, label: "User and Account Management"}},
-  accountSettings: {parent: undefined, destination: {name: "accountSettings", path: accountSettings, label: "Account Settings"}},
+  ldapDashboard: {parent: "admin", destination: {name: "ldapDashboard", path: paths.ldapDashboard, label: "User and Account Management"}},
+  accountSettings: {parent: undefined, destination: {name: "accountSettings", path: paths.accountSettings, label: "Account Settings"}},
 
   // LDAP Users Administration
-  ldapUserManagement: {parent: "accountSettings", destination: {name: "ldapUserManagement", path: ldapUserManagement, label: "Users"}},
-  ldapUserDetailView: {parent: "ldapUserManagement", destination: {name: "ldapUserDetailView", path: ldapUserDetailView, label: "User Details"}},
+  ldapUserManagement: {parent: "accountSettings", destination: {name: "ldapUserManagement", path: paths.ldapUserManagement, label: "Users"}},
+  ldapUserDetailView: {parent: "ldapUserManagement", destination: {name: "ldapUserDetailView", path: paths.ldapUserDetailView, label: "User Details"}},
 
   // LDAP Groups Administration
-  ldapGroupManagement: {parent: "accountSettings", destination: {name: "ldapGroupManagement", path: ldapGroupManagement, label: "Groups"}},
-  ldapGroupDetailView: {parent: "ldapGroupManagement", destination: {name: "ldapGroupDetailView", path: ldapGroupDetailView, label: "Group Details"}},
+  ldapGroupManagement: {parent: "accountSettings", destination: {name: "ldapGroupManagement", path: paths.ldapGroupManagement, label: "Groups"}},
+  ldapGroupDetailView: {parent: "ldapGroupManagement", destination: {name: "ldapGroupDetailView", path: paths.ldapGroupDetailView, label: "Group Details"}},
 
   // Ldap Organizations Administration
-  ldapOrganizationManagement: {parent: "ldapDashboard", destination: {name: "ldapOrganizationManagement", path: ldapOrganizationManagement, label: "Organizations"}},
-  ldapOrganizationDetailView: {parent: "ldapOrganizationManagement", destination: {name: "ldapOrganizationDetailView", path: ldapOrganizationDetailView, label: "Accounts"}},
+  ldapOrganizationManagement: {parent: "ldapDashboard", destination: {name: "ldapOrganizationManagement", path: paths.ldapOrganizationManagement, label: "Organizations"}},
+  ldapOrganizationDetailView: {parent: "ldapOrganizationManagement", destination: {name: "ldapOrganizationDetailView", path: paths.ldapOrganizationDetailView, label: "Accounts"}},
 };
 
 export const getTrail = (destination) => {

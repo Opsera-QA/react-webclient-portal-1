@@ -1,43 +1,24 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimesCircle, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import { format } from "date-fns";
 import CustomTable from "components/common/table/table";
 import { useHistory } from "react-router-dom";
+import tagEditorMetadata from "./tags-form-fields";
+import {
+  getTableBooleanIconColumn,
+  getTableDateColumn,
+  getTableTextColumn
+} from "../../common/table/table-column-helpers";
 
 function TagsTable({ data }) {
   const history = useHistory();
+  let fields = tagEditorMetadata.fields;
   const columns = useMemo(
     () => [
-      {
-        Header: "Type",
-        accessor: "type",
-      },
-      {
-        Header: "Value",
-        accessor: "value",
-      },      
-      {
-        Header: "Account",
-        accessor: "account",
-      },           
-      {
-        Header: "Active",
-        accessor: "active",
-        Cell: (props) => {
-          return props.value ?  <FontAwesomeIcon icon={faCheckCircle} className="green" /> :  <FontAwesomeIcon icon={faTimesCircle} className="red" />;
-        },
-        class: "cell-center"
-      },
-      {
-        Header: "Created",
-        accessor: "createdAt",
-        Cell: (props) => {
-          return props.value ? format(new Date(props.value), "yyyy-MM-dd") : "";
-        },
-        class: "cell-center no-wrap-inline"
-      },
+      getTableTextColumn(fields.find(field => { return field.id === "type"})),
+      getTableTextColumn(fields.find(field => { return field.id === "value"})),
+      getTableTextColumn(fields.find(field => { return field.id === "account"})),
+      getTableBooleanIconColumn(fields.find(field => { return field.id === "active"})),
+      getTableDateColumn(fields.find(field => { return field.id === "createdAt"})),
     ],
     []
   );
@@ -62,7 +43,15 @@ function TagsTable({ data }) {
 
   return (
     <>
-      <CustomTable onRowSelect={onRowSelect} data={data} rowStyling={rowStyling} columns={columns} initialState={initialState}></CustomTable>
+      <div className="table-content-block">
+        <CustomTable onRowSelect={onRowSelect}
+                     data={data}
+                     rowStyling={rowStyling}
+                     columns={columns}
+                     initialState={initialState}
+                     tableStyleName={"custom-table-2"}
+        />
+      </div>
     </>
   );
 }
