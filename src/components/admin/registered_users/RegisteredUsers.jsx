@@ -84,6 +84,10 @@ function RegisteredUsers() {
     deactivateUser(userId, userInfo);
   }
 
+  const gotoProfile = (id) => {
+     history.push("/admin/registered-users/" + id);
+  }
+
   async function handleDeployElkStack(userId) {
     console.log("Deploying for User ID: ", userId);
     setState({ deployingElk: true });
@@ -189,6 +193,7 @@ function RegisteredUsers() {
         {Object.keys(userData).length > 0 && <RegisteredUserTable
           data={userData}
           deployingElk={deployingElk}
+          gotoProfile={(id) => gotoProfile(id) }
           handleDeletePress={(id) => {
             handleDeletePress(id);
           }}

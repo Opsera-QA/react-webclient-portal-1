@@ -25,6 +25,7 @@ import Update from "./components/update/Update";
 import AdminTools from "./components/admin/AdminTools";
 import DeleteTools from "./components/admin/delete_tools/DeleteTools";
 import RegisteredUsers from "./components/admin/registered_users/RegisteredUsers";
+import RegisteredUserDetail from "./components/admin/registered_users/registered_user_details/RegisteredUserDetail";
 import ManageSystems from "./components/admin/manage_systems/ManageSystems";
 import ReportsRegistration from "./components/admin/analytics/ReportsRegistration";
 import Workflow from "./components/workflow/Workflow";
@@ -221,7 +222,8 @@ const AppWithRouterAccess = () => {
                 <SecureRoute path="/admin" exact component={AdminTools}/>
                 <SecureRoute path="/admin/delete" component={DeleteTools}/>
                 <SecureRoute path="/admin/manage_systems" component={ManageSystems}/>
-                <SecureRoute path="/admin/registered-users" component={RegisteredUsers}/>
+                <SecureRoute path="/admin/registered-users" exact component={RegisteredUsers}/>
+                <SecureRoute path="/admin/registered-users/:id" exact component={RegisteredUserDetail}/>
                 <SecureRoute path="/admin/systemstatus" component={SystemStatus}/>
                 <SecureRoute path="/admin/customerstatus" component={CustomerSystemStatus}/>
                 <SecureRoute path="/admin/analytics/reports-registration" component={ReportsRegistration}/>

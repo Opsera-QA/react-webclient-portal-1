@@ -6,7 +6,7 @@ import {  faSortUp, faSortDown, faSort } from "@fortawesome/free-solid-svg-icons
 
 import "../admin.css";
 
-function RegisteredUserTable({  data, deployingElk, handleDeletePress, handleDeployElkStack }) {
+function RegisteredUserTable({  data, deployingElk, handleDeletePress, handleDeployElkStack, gotoProfile }) {
 
   const columns = useMemo(
     () => [
@@ -46,7 +46,8 @@ function RegisteredUserTable({  data, deployingElk, handleDeletePress, handleDep
   const actionButtons = (cellData) => {
     return(
       <>
-        <Button variant="danger" size="sm" onClick={() => { handleDeletePress(cellData.row.original._id); }} > Deactivate User</Button>
+        <Button variant="primary" size="sm" onClick={() => { gotoProfile(cellData.row.original._id); }} className="mr-4"> Analytics Profile</Button> 
+        <Button variant="danger" size="sm" onClick={() => { handleDeletePress(cellData.row.original._id); }} > Deactivate User</Button>     
       </>
     );
   };
