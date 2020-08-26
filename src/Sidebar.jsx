@@ -351,7 +351,7 @@ const funcDefaultNav = () => {
           <div className="mt-3 mb-2 sub-header">Operations</div>
           <NavLink className="nav-link" activeClassName="chosen" to="/inventory/tools">
             <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
-            className="menu-text">Inventory</span></NavLink>
+            className="menu-text">Tool Registry</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/logs">
             <FontAwesomeIcon size="lg" icon={faArchive} fixedWidth/> <span className="menu-text">Logs</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/blueprint">
