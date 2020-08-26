@@ -910,7 +910,28 @@ function DockerPushStepConfiguration({
                       filter="contains"
                       onChange={handleAWSChange}
                     />
-          <Form.Group controlId="s3Step">
+                  </>
+                ) : (
+                  <>
+                    <div className="form-text text-muted p-2">
+                      <FontAwesomeIcon
+                        icon={faExclamationCircle}
+                        className="text-muted mr-1"
+                        fixedWidth
+                      />
+                      No accounts have been registered for AWS. Please go
+                      to
+                      <Link to="/inventory/tools">Tool Registry</Link> and add a
+                      AWS Account entry in order to proceed.
+                    </div>
+                  </>
+                )}
+              </>
+            )}
+          </Form.Group>
+        )}
+
+<Form.Group controlId="s3Step">
           <Form.Label>Build Step Info*</Form.Label>
           {listOfSteps ? (
             <DropdownList
@@ -946,26 +967,6 @@ function DockerPushStepConfiguration({
             />
           )}
         </Form.Group>
-                  </>
-                ) : (
-                  <>
-                    <div className="form-text text-muted p-2">
-                      <FontAwesomeIcon
-                        icon={faExclamationCircle}
-                        className="text-muted mr-1"
-                        fixedWidth
-                      />
-                      No accounts have been registered for AWS. Please go
-                      to
-                      <Link to="/inventory/tools">Tool Registry</Link> and add a
-                      AWS Account entry in order to proceed.
-                    </div>
-                  </>
-                )}
-              </>
-            )}
-          </Form.Group>
-        )}
 
         {formData.jenkinsUrl && jenkinsList.length > 1 && (
           <Form.Group controlId="formBasicEmail">
