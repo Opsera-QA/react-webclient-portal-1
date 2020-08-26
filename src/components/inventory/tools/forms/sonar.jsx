@@ -43,7 +43,7 @@ function SonarToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVaul
       let newConfiguration = formData;
       
       if (typeof(newConfiguration.sonarAuthToken) === "string") {
-        newConfiguration.secretKey = await saveToVault(toolId, toolData.tool_identifier, "secretKey", "Vault Secured Key", newConfiguration.sonarAuthToken);
+        newConfiguration.sonarAuthToken = await saveToVault(toolId, toolData.tool_identifier, "sonarAuthToken", "Vault Secured Key", newConfiguration.sonarAuthToken);
       }
 
       const item = {
