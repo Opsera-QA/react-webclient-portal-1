@@ -11,14 +11,11 @@ import ModalActivityLogs from "../../../common/modal/modalActivityLogs";
 import ErrorDialog from "../../../common/status_notifications/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faFileAlt,
   faPencilAlt,
-  faTrash,
   faSave,
   faTimes,
   faCogs,
   faFlag,
-  faCopy,
 } from "@fortawesome/free-solid-svg-icons";
 import "../../workflows.css";
 import SchedulerWidget from "../../../common/schedulerWidget";
@@ -26,6 +23,7 @@ import PipelineHelpers from "../../pipelineHelpers";
 import EditToolModal from "../../editToolModal";
 import DropdownList from "react-widgets/lib/DropdownList";
 import SummaryActionBar from "../../../common/actions/SummaryActionBar";
+import pipelineHelpers from "../../pipelineHelpers";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -34,14 +32,7 @@ const INITIAL_FORM_DATA = {
   type: [],
 };
 
-let PIPELINE_TYPES = [
-  { id: "sfdc", name: "SalesForce" },
-  { id: "sdlc", name: "Software Development" },
-  { id: "ai-ml", name: "Machine Learning (AI)" },
-];
-
-
-function PipelineOverviewSummaryPanel({ data, customerAccessRules, parentWorkflowStatus }) {
+function PipelineSummaryPanel({ data, customerAccessRules, parentWorkflowStatus }) {
   // const { data, customerAccessRules, parentWorkflowStatus } = props;
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
@@ -88,23 +79,22 @@ function PipelineOverviewSummaryPanel({ data, customerAccessRules, parentWorkflo
 
   useEffect(() => {
     const controller = new AbortController();
-    const runEffect = async () => {
-      try {
-
-        await loadFormData(data);
-      } catch (err) {
-        if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
-          return;
-        }
-      }
-    };
-    runEffect();
+    loadData();
     return () => {
       controller.abort();
     };
   }, []);
 
+  const loadData = async () => {
+    try {
+      await loadFormData(data);
+    } catch (err) {
+      if (err.name === "AbortError") {
+        console.log("Request was canceled via controller.abort");
+        return;
+      }
+    }
+  };
 
   const loadFormData = async (pipeline) => {
     if (pipeline.workflow !== undefined) {
@@ -166,48 +156,52 @@ function PipelineOverviewSummaryPanel({ data, customerAccessRules, parentWorkflo
       const { getAccessToken } = contextType;
       let postBody = {};
 
-      if (type === "name") {
-        data.name = value.name;
-        postBody = {
-          "name": value.name,
-        };
-        setEditTitle(false);
-
-      } else if (type === "project") {
-        data.project.name = value.project.name;
-        postBody = {
-          "project": {
-            "name": value.project.name,
-            "project_id": "",
-          },
-        };
-        setEditProject(false);
-
-      } else if (type === "description") {
-        data.description = value.description;
-        postBody = {
-          "description": value.description,
-        };
-        setEditDescription(false);
-
-      } else if (type === "schedule") {
-        data.workflow.schedule = value;
-        postBody = {
-          "workflow": data.workflow,
-        };
-        setEditTitle(false);
-      } else if (type === "tags") {
-        data.tags = value;
-        postBody = {
-          "tags": data.tags,
-        };
-        setEditTags(false);
-      } else if (type === "type") {
-        data.type = value.type;
-        postBody = {
-          "type": value.type,
-        };
-        setEditType(false);
+      switch (type) {
+        case "name":
+          data.name = value.name;
+          postBody = {
+            "name": value.name,
+          };
+          setEditTitle(false);
+          break;
+        case "project":
+          data.project.name = value.project.name;
+          postBody = {
+            "project": {
+              "name": value.project.name,
+              "project_id": "",
+            },
+          };
+          setEditProject(false);
+          break;
+        case "description":
+          data.description = value.description;
+          postBody = {
+            "description": value.description,
+          };
+          setEditDescription(false);
+          break;
+        case "schedule":
+          data.workflow.schedule = value;
+          postBody = {
+            "workflow": data.workflow,
+          };
+          setEditTitle(false);
+          break;
+        case "tags":
+          data.tags = value;
+          postBody = {
+            "tags": data.tags,
+          };
+          setEditTags(false);
+          break;
+        case "type":
+          data.type = value.type;
+          postBody = {
+            "type": value.type,
+          };
+          setEditType(false);
+          break;
       }
       if (Object.keys(postBody).length > 0) {
         const response = await PipelineActions.save(pipelineId, postBody, getAccessToken);
@@ -229,21 +223,79 @@ function PipelineOverviewSummaryPanel({ data, customerAccessRules, parentWorkflo
     setEditSchedule(false);
   };
 
-  const displayPipelineType = (typeArray) => {
-    switch (typeArray[0]) {
-    case "sfdc":
-      return "SalesForce";
-    case "ai-ml":
-      return "Machine Learning (AI)";
-    case "sdlc":
-      return "Software Development";
-    default:
-      return "";
-    }
-  };
-
   const handleBackButton = () => {
     history.push("/workflow");
+  };
+
+  const handleEditPropertyClick = (type) => {
+    console.log("in handle edit property click: " + type)
+    switch (type) {
+      case "name":
+        setEditTitle(true);
+        setFormData({...formData, name: data.name});
+        break;
+      case "project":
+        setEditProject(true);
+        setFormData({
+          ...formData,
+          project: { name: data.project !== undefined && data.project.hasOwnProperty("name") ? data.project.name : "" },
+        });
+        break;
+      case "description":
+        setEditDescription(true);
+        setFormData({ ...formData, description: data.description });
+        break;
+      case "schedule":
+        setEditSchedule(true);
+        break;
+      case "tags":
+        setEditTags(true);
+        break;
+      case "type":
+        setEditType(true);
+        break;
+      default:
+        console.error("Missing value or type for edit field");
+    }
+  }
+
+  const getSaveIcon = (field) => {
+    return (
+      <FontAwesomeIcon
+        icon={faSave}
+        className="text-muted"
+        size="sm"
+        style={{ cursor: "pointer" }}
+        onClick={() => {
+          handleSavePropertyClick(data._id, formData, field);
+        }}/>
+    );
+  };
+
+  const getEditIcon = (field) => {
+    return (
+      <FontAwesomeIcon
+        icon={faPencilAlt}
+        className="ml-2 text-muted"
+        size="xs" transform="shrink-6"
+        style={{ cursor: "pointer" }}
+        onClick={() => {
+          handleEditPropertyClick(field);
+        }}/>
+    );
+  };
+
+  const getCancelIcon = (cancelFunction) => {
+    return (
+      <FontAwesomeIcon
+        icon={faTimes}
+        className="text-muted ml-3"
+        size="sm"
+        style={{ cursor: "pointer" }}
+        onClick={() => {
+          cancelFunction(false);
+        }}/>
+    );
   };
 
   return (
@@ -277,20 +329,8 @@ function PipelineOverviewSummaryPanel({ data, customerAccessRules, parentWorkflo
                       <Form.Control maxLength="500" type="text" placeholder="" value={formData.name || ""}
                                     onChange={e => setFormData({ ...formData, name: e.target.value })}/></Col>
                     <Col sm={1} className="my-auto">
-                      <FontAwesomeIcon icon={faSave}
-                                       className="text-muted"
-                                       size="sm"
-                                       style={{ cursor: "pointer" }}
-                                       onClick={() => {
-                                         handleSavePropertyClick(data._id, formData, "name");
-                                       }}/>
-                      <FontAwesomeIcon icon={faTimes}
-                                       className="text-muted ml-3"
-                                       size="sm"
-                                       style={{ cursor: "pointer" }}
-                                       onClick={() => {
-                                         setEditTitle(false);
-                                       }}/>
+                      {getSaveIcon("name")}
+                      {getCancelIcon(setEditTitle)}
                     </Col>
                   </Row>
                 </>
@@ -298,15 +338,10 @@ function PipelineOverviewSummaryPanel({ data, customerAccessRules, parentWorkflo
                 <>
                   {Object.keys(approvalStep).length > 0 && <FontAwesomeIcon icon={faFlag} className="red mr-1"/>}
                   {data.name}
-                  {authorizedAction("edit_pipeline_attribute", data.owner) && parentWorkflowStatus !== "running" ?
-                    <FontAwesomeIcon icon={faPencilAlt}
-                                     className="ml-2 text-muted"
-                                     size="xs" transform="shrink-6"
-                                     style={{ cursor: "pointer" }}
-                                     onClick={() => {
-                                       setEditTitle(true);
-                                       setFormData({ ...formData, name: data.name });
-                                     }}/> : null}
+                  {authorizedAction("edit_pipeline_attribute", data.owner)
+                  && parentWorkflowStatus !== "running"
+                    ? getEditIcon("name")
+                    : null}
                 </>
               }</div>
           </div>
@@ -356,20 +391,8 @@ function PipelineOverviewSummaryPanel({ data, customerAccessRules, parentWorkflo
                                         project: { name: e.target.value },
                                       })}/></Col>
                       <Col sm={3} className="my-auto">
-                        <FontAwesomeIcon icon={faSave}
-                                         className="text-muted"
-                                         size="sm"
-                                         style={{ cursor: "pointer" }}
-                                         onClick={() => {
-                                           handleSavePropertyClick(data._id, formData, "project");
-                                         }}/>
-                        <FontAwesomeIcon icon={faTimes}
-                                         className="text-muted ml-3"
-                                         size="sm"
-                                         style={{ cursor: "pointer" }}
-                                         onClick={() => {
-                                           setEditProject(false);
-                                         }}/>
+                        {getSaveIcon("project")}
+                        {getCancelIcon(setEditProject)}
                       </Col>
                     </Row>
                   </>
@@ -378,18 +401,10 @@ function PipelineOverviewSummaryPanel({ data, customerAccessRules, parentWorkflo
                     <span
                       className="text-muted">Project: </span> {data.project !== undefined && data.project.hasOwnProperty("name") ? <>{data.project.name}</> :
                     <span className="text-muted font-italic">untitled</span>}
-                    {authorizedAction("edit_pipeline_attribute", data.owner) && parentWorkflowStatus !== "running" ?
-                      <FontAwesomeIcon icon={faPencilAlt}
-                                       className="ml-2 text-muted"
-                                       size="xs" transform="shrink-6"
-                                       style={{ cursor: "pointer" }}
-                                       onClick={() => {
-                                         setEditProject(true);
-                                         setFormData({
-                                           ...formData,
-                                           project: { name: data.project !== undefined && data.project.hasOwnProperty("name") ? data.project.name : "" },
-                                         });
-                                       }}/> : null}
+                    {authorizedAction("edit_pipeline_attribute", data.owner)
+                    && parentWorkflowStatus !== "running"
+                      ? getEditIcon("project")
+                      : null}
                   </>}
               </Col>
               <Col lg className="py-1"><span className="text-muted mr-1">Owner:</span> {ownerName}</Col>
@@ -406,14 +421,8 @@ function PipelineOverviewSummaryPanel({ data, customerAccessRules, parentWorkflo
               <Col className="py-1"><span className="text-muted mr-1">Tags:</span>
                 {!editTags && authorizedAction("edit_pipeline_attribute", data.owner) && parentWorkflowStatus !== "running" && <>
                   {data.tags.map((item, idx) => (<span key={idx}>{item}, </span>))}
-                  <FontAwesomeIcon icon={faPencilAlt}
-                                   className="ml-2 text-muted"
-                                   size="xs" transform="shrink-4"
-                                   style={{ cursor: "pointer" }}
-                                   onClick={() => {
-                                     setEditTags(true);
-                                   }}/>
-                </>}
+                  {getEditIcon("tags")}
+                  </>}
                 {editTags && <EditToolModal data={data.tags} visible={editTags} onHide={() => {
                   setEditTags(false);
                 }} onClick={(tags) => {
@@ -421,23 +430,16 @@ function PipelineOverviewSummaryPanel({ data, customerAccessRules, parentWorkflo
                 }}/>}
               </Col>
               <Col lg className="py-1"><span className="text-muted mr-1">Type:</span>
-                {data.type && !editType && displayPipelineType(data.type)}
-
-                {authorizedAction("edit_pipeline_attribute", data.owner) && parentWorkflowStatus !== "running" && !editType &&
-                <FontAwesomeIcon icon={faPencilAlt}
-                                 className="ml-2 text-muted"
-                                 size="xs" transform="shrink-4"
-                                 style={{ cursor: "pointer" }}
-                                 onClick={() => {
-                                   setEditType(true);
-                                 }}/>
-                }
-
+                {data.type && !editType && pipelineHelpers.displayPipelineType(data.type)}
+                {authorizedAction("edit_pipeline_attribute", data.owner)
+                && parentWorkflowStatus !== "running" && !editType
+                  ? getEditIcon("type")
+                  : null}
                 {editType &&
                 <div className="d-flex mt-1">
                   <div className="w-75">
                     <DropdownList
-                      data={PIPELINE_TYPES}
+                      data={pipelineHelpers.PIPELINE_TYPES}
                       defaultValue={data.type[0]}
                       valueField='id'
                       textField='name'
@@ -449,20 +451,8 @@ function PipelineOverviewSummaryPanel({ data, customerAccessRules, parentWorkflo
                     />
                   </div>
                   <div className="px-2 pt-1">
-                    <FontAwesomeIcon icon={faSave}
-                                     className="text-muted"
-                                     size="sm"
-                                     style={{ cursor: "pointer" }}
-                                     onClick={() => {
-                                       handleSavePropertyClick(data._id, formData, "type");
-                                     }}/>
-                    <FontAwesomeIcon icon={faTimes}
-                                     className="text-muted ml-3"
-                                     size="sm"
-                                     style={{ cursor: "pointer" }}
-                                     onClick={() => {
-                                       setEditType(false);
-                                     }}/>
+                    {getSaveIcon("type")}
+                    {getCancelIcon(setEditType)}
                   </div>
                 </div>
                 }
@@ -483,8 +473,10 @@ function PipelineOverviewSummaryPanel({ data, customerAccessRules, parentWorkflo
                 </> :
 
                 <Col className="py-1"><span className="text-muted mr-1">Schedule:</span>
-                  {data.workflow.schedule && data.workflow.schedule.start_date !== null && !editSchedule ?
-                    <>
+                  {data.workflow.schedule
+                  && data.workflow.schedule.start_date !== null
+                  && !editSchedule
+                  ? <>
                       <span
                         className="ml-1">Run next on: {format(new Date(data.workflow.schedule.start_date), "yyyy-MM-dd', 'hh:mm a")}</span>
                       <span
@@ -492,13 +484,7 @@ function PipelineOverviewSummaryPanel({ data, customerAccessRules, parentWorkflo
                     </> : null}
 
                   {authorizedAction("edit_pipeline_attribute", data.owner) && parentWorkflowStatus !== "running" ?
-                    <FontAwesomeIcon icon={faPencilAlt}
-                                     className="ml-2 text-muted"
-                                     size="xs" transform="shrink-4"
-                                     style={{ cursor: "pointer" }}
-                                     onClick={() => {
-                                       setEditSchedule(true);
-                                     }}/> : null}
+                    getEditIcon("schedule") : null}
                 </Col>
               }
               <Col lg className="py-1"><span className="text-muted mr-1">Org Account:</span> {data.account}</Col>
@@ -523,20 +509,8 @@ function PipelineOverviewSummaryPanel({ data, customerAccessRules, parentWorkflo
                                   value={formData.description || ""}
                                   onChange={e => setFormData({ ...formData, description: e.target.value })}/></Col>
                   <Col sm={1} className="my-auto">
-                    <FontAwesomeIcon icon={faSave}
-                                     className="text-muted"
-                                     size="sm"
-                                     style={{ cursor: "pointer" }}
-                                     onClick={() => {
-                                       handleSavePropertyClick(data._id, formData, "description");
-                                     }}/>
-                    <FontAwesomeIcon icon={faTimes}
-                                     className="text-muted ml-3"
-                                     size="sm"
-                                     style={{ cursor: "pointer" }}
-                                     onClick={() => {
-                                       setEditDescription(false);
-                                     }}/>
+                    {getSaveIcon("description")}
+                    {getCancelIcon(setEditDescription)}
                   </Col>
                 </Row>
               </>
@@ -545,15 +519,10 @@ function PipelineOverviewSummaryPanel({ data, customerAccessRules, parentWorkflo
                 <Row>
                   <Col className="mt-2 mb-1">
                     <span className="text-muted mr-1">Description:</span>{data.description}
-                    {authorizedAction("edit_pipeline_attribute", data.owner) && parentWorkflowStatus !== "running" ?
-                      <FontAwesomeIcon icon={faPencilAlt}
-                                       className="ml-2 text-muted"
-                                       size="xs" transform="shrink-5"
-                                       style={{ cursor: "pointer" }}
-                                       onClick={() => {
-                                         setEditDescription(true);
-                                         setFormData({ ...formData, description: data.description });
-                                       }}/> : null}
+                    {authorizedAction("edit_pipeline_attribute", data.owner)
+                    && parentWorkflowStatus !== "running"
+                      ? getEditIcon("description")
+                      : null}
                   </Col>
                 </Row>
               </>
@@ -592,19 +561,10 @@ const _configuredToolsCount = (array) => {
   return toolsCount;
 };
 
-function renderTooltip(props) {
-  const { message } = props;
-  return (
-    <Tooltip id="button-tooltip" {...props}>
-      {message}
-    </Tooltip>
-  );
-}
-
-
-PipelineOverviewSummaryPanel.propTypes = {
+PipelineSummaryPanel.propTypes = {
   data: PropTypes.object,
   customerAccessRules: PropTypes.object,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 };
-export default PipelineOverviewSummaryPanel;
+
+export default PipelineSummaryPanel;

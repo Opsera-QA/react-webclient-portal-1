@@ -14,20 +14,24 @@ import AccessDeniedDialog from "../../common/status_notifications/accessDeniedIn
 function TagManagement() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState({});
-  const [ pageLoading, setPageLoading ] = useState(true);
-  const [ tagList, setTagList ] = useState([]);
+  const [pageLoading, setPageLoading] = useState(true);
+  const [tagList, setTagList] = useState([]);
   const [showTagModal, setShowTagModal] = useState(false);
 
   useEffect(() => {
-    getRoles();
-    getTags();
+    loadData();
   }, []);
 
+  const loadData = async () => {
+    setPageLoading(true);
+    getRoles();
+    getTags();
+    setPageLoading(false);
+  };
+
   const getTags = async () => {
-    setPageLoading(true)
     const response = await adminTagsActions.getTags(getAccessToken);
     setTagList(response.data);
-    setPageLoading(false)
   };
 
   const getRoles = async () => {
@@ -37,11 +41,6 @@ function TagManagement() {
       setAccessRoleData(userRoleAccess);
     }
   };
-
-  const onModalClose = () => {
-    getTags();
-    setShowTagModal(false);
-  };  
 
   const createTag = () => {
     setShowTagModal(true);
@@ -80,9 +79,7 @@ function TagManagement() {
             {tagList && <TagsTable data={tagList}/>}
           </div>
 
-          {showTagModal ? <NewTagModal
-            showModal={showTagModal}
-            onModalClose={onModalClose}/> : null}
+          {showTagModal ? <NewTagModal showModal={showTagModal} loadData={loadData} setShowModal={setShowTagModal}/> : null}
 
       </div>
     );

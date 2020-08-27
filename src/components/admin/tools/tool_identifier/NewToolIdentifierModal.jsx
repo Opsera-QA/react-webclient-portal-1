@@ -17,21 +17,21 @@ const INITIAL_TOOL_IDENTIFIER_DATA = {
   active: true,
 };
 
-function NewToolIdentifierModal({ onModalClose, showModal } ) {
+function NewToolIdentifierModal({ setShowModal, loadData, showModal } ) {
   const [toolIdentifierData, setToolIdentifierData] = useState(undefined);
 
   useEffect(() => {
-    setToolIdentifierData(new Model(INITIAL_TOOL_IDENTIFIER_DATA, toolIdentifierMetadata, true));
+    setToolIdentifierData(new Model({...INITIAL_TOOL_IDENTIFIER_DATA}, toolIdentifierMetadata, true));
   }, []);
 
   const handleClose = () => {
-    onModalClose(false);
+    setShowModal(false);
   };
 
   return (
     <>
-      <CreateModal handleCancelModal={handleClose} objectType={"Tool Identifier"} showModal={showModal} >
-        {toolIdentifierData && <ToolIdentifierEditorPanel setToolIdentifierData={setToolIdentifierData} handleClose={handleClose} toolIdentifierData={toolIdentifierData} />}
+      <CreateModal handleCancelModal={handleClose} objectType={"Tool Identifier"} showModal={showModal} loadData={loadData} >
+        {toolIdentifierData && <ToolIdentifierEditorPanel setToolIdentifierData={setToolIdentifierData} toolIdentifierData={toolIdentifierData} />}
       </CreateModal>
     </>
   );
@@ -39,7 +39,8 @@ function NewToolIdentifierModal({ onModalClose, showModal } ) {
 
 NewToolIdentifierModal.propTypes = {
   showModal: PropTypes.bool,
-  onModalClose: PropTypes.func,
+  setShowModal: PropTypes.func,
+  loadData: PropTypes.func,
 };
 
 export default NewToolIdentifierModal;

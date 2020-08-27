@@ -4,7 +4,6 @@ import {AuthContext} from "contexts/AuthContext";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {Link, useHistory, useParams} from "react-router-dom";
-import accountsActions from "components/accounts/accounts-actions.js";
 import LdapGroupsTable from "./LdapGroupsTable";
 import NewLdapGroupModal from "./NewLdapGroupModal";
 import DropdownList from "react-widgets/lib/DropdownList";
@@ -32,9 +31,14 @@ function LdapGroupManagement() {
   const [showCreateGroupModal, setShowCreateGroupModal] = useState(false);
 
   useEffect(() => {
-    setPageLoading(true);
-    getRoles();
+    loadData();
   }, []);
+
+  const loadData = async () => {
+    setPageLoading(true);
+    await getRoles();
+    setPageLoading(false);
+  }
 
   const getGroupsByEmail = async (email) => {
     let organization = await getOrganizationByEmail(email, getAccessToken);
@@ -74,12 +78,6 @@ function LdapGroupManagement() {
       }
     }
 
-    setPageLoading(false);
-  };
-
-  const onModalClose = () => {
-    getGroupsByDomain(orgDomain);
-    setShowCreateGroupModal(false);
   };
 
   const createGroup = () => {
@@ -135,11 +133,7 @@ function LdapGroupManagement() {
             {groupList && <LdapGroupsTable groupData={groupList} orgDomain={orgDomain}/>}
           </div>
 
-          {showCreateGroupModal ? <NewLdapGroupModal
-            ldapOrganizationData={ldapOrganizationData}
-            showModal={showCreateGroupModal}
-            currentUserEmail={currentUserEmail}
-            onModalClose={onModalClose}/> : null}
+          <NewLdapGroupModal loadData={loadData} ldapOrganizationData={ldapOrganizationData} showModal={showCreateGroupModal} currentUserEmail={currentUserEmail} setShowModal={setShowCreateGroupModal}/>
         </>}
       </div>
     );

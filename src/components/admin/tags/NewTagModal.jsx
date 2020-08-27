@@ -12,20 +12,20 @@ const INITIAL_DATA = {
   active: false,
 };
 
-function NewTagModal( { onModalClose, showModal } ) {
+function NewTagModal({ setShowModal, showModal, loadData }) {
   const [tagData, setTagData] = useState(undefined);
 
   useEffect(() => {
-    setTagData(new Model(INITIAL_DATA, tagEditorMetadata, true));
+    setTagData(new Model({...INITIAL_DATA}, tagEditorMetadata, true));
   }, []);
 
   const handleClose = () => {
-    onModalClose(false);
+    setShowModal(false);
   };
 
   return (
     <>
-      <CreateModal handleCancelModal={handleClose} objectType={"Tag"} showModal={showModal} >
+      <CreateModal handleCancelModal={handleClose} objectType={"Tag"} showModal={showModal} loadData={loadData} >
         {tagData && <TagEditorPanel setTagData={setTagData} newTag={true} handleClose={handleClose} tagData={tagData} />}
       </CreateModal>
     </>
@@ -34,7 +34,8 @@ function NewTagModal( { onModalClose, showModal } ) {
 
 NewTagModal.propTypes = {
   showModal: PropTypes.bool,
-  onModalClose: PropTypes.func,
+  setShowModal: PropTypes.func,
+  loadData: PropTypes.func,
 };
 
 export default NewTagModal;

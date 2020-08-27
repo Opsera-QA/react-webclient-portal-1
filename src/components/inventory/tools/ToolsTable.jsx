@@ -14,7 +14,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {DropdownList} from "react-widgets";
 
-function ToolsTable({ data, filterOptionList }) {
+function ToolsTable({ data, filterOptionList, loadData }) {
   const [showCreateToolModal, setShowCreateToolModal] = useState(false);
   const [tableFilter, setTableFilter] = useState();
   let history = useHistory();
@@ -49,8 +49,7 @@ function ToolsTable({ data, filterOptionList }) {
 
   return (
     <>
-      {showCreateToolModal && <NewToolModal onModalClose={setShowCreateToolModal} showModal={showCreateToolModal}/>}
-
+      <NewToolModal loadData={loadData} setShowModal={setShowCreateToolModal} showModal={showCreateToolModal}/>
       <div className="p-2">
         <div className="custom-table-filter d-flex flex-row-reverse">
           <div className="mb-1 text-right">
@@ -91,6 +90,7 @@ function ToolsTable({ data, filterOptionList }) {
 
 ToolsTable.propTypes = {
   data: PropTypes.array,
+  loadData: PropTypes.func,
   filterOptionList: PropTypes.array
 };
 

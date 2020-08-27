@@ -17,20 +17,20 @@ const INITIAL_ORGANIZATION_DATA = {
   subscription: ["apps", "eventHooks"]
 };
 
-function NewLdapOrganizationModal({ onModalClose, showModal } ) {
+function NewLdapOrganizationModal({ setShowModal, showModal, loadData }) {
   const [ldapOrganizationData, setLdapOrganizationData] = useState(undefined);
 
   useEffect(() => {
-    setLdapOrganizationData(new Model(INITIAL_ORGANIZATION_DATA, ldapOrganizationMetaData, true));
+    setLdapOrganizationData(new Model({...INITIAL_ORGANIZATION_DATA}, ldapOrganizationMetaData, true));
   }, []);
 
   const handleClose = () => {
-    onModalClose(false);
+    setShowModal(false);
   };
 
   return (
     <>
-      <CreateModal handleCancelModal={handleClose} objectType={"Organization"} showModal={showModal} >
+      <CreateModal handleCancelModal={handleClose} objectType={"Organization"} showModal={showModal} loadData={loadData} >
         {ldapOrganizationData && <LdapOrganizationEditorPanel setLdapOrganizationData={setLdapOrganizationData} newLdapOrganization={true} handleClose={handleClose} ldapOrganizationData={ldapOrganizationData} />}
       </CreateModal>
     </>
@@ -39,7 +39,8 @@ function NewLdapOrganizationModal({ onModalClose, showModal } ) {
 
 NewLdapOrganizationModal.propTypes = {
   showModal: PropTypes.bool,
-  onModalClose: PropTypes.func,
+  setShowModal: PropTypes.func,
+  loadData: PropTypes.func
 };
 
 export default NewLdapOrganizationModal;

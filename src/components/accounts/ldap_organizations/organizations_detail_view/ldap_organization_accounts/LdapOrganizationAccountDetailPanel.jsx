@@ -44,17 +44,10 @@ function LdapOrganizationAccountDetailPanel({ldapOrganizationData, ldapOrganizat
     setShowEditPanel(false);
   }
 
-  const onModalClose = () => {
-    loadData();
-    setShowCreateAccountModal(false);
-  }
 
   return (
     <>
-      {showCreateAccountModal ? <NewLdapAccountModal
-        showModal={showCreateAccountModal}
-        ldapOrganizationData={ldapOrganizationData}
-        onModalClose={onModalClose} /> : null }
+      <NewLdapAccountModal showModal={showCreateAccountModal} ldapOrganizationData={ldapOrganizationData} loadData={loadData} setShowModal={setShowCreateAccountModal} />
       <div className="pb-3 px-3">
         <Row>
           <Col>

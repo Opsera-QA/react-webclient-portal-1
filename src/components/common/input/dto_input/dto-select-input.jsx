@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import DropdownList from "react-widgets/lib/DropdownList";
 
-function DtoSelectInput({ fieldName, dataObject, setDataObject, groupBy, selectOptions, valueField, textField, filter, placeholderText, setDataFunction, allowCreate, setSelectOptions}) {
+function DtoSelectInput({ fieldName, dataObject, setDataObject, groupBy, selectOptions, valueField, textField, filter, placeholderText, setDataFunction, allowCreate, setSelectOptions, valueFormatter}) {
   const [errorMessage, setErrorMessage] = useState("");
   const [isValid, setIsValid] = useState(true);
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -24,11 +24,10 @@ function DtoSelectInput({ fieldName, dataObject, setDataObject, groupBy, selectO
     validateAndSetData(fieldName, newValue);
   }
 
-
   return (
     field &&
         <>
-          <div className="m-2">
+          <div className="custom-select-input m-2">
             <label><span>{field.label}{field.isRequired ? <span className="danger-red">*</span> : null } </span></label>
             <DropdownList
               allowCreate={allowCreate}
@@ -38,9 +37,10 @@ function DtoSelectInput({ fieldName, dataObject, setDataObject, groupBy, selectO
               textField={textField}
               filter={filter}
               groupBy={groupBy}
-              value={dataObject.getData(fieldName)}
+              defaultValue={dataObject.getData(fieldName)}
+              valueComponent={valueFormatter}
               placeholder={placeholderText}
-              onChange={e => setDataFunction ? setDataFunction(field.id, e) : validateAndSetData(field.id, e[valueField])}
+              onChange={data => setDataFunction ? setDataFunction(fieldName, data) : validateAndSetData(fieldName, data[valueField])}
             />
             <div className="invalid-feedback">
               <div>{errorMessage}</div>
@@ -54,7 +54,7 @@ function DtoSelectInput({ fieldName, dataObject, setDataObject, groupBy, selectO
 }
 
 DtoSelectInput.propTypes = {
-  selectOptions: PropTypes.array,
+  selectOptions: PropTypes.array.isRequired,
   setDataObject: PropTypes.func,
   fieldName: PropTypes.string,
   groupBy: PropTypes.string,
@@ -66,7 +66,8 @@ DtoSelectInput.propTypes = {
   placeholderText: PropTypes.string,
   setDataFunction: PropTypes.func,
   allowCreate: PropTypes.string,
-  setSelectOptions: PropTypes.func
+  setSelectOptions: PropTypes.func,
+  valueFormatter: PropTypes.func
 };
 
 DtoSelectInput.defaultProps = {

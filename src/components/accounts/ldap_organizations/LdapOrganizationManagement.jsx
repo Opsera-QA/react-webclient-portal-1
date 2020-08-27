@@ -1,7 +1,4 @@
-// This is the summary view of a topic: organization, accounts, users etc.  This should primarily be a table view of the content (filtered by what user could see in theory)
-//  Selecting an item form this list should then tak user to the LdapDetailView where we show the split design of "info" in the top half and forms/details in the bottom
-
-import React, {useMemo, useContext, useState, useEffect} from "react";
+import React, {useContext, useState, useEffect} from "react";
 import {AuthContext} from "../../../contexts/AuthContext";
 import ErrorDialog from "../../common/status_notifications/error";
 import LoadingDialog from "../../common/status_notifications/loading";
@@ -24,32 +21,27 @@ function LdapOrganizationManagement() {
   const [showCreateOrganizationModal, setShowCreateOrganizationModal] = useState(false);
 
   useEffect(() => {
-    getRoles();
+    loadData();
   }, []);
-
 
   const loadData = async () => {
     setLoading(true);
+    await getRoles();
+    setLoading(false);
+  };
 
+  const loadOrganizations = async () => {
     try {
       const response = await accountsActions.getOrganizations(getAccessToken);
-      // console.log("Get Organizations: " + JSON.stringify(response.data));
       setLdapOrganizationData(response.data);
     } catch (error) {
       console.log("Error getting API Data: ", error);
       setError(error);
     }
-    setLoading(false);
-
   };
 
   const createOrganization = () => {
     setShowCreateOrganizationModal(true);
-  };
-
-  const onModalClose = () => {
-    setShowCreateOrganizationModal(false);
-    loadData();
   };
 
   const getRoles = async () => {
@@ -58,7 +50,7 @@ function LdapOrganizationManagement() {
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
       if (userRoleAccess.OpseraAdministrator) {
-        await loadData();
+        await loadOrganizations();
       }
     }
   };
@@ -89,12 +81,9 @@ function LdapOrganizationManagement() {
         </div>
 
         {error &&
-        <div className="absolute-center-content"><ErrorDialog align="center" error={error.message}></ErrorDialog></div>}
+        <div className="absolute-center-content"><ErrorDialog align="center" error={error.message} /></div>}
         {ldapOrganizationData && <LdapOrganizationsTable data={ldapOrganizationData} />}
-
-        {showCreateOrganizationModal ? <NewLdapOrganizationModal
-          showModal={showCreateOrganizationModal}
-          onModalClose={onModalClose}/> : null}
+        <NewLdapOrganizationModal showModal={showCreateOrganizationModal} loadData={loadData} setShowModal={setShowCreateOrganizationModal}/>
       </div>
   </>);
   }

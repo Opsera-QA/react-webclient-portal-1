@@ -7,26 +7,11 @@ import {Button} from "react-bootstrap";
 import NewJenkinsJobModal from "./NewJenkinsJobModal";
 
 function JenkinsJobsTable({ toolData, loadData, selectedRow }) {
-
-  const handleCancelModal = () => {
-    setShowCreateJobModal(false);
-  }
+  const [showCreateJobModal, setShowCreateJobModal] = useState(false);
 
   const createJenkinsJob = () => {
     setShowCreateJobModal(true);
   }
-
-  const [showCreateJobModal, setShowCreateJobModal] = useState(false);
-
-  const initialState = {
-    pageIndex: 0,
-    sortBy: [
-      {
-        id: "name",
-        desc: false
-      }
-    ]
-  };
 
   const columns = useMemo(
     () => [
@@ -58,7 +43,7 @@ function JenkinsJobsTable({ toolData, loadData, selectedRow }) {
 
   return (
     <>
-      <NewJenkinsJobModal toolData={toolData} loadData={loadData} onModalClose={handleCancelModal} showModal={showCreateJobModal} />
+      <NewJenkinsJobModal toolData={toolData} loadData={loadData} setShowModal={setShowCreateJobModal} showModal={showCreateJobModal} />
       <div className="my-1 text-right">
         <Button variant="primary" size="sm"
                 onClick={() => createJenkinsJob()}>
@@ -70,7 +55,6 @@ function JenkinsJobsTable({ toolData, loadData, selectedRow }) {
         <CustomTable
           columns={columns}
           data={toolData.getData("jobs")}
-          initialState={initialState}
           onRowSelect={selectedRow}
           tableStyleName="custom-table-2"
         >

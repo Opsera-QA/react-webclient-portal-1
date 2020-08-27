@@ -13,20 +13,20 @@ const INITIAL_GROUP_DATA = {
   isSync: true,
 };
 
-function NewLdapUserModal({ ldapOrganizationData, currentUserEmail, onModalClose, showModal } ) {
+function NewLdapUserModal({ ldapOrganizationData, currentUserEmail, setShowModal, showModal, loadData }) {
   const [ldapGroupData, setLdapGroupData] = useState(undefined);
 
   useEffect(() => {
-    setLdapGroupData(new Model(INITIAL_GROUP_DATA, ldapGroupMetaData, true));
+    setLdapGroupData(new Model({...INITIAL_GROUP_DATA}, ldapGroupMetaData, true));
   }, []);
 
   const handleClose = () => {
-    onModalClose(false);
+    setShowModal(false);
   };
 
   return (
     <>
-      <CreateModal handleCancelModal={handleClose} objectType={"Group"} showModal={showModal} >
+      <CreateModal handleCancelModal={handleClose} objectType={"Group"} showModal={showModal} loadData={loadData}>
         {ldapGroupData && <LdapGroupEditorPanel currentUserEmail={currentUserEmail} ldapGroupData={ldapGroupData} handleClose={handleClose} ldapOrganizationData={ldapOrganizationData} />}
       </CreateModal>
     </>
@@ -37,7 +37,8 @@ NewLdapUserModal.propTypes = {
   ldapOrganizationData: PropTypes.object,
   currentUserEmail: PropTypes.string,
   showModal: PropTypes.bool,
-  onModalClose: PropTypes.func,
+  setShowModal: PropTypes.func,
+  loadData: PropTypes.func
 };
 
 export default NewLdapUserModal;

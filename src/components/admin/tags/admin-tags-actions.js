@@ -41,6 +41,15 @@ adminTagsActions.getTags = async (getAccessToken) => {
   return response;
 };
 
+adminTagsActions.getVisibleTags = async (getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = "/tags";
+  const response = await axiosApiService(accessToken).get(apiUrl)
+    .then((result) =>  {return result;})
+    .catch(error => {throw { error };});
+  return response;
+};
+
 adminTagsActions.get = async (tagId, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = `/tags/${tagId}`;

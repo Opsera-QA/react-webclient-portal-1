@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
 import toolTypeMetadata from "./tool-type-metadata";
 import Model from "../../../../core/data_model/model";
@@ -13,20 +13,20 @@ const INITIAL_TOOL_TYPE_DATA = {
   "active": true,
 };
 
-function NewToolTypeModal({ onModalClose, showModal } ) {
+function NewToolTypeModal({ setShowModal, showModal, loadData } ) {
   const [toolTypeData, setToolTypeData] = useState(undefined);
 
   useEffect(() => {
-    setToolTypeData(new Model(INITIAL_TOOL_TYPE_DATA, toolTypeMetadata, true));
+    setToolTypeData(new Model({...INITIAL_TOOL_TYPE_DATA}, toolTypeMetadata, true));
   }, []);
 
   const handleClose = () => {
-    onModalClose(false);
+    setShowModal(false);
   };
 
   return (
     <>
-      <CreateModal handleCancelModal={handleClose} objectType={"Tool Type"} showModal={showModal} >
+      <CreateModal handleCancelModal={handleClose} objectType={"Tool Type"} showModal={showModal} loadData={loadData} >
         {toolTypeData && <ToolTypeEditorPanel setToolTypeData={setToolTypeData} handleClose={handleClose} toolTypeData={toolTypeData} />}
       </CreateModal>
     </>
@@ -35,7 +35,8 @@ function NewToolTypeModal({ onModalClose, showModal } ) {
 
 NewToolTypeModal.propTypes = {
   showModal: PropTypes.bool,
-  onModalClose: PropTypes.func,
+  setShowModal: PropTypes.func,
+  loadData: PropTypes.func
 };
 
 export default NewToolTypeModal;

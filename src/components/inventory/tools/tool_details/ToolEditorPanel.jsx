@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
@@ -11,14 +10,14 @@ import {
   getUpdateFailureResultDialog, getUpdateSuccessResultDialog
 } from "../../../common/toasts/toasts";
 import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
-import Model, {DataState} from "../../../../core/data_model/model";
+import Model from "../../../../core/data_model/model";
 import DtoSelectInput from "../../../common/input/dto_input/dto-select-input";
 import DtoToggleInput from "../../../common/input/dto_input/dto-toggle-input";
 import DtoMultipleInput from "../../../common/input/dto_input/dto-multiple-input";
-import DtoItemInput from "../../../common/input/dto_input/item-displayer/dto-item-input";
 import toolsActions from "../tools-actions";
 import SaveButton from "../../../common/buttons/SaveButton";
 import LoadingDialog from "../../../common/status_notifications/loading";
+import DtoTagManagerInput from "../../../common/input/dto_input/dto-tag-manager-input";
 
 function ToolEditorPanel({ toolData, setToolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -58,6 +57,7 @@ function ToolEditorPanel({ toolData, setToolData }) {
   const createTool = async () => {
     if (toolDataDto.isModelValid()) {
       try {
+        console.log("toolDataDto: " + JSON.stringify(toolDataDto));
         let createToolTypeResponse = await toolsActions.createTool(toolDataDto, getAccessToken);
         let toast = getCreateSuccessResultDialog("Tool", setShowToast, "detailPanelTop");
         setToast(toast);
@@ -155,6 +155,9 @@ function ToolEditorPanel({ toolData, setToolData }) {
               <DtoTextInput disabled={true} setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"compliance"} />
             </Col>
             <Col lg={6}>
+              <DtoTagManagerInput type={"Tool"} setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"tags"} />
+            </Col>
+            <Col lg={6}>
               <DtoMultipleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fields={["name", "value"]} fieldName={"location"} />
             </Col>
             <Col lg={6}>
@@ -171,9 +174,6 @@ function ToolEditorPanel({ toolData, setToolData }) {
             </Col>
             <Col lg={6}>
               <DtoToggleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"active"}/>
-            </Col>
-            <Col lg={6}>
-              <DtoItemInput setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"tags"}/>
             </Col>
           </Row>
           <Row>

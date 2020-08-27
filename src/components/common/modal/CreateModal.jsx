@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Button, Modal } from "react-bootstrap";
 import TooltipWrapper from "../tooltip/tooltipWrapper";
 import {unsavedChanges} from "../tooltip/popover-text";
 
-function CreateModal({ children, objectType, showModal, handleCancelModal }) {
+function CreateModal({ children, objectType, showModal, handleCancelModal, loadData}) {
   const handleClose = () => {
+    loadData();
     handleCancelModal();
   };
 
@@ -40,6 +41,7 @@ CreateModal.propTypes = {
   setShowModal: PropTypes.func,
   handleConfirmModal: PropTypes.func,
   handleCancelModal: PropTypes.func.isRequired,
+  loadData: PropTypes.func.isRequired,
 };
 
 export default CreateModal;

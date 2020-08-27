@@ -11,17 +11,12 @@ import NewJenkinsAccountModal from "./NewJenkinsAccountModal";
 function JenkinsAccounts({ toolData, loadData }) {
   const [showCreateAccountModal, setShowCreateAccountModal] = useState(false);
 
-  const handleCancelModal = () => {
-    setShowCreateAccountModal(false);
-  }
-
   const createJenkinsAccount = () => {
     setShowCreateAccountModal(true);
   }
 
   return (
     <div>
-      <NewJenkinsAccountModal showModal={showCreateAccountModal} onModalClose={handleCancelModal} toolData={toolData} loadData={loadData} />
         <div className="my-1 text-right">
           <Button variant="primary" size="sm"
                   onClick={() => createJenkinsAccount()}>
@@ -29,7 +24,8 @@ function JenkinsAccounts({ toolData, loadData }) {
           </Button>
           <br/>
         </div>
-        <JenkinsAccountsTable data={toolData.getData("accounts")}/>
+      <JenkinsAccountsTable data={toolData.getData("accounts")}/>
+      <NewJenkinsAccountModal showModal={showCreateAccountModal} setShowModal={setShowCreateAccountModal} toolData={toolData} loadData={loadData} />
     </div>
   );
 }

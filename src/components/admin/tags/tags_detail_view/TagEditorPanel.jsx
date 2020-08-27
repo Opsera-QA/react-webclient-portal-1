@@ -15,8 +15,6 @@ import DtoMultipleInput from "../../../common/input/dto_input/dto-multiple-input
 import SaveButton from "../../../common/buttons/SaveButton";
 import Col from "react-bootstrap/Col";
 import Model from "../../../../core/data_model/model";
-import DtoMultiselectInput from "../../../common/input/dto_input/dto-multiselect-input";
-import DtoSelectInput from "../../../common/input/dto_input/dto-select-input";
 
 function TagEditorPanel({ tagData, setTagData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);

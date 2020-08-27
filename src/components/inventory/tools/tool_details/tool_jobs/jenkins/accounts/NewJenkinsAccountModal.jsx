@@ -10,21 +10,20 @@ const INITIAL_ACCOUNT_DATA = {
     credentialsDescription: ""
 };
 
-function NewJenkinsAccountModal( { toolData, onModalClose, showModal, loadData } ) {
+function NewJenkinsAccountModal( { toolData, setShowModal, showModal, loadData } ) {
   const [jenkinsAccountData, setJenkinsAccountData] = useState(undefined);
 
   useEffect(() => {
-    setJenkinsAccountData(new Model(INITIAL_ACCOUNT_DATA, jenkinsCreateAccountMetadata, true));
+    setJenkinsAccountData(new Model({...INITIAL_ACCOUNT_DATA}, jenkinsCreateAccountMetadata, true));
   }, []);
 
   const handleClose = async () => {
-    await loadData();
-    onModalClose(false);
+    setShowModal(false);
   };
 
   return (
     <>
-      <CreateModal handleCancelModal={handleClose} objectType={"Jenkins Account"} showModal={showModal} >
+      <CreateModal handleCancelModal={handleClose} objectType={"Jenkins Account"} showModal={showModal} loadData={loadData}>
         {jenkinsAccountData && <JenkinsAccountEditorPanel toolData={toolData} jenkinsAccountData={jenkinsAccountData} handleClose={handleClose}/>}
       </CreateModal>
     </>
@@ -34,7 +33,7 @@ function NewJenkinsAccountModal( { toolData, onModalClose, showModal, loadData }
 NewJenkinsAccountModal.propTypes = {
   toolData: PropTypes.object,
   showModal: PropTypes.bool,
-  onModalClose: PropTypes.func,
+  setShowModal: PropTypes.func,
   loadData: PropTypes.func
 };
 

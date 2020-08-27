@@ -2,7 +2,11 @@ import React, { useState, useEffect, useContext } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext";
 import Model, {DataState} from "../../../../core/data_model/model";
-import {getFormValidationErrorDialog, getPersistResultDialog} from "../../../common/toasts/toasts";
+import {
+  getCreateFailureResultDialog, getCreateSuccessResultDialog,
+  getFormValidationErrorDialog,
+  getUpdateFailureResultDialog, getUpdateSuccessResultDialog
+} from "../../../common/toasts/toasts";
 import templateActions from "../template-actions";
 import Loading from "../../../common/status_notifications/loading";
 import PropTypes from "prop-types";
@@ -15,8 +19,12 @@ import {
 } from "../../../accounts/ldap_organizations/organization-functions";
 import DtoSelectInput from "../../../common/input/dto_input/dto-select-input";
 import DtoMultiselectInput from "../../../common/input/dto_input/dto-multiselect-input";
+import DtoTagManagerInput from "../../../common/input/dto_input/dto-tag-manager-input";
+import LoadingDialog from "../../../common/status_notifications/loading";
+import SaveButton from "../../../common/buttons/SaveButton";
+import pipelineHelpers from "../../../workflow/pipelineHelpers";
 
-function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
+function TemplateEditorPanel({ templateData, setTemplateData }) {
   const { getAccessToken } = useContext(AuthContext);
   const [templateDataDto, setTemplateDataDto] = useState({});
   const [ldapOrganizationAccountList, setLdapOrganizationAccountList] = useState({});
@@ -41,45 +49,22 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
     setLdapOrganizationAccountList(ldapOrganizationAccountList);
   };
 
-  const updateTemplate = async () => {
-    if(templateDataDto.isModelValid()) {
-      try {
-        console.log("Attempting to update: " + JSON.stringify(templateDataDto.data));
-        let response = await templateActions.updateTemplate(templateDataDto, getAccessToken);
-        // getToolRegistryItem(toolId);
-        console.log("response: " + JSON.stringify(response));
-        let updatedDto = new Model(response.data, templateDataDto.metaData, false);
-        setTemplateDataDto(updatedDto);
-        setTemplateData(updatedDto);
-        let toast = getPersistResultDialog(true, "update", "Template", undefined, setShowToast);
-        setToast(toast);
-        setShowToast(true);
-      }
-      catch (err) {
-        console.log(err.message);
-      }
-    }
-    else {
-      let toast = getFormValidationErrorDialog(setShowToast);
-      setToast(toast);
-      setShowToast(true);
-    }
-  };
-
   const createTemplate = async () => {
     if(templateDataDto.isModelValid()) {
       try {
-        console.log("Attempting to update: " + JSON.stringify(templateDataDto.data));
         let response = await templateActions.createTemplate(templateDataDto, getAccessToken);
-        // getToolRegistryItem(toolId);
-        console.log("response: " + JSON.stringify(response));
         let updatedDto = new Model(response.data, templateDataDto.metaData, false);
         setTemplateDataDto(updatedDto);
         setTemplateData(updatedDto);
-        handleClose();
+        let toast = getCreateSuccessResultDialog("Template", setShowToast, "top");
+        setToast(toast);
+        setShowToast(true);
       }
-      catch (err) {
-        console.log(err.message);
+      catch (error) {
+        let toast = getCreateFailureResultDialog("Template", error.message, setShowToast, "top");
+        setToast(toast);
+        setShowToast(true);
+        console.error(error.message);
       }
     }
     else {
@@ -88,12 +73,45 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
       setShowToast(true);
     }
   };
-  
-  return (
-    <>
-      {isLoading ? <Loading size="sm"/> : null}
 
-      {!isLoading && <>
+  const updateTemplate = async () => {
+    if(templateDataDto.isModelValid()) {
+      try {
+        let response = await templateActions.updateTemplate(templateDataDto, getAccessToken);
+        let updatedDto = new Model(response.data, templateDataDto.metaData, false);
+        setTemplateDataDto(updatedDto);
+        setTemplateData(updatedDto);
+        let toast = getUpdateSuccessResultDialog("Template", setShowToast, "detailPanelTop");
+        setToast(toast);
+        setShowToast(true);
+      }
+      catch (error) {
+        let toast = getUpdateFailureResultDialog("Template", error.message, setShowToast, "detailPanelTop");
+        setToast(toast);
+        setShowToast(true);
+        console.error(error.message);
+      }
+    }
+    else {
+      let toast = getFormValidationErrorDialog(setShowToast);
+      setToast(toast);
+      setShowToast(true);
+    }
+  };
+
+  // TODO: Remove and use multi-select once implemented for types.
+  const updateSelectArray = async (fieldName, value) => {
+    let newDataObject = templateDataDto;
+    console.log(value.id)
+    newDataObject.setData(fieldName, [value.id]);
+    setTemplateDataDto({...newDataObject});
+  }
+
+  if (isLoading) {
+    return (<LoadingDialog size="sm"/>);
+  } else {
+    return (
+      <>
         <div className="mx-2 my-3">
           {showToast && toast}
           <Row>
@@ -110,13 +128,20 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
               <DtoSelectInput valueField={"id"} fieldName={"account"} dataObject={templateDataDto} setDataObject={setTemplateDataDto} selectOptions={ldapOrganizationAccountList}/>
             </Col>
             <Col lg={6}>
-              <DtoItemInput fieldName={"type"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
+              <DtoSelectInput textField={"name"}
+                              valueField={"id"}
+                              fieldName={"type"}
+                              dataObject={templateDataDto}
+                              setDataObject={setTemplateDataDto}
+                              setDataFunction={updateSelectArray}
+                              // valueFormatter={}
+                              selectOptions={pipelineHelpers.PIPELINE_TYPES}/>
             </Col>
             <Col lg={6}>
               <DtoMultiselectInput fieldName={"roles"} dataObject={templateDataDto} setDataObject={setTemplateDataDto} selectOptions={roleOptions} setSelectOptions={setRoleOptions} />
             </Col>
             <Col lg={6}>
-              <DtoItemInput fieldName={"tags"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
+              <DtoTagManagerInput type={"template"} fieldName={"tags"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
             </Col>
             <Col lg={12}>
               <DtoJsonInput fieldName={"plan"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
@@ -124,23 +149,18 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
           </Row>
           <Row>
             <div className="ml-auto m-3 px-3">
-              {templateDataDto.isNew()
-                ? <Button size="sm" variant="primary" onClick={() => createTemplate()}>Create Template</Button>
-                : <Button size="sm" variant="primary" disabled={templateDataDto.dataState === DataState.LOADED}
-                          onClick={() => updateTemplate()}>Save</Button>
-              }
+              <SaveButton type={"Template"} updateRecord={updateTemplate} createRecord={createTemplate} recordDto={templateDataDto} />
             </div>
           </Row>
         </div>
-      </>}
-    </>
-  );
+      </>
+    );
+  }
 }
 
 TemplateEditorPanel.propTypes = {
   templateData: PropTypes.object,
   setTemplateData: PropTypes.func,
-  handleClose: PropTypes.func
 };
 
 export default TemplateEditorPanel;
