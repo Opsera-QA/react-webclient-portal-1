@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import {getFormValidationErrorDialog, getPersistResultDialog} from "../../../common/toasts/toasts";
+import {getFormValidationErrorDialog} from "../../../common/toasts/toasts";
 import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
 import DtoItemInput from "../../../common/input/dto_input/item-displayer/dto-item-input";
 

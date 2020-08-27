@@ -6,52 +6,29 @@ export const getLoadingErrorDialog = (errorMessage, toggleToast, alignment) => {
   return getErrorDialog(`WARNING! An error has occurred loading: ${errorMessage}`, toggleToast, alignment);
 }
 
-export const getCreateSuccessResultDialog = (type, toggleToast, alignment) => {
+export const getCreateSuccessResultDialog = (type, toggleToast, alignment = "top") => {
   return getSuccessDialog(`${type} created successfully!`, toggleToast, alignment)
 }
 
-export const getUpdateSuccessResultDialog = (type, toggleToast, alignment) => {
+export const getUpdateSuccessResultDialog = (type, toggleToast, alignment = "detailPanelTop") => {
   return getSuccessDialog(`${type} updated successfully!`, toggleToast, alignment);
 }
 
-export const getDeleteSuccessResultDialog = (type, toggleToast, alignment) => {
+export const getDeleteSuccessResultDialog = (type, toggleToast, alignment = "top") => {
   return getSuccessDialog(`${type} deleted successfully!`, toggleToast, alignment);
 }
 
-export const getCreateFailureResultDialog = (type, errorMessage, toggleToast, alignment) => {
+export const getCreateFailureResultDialog = (type, errorMessage, toggleToast, alignment = "top") => {
   return getErrorDialog(`WARNING! An error has occurred creating this ${type}: ${errorMessage}`, toggleToast, alignment);
 }
 
-export const getUpdateFailureResultDialog = (type, errorMessage, toggleToast, alignment) => {
+export const getUpdateFailureResultDialog = (type, errorMessage, toggleToast, alignment = "detailPanelTop") => {
   return getErrorDialog(`WARNING! An error has occurred updating this ${type}: ${errorMessage}`, toggleToast, alignment);
 }
 
-export const getDeleteFailureResultDialog = (type, errorMessage, toggleToast, alignment) => {
+export const getDeleteFailureResultDialog = (type, errorMessage, toggleToast, alignment = "detailPanelTop") => {
   return getErrorDialog(`WARNING! An error has occurred deleting this ${type}: ${errorMessage}`, toggleToast, alignment);
 }
-
-// TODO: Remove when all pages are updated
-export const getPersistResultDialog = (success, action, type, message, toggleToast, alignment) => {
-  if (success) {
-    switch (action) {
-      case "add":
-        return getSuccessDialog(`${type} created successfully!`, toggleToast, alignment);
-      case "update":
-        return getSuccessDialog(`${type} updated successfully!`, toggleToast, alignment);
-      case "delete":
-        return getSuccessDialog(`${type} deleted successfully!`, toggleToast, alignment);
-    }
-  } else {
-    switch (action) {
-      case "add":
-        return getErrorDialog(`WARNING! An error has occurred creating this ${type}: ${message}`, toggleToast, alignment);
-      case "update":
-        return getErrorDialog(`WARNING! An error has occurred updating this ${type}: ${message}`, toggleToast, alignment);
-      case "delete":
-        return getErrorDialog(`WARNING! An error has occurred deleting this ${type}: ${message}`, toggleToast, alignment);
-    }
-  }
-};
 
 export const getFormValidationErrorDialog = (toggleToast, alignment = "top") => {
   return getErrorDialog(`WARNING! There are errors in your form`, toggleToast, alignment);

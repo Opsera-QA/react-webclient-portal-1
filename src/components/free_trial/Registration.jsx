@@ -69,7 +69,7 @@ function FreeTrialSignup(props) {
     event.stopPropagation();
 
     if (registrationDataDto.getData("email").length === 0) {
-      let toast = getErrorDialog("You did not enter an email address.", setShowToast, "detailPanelTop");
+      let toast = getErrorDialog("You did not enter an email address.", setShowToast);
       setToast(toast);
       setShowToast(true);
       return;
@@ -78,7 +78,7 @@ function FreeTrialSignup(props) {
     const emailIsAvailable = await isEmailAvailable();
 
     if (!emailIsAvailable) {
-      let toast = getErrorDialog("Email address already exists.", setShowToast, "detailPanelTop");
+      let toast = getErrorDialog("Email address already exists.", setShowToast);
       setToast(toast);
       setShowToast(true);
     }
@@ -102,7 +102,7 @@ function FreeTrialSignup(props) {
           loadRegistrationResponse();
         })
         .catch(function (error) {
-          let toast = getUpdateFailureResultDialog("Tag", error.message, setShowToast, "detailPanelTop");
+          let toast = getUpdateFailureResultDialog("Tag", error.message, setShowToast);
           setToast(toast);
           setShowToast(true);
           console.error(error.message);

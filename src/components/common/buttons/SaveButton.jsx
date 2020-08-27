@@ -5,13 +5,17 @@ import {DataState} from "../../../core/data_model/model";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSave, faSpinner} from "@fortawesome/free-solid-svg-icons";
 
-function SaveButton({recordDto, type, createRecord, updateRecord, altButtonText}) {
+function SaveButton({recordDto, createRecord, updateRecord, altButtonText, type}) {
   const [isSaving, setIsSaving] = useState(false);
 
   const persistRecord = async (persistFunction) => {
     setIsSaving(true);
     await persistFunction();
     setIsSaving(false);
+  }
+
+  const getType = () => {
+    return type != null ? type : recordDto.getType();
   }
 
   // TODO: Disable button with record is not valid
@@ -26,7 +30,7 @@ function SaveButton({recordDto, type, createRecord, updateRecord, altButtonText}
       <>
         <div className="d-flex">
           {isSaving && <div className="text-center mr-3 mt-1"><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>Saving is in progress</div>}
-          <Button size="sm" variant="primary" disabled={isSaving} onClick={() => persistRecord(createRecord)}><FontAwesomeIcon icon={faSave} fixedWidth className="mr-2"/>{altButtonText ? altButtonText : "Create " + type}</Button>
+          <Button size="sm" variant="primary" disabled={isSaving} onClick={() => persistRecord(createRecord)}><FontAwesomeIcon icon={faSave} fixedWidth className="mr-2"/>{altButtonText ? altButtonText : "Create " + getType()}</Button>
         </div>
       </>
     );
@@ -45,7 +49,7 @@ function SaveButton({recordDto, type, createRecord, updateRecord, altButtonText}
 
 SaveButton.propTypes = {
   recordDto: PropTypes.object,
-  type: PropTypes.string,
+  type: PropTypes.string, // TODO: Remove when everything is hooked up with metadata
   createRecord: PropTypes.func,
   updateRecord: PropTypes.func
 };

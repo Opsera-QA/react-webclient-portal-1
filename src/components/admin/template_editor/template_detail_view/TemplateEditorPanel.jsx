@@ -8,15 +8,13 @@ import {
   getUpdateFailureResultDialog, getUpdateSuccessResultDialog
 } from "../../../common/toasts/toasts";
 import templateActions from "../template-actions";
-import Loading from "../../../common/status_notifications/loading";
 import PropTypes from "prop-types";
 import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
-import DtoItemInput from "../../../common/input/dto_input/item-displayer/dto-item-input";
 import DtoToggleInput from "../../../common/input/dto_input/dto-toggle-input";
 import DtoJsonInput from "../../../common/input/dto_input/dto-json-input";
 import {
   getOrganizationDropdownList,
-} from "../../../accounts/ldap_organizations/organization-functions";
+} from "../../accounts/ldap/organizations/organization-functions";
 import DtoSelectInput from "../../../common/input/dto_input/dto-select-input";
 import DtoMultiselectInput from "../../../common/input/dto_input/dto-multiselect-input";
 import DtoTagManagerInput from "../../../common/input/dto_input/dto-tag-manager-input";
@@ -56,12 +54,12 @@ function TemplateEditorPanel({ templateData, setTemplateData }) {
         let updatedDto = new Model(response.data, templateDataDto.metaData, false);
         setTemplateDataDto(updatedDto);
         setTemplateData(updatedDto);
-        let toast = getCreateSuccessResultDialog("Template", setShowToast, "top");
+        let toast = getCreateSuccessResultDialog(templateDataDto.getType(), setShowToast);
         setToast(toast);
         setShowToast(true);
       }
       catch (error) {
-        let toast = getCreateFailureResultDialog("Template", error.message, setShowToast, "top");
+        let toast = getCreateFailureResultDialog(templateDataDto.getType(), error.message, setShowToast);
         setToast(toast);
         setShowToast(true);
         console.error(error.message);
@@ -81,12 +79,12 @@ function TemplateEditorPanel({ templateData, setTemplateData }) {
         let updatedDto = new Model(response.data, templateDataDto.metaData, false);
         setTemplateDataDto(updatedDto);
         setTemplateData(updatedDto);
-        let toast = getUpdateSuccessResultDialog("Template", setShowToast, "detailPanelTop");
+        let toast = getUpdateSuccessResultDialog(templateDataDto.getType(), setShowToast);
         setToast(toast);
         setShowToast(true);
       }
       catch (error) {
-        let toast = getUpdateFailureResultDialog("Template", error.message, setShowToast, "detailPanelTop");
+        let toast = getUpdateFailureResultDialog(templateDataDto.getType(), error.message, setShowToast);
         setToast(toast);
         setShowToast(true);
         console.error(error.message);
@@ -149,7 +147,7 @@ function TemplateEditorPanel({ templateData, setTemplateData }) {
           </Row>
           <Row>
             <div className="ml-auto m-3 px-3">
-              <SaveButton type={"Template"} updateRecord={updateTemplate} createRecord={createTemplate} recordDto={templateDataDto} />
+              <SaveButton updateRecord={updateTemplate} createRecord={createTemplate} recordDto={templateDataDto} />
             </div>
           </Row>
         </div>

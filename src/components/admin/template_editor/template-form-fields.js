@@ -1,4 +1,6 @@
 const templateEditorMetadata = {
+  idProperty: "_id",
+  type: "Template",
   fields: [
   {
     label: "Name",

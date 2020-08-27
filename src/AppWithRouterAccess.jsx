@@ -33,25 +33,24 @@ import SystemStatus from "./components/admin/status/SystemStatus";
 import CustomerSystemStatus from "./components/admin/status/CustomerSystemStatus";
 import Overview from "./components/landing/Overview";
 import Registration from "./components/landing/Registration";
-import TagEditor from "./components/admin/tags/TagManagement";
-import TagDetailView from "./components/admin/tags/tags_detail_view/TagDetailView";
+import TagEditor from "./components/settings/tags/TagManagement";
+import TagDetailView from "./components/settings/tags/tags_detail_view/TagDetailView";
 import KpiEditor from "./components/admin/kpi_editor/KpiEditor";
 import KpiDetailView from "./components/admin/kpi_editor/kpi_detail_view/KpiDetailView";
 import TemplateManagement from "./components/admin/template_editor/TemplateManagement";
 import OPBlueprintMain from "./components/blueprint/blueprint";
-import LdapDashboard from "./components/accounts/LdapDashboard";
-import LdapOrganizationsView from "./components/accounts/ldap_organizations/LdapOrganizationManagement";
+import LdapOrganizationsView from "./components/admin/accounts/ldap/organizations/LdapOrganizationManagement";
 import LdapOrganizationDetailView
-  from "./components/accounts/ldap_organizations/organizations_detail_view/LdapOrganizationDetailView";
-import LdapCustomerOnboardView from "./components/accounts/ldap_customer_onboard/LdapCustomerOnboard";
+  from "./components/admin/accounts/ldap/organizations/organizations_detail_view/LdapOrganizationDetailView";
+import LdapCustomerOnboardView from "./components/admin/accounts/ldap/customer_onboard/LdapCustomerOnboard";
 import FreeTrialRegistration from "./components/free_trial/Registration";
 import ApiConnectionDemo from "./components/api_connector/ApiDemo";
 import CommonTableDemo from "./components/common/samples/tableImplementation";
-import LdapUserManagement from "./components/accounts/ldap_users/LdapUserManagement";
-import LdapUserDetailView from "./components/accounts/ldap_users/users_detail_view/LdapUserDetailView";
-import AccountSettingsView from "./components/user/AccountSettings";
-import LdapGroupManagement from "./components/accounts/ldap_groups/LdapGroupManagement";
-import LdapGroupDetailView from "./components/accounts/ldap_groups/ldap_group_detail/LdapGroupDetailView";
+import LdapUserManagement from "./components/settings/ldap_users/LdapUserManagement";
+import LdapUserDetailView from "./components/settings/ldap_users/users_detail_view/LdapUserDetailView";
+import AccountSettingsView from "./components/settings/AccountSettings";
+import LdapGroupManagement from "./components/settings/ldap_groups/LdapGroupManagement";
+import LdapGroupDetailView from "./components/settings/ldap_groups/ldap_group_detail/LdapGroupDetailView";
 import ToolDetailView from "./components/inventory/tools/tool_details/ToolDetailView";
 import TemplateDetailView from "./components/admin/template_editor/template_detail_view/TemplateDetailView";
 import ToolManagement from "./components/admin/tools/ToolManagement";
@@ -189,7 +188,6 @@ const AppWithRouterAccess = () => {
                 <Route path="/registration" exact component={Registration}/>
 
                 <SecureRoute path="/profile" component={Profile}/>
-                <SecureRoute path="/settings" component={AccountSettingsView}/>
                 <SecureRoute path="/inventory/:view" exact component={Inventory}/>
                 <SecureRoute path="/inventory/tools/details/:id" exact component={ToolDetailView}/>
                 <SecureRoute path="/dashboard" component={Dashboard}/>
@@ -216,24 +214,26 @@ const AppWithRouterAccess = () => {
                 <SecureRoute path="/admin/tools/types/details/:toolTypeId" exact component={ToolTypeDetailView}/>
                 <SecureRoute path="/admin/tools/identifiers/details/:toolIdentifierId" exact
                              component={ToolIdentifierDetailView}/>
-                <SecureRoute path="/admin/tags" exact component={TagEditor}/>
-                <SecureRoute path="/admin/tags/:id" exact component={TagDetailView}/>
                 <SecureRoute path="/admin/kpis" exact component={KpiEditor}/>
                 <SecureRoute path="/admin/kpis/:id" exact component={KpiDetailView}/>
                 <SecureRoute path="/admin/templates" exact component={TemplateManagement}/>
                 <SecureRoute path="/admin/templates/details/:templateId" exact component={TemplateDetailView}/>
 
                 {/* Ldap Account Pages */}
-                <SecureRoute path="/accounts" exact component={LdapDashboard}/>
                 <SecureRoute path="/accounts/organizations" exact component={LdapOrganizationsView}/>
                 <SecureRoute path="/accounts/organizations/details/:organizationName" exact
                              component={LdapOrganizationDetailView}/>
-                <SecureRoute path="/accounts/:orgDomain?/users/" exact component={LdapUserManagement}/>
-                <SecureRoute path="/accounts/:orgDomain/users/details/:userEmail" exact component={LdapUserDetailView}/>
                 <SecureRoute path="/accounts/create" exact component={LdapCustomerOnboardView}/>
-                <SecureRoute path="/accounts/:orgDomain?/groups/" exact component={LdapGroupManagement}/>
-                <SecureRoute path="/accounts/:orgDomain/groups/details/:groupName" exact
+
+                {/*Settings*/}
+                <SecureRoute path="/settings" exact component={AccountSettingsView}/>
+                <SecureRoute path="/settings/:orgDomain?/groups/" exact component={LdapGroupManagement}/>
+                <SecureRoute path="/settings/:orgDomain/groups/details/:groupName" exact
                              component={LdapGroupDetailView}/>
+                <SecureRoute path="/settings/:orgDomain?/users/" exact component={LdapUserManagement}/>
+                <SecureRoute path="/settings/:orgDomain/users/details/:userEmail" exact component={LdapUserDetailView}/>
+                <SecureRoute path="/settings/tags" exact component={TagEditor}/>
+                <SecureRoute path="/settings/tags/:id" exact component={TagDetailView}/>
 
                 <SecureRoute path="/demo/api" component={ApiConnectionDemo}/>
                 <SecureRoute path="/demo/table" component={CommonTableDemo}/>

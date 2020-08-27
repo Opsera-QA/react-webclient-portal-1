@@ -36,12 +36,12 @@ function ToolConfigurationPanel({ toolData }) {
     const apiUrl = `/registry/${newToolData._id}/update`;
     try {
       let response = await axiosApiService(accessToken).post(apiUrl, newToolData.data);
-      let toast = getUpdateSuccessResultDialog( "Tool Configuration", setShowToast, "detailPanelTop");
+      let toast = getUpdateSuccessResultDialog( "Tool Configuration", setShowToast);
       setToast(toast);
       setShowToast(true);
       // console.log("response: " + JSON.stringify(response));
     } catch (error) {
-      let toast = getUpdateFailureResultDialog("Tool Type", error.message, setShowToast, "detailPanelTop");
+      let toast = getUpdateFailureResultDialog("Tool Type", error.message, setShowToast);
       setToast(toast);
       setShowToast(true);
       console.error(error.message);
