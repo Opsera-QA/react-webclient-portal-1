@@ -28,7 +28,6 @@ const INITIAL_COMPONENT_TYPES_FORM = {
   "stepId": "", //assume for now it's the first
   "nameSpacePrefix": "", // prefix
   "objectType": "", // type of objs managed custom or all
-  "retrieveFilesFromSFDC": "",
   "componentTypes": [],
 };
 
@@ -44,7 +43,6 @@ const SfdcPipelineComponents = ({ pipelineId, stepId, setView, setModifiedFiles,
   const [error, setError] = useState(false);
   const [configurationError, setConfigurationError] = useState(false);
   const [save, setSave] = useState(false);
-  const [fromSFDC, setFromSFDC] = useState(false);
   const [componentTypes, setComponentTypes] = useState([]);
   const [selectedComponentTypes, setSelectedComponentTypes] = useState([]);
   const [componentTypeForm, setComponentTypeForm] = useState(INITIAL_COMPONENT_TYPES_FORM);
@@ -123,7 +121,6 @@ const SfdcPipelineComponents = ({ pipelineId, stepId, setView, setModifiedFiles,
     postBody.componentTypes = selectedComponentTypes;
     postBody.objectType = filtered[0];
     postBody.nameSpacePrefix = nameSpacePrefix;
-    postBody.retrieveFilesFromSFDC = fromSFDC;
 
     console.log(postBody);
     await postComponentTypes(postBody);
@@ -177,16 +174,6 @@ const SfdcPipelineComponents = ({ pipelineId, stepId, setView, setModifiedFiles,
                     <Form.Control maxLength="50" type="text" placeholder="" value={nameSpacePrefix || ""}
                                   className={"mb-1"}
                                   onChange={e => setNameSpacePrefix(e.target.value)}/>
-                    <Form.Check
-                      type="checkbox"
-                      label="Retrieve from SFDC"
-                      name="fromSFDC"
-                      disabled={!nameSpacePrefix || nameSpacePrefix.length === 0}
-                      checked={fromSFDC ? fromSFDC : false}
-                      onChange={(e) =>
-                        setFromSFDC(e.target.checked)
-                      }
-                    />
                   </Form.Group>
                 </div>
 
