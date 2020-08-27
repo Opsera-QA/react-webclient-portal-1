@@ -15,6 +15,7 @@ import {
 } from "../../../../common/toasts/toasts";
 import LoadingDialog from "../../../../common/status_notifications/loading";
 import SaveButton from "../../../../common/buttons/SaveButton";
+import DtoTagManagerInput from "../../../../common/input/dto_input/dto-tag-manager-input";
 
 function ToolTypeEditorPanel( { toolTypeData, setToolTypeData, }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -37,11 +38,11 @@ function ToolTypeEditorPanel( { toolTypeData, setToolTypeData, }) {
     if(toolTypeDataDto.isModelValid()) {
       try {
         const response = await toolTypeActions.createToolType(toolTypeDataDto, getAccessToken);
-        let toast = getCreateSuccessResultDialog("Tool Type", setShowToast, "top");
+        let toast = getCreateSuccessResultDialog(toolTypeDataDto.getType(), setShowToast);
         setToast(toast);
         setShowToast(true);
       } catch (error) {
-        let toast = getCreateFailureResultDialog("Tool Type", error.message, setShowToast, "top");
+        let toast = getCreateFailureResultDialog(toolTypeDataDto.getType(), error.message, setShowToast);
         setToast(toast);
         setShowToast(true);
         console.error(error.message);
@@ -58,14 +59,14 @@ function ToolTypeEditorPanel( { toolTypeData, setToolTypeData, }) {
     if(toolTypeDataDto.isModelValid()) {
       try {
         const response = await toolTypeActions.updateToolType(toolTypeDataDto, getAccessToken);
-        let toast = getUpdateSuccessResultDialog( "Tool Type", setShowToast, "detailPanelTop");
+        let toast = getUpdateSuccessResultDialog( toolTypeDataDto.getType(), setShowToast);
         setToast(toast);
         setShowToast(true);
         let updatedDto = new Model(response.data, toolTypeDataDto.metaData, false);
         setToolTypeDataDto(updatedDto);
         setToolTypeData(updatedDto);
       } catch (error) {
-        let toast = getUpdateFailureResultDialog("Tool Type", error.message, setShowToast, "detailPanelTop");
+        let toast = getUpdateFailureResultDialog(toolTypeDataDto.getType(), error.message, setShowToast);
         setToast(toast);
         setShowToast(true);
         console.error(error.message);
@@ -81,13 +82,13 @@ function ToolTypeEditorPanel( { toolTypeData, setToolTypeData, }) {
   const deleteTool = async () => {
     try {
       const response = await toolTypeActions.deleteToolType(toolTypeDataDto, getAccessToken);
-      let toast = getDeleteSuccessResultDialog("Tool Type", setShowToast, "top");
+      let toast = getDeleteSuccessResultDialog(toolTypeDataDto.getType(), setShowToast);
       setToast(toast);
       setShowToast(true);
       setToolTypeDataDto(null);
       setToolTypeData(null);
     } catch (error) {
-      let toast = getDeleteFailureResultDialog("Tool Type", error.message, setShowToast, "top");
+      let toast = getDeleteFailureResultDialog(toolTypeDataDto.getType(), error.message, setShowToast);
       setToast(toast);
       setShowToast(true);
       console.error(error.message);
@@ -117,7 +118,7 @@ function ToolTypeEditorPanel( { toolTypeData, setToolTypeData, }) {
               <DtoTextInput fieldName={"identifier"} dataObject={toolTypeDataDto} setDataObject={setToolTypeDataDto}/>
             </Col>
             <Col lg={6}>
-              <DtoItemInput fieldName={"tags"} dataObject={toolTypeDataDto} setDataObject={setToolTypeDataDto}/>
+              <DtoTagManagerInput type={"tool"} dataObject={toolTypeDataDto} fieldName={"tags"} setDataObject={setToolTypeDataDto}  />
             </Col>
           </Row>
           <Row>

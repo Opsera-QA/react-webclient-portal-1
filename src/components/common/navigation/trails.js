@@ -12,11 +12,8 @@ const trails = {
   toolManagement: {parent: "admin", destination: {name: "toolManagement", path: paths.toolManagement, label: "Tool Management"}},
   toolTypeDetailView: {parent: "toolManagement", destination: {name: "toolTypeDetailView", path: paths.toolTypeDetailView, label: "Tool Type Details"}},
   toolIdentifierDetailView: {parent: "toolManagement", destination: {name: "toolIdentifierDetailView", path: paths.toolIdentifierDetailView, label: "Tool Identifier Details"}},
-  tagManagement: {parent: "admin", destination: {name: "tagManagement", path: paths.tagManagement, label: "Tag Management"}},
-  tagDetailView: {parent: "tagManagement", destination: {name: "tagDetailView", path: paths.tagDetailView, label: "Tag Details"}},
 
-  // LDAP Administration
-  ldapDashboard: {parent: "admin", destination: {name: "ldapDashboard", path: paths.ldapDashboard, label: "User and Account Management"}},
+  // Account settings
   accountSettings: {parent: undefined, destination: {name: "accountSettings", path: paths.accountSettings, label: "Account Settings"}},
 
   // LDAP Users Administration
@@ -27,8 +24,12 @@ const trails = {
   ldapGroupManagement: {parent: "accountSettings", destination: {name: "ldapGroupManagement", path: paths.ldapGroupManagement, label: "Groups"}},
   ldapGroupDetailView: {parent: "ldapGroupManagement", destination: {name: "ldapGroupDetailView", path: paths.ldapGroupDetailView, label: "Group Details"}},
 
+  // Tag Management
+  tagManagement: {parent: "accountSettings", destination: {name: "tagManagement", path: paths.tagManagement, label: "Tag Management"}},
+  tagDetailView: {parent: "tagManagement", destination: {name: "tagDetailView", path: paths.tagDetailView, label: "Tag Details"}},
+
   // Ldap Organizations Administration
-  ldapOrganizationManagement: {parent: "ldapDashboard", destination: {name: "ldapOrganizationManagement", path: paths.ldapOrganizationManagement, label: "Organizations"}},
+  ldapOrganizationManagement: {parent: "admin", destination: {name: "ldapOrganizationManagement", path: paths.ldapOrganizationManagement, label: "Organizations"}},
   ldapOrganizationDetailView: {parent: "ldapOrganizationManagement", destination: {name: "ldapOrganizationDetailView", path: paths.ldapOrganizationDetailView, label: "Accounts"}},
 };
 

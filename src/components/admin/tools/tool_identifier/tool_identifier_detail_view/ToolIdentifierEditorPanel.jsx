@@ -17,6 +17,7 @@ import DtoSelectInput from "../../../../common/input/dto_input/dto-select-input"
 import DtoPropertiesInput from "../../../../common/input/dto_input/dto-properties-input";
 import SaveButton from "../../../../common/buttons/SaveButton";
 import LoadingDialog from "../../../../common/status_notifications/loading";
+import DtoTagManagerInput from "../../../../common/input/dto_input/dto-tag-manager-input";
 
 function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData} ) {
   const {getAccessToken} = useContext(AuthContext);
@@ -43,7 +44,7 @@ function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData} 
       const toolResponse = await toolTypeActions.getToolTypes(getAccessToken, false);
       setToolList(toolResponse.data);
     } catch (error) {
-      let toast = getLoadingErrorDialog(error.message, setShowToast, "top");
+      let toast = getLoadingErrorDialog(error.message, setShowToast);
       setToast(toast);
       setShowToast(true);
       setLoadingError(true);
@@ -55,14 +56,14 @@ function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData} 
     if (toolIdentifierDataDto.isModelValid()) {
       try {
         const response = await toolTypeActions.createToolIdentifier(toolIdentifierDataDto, getAccessToken);
-        let toast = getCreateSuccessResultDialog("Tool Identifier", setShowToast, "top");
+        let toast = getCreateSuccessResultDialog("Tool Identifier", setShowToast);
         setToast(toast);
         setShowToast(true);
         let updatedDto = new Model(response.data, toolIdentifierDataDto.metaData, false);
         setToolIdentifierData(updatedDto);
         setToolIdentifierDataDto(updatedDto);
       } catch (error) {
-        let toast = getCreateFailureResultDialog("Tool Identifier", error.message, setShowToast, "top");
+        let toast = getCreateFailureResultDialog("Tool Identifier", error.message);
         setToast(toast);
         setShowToast(true);
         console.error(error.message);
@@ -78,14 +79,14 @@ function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData} 
     if (toolIdentifierDataDto.isModelValid()) {
       try {
         const response = await toolTypeActions.updateToolIdentifier(toolIdentifierDataDto, getAccessToken);
-        let toast = getUpdateSuccessResultDialog("Tool Identifier", setShowToast, "detailPanelTop");
+        let toast = getUpdateSuccessResultDialog("Tool Identifier", setShowToast);
         setToast(toast);
         setShowToast(true);
         let updatedDto = new Model(response.data, toolIdentifierDataDto.metaData, false);
         setToolIdentifierData(updatedDto);
         setToolIdentifierDataDto(updatedDto);
       } catch (error) {
-        let toast = getUpdateFailureResultDialog("Tool Identifier", error.message, setShowToast, "detailPanelTop");
+        let toast = getUpdateFailureResultDialog("Tool Identifier", error.message, setShowToast);
         setToast(toast);
         setShowToast(true);
         console.error(error.message);
@@ -123,7 +124,7 @@ function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData} 
               <DtoSelectInput textField={"name"} valueField={"identifier"} fieldName={"tool_type_identifier"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto} selectOptions={toolList}/>
             </Col>
             <Col lg={6}>
-              <DtoItemInput fieldName={"tags"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto}/>
+              <DtoTagManagerInput type={"tool"} dataObject={toolIdentifierDataDto} fieldName={"tags"} setDataObject={setToolIdentifierDataDto}  />
             </Col>
             <Col lg={6}>
               <DtoPropertiesInput fieldName={"properties"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto} fields={["name", "value"]}/>

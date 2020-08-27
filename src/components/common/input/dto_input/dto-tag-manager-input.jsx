@@ -1,9 +1,9 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import { Multiselect } from 'react-widgets'
-import adminTagsActions from "../../../admin/tags/admin-tags-actions";
+import adminTagsActions from "../../../settings/tags/admin-tags-actions";
 import {AuthContext} from "../../../../contexts/AuthContext";
-import tagEditorMetadata from "../../../admin/tags/tags-form-fields";
+import tagEditorMetadata from "../../../settings/tags/tags-form-fields";
 import Model from "../../../../core/data_model/model";
 
 const defaultTags = [
@@ -14,7 +14,7 @@ const defaultTags = [
   {type: "custom", value: "Custom"},
 ];
 
-function DtoTagManagerInput({ fieldName, type, dataObject, setDataObject, disabled, filter, placeholderText, setDataFunction, allowCreate}) {
+function DtoTagManagerInput({ fieldName, type, dataObject, setDataObject, disabled, filter, placeholderText, setDataFunction, allowCreate, groupBy}) {
   const { getAccessToken } = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState("");
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -43,9 +43,7 @@ function DtoTagManagerInput({ fieldName, type, dataObject, setDataObject, disabl
   };
 
   const saveNewTag = async (newTagDto) => {
-    console.log("persist this new tag: " + JSON.stringify(newTagDto));
     let createTagResponse = await adminTagsActions.create(newTagDto, getAccessToken);
-    console.log("createTagResponse: " + JSON.stringify(createTagResponse));
   };
 
   const loadTagOptions = (tags) => {
@@ -57,20 +55,6 @@ function DtoTagManagerInput({ fieldName, type, dataObject, setDataObject, disabl
 
     setTagOptions(currentOptions);
   }
-
-  // TODO: Remove after everything is wired up correctly with persisting new tags
-  // TODO: Check current tags to prevent duplicates
-  // const loadExtraOptions = async () => {
-  //   let currentTags = dataObject.getData(fieldName);
-  //   let currentTagOptions = tagOptions;
-  //   if (currentTags && currentTags.length > 0) {
-  //     currentTags.map(tag => {
-  //       if (currentTagOptions.find(tagOption => tag["type"] == null && tagOption.type === type && tagOption.value === tag) == null) {
-  //         handleCreate(tag);
-  //       }
-  //     });
-  //   }
-  // };
 
   const validateAndSetData = (fieldName, value) => {
     let newDataObject = dataObject;
@@ -93,11 +77,9 @@ function DtoTagManagerInput({ fieldName, type, dataObject, setDataObject, disabl
 
     if (existingTag != null)
     {
-      console.info("Tag already exists so will not be created");
       let tagSelected = tagAlreadySelected(newValue);
       if (!tagSelected)
       {
-        console.info("Tag already selected so will not be added");
         currentValues.push(existingTag);
         validateAndSetData(fieldName, currentValues);
       }
@@ -130,6 +112,7 @@ function DtoTagManagerInput({ fieldName, type, dataObject, setDataObject, disabl
             textField={data => data["type"] + ": " + data["value"]}
             filter={filter}
             allowCreate={allowCreate}
+            groupBy={groupBy}
             busy={componentLoading}
             onCreate={value => handleCreate(value)}
             value={[...dataObject.getData(fieldName)]}
@@ -166,7 +149,8 @@ DtoTagManagerInput.propTypes = {
 DtoTagManagerInput.defaultProps = {
   filter: "contains",
   allowCreate: "onFilter",
-  disabled: false
+  disabled: false,
+  groupBy: "type"
 }
 
 export default DtoTagManagerInput;

@@ -136,6 +136,10 @@ export class Model {
     return this.metaData.fields;
   };
 
+  getType = () => {
+    return this.metaData["type"];
+  }
+
   getFieldById = (id) => {
     return this.metaData.fields.find(field => {
       return field.id === id });

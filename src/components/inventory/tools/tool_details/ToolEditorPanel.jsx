@@ -46,7 +46,7 @@ function ToolEditorPanel({ toolData, setToolData }) {
       setToolList(toolResponse.data);
     }
     catch (error) {
-      let toast = getLoadingErrorDialog(error.message, setShowToast, "top");
+      let toast = getLoadingErrorDialog(error.message, setShowToast);
       setToast(toast);
       setShowToast(true);
       setLoadingError(true);
@@ -59,12 +59,12 @@ function ToolEditorPanel({ toolData, setToolData }) {
       try {
         console.log("toolDataDto: " + JSON.stringify(toolDataDto));
         let createToolTypeResponse = await toolsActions.createTool(toolDataDto, getAccessToken);
-        let toast = getCreateSuccessResultDialog("Tool", setShowToast, "detailPanelTop");
+        let toast = getCreateSuccessResultDialog(toolDataDto.getType(), setShowToast);
         setToast(toast);
         setShowToast(true);
       }
       catch (error) {
-        let toast = getCreateFailureResultDialog("Tool", error.message, setShowToast, "top");
+        let toast = getCreateFailureResultDialog(toolDataDto.getType(), error.message, setShowToast);
         setToast(toast);
         setShowToast(true);
         console.error(error.message);
@@ -84,12 +84,12 @@ function ToolEditorPanel({ toolData, setToolData }) {
         let updatedDto = new Model(response.data, toolDataDto.metaData, false);
         setToolDataDto(updatedDto);
         setToolData(updatedDto);
-        let toast = getUpdateSuccessResultDialog("Tool", setShowToast, "detailPanelTop");
+        let toast = getUpdateSuccessResultDialog(toolDataDto.getType(), setShowToast);
         setToast(toast);
         setShowToast(true);
       }
       catch (error) {
-        let toast = getUpdateFailureResultDialog("Tool", error.message, setShowToast, "detailPanelTop", "detailPanelTop");
+        let toast = getUpdateFailureResultDialog(toolDataDto.getType(), error.message, setShowToast);
         setToast(toast);
         setShowToast(true);
         console.error(error.message);
@@ -155,7 +155,7 @@ function ToolEditorPanel({ toolData, setToolData }) {
               <DtoTextInput disabled={true} setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"compliance"} />
             </Col>
             <Col lg={6}>
-              <DtoTagManagerInput type={"Tool"} setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"tags"} />
+              <DtoTagManagerInput type={"tool"} setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"tags"} />
             </Col>
             <Col lg={6}>
               <DtoMultipleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fields={["name", "value"]} fieldName={"location"} />
@@ -178,7 +178,7 @@ function ToolEditorPanel({ toolData, setToolData }) {
           </Row>
           <Row>
             <div className="ml-auto mt-3 px-3">
-              <SaveButton recordDto={toolDataDto} createRecord={createTool} updateRecord={updateTool} type={"Tool"}/>
+              <SaveButton recordDto={toolDataDto} createRecord={createTool} updateRecord={updateTool} />
             </div>
             }
           </Row>

@@ -1,4 +1,6 @@
 const toolTypeMetadata = {
+  idProperty: "_id",
+  type: "Tool Type",
   fields: [
   {
     label: "Name",

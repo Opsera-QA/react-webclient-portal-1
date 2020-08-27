@@ -67,7 +67,7 @@ function JenkinsAccountEditorPanel({ toolData, jenkinsAccountData }) {
       setAccountList(accountList);
     }
     catch (error) {
-      let toast = getLoadingErrorDialog(error.message, setShowToast, "top");
+      let toast = getLoadingErrorDialog(error.message, setShowToast);
       setToast(toast);
       setShowToast(true);
       console.error(error.message);
@@ -84,11 +84,11 @@ function JenkinsAccountEditorPanel({ toolData, jenkinsAccountData }) {
       };
       try {
         const response = await axiosApiService(getAccessToken).post("/registry/action/" + toolData["_id"] + "/createcredential", {...payload});
-        let toast = getCreateSuccessResultDialog("Jenkins Account Credentials", setShowToast, "top");
+        let toast = getCreateSuccessResultDialog("Jenkins Account Credentials", setShowToast);
         setToast(toast);
         setShowToast(true);
       } catch (error) {
-        let toast = getUpdateFailureResultDialog("Jenkins Account Credentials", error.message, setShowToast, "detailPanelTop");
+        let toast = getUpdateFailureResultDialog("Jenkins Account Credentials", error.message, setShowToast);
         setToast(toast);
         setShowToast(true);
         console.error(error.message);

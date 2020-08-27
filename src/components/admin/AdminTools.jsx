@@ -14,7 +14,7 @@ import {
   faTags,
   faStream,
   faUsers,
-  faFileInvoice
+  faFileInvoice, faSitemap, faUserPlus
 } from "@fortawesome/free-solid-svg-icons";
 import AccessDeniedDialog from "../common/status_notifications/accessDeniedInfo";
 import LoadingDialog from "../common/status_notifications/loading";
@@ -87,19 +87,16 @@ function AdminTools(props) {
                 <Link to="/admin/delete"><FontAwesomeIcon icon={faTimes} fixedWidth/> Delete Tools</Link>
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to={!featureFlagItemInProd() ? "/admin/tags" : "#"}><FontAwesomeIcon icon={faTags}
-                                                                                           fixedWidth/> Tags</Link>
-              </Col>
-              <Col xs={12} md={6} lg={4} className="p-2">
                 <Link to={!featureFlagItemInProd() ? "/admin/kpis" : "#"}><FontAwesomeIcon icon={faFileInvoice} fixedWidth/> KPI Management</Link>
               </Col>              
               <Col xs={12} md={6} lg={4} className="p-2">
                 <Link to="/admin/templates"><FontAwesomeIcon icon={faStream} fixedWidth/> Pipeline Templates Editor</Link>
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to={"/accounts"}><FontAwesomeIcon icon={faUsers}
-                                                        fixedWidth/> Account Management
-                  (LDAP)</Link>
+                <Link to="/accounts/organizations"><FontAwesomeIcon icon={faSitemap} fixedWidth />Organizations & Accounts (LDAP)</Link>
+              </Col>
+              <Col xs={12} md={6} lg={4} className="p-2">
+                <Link to="/accounts/create"><FontAwesomeIcon icon={faUserPlus} fixedWidth /> Customer Onboarding</Link>
               </Col>
             </Row>
           </div>
