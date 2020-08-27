@@ -3,7 +3,7 @@ import {Button} from "react-bootstrap";
 import {AuthContext} from "contexts/AuthContext";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
-import {Link, useHistory, useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import LdapUsersTable from "./LdapUsersTable";
 import NewLdapUserModal from "./NewLdapUserModal";
 import DropdownList from "react-widgets/lib/DropdownList";
@@ -30,9 +30,14 @@ function LdapUserManagement() {
   const [showCreateUserModal, setShowCreateUserModal] = useState(false);
 
   useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
     setPageLoading(true);
     getRoles();
-  }, []);
+    setPageLoading(false);
+  }
 
   const getUsersByEmail = async (email) => {
     let organization = await getOrganizationByEmail(email, getAccessToken);
@@ -47,7 +52,6 @@ function LdapUserManagement() {
   };
 
   const getRoles = async () => {
-    setPageLoading(true)
     const user = await getUserRecord();
     const {ldap, groups} = user;
     const userRoleAccess = await setAccessRoles(user);
@@ -69,12 +73,6 @@ function LdapUserManagement() {
         setOrganizationList(organizationList);
       }
     }
-    setPageLoading(false);
-  };
-
-  const onModalClose = () => {
-    getUsersByDomain(currentOrganizationDomain);
-    setShowCreateUserModal(false);
   };
 
   const createUser = () => {
@@ -128,11 +126,7 @@ function LdapUserManagement() {
         <div className="full-height">
           {userList && <LdapUsersTable orgDomain={orgDomain} userData={userList}/>}
         </div>
-
-        {showCreateUserModal ? <NewLdapUserModal
-          organizationName={organization.name}
-          showModal={showCreateUserModal}
-          onModalClose={onModalClose}/> : null}
+        <NewLdapUserModal organizationName={organization.name} showModal={showCreateUserModal} setShowModal={setShowCreateUserModal} loadData={loadData}/>
       </div>
     );
   }

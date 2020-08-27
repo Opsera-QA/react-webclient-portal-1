@@ -1,6 +1,5 @@
-import React, {useState, useContext, useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "contexts/AuthContext";
 import LdapUserEditorPanel from "./users_detail_view/LdapUserEditorPanel";
 import Model from "../../../core/data_model/model";
 import {ldapUsersMetaData} from "./ldap-users-metadata";
@@ -18,20 +17,20 @@ const INITIAL_USER_DATA = {
   site: "",
 };
 
-function NewLdapUserModal({ onModalClose, showModal } ) {
+function NewLdapUserModal({ setShowModal, showModal, loadData } ) {
   const [ldapUserData, setLdapUserData] = useState(undefined);
 
   useEffect(() => {
-    setLdapUserData(new Model(INITIAL_USER_DATA, ldapUsersMetaData, true));
+    setLdapUserData(new Model({...INITIAL_USER_DATA}, ldapUsersMetaData, true));
   }, []);
 
   const handleClose = () => {
-    onModalClose(false);
+    setShowModal(false);
   };
 
   return (
     <>
-      <CreateModal handleCancelModal={handleClose} objectType={"User"} showModal={showModal} >
+      <CreateModal handleCancelModal={handleClose} objectType={"User"} showModal={showModal} loadData={loadData} >
         {ldapUserData && <LdapUserEditorPanel setLdapUserData={setLdapUserData} handleClose={handleClose} ldapUserData={ldapUserData} />}
       </CreateModal>
     </>
@@ -40,7 +39,8 @@ function NewLdapUserModal({ onModalClose, showModal } ) {
 
 NewLdapUserModal.propTypes = {
   showModal: PropTypes.bool,
-  onModalClose: PropTypes.func,
+  setShowModal: PropTypes.func,
+  loadData: PropTypes.func
 };
 
 export default NewLdapUserModal;

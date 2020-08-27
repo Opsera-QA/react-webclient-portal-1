@@ -64,6 +64,37 @@ pipelineHelpers.getUserNameById = async (userId, accessTokenFn) => {
   return name;
 };
 
+pipelineHelpers.displayPipelineType = (typeArray) => {
+  switch (typeArray[0]) {
+    case "sfdc":
+      return "SalesForce";
+    case "ai-ml":
+      return "Machine Learning (AI)";
+    case "sdlc":
+      return "Software Development";
+    default:
+      return "";
+  }
+};
 
+pipelineHelpers.displayPipelineValueComponent = ({typeArray}) => {
+  switch (typeArray[0]) {
+    case "sfdc":
+      return "SalesForce";
+    case "ai-ml":
+      return "Machine Learning (AI)";
+    case "sdlc":
+      return "Software Development";
+    default:
+      return "";
+  }
+};
+
+pipelineHelpers.PIPELINE_TYPES = [
+  { id: "", name: "No Value", groupId: "Pipeline Types" },
+  { id: "sfdc", name: "SalesForce", groupId: "Pipeline Types" },
+  { id: "sdlc", name: "Software Development", groupId: "Pipeline Types" },
+  { id: "ai-ml", name: "Machine Learning (AI)", groupId: "Pipeline Types" },
+];
 
 export default pipelineHelpers;

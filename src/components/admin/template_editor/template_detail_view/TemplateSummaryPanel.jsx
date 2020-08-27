@@ -15,6 +15,7 @@ import templateActions from "../template-actions";
 import DtoJsonField from "../../../common/form_fields/dto_form_fields/dto-json-field";
 import DtoItemDisplayer from "../../../common/input/dto_input/item-displayer/dto-item-displayer";
 import DtoItemField from "../../../common/form_fields/dto_form_fields/dto-item-field";
+import DtoTagField from "../../../common/form_fields/dto_form_fields/dto-tag-field";
 
 function TemplateSummaryPanel({templateData, setTemplateData}) {
   const { getAccessToken } = useContext(AuthContext);
@@ -28,9 +29,6 @@ function TemplateSummaryPanel({templateData, setTemplateData}) {
         let response = await templateActions.updateTemplate({...newTemplateData}, getAccessToken);
         let updatedDto = new Model(response.data, templateData.metaData, false);
         setTemplateData(updatedDto);
-        // let toast = getPersistResultDialog(true, "update", "User", undefined, setShowToast);
-        // setToast(toast);
-        // setShowToast(true);
       }
       catch (err) {
         console.log(err.message);
@@ -71,7 +69,7 @@ function TemplateSummaryPanel({templateData, setTemplateData}) {
             </Row>
             <Row>
               <Col lg={4}>
-                <DtoItemField dataObject={templateData} fieldName={"tags"} />
+                <DtoTagField dataObject={templateData} fieldName={"tags"} />
               </Col>
               <Col lg={4}>
                 <DtoItemField dataObject={templateData} fieldName={"type"} />

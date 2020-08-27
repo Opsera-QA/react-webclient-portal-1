@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext, useMemo } from "react";
-import { Button, Tabs, Tab } from "react-bootstrap";
+import React, { useState, useEffect, useContext } from "react";
+import { Tabs, Tab } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext";
 
 import ToolTypeTable from "./tool_type/ToolTypeTable";
@@ -25,7 +25,9 @@ function ToolManagement() {
   }, []);
 
   const loadData = async () => {
+    setPageLoading(true);
     await getRoles();
+    setPageLoading(false);
   };
 
   const getRoles = async () => {
@@ -36,11 +38,9 @@ function ToolManagement() {
       await getToolTypes();
       await getToolIdentifiers();
     }
-    setPageLoading(false);
   };
 
   const getToolTypes = async () => {
-    setPageLoading(true)
     try {
       const tool_type = await toolTypeActions.getToolTypes(getAccessToken);
       setToolTypeList(tool_type.data);
@@ -68,7 +68,6 @@ function ToolManagement() {
         <BreadcrumbTrail destination="toolManagement"/>
 
         <h5>Tool Management</h5>
-
         <div className="default-custom-tabs">
           <Tabs defaultActiveKey={tabKey != null && tabKey === "identifiers" ? tabKey : "types"} className="default-custom-tabs" id="uncontrolled-tab-example">
             <Tab eventKey="types" title="Tool Type">
@@ -76,15 +75,13 @@ function ToolManagement() {
                 <ToolTypeTable loadData={loadData} data={toolTypeList}/>
               </div>
             </Tab>
-
             <Tab eventKey="identifiers" title="Tool Identifier">
               <div className="tabbed-content-block">
-                  <ToolIdentifierTable loadData={loadData} data={toolIdentifierList}/>
+                <ToolIdentifierTable loadData={loadData} data={toolIdentifierList}/>
               </div>
             </Tab>
           </Tabs>
         </div>
-
       </div>
     );
   }

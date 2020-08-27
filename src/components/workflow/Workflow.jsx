@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams, useLocation } from "react-router-dom";
 import MyPipelines from "./pipelines/MyPipelines";
-import PipelineOverview from "./pipelines/pipeline_details/pipelineOverview";
+import PipelineDetailView from "./pipelines/pipeline_details/PipelineDetailView";
 import PipelineWorkflowView from "./pipelines/pipeline_details/workflow/pipelineWorkflowView";
 import "./workflows.css";
 
@@ -52,7 +52,7 @@ function Workflow() {
 
         <h4>Pipelines</h4>
       </div>
-      {itemId.length > 0 && selection === "pipelineDetail" ? <PipelineOverview id={itemId}/> : null}
+      {itemId.length > 0 && selection === "pipelineDetail" ? <PipelineDetailView id={itemId}/> : null}
       {itemId.length > 0 && selection === "workflowView" ? <PipelineWorkflowView id={itemId}/> : null}
       {((itemId.length === 0 && selection === "myPipelines") || selection === "catalog") ?
         <MyPipelines view={selection}/> : null}

@@ -14,9 +14,15 @@ function TemplateManagement() {
   const [templateList, setTemplateList] = useState([]);
 
   useEffect(() => {
-    getRoles();
-    getTemplates();
+    loadData();
   }, []);
+
+  const loadData = async () => {
+    setPageLoading(true);
+    await getRoles();
+    await getTemplates();
+    setPageLoading(false);
+  }
 
   const getRoles = async () => {
     const user = await getUserRecord();
@@ -27,7 +33,6 @@ function TemplateManagement() {
   };
 
   const getTemplates = async () => {
-    setPageLoading(true);
     try {
       const templateListResponse = await templateActions.getTemplates(getAccessToken);
       console.log(templateListResponse.data);
@@ -35,21 +40,20 @@ function TemplateManagement() {
     } catch (err) {
       console.log(err.message);
     }
-    setPageLoading(false);
   };
 
   if (!accessRoleData || pageLoading) {
     return (<LoadingDialog size="sm"/>);
   } else if (!accessRoleData.OpseraAdministrator) {
-    return (<AccessDeniedDialog roleData={accessRoleData} />);
+    return (<AccessDeniedDialog roleData={accessRoleData}/>);
   } else {
     return (
-    <div>
-      <BreadcrumbTrail destination={"templateManagement"} />
-      <TemplatesTable data={templateList} loadData={getTemplates}/>
-    </div>
-  );
-}
+      <div>
+        <BreadcrumbTrail destination={"templateManagement"}/>
+        <TemplatesTable data={templateList} loadData={loadData}/>
+      </div>
+    );
+  }
 }
 
 export default TemplateManagement;

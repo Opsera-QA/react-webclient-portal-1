@@ -14,24 +14,16 @@ import {
 import NewToolIdentifierModal from "./NewToolIdentifierModal";
 
 function ToolIdentifierTable({data, loadData}) {
-  const [showCreateToolIdentiferModal, setShowCreateToolIdentiferModal] = useState(false);
+  const [showCreateToolIdentifierModal, setShowCreateToolIdentifierModal] = useState(false);
   const history = useHistory();
   let fields = toolIdentifierMetadata.fields;
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(fields.find(field => {
-        return field.id === "name"
-      })),
-      getTableTextColumn(fields.find(field => {
-        return field.id === "description"
-      })),
-      getTableDateColumn(fields.find(field => {
-        return field.id === "createdAt"
-      })),
-      getTableBooleanIconColumn(fields.find(field => {
-        return field.id === "active"
-      })),
+      getTableTextColumn(fields.find(field => { return field.id === "name" })),
+      getTableTextColumn(fields.find(field => { return field.id === "description" })),
+      getTableDateColumn(fields.find(field => { return field.id === "createdAt" })),
+      getTableBooleanIconColumn(fields.find(field => { return field.id === "active" })),
     ],
     []
   );
@@ -42,13 +34,8 @@ function ToolIdentifierTable({data, loadData}) {
     return !row["values"].active ? " inactive-row" : "";
   };
 
-  const handleClose = () => {
-    setShowCreateToolIdentiferModal(false)
-    loadData();
-  };
-
   const createToolType = () => {
-    setShowCreateToolIdentiferModal(true);
+    setShowCreateToolIdentifierModal(true);
   };
 
   const selectedRow = (rowData, type) => {
@@ -57,8 +44,7 @@ function ToolIdentifierTable({data, loadData}) {
 
   return (
     <>
-      {showCreateToolIdentiferModal &&
-      <NewToolIdentifierModal onModalClose={handleClose} showModal={showCreateToolIdentiferModal}/>}
+      {showCreateToolIdentifierModal && <NewToolIdentifierModal setShowModal={setShowCreateToolIdentifierModal} loadData={loadData} showModal={showCreateToolIdentifierModal}/>}
       <div className="flex-row-reverse mb-1 d-flex">
         <div className="text-right">
           <Button variant="primary" size="sm"

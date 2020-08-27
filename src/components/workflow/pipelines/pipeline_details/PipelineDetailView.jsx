@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
-import PipelineOverviewSummary from "./PipelineOverviewSummaryPanel";
+import PipelineOverviewSummary from "./PipelineSummaryPanel";
 import PipelineActivityLogTable from "./pipelineActivityLogTable";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
@@ -11,7 +11,7 @@ import "../../workflows.css";
 import PipelineActionControls from "./piplineActionControls";
 
 
-function PipelineOverview({ id }) {
+function PipelineDetailView({ id }) {
   const [error, setErrors] = useState();
   const [data, setData] = useState({});
   const [activityData, setActivityData] = useState({});
@@ -142,8 +142,8 @@ function PipelineOverview({ id }) {
   }
 }
 
-PipelineOverview.propTypes = {
+PipelineDetailView.propTypes = {
   id: PropTypes.string,
 };
 
-export default PipelineOverview;
+export default PipelineDetailView;

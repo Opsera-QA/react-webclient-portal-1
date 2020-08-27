@@ -38,18 +38,13 @@ function ToolTypeTable({ data, loadData }) {
 
   const noDataMessage = "No tools are currently registered";
 
-  const handleClose = () => {
-    setShowCreateToolTypeModal(false)
-    loadData();
-  };
-
   const createToolType = () => {
     setShowCreateToolTypeModal(true);
   };
 
   return (
     <>
-      {showCreateToolTypeModal && <NewToolTypeModal onModalClose={handleClose} showModal={showCreateToolTypeModal}/>}
+      {showCreateToolTypeModal && <NewToolTypeModal setShowModal={setShowCreateToolTypeModal} showModal={showCreateToolTypeModal} loadData={loadData}/>}
       <div className="flex-row-reverse mb-1 d-flex">
         <div className="text-right">
           <Button variant="primary" size="sm"

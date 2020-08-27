@@ -4,14 +4,18 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import accountsActions from "../../../accounts-actions";
-import Loading from "../../../../common/status_notifications/loading";
 import {AuthContext} from "../../../../../contexts/AuthContext";
-import {getFormValidationErrorDialog, getPersistResultDialog} from "../../../../common/toasts/toasts";
+import {
+  getCreateFailureResultDialog,
+  getCreateSuccessResultDialog,
+  getFormValidationErrorDialog, getUpdateFailureResultDialog, getUpdateSuccessResultDialog
+} from "../../../../common/toasts/toasts";
 import DtoTextInput from "../../../../common/input/dto_input/dto-text-input";
 import Model, {DataState} from "../../../../../core/data_model/model";
 import TooltipWrapper from "../../../../common/tooltip/tooltipWrapper";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCogs} from "@fortawesome/free-solid-svg-icons";
+import LoadingDialog from "../../../../common/status_notifications/loading";
 
 function LdapIdpAccountEditorPanel({ldapOrganizationAccountData, ldapIdpAccountData, setLdapIdpAccountData, setShowIdpEditPanel }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -45,22 +49,20 @@ function LdapIdpAccountEditorPanel({ldapOrganizationAccountData, ldapIdpAccountD
   };
 
   const createIdpAccount = async () => {
-    // console.log("Persisting new idp account to DB: " + JSON.stringify(ldapIdpAccountDataDto));
-
     if (ldapIdpAccountDataDto.isModelValid()) {
-      let createLdapIdpAccountResponse = await accountsActions.createIdpAccount(ldapIdpAccountDataDto, getAccessToken);
-      // console.log("createLdapIdpAccountResponse: ", JSON.stringify(createLdapIdpAccountResponse));
-
-      if (createLdapIdpAccountResponse.error != null) {
-        const errorMsg = `Microservice error reported creating the organization for : ${ldapIdpAccountDataDto["name"]}.  Error returned: ${JSON.stringify(createLdapIdpAccountResponse.error.message, null, 2)}`;
-        console.log(errorMsg);
-        let toast = getPersistResultDialog(false, "create", "account", errorMsg, setShowToast);
+      try {
+        let createLdapIdpAccountResponse = await accountsActions.createIdpAccount(ldapIdpAccountDataDto, getAccessToken);
+        let toast = getCreateSuccessResultDialog("IDP Account", setShowToast, "top");
         setToast(toast);
         setShowToast(true);
-      } else {
         let updatedDto = new Model(createLdapIdpAccountResponse.data, ldapIdpAccountDataDto.metaData, false);
         setLdapIdpAccountData(updatedDto);
         setLdapIdpAccountDataDto(updatedDto);
+      } catch (error) {
+        let toast = getCreateFailureResultDialog("IDP Account", error.message, setShowToast, "top");
+        setToast(toast);
+        setShowToast(true);
+        console.error(error.message);
       }
     }
     else {
@@ -74,15 +76,17 @@ function LdapIdpAccountEditorPanel({ldapOrganizationAccountData, ldapIdpAccountD
     if (ldapIdpAccountDataDto.isModelValid()) {
       try {
         const updateIdpAccountResponse = await accountsActions.updateIdpAccount(ldapIdpAccountDataDto, ldapOrganizationAccountData, getAccessToken);
-        console.log("updateIdpAccountResponse: ", JSON.stringify(updateIdpAccountResponse));
-        let toast = getPersistResultDialog(true, "update", "Account", undefined, setShowToast);
+        let toast = getUpdateSuccessResultDialog("IDP Account", setShowToast, "detailPanelTop");
         setToast(toast);
         setShowToast(true);
-        // let updatedDto = new Model(updateIdpAccountResponse.data, ldapIdpAccountDataDto.metaData, false);
-        // setLdapIdpAccountDataDto(updatedDto);
-        // setLdapIdpAccountData(updatedDto);
-      } catch (err) {
-        console.log(err.message);
+        let updatedDto = new Model(updateIdpAccountResponse.data, ldapIdpAccountDataDto.metaData, false);
+        setLdapIdpAccountDataDto(updatedDto);
+        setLdapIdpAccountData(updatedDto);
+      } catch (error) {
+        let toast = getUpdateFailureResultDialog("IDP Account", error.message, setShowToast, "detailPanelTop");
+        setToast(toast);
+        setShowToast(true);
+        console.error(error.message);
       }
     }
     else {
@@ -91,11 +95,12 @@ function LdapIdpAccountEditorPanel({ldapOrganizationAccountData, ldapIdpAccountD
       setShowToast(true);
     }
   };
-  return (
-    <>
-      {isLoading ? <Loading size="sm"/> : null}
 
-      {!isLoading && <>
+  if (isLoading) {
+    return (<LoadingDialog size="sm"/>);
+  } else {
+    return (
+    <>
         <div className="m-3">
           {!ldapIdpAccountDataDto.isNew() && <div className="mb-2 text-muted">
             <TooltipWrapper innerText={"Edit this Account"}>
@@ -146,9 +151,9 @@ function LdapIdpAccountEditorPanel({ldapOrganizationAccountData, ldapIdpAccountD
             </div>
           </Row>
         </div>
-      </>}
     </>
   );
+}
 }
 
 LdapIdpAccountEditorPanel.propTypes = {
@@ -157,7 +162,6 @@ LdapIdpAccountEditorPanel.propTypes = {
   setLdapIdpAccountData: PropTypes.func,
   canDelete: PropTypes.bool,
   setShowEditPanel: PropTypes.func,
-  handleClose: PropTypes.func,
   handleBackButton: PropTypes.func,
   setShowIdpEditPanel: PropTypes.func
 };

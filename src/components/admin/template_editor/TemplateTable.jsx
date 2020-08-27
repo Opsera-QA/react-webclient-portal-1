@@ -55,18 +55,13 @@ function TemplateTable({ data, loadData }) {
     history.push(`/admin/templates/details/${rowData.original._id}`);
   };
 
-  const handleClose = () => {
-    setShowCreateTemplateModal(false)
-    loadData();
-  };
-
   const createTemplate = () => {
     setShowCreateTemplateModal(true);
   };
 
   return (
     <>
-      {showCreateTemplateModal && <NewTemplateModal onModalClose={handleClose} showModal={showCreateTemplateModal}/>}
+      {showCreateTemplateModal && <NewTemplateModal setShowModal={setShowCreateTemplateModal} loadData={loadData} showModal={showCreateTemplateModal}/>}
       <div className="justify-content-between mb-1 d-flex">
         <h5>Template Management</h5>
         <div className="text-right">

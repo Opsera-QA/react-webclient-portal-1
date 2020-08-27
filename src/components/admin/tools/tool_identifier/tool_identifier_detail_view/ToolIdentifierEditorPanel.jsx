@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useContext, useMemo } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import DtoTextInput from "../../../../common/input/dto_input/dto-text-input";
 import DtoToggleInput from "../../../../common/input/dto_input/dto-toggle-input";
 import DtoItemInput from "../../../../common/input/dto_input/item-displayer/dto-item-input";
-import Model, {DataState} from "../../../../../core/data_model/model";
+import Model from "../../../../../core/data_model/model";
 import toolTypeActions from "../../tool-management-actions";
 import {
   getCreateFailureResultDialog, getCreateSuccessResultDialog,
@@ -78,7 +78,6 @@ function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData} 
     if (toolIdentifierDataDto.isModelValid()) {
       try {
         const response = await toolTypeActions.updateToolIdentifier(toolIdentifierDataDto, getAccessToken);
-        console.log("Response.data: " + JSON.stringify(response));
         let toast = getUpdateSuccessResultDialog("Tool Identifier", setShowToast, "detailPanelTop");
         setToast(toast);
         setShowToast(true);

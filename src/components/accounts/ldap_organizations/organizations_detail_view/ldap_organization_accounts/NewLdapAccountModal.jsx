@@ -25,20 +25,20 @@ const INITIAL_ORGANIZATION_ACCOUNT_DATA = {
   administrator: {}
 };
 
-function NewLdapAccountModal({ onModalClose, showModal, ldapOrganizationData } ) {
+function NewLdapAccountModal({ setShowModal, showModal, ldapOrganizationData, loadData } ) {
   const [ldapOrganizationAccountData, setLdapOrganizationAccountData] = useState(undefined);
 
   useEffect(() => {
-    setLdapOrganizationAccountData(new Model(INITIAL_ORGANIZATION_ACCOUNT_DATA, ldapOrganizationAccountMetaData, true));
+    setLdapOrganizationAccountData(new Model({...INITIAL_ORGANIZATION_ACCOUNT_DATA}, ldapOrganizationAccountMetaData, true));
   }, []);
 
   const handleClose = () => {
-    onModalClose(false);
+    setShowModal(false);
   };
 
   return (
     <>
-      <CreateModal handleCancelModal={handleClose} objectType={"Organization Account"} showModal={showModal} >
+      <CreateModal handleCancelModal={handleClose} objectType={"Organization Account"} showModal={showModal} loadData={loadData} >
         {ldapOrganizationAccountData && <LdapOrganizationAccountEditorPanel ldapOrganization={ldapOrganizationData} setLdapOrganizationAccountData={setLdapOrganizationAccountData} handleClose={handleClose} ldapOrganizationAccountData={ldapOrganizationAccountData} />}
       </CreateModal>
     </>
@@ -48,7 +48,8 @@ function NewLdapAccountModal({ onModalClose, showModal, ldapOrganizationData } )
 NewLdapAccountModal.propTypes = {
   ldapOrganizationData: PropTypes.object,
   showModal: PropTypes.bool,
-  onModalClose: PropTypes.func,
+  setShowModal: PropTypes.func,
+  loadData: PropTypes.func
 };
 
 export default NewLdapAccountModal;
