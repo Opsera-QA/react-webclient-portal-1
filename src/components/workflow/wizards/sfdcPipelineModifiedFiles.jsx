@@ -62,7 +62,7 @@ const SfdcPipelineModifiedFiles = ({ handleClose, setView, modifiedFiles, create
           <>
             <div className="d-flex w-100 pr-2">
               <div className="col-7 list-item-container mr-1">
-                <div className="h6 opsera-blue">GitLab Files</div>
+                <div className="h6 opsera-blue">Git Files</div>
                 {(gitModified && gitModified.length === 0) && <div className="info-text mt-3">NO FILES</div>}
                 {typeof(gitModified) === "object" && gitModified.map((item, idx) => (
                   <div key={idx} className="thick-list-item-container-green  w-100 force-text-wrap p-1">
