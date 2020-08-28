@@ -56,6 +56,7 @@ const INITIAL_DATA = {
   gitUserName: "",
   repository: "",
   branch: "",
+  jsonPath: ""
 };
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
@@ -348,6 +349,7 @@ function CypressStepConfiguration({
       buildType,
       dockerName,
       dockerTagName,
+      jsonPath
     } = formData;
 
     if(jobType === "job") {
@@ -364,6 +366,7 @@ function CypressStepConfiguration({
       toolConfigId.length === 0 ||
       jenkinsUrl.length === 0 ||
       jUserId.length === 0 ||
+      jsonPath.length === 0 ||
       jAuthToken.length === 0 ||
       (buildType === "docker"
         ? dockerName.length === 0 || dockerTagName.length === 0
@@ -929,6 +932,24 @@ function CypressStepConfiguration({
           </Form.Group>
         )}
 
+        {formData.jobType === "CYPRESS UNIT TESTING" && (
+          <>
+            <Form.Group controlId="branchField">
+              <Form.Label>JSON Path*</Form.Label>
+              <Form.Control
+                maxLength="250"
+                type="text"
+                placeholder=""
+                value={formData.jsonPath || ""}
+                onChange={(e) =>
+                  setFormData({ ...formData, jsonPath: e.target.value })
+                }
+              />
+            </Form.Group> 
+            </>
+          )
+          }
+
         <Form.Group controlId="threshold">
           <Form.Label>Success Threshold</Form.Label>
           <Form.Control
@@ -941,7 +962,7 @@ function CypressStepConfiguration({
         </Form.Group>
         </>
         }
-
+        
         {jobType === "opsera-job" ? (
           <Button
             variant="primary"
