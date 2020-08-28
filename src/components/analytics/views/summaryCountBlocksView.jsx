@@ -33,7 +33,7 @@ function SummaryCountBlocksView({ data, view }) {
     <>
       {data !== undefined && data.length > 0 ? (
         <div className="w-100">
-          <div className="d-flex justify-content-center">
+          <div className="d-none d-sm-block justify-content-center">
             <CardGroup className="w-100 d-flex justify-content-center">
               {data.map(function (item, index) {
                 return (
