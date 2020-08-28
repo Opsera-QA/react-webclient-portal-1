@@ -65,7 +65,7 @@ function SourceCodeView_developer({ persona, date }) {
         },
         {
           request: "gitlabTotalNumberOfCommits",
-          metric: "count",
+          metric: "complexCount",
         },
         {
           request: "gitlabTotalNumberOfMergeRequestsOpenedByUser",
