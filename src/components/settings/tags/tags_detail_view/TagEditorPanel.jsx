@@ -16,7 +16,7 @@ import SaveButton from "../../../common/buttons/SaveButton";
 import Col from "react-bootstrap/Col";
 import Model from "../../../../core/data_model/model";
 import DtoSelectInput from "../../../common/input/dto_input/dto-select-input";
-import pipelineHelpers from "../../../workflow/pipelineHelpers";
+import {defaultTags} from "../tags-form-fields";
 
 function TagEditorPanel({ tagData, setTagData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -97,14 +97,14 @@ function TagEditorPanel({ tagData, setTagData }) {
         <div className="mx-2 my-3">
           <Row>
             <Col>
-              <DtoSelectInput textField={"name"}
-                              valueField={"id"}
+              <DtoSelectInput textField={"value"}
+                              valueField={"type"}
                               fieldName={"type"}
                               dataObject={tagDataDto}
                               setDataObject={setTagDataDto}
                               setDataFunction={updateSelectArray}
                 // valueFormatter={}
-                              selectOptions={pipelineHelpers.PIPELINE_TYPES}/>
+                              selectOptions={defaultTags}/>
             </Col>
             <Col>
               <DtoToggleInput fieldName={"active"} setDataObject={setTagDataDto} dataObject={tagDataDto} />

@@ -3,16 +3,8 @@ import PropTypes from "prop-types";
 import { Multiselect } from 'react-widgets'
 import adminTagsActions from "../../../settings/tags/admin-tags-actions";
 import {AuthContext} from "../../../../contexts/AuthContext";
-import tagEditorMetadata from "../../../settings/tags/tags-form-fields";
+import tagEditorMetadata, {defaultTags} from "../../../settings/tags/tags-form-fields";
 import Model from "../../../../core/data_model/model";
-
-const defaultTags = [
-  {type: "pipeline", value: "Pipeline"},
-  {type: "application", value: "Application"},
-  {type: "project", value: "Project"},
-  {type: "release", value: "Release"},
-  {type: "custom", value: "Custom"},
-];
 
 function DtoTagManagerInput({ fieldName, type, dataObject, setDataObject, disabled, filter, placeholderText, setDataFunction, allowCreate, groupBy}) {
   const { getAccessToken } = useContext(AuthContext);
