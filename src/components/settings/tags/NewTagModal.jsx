@@ -9,7 +9,7 @@ const INITIAL_DATA = {
   key: "",
   value: "",
   configuration: {},
-  active: false,
+  active: true,
 };
 
 function NewTagModal({ setShowModal, showModal, loadData }) {
