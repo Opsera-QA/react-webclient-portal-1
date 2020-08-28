@@ -81,13 +81,6 @@ function TagEditorPanel({ tagData, setTagData }) {
     }
   };
 
-  // TODO: Remove and use multi-select once implemented for types.
-  const updateSelectArray = async (fieldName, value) => {
-    let newDataObject = tagDataDto;
-    newDataObject.setData(fieldName, [value.id]);
-    setTagDataDto({...newDataObject});
-  }
-
   if (isLoading) {
     return (<LoadingDialog size="sm"/>);
   } else {
@@ -102,7 +95,6 @@ function TagEditorPanel({ tagData, setTagData }) {
                               fieldName={"type"}
                               dataObject={tagDataDto}
                               setDataObject={setTagDataDto}
-                              setDataFunction={updateSelectArray}
                 // valueFormatter={}
                               selectOptions={defaultTags}/>
             </Col>

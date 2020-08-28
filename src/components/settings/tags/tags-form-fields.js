@@ -42,6 +42,7 @@ export const defaultTags = [
   {type: "application", value: "Application"},
   {type: "project", value: "Project"},
   {type: "release", value: "Release"},
+  {type: "tool", value: "Tool"},
   {type: "custom", value: "Custom"},
 ];
 
