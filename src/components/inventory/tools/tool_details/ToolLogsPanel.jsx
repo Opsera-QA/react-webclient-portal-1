@@ -34,29 +34,16 @@ function ToolLogsPanel(props) {
 
   const columns = useMemo(
     () => [
-      /*{
-        Header: "Run",
-        accessor: "run_count",
-        class: "cell-center no-wrap-inline"
-      },*/
       {
         Header: "Action",
         accessor: "action",
-      },
-      {
-        Header: "Task",
-        accessor: "step_name",
-      },
-      {
-        Header: "Tool",
-        accessor: "tool_identifier",
       },
       {
         Header: "Status",
         accessor: "status",
         Cell: (props) => {
           return props.value ?
-            (props.value === "failure" || props.value === "failed")
+            (props.value !== "success")
               ? <>
                 <div style={{ display: "flex", flexWrap: "nowrap" }}>
                   <div><FontAwesomeIcon icon={faTimesCircle} className="cell-icon red"/></div>
