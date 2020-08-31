@@ -6,6 +6,19 @@ import DropdownList from "react-widgets/lib/DropdownList";
 import "./pagination.css";
 //import "./pagination.scss";  "node-sass": "^4.14.1",
 
+export const sortOptionList = [
+  { name: "createdAt", text: "Newest Pipelines", order: -1 },
+  { name: "createdAt", text: "Oldest Pipelines", order: 1 },
+  { name: "name", text: "Pipeline Name (a-z)", order: 1 },
+  { name: "name", text: "Pipeline Name (z-a)", order: -1 },
+  { name: "updatedAt", text: "Updated (latest)", order: -1 },
+  { name: "updatedAt", text: "Updated (earliest)", order: 1 },
+];
+
+export const getSortOptionByText = (text) => {
+  return sortOptionList.find(sortOption => sortOption.text === text);
+};
+
 function PaginationComponent(props) {
   const [currentPage, setCurrentPage] = useState(props.currentPage || 1);
   const location = props.location || "bottom";
@@ -40,14 +53,6 @@ function PaginationComponent(props) {
   };
 
   const pageSizeList = [25, 50, 100];
-  const sortOptionList = [
-    { name: "createdAt", text: "Newest Pipelines", order: -1 },
-    { name: "createdAt", text: "Oldest Pipelines", order: 1 },
-    { name: "name", text: "Pipeline Name (a-z)", order: 1 }, 
-    { name: "name", text: "Pipeline Name (z-a)", order: -1 },
-    { name: "updatedAt", text: "Updated (latest)", order: -1 },
-    { name: "updatedAt", text: "Updated (earliest)", order: 1 },
-  ];
 
   useEffect(()=> {
     props.onClick(currentPage, pageSize, sortOption);

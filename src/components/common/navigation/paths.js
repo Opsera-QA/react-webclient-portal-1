@@ -14,6 +14,9 @@ paths.ldapOrganizationManagement = paths.admin + "/accounts/organizations";
 paths.ldapOrganizationDetailView = paths.ldapUserManagement;
 
 
+// Pipelines Paths
+paths.pipelines = "workflow"
+paths.pipelineDetailView = paths.pipelines + "/details"
 
 // Settings Paths
 paths.accountSettings = "settings";

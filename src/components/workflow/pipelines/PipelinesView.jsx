@@ -10,6 +10,8 @@ import pipelineActions from "../pipeline-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import PipelineWelcomeView from "./PipelineWelcomeView";
+import cookieHelpers from "../../../core/cookies/cookie-helpers";
+import {getSortOptionByText} from "../../common/pagination";
 
 function PipelinesView({ currentTab, setActiveTab }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -32,6 +34,12 @@ function PipelinesView({ currentTab, setActiveTab }) {
     try {
       const pipelinesResponse = await pipelineActions.getPipelines(currentPage, pageSize, sortOption, currentTab, getAccessToken);
       setData(pipelinesResponse.data);
+      let storedSortOption = cookieHelpers.getCookie("pipelines", "sortOption");
+
+      if (storedSortOption != null)
+      {
+        setSortOption(getSortOptionByText(storedSortOption));
+      }
     }
     catch (error)
     {
@@ -51,6 +59,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
   const sortPage = (pageNumber, sortOption) => {
     setCurrentPage(pageNumber);
     setSortOption(sortOption);
+    cookieHelpers.setCookie("pipelines", "sortOption", sortOption.text);
   };
 
   if (loading || data.response == null) {
@@ -59,28 +68,32 @@ function PipelinesView({ currentTab, setActiveTab }) {
     return (<ErrorDialog error={errors}/>);
   } else if (data && data.count === 0 && currentTab === "owner")  {
     return (<><PipelineWelcomeView setActiveTab={setActiveTab} /></>)
-  } else {
+  } else if (data && data.count === 0)  {
+    return (
+      <div className="px-2 max-content-width" style={{minWidth:"505px"}}>
+        <div className="my-5"><InfoDialog message="No pipelines found" /></div>
+      </div>
+    );
+  }
+  else {
+
     return (
       <>
         <div className="px-2 max-content-width" style={{minWidth:"505px"}}>
-          { (data && data.count === 0) ?
-            <div className="my-5"><InfoDialog message="No pipelines found" /></div>
-            :
-            <div className="mb-4">
-              <Pagination total={data.count} currentPage={currentPage} pageSize={pageSize} location="top"
-                          sortOption={sortOption}
-                          onClick={(pageNumber, pageSize, sortOption) => sortPage(pageNumber, sortOption)}/>
-              <Row>
-                {data.response.map((item, idx) => (
-                  <Col key={idx} xl={6} lg={10} md={12} className="p-2">
-                    <PipelineItem item={item}/>
-                  </Col>
-                ))}
-              </Row>
-              <Pagination total={data.count} currentPage={currentPage} pageSize={pageSize}
-                          onClick={(pageNumber, pageSize, sortOption) => gotoPage(pageNumber, pageSize)}/>
-            </div>
-          }
+          <div className="mb-4">
+            <Pagination total={data.count} currentPage={currentPage} pageSize={pageSize} location="top"
+                        sortOption={sortOption}
+                        onClick={(pageNumber, pageSize, sortOption) => sortPage(pageNumber, sortOption)}/>
+            <Row>
+              {data.response.map((item, idx) => (
+                <Col key={idx} xl={6} lg={10} md={12} className="p-2">
+                  <PipelineItem item={item}/>
+                </Col>
+              ))}
+            </Row>
+            <Pagination total={data.count} currentPage={currentPage} pageSize={pageSize}
+                        onClick={(pageNumber, pageSize, sortOption) => gotoPage(pageNumber, pageSize)}/>
+          </div>
         </div>
       </>
     );

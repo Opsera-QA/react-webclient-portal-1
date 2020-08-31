@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext, useMemo } from "react";
 import TagsSummaryPanel from "./TagsSummaryPanel";
-import PropTypes from "prop-types";
 import TagDetailPanel from "./TagDetailPanel";
 import { Link, useParams } from "react-router-dom";
 import adminTagsActions from "../admin-tags-actions";
@@ -24,6 +23,8 @@ function TagDetailView() {
   }, []);
 
   const getTag = async (tagId) => {
+    const response = await adminTagsActions.get(tagId, getAccessToken);
+    setTagData(response.data.length > 0 ? response.data[0] : null);
     try {
       const response = await adminTagsActions.get(tagId, getAccessToken);
       setTagData(new Model(response.data, tagEditorMetadata, false));
