@@ -147,6 +147,17 @@ function DashboardHome() {
       const result = await axiosApiService(accessToken).get(apiUrl);
       setData(result.data);
 
+      if (!result.data) {
+        setErrors(
+          "Warning!  Profile settings associated with your account are incomplete.  Log searching will be unavailable until this is fixed."
+        );
+      } else if (result.data && result.data.vault !== 200) {
+        console.error("Error Code " + result.data.vault + " with the following message: " + result.data.message)
+        setErrors(
+          "Error Reported: Vault has returned a message: " + result.data.message
+        );
+      }
+
       const indices = await axiosApiService(accessToken).post("/analytics/index", { index: INDICES });
       let indicesList = indices.data && Array.isArray(indices.data) ? indices.data : [];
       setIndex(indicesList);
@@ -268,193 +279,125 @@ function DashboardHome() {
               </p>
             </div>
 
-            {hasError && <ErrorDialog error={hasError} className="max-content-width mt-4 mb-4" />}
+            {hasError ? <ErrorDialog error={hasError} className="max-content-width mt-4 mb-4" /> : 
+                          <>
+                          <Row>
+                            <Col sm={8}>
+                              <ul className="nav nav-pills ml-2 mb-2">
+                                <li className="nav-item">
+                                  <a
+                                    className={"nav-link " + (selection === "pipeline" ? "active" : "")}
+                                    onClick={handleTabClick("pipeline")}
+                                    href="#"
+                                  >
+                                    Pipeline
+                                  </a>
+                                </li>
+                                <li className="nav-item">
+                                  <a
+                                    className={"nav-link " + (selection === "planning" ? "active" : "")}
+                                    onClick={handleTabClick("planning")}
+                                    href="#"
+                                  >
+                                    Planning
+                                  </a>
+                                </li>
+                                <li className="nav-item">
+                                  <a
+                                    className={"nav-link " + (selection === "secops_v2" ? "active" : "")}
+                                    onClick={handleTabClick("secops_v2")}
+                                    href="#"
+                                  >
+                                    SecOps
+                                  </a>
+                                </li>
+                                <li className="nav-item">
+                                  <a
+                                    className={"nav-link " + (selection === "quality_v2" ? "active" : "")}
+                                    onClick={handleTabClick("quality_v2")}
+                                    href="#"
+                                  >
+                                    Quality
+                                  </a>
+                                </li>
+                                <li className="nav-item">
+                                  <a
+                                    className={"nav-link " + (selection === "operations_v2" ? "active" : "")}
+                                    onClick={handleTabClick("operations_v2")}
+                                    href="#"
+                                  >
+                                    Operations
+                                  </a>
+                                </li>
+                              </ul>
+                            </Col>
+                            <Col sm={2}>
+                              <OverlayTrigger placement="top" delay={{ show: 250, hide: 250 }} overlay={renderTooltip}>
+                                <DropdownList
+                                  filter
+                                  disabled={selection === "operations_v2"}
+                                  data={DATELABELS}
+                                  className="max-content-width"
+                                  valueComponent={ValueInput}
+                                  textField="label"
+                                  allowCreate="onFilter"
+                                  onCreate={handleCreate}
+                                  defaultValue={
+                                    date
+                                      ? DATELABELS.find((o) => o.value.start === date.start && o.value.end === date.end)
+                                      : DATELABELS[5]
+                                  }
+                                  onChange={handleDateChange}
+                                />
+                              </OverlayTrigger>
+                            </Col>
+          
+                            <Col sm={2}>
+                              {personaDisabled ? (
+                                <OverlayTrigger
+                                  placement="top"
+                                  delay={{ show: 250, hide: 250 }}
+                                  overlay={
+                                    <Tooltip id="tooltip-disabled">
+                                      Persona based analytics is unavailable as part of the free trial.
+                                    </Tooltip>
+                                  }
+                                >
+                                  <span>
+                                    <DropdownList
+                                      data={PERSONAS}
+                                      className="basic-single mr-2"
+                                      valueField="value"
+                                      textField="label"
+                                      disabled={personaDisabled}
+                                      defaultValue={persona ? PERSONAS.find((o) => o.value === persona) : PERSONAS[0]}
+                                      onChange={handleSelectPersonaChange}
+                                    />
+                                  </span>
+                                </OverlayTrigger>
+                              ) : (
+                                <DropdownList
+                                  data={PERSONAS}
+                                  className="basic-single mr-2"
+                                  valueField="value"
+                                  textField="label"
+                                  disabled={personaDisabled}
+                                  defaultValue={persona ? PERSONAS.find((o) => o.value === persona) : PERSONAS[0]}
+                                  onChange={handleSelectPersonaChange}
+                                />
+                              )}
+                            </Col>
+                          </Row>
+          
+                          <DashboardView selection={selection} persona={persona} date={date} index={index} />
+                        </>}
 
             {profile && !profile.enabledToolsOn && (
               <div className="mt-1 max-content-width mb-1">
                 <ConfigurationsForm settings={profile} token={token} />
               </div>
             )}
-
-            {!profile.enabledToolsOn ||
-            data.esSearchApi === null ||
-            data.vault !== 200 ||
-            data.esSearchApi.status !== 200 ? (
-              <div style={{ height: "250px" }} className="max-content-module-width-50">
-                <div className="row h-100">
-                  <div className="col-sm-12 my-auto">
-                    <Alert variant="warning">
-                      Your Analytics configurations are incomplete. Please review the details below in order to
-                      determine what needs to be done.
-                    </Alert>
-                    <div className="text-muted mt-4">
-                      <div className="mb-3">
-                        In order to take advantage of the robust analytics dashboards offered by OpsERA, the following
-                        configurations are necessary:
-                      </div>
-                      <ul className="list-group">
-                        <li className="list-group-item d-flex justify-content-between align-items-center">
-                          Your Analytics account must be enabled for yourself or your organization.
-                          {profile.enabledToolsOn ? (
-                            <span className="badge badge-success badge-pill">
-                              <FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth />
-                            </span>
-                          ) : (
-                            <span className="badge badge-warning badge-pill">
-                              <FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth />
-                            </span>
-                          )}
-                        </li>
-                        <li className="list-group-item d-flex justify-content-between align-items-center">
-                          An OpsERA Analytics instance must be spun up and configured with your pipeline tools.
-                          {data.esSearchApi === undefined ||
-                          data.esSearchApi === null ||
-                          data.esSearchApi.status !== 200 ? (
-                            <span className="badge badge-warning badge-pill">
-                              <FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth />
-                            </span>
-                          ) : (
-                            <span className="badge badge-success badge-pill">
-                              <FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth />
-                            </span>
-                          )}
-                        </li>
-                        <li className="list-group-item d-flex justify-content-between align-items-center">
-                          OpsERA Analytics authentication information must be secured and available.
-                          {data.vault === undefined || data.vault !== 200 ? (
-                            <span className="badge badge-warning badge-pill">
-                              <FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth />
-                            </span>
-                          ) : (
-                            <span className="badge badge-success badge-pill">
-                              <FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth />
-                            </span>
-                          )}
-                        </li>
-                        <li className="list-group-item d-flex justify-content-between align-items-center">
-                          Pipeline activity must have occurred in order for the system to collect data for display.
-                          <span className="badge badge-warning badge-pill">
-                            <FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth />
-                          </span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <>
-                <Row>
-                  <Col sm={8}>
-                    <ul className="nav nav-pills ml-2 mb-2">
-                      <li className="nav-item">
-                        <a
-                          className={"nav-link " + (selection === "pipeline" ? "active" : "")}
-                          onClick={handleTabClick("pipeline")}
-                          href="#"
-                        >
-                          Pipeline
-                        </a>
-                      </li>
-                      <li className="nav-item">
-                        <a
-                          className={"nav-link " + (selection === "planning" ? "active" : "")}
-                          onClick={handleTabClick("planning")}
-                          href="#"
-                        >
-                          Planning
-                        </a>
-                      </li>
-                      <li className="nav-item">
-                        <a
-                          className={"nav-link " + (selection === "secops_v2" ? "active" : "")}
-                          onClick={handleTabClick("secops_v2")}
-                          href="#"
-                        >
-                          SecOps
-                        </a>
-                      </li>
-                      <li className="nav-item">
-                        <a
-                          className={"nav-link " + (selection === "quality_v2" ? "active" : "")}
-                          onClick={handleTabClick("quality_v2")}
-                          href="#"
-                        >
-                          Quality
-                        </a>
-                      </li>
-                      <li className="nav-item">
-                        <a
-                          className={"nav-link " + (selection === "operations_v2" ? "active" : "")}
-                          onClick={handleTabClick("operations_v2")}
-                          href="#"
-                        >
-                          Operations
-                        </a>
-                      </li>
-                    </ul>
-                  </Col>
-                  <Col sm={2}>
-                    <OverlayTrigger placement="top" delay={{ show: 250, hide: 250 }} overlay={renderTooltip}>
-                      <DropdownList
-                        filter
-                        disabled={selection === "operations_v2"}
-                        data={DATELABELS}
-                        className="max-content-width"
-                        valueComponent={ValueInput}
-                        textField="label"
-                        allowCreate="onFilter"
-                        onCreate={handleCreate}
-                        defaultValue={
-                          date
-                            ? DATELABELS.find((o) => o.value.start === date.start && o.value.end === date.end)
-                            : DATELABELS[5]
-                        }
-                        onChange={handleDateChange}
-                      />
-                    </OverlayTrigger>
-                  </Col>
-
-                  <Col sm={2}>
-                    {personaDisabled ? (
-                      <OverlayTrigger
-                        placement="top"
-                        delay={{ show: 250, hide: 250 }}
-                        overlay={
-                          <Tooltip id="tooltip-disabled">
-                            Persona based analytics is unavailable as part of the free trial.
-                          </Tooltip>
-                        }
-                      >
-                        <span>
-                          <DropdownList
-                            data={PERSONAS}
-                            className="basic-single mr-2"
-                            valueField="value"
-                            textField="label"
-                            disabled={personaDisabled}
-                            defaultValue={persona ? PERSONAS.find((o) => o.value === persona) : PERSONAS[0]}
-                            onChange={handleSelectPersonaChange}
-                          />
-                        </span>
-                      </OverlayTrigger>
-                    ) : (
-                      <DropdownList
-                        data={PERSONAS}
-                        className="basic-single mr-2"
-                        valueField="value"
-                        textField="label"
-                        disabled={personaDisabled}
-                        defaultValue={persona ? PERSONAS.find((o) => o.value === persona) : PERSONAS[0]}
-                        onChange={handleSelectPersonaChange}
-                      />
-                    )}
-                  </Col>
-                </Row>
-
-                <DashboardView selection={selection} persona={persona} date={date} index={index} />
-              </>
-            )}
+            
           </div>
         </>
       ) : null}
