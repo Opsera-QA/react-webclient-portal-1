@@ -12,6 +12,7 @@ import PipelineWorkflowView from "./workflow/PipelineWorkflowView";
 import PipelineSummaryPanel from "./PipelineSummaryPanel";
 import PipelineHelpers from "../../pipelineHelpers";
 import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
+import { useHistory } from "react-router-dom";
 
 
 function PipelineDetailView() {
@@ -30,6 +31,7 @@ function PipelineDetailView() {
   const [editItem, setEditItem] = useState(false);
   const [ownerName, setOwnerName] = useState(undefined);
   // const [pipeline, setPipeline] = useState(undefined);
+  const history = useHistory();
 
   /* Role based Access Controls */
   const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
@@ -43,6 +45,11 @@ function PipelineDetailView() {
     e.preventDefault();
     setActiveTab(tabSelection);
 
+    if (tab !== tabSelection)
+    {
+      history.push(`/workflow/details/${id}/${tabSelection}`);
+      fetchData();
+    }
     // if (tabSelection !== "catalog") {
     //   cookieHelpers.setCookie("pipelines", "selectedTab", tabSelection);
     // }
@@ -133,7 +140,7 @@ function PipelineDetailView() {
   };
 
   const fetchPlan = async (param) => {
-    console.log("fetchPlan")
+    // console.log("fetchPlan")
     // setEditItem(false);
     await fetchData();
     if (param) {
@@ -150,8 +157,10 @@ function PipelineDetailView() {
   } else {
     return (
       <>
-        <div className="px-2 max-content-width">
-          <BreadcrumbTrail destination={"pipelineDetailView"} />
+        <div className="px-2">
+          <div className="max-content-width">
+            <BreadcrumbTrail destination={"pipelineDetailView"} />
+          </div>
           <div className="alternate-tabs">
             <ul className="nav nav-tabs">
               <li className="nav-item">
@@ -168,20 +177,6 @@ function PipelineDetailView() {
               {/*</li>*/}
             </ul>
           </div>
-        <div className="max-content-width">
-          <div className="content-block-collapse p-3">
-            <div className="max-content-width w-100 d-flex mb-1">
-              <div className="flex-fill">
-                <div className="title-text-5">{data.pipeline.name}</div>
-              </div>
-              <div className="align-content-end">
-                <PipelineActionControls pipeline={data.pipeline} disabledActionState={false}
-                                        customerAccessRules={customerAccessRules}
-                                        fetchData={fetchPlan}
-                                        fetchActivityLogs={getActivityLogs}
-                                        setParentWorkflowStatus={setWorkflowStatus}/>
-              </div>
-            </div>
             <PipelineDetailsTabView
               activeTab={activeTab}
               pipeline={data.pipeline}
@@ -197,10 +192,10 @@ function PipelineDetailView() {
               setEditItem={setEditItem}
               ownerName={ownerName}
               setActiveTab={setActiveTab}
+              setWorkflowStatus={setWorkflowStatus}
+              getActivityLogs={getActivityLogs}
             />
           </div>
-        </div>
-      </div>
         </>
     );
   }
@@ -221,7 +216,9 @@ function PipelineDetailsTabView(
       editItem,
       setEditItem,
       ownerName,
-      setActiveTab
+      setActiveTab,
+      setWorkflowStatus,
+      getActivityLogs
     }
   ) {
   useEffect(() => {
@@ -233,31 +230,38 @@ function PipelineDetailsTabView(
       default:
         return (
           <>
-            <PipelineSummaryPanel
-              pipeline={pipeline}
-              customerAccessRules={customerAccessRules}
-              parentWorkflowStatus={workflowStatus}
-              ownerName={ownerName}
-              setActiveTab={setActiveTab}
-            />
-            <PipelineActivityLogTable
-              isLoading={logsIsLoading}
-              currentRunCountFilter={runCount}
-              selectRunCountFilter={selectRunCountFilter}
-              data={activityData.pipelineData}
-              paginationOptions={getPaginationOptions()}
-            />
+            <div className="max-content-width content-block-collapse p-3">
+              <PipelineSummaryPanel
+                pipeline={pipeline}
+                customerAccessRules={customerAccessRules}
+                parentWorkflowStatus={workflowStatus}
+                ownerName={ownerName}
+                setActiveTab={setActiveTab}
+                setWorkflowStatus={setWorkflowStatus}
+                getActivityLogs={getActivityLogs}
+                fetchPlan={fetchPlan}
+              />
+              <PipelineActivityLogTable
+                isLoading={logsIsLoading}
+                currentRunCountFilter={runCount}
+                selectRunCountFilter={selectRunCountFilter}
+                data={activityData.pipelineData}
+                paginationOptions={getPaginationOptions()}
+              />
+            </div>
           </>
         );
       case "model":
         return (
-          <PipelineWorkflowView
-            customerAccessRules={customerAccessRules}
-            pipeline={pipeline}
-            editItem={editItem}
-            setEditItem={setEditItem}
-            fetchPlan={fetchPlan}
-          />
+            <PipelineWorkflowView
+              customerAccessRules={customerAccessRules}
+              pipeline={pipeline}
+              editItem={editItem}
+              setEditItem={setEditItem}
+              fetchPlan={fetchPlan}
+              setWorkflowStatus={setWorkflowStatus}
+              getActivityLogs={getActivityLogs}
+            />
        );
     }
   }

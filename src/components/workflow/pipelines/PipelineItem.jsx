@@ -19,7 +19,7 @@ const PipelineItem = ({item}) => {
 
   const handleDetailsClick = param => e => {
     e.preventDefault();
-    history.push(`/workflow/details/${param}`);
+    history.push(`/workflow/details/${param}/summary`);
   };
 
   const getPipelineStatusField = () => {

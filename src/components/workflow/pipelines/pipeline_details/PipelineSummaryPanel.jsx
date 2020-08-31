@@ -25,6 +25,7 @@ import DropdownList from "react-widgets/lib/DropdownList";
 import SummaryActionBar from "../../../common/actions/SummaryActionBar";
 import pipelineHelpers from "../../pipelineHelpers";
 import {getCreateSuccessResultDialog, getUpdateSuccessResultDialog} from "../../../common/toasts/toasts";
+import PipelineActionControls from "./PipelineActionControls";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -33,7 +34,7 @@ const INITIAL_FORM_DATA = {
   type: [],
 };
 
-function PipelineSummaryPanel({ pipeline, ownerName, customerAccessRules, parentWorkflowStatus, setActiveTab}) {
+function PipelineSummaryPanel({ pipeline, ownerName, customerAccessRules, parentWorkflowStatus, setActiveTab, fetchPlan, setWorkflowStatus, getActivityLogs}) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
   const [showModal, setShowModal] = useState(false);
@@ -47,7 +48,6 @@ function PipelineSummaryPanel({ pipeline, ownerName, customerAccessRules, parent
   const [editTags, setEditTags] = useState(false);
   const [editType, setEditType] = useState(false);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
-  const [workflowStatus, setWorkflowStatus] = useState(false);
   const [approvalStep, setApprovalStep] = useState({});
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
   let history = useHistory();
@@ -306,6 +306,18 @@ function PipelineSummaryPanel({ pipeline, ownerName, customerAccessRules, parent
       {error ? <ErrorDialog error={error}/> : null}
       {typeof (pipeline) !== "undefined" && pipeline !== {} ?
         <>
+          <div className="w-100 d-flex mb-1">
+            <div className="flex-fill">
+              <div className="title-text-5">{pipeline.name}</div>
+            </div>
+            <div className="align-content-end">
+              <PipelineActionControls pipeline={pipeline} disabledActionState={false}
+                                      customerAccessRules={customerAccessRules}
+                                      fetchData={fetchPlan}
+                                      fetchActivityLogs={getActivityLogs}
+                                      setParentWorkflowStatus={setWorkflowStatus}/>
+            </div>
+          </div>
           <div>
             {pipeline.owner !== customerAccessRules.UserId &&
             <>
@@ -556,6 +568,9 @@ PipelineSummaryPanel.propTypes = {
   customerAccessRules: PropTypes.object,
   ownerName: PropTypes.string,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  setActiveTab: PropTypes.func,
+  fetchPlan: PropTypes.func,
+  setWorkflowStatus: PropTypes.func,
 };
 
 export default PipelineSummaryPanel;
