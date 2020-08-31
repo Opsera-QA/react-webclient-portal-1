@@ -143,17 +143,7 @@ const AppWithRouterAccess = () => {
     enableSideBar(history.location.pathname);
   }, [data]);
 
-  useEffect(() => {
-    if (error) {
-      if (error.message.includes("401") && !hideSideBar) {
-        console.log("useEffect on error with 401, auto refreshing...");
-        //window.location = "/login";
-      }
-      console.error(error.message);
-    }
-  }, [error]);
-
-  const enableSideBar = (path) => {
+    const enableSideBar = (path) => {
     if (path === "/login" || path === "/signup" || path === "/registration" || path === "/trial/registration") {
       setHideSideBar(true);
     } else {
@@ -171,7 +161,7 @@ const AppWithRouterAccess = () => {
   } else {
     return (
       <Security {...OKTA_CONFIG}>
-        { error && <div style={{height: "55px"}}><ErrorDialog align="top" error={error} /></div> }
+        { (error && !error.message.includes("401") && !error.message.includes("cancelToken")) && <div style={{height: "55px"}}><ErrorDialog align="top" error={error} /></div> }
         <AuthContextProvider userData={data} refreshToken={refreshToken} authClient={authClient}>
           <Navbar hideAuthComponents={hideSideBar} userData={data}/>
           <div className="container-fluid">

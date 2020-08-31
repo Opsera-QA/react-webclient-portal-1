@@ -82,7 +82,7 @@ function ErrorDialog({ error, align, type, setError }) {
             }}/>
           </div>
           {state.message} {(statusCode === 401 || (state.message && state.message.includes("401"))) &&
-          <span className="ml-1"><a href="#" onClick={() => {
+          <span className="ml-1"><a style={{color: "#fff", textDecoration:"underline"}} href="#" onClick={() => {
             login();
           }}>Click here to refresh login.</a></span>}
         </div>
@@ -97,7 +97,7 @@ function ErrorDialog({ error, align, type, setError }) {
             clearError();
           }}/></div>
         {state.message} {(statusCode === 401 || (state.message && state.message.includes("401"))) &&
-      <span className="ml-1"><a href="#" onClick={() => {
+      <span className="ml-1"><a style={{color: "#fff", textDecoration:"underline"}} href="#" onClick={() => {
         login();
       }}>Click here to refresh login.</a></span>}
       </div>
