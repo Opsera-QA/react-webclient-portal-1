@@ -44,8 +44,9 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
     }
   }
 
-  const handleCloseClick = () => {
+  const handleCloseClick = async () => {
     closeEditorPanel();
+    await fetchPlan();
   };
 
   // TODO: Pull actual names

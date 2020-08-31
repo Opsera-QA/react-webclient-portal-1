@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
 import ReactJson from "react-json-view";
 import "components/inventory/tools/tools.css";
+import {DropdownList} from "react-widgets";
 
 function ToolLogsPanel(props) {
   const { toolData, accessToken } = props;
@@ -37,6 +38,7 @@ function ToolLogsPanel(props) {
       {
         Header: "Action",
         accessor: "action",
+        class: "upper-case-first"
       },
       {
         Header: "Status",
@@ -58,6 +60,7 @@ function ToolLogsPanel(props) {
               </>
             : "unknown";
         },
+        class: "upper-case-first"
       },
       {
         Header: "Message",
@@ -134,6 +137,18 @@ function ToolLogsPanel(props) {
           creation or deletion of jobs as well as registering accounts.
         </div>
       </div>
+      {/*<div className="tool-filter mr-2">*/}
+      {/*  { filterOptionList && <DropdownList*/}
+      {/*    busy={Object.keys(filterOptionList).length === 1}*/}
+      {/*    disabled={Object.keys(filterOptionList).length === 1}*/}
+      {/*    data={filterOptionList}*/}
+      {/*    valueField='filterText'*/}
+      {/*    textField='text'*/}
+      {/*    filter="contains"*/}
+      {/*    defaultValue={tableFilter}*/}
+      {/*    onChange={updateFilterOption}*/}
+      {/*  />}*/}
+      {/*</div>*/}
       <div className="table-content-block">
         <CustomTable
           columns={columns}

@@ -7,8 +7,9 @@ import InfoDialog from "../../../../common/status_notifications/info";
 import PipelineWorkflow from "./PipelineWorkflow";
 import PipelineWorkflowEditor from "./PipelineWorkflowItemEditor";
 import "../../../workflows.css";
+import PipelineActionControls from "../PipelineActionControls";
 
-function PipelineWorkflowView({ pipeline, customerAccessRules, editItem, setEditItem, fetchPlan }) {
+function PipelineWorkflowView({ pipeline, customerAccessRules, editItem, setEditItem, fetchPlan, setWorkflowStatus, getActivityLogs }) {
   const [error, setErrors] = useState();
 
   const closeEditorPanel = () => {
@@ -18,12 +19,12 @@ function PipelineWorkflowView({ pipeline, customerAccessRules, editItem, setEdit
   const getPipelineWorkflowEditor = (editingItem) => {
     if (editingItem) {
       return (
-        <Col xs lg="4" className="pl-0">
-          <div className="content-container content-card-1">
+        <Col xs lg="4" className="pl-2">
+          <div className="content-card-1 table-content-block h-100">
             <PipelineWorkflowEditor editItem={editItem} pipeline={pipeline} closeEditorPanel={closeEditorPanel}
                                     fetchPlan={fetchPlan}/>
-            <div className="content-block-footer" />
           </div>
+          <div className="content-block-footer" />
         </Col>
       );
     }
@@ -37,9 +38,21 @@ function PipelineWorkflowView({ pipeline, customerAccessRules, editItem, setEdit
   else {
     return (
       <>
-        <div className="workflow-view w-100">
-            <Row>
-              <Col>
+        <div className="pl-3 workflow-view h-100">
+            <Row className="w-100">
+              <Col className="max-content-width content-block-collapse pt-3">
+                <div className="w-100 d-flex mb-1 pr-1">
+                  <div className="flex-fill">
+                    <div className="title-text-5">{pipeline.name}</div>
+                  </div>
+                  <div className="align-content-end">
+                    <PipelineActionControls pipeline={pipeline} disabledActionState={false}
+                                            customerAccessRules={customerAccessRules}
+                                            fetchData={fetchPlan}
+                                            fetchActivityLogs={getActivityLogs}
+                                            setParentWorkflowStatus={setWorkflowStatus}/>
+                  </div>
+                </div>
                 <PipelineWorkflow pipeline={pipeline} editItemId={editItem.step_id} fetchPlan={fetchPlan} customerAccessRules={customerAccessRules}/>
               </Col>
               {getPipelineWorkflowEditor(editItem)}
@@ -56,7 +69,9 @@ PipelineWorkflowView.propTypes = {
   customerAccessRules: PropTypes.object,
   editItem: PropTypes.bool,
   setEditItem: PropTypes.func,
-  fetchPlan: PropTypes.func
+  setActiveTab: PropTypes.func,
+  fetchPlan: PropTypes.func,
+  setWorkflowStatus: PropTypes.func,
 };
 
 export default PipelineWorkflowView;
