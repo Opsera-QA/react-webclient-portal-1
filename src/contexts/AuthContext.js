@@ -1,5 +1,4 @@
 import React, { createContext } from "react";
-import OktaAuth from "@okta/okta-auth-js";
 import PropTypes from "prop-types";
 
 const AuthContextProvider = (props) => {
@@ -21,7 +20,7 @@ const AuthContextProvider = (props) => {
 
     const getAccessToken = async () => {
       const isAuthenticated = await getIsAuthenticated();
-      console.log(isAuthenticated)
+      console.log(isAuthenticated);
       if (!isAuthenticated) {
         console.log("!getAccessToken: redirecting to login");
         window.location = "/login"; //if not authenticated, may just need to take user to login page
@@ -35,28 +34,7 @@ const AuthContextProvider = (props) => {
       } else {
         return false;
       }
-
-      /*if (!tokenObject.accessToken) {
-        console.log("!tokenObject");
-        //token object isn't found, so get new one
-        try {
-          const response = await authClient.token.getWithRedirect({
-            responseType: 'id_token'
-          });
-          console.log("response in try block getAccessToken: ", response)
-          //todo: I think I will need to NOW lookup token again..
-          return false; //hopefully this will not blow up the requests..
-        }
-        catch (err) {
-          console.error("Error in getAccessToken via AuthContext");
-          console.error(err);
-          window.location = "/login";
-        }
-      }*/
-
     };
-
-
 
 
     const getIsAuthenticated = async () => {
@@ -114,7 +92,7 @@ const AuthContextProvider = (props) => {
             User: groups.includes("Users"),
             UserId: user._id,
             Role: role,
-            Type: ldap ? ldap.type : "sass-user"
+            Type: ldap ? ldap.type : "sass-user",
           };
         }
         if (ldap && ldap.domain === "opsera.io") { //checking for OpsERA account domain
@@ -152,7 +130,7 @@ const AuthContextProvider = (props) => {
 AuthContextProvider.propTypes = {
   userData: PropTypes.object,
   refreshToken: PropTypes.func,
-  authClient: PropTypes.object
+  authClient: PropTypes.object,
 };
 
 export const AuthContext = createContext();
