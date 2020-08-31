@@ -20,7 +20,6 @@ const AuthContextProvider = (props) => {
 
     const getAccessToken = async () => {
       const isAuthenticated = await getIsAuthenticated();
-      console.log(isAuthenticated);
       if (!isAuthenticated) {
         console.log("!getAccessToken: redirecting to login");
         window.location = "/login"; //if not authenticated, may just need to take user to login page
@@ -29,7 +28,6 @@ const AuthContextProvider = (props) => {
 
       const tokenObject = await authClient.tokenManager.get("accessToken");
       if (tokenObject.accessToken) {
-        console.debug(tokenObject.tokenType + ": " + tokenObject.accessToken.substring(0, 50));
         return tokenObject.accessToken;
       } else {
         return false;
