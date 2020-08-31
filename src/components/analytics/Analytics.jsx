@@ -213,6 +213,17 @@ function Analytics() {
       const profileResponse = await axiosApiService(accessToken).get(apiUrl);
       setSettingsData(profileResponse.data);
 
+      if (!profileResponse.data) {
+        setErrors(
+          "Warning!  Profile settings associated with your account are incomplete.  Log searching will be unavailable until this is fixed."
+        );
+      } else if (profileResponse.data && profileResponse.data.vault !== 200) {
+        console.error("Error Code " + profileResponse.data.vault + " with the following message: " + profileResponse.data.message)
+        setErrors(
+          "Error Reported: Vault has returned a message: " + profileResponse.data.message
+        );
+      }
+
       const indices = await axiosApiService(accessToken).post("/analytics/index", { index: INDICES });
       let indicesList = indices.data && Array.isArray(indices.data) ? indices.data : [];
       setIndex(indicesList);
@@ -249,25 +260,6 @@ function Analytics() {
     return (
       <>
         {loadingProfile ? <LoadingDialog size="lg" /> : null}
-        {error ? <ErrorDialog error={error} /> : null}
-        {!profile.enabledToolsOn && (
-          <>
-            <div style={{ height: "250px" }} className="max-content-module-width-50">
-              <div className="max-content-width">
-                <h4>Analytics</h4>
-                <p>
-                  OpsERA provides users with access to a vast repository of logging and analytics. Access all available
-                  logging, reports and configurations around the OpsERA Analytics Platform or search your currently
-                  configured logs repositories below.
-                </p>
-              </div>
-              <div className="mt-1 max-content-width mb-1">
-                <ConfigurationsForm settings={profile} token={token} />
-              </div>
-            </div>
-          </>
-        )}
-
         {profile.enabledToolsOn && (
           <>
             <div className="mt-3">
@@ -282,7 +274,7 @@ function Analytics() {
               <div className="p-2 mt-1 max-content-width mb-1">
                 <ConfigurationsForm settings={profile} token={token} />
               </div>
-
+              {error ? <ErrorDialog error={error} /> :
               <div className="p-2">
                 <div className="mt-1">
                   <Row>
@@ -344,7 +336,7 @@ function Analytics() {
                 <div className="mt-3">
                   <ChartView token={token} selection={selection} persona={null} date={date} index={index} />
                 </div>
-              </div>
+              </div>}
             </div>
           </>
         )}

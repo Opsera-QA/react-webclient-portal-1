@@ -82,6 +82,11 @@ function Logs() {
         setErrors(
           "Warning!  Profile settings associated with your account are incomplete.  Log searching will be unavailable until this is fixed."
         );
+      } else if (profile.data && profile.data.vault !== 200) {
+        console.error("Error Code " + profile.data.vault + " with the following message: " + profile.data.message)
+        setErrors(
+          "Error Reported: Vault has returned a message: " + profile.data.message
+        );
       }
 
       setLoadingProfile(false);
@@ -107,81 +112,10 @@ function Logs() {
               Platform or search your currently configured logs repositories below.{" "}
             </p>
           </div>
-          {error ? <ErrorDialog error={error} /> : null}
-
-          {(!isEnabled ||
-            !enabledOn ||
-            profile.esSearchApi === null ||
-            profile.vault !== 200 ||
-            profile.esSearchApi.status !== 200) &&
-          !error ? (
-            <div style={{ height: "250px" }} className="max-content-module-width-50">
-              <div className="row h-100">
-                <div className="col-sm-12 my-auto">
-                  <Alert variant="warning">
-                    Your Analytics configurations are incomplete. Please review the details below in order to determine
-                    what needs to be done.
-                  </Alert>
-                  <div className="text-muted mt-4">
-                    <div className="mb-3">
-                      In order to take advantage of the robust analytics dashboards offered by OpsERA, the following
-                      configurations are necessary:
-                    </div>
-                    <ul className="list-group">
-                      <li className="list-group-item d-flex justify-content-between align-items-center">
-                        Your Analytics account must be enabled for yourself or your organization.
-                        {enabledOn ? (
-                          <span className="badge badge-success badge-pill">
-                            <FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth />
-                          </span>
-                        ) : (
-                          <span className="badge badge-warning badge-pill">
-                            <FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth />
-                          </span>
-                        )}
-                      </li>
-                      <li className="list-group-item d-flex justify-content-between align-items-center">
-                        An OpsERA Analytics instance must be spun up and configured with your pipeline tools.
-                        {profile.esSearchApi === undefined ||
-                        profile.esSearchApi === null ||
-                        profile.esSearchApi.status !== 200 ? (
-                          <span className="badge badge-warning badge-pill">
-                            <FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth />
-                          </span>
-                        ) : (
-                          <span className="badge badge-success badge-pill">
-                            <FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth />
-                          </span>
-                        )}
-                      </li>
-                      <li className="list-group-item d-flex justify-content-between align-items-center">
-                        OpsERA Analytics authentication information must be secured and available.
-                        {profile.vault === undefined || profile.vault !== 200 ? (
-                          <span className="badge badge-warning badge-pill">
-                            <FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth />
-                          </span>
-                        ) : (
-                          <span className="badge badge-success badge-pill">
-                            <FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth />
-                          </span>
-                        )}
-                      </li>
-                      <li className="list-group-item d-flex justify-content-between align-items-center">
-                        Pipeline activity must have occurred in order for the system to collect data for display.
-                        <span className="badge badge-warning badge-pill">
-                          <FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth />
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="pr-2 mt-1">
+          {error ? <ErrorDialog error={error} /> : 
+          <div className="pr-2 mt-1">
               <SearchLogs tools={tools} />
-            </div>
-          )}
+            </div>}
         </>
       ) : null}
     </div>
