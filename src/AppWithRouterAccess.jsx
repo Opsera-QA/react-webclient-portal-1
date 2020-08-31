@@ -60,6 +60,7 @@ import Axios from "axios";
 import Pipelines from "./components/workflow/pipelines/Pipelines";
 import PipelineWorkflowView from "./components/workflow/pipelines/pipeline_details/workflow/PipelineWorkflowView";
 import PipelineDetailView from "./components/workflow/pipelines/pipeline_details/PipelineDetailView";
+import ErrorDialog from "./components/common/status_notifications/error";
 const OktaAuth = require("@okta/okta-auth-js");
 const config = require("./config");
 
@@ -165,11 +166,12 @@ const AppWithRouterAccess = () => {
   };
 
 
-  if (!data && loading) {
+  if (!data && loading && !error) {
     return (<LoadingDialog/>);
   } else {
     return (
       <Security {...OKTA_CONFIG}>
+        { error && <div style={{height: "55px"}}><ErrorDialog align="top" error={error} /></div> }
         <AuthContextProvider userData={data} refreshToken={refreshToken} authClient={authClient}>
           <Navbar hideAuthComponents={hideSideBar} userData={data}/>
           <div className="container-fluid">
