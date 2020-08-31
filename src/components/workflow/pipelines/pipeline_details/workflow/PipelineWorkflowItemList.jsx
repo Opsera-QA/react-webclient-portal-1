@@ -8,12 +8,11 @@ import PipelineWorkflowItem from "./PipelineWorkflowItem";
 import "../../../workflows.css";
 
 
-function PipelineWorkflowItemList({ pipeline, items, lastStep, editWorkflow, pipelineId, accessToken, parentCallbackEditItem, parentHandleViewSourceActivityLog, setStateItems, quietSavePlan, fetchPlan, customerAccessRules, parentWorkflowStatus }) {
+function PipelineWorkflowItemList({ pipeline, items, lastStep, editWorkflow, pipelineId, accessToken, parentCallbackEditItem, parentHandleViewSourceActivityLog, setStateItems, quietSavePlan, fetchPlan, customerAccessRules, parentWorkflowStatus, refreshCount }) {
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
-  }, [items]);
-
+  }, [items, refreshCount, parentWorkflowStatus]);
 
   const handleAddStep = async (itemId, index) => {
     console.log("Prior Step ID: ", itemId);
@@ -225,6 +224,7 @@ PipelineWorkflowItemList.propTypes = {
   fetchPlan: PropTypes.func,
   customerAccessRules: PropTypes.object,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  refreshCount: PropTypes.number
 };
 
 

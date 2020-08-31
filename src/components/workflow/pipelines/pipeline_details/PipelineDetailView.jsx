@@ -7,7 +7,7 @@ import ErrorDialog from "components/common/status_notifications/error";
 import InfoDialog from "components/common/status_notifications/info";
 import "../../workflows.css";
 import PipelineActionControls from "./PipelineActionControls";
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import PipelineWorkflowView from "./workflow/PipelineWorkflowView";
 import PipelineSummaryPanel from "./PipelineSummaryPanel";
 import PipelineHelpers from "../../pipelineHelpers";
@@ -31,6 +31,7 @@ function PipelineDetailView() {
   const [editItem, setEditItem] = useState(false);
   const [ownerName, setOwnerName] = useState(undefined);
   // const [pipeline, setPipeline] = useState(undefined);
+  const [refreshCount, setRefreshCount] = useState(0);
   const history = useHistory();
 
   /* Role based Access Controls */
@@ -45,8 +46,7 @@ function PipelineDetailView() {
     e.preventDefault();
     setActiveTab(tabSelection);
 
-    if (tab !== tabSelection)
-    {
+    if (tab !== tabSelection) {
       history.push(`/workflow/details/${id}/${tabSelection}`);
       fetchData();
     }
@@ -56,9 +56,13 @@ function PipelineDetailView() {
   };
 
   useEffect(() => {
-    // Executed every time page number or page size changes
     getActivityLogs();
   }, [currentPage, pageSize]);
+
+  /*useEffect(() => {
+    fetchData();
+  }, [workflowStatus]);
+*/
 
   const initComponent = async () => {
     setLoading(true);
@@ -76,7 +80,8 @@ function PipelineDetailView() {
   };
 
   async function fetchData() {
-    console.log("IN fetch data");
+    console.log("Top level fetch data");
+    setRefreshCount(refreshCount => refreshCount + 1);
     const accessToken = await getAccessToken();
     const apiUrl = `/pipelines/${id}`;
     try {
@@ -111,7 +116,6 @@ function PipelineDetailView() {
   };
 
   async function getActivityLogs() {
-    console.log("in activity log")
     const accessToken = await getAccessToken();
     const apiUrl = `/pipelines/${id}/activity?page=${currentPage}&size=${pageSize}`;
     setLogsIsLoading(true);
@@ -150,18 +154,19 @@ function PipelineDetailView() {
     }
   };
 
-  if (error) {
+  if (error && !loading) {
     return (<ErrorDialog error={error} align={"detailPanelTop"} setError={setErrors}/>);
-  } else if (loading) {
+  } else if (loading && !error) {
     return (<LoadingDialog size="lg"/>);
   } else if (!loading && (data.length === 0 || data.pipeline == null)) {
-    return (<InfoDialog message="No Pipeline details found.  Please ensure you have access to view the requested pipeline."/>);
+    return (<InfoDialog
+      message="No Pipeline details found.  Please ensure you have access to view the requested pipeline."/>);
   } else {
     return (
       <>
         <div className="px-2">
           <div className="max-content-width">
-            <BreadcrumbTrail destination={"pipelineDetailView"} />
+            <BreadcrumbTrail destination={"pipelineDetailView"}/>
           </div>
           <div className="alternate-tabs">
             <ul className="nav nav-tabs">
@@ -179,94 +184,45 @@ function PipelineDetailView() {
               {/*</li>*/}
             </ul>
           </div>
-            <PipelineDetailsTabView
-              activeTab={activeTab}
+
+          {activeTab === "summary" && <div className="max-content-width content-block-collapse p-3">
+            <PipelineSummaryPanel
               pipeline={data.pipeline}
               customerAccessRules={customerAccessRules}
-              workflowStatus={workflowStatus}
-              logsIsLoading={logsIsLoading}
-              runCount={runCount}
-              selectRunCountFilter={selectRunCountFilter}
-              activityData={activityData}
-              getPaginationOptions={getPaginationOptions}
-              fetchPlan={fetchPlan}
-              editItem={editItem}
-              setEditItem={setEditItem}
+              parentWorkflowStatus={workflowStatus}
               ownerName={ownerName}
               setActiveTab={setActiveTab}
               setWorkflowStatus={setWorkflowStatus}
               getActivityLogs={getActivityLogs}
+              fetchPlan={fetchPlan}
             />
-          </div>
-        </>
+            <PipelineActivityLogTable
+              isLoading={logsIsLoading}
+              currentRunCountFilter={runCount}
+              selectRunCountFilter={selectRunCountFilter}
+              data={activityData.pipelineData}
+              paginationOptions={getPaginationOptions()}
+            />
+          </div>}
+
+          {activeTab === "model" &&
+          <PipelineWorkflowView
+            customerAccessRules={customerAccessRules}
+            parentWorkflowStatus={workflowStatus}
+            pipeline={data.pipeline}
+            refreshCount={refreshCount}
+            editItem={editItem}
+            setEditItem={setEditItem}
+            fetchPlan={fetchPlan}
+            setWorkflowStatus={setWorkflowStatus}
+            getActivityLogs={getActivityLogs}
+          />}
+
+        </div>
+      </>
     );
   }
 }
 
-// TODO: Cleanup
-function PipelineDetailsTabView(
-    { activeTab,
-      pipeline,
-      customerAccessRules,
-      workflowStatus,
-      logsIsLoading,
-      runCount,
-      selectRunCountFilter,
-      activityData,
-      getPaginationOptions,
-      fetchPlan,
-      editItem,
-      setEditItem,
-      ownerName,
-      setActiveTab,
-      setWorkflowStatus,
-      getActivityLogs
-    }
-  ) {
-  useEffect(() => {
-    // console.log("CHANGE HAPPENED");
-  }, [activeTab, activityData, pipeline, workflowStatus]);
-  if (activeTab) {
-    switch (activeTab) {
-      case "summary":
-      default:
-        return (
-          <>
-            <div className="max-content-width content-block-collapse p-3">
-              <PipelineSummaryPanel
-                pipeline={pipeline}
-                customerAccessRules={customerAccessRules}
-                parentWorkflowStatus={workflowStatus}
-                ownerName={ownerName}
-                setActiveTab={setActiveTab}
-                setWorkflowStatus={setWorkflowStatus}
-                getActivityLogs={getActivityLogs}
-                fetchPlan={fetchPlan}
-              />
-              <PipelineActivityLogTable
-                isLoading={logsIsLoading}
-                currentRunCountFilter={runCount}
-                selectRunCountFilter={selectRunCountFilter}
-                data={activityData.pipelineData}
-                paginationOptions={getPaginationOptions()}
-              />
-            </div>
-          </>
-        );
-      case "model":
-        return (
-            <PipelineWorkflowView
-              customerAccessRules={customerAccessRules}
-              pipeline={pipeline}
-              editItem={editItem}
-              setEditItem={setEditItem}
-              fetchPlan={fetchPlan}
-              setWorkflowStatus={setWorkflowStatus}
-              getActivityLogs={getActivityLogs}
-            />
-       );
-    }
-  }
-}
 
 export default PipelineDetailView;

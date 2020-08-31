@@ -9,12 +9,29 @@ import PipelineWorkflowEditor from "./PipelineWorkflowItemEditor";
 import "../../../workflows.css";
 import PipelineActionControls from "../PipelineActionControls";
 
-function PipelineWorkflowView({ pipeline, customerAccessRules, editItem, setEditItem, fetchPlan, setWorkflowStatus, getActivityLogs }) {
+function PipelineWorkflowView({ pipeline, customerAccessRules, editItem, setEditItem, fetchPlan, setWorkflowStatus, getActivityLogs, refreshCount, parentWorkflowStatus }) {
   const [error, setErrors] = useState();
+  //const [runningStepId, setRunningStepId] = useState(false);
 
   const closeEditorPanel = () => {
     setEditItem(false);
   };
+/*
+  useEffect(() => {
+    console.log("parentWorkflowStatus:", parentWorkflowStatus)
+
+    if (parentWorkflowStatus === "running") {
+      if (pipeline.workflow.last_step.step_id && runningStepId !== pipeline.workflow.last_step.step_id && pipeline.workflow.last_step.step_id.length > 0) {
+        console.log("Calling Refresh")
+        fetchPlan();
+      } else {
+        setRunningStepId(pipeline.workflow.last_step.step_id)
+      }
+    } else {
+      setRunningStepId(false)
+    }
+
+  }, [refreshCount, parentWorkflowStatus]);*/
 
   const getPipelineWorkflowEditor = (editingItem) => {
     if (editingItem) {
@@ -53,7 +70,7 @@ function PipelineWorkflowView({ pipeline, customerAccessRules, editItem, setEdit
                                             setParentWorkflowStatus={setWorkflowStatus}/>
                   </div>
                 </div>
-                <PipelineWorkflow pipeline={pipeline} editItemId={editItem.step_id} fetchPlan={fetchPlan} customerAccessRules={customerAccessRules}/>
+                <PipelineWorkflow pipeline={pipeline} editItemId={editItem.step_id} fetchPlan={fetchPlan} customerAccessRules={customerAccessRules} refreshCount={refreshCount}/>
               </Col>
               {getPipelineWorkflowEditor(editItem)}
             </Row>
@@ -72,6 +89,8 @@ PipelineWorkflowView.propTypes = {
   setActiveTab: PropTypes.func,
   fetchPlan: PropTypes.func,
   setWorkflowStatus: PropTypes.func,
+  refreshCount: PropTypes.number,
+  parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 };
 
 export default PipelineWorkflowView;

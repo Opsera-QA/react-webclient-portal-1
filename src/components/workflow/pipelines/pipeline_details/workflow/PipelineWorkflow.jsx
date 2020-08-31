@@ -23,7 +23,7 @@ import PipelineWorkflowItemList from "./PipelineWorkflowItemList";
 import Modal from "../../../../common/modal/modal";
 import "../../../workflows.css";
 
-function PipelineWorkflow({ pipeline, fetchPlan, customerAccessRules, editItemId }) {
+function PipelineWorkflow({ pipeline, fetchPlan, customerAccessRules, editItemId, refreshCount }) {
   const [error, setErrors] = useState();
   const [userInfo, setUserInfo] = useState();
   const [modalHeader, setModalHeader] = useState("");
@@ -53,9 +53,14 @@ function PipelineWorkflow({ pipeline, fetchPlan, customerAccessRules, editItemId
     }
   };
 
+  /*useEffect(() => {
+    loadData();
+  });*/
+
   useEffect(() => {
     loadData();
-  }, []);
+  },[refreshCount]);
+
 
   const loadData = async () => {
     try {
@@ -392,6 +397,7 @@ function PipelineWorkflow({ pipeline, fetchPlan, customerAccessRules, editItemId
                   accessToken={accessToken}
                   setStateItems={setState}
                   fetchPlan={fetchPlan}
+                  refreshCount={refreshCount}
                   customerAccessRules={customerAccessRules}
                   parentCallbackEditItem={callbackFunctionEditItem}
                   quietSavePlan={quietSavePlan}
@@ -435,5 +441,6 @@ PipelineWorkflow.propTypes = {
   fetchPlan: PropTypes.func,
   customerAccessRules: PropTypes.object,
   editItemId: PropTypes.string,
+  refreshCount: PropTypes.number
 };
 export default PipelineWorkflow;
