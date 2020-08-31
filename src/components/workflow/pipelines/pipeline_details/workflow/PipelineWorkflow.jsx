@@ -23,7 +23,7 @@ import PipelineWorkflowItemList from "./PipelineWorkflowItemList";
 import Modal from "../../../../common/modal/modal";
 import "../../../workflows.css";
 
-function PipelineWorkflow ({ pipeline, fetchPlan, customerAccessRules, editItemId }) {
+function PipelineWorkflow({ pipeline, fetchPlan, customerAccessRules, editItemId }) {
   const [error, setErrors] = useState();
   const [userInfo, setUserInfo] = useState();
   const [modalHeader, setModalHeader] = useState("");
@@ -62,7 +62,7 @@ function PipelineWorkflow ({ pipeline, fetchPlan, customerAccessRules, editItemI
       await checkAuthentication();
       await loadFormData(pipeline);
     } catch (error) {
-      setErrors(error)
+      setErrors(error);
     }
   };
 
@@ -202,96 +202,95 @@ function PipelineWorkflow ({ pipeline, fetchPlan, customerAccessRules, editItemI
     }
   };
 
-  if (pipeline == null || pipeline.workflow == null || !Object.prototype.hasOwnProperty.call(pipeline.workflow, "source")){
-    return <ErrorDialog error={"Pipeline Workflow Details Not Found"}/>
-  }
-  else {
+  if (pipeline == null || pipeline.workflow == null || !Object.prototype.hasOwnProperty.call(pipeline.workflow, "source")) {
+    return <ErrorDialog error={"Pipeline Workflow Details Not Found"}/>;
+  } else {
     return (
       <>
         {error ? <ErrorDialog error={error}/> : null}
-          <>
-            <div className="max-content-width">
+        <>
+          <div className="max-content-width">
 
-              {pipeline.owner !== customerAccessRules.UserId &&
-              <>
-                <div className="mb-2 w-100 max-charting-width info-text">
-                  {customerAccessRules.Role === "administrator" && <>Administrator Access Role: Your account has full
-                    access to this pipeline and its settings.</>}
-                  {customerAccessRules.Role === "power_user" && <>Power User Role: Your account has elevated privileges
-                    to
-                    this pipeline which include changing settings and running the pipeline.</>}
-                  {customerAccessRules.Role === "user" && <>Standard User Role: Your account has basic access to this
-                    pipeline which is limited to viewing and running pipeline operations only.</>}
-                  {customerAccessRules.Role === "readonly" && <>Read Only Role: Your account does not have any
-                    privileges
-                    associated with this pipeline. You are being temporarily granted Viewer permissions and will not be
-                    able
-                    to perform any
-                    actions.</>}
-                </div>
-              </>
-              }
-              <div className="pr-1 text-right float-right">
-                <Button variant="secondary"
-                        className="mr-1"
-                        size="sm"
-                        disabled={zoomValue >= 3}
-                        onClick={() => {
-                          handleZoomClick(zoomValue, "in");
-                        }}>
-                  <FontAwesomeIcon icon={faSearchPlus} fixedWidth/></Button>
-
-                <Button variant="secondary"
-                        className="mr-1"
-                        size="sm"
-                        disabled={zoomValue <= 1}
-                        onClick={() => {
-                          handleZoomClick(zoomValue, "out");
-                        }}>
-                  <FontAwesomeIcon icon={faSearchMinus} fixedWidth/></Button>
-
-
-                <OverlayTrigger
-                  placement="top"
-                  delay={{show: 250, hide: 400}}
-                  overlay={renderTooltip({message: "View pipeline configuration"})}>
-                  <Button variant="secondary" className="mr-1" size="sm" onClick={() => {
-                    handleViewPipelineClick(pipeline);
-                  }}>
-                    <FontAwesomeIcon icon={faFileAlt} fixedWidth/></Button>
-                </OverlayTrigger>
-
-                {authorizedAction("edit_workflow_btn", pipeline.owner) && <>
-                  {editWorkflow ?
-                    <Button variant="success" size="sm" onClick={() => {
-                      handleDoneWorkflowEditsClick();
-                    }}>
-                      {isSavingPipeline ?
-                        <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/> :
-                        <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1"/>}
-                      Done</Button>
-                    :
-                    <OverlayTrigger
-                      placement="top"
-                      delay={{show: 250, hide: 400}}
-                      overlay={renderTooltip({message: "Edit workflow"})}>
-                      <Button variant="secondary" size="sm"
-                              onClick={() => {
-                                handleEditWorkflowClick();
-                              }}
-                              disabled={(workflowStatus && workflowStatus !== "stopped") || !authorizedAction("edit_workflow_btn", pipeline.owner)}>
-                        <FontAwesomeIcon icon={faPen} fixedWidth/> </Button>
-                    </OverlayTrigger>
-                  }  </>}
-
+            {pipeline.owner !== customerAccessRules.UserId &&
+            <>
+              <div className="mb-2 w-100 max-charting-width info-text">
+                {customerAccessRules.Role === "administrator" && <>Administrator Access Role: Your account has full
+                  access to this pipeline and its settings.</>}
+                {customerAccessRules.Role === "power_user" && <>Power User Role: Your account has elevated privileges
+                  to
+                  this pipeline which include changing settings and running the pipeline.</>}
+                {customerAccessRules.Role === "user" && <>Standard User Role: Your account has basic access to this
+                  pipeline which is limited to viewing and running pipeline operations only.</>}
+                {customerAccessRules.Role === "readonly" && <>Read Only Role: Your account does not have any
+                  privileges
+                  associated with this pipeline. You are being temporarily granted Viewer permissions and will not be
+                  able
+                  to perform any
+                  actions.</>}
               </div>
-            </div>
+            </>
+            }
+            <div className="pr-1 text-right float-right">
+              <Button variant="secondary"
+                      className="mr-1"
+                      size="sm"
+                      disabled={zoomValue >= 3}
+                      onClick={() => {
+                        handleZoomClick(zoomValue, "in");
+                      }}>
+                <FontAwesomeIcon icon={faSearchPlus} fixedWidth/></Button>
 
-            <div className={"workflow-container max-content-width p-2" + (zoomValue > 2 ? " scale-120-container" : "")}>
-              <div className={setZoomClass(zoomValue)}>
-                <div className="source workflow-module-container workflow-module-container-width mt-2 mx-auto">
-                  <div className="pt-2 text-center h6 mx-auto">Start of Workflow</div>
-                  {/*{!pipeline.workflow.source.service ? <div className="mt-1">Source Repository</div> : null }
+              <Button variant="secondary"
+                      className="mr-1"
+                      size="sm"
+                      disabled={zoomValue <= 1}
+                      onClick={() => {
+                        handleZoomClick(zoomValue, "out");
+                      }}>
+                <FontAwesomeIcon icon={faSearchMinus} fixedWidth/></Button>
+
+
+              <OverlayTrigger
+                placement="top"
+                delay={{ show: 250, hide: 400 }}
+                overlay={renderTooltip({ message: "View pipeline configuration" })}>
+                <Button variant="secondary" className="mr-1" size="sm" onClick={() => {
+                  handleViewPipelineClick(pipeline);
+                }}>
+                  <FontAwesomeIcon icon={faFileAlt} fixedWidth/></Button>
+              </OverlayTrigger>
+
+              {authorizedAction("edit_workflow_btn", pipeline.owner) && <>
+                {editWorkflow ?
+                  <Button variant="success" size="sm" onClick={() => {
+                    handleDoneWorkflowEditsClick();
+                  }}>
+                    {isSavingPipeline ?
+                      <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/> :
+                      <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1"/>}
+                    Done</Button>
+                  :
+                  <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip({ message: "Edit workflow" })}>
+                    <Button variant="secondary" size="sm"
+                            onClick={() => {
+                              handleEditWorkflowClick();
+                            }}
+                            disabled={(workflowStatus && workflowStatus !== "stopped") || !authorizedAction("edit_workflow_btn", pipeline.owner)}>
+                      <FontAwesomeIcon icon={faPen} fixedWidth/> </Button>
+                  </OverlayTrigger>
+                }  </>}
+
+            </div>
+          </div>
+
+          <div className={"workflow-container max-content-width p-2" + (zoomValue > 2 ? " scale-120-container" : "")}>
+            <div className={setZoomClass(zoomValue)}>
+              <div className="source workflow-module-container workflow-module-container-width mt-2 mx-auto">
+                <div className="pt-2 text-center h6 mx-auto">Start of Workflow</div>
+                {/*{!pipeline.workflow.source.service ? <div className="mt-1">Source Repository</div> : null }
               
               {pipeline.workflow.source.name ?
                 <div className="d-flex">
@@ -320,106 +319,106 @@ function PipelineWorkflow ({ pipeline, fetchPlan, customerAccessRules, editItemI
                   </div>            
                 </div> : null }*/}
 
-                  {pipeline.workflow.source.trigger_active &&
-                  <div className="d-flex">
-                    <div className="upper-case-first">
+                {pipeline.workflow.source.trigger_active &&
+                <div className="d-flex">
+                  <div className="upper-case-first pl-2">
                   <span className="text-muted small">
                     <FontAwesomeIcon icon={faClipboardCheck} size="sm" fixedWidth
                                      className="mr-1"/>Webhook Trigger: {pipeline.workflow.source.trigger_active ? "Enabled" : "Disabled"}</span>
-                    </div>
-                  </div>}
+                  </div>
+                </div>}
 
-                  {pipeline.workflow.source.service &&
-                  <div className="d-flex">
-                    <div className="upper-case-first">
+                {pipeline.workflow.source.service &&
+                <div className="d-flex">
+                  <div className="upper-case-first pl-2">
                   <span className="text-muted small">
                     <FontAwesomeIcon icon={faCode} size="sm" fixedWidth
                                      className="mr-1"/>Source Repository: {pipeline.workflow.source.service}</span>
-                    </div>
-                  </div>}
-
-                  <div className="d-flex align-items-end flex-row mt-1">
-                    <div className="ml-auto text-right">
-                      <OverlayTrigger
-                        placement="top"
-                        delay={{show: 250, hide: 400}}
-                        overlay={renderTooltip({message: "View Settings"})}>
-                        <FontAwesomeIcon icon={faSearchPlus}
-                                         className="text-muted mr-2" fixedWidth
-                                         style={{cursor: "pointer"}}
-                                         onClick={() => {
-                                           handleViewClick(pipeline.workflow.source, "Step Settings");
-                                         }}/>
-                      </OverlayTrigger>
-
-                      {workflowStatus !== "running" ?
-                        <>
-                          <OverlayTrigger
-                            placement="top"
-                            delay={{show: 250, hide: 400}}
-                            overlay={renderTooltip({message: "Configure Pipeline Level Settings"})}>
-                            <FontAwesomeIcon icon={faCog}
-                                             style={{cursor: "pointer"}}
-                                             className="text-muted" fixedWidth
-                                             onClick={() => {
-                                               handleSourceEditClick();
-                                             }}/>
-                          </OverlayTrigger>
-                        </>
-                        :
-                        <>
-                          <OverlayTrigger
-                            placement="top"
-                            delay={{show: 250, hide: 400}}
-                            overlay={renderTooltip({message: "Cannot access settings while pipeline is running"})}>
-                            <FontAwesomeIcon icon={faCog}
-                                             className="text-muted mx-1" fixedWidth/>
-                          </OverlayTrigger>
-                        </>
-                      }
-                    </div>
                   </div>
-                </div>
+                </div>}
 
-                <div style={{height: "40px"}}>&nbsp;</div>
+                <div className="d-flex align-items-end flex-row m-2">
+                  <div className="ml-auto text-right">
+                    <OverlayTrigger
+                      placement="top"
+                      delay={{ show: 250, hide: 400 }}
+                      overlay={renderTooltip({ message: "View Settings" })}>
+                      <FontAwesomeIcon icon={faSearchPlus}
+                                       className="text-muted mr-2" fixedWidth
+                                       style={{ cursor: "pointer" }}
+                                       onClick={() => {
+                                         handleViewClick(pipeline.workflow.source, "Step Settings");
+                                       }}/>
+                    </OverlayTrigger>
 
-                <div className="step-items workflow-module-container-width mx-auto">
-                  <PipelineWorkflowItemList
-                    pipeline={pipeline}
-                    items={state.items}
-                    lastStep={lastStep}
-                    editWorkflow={editWorkflow}
-                    pipelineId={pipeline._id}
-                    accessToken={accessToken}
-                    setStateItems={setState}
-                    fetchPlan={fetchPlan}
-                    customerAccessRules={customerAccessRules}
-                    parentCallbackEditItem={callbackFunctionEditItem}
-                    quietSavePlan={quietSavePlan}
-                    parentHandleViewSourceActivityLog={handleViewSourceActivityLog}
-                    parentWorkflowStatus={workflowStatus}/>
-                </div>
-                {/*<SteppedLineTo from="source" to="step-items" orientation="h" borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="top" />*/}
-                <SteppedLineTo from="source" to="step-items" delay={100} orientation="v"
-                               borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="top"/>
-
-
-                <div
-                  className="workflow-module-container workflow-module-container-width p-2 mb-4 text-center h6 mx-auto">
-                  End of Workflow
+                    {workflowStatus !== "running" ?
+                      <>
+                        <OverlayTrigger
+                          placement="top"
+                          delay={{ show: 250, hide: 400 }}
+                          overlay={renderTooltip({ message: "Configure Pipeline Level Settings" })}>
+                          <FontAwesomeIcon icon={faCog}
+                                           style={{ cursor: "pointer" }}
+                                           className="text-muted" fixedWidth
+                                           onClick={() => {
+                                             handleSourceEditClick();
+                                           }}/>
+                        </OverlayTrigger>
+                      </>
+                      :
+                      <>
+                        <OverlayTrigger
+                          placement="top"
+                          delay={{ show: 250, hide: 400 }}
+                          overlay={renderTooltip({ message: "Cannot access settings while pipeline is running" })}>
+                          <FontAwesomeIcon icon={faCog}
+                                           className="text-muted mx-1" fixedWidth/>
+                        </OverlayTrigger>
+                      </>
+                    }
+                  </div>
                 </div>
               </div>
 
+              <div style={{ height: "40px" }}>&nbsp;</div>
+
+              <div className="step-items workflow-module-container-width mx-auto">
+                <PipelineWorkflowItemList
+                  pipeline={pipeline}
+                  items={state.items}
+                  lastStep={lastStep}
+                  editWorkflow={editWorkflow}
+                  pipelineId={pipeline._id}
+                  accessToken={accessToken}
+                  setStateItems={setState}
+                  fetchPlan={fetchPlan}
+                  customerAccessRules={customerAccessRules}
+                  parentCallbackEditItem={callbackFunctionEditItem}
+                  quietSavePlan={quietSavePlan}
+                  parentHandleViewSourceActivityLog={handleViewSourceActivityLog}
+                  parentWorkflowStatus={workflowStatus}/>
+              </div>
+              {/*<SteppedLineTo from="source" to="step-items" orientation="h" borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="top" />*/}
+              <SteppedLineTo from="source" to="step-items" delay={100} orientation="v"
+                             borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="top"/>
+
+
+              <div
+                className="workflow-module-container workflow-module-container-width p-2 mb-4 text-center h6 mx-auto">
+                End of Workflow
+              </div>
             </div>
-          </>
+
+          </div>
+        </>
         <ModalActivityLogs header={modalHeader} size="lg" jsonData={modalMessage} show={showModal}
                            setParentVisibility={setShowModal}/>
         {infoModal.show && <Modal header={infoModal.header} message={infoModal.message} button={infoModal.button}
-                                  handleCancelModal={() => setInfoModal({...infoModal, show: false})}/>}
+                                  handleCancelModal={() => setInfoModal({ ...infoModal, show: false })}/>}
       </>
     );
   }
-};
+}
 
 
 function renderTooltip(props) {
