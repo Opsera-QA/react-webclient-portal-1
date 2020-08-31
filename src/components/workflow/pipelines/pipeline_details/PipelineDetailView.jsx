@@ -76,6 +76,7 @@ function PipelineDetailView() {
   };
 
   async function fetchData() {
+    console.log("IN fetch data");
     const accessToken = await getAccessToken();
     const apiUrl = `/pipelines/${id}`;
     try {
@@ -110,6 +111,7 @@ function PipelineDetailView() {
   };
 
   async function getActivityLogs() {
+    console.log("in activity log")
     const accessToken = await getAccessToken();
     const apiUrl = `/pipelines/${id}/activity?page=${currentPage}&size=${pageSize}`;
     setLogsIsLoading(true);
@@ -223,7 +225,7 @@ function PipelineDetailsTabView(
   ) {
   useEffect(() => {
     // console.log("CHANGE HAPPENED");
-  }, [activeTab]);
+  }, [activeTab, activityData, pipeline, workflowStatus]);
   if (activeTab) {
     switch (activeTab) {
       case "summary":
