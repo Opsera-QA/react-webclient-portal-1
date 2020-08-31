@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "../../../../../contexts/AuthContext";
 import { Row, Col } from "react-bootstrap";
 import ErrorDialog from "../../../../common/status_notifications/error";
 import InfoDialog from "../../../../common/status_notifications/info";

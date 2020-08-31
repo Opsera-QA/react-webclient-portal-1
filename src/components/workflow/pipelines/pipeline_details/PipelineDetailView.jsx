@@ -6,7 +6,6 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
 import InfoDialog from "components/common/status_notifications/info";
 import "../../workflows.css";
-import PipelineActionControls from "./PipelineActionControls";
 import { useParams } from "react-router-dom";
 import PipelineWorkflowView from "./workflow/PipelineWorkflowView";
 import PipelineSummaryPanel from "./PipelineSummaryPanel";
@@ -58,11 +57,6 @@ function PipelineDetailView() {
   useEffect(() => {
     getActivityLogs();
   }, [currentPage, pageSize]);
-
-  /*useEffect(() => {
-    fetchData();
-  }, [workflowStatus]);
-*/
 
   const initComponent = async () => {
     setLoading(true);
@@ -116,9 +110,10 @@ function PipelineDetailView() {
   };
 
   async function getActivityLogs() {
+    if (activeTab !== "summary" || logsIsLoading) { return }
+    setLogsIsLoading(true);
     const accessToken = await getAccessToken();
     const apiUrl = `/pipelines/${id}/activity?page=${currentPage}&size=${pageSize}`;
-    setLogsIsLoading(true);
     try {
       const activity = await axiosApiService(accessToken).get(apiUrl);
       setActivityData(activity.data);

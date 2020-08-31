@@ -53,41 +53,40 @@ function PipelineWorkflow({ pipeline, fetchPlan, customerAccessRules, editItemId
     }
   };
 
-  /*useEffect(() => {
-    loadData();
-  });*/
-
   useEffect(() => {
     loadData();
-  },[refreshCount]);
+  },[]);
+
+  useEffect(() => {
+    console.log("PipelineWorkflow.jsx effect?");
+    loadFormData(pipeline);
+  }, [refreshCount, JSON.stringify(pipeline), JSON.stringify(lastStep)]);
 
 
   const loadData = async () => {
-    try {
-      await checkAuthentication();
-      await loadFormData(pipeline);
-    } catch (error) {
-      setErrors(error);
-    }
+    await checkAuthentication();
   };
 
-  const loadFormData = async (pipeline) => {
-    if (pipeline.workflow !== undefined) {
-      setState({ items: pipeline.workflow.plan });
-      setLastStep(pipeline.workflow.last_step);
-
-      if (pipeline.workflow.last_step !== undefined) {
-        let status = Object.prototype.hasOwnProperty.call(pipeline.workflow.last_step, "status") ? pipeline.workflow.last_step.status : false;
-
-        if (status === "stopped" && pipeline.workflow.last_step.running && pipeline.workflow.last_step.running.paused) {
-          setWorkflowStatus("paused");
-        } else {
-          setWorkflowStatus(status);
-        }
-      } else {
-        setWorkflowStatus(false);
-      }
+  const loadFormData = (pipeline) => {
+    if (!pipeline.workflow) {
+      return;
     }
+
+    setState({ items: pipeline.workflow.plan });
+    setLastStep(pipeline.workflow.last_step);
+
+    if (pipeline.workflow.last_step !== undefined) {
+      let status = Object.prototype.hasOwnProperty.call(pipeline.workflow.last_step, "status") ? pipeline.workflow.last_step.status : false;
+
+      if (status === "stopped" && pipeline.workflow.last_step.running && pipeline.workflow.last_step.running.paused) {
+        setWorkflowStatus("paused");
+      } else {
+        setWorkflowStatus(status);
+      }
+    } else {
+      setWorkflowStatus(false);
+    }
+
   };
 
   async function checkAuthentication() {
@@ -295,34 +294,7 @@ function PipelineWorkflow({ pipeline, fetchPlan, customerAccessRules, editItemId
             <div className={setZoomClass(zoomValue)}>
               <div className="source workflow-module-container workflow-module-container-width mt-2 mx-auto">
                 <div className="pt-2 text-center h6 mx-auto">Start of Workflow</div>
-                {/*{!pipeline.workflow.source.service ? <div className="mt-1">Source Repository</div> : null }
-              
-              {pipeline.workflow.source.name ?
-                <div className="d-flex">
-                  <div className="p-1 upper-case-first"><span className="text-muted">Project:</span> {pipeline.workflow.source.name}</div>
-                </div> : null }
-              {pipeline.workflow.source.service ?
-                <div className="d-flex mt-1">
-                  <div className="upper-case-first">
-                    <span className="text-muted small">
-                      <FontAwesomeIcon icon={faCubes} size="sm" fixedWidth className="mr-1"/>Service: {pipeline.workflow.source.service}</span>
-                  </div>            
-                </div> : null }
 
-              {pipeline.workflow.source.repository ?
-                <div className="d-flex">
-                  <div className="upper-case-first">
-                    <span className="text-muted small">
-                      <FontAwesomeIcon icon={faFileCode} size="sm" fixedWidth className="mr-1"/>Repository: {pipeline.workflow.source.repository}</span>
-                  </div>            
-                </div> : null }
-              {pipeline.workflow.source.branch ?
-                <div className="d-flex">
-                  <div className="upper-case-first">
-                    <span className="text-muted small">
-                      <FontAwesomeIcon icon={faCodeBranch} size="sm" fixedWidth className="mr-1"/>Branch: {pipeline.workflow.source.branch}</span>
-                  </div>            
-                </div> : null }*/}
 
                 {pipeline.workflow.source.trigger_active &&
                 <div className="d-flex">
@@ -392,6 +364,7 @@ function PipelineWorkflow({ pipeline, fetchPlan, customerAccessRules, editItemId
                   pipeline={pipeline}
                   items={state.items}
                   lastStep={lastStep}
+                  lastStepId={lastStep && lastStep.step_id}
                   editWorkflow={editWorkflow}
                   pipelineId={pipeline._id}
                   accessToken={accessToken}
@@ -402,7 +375,8 @@ function PipelineWorkflow({ pipeline, fetchPlan, customerAccessRules, editItemId
                   parentCallbackEditItem={callbackFunctionEditItem}
                   quietSavePlan={quietSavePlan}
                   parentHandleViewSourceActivityLog={handleViewSourceActivityLog}
-                  parentWorkflowStatus={workflowStatus}/>
+                  parentWorkflowStatus={workflowStatus}
+                />
               </div>
               {/*<SteppedLineTo from="source" to="step-items" orientation="h" borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="top" />*/}
               <SteppedLineTo from="source" to="step-items" delay={100} orientation="v"
@@ -441,6 +415,6 @@ PipelineWorkflow.propTypes = {
   fetchPlan: PropTypes.func,
   customerAccessRules: PropTypes.object,
   editItemId: PropTypes.string,
-  refreshCount: PropTypes.number
+  refreshCount: PropTypes.number,
 };
 export default PipelineWorkflow;

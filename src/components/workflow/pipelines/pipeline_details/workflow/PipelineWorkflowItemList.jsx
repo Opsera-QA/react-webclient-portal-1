@@ -8,11 +8,12 @@ import PipelineWorkflowItem from "./PipelineWorkflowItem";
 import "../../../workflows.css";
 
 
-function PipelineWorkflowItemList({ pipeline, items, lastStep, editWorkflow, pipelineId, accessToken, parentCallbackEditItem, parentHandleViewSourceActivityLog, setStateItems, quietSavePlan, fetchPlan, customerAccessRules, parentWorkflowStatus, refreshCount }) {
+function PipelineWorkflowItemList({ pipeline, items, lastStep, editWorkflow, pipelineId, accessToken, parentCallbackEditItem, parentHandleViewSourceActivityLog, setStateItems, quietSavePlan, fetchPlan, customerAccessRules, parentWorkflowStatus, refreshCount, lastStepId }) {
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
-  }, [items, refreshCount, parentWorkflowStatus]);
+    console.log("PipelineWorkflowItemList Laststep", lastStep);
+  }, [JSON.stringify(items), refreshCount, JSON.stringify(lastStep), JSON.stringify(pipeline)]);
 
   const handleAddStep = async (itemId, index) => {
     console.log("Prior Step ID: ", itemId);
@@ -118,8 +119,10 @@ function PipelineWorkflowItemList({ pipeline, items, lastStep, editWorkflow, pip
 
   return items.map((item, index) => (
     <div key={index} className={isSaving ? "fa-disabled" : ""}>
+
       <div
-        className={"mb-1 p-1 workflow-module-container workflow-module-container-width mx-auto " + setStepStatusClass(lastStep, item)}>
+        className={"mb-1 p-1 workflow-module-container workflow-module-container-width mx-auto " +
+        setStepStatusClass(lastStep, item)}>
         <PipelineWorkflowItem
           pipeline={pipeline}
           plan={items}
@@ -132,6 +135,7 @@ function PipelineWorkflowItemList({ pipeline, items, lastStep, editWorkflow, pip
           accessToken={accessToken}
           parentCallbackEditItem={parentCallbackEditItem}
           deleteStep={deleteStep}
+          refreshCount={refreshCount}
           parentHandleViewSourceActivityLog={parentHandleViewSourceActivityLog}
           parentWorkflowStatus={parentWorkflowStatus}/>
       </div>
@@ -224,7 +228,7 @@ PipelineWorkflowItemList.propTypes = {
   fetchPlan: PropTypes.func,
   customerAccessRules: PropTypes.object,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  refreshCount: PropTypes.number
+  refreshCount: PropTypes.number,
 };
 
 

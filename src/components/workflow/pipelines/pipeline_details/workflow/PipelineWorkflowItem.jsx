@@ -28,7 +28,7 @@ import { format } from "date-fns";
 import "../../../workflows.css";
 
 
-const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineId, accessToken, editWorkflow, parentCallbackEditItem, deleteStep, parentHandleViewSourceActivityLog, customerAccessRules, parentWorkflowStatus }) => {
+const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineId, accessToken, editWorkflow, parentCallbackEditItem, deleteStep, parentHandleViewSourceActivityLog, customerAccessRules, parentWorkflowStatus, refreshCount }) => {
   const [currentStatus, setCurrentStatus] = useState({});
   const [itemState, setItemState] = useState(false);
   const [stepConfigured, setStepConfigured] = useState(true);
@@ -55,10 +55,10 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
 
   useEffect(() => {
     loadFormData(item, lastStep, index, plan);
-  }, [item, lastStep]);
+  }, [item, lastStep, JSON.stringify(pipeline), refreshCount]);
 
 
-  const loadFormData = async (item, lastStep1, index, plan) => {
+  const loadFormData = (item, lastStep1, index, plan) => {
     setStepConfigured(false);
     setToolProperties({});
     setCurrentStatus({});
@@ -475,6 +475,7 @@ PipelineWorkflowItem.propTypes = {
   parentHandleViewSourceActivityLog: PropTypes.func,
   customerAccessRules: PropTypes.object,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  refreshCount: PropTypes.number
 };
 
 export default PipelineWorkflowItem;
