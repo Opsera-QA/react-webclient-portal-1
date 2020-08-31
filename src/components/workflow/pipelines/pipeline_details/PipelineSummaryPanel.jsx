@@ -433,7 +433,7 @@ function PipelineSummaryPanel({ pipeline, ownerName, customerAccessRules, parent
                   handleSavePropertyClick(pipeline._id, tags, "tags");
                 }}/>}
               </Col>
-              <Col lg className="py-1"><span className="text-muted mr-1">Type:</span>
+              <Col lg className="py-1"><span className="text-muted mr-2">Type:</span>
                 {pipeline.type && !editType && pipelineHelpers.displayPipelineType(pipeline.type)}
                 {authorizedAction("edit_pipeline_attribute", pipeline.owner)
                 && parentWorkflowStatus !== "running" && !editType
@@ -443,7 +443,7 @@ function PipelineSummaryPanel({ pipeline, ownerName, customerAccessRules, parent
                 <div className="d-flex mt-1">
                   <div className="w-75">
                     <DropdownList
-                      pipeline={pipelineHelpers.PIPELINE_TYPES}
+                      data={pipelineHelpers.PIPELINE_TYPES}
                       defaultValue={pipeline.type[0]}
                       valueField='id'
                       textField='name'
