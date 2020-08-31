@@ -44,7 +44,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
     catch (error)
     {
       setErrors(error);
-      console.log(`Error Reported: ${error}`);
+      console.error(`Error Reported: ${error}`);
     }
     finally {
       setLoading(false)
@@ -62,21 +62,27 @@ function PipelinesView({ currentTab, setActiveTab }) {
     cookieHelpers.setCookie("pipelines", "sortOption", sortOption.text);
   };
 
-  if (loading || data.response == null) {
+  if ((loading && !errors) || !data.response) {
     return (<LoadingDialog size="sm"/>);
-  } else if (errors) {
+  }
+
+  if (errors && !loading) {
     return (<ErrorDialog error={errors}/>);
-  } else if (data && data.count === 0 && currentTab === "owner")  {
+  }
+
+  if (data && data.count === 0 && currentTab === "owner")  {
     return (<><PipelineWelcomeView setActiveTab={setActiveTab} /></>)
-  } else if (data && data.count === 0)  {
+  }
+
+  if (data && data.count === 0)  {
     return (
       <div className="px-2 max-content-width" style={{minWidth:"505px"}}>
         <div className="my-5"><InfoDialog message="No pipelines found" /></div>
       </div>
     );
   }
-  else {
 
+  if (data && data.response && data.count >= 0)  {
     return (
       <>
         <div className="px-2 max-content-width" style={{minWidth:"505px"}}>
@@ -97,6 +103,9 @@ function PipelinesView({ currentTab, setActiveTab }) {
         </div>
       </>
     );
+  }
+  else {
+    return (<></>)
   }
 }
 
