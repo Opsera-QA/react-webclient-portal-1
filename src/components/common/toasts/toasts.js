@@ -6,6 +6,10 @@ export const getLoadingErrorDialog = (errorMessage, toggleToast, alignment) => {
   return getErrorDialog(`WARNING! An error has occurred loading: ${errorMessage}`, toggleToast, alignment);
 }
 
+export const getServiceUnavailableDialog = (toggleToast, alignment) => {
+  return getErrorDialog(`Service Unavailable.  Please try again or report this issue.`, toggleToast, alignment);
+}
+
 export const getCreateSuccessResultDialog = (type, toggleToast, alignment = "top") => {
   return getSuccessDialog(`${type} created successfully!`, toggleToast, alignment)
 }
@@ -32,6 +36,10 @@ export const getDeleteFailureResultDialog = (type, errorMessage, toggleToast, al
 
 export const getFormValidationErrorDialog = (toggleToast, alignment = "top") => {
   return getErrorDialog(`WARNING! There are errors in your form`, toggleToast, alignment);
+};
+
+export const getMissingRequiredFieldsErrorDialog = (toggleToast, alignment = "top") => {
+  return getErrorDialog(`Required Fields Missing!`, toggleToast, alignment);
 };
 
 export const getSuccessDialog = (message, toggleToast, alignment) => {

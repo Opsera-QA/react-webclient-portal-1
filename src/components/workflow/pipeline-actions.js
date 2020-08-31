@@ -32,7 +32,7 @@ pipelineActions.run = async (pipelineId, postBody, getAccessToken) => {
   const apiUrl = `/pipelines/${pipelineId}/run/`;   
   const response = await axiosApiService(accessToken).post(apiUrl, postBody)
     .then((result) =>  {return result;})
-    .catch(error => {return { error };});
+    .catch(error => {throw { error };});
   return response;
 };
 
@@ -41,16 +41,16 @@ pipelineActions.cancel = async (pipelineId, getAccessToken) => {
   const apiUrl = `/pipelines/${pipelineId}/reset/`;   
   const response = await axiosApiService(accessToken).get(apiUrl)
     .then((result) =>  {return result;})
-    .catch(error => {return { error };});
+    .catch(error => {throw { error };});
   return response;
 };
 
-pipelineActions.save = async (pipelineId, postBody, getAccessToken) => {
+pipelineActions.updatePipeline = async (pipelineId, postBody, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = `/pipelines/${pipelineId}/update/`;   
   const response = await axiosApiService(accessToken).post(apiUrl, postBody)
     .then((result) =>  {return result;})
-    .catch(error => {return { error };});
+    .catch(error => {throw { error };});
   return response;
 };
 
@@ -59,7 +59,7 @@ pipelineActions.get = async (pipelineId, getAccessToken) => {
   const apiUrl = `/pipelines/${pipelineId}`;   
   const response = await axiosApiService(accessToken).get(apiUrl)
     .then((result) =>  {return result;})
-    .catch(error => {return { error };});
+    .catch(error => {throw { error };});
   return response;
 };
 
@@ -68,7 +68,7 @@ pipelineActions.saveToVault = async (postBody, getAccessToken) => {
   const apiUrl = "/vault";   
   const response = await axiosApiService(accessToken).post(apiUrl, postBody)
     .then((result) =>  {return result;})
-    .catch(error => {return { error };});
+    .catch(error => {throw { error };});
   return response;
 };
 
@@ -77,7 +77,7 @@ pipelineActions.createJob = async (toolId, postBody, getAccessToken) => {
   const apiUrl = `/registry/action/${toolId}/createjob`;   
   const response = await axiosApiService(accessToken).post(apiUrl, postBody)
     .then((result) =>  {return result;})
-    .catch(error => {return { error };});
+    .catch(error => {throw { error };});
   return response;
 };
 
@@ -86,7 +86,7 @@ pipelineActions.duplicate = async (pipelineId, getAccessToken) => {
   const apiUrl = `/pipelines/${pipelineId}/duplicate/`;   
   const response = await axiosApiService(accessToken).put(apiUrl)
     .then((result) =>  {return result;})
-    .catch(error => {return { error };});
+    .catch(error => {throw { error };});
   return response;
 };
 
@@ -95,7 +95,7 @@ pipelineActions.getLogs = async (pipelineId, getAccessToken) => {
   const apiUrl = `/pipelines/${pipelineId}/status`;   
   const response = await axiosApiService(accessToken).get(apiUrl)
     .then((result) =>  {return result;})
-    .catch(error => {return { error };});
+    .catch(error => {throw { error };});
   return response;
 };
 

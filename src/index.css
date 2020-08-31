@@ -486,6 +486,7 @@ a:hover, .active {
     border-right: 1px solid #d2d2d2;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
+    background-color: #fff;
 
     border-top: 1px solid #d2d2d2; /* Temporarily added to address tabbed content that isn't ready for no top border */
 }

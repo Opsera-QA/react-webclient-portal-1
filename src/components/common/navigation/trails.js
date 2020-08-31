@@ -31,6 +31,10 @@ const trails = {
   // Ldap Organizations Administration
   ldapOrganizationManagement: {parent: "admin", destination: {name: "ldapOrganizationManagement", path: paths.ldapOrganizationManagement, label: "Organizations"}},
   ldapOrganizationDetailView: {parent: "ldapOrganizationManagement", destination: {name: "ldapOrganizationDetailView", path: paths.ldapOrganizationDetailView, label: "Accounts"}},
+
+  //Pipelines
+  pipelines: {parent: undefined, destination: {name: "pipelines", path: paths.pipelines, label: "Pipelines"}},
+  pipelineDetailView: {parent: "pipelines", destination: {name: "pipelineDetailView", path: paths.pipelineDetailView, label: "Pipeline Details"}},
 };
 
 export const getTrail = (destination) => {

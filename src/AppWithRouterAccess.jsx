@@ -28,7 +28,6 @@ import RegisteredUsers from "./components/admin/registered_users/RegisteredUsers
 import RegisteredUserDetail from "./components/admin/registered_users/registered_user_details/RegisteredUserDetail";
 import ManageSystems from "./components/admin/manage_systems/ManageSystems";
 import ReportsRegistration from "./components/admin/analytics/ReportsRegistration";
-import Workflow from "./components/workflow/Workflow";
 import SystemStatus from "./components/admin/status/SystemStatus";
 import CustomerSystemStatus from "./components/admin/status/CustomerSystemStatus";
 import Overview from "./components/landing/Overview";
@@ -58,6 +57,9 @@ import ToolTypeDetailView from "./components/admin/tools/tool_type/tool_type_det
 import ToolIdentifierDetailView
   from "./components/admin/tools/tool_identifier/tool_identifier_detail_view/ToolIdentifierDetailView";
 import Axios from "axios";
+import Pipelines from "./components/workflow/pipelines/Pipelines";
+import PipelineWorkflowView from "./components/workflow/pipelines/pipeline_details/workflow/PipelineWorkflowView";
+import PipelineDetailView from "./components/workflow/pipelines/pipeline_details/PipelineDetailView";
 const OktaAuth = require("@okta/okta-auth-js");
 const config = require("./config");
 
@@ -192,8 +194,6 @@ const AppWithRouterAccess = () => {
                 <SecureRoute path="/inventory/tools/details/:id" exact component={ToolDetailView}/>
                 <SecureRoute path="/dashboard" component={Dashboard}/>
                 <SecureRoute path="/tools/:id?" component={ApiConnector}/>
-                <SecureRoute path="/pipeline" component={Pipeline}/>
-                <SecureRoute path="/workflow/:id?/:view?" component={Workflow}/>
                 <SecureRoute path="/platform" component={Platform}/>
                 <SecureRoute path="/analytics" exact component={Analytics}/>
                 <SecureRoute path="/logs" exact component={Logs}/>
@@ -224,6 +224,11 @@ const AppWithRouterAccess = () => {
                 <SecureRoute path="/accounts/organizations/details/:organizationName" exact
                              component={LdapOrganizationDetailView}/>
                 <SecureRoute path="/accounts/create" exact component={LdapCustomerOnboardView}/>
+
+                {/*Pipelines*/}
+                <SecureRoute path="/pipeline" component={Pipeline}/> {/*Old Pipeline*/}
+                <SecureRoute path="/workflow/:tab?" exact component={Pipelines}/>
+                <SecureRoute path="/workflow/details/:id/:tab?" exact component={PipelineDetailView}/>
 
                 {/*Settings*/}
                 <SecureRoute path="/settings" exact component={AccountSettingsView}/>
