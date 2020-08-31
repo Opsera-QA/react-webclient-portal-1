@@ -51,10 +51,7 @@ function AdminTools(props) {
               <Col xs={12} md={6} lg={4} className="p-2">
                 <Link to="/admin/systemstatus"><FontAwesomeIcon icon={faHeartbeat} fixedWidth/> System Status</Link>
               </Col>
-              <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/customerstatus"><FontAwesomeIcon icon={faHeartbeat} fixedWidth/> Customer System
-                  Status</Link>
-              </Col>
+
               {/* <Col xs={12} md={6} lg={4} className="p-2">
                <Link to="/admin/health"><FontAwesomeIcon icon={faHeartbeat} fixedWidth /> System Health Check</Link>
                </Col> */}
