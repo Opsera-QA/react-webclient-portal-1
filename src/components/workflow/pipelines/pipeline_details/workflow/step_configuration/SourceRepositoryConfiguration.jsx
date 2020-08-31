@@ -327,7 +327,7 @@ function SourceRepositoryConfiguration({ data, parentCallback, setToast, setShow
       
         {formData.trigger_active === true && 
         <>
-          <EventBasedTriggerDetails pipelineId={data._id} />
+          <EventBasedTriggerDetails pipelineId={data._id} userId={data.owner} />
           <Form.Group controlId="securityKeyField">
             <Form.Label>Webhook Security Key</Form.Label>
             <Form.Control maxLength="75" type="password" placeholder="Optional security key/token from service" value={formData.key || ""} onChange={e => setFormData({ ...formData, key: e.target.value })} />
@@ -347,13 +347,13 @@ function SourceRepositoryConfiguration({ data, parentCallback, setToast, setShow
 }
 
 
-function EventBasedTriggerDetails({ pipelineId }) {
+function EventBasedTriggerDetails({ pipelineId, userId }) {
   const apiUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
   const [triggerUrl, setTriggerUrl] = useState("");
   const [copySuccess, setCopySuccess] = useState(false);
   
   useEffect(() => {
-    setTriggerUrl(`${apiUrl}/hooks/${pipelineId}/source`);
+    setTriggerUrl(`${apiUrl}/hooks/${userId}/${pipelineId}/source`);
     setCopySuccess(false);
   }, [pipelineId]);
 
@@ -395,7 +395,8 @@ SourceRepositoryConfiguration.propTypes = {
 };
 
 EventBasedTriggerDetails.propTypes = {
-  pipelineId: PropTypes.string
+  pipelineId: PropTypes.string,
+  userId: PropTypes.string
 };
 
 export default SourceRepositoryConfiguration;
