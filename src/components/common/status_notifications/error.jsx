@@ -15,17 +15,17 @@ import {
  * @returns
  */
 function ErrorDialog({ error, align, type, setError }) {
-  const contextType = useContext(AuthContext);
+  //const contextType = useContext(AuthContext);
   const [state, setState] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     { message: null, detail: null, statusCode: null, alignment: "inline", variant: "danger" },
   );
 
-  const login = function() {
-    const { renewUserToken } = contextType;
+  const reloadSession = function() {
+    //const { renewUserToken } = contextType;
     console.log("Error.jsx: triggering login function in error.jsx (window reload)");
-    renewUserToken(); //what should this do?  will getWithRedirect work or throw crash?
-    //window.location.reload(false); //using this worked without errors so fall back to this (or last commit) if need
+    //renewUserToken(); //This triggers a full state refresh of the application, downside is it redirect to home
+    window.location.reload(false); //trying this out for improved user experience if it works
   };
 
   const clearError = () => {
@@ -65,31 +65,33 @@ function ErrorDialog({ error, align, type, setError }) {
           <div className="error-text">
             {state.message} {(statusCode === 401 || (state.message && state.message.includes("401"))) &&
           <span className="ml-1"><a href="#" onClick={() => {
-            login();
-          }}>Click here to refresh login.</a></span>}
+            reloadSession();
+          }}>Click here to renew session.</a></span>}
           </div>
         </div>
       </div>
     );
   }
-  else if (alignment === "detailPanelTop") {
+
+  if (alignment === "detailPanelTop") {
     return (
       <div className="row error-block top-dialog-detail-panel-block m-2">
         <div className="col-sm-12 my-auto text-center">
           <div className="float-right ml-1">
-            <FontAwesomeIcon icon={faTimes} style={{cursor: "pointer"}} onClick={() => {
+            <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
               clearError();
             }}/>
           </div>
           {state.message} {(statusCode === 401 || (state.message && state.message.includes("401"))) &&
-          <span className="ml-1"><a style={{color: "#fff", textDecoration:"underline"}} href="#" onClick={() => {
-            login();
-          }}>Click here to refresh login.</a></span>}
+        <span className="ml-1"><a style={{ color: "#fff", textDecoration: "underline" }} href="#" onClick={() => {
+          reloadSession();
+        }}>Click here to renew session.</a></span>}
         </div>
       </div>
     );
   }
-  else if (alignment === "top") {
+
+  if (alignment === "top") {
     return (
       <div className="w-100 error-block top-error-block">
         <div className="float-right ml-1">
@@ -97,23 +99,24 @@ function ErrorDialog({ error, align, type, setError }) {
             clearError();
           }}/></div>
         {state.message} {(statusCode === 401 || (state.message && state.message.includes("401"))) &&
-      <span className="ml-1"><a style={{color: "#fff", textDecoration:"underline"}} href="#" onClick={() => {
-        login();
-      }}>Click here to refresh login.</a></span>}
-      </div>
-    );
-  } else {
-    return (
-      <div className="mx-3 my-3 max-content-module-width-50">
-        <div className="error-text">
-          {state.message} {(statusCode === 401 || (state.message && state.message.includes("401"))) &&
-        <span className="ml-1"><a href="#" onClick={() => {
-          login();
-        }}>Click here to refresh login.</a></span>}
-        </div>
+      <span className="ml-1"><a style={{ color: "#fff", textDecoration: "underline" }} href="#" onClick={() => {
+        reloadSession();
+      }}>Click here to renew session.</a></span>}
       </div>
     );
   }
+
+  return (
+    <div className="mx-3 my-3 max-content-module-width-50">
+      <div className="error-text">
+        {state.message} {(statusCode === 401 || (state.message && state.message.includes("401"))) &&
+      <span className="ml-1"><a href="#" onClick={() => {
+        reloadSession();
+      }}>Click here to renew session.</a></span>}
+      </div>
+    </div>
+  );
+
 
 }
 
