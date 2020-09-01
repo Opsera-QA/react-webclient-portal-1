@@ -123,7 +123,6 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
   };
 
   const handleViewClick = (data, header) => {
-    console.log("HERE?");
     setActivityLogModal({ show: true, header: header, message: data, button: "OK" });
   };
 

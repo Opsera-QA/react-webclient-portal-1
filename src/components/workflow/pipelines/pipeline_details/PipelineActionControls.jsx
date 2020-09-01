@@ -22,7 +22,17 @@ import {
 
 import "../../workflows.css";
 
-function PipelineActionControls({ pipeline, customerAccessRules, disabledActionState, fetchData, fetchActivityLogs, setParentWorkflowStatus }) {
+function PipelineActionControls({
+  pipeline,
+  customerAccessRules,
+  disabledActionState,
+  fetchData,
+  fetchActivityLogs,
+  setParentWorkflowStatus,
+  setPipeline,
+  refreshCount,
+  setRefreshCount
+}) {
   const { getAccessToken } = useContext(AuthContext);
   const [workflowStatus, setWorkflowStatus] = useState(false);
   const [socketRunning, setSocketRunning] = useState(false);
@@ -240,7 +250,6 @@ function PipelineActionControls({ pipeline, customerAccessRules, disabledActionS
   }
 
   async function runPipeline(pipelineId) {
-    console.log("RUNNING PIPELINE; ", pipelineId);
     setStartPipeline(true);
     const response = await PipelineActions.run(pipelineId, {}, getAccessToken);
 
@@ -296,6 +305,10 @@ function PipelineActionControls({ pipeline, customerAccessRules, disabledActionS
 
         if (typeof (dataObj) !== "undefined" && Object.keys(dataObj).length > 0) {
           pipeline.workflow.last_step = dataObj;
+          let updatedPipeline = pipeline;
+          updatedPipeline.workflow = {...pipeline.workflow, last_step: dataObj}
+          setPipeline(updatedPipeline);
+          setRefreshCount(refreshCount => refreshCount + 1);
         }
 
         if (staleRefreshCount > 1 && status === "stopped") {
@@ -446,5 +459,8 @@ PipelineActionControls.propTypes = {
   fetchData: PropTypes.func,
   fetchActivityLogs: PropTypes.func,
   setParentWorkflowStatus: PropTypes.func,
+  setPipeline: PropTypes.func,
+  refreshCount: PropTypes.number,
+  setRefreshCount: PropTypes.func,
 };
 export default PipelineActionControls;

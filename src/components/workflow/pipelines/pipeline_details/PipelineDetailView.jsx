@@ -18,6 +18,7 @@ function PipelineDetailView() {
   const { tab, id } = useParams();
   const [error, setErrors] = useState();
   const [data, setData] = useState({});
+  const [pipeline, setPipeline] = useState({});
   const [activityData, setActivityData] = useState({});
   const [stepStatus, setStepStatus] = useState({});
   const [loading, setLoading] = useState(false);
@@ -29,7 +30,6 @@ function PipelineDetailView() {
   const [activeTab, setActiveTab] = useState("summary");
   const [editItem, setEditItem] = useState(false);
   const [ownerName, setOwnerName] = useState(undefined);
-  // const [pipeline, setPipeline] = useState(undefined);
   const [refreshCount, setRefreshCount] = useState(0);
   const history = useHistory();
 
@@ -58,6 +58,12 @@ function PipelineDetailView() {
     getActivityLogs();
   }, [currentPage, pageSize]);
 
+
+  useEffect(() => {
+    console.log("Pipeline object useEffect update detected!!!")
+  }, [refreshCount, JSON.stringify(pipeline)]);
+
+
   const initComponent = async () => {
     setLoading(true);
 
@@ -85,6 +91,8 @@ function PipelineDetailView() {
           ...data,
           pipeline: pipeline && pipeline.data[0],
         });
+
+        setPipeline(pipeline && pipeline.data[0])
 
         let owner = await PipelineHelpers.getUserNameById(pipeline.data[0].owner, getAccessToken);
         setOwnerName(owner);
@@ -182,7 +190,7 @@ function PipelineDetailView() {
 
           {activeTab === "summary" && <div className="max-content-width content-block-collapse p-3">
             <PipelineSummaryPanel
-              pipeline={data.pipeline}
+              pipeline={pipeline}
               customerAccessRules={customerAccessRules}
               parentWorkflowStatus={workflowStatus}
               ownerName={ownerName}
@@ -204,8 +212,10 @@ function PipelineDetailView() {
           <PipelineWorkflowView
             customerAccessRules={customerAccessRules}
             parentWorkflowStatus={workflowStatus}
-            pipeline={data.pipeline}
+            pipeline={pipeline}
+            setPipeline={setPipeline}
             refreshCount={refreshCount}
+            setRefreshCount={setRefreshCount}
             editItem={editItem}
             setEditItem={setEditItem}
             fetchPlan={fetchPlan}

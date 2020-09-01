@@ -12,7 +12,6 @@ function PipelineWorkflowItemList({ pipeline, items, lastStep, editWorkflow, pip
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
-    console.log("PipelineWorkflowItemList Laststep", lastStep);
   }, [JSON.stringify(items), refreshCount, JSON.stringify(lastStep), JSON.stringify(pipeline)]);
 
   const handleAddStep = async (itemId, index) => {
@@ -69,7 +68,6 @@ function PipelineWorkflowItemList({ pipeline, items, lastStep, editWorkflow, pip
 
 
   const handleMoveStep = async (itemId, index, direction) => {
-
     if (direction === "up" && index > 0) {
       console.log("Direction: ", direction);
       setIsSaving(true);
@@ -117,91 +115,93 @@ function PipelineWorkflowItemList({ pipeline, items, lastStep, editWorkflow, pip
   };
 
 
-  return items.map((item, index) => (
-    <div key={index} className={isSaving ? "fa-disabled" : ""}>
-
-      <div
-        className={"mb-1 p-1 workflow-module-container workflow-module-container-width mx-auto " +
-        setStepStatusClass(lastStep, item)}>
-        <PipelineWorkflowItem
-          pipeline={pipeline}
-          plan={items}
-          item={item}
-          index={index}
-          lastStep={lastStep}
-          editWorkflow={editWorkflow}
-          pipelineId={pipelineId}
-          customerAccessRules={customerAccessRules}
-          accessToken={accessToken}
-          parentCallbackEditItem={parentCallbackEditItem}
-          deleteStep={deleteStep}
-          refreshCount={refreshCount}
-          parentHandleViewSourceActivityLog={parentHandleViewSourceActivityLog}
-          parentWorkflowStatus={parentWorkflowStatus}/>
-      </div>
-
-      {editWorkflow ? <>
-          <div className={"text-center my-3 step-plus-" + index}>
-            <OverlayTrigger
-              placement="top"
-              delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltip({ message: "Move lower step up one position" })}>
-              <FontAwesomeIcon icon={faCaretSquareUp} size="lg"
-                               fixedWidth
-                               className={index === 0 ? "fa-disabled" : "pointer dark-blue"}
-                               onClick={() => {
-                                 handleMoveStep(item._id, index, "up");
-                               }}/>
-            </OverlayTrigger>
-
-            <OverlayTrigger
-              placement="top"
-              delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltip({ message: "Add new step here" })}>
-              <FontAwesomeIcon icon={faPlusSquare}
-                               size="lg"
-                               fixedWidth
-                               className="green pointer ml-2 mr-1"
-                               onClick={() => {
-                                 handleAddStep(item._id, index);
-                               }}/>
-            </OverlayTrigger>
-
-            <OverlayTrigger
-              placement="top"
-              delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltip({ message: "Copy previous step" })}>
-              <FontAwesomeIcon icon={faCopy}
-                               size="lg"
-                               fixedWidth
-                               className="yellow pointer ml-1 mr-2"
-                               onClick={() => {
-                                 handleCopyStep(item, index);
-                               }}/>
-            </OverlayTrigger>
-
-            <OverlayTrigger
-              placement="top"
-              delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltip({ message: "Move upper step down one position" })}>
-              <FontAwesomeIcon icon={faCaretSquareDown} size="lg"
-                               fixedWidth
-                               className={index === items.length - 1 ? "fa-disabled" : "pointer dark-blue"}
-                               onClick={() => {
-                                 handleMoveStep(item._id, index, "down");
-                               }}/>
-            </OverlayTrigger>
+  return (
+    <>
+      {items && items.map((item, index) => (
+        <div key={index} className={isSaving ? "fa-disabled" : ""}>
+          <div className={"mb-1 p-1 workflow-module-container workflow-module-container-width mx-auto " +
+            setStepStatusClass(lastStep, item)}>
+            <PipelineWorkflowItem
+              pipeline={pipeline}
+              plan={items}
+              item={item}
+              index={index}
+              lastStep={lastStep}
+              editWorkflow={editWorkflow}
+              pipelineId={pipelineId}
+              customerAccessRules={customerAccessRules}
+              accessToken={accessToken}
+              parentCallbackEditItem={parentCallbackEditItem}
+              deleteStep={deleteStep}
+              refreshCount={refreshCount}
+              parentHandleViewSourceActivityLog={parentHandleViewSourceActivityLog}
+              parentWorkflowStatus={parentWorkflowStatus}/>
           </div>
-        </> :
-        <>
-          <SteppedLineTo from={"step-" + item._id} to={"step-" + index} delay={100} orientation="v"
-                         borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="bottom"/>
-          <div style={{ height: "40px" }} className={"step-" + index}>&nbsp;</div>
-        </>
-      }
 
-    </div>
-  ));
+          {editWorkflow ? <>
+              <div className={"text-center my-3 step-plus-" + index}>
+                <OverlayTrigger
+                  placement="top"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltip({ message: "Move lower step up one position" })}>
+                  <FontAwesomeIcon icon={faCaretSquareUp} size="lg"
+                                   fixedWidth
+                                   className={index === 0 ? "fa-disabled" : "pointer dark-blue"}
+                                   onClick={() => {
+                                     handleMoveStep(item._id, index, "up");
+                                   }}/>
+                </OverlayTrigger>
+
+                <OverlayTrigger
+                  placement="top"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltip({ message: "Add new step here" })}>
+                  <FontAwesomeIcon icon={faPlusSquare}
+                                   size="lg"
+                                   fixedWidth
+                                   className="green pointer ml-2 mr-1"
+                                   onClick={() => {
+                                     handleAddStep(item._id, index);
+                                   }}/>
+                </OverlayTrigger>
+
+                <OverlayTrigger
+                  placement="top"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltip({ message: "Copy previous step" })}>
+                  <FontAwesomeIcon icon={faCopy}
+                                   size="lg"
+                                   fixedWidth
+                                   className="yellow pointer ml-1 mr-2"
+                                   onClick={() => {
+                                     handleCopyStep(item, index);
+                                   }}/>
+                </OverlayTrigger>
+
+                <OverlayTrigger
+                  placement="top"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltip({ message: "Move upper step down one position" })}>
+                  <FontAwesomeIcon icon={faCaretSquareDown} size="lg"
+                                   fixedWidth
+                                   className={index === items.length - 1 ? "fa-disabled" : "pointer dark-blue"}
+                                   onClick={() => {
+                                     handleMoveStep(item._id, index, "down");
+                                   }}/>
+                </OverlayTrigger>
+              </div>
+            </> :
+            <>
+              <SteppedLineTo from={"step-" + item._id} to={"step-" + index} delay={100} orientation="v"
+                             borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="bottom"/>
+              <div style={{ height: "40px" }} className={"step-" + index}>&nbsp;</div>
+            </>
+          }
+
+        </div>
+      ))}
+      </>
+  )
 }
 
 function renderTooltip(props) {

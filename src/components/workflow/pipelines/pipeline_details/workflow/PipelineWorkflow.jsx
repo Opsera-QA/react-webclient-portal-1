@@ -58,9 +58,8 @@ function PipelineWorkflow({ pipeline, fetchPlan, customerAccessRules, editItemId
   },[]);
 
   useEffect(() => {
-    console.log("PipelineWorkflow.jsx effect?");
     loadFormData(pipeline);
-  }, [refreshCount, JSON.stringify(pipeline), JSON.stringify(lastStep)]);
+  }, [refreshCount, JSON.stringify(pipeline)]);
 
 
   const loadData = async () => {
