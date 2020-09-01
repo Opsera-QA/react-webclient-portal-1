@@ -318,11 +318,8 @@ function PipelineSummaryPanel({
       {error ? <ErrorDialog error={error}/> : null}
       {typeof (pipeline) !== "undefined" && pipeline !== {} ?
         <>
-          <div className="w-100 d-flex mb-1">
-            <div className="flex-fill">
-              <div className="title-text-5">{pipeline.name}</div>
-            </div>
-            <div className="align-content-end">
+          <div>
+            <div className="text-right">
               <PipelineActionControls pipeline={pipeline} disabledActionState={false}
                                       customerAccessRules={customerAccessRules}
                                       fetchData={fetchPlan}
@@ -365,14 +362,13 @@ function PipelineSummaryPanel({
                 handleDuplicateClick={handleCopyPipeline}
                 handleViewClick={handleViewClick}
               />
-              <hr className={"pt-0 pb-2 m-0"} />
             </div>
             {showToast && toast}
             <Row>
-              <div className="pl-3 title-text-5 flex-fill">
+              <Col sm={12} className="py-2">
+              <div className="title-text-5 flex-fill pb-3">
                 {editTitle ?
                   <>
-                    <Row>
                       <Col sm={11}>
                         <Form.Control maxLength="500" type="text" placeholder="" value={formData.name || ""}
                                       onChange={e => setFormData({ ...formData, name: e.target.value })}/></Col>
@@ -380,7 +376,6 @@ function PipelineSummaryPanel({
                         {getSaveIcon("name")}
                         {getCancelIcon(setEditTitle)}
                       </Col>
-                    </Row>
                   </>
                   :
                   <>
@@ -392,18 +387,14 @@ function PipelineSummaryPanel({
                       : null}
                   </>
                 }</div>
-            </Row>
-            <Row>
-              <Col lg className="py-1"><span className="text-muted mr-1">ID:</span> {pipeline._id}</Col>
-              <Col lg className="py-1"><span
+              </Col>
+              <Col sm={12} lg={6} className="py-2"><span className="text-muted mr-1">ID:</span> {pipeline._id}</Col>
+              <Col sm={12} lg={6} className="py-2"><span
                 className="text-muted mr-1">Pipeline Run Count:</span> {pipeline.workflow.run_count || "0"}</Col>
-            </Row>
-
-            <Row className="row-content-spacing">
-              <Col>
+              <Col sm={12} lg={6} className="py-2">
                 {editProject ?
                   <>
-                    <Row className="my-2">
+                    <Row className="">
                       <Col sm={9}>
                         <Form.Control maxLength="150" type="text" placeholder="Project Name"
                                       value={formData.project.name || ""}
@@ -428,18 +419,13 @@ function PipelineSummaryPanel({
                       : null}
                   </>}
               </Col>
-              <Col lg className="py-1"><span className="text-muted mr-1">Owner:</span> {ownerName}</Col>
-            </Row>
-            <Row className="row-content-spacing">
-              <Col lg className="py-1"><span className="text-muted mr-1">Organization:</span> <span
+              <Col sm={12} lg={6} className="py-2"><span className="text-muted mr-1">Owner:</span> {ownerName}</Col>
+              <Col sm={12} lg={6} className="py-2"><span className="text-muted mr-1">Organization:</span> <span
                 className="upper-case-first">{pipeline.organizationName}</span></Col>
-              <Col lg className="py-1"><span
+              <Col sm={12} lg={6} className="py-2"><span
                 className="text-muted mr-1">Created On:</span> {pipeline.createdAt && format(new Date(pipeline.createdAt), "yyyy-MM-dd', 'hh:mm a")}
               </Col>
-            </Row>
-
-            <Row className="row-content-spacing">
-              <Col className="py-1"><span className="text-muted mr-1">Tags:</span>
+              <Col sm={12} lg={6} className="py-2"><span className="text-muted mr-1">Tags:</span>
                 {!editTags && authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running" && <>
                   {pipeline.tags.map((item, idx) => (<span key={idx}>{item}, </span>))}
                   {getEditIcon("tags")}
@@ -450,7 +436,7 @@ function PipelineSummaryPanel({
                   handleSavePropertyClick(pipeline._id, tags, "tags");
                 }}/>}
               </Col>
-              <Col lg className="py-1"><span className="text-muted mr-2">Type:</span>
+              <Col sm={12} lg={6} className="py-2"><span className="text-muted mr-2">Type:</span>
                 {pipeline.type && !editType && pipelineHelpers.displayPipelineType(pipeline.type)}
                 {authorizedAction("edit_pipeline_attribute", pipeline.owner)
                 && parentWorkflowStatus !== "running" && !editType
@@ -478,22 +464,19 @@ function PipelineSummaryPanel({
                 </div>
                 }
               </Col>
-            </Row>
-
-            <Row className="row-content-spacing">
               {editSchedule ?
                 <>
-                  <Col xs={12} md={8}><span className="text-muted mr-1">Schedule:</span>
+                  <Col sm={12} lg={6} className="py-2"><span className="text-muted mr-1">Schedule:</span>
                     <SchedulerWidget
                       startDate={pipeline.workflow.schedule ? pipeline.workflow.schedule.start_date : new Date()}
                       frequency={pipeline.workflow.schedule ? pipeline.workflow.schedule.frequency : ""}
                       schedule={pipeline.workflow.schedule ? pipeline.workflow.schedule : null}
                       setEditSchedule={setEditSchedule}
-                      setSchedule={handleSetSchedule}></SchedulerWidget></Col>
-                  <Col xs={6} md={4}></Col>
+                      setSchedule={handleSetSchedule}></SchedulerWidget>
+                  </Col>
                 </> :
 
-                <Col className="py-1"><span className="text-muted mr-1">Schedule:</span>
+                <Col sm={12} lg={6} className="py-2"><span className="text-muted mr-1">Schedule:</span>
                   {pipeline.workflow.schedule
                   && pipeline.workflow.schedule.start_date !== null
                   && !editSchedule
@@ -509,12 +492,9 @@ function PipelineSummaryPanel({
                 </Col>
               }
               <Col lg className="py-1"><span className="text-muted mr-1">Org Account:</span> {pipeline.account}</Col>
-            </Row>
-
 
             {editDescription ?
               <>
-                <Row className="my-2">
                   <Col sm={11}>
                     <Form.Control maxLength="2000" as="textarea" type="text" placeholder=""
                                   value={formData.description || ""}
@@ -523,30 +503,27 @@ function PipelineSummaryPanel({
                     {getSaveIcon("description")}
                     {getCancelIcon(setEditDescription)}
                   </Col>
-                </Row>
               </>
               :
               <>
-                <Row>
-                  <Col className="mt-2 mb-1">
+                  <Col sm={12} className="py-2">
                     <span className="text-muted mr-1">Description:</span>{pipeline.description}
                     {authorizedAction("edit_pipeline_attribute", pipeline.owner)
                     && parentWorkflowStatus !== "running"
                       ? getEditIcon("description")
                       : null}
                   </Col>
-                </Row>
               </>
             }
             {_configuredToolsCount(pipeline.workflow.plan) === 0 &&
-            <Row>
               <Col className="mt-3 mb-1">
                   <Button variant="success" className="mr-2 mt-2" size="sm" onClick={() => setActiveTab("model")}>
                     <FontAwesomeIcon icon={faCogs} className="mr-1" fixedWidth/>
                     Build Workflow
                   </Button>
               </Col>
-            </Row>}
+            }
+            </Row>
           </div>
         </>
         : null}
