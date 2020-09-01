@@ -191,6 +191,9 @@ function PipelineDetailView() {
           {activeTab === "summary" && <div className="max-content-width content-block-collapse p-3">
             <PipelineSummaryPanel
               pipeline={pipeline}
+              setPipeline={setPipeline}
+              refreshCount={refreshCount}
+              setRefreshCount={setRefreshCount}
               customerAccessRules={customerAccessRules}
               parentWorkflowStatus={workflowStatus}
               ownerName={ownerName}

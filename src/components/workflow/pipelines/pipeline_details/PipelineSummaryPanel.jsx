@@ -34,7 +34,19 @@ const INITIAL_FORM_DATA = {
   type: [],
 };
 
-function PipelineSummaryPanel({ pipeline, ownerName, customerAccessRules, parentWorkflowStatus, setActiveTab, fetchPlan, setWorkflowStatus, getActivityLogs}) {
+function PipelineSummaryPanel({
+  pipeline,
+  ownerName,
+  customerAccessRules,
+  parentWorkflowStatus,
+  setActiveTab,
+  fetchPlan,
+  setWorkflowStatus,
+  getActivityLogs,
+  setRefreshCount,
+  setPipeline,
+  refreshCount,
+}) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
   const [showModal, setShowModal] = useState(false);
@@ -314,8 +326,13 @@ function PipelineSummaryPanel({ pipeline, ownerName, customerAccessRules, parent
               <PipelineActionControls pipeline={pipeline} disabledActionState={false}
                                       customerAccessRules={customerAccessRules}
                                       fetchData={fetchPlan}
+                                      setPipeline={setPipeline}
+                                      setRefreshCount={setRefreshCount}
+                                      refreshCount={refreshCount}
                                       fetchActivityLogs={getActivityLogs}
                                       setParentWorkflowStatus={setWorkflowStatus}/>
+
+
             </div>
           </div>
           <div>
@@ -571,6 +588,9 @@ PipelineSummaryPanel.propTypes = {
   setActiveTab: PropTypes.func,
   fetchPlan: PropTypes.func,
   setWorkflowStatus: PropTypes.func,
+  setPipeline: PropTypes.func,
+  refreshCount: PropTypes.number,
+  setRefreshCount: PropTypes.func,
 };
 
 export default PipelineSummaryPanel;
