@@ -60,7 +60,7 @@ function PipelineDetailView() {
 
 
   useEffect(() => {
-    console.log("Pipeline update detected!!!")
+    console.log("Pipeline update detected!!!");
   }, [refreshCount, JSON.stringify(pipeline)]);
 
 
@@ -92,7 +92,7 @@ function PipelineDetailView() {
           pipeline: pipeline && pipeline.data[0],
         });
 
-        setPipeline(pipeline && pipeline.data[0])
+        setPipeline(pipeline && pipeline.data[0]);
 
         let owner = await PipelineHelpers.getUserNameById(pipeline.data[0].owner, getAccessToken);
         setOwnerName(owner);
@@ -118,7 +118,9 @@ function PipelineDetailView() {
   };
 
   async function getActivityLogs() {
-    if (activeTab !== "summary" || logsIsLoading) { return }
+    if (activeTab !== "summary" || logsIsLoading) {
+      return;
+    }
     setLogsIsLoading(true);
     const accessToken = await getAccessToken();
     const apiUrl = `/pipelines/${id}/activity?page=${currentPage}&size=${pageSize}`;
@@ -188,7 +190,8 @@ function PipelineDetailView() {
             </ul>
           </div>
 
-          {activeTab === "summary" && <div className="max-content-width content-block-collapse p-3">
+          {activeTab === "summary" &&
+          <div className="max-content-width-1080 content-block-no-height px-3 pb-2" style={{width:"80vw"}}>
             <PipelineSummaryPanel
               pipeline={pipeline}
               setPipeline={setPipeline}
@@ -202,14 +205,8 @@ function PipelineDetailView() {
               getActivityLogs={getActivityLogs}
               fetchPlan={fetchPlan}
             />
-            <PipelineActivityLogTable
-              isLoading={logsIsLoading}
-              currentRunCountFilter={runCount}
-              selectRunCountFilter={selectRunCountFilter}
-              data={activityData.pipelineData}
-              paginationOptions={getPaginationOptions()}
-            />
           </div>}
+
 
           {activeTab === "model" &&
           <PipelineWorkflowView
@@ -227,6 +224,16 @@ function PipelineDetailView() {
           />}
 
         </div>
+
+        {activeTab === "summary" &&
+        <div className="max-content-width-1875">
+          <PipelineActivityLogTable
+            isLoading={logsIsLoading}
+            currentRunCountFilter={runCount}
+            selectRunCountFilter={selectRunCountFilter}
+            data={activityData.pipelineData}
+            paginationOptions={getPaginationOptions()}
+          /></div>}
       </>
     );
   }

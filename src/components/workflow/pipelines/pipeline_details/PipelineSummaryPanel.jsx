@@ -319,7 +319,7 @@ function PipelineSummaryPanel({
       {typeof (pipeline) !== "undefined" && pipeline !== {} ?
         <>
           <div>
-            <div className="text-right">
+            <div className="text-right py-2">
               <PipelineActionControls pipeline={pipeline} disabledActionState={false}
                                       customerAccessRules={customerAccessRules}
                                       fetchData={fetchPlan}
@@ -388,10 +388,10 @@ function PipelineSummaryPanel({
                   </>
                 }</div>
               </Col>
-              <Col sm={12} lg={6} className="py-2"><span className="text-muted mr-1">ID:</span> {pipeline._id}</Col>
-              <Col sm={12} lg={6} className="py-2"><span
+              <Col sm={12} md={6} className="py-2"><span className="text-muted mr-1">ID:</span> {pipeline._id}</Col>
+              <Col sm={12} md={6} className="py-2"><span
                 className="text-muted mr-1">Pipeline Run Count:</span> {pipeline.workflow.run_count || "0"}</Col>
-              <Col sm={12} lg={6} className="py-2">
+              <Col sm={12} md={6} className="py-2">
                 {editProject ?
                   <>
                     <Row className="">
@@ -419,13 +419,13 @@ function PipelineSummaryPanel({
                       : null}
                   </>}
               </Col>
-              <Col sm={12} lg={6} className="py-2"><span className="text-muted mr-1">Owner:</span> {ownerName}</Col>
-              <Col sm={12} lg={6} className="py-2"><span className="text-muted mr-1">Organization:</span> <span
+              <Col sm={12} md={6} className="py-2"><span className="text-muted mr-1">Owner:</span> {ownerName}</Col>
+              <Col sm={12} md={6} className="py-2"><span className="text-muted mr-1">Organization:</span> <span
                 className="upper-case-first">{pipeline.organizationName}</span></Col>
-              <Col sm={12} lg={6} className="py-2"><span
+              <Col sm={12} md={6} className="py-2"><span
                 className="text-muted mr-1">Created On:</span> {pipeline.createdAt && format(new Date(pipeline.createdAt), "yyyy-MM-dd', 'hh:mm a")}
               </Col>
-              <Col sm={12} lg={6} className="py-2"><span className="text-muted mr-1">Tags:</span>
+              <Col sm={12} md={6} className="py-2"><span className="text-muted mr-1">Tags:</span>
                 {!editTags && authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running" && <>
                   {pipeline.tags.map((item, idx) => (<span key={idx}>{item}, </span>))}
                   {getEditIcon("tags")}
@@ -436,7 +436,7 @@ function PipelineSummaryPanel({
                   handleSavePropertyClick(pipeline._id, tags, "tags");
                 }}/>}
               </Col>
-              <Col sm={12} lg={6} className="py-2"><span className="text-muted mr-2">Type:</span>
+              <Col sm={12} md={6} className="py-2"><span className="text-muted mr-2">Type:</span>
                 {pipeline.type && !editType && pipelineHelpers.displayPipelineType(pipeline.type)}
                 {authorizedAction("edit_pipeline_attribute", pipeline.owner)
                 && parentWorkflowStatus !== "running" && !editType
@@ -466,7 +466,7 @@ function PipelineSummaryPanel({
               </Col>
               {editSchedule ?
                 <>
-                  <Col sm={12} lg={6} className="py-2"><span className="text-muted mr-1">Schedule:</span>
+                  <Col sm={12} md={6} className="py-2"><span className="text-muted mr-1">Schedule:</span>
                     <SchedulerWidget
                       startDate={pipeline.workflow.schedule ? pipeline.workflow.schedule.start_date : new Date()}
                       frequency={pipeline.workflow.schedule ? pipeline.workflow.schedule.frequency : ""}
@@ -476,7 +476,7 @@ function PipelineSummaryPanel({
                   </Col>
                 </> :
 
-                <Col sm={12} lg={6} className="py-2"><span className="text-muted mr-1">Schedule:</span>
+                <Col sm={12} md={6} className="py-2"><span className="text-muted mr-1">Schedule:</span>
                   {pipeline.workflow.schedule
                   && pipeline.workflow.schedule.start_date !== null
                   && !editSchedule

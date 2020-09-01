@@ -662,6 +662,11 @@ div.modal-footer {
   min-height: 50vh;
 }
 
+.content-block-no-height {
+  border-radius: 5px;
+  background-color: rgba(203, 205, 205, 0.1);
+}
+
 .content-block-top {
   border-top: 1px solid #d2d2d2;
   padding-top: 5px;
