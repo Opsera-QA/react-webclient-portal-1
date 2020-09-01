@@ -324,7 +324,7 @@ function OPBlueprint(props) {
   // };
 
   const goToPipeline = () => {
-    history.push("/workflow/" + idFetch[multiFilter.value]);
+    history.push(`/workflow/details/${idFetch[multiFilter.value]}/summary`);
   };
 
   if (error) {
