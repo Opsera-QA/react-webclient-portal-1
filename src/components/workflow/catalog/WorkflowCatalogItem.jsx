@@ -3,6 +3,7 @@ import {useHistory} from "react-router-dom";
 import {Button, Card, Col, Row} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faClock, faPlus, faSearch} from "@fortawesome/free-solid-svg-icons";
+import { faOctagon } from '@fortawesome/pro-regular-svg-icons';
 import {format} from "date-fns";
 import React, {useContext, useState} from "react";
 import {axiosApiService} from "../../../api/apiService";
@@ -54,7 +55,7 @@ const WorkflowCatalogItem = ({item, parentCallback}) => {
         <Card.Title className="pb-0">
           <div className="d-flex pipeline-card-title p-2">
             <div>
-              {item.name}
+              <FontAwesomeIcon icon={faOctagon} /> {item.name}
             </div>
           </div>
         </Card.Title>
