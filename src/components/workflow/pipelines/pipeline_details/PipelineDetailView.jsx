@@ -60,7 +60,7 @@ function PipelineDetailView() {
 
 
   useEffect(() => {
-    console.log("Pipeline object useEffect update detected!!!")
+    console.log("Pipeline update detected!!!")
   }, [refreshCount, JSON.stringify(pipeline)]);
 
 
