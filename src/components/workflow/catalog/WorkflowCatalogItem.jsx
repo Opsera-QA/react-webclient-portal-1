@@ -37,7 +37,7 @@ const WorkflowCatalogItem = ({item, parentCallback}) => {
       let newPipelineId = result.data !== undefined ? result.data._id : false;
 
       if (newPipelineId) {
-        history.push(`/workflow/${newPipelineId}`);
+        history.push(`/workflow/details/${newPipelineId}/summary`);
       }
       setLoading(false);
     }

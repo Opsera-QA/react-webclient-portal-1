@@ -113,7 +113,7 @@ const MapActivityData = (props) => {
   };
 
   const goToPipeline = (item) => {
-    history.push("/workflow/" + item);
+    history.push(`/workflow/details/${item}/summary`);
   };
 
   if (typeof data === "undefined" || data.length === 0) {

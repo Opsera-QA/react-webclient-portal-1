@@ -67,7 +67,7 @@ function OverviewLanding() {
   const loadPipelines = (id) => {
     // eslint-disable-next-line react/prop-types
     if (id) {
-      history.push("/workflow/" + id);
+      history.push(`/workflow/details/${id}/summary`);
     } else {
       history.push("/workflow");
     }
