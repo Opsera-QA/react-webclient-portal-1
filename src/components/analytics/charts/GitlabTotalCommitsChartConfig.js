@@ -59,23 +59,21 @@ export default {
   },
   legends: [
     {
-      dataFrom: "keys",
-      anchor: "bottom-right",
+      anchor: "top-right",
       direction: "column",
-      justify: false,
       translateX: 40,
-      translateY: 0,
-      itemsSpacing: 2,
+      translateY: -30,
       itemWidth: 100,
-      itemHeight: 20,
-      itemDirection: "left-to-right",
-      itemOpacity: 0.85,
-      symbolSize: 20,
+      itemHeight: 18,
+      itemTextColor: "#999",
+      symbolSize: 18,
+      symbolShape: "circle",
+      itemsSpacing: 1,
       effects: [
         {
           on: "hover",
           style: {
-            itemOpacity: 1,
+            itemTextColor: "#000",
           },
         },
       ],
