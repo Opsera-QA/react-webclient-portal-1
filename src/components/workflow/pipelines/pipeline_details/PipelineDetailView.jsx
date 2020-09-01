@@ -169,7 +169,7 @@ function PipelineDetailView() {
   } else {
     return (
       <>
-        <div className="px-2">
+        <div>
           <div className="max-content-width">
             <BreadcrumbTrail destination={"pipelineDetailView"}/>
           </div>
@@ -191,7 +191,7 @@ function PipelineDetailView() {
           </div>
 
           {activeTab === "summary" &&
-          <div className="max-content-width-1080 content-block-no-height px-3 pb-2" style={{width:"80vw"}}>
+          <div className="max-content-width-1080 content-block-no-height pl-3 pb-2" style={{width:"80vw"}}>
             <PipelineSummaryPanel
               pipeline={pipeline}
               setPipeline={setPipeline}

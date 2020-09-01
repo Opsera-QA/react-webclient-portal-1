@@ -46,7 +46,7 @@ function PipelineWorkflowView({
     return (
       <>
         <div className="pl-3 workflow-view h-100">
-          <Row className="w-100">
+          <Row className="w-100" style={{margin:"0"}}>
             <Col className="max-content-width content-block-collapse pt-3">
               <div className="w-100 d-flex mb-1 pr-1">
                 <div className="flex-fill">
@@ -78,7 +78,7 @@ function PipelineWorkflowView({
 PipelineWorkflowView.propTypes = {
   pipeline: PropTypes.object,
   customerAccessRules: PropTypes.object,
-  editItem: PropTypes.bool,
+  editItem: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   setEditItem: PropTypes.func,
   setActiveTab: PropTypes.func,
   fetchPlan: PropTypes.func,
