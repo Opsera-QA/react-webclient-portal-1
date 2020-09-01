@@ -270,7 +270,7 @@ function PipelineActionControls({
 
   const subscribeToTimer = (socket) => {
     console.log("initializingSocket");
-    socket = socketIOClient(endPointUrl, { query: "pipelineId=" + pipeline._id });
+    socket = socketIOClient(endPointUrl, { query: "pipelineId=" + pipeline._id + "&user=" + pipeline.owner });
     console.log("Connected status before onConnect", socket.socket ? socket.socket.connected : socket.socket === undefined);
 
     if (socket.socket === undefined) {
