@@ -90,7 +90,7 @@ function LdapUserManagement() {
 
   if (!accessRoleData || pageLoading) {
     return (<LoadingDialog size="sm"/>);
-  } else if (!accessRoleData.Administrator && !accessRoleData.OpseraAdministrator) {
+  } else if (!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator) {
     return (<AccessDeniedDialog roleData={accessRoleData}/>);
   } else {
     return (
