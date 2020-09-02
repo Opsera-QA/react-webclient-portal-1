@@ -219,7 +219,6 @@ function PipelineSummaryPanel({
           const response = await PipelineActions.updatePipeline(pipelineId, postBody, getAccessToken);
           setFormData(INITIAL_FORM_DATA);
           let toast = getUpdateSuccessResultDialog("Pipeline", setShowToast);
-          console.log("Got toast: " + JSON.stringify(toast));
           setToast(toast);
           setShowToast(true);
         }

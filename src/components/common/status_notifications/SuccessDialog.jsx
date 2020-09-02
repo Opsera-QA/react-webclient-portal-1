@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTimes} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
-function SuccessDialog({successMessage, setSuccessMessage, alignment}) {
+function SuccessDialog({ successMessage, setSuccessMessage, alignment }) {
   const [messageBody, setMessageBody] = useState("");
 
   const clearSuccess = () => {
@@ -20,7 +20,7 @@ function SuccessDialog({successMessage, setSuccessMessage, alignment}) {
     return (
       <div className="w-100 success-block top-error-block">
         {setSuccessMessage && <div className="float-right ml-1">
-          <FontAwesomeIcon icon={faTimes} style={{cursor: "pointer"}} onClick={() => {
+          <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
             clearSuccess();
           }}/>
         </div>}
@@ -28,12 +28,13 @@ function SuccessDialog({successMessage, setSuccessMessage, alignment}) {
       </div>
     );
   }
-  else if (alignment === "detailPanelTop") {
+
+  if (alignment === "detailPanelTop") {
     return (
       <div className="row success-block top-dialog-detail-panel-block m-2">
         <div className="col-sm-12 my-auto text-center">
           {setSuccessMessage && <div className="float-right ml-1">
-            <FontAwesomeIcon icon={faTimes} style={{cursor: "pointer"}} onClick={() => {
+            <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
               clearSuccess();
             }}/>
           </div>}
@@ -42,26 +43,42 @@ function SuccessDialog({successMessage, setSuccessMessage, alignment}) {
       </div>
     );
   }
-  else {
+
+  if (alignment === "top") {
     return (
-      <div className="row">
-        <div className="col-sm-12 my-auto text-center">
+      <div className="w-100 error-block top-error-block">
+        <div className="float-right ml-1">
           {setSuccessMessage && <div className="float-right ml-1">
-            <FontAwesomeIcon icon={faTimes} style={{cursor: "pointer"}} onClick={() => {
+            <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
               clearSuccess();
             }}/>
           </div>}
-          <div className="success-text">
-            <span>{messageBody}</span>
-          </div>
+          <span>{messageBody}</span>
         </div>
       </div>
     );
   }
+
+
+  return (
+    <div className="row">
+      <div className="col-sm-12 my-auto text-center">
+        {setSuccessMessage && <div className="float-right ml-1">
+          <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
+            clearSuccess();
+          }}/>
+        </div>}
+        <div className="success-text">
+          <span>{messageBody}</span>
+        </div>
+      </div>
+    </div>
+  );
+
 }
 
 SuccessDialog.propTypes = {
-  successMessage: PropTypes.string
+  successMessage: PropTypes.string,
 };
 
 export default SuccessDialog;
