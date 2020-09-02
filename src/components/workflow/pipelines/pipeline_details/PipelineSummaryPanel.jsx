@@ -366,16 +366,16 @@ function PipelineSummaryPanel({
             {showToast && toast}
             <Row>
               <Col sm={12} className="py-2">
-              <div className="title-text-5 flex-fill pb-3">
+              <div className="title-text-5 pb-3 d-flex">
                 {editTitle ?
                   <>
-                      <Col sm={11}>
+                      <div className="flex-fill p-2">
                         <Form.Control maxLength="500" type="text" placeholder="" value={formData.name || ""}
-                                      onChange={e => setFormData({ ...formData, name: e.target.value })}/></Col>
-                      <Col sm={1} className="my-auto">
+                                      onChange={e => setFormData({ ...formData, name: e.target.value })}/></div>
+                    <div className="flex-fill p-2">
                         {getSaveIcon("name")}
                         {getCancelIcon(setEditTitle)}
-                      </Col>
+                      </div>
                   </>
                   :
                   <>
