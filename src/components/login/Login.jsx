@@ -4,7 +4,7 @@ import LoginForm from "./LoginForm";
 import { useOktaAuth } from "@okta/okta-react";
 import { useHistory } from "react-router-dom";
 
-const Login = ({ issuer }) => {
+const Login = ({ issuer, redirectFromLogin }) => {
   const history = useHistory();
   const { authState } = useOktaAuth();
 
@@ -13,7 +13,8 @@ const Login = ({ issuer }) => {
     if (!authState.isPending && authState.isAuthenticated) {
       console.log("Login.jsx detected an authenticated state, so pushing to /");
       console.debug("warning, this could be a problem with 401 errors IF this state says it's authenticated but token expired, so may now want to do this");
-      history.push("/");
+      //history.push("/");
+      redirectFromLogin();
     }
 
   }, [authState]);
@@ -23,6 +24,7 @@ const Login = ({ issuer }) => {
 
 Login.propTypes = {
   issuer: PropTypes.string,
+  redirectFromLogin: PropTypes.func
 };
 export default Login;
 

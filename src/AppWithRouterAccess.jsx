@@ -151,7 +151,8 @@ const AppWithRouterAccess = () => {
 
   useEffect(() => {
     enableSideBar(history.location.pathname);
-  }, [data]);
+  }, [data, history.location.pathname]);
+
 
   const enableSideBar = (path) => {
     if (path === "/login" || path === "/signup" || path === "/registration" || path === "/trial/registration") {
@@ -163,6 +164,12 @@ const AppWithRouterAccess = () => {
 
   const refreshToken = () => {
     refetch();
+  };
+
+  const redirectFromLogin = () => {
+    console.log("redirectFromLogin called")
+    refetch();
+    history.push("/");
   };
 
 
@@ -182,7 +189,7 @@ const AppWithRouterAccess = () => {
                 <Route path="/" exact component={Home}/>
                 {/*<SecureRoute path="/" exact component={Overview}/>*/}
 
-                <Route path='/login' render={() => <Login/>}/>
+                <Route path='/login' render={() => <Login redirectFromLogin={redirectFromLogin}/>}/>
                 <Route path='/implicit/callback' component={LoginCallback}/>
 
                 <Route path="/signup" exact component={Signup}/>
