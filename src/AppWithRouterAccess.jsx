@@ -74,6 +74,7 @@ const OKTA_CONFIG = {
   client_id: process.env.REACT_APP_OKTA_CLIENT_ID,
   redirect_uri: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
   disableHttpsCheck: false,
+  pkce: true,
   onAuthRequired: onAuthRequired,
 };
 
@@ -81,6 +82,7 @@ const authClient = new OktaAuth({
   issuer: OKTA_CONFIG.issuer,
   clientId: OKTA_CONFIG.client_id,
   redirectUri: OKTA_CONFIG.redirect_uri,
+  pkce: true,
 });
 
 // Triggered when a token has expired
