@@ -64,9 +64,11 @@ import ErrorDialog from "./components/common/status_notifications/error";
 const OktaAuth = require("@okta/okta-auth-js");
 const config = require("./config");
 
+
 const onAuthRequired = () => {
   console.log("onAuthRequired being called!");
-//  window.location = "/login";
+  window.location = "/login";
+
 };
 
 const OKTA_CONFIG = {
@@ -181,6 +183,8 @@ const AppWithRouterAccess = () => {
                 <Route path="/about/pricing" component={Pricing}/>
                 <Route path="/help" component={OnlineHelp}/>
                 <Route path="/registration" exact component={Registration}/>
+
+
 
                 <SecureRoute path="/profile" component={Profile}/>
                 <SecureRoute path="/inventory/:view" exact component={Inventory}/>
