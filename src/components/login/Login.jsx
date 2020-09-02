@@ -9,12 +9,12 @@ const Login = ({ issuer }) => {
   const { authState } = useOktaAuth();
 
   useEffect(() => {
+    if (authState.isPending !== true && authState.isAuthenticated) {
+      console.debug("warning, this could be a problem with 401 errors IF this state says it's authenticated but token expired, so may now want to do this");
+      //history.push("/");
+    }
+    console.log("Login.jsx detected an authenticated state, so pushing to /", authState);
   }, [authState]);
-
-  //if (authState.isAuthenticated) {
-    //history.push("/");
-  //  return;
- // }
 
   if (authState.isPending) {
     return <div>Loading...</div>;

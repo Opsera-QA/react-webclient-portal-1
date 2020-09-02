@@ -64,9 +64,10 @@ const OktaAuth = require("@okta/okta-auth-js");
 const config = require("./config");
 
 
-const onAuthRequired = () => {
+const onAuthRequired = (authService) => {
   console.log("onAuthRequired being called!");
-  window.location = "/login";
+  console.log(authService)
+  //window.location = "/login";
 };
 
 const OKTA_CONFIG = {
