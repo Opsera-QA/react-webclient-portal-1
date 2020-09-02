@@ -15,17 +15,17 @@ import {
  * @returns
  */
 function ErrorDialog({ error, align, type, setError }) {
-  //const contextType = useContext(AuthContext);
+  const contextType = useContext(AuthContext);
   const [state, setState] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     { message: null, detail: null, statusCode: null, alignment: "inline", variant: "danger" },
   );
 
   const reloadSession = function() {
-    //const { renewUserToken } = contextType;
+    const { renewUserToken } = contextType;
     console.log("Error.jsx: triggering login function in error.jsx (window reload)");
-    //renewUserToken(); //This triggers a full state refresh of the application, downside is it redirect to home
-    window.location.reload(false); //trying this out for improved user experience if it works
+    renewUserToken(); //This triggers a full state refresh of the application, downside is it redirect to home
+    //window.location.reload(false); //trying this out for improved user experience if it works
   };
 
   const clearError = () => {
