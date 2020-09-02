@@ -24,6 +24,11 @@ const registrationMetadata = {
       isRequired: true
     },
     {
+      label: "Domain",
+      id: "domain",
+      isRequired: true
+    },
+    {
       label: "Password",
       id: "password",
       isRequired: true,
