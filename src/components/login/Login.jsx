@@ -18,10 +18,6 @@ const Login = ({ issuer }) => {
 
   }, [authState]);
 
-  if (authState.isPending) {
-    return <div>Loading...</div>;
-  }
-
   return <LoginForm issuer={issuer}/>;
 };
 

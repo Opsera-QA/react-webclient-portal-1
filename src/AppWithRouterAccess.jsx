@@ -70,13 +70,19 @@ const onAuthRequired = async (authService) => {
 
 
 
+/*
   if (!authService._authState.isPending) {
     console.log("NOT PENDING SO WOULD REDIRECT!")
     //window.location = "/login";
   }
+*/
 
   const authenticationState = await authService.getAuthState();
   console.log("authenticationState: ", authenticationState)
+  if (!authenticationState.isAuthenticated) {
+    console.log("NOT PENDING SO WOULD REDIRECT!")
+    window.location = "/login";
+  }
 };
 
 const OKTA_CONFIG = {
