@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useMemo } from "react";
 import { Button } from "react-bootstrap";
-import { AuthContext } from "contexts/AuthContext"; 
+import { AuthContext } from "contexts/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
@@ -49,31 +49,37 @@ function TagManagement() {
 
   if (!accessRoleData || pageLoading) {
     return (<LoadingDialog size="sm"/>);
-  } else if (!accessRoleData.OpseraAdministrator || !accessRoleData.Administrator) {
-    return (<AccessDeniedDialog roleData={accessRoleData} />);
+  } else if (
+    !accessRoleData.OpseraAdministrator ||
+    !accessRoleData.Administrator ||
+    !accessRoleData.PowerUser ||
+    !accessRoleData.User
+  ) {
+    return (<AccessDeniedDialog roleData={accessRoleData}/>);
   } else {
 
     return (
       <div>
-        <BreadcrumbTrail destination={"tagManagement"} />
-          <div className="justify-content-between mb-1 d-flex">
-            <h5>Tag Management</h5>
-            <div className="text-right">
-              <Button variant="primary" size="sm"
-                      onClick={() => {
-                        createTag();
-                      }}>
-                <FontAwesomeIcon icon={faPlus} className="mr-1"/>New Tag
-              </Button>
-              <br/>
-            </div>
+        <BreadcrumbTrail destination={"tagManagement"}/>
+        <div className="justify-content-between mb-1 d-flex">
+          <h5>Tag Management</h5>
+          <div className="text-right">
+            <Button variant="primary" size="sm"
+                    onClick={() => {
+                      createTag();
+                    }}>
+              <FontAwesomeIcon icon={faPlus} className="mr-1"/>New Tag
+            </Button>
+            <br/>
           </div>
+        </div>
 
-          <div className="full-height">
-            {tagList && <TagsTable data={tagList}/>}
-          </div>
+        <div className="full-height">
+          {tagList && <TagsTable data={tagList}/>}
+        </div>
 
-          {showTagModal ? <NewTagModal showModal={showTagModal} loadData={loadData} setShowModal={setShowTagModal}/> : null}
+        {showTagModal ?
+          <NewTagModal showModal={showTagModal} loadData={loadData} setShowModal={setShowTagModal}/> : null}
 
       </div>
     );

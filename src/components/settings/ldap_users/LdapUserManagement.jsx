@@ -62,7 +62,7 @@ function LdapUserManagement() {
       if (orgDomain != null && userRoleAccess.OpseraAdministrator) {
         setCurrentOrganizationDomain(orgDomain);
         await getUsersByDomain(orgDomain);
-      } else if (userRoleAccess.Administrator === true && ldap.domain != null) {
+      } else if ((userRoleAccess.Administrator || userRoleAccess.PowerUser) && ldap.domain != null) {
         history.push(`/settings/${ldap.domain}/users/`);
         setCurrentOrganizationDomain(ldap.email);
         await getUsersByDomain(ldap.domain);

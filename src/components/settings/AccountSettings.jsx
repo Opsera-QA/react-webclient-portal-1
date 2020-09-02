@@ -39,13 +39,13 @@ function AccountSettings() {
 
           <Row className="ml-3 mt-3 admin-tools">
             <Col xs={12} md={6} lg={4} className="p-2">
-              <Link to="/settings/groups"><FontAwesomeIcon icon={faUserFriends} fixedWidth />Groups</Link>
+              <Link to="/settings/groups"><FontAwesomeIcon icon={faUserFriends} fixedWidth className="mr-1" />Groups</Link>
             </Col>
             <Col xs={12} md={6} lg={4} className="p-2">
-              <Link to="/settings/users"><FontAwesomeIcon icon={faUser} fixedWidth />Users</Link>
+              <Link to="/settings/users"><FontAwesomeIcon icon={faUser} fixedWidth className="mr-1" />Users</Link>
             </Col>
             <Col xs={12} md={6} lg={4} className="p-2">
-              <Link to={"/settings/tags"}><FontAwesomeIcon icon={faTags} fixedWidth/> Tags</Link>
+              <Link to={"/settings/tags"}><FontAwesomeIcon icon={faTags} fixedWidth className="mr-1"/> Tags</Link>
             </Col>
             {/*<Col xs={12} md={6} lg={4} className="p-2">
               <Link to="/settings/customerstatus"><FontAwesomeIcon icon={faHeartbeat} fixedWidth/> Customer Status</Link>
