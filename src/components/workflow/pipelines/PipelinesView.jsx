@@ -63,7 +63,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
     cookieHelpers.setCookie("pipelines", "sortOption", sortOption.text);
   };
 
-  if ((loading && !errors) || !data.response) {
+  if (loading && !errors) {
     return (<LoadingDialog size="sm"/>);
   }
 
