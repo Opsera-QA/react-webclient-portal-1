@@ -61,10 +61,12 @@ import Pipelines from "./components/workflow/pipelines/Pipelines";
 import PipelineWorkflowView from "./components/workflow/pipelines/pipeline_details/workflow/PipelineWorkflowView";
 import PipelineDetailView from "./components/workflow/pipelines/pipeline_details/PipelineDetailView";
 import ErrorDialog from "./components/common/status_notifications/error";
+
 const OktaAuth = require("@okta/okta-auth-js");
 const config = require("./config");
 
 const onAuthRequired = () => {
+  console.log("onAuthRequired being called!");
   window.location = "/login";
 };
 
@@ -96,7 +98,7 @@ authClient.tokenManager.on("renewed", function(key, newToken, oldToken) {
 // Triggered when an OAuthError is returned via the API (typically during token renew)
 authClient.tokenManager.on("error", function(err) {
   console.log("TokenManager error:", err);
-  window.location.reload(false)
+  window.location.reload(false);
   // err.name
   // err.message
   // err.errorCode
@@ -104,7 +106,6 @@ authClient.tokenManager.on("error", function(err) {
   // err.tokenKey
   // err.accessToken
 });
-
 
 
 const AppWithRouterAccess = () => {
@@ -143,7 +144,7 @@ const AppWithRouterAccess = () => {
     enableSideBar(history.location.pathname);
   }, [data]);
 
-    const enableSideBar = (path) => {
+  const enableSideBar = (path) => {
     if (path === "/login" || path === "/signup" || path === "/registration" || path === "/trial/registration") {
       setHideSideBar(true);
     } else {
@@ -164,7 +165,7 @@ const AppWithRouterAccess = () => {
         {/*{ (error && !error.message.includes("401") && !error.message.includes("cancelToken")) && <div style={{height: "55px"}}><ErrorDialog align="top" error={error} /></div> }*/}
         <AuthContextProvider userData={data} refreshToken={refreshToken} authClient={authClient}>
           <Navbar hideAuthComponents={hideSideBar} userData={data}/>
-          <div className="container-fluid" style={{margin:"0"}}>
+          <div className="container-fluid" style={{ margin: "0" }}>
             <div className="d-flex flex-row">
               <Sidebar userData={data} hideSideBar={hideSideBar}/>
 
@@ -172,7 +173,7 @@ const AppWithRouterAccess = () => {
                 {/*<Route path="/welcome" exact component={Home}/>*/}
                 <SecureRoute path="/" exact component={Overview}/>
 
-                <Route path='/login' render={() => <Login />}/>
+                <Route path='/login' render={() => <Login/>}/>
                 <Route path='/implicit/callback' component={LoginCallback}/>
 
                 <Route path="/signup" exact component={Signup}/>
