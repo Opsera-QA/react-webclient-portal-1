@@ -66,7 +66,7 @@ const config = require("./config");
 
 const onAuthRequired = () => {
   console.log("onAuthRequired being called!");
-  window.location = "/login";
+//  window.location = "/login";
 };
 
 const OKTA_CONFIG = {
