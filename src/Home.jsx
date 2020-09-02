@@ -9,6 +9,7 @@ function Home() {
 
   useEffect(() => {
     if (!authState.isPending && !authState.isAuthenticated) {
+      console.log('Home useEffect, push to login')
       history.push("/login");
     }
     console.log(authState);

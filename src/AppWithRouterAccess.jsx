@@ -79,9 +79,10 @@ const onAuthRequired = async (authService) => {
 
   const authenticationState = await authService.getAuthState();
   console.log("authenticationState: ", authenticationState)
-  if (!authenticationState.isAuthenticated) {
+  if (!authenticationState.isAuthenticated && !authenticationState.isPending) {
     console.log("NOT PENDING SO WOULD REDIRECT!")
-    window.location = "/login";
+
+    //window.location = "/login";
   }
 };
 
@@ -98,7 +99,6 @@ const authClient = new OktaAuth({
   issuer: OKTA_CONFIG.issuer,
   clientId: OKTA_CONFIG.client_id,
   redirectUri: OKTA_CONFIG.redirect_uri,
-  pkce: true,
 });
 
 // Triggered when a token has expired
