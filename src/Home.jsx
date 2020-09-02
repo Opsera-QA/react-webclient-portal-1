@@ -12,7 +12,6 @@ function Home() {
       console.log('Home useEffect, push to login')
       history.push("/login");
     }
-    console.log(authState);
   }, [authState]);
 
   if (authState.isAuthenticated) {

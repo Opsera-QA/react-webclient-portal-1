@@ -8,8 +8,6 @@ const axiosInstance = axios.create({
 
 const setInterceptorToken = (authToken) => {
   axiosInstance.interceptors.request.use(function(config) {
-    //const token = "Bearer " + authToken;
-    //config.headers.Authorization = token;
     config.headers["authorization"] = `Bearer ${authToken}`;
     config.headers["cache-control"] = `no-cache`;
     return config;
@@ -17,6 +15,7 @@ const setInterceptorToken = (authToken) => {
     if (error.message.includes("401")){
       console.log("apiService detected 401 and would redirect to login, if allowed")
       //window.location = "/login";
+      window.location.reload(false);
     }
     return Promise.reject(error);
 

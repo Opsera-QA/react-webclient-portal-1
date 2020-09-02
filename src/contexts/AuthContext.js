@@ -21,8 +21,9 @@ const AuthContextProvider = (props) => {
     const getAccessToken = async () => {
       const isAuthenticated = await getIsAuthenticated();
       if (!isAuthenticated) {
-        console.log("!getAccessToken: redirecting to login");
+        console.log("!getAccessToken: refreshing UI to trigger login");
         //window.location = "/login"; //if not authenticated, may just need to take user to login page
+        window.location.reload(false);
         return false;
       }
 
