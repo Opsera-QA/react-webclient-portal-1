@@ -10,6 +10,8 @@ const Login = ({ issuer }) => {
     return <div>Loading...</div>;
   }
 
+  console.log(authState)
+
   return <LoginForm issuer={issuer} />;
 };
 

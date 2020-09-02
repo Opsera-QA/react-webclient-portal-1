@@ -14,11 +14,11 @@ const setInterceptorToken = (authToken) => {
     config.headers["cache-control"] = `no-cache`;
     return config;
   }, function(error) {
-    if (error.message.includes("401")){
+    /*if (error.message.includes("401")){
       window.location = "/login";
-    } else {
+    } else {*/
       return Promise.reject(error);
-    }
+    //}
   }, authToken);
 };
 

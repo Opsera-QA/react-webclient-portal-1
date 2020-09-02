@@ -22,7 +22,7 @@ const AuthContextProvider = (props) => {
       const isAuthenticated = await getIsAuthenticated();
       if (!isAuthenticated) {
         console.log("!getAccessToken: redirecting to login");
-        window.location = "/login"; //if not authenticated, may just need to take user to login page
+        //window.location = "/login"; //if not authenticated, may just need to take user to login page
         return false;
       }
 
