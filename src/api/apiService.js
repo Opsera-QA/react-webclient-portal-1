@@ -14,7 +14,12 @@ const setInterceptorToken = (authToken) => {
     config.headers["cache-control"] = `no-cache`;
     return config;
   }, function(error) {
+    if (error.message.includes("401")){
+      console.log("apiService detected 401 and would redirect to login, if allowed")
+      //window.location = "/login";
+    }
     return Promise.reject(error);
+
   }, authToken);
 };
 

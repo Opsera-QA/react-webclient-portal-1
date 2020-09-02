@@ -29,7 +29,6 @@ import RegisteredUserDetail from "./components/admin/registered_users/registered
 import ManageSystems from "./components/admin/manage_systems/ManageSystems";
 import ReportsRegistration from "./components/admin/analytics/ReportsRegistration";
 import SystemStatus from "./components/admin/status/SystemStatus";
-import Overview from "./components/landing/Overview";
 import Registration from "./components/landing/Registration";
 import TagEditor from "./components/settings/tags/TagManagement";
 import TagDetailView from "./components/settings/tags/tags_detail_view/TagDetailView";
@@ -68,7 +67,6 @@ const config = require("./config");
 const onAuthRequired = () => {
   console.log("onAuthRequired being called!");
   window.location = "/login";
-
 };
 
 const OKTA_CONFIG = {
@@ -172,8 +170,8 @@ const AppWithRouterAccess = () => {
               <Sidebar userData={data} hideSideBar={hideSideBar}/>
 
               <div className="w-100 pt-4 pb-4">
-                {/*<Route path="/welcome" exact component={Home}/>*/}
-                <SecureRoute path="/" exact component={Overview}/>
+                <Route path="/" exact component={Home}/>
+                {/*<SecureRoute path="/" exact component={Overview}/>*/}
 
                 <Route path='/login' render={() => <Login/>}/>
                 <Route path='/implicit/callback' component={LoginCallback}/>
