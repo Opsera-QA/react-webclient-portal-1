@@ -430,7 +430,7 @@ function PipelineSummaryPanel({
                   {pipeline.tags.map((item, idx) => (<span key={idx}>{item}, </span>))}
                   {getEditIcon("tags")}
                   </>}
-                {editTags && <EditToolModal pipeline={pipeline.tags} visible={editTags} onHide={() => {
+                {editTags && <EditToolModal data={pipeline.tags} visible={editTags} onHide={() => {
                   setEditTags(false);
                 }} onClick={(tags) => {
                   handleSavePropertyClick(pipeline._id, tags, "tags");
