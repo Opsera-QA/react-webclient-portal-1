@@ -67,6 +67,11 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
     Object.keys(response.data["users"]).length > 0 && response.data["users"].map(user => {
       let orgDomain = user.email.substring(user.email.lastIndexOf("@") + 1);
       if (ldapOrganizationAccountData.isNew() || ldapOrganizationAccountDataDto["orgDomain"].includes(orgDomain)) {
+        if (ldapOrganizationAccountData.getData("orgOwnerEmail") != null) {
+          if (user["email"] === ldapOrganizationAccountDataDto.getData("orgOwnerEmail")) {
+            setCurrentOpseraUser({text: (user["firstName"] + " " + user["lastName"]) + ": " + user["email"], id: user});
+          }
+        }
         parsedUserNames.push({text: (user["firstName"] + " " + user["lastName"]) + ": " + user["email"], id: user});
       }
     });
@@ -183,7 +188,7 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
                   textField='text'
                   filter='contains'
                   groupBy={user => capitalizeFirstLetter(user.id.organizationName, "-", "No Organization Name")}
-                  defaultValue={undefined}
+                  defaultValue={currentOpseraUser}
                   onChange={handleOpseraUserChange}
                 />
               </div>

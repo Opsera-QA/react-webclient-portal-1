@@ -41,6 +41,11 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganization
     const response = await accountsActions.getUsers(getAccessToken);
     let parsedUserNames = [];
     Object.keys(response.data["users"]).length > 0 && response.data["users"].map(user => {
+      if (ldapOrganizationData.getData("orgOwnerEmail") != null) {
+        if (user["email"] === ldapOrganizationData.getData("orgOwnerEmail")) {
+          setCurrentOpseraUser({text: (user["firstName"] + " " + user["lastName"]) + ": " + user["email"], id: user});
+        }
+      }
       parsedUserNames.push({text: (user["firstName"] + " " + user["lastName"]) + ": " + user["email"], id: user});
     });
     setOpseraUsersList(parsedUserNames);
@@ -116,7 +121,7 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganization
                   textField='text'
                   filter='contains'
                   groupBy={user => capitalizeFirstLetter(user.id.organizationName, "-", "No Organization Name")}
-                  defaultValue={undefined}
+                  defaultValue={currentOpseraUser}
                   onChange={handleOpseraUserChange}
                 />
               </div>

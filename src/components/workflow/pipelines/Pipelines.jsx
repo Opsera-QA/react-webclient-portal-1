@@ -7,14 +7,21 @@ import PipelinesView from "./PipelinesView";
 import WorkflowCatalog from "../catalog/WorkflowCatalog";
 import cookieHelpers from "../../../core/cookies/cookie-helpers";
 import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
+import { useHistory } from "react-router-dom";
 
 function Pipelines() {
   const { tab } = useParams();
   const [errors, setErrors] = useState();
   const [loading, setLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState("owner");
+  const [activeTab, setActiveTab] = useState(undefined);
+  const history = useHistory();
 
   useEffect(() => {
+    initializeComponent();
+  }, []);
+
+  const initializeComponent = async () => {
+    setLoading(true);
     if (tab != null) {
       setActiveTab(tab);
     }
@@ -29,11 +36,13 @@ function Pipelines() {
         setActiveTab("owner");
       }
     }
-  }, []);
+    setLoading(false);
+  }
 
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
     setActiveTab(tabSelection);
+    history.push(`/workflow/${tabSelection}`);
 
     if (tabSelection !== "catalog") {
       cookieHelpers.setCookie("pipelines", "selectedTab", tabSelection);
@@ -79,7 +88,7 @@ function Pipelines() {
               </ul>
             </div>
             <div className="content-block-collapse px-3 pt-2">
-              <PipelinesTabView activeTab={activeTab} setActiveTab={setActiveTab}/>
+              {activeTab && <PipelinesTabView activeTab={activeTab} setActiveTab={setActiveTab}/>}
             </div>
           </>
         </div>

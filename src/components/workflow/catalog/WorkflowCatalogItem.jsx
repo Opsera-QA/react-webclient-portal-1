@@ -53,14 +53,17 @@ const WorkflowCatalogItem = ({item, parentCallback}) => {
     <>
       <Card style={{ height:"100%" }}>
         <Card.Title className="pb-0">
-          <div className="d-flex pipeline-card-title p-2">
+          <div className="d-flex catalog-card-title p-2">
             <div>
               <FontAwesomeIcon icon={faOctagon} /> {item.name}
+            </div>
+            <div className="ml-auto mr-1 text-muted small upper-case-first d-none d-md-block">
+              Template
             </div>
           </div>
         </Card.Title>
         <Card.Body className="pt-0 pb-2">
-          <Row className="pipeline-card-text">
+          <Row className="catalog-card-text">
             <Col lg={12}>
               <Card.Text className="mb-2">{item.description}</Card.Text>
             </Col>

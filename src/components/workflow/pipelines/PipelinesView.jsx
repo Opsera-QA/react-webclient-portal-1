@@ -32,6 +32,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
     setLoading(true);
 
     try {
+      setData(undefined);
       const pipelinesResponse = await pipelineActions.getPipelines(currentPage, pageSize, sortOption, currentTab, getAccessToken);
       setData(pipelinesResponse.data);
       let storedSortOption = cookieHelpers.getCookie("pipelines", "sortOption");
