@@ -21,6 +21,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import "../../workflows.css";
+import ErrorDialog from "../../../common/status_notifications/error";
 
 function PipelineActionControls({
   pipeline,
@@ -31,7 +32,7 @@ function PipelineActionControls({
   setParentWorkflowStatus,
   setPipeline,
   refreshCount,
-  setRefreshCount
+  setRefreshCount,
 }) {
   const { getAccessToken } = useContext(AuthContext);
   const [workflowStatus, setWorkflowStatus] = useState(false);
@@ -240,24 +241,35 @@ function PipelineActionControls({
   //action functions
   async function cancelPipelineRun(pipelineId) {
     setStopPipeline(true);
-    const response = await PipelineActions.cancel(pipelineId, getAccessToken);
+    const response = await PipelineActions.cancel(pipelineId, getAccessToken)
+      .catch(err => {
+        setStartPipeline(false);
+        console.log(err);
+        setErrors(err.error);
+      });
+    /*;
     if (typeof (response.error) !== "undefined") {
       console.log(response.error);
       setErrors(response.error);
-    }
+    }*/
     setStopPipeline(false);
     setStartPipeline(false);
   }
 
   async function runPipeline(pipelineId) {
     setStartPipeline(true);
-    const response = await PipelineActions.run(pipelineId, {}, getAccessToken);
+    const response = await PipelineActions.run(pipelineId, {}, getAccessToken)
+      .catch(err => {
+        setStartPipeline(false);
+        console.log(err);
+        setErrors(err.error);
+      });
 
-    if (typeof (response.error) !== "undefined") {
+    /*if (typeof (response.error) !== "undefined") {
       setStartPipeline(false);
       console.log(response.error);
       setErrors(response.error);
-    }
+    }*/
   }
 
   const stopSocket = () => {
@@ -306,7 +318,7 @@ function PipelineActionControls({
         if (typeof (dataObj) !== "undefined" && Object.keys(dataObj).length > 0) {
           pipeline.workflow.last_step = dataObj;
           let updatedPipeline = pipeline;
-          updatedPipeline.workflow = {...pipeline.workflow, last_step: dataObj}
+          updatedPipeline.workflow = { ...pipeline.workflow, last_step: dataObj };
           setPipeline(updatedPipeline);
           setRefreshCount(refreshCount => refreshCount + 1);
         }
@@ -345,6 +357,8 @@ function PipelineActionControls({
                            handleClose={handlePipelineStartWizardClose}
                            handlePipelineWizardRequest={handlePipelineWizardRequest}
                            refreshPipelineActivityData={fetchActivityLogs}/>}
+
+      {error && <ErrorDialog error={error} setError={setErrors} align="top"/> }
 
       <div className="text-right" style={{ marginBottom: "5px" }}>
         {workflowStatus === "running" &&
