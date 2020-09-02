@@ -20,6 +20,7 @@ function OverviewLanding() {
   let userAccess = {};
 
   useEffect(() => {
+    console.log("OverviewLanding calling userEffect")
     getRoles();
   }, []);
 
