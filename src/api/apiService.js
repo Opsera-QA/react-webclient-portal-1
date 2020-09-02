@@ -7,32 +7,27 @@ const axiosInstance = axios.create({
 });
 
 const setInterceptorToken = (authToken) => {
-  axiosInstance.interceptors.request.use(function (config) {
+  axiosInstance.interceptors.request.use(function(config) {
     //const token = "Bearer " + authToken;
     //config.headers.Authorization = token;
     config.headers["authorization"] = `Bearer ${authToken}`;
     config.headers["cache-control"] = `no-cache`;
     return config;
   }, function(error) {
-    /*if (error.message.includes("401")){
-      window.location = "/login";
-    } else {*/
-      return Promise.reject(error);
-    //}
+    return Promise.reject(error);
   }, authToken);
 };
 
-export function axiosApiService (token) {
+export function axiosApiService(token) {
   setInterceptorToken(token);
   return axiosInstance;
 }
 
-export function axiosApiServiceMultiGet (token, urls) {
+export function axiosApiServiceMultiGet(token, urls) {
   setInterceptorToken(token);
   const requests = urls.map(URL => axiosInstance.get(URL).catch(err => null));
   return axios.all(requests);
 }
-
 
 
 export class ApiService {
@@ -40,7 +35,9 @@ export class ApiService {
     this.url = url;
     this.params = params;
     this.data = data; //POST BODY Data JSON format
-    if (token) { setInterceptorToken(token); }
+    if (token) {
+      setInterceptorToken(token);
+    }
   }
 
   get() {
@@ -49,7 +46,7 @@ export class ApiService {
       method: "get",
       url: self.url,
       params: self.params,
-      responseType: "stream"
+      responseType: "stream",
     });
   }
 
@@ -60,7 +57,7 @@ export class ApiService {
       url: self.url,
       params: self.params,
       data: self.data,
-      responseType: "stream"
+      responseType: "stream",
     });
   }
 

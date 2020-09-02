@@ -19,7 +19,7 @@ const AuthContextProvider = (props) => {
     };
 
     const getAccessToken = async () => {
-/*
+/* //this may still be needed!  right now nothing is left to redirect user since I also removed this at the apiSErvice.js level
       const isAuthenticated = await getIsAuthenticated();
       if (!isAuthenticated) {
         console.log("!getAccessToken: redirecting to login");

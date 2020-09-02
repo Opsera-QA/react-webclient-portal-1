@@ -129,7 +129,6 @@ const AppWithRouterAccess = () => {
       } catch (err) {
         console.error("Error in authClient.tokenManager via Users Axios.interceptors");
         console.error(err);
-        //window.location = "/login";
       }
     },
     function(error) {
