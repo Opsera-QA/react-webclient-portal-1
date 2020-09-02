@@ -13,6 +13,8 @@
   background-image:
     linear-gradient(to right, #dddddd 1px, transparent 1px),
     linear-gradient(to bottom, #dddddd 1px, transparent 1px);
+
+  min-height: 70vh;
 }
 
 .workflow-module-container-width-sm {
