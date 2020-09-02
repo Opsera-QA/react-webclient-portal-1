@@ -20,7 +20,7 @@ function JenkinsAccounts({ toolData, loadData }) {
         <div className="my-1 text-right">
           <Button variant="primary" size="sm"
                   onClick={() => createJenkinsAccount()}>
-            <FontAwesomeIcon icon={faPlus} className="mr-1"/> Add Jenkins Account Credentials
+            <FontAwesomeIcon icon={faPlus} className="mr-1"/> Register New Account Credentials
           </Button>
           <br/>
         </div>
