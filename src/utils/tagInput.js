@@ -44,14 +44,6 @@ function TagInput(props) {
 
   return (
     <div className="pt-4 px-4">
-      <div style={{ display: "flex", flexWrap: "wrap" }}>
-        {tags.map((tag, i) => (
-          <Button key={tag}variant="outline-secondary" style={{ marginRight: 10, marginBottom: 10 }} size="sm">
-            {tag} 
-            <span style={{ marginLeft: 5 }} onClick={() => { removeTag(i); }}><FontAwesomeIcon icon={faTimes} fixedWidth/></span>
-          </Button>
-        ))}
-      </div>
       <InputGroup className="mb-3">
         <FormControl
           placeholder="Add tag and press enter"
@@ -62,6 +54,14 @@ function TagInput(props) {
         />
         <Button variant="primary" size="sm" onClick={addTag} className="ml-3"><FontAwesomeIcon icon={faPlus} /></Button>
       </InputGroup>
+      <div style={{ display: "flex", flexWrap: "wrap" }}>
+        {tags.map((tag, i) => (
+          <Button key={tag}variant="outline-secondary" style={{ marginRight: 10, marginBottom: 10 }} size="sm">
+            {tag}
+            <span style={{ marginLeft: 5 }} onClick={() => { removeTag(i); }}><FontAwesomeIcon icon={faTimes} fixedWidth/></span>
+          </Button>
+        ))}
+      </div>
     </div>
   );
 
