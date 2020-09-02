@@ -58,7 +58,6 @@ import ToolIdentifierDetailView
   from "./components/admin/tools/tool_identifier/tool_identifier_detail_view/ToolIdentifierDetailView";
 import Axios from "axios";
 import Pipelines from "./components/workflow/pipelines/Pipelines";
-import PipelineWorkflowView from "./components/workflow/pipelines/pipeline_details/workflow/PipelineWorkflowView";
 import PipelineDetailView from "./components/workflow/pipelines/pipeline_details/PipelineDetailView";
 import ErrorDialog from "./components/common/status_notifications/error";
 
@@ -67,7 +66,7 @@ const config = require("./config");
 
 const onAuthRequired = () => {
   console.log("onAuthRequired being called!");
-  window.location = "/login";
+  //window.location = "/login";
 };
 
 const OKTA_CONFIG = {
@@ -162,7 +161,7 @@ const AppWithRouterAccess = () => {
   } else {
     return (
       <Security {...OKTA_CONFIG}>
-        {/*{ (error && !error.message.includes("401") && !error.message.includes("cancelToken")) && <div style={{height: "55px"}}><ErrorDialog align="top" error={error} /></div> }*/}
+        { (error && !error.message.includes("401") && !error.message.includes("cancelToken")) && <div style={{height: "55px"}}><ErrorDialog align="top" error={error} /></div> }
         <AuthContextProvider userData={data} refreshToken={refreshToken} authClient={authClient}>
           <Navbar hideAuthComponents={hideSideBar} userData={data}/>
           <div className="container-fluid" style={{ margin: "0" }}>
