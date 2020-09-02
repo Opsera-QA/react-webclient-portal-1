@@ -115,7 +115,9 @@ authClient.tokenManager.on("renewed", function(key, newToken, oldToken) {
 // Triggered when an OAuthError is returned via the API (typically during token renew)
 authClient.tokenManager.on("error", function(err) {
   console.log("TokenManager error:", err);
-  window.location.reload(false);
+  //window.location.reload(false); //TODO THIS IS NEEDED!!!
+
+
   // err.name
   // err.message
   // err.errorCode
