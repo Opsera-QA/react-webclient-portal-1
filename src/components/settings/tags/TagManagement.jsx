@@ -49,12 +49,7 @@ function TagManagement() {
 
   if (!accessRoleData || pageLoading) {
     return (<LoadingDialog size="sm"/>);
-  } else if (
-    !accessRoleData.OpseraAdministrator ||
-    !accessRoleData.Administrator ||
-    !accessRoleData.PowerUser ||
-    !accessRoleData.User
-  ) {
+  } else if (!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator) {
     return (<AccessDeniedDialog roleData={accessRoleData}/>);
   } else {
 
