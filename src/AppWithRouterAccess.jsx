@@ -66,22 +66,13 @@ const config = require("./config");
 
 const onAuthRequired = async (authService) => {
   console.log("onAuthRequired being called!");
-  console.log(authService._authState)
+//  console.log(authService._authState)
 
-
-
-/*
-  if (!authService._authState.isPending) {
-    console.log("NOT PENDING SO WOULD REDIRECT!")
-    //window.location = "/login";
-  }
-*/
 
   const authenticationState = await authService.getAuthState();
   console.log("authenticationState: ", authenticationState)
   if (!authenticationState.isAuthenticated && !authenticationState.isPending) {
     console.log("NOT PENDING SO WOULD REDIRECT!")
-
     //window.location = "/login";
   }
 };
@@ -115,7 +106,7 @@ authClient.tokenManager.on("renewed", function(key, newToken, oldToken) {
 // Triggered when an OAuthError is returned via the API (typically during token renew)
 authClient.tokenManager.on("error", function(err) {
   console.log("TokenManager error:", err);
-  //window.location.reload(false); //TODO THIS IS NEEDED!!!
+  window.location.reload(false);
 
 
   // err.name
