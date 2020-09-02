@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useOktaAuth } from "@okta/okta-react";
 import OverviewLanding from "./components/landing/Overview";
@@ -11,11 +11,11 @@ function Home() {
     if (!authState.isPending && !authState.isAuthenticated) {
       history.push("/login");
     }
-    console.log(authState)
+    console.log(authState);
   }, [authState]);
 
   if (authState.isAuthenticated) {
-    return <OverviewLanding />;
+    return <OverviewLanding/>;
   }
 
 
