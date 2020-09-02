@@ -64,10 +64,19 @@ const OktaAuth = require("@okta/okta-auth-js");
 const config = require("./config");
 
 
-const onAuthRequired = (authService) => {
+const onAuthRequired = async (authService) => {
   console.log("onAuthRequired being called!");
-  console.log(authService)
-  //window.location = "/login";
+  console.log(authService._authState)
+
+
+
+  if (!authService._authState.isPending) {
+    console.log("NOT PENDING SO WOULD REDIRECT!")
+    //window.location = "/login";
+  }
+
+  const authenticationState = await authService.getAuthState();
+  console.log("authenticationState: ", authenticationState)
 };
 
 const OKTA_CONFIG = {
