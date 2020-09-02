@@ -11,7 +11,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import PipelineWelcomeView from "./PipelineWelcomeView";
 import cookieHelpers from "../../../core/cookies/cookie-helpers";
-import {getSortOptionByText} from "../../common/pagination";
+import { getSortOptionByText } from "../../common/pagination";
 
 function PipelinesView({ currentTab, setActiveTab }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -24,7 +24,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
   const [sortOption, setSortOption] = useState({ name: "name", text: "Pipeline Name (a-z)", order: 1 });
 
   // Executed every time page number, page size, or sort option changes
-  useEffect(() => {    
+  useEffect(() => {
     fetchData();
   }, [currentPage, pageSize, sortOption, currentTab]);
 
@@ -37,21 +37,17 @@ function PipelinesView({ currentTab, setActiveTab }) {
       setData(pipelinesResponse.data);
       let storedSortOption = cookieHelpers.getCookie("pipelines", "sortOption");
 
-      if (storedSortOption != null)
-      {
+      if (storedSortOption != null) {
         setSortOption(getSortOptionByText(storedSortOption));
       }
-    }
-    catch (error)
-    {
+    } catch (error) {
       setErrors(error);
       console.error(`Error Reported: ${error}`);
-    }
-    finally {
-      setLoading(false)
+    } finally {
+      setLoading(false);
     }
   }
-  
+
   const gotoPage = (pageNumber, pageSize) => {
     setCurrentPage(pageNumber);
     setPageSize(pageSize);
@@ -71,22 +67,22 @@ function PipelinesView({ currentTab, setActiveTab }) {
     return (<ErrorDialog error={errors}/>);
   }
 
-  if (data && data.count === 0 && currentTab === "owner")  {
-    return (<><PipelineWelcomeView setActiveTab={setActiveTab} /></>)
+  if (data && data.count === 0 && currentTab === "owner") {
+    return (<><PipelineWelcomeView setActiveTab={setActiveTab}/></>);
   }
 
-  if (data && data.count === 0)  {
+  if (data && data.count === 0) {
     return (
-      <div className="px-2 max-content-width" style={{minWidth:"505px"}}>
-        <div className="my-5"><InfoDialog message="No pipelines found" /></div>
+      <div className="px-2 max-content-width" style={{ minWidth: "505px" }}>
+        <div className="my-5"><InfoDialog message="No pipelines found"/></div>
       </div>
     );
   }
 
-  if (data && data.response && data.count >= 0)  {
+  if (data && data.response && data.count >= 0) {
     return (
       <>
-        <div className="px-2 max-content-width" style={{minWidth:"505px"}}>
+        <div className="px-2 max-content-width" style={{ minWidth: "505px" }}>
           <div className="mb-4">
             <Pagination total={data.count} currentPage={currentPage} pageSize={pageSize} location="top"
                         sortOption={sortOption}
@@ -105,14 +101,14 @@ function PipelinesView({ currentTab, setActiveTab }) {
       </>
     );
   }
-  else {
-    return (<></>)
-  }
+
+  return (<></>);
+
 }
 
 PipelinesView.propTypes = {
   currentTab: PropTypes.string,
-  setActiveTab: PropTypes.func
-}
+  setActiveTab: PropTypes.func,
+};
 
 export default PipelinesView;
