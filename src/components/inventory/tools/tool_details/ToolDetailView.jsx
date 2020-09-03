@@ -18,12 +18,14 @@ function ToolDetailView() {
   useEffect(() => {
     // getRoles();
     getTool();
-    setPageLoading(false);
   }, []);
 
   const getTool = async () => {
+    console.log("loading tool");
+    setPageLoading(true);
     const response = await inventoryActions.getToolById(id, getAccessToken);
     setToolData(new Model(...response.data, toolMetadata, false));
+    setPageLoading(false);
   };
 
   // TODO: Implement Roles if required

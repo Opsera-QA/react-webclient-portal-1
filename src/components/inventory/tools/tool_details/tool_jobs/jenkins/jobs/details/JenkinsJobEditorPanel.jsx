@@ -16,8 +16,15 @@ import JenkinsJobTypeShellScript from "../job-type-shell-script.js";
 import JobTypeSFDC from "../job-type-sfdc";
 import {jobTypes} from "../jenkins-job-metadata";
 import {AuthContext} from "../../../../../../../../contexts/AuthContext";
+import Modal from "../../../../../../../common/modal/modal";
+import {
+  getCreateFailureResultDialog,
+  getCreateSuccessResultDialog,
+  getDeleteFailureResultDialog,
+  getUpdateFailureResultDialog, getUpdateSuccessResultDialog
+} from "../../../../../../../common/toasts/toasts";
 
-function JenkinsJobEditorPanel({ toolData, jobData, handleClose }) {
+function JenkinsJobEditorPanel({ toolData, jobData, loadData }) {
   const { getAccessToken } = useContext(AuthContext);
   let toolDataSet = toolData;
   const [ jenkinsFormList, updateJenkinsForm] = useState({ ...JobTypeBuild });
@@ -25,6 +32,9 @@ function JenkinsJobEditorPanel({ toolData, jobData, handleClose }) {
   const [jobName, setJobName ] = useState("");
   const [jobDescription, setJobDescription ] = useState("");
   const [viewForm, toggleViewForm ] = useState(true);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [toast, setToast] = useState({});
+  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {   
     //Check if data is available before update
@@ -154,11 +164,14 @@ function JenkinsJobEditorPanel({ toolData, jobData, handleClose }) {
       type: formType.split()
     };
 
+    let action;
     //Check if job is edited/delete or new job
     if(Object.keys(jobData).length > 0){
+      action = "update";
       let index =  toolDataSet.jobs.indexOf(jobData);
       toolDataSet.jobs[index] = payload;
     }else {
+      action = "create";
       (toolDataSet.jobs || (toolDataSet.jobs = [])).push(payload);
     }
 
@@ -167,13 +180,27 @@ function JenkinsJobEditorPanel({ toolData, jobData, handleClose }) {
         getAccessToken
       ).post("/registry/" + toolData["_id"] + "/update", { ...toolDataSet });
       console.log(response.data);
-
-      if (handleClose)
-      {
-        handleClose(response.data);
+      let toast;
+      if (action === "update") {
+        toast = getUpdateSuccessResultDialog("Jenkins Job", setShowToast);
+        loadData();
       }
-    } catch (err) {
-      console.log(err.message);
+      else {
+        toast = getCreateSuccessResultDialog("Jenkins Job", setShowToast);
+      }
+      setToast(toast);
+      setShowToast(true);
+    } catch (error) {
+      console.error(error.message);
+      let toast;
+      if (action === "update") {
+        toast = getUpdateFailureResultDialog("Jenkins Job", error, setShowToast, "top");
+      }
+      else {
+        toast = getCreateFailureResultDialog("Jenkins Job", error, setShowToast);
+      }
+      setToast(toast);
+      setShowToast(true);
     }
   };
 
@@ -188,13 +215,12 @@ function JenkinsJobEditorPanel({ toolData, jobData, handleClose }) {
         getAccessToken
       ).post("/registry/" + toolData["_id"] + "/update", { ...toolDataSet });
       console.log(response.data);
-
-      if (handleClose)
-      {
-        handleClose(response.data);
-      }
-    } catch (err) {
-      console.log(err.message);
+      loadData();
+    } catch (error) {
+      console.error(error.message);
+      let toast = getDeleteFailureResultDialog("Jenkins Job", error, setShowToast, "top");
+      setToast(toast);
+      setShowToast(true);
     }
   };
 
@@ -216,7 +242,7 @@ function JenkinsJobEditorPanel({ toolData, jobData, handleClose }) {
 
   return (
     <>
-
+      {showToast && toast}
       {viewForm && <ButtonToolbar className="justify-content-between my-2 ml-2 mr-2">
         <ButtonGroup> 
           <Button size="sm" className="mr-2" variant="primary" onClick= {() => { editJob(); }} >
@@ -224,7 +250,7 @@ function JenkinsJobEditorPanel({ toolData, jobData, handleClose }) {
           </Button>
         </ButtonGroup>
         <ButtonGroup>
-          <Button size="sm" className="pull-right mr-2" variant="danger" onClick= {() => { deleteJob(); }} >
+          <Button size="sm" className="pull-right mr-2" variant="danger" onClick= {() => { setShowDeleteModal(true); }} >
             <FontAwesomeIcon icon={faTrash} fixedWidth style={{ cursor: "pointer" }} /> Delete Job
           </Button>
         </ButtonGroup>
@@ -301,9 +327,15 @@ function JenkinsJobEditorPanel({ toolData, jobData, handleClose }) {
 
 
       <div className="text-right m-2">
-        {!handleClose && !viewForm && <Button size="sm" variant="secondary" onClick={() => toggleViewForm(false)} className="mr-2">Cancel</Button>}
+        {!viewForm && <Button size="sm" variant="secondary" onClick={() => toggleViewForm(false)} className="mr-2">Cancel</Button>}
         {!viewForm && <Button size="sm" variant="primary" onClick={updateJob}><FontAwesomeIcon icon={faSave} fixedWidth />Save Job</Button>}
       </div>
+
+      {showDeleteModal ? <Modal header="Confirm Jenkins Job Delete"
+                               message="Warning! Data cannot be recovered once this job is deleted. Do you still want to proceed?"
+                               button="Confirm"
+                               handleCancelModal={() => setShowDeleteModal(false)}
+                               handleConfirmModal={() => deleteJob()} /> : null}
     </>
   );
 }
@@ -314,7 +346,7 @@ JenkinsJobEditorPanel.propTypes = {
   jobData: PropTypes.object,
   accessToken: PropTypes.string,
   setJobAction: PropTypes.func,
-  handleClose: PropTypes.func
+  loadData: PropTypes.func
 };
 
 

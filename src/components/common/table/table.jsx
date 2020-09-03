@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
 import Pagination from "components/common/pagination";
+import LoadingDialog from "../status_notifications/loading";
+import {Spinner} from "react-bootstrap";
 
 export const defaultRowStyling = (row) => {
   return "";
@@ -19,7 +21,7 @@ export const defaultInitialState = {
   ]
 };
 
-function CustomTable({ tableStyleName, columns, data, noDataMessage, onRowSelect, rowStyling, initialState, tableFilter, paginationOptions, showHeaderText }) {
+function CustomTable({ tableStyleName, columns, data, noDataMessage, onRowSelect, rowStyling, initialState, tableFilter, paginationOptions, showHeaderText, isLoading }) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -69,6 +71,22 @@ function CustomTable({ tableStyleName, columns, data, noDataMessage, onRowSelect
     return false;
   };
 
+  const tableLoading = () => {
+    return(
+      <div className="row" style={{ height:"150px", width: "100%"}}>
+        <div className="col-sm-12 my-auto text-center">
+          <Spinner className="mr-2" as="span"
+                   animation="border"
+                   variant="primary"
+                   size="sm"
+                   role="status"
+                   aria-hidden="true" />
+          Loading Data
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       {/* TODO: Create Title bar and action bar components */}
@@ -103,17 +121,23 @@ function CustomTable({ tableStyleName, columns, data, noDataMessage, onRowSelect
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.map((row, i) => {
-            prepareRow(row);
-            return filterRow(row) ? null : (
-              <tr className={getRowClassNames(i, row)} key={i} {...row.getRowProps({ onClick: () => onRowSelect ? onRowSelect(row) : null } )}>
-                {row.cells.map((cell, j) => {
-                  return <td key={j} {...cell.getCellProps()} className={"table-cell px-2 " + setColumnClass(cell.column.id, columns)}>{cell.render("Cell")}</td>;
-                })}
-              </tr>
-            );
-          })}
-          {rows.length == 0 && <tr><td colSpan="8" className="info-text text-center p-5">{noDataMessage ? noDataMessage : defaultNoDataMessage}</td></tr>}
+        <>
+          { isLoading ? <tr><td colSpan="8" className="info-text text-center p-3">{tableLoading()}</td></tr> :
+            rows.map((row, i) => {
+              prepareRow(row);
+              return filterRow(row) ? null : (
+                <tr className={getRowClassNames(i, row)}
+                    key={i} {...row.getRowProps({onClick: () => onRowSelect ? onRowSelect(row) : null})}>
+                  {row.cells.map((cell, j) => {
+                    return <td key={j} {...cell.getCellProps()}
+                               className={"table-cell px-2 " + setColumnClass(cell.column.id, columns)}>{cell.render("Cell")}</td>;
+                  })}
+                </tr>
+              );
+            })
+        }
+        {!isLoading && rows.length === 0 && <tr><td colSpan="8" className="info-text text-center p-5">{noDataMessage ? noDataMessage : defaultNoDataMessage}</td></tr>}
+        </>
         </tbody>
         <tfoot>
           <tr>
@@ -137,7 +161,8 @@ CustomTable.propTypes = {
   initialState: PropTypes.object,
   tableFilter: PropTypes.object,
   paginationOptions: PropTypes.object,
-  showHeaderText: PropTypes.bool
+  showHeaderText: PropTypes.bool,
+  isLoading: PropTypes.bool
 };
 
 CustomTable.defaultProps = {
@@ -145,7 +170,8 @@ CustomTable.defaultProps = {
   rowStyling: defaultRowStyling,
   initialState: defaultInitialState,
   showHeaderText: true,
-  data: []
+  data: [],
+  isLoading: false
 };
 
 export default CustomTable;

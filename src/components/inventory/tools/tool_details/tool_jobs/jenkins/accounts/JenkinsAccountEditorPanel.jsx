@@ -11,9 +11,9 @@ import DtoTextInput from "../../../../../../common/input/dto_input/dto-text-inpu
 import LoadingDialog from "../../../../../../common/status_notifications/loading";
 import SaveButton from "../../../../../../common/buttons/SaveButton";
 import {
+  getCreateFailureResultDialog,
   getCreateSuccessResultDialog,
   getFormValidationErrorDialog, getLoadingErrorDialog,
-  getUpdateFailureResultDialog
 } from "../../../../../../common/toasts/toasts";
 
 
@@ -84,11 +84,11 @@ function JenkinsAccountEditorPanel({ toolData, jenkinsAccountData }) {
       };
       try {
         const response = await axiosApiService(getAccessToken).post("/registry/action/" + toolData["_id"] + "/createcredential", {...payload});
-        let toast = getCreateSuccessResultDialog("Jenkins Account Credentials", setShowToast);
+        let toast = getCreateSuccessResultDialog("Jenkins Account Credential", setShowToast, "top");
         setToast(toast);
         setShowToast(true);
       } catch (error) {
-        let toast = getUpdateFailureResultDialog("Jenkins Account Credentials", error.message, setShowToast);
+        let toast = getCreateFailureResultDialog("Jenkins Account Credential", error.message, setShowToast, "top");
         setToast(toast);
         setShowToast(true);
         console.error(error.message);

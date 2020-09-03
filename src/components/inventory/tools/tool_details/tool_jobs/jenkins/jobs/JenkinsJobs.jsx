@@ -15,7 +15,7 @@ function JenkinsJobs({ toolData, loadData }) {
   return (
     <div>
       {jobData != null
-        ? <JenkinsJobEditorPanel toolData={toolData.getPersistData()} jobData={jobData}/>
+        ? <JenkinsJobEditorPanel toolData={toolData.getPersistData()} jobData={jobData} loadData={loadData}/>
         : <JenkinsJobsTable toolData={toolData} loadData={loadData} selectedRow={rowData => selectedJobRow(rowData)}/>}
     </div>
   );
