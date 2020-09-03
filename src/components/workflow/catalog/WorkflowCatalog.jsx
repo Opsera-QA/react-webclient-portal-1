@@ -58,9 +58,7 @@ function WorkflowCatalog() {
           <>
             <div className="px-2 max-content-width" style={{minWidth:"505px"}}>
               <div className="my-2 p-1">
-                <div>Listed below are workflow catalog options to choose from.  Each one contains specific tools and workflows for creating
-              your new pipeline.</div>
-                <div>After selecting a workflow to add to your pipeline, you will be able to customize it and add the proper tool configurations.</div>
+                <div>Choose a pipeline template below to add to your pipelines library.</div>
               </div>
               
               {data !== undefined && data.length > 0 ?
