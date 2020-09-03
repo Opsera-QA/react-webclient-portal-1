@@ -13,6 +13,8 @@ import SonarCodeSmellsLineChart from "../../charts/sonarCodeSmellsLineChart";
 import SonarCodeCategoriesNO_VALUEPieChart from "../../charts/sonarCodeCategoriesNO_VALUEPieChart";
 import SonarCodeCategoriesOKPieChart from "../../charts/sonarCodeCategoriesOKPieChart";
 import TwistlockVulnerability from "../../charts/twistlockVulnerabilityLineChart";
+import VulnerabilityLineChart from "../../charts/vulnerabilityTimeSeriesLineChart";
+import VulnerabilityByPackage from "../../charts/vulnerabilityByPackageBarChart";
 import {  Row } from "react-bootstrap";
 
 
@@ -56,6 +58,10 @@ function CodeView_Manager ({ persona, date, index }) {
         {
           "request": "twistlockHighVulnerabilities",
           "metric": "count"
+        },
+        {
+          "request": "vulnerabilityCounts",
+          "metric": "complexCount"
         },
         {
           "request": "twistlockMidVulnerabilities",
@@ -122,9 +128,15 @@ function CodeView_Manager ({ persona, date, index }) {
 
   
   const buildSummaryCounts = (data) => {
-    const { twistlockHighVulnerabilities, twistlockMidVulnerabilities, twistlockLowVulnerabilities, sonarBugs } = data;
+    const { vulnerabilityCounts, twistlockHighVulnerabilities, twistlockMidVulnerabilities, twistlockLowVulnerabilities, sonarBugs } = data;
 
     let summaryCountsData = [];    
+
+    if (vulnerabilityCounts.status === 200 && vulnerabilityCounts.data !== undefined) {
+      for (let item in vulnerabilityCounts.data[0].count) {
+        summaryCountsData.push({ name: vulnerabilityCounts.data[0].count[item].key + " Vulnerabilities", value: vulnerabilityCounts.data[0].count[item].doc_count, footer: "Anchore", status: vulnerabilityCounts.data[0].count[item].key === "High" || vulnerabilityCounts.data[0].count[item].key === "Critical" ? "danger" : vulnerabilityCounts.data[0].count[item].key === "Medium" || vulnerabilityCounts.data[0].count[item].key === "Low" ? "warning" : null});
+      }
+    } 
 
     if (twistlockHighVulnerabilities.status === 200 && twistlockHighVulnerabilities.data !== undefined) {
       summaryCountsData.push({ name: "High Vulnerabilities", value: twistlockHighVulnerabilities.data[0].count, footer: twistlockHighVulnerabilities.tool, status: twistlockHighVulnerabilities.data[0].count > 0 ? "danger" : "success" });
@@ -147,7 +159,7 @@ function CodeView_Manager ({ persona, date, index }) {
     return (<LoadingDialog />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
-  } else if (!index.includes("sonar'\]'w\]wer\]e'")) {
+  } else if (!index.includes("sonar")) {
     return (
       <div
         className="mt-3 bordered-content-block p-3 max-content-width"
@@ -171,18 +183,37 @@ function CodeView_Manager ({ persona, date, index }) {
         <SummaryCountBlocksView data={countBlockData} />
 
         <div className="d-flex">
+        <div className="align-self-stretch p-2 w-100">
+            <VulnerabilityLineChart persona={persona} date={date}/>
+          </div>
+          <div className="align-self-stretch p-2 w-100">
+            <VulnerabilityByPackage persona={persona} date={date}/>
+          </div>
+        </div>
+
+        <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
             {Object.keys(data.sonarCodeSmells.data[0]).length > 0 && data.sonarCodeSmells.status === 200 ? <div className="chart mb-3" style={{ height: "300px" }}>
               <SonarCodeSmellsLineChart data={data} persona={persona} date={date}/>
             </div> :         <div className="chart mb-3" style={{ height: "300px" }}>
-              <div className="chart-label-text">Sonar: Code Smells</div><InfoDialog message="No Data is available for this chart at this time." /></div>}
+              <div className="chart-label-text">Sonar: Code Smells</div><div
+      className="max-content-width p-5 mt-5"
+      style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+    >
+      <InfoDialog message="No Data is available for this chart at this time." />
+    </div></div>}
           </div>
           <div className="align-self-stretch p-2 w-100">
             {Object.keys(data.sonarCodeCategoriesNO_VALUE.data[0]).length > 0 && data.sonarCodeCategoriesNO_VALUE.status === 200 ? <div className="chart mb-3" style={{ height: "300px" }}>
               <SonarCodeCategoriesNO_VALUEPieChart data={data} persona={persona} date={date}/>
             </div> : <div className="chart mb-3" style={{ height: "300px" }}>
               <div className="chart-label-text">Sonar: Code Categories (Keyword = No Value)
-              </div><InfoDialog message="No Data is available for this chart at this time." /></div>}
+              </div><div
+      className="max-content-width p-5 mt-5"
+      style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+    >
+      <InfoDialog message="No Data is available for this chart at this time." />
+    </div></div>}
           </div>
         </div>
 
@@ -192,14 +223,24 @@ function CodeView_Manager ({ persona, date, index }) {
               <SonarCodeCategoriesOKPieChart data={data} persona={persona} date={date}/>
             </div> : <div className="chart mb-3" style={{ height: "300px" }}>
               <div className="chart-label-text">Sonar: Code Categories (Keyword = OK)
-              </div><InfoDialog message="No Data is available for this chart at this time." /></div>}
+              </div><div
+      className="max-content-width p-5 mt-5"
+      style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+    >
+      <InfoDialog message="No Data is available for this chart at this time." />
+    </div></div>}
           </div>
           <div className="align-self-stretch p-2 w-100">
             {Object.keys(data.sonarMaintainability.data[0]).length > 0 && data.sonarMaintainability.status === 200 ? <div className="chart mb-3" style={{ height: "300px" }}>
               <SonarMaintainabilityLineChart data={data} persona={persona} date={date}/>
             </div> : <div className="chart mb-3" style={{ height: "300px" }}>
               <div className="chart-label-text">Sonar: Maintainability Rating
-              </div><InfoDialog message="No Data is available for this chart at this time." /></div>}
+              </div><div
+      className="max-content-width p-5 mt-5"
+      style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+    >
+      <InfoDialog message="No Data is available for this chart at this time." />
+    </div></div>}
           </div>
         </div>
 
