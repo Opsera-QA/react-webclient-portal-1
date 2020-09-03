@@ -63,7 +63,7 @@ import ErrorDialog from "./components/common/status_notifications/error";
 const OktaAuth = require("@okta/okta-auth-js");
 const config = require("./config");
 
-
+/*
 const onAuthRequired = async (authService) => {
   console.log("onAuthRequired being called!");
 //  console.log(authService._authState)
@@ -75,52 +75,59 @@ const onAuthRequired = async (authService) => {
     console.log("NOT PENDING SO WOULD REDIRECT!")
     //window.location = "/login";
   }
-};
-
-const OKTA_CONFIG = {
-  issuer: process.env.REACT_APP_OKTA_ISSUER,
-  client_id: process.env.REACT_APP_OKTA_CLIENT_ID,
-  redirect_uri: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
-  disableHttpsCheck: false,
-  pkce: true,
-  onAuthRequired: onAuthRequired,
-};
-
-const authClient = new OktaAuth({
-  issuer: OKTA_CONFIG.issuer,
-  clientId: OKTA_CONFIG.client_id,
-  redirectUri: OKTA_CONFIG.redirect_uri,
-});
-
-// Triggered when a token has expired
-authClient.tokenManager.on("expired", function(key, expiredToken) {
-  console.log("Token with key", key, " has expired:");
-  console.log(expiredToken);
-});
-// Triggered when a token has been renewed
-authClient.tokenManager.on("renewed", function(key, newToken, oldToken) {
-  console.log("Token with key", key, "has been renewed");
-  console.log("Old token:", oldToken);
-  console.log("New token:", newToken);
-});
-// Triggered when an OAuthError is returned via the API (typically during token renew)
-authClient.tokenManager.on("error", function(err) {
-  console.log("TokenManager error:", err);
-  window.location.reload(false);
-
-
-  // err.name
-  // err.message
-  // err.errorCode
-  // err.errorSummary
-  // err.tokenKey
-  // err.accessToken
-});
+};*/
 
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
   const history = useHistory();
+  const onAuthRequired = (authService) => {
+    console.log("onAuthRequired being called!");
+    console.log(authService._authState);
+    history.push("/login");
+  };
+
+
+  const OKTA_CONFIG = {
+    issuer: process.env.REACT_APP_OKTA_ISSUER,
+    client_id: process.env.REACT_APP_OKTA_CLIENT_ID,
+    redirect_uri: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
+    disableHttpsCheck: false,
+    pkce: true,
+    onAuthRequired: onAuthRequired,
+  };
+
+  const authClient = new OktaAuth({
+    issuer: OKTA_CONFIG.issuer,
+    clientId: OKTA_CONFIG.client_id,
+    redirectUri: OKTA_CONFIG.redirect_uri,
+  });
+
+// Triggered when a token has expired
+  authClient.tokenManager.on("expired", function(key, expiredToken) {
+    console.log("Token with key", key, " has expired:");
+    console.log(expiredToken);
+  });
+// Triggered when a token has been renewed
+  authClient.tokenManager.on("renewed", function(key, newToken, oldToken) {
+    console.log("Token with key", key, "has been renewed");
+    console.log("Old token:", oldToken);
+    console.log("New token:", newToken);
+  });
+// Triggered when an OAuthError is returned via the API (typically during token renew)
+  authClient.tokenManager.on("error", function(err) {
+    console.log("TokenManager error:", err);
+    window.location.reload(false);
+    // err.name
+    // err.message
+    // err.errorCode
+    // err.errorSummary
+    // err.tokenKey
+    // err.accessToken
+  });
+
+
+
 
   const axios = Axios.create({
     baseURL: config.apiServerUrl,
@@ -167,7 +174,7 @@ const AppWithRouterAccess = () => {
   };
 
   const redirectFromLogin = () => {
-    console.log("redirectFromLogin called")
+    console.log("redirectFromLogin called");
     refetch();
     history.push("/");
   };
@@ -178,7 +185,8 @@ const AppWithRouterAccess = () => {
   } else {
     return (
       <Security {...OKTA_CONFIG}>
-        { (error && !error.message.includes("401") && !error.message.includes("undefined") && !error.message.includes("cancelToken")) && <div style={{height: "55px"}}><ErrorDialog align="top" error={error} /></div> }
+        {(error && !error.message.includes("401") && !error.message.includes("undefined") && !error.message.includes("cancelToken")) &&
+        <div style={{ height: "55px" }}><ErrorDialog align="top" error={error}/></div>}
         <AuthContextProvider userData={data} refreshToken={refreshToken} authClient={authClient}>
           <Navbar hideAuthComponents={hideSideBar} userData={data}/>
           <div className="container-fluid" style={{ margin: "0" }}>
@@ -197,7 +205,6 @@ const AppWithRouterAccess = () => {
                 <Route path="/about/pricing" component={Pricing}/>
                 <Route path="/help" component={OnlineHelp}/>
                 <Route path="/registration" exact component={Registration}/>
-
 
 
                 <SecureRoute path="/profile" component={Profile}/>
