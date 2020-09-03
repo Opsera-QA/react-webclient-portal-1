@@ -26,7 +26,7 @@ function NewJenkinsJobModal( { toolData, loadData, setShowModal, showModal } ) {
   return (
     <>
       <CreateModal handleCancelModal={handleClose} objectType={"Jenkins Job"} showModal={showModal} loadData={loadData} >
-        {toolData && <JenkinsJobEditorPanel toolData={toolData.getPersistData()} jobData={{}} handleClose={handleClose}/>}
+        {toolData && <JenkinsJobEditorPanel toolData={toolData.getPersistData()} loadData={loadData} jobData={{}} handleClose={handleClose}/>}
       </CreateModal>
     </>
   );
