@@ -1,15 +1,15 @@
 import PropTypes from "prop-types";
-import {useHistory} from "react-router-dom";
-import {Button, Card, Col, Row} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faClock, faPlus, faSearch} from "@fortawesome/free-solid-svg-icons";
-import { faOctagon } from '@fortawesome/pro-regular-svg-icons';
-import {format} from "date-fns";
-import React, {useContext, useState} from "react";
-import {axiosApiService} from "../../../api/apiService";
-import {AuthContext} from "../../../contexts/AuthContext";
+import { useHistory } from "react-router-dom";
+import { Button, Card, Col, Row } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faHexagon } from "@fortawesome/pro-regular-svg-icons";
+import { format } from "date-fns";
+import React, { useContext, useState } from "react";
+import { axiosApiService } from "../../../api/apiService";
+import { AuthContext } from "../../../contexts/AuthContext";
 
-const WorkflowCatalogItem = ({item, parentCallback}) => {
+const WorkflowCatalogItem = ({ item, parentCallback }) => {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
   const [loading, setLoading] = useState(false);
@@ -41,8 +41,7 @@ const WorkflowCatalogItem = ({item, parentCallback}) => {
         history.push(`/workflow/details/${newPipelineId}/summary`);
       }
       setLoading(false);
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err.message);
       setLoading(false);
       setErrors(err.message);
@@ -51,14 +50,14 @@ const WorkflowCatalogItem = ({item, parentCallback}) => {
 
   return (
     <>
-      <Card style={{ height:"100%" }}>
+      <Card style={{ height: "100%" }}>
         <Card.Title className="pb-0">
           <div className="d-flex catalog-card-title p-2">
             <div>
-              <FontAwesomeIcon icon={faOctagon} /> {item.name}
+              {item.name}
             </div>
             <div className="ml-auto mr-1 text-muted small upper-case-first d-none d-md-block">
-              Template
+              <FontAwesomeIcon icon={faHexagon}/>
             </div>
           </div>
         </Card.Title>
@@ -71,7 +70,7 @@ const WorkflowCatalogItem = ({item, parentCallback}) => {
           <Row>
             <Col>
               <Button variant="primary" size="sm" className="mr-2 mt-2" onClick={handleAddClick(item)}>
-                <FontAwesomeIcon icon={faPlus} className="mr-1"/>  Add</Button>
+                <FontAwesomeIcon icon={faPlus} className="mr-1"/> Add</Button>
               <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" onClick={handleDetailsClick(item)}>
                 <FontAwesomeIcon icon={faSearch} className="mr-1"/>Details</Button>
             </Col>
@@ -87,7 +86,7 @@ const WorkflowCatalogItem = ({item, parentCallback}) => {
             </Col>
           </Row>
         </Card.Body>
-        <Card.Footer />
+        <Card.Footer/>
       </Card>
     </>
   );
@@ -95,7 +94,7 @@ const WorkflowCatalogItem = ({item, parentCallback}) => {
 
 WorkflowCatalogItem.propTypes = {
   item: PropTypes.object,
-  parentCallback: PropTypes.func
+  parentCallback: PropTypes.func,
 };
 
 export default WorkflowCatalogItem;
