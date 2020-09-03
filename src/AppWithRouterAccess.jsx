@@ -63,20 +63,6 @@ import ErrorDialog from "./components/common/status_notifications/error";
 const OktaAuth = require("@okta/okta-auth-js");
 const config = require("./config");
 
-/*
-const onAuthRequired = async (authService) => {
-  console.log("onAuthRequired being called!");
-//  console.log(authService._authState)
-
-
-  const authenticationState = await authService.getAuthState();
-  console.log("authenticationState: ", authenticationState)
-  if (!authenticationState.isAuthenticated && !authenticationState.isPending) {
-    console.log("NOT PENDING SO WOULD REDIRECT!")
-    //window.location = "/login";
-  }
-};*/
-
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -86,7 +72,6 @@ const AppWithRouterAccess = () => {
     console.log(authService._authState);
     history.push("/login");
   };
-
 
   const OKTA_CONFIG = {
     issuer: process.env.REACT_APP_OKTA_ISSUER,
@@ -125,8 +110,6 @@ const AppWithRouterAccess = () => {
     // err.tokenKey
     // err.accessToken
   });
-
-
 
 
   const axios = Axios.create({
