@@ -56,6 +56,8 @@ function OPBlueprint(props) {
   const [disabledForm, setDisabledState] = useState(false);
   const [submittedRunCount, setSubmittedRunCount] = useState(null);
   const [xmlData, setXMLData] = useState(false);
+  const [anchoreResponse, setAnchoreResponse] = useState(false);
+  const [anchoreStats, setAnchoreStats] = useState(false);
   const [XMLDisabled, setXMLDisable] = useState("disabled");
 
   simpleNumberLocalizer();
@@ -84,6 +86,8 @@ function OPBlueprint(props) {
 
     // getSearchResults(startDate, endDate);
     setXMLData(false);
+    setAnchoreResponse(false);
+    setAnchoreStats(false);
     if (run_count === runCountFetch[multiFilter.value]) {
       setXMLDisable("enabled")
     } else {
@@ -94,6 +98,8 @@ function OPBlueprint(props) {
 
   const cancelSearchClicked = () => {
     setXMLData(false);
+    setAnchoreResponse(false);
+    setAnchoreStats(false);
     setXMLDisable("disabled");
     setSubmittedRunCount(null);
     // setDate([
@@ -165,9 +171,13 @@ function OPBlueprint(props) {
         .then((result) => {
           let searchResults = [];
           let xmlFile = false;
+          let anchoreResponse = false;
+          let anchoreStats = false;
           if (result) {
             searchResults = result.hasOwnProperty("data") ? result.data.data : [];
-            xmlFile = result.hasOwnProperty("data") ? result.data.xml ?  result.data.xml : false : false;
+            xmlFile = result.hasOwnProperty("data") ? result.data.reports && result.data.reports.xml ?  result.data.reports.xml : false : false;
+            anchoreResponse = result.hasOwnProperty("data") ? result.data.reports && result.data.reports.anchore_report ?  result.data.reports.anchore_report : false : false;
+            anchoreStats = result.hasOwnProperty("data") ? result.data.reports && result.data.reports.anchore_stats ?  setAnchoreStats(result.data.reports.anchore_stats) : false : false;
           }
           if (searchResults.length === 0) {
             setNoResults(true);
@@ -176,6 +186,9 @@ function OPBlueprint(props) {
             setNoResults(false);
             setLogData(searchResults);
             if (xmlFile) setXMLData(xmlFile);
+            if (anchoreResponse) setAnchoreResponse(anchoreResponse)
+            if (anchoreStats) setAnchoreStats(anchoreStats)
+            console.log(xmlFile)
           }
           setLoading(false);
         })
@@ -546,7 +559,9 @@ function OPBlueprint(props) {
             <BlueprintSearchResult searchResults={{
               data: logData,
               xmlData: xmlData,
-              xmlModal: XMLDisabled
+              xmlModal: XMLDisabled,
+              anchore : anchoreResponse,
+              stats: anchoreStats
             }}/>
           </>
         ) : (

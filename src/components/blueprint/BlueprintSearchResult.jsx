@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, Link } from "react";
 import PropTypes from "prop-types";
 import { Button, Row, Col, Nav, OverlayTrigger, Tooltip } from "react-bootstrap";
 import ModalLogs from "components/common/modal/modalLogs";
+import ModalTable from "./modalTable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faLayerGroup,
@@ -16,12 +17,71 @@ import ReactJson from "react-json-view";
 
 function BlueprintSearchResult({ searchResults }) {
   const [showModal, setShowModal] = useState(false);
+  const [showTable, setShowTable] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
+  const [columns, setColumns] = useState([]);
+  const [tableData, setTableData] = useState({});
 
   const handleClick = (param) => {
     setModalMessage(param);
     setShowModal(true);
   };
+
+  const tableViewer = (param) => {
+    setShowTable(true);
+    setTableData(param)
+    setColumns([
+      {
+        Header: "Vulnerability",
+        accessor: "vulnerability",
+        class: "cell-center no-wrap-inline",
+      },
+      {
+        Header: "Package Name",
+        accessor: "package_name",
+      },
+      {
+        Header: "Severity",
+        accessor: "severity",
+      },
+      {
+        Header: "CVSS Base",
+        accessor: "cvss_base",
+        Cell: (props) => {
+          return props ? 
+          <div className="console-text-invert-modal">{props.value}</div> : 
+          "N/A"
+        }
+      },
+      {
+        Header: "CVSS Exploitability",
+        accessor: "cvss_exploitability_score",
+        Cell: (props) => {
+          return props ? 
+          <div className="console-text-invert-modal">{props.value}</div> : 
+          "N/A"
+        }
+      },
+      {
+        Header: "CVSS Impact",
+        accessor: "cvss_impact_score",
+        Cell: (props) => {
+          return props ? 
+          <div className="console-text-invert-modal">{props.value}</div> : 
+          "N/A"
+        }
+      },
+      {
+        Header: "Vulnerability URL",
+        accessor: "url",
+        Cell: (props) => {
+          return props ? 
+          <a href={props.value} target="_blank" className="text-muted console-text-invert-modal">{props.value}</a> : 
+          "N/A"
+        },
+      }
+    ])
+  }
 
   let completeInput = [];
 
@@ -147,8 +207,8 @@ function BlueprintSearchResult({ searchResults }) {
       );
     } else {
       return (
-        <div className="pre">
-          <ReactJson src={item.api_response} displayDataTypes={false} />
+        <div className="pre mt-2">
+          <ReactJson src={item} displayDataTypes={false} />
         </div>
       );
     }
@@ -158,6 +218,19 @@ function BlueprintSearchResult({ searchResults }) {
     <>
       <br></br>
       <div className="mb-1 mt-3 bordered-content-block p-3 max-content-width">
+      {searchResults.anchore && (
+          <Button
+            variant="outline-dark mr-3"
+            className="float-right mt-1 ml-1"
+            size="sm"
+            onClick={() => {
+              tableViewer(searchResults.anchore);
+            }}
+          >
+            <FontAwesomeIcon icon={faFileCode} fixedWidth />
+            Security Report
+          </Button>
+        )}
         {searchResults.xmlData && searchResults.xmlModal === "enabled" && (
           <Button
             variant="outline-dark mr-3"
@@ -254,8 +327,8 @@ function BlueprintSearchResult({ searchResults }) {
                           {item.api_response}
                         </div>
                       ) : (
-                        renderStep(item.api_response)
-                      )}
+                          renderStep(item.api_response)
+                        )}
                     </Tab.Pane>
                   ))}
                   {completeInput.length > 0 && (
@@ -277,6 +350,14 @@ function BlueprintSearchResult({ searchResults }) {
         show={showModal}
         setParentVisibility={setShowModal}
       />
+      <ModalTable 
+        header="Anchore Security Report" 
+        column_data={columns}
+        size="lg" 
+        jsonData={tableData} 
+        stats={searchResults.stats}
+        show={showTable}
+        setParentVisibility={setShowTable}/>
     </>
   );
 }
