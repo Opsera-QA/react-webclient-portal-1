@@ -135,14 +135,14 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
         message: "Editing step details requires administrator or owner access to this Pipeline.",
         button: "OK",
       });
-    } else {
-      if (tool && tool.tool_identifier !== undefined) {
-        parentCallbackEditItem({ type: type, tool_name: tool.tool_identifier, step_id: itemId });
-      } else {
-        parentCallbackEditItem({ type: type, tool_name: "", step_id: itemId });
-      }
+      return;
     }
 
+    if (tool && tool.tool_identifier !== undefined) {
+      parentCallbackEditItem({ type: type, tool_name: tool.tool_identifier, step_id: itemId });
+    } else {
+      parentCallbackEditItem({ type: type, tool_name: "", step_id: itemId });
+    }
   };
 
   const handleDeleteStepClick = (index) => {
@@ -474,7 +474,7 @@ PipelineWorkflowItem.propTypes = {
   parentHandleViewSourceActivityLog: PropTypes.func,
   customerAccessRules: PropTypes.object,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  refreshCount: PropTypes.number
+  refreshCount: PropTypes.number,
 };
 
 export default PipelineWorkflowItem;

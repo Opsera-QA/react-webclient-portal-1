@@ -19,6 +19,7 @@ function PipelineWorkflowView({
   refreshCount,
   setRefreshCount,
   setPipeline,
+  softLoading
 }) {
 
   const closeEditorPanel = () => {
@@ -63,8 +64,12 @@ function PipelineWorkflowView({
                                           setParentWorkflowStatus={setWorkflowStatus}/>
                 </div>
               </div>
-              <PipelineWorkflow pipeline={pipeline} editItemId={editItem.step_id} fetchPlan={fetchPlan}
-                                customerAccessRules={customerAccessRules} refreshCount={refreshCount}/>
+              <PipelineWorkflow pipeline={pipeline}
+                                editItemId={editItem.step_id}
+                                fetchPlan={fetchPlan}
+                                customerAccessRules={customerAccessRules}
+                                refreshCount={refreshCount}
+                                softLoading={softLoading}/>
             </Col>
             {getPipelineWorkflowEditor(editItem)}
           </Row>
@@ -87,6 +92,7 @@ PipelineWorkflowView.propTypes = {
   refreshCount: PropTypes.number,
   setRefreshCount: PropTypes.func,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  softLoading: PropTypes.bool
 };
 
 export default PipelineWorkflowView;

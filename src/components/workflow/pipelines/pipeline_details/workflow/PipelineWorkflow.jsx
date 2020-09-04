@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { axiosApiService } from "../../../../../api/apiService";
 import { AuthContext } from "../../../../../contexts/AuthContext";
 import { SteppedLineTo } from "react-lineto";
-import { Link } from "react-router-dom";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import ErrorDialog from "../../../../common/status_notifications/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -22,8 +21,16 @@ import ModalActivityLogs from "../../../../common/modal/modalActivityLogs";
 import PipelineWorkflowItemList from "./PipelineWorkflowItemList";
 import Modal from "../../../../common/modal/modal";
 import "../../../workflows.css";
+import LoadingDialog from "../../../../common/status_notifications/loading";
 
-function PipelineWorkflow({ pipeline, fetchPlan, customerAccessRules, editItemId, refreshCount }) {
+function PipelineWorkflow({
+  pipeline,
+  fetchPlan,
+  customerAccessRules,
+  editItemId,
+  refreshCount,
+  softLoading,
+}) {
   const [error, setErrors] = useState();
   const [userInfo, setUserInfo] = useState();
   const [modalHeader, setModalHeader] = useState("");
@@ -55,7 +62,7 @@ function PipelineWorkflow({ pipeline, fetchPlan, customerAccessRules, editItemId
 
   useEffect(() => {
     loadData();
-  },[]);
+  }, []);
 
   useEffect(() => {
     loadFormData(pipeline);
@@ -358,6 +365,8 @@ function PipelineWorkflow({ pipeline, fetchPlan, customerAccessRules, editItemId
 
               <div style={{ height: "40px" }}>&nbsp;</div>
 
+              {softLoading && <LoadingDialog />}
+
               <div className="step-items workflow-module-container-width mx-auto">
                 <PipelineWorkflowItemList
                   pipeline={pipeline}
@@ -415,5 +424,6 @@ PipelineWorkflow.propTypes = {
   customerAccessRules: PropTypes.object,
   editItemId: PropTypes.string,
   refreshCount: PropTypes.number,
+  softLoading: PropTypes.bool,
 };
 export default PipelineWorkflow;

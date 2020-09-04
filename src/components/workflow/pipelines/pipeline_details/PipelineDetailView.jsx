@@ -22,6 +22,7 @@ function PipelineDetailView() {
   const [activityData, setActivityData] = useState({});
   const [stepStatus, setStepStatus] = useState({});
   const [loading, setLoading] = useState(false);
+  const [softLoading, setSoftLoading] = useState(false);
   const [logsIsLoading, setLogsIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(25);
@@ -82,6 +83,7 @@ function PipelineDetailView() {
   async function fetchData() {
     console.log("Top level fetch data");
     setRefreshCount(refreshCount => refreshCount + 1);
+    setSoftLoading(true);
     const accessToken = await getAccessToken();
     const apiUrl = `/pipelines/${id}`;
     try {
@@ -110,6 +112,8 @@ function PipelineDetailView() {
     } catch (err) {
       console.error(err.message);
       setErrors(err.message);
+    } finally {
+      setSoftLoading(false);
     }
   }
 
@@ -221,6 +225,7 @@ function PipelineDetailView() {
             fetchPlan={fetchPlan}
             setWorkflowStatus={setWorkflowStatus}
             getActivityLogs={getActivityLogs}
+            softLoading={softLoading}
           />}
 
         </div>
