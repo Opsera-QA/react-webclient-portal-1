@@ -64,7 +64,7 @@ function WorkflowCatalog() {
               {data !== undefined && data.length > 0 ?
                 <Row>
                   {data.map((item, idx) => (
-                    <Col xl={6} lg={10} md={12} key={idx} className="p-2">
+                    <Col xl={6} md={12} key={idx} className="p-2">
                       <WorkflowCatalogItem item={item} parentCallback={callbackFunction} />
                     </Col>))}
                 </Row>

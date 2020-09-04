@@ -4,7 +4,7 @@ import {Button, Card, Col, OverlayTrigger, Row, Tooltip} from "react-bootstrap";
 import PipelineHelpers from "../pipelineHelpers";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-  faClock, faPause,
+  faClock, faFlag, faPause,
   faSearch,
   faSpinner, faStop,
   faTimesCircle
@@ -13,6 +13,9 @@ import {format} from "date-fns";
 import React from "react";
 import PipelineActionBar from "./PipelineActionBar";
 import PipelineStatus from "./PipelineStatus";
+import TooltipWrapper from "../../common/tooltip/tooltipWrapper";
+import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
+import {faBracketsCurly, faMicrochip, faServer} from "@fortawesome/pro-regular-svg-icons";
 
 const PipelineItem = ({item}) => {
   let history = useHistory();
@@ -21,6 +24,18 @@ const PipelineItem = ({item}) => {
     e.preventDefault();
     history.push(`/workflow/details/${param}/summary`);
   };
+
+  const getPendingApprovalField = () => {
+    let pendingApproval = PipelineHelpers.getPendingApprovalStep(item);
+
+    if (pendingApproval) {
+      return (
+        <TooltipWrapper innerText={`Pending Approval`}>
+          <FontAwesomeIcon icon={faFlag} className="ml-2 danger-red"/>
+        </TooltipWrapper>
+      );
+    }
+  }
 
   const getPipelineStatusField = () => {
     let pipelineStatus = PipelineHelpers.getPipelineStatus(item);
@@ -71,13 +86,29 @@ const PipelineItem = ({item}) => {
     const type = item.type;
     switch (type[0]) {
     case "sfdc":
-      return "SalesForce"
+      return (
+        <TooltipWrapper innerText={`SalesForce`}>
+          <FontAwesomeIcon icon={faSalesforce} className="ml-2 pipeline-blue-text"/>
+        </TooltipWrapper>
+      );
     case "ai-ml":
-      return "Machine Learning (AI)"
+      return (
+        <TooltipWrapper innerText={"Machine Learning (AI)"}>
+          <FontAwesomeIcon icon={faMicrochip} className="ml-2 pipeline-blue-text"/>
+        </TooltipWrapper>
+      );
     case "sdlc":
-      return "Software Development"
+      return (
+        <TooltipWrapper innerText={"Software Development"}>
+          <FontAwesomeIcon icon={faBracketsCurly} className="ml-2 pipeline-blue-text"/>
+        </TooltipWrapper>
+      );
     default:
-      return ""
+      return (
+        <TooltipWrapper innerText={"No Pipeline Type Assigned"}>
+          <FontAwesomeIcon icon={faServer} className="ml-2 pipeline-blue-text"/>
+        </TooltipWrapper>
+      );
     }
   }
 
@@ -89,8 +120,9 @@ const PipelineItem = ({item}) => {
             <div>
               {item.name}
             </div>
-            <div className="ml-auto mr-1 text-muted small upper-case-first d-none d-md-block">
+            <div className="ml-auto mt-1 mr-1 text-muted small upper-case-first">
               {getFirstCategory()}
+              {getPendingApprovalField()}
             </div>
           </div>
 
