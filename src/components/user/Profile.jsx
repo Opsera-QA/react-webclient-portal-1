@@ -86,6 +86,10 @@ function Profile() {
                 <td>{user.createdAt}</td>
               </tr>
               <tr>
+                <td>Updated</td>
+                <td>{user.updatedAt}</td>
+              </tr>
+              <tr>
                 <td>SyncAt</td>
                 <td>{user.ldapSyncAt || ""}</td>
               </tr>
