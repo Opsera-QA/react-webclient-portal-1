@@ -9,9 +9,10 @@ import cookieHelpers from "../../../core/cookies/cookie-helpers";
 import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
 import { useHistory } from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBracketsCurly, faHexagon, faServer, faUser} from "@fortawesome/pro-regular-svg-icons";
+import {faBracketsCurly, faHexagon, faUser} from "@fortawesome/pro-regular-svg-icons";
 import {faMicrochip} from "@fortawesome/pro-light-svg-icons";
 import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
+import {faInfinity} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "../../common/tooltip/tooltipWrapper";
 
 function Pipelines() {
@@ -55,10 +56,10 @@ function Pipelines() {
   };
 
   // TODO: make tab component
-  const getTab = (handleTabClick, tabName, icon, text) => {
+  const getTab = (handleTabClick, tabName, icon, text, hover_text) => {
     return (
-      <li className="nav-item">
-        <TooltipWrapper innerText={text}>
+      <li className="nav-item" style={{minWidth:"5em", textAlign:"center"}}>
+        <TooltipWrapper innerText={hover_text}>
         <a className={"nav-link " + (activeTab === tabName ? "active" : "")} href="#"
            onClick={handleTabClick(tabName)}><FontAwesomeIcon icon={icon} fixedWidth/><span className="ml-2 d-none d-lg-inline">{text}</span></a>
         </TooltipWrapper>
@@ -78,12 +79,12 @@ function Pipelines() {
           <>
             <div className="alternate-tabs">
               <ul className="nav nav-tabs">
-                {getTab(handleTabClick,"catalog", faHexagon, "Catalog")}
-                {getTab(handleTabClick,"all", faServer, "All")}
-                {getTab(handleTabClick,"owner", faUser, "My Pipelines")}
-                {getTab(handleTabClick,"sdlc", faBracketsCurly, "Software Development")}
-                {getTab(handleTabClick,"ai-ml", faMicrochip, "Machine Learning (AI)")}
-                {getTab(handleTabClick,"sfdc", faSalesforce, "SalesForce")}
+                {getTab(handleTabClick,"catalog", faHexagon, "Catalog", "Catalog Templates")}
+                {getTab(handleTabClick,"all", faInfinity, "All", "All Pipelines")}
+                {getTab(handleTabClick,"owner", faUser, "My Pipelines", "My Pipelines")}
+                {getTab(handleTabClick,"sdlc", faBracketsCurly, "Software Development", "Software Development Pipelines")}
+                {getTab(handleTabClick,"ai-ml", faMicrochip, "Machine Learning (AI)", "Machine Learning (AI) Pipelines")}
+                {getTab(handleTabClick,"sfdc", faSalesforce, "SalesForce", "SalesForce Pipelines")}
               </ul>
             </div>
             <div className="content-block-collapse px-3 pt-2">

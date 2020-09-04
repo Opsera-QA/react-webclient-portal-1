@@ -15,7 +15,8 @@ import PipelineActionBar from "./PipelineActionBar";
 import PipelineStatus from "./PipelineStatus";
 import TooltipWrapper from "../../common/tooltip/tooltipWrapper";
 import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
-import {faBracketsCurly, faMicrochip, faServer} from "@fortawesome/pro-regular-svg-icons";
+import {faBracketsCurly, faMicrochip} from "@fortawesome/pro-regular-svg-icons";
+import {faInfinity} from "@fortawesome/pro-light-svg-icons";
 
 const PipelineItem = ({item}) => {
   let history = useHistory();
@@ -106,7 +107,7 @@ const PipelineItem = ({item}) => {
     default:
       return (
         <TooltipWrapper innerText={"No Pipeline Type Assigned"}>
-          <FontAwesomeIcon icon={faServer} className="ml-2 pipeline-blue-text"/>
+          <FontAwesomeIcon icon={faInfinity} className="ml-2 pipeline-blue-text"/>
         </TooltipWrapper>
       );
     }
