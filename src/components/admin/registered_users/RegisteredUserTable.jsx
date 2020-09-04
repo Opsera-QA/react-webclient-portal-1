@@ -1,18 +1,38 @@
-import React, { Fragment, useMemo } from "react";
-import { Table, Button, Row, Col } from "react-bootstrap";
+import React, {Fragment, useContext, useMemo, useState} from "react";
+import {Table, Button, Row, Col, Spinner} from "react-bootstrap";
 import { useTable, useExpanded, useSortBy } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {  faSortUp, faSortDown, faSort } from "@fortawesome/free-solid-svg-icons";
 
 import "../admin.css";
+import ModalActivityLogs from "../../common/modal/modalActivityLogs";
+import {faSearchPlus} from "@fortawesome/pro-regular-svg-icons";
+import RegisteredUserActions from "./registered-user-actions";
+import {AuthContext} from "../../../contexts/AuthContext";
 
 function RegisteredUserTable({  data, deployingElk, handleDeletePress, handleDeployElkStack, gotoProfile }) {
+  const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState({});
+  const { getAccessToken } = useContext(AuthContext);
 
   const columns = useMemo(
     () => [
       {
         Header: "User ID",
         accessor: "_id",
+      },
+      {
+        Header: "User Info",
+        accessor: "row",
+        Cell: (props) => {
+          return (
+            <>
+              <FontAwesomeIcon icon={faSearchPlus}
+                             style={{ cursor: "pointer" }}
+                             onClick= {() => { selectRow(props, props.row, props.row["index"]); }} />
+            </>
+          );
+        },
       },
       {
         Header: "Name",
@@ -42,6 +62,22 @@ function RegisteredUserTable({  data, deployingElk, handleDeletePress, handleDep
     ],
     []
   );
+
+  const selectRow = (rows, row, index) => {
+    return getUserData(rows["data"][index]["_id"]);
+  };
+
+  const getUserData = async (userId) => {
+    try {
+      setShowModal(true);
+      const response = await RegisteredUserActions.getUserRecord(userId, getAccessToken);
+      // console.log("[LdapOrganizationDetailView] Response: ", response.data);
+      setModalData(response.data);
+    } catch (error) {
+      console.error("Error getting API Data: ", error);
+      // setError(error);
+    }
+  }
 
   const actionButtons = (cellData) => {
     return(
@@ -130,6 +166,7 @@ function RegisteredUserTable({  data, deployingElk, handleDeletePress, handleDep
           })}
         </tbody>
       </Table>
+      <ModalActivityLogs header="User Information" size="lg" jsonData={modalData} show={showModal} setParentVisibility={setShowModal} />
     </>
   );
 }
