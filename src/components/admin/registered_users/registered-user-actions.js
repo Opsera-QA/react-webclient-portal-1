@@ -11,6 +11,15 @@ RegisteredUserActions.getUserDetail = async (userId, getAccessToken) => {
   return response;
 };
 
+RegisteredUserActions.getUserRecord = async (userId, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/users/record/${userId}`;
+  const response = await axiosApiService(accessToken).get(apiUrl)
+    .then((result) =>  {return result;})
+    .catch(error => {throw error;});
+  return response;
+};
+
 RegisteredUserActions.getTools = async (getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = `/registry/tools?hidden=true`;
