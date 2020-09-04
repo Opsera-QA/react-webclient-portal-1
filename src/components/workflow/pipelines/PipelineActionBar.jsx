@@ -6,28 +6,14 @@ import {
   faTrash,
   faQuestion, faCalendarDay, faShareAlt, faCog, faRedo, faUnlink, faExclamation, faFlag
 } from "@fortawesome/free-solid-svg-icons";
-import PipelineHelpers from "../pipelineHelpers";
 
 // TODO: Wire up functions
 function PipelineActionBar({item, handleShareClick, handleScheduleClick, handleHelpClick, handleSettingsClick, handleRedoClick, handleDeleteClick, handleUnlinkClick}) {
-
-  const getPendingApprovalField = () => {
-    let pendingApproval = PipelineHelpers.getPendingApprovalStep(item);
-
-    if (pendingApproval) {
-      return (
-        <OverlayTriggerWrapper message={`Pending Approval`}>
-          <FontAwesomeIcon icon={faFlag} className="pipeline-blue-text float-left"/>
-        </OverlayTriggerWrapper>
-      );
-    }
-  }
 
   // TODO: Be sure to add pointer and enable hover color when wiring up functions
   return (
     <>
         <div className="action-bar p-0 my-auto">
-          {getPendingApprovalField()}
           {handleDeleteClick && <OverlayTriggerWrapper message={`Delete this Pipeline`}>
             <FontAwesomeIcon icon={faTrash} className="pipeline-blue-text float-right ml-3" onClick={() => handleDeleteClick()}/>
           </OverlayTriggerWrapper>}

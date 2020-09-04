@@ -89,7 +89,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
                         onClick={(pageNumber, pageSize, sortOption) => sortPage(pageNumber, sortOption)}/>
             <Row>
               {data.response.map((item, idx) => (
-                <Col key={idx} xl={6} lg={10} md={12} className="p-2">
+                <Col key={idx} xl={6} md={12} className="p-2">
                   <PipelineItem item={item}/>
                 </Col>
               ))}
