@@ -90,7 +90,10 @@ function AdminTools(props) {
                 <Link to="/admin/templates"><FontAwesomeIcon icon={faStream} fixedWidth/> Pipeline Templates Editor</Link>
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/accounts/organizations"><FontAwesomeIcon icon={faSitemap} fixedWidth />Organizations & Accounts (LDAP)</Link>
+                <Link to="/accounts/organizations"><FontAwesomeIcon icon={faSitemap} fixedWidth /> Organizations (LDAP)</Link>
+              </Col>
+              <Col xs={12} md={6} lg={4} className="p-2">
+                <Link to="/accounts/organization-accounts"><FontAwesomeIcon icon={faSitemap} fixedWidth /> Organization Accounts (LDAP)</Link>
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
                 <Link to="/accounts/create"><FontAwesomeIcon icon={faUserPlus} fixedWidth /> Customer Onboarding</Link>

@@ -1,16 +1,19 @@
 import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "../../../../common/table/table";
-import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {
   ldapOrganizationAccountMetaData
 } from "./ldap-organization-account-form-fields";
 import {getTableTextColumn} from "../../../../common/table/table-column-helpers";
+import {useHistory} from "react-router-dom";
+import NewLdapOrganizationModal from "../organizations/NewLdapOrganizationModal";
+import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import Button from "react-bootstrap/Button";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-function LdapOrganizationAccountsTable({ldapOrganizationAccounts, handleAccountClick, setShowCreateAccountModal}) {
+function LdapOrganizationAccountsTable({ldapOrganizationAccounts, loadData, }) {
   let fields = ldapOrganizationAccountMetaData.fields;
+  const history = useHistory();
 
   const columns = useMemo(
     () => [
@@ -25,21 +28,13 @@ function LdapOrganizationAccountsTable({ldapOrganizationAccounts, handleAccountC
   );
 
   const onRowSelect = (selectedRow) => {
-    handleAccountClick(selectedRow.original);
+    history.push(`/accounts/organization-accounts/${selectedRow.original.orgDomain}/details/`);
   };
 
   return (
     <>
       {ldapOrganizationAccounts &&
       <>
-        <div className="my-1 text-right">
-          <Button variant="primary" size="sm"
-                  onClick={() => {
-                    setShowCreateAccountModal(true);
-                  }}>
-            <FontAwesomeIcon icon={faPlus} className="mr-1"/>New Organization Account
-          </Button>
-        </div>
         <div className="table-content-block">
           <CustomTable
             columns={columns}
@@ -56,7 +51,7 @@ function LdapOrganizationAccountsTable({ldapOrganizationAccounts, handleAccountC
 LdapOrganizationAccountsTable.propTypes = {
   setShowCreateAccountModal: PropTypes.func,
   ldapOrganizationAccounts: PropTypes.array,
-  handleAccountClick: PropTypes.func
+  loadData: PropTypes.func
 };
 
 export default LdapOrganizationAccountsTable;

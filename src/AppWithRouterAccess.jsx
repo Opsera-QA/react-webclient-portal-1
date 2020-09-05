@@ -59,6 +59,10 @@ import Axios from "axios";
 import Pipelines from "./components/workflow/pipelines/Pipelines";
 import PipelineDetailView from "./components/workflow/pipelines/pipeline_details/PipelineDetailView";
 import ErrorDialog from "./components/common/status_notifications/error";
+import LdapOrganizationAccountDetailView
+  from "./components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountDetailView";
+import LdapOrganizationAccountManagement
+  from "./components/admin/accounts/ldap/organization_accounts/LdapOrganizationAccountManagement";
 
 const OktaAuth = require("@okta/okta-auth-js");
 const config = require("./config");
@@ -223,6 +227,10 @@ const AppWithRouterAccess = () => {
                 <SecureRoute path="/accounts/organizations" exact component={LdapOrganizationsView}/>
                 <SecureRoute path="/accounts/organizations/details/:organizationName" exact
                              component={LdapOrganizationDetailView}/>
+                <SecureRoute path="/accounts/organization-accounts/:organizationName?" exact
+                             component={LdapOrganizationAccountManagement}/>
+                <SecureRoute path="/accounts/organization-accounts/:organizationDomain/details" exact
+                             component={LdapOrganizationAccountDetailView}/>
                 <SecureRoute path="/accounts/create" exact component={LdapCustomerOnboardView}/>
 
                 {/*Pipelines*/}

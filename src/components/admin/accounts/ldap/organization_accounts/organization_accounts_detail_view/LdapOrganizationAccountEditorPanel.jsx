@@ -1,30 +1,25 @@
 import React, {useState, useEffect, useContext} from "react";
-import {Button, Form} from "react-bootstrap";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import DropdownList from "react-widgets/lib/DropdownList";
-import accountsActions from "../../accounts-actions";
-import Loading from "../../../../common/status_notifications/loading";
-import {AuthContext} from "../../../../../contexts/AuthContext";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCogs} from "@fortawesome/free-solid-svg-icons";
-import {capitalizeFirstLetter} from "../../../../common/helpers/string-helpers";
+import accountsActions from "../../../accounts-actions";
+import {AuthContext} from "../../../../../../contexts/AuthContext";
+import {capitalizeFirstLetter} from "../../../../../common/helpers/string-helpers";
 import {
   getCreateFailureResultDialog,
   getCreateSuccessResultDialog,
   getFormValidationErrorDialog,
   getUpdateFailureResultDialog,
   getUpdateSuccessResultDialog
-} from "../../../../common/toasts/toasts";
-import DtoTextInput from "../../../../common/input/dto_input/dto-text-input";
-import Model, {DataState} from "../../../../../core/data_model/model";
-import DtoToggleInput from "../../../../common/input/dto_input/dto-toggle-input";
-import SaveButton from "../../../../common/buttons/SaveButton";
-import LoadingDialog from "../../../../common/status_notifications/loading";
-import toolTypeActions from "../../../tools/tool-management-actions";
+} from "../../../../../common/toasts/toasts";
+import DtoTextInput from "../../../../../common/input/dto_input/dto-text-input";
+import Model, {DataState} from "../../../../../../core/data_model/model";
+import DtoToggleInput from "../../../../../common/input/dto_input/dto-toggle-input";
+import SaveButton from "../../../../../common/buttons/SaveButton";
+import LoadingDialog from "../../../../../common/status_notifications/loading";
 
-function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOrganization, setLdapOrganizationAccountData, setShowEditPanel, handleClose, handleBackButton}) {
+function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOrganization, setLdapOrganizationAccountData}) {
   const {getAccessToken} = useContext(AuthContext);
   const [ldapOrganizationAccountDataDto, setLdapOrganizationAccountDataDto] = useState({});
   const [opseraUserList, setOpseraUsersList] = useState([]);
@@ -87,7 +82,7 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
         setToast(toast);
         setShowToast(true);
       } catch (error) {
-        let toast = getCreateFailureResultDialog(ldapOrganizationAccountDataDto.getType(), error.message, setShowToast);
+        let toast = getCreateFailureResultDialog(ldapOrganizationAccountDataDto.getType(), error, setShowToast);
         setToast(toast);
         setShowToast(true);
         console.error(error.message);
@@ -107,6 +102,7 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
         let toast = getUpdateSuccessResultDialog(ldapOrganizationAccountDataDto.getType(), setShowToast);
         setToast(toast);
         setShowToast(true);
+        console.log("updateOrganizationAccountResponse.data: " + JSON.stringify(updateOrganizationAccountResponse.data))
         let updatedDto = new Model(updateOrganizationAccountResponse.data, ldapOrganizationAccountDataDto.metaData, false);
         setLdapOrganizationAccountData(updatedDto);
         setLdapOrganizationAccountDataDto(updatedDto);
@@ -125,7 +121,6 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
   };
 
   const addAdmin = (user) => {
-    console.log("USER: " + JSON.stringify(user));
     let newAdmin = {
       name: user.accountName,
       firstName: user.firstName,
@@ -158,25 +153,6 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
     return (
       <>
         <div className="scroll-y full-height">
-          {!ldapOrganizationAccountDataDto.isNew() &&
-          <>
-            <div className="mb-2 text-muted">
-              {/*TODO: Implement overlay*/}
-              {/*<OverlayTrigger*/}
-              {/*  placement="top"*/}
-              {/*  delay={{ show: 250, hide: 400 }}*/}
-              {/*  // overlay={renderTooltip({ message: "Edit this account" })}*/}
-              {/*>*/}
-              <FontAwesomeIcon icon={faCogs} className="pointer float-right ml-3" onClick={() => {
-                setShowEditPanel(false);
-              }}/>
-              {/*</OverlayTrigger>*/}
-            </div>
-            <div className="pt-1">
-              <hr/>
-            </div>
-          </>
-          }
           {showToast && toast}
           <Row>
             <Col>
@@ -210,7 +186,7 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
                             setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <DtoTextInput fieldName={"name"} dataObject={ldapOrganizationAccountDataDto}
+              <DtoTextInput disabled={!ldapOrganizationAccountDataDto.isNew()} fieldName={"name"} dataObject={ldapOrganizationAccountDataDto}
                             setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             <Col lg={12}>
@@ -275,10 +251,6 @@ LdapOrganizationAccountEditorPanel.propTypes = {
   ldapOrganization: PropTypes.object,
   ldapOrganizationAccountData: PropTypes.object,
   setLdapOrganizationAccountData: PropTypes.func,
-  canDelete: PropTypes.bool,
-  setShowEditPanel: PropTypes.func,
-  handleClose: PropTypes.func,
-  handleBackButton: PropTypes.func
 };
 
 export default LdapOrganizationAccountEditorPanel;

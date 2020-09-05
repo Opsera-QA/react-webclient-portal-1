@@ -108,9 +108,6 @@ function LdapIdpAccountEditorPanel({ldapOrganizationAccountData, ldapIdpAccountD
                 setShowIdpEditPanel(false);
               }}/>
             </TooltipWrapper>
-            <div className="pt-1">
-              <hr/>
-            </div>
           </div>}
           {showToast && toast}
           <Row>

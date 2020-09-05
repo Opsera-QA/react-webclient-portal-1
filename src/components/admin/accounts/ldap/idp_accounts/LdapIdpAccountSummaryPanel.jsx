@@ -17,9 +17,6 @@ function LdapIdpAccountSummaryPanel({ldapIdpAccountData, setShowIdpEditPanel}) {
               setShowIdpEditPanel(true);
             }}/>
           </TooltipWrapper>
-          <div className="pt-1">
-            <hr/>
-          </div>
         </div>
         <Row>
           <Col lg={6}>

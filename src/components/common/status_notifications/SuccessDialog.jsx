@@ -31,7 +31,7 @@ function SuccessDialog({ successMessage, setSuccessMessage, alignment }) {
 
   if (alignment === "detailPanelTop") {
     return (
-      <div className="row success-block top-dialog-detail-panel-block m-2">
+      <div className="row success-block top-dialog-detail-panel-block top-error-block">
         <div className="col-sm-12 my-auto text-center">
           {setSuccessMessage && <div className="float-right ml-1">
             <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
@@ -43,22 +43,6 @@ function SuccessDialog({ successMessage, setSuccessMessage, alignment }) {
       </div>
     );
   }
-
-  if (alignment === "top") {
-    return (
-      <div className="w-100 error-block top-error-block">
-        <div className="float-right ml-1">
-          {setSuccessMessage && <div className="float-right ml-1">
-            <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
-              clearSuccess();
-            }}/>
-          </div>}
-          <span>{messageBody}</span>
-        </div>
-      </div>
-    );
-  }
-
 
   return (
     <div className="row">
