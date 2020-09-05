@@ -3,29 +3,29 @@ import { AuthContext } from "../../../../../../contexts/AuthContext";
 import { useParams } from "react-router-dom";
 import ErrorDialog from "../../../../../common/status_notifications/error";
 import LoadingDialog from "../../../../../common/status_notifications/loading";
-import LdapOrganizationSummaryPanel from "./LdapOrganizationSummaryPanel";
-
 import "../../../accounts.css";
 import BreadcrumbTrail from "../../../../../common/navigation/breadcrumbTrail";
 import AccessDeniedDialog from "../../../../../common/status_notifications/accessDeniedInfo";
 import Model from "../../../../../../core/data_model/model";
-import {ldapOrganizationMetaData} from "../ldap-organizations-form-fields";
 import accountsActions from "../../../accounts-actions";
-import LdapOrganizationDetailPanel from "./LdapOrganizationDetailPanel";
+import LdapOrganizationAccountSummaryPanel from "./LdapOrganizationAccountSummaryPanel";
+import {ldapOrganizationAccountMetaData} from "../ldap-organization-account-form-fields";
+import LdapOrganizationAccountDetailPanel from "./LdapOrganizationAccountDetailPanel";
+import {getOrganizationList} from "../../organizations/organization-functions";
 
-function LdapOrganizationDetailView() {
-  const { organizationName } = useParams();
+function LdapOrganizationAccountDetailView() {
+  const { organizationDomain } = useParams();
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState({});
   const [loading, setLoading] = useState(false); //this is how we toggle showing/hiding stuff when API calls or other functions are loading
   const [error, setError] = useState(false); //if any errors on API call or anything else need to be shown to use, this is used
-  const [ldapOrganizationData, setLdapOrganizationData] = useState(undefined);
-  const [organizationAccounts, setOrganizationAccounts] = useState(undefined);
+  const [ldapOrganizationAccountData, setLdapOrganizationAccountData] = useState(undefined);
 
 
   useEffect(() => {
     setLoading(true);
     getRoles();
+    loadData();
   }, []);
 
   const getRoles = async () => {
@@ -33,18 +33,14 @@ function LdapOrganizationDetailView() {
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
-      await loadData();
     }
   };
 
   const loadData = async () => {
     try {
-      const response = await accountsActions.getOrganizationByName(organizationName, getAccessToken);
-      // console.log("[LdapOrganizationDetailView] Response: ", response.data);
-      setLdapOrganizationData(new Model(response.data, ldapOrganizationMetaData, false));
-      setOrganizationAccounts(response.data["orgAccounts"]);
+      const response = await accountsActions.getOrganizationAccountByDomain(organizationDomain, getAccessToken);
+      setLdapOrganizationAccountData(new Model(response.data, ldapOrganizationAccountMetaData, false));
     } catch (error) {
-      console.error("Error getting API Data: ", error);
       setError(error);
     }
     setLoading(false);
@@ -57,26 +53,23 @@ function LdapOrganizationDetailView() {
   } else {
     return (
       <>
-        <BreadcrumbTrail destination="ldapOrganizationDetailView"/>
-
-        <h5>Organization and Account Management</h5>
+        <BreadcrumbTrail destination="ldapOrganizationAccountDetailView"/>
+        <h5>Organization Account Management</h5>
 
         {error &&
         <div className="absolute-center-content"><ErrorDialog align="center" error={error.message}></ErrorDialog></div>}
 
-        {ldapOrganizationData &&
+        {ldapOrganizationAccountData &&
         <div className="content-container content-card-1 max-content-width ml-2">
           <div className="pt-2 pl-2 content-block-header">
-            <h6>Organization Details [{ldapOrganizationData && ldapOrganizationData["name"]}]</h6>
+            <h6>Organization Account Details [{ldapOrganizationAccountData && ldapOrganizationAccountData["name"]}]</h6>
           </div>
           <div className="detail-view-body">
             <div>
-              <LdapOrganizationSummaryPanel ldapOrganizationData={ldapOrganizationData}/>
+              <LdapOrganizationAccountSummaryPanel ldapOrganizationAccountData={ldapOrganizationAccountData} />
             </div>
             <div>
-              <LdapOrganizationDetailPanel organizationAccounts={organizationAccounts}
-                                           ldapOrganizationData={ldapOrganizationData}
-                                           setLdapOrganizationData={setLdapOrganizationData} loadData={loadData}/>
+              <LdapOrganizationAccountDetailPanel ldapOrganizationAccountData={ldapOrganizationAccountData} setLdapOrganizationAccountData={setLdapOrganizationAccountData} loadData={loadData}/>
             </div>
           </div>
           <div className="content-block-footer"/>
@@ -87,4 +80,4 @@ function LdapOrganizationDetailView() {
   }
 }
 
-export default LdapOrganizationDetailView;
+export default LdapOrganizationAccountDetailView;

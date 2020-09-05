@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
-import LdapOrganizationAccountEditorPanel from "./LdapOrganizationAccountEditorPanel";
+import LdapOrganizationAccountEditorPanel from "./organization_accounts_detail_view/LdapOrganizationAccountEditorPanel";
 import Model from "../../../../../core/data_model/model";
 import {ldapOrganizationAccountMetaData} from "./ldap-organization-account-form-fields";
 import CreateModal from "../../../../common/modal/CreateModal";
@@ -25,7 +25,7 @@ const INITIAL_ORGANIZATION_ACCOUNT_DATA = {
   administrator: {}
 };
 
-function NewLdapAccountModal({ setShowModal, showModal, ldapOrganizationData, loadData } ) {
+function NewLdapOrganizationAccountModal({ setShowModal, showModal, ldapOrganizationData, loadData } ) {
   const [ldapOrganizationAccountData, setLdapOrganizationAccountData] = useState(undefined);
 
   useEffect(() => {
@@ -45,13 +45,13 @@ function NewLdapAccountModal({ setShowModal, showModal, ldapOrganizationData, lo
   );
 }
 
-NewLdapAccountModal.propTypes = {
+NewLdapOrganizationAccountModal.propTypes = {
   ldapOrganizationData: PropTypes.object,
   showModal: PropTypes.bool,
   setShowModal: PropTypes.func,
   loadData: PropTypes.func
 };
 
-export default NewLdapAccountModal;
+export default NewLdapOrganizationAccountModal;
 
 

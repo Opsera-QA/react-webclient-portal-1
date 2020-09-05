@@ -168,9 +168,24 @@ accountsActions.getOrganizationByName = async (organizationName, getAccessToken)
   return response;
 };
 
-accountsActions.getOrganizationByEmail = async (postBody, getAccessToken) => {
+accountsActions.getOrganizationAccountByDomain = async (domain, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = "/users/account";
+  const postBody = {
+    domain: domain
+  }
+  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
+    .then((result) =>  {return result;})
+    .catch(error => {throw error;});
+  return response;
+};
+
+accountsActions.getOrganizationAccountByEmail = async (email, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = "/users/account";
+  const postBody = {
+    email: email
+  }
   const response = await axiosApiService(accessToken).post(apiUrl, postBody)
     .then((result) =>  {return result;})
     .catch(error => {throw error;});

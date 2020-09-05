@@ -12,7 +12,7 @@ export const getGroupsByDomain = async (ldapDomain, getAccessToken) => {
 
 const getGroups = async (postBody) => {
   if (postBody != null) {
-    const response = await accountsActions.getOrganizationByEmail(postBody, getAccessToken);
+    const response = await accountsActions.getOrganizationAccountByEmail(postBody, getAccessToken);
     let ldapOrganizationData = response.data;
 
     return ldapOrganizationData != null ? ldapOrganizationData["groups"] : undefined;

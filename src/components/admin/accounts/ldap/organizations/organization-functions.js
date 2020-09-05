@@ -23,18 +23,15 @@ export const getOrganizationDropdownList = async (valueField, getAccessToken) =>
 };
 
 export const getOrganizationByEmail = async (email, getAccessToken) => {
-  return getOrganization({email: email}, getAccessToken);
+  if (email != null) {
+    const response = await accountsActions.getOrganizationAccountByEmail(email, getAccessToken);
+    return response.data;
+  }
 };
 
 export const getOrganizationByDomain = async (ldapDomain, getAccessToken) => {
   if (ldapDomain != null) {
-    return getOrganization({domain: ldapDomain}, getAccessToken);
-  }
-};
-
-const getOrganization = async (postBody, getAccessToken) => {
-  if (postBody != null) {
-    const response = await accountsActions.getOrganizationByEmail(postBody, getAccessToken);
+    const response = await accountsActions.getOrganizationAccountByDomain(ldapDomain, getAccessToken);
     return response.data;
   }
-}
+};

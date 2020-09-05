@@ -75,7 +75,7 @@ function ErrorDialog({ error, align, type, setError }) {
 
   if (alignment === "detailPanelTop") {
     return (
-      <div className="row error-block top-dialog-detail-panel-block m-2">
+      <div className="row error-block top-error-block top-dialog-detail-panel-block">
         <div className="col-sm-12 my-auto text-center">
           <div className="float-right ml-1">
             <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {

@@ -14,7 +14,7 @@ export const getCreateSuccessResultDialog = (type, toggleToast, alignment = "top
   return getSuccessDialog(`${type} created successfully!`, toggleToast, alignment)
 }
 
-export const getUpdateSuccessResultDialog = (type, toggleToast, alignment = "top") => {
+export const getUpdateSuccessResultDialog = (type, toggleToast, alignment = "detailPanelTop") => {
   return getSuccessDialog(`${type} updated successfully!`, toggleToast, alignment);
 }
 

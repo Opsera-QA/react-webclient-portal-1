@@ -10,8 +10,11 @@ paths.toolManagement = paths.admin + "/tools";
 paths.toolTypeDetailView = paths.toolManagement + "types/details/";
 paths.toolIdentifierDetailView = paths.toolManagement + "identifiers/details/";
 
-paths.ldapOrganizationManagement = paths.admin + "/accounts/organizations";
-paths.ldapOrganizationDetailView = paths.ldapUserManagement;
+paths.ldapOrganizationManagement = "accounts/organizations";
+paths.ldapOrganizationDetailView = "accounts/organizations";
+
+paths.ldapOrganizationAccountManagement = "accounts";
+paths.ldapOrganizationDetailView = "accounts";
 
 
 // Pipelines Paths

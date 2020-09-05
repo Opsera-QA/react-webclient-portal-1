@@ -32,7 +32,7 @@ function LdapGroupDetailView() {
 
   const getOrganization = async (domain) => {
     if (domain != null) {
-      const response = await accountsActions.getOrganizationByEmail({domain: domain}, getAccessToken);
+      const response = await accountsActions.getOrganizationAccountByDomain(domain, getAccessToken);
       let ldapOrganizationData = response.data;
       setLdapOrganizationData(ldapOrganizationData);
     }

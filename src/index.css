@@ -540,7 +540,10 @@ a:hover, .active {
 
 .top-dialog-detail-panel-block {
     padding: 1em;
+    width: 96%;
+    margin: 1em 2em;
     border-radius: 5px;
+    z-index: 1200;
 }
 
 .top-error-block {
