@@ -16,7 +16,7 @@ import RecentBuildsTable from "../../metrics/recentBuildsTable.jsx";
 import OpseraPipelineByStatusBarChart from "../../charts/opseraPipelineByStatusBarChart";
 import OpseraBuildDurationBarChart from "../../charts/opseraBuildDurationBarChart";
 import OpseraBuildsByUserBarChart from "../../charts/opseraBuildsByUserBarChart";
-import OpseraRecentPipelineStatus from "../../metrics/recentPipelineRunsTable.jsx";
+import OpseraRecentPipelineStatus from "../../metrics/OpseraRecentPipelineStatus.jsx";
 import OpseraDeploymentFrequencyLineChart from "../../charts/opseraDeploymentFrequencyLineChart.jsx";
 import {  Row } from "react-bootstrap";
 

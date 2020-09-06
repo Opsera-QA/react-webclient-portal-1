@@ -132,7 +132,7 @@ function TemplateEditorPanel({ templateData, setTemplateData }) {
                               dataObject={templateDataDto}
                               setDataObject={setTemplateDataDto}
                               setDataFunction={updateSelectArray}
-                              // valueFormatter={}
+                              groupBy={"groupId"}
                               selectOptions={pipelineHelpers.PIPELINE_TYPES}/>
             </Col>
             <Col lg={6}>

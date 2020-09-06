@@ -8,7 +8,7 @@ import { Table }  from "react-bootstrap";
 import { format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
-import CustomTable from "../../common/table/table";
+import CustomTable from "../../common/table/CustomTable";
 
 function RecentBuildsTable({ date }) {
   const contextType = useContext(AuthContext);

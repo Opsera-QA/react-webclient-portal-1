@@ -15,29 +15,32 @@ import {
   getOrganizationByEmail,
   getOrganizationList
 } from "../../admin/accounts/ldap/organizations/organization-functions";
+import {getLoadingErrorDialog} from "../../common/toasts/toasts";
 
 
 function LdapGroupManagement() {
   const history = useHistory();
   const {orgDomain} = useParams();
-  const [accessRoleData, setAccessRoleData] = useState({});
+  const [accessRoleData, setAccessRoleData] = useState(undefined);
   const {getUserRecord, setAccessRoles, getAccessToken} = useContext(AuthContext);
-  const [pageLoading, setPageLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [groupList, setGroupList] = useState([]);
   const [currentOrganizationDomain, setCurrentOrganizationDomain] = useState("");
   const [organizationList, setOrganizationList] = useState(undefined);
   const [ldapOrganizationData, setLdapOrganizationData] = useState();
   const [currentUserEmail, setCurrentUserEmail] = useState(undefined);
   const [showCreateGroupModal, setShowCreateGroupModal] = useState(false);
+  const [toast, setToast] = useState({});
+  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
     loadData();
   }, []);
 
   const loadData = async () => {
-    setPageLoading(true);
+    setIsLoading(true);
     await getRoles();
-    setPageLoading(false);
+    setIsLoading(false);
   }
 
   const getGroupsByEmail = async (email) => {
@@ -48,9 +51,16 @@ function LdapGroupManagement() {
 
   const getGroupsByDomain = async (ldapDomain) => {
     if (ldapDomain != null) {
-      let organization = await getOrganizationByDomain(ldapDomain, getAccessToken);
-      setLdapOrganizationData(organization);
-      setGroupList(organization["groups"]);
+      try {
+        let organization = await getOrganizationByDomain(ldapDomain, getAccessToken);
+        setLdapOrganizationData(organization);
+        setGroupList(organization["groups"]);
+      } catch (error) {
+        let toast = getLoadingErrorDialog(error.message, setShowToast);
+        setToast(toast);
+        setShowToast(true);
+        console.error(error.message);
+      }
     }
   };
 
@@ -73,8 +83,15 @@ function LdapGroupManagement() {
       }
 
       if (userRoleAccess.OpseraAdministrator) {
-        const organizationList = await getOrganizationList(getAccessToken);
-        setOrganizationList(organizationList);
+        try {
+          const organizationList = await getOrganizationList(getAccessToken);
+          setOrganizationList(organizationList);
+        } catch (error) {
+          let toast = getLoadingErrorDialog(error.message, setShowToast);
+          setToast(toast);
+          setShowToast(true);
+          console.error(error.message);
+        }
       }
     }
 
@@ -85,23 +102,23 @@ function LdapGroupManagement() {
   };
 
   const handleOrganizationChange = async (selectedOption) => {
-    setPageLoading(true)
+    setIsLoading(true)
     history.push(`/settings/${selectedOption.id}/groups`);
     setCurrentOrganizationDomain(selectedOption.id);
     await getGroupsByDomain(selectedOption.id);
-    setPageLoading(false)
+    setIsLoading(false)
   };
 
-  if (!accessRoleData || pageLoading) {
+  if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   } else if (!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator) {
     return (<AccessDeniedDialog roleData={accessRoleData}/>);
   } else {
     return (
       <div>
-        {!pageLoading &&
         <>
           <BreadcrumbTrail destination={"ldapGroupManagement"} />
+          {showToast && toast}
           <div className="justify-content-between mb-1 d-flex">
             <h5>Groups Management</h5>
             <div className="d-flex">
@@ -130,11 +147,11 @@ function LdapGroupManagement() {
           </div>
 
           <div className="full-height">
-            {groupList && <LdapGroupsTable groupData={groupList} orgDomain={orgDomain}/>}
+            {groupList && <LdapGroupsTable isLoading={isLoading} groupData={groupList} orgDomain={orgDomain}/>}
           </div>
 
           <NewLdapGroupModal loadData={loadData} ldapOrganizationData={ldapOrganizationData} showModal={showCreateGroupModal} currentUserEmail={currentUserEmail} setShowModal={setShowCreateGroupModal}/>
-        </>}
+          </>
       </div>
     );
   }

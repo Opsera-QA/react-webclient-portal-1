@@ -43,10 +43,13 @@ function TemplateDetailView() {
 
   if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
-  } else if (accessRoleData.OpseraAdministrator === false) {
+  }
+
+  if (accessRoleData.OpseraAdministrator === false) {
     return (<AccessDeniedDialog roleData={accessRoleData} />);
-  } else {
-    return (
+  }
+
+  return (
       <>
         <BreadcrumbTrail destination="templateDetailView"/>
         {templateData &&
@@ -66,7 +69,6 @@ function TemplateDetailView() {
         }
       </>
     );
-  }
 }
 
 export default TemplateDetailView;

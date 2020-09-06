@@ -7,15 +7,17 @@ paths.templateManagement = paths.admin+ "/templates";
 paths.templateDetailView = paths.templateManagement + "/details/";
 
 paths.toolManagement = paths.admin + "/tools";
-paths.toolTypeDetailView = paths.toolManagement + "types/details/";
-paths.toolIdentifierDetailView = paths.toolManagement + "identifiers/details/";
+paths.toolTypeDetailView = paths.toolManagement + "/types/details/";
+paths.toolIdentifierDetailView = paths.toolManagement + "/identifiers/details/";
 
-paths.ldapOrganizationManagement = "accounts/organizations";
-paths.ldapOrganizationDetailView = "accounts/organizations";
+paths.ldapOrganizationManagement = paths.admin + "/organizations";
+paths.ldapOrganizationDetailView = paths.admin + "/organizations";
 
-paths.ldapOrganizationAccountManagement = "accounts";
-paths.ldapOrganizationDetailView = "accounts";
+paths.ldapOrganizationAccountManagement = paths.admin + "/organization-accounts";
+paths.ldapOrganizationDetailView = paths.admin + "/organization-accounts";
 
+paths.kpiManagement = paths.admin + "/kpis";
+paths.kpiDetailView = paths.kpiManagement;
 
 // Pipelines Paths
 paths.pipelines = "workflow"

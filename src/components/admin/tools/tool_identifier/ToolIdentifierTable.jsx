@@ -1,6 +1,6 @@
 import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
-import CustomTable from "components/common/table/table";
+import CustomTable from "components/common/table/CustomTable";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {Button} from "react-bootstrap";
@@ -13,7 +13,7 @@ import {
 } from "../../../common/table/table-column-helpers";
 import NewToolIdentifierModal from "./NewToolIdentifierModal";
 
-function ToolIdentifierTable({data, loadData}) {
+function ToolIdentifierTable({data, loadData, isLoading}) {
   const [showCreateToolIdentifierModal, setShowCreateToolIdentifierModal] = useState(false);
   const history = useHistory();
   let fields = toolIdentifierMetadata.fields;
@@ -62,6 +62,7 @@ function ToolIdentifierTable({data, loadData}) {
           data={data}
           rowStyling={rowStyling}
           noDataMessage={noDataMessage}
+          isLoading={isLoading}
           onRowSelect={selectedRow}
           tableStyleName="custom-table-2"
         />
@@ -72,6 +73,7 @@ function ToolIdentifierTable({data, loadData}) {
 
 ToolIdentifierTable.propTypes = {
   data: PropTypes.array,
+  isLoading: PropTypes.bool,
   loadData: PropTypes.func
 };
 

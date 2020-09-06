@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component, useEffect, useState} from "react";
 import GitHub from "./source_control/gitHub";
 import GitLab from "./source_control/gitLab";
 import Bitbucket from "./source_control/bitbucket";
@@ -17,128 +17,109 @@ import JenkinsForm from "./automation_server/jenkinsForm";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
-import { faGithub, faGitlab, faBitbucket, faJira, faSlack } from "@fortawesome/free-brands-svg-icons";
+import {faGithub, faGitlab, faBitbucket, faJira, faSlack, faJenkins} from "@fortawesome/free-brands-svg-icons";
+import CustomTabContainer from "../common/tabs/CustomTabContainer";
+import CustomTab from "../common/tabs/CustomTab";
 
-class ApiConnector extends Component {
-  state = {
-    selection: ""
-  }
+function ApiConnector({}) {
+  const [activeTab, setTabSelection] = useState("home");
 
-  handleClick = param => e => {
-    // param is the argument you passed to the function
-    // e is the event object that returned
+  const handleTabClick = (activeTab) => e => {
     e.preventDefault();
-    this.setState({
-      selection: param
-    });
+    setTabSelection(activeTab);
   };
 
 
-  render() {
     return (
       <div className="max-content-width">
         <h4>API Tools and Connectivity</h4>
         <div>Configure connection information for various platform and pipeline supported tools.</div>
-
-
-        <div className="default-custom-tabs">
-          <ul className="nav nav-tabs mt-3">
-            <li className="nav-item">
-              <a className={"nav-link " + (this.state.selection === "" ? "active" : "")} href="#" onClick={this.handleClick("")}>
-                <FontAwesomeIcon icon={faHome} className="mr-1"/> Home</a>
-            </li>
-            <li className="nav-item">
-              <a className={"nav-link " + (this.state.selection === "github" ? "active" : "")} href="#" onClick={this.handleClick("github")}>
-                <FontAwesomeIcon icon={faGithub} className="mr-1"/> GitHub</a>
-            </li>
-            <li className="nav-item">
-              <a className={"nav-link " + (this.state.selection === "gitlab" ? "active" : "")} href="#" onClick={this.handleClick("gitlab")}>
-                <FontAwesomeIcon icon={faGitlab} className="mr-1"/> GitLab</a>
-            </li>
-            <li className="nav-item">
-              <a className={"nav-link " + (this.state.selection === "bitbucket" ? "active" : "")} href="#" onClick={this.handleClick("bitbucket")}>
-                <FontAwesomeIcon icon={faBitbucket} className="mr-1"/> Bitbucket</a>
-            </li>
-            <li className="nav-item">
-              <a className={"nav-link " + (this.state.selection === "jira" ? "active" : "")} href="#" onClick={this.handleClick("jira")}>
-                <FontAwesomeIcon icon={faJira} className="mr-1"/> Jira</a>
-            </li>
-            <li className="nav-item">
-              <a className={"nav-link " + (this.state.selection === "slack" ? "active" : "")} href="#" onClick={this.handleClick("slack")}>
-                <FontAwesomeIcon icon={faSlack} className="mr-1"/> Slack</a>
-            </li>
-            {/* <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "jenkins" ? "active" : "")} href="#" onClick={this.handleClick("jenkins")}>Jenkins</a>
-          </li>
-          
-          <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "sonar" ? "active" : "")} href="#" onClick={this.handleClick("sonar")}>Sonar</a>
-          </li>
-          <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "junit" ? "active" : "")} href="#" onClick={this.handleClick("junit")}>junit</a>
-          </li>
-          <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "jMeter" ? "active" : "")} href="#" onClick={this.handleClick("jMeter")}>jMeter</a>
-          </li>
-          <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "selenium" ? "active" : "")} href="#" onClick={this.handleClick("selenium")}>Selenium</a>
-          </li>
-          <li className="nav-item">
-            <a className={"nav-link " + (this.state.selection === "twistlock" ? "active" : "")} href="#" onClick={this.handleClick("twistlock")}>Twistlock</a>
-          </li> */}
-
-            {/* <li className="nav-item">
-            <a className="nav-link disabled" href="#">Disabled</a>
-          </li> */}
-          </ul>
-        </div>
-        <div className="tabbed-content-block px-2 pt-3 pb-4">
-
-          {this.state.selection === "github" && <GitHub />}
-          {this.state.selection === "gitlab" && <GitLab />}
-          {this.state.selection === "bitbucket" && <Bitbucket />}
-          {this.state.selection === "jira" && <Jira />}
-
-          {this.state.selection === "jenkins" && <JenkinsForm />}
-          {this.state.selection === "sonar" && <Sonar />}
-          {this.state.selection === "junit" && <JUnit />}
-          {this.state.selection === "jMeter" && <JMeter />}
-          {this.state.selection === "selenium" && <Selenium />}
-          {this.state.selection === "twistlock" && <Twistlock />}
-
-          {this.state.selection === "servicenow" && <ServiceNow />}
-          {this.state.selection === "openstack" && <OpenStack />}
-          {this.state.selection === "slack" && <Slack />}
-          {this.state.selection === "tableau" && <Tableau />}
-          {this.state.selection === "splunk" && <Splunk />}
-          {this.state.selection === "" &&
-          <div className="mt-4 ml-1">
-            <div className="h5 mb-2 mt-2">Getting Started</div>
-            OpsERA offers various out of the box API connectors which allow users to integrate their platforms and technologies with the OpsERA services. If your tool is 
-            not listed in the tabs above, please reach out to OpsERA to find out how we can meet your needs.  For each tool available, different functionality is provided.
-
-            <div className="header-text mt-4">Source Repositories</div>
-            OpsERA connects to various GIT based repositories for your pipeline needs.  Each supported platform has various configuration settings.  In order to leverage a 
-            particular tool in an OpsERA Pipeline, Platform or Analytics solution, configure the necessary fields per tool.  Users can run multiple source repositories with 
-            our platform.
-            <div>
-
-            </div>
-
-            <div className="header-text mt-4">Planning Tools</div>
-            At this time, OpsERA supports Atlassian's Jira Software for project planning and defect tracking.  Configure your Jira solution here in order to link pipelines and 
-            developers to defects and sprints and leverage advanced analytics and analysis for SDLC pipelines.
-
-            <div className="header-text mt-4">Collaboration Tools</div>
-            OpsERA supports various forms of notification and collaboration for our solutions.  Slack is the most popular and can be configured to send notifications per pipeline step to 
-             specific Slack channels.  In order to leverage this feature, register your Slack Account Token here and then in your pipelines, enable Slack notification per 
-            step.  
-
+        <div className="py-3">
+          <CustomTabContainer>
+            <CustomTab icon={faHome} tabName={"home"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Home"} />
+            <CustomTab icon={faGithub} tabName={"github"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"GitHub"} />
+            <CustomTab icon={faGitlab} tabName={"gitlab"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"GitLab"} />
+            <CustomTab icon={faBitbucket} tabName={"bitbucket"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Bitbucket"} />
+            <CustomTab icon={faJira} tabName={"jira"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Jira"} />
+            <CustomTab icon={faSlack} tabName={"slack"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Slack"} />
+            {/*<CustomTab icon={faJenkins} tabName={"jenkins"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Jenkins"} />*/}
+            {/*<CustomTab icon={faCogs} tabName={"sonar"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Sonar"} />*/}
+            {/*<CustomTab icon={faCogs} tabName={"junit"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"JUnit"} />*/}
+            {/*<CustomTab icon={faCogs} tabName={"jMeter"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"jMeter"} />*/}
+            {/*<CustomTab icon={faCogs} tabName={"selenium"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Selenium"} />*/}
+            {/*<CustomTab icon={faCogs} tabName={"twistlock"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Twistlock"} />*/}
+          </CustomTabContainer>
+          <div className="content-block-collapse px-2 pt-3 pb-4">
+              <ApiConnectorTabView activeTab={activeTab} />
           </div>
-          }
         </div>
       </div>
     );
+}
+
+
+function ApiConnectorTabView({ activeTab }) {
+  useEffect(() => {
+    // console.log("CHANGE HAPPENED");
+  }, [activeTab]);
+
+  if (activeTab) {
+    switch (activeTab) {
+      case "home":
+        return (
+          <div className="m-3">
+            <div className="h5 mb-2 mt-2">Getting Started</div>
+            OpsERA offers various out of the box API connectors which allow users to integrate their platforms and technologies with the OpsERA services. If your tool is
+            not listed in the tabs above, please reach out to OpsERA to find out how we can meet your needs.  For each tool available, different functionality is provided.
+            <div className="header-text mt-4">Source Repositories</div>
+            OpsERA connects to various GIT based repositories for your pipeline needs.  Each supported platform has various configuration settings.  In order to leverage a
+            particular tool in an OpsERA Pipeline, Platform or Analytics solution, configure the necessary fields per tool.  Users can run multiple source repositories with
+            our platform.
+            <div>
+            </div>
+            <div className="header-text mt-4">Planning Tools</div>
+            At this time, OpsERA supports Atlassian's Jira Software for project planning and defect tracking.  Configure your Jira solution here in order to link pipelines and
+            developers to defects and sprints and leverage advanced analytics and analysis for SDLC pipelines.
+            <div className="header-text mt-4">Collaboration Tools</div>
+            OpsERA supports various forms of notification and collaboration for our solutions.  Slack is the most popular and can be configured to send notifications per pipeline step to
+            specific Slack channels.  In order to leverage this feature, register your Slack Account Token here and then in your pipelines, enable Slack notification per
+            step.
+
+          </div>
+        );
+      case "github":
+        return <GitHub />;
+      case "gitlab":
+        return <GitLab />;
+      case "bitbucket":
+        return <Bitbucket />;
+      case "jira":
+        return <Jira />;
+      case "jenkins":
+        return <JenkinsForm />;
+      case "sonar":
+        return <Sonar />;
+      case "junit":
+        return <JUnit />;
+      case "jMeter":
+        return <JMeter />;
+      case "selenium":
+        return <Selenium />;
+      case "twistlock":
+        return <Twistlock />;
+      case "servicenow":
+        return <ServiceNow />;
+      case "openstack":
+        return <OpenStack />;
+      case "slack":
+        return <Slack />;
+      case "tableau":
+        return <Tableau />;
+      case "splunk":
+        return <Splunk />;
+      default:
+        return null;
+    }
   }
 }
 

@@ -1,11 +1,11 @@
-/* This is an example of a react component using the /common/table.jsx
+/* This is an example of a react component using the /common/CustomTable.jsx
     This uses hard coded objects to just show how to format data to use each feature
 
     This file is accessible in UI through this demo route:  /demo/table
 */
 
 import React, { useState, useMemo } from "react";
-import CustomTable from "../table/table";
+import CustomTable from "../table/CustomTable";
 import { faTimesCircle, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";

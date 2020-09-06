@@ -12,6 +12,11 @@ import PipelineSummaryPanel from "./PipelineSummaryPanel";
 import PipelineHelpers from "../../pipelineHelpers";
 import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
 import { useHistory } from "react-router-dom";
+import {faBracketsCurly, faSearchPlus} from "@fortawesome/pro-regular-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSortDown} from "@fortawesome/free-solid-svg-icons";
+import {faDraftingCompass, faInfinity, faMicrochip} from "@fortawesome/pro-light-svg-icons";
+import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
 
 
 function PipelineDetailView() {
@@ -163,6 +168,20 @@ function PipelineDetailView() {
     }
   };
 
+  const getTypeIcon = (type) => {
+    console.log("type: " + type)
+    switch (type) {
+      case "sfdc":
+        return faSalesforce;
+      case "sdlc":
+      return faBracketsCurly;
+      case "ai-ml":
+        return faMicrochip;
+      default:
+        return faInfinity;
+    }
+  };
+
   if (error && !loading) {
     return (<ErrorDialog error={error} align={"detailPanelTop"} setError={setErrors}/>);
   } else if (loading && !error) {
@@ -181,11 +200,11 @@ function PipelineDetailView() {
             <ul className="nav nav-tabs">
               <li className="nav-item">
                 <a className={"nav-link " + (activeTab === "summary" ? "active" : "")} href="#"
-                   onClick={handleTabClick("summary")}>Summary</a>
+                   onClick={handleTabClick("summary")}><FontAwesomeIcon icon={getTypeIcon(pipeline["type"] ? pipeline["type"][0] : "default")} className="mr-2" />Summary</a>
               </li>
               <li className="nav-item">
                 <a className={"nav-link " + (activeTab === "model" ? "active" : "")} href="#"
-                   onClick={handleTabClick("model")}>Workflow</a>
+                   onClick={handleTabClick("model")}><FontAwesomeIcon icon={faDraftingCompass} className="mr-2" />Workflow</a>
               </li>
               {/*<li className="nav-item">*/}
               {/*  <a className={"nav-link " + (activeTab === "editor" ? "active" : "")} href="#"*/}

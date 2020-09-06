@@ -8,12 +8,16 @@ import ToolSummaryPanel from "./ToolSummaryPanel";
 import inventoryActions from "../../inventory-actions";
 import toolMetadata from "../tool-metadata";
 import ToolDetailPanel from "./ToolDetailPanel";
+import {getLoadingErrorDialog} from "../../../common/toasts/toasts";
 
 function ToolDetailView() {
   const { id } = useParams();
   const { getAccessToken } = useContext(AuthContext);
   const [toolData, setToolData] = useState(undefined);
-  const [pageLoading, setPageLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [toast, setToast] = useState({});
+  const [showToast, setShowToast] = useState(false);
+
 
   useEffect(() => {
     // getRoles();
@@ -22,10 +26,17 @@ function ToolDetailView() {
 
   const getTool = async () => {
     console.log("loading tool");
-    setPageLoading(true);
-    const response = await inventoryActions.getToolById(id, getAccessToken);
-    setToolData(new Model(...response.data, toolMetadata, false));
-    setPageLoading(false);
+    setIsLoading(true);
+    try {
+      const response = await inventoryActions.getToolById(id, getAccessToken);
+      setToolData(new Model(...response.data, toolMetadata, false));
+    } catch (error) {
+      let toast = getLoadingErrorDialog(error.message, setShowToast);
+      setToast(toast);
+      setShowToast(true);
+      console.error(error.message);
+    }
+    setIsLoading(false);
   };
 
   // TODO: Implement Roles if required
@@ -41,12 +52,10 @@ function ToolDetailView() {
   //   }
   // };
 
-  if (pageLoading) {
-    return (<LoadingDialog size="sm"/>);
-  } else {
     return (
       <>
         <BreadcrumbTrail destination="toolDetailView"/>
+        {showToast && toast}
         {toolData &&
         <div className="content-container content-card-1 max-content-width ml-2">
           <div className="pt-2 pl-2 content-block-header"><h5>Tool Details
@@ -56,7 +65,7 @@ function ToolDetailView() {
               <ToolSummaryPanel toolData={toolData} setToolData={setToolData}/>
             </div>
             <div>
-              <ToolDetailPanel toolData={toolData} setToolData={setToolData} loadData={getTool} />
+              <ToolDetailPanel toolData={toolData} isLoading={isLoading} setToolData={setToolData} loadData={getTool} />
             </div>
           </div>
           <div className="content-block-footer"/>
@@ -64,7 +73,6 @@ function ToolDetailView() {
         }
       </>
     );
-  }
 }
 
 export default ToolDetailView;

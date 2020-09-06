@@ -5,7 +5,7 @@ import JenkinsJobsTable from "./JenkinsJobsTable";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 
-function JenkinsJobs({ toolData, loadData }) {
+function JenkinsJobs({ toolData, loadData, isLoading }) {
   const [jobData, setJobData] = useState(undefined);
 
   const selectedJobRow = (rowData) => {
@@ -16,7 +16,7 @@ function JenkinsJobs({ toolData, loadData }) {
     <div>
       {jobData != null
         ? <JenkinsJobEditorPanel toolData={toolData.getPersistData()} jobData={jobData} loadData={loadData}/>
-        : <JenkinsJobsTable toolData={toolData} loadData={loadData} selectedRow={rowData => selectedJobRow(rowData)}/>}
+        : <JenkinsJobsTable isLoading={isLoading} toolData={toolData} loadData={loadData} selectedRow={rowData => selectedJobRow(rowData)}/>}
     </div>
   );
 }
@@ -24,6 +24,7 @@ function JenkinsJobs({ toolData, loadData }) {
 
 JenkinsJobs.propTypes = {
   toolData: PropTypes.object,
-  loadData: PropTypes.func
+  loadData: PropTypes.func,
+  isLoading: PropTypes.bool
 };
 export default JenkinsJobs;

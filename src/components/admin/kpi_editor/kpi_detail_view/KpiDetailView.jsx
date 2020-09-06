@@ -6,6 +6,9 @@ import { Link, useParams } from "react-router-dom";
 import KpiTagsActions from "../kpi-editor-actions";
 import { AuthContext } from "contexts/AuthContext";
 import ErrorDialog from "components/common/status_notifications/error";
+import Model from "../../../../core/data_model/model";
+import kpiMetaData from "./kpi-form-fields";
+import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
 
 function KpiDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -16,13 +19,12 @@ function KpiDetailView() {
   const [error, setError] = useState(false); //if any errors on API call or anything else need to be shown to use, this is used
 
   useEffect(() => {
-    getTag(id);
     getRoles();
   }, []);
 
-  const getTag = async (tagId) => {
+  const getKpi = async (tagId) => {
     const response = await KpiTagsActions.get(tagId, getAccessToken);
-    setKpiData(response.data);
+    setKpiData(new Model(response.data, kpiMetaData, false));
   };
 
   const getRoles = async () => {
@@ -30,25 +32,14 @@ function KpiDetailView() {
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
+      await getKpi(id);
     }
   };
 
-
   return (
     <>
-      <nav aria-label="breadcrumb">
-        <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
-          <li className="breadcrumb-item">
-            <Link to="/admin">Admin</Link>
-          </li>
-          <li className="breadcrumb-item">
-            <Link to="/admin/kpis">KPI Management</Link>
-          </li>
-          <li className="breadcrumb-item active">KPI</li>
-        </ol>
-      </nav>
+      <BreadcrumbTrail destination={"kpiDetailView"}/>
 
-      {/*TODO: Add isLoading pinwheel*/}
       {kpiData &&
       <div className="content-container content-card-1 max-content-width ml-2">
         <div className="pt-2 pl-2 content-block-header"><h5>KPI Configuration Details [{kpiData.name}]</h5></div>
@@ -57,7 +48,7 @@ function KpiDetailView() {
         <div>
           <div>
             <div>
-              <KpiSummaryPanel kpiData={kpiData}/>
+              <KpiSummaryPanel kpiData={kpiData} setKpiData={setKpiData}/>
             </div>
             <div>
               <KpiDetailPanel

@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
-import CustomTable from "components/common/table/table";
+import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
 import {ldapGroupMetaData} from "./ldap-groups-metadata";
 import {
@@ -9,7 +9,7 @@ import {
   getTableTextColumn
 } from "../../common/table/table-column-helpers";
 
-function LdapGroupsTable({ groupData, orgDomain }) {
+function LdapGroupsTable({ groupData, orgDomain, isLoading }) {
   let fields = ldapGroupMetaData.fields;
   const history = useHistory();
 
@@ -33,7 +33,7 @@ function LdapGroupsTable({ groupData, orgDomain }) {
   return (
     <>
       <div className="table-content-block">
-        <CustomTable tableStyleName="custom-table-2" onRowSelect={onRowSelect} data={groupData} columns={columns} />
+        <CustomTable tableStyleName="custom-table-2" isLoading={isLoading} onRowSelect={onRowSelect} data={groupData} columns={columns} />
       </div>
     </>
   );
@@ -41,7 +41,8 @@ function LdapGroupsTable({ groupData, orgDomain }) {
 
 LdapGroupsTable.propTypes = {
   groupData: PropTypes.array,
-  orgDomain: PropTypes.string
+  orgDomain: PropTypes.string,
+  isLoading: PropTypes.bool
 };
 
 export default LdapGroupsTable;

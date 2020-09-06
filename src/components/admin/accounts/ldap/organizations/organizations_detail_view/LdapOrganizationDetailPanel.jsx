@@ -5,6 +5,9 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import LdapOrganizationEditorPanel from "./LdapOrganizationEditorPanel";
 import LdapOrganizationAccountsTable from "../../organization_accounts/LdapOrganizationAccountsTable";
+import CustomTabContainer from "../../../../../common/tabs/CustomTabContainer";
+import CustomTab from "../../../../../common/tabs/CustomTab";
+import {faCogs, faUsers} from "@fortawesome/pro-solid-svg-icons";
 
 function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationData, setLdapOrganizationData, loadData}) {
   const [activeTab, setActiveTab] = useState("accounts");
@@ -20,21 +23,17 @@ function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationDat
     <>
       <div className="pb-3 px-3 h-50">
         <Row>
-          <Col lg={12}>
-            <div className="default-custom-tabs">
-              <ul className="nav nav-tabs">
-                <li className="nav-item">
-                  <a className={"nav-link " + (activeTab === "accounts" ? "active" : "")} href="#"
-                     onClick={handleTabClick("accounts")}>Accounts</a>
-                </li>
-                <li className="nav-item">
-                  <a className={"nav-link " + (activeTab === "organizationEditor" ? "active" : "")}
-                     onClick={handleTabClick("organizationEditor")} href="#">Settings</a>
-                </li>
-              </ul>
-            </div>
+          <Col>
+            <CustomTabContainer>
+              <CustomTab icon={faUsers} tabName={"accounts"} handleTabClick={handleTabClick} activeTab={activeTab}
+                         tabText={"Accounts"}/>
+              <CustomTab icon={faCogs} tabName={"settings"} handleTabClick={handleTabClick} activeTab={activeTab}
+                         tabText={"Settings"}/>
+            </CustomTabContainer>
           </Col>
-          <Col lg={12}>
+        </Row>
+        <Row>
+          <Col>
             <div className="tabbed-content-block detail-view-detail-panel">
               {ldapOrganizationData &&
               <LdapOrganizationDetailsView organizationAccounts={organizationAccounts} loadData={loadData} activeTab={activeTab} setLdapOrganizationData={setLdapOrganizationData} ldapOrganizationData={ldapOrganizationData}/>}
@@ -52,10 +51,10 @@ function LdapOrganizationDetailsView({activeTab, loadData, setLdapOrganizationDa
   }, [activeTab]);
   if (activeTab) {
     switch (activeTab) {
-      case "organizationEditor":
-        return <LdapOrganizationEditorPanel setLdapOrganizationData={setLdapOrganizationData} ldapOrganizationData={ldapOrganizationData} />;
       case "accounts":
         return <LdapOrganizationAccountsTable ldapOrganizationAccounts={organizationAccounts} loadData={loadData} />
+      case "settings":
+        return <LdapOrganizationEditorPanel setLdapOrganizationData={setLdapOrganizationData} ldapOrganizationData={ldapOrganizationData} />;
       default:
         return null;
     }

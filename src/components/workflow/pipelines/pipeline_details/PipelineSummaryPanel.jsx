@@ -237,10 +237,6 @@ function PipelineSummaryPanel({
     setEditSchedule(false);
   };
 
-  const handleBackButton = () => {
-    history.push("/workflow");
-  };
-
   const handleEditPropertyClick = (type) => {
     console.log("in handle edit property click: " + type)
     switch (type) {
@@ -356,7 +352,7 @@ function PipelineSummaryPanel({
                 itemId={pipeline._id}
                 itemName={"Pipeline"}
                 data={pipeline}
-                handleBackButton={handleBackButton}
+                backButtonPath={"/workflow"}
                 handleDeleteClick={authorizedAction("delete_pipeline_btn", pipeline.owner) ? handleDeleteClick : undefined}
                 handleDuplicateClick={handleCopyPipeline}
                 handleViewClick={handleViewClick}

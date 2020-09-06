@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
-import CustomTable from "./table";
+import CustomTable from "./CustomTable";
 import {getTableBooleanIconColumn, getTableTextColumn, getValueColumn} from "./table-column-helpers";
 
 const fields = {

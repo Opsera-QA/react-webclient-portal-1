@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import PlatformInventory from "./platform/platformInventory";
 import ToolInventory from "./tools/ToolInventory";
 import BreadcrumbTrail from "../common/navigation/breadcrumbTrail";
+import CustomTabContainer from "../common/tabs/CustomTabContainer";
+import CustomTab from "../common/tabs/CustomTab";
+import {faServer, faTools} from "@fortawesome/pro-light-svg-icons";
 
 function Inventory() {
-  const [tabView, setTabView] = useState("tools");
+  const [activeTab, setActiveTab] = useState("tools");
 
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
-    setTabView(tabSelection);
+    setActiveTab(tabSelection);
   };
 
   return (
@@ -18,22 +21,32 @@ function Inventory() {
       <p>The OpsERA Tool Registry allows you to register, track and configure all of the tools in your organization in
         one centralized inventory.</p>
 
-      <div className="alternate-tabs">
-        <ul className="nav nav-tabs">
-          <li className="nav-item">
-            <a className={"nav-link " + (tabView === "tools" ? "active" : "")} href="#" onClick={handleTabClick("tools")}>Tools</a>
-          </li>
-          <li className="nav-item">
-            <a className={"nav-link " + (tabView === "platform" ? "active" : "")} href="#" onClick={handleTabClick("platform")}>Platform</a>
-          </li>
-        </ul>
-      </div>
+      <CustomTabContainer styling="alternate-tabs">
+        <CustomTab icon={faTools} tabName={"tools"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Tools"} />
+        <CustomTab icon={faServer} tabName={"platform"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Platform"} />
+      </CustomTabContainer>
       <div className="content-block-collapse">
-        {tabView === "tools" && <><ToolInventory/></>}
-        {tabView === "platform" && <><PlatformInventory/></>}
+        <InventoryTabView activeTab={activeTab} />
       </div>
     </div>
   );
+}
+
+function InventoryTabView({ activeTab }) {
+  useEffect(() => {
+    // console.log("CHANGE HAPPENED");
+  }, [activeTab]);
+
+  if (activeTab) {
+    switch (activeTab) {
+      case "tools":
+        return <ToolInventory/>;
+      case "platform":
+        return <PlatformInventory/>;
+      default:
+        return null;
+    }
+  }
 }
 
 export default Inventory;

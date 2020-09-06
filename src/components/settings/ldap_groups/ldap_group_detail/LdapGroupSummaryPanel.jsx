@@ -4,14 +4,19 @@ import PropTypes from "prop-types";
 import DtoTextField from "../../../common/form_fields/dto_form_fields/dto-text-field";
 import DtoToggleField from "../../../common/form_fields/dto_form_fields/dto-toggle-field";
 import TextField from "../../../common/form_fields/text-field";
+import SummaryActionBar from "../../../common/actions/SummaryActionBar";
 
 function LdapGroupSummaryPanel({ldapGroupData, domain}) {
 
+  if (ldapGroupData == null) {
+    return <></>;
+  }
+
   return (
     <>
-      <div className="scroll-y pt-3 px-3">
+      <div className="scroll-y pt-2 px-3">
+        <SummaryActionBar backButtonPath={`/settings/${domain}/groups`} />
         <div className="mb-3 flat-top-content-block p-3 detail-view-summary">
-          {ldapGroupData &&
           <Row>
             <Col lg={6}>
               <DtoTextField dataObject={ldapGroupData} fieldName={"name"} />
@@ -33,7 +38,6 @@ function LdapGroupSummaryPanel({ldapGroupData, domain}) {
               <DtoTextField dataObject={ldapGroupData} fieldName={"ownerEmail"} />
             </Col>
           </Row>
-          }
         </div>
       </div>
     </>
@@ -42,7 +46,6 @@ function LdapGroupSummaryPanel({ldapGroupData, domain}) {
 
 LdapGroupSummaryPanel.propTypes = {
   ldapGroupData: PropTypes.object,
-  ldapGroupDto: PropTypes.object,
   domain: PropTypes.string,
 };
 

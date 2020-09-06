@@ -11,23 +11,25 @@ import NewLdapOrganizationModal from "./NewLdapOrganizationModal";
 import accountsActions from "../../accounts-actions";
 import BreadcrumbTrail from "../../../../common/navigation/breadcrumbTrail";
 import AccessDeniedDialog from "../../../../common/status_notifications/accessDeniedInfo";
+import {getLoadingErrorDialog} from "../../../../common/toasts/toasts";
 
 function LdapOrganizationManagement() {
-  const [accessRoleData, setAccessRoleData] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const [accessRoleData, setAccessRoleData] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(true);
   const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
   const [ldapOrganizationData, setLdapOrganizationData] = useState([]);
   const [showCreateOrganizationModal, setShowCreateOrganizationModal] = useState(false);
+  const [toast, setToast] = useState({});
+  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
     loadData();
   }, []);
 
   const loadData = async () => {
-    setLoading(true);
+    setIsLoading(true);
     await getRoles();
-    setLoading(false);
+    setIsLoading(false);
   };
 
   const loadOrganizations = async () => {
@@ -35,8 +37,10 @@ function LdapOrganizationManagement() {
       const response = await accountsActions.getOrganizations(getAccessToken);
       setLdapOrganizationData(response.data);
     } catch (error) {
-      console.log("Error getting API Data: ", error);
-      setError(error);
+      let toast = getLoadingErrorDialog(error.message, setShowToast);
+      setToast(toast);
+      setShowToast(true);
+      console.error(error.message);
     }
   };
 
@@ -55,18 +59,22 @@ function LdapOrganizationManagement() {
     }
   };
 
-  if (!accessRoleData || loading) {
+  if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
-  } else if (!accessRoleData.OpseraAdministrator) {
+  }
+
+   if (!accessRoleData.OpseraAdministrator) {
     return (<AccessDeniedDialog roleData={accessRoleData} />);
-  } else {
-    return (
-      <>
-        <BreadcrumbTrail destination="ldapOrganizationManagement" />
+  }
+
+  return (
+    <>
+      <BreadcrumbTrail destination="ldapOrganizationManagement"/>
+      {showToast && toast}
 
       <div className="max-content-width ml-2">
         <div className="justify-content-between mb-1 d-flex">
-          <h5>Organization and Account Management</h5>
+          <h5>Organization Management</h5>
           <div className="d-flex">
             <div className="mt-1">
               <Button variant="primary" size="sm"
@@ -79,14 +87,11 @@ function LdapOrganizationManagement() {
             <br/>
           </div>
         </div>
-
-        {error &&
-        <div className="absolute-center-content"><ErrorDialog align="center" error={error.message} /></div>}
-        {ldapOrganizationData && <LdapOrganizationsTable data={ldapOrganizationData} />}
-        <NewLdapOrganizationModal showModal={showCreateOrganizationModal} loadData={loadData} setShowModal={setShowCreateOrganizationModal}/>
+        {ldapOrganizationData && <LdapOrganizationsTable isLoading={isLoading} data={ldapOrganizationData}/>}
+        <NewLdapOrganizationModal showModal={showCreateOrganizationModal} loadData={loadData}
+                                  setShowModal={setShowCreateOrganizationModal}/>
       </div>
-  </>);
-  }
+    </>);
 }
 
 export default LdapOrganizationManagement;

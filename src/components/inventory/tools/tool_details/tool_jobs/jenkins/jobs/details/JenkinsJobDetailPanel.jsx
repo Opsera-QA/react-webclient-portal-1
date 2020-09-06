@@ -4,15 +4,18 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import JenkinsJobEditorPanel from "./JenkinsJobEditorPanel";
+import CustomTabContainer from "../../../../../../../common/tabs/CustomTabContainer";
+import CustomTab from "../../../../../../../common/tabs/CustomTab";
+import {faCogs} from "@fortawesome/pro-solid-svg-icons/faCogs";
 
 // TODO: Implement
 function JenkinsJobDetailPanel({ jenkinsJobData, setJenkinsJobData }) {
-  const [tabSelection, setTabSelection] = useState("settings");
+  const [activeTab, setTabSelection] = useState("settings");
 
-  const handleTabClick = (tabSelection) => e => {
-    console.log(tabSelection);
+  const handleTabClick = (activeTab) => e => {
+    console.log(activeTab);
     e.preventDefault();
-    setTabSelection(tabSelection);
+    setTabSelection(activeTab);
   };
 
   return (
@@ -20,19 +23,15 @@ function JenkinsJobDetailPanel({ jenkinsJobData, setJenkinsJobData }) {
       <div className="pb-3 px-3">
         <Row>
           <Col>
-            <div className="default-custom-tabs">
-              <ul className="nav nav-tabs">
-                <li className="nav-item">
-                  <a className={"nav-link " + (tabSelection === "settings" ? "active" : "")} onClick={handleTabClick("settings")} href="#">Settings</a>
-                </li>
-              </ul>
-            </div>
+            <CustomTabContainer>
+              <CustomTab icon={faCogs} tabName={"settings"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Settings"} />
+            </CustomTabContainer>
           </Col>
         </Row>
         <Row>
           <Col>
             <div className="tabbed-content-block detail-view-detail-panel">
-              {jenkinsJobData && <LdapDetailsView tabSelection={tabSelection} setJenkinsJobData={setJenkinsJobData} jenkinsJobData={jenkinsJobData} /> }
+              {jenkinsJobData && <LdapDetailsView activeTab={activeTab} setJenkinsJobData={setJenkinsJobData} jenkinsJobData={jenkinsJobData} /> }
             </div>
           </Col>
         </Row>
@@ -41,12 +40,12 @@ function JenkinsJobDetailPanel({ jenkinsJobData, setJenkinsJobData }) {
   );
 }
 
-function LdapDetailsView({ tabSelection, jenkinsJobData, setJenkinsJobData }) {
+function LdapDetailsView({ activeTab, jenkinsJobData, setJenkinsJobData }) {
   useEffect(() => {
     // console.log("CHANGE HAPPENED");
-  }, [tabSelection]);
-  if (tabSelection) {
-    switch (tabSelection) {
+  }, [activeTab]);
+  if (activeTab) {
+    switch (activeTab) {
     case "settings":
       return <JenkinsJobEditorPanel setJenkinsJobData={setJenkinsJobData} jenkinsJobData={jenkinsJobData} />;
     default:

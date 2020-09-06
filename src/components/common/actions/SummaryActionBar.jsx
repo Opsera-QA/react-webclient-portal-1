@@ -3,8 +3,10 @@ import PropTypes from "prop-types";
 import {Form, OverlayTrigger, Tooltip} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCopy, faToggleOn, faToggleOff, faTrash, faArrowLeft, faFileAlt} from "@fortawesome/free-solid-svg-icons";
+import {useHistory} from "react-router-dom";
 
-function SummaryActionBar({itemName, itemId, handleBackButton, handleDuplicateClick, handleDeleteClick, handleActiveToggle, handleViewClick, data, status}) {
+function SummaryActionBar({itemName, itemId, backButtonPath, handleDuplicateClick, handleDeleteClick, handleActiveToggle, handleViewClick, data, status}) {
+  const history = useHistory();
   // TODO: Move to helper
   function renderTooltip(message) {
     return (
@@ -14,34 +16,38 @@ function SummaryActionBar({itemName, itemId, handleBackButton, handleDuplicateCl
     );
   }
 
+  const handleBackButton = (path) => {
+    history.push(path);
+  }
+
   return (
     <>
-        <div className="text-muted action-bar mt-1">
-          {handleBackButton && <OverlayTrigger
+        <div className="text-muted action-bar mb-1">
+          {backButtonPath && <OverlayTrigger
             placement="top"
             delay={{ show: 250, hide: 400 }}
             overlay={renderTooltip("Go back")} >
-            <FontAwesomeIcon icon={faArrowLeft} className="action-bar-icon pointer float-left ml-1" onClick={() => {handleBackButton();}}/></OverlayTrigger> }
+            <span className="action-bar-icon pointer float-left ml-1"><FontAwesomeIcon icon={faArrowLeft} onClick={() => {handleBackButton(backButtonPath);}}/></span></OverlayTrigger> }
           {handleDeleteClick && <OverlayTrigger
             placement="top"
             delay={{ show: 250, hide: 400 }}
             overlay={renderTooltip(`Delete this ${itemName}`)} >
-            <FontAwesomeIcon icon={faTrash} className="delete-icon pointer red float-right ml-3" onClick={() => {handleDeleteClick(itemId);}}/></OverlayTrigger> }
+            <span className="delete-icon pointer red float-right ml-3"><FontAwesomeIcon icon={faTrash} onClick={() => {handleDeleteClick(itemId);}}/></span></OverlayTrigger> }
           {handleDuplicateClick && <OverlayTrigger
             placement="top"
             delay={{ show: 250, hide: 400 }}
             overlay={renderTooltip(`Duplicate this ${itemName} configuration`)} >
-            <FontAwesomeIcon icon={faCopy} className="pointer float-right ml-3" onClick={() => {handleDuplicateClick(itemId);}}/></OverlayTrigger> }
+            <span className="pointer float-right ml-3"><FontAwesomeIcon icon={faCopy} onClick={() => {handleDuplicateClick(itemId);}}/></span></OverlayTrigger> }
           {handleViewClick && <OverlayTrigger
             placement="top"
             delay={{ show: 250, hide: 400 }}
             overlay={renderTooltip(`View ${itemName} Configurations`)} >
-            <FontAwesomeIcon icon={faFileAlt} className={"action-bar-icon pointer float-right ml-3" + (status ? " opsera-blue" : " dark-grey")} onClick={() => {handleViewClick(data);}}/></OverlayTrigger>}
+            <span className="action-bar-icon pointer float-right ml-3"><FontAwesomeIcon icon={faFileAlt} onClick={() => {handleViewClick(data);}}/></span></OverlayTrigger>}
           {handleActiveToggle && <OverlayTrigger
             placement="top"
             delay={{ show: 250, hide: 400 }}
             overlay={renderTooltip(`Toggle Current Status`)} >
-            <FontAwesomeIcon icon={status ? faToggleOn : faToggleOff} className={"action-bar-icon pointer float-right ml-3" + (status ? " opsera-blue" : " dark-grey")} onClick={() => {handleActiveToggle();}}/></OverlayTrigger>}
+            <span className="action-bar-icon pointer float-right ml-3" onClick={() => {handleActiveToggle();}}><FontAwesomeIcon icon={status ? faToggleOn : faToggleOff} className={"mr-2" + (status ? " opsera-blue" : " dark-grey")}/>{status ? "Active" : "Inactive"}</span></OverlayTrigger>}
         </div>
         <div className="py-3" />
     </>
@@ -51,7 +57,7 @@ function SummaryActionBar({itemName, itemId, handleBackButton, handleDuplicateCl
 SummaryActionBar.propTypes = {
   handleDeleteClick: PropTypes.func,
   handleDuplicateClick: PropTypes.func,
-  handleBackButton: PropTypes.func,
+  backButtonPath: PropTypes.string,
   handleActiveToggle: PropTypes.func,
   handleViewClick: PropTypes.func,
   data: PropTypes.object,

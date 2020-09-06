@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import {Row, Col} from "react-bootstrap";
 import PropTypes from "prop-types";
 import ReactJson from "react-json-view";
@@ -10,16 +10,21 @@ import DtoDateField from "../../../common/form_fields/dto_form_fields/dto-date-f
 import SummaryActionBar from "../../../common/actions/SummaryActionBar";
 import Model from "../../../../core/data_model/model";
 import {AuthContext} from "../../../../contexts/AuthContext";
-import {useHistory} from "react-router-dom";
 import templateActions from "../template-actions";
 import DtoJsonField from "../../../common/form_fields/dto_form_fields/dto-json-field";
-import DtoItemDisplayer from "../../../common/input/dto_input/item-displayer/dto-item-displayer";
 import DtoItemField from "../../../common/form_fields/dto_form_fields/dto-item-field";
 import DtoTagField from "../../../common/form_fields/dto_form_fields/dto-tag-field";
+import LoadingDialog from "../../../common/status_notifications/loading";
+import {
+  getFormValidationErrorDialog,
+  getLoadingErrorDialog,
+  getUpdateSuccessResultDialog
+} from "../../../common/toasts/toasts";
 
 function TemplateSummaryPanel({templateData, setTemplateData}) {
   const { getAccessToken } = useContext(AuthContext);
-  const history = useHistory();
+  const [toast, setToast] = useState({});
+  const [showToast, setShowToast] = useState(false);
 
   const handleActiveToggle = async () => {
     if(templateData.isModelValid()) {
@@ -29,22 +34,32 @@ function TemplateSummaryPanel({templateData, setTemplateData}) {
         let response = await templateActions.updateTemplate({...newTemplateData}, getAccessToken);
         let updatedDto = new Model(response.data, templateData.metaData, false);
         setTemplateData(updatedDto);
+        let toast = getUpdateSuccessResultDialog(newTemplateData.getType(), setShowToast);
+        setToast(toast);
+        setShowToast(true);
+      } catch (error) {
+        let toast = getLoadingErrorDialog(error.message, setShowToast);
+        setToast(toast);
+        setShowToast(true);
+        console.error(error.message);
       }
-      catch (err) {
-        console.log(err.message);
-      }
+    }
+    else {
+      let toast = getFormValidationErrorDialog(setShowToast);
+      setToast(toast);
+      setShowToast(true);
     }
   };
 
-  const handleBackButton = () => {
-    history.push("/admin/templates");
+  if (templateData == null) {
+    return (<LoadingDialog size="sm"/>);
   }
 
   return (
     <>
-      {templateData && <>
+      {showToast && toast}
         <div className="scroll-y pt-2 px-3">
-          <SummaryActionBar handleBackButton={handleBackButton} handleActiveToggle={handleActiveToggle}
+          <SummaryActionBar backButtonPath={"/admin/templates"} handleActiveToggle={handleActiveToggle}
                             status={templateData.getData("active")}/>
           <div className="mb-3 flat-top-content-block p-3 detail-view-summary">
             <Row>
@@ -52,6 +67,9 @@ function TemplateSummaryPanel({templateData, setTemplateData}) {
                 <DtoTextField dataObject={templateData} fieldName={"name"}/>
               </Col>
               <Col lg={6}>
+                <DtoTextField dataObject={templateData} fieldName={"_id"}/>
+              </Col>
+              <Col lg={12}>
                 <DtoTextField dataObject={templateData} fieldName={"description"}/>
               </Col>
               <Col lg={6}>
@@ -59,9 +77,6 @@ function TemplateSummaryPanel({templateData, setTemplateData}) {
               </Col>
               <Col lg={6}>
                 <DtoDateField dataObject={templateData} fieldName={"createdAt"}/>
-              </Col>
-              <Col lg={6}>
-                <DtoTextField dataObject={templateData} fieldName={"_id"}/>
               </Col>
               <Col lg={6}>
                 <DtoToggleField dataObject={templateData} fieldName={"active"}/>
@@ -85,7 +100,6 @@ function TemplateSummaryPanel({templateData, setTemplateData}) {
             </Row>
           </div>
         </div>
-      </>}
     </>
   );
 }

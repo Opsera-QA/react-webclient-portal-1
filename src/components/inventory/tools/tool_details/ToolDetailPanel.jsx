@@ -9,14 +9,18 @@ import ToolEditorPanel from "./ToolEditorPanel";
 import ToolConfigurationPanel from "./ToolConfigurationPanel";
 import ToolAccountsPanel from "./ToolAccountsPanel";
 import ToolAttributesPanel from "./ToolAttributesPanel";
+import CustomTabContainer from "../../../common/tabs/CustomTabContainer";
+import CustomTab from "../../../common/tabs/CustomTab";
+import {faCogs} from "@fortawesome/pro-solid-svg-icons/faCogs";
+import {faAbacus, faClipboardList, faList, faTable, faUsers} from "@fortawesome/pro-solid-svg-icons";
 
-function ToolDetailPanel({ toolData, setToolData, loadData }) {
+function ToolDetailPanel({ toolData, setToolData, loadData, isLoading }) {
   const [activeTab, setActiveTab] = useState("attributes");
 
-  const handleTabClick = (tabSelection) => e => {
+  const handleTabClick = (activeTab) => e => {
     e.preventDefault();
-    if (tabSelection) {
-      setActiveTab(tabSelection);
+    if (activeTab) {
+      setActiveTab(activeTab);
     }
   };
 
@@ -24,40 +28,22 @@ function ToolDetailPanel({ toolData, setToolData, loadData }) {
     <>
       <div className="pb-3 px-3">
         <Row>
-          <Col lg={12}>
-            <div className="default-custom-tabs">
-              <ul className="nav nav-tabs">
-                <li className="nav-item">
-                  <a className={"nav-link " + (activeTab === "attributes" ? "active" : "")} href="#"
-                     onClick={handleTabClick("attributes")}>Attributes</a>
-                </li>
-                <li className="nav-item">
-                  <a className={"nav-link " + (activeTab === "configuration" ? "active" : "")} href="#"
-                     onClick={handleTabClick("configuration")}>Connection</a>
-                </li>
-                <li className="nav-item">
-                  <a className={"nav-link " + (activeTab === "jobs" ? "active" : "")} href="#"
-                     onClick={handleTabClick("jobs")}>Jobs</a>
-                </li>
-                <li className="nav-item">
-                  <a className={"nav-link " + (activeTab === "accounts" ? "active" : "")} href="#"
-                     onClick={handleTabClick("accounts")}>Accounts</a>
-                </li>
-                <li className="nav-item">
-                  <a className={"nav-link " + (activeTab === "logs" ? "active" : "")} href="#"
-                     onClick={handleTabClick("logs")}>Logs</a>
-                </li>
-                <li className="nav-item">
-                  <a className={"nav-link " + (activeTab === "settings" ? "active" : "")} href="#"
-                     onClick={handleTabClick("settings")}>Settings</a>
-                </li>
-              </ul>
-            </div>
+          <Col>
+            <CustomTabContainer>
+              <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Attributes"} />
+              <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Connection"} />
+              <CustomTab icon={faAbacus} tabName={"jobs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Jobs"} />
+              <CustomTab icon={faUsers} tabName={"accounts"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Accounts"} />
+              <CustomTab icon={faTable} tabName={"logs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Logs"} />
+              <CustomTab icon={faCogs} tabName={"settings"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Settings"} />
+            </CustomTabContainer>
           </Col>
-          <Col lg={12}>
+        </Row>
+        <Row>
+          <Col>
             <div className="tabbed-content-block detail-view-detail-panel">
               {toolData &&
-              <ToolDetailsView toolData={toolData} setToolData={setToolData} loadData={loadData} activeTab={activeTab}/>}
+              <ToolDetailsView toolData={toolData} setToolData={setToolData} loadData={loadData} activeTab={activeTab} isLoading={isLoading}/>}
             </div>
           </Col>
         </Row>
@@ -66,7 +52,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData }) {
   );
 }
 
-function ToolDetailsView({activeTab, toolData, setToolData, loadData}) {
+function ToolDetailsView({activeTab, toolData, setToolData, loadData, isLoading}) {
   useEffect(() => {
     // console.log("CHANGE HAPPENED");
   }, [activeTab]);
@@ -77,9 +63,9 @@ function ToolDetailsView({activeTab, toolData, setToolData, loadData}) {
       case "configuration":
         return <ToolConfigurationPanel toolData={toolData} loadData={loadData} />;
       case "jobs":
-        return <ToolJobsPanel toolData={toolData} loadData={loadData}/>;
+        return <ToolJobsPanel toolData={toolData} loadData={loadData} isLoading={isLoading}/>;
       case "accounts":
-        return <ToolAccountsPanel toolData={toolData} loadData={loadData} />;
+        return <ToolAccountsPanel isLoading={isLoading} toolData={toolData} loadData={loadData} />;
       case "logs":
         return <ToolLogsPanel toolData={toolData} />;
       case "settings":
@@ -93,7 +79,8 @@ function ToolDetailsView({activeTab, toolData, setToolData, loadData}) {
 ToolDetailPanel.propTypes = {
   toolData: PropTypes.object,
   setToolData: PropTypes.func,
-  loadData: PropTypes.func
+  loadData: PropTypes.func,
+  isLoading: PropTypes.bool
 };
 
 export default ToolDetailPanel;

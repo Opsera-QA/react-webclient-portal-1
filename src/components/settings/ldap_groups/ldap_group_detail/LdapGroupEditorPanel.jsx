@@ -95,7 +95,7 @@ function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, ldapOrganization
               </Col>
               <Col lg={12}>
                 {ldapGroupDataDto.isNew()
-                  ? <DtoSelectInput fieldName={"groupType"} setDataObject={setLdapGroupDataDto}
+                  ? <DtoSelectInput groupBy={"groupId"} fieldName={"groupType"} setDataObject={setLdapGroupDataDto}
                                     dataObject={ldapGroupDataDto} selectOptions={groupTypeOptions}/>
                   : <DtoTextInput disabled={true} fieldName={"groupType"} setData={setLdapGroupDataDto}
                                   dataObject={ldapGroupDataDto}/>}

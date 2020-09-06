@@ -1,11 +1,11 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
-import CustomTable from "components/common/table/table";
+import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
 import {ldapUsersMetaData} from "./ldap-users-metadata";
 import { getTableTextColumn } from "../../common/table/table-column-helpers";
 
-function LdapUsersTable({ userData, orgDomain }) {
+function LdapUsersTable({ userData, orgDomain, isLoading }) {
   const fields = ldapUsersMetaData.fields;
   const history = useHistory();
 
@@ -31,7 +31,7 @@ function LdapUsersTable({ userData, orgDomain }) {
   return (
     <>
       <div className="table-content-block">
-        <CustomTable tableStyleName="custom-table-2" onRowSelect={onRowSelect} data={userData} columns={columns} />
+        <CustomTable tableStyleName="custom-table-2" isLoading={isLoading} onRowSelect={onRowSelect} data={userData} columns={columns} />
       </div>
     </>
   );
@@ -39,7 +39,8 @@ function LdapUsersTable({ userData, orgDomain }) {
 
 LdapUsersTable.propTypes = {
   userData: PropTypes.array,
-  orgDomain: PropTypes.string
+  orgDomain: PropTypes.string,
+  isLoading: PropTypes.bool
 };
 
 export default LdapUsersTable;

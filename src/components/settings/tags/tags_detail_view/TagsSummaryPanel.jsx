@@ -3,7 +3,6 @@ import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 import NameValueTable from "../../../common/table/nameValueTable";
-import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import DtoTextField from "../../../common/form_fields/dto_form_fields/dto-text-field";
 import DtoToggleField from "../../../common/form_fields/dto_form_fields/dto-toggle-field";
@@ -12,10 +11,16 @@ import SummaryActionBar from "../../../common/actions/SummaryActionBar";
 import Model from "../../../../core/data_model/model";
 import paths from "../../../common/navigation/paths";
 import adminTagsActions from "../admin-tags-actions";
+import {
+  getFormValidationErrorDialog,
+  getLoadingErrorDialog,
+  getUpdateSuccessResultDialog
+} from "../../../common/toasts/toasts";
 
 function TagsSummaryPanel({ tagData, setTagData }) {
   const { getAccessToken } = useContext(AuthContext);
-  const history = useHistory();
+  const [toast, setToast] = useState({});
+  const [showToast, setShowToast] = useState(false);
 
   const parseNameValueArray = (nameValueArray) => {
     let parsedValues = [];
@@ -39,26 +44,33 @@ function TagsSummaryPanel({ tagData, setTagData }) {
         let response = await adminTagsActions.update({...newTagData}, getAccessToken);
         let updatedDto = new Model(response.data, tagData.metaData, false);
         setTagData(updatedDto);
+        let toast = getUpdateSuccessResultDialog(newTagData.getType(), setShowToast);
+        setToast(toast);
+        setShowToast(true);
+      } catch (error) {
+        let toast = getLoadingErrorDialog(error.message, setShowToast);
+        setToast(toast);
+        setShowToast(true);
+        console.error(error.message);
       }
-      catch (err) {
-        console.log(err.message);
+    } else {
+        let toast = getFormValidationErrorDialog(setShowToast);
+        setToast(toast);
+        setShowToast(true);
       }
-    }
   };
 
-
-  const handleBackButton = () => {
-    history.push("/" + paths.tagManagement);
+  if (tagData == null) {
+    return
   }
 
   return (
     <>
-      {tagData &&
       <div className="scroll-y pt-2 px-3">
-        <SummaryActionBar handleBackButton={handleBackButton} handleActiveToggle={handleActiveToggle}
+        <SummaryActionBar backButtonPath={"/" + paths.tagManagement} handleActiveToggle={handleActiveToggle}
                           status={tagData.getData("active")}/>
         <div className="mb-3 flat-top-content-block p-3 detail-view-summary">
-
+          {showToast && toast}
           <Row>
             <Col lg={6}>
               <DtoTextField dataObject={tagData} fieldName={"_id"}/>

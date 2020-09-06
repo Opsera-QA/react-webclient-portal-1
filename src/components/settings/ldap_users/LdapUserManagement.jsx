@@ -15,19 +15,22 @@ import {
   getOrganizationByEmail,
   getOrganizationList
 } from "../../admin/accounts/ldap/organizations/organization-functions";
+import {getLoadingErrorDialog} from "../../common/toasts/toasts";
 
 
 function LdapUserManagement() {
   const history = useHistory();
   const {orgDomain} = useParams();
   const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
-  const [accessRoleData, setAccessRoleData] = useState({});
+  const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [pageLoading, setPageLoading] = useState(true);
   const [userList, setUserList] = useState([]);
   const [currentOrganizationDomain, setCurrentOrganizationDomain] = useState(undefined);
   const [organizationList, setOrganizationList] = useState(undefined);
-  const [organization, setOrganization] = useState();
+  const [organization, setOrganization] = useState(undefined);
   const [showCreateUserModal, setShowCreateUserModal] = useState(false);
+  const [toast, setToast] = useState({});
+  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -46,9 +49,16 @@ function LdapUserManagement() {
   };
 
   const getUsersByDomain = async (ldapDomain) => {
-    let organization = await getOrganizationByDomain(ldapDomain, getAccessToken);
-    setOrganization(organization);
-    setUserList(organization["users"]);
+    try {
+      let organization = await getOrganizationByDomain(ldapDomain, getAccessToken);
+      setOrganization(organization);
+      setUserList(organization["users"]);
+    } catch (error) {
+      let toast = getLoadingErrorDialog(error.message, setShowToast);
+      setToast(toast);
+      setShowToast(true);
+      console.error(error.message);
+    }
   };
 
   const getRoles = async () => {
@@ -69,8 +79,15 @@ function LdapUserManagement() {
       }
 
       if (userRoleAccess.OpseraAdministrator) {
-        let organizationList = await getOrganizationList(getAccessToken);
-        setOrganizationList(organizationList);
+        try {
+          let organizationList = await getOrganizationList(getAccessToken);
+          setOrganizationList(organizationList);
+        } catch (error) {
+          let toast = getLoadingErrorDialog(error.message, setShowToast);
+          setToast(toast);
+          setShowToast(true);
+          console.error(error.message);
+        }
       }
     }
   };
@@ -88,7 +105,7 @@ function LdapUserManagement() {
     setPageLoading(false);
   };
 
-  if (!accessRoleData || pageLoading) {
+  if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   } else if (!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator) {
     return (<AccessDeniedDialog roleData={accessRoleData}/>);
@@ -96,6 +113,7 @@ function LdapUserManagement() {
     return (
       <div>
         <BreadcrumbTrail destination={"ldapUserManagement"} />
+        {showToast && toast}
         <div className="justify-content-between mb-1 d-flex">
           <h5>Users Management</h5>
           <div className="d-flex">
@@ -124,9 +142,9 @@ function LdapUserManagement() {
         </div>
 
         <div className="full-height">
-          {userList && <LdapUsersTable orgDomain={orgDomain} userData={userList}/>}
+          {userList && <LdapUsersTable orgDomain={orgDomain} isLoading={pageLoading} userData={userList}/>}
         </div>
-        <NewLdapUserModal organizationName={organization.name} showModal={showCreateUserModal} setShowModal={setShowCreateUserModal} loadData={loadData}/>
+        <NewLdapUserModal organizationName={organization && organization.name} showModal={showCreateUserModal} setShowModal={setShowCreateUserModal} loadData={loadData}/>
       </div>
     );
   }

@@ -6,15 +6,19 @@ import PropTypes from "prop-types";
 import LdapGroupEditorPanel from "./LdapGroupEditorPanel";
 import LdapGroupManagePanel from "./LdapGroupManagePanel";
 import LdapUsersTable from "../../ldap_users/LdapUsersTable";
+import CustomTabContainer from "../../../common/tabs/CustomTabContainer";
+import CustomTab from "../../../common/tabs/CustomTab";
+import {faCogs} from "@fortawesome/pro-solid-svg-icons/faCogs";
+import {faIdCard, faUsers} from "@fortawesome/pro-solid-svg-icons";
 
 function LdapGroupDetailPanel({ currentUserEmail, ldapGroupData, setLdapGroupData, ldapOrganizationData, orgDomain, loadData }) {
   const [activeTab, setActiveTab] = useState("membership");
 
-  const handleTabClick = (tabSelection) => e => {
-    console.log(tabSelection);
+  const handleTabClick = (activeTab) => e => {
+    console.log(activeTab);
     e.preventDefault();
-    if (tabSelection) {
-      setActiveTab(tabSelection);
+    if (activeTab) {
+      setActiveTab(activeTab);
     }
   };
 
@@ -22,25 +26,16 @@ function LdapGroupDetailPanel({ currentUserEmail, ldapGroupData, setLdapGroupDat
     <>
       <div className="pb-3 px-3">
         <Row>
-          <Col lg={12}>
-            <div className="default-custom-tabs">
-              <ul className="nav nav-tabs">
-                <li className="nav-item">
-                  <a className={"nav-link " + (activeTab === "membership" ? "active" : "")} href="#"
-                     onClick={handleTabClick("membership")}>Membership</a>
-                </li>
-                <li className="nav-item">
-                  <a className={"nav-link " + (activeTab === "manage" ? "active" : "")} href="#"
-                     onClick={handleTabClick("manage")}>Manage</a>
-                </li>
-                <li className="nav-item">
-                  <a className={"nav-link " + (activeTab === "settings" ? "active" : "")}
-                     onClick={handleTabClick("settings")}>Settings</a>
-                </li>
-              </ul>
-            </div>
+          <Col>
+            <CustomTabContainer>
+              <CustomTab icon={faUsers} tabName={"membership"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Membership"} />
+              <CustomTab icon={faIdCard} tabName={"manage"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Manage"} />
+              <CustomTab icon={faCogs} tabName={"settings"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Settings"} />
+            </CustomTabContainer>
           </Col>
-          <Col lg={12}>
+        </Row>
+        <Row>
+          <Col>
             <div className="tabbed-content-block detail-view-detail-panel">
               {ldapGroupData &&
               <LdapGroupDetailsView currentUserEmail={currentUserEmail} ldapGroupData={ldapGroupData} orgDomain={orgDomain} setLdapGroupData={setLdapGroupData} loadData={loadData} activeTab={activeTab} ldapOrganizationData={ldapOrganizationData}/>}

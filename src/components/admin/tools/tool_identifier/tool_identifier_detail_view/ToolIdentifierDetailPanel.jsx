@@ -4,14 +4,17 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import ToolIdentifierEditorPanel from "./ToolIdentifierEditorPanel";
+import CustomTabContainer from "../../../../common/tabs/CustomTabContainer";
+import CustomTab from "../../../../common/tabs/CustomTab";
+import {faCogs} from "@fortawesome/pro-solid-svg-icons/faCogs";
 
 function ToolIdentifierDetailPanel({ toolIdentifierData, setToolIdentifierData }) {
-  const [tabSelection, setTabSelection] = useState("settings");
+  const [activeTab, setTabSelection] = useState("settings");
 
-  const handleTabClick = (tabSelection) => e => {
-    console.log(tabSelection);
+  const handleTabClick = (activeTab) => e => {
+    console.log(activeTab);
     e.preventDefault();
-    setTabSelection(tabSelection);
+    setTabSelection(activeTab);
   };
 
   return (
@@ -19,19 +22,15 @@ function ToolIdentifierDetailPanel({ toolIdentifierData, setToolIdentifierData }
       <div className="pb-3 px-3">
         <Row>
           <Col>
-            <div className="default-custom-tabs">
-              <ul className="nav nav-tabs">
-                <li className="nav-item">
-                  <a className={"nav-link " + (tabSelection === "settings" ? "active" : "")} onClick={handleTabClick("settings")} href="#">Settings</a>
-                </li>
-              </ul>
-            </div>
+            <CustomTabContainer>
+              <CustomTab icon={faCogs} tabName={"settings"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Settings"} />
+            </CustomTabContainer>
           </Col>
         </Row>
         <Row>
           <Col>
             <div className="tabbed-content-block detail-view-detail-panel">
-              {toolIdentifierData && <ToolTypeDetailsView tabSelection={tabSelection} setToolIdentifierData={setToolIdentifierData} toolIdentifierData={toolIdentifierData} /> }
+              {toolIdentifierData && <ToolTypeDetailsView activeTab={activeTab} setToolIdentifierData={setToolIdentifierData} toolIdentifierData={toolIdentifierData} /> }
             </div>
           </Col>
         </Row>
@@ -40,12 +39,12 @@ function ToolIdentifierDetailPanel({ toolIdentifierData, setToolIdentifierData }
   );
 }
 
-function ToolTypeDetailsView({ tabSelection, setToolIdentifierData, toolIdentifierData }) {
+function ToolTypeDetailsView({ activeTab, setToolIdentifierData, toolIdentifierData }) {
   useEffect(() => {
     // console.log("CHANGE HAPPENED");
-  }, [tabSelection]);
-  if (tabSelection) {
-    switch (tabSelection) {
+  }, [activeTab]);
+  if (activeTab) {
+    switch (activeTab) {
     case "settings":
       return <ToolIdentifierEditorPanel setToolIdentifierData={setToolIdentifierData} toolIdentifierData={toolIdentifierData} />;
     default:

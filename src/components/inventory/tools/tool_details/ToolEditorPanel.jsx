@@ -57,7 +57,6 @@ function ToolEditorPanel({ toolData, setToolData }) {
   const createTool = async () => {
     if (toolDataDto.isModelValid()) {
       try {
-        console.log("toolDataDto: " + JSON.stringify(toolDataDto));
         let createToolTypeResponse = await toolsActions.createTool(toolDataDto, getAccessToken);
         let toast = getCreateSuccessResultDialog(toolDataDto.getType(), setShowToast);
         setToast(toast);
@@ -119,14 +118,9 @@ function ToolEditorPanel({ toolData, setToolData }) {
   // };
 
   const handleToolIdentifierChange = (fieldName, value) => {
-    // console.log("value.tool_identifier", value.identifier);
-    // console.log("value.tool_type_identifier", value.tool_type_identifier);
     let newDataObject = toolDataDto;
     newDataObject.setData("tool_identifier", value.identifier);
     newDataObject.setData("type", value.tool_type_identifier);
-    // console.log(JSON.stringify(value));
-
-    // setFormData({ ...formData, tool_identifier: selectedOption.identifier, type: selectedOption.tool_type_identifier });
     setToolDataDto({...newDataObject});
   };
 

@@ -4,14 +4,16 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import LdapUserEditorPanel from "./LdapUserEditorPanel";
+import {faCogs} from "@fortawesome/pro-solid-svg-icons/faCogs";
+import CustomTab from "../../../common/tabs/CustomTab";
+import CustomTabContainer from "../../../common/tabs/CustomTabContainer";
 
 function LdapUserDetailPanel({ ldapUserData, setLdapUserData, orgDomain }) {
-  const [tabSelection, setTabSelection] = useState("settings");
+  const [activeTab, setActiveTab] = useState("settings");
 
-  const handleTabClick = (tabSelection) => e => {
-    console.log(tabSelection);
+  const handleTabClick = (activeTab) => e => {
     e.preventDefault();
-    setTabSelection(tabSelection);
+    setActiveTab(activeTab);
   };
 
   return (
@@ -19,19 +21,15 @@ function LdapUserDetailPanel({ ldapUserData, setLdapUserData, orgDomain }) {
       <div className="pb-3 px-3">
         <Row>
           <Col>
-            <div className="default-custom-tabs">
-              <ul className="nav nav-tabs">
-                <li className="nav-item">
-                  <a className={"nav-link " + (tabSelection === "settings" ? "active" : "")} onClick={handleTabClick("settings")} href="#">Settings</a>
-                </li>
-              </ul>
-            </div>
+            <CustomTabContainer>
+              <CustomTab icon={faCogs} tabName={"settings"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Settings"} />
+            </CustomTabContainer>
           </Col>
         </Row>
         <Row>
           <Col>
             <div className="tabbed-content-block detail-view-detail-panel">
-              {ldapUserData && <LdapDetailsView tabSelection={tabSelection} setLdapUserData={setLdapUserData} ldapUserData={ldapUserData} orgDomain={orgDomain} /> }
+              {ldapUserData && <LdapDetailsView activeTab={activeTab} setLdapUserData={setLdapUserData} ldapUserData={ldapUserData} orgDomain={orgDomain} /> }
             </div>
           </Col>
         </Row>
@@ -40,12 +38,12 @@ function LdapUserDetailPanel({ ldapUserData, setLdapUserData, orgDomain }) {
   );
 }
 
-function LdapDetailsView({ tabSelection, setLdapUserData, ldapUserData, orgDomain }) {
+function LdapDetailsView({ activeTab, setLdapUserData, ldapUserData, orgDomain }) {
   useEffect(() => {
     // console.log("CHANGE HAPPENED");
-  }, [tabSelection]);
-  if (tabSelection) {
-    switch (tabSelection) {
+  }, [activeTab]);
+  if (activeTab) {
+    switch (activeTab) {
     case "settings":
       return <LdapUserEditorPanel setLdapUserData={setLdapUserData} ldapUserData={ldapUserData} orgDomain={orgDomain} />;
     default:

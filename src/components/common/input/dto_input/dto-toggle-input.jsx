@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Form } from "react-bootstrap";
 
-function DtoToggleInput({ fieldName, dataObject, setDataObject, disabled }) {
+function DtoToggleInput({ fieldName, dataObject, setDataObject, setData, disabled }) {
     const [errorMessage, setErrorMessage] = useState("");
     const [field] = useState(dataObject.getFieldById(fieldName));
 
@@ -37,7 +37,7 @@ function DtoToggleInput({ fieldName, dataObject, setDataObject, disabled }) {
               label={dataObject.getData(fieldName) ? "Active" : "Inactive"}
               placeholder="Please select"
               onChange={() => {
-                  validateAndSetData(field.id, !dataObject.getData(fieldName));
+                  setData ? setData(field.id, !dataObject.getData(fieldName)) : validateAndSetData(field.id, !dataObject.getData(fieldName));
               }}
             />
             <div className="invalid-feedback">{errorMessage}</div>
@@ -53,7 +53,8 @@ DtoToggleInput.propTypes = {
   disabled: PropTypes.bool,
   setDataObject: PropTypes.func,
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object
+  dataObject: PropTypes.object,
+  setData: PropTypes.func
 };
 
 export default DtoToggleInput;

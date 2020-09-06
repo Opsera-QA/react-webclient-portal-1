@@ -9,6 +9,13 @@ import LdapUsersTable from "../../../../../settings/ldap_users/LdapUsersTable";
 import LdapGroupsTable from "../../../../../settings/ldap_groups/LdapGroupsTable";
 import LdapIdpAccountEditorPanel from "../../idp_accounts/LdapIdpAccountEditorPanel";
 import LdapIdpAccountSummaryPanel from "../../idp_accounts/LdapIdpAccountSummaryPanel";
+import CustomTabContainer from "../../../../../common/tabs/CustomTabContainer";
+import CustomTab from "../../../../../common/tabs/CustomTab";
+import {faCogs, faUsers} from "@fortawesome/pro-solid-svg-icons";
+import Row from "react-bootstrap/Row";
+import {faUsersClass} from "@fortawesome/pro-solid-svg-icons/faUsersClass";
+import {faBuilding} from "@fortawesome/pro-solid-svg-icons/faBuilding";
+import {faCubes} from "@fortawesome/pro-solid-svg-icons/faCubes";
 
 const INITIAL_IDP_ACCOUNT_DATA = {
   name: "",
@@ -33,7 +40,6 @@ function LdapOrganizationAccountDetailPanel({ldapOrganizationAccountData, setLda
 
   const loadIdpAccount = () => {
     let idpAccounts = ldapOrganizationAccountData.getData("idpAccounts");
-    console.log("idpAccounts: " + JSON.stringify(idpAccounts));
     if (idpAccounts != null && idpAccounts.length > 0) {
       setLdapIdpAccountData(new Model(idpAccounts[0], ldapIdpAccountsMetaData, false));
     }
@@ -51,45 +57,39 @@ function LdapOrganizationAccountDetailPanel({ldapOrganizationAccountData, setLda
 
   return (
     <>
-      <div className="pb-3">
-      <Col lg={12}>
-        <div className="default-custom-tabs">
-          <ul className="nav nav-tabs">
-            <li className="nav-item">
-              <a className={"nav-link " + (activeTab === "users" ? "active" : "")}
-                 onClick={handleTabClick("users")} href="#">Users</a>
-            </li>
-            <li className="nav-item">
-              <a className={"nav-link " + (activeTab === "groups" ? "active" : "")} href="#"
-                 onClick={handleTabClick("groups")}>Groups</a>
-            </li>
-            <li className="nav-item">
-              <a className={"nav-link " + (activeTab === "departments" ? "active" : "")} href="#"
-                 onClick={handleTabClick("departments")}>Departments</a>
-            </li>
-            <li className="nav-item">
-              <a className={"nav-link " + (activeTab === "idpAccounts" ? "active" : "")} href="#"
-                 onClick={handleTabClick("idpAccounts")}>IDP Account</a>
-            </li>
-            <li className="nav-item">
-              <a className={"nav-link " + (activeTab === "settings" ? "active" : "")}
-                 onClick={handleTabClick("settings")} href="#">Settings</a>
-            </li>
-          </ul>
-        </div>
-      </Col>
-      <Col lg={12}>
-        <div className="tabbed-content-block detail-view-detail-panel">
-          {ldapOrganizationAccountData &&
-          <LdapOrganizationAccountTabView showIdpEditPanel={showIdpEditPanel} ldapIdpAccountData={ldapIdpAccountData}
-                                          setLdapIdpAccountData={setLdapIdpAccountData}
-                                          setShowIdpEditPanel={setShowIdpEditPanel}
-                                          ldapOrganizationAccountData={ldapOrganizationAccountData} loadData={loadData}
-                                          activeTab={activeTab}
-                                          setLdapOrganizationAccountData={setLdapOrganizationAccountData}
-          />}
-        </div>
-      </Col>
+      <div className="pb-3 px-3 h-50">
+        <Row>
+          <Col>
+            <CustomTabContainer>
+              <CustomTab icon={faUsers} tabName={"users"} handleTabClick={handleTabClick} activeTab={activeTab}
+                         tabText={"Users"}/>
+              <CustomTab icon={faUsersClass} tabName={"groups"} handleTabClick={handleTabClick} activeTab={activeTab}
+                         tabText={"Groups"}/>
+              <CustomTab icon={faBuilding} tabName={"departments"} handleTabClick={handleTabClick} activeTab={activeTab}
+                         tabText={"Departments"}/>
+              <CustomTab icon={faCubes} tabName={"idpAccounts"} handleTabClick={handleTabClick} activeTab={activeTab}
+                         tabText={"IDP Account"}/>
+              <CustomTab icon={faCogs} tabName={"settings"} handleTabClick={handleTabClick} activeTab={activeTab}
+                         tabText={"Settings"}/>
+            </CustomTabContainer>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <div className="tabbed-content-block detail-view-detail-panel">
+              {ldapOrganizationAccountData &&
+              <LdapOrganizationAccountTabView showIdpEditPanel={showIdpEditPanel}
+                                              ldapIdpAccountData={ldapIdpAccountData}
+                                              setLdapIdpAccountData={setLdapIdpAccountData}
+                                              setShowIdpEditPanel={setShowIdpEditPanel}
+                                              ldapOrganizationAccountData={ldapOrganizationAccountData}
+                                              loadData={loadData}
+                                              activeTab={activeTab}
+                                              setLdapOrganizationAccountData={setLdapOrganizationAccountData}
+              />}
+            </div>
+          </Col>
+        </Row>
       </div>
     </>
   );

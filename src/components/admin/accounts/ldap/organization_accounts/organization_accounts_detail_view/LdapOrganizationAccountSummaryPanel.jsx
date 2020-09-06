@@ -1,27 +1,22 @@
 import React, {useState} from "react";
-import { Row, Col, Button} from "react-bootstrap";
+import { Row, Col} from "react-bootstrap";
 import PropTypes from "prop-types";
 import DtoTextField from "../../../../../common/form_fields/dto_form_fields/dto-text-field";
 import DtoToggleField from "../../../../../common/form_fields/dto_form_fields/dto-toggle-field";
 import DtoItemField from "../../../../../common/form_fields/dto_form_fields/dto-item-field";
 import SummaryActionBar from "../../../../../common/actions/SummaryActionBar";
-import {useHistory} from "react-router-dom";
+import LoadingDialog from "../../../../../common/status_notifications/loading";
 
-function LdapOrganizationAccountSummaryPanel({ldapOrganizationAccountData}) {
-  const history = useHistory();
+function LdapOrganizationAccountSummaryPanel({ldapOrganizationAccountData, organizationName}) {
 
   if (ldapOrganizationAccountData == null) {
-    return (<></>);
-  }
-
-  const handleBackButton = () => {
-    history.push(`/accounts/organization-accounts/${ldapOrganizationAccountData["org"]["name"]}`);
+    return (<LoadingDialog size="sm"/>);
   }
 
   return (
     <>
-      <div className="scroll-y pt-3 px-3">
-        <SummaryActionBar handleBackButton={handleBackButton} />
+      <div className="scroll-y pt-2 px-3">
+        <SummaryActionBar backButtonPath={`/admin/organization-accounts/${organizationName}`} />
         <div className="mb-3 flat-top-content-block p-3 detail-view-summary">
           <Row className="mt-1">
             <Col lg={6}>
@@ -77,7 +72,7 @@ function LdapOrganizationAccountSummaryPanel({ldapOrganizationAccountData}) {
 
 LdapOrganizationAccountSummaryPanel.propTypes = {
   ldapOrganizationAccountData: PropTypes.object,
-  handleBackButton: PropTypes.func
+  organizationName: PropTypes.string
 };
 
 export default LdapOrganizationAccountSummaryPanel;

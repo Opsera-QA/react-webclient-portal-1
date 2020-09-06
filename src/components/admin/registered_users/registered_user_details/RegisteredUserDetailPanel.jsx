@@ -1,19 +1,20 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import KpiEditorPanel from "./KpiEditorPanel";
+import RegisteredUserEditorPanel from "./RegisteredUserEditorPanel";
 import CustomTabContainer from "../../../common/tabs/CustomTabContainer";
 import CustomTab from "../../../common/tabs/CustomTab";
 import {faCogs} from "@fortawesome/pro-solid-svg-icons/faCogs";
 
-function KpiDetailPanel({ kpiData, setKpiData }) {
-  const [activeTab, setTabSelection] = useState("settings");
+function RegisteredUserDetailPanel({ userData, setUserData, canDelete }) {
+  const [activeTab, setActiveTab] = useState("settings");
 
-  const handleTabClick = (activeTab) => e => {
+  const handleTabClick = (tabSelection) => e => {
+    console.log(tabSelection);
     e.preventDefault();
-    setTabSelection(activeTab);
+    setActiveTab(tabSelection);
   };
 
   return (
@@ -29,7 +30,7 @@ function KpiDetailPanel({ kpiData, setKpiData }) {
         <Row>
           <Col>
             <div className="tabbed-content-block">
-              {kpiData && <TagDetailsView activeTab={activeTab} setKpiData={setKpiData} kpiData={kpiData} /> }
+              {userData && <RegisteredUserTabView activeTab={activeTab} userData={userData} canDelete={canDelete} setUserData={setUserData} />}
             </div>
           </Col>
         </Row>
@@ -38,27 +39,27 @@ function KpiDetailPanel({ kpiData, setKpiData }) {
   );
 }
 
-function TagDetailsView({ activeTab, setKpiData, kpiData }) {
+function RegisteredUserTabView({ activeTab, setUserData, userData, canDelete }) {
   useEffect(() => {
     // console.log("CHANGE HAPPENED");
-  }, [activeTab, kpiData]);
+  }, [activeTab, userData]);
 
   if (activeTab) {
     switch (activeTab) {
-    case "settings":
-      return <KpiEditorPanel setKpiData={setKpiData} kpiData={kpiData} />;
-    default:
-      return null;
+      case "settings":
+        return <RegisteredUserEditorPanel setUserData={setUserData} userData={userData} canDelete={canDelete} />;
+      default:
+        return null;
     }
   }
 }
 
-KpiDetailPanel.propTypes = {
-  kpiData: PropTypes.object,
-  setKpiData: PropTypes.func,
+RegisteredUserDetailPanel.propTypes = {
+  userData: PropTypes.object,
+  setUserData: PropTypes.func,
   canDelete: PropTypes.bool
 };
 
-export default KpiDetailPanel;
+export default RegisteredUserDetailPanel;
 
 

@@ -16,7 +16,6 @@ import {
   getFormValidationErrorDialog, getLoadingErrorDialog,
 } from "../../../../../../common/toasts/toasts";
 
-
 function JenkinsAccountEditorPanel({ toolData, jenkinsAccountData }) {
   const { getAccessToken } = useContext(AuthContext);
   const [ platformType, setPlatformType ] = useState("");

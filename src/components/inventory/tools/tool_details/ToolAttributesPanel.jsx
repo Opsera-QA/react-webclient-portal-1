@@ -2,7 +2,7 @@ import React, {useContext, useMemo} from "react";
 import { Row, Col, Table } from "react-bootstrap";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
-import CustomTable from "components/common/table/table";
+import CustomTable from "components/common/table/CustomTable";
 import NameValueTable from "../../../common/table/nameValueTable";
 
 function ToolAttributesPanel({ toolData }) {

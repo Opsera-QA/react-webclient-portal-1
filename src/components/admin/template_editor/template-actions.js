@@ -13,16 +13,14 @@ templateActions.createTemplate = async (templateDataDto, getAccessToken) => {
       return result;
     })
     .catch(error => {
-      return {
-        error
-      };
+      throw { error };
     });
   return response;
 };
 
 templateActions.updateTemplate = async (templateDataDto, getAccessToken) => {
   const postBody = {
-      ...templateDataDto.getPersistData()
+    ...templateDataDto.getPersistData()
   }
   const accessToken = await getAccessToken();
   const apiUrl = `/pipelines/workflows/${templateDataDto.getData("_id")}/update`;
@@ -31,9 +29,7 @@ templateActions.updateTemplate = async (templateDataDto, getAccessToken) => {
       return result;
     })
     .catch(error => {
-      return {
-        error
-      };
+      throw { error };
     });
   return response;
 };
@@ -46,9 +42,7 @@ templateActions.deleteTemplate = async (templateDataDto, getAccessToken) => {
       return result;
     })
     .catch(error => {
-      return {
-        error
-      };
+      throw { error };
     });
   return response;
 };
@@ -61,9 +55,7 @@ templateActions.getTemplates = async (getAccessToken) => {
       return result;
     })
     .catch(error => {
-      return {
-        error
-      };
+      throw { error };
     });
   return response;
 };
@@ -76,9 +68,7 @@ templateActions.getTemplateById = async (templateId, getAccessToken) => {
       return result;
     })
     .catch(error => {
-      return {
-        error
-      };
+      throw { error };
     });
   return response;
 };

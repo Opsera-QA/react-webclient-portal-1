@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 
@@ -10,13 +10,19 @@ import DtoItemField from "../../../../common/form_fields/dto_form_fields/dto-ite
 import SummaryActionBar from "../../../../common/actions/SummaryActionBar";
 import Model from "../../../../../core/data_model/model";
 import {AuthContext} from "../../../../../contexts/AuthContext";
-import {useHistory, useParams} from "react-router-dom";
 import toolTypeActions from "../../tool-management-actions";
 import DtoPropertiesField from "../../../../common/form_fields/dto_form_fields/dto-properties-field";
+import {
+  getFormValidationErrorDialog,
+  getLoadingErrorDialog,
+  getUpdateSuccessResultDialog
+} from "../../../../common/toasts/toasts";
+import LoadingDialog from "../../../../common/status_notifications/loading";
 
 function ToolIdentifierSummaryPanel({toolIdentifierData, setToolIdentifierData}) {
   const { getAccessToken } = useContext(AuthContext);
-  const history = useHistory();
+  const [toast, setToast] = useState({});
+  const [showToast, setShowToast] = useState(false);
 
   const handleActiveToggle = async () => {
     if(toolIdentifierData.isModelValid()) {
@@ -26,22 +32,32 @@ function ToolIdentifierSummaryPanel({toolIdentifierData, setToolIdentifierData})
         let response = await toolTypeActions.updateToolIdentifier({...newToolIdentifierData}, getAccessToken);
         let updatedDto = new Model(response.data, toolIdentifierData.metaData, false);
         setToolIdentifierData(updatedDto);
+        let toast = getUpdateSuccessResultDialog(newToolIdentifierData.getType(), setShowToast);
+        setToast(toast);
+        setShowToast(true);
+      } catch (error) {
+        let toast = getLoadingErrorDialog(error.message, setShowToast);
+        setToast(toast);
+        setShowToast(true);
+        console.error(error.message);
       }
-      catch (err) {
-        console.log(err.message);
-      }
+    }
+    else {
+      let toast = getFormValidationErrorDialog(setShowToast);
+      setToast(toast);
+      setShowToast(true);
     }
   };
 
-  const handleBackButton = () => {
-    history.push("/admin/tools/identifiers");
+  if (toolIdentifierData == null) {
+    return (<LoadingDialog size="sm"/>);
   }
 
   return (
     <>
-      {toolIdentifierData &&
       <div className="scroll-y pt-2 px-3">
-        <SummaryActionBar handleBackButton={handleBackButton} handleActiveToggle={handleActiveToggle}
+        {showToast && toast}
+        <SummaryActionBar backButtonPath={"/admin/tools/identifiers"} handleActiveToggle={handleActiveToggle}
                           status={toolIdentifierData.getData("active")}/>
         <div className="mb-3 flat-top-content-block p-3 detail-view-summary">
           <Row>
@@ -74,7 +90,7 @@ function ToolIdentifierSummaryPanel({toolIdentifierData, setToolIdentifierData})
             </Col>
           </Row>
         </div>
-      </div>}
+      </div>
     </>
   );
 }

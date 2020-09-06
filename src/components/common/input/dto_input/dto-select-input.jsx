@@ -73,7 +73,6 @@ DtoSelectInput.propTypes = {
 DtoSelectInput.defaultProps = {
   valueField: "value",
   textField: "text",
-  groupBy: "groupId",
   filter: "contains",
   placeholderText: "Select One"
 }

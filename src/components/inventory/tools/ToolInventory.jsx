@@ -5,13 +5,16 @@ import React, { useContext, useEffect, useState } from "react";
 import "./tools.css";
 import ToolsTable from "./ToolsTable";
 import {createFilterOptionList} from "../../../utils/tableHelpers";
+import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
+import {getLoadingErrorDialog} from "../../common/toasts/toasts";
 
 function ToolInventory () {
   const { getAccessToken } = useContext(AuthContext);
-  const [errors, setErrors] = useState("");
   const [isLoading, setLoading] = useState(false);
   const [toolRegistryList, setToolRegistryList] = useState([]);
   const [filterOptionList, setFilterOptionList] = useState([]);
+  const [toast, setToast] = useState({});
+  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {    
     loadData();
@@ -36,10 +39,11 @@ function ToolInventory () {
       let apiUrl = "/registry?hidden=true";
       const response = await axiosApiService(accessToken).get(apiUrl, params);
       setToolRegistryList(response.data);
-    }
-    catch (err) {
-      console.log(err.message);
-      setErrors(err.message);
+    } catch (error) {
+      let toast = getLoadingErrorDialog(error.message, setShowToast);
+      setToast(toast);
+      setShowToast(true);
+      console.error(error.message);
     }
   };
 
@@ -48,24 +52,22 @@ function ToolInventory () {
       const accessToken = await getAccessToken();
       const toolResponse = await axiosApiService(accessToken).get("/registry/tools", {});
       setFilterOptionList(createFilterOptionList(toolResponse.data, "tool_identifier", "name", "identifier", false));
-    }
-    catch (err) {
-      setErrors(err.message);
-      console.log(err.message);
+    } catch (error) {
+      let toast = getLoadingErrorDialog(error.message, setShowToast);
+      setToast(toast);
+      setShowToast(true);
+      console.error(error.message);
     }
   };
 
 
-  if (isLoading) {
-    return (<LoadingDialog size="sm"/>);
-  } else {
-    return (
-      <>
-          {errors && <div className="error-text">Error Reported: {errors}</div>}
-          {toolRegistryList && <ToolsTable loadData={loadData} filterOptionList={filterOptionList} data={toolRegistryList}/>}
-      </>
+  return (
+    <>
+      {showToast && toast}
+      {toolRegistryList && <ToolsTable isLoading={isLoading} loadData={loadData} filterOptionList={filterOptionList}
+                                       data={toolRegistryList}/>}
+    </>
     );
-  }
 }
 
 

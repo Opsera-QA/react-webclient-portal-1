@@ -1,11 +1,11 @@
 import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
-import CustomTable from "components/common/table/table";
+import CustomTable from "components/common/table/CustomTable";
 import {useHistory} from "react-router-dom";
 import {getTableTextColumn} from "../../../../common/table/table-column-helpers";
 import  {ldapOrganizationMetaData} from "./ldap-organizations-form-fields";
 
-function LdapOrganizationsTable({data}) {
+function LdapOrganizationsTable({data, isLoading}) {
   const fields = ldapOrganizationMetaData.fields;
   const history = useHistory();
 
@@ -20,13 +20,13 @@ function LdapOrganizationsTable({data}) {
   );
 
   const onRowSelect = (selectedRow, type) => {
-    history.push(`/accounts/organizations/details/${selectedRow.original.name}`);
+    history.push(`/admin/organizations/details/${selectedRow.original.name}`);
   };
 
   return (
     <>
       <div className="table-content-block">
-        <CustomTable tableStyleName="custom-table-2" onRowSelect={onRowSelect} data={data} columns={columns} />
+        <CustomTable tableStyleName="custom-table-2" isLoading={isLoading} onRowSelect={onRowSelect} data={data} columns={columns} />
       </div>
     </>
   );
@@ -34,7 +34,7 @@ function LdapOrganizationsTable({data}) {
 
 LdapOrganizationsTable.propTypes = {
   data: PropTypes.array,
-  view: PropTypes.string,
+  isLoading: PropTypes.bool,
 };
 
 export default LdapOrganizationsTable;

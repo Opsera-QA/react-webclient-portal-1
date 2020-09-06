@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
-import CustomTable from "components/common/table/table";
+import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
 import tagEditorMetadata from "./tags-form-fields";
 import {
@@ -9,7 +9,7 @@ import {
   getTableTextColumn
 } from "../../common/table/table-column-helpers";
 
-function TagsTable({ data }) {
+function TagsTable({ data, isLoading }) {
   const history = useHistory();
   let fields = tagEditorMetadata.fields;
   const columns = useMemo(
@@ -49,6 +49,7 @@ function TagsTable({ data }) {
                      rowStyling={rowStyling}
                      columns={columns}
                      initialState={initialState}
+                     isLoading={isLoading}
                      tableStyleName={"custom-table-2"}
         />
       </div>
@@ -58,6 +59,7 @@ function TagsTable({ data }) {
 
 TagsTable.propTypes = {
   data: PropTypes.array,
+  isLoading: PropTypes.bool
 };
 
 export default TagsTable;

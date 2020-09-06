@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useMemo } from "react";
 import RegisteredUserSummary from "./RegisteredUserSummary";
 import PropTypes from "prop-types";
-import RegisteredUserDetailsPanel from "./RegisteredUserDetailsPanel";
+import RegisteredUserDetailPanel from "./RegisteredUserDetailPanel";
 import { Link, useParams } from "react-router-dom";
 import RegisteredUserActions from "../registered-user-actions";
 import { AuthContext } from "contexts/AuthContext";
@@ -32,7 +32,6 @@ function RegisteredUserDetail() {
     }
   };
 
-
   return (
     <>
       <nav aria-label="breadcrumb">
@@ -59,7 +58,7 @@ function RegisteredUserDetail() {
               <RegisteredUserSummary userData={userData}/>
             </div>
             <div>
-             {Object.values(userData).length > 0 && <RegisteredUserDetailsPanel
+             {Object.values(userData).length > 0 && <RegisteredUserDetailPanel
                 setUserData={setUserData}
              userData={userData} /> }
             </div>

@@ -11,7 +11,7 @@ function PlatformInventory () {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   
   const [key, setKey] = useState({});
   const [renderForm, setRenderForm] = useState(false);
@@ -37,7 +37,7 @@ function PlatformInventory () {
   }, []);
 
   const getApiData = async () => {
-    setLoading(true);
+    setIsLoading(true);
     setKey(null);
     const { getAccessToken, getUserRecord } = contextType;
     const accessToken = await getAccessToken();
@@ -49,11 +49,11 @@ function PlatformInventory () {
       const result = await axiosApiService(accessToken).get(apiUrl, { params });    
       const filteredApps = result.data.filter((app) => { return app.type !== "pipeline"; }); //we don't want the legacy pipeline apps to show.
       setData(filteredApps);
-      setLoading(false);
+      setIsLoading(false);
     }
     catch (err) {
       setErrors(err);
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -67,7 +67,7 @@ function PlatformInventory () {
   } else {
     return (
       <div className="h-50 p-2">
-        {!loading && data && data.length === 0 ? 
+        {!isLoading && data && data.length === 0 ?
           <>
             <div className="mt-3">
               <Alert variant="secondary">
@@ -83,7 +83,7 @@ function PlatformInventory () {
                 className="application-select"
                 data={data} 
                 valueField='name'
-                busy={loading}
+                busy={isLoading}
                 textField='name'
                 onChange={handleDropdownChange}
               /> : null }
@@ -94,7 +94,7 @@ function PlatformInventory () {
           {key && Object.keys(key).length > 0 ? 
             <>
               {Object.keys(key.tools).length > 0
-                ? <PlatformToolsTable data={key.tools} />
+                ? <PlatformToolsTable data={key.tools} isLoading={isLoading} />
                 : <div className="mt-2"><Alert variant="secondary">No tools are currently configured for this application.</Alert></div> }
             </>
             : null }

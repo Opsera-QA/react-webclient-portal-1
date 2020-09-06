@@ -12,6 +12,8 @@ const trails = {
   toolManagement: {parent: "admin", destination: {name: "toolManagement", path: paths.toolManagement, label: "Tool Management"}},
   toolTypeDetailView: {parent: "toolManagement", destination: {name: "toolTypeDetailView", path: paths.toolTypeDetailView, label: "Tool Type Details"}},
   toolIdentifierDetailView: {parent: "toolManagement", destination: {name: "toolIdentifierDetailView", path: paths.toolIdentifierDetailView, label: "Tool Identifier Details"}},
+  kpiManagement: {parent: "admin", destination: {name: "kpiManagement", path: paths.kpiManagement, label: "Kpi Management"}},
+  kpiDetailView: {parent: "kpiManagement", destination: {name: "kpiDetailView", path: paths.kpiManagement, label: "Kpi Details"}},
 
   // Account settings
   accountSettings: {parent: undefined, destination: {name: "accountSettings", path: paths.accountSettings, label: "Account Settings"}},
@@ -30,11 +32,11 @@ const trails = {
 
   // Ldap Organizations Administration
   ldapOrganizationManagement: {parent: "admin", destination: {name: "ldapOrganizationManagement", path: paths.ldapOrganizationManagement, label: "Organizations"}},
-  ldapOrganizationDetailView: {parent: "ldapOrganizationManagement", destination: {name: "ldapOrganizationDetailView", path: paths.ldapOrganizationDetailView, label: "Accounts"}},
+  ldapOrganizationDetailView: {parent: "ldapOrganizationManagement", destination: {name: "ldapOrganizationDetailView", path: paths.ldapOrganizationDetailView, label: "Organization Details"}},
 
   // Ldap Organization Account Administration
   ldapOrganizationAccountManagement: {parent: "admin", destination: {name: "ldapOrganizationAccountManagement", path: paths.ldapOrganizationAccountManagement, label: "Organization Accounts"}},
-  ldapOrganizationAccountDetailView: {parent: "admin", destination: {name: "ldapOrganizationDetailView", path: paths.ldapOrganizationDetailView, label: "Account Details"}},
+  ldapOrganizationAccountDetailView: {parent: "ldapOrganizationAccountManagement", destination: {name: "ldapOrganizationAccountDetailView", path: paths.ldapOrganizationDetailView, label: "Organization Account Details"}},
 
   //Pipelines
   pipelines: {parent: undefined, destination: {name: "pipelines", path: paths.pipelines, label: "Pipelines"}},
