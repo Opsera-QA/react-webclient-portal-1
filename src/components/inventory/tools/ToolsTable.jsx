@@ -1,6 +1,6 @@
 import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
-import CustomTable from "components/common/table/table";
+import CustomTable from "components/common/table/CustomTable";
 import {
   getTableBooleanIconColumn,
   getTableDateColumn,
@@ -14,7 +14,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {DropdownList} from "react-widgets";
 
-function ToolsTable({ data, filterOptionList, loadData }) {
+function ToolsTable({ data, filterOptionList, loadData, isLoading }) {
   const [showCreateToolModal, setShowCreateToolModal] = useState(false);
   const [tableFilter, setTableFilter] = useState();
   let history = useHistory();
@@ -76,6 +76,7 @@ function ToolsTable({ data, filterOptionList, loadData }) {
           <CustomTable
             columns={columns}
             data={data}
+            isLoading={isLoading}
             onRowSelect={onRowSelect}
             rowStyling={rowStyling}
             tableFilter={tableFilter}

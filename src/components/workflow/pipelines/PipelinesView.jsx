@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import { AuthContext } from "../../../contexts/AuthContext";
-import ErrorDialog from "components/common/status_notifications/error";
 import Pagination from "components/common/pagination";
 import "../workflows.css";
 import PipelineItem from "./PipelineItem";
@@ -12,16 +11,17 @@ import InfoDialog from "components/common/status_notifications/info";
 import PipelineWelcomeView from "./PipelineWelcomeView";
 import cookieHelpers from "../../../core/cookies/cookie-helpers";
 import { getSortOptionByText } from "../../common/pagination";
+import {getLoadingErrorDialog} from "../../common/toasts/toasts";
 
 function PipelinesView({ currentTab, setActiveTab }) {
   const { getAccessToken } = useContext(AuthContext);
-  const [errors, setErrors] = useState();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(30);
   const [sortOption, setSortOption] = useState({ name: "name", text: "Pipeline Name (a-z)", order: 1 });
+  const [toast, setToast] = useState({});
+  const [showToast, setShowToast] = useState(false);
 
   // Executed every time page number, page size, or sort option changes
   useEffect(() => {
@@ -41,8 +41,10 @@ function PipelinesView({ currentTab, setActiveTab }) {
         setSortOption(getSortOptionByText(storedSortOption));
       }
     } catch (error) {
-      setErrors(error);
-      console.error(`Error Reported: ${error}`);
+      let toast = getLoadingErrorDialog(error.message, setShowToast);
+      setToast(toast);
+      setShowToast(true);
+      console.error(error.message);
     } finally {
       setLoading(false);
     }
@@ -59,12 +61,12 @@ function PipelinesView({ currentTab, setActiveTab }) {
     cookieHelpers.setCookie("pipelines", "sortOption", sortOption.text);
   };
 
-  if (loading && !errors) {
+  if (loading && !showToast) {
     return (<LoadingDialog size="sm"/>);
   }
 
-  if (errors && !loading) {
-    return (<ErrorDialog error={errors}/>);
+  if (showToast && !loading) {
+    return (<>{showToast && toast}</>);
   }
 
   if (data && data.count === 0 && currentTab === "owner") {

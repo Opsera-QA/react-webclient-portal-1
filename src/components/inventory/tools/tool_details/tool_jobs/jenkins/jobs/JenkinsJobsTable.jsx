@@ -1,12 +1,12 @@
 import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
-import CustomTable from "components/common/table/table";
+import CustomTable from "components/common/table/CustomTable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faTimesCircle, faCheckCircle, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {Button} from "react-bootstrap";
 import NewJenkinsJobModal from "./NewJenkinsJobModal";
 
-function JenkinsJobsTable({ toolData, loadData, selectedRow }) {
+function JenkinsJobsTable({ toolData, loadData, selectedRow, isLoading }) {
   const [showCreateJobModal, setShowCreateJobModal] = useState(false);
 
   const createJenkinsJob = () => {
@@ -56,6 +56,7 @@ function JenkinsJobsTable({ toolData, loadData, selectedRow }) {
           columns={columns}
           data={toolData.getData("jobs")}
           onRowSelect={selectedRow}
+          isLoading={isLoading}
           tableStyleName="custom-table-2"
         >
         </CustomTable>
@@ -67,7 +68,8 @@ function JenkinsJobsTable({ toolData, loadData, selectedRow }) {
 JenkinsJobsTable.propTypes = {
   toolData: PropTypes.object,
   loadData: PropTypes.func,
-  selectedRow: PropTypes.func
+  selectedRow: PropTypes.func,
+  isLoading: PropTypes.bool
 };
 
 export default JenkinsJobsTable;

@@ -10,6 +10,7 @@ import ModalActivityLogs from "../../common/modal/modalActivityLogs";
 
 import "../workflows.css";
 import WorkflowCatalogItem from "./WorkflowCatalogItem";
+import {getLoadingErrorDialog} from "../../common/toasts/toasts";
 
 
 function WorkflowCatalog() {
@@ -19,6 +20,8 @@ function WorkflowCatalog() {
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
+  const [toast, setToast] = useState({});
+  const [showToast, setShowToast] = useState(false);
   
   const callbackFunction = (item) => {
     setModalMessage(item);
@@ -38,21 +41,21 @@ function WorkflowCatalog() {
     try {
       const result = await axiosApiService(accessToken).get(apiUrl);
       setData(result.data ? result.data : []);
-      setLoading(false);    
+    } catch (error) {
+      let toast = getLoadingErrorDialog(error.message, setShowToast);
+      setToast(toast);
+      setShowToast(true);
+      console.error(error.message);
     }
-    catch (err) {
-      console.log(err.message);
+    finally {
       setLoading(false);
-      setErrors(err.message);
     }
   }
 
   if (loading) {
     return (<LoadingDialog size="sm"/>);
   }
-  else if (error) {
-    return (<ErrorDialog error={error} />);
-  } else {
+
     return (
       <>
           <>
@@ -60,7 +63,7 @@ function WorkflowCatalog() {
               <div className="my-2 p-1">
                 <div>Choose a pipeline template below to add to your pipelines library.</div>
               </div>
-              
+              {showToast && toast}
               {data !== undefined && data.length > 0 ?
                 <Row>
                   {data.map((item, idx) => (
@@ -76,7 +79,6 @@ function WorkflowCatalog() {
           </>
       </>
     );
-  }
 }
 
 WorkflowCatalog.propTypes = {

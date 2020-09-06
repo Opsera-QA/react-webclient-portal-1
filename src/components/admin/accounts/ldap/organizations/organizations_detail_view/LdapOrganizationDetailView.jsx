@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../../../../../contexts/AuthContext";
 import { useParams } from "react-router-dom";
-import ErrorDialog from "../../../../../common/status_notifications/error";
 import LoadingDialog from "../../../../../common/status_notifications/loading";
 import LdapOrganizationSummaryPanel from "./LdapOrganizationSummaryPanel";
 
@@ -12,15 +11,17 @@ import Model from "../../../../../../core/data_model/model";
 import {ldapOrganizationMetaData} from "../ldap-organizations-form-fields";
 import accountsActions from "../../../accounts-actions";
 import LdapOrganizationDetailPanel from "./LdapOrganizationDetailPanel";
+import {getLoadingErrorDialog} from "../../../../../common/toasts/toasts";
 
 function LdapOrganizationDetailView() {
   const { organizationName } = useParams();
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState({});
   const [loading, setLoading] = useState(false); //this is how we toggle showing/hiding stuff when API calls or other functions are loading
-  const [error, setError] = useState(false); //if any errors on API call or anything else need to be shown to use, this is used
   const [ldapOrganizationData, setLdapOrganizationData] = useState(undefined);
   const [organizationAccounts, setOrganizationAccounts] = useState(undefined);
+  const [toast, setToast] = useState({});
+  const [showToast, setShowToast] = useState(false);
 
 
   useEffect(() => {
@@ -44,8 +45,10 @@ function LdapOrganizationDetailView() {
       setLdapOrganizationData(new Model(response.data, ldapOrganizationMetaData, false));
       setOrganizationAccounts(response.data["orgAccounts"]);
     } catch (error) {
-      console.error("Error getting API Data: ", error);
-      setError(error);
+      let toast = getLoadingErrorDialog(error.message, setShowToast);
+      setToast(toast);
+      setShowToast(true);
+      console.error(error.message);
     }
     setLoading(false);
   };
@@ -58,12 +61,8 @@ function LdapOrganizationDetailView() {
     return (
       <>
         <BreadcrumbTrail destination="ldapOrganizationDetailView"/>
-
-        <h5>Organization and Account Management</h5>
-
-        {error &&
-        <div className="absolute-center-content"><ErrorDialog align="center" error={error.message}></ErrorDialog></div>}
-
+        {showToast && toast}
+        <h5>Organization Management</h5>
         {ldapOrganizationData &&
         <div className="content-container content-card-1 max-content-width ml-2">
           <div className="pt-2 pl-2 content-block-header">

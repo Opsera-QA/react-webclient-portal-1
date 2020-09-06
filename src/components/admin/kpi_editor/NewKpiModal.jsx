@@ -1,8 +1,14 @@
-import React, { useState, useContext } from "react";
+import React, {useState, useContext, useEffect} from "react";
 import { Button, Modal, Popover, OverlayTrigger } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import KpiEditorPanel from "./kpi_detail_view/KpiEditorPanel";
+import CreateModal from "../../common/modal/CreateModal";
+import LdapOrganizationEditorPanel
+  from "../accounts/ldap/organizations/organizations_detail_view/LdapOrganizationEditorPanel";
+import Model from "../../../core/data_model/model";
+import {ldapOrganizationMetaData} from "../accounts/ldap/organizations/ldap-organizations-form-fields";
+import kpiMetaData from "./kpi_detail_view/kpi-form-fields";
 
 const INITIAL_DATA = {
   "name": "",
@@ -15,48 +21,30 @@ const INITIAL_DATA = {
 
 
 
-function NewKpiModal( { onModalClose, showModal } ) {
-  const { getAccessToken } = useContext(AuthContext);
+function NewKpiModal( { setShowModal, showModal, loadData } ) {
   const [kpiData, setKpiData] = useState(INITIAL_DATA);
 
-  const handleClose = () => {
-    onModalClose(false);
-  };
+  useEffect(() => {
+    setKpiData(new Model({...kpiMetaData.newObjectFields}, kpiMetaData, true));
+  }, []);
 
-  const popover = (
-    <Popover id="popover-basic">
-      <Popover.Content>
-        All unsaved changes will be lost
-      </Popover.Content>
-    </Popover>
-  );
+  const handleClose = () => {
+    setShowModal(false);
+  };
 
   return (
     <>
-      <Modal size="lg" show={showModal} onHide={handleClose} backdrop="static">
-        <Modal.Header closeButton>
-          <Modal.Title>Create New KPI</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="content-block m-3 full-height">
-            <div className="p-3">
-              <KpiEditorPanel setKpiData={setKpiData} newTag={true} handleClose={handleClose} kpiData={kpiData} /> 
-            </div>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <OverlayTrigger trigger={["hover", "hover"]} placement="top" overlay={popover}>
-            <Button size="sm" variant="secondary" onClick={handleClose}>Close</Button>
-          </OverlayTrigger>
-        </Modal.Footer>
-      </Modal>
+      <CreateModal handleCancelModal={handleClose} objectType={"Organization"} showModal={showModal} loadData={loadData} >
+        {kpiData && <KpiEditorPanel setKpiData={setKpiData} kpiData={kpiData} />}
+      </CreateModal>
     </>
   );
 }
 
 NewKpiModal.propTypes = {
   showModal: PropTypes.bool,
-  onModalClose: PropTypes.func,
+  setShowModal: PropTypes.func,
+  loadData: PropTypes.func
 };
 
 export default NewKpiModal;

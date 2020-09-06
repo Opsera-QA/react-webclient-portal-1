@@ -1,8 +1,8 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
-import CustomTable from "components/common/table/table";
+import CustomTable from "components/common/table/CustomTable";
 
-function JenkinsAccountsTable({ data, selectedRow }) {
+function JenkinsAccountsTable({ data, selectedRow, isLoading }) {
 
   const initialState = {
     pageIndex: 0,
@@ -44,6 +44,7 @@ function JenkinsAccountsTable({ data, selectedRow }) {
           data={data}
           initialState={initialState}
           onRowSelect={selectedRow}
+          isLoading={isLoading}
           tableStyleName={"custom-table-2"}
         >
         </CustomTable>
@@ -55,7 +56,8 @@ function JenkinsAccountsTable({ data, selectedRow }) {
 JenkinsAccountsTable.propTypes = {
   data: PropTypes.array,
   rowInfo: PropTypes.func,
-  selectedRow: PropTypes.func
+  selectedRow: PropTypes.func,
+  isLoading: PropTypes.bool
 };
 
 export default JenkinsAccountsTable;

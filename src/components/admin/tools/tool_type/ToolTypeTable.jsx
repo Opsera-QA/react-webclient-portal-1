@@ -1,6 +1,6 @@
 import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
-import CustomTable from "components/common/table/table";
+import CustomTable from "components/common/table/CustomTable";
 import toolMetadata from "../../../inventory/tools/tool-metadata";
 import {
   getTableBooleanIconColumn,
@@ -13,7 +13,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import NewToolTypeModal from "./NewToolTypeModal";
 
-function ToolTypeTable({ data, loadData }) {
+function ToolTypeTable({ data, loadData, isLoading }) {
   const [showCreateToolTypeModal, setShowCreateToolTypeModal] = useState(false);
   const history = useHistory();
   let fields = toolMetadata.fields;
@@ -63,6 +63,7 @@ function ToolTypeTable({ data, loadData }) {
           rowStyling={rowStyling}
           noDataMessage={noDataMessage}
           onRowSelect={selectedRow}
+          isLoading={isLoading}
           tableStyleName="custom-table-2"
         />
       </div>
@@ -72,7 +73,8 @@ function ToolTypeTable({ data, loadData }) {
 
 ToolTypeTable.propTypes = {
   data: PropTypes.array,
-  loadData: PropTypes.func
+  loadData: PropTypes.func,
+  isLoading: PropTypes.bool
 };
 
 export default ToolTypeTable;

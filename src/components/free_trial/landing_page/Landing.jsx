@@ -11,12 +11,12 @@ import FreeTrialLandingPipeline from "./tabs/pipeline-tab";
 import FreeTrialLandingAnalytics from "./tabs/analytics-tab";
 
 function FreeTrialLanding() {
-  const [tabSelection, setTabSelection] = useState("welcome");
+  const [activeTab, setTabSelection] = useState("welcome");
 
-  const handleTabClick = (tabSelection) => e => {
-    console.log(tabSelection);
+  const handleTabClick = (activeTab) => e => {
+    console.log(activeTab);
     e.preventDefault();
-    setTabSelection(tabSelection);
+    setTabSelection(activeTab);
   };
   
   return (
@@ -27,16 +27,16 @@ function FreeTrialLanding() {
             <div className="alternate-tabs">
               <ul className="nav nav-tabs">
                 <li className="nav-item">
-                  <a className={"nav-link " + (tabSelection === "welcome" ? "active" : "")} onClick={handleTabClick("welcome")} href="#">Welcome</a>
+                  <a className={"nav-link " + (activeTab === "welcome" ? "active" : "")} onClick={handleTabClick("welcome")} href="#">Welcome</a>
                 </li>
                 <li className="nav-item"> 
-                  <a className={"nav-link " + (tabSelection === "platform" ? "active" : "")} onClick={handleTabClick("platform")} href="#">Platform</a>
+                  <a className={"nav-link " + (activeTab === "platform" ? "active" : "")} onClick={handleTabClick("platform")} href="#">Platform</a>
                 </li>
                 <li className="nav-item">
-                  <a className={"nav-link " + (tabSelection === "pipeline" ? "active" : "")} onClick={handleTabClick("pipeline")} href="#">Pipeline</a>
+                  <a className={"nav-link " + (activeTab === "pipeline" ? "active" : "")} onClick={handleTabClick("pipeline")} href="#">Pipeline</a>
                 </li>
                 <li className="nav-item">
-                  <a className={"nav-link " + (tabSelection === "analytics" ? "active" : "")} onClick={handleTabClick("analytics")} href="#">Analytics</a>
+                  <a className={"nav-link " + (activeTab === "analytics" ? "active" : "")} onClick={handleTabClick("analytics")} href="#">Analytics</a>
                 </li>
               </ul>
             </div>
@@ -44,7 +44,7 @@ function FreeTrialLanding() {
         </Row>
         <Row>
           <Col>
-            <LandingView tabSelection={tabSelection} handleTabClick={handleTabClick}/>
+            <LandingView activeTab={activeTab} handleTabClick={handleTabClick}/>
           </Col>
         </Row>
       </div>
@@ -53,13 +53,13 @@ function FreeTrialLanding() {
 }
 
 
-function LandingView({ tabSelection, handleTabClick }) {
+function LandingView({ activeTab, handleTabClick }) {
   useEffect(() => {
     console.log("CHANGE HAPPENED");
-  }, [tabSelection, handleTabClick]);
+  }, [activeTab, handleTabClick]);
 
-  if (tabSelection) {
-    switch (tabSelection) {
+  if (activeTab) {
+    switch (activeTab) {
     case "welcome":
       return <FreeTrialLandingWelcome handleTabClick={handleTabClick}/>;
     case "platform":

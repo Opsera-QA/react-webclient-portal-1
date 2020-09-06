@@ -52,7 +52,7 @@ function LdapUserDetailView() {
             [{ldapUserData && ldapUserData["name"]}]</h5></div>
           <div className="detail-view-body">
             <div>
-              <LdapUserSummaryPanel ldapUserData={ldapUserData}/>
+              <LdapUserSummaryPanel ldapUserData={ldapUserData} orgDomain={orgDomain}/>
             </div>
             <div>
               <LdapUserDetailPanel setLdapUserData={setLdapUserData} orgDomain={orgDomain} ldapUserData={ldapUserData}/>

@@ -6,7 +6,7 @@ import InfoDialog from "../../common/status_notifications/info";
 import ErrorDialog from "../../common/status_notifications/error";
 import { Table } from "react-bootstrap";
 import { format } from "date-fns";
-import CustomTable from "../../common/table/table";
+import CustomTable from "../../common/table/CustomTable";
 
 function GitlabMergedMergeReqCommitsCountTable({ date }) {
   const contextType = useContext(AuthContext);

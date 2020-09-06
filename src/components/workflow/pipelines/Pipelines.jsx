@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import ErrorDialog from "components/common/status_notifications/error";
 import "../workflows.css";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PipelinesView from "./PipelinesView";
@@ -69,8 +68,6 @@ function Pipelines() {
 
   if (loading) {
     return (<LoadingDialog size="sm"/>);
-  } else if (errors) {
-    return (<ErrorDialog error={errors}/>);
   } else {
     return (
       <>

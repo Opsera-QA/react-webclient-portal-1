@@ -1,47 +1,22 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
-import CustomTable from "components/common/table/table";
-import { format } from "date-fns";
+import CustomTable from "components/common/table/CustomTable";
+import {getTableDateColumn, getTableTextColumn} from "../../common/table/table-column-helpers";
+import platformMetadata from "./platform-metadata";
 
-function PlatformToolsTable({ data }) {
+function PlatformToolsTable({ data, isLoading }) {
+  const fields = platformMetadata.fields;
 
   // TODO: Pull from metadata
   const columns = useMemo(
     () => [
-      {
-        Header: "Tool",
-        accessor: "name",
-      },
-      {
-        Header: "Port",
-        accessor: "port",
-        class: "cell-center"
-      },
-      {
-        Header: "Version",
-        accessor: "versionNumber",
-      },
-      {
-        Header: "Status",
-        accessor: "toolStatus"
-      },      
-      {
-        Header: "Install Date",
-        accessor: "installationDate",
-        Cell: (props) => {
-          return format(new Date(props.value), "yyyy-MM-dd");
-        },
-        class: "cell-center"
-      },
-      {
-        Header: "URL",
-        accessor: "toolURL",
-      },
-      {
-        Header: "DNS",
-        accessor: "dnsName",
-        class: "cell-center"
-      },   
+      getTableTextColumn(fields.find(field => { return field.id === "name"})),
+      getTableTextColumn(fields.find(field => { return field.id === "port"})),
+      getTableTextColumn(fields.find(field => { return field.id === "toolStatus"})),
+      getTableTextColumn(fields.find(field => { return field.id === "versionNumber"})),
+      getTableDateColumn(fields.find(field => { return field.id === "installationDate"})),
+      getTableTextColumn(fields.find(field => { return field.id === "toolURL"})),
+      getTableTextColumn(fields.find(field => { return field.id === "dnsName"})),
     ],
     []
   );
@@ -53,6 +28,7 @@ function PlatformToolsTable({ data }) {
         columns={columns} 
         data={data}
         tableStyleName="custom-table-2"
+        isLoading={isLoading}
       />
       </div>
     </>
@@ -61,7 +37,7 @@ function PlatformToolsTable({ data }) {
 
 PlatformToolsTable.propTypes = {
   data: PropTypes.array,
-  rowInfo: PropTypes.func
+  isLoading: PropTypes.bool
 };
 
 export default PlatformToolsTable;

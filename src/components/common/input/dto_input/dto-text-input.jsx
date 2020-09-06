@@ -1,9 +1,9 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 
 function DtoTextInput({fieldName, dataObject, setDataObject, disabled, type}) {
   const [errorMessage, setErrorMessage] = useState("");
-  const [field] = useState(dataObject.getFieldById(fieldName));
+  const [field, setField] = useState(dataObject.getFieldById(fieldName));
 
   const validateAndSetData = (fieldName, value) => {
     let newDataObject = dataObject;
@@ -32,7 +32,7 @@ function DtoTextInput({fieldName, dataObject, setDataObject, disabled, type}) {
       <div className="form-group m-2">
         <label>{field.label}{field.isRequired ?
           <span className="danger-red">*</span> : null}</label>
-        <input type={type} disabled={disabled} defaultValue={dataObject.getData(fieldName)} className="form-control"
+        <input type={type} disabled={disabled} value={dataObject.getData(fieldName)} className="form-control"
                onChange={e => validateAndSetData(fieldName, e.target.value)}/>
         <div className="invalid-feedback text-right">
           <div>{errorMessage}</div>

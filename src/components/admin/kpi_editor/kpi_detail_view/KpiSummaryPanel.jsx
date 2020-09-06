@@ -3,49 +3,25 @@ import { Row, Col, Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import PropTypes from "prop-types";
 
 import "components/inventory/tools/tools.css";
-import TextField from "components/common/form_fields/text-field";
-import DateField from "components/common/form_fields/date-field";
-import NameValueTable from "components/common/table/nameValueTable";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCopy, faFileAlt, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { axiosApiService } from "api/apiService";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "contexts/AuthContext";
 import KpiActions from "../kpi-editor-actions";
 import Modal from "components/common/modal/modal";
-import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import DtoTextField from "../../../common/form_fields/dto_form_fields/dto-text-field";
+import DtoDateField from "../../../common/form_fields/dto_form_fields/dto-date-field";
+import DtoToggleField from "../../../common/form_fields/dto_form_fields/dto-toggle-field";
+import DtoItemField from "../../../common/form_fields/dto_form_fields/dto-item-field";
+import SummaryActionBar from "../../../common/actions/SummaryActionBar";
+import Model from "../../../../core/data_model/model";
+import {getLoadingErrorDialog, getUpdateSuccessResultDialog} from "../../../common/toasts/toasts";
 
-function KpiSummaryPanel({ kpiData, fields, setKpiData } ) {
+function KpiSummaryPanel({ kpiData, setKpiData } ) {
   const { getAccessToken } = useContext(AuthContext);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const history = useHistory();
+  const [toast, setToast] = useState({});
+  const [showToast, setShowToast] = useState(false);
 
-  const parseNameValueArray = (nameValueArray) => {
-    let parsedValues = [];
-
-    if (nameValueArray != null)
-    {
-      for (const key of Object.keys(nameValueArray)) {
-        if (key != null) {
-          parsedValues.push( { name: key, value: nameValueArray[key] });
-        }
-      }
-    }
-
-    console.log("Parsed Values: " + JSON.stringify(parsedValues));
-
-    return parsedValues;
-  };
-
-  // TODO: Move to helper
-  function renderTooltip(props) {
-    const { message } = props;
-    return (
-      <Tooltip id="button-tooltip" {...props}>
-        {message}
-      </Tooltip>
-    );
-  }
 
   const deleteKpi = async (kpiData) => {
     kpiData["active"] = false
@@ -59,61 +35,71 @@ function KpiSummaryPanel({ kpiData, fields, setKpiData } ) {
       }
   };
 
-  const handleDeleteClick = () => {
-    setShowDeleteModal(true);
+  const handleActiveToggle = async () => {
+    if(kpiData.isModelValid()) {
+      try {
+        let newKpiData = {...kpiData};
+        newKpiData.setData("active", !newKpiData.getData("active"));
+        let response = await KpiActions.updateKpi({...newKpiData}, getAccessToken);
+        let updatedDto = new Model(response.data, newKpiData.metaData, false);
+        setKpiData(updatedDto);
+        let toast = getUpdateSuccessResultDialog(newKpiData.getType(), setShowToast);
+        setToast(toast);
+        setShowToast(true);
+      }
+      catch (error) {
+        let toast = getLoadingErrorDialog(error.message, setShowToast);
+        setToast(toast);
+        setShowToast(true);
+        console.error(error.message);
+      }
+    }
   };
+
+  if (kpiData == null) {
+    return <></>;
+  }
 
   return (
     <>
-      {showDeleteModal ? <Modal header="Confirm Tag Delete"
-        message="Warning! Data cannot be recovered once this tag is deleted. Do you still want to proceed?"
-        button="Confirm"
-        handleCancelModal={() => setShowDeleteModal(false)}
-        handleConfirmModal={() => deleteKpi(kpiData)} /> : null}
-      { Object.keys(kpiData).length > 0  && <>
-        <div className="scroll-y pt-3 px-3">
-
-          <div className="mb-3 flat-top-content-block p-3">
-            {/*<div className="mb-2 text-muted">
-              <OverlayTrigger
-                placement="top"
-                delay={{ show: 250, hide: 400 }}
-                overlay={renderTooltip({ message: "Delete this KPI" })} >
-                <FontAwesomeIcon icon={faTrash} className="delete-icon pointer red float-right ml-3" onClick={() => {handleDeleteClick(kpiData);}}/></OverlayTrigger>
-            </div>
-
-            <div className="pt-1"><hr/></div>
-*/}
-            <Row>
-              <Col md={4}>
-                <TextField label="Name" value={kpiData.name} />
-              </Col>
-              <Col md={4}>
-                <TextField label="KPI ID" value={kpiData._id} />
-              </Col>
-              <Col md={4}>
-                <DateField label="Created" value={kpiData.createdAt} />
-              </Col>
-              <Col md={4}>
-                <TextField label="Tool Identifier" value={kpiData.tool_identifier.map((data) => { return <Button className="mr-2" variant="primary" size="sm">{capitalizeFirstLetter(data)}</Button> })} />
-              </Col>
-              <Col md={4}>
-                <TextField label="State" value={kpiData.active ? "Active" : "Disabled"} />
-              </Col>
-              <Col md={12}>
-                <TextField label="Description" value={kpiData.description} />
-              </Col>
-            </Row>
-          </div>
+      <div className="scroll-y pt-2 px-3">
+        {showToast && toast}
+        <SummaryActionBar backButtonPath={"/admin/kpis"} handleActiveToggle={handleActiveToggle}
+                          status={kpiData.getData("active")}/>
+        <div className="mb-3 flat-top-content-block p-3 detail-view-summary">
+          <Row>
+            <Col lg={6}>
+              <DtoTextField dataObject={kpiData} fieldName={"name"}/>
+            </Col>
+            <Col lg={6}>
+              <DtoTextField dataObject={kpiData} fieldName={"_id"}/>
+            </Col>
+            <Col lg={6}>
+              <DtoDateField dataObject={kpiData} fieldName={"createdAt"}/>
+            </Col>
+            <Col lg={6}>
+              <DtoItemField dataObject={kpiData} fieldName={"tool_identifier"}/>
+            </Col>
+            <Col lg={6}>
+              <DtoToggleField fieldName={"active"} dataObject={kpiData}/>
+            </Col>
+            <Col lg={6}>
+              <DtoTextField dataObject={kpiData} fieldName={"description"}/>
+            </Col>
+          </Row>
         </div>
-      </>}
+      </div>
+      {showDeleteModal ? <Modal header="Confirm Kpi Delete"
+                                message="Warning! Data cannot be recovered once this tag is deleted. Do you still want to proceed?"
+                                button="Confirm"
+                                handleCancelModal={() => setShowDeleteModal(false)}
+                                handleConfirmModal={() => deleteKpi(kpiData)}/> : null}
     </>
   );
 }
 
 KpiSummaryPanel.propTypes = {
   kpiData: PropTypes.object,
-  fields: PropTypes.object,
   setKpiData: PropTypes.func
 };
 

@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import JenkinsJobs from "./tool_jobs/jenkins/jobs/JenkinsJobs.jsx";
 import PropTypes from "prop-types";
 
-function ToolJobsPanel({ toolData, loadData }) {
+function ToolJobsPanel({ toolData, loadData, isLoading }) {
 
   const getJobsPanel = (toolIdentifier, loadData) => {
     switch (toolIdentifier) {
     case "jenkins":
-      return <JenkinsJobs toolData={toolData} loadData={loadData}/>;
+      return <JenkinsJobs isLoading={isLoading} toolData={toolData} loadData={loadData}/>;
     default:
       return <div className="text-center p-5 text-muted mt-5">Opsera jobs management is not currently available for this
         tool.</div>;
@@ -31,6 +31,7 @@ function ToolJobsPanel({ toolData, loadData }) {
 ToolJobsPanel.propTypes = {
   toolData: PropTypes.object,
   loadData: PropTypes.func,
+  isLoading: PropTypes.bool
 };
 
 

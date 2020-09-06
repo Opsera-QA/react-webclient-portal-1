@@ -1,168 +1,120 @@
 import React, { useState, useEffect, useContext } from "react";
-import {
-  Button,
-} from "react-bootstrap";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
-import tagEditorFormFields from "./kpi-form-fields.js";
-import TextInput from "components/common/input/text-input";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import ToggleInput from "components/common/input/toggle-input";
-import Multiselect from "react-widgets/lib/Multiselect";
-import MultipleInput from "components/common/input/multiple-input";
-import Modal from "components/common/modal/modal";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import KpiActions from "../kpi-editor-actions";
 import Loading from "components/common/status_notifications/loading";
+import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
+import DtoToggleInput from "../../../common/input/dto_input/dto-toggle-input";
+import SaveButton from "../../../common/buttons/SaveButton";
+import DtoSelectInput from "../../../common/input/dto_input/dto-select-input";
+import {
+  getFormValidationErrorDialog,
+  getUpdateFailureResultDialog,
+  getUpdateSuccessResultDialog
+} from "../../../common/toasts/toasts";
+import Model from "../../../../core/data_model/model";
 
-const INITIAL_DATA = {
-  "name": "",
-  "description": "",
-  "tool_identifier": [],
-  "type": "",
-  "active": true,
-  "persona": ["manager","developer", "executive"]
-};
-
-function KpiEditorPanel({ kpiData, newTag, setKpiData, handleClose }) {
-  const [error, setErrors] = useState("");
+function KpiEditorPanel({ kpiData, setKpiData }) {
   const { getAccessToken } = useContext(AuthContext);
-  const [formFieldList, updateFormFields ] = useState({ ...tagEditorFormFields });
-  const [ changeMap, setChangeMap] = useState({});
-  const [ formData, setFormData] = useState(INITIAL_DATA);
   const [isLoading, setIsLoading] = useState(true);
   const [toolList, setToolList] = useState([]);
+  const [kpiDataDto, setKpiDataDto] = useState(undefined);
+  const [toast, setToast] = useState({});
+  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
-    loadData(kpiData);
+    loadData();
   }, []);
 
-  const loadData = async (kpiData) => {
+  const loadData = async () => {
     setIsLoading(true);
-    getToolList();
-    await unpackKpiData(kpiData);
+    setKpiDataDto(kpiData);
+    await getToolList();
     setIsLoading(false);
   };
 
-  const unpackKpiData = async (kpiData) => {
-    console.log(kpiData);
-    if (kpiData != null) {
-      setFormField("name", kpiData["name"] != null ? kpiData["name"] : "");
-      setFormField("description", kpiData["description"] != null ? kpiData["description"] : "");
-      setFormField("active", kpiData["active"] != null ? kpiData["active"] : false);
-      setFormField("tool_identifier", kpiData["tool_identifier"] != null ? kpiData["tool_identifier"] : []);
-    }
-    setIsLoading(false);
-  };
-
-  const setFormField = (field, value) => {
-    if (value === kpiData[field])
-    {
-      delete changeMap[field];
-    }
-    else
-    {
-      changeMap[field] = value;
-      setChangeMap({ ...changeMap });
-    }
-    formData[field] = value;
-    setFormData({ ...formData });
-    if (newTag)
-    {
-      kpiData[field] = value;
-      setKpiData({ ...kpiData });
-    }
-  };
-
-  //TODO: Check fields
-  const isFormValid = true;
-
-  const createKpi = async (newFormData) => {
-    if(isFormValid) {
-      let kpiResponse = await KpiActions.create(newFormData, getAccessToken);
-      if (kpiResponse.error != null) {
-        setErrors("Cannot create KPI configuration");
-      }
-      else {
-        handleClose();
-      }
-    }
-  };
-
-  const updateKpi = async (newKpiData) => {
-    if(isFormValid) {
+  const createKpi = async () => {
+    if (kpiDataDto.isModelValid()) {
       try {
-        const response = await KpiActions.update(newKpiData._id, changeMap, getAccessToken);
-        setKpiData({ ...response.data });
-        setChangeMap({});
+        let createKpiResponse = await KpiActions.createKpi(kpiDataDto, getAccessToken);
+        let toast = getUpdateSuccessResultDialog(kpiDataDto.getType(), setShowToast);
+        setToast(toast);
+        setShowToast(true);
+        let updatedDto = new Model(createKpiResponse.data, kpiDataDto.metaData, false);
+        setKpiData(updatedDto);
+        setKpiDataDto(updatedDto);
+      } catch (error) {
+        let toast = getUpdateFailureResultDialog(kpiDataDto.getType(), error.message, setShowToast);
+        setToast(toast);
+        setShowToast(true);
+        console.error(error.message);
       }
-      catch (err) {
-        console.log(err.message);
+    } else {
+      let toast = getFormValidationErrorDialog(setShowToast);
+      setToast(toast);
+      setShowToast(true);
+    }
+  }
+
+  const updateKpi = async () => {
+    if(kpiDataDto.isModelValid()) {
+      try {
+        let updateOrganizationResponse = await KpiActions.updateKpi(kpiDataDto, getAccessToken);
+        let toast = getUpdateSuccessResultDialog( kpiDataDto.getType(), setShowToast);
+        setToast(toast);
+        setShowToast(true);
+        let updatedDto = new Model(updateOrganizationResponse.data, kpiDataDto.metaData, false);
+        setKpiData(updatedDto);
+        setKpiDataDto(updatedDto);
+      } catch (error) {
+        let toast = getUpdateFailureResultDialog(kpiDataDto.getType(), error.message, setShowToast);
+        setToast(toast);
+        setShowToast(true);
+        console.error(error.message);
       }
     }
+    else {
+      let toast = getFormValidationErrorDialog(setShowToast);
+      setToast(toast);
+      setShowToast(true);
+    }
   };
-
 
   const getToolList = async () => {
     const response = await KpiActions.getTools(getAccessToken);
     setToolList(response.data)
   }
 
-  const setTool = (value) => {
-    let identifier_list = value.reduce((acc, item) => {
-        acc.push(item.identifier);
-        return acc;
-      }, []);
-    setFormField("tool_identifier", [ ...identifier_list])
-  };
+  if (isLoading || kpiDataDto == null) {
+    return <Loading size="sm" />;
+  }
 
   return (
     <>
-      {isLoading ? <Loading size="sm" /> : null}
-
-      {!isLoading && <>
         <div className="scroll-y full-height">
-          {error.length > 0 && <>
-            <div className="pb-2 error-text">WARNING! An error has occurred saving your configuration: {error}</div>
-          </>}
+          {showToast && toast}
           <Row>
-            <Col>
-              <TextInput field={formFieldList.name} setData={setFormField} formData={formData}/>
+            <Col lg={12}>
+              <DtoTextInput dataObject={kpiDataDto} fieldName={"name"} setDataObject={setKpiDataDto} />
             </Col>
-            <Col>
-              <ToggleInput field={formFieldList.active} setData={setFormField} formData={formData} />
+            <Col lg={12}>
+              <DtoToggleInput setDataObject={setKpiDataDto} fieldName={"active"} dataObject={kpiData} />
+            </Col>
+            <Col lg={12}>
+              <DtoTextInput dataObject={kpiDataDto} fieldName={"description"} setDataObject={setKpiDataDto} />
+            </Col>
+            <Col lg={12}>
+              <DtoSelectInput selectOptions={toolList} dataObject={kpiDataDto} fieldName={"tool_identifier"} setDataObject={setKpiDataDto} textField={"name"} valueField={"identifier"} />
             </Col>
           </Row>
           <Row>
-            <Col>
-              <TextInput field={ formFieldList.description } setData={setFormField} formData={formData}/>
-            </Col>
-            <Col>
-             <div className="custom-text-input form-group">
-              <label><span>Tool Identifier</span></label> 
-              <Multiselect
-                data={toolList} 
-                className="basic-multi-select"
-                valueField="identifier"
-                textField="name"
-                placeholder="Select One"
-                defaultValue={formData["tool_identifier"]}
-                onChange={setTool}           
-              />
-             </div>
-            </Col>
-          </Row>
-          <Row>
-            <div className="ml-auto px-3">
-              {newTag ? <Button size="sm" variant="primary" disabled={Object.keys(changeMap).length === 0} onClick={() => createKpi(kpiData)}>Create KPI</Button>
-                : <Button size="sm" variant="primary" disabled={Object.keys(changeMap).length === 0} onClick={() => updateKpi(kpiData)}>Save changes</Button>
-              }
+            <div className="ml-auto mt-3 px-3">
+              <SaveButton updateRecord={updateKpi} createRecord={createKpi} recordDto={kpiDataDto} />
             </div>
           </Row>
         </div>
-      </>}
     </>
   );
 }
@@ -171,12 +123,6 @@ KpiEditorPanel.propTypes = {
   kpiData: PropTypes.object,
   setKpiData: PropTypes.func,
   canDelete: PropTypes.bool,
-  newTag: PropTypes.bool,
-  handleClose: PropTypes.func
-};
-
-KpiEditorPanel.defaultProps = {
-  newTag: false
 };
 
 export default KpiEditorPanel;

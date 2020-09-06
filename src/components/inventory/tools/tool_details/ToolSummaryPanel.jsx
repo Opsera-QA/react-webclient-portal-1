@@ -8,12 +8,10 @@ import SummaryActionBar from "../../../common/actions/SummaryActionBar";
 import {axiosApiService} from "../../../../api/apiService";
 import {AuthContext} from "../../../../contexts/AuthContext";
 import Model from "../../../../core/data_model/model";
-import {useHistory} from "react-router-dom";
 import DtoTagField from "../../../common/form_fields/dto_form_fields/dto-tag-field";
 
 function ToolSummaryPanel({ toolData, setToolData }) {
   const { getAccessToken } = useContext(AuthContext);
-  const history = useHistory();
 
   const toggleToolType = async () => {
     if(toolData.isModelValid()) {
@@ -30,14 +28,10 @@ function ToolSummaryPanel({ toolData, setToolData }) {
     }
   };
 
-  const handleBackButton = () => {
-    history.push("/inventory/tools");
-  }
-  
   return (
     <>{ toolData && <>
       <div className="scroll-y pt-2 px-3">
-        <SummaryActionBar handleBackButton={handleBackButton} handleActiveToggle={toggleToolType} status={toolData.getData("active")} />
+        <SummaryActionBar backButtonPath={"/inventory/tools"} handleActiveToggle={toggleToolType} status={toolData.getData("active")} />
         <div className="mb-3 flat-top-content-block p-3 detail-view-summary">
           <Row>
             <Col lg={6}>

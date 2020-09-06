@@ -4,14 +4,16 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import TagEditorPanel from "./TagEditorPanel";
+import {faCogs} from "@fortawesome/pro-solid-svg-icons/faCogs";
+import CustomTab from "../../../common/tabs/CustomTab";
+import CustomTabContainer from "../../../common/tabs/CustomTabContainer";
 
 function TagDetailPanel({ tagData, setTagData, canDelete }) {
-  const [tabSelection, setTabSelection] = useState("editor");
+  const [activeTab, setTabSelection] = useState("settings");
 
-  const handleTabClick = (tabSelection) => e => {
-    console.log(tabSelection);
+  const handleTabClick = (activeTab) => e => {
     e.preventDefault();
-    setTabSelection(tabSelection);
+    setTabSelection(activeTab);
   };
 
   return (
@@ -19,19 +21,15 @@ function TagDetailPanel({ tagData, setTagData, canDelete }) {
       <div className="pb-3 px-3">
         <Row>
           <Col>
-            <div className="default-custom-tabs">
-              <ul className="nav nav-tabs">
-                <li className="nav-item">
-                  <a className={"nav-link " + (tabSelection === "editor" ? "active" : "")} onClick={handleTabClick("editor")} href="#">Tag Editor</a>
-                </li>
-              </ul>
-            </div>
+            <CustomTabContainer>
+              <CustomTab icon={faCogs} tabName={"settings"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Settings"} />
+            </CustomTabContainer>
           </Col>
         </Row>
         <Row>
           <Col>
             <div className="tabbed-content-block">
-              {tagData && <TagDetailsView tabSelection={tabSelection} setTagData={setTagData} tagData={tagData} canDelete={canDelete} /> }
+              {tagData && <TagDetailsView activeTab={activeTab} setTagData={setTagData} tagData={tagData} canDelete={canDelete} /> }
             </div>
           </Col>
         </Row>
@@ -40,14 +38,14 @@ function TagDetailPanel({ tagData, setTagData, canDelete }) {
   );
 }
 
-function TagDetailsView({ tabSelection, setTagData, tagData, canDelete }) {
+function TagDetailsView({ activeTab, setTagData, tagData, canDelete }) {
   useEffect(() => {
     // console.log("CHANGE HAPPENED");
-  }, [tabSelection, tagData]);
+  }, [activeTab, tagData]);
 
-  if (tabSelection) {
-    switch (tabSelection) {
-    case "editor":
+  if (activeTab) {
+    switch (activeTab) {
+    case "settings":
       return <TagEditorPanel setTagData={setTagData} tagData={tagData} canDelete={canDelete} />;
     default:
       return null;

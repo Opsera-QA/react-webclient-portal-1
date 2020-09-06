@@ -1,46 +1,30 @@
 import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import CustomTable from "components/common/table/table";
-import { format } from "date-fns";
-import {faTimesCircle, faCheckCircle, faPlus} from "@fortawesome/free-solid-svg-icons";
+import CustomTable from "components/common/table/CustomTable";
+import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {useHistory} from "react-router-dom";
 import {Button} from "react-bootstrap";
 import NewTemplateModal from "./NewTemplateModal";
+import templateEditorMetadata from "./template-form-fields";
+import {
+  getTableBooleanIconColumn,
+  getTableDateColumn,
+  getTableTextColumn
+} from "../../common/table/table-column-helpers";
 
-function TemplateTable({ data, loadData }) {
+function TemplateTable({ data, loadData, isLoading }) {
+  const fields = templateEditorMetadata.fields;
   const [showCreateTemplateModal, setShowCreateTemplateModal] = useState(false);
   const history = useHistory();
 
   const columns = useMemo(
     () => [
-      {
-        Header: "Name",
-        accessor: "name",
-      },
-      {
-        Header: "Description",
-        accessor: "description",
-      },
-      {
-        Header: "Created",
-        accessor: "createdAt",
-        Cell: (props) => {
-          return props.value ? format(new Date(props.value), "yyyy-MM-dd") : "";
-        },
-        class: "cell-center no-wrap-inline"
-      },
-      {
-        Header: "Account",
-        accessor: "account",
-      },
-      {
-        Header: "Active",
-        accessor: "active",
-        Cell: (props) => {
-          return props.value ?  <FontAwesomeIcon icon={faCheckCircle} className="green ml-3" /> :  <FontAwesomeIcon icon={faTimesCircle} className="red ml-3" />;
-        },
-      },
+      getTableTextColumn(fields.find(field => { return field.id === "name"})),
+      getTableTextColumn(fields.find(field => { return field.id === "description"})),
+      getTableDateColumn(fields.find(field => { return field.id === "createdAt"})),
+      getTableTextColumn(fields.find(field => { return field.id === "account"})),
+      getTableBooleanIconColumn(fields.find(field => { return field.id === "active"})),
     ],
     []
   );
@@ -61,7 +45,6 @@ function TemplateTable({ data, loadData }) {
 
   return (
     <>
-      {showCreateTemplateModal && <NewTemplateModal setShowModal={setShowCreateTemplateModal} loadData={loadData} showModal={showCreateTemplateModal}/>}
       <div className="justify-content-between mb-1 d-flex">
         <h5>Template Management</h5>
         <div className="text-right">
@@ -80,18 +63,21 @@ function TemplateTable({ data, loadData }) {
           data={data}
           onRowSelect={selectedRow}
           noDataMessage={noDataMessage}
+          isLoading={isLoading}
           rowStyling={rowStyling}
           tableStyleName="custom-table-2"
         >
         </CustomTable>
       </div>
+      <NewTemplateModal setShowModal={setShowCreateTemplateModal} loadData={loadData} showModal={showCreateTemplateModal}/>
     </>
   );
 }
 
 TemplateTable.propTypes = {
   data: PropTypes.array,
-  loadData: PropTypes.func
+  loadData: PropTypes.func,
+  isLoading: PropTypes.bool
 };
 
 export default TemplateTable;

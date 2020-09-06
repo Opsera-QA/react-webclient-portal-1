@@ -95,7 +95,6 @@ function TagEditorPanel({ tagData, setTagData }) {
                               fieldName={"type"}
                               dataObject={tagDataDto}
                               setDataObject={setTagDataDto}
-                // valueFormatter={}
                               selectOptions={defaultTags}/>
             </Col>
             <Col>

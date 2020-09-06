@@ -32,7 +32,7 @@ import SystemStatus from "./components/admin/status/SystemStatus";
 import Registration from "./components/landing/Registration";
 import TagEditor from "./components/settings/tags/TagManagement";
 import TagDetailView from "./components/settings/tags/tags_detail_view/TagDetailView";
-import KpiEditor from "./components/admin/kpi_editor/KpiEditor";
+import KpiManagement from "./components/admin/kpi_editor/KpiManagement";
 import KpiDetailView from "./components/admin/kpi_editor/kpi_detail_view/KpiDetailView";
 import TemplateManagement from "./components/admin/template_editor/TemplateManagement";
 import OPBlueprintMain from "./components/blueprint/blueprint";
@@ -218,18 +218,18 @@ const AppWithRouterAccess = () => {
                 <SecureRoute path="/admin/tools/types/details/:toolTypeId" exact component={ToolTypeDetailView}/>
                 <SecureRoute path="/admin/tools/identifiers/details/:toolIdentifierId" exact
                              component={ToolIdentifierDetailView}/>
-                <SecureRoute path="/admin/kpis" exact component={KpiEditor}/>
+                <SecureRoute path="/admin/kpis" exact component={KpiManagement}/>
                 <SecureRoute path="/admin/kpis/:id" exact component={KpiDetailView}/>
                 <SecureRoute path="/admin/templates" exact component={TemplateManagement}/>
                 <SecureRoute path="/admin/templates/details/:templateId" exact component={TemplateDetailView}/>
 
                 {/* Ldap Account Pages */}
-                <SecureRoute path="/accounts/organizations" exact component={LdapOrganizationsView}/>
-                <SecureRoute path="/accounts/organizations/details/:organizationName" exact
+                <SecureRoute path="/admin/organizations" exact component={LdapOrganizationsView}/>
+                <SecureRoute path="/admin/organizations/details/:organizationName" exact
                              component={LdapOrganizationDetailView}/>
-                <SecureRoute path="/accounts/organization-accounts/:organizationName?" exact
+                <SecureRoute path="/admin/organization-accounts/:organizationName?" exact
                              component={LdapOrganizationAccountManagement}/>
-                <SecureRoute path="/accounts/organization-accounts/:organizationDomain/details" exact
+                <SecureRoute path="/admin/organization-accounts/:organizationDomain/details" exact
                              component={LdapOrganizationAccountDetailView}/>
                 <SecureRoute path="/accounts/create" exact component={LdapCustomerOnboardView}/>
 

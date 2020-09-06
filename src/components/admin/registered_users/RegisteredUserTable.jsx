@@ -9,18 +9,18 @@ import ModalActivityLogs from "../../common/modal/modalActivityLogs";
 import {faSearchPlus} from "@fortawesome/pro-regular-svg-icons";
 import RegisteredUserActions from "./registered-user-actions";
 import {AuthContext} from "../../../contexts/AuthContext";
+import registeredUsersMetadata from "./registered-users-form-fields";
+import {getTableDateColumn, getTableTextColumn} from "../../common/table/table-column-helpers";
 
 function RegisteredUserTable({  data, deployingElk, handleDeletePress, handleDeployElkStack, gotoProfile }) {
+  const fields = registeredUsersMetadata.fields;
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState({});
   const { getAccessToken } = useContext(AuthContext);
 
   const columns = useMemo(
     () => [
-      {
-        Header: "User ID",
-        accessor: "_id",
-      },
+      getTableTextColumn(fields.find(field => { return field.id === "_id"})),
       {
         Header: "User Info",
         accessor: "row",
@@ -34,27 +34,11 @@ function RegisteredUserTable({  data, deployingElk, handleDeletePress, handleDep
           );
         },
       },
-      {
-        Header: "Name",
-        accessor: "firstName"
-      },
-      {
-        Header: "Email",
-        accessor: "email"
-      },
-      {
-        Header: "Organization",
-        accessor: "organizationName"
-      },
-      {
-        Header: "Domain",
-        accessor: "domain"
-      },
-      {
-        Header: "Created",
-        accessor: "createdAt",
-        class: "cell-center no-wrap-inline"
-      },
+      getTableTextColumn(fields.find(field => { return field.id === "firstName"})),
+      getTableTextColumn(fields.find(field => { return field.id === "email"})),
+      getTableTextColumn(fields.find(field => { return field.id === "organizationName"})),
+      getTableTextColumn(fields.find(field => { return field.id === "domain"})),
+      getTableDateColumn(fields.find(field => { return field.id === "createdAt"})),
       {
         Header: "Actions",
         Cell: (cellData) => actionButtons(cellData)

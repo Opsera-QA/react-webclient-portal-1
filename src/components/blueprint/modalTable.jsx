@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Button, Modal } from "react-bootstrap";
 import { format } from "date-fns";
 import ReactJson from "react-json-view";
-import CustomTable from "../common/table/table";
+import CustomTable from "../common/table/CustomTable";
 import Card from "react-bootstrap/Card";
 import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

@@ -11,28 +11,36 @@ import NewTagModal from "./NewTagModal";
 import LoadingDialog from "components/common/status_notifications/loading";
 import AccessDeniedDialog from "../../common/status_notifications/accessDeniedInfo";
 import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
+import {getLoadingErrorDialog} from "../../common/toasts/toasts";
 
 function TagManagement() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState({});
-  const [pageLoading, setPageLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [tagList, setTagList] = useState([]);
   const [showTagModal, setShowTagModal] = useState(false);
+  const [toast, setToast] = useState({});
+  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
     loadData();
   }, []);
 
   const loadData = async () => {
-    setPageLoading(true);
+    setIsLoading(true);
     getRoles();
-    getTags();
-    setPageLoading(false);
   };
 
   const getTags = async () => {
-    const response = await adminTagsActions.getTags(getAccessToken);
-    setTagList(response.data);
+    try {
+      const response = await adminTagsActions.getTags(getAccessToken);
+      setTagList(response.data);
+    } catch (error) {
+      let toast = getLoadingErrorDialog(error.message, setShowToast);
+      setToast(toast);
+      setShowToast(true);
+      console.error(error.message);
+    }
   };
 
   const getRoles = async () => {
@@ -41,13 +49,16 @@ function TagManagement() {
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
     }
+
+    await getTags();
+    setIsLoading(false);
   };
 
   const createTag = () => {
     setShowTagModal(true);
   };
 
-  if (!accessRoleData || pageLoading) {
+  if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   } else if (!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator) {
     return (<AccessDeniedDialog roleData={accessRoleData}/>);
@@ -56,6 +67,7 @@ function TagManagement() {
     return (
       <div>
         <BreadcrumbTrail destination={"tagManagement"}/>
+        {showToast && toast}
         <div className="justify-content-between mb-1 d-flex">
           <h5>Tag Management</h5>
           <div className="text-right">
@@ -70,12 +82,9 @@ function TagManagement() {
         </div>
 
         <div className="full-height">
-          {tagList && <TagsTable data={tagList}/>}
+          {tagList && <TagsTable isLoading={isLoading} data={tagList}/>}
         </div>
-
-        {showTagModal ?
-          <NewTagModal showModal={showTagModal} loadData={loadData} setShowModal={setShowTagModal}/> : null}
-
+        <NewTagModal showModal={showTagModal} loadData={loadData} setShowModal={setShowTagModal}/>
       </div>
     );
   }

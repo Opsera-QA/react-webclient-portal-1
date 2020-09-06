@@ -4,11 +4,9 @@ import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 import ErrorDialog from "../../common/status_notifications/error";
-import { Table } from "react-bootstrap";
-import { format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
-import CustomTable from "../../common/table/table";
+import CustomTable from "../../common/table/CustomTable";
 
 function OpseraRecentPipelineStatus({ date }) {
   const contextType = useContext(AuthContext);
@@ -16,15 +14,6 @@ function OpseraRecentPipelineStatus({ date }) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const noDataMessage = "No Data is available for this chart at this time";
-  const initialState = {
-    pageIndex: 0,
-    sortBy: [
-      {
-        id: "run_count",
-        desc: true
-      }
-    ]
-  };
 
   useEffect(() => {
     const controller = new AbortController();
@@ -131,15 +120,14 @@ function OpseraRecentPipelineStatus({ date }) {
               <div className="h6 activity-label-text mb-2">Opsera: Recent Pipeline Status</div>
 
             </div>
-            <CustomTable
-              columns={columns}
-              data={data.data}
-              rowStyling={""}
-              noDataMessage={noDataMessage}
-              // initialState={initialState}
-              // paginationOptions={paginationOptions}
-            >
-            </CustomTable>
+            <div className="table-content-block">
+              <CustomTable
+                tableStyleName="custom-table-2"
+                columns={columns}
+                data={data.data}
+                noDataMessage={noDataMessage}
+              />
+            </div>
           </>
         }
       </>

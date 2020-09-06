@@ -17,7 +17,7 @@ import Model, {DataState} from "../../../../../../core/data_model/model";
 import LoadingDialog from "../../../../../common/status_notifications/loading";
 import SaveButton from "../../../../../common/buttons/SaveButton";
 
-function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganizationData, handleClose }) {
+function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganizationData }) {
   const { getAccessToken } = useContext(AuthContext);
   const [ldapOrganizationDataDto, setLdapOrganizationDataDto] = useState({});
   const [ opseraUserList, setOpseraUsersList] = useState([]);
@@ -76,7 +76,7 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganization
     if(ldapOrganizationDataDto.isModelValid()) {
       try {
           let updateOrganizationResponse = await accountsActions.updateOrganization(ldapOrganizationDataDto, getAccessToken);
-          let toast = getUpdateSuccessResultDialog( ldapOrganizationDataDto.getType(), setShowToast);
+          let toast = getUpdateSuccessResultDialog(ldapOrganizationDataDto.getType(), setShowToast);
           setToast(toast);
           setShowToast(true);
           let updatedDto = new Model(updateOrganizationResponse.data, ldapOrganizationDataDto.metaData, false);

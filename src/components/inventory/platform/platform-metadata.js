@@ -6,96 +6,36 @@ const platformMetadata = {
       id: "_id",
     },
     {
-      label: "Configuration Name",
+      label: "Name",
       id: "name",
       isRequired: true
     },
     {
-      label: "Account",
-      id: "account",
-    },
-    {
-      label: "Description",
-      id: "description",
-    },
-    {
-      label: "Owner",
-      id: "owner_name",
-    },
-    {
-      label: "Tool",
-      id: "tool_identifier",
-    },
-    {
-      label: "Tool Type",
-      id: "tool_type_identifier",
-    },
-    {
-      label: "Compliance",
-      id: "compliance",
-      // fields: ["name", "value"],
-    },
-    {
-      label: "Licensing",
-      id: "licensing",
-      // fields: ["name", "value"],
-    },
-    {
-      label: "Location",
-      id: "location",
-      type: "multi",
-      // fields: ["name", "value"],
-    },
-    {
-      label: "Project",
-      id: "projects",
-      // fields: ["name", "value"],
-    },
-    {
-      label: "Contacts",
-      id: "contacts",
-      // fields: ["name", "email", "user_id"],
-    },
-    {
-      label: "Application",
-      id: "applications",
-      // fields: ["name", "value"],
-    },
-    {
-      label: "Organization",
-      id: "organization",
-      // fields: ["name", "value"],
-    },
-    {
-      label: "External Reference",
-      id: "external_reference",
-      // fields: ["name", "description", "identifier"],
+      label: "Port",
+      id: "port",
+      isRequired: true
     },
     {
       label: "Status",
-      id: "active",
+      id: "toolStatus",
     },
     {
-      label: "Roles",
-      id: "roles",
+      label: "Version Number",
+      id: "versionNumber",
     },
     {
-      label: "Configuration",
-      id: "configuration",
+      label: "Install Data",
+      id: "installationDate",
     },
     {
-      label: "Status",
-      id: "status",
+      label: "URL",
+      id: "toolURL",
     },
     {
-      label: "Tags",
-      id: "tags",
+      label: "DNS",
+      id: "dnsName",
     },
-    {
-      label: "Created",
-      id: "createdAt",
-    }
   ]
 };
 
-export default toolMetadata;
+export default platformMetadata;

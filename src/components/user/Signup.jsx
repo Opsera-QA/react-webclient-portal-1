@@ -1,10 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import { Button, Form, Row, Col, Card, Alert } from "react-bootstrap";
-import Modal from "components/common/modal/modal";
-import { AuthContext } from "contexts/AuthContext";
 import { ApiService } from "api/apiService";
 import { useHistory } from "react-router-dom";
-import validate from "utils/formValidation";
 import defaultSignupFormFields from "./signup-form-fields.js";
 import usStateList from "./states";
 

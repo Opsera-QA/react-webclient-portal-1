@@ -6,22 +6,25 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import AccessDeniedDialog from "../../common/status_notifications/accessDeniedInfo";
 import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
 import templateActions from "./template-actions";
+import {getLoadingErrorDialog} from "../../common/toasts/toasts";
 
 function TemplateManagement() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState({});
-  const [pageLoading, setPageLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [templateList, setTemplateList] = useState([]);
+  const [toast, setToast] = useState({});
+  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
     loadData();
   }, []);
 
   const loadData = async () => {
-    setPageLoading(true);
+    setIsLoading(true);
     await getRoles();
     await getTemplates();
-    setPageLoading(false);
+    setIsLoading(false);
   }
 
   const getRoles = async () => {
@@ -37,23 +40,27 @@ function TemplateManagement() {
       const templateListResponse = await templateActions.getTemplates(getAccessToken);
       console.log(templateListResponse.data);
       setTemplateList(templateListResponse.data);
-    } catch (err) {
-      console.log(err.message);
+    } catch (error) {
+      let toast = getLoadingErrorDialog(error.message, setShowToast);
+      setToast(toast);
+      setShowToast(true);
+      console.error(error.message);
     }
   };
 
-  if (!accessRoleData || pageLoading) {
+  if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
-  } else if (!accessRoleData.OpseraAdministrator) {
-    return (<AccessDeniedDialog roleData={accessRoleData}/>);
-  } else {
-    return (
-      <div>
-        <BreadcrumbTrail destination={"templateManagement"}/>
-        <TemplatesTable data={templateList} loadData={loadData}/>
-      </div>
-    );
   }
+  if (!accessRoleData.OpseraAdministrator) {
+    return (<AccessDeniedDialog roleData={accessRoleData}/>);
+  }
+  return (
+    <div>
+      <BreadcrumbTrail destination={"templateManagement"}/>
+      {showToast && toast}
+      <TemplatesTable data={templateList} isLoading={isLoading} loadData={loadData}/>
+    </div>
+  );
 }
 
 export default TemplateManagement;

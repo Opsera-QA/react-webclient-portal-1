@@ -95,12 +95,12 @@ function CustomTable({ tableStyleName, columns, data, noDataMessage, onRowSelect
       </div> */}
       <table className={tableStyleName} responsive="true" hover="true" {...getTableProps()}>
         <thead>
-          {headerGroups.map((headerGroup, i) => (
+          {!isLoading && headerGroups ? headerGroups.map((headerGroup, i) => (
             <tr key={i}  {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column, j) => (
                 <th className="px-2" key={j} {...column.getHeaderProps(column.getSortByToggleProps())}>
                   <div style={{ display: "flex",  flexWrap: "nowrap" }}>
-                    {showHeaderText ?
+                    {showHeaderText && !isLoading ?
                     <>
                       <div>{column.render("Header")}</div>
                       <div className="ml-1">
@@ -118,7 +118,14 @@ function CustomTable({ tableStyleName, columns, data, noDataMessage, onRowSelect
                 </th>
               ))}
             </tr>
-          ))}
+          ))
+          :
+            <tr>
+              <th>
+                <div className="no-header-text" />
+              </th>
+            </tr>
+          }
         </thead>
         <tbody {...getTableBodyProps()}>
         <>

@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 import NewJenkinsAccountModal from "./NewJenkinsAccountModal";
 
-function JenkinsAccounts({ toolData, loadData }) {
+function JenkinsAccounts({ toolData, loadData, isLoading }) {
   const [showCreateAccountModal, setShowCreateAccountModal] = useState(false);
 
   const createJenkinsAccount = () => {
@@ -24,7 +24,7 @@ function JenkinsAccounts({ toolData, loadData }) {
           </Button>
           <br/>
         </div>
-      <JenkinsAccountsTable data={toolData.getData("accounts")}/>
+      <JenkinsAccountsTable isLoading={isLoading} data={toolData.getData("accounts")}/>
       <NewJenkinsAccountModal showModal={showCreateAccountModal} setShowModal={setShowCreateAccountModal} toolData={toolData} loadData={loadData} />
     </div>
   );
@@ -33,6 +33,7 @@ function JenkinsAccounts({ toolData, loadData }) {
 
 JenkinsAccounts.propTypes = {
   toolData: PropTypes.object,
-  loadData: PropTypes.func
+  loadData: PropTypes.func,
+  isLoading: PropTypes.bool
 };
 export default JenkinsAccounts;

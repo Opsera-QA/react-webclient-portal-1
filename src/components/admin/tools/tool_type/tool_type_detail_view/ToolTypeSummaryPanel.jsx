@@ -10,12 +10,10 @@ import DtoItemField from "../../../../common/form_fields/dto_form_fields/dto-ite
 import SummaryActionBar from "../../../../common/actions/SummaryActionBar";
 import Model from "../../../../../core/data_model/model";
 import {AuthContext} from "../../../../../contexts/AuthContext";
-import {useHistory} from "react-router-dom";
 import toolTypeActions from "../../tool-management-actions";
 
 function ToolTypeSummaryPanel({toolTypeData, setToolTypeData}) {
   const { getAccessToken } = useContext(AuthContext);
-  const history = useHistory();
 
   const handleActiveToggle = async () => {
     if(toolTypeData.isModelValid()) {
@@ -32,15 +30,11 @@ function ToolTypeSummaryPanel({toolTypeData, setToolTypeData}) {
     }
   };
 
-  const handleBackButton = () => {
-    history.push("/admin/tools/types");
-  }
-
   return (
     <>
       {toolTypeData &&
       <div className="scroll-y pt-2 px-3">
-        <SummaryActionBar handleBackButton={handleBackButton} handleActiveToggle={handleActiveToggle}
+        <SummaryActionBar backButtonPath={"/admin/tools/types"} handleActiveToggle={handleActiveToggle}
                           status={toolTypeData.getData("active")}/>
         <div className="mb-3 flat-top-content-block p-3 detail-view-summary">
           <Row>
