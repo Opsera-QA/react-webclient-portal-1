@@ -85,7 +85,7 @@ function FreeTrialSignup(props) {
     } else if (registrationDataDto.isModelValid()) {
       let finalObject = registrationDataDto.getPersistData();
       let attributes = { title: registrationDataDto.getData("title"), company: registrationDataDto.getData("company") };
-      let configuration = { cloudProvider: "EKS", cloudProviderRegion: "us-east-2" };
+      let configuration = { cloudProvider: "GKE", cloudProviderRegion: "" };
       delete finalObject["title"];
       delete finalObject["company"];
       finalObject["attributes"] = attributes;

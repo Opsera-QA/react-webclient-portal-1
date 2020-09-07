@@ -1,11 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import {
-  Button,
-  Form,
-  OverlayTrigger,
-  Popover,
-} from "react-bootstrap";
+import { Button, Form, OverlayTrigger, Popover } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faExclamationCircle,
@@ -22,7 +17,7 @@ import { Link } from "react-router-dom";
 import {
   getErrorDialog,
   getMissingRequiredFieldsErrorDialog,
-  getServiceUnavailableDialog
+  getServiceUnavailableDialog,
 } from "../../../../../../common/toasts/toasts";
 
 const JOB_OPTIONS = [
@@ -64,6 +59,7 @@ const INITIAL_DATA = {
   repository: "",
   branch: "",
   buildArgs: {},
+  isOrgToOrg: false,
 };
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
@@ -77,7 +73,7 @@ function JenkinsStepConfiguration({
   callbackSaveToVault,
   createJob,
   setToast,
-  setShowToast
+  setShowToast,
 }) {
   const contextType = useContext(AuthContext);
   const [formData, setFormData] = useState(INITIAL_DATA);
@@ -107,7 +103,7 @@ function JenkinsStepConfiguration({
   const formatStepOptions = (plan, stepId) => {
     let STEP_OPTIONS = plan.slice(
       0,
-      plan.findIndex((element) => element._id === stepId),
+      plan.findIndex((element) => element._id === stepId)
     );
     STEP_OPTIONS.unshift({ _id: "", name: "Select One", isDisabled: "yes" });
     return STEP_OPTIONS;
@@ -133,8 +129,6 @@ function JenkinsStepConfiguration({
     };
   }, [stepTool]);
 
-
-
   useEffect(() => {
     setShowToast(false);
     async function fetchJenkinsDetails(service) {
@@ -142,16 +136,13 @@ function JenkinsStepConfiguration({
       // Set results state
       let results = await searchToolsList(service);
       if (results) {
-          setJenkinsList(results);
-          setisJenkinsSearching(false);
+        setJenkinsList(results);
+        setisJenkinsSearching(false);
       }
     }
 
     fetchJenkinsDetails("jenkins");
   }, []);
-
-
-
 
   // search sfdc
   useEffect(() => {
@@ -162,9 +153,7 @@ function JenkinsStepConfiguration({
       let results = await searchToolsList(service);
 
       if (results) {
-        const filteredList = results.filter(
-          (el) => el.configuration !== undefined,
-        ); //filter out items that do not have any configuration data!
+        const filteredList = results.filter((el) => el.configuration !== undefined); //filter out items that do not have any configuration data!
         if (filteredList) {
           setSFDCList(filteredList);
           setisSFDCSearching(false);
@@ -192,12 +181,7 @@ function JenkinsStepConfiguration({
       }
     }
 
-    if (
-      formData.service &&
-      formData.service.length > 0 &&
-      formData.gitToolId &&
-      formData.gitToolId.length > 0
-    ) {
+    if (formData.service && formData.service.length > 0 && formData.gitToolId && formData.gitToolId.length > 0) {
       // Fire off our API call
       fetchRepos(formData.service, formData.gitToolId);
     } else {
@@ -238,31 +222,23 @@ function JenkinsStepConfiguration({
     }
   }, [formData.repoId]);
 
-
-
   useEffect(() => {
     if (formData.toolConfigId) {
       // console.log(jenkinsList[jenkinsList.findIndex(x => x.id === formData.toolConfigId)].accounts);
       setAccountsList(
-        jenkinsList[
-          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-          ] ?
-          jenkinsList[
-            jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-            ].accounts : [],
+        jenkinsList[jenkinsList.findIndex((x) => x.id === formData.toolConfigId)]
+          ? jenkinsList[jenkinsList.findIndex((x) => x.id === formData.toolConfigId)].accounts
+          : []
       );
 
       setJobsList(
-        jenkinsList[
-          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-          ] ?
-          jenkinsList[
-            jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-            ].jobs : [],
+        jenkinsList[jenkinsList.findIndex((x) => x.id === formData.toolConfigId)]
+          ? jenkinsList[jenkinsList.findIndex((x) => x.id === formData.toolConfigId)].jobs
+          : []
       );
     }
   }, [jenkinsList, formData.toolConfigId]);
-/*
+  /*
 
   useEffect(() => {
     if (formData.toolConfigId) {
@@ -278,14 +254,11 @@ function JenkinsStepConfiguration({
   }, [jenkinsList, formData.toolConfigId]);
 */
 
-
-
   useEffect(() => {
     if (formData.toolJobType && formData.toolJobType.includes("SFDC")) {
       setFormData({ ...formData, buildType: "ant" });
     }
   }, [formData.toolJobType]);
-
 
   const loadFormData = async (step) => {
     let { configuration, threshold, job_type } = step;
@@ -374,7 +347,11 @@ function JenkinsStepConfiguration({
         //console.log(respObj);
         return respObj;
       } else {
-        let toast = getErrorDialog("Jenkins information is missing or unavailable!  Please ensure the required Jenkins creds are registered and up to date in Tool Registry.", setShowToast, "detailPanelTop");
+        let toast = getErrorDialog(
+          "Jenkins information is missing or unavailable!  Please ensure the required Jenkins creds are registered and up to date in Tool Registry.",
+          setShowToast,
+          "detailPanelTop"
+        );
         setToast(toast);
         setShowToast(true);
       }
@@ -386,48 +363,38 @@ function JenkinsStepConfiguration({
   };
 
   const validateRequiredFields = () => {
-    let {
-      toolConfigId,
-      jenkinsUrl,
-      jUserId,
-      jobName,
-      buildType,
-      dockerName,
-      dockerTagName,
-    } = formData;
+    let { toolConfigId, jenkinsUrl, jUserId, jobName, buildType, dockerName, dockerTagName } = formData;
 
-    if(jobType === "job") {
-      if(jobName.length === 0) {
+    if (jobType === "job") {
+      if (jobName.length === 0) {
         let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "detailPanelTop");
         setToast(toast);
         setShowToast(true);
-        return false
+        return false;
       } else {
-        return true
+        return true;
+      }
+    } else {
+      if (
+        toolConfigId.length === 0 ||
+        jenkinsUrl.length === 0 ||
+        jUserId.length === 0 ||
+        (buildType === "docker" ? dockerName.length === 0 || dockerTagName.length === 0 : false)
+      ) {
+        let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "detailPanelTop");
+        setToast(toast);
+        setShowToast(true);
+        return false;
+      } else {
+        return true;
       }
     }
-    else  {
-    if (
-      toolConfigId.length === 0 ||
-      jenkinsUrl.length === 0 ||
-      jUserId.length === 0 ||
-      (buildType === "docker"
-        ? dockerName.length === 0 || dockerTagName.length === 0
-        : false)
-    ) {
-      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "detailPanelTop");
-      setToast(toast);
-      setShowToast(true);
-      return false;
-    } else {
-      return true;
-    }
-  }
   };
 
   const handleJenkinsChange = (selectedOption) => {
     if (!selectedOption.configuration) {
-      let errorMessage = "Connection information missing for this tool!  This Jenkins tool does not have connection details defined in its Tool Registry record.  Please go into Tool Registry and add connection information in order for Opsera to work with this tool.";
+      let errorMessage =
+        "Connection information missing for this tool!  This Jenkins tool does not have connection details defined in its Tool Registry record.  Please go into Tool Registry and add connection information in order for Opsera to work with this tool.";
       let toast = getErrorDialog(errorMessage, setShowToast, "detailPanelTop");
       setToast(toast);
       setShowToast(true);
@@ -478,9 +445,7 @@ function JenkinsStepConfiguration({
       setFormData({
         ...formData,
         sfdcToolId: selectedOption.id,
-        accountUsername: selectedOption.configuration
-          ? selectedOption.configuration.accountUsername
-          : "",
+        accountUsername: selectedOption.configuration ? selectedOption.configuration.accountUsername : "",
       });
     }
     //setLoading(false);
@@ -493,9 +458,7 @@ function JenkinsStepConfiguration({
       setFormData({
         ...formData,
         sfdcDestToolId: selectedOption.id,
-        destAccountUsername: selectedOption.configuration
-          ? selectedOption.configuration.destAccountUsername
-          : "",
+        destAccountUsername: selectedOption.configuration ? selectedOption.configuration.destAccountUsername : "",
       });
     }
     //setLoading(false);
@@ -520,34 +483,34 @@ function JenkinsStepConfiguration({
     //   });
     // }
     switch (selectedOption.type[0]) {
-    case "SFDC":
-      setFormData({
-        ...formData,
-        toolJobId: selectedOption._id,
-        toolJobType: selectedOption.type,
-        jobType: selectedOption.configuration.jobType,
-        ...selectedOption.configuration,
-        stepIdXML: "",
-        sfdcDestToolId: "",
-        destAccountUsername: "",
-        buildArgs: {},
-      });
-      break;
-    default:
-      setFormData({
-        ...formData,
-        toolJobId: selectedOption._id,
-        toolJobType: selectedOption.type,
-        jobType: selectedOption.type[0],
-        ...selectedOption.configuration,
-        rollbackBranchName: "",
-        stepIdXML: "",
-        sfdcDestToolId: "",
-        destAccountUsername: "",
-        buildToolVersion: "6.3",
-        buildArgs: {},
-      });
-      break;
+      case "SFDC":
+        setFormData({
+          ...formData,
+          toolJobId: selectedOption._id,
+          toolJobType: selectedOption.type,
+          jobType: selectedOption.configuration.jobType,
+          ...selectedOption.configuration,
+          stepIdXML: "",
+          sfdcDestToolId: "",
+          destAccountUsername: "",
+          buildArgs: {},
+        });
+        break;
+      default:
+        setFormData({
+          ...formData,
+          toolJobId: selectedOption._id,
+          toolJobType: selectedOption.type,
+          jobType: selectedOption.type[0],
+          ...selectedOption.configuration,
+          rollbackBranchName: "",
+          stepIdXML: "",
+          sfdcDestToolId: "",
+          destAccountUsername: "",
+          buildToolVersion: "6.3",
+          buildArgs: {},
+        });
+        break;
     }
   };
 
@@ -674,7 +637,7 @@ function JenkinsStepConfiguration({
       if (res.data && res.data.data) {
         let arrOfObj = res.data.data;
         if (arrOfObj) {
-          var result = arrOfObj.map(function(el) {
+          var result = arrOfObj.map(function (el) {
             var o = Object.assign({});
             o.value = el.toLowerCase();
             o.name = el;
@@ -701,29 +664,23 @@ function JenkinsStepConfiguration({
         <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
           <Popover.Title as="h3">
             Tool and Account Details{" "}
-            <FontAwesomeIcon
-              icon={faTimes}
-              className="fa-pull-right pointer"
-              onClick={() => document.body.click()}
-            />
+            <FontAwesomeIcon icon={faTimes} className="fa-pull-right pointer" onClick={() => document.body.click()} />
           </Popover.Title>
 
           <Popover.Content>
             <div className="text-muted mb-2">
-              Configuration details for this item are listed below. Tool and
-              account specific settings are stored in the
-              <Link to="/inventory/tools">Tool Registry</Link>. To add a new
-              entry to a dropdown or update settings, make those changes there.
+              Configuration details for this item are listed below. Tool and account specific settings are stored in the
+              <Link to="/inventory/tools">Tool Registry</Link>. To add a new entry to a dropdown or update settings,
+              make those changes there.
             </div>
             {data.configuration && (
               <>
-                {Object.entries(data.configuration).map(function(a) {
+                {Object.entries(data.configuration).map(function (a) {
                   return (
                     <div key={a}>
                       {a[1].length > 0 && (
                         <>
-                          <span className="text-muted pr-1">{a[0]}: </span>{" "}
-                          {a[1]}
+                          <span className="text-muted pr-1">{a[0]}: </span> {a[1]}
                         </>
                       )}
                     </div>
@@ -739,17 +696,11 @@ function JenkinsStepConfiguration({
         <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
           <Popover.Title as="h3">
             Tool and Account Details{" "}
-            <FontAwesomeIcon
-              icon={faTimes}
-              className="fa-pull-right pointer"
-              onClick={() => document.body.click()}
-            />
+            <FontAwesomeIcon icon={faTimes} className="fa-pull-right pointer" onClick={() => document.body.click()} />
           </Popover.Title>
 
           <Popover.Content>
-            <div className="text-muted mb-2">
-              Please select any tool/account to get the details.
-            </div>
+            <div className="text-muted mb-2">Please select any tool/account to get the details.</div>
           </Popover.Content>
         </Popover>
       );
@@ -766,11 +717,7 @@ function JenkinsStepConfiguration({
               trigger="click"
               rootClose
               placement="left"
-              overlay={RegistryPopover(
-                jenkinsList[
-                  jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-                  ],
-              )}
+              overlay={RegistryPopover(jenkinsList[jenkinsList.findIndex((x) => x.id === formData.toolConfigId)])}
             >
               <FontAwesomeIcon
                 icon={faEllipsisH}
@@ -781,12 +728,7 @@ function JenkinsStepConfiguration({
           </Form.Label>
           {isJenkinsSearching ? (
             <div className="form-text text-muted mt-2 p-2">
-              <FontAwesomeIcon
-                icon={faSpinner}
-                spin
-                className="text-muted mr-1"
-                fixedWidth
-              />
+              <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth />
               Loading Jenkins accounts from registry
             </div>
           ) : (
@@ -795,13 +737,7 @@ function JenkinsStepConfiguration({
                 <>
                   <DropdownList
                     data={jenkinsList}
-                    value={
-                      jenkinsList[
-                        jenkinsList.findIndex(
-                          (x) => x.id === formData.toolConfigId,
-                        )
-                        ]
-                    }
+                    value={jenkinsList[jenkinsList.findIndex((x) => x.id === formData.toolConfigId)]}
                     valueField="id"
                     textField="name"
                     placeholder="Please select an account"
@@ -812,16 +748,11 @@ function JenkinsStepConfiguration({
               ) : (
                 <>
                   <div className="form-text text-muted p-2">
-                    <FontAwesomeIcon
-                      icon={faExclamationCircle}
-                      className="text-muted mr-1"
-                      fixedWidth
-                    />
-                    No accounts have been registered for{" "}
-                    <span className="upper-case-first">{formData.service}</span>
-                    . Please go to
-                    <Link to="/inventory/tools"> Tool Registry</Link> and add an
-                    entry for this repository in order to proceed.
+                    <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+                    No accounts have been registered for <span className="upper-case-first">{formData.service}</span>.
+                    Please go to
+                    <Link to="/inventory/tools"> Tool Registry</Link> and add an entry for this repository in order to
+                    proceed.
                   </div>
                 </>
               )}
@@ -830,8 +761,7 @@ function JenkinsStepConfiguration({
           {formData.toolConfigId && formData.toolConfigId.length > 0 && (
             <Form.Label className="mt-2 pl-1">
               <Link to={"/inventory/tools/" + formData.toolConfigId}>
-                <FontAwesomeIcon icon={faTools} className="pr-1"/> View/edit
-                this tool's Registry settings
+                <FontAwesomeIcon icon={faTools} className="pr-1" /> View/edit this tool's Registry settings
               </Link>
             </Form.Label>
           )}
@@ -844,9 +774,7 @@ function JenkinsStepConfiguration({
               data={JOB_OPTIONS}
               valueField="id"
               textField="label"
-              value={
-                JOB_OPTIONS[JOB_OPTIONS.findIndex((x) => x.value === jobType)]
-              }
+              value={JOB_OPTIONS[JOB_OPTIONS.findIndex((x) => x.value === jobType)]}
               filter="contains"
               placeholder="Please select an account"
               onChange={handleJobTypeChange}
@@ -863,27 +791,187 @@ function JenkinsStepConfiguration({
               type="text"
               placeholder=""
               value={formData.jobName || ""}
-              onChange={(e) =>
-                setFormData({ ...formData, jobName: e.target.value })
-              }
+              onChange={(e) => setFormData({ ...formData, jobName: e.target.value })}
             />
           </Form.Group>
-        ) : 
-        <>
-           {jobType === "opsera-job" && (
+        ) : (
           <>
+            {jobType === "opsera-job" && (
+              <>
+                {formData.jenkinsUrl && jenkinsList.length > 1 && (
+                  <Form.Group controlId="formBasicEmail">
+                    <Form.Label className="w-100">
+                      Job*
+                      <OverlayTrigger
+                        trigger="click"
+                        rootClose
+                        placement="left"
+                        overlay={RegistryPopover(jobsList[jobsList.findIndex((x) => x._id === formData.toolJobId)])}
+                      >
+                        <FontAwesomeIcon
+                          icon={faEllipsisH}
+                          className="fa-pull-right pointer pr-1"
+                          onClick={() => document.body.click()}
+                        />
+                      </OverlayTrigger>
+                    </Form.Label>
+                    {jobsList.length < 1 && (
+                      <div className="form-text text-muted p-2">
+                        <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+                        No jobs have been created for <span>{formData.jenkinsUrl}</span>. Please go to
+                        <Link to={"/inventory/tools/" + formData.toolConfigId}> Tool Registry</Link> and add credentials
+                        and register a job for this Jenkins in order to proceed.{" "}
+                      </div>
+                    )}
+                    {jobsList !== undefined && jobsList.length > 0 ? (
+                      <DropdownList
+                        data={jobsList}
+                        valueField="id"
+                        textField="name"
+                        defaultValue={
+                          jobsList &&
+                          jobsList.length > 0 &&
+                          jobsList[jobsList.findIndex((x) => x._id === formData.toolJobId)]
+                        }
+                        filter="contains"
+                        onChange={handleJobChange}
+                      />
+                    ) : null}
+                  </Form.Group>
+                )}
+              </>
+            )}
+
+            {(jobType === "sfdc-ant" || (formData.toolJobType && formData.toolJobType.includes("SFDC"))) && (
+              <>
+                <Form.Group controlId="formBasicCheckboxOrgToOrg" className="mt-4 ml-1">
+                  <Form.Check
+                    type="checkbox"
+                    label="SFDC to SFDC comparison?"
+                    checked={formData.isOrgToOrg}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        isOrgToOrg: e.target.checked,
+                        sfdcDestToolId: "",
+                        destAccountUsername: "",
+                      })
+                    }
+                  />
+                </Form.Group>
+
+                <Form.Group controlId="sfdcList">
+                  <Form.Label className="w-100">
+                    SalesForce Credentials*
+                    <OverlayTrigger
+                      trigger="click"
+                      rootClose
+                      placement="left"
+                      overlay={RegistryPopover(sfdcList[sfdcList.findIndex((x) => x.id === formData.sfdcToolId)])}
+                    >
+                      <FontAwesomeIcon
+                        icon={faEllipsisH}
+                        className="fa-pull-right pointer pr-1"
+                        onClick={() => document.body.click()}
+                      />
+                    </OverlayTrigger>
+                  </Form.Label>
+                  {isSFDCSearching ? (
+                    <div className="form-text text-muted mt-2 p-2">
+                      <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth />
+                      Loading SalesForce accounts from Tool Registry
+                    </div>
+                  ) : (
+                    <>
+                      {renderForm && sfdcList && sfdcList.length > 0 ? (
+                        <>
+                          <DropdownList
+                            data={sfdcList}
+                            value={sfdcList[sfdcList.findIndex((x) => x.id === formData.sfdcToolId)]}
+                            valueField="id"
+                            textField="name"
+                            filter="contains"
+                            onChange={handleSFDCChange}
+                          />
+                        </>
+                      ) : (
+                        <>
+                          <div className="form-text text-muted p-2">
+                            <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+                            No accounts have been registered for SalesForce. Please go to
+                            <Link to="/inventory/tools">Tool Registry</Link> and add a SalesForce (SFDC) Account entry
+                            in order to proceed.
+                          </div>
+                        </>
+                      )}
+                    </>
+                  )}
+                </Form.Group>
+              </>
+            )}
+
+            {(formData.jobType === "SFDC FETCH AND DEPLOY" || formData.isOrgToOrg) && (
+              <Form.Group controlId="jenkinsList">
+                <Form.Label>Destination SalesForce Credentials*</Form.Label>
+                {isSFDCSearching ? (
+                  <div className="form-text text-muted mt-2 p-2">
+                    <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth />
+                    Loading SalesForce accounts from Tool Registry
+                  </div>
+                ) : (
+                  <>
+                    {renderForm && sfdcList && sfdcList.length > 0 ? (
+                      <>
+                        <DropdownList
+                          data={sfdcList}
+                          value={sfdcList[sfdcList.findIndex((x) => x.id === formData.sfdcDestToolId)]}
+                          valueField="id"
+                          textField="name"
+                          filter="contains"
+                          onChange={handleDestinationSFDCChange}
+                        />
+                        {formData.destAccountUsername && formData.destAccountUsername.length > 0 && (
+                          <div className="text-right pt-2">
+                            <OverlayTrigger
+                              trigger="click"
+                              rootClose
+                              placement="left"
+                              overlay={RegistryPopover(
+                                sfdcList[sfdcList.findIndex((x) => x.id === formData.sfdcDestToolId)]
+                              )}
+                            >
+                              <Button variant="outline-dark" size="sm">
+                                Info
+                              </Button>
+                            </OverlayTrigger>
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        <div className="form-text text-muted p-2">
+                          <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+                          No accounts have been registered for SalesForce. Please go to
+                          <Link to="/inventory/tools"> Tool Registry</Link> and add an entry for this repository in
+                          order to proceed.
+                        </div>
+                      </>
+                    )}
+                  </>
+                )}
+              </Form.Group>
+            )}
+
             {formData.jenkinsUrl && jenkinsList.length > 1 && (
               <Form.Group controlId="formBasicEmail">
                 <Form.Label className="w-100">
-                  Job*
+                  Account*
                   <OverlayTrigger
                     trigger="click"
                     rootClose
                     placement="left"
                     overlay={RegistryPopover(
-                      jobsList[
-                        jobsList.findIndex((x) => x._id === formData.toolJobId)
-                        ],
+                      accountsList[accountsList.findIndex((x) => x.gitCredential === formData.gitCredential)]
                     )}
                   >
                     <FontAwesomeIcon
@@ -893,380 +981,127 @@ function JenkinsStepConfiguration({
                     />
                   </OverlayTrigger>
                 </Form.Label>
-                {jobsList.length < 1 && (
+                {accountsList.length < 1 && (
                   <div className="form-text text-muted p-2">
-                    <FontAwesomeIcon
-                      icon={faExclamationCircle}
-                      className="text-muted mr-1"
-                      fixedWidth
-                    />
-                    No jobs have been created for{" "}
-                    <span>{formData.jenkinsUrl}</span>. Please go to
-                    <Link to={"/inventory/tools/" + formData.toolConfigId}>
-                      {" "}
-                      Tool Registry
-                    </Link>{" "}
-                    and add credentials and register a job for this Jenkins in
-                    order to proceed.{" "}
+                    <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+                    No Credentials have been created for <span>{formData.jenkinsUrl}</span>. Please go to
+                    <Link to="/inventory/tools"> Tool Registry</Link> and add credentials for this Jenkins in order to
+                    proceed.
                   </div>
                 )}
-                {jobsList !== undefined && jobsList.length > 0 ? (
+                {accountsList !== undefined && accountsList.length > 0 ? (
                   <DropdownList
-                    data={jobsList}
-                    valueField="id"
-                    textField="name"
+                    data={accountsList}
+                    valueField="gitCredential"
+                    textField="gitCredential"
                     defaultValue={
-                      jobsList && jobsList.length > 0 &&
-                      jobsList[
-                        jobsList.findIndex((x) => x._id === formData.toolJobId)
-                        ]
+                      accountsList &&
+                      accountsList.length > 0 &&
+                      accountsList[accountsList.findIndex((x) => x.gitCredential === formData.gitCredential)]
                     }
                     filter="contains"
-                    onChange={handleJobChange}
+                    onChange={handleAccountChange}
                   />
                 ) : null}
               </Form.Group>
             )}
-          </>
-        )}
 
-        {(jobType === "sfdc-ant" ||
-          (formData.toolJobType && formData.toolJobType.includes("SFDC"))) && (
-          <Form.Group controlId="jenkinsList">
-            <Form.Label className="w-100">
-              SalesForce Credentials*
-              <OverlayTrigger
-                trigger="click"
-                rootClose
-                placement="left"
-                overlay={RegistryPopover(
-                  sfdcList[
-                    sfdcList.findIndex((x) => x.id === formData.sfdcToolId)
-                    ],
-                )}
-              >
-                <FontAwesomeIcon
-                  icon={faEllipsisH}
-                  className="fa-pull-right pointer pr-1"
-                  onClick={() => document.body.click()}
-                />
-              </OverlayTrigger>
-            </Form.Label>
-            {isSFDCSearching ? (
-              <div className="form-text text-muted mt-2 p-2">
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
-                Loading SalesForce accounts from Tool Registry
-              </div>
-            ) : (
-              <>
-                {renderForm && sfdcList && sfdcList.length > 0 ? (
-                  <>
-                    <DropdownList
-                      data={sfdcList}
-                      value={
-                        sfdcList[
-                          sfdcList.findIndex(
-                            (x) => x.id === formData.sfdcToolId,
-                          )
-                          ]
-                      }
-                      valueField="id"
-                      textField="name"
-                      filter="contains"
-                      onChange={handleSFDCChange}
-                    />
-                  </>
+            {formData.service && formData.gitToolId && (
+              <Form.Group controlId="account" className="mt-2">
+                <Form.Label>Repository*</Form.Label>
+                {isRepoSearching ? (
+                  <div className="form-text text-muted mt-2 p-2">
+                    <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth />
+                    Loading repositories from registry
+                  </div>
                 ) : (
                   <>
-                    <div className="form-text text-muted p-2">
-                      <FontAwesomeIcon
-                        icon={faExclamationCircle}
-                        className="text-muted mr-1"
-                        fixedWidth
+                    {repoList ? (
+                      <DropdownList
+                        data={repoList}
+                        value={repoList[repoList.findIndex((x) => x.name === formData.repository)]}
+                        valueField="value"
+                        textField="name"
+                        filter="contains"
+                        onChange={handleRepoChange}
                       />
-                      No accounts have been registered for SalesForce. Please go
-                      to
-                      <Link to="/inventory/tools">Tool Registry</Link> and add a
-                      SalesForce (SFDC) Account entry in order to proceed.
-                    </div>
-                  </>
-                )}
-              </>
-            )}
-          </Form.Group>
-        )}
-
-        {formData.jenkinsUrl && jenkinsList.length > 1 && (
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label className="w-100">
-              Account*
-              <OverlayTrigger
-                trigger="click"
-                rootClose
-                placement="left"
-                overlay={RegistryPopover(
-                  accountsList[
-                    accountsList.findIndex(
-                      (x) => x.gitCredential === formData.gitCredential,
-                    )
-                    ],
-                )}
-              >
-                <FontAwesomeIcon
-                  icon={faEllipsisH}
-                  className="fa-pull-right pointer pr-1"
-                  onClick={() => document.body.click()}
-                />
-              </OverlayTrigger>
-            </Form.Label>
-            {accountsList.length < 1 && (
-              <div className="form-text text-muted p-2">
-                <FontAwesomeIcon
-                  icon={faExclamationCircle}
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
-                No Credentials have been created for{" "}
-                <span>{formData.jenkinsUrl}</span>. Please go to
-                <Link to="/inventory/tools"> Tool Registry</Link> and add
-                credentials for this Jenkins in order to proceed.
-              </div>
-            )}
-            {accountsList !== undefined && accountsList.length > 0 ? (
-              <DropdownList
-                data={accountsList}
-                valueField="gitCredential"
-                textField="gitCredential"
-                defaultValue={
-                  accountsList && accountsList.length > 0 &&
-                  accountsList[
-                    accountsList.findIndex(
-                      (x) => x.gitCredential === formData.gitCredential,
-                    )
-                    ]
-                }
-                filter="contains"
-                onChange={handleAccountChange}
-              />
-            ) : null}
-          </Form.Group>
-        )}
-
-        {formData.service && formData.gitToolId && (
-          <Form.Group controlId="account" className="mt-2">
-            <Form.Label>Repository*</Form.Label>
-            {isRepoSearching ? (
-              <div className="form-text text-muted mt-2 p-2">
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
-                Loading repositories from registry
-              </div>
-            ) : (
-              <>
-                {repoList ? (
-                  <DropdownList
-                    data={repoList}
-                    value={
-                      repoList[
-                        repoList.findIndex(
-                          (x) => x.name === formData.repository,
-                        )
-                        ]
-                    }
-                    valueField="value"
-                    textField="name"
-                    filter="contains"
-                    onChange={handleRepoChange}
-                  />
-                ) : (
-                  <FontAwesomeIcon
-                    icon={faSpinner}
-                    spin
-                    className="text-muted mr-1"
-                    fixedWidth
-                  />
-                )}
-              </>
-            )}
-            {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
-          </Form.Group>
-        )}
-
-        {formData.service && formData.gitToolId && formData.repoId && (
-          <Form.Group controlId="account" className="mt-2">
-            <Form.Label>Branch*</Form.Label>
-            {isBranchSearching ? (
-              <div className="form-text text-muted mt-2 p-2">
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
-                Loading branches from selected repository
-              </div>
-            ) : (
-              <>
-                {branchList ? (
-                  <DropdownList
-                    data={branchList}
-                    value={
-                      branchList[
-                        branchList.findIndex((x) => x.value === formData.branch)
-                        ]
-                    }
-                    valueField="value"
-                    textField="name"
-                    filter="contains"
-                    onChange={handleBranchChange}
-                  />
-                ) : (
-                  <FontAwesomeIcon
-                    icon={faSpinner}
-                    spin
-                    className="text-muted mr-1"
-                    fixedWidth
-                  />
-                )}
-              </>
-            )}
-            {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
-          </Form.Group>
-        )}
-
-        {formData.jobType === "VALIDATE PACKAGE XML" ||
-        formData.jobType === "SFDC DEPLOY" ? (
-          <Form.Group controlId="s3Step">
-            <Form.Label>Generate XML Step Info*</Form.Label>
-            {listOfSteps ? (
-              <DropdownList
-                data={listOfSteps}
-                value={
-                  formData.stepIdXML
-                    ? listOfSteps[
-                      listOfSteps.findIndex(
-                        (x) => x._id === formData.stepIdXML,
-                      )
-                      ]
-                    : listOfSteps[0]
-                }
-                valueField="_id"
-                textField="name"
-                filter="contains"
-                onChange={handleXMLStepChange}
-              />
-            ) : (
-              <FontAwesomeIcon
-                icon={faSpinner}
-                spin
-                className="text-muted ml-2"
-                fixedWidth
-              />
-            )}
-          </Form.Group>
-        ) : (
-          <></>
-        )}
-
-      {formData.jobType === "SFDC BACK UP" ? (
-          <Form.Group controlId="branchName">
-            <Form.Label>Rollback Branch Name*</Form.Label>
-              <Form.Control
-                maxLength="50"
-                type="text"
-                placeholder=""
-                value={formData.rollbackBranchName || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, rollbackBranchName: e.target.value })
-                }
-              />
-          </Form.Group>
-          ) : (
-          <></>
-        )}
-
-        {formData.jobType === "SFDC FETCH AND DEPLOY" && (
-          <Form.Group controlId="jenkinsList">
-            <Form.Label>Destination SalesForce Credentials*</Form.Label>
-            {isSFDCSearching ? (
-              <div className="form-text text-muted mt-2 p-2">
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
-                Loading SalesForce accounts from Tool Registry
-              </div>
-            ) : (
-              <>
-                {renderForm && sfdcList && sfdcList.length > 0 ? (
-                  <>
-                    <DropdownList
-                      data={sfdcList}
-                      value={
-                        sfdcList[
-                          sfdcList.findIndex(
-                            (x) => x.id === formData.sfdcDestToolId,
-                          )
-                          ]
-                      }
-                      valueField="id"
-                      textField="name"
-                      filter="contains"
-                      onChange={handleDestinationSFDCChange}
-                    />
-                    {formData.destAccountUsername &&
-                    formData.destAccountUsername.length > 0 && (
-                      <div className="text-right pt-2">
-                        <OverlayTrigger
-                          trigger="click"
-                          rootClose
-                          placement="left"
-                          overlay={RegistryPopover(
-                            sfdcList[
-                              sfdcList.findIndex(
-                                (x) => x.id === formData.sfdcDestToolId,
-                              )
-                              ],
-                          )}
-                        >
-                          <Button variant="outline-dark" size="sm">
-                            Info
-                          </Button>
-                        </OverlayTrigger>
-                      </div>
+                    ) : (
+                      <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth />
                     )}
                   </>
+                )}
+                {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
+              </Form.Group>
+            )}
+
+            {formData.service && formData.gitToolId && formData.repoId && (
+              <Form.Group controlId="account" className="mt-2">
+                <Form.Label>Branch*</Form.Label>
+                {isBranchSearching ? (
+                  <div className="form-text text-muted mt-2 p-2">
+                    <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth />
+                    Loading branches from selected repository
+                  </div>
                 ) : (
                   <>
-                    <div className="form-text text-muted p-2">
-                      <FontAwesomeIcon
-                        icon={faExclamationCircle}
-                        className="text-muted mr-1"
-                        fixedWidth
+                    {branchList ? (
+                      <DropdownList
+                        data={branchList}
+                        value={branchList[branchList.findIndex((x) => x.value === formData.branch)]}
+                        valueField="value"
+                        textField="name"
+                        filter="contains"
+                        onChange={handleBranchChange}
                       />
-                      No accounts have been registered for SalesForce. Please go
-                      to
-                      <Link to="/inventory/tools"> Tool Registry</Link> and add
-                      an entry for this repository in order to proceed.
-                    </div>
+                    ) : (
+                      <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth />
+                    )}
                   </>
                 )}
-              </>
+                {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
+              </Form.Group>
             )}
-          </Form.Group>
-        )}
-        {/*
+
+            {formData.jobType === "VALIDATE PACKAGE XML" || formData.jobType === "SFDC DEPLOY" ? (
+              <Form.Group controlId="s3Step">
+                <Form.Label>Generate XML Step Info*</Form.Label>
+                {listOfSteps ? (
+                  <DropdownList
+                    data={listOfSteps}
+                    value={
+                      formData.stepIdXML
+                        ? listOfSteps[listOfSteps.findIndex((x) => x._id === formData.stepIdXML)]
+                        : listOfSteps[0]
+                    }
+                    valueField="_id"
+                    textField="name"
+                    filter="contains"
+                    onChange={handleXMLStepChange}
+                  />
+                ) : (
+                  <FontAwesomeIcon icon={faSpinner} spin className="text-muted ml-2" fixedWidth />
+                )}
+              </Form.Group>
+            ) : (
+              <></>
+            )}
+
+            {formData.jobType === "SFDC BACK UP" ? (
+              <Form.Group controlId="branchName">
+                <Form.Label>Rollback Branch Name*</Form.Label>
+                <Form.Control
+                  maxLength="50"
+                  type="text"
+                  placeholder=""
+                  value={formData.rollbackBranchName || ""}
+                  onChange={(e) => setFormData({ ...formData, rollbackBranchName: e.target.value })}
+                />
+              </Form.Group>
+            ) : (
+              <></>
+            )}
+
+            {/*
         {formData.jenkinsUrl && jenkinsList.length > 1 && (
           <Form.Group controlId="formBasicCheckbox" className="mt-4 ml-1">
             <Form.Check
@@ -1286,7 +1121,7 @@ function JenkinsStepConfiguration({
             />
           </Form.Group>
         )} */}
-        {/*
+            {/*
         {formData.buildType === "docker" && (
           <>
             <Form.Group controlId="branchField">
@@ -1317,18 +1152,18 @@ function JenkinsStepConfiguration({
           </>
         )} */}
 
-        <Form.Group controlId="threshold">
-          <Form.Label>Success Threshold</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder=""
-            value={thresholdVal || ""}
-            onChange={(e) => setThresholdValue(e.target.value)}
-            disabled={true}
-          />
-        </Form.Group>
-        </>
-        }
+            <Form.Group controlId="threshold">
+              <Form.Label>Success Threshold</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder=""
+                value={thresholdVal || ""}
+                onChange={(e) => setThresholdValue(e.target.value)}
+                disabled={true}
+              />
+            </Form.Group>
+          </>
+        )}
 
         {jobType === "opsera-job" ? (
           <Button
@@ -1341,17 +1176,11 @@ function JenkinsStepConfiguration({
           >
             {loading ? (
               <>
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="mr-1"
-                  fixedWidth
-                />{" "}
-                Working
+                <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth /> Working
               </>
             ) : (
               <>
-                <FontAwesomeIcon icon={faSave} className="mr-1"/>
+                <FontAwesomeIcon icon={faSave} className="mr-1" />
                 Create Job and Save
               </>
             )}
@@ -1367,25 +1196,17 @@ function JenkinsStepConfiguration({
           >
             {loading ? (
               <>
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="mr-1"
-                  fixedWidth
-                />{" "}
-                Saving
+                <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth /> Saving
               </>
             ) : (
               <>
-                <FontAwesomeIcon icon={faSave} className="mr-1"/> Save
+                <FontAwesomeIcon icon={faSave} className="mr-1" /> Save
               </>
             )}
           </Button>
         )}
 
-        <small className="form-text text-muted mt-2 text-right">
-          * Required Fields
-        </small>
+        <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
       </Form>
     </>
   );
@@ -1400,7 +1221,7 @@ JenkinsStepConfiguration.propTypes = {
   callbackSaveToVault: PropTypes.func,
   createJob: PropTypes.func,
   setToast: PropTypes.func,
-  setShowToast: PropTypes.func
+  setShowToast: PropTypes.func,
 };
 
 export default JenkinsStepConfiguration;
