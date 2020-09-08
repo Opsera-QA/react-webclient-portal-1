@@ -178,7 +178,7 @@ function GitLab() {
   };
 
   const showSuccessAlert = (message) => {
-    this.setState({
+    setState({
       modal: true,
       type: "success",
       title: "Success!",
@@ -188,7 +188,7 @@ function GitLab() {
   };
 
   const showErrorAlert = (message) => {
-    this.setState({
+    setState({
       modal: true,
       type: "danger",
       title: "Error!",
