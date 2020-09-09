@@ -35,7 +35,9 @@ function PipelineWorkflow({
   const [userInfo, setUserInfo] = useState();
   const [modalHeader, setModalHeader] = useState("");
   const contextType = useContext(AuthContext);
-  const [state, setState] = useState({ items: [] });
+
+  //const [state, setState] = useState({ items: [] });
+
   const [lastStep, setLastStep] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [zoomValue, setZoomValue] = useState(2); //1,2, or 3 with 2 being default zoom
@@ -78,7 +80,7 @@ function PipelineWorkflow({
       return;
     }
 
-    setState({ items: pipeline.workflow.plan });
+    //setState({ items: pipeline.workflow.plan });
     setLastStep(pipeline.workflow.last_step);
 
     if (pipeline.workflow.last_step !== undefined) {
@@ -172,8 +174,11 @@ function PipelineWorkflow({
     setEditWorkflow(false);
   };
 
-  const quietSavePlan = async () => {
+  const quietSavePlan = async (steps) => {
     console.log("saving plan: ", pipeline.workflow.plan);
+    if (steps) {
+      pipeline.workflow.plan = steps;
+    }
     await updatePipeline(pipeline);
   };
 
@@ -372,13 +377,12 @@ function PipelineWorkflow({
               <div className="step-items workflow-module-container-width mx-auto">
                 <PipelineWorkflowItemList
                   pipeline={pipeline}
-                  items={state.items}
+
                   lastStep={lastStep}
                   lastStepId={lastStep && lastStep.step_id}
                   editWorkflow={editWorkflow}
                   pipelineId={pipeline._id}
                   accessToken={accessToken}
-                  setStateItems={setState}
                   fetchPlan={fetchPlan}
                   refreshCount={refreshCount}
                   customerAccessRules={customerAccessRules}

@@ -8,16 +8,38 @@ import PipelineWorkflowItem from "./PipelineWorkflowItem";
 import "../../../workflows.css";
 
 
-function PipelineWorkflowItemList({ pipeline, items, lastStep, editWorkflow, pipelineId, accessToken, parentCallbackEditItem, parentHandleViewSourceActivityLog, setStateItems, quietSavePlan, fetchPlan, customerAccessRules, parentWorkflowStatus, refreshCount, lastStepId }) {
+function PipelineWorkflowItemList({
+  pipeline,
+  lastStep,
+  editWorkflow,
+  pipelineId,
+  accessToken,
+  parentCallbackEditItem,
+  parentHandleViewSourceActivityLog,
+  quietSavePlan,
+  fetchPlan,
+  customerAccessRules,
+  parentWorkflowStatus,
+  refreshCount,
+}) {
   const [isSaving, setIsSaving] = useState(false);
+  const [pipelineSteps, setPipelineSteps] = useState(pipeline.workflow.plan);
+
 
   useEffect(() => {
-  }, [JSON.stringify(items), refreshCount, JSON.stringify(lastStep), JSON.stringify(pipeline)]);
+    if (pipeline) {
+      setPipelineSteps(pipeline.workflow.plan)
+      console.log("STEPS: ", pipeline.workflow.plan)
+    }
+
+  }, [refreshCount, JSON.stringify(lastStep), JSON.stringify(pipeline)]);
+
 
   const handleAddStep = async (itemId, index) => {
-    console.log("Prior Step ID: ", itemId);
-    console.log("Prior Step index: ", index);
+    const steps = pipelineSteps;
+
     setIsSaving(true);
+
     const newStep = {
       "trigger": [],
       "type": [],
@@ -26,17 +48,21 @@ function PipelineWorkflowItemList({ pipeline, items, lastStep, editWorkflow, pip
       "description": "",
       "active": true,
     };
-    items.splice(index + 1, 0, newStep);
-    setStateItems({ items: items });
-    await quietSavePlan();
+    steps.splice(index + 1, 0, newStep);
+
+    await quietSavePlan(steps);
+
     await fetchPlan();
+
     setIsSaving(false);
   };
 
+
   const handleCopyStep = async (item, index) => {
-    console.log("Prior Step ID: ", item);
-    console.log("Prior Step index: ", index);
+    const steps = pipelineSteps;
+
     setIsSaving(true);
+
     const newStep = {
       "trigger": item.trigger,
       "type": item.type,
@@ -46,50 +72,60 @@ function PipelineWorkflowItemList({ pipeline, items, lastStep, editWorkflow, pip
       "description": item.description,
       "active": true,
     };
-    items.splice(index + 1, 0, newStep);
-    setStateItems({ items: items });
-    await quietSavePlan();
+    steps.splice(index + 1, 0, newStep);
+
+    await quietSavePlan(steps);
+
     await fetchPlan();
+
     setIsSaving(false);
   };
 
-  const deleteStep = async (index) => {
-    setIsSaving(true);
-    items.splice(index, 1);
 
-    if (items.length === 0) {
-      handleAddStep("", 0);
+  const deleteStep = async (index) => {
+    const steps = pipelineSteps;
+
+    setIsSaving(true);
+    steps.splice(index, 1);
+
+    if (steps.length === 0) {
+      await handleAddStep("", 0);
     } else {
-      await quietSavePlan();
+      await quietSavePlan(steps);
 
       await fetchPlan();
     }
 
-    setStateItems({ items: items });
     setIsSaving(false);
   };
 
 
   const handleMoveStep = async (itemId, index, direction) => {
+    const steps = pipelineSteps;
+
     if (direction === "up" && index > 0) {
-      console.log("Direction: ", direction);
       setIsSaving(true);
-      let cutOut = items.splice(index, 1) [0];
-      items.splice(index - 1, 0, cutOut);
-      await quietSavePlan();
+      let cutOut = steps.splice(index, 1) [0];
+      steps.splice(index - 1, 0, cutOut);
+
+      await quietSavePlan(steps);
+
       await fetchPlan();
       setIsSaving(false);
 
-    } else if (direction === "down" && index < items.length - 1) {
-      console.log("Direction: ", direction);
+    } else if (direction === "down" && index < steps.length - 1) {
       setIsSaving(true);
-      let cutOut = items.splice(index, 1) [0];
-      items.splice(index + 1, 0, cutOut);
-      await quietSavePlan();
+
+      let cutOut = steps.splice(index, 1) [0];
+      steps.splice(index + 1, 0, cutOut);
+
+      await quietSavePlan(steps);
+
       await fetchPlan();
       setIsSaving(false);
     }
   };
+
 
   const setStepStatusClass = (last_step, item) => {
     const item_id = item._id;
@@ -120,13 +156,13 @@ function PipelineWorkflowItemList({ pipeline, items, lastStep, editWorkflow, pip
 
   return (
     <>
-      {items && items.map((item, index) => (
+      {pipelineSteps && pipelineSteps.map((item, index) => (
         <div key={index} className={isSaving ? "fa-disabled" : ""}>
           <div className={"mb-1 p-1 workflow-module-container workflow-module-container-width mx-auto " +
-            setStepStatusClass(lastStep, item)}>
+          setStepStatusClass(lastStep, item)}>
             <PipelineWorkflowItem
               pipeline={pipeline}
-              plan={items}
+              plan={pipelineSteps}
               item={item}
               index={index}
               lastStep={lastStep}
@@ -187,7 +223,7 @@ function PipelineWorkflowItemList({ pipeline, items, lastStep, editWorkflow, pip
                   overlay={renderTooltip({ message: "Move upper step down one position" })}>
                   <FontAwesomeIcon icon={faCaretSquareDown} size="lg"
                                    fixedWidth
-                                   className={index === items.length - 1 ? "fa-disabled" : "pointer dark-blue"}
+                                   className={index === pipelineSteps.length - 1 ? "fa-disabled" : "pointer dark-blue"}
                                    onClick={() => {
                                      handleMoveStep(item._id, index, "down");
                                    }}/>
@@ -203,8 +239,8 @@ function PipelineWorkflowItemList({ pipeline, items, lastStep, editWorkflow, pip
 
         </div>
       ))}
-      </>
-  )
+    </>
+  );
 }
 
 function renderTooltip(props) {
@@ -219,7 +255,6 @@ function renderTooltip(props) {
 
 PipelineWorkflowItemList.propTypes = {
   pipeline: PropTypes.object,
-  items: PropTypes.array,
   lastStep: PropTypes.object,
   editWorkflow: PropTypes.bool,
   pipelineId: PropTypes.string,
