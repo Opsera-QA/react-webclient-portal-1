@@ -24,7 +24,7 @@ import EditToolModal from "../../editToolModal";
 import DropdownList from "react-widgets/lib/DropdownList";
 import SummaryActionBar from "../../../common/actions/SummaryActionBar";
 import pipelineHelpers from "../../pipelineHelpers";
-import {getCreateSuccessResultDialog, getUpdateSuccessResultDialog} from "../../../common/toasts/toasts";
+import { getCreateSuccessResultDialog, getUpdateSuccessResultDialog } from "../../../common/toasts/toasts";
 import PipelineActionControls from "./PipelineActionControls";
 
 const INITIAL_FORM_DATA = {
@@ -168,52 +168,53 @@ function PipelineSummaryPanel({
       let postBody = {};
 
       switch (type) {
-        case "name":
-          pipeline.name = value.name;
-          postBody = {
-            "name": value.name,
-          };
-          setEditTitle(false);
-          break;
-        case "project":
-          pipeline.project.name = value.project.name;
-          postBody = {
-            "project": {
-              "name": value.project.name,
-              "project_id": "",
-            },
-          };
-          setEditProject(false);
-          break;
-        case "description":
-          pipeline.description = value.description;
-          postBody = {
-            "description": value.description,
-          };
-          setEditDescription(false);
-          break;
-        case "schedule":
-          pipeline.workflow.schedule = value;
-          postBody = {
-            "workflow": pipeline.workflow,
-          };
-          setEditTitle(false);
-          break;
-        case "tags":
-          pipeline.tags = value;
-          postBody = {
-            "tags": pipeline.tags,
-          };
-          setEditTags(false);
-          break;
-        case "type":
-          pipeline.type = value.type;
-          postBody = {
-            "type": value.type,
-          };
-          setEditType(false);
-          break;
+      case "name":
+        pipeline.name = value.name;
+        postBody = {
+          "name": value.name,
+        };
+        setEditTitle(false);
+        break;
+      case "project":
+        pipeline.project.name = value.project.name;
+        postBody = {
+          "project": {
+            "name": value.project.name,
+            "project_id": "",
+          },
+        };
+        setEditProject(false);
+        break;
+      case "description":
+        pipeline.description = value.description;
+        postBody = {
+          "description": value.description,
+        };
+        setEditDescription(false);
+        break;
+      case "schedule":
+        pipeline.workflow.schedule = value;
+        postBody = {
+          "workflow": pipeline.workflow,
+        };
+        setEditTitle(false);
+        break;
+      case "tags":
+        pipeline.tags = value;
+        postBody = {
+          "tags": pipeline.tags,
+        };
+        setEditTags(false);
+        break;
+      case "type":
+        pipeline.type = value.type;
+        postBody = {
+          "type": value.type,
+        };
+        setEditType(false);
+        break;
       }
+
       if (Object.keys(postBody).length > 0) {
         try {
           const response = await PipelineActions.updatePipeline(pipelineId, postBody, getAccessToken);
@@ -221,8 +222,8 @@ function PipelineSummaryPanel({
           let toast = getUpdateSuccessResultDialog("Pipeline", setShowToast);
           setToast(toast);
           setShowToast(true);
-        }
-        catch (error) {
+          await fetchPlan();
+        } catch (error) {
           console.error(error);
           setErrors(error);
         }
@@ -238,36 +239,36 @@ function PipelineSummaryPanel({
   };
 
   const handleEditPropertyClick = (type) => {
-    console.log("in handle edit property click: " + type)
+    console.log("in handle edit property click: " + type);
     switch (type) {
-      case "name":
-        setEditTitle(true);
-        setFormData({...formData, name: pipeline.name});
-        break;
-      case "project":
-        setEditProject(true);
-        setFormData({
-          ...formData,
-          project: { name: pipeline.project !== undefined && pipeline.project.hasOwnProperty("name") ? pipeline.project.name : "" },
-        });
-        break;
-      case "description":
-        setEditDescription(true);
-        setFormData({ ...formData, description: pipeline.description });
-        break;
-      case "schedule":
-        setEditSchedule(true);
-        break;
-      case "tags":
-        setEditTags(true);
-        break;
-      case "type":
-        setEditType(true);
-        break;
-      default:
-        console.error("Missing value or type for edit field");
+    case "name":
+      setEditTitle(true);
+      setFormData({ ...formData, name: pipeline.name });
+      break;
+    case "project":
+      setEditProject(true);
+      setFormData({
+        ...formData,
+        project: { name: pipeline.project !== undefined && pipeline.project.hasOwnProperty("name") ? pipeline.project.name : "" },
+      });
+      break;
+    case "description":
+      setEditDescription(true);
+      setFormData({ ...formData, description: pipeline.description });
+      break;
+    case "schedule":
+      setEditSchedule(true);
+      break;
+    case "tags":
+      setEditTags(true);
+      break;
+    case "type":
+      setEditType(true);
+      break;
+    default:
+      console.error("Missing value or type for edit field");
     }
-  }
+  };
 
   const getSaveIcon = (field) => {
     return (
@@ -347,12 +348,13 @@ function PipelineSummaryPanel({
           </div>
 
           <div className="mb-3 flat-top-content-block p-3">
-            <div className="text-muted">
+
+            <div className="text-muted float-right">
               <SummaryActionBar
                 itemId={pipeline._id}
                 itemName={"Pipeline"}
                 data={pipeline}
-                backButtonPath={"/workflow"}
+                /*backButtonPath={"/workflow"}*/
                 handleDeleteClick={authorizedAction("delete_pipeline_btn", pipeline.owner) ? handleDeleteClick : undefined}
                 handleDuplicateClick={handleCopyPipeline}
                 handleViewClick={handleViewClick}
@@ -360,28 +362,28 @@ function PipelineSummaryPanel({
             </div>
             {showToast && toast}
             <Row>
-              <Col sm={12} className="py-2">
-              <div className="title-text-5 pb-3 d-flex">
-                {editTitle ?
-                  <>
+              <Col sm={12}>
+                <div className="d-flex py-2">
+                  {editTitle ?
+                    <>
                       <div className="flex-fill p-2">
                         <Form.Control maxLength="500" type="text" placeholder="" value={formData.name || ""}
                                       onChange={e => setFormData({ ...formData, name: e.target.value })}/></div>
-                    <div className="flex-fill p-2">
+                      <div className="flex-fill p-2">
                         {getSaveIcon("name")}
                         {getCancelIcon(setEditTitle)}
                       </div>
-                  </>
-                  :
-                  <>
-                    {Object.keys(approvalStep).length > 0 && <FontAwesomeIcon icon={faFlag} className="red mr-1"/>}
-                    {pipeline.name}
-                    {authorizedAction("edit_pipeline_attribute", pipeline.owner)
-                    && parentWorkflowStatus !== "running"
-                      ? getEditIcon("name")
-                      : null}
-                  </>
-                }</div>
+                    </>
+                    :
+                    <>
+                      {Object.keys(approvalStep).length > 0 && <FontAwesomeIcon icon={faFlag} className="red mr-1"/>}
+                      <span className="text-muted mr-1">Name:</span> {pipeline.name}
+                      {authorizedAction("edit_pipeline_attribute", pipeline.owner)
+                      && parentWorkflowStatus !== "running"
+                        ? getEditIcon("name")
+                        : null}
+                    </>
+                  }</div>
               </Col>
               <Col sm={12} md={6} className="py-2"><span className="text-muted mr-1">ID:</span> {pipeline._id}</Col>
               <Col sm={12} md={6} className="py-2"><span
@@ -414,24 +416,24 @@ function PipelineSummaryPanel({
                       : null}
                   </>}
               </Col>
-              <Col sm={12} md={6} className="py-2"><span className="text-muted mr-1">Owner:</span> {ownerName}</Col>
-              <Col sm={12} md={6} className="py-2"><span className="text-muted mr-1">Organization:</span> <span
+              <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Owner:</span> {ownerName}</Col>
+              <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Organization:</span> <span
                 className="upper-case-first">{pipeline.organizationName}</span></Col>
-              <Col sm={12} md={6} className="py-2"><span
+              <Col xs={12} sm={6} className="py-2"><span
                 className="text-muted mr-1">Created On:</span> {pipeline.createdAt && format(new Date(pipeline.createdAt), "yyyy-MM-dd', 'hh:mm a")}
               </Col>
-              <Col sm={12} md={6} className="py-2"><span className="text-muted mr-1">Tags:</span>
+              <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Tags:</span>
                 {!editTags && authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running" && <>
                   {pipeline.tags.map((item, idx) => (<span key={idx}>{item}, </span>))}
                   {getEditIcon("tags")}
-                  </>}
+                </>}
                 {editTags && <EditToolModal data={pipeline.tags} visible={editTags} onHide={() => {
                   setEditTags(false);
                 }} onClick={(tags) => {
                   handleSavePropertyClick(pipeline._id, tags, "tags");
                 }}/>}
               </Col>
-              <Col sm={12} md={6} className="py-2"><span className="text-muted mr-2">Type:</span>
+              <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-2">Type:</span>
                 {pipeline.type && !editType && pipelineHelpers.displayPipelineType(pipeline.type)}
                 {authorizedAction("edit_pipeline_attribute", pipeline.owner)
                 && parentWorkflowStatus !== "running" && !editType
@@ -461,7 +463,7 @@ function PipelineSummaryPanel({
               </Col>
               {editSchedule ?
                 <>
-                  <Col sm={12} md={6} className="py-2"><span className="text-muted mr-1">Schedule:</span>
+                  <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Schedule:</span>
                     <SchedulerWidget
                       startDate={pipeline.workflow.schedule ? pipeline.workflow.schedule.start_date : new Date()}
                       frequency={pipeline.workflow.schedule ? pipeline.workflow.schedule.frequency : ""}
@@ -471,11 +473,11 @@ function PipelineSummaryPanel({
                   </Col>
                 </> :
 
-                <Col sm={12} md={6} className="py-2"><span className="text-muted mr-1">Schedule:</span>
+                <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Schedule:</span>
                   {pipeline.workflow.schedule
                   && pipeline.workflow.schedule.start_date !== null
                   && !editSchedule
-                  ? <>
+                    ? <>
                       <span
                         className="ml-1">Run next on: {format(new Date(pipeline.workflow.schedule.start_date), "yyyy-MM-dd', 'hh:mm a")}</span>
                       <span
@@ -488,19 +490,19 @@ function PipelineSummaryPanel({
               }
               <Col lg className="py-1"><span className="text-muted mr-1">Org Account:</span> {pipeline.account}</Col>
 
-            {editDescription ?
-              <>
-                  <Col sm={11}>
+              {editDescription ?
+                <>
+                  <Col xs={11}>
                     <Form.Control maxLength="2000" as="textarea" type="text" placeholder=""
                                   value={formData.description || ""}
                                   onChange={e => setFormData({ ...formData, description: e.target.value })}/></Col>
-                  <Col sm={1} className="my-auto">
+                  <Col xs={1} className="my-auto">
                     {getSaveIcon("description")}
                     {getCancelIcon(setEditDescription)}
                   </Col>
-              </>
-              :
-              <>
+                </>
+                :
+                <>
                   <Col sm={12} className="py-2">
                     <span className="text-muted mr-1">Description:</span>{pipeline.description}
                     {authorizedAction("edit_pipeline_attribute", pipeline.owner)
@@ -508,16 +510,16 @@ function PipelineSummaryPanel({
                       ? getEditIcon("description")
                       : null}
                   </Col>
-              </>
-            }
-            {_configuredToolsCount(pipeline.workflow.plan) === 0 &&
+                </>
+              }
+              {_configuredToolsCount(pipeline.workflow.plan) === 0 &&
               <Col className="mt-3 mb-1">
-                  <Button variant="success" className="mr-2 mt-2" size="sm" onClick={() => setActiveTab("model")}>
-                    <FontAwesomeIcon icon={faCogs} className="mr-1" fixedWidth/>
-                    Build Workflow
-                  </Button>
+                <Button variant="success" className="mr-2 mt-2" size="sm" onClick={() => setActiveTab("model")}>
+                  <FontAwesomeIcon icon={faCogs} className="mr-1" fixedWidth/>
+                  Build Workflow
+                </Button>
               </Col>
-            }
+              }
             </Row>
           </div>
         </>

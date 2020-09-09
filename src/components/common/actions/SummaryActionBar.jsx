@@ -22,7 +22,7 @@ function SummaryActionBar({itemName, itemId, backButtonPath, handleDuplicateClic
 
   return (
     <>
-        <div className="text-muted action-bar mb-1">
+        <div className="text-muted action-bar">
           {backButtonPath && <OverlayTrigger
             placement="top"
             delay={{ show: 250, hide: 400 }}

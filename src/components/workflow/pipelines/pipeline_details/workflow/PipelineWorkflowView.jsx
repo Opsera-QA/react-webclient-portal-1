@@ -46,14 +46,11 @@ function PipelineWorkflowView({
   } else {
     return (
       <>
-        <div className="pl-3 workflow-view h-100">
+        <div className="workflow-view h-100">
           <Row className="w-100" style={{margin:"0"}}>
             <Col className="max-content-width content-block-collapse pt-3">
-              <div className="w-100 d-flex mb-1 pr-1">
-                <div className="flex-fill">
-                  <div className="title-text-5">{pipeline.name}</div>
-                </div>
-                <div className="align-content-end">
+              <div className="w-100 mb-1 pr-1 text-right">
+
                   <PipelineActionControls pipeline={pipeline} disabledActionState={false}
                                           customerAccessRules={customerAccessRules}
                                           fetchData={fetchPlan}
@@ -62,7 +59,7 @@ function PipelineWorkflowView({
                                           refreshCount={refreshCount}
                                           fetchActivityLogs={getActivityLogs}
                                           setParentWorkflowStatus={setWorkflowStatus}/>
-                </div>
+
               </div>
               <PipelineWorkflow pipeline={pipeline}
                                 editItemId={editItem.step_id}

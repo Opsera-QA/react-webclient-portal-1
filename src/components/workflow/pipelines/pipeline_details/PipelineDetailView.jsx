@@ -14,8 +14,7 @@ import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
 import { useHistory } from "react-router-dom";
 import {faBracketsCurly, faSearchPlus} from "@fortawesome/pro-regular-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSortDown} from "@fortawesome/free-solid-svg-icons";
-import {faDraftingCompass, faInfinity, faMicrochip} from "@fortawesome/pro-light-svg-icons";
+import {faDraftingCompass, faInfinity, faMicrochip, faArrowLeft} from "@fortawesome/pro-light-svg-icons";
 import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
 
 
@@ -49,8 +48,12 @@ function PipelineDetailView() {
 
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
-    setActiveTab(tabSelection);
+    if (tabSelection === "pipelines") {
+      history.push(`/workflow/`);
+      return;
+    }
 
+    setActiveTab(tabSelection);
     if (tab !== tabSelection) {
       history.push(`/workflow/details/${id}/${tabSelection}`);
       fetchData();
@@ -169,7 +172,6 @@ function PipelineDetailView() {
   };
 
   const getTypeIcon = (type) => {
-    console.log("type: " + type)
     switch (type) {
       case "sfdc":
         return faSalesforce;
@@ -193,11 +195,18 @@ function PipelineDetailView() {
     return (
       <>
         <div>
-          <div className="max-content-width">
+          {/*<div className="max-content-width">
             <BreadcrumbTrail destination={"pipelineDetailView"}/>
-          </div>
+          </div>*/}
+
+          {pipeline ? <div className="title-text-5 mb-2">{pipeline.name}</div> : <div className="title-text-5 mb-2">Pipelines</div> }
+
           <div className="alternate-tabs">
             <ul className="nav nav-tabs">
+              <li className="nav-item">
+                <a className={"nav-link"} href="#"
+                   onClick={handleTabClick("pipelines")}><FontAwesomeIcon icon={faArrowLeft} className="mr-2" />Pipelines</a>
+              </li>
               <li className="nav-item">
                 <a className={"nav-link " + (activeTab === "summary" ? "active" : "")} href="#"
                    onClick={handleTabClick("summary")}><FontAwesomeIcon icon={getTypeIcon(pipeline["type"] ? pipeline["type"][0] : "default")} className="mr-2" />Summary</a>

@@ -227,20 +227,17 @@ function PipelineWorkflow({
                 {customerAccessRules.Role === "administrator" && <>Administrator Access Role: Your account has full
                   access to this pipeline and its settings.</>}
                 {customerAccessRules.Role === "power_user" && <>Power User Role: Your account has elevated privileges
-                  to
-                  this pipeline which include changing settings and running the pipeline.</>}
+                  to this pipeline which include changing settings and running the pipeline.</>}
                 {customerAccessRules.Role === "user" && <>Standard User Role: Your account has basic access to this
                   pipeline which is limited to viewing and running pipeline operations only.</>}
                 {customerAccessRules.Role === "readonly" && <>Read Only Role: Your account does not have any
-                  privileges
-                  associated with this pipeline. You are being temporarily granted Viewer permissions and will not be
-                  able
-                  to perform any
-                  actions.</>}
+                  privileges associated with this pipeline. You are being temporarily granted Viewer permissions and
+                  will not be able to perform any actions.</>}
               </div>
             </>
             }
-            <div className="pr-1 text-right float-right">
+            <div className="pr-1 text-right m-1">
+
               <Button variant="secondary"
                       className="mr-1"
                       size="sm"
@@ -259,27 +256,30 @@ function PipelineWorkflow({
                       }}>
                 <FontAwesomeIcon icon={faSearchMinus} fixedWidth/></Button>
 
-
-              <OverlayTrigger
-                placement="top"
-                delay={{ show: 250, hide: 400 }}
-                overlay={renderTooltip({ message: "View pipeline configuration" })}>
-                <Button variant="secondary" className="mr-1" size="sm" onClick={() => {
-                  handleViewPipelineClick(pipeline);
+              {editWorkflow &&
+              <Button
+                variant="success"
+                size="sm"
+                onClick={() => {
+                  handleDoneWorkflowEditsClick();
                 }}>
-                  <FontAwesomeIcon icon={faFileAlt} fixedWidth/></Button>
-              </OverlayTrigger>
+                <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1"/>Done Editing</Button>
+              }
 
-              {authorizedAction("edit_workflow_btn", pipeline.owner) && <>
-                {editWorkflow ?
-                  <Button variant="success" size="sm" onClick={() => {
-                    handleDoneWorkflowEditsClick();
+              {!editWorkflow &&
+              <>
+                <OverlayTrigger
+                  placement="top"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltip({ message: "View pipeline configuration" })}>
+                  <Button variant="secondary" className="mr-1" size="sm" onClick={() => {
+                    handleViewPipelineClick(pipeline);
                   }}>
-                    {isSavingPipeline ?
-                      <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/> :
-                      <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1"/>}
-                    Done</Button>
-                  :
+                    <FontAwesomeIcon icon={faFileAlt} fixedWidth/></Button>
+                </OverlayTrigger>
+
+                {authorizedAction("edit_workflow_btn", pipeline.owner) && <>
+                  {!editWorkflow &&
                   <OverlayTrigger
                     placement="top"
                     delay={{ show: 250, hide: 400 }}
@@ -291,7 +291,9 @@ function PipelineWorkflow({
                             disabled={(workflowStatus && workflowStatus !== "stopped") || !authorizedAction("edit_workflow_btn", pipeline.owner)}>
                       <FontAwesomeIcon icon={faPen} fixedWidth/> </Button>
                   </OverlayTrigger>
-                }  </>}
+                  }
+                </>}
+              </>}
 
             </div>
           </div>
@@ -305,18 +307,18 @@ function PipelineWorkflow({
                 {pipeline.workflow.source.trigger_active &&
                 <div className="d-flex">
                   <div className="upper-case-first pl-2">
-                  <span className="text-muted small">
-                    <FontAwesomeIcon icon={faClipboardCheck} size="sm" fixedWidth
-                                     className="mr-1"/>Webhook Trigger: {pipeline.workflow.source.trigger_active ? "Enabled" : "Disabled"}</span>
+                <span className="text-muted small">
+                <FontAwesomeIcon icon={faClipboardCheck} size="sm" fixedWidth
+                                 className="mr-1"/>Webhook Trigger: {pipeline.workflow.source.trigger_active ? "Enabled" : "Disabled"}</span>
                   </div>
                 </div>}
 
                 {pipeline.workflow.source.service &&
                 <div className="d-flex">
                   <div className="upper-case-first pl-2">
-                  <span className="text-muted small">
-                    <FontAwesomeIcon icon={faCode} size="sm" fixedWidth
-                                     className="mr-1"/>Source Repository: {pipeline.workflow.source.service}</span>
+                <span className="text-muted small">
+                <FontAwesomeIcon icon={faCode} size="sm" fixedWidth
+                                 className="mr-1"/>Source Repository: {pipeline.workflow.source.service}</span>
                   </div>
                 </div>}
 
@@ -365,7 +367,7 @@ function PipelineWorkflow({
 
               <div style={{ height: "40px" }}>&nbsp;</div>
 
-              {softLoading && <LoadingDialog />}
+              {softLoading && <LoadingDialog/>}
 
               <div className="step-items workflow-module-container-width mx-auto">
                 <PipelineWorkflowItemList

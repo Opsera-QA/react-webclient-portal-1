@@ -199,7 +199,6 @@ function PipelineActionControls({
     //check type of pipeline to determine if pre-flight wizard is required
     // is pipeline at the beginning or stopped midway or end of prior?
     const pipelineType = typeof pipeline.type !== "undefined" && pipeline.type[0] !== undefined ? pipeline.type[0] : ""; //for now type is just the first entry
-    console.log("pipelineType: ", pipelineType);
 
     let pipelineOrientation = "start";
     //what step are we currently on in the pipeline: first, last or middle?
@@ -414,7 +413,7 @@ function PipelineActionControls({
                       handleRunPipelineClick(pipeline._id);
                     }}
                     disabled={!authorizedAction("start_pipeline_btn", pipeline.owner) || disabledActionState}>
-              <FontAwesomeIcon icon={faPlay} fixedWidth className="mr-1"/> Start Pipeline</Button>
+              <FontAwesomeIcon icon={faPlay} fixedWidth className="mr-1"/> Start <span className="d-none d-md-inline">Pipeline</span></Button>
           }
         </>}
 
@@ -431,7 +430,7 @@ function PipelineActionControls({
                   disabled={!authorizedAction("reset_pipeline_btn", pipeline.owner) || disabledActionState}>
             {resetPipeline ? <FontAwesomeIcon icon={faSpinner} fixedWidth spin className="mr-1"/> :
               <FontAwesomeIcon icon={faHistory} fixedWidth className="mr-1"/>}
-            Reset Pipeline</Button>
+            <span className="d-none d-md-inline">Reset Pipeline</span></Button>
         </OverlayTrigger>
 
         <OverlayTrigger
