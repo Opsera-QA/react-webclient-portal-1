@@ -352,7 +352,7 @@ function CommandLineStepConfiguration({
 
     if(jobType === "job") {
       if(jobName.length === 0) {
-        let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "detailPanelTop");
+        let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
         setToast(toast);
         setShowToast(true);
         return false;
@@ -368,7 +368,7 @@ function CommandLineStepConfiguration({
       jAuthToken.length === 0 ||
       commands.length === 0
     ) {
-      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "detailPanelTop");
+      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
       setToast(toast);
       setShowToast(true);
       return false;

@@ -6,7 +6,7 @@ import {faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
 
 // TODO: Rewrite once I have a better idea of what we need
 // For now, this is not dynamic and will only deal with name/boolean value pairs
-function DtoPropertiesInput({dataObject, setDataObject, fieldName, fields, removeItem}) {
+function DtoPropertiesInput({dataObject, setDataObject, fieldName}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
   const [rowList, setRowList ] = useState([]);
 
@@ -105,8 +105,7 @@ function DtoPropertiesInput({dataObject, setDataObject, fieldName, fields, remov
 DtoPropertiesInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
-  fields: PropTypes.array,
-  removeItem: PropTypes.func
+  setDataObject: PropTypes.func
 };
 
 export default DtoPropertiesInput;

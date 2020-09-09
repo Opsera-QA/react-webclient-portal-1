@@ -210,7 +210,7 @@ function SshUploadDeployStepConfiguration({ data, pipelineId, stepId, parentCall
     if (accessKey.length === 0 || 
       secretKey.length === 0 || 
       Object.keys(sshKey).length === 0) {
-      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "detailPanelTop");
+      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
       setToast(toast);
       setShowToast(true);
       return false;

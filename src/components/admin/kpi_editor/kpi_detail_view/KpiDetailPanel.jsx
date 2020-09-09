@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 import Col from "react-bootstrap/Col";
@@ -7,6 +7,7 @@ import KpiEditorPanel from "./KpiEditorPanel";
 import CustomTabContainer from "../../../common/tabs/CustomTabContainer";
 import CustomTab from "../../../common/tabs/CustomTab";
 import {faCogs} from "@fortawesome/pro-solid-svg-icons/faCogs";
+import LoadingDialog from "../../../common/status_notifications/loading";
 
 function KpiDetailPanel({ kpiData, setKpiData }) {
   const [activeTab, setTabSelection] = useState("settings");
@@ -15,6 +16,10 @@ function KpiDetailPanel({ kpiData, setKpiData }) {
     e.preventDefault();
     setTabSelection(activeTab);
   };
+
+  if (kpiData == null) {
+    return <LoadingDialog size="sm" />
+  }
 
   return (
     <>

@@ -11,6 +11,8 @@ import accountsActions from "../../../admin/accounts/accounts-actions";
 import AccessDeniedDialog from "../../../common/status_notifications/accessDeniedInfo";
 import {ldapGroupMetaData} from "../ldap-groups-metadata";
 import Model from "../../../../core/data_model/model";
+import {faUserFriends} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 function LdapGroupDetailView() {
   const {groupName, orgDomain} = useParams();
@@ -65,7 +67,7 @@ function LdapGroupDetailView() {
           <BreadcrumbTrail destination="ldapGroupDetailView"/>
           <div className="content-container content-card-1 ml-2">
             <div className="pt-2 pl-2 content-block-header">
-              <h6>Group Details [{ldapGroupData && ldapGroupData.name}]</h6>
+              <h6><FontAwesomeIcon icon={faUserFriends} fixedWidth className="mr-1" />Group Details [{ldapGroupData && ldapGroupData.name}]</h6>
             </div>
             <div className="detail-view-body">
               <div>

@@ -8,6 +8,8 @@ import ErrorDialog from "../../../common/status_notifications/error";
 import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
 import Model from "../../../../core/data_model/model";
 import tagEditorMetadata from "../tags-form-fields";
+import {faTags} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 function TagDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -48,7 +50,7 @@ function TagDetailView() {
       {error && <ErrorDialog error={error} align={"top"} setError={setErrors}/>}
       {tagData &&
       <div className="content-container content-card-1 max-content-width ml-2">
-        <div className="pt-2 pl-2 content-block-header"><h5>Tag Details [{tagData && tagData.type}]</h5></div>
+        <div className="pt-2 pl-2 content-block-header"><h5><FontAwesomeIcon icon={faTags} fixedWidth className="mr-1"/>Tag Details [{tagData && tagData.type}]</h5></div>
 
         <div>
           <div>

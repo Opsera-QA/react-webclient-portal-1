@@ -2,13 +2,14 @@ import React, { useState, useEffect, useContext, useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
-import LoadingDialog from "../../../common/status_notifications/loading";
 import Model from "../../../../core/data_model/model";
 import ToolSummaryPanel from "./ToolSummaryPanel";
 import inventoryActions from "../../inventory-actions";
 import toolMetadata from "../tool-metadata";
 import ToolDetailPanel from "./ToolDetailPanel";
 import {getLoadingErrorDialog} from "../../../common/toasts/toasts";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faTools} from "@fortawesome/pro-solid-svg-icons";
 
 function ToolDetailView() {
   const { id } = useParams();
@@ -58,8 +59,8 @@ function ToolDetailView() {
         {showToast && toast}
         {toolData &&
         <div className="content-container content-card-1 max-content-width ml-2">
-          <div className="pt-2 pl-2 content-block-header"><h5>Tool Details
-            [{toolData["name"]}]</h5></div>
+          <div className="pt-2 pl-2 content-block-header">
+            <h5><FontAwesomeIcon icon={faTools} fixedWidth className="mr-1"/>Tool Details [{toolData["name"]}]</h5></div>
           <div className="detail-view-body">
             <div>
               <ToolSummaryPanel toolData={toolData} setToolData={setToolData}/>

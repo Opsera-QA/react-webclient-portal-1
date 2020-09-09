@@ -91,6 +91,21 @@ function ErrorDialog({ error, align, type, setError }) {
     );
   }
 
+  if (alignment === "stepConfigurationTop") {
+    return (
+      <div className="w-100 error-block step-configuration-dialog-block mt-1">
+        <div className="float-right ml-1">
+          <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
+            clearError();
+          }}/></div>
+        {state.message} {(statusCode === 401 || (state.message && state.message.includes("401"))) &&
+      <span className="ml-1"><a style={{ color: "#fff", textDecoration: "underline" }} href="#" onClick={() => {
+        reloadSession();
+      }}>Click here to renew session.</a></span>}
+      </div>
+    );
+  }
+
   if (alignment === "top") {
     return (
       <div className="w-100 error-block top-error-block">

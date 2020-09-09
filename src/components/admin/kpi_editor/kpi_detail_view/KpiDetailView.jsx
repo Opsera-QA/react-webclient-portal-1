@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext, useMemo } from "react";
 import KpiSummaryPanel from "./KpiSummaryPanel";
-import PropTypes from "prop-types";
 import KpiDetailPanel from "./KpiDetailPanel";
 import { Link, useParams } from "react-router-dom";
 import KpiTagsActions from "../kpi-editor-actions";
@@ -9,6 +8,8 @@ import ErrorDialog from "components/common/status_notifications/error";
 import Model from "../../../../core/data_model/model";
 import kpiMetaData from "./kpi-form-fields";
 import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
+import {faFileInvoice} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 function KpiDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -39,10 +40,10 @@ function KpiDetailView() {
   return (
     <>
       <BreadcrumbTrail destination={"kpiDetailView"}/>
-
-      {kpiData &&
       <div className="content-container content-card-1 max-content-width ml-2">
-        <div className="pt-2 pl-2 content-block-header"><h5>KPI Configuration Details [{kpiData.name}]</h5></div>
+        <div className="pt-2 pl-2 content-block-header">
+          <h5><FontAwesomeIcon icon={faFileInvoice} fixedWidth className="mr-1" />KPI Configuration Details [{kpiData && kpiData.name}]</h5>
+        </div>
         {error &&
         <div className="absolute-center-content"><ErrorDialog align="center" error={error.message}></ErrorDialog></div>}
         <div>
@@ -60,7 +61,6 @@ function KpiDetailView() {
         </div>
         <div className="content-block-footer" />
       </div>
-      }
     </>
   );
 }

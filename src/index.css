@@ -553,6 +553,12 @@ a:hover, .active {
     padding: 1em;
 }
 
+.step-configuration-dialog-block {
+    padding: 1em;
+    border-radius: 5px;
+    z-index: 1200;
+}
+
 .code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }

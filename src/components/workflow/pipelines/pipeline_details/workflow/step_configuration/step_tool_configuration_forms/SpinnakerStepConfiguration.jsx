@@ -274,7 +274,7 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
       spinnakerId.length === 0 || 
       appName.length === 0 || 
       toolName.length === 0 ) {
-      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "detailPanelTop");
+      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
       setToast(toast);
       setShowToast(true);
       return false;

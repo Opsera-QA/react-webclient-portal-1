@@ -367,7 +367,7 @@ function SeleniumStepConfiguration({
 
     if(jobType === "job") {
       if(jobName.length === 0) {
-        let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "detailPanelTop");
+        let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
         setToast(toast);
         setShowToast(true);
       return false
@@ -386,7 +386,7 @@ function SeleniumStepConfiguration({
         ? dockerName.length === 0 || dockerTagName.length === 0
         : false)
     ) {
-        let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "detailPanelTop");
+        let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
         setToast(toast);
         setShowToast(true);
         return false;

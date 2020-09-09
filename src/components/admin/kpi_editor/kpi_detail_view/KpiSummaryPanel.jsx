@@ -14,6 +14,7 @@ import DtoItemField from "../../../common/form_fields/dto_form_fields/dto-item-f
 import SummaryActionBar from "../../../common/actions/SummaryActionBar";
 import Model from "../../../../core/data_model/model";
 import {getLoadingErrorDialog, getUpdateSuccessResultDialog} from "../../../common/toasts/toasts";
+import LoadingDialog from "../../../common/status_notifications/loading";
 
 function KpiSummaryPanel({ kpiData, setKpiData } ) {
   const { getAccessToken } = useContext(AuthContext);
@@ -57,7 +58,7 @@ function KpiSummaryPanel({ kpiData, setKpiData } ) {
   };
 
   if (kpiData == null) {
-    return <></>;
+      return <LoadingDialog size="sm" />
   }
 
   return (

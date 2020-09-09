@@ -157,7 +157,7 @@ function AnchoreStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCa
       buildStepId == null || buildStepId.length === 0
       // dockerImageUrl.length === 0
     ) {
-      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "detailPanelTop");
+      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
       setToast(toast);
       setShowToast(true);
       return false;

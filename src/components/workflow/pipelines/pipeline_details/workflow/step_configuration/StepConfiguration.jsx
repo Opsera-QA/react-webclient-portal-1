@@ -157,8 +157,8 @@ function StepConfiguration( { data, stepId, parentCallback, setToast, setShowToa
   const validateRequiredFields = () => {    
     // console.log("form", formData);
     if (formData.name.length === 0 || formData.tool_identifier.length === 0) {
-      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "detailPanelTop");
-      setToast(toast);
+      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
+      setToast(toast)
       setShowToast(true);
       return false;
     }    
