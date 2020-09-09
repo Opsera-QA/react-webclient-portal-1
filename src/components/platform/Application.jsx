@@ -6,7 +6,6 @@ import LogManagement from "./LogManagement";
 import RepositoryManagement from "./RepositoryManagement";
 import SAST from "./SAST";
 import Monitoring from "./Monitoring";
-import Kubernetes from "./Kubernetes";
 import InfoDialog from "components/common/status_notifications/info";
 import { NewAppContext } from "./context";
 import { ApiService } from "api/apiService";
@@ -16,9 +15,10 @@ import { handleError, isAlphaNumeric } from "utils/helpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWrench, faClipboardList } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
+import ContainerScan from "./ContainerScan";
 
 function Application(props) {
-  const { data, saving, gotoInventory, token, user, reset, setAppDetails, appid, setState } = useContext(NewAppContext);
+  const { data, saving, gotoInventory, token, user, reset, setAppDetails, appid, setState, isEKS } = useContext(NewAppContext);
   const { featureFlagItemInProd } = useContext(AuthContext);
   const envIsProd = featureFlagItemInProd();
   const [dropdownData, setDropdownData] = useState([]);
@@ -295,13 +295,13 @@ function Application(props) {
           {applicationStatus === "success" && savingStatus === null && (
             <div className="mb-2">
               <CardColumns>
-                <ConfigurationManagement app={applicationDetails.data} tools={applicationDetails.tools} />
+                <ConfigurationManagement app={applicationDetails.data} tools={applicationDetails.tools} isEKS ={isEKS}  />
                 <SAST app={applicationDetails.data} tools={applicationDetails.tools} />
-                <ContinousIntegration app={applicationDetails.data} tools={applicationDetails.tools} />
-                <LogManagement app={applicationDetails.data} tools={applicationDetails.tools} />
+                <ContinousIntegration app={applicationDetails.data} tools={applicationDetails.tools} isEKS ={isEKS}  />
+                <LogManagement app={applicationDetails.data} tools={applicationDetails.tools} isEKS ={isEKS}  />
                 <RepositoryManagement app={applicationDetails.data} tools={applicationDetails.tools} />
-                <Monitoring app={applicationDetails.data} tools={applicationDetails.tools} />
-                {!envIsProd && <Kubernetes app={applicationDetails.data} tools={applicationDetails.tools} />}                
+                <Monitoring app={applicationDetails.data} tools={applicationDetails.tools} isEKS ={isEKS} />              
+                <ContainerScan app={applicationDetails.data} tools={applicationDetails.tools} isEKS ={isEKS} />            
               </CardColumns>
               <div className="text-right">
                 <Button variant="outline-primary" onClick={cancelTools} disabled={Object.keys(data).length == 0} className="m-2">

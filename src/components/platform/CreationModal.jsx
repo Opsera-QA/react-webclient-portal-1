@@ -33,7 +33,7 @@ function CreationModal(props) {
       <Modal.Footer>
         <Button
           variant="secondary"
-          onClick={() => handleCancel(service)}> Cancel
+          onClick={() => handleCancel()}> Cancel
         </Button>
         <Button variant="primary" onClick={handleSave}>
             Confirm

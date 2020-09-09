@@ -336,7 +336,7 @@ function SshUploadDeployStepConfiguration({ data, pipelineId, stepId, parentCall
             </div>
           ) : (
             <>
-              {jenkinsList && jenkinsList.length > 1 ? (
+              {jenkinsList && jenkinsList.length > 0 ? (
                 <DropdownList
                   data={jenkinsList}
                   value={

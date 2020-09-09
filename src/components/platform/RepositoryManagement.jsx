@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
+import PropTypes from "prop-types";
 import { Card } from "react-bootstrap";
 import { NewAppContext } from "./context";
 
 function RepositoryManagement(props) {
 
   const { data, setState } = useContext(NewAppContext);
-  const { tools } = props;
+  const { tools, isEKS } = props;
   const [isChecked, setCheckbox] = useState({
     ArtiFactory: tools.includes("ArtiFactory") ? true : false,
     Nexus: tools.includes("Nexus") ? true : false
@@ -61,19 +62,21 @@ function RepositoryManagement(props) {
             <input type="checkbox"
               inline
               disabled={tools.includes("ArtiFactory") ? true : false}
-              checked={isChecked.ArtiFactory}
+              checked={isChecked.ArtiFactory && data["FluxCD"]}
               className="newApp__checkbox"
             />
             <img src={require("./imgs/artifactory.png")} alt="artifactory" />
             <span className="newApp__service-title">ArtiFactory</span>
           </div>
 
-          <div className="newApp__service-logo newApp__service-logo--disabled">
+          <div  className={`newApp__service-logo ${tools.includes("Nexus") ? "newApp__service-logo--alredy-installed" : !isEKS ? "newApp__service-logo--disabled" : ""}`}
+            onClick={() => selectCard("Nexus")} >
             <input type="checkbox"
               inline
               disabled={tools.includes("Nexus") ? true : false}
-              checked={isChecked.Nexus}
+              checked={isChecked.Nexus && data["Nexus"]}
               className="newApp__checkbox"
+              onClick={() => selectCard("Nexus")}
             />
             <img src={require("./imgs/nexus.png")} alt="nexus"/>
             <span className="newApp__service-title">Nexus</span>
@@ -83,5 +86,10 @@ function RepositoryManagement(props) {
     </Card>
   );
 } 
+
+RepositoryManagement.propTypes = {
+  tools: PropTypes.array,
+  isEKS: PropTypes.bool,
+};
 
 export default RepositoryManagement;

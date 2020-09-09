@@ -755,7 +755,7 @@ function SeleniumStepConfiguration({
 
 {jobType === "opsera-job" && (
           <>
-            {formData.jenkinsUrl && jenkinsList.length > 1 && (
+            {formData.jenkinsUrl && jenkinsList.length > 0 && (
               <Form.Group controlId="formBasicEmail">
                 <Form.Label className="w-100">
                   Job*
@@ -813,7 +813,7 @@ function SeleniumStepConfiguration({
           </>
         )}
 
-        {formData.jenkinsUrl && jenkinsList.length > 1 && (
+        {formData.jenkinsUrl && jenkinsList.length > 0 && (
           <Form.Group controlId="formBasicEmail">
             <Form.Label className="w-100">
               Account*

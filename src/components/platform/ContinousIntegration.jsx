@@ -6,16 +6,22 @@ import { NewAppContext } from "./context";
 function ContinousIntegration(props) {
 
   const { data, setState } = useContext(NewAppContext);
-  const { tools } = props;
+  const { tools, isEKS  } = props;
   const [isChecked, setCheckbox] = useState({
     Jenkins: tools.includes("Jenkins") ? true : false,
-    Teamcity: tools.includes("Teamcity") ? true : false
+    Teamcity: tools.includes("Teamcity") ? true : false,
+    Argocd: tools.includes("Argocd") ? true : false,
+    Spinnaker: tools.includes("Spinnaker") ? true : false,
+    FluxCD: tools.includes("FluxCD") ? true : false,
   });
 
   useEffect(() => {
     setCheckbox({ 
       Jenkins: false,
-      Teamcity: false
+      Teamcity: false,
+      Argocd: false,
+      Spinnaker: false,
+      FluxCD: false, 
     });
     if(tools.length > 0) {
       tools.map((tool) => {
@@ -59,7 +65,7 @@ function ContinousIntegration(props) {
     <>
       <Card style={{ minWidth: "16rem" }}>
         <Card.Body className="text-center">
-          <Card.Title>Continuous Integration</Card.Title>
+          <Card.Title>CI/CD</Card.Title>
           <div>
             <div
               className={`newApp__service-logo ${tools.includes("Jenkins") ? "newApp__service-logo--alredy-installed" : ""}`}
@@ -68,7 +74,7 @@ function ContinousIntegration(props) {
               <input type="checkbox"
                 inline
                 disabled={tools.includes("Jenkins") ? true : false}
-                checked={isChecked.Jenkins}
+                checked={isChecked.Jenkins && data["Jenkins"]}
                 className="newApp__checkbox"
                 onClick={() => selectCard("Jenkins")}
               />
@@ -77,17 +83,63 @@ function ContinousIntegration(props) {
             </div>
 
             <div
-              className="newApp__service-logo newApp__service-logo--disabled"
+                className={`newApp__service-logo ${tools.includes("TeamCity") ? "newApp__service-logo--alredy-installed" : !isEKS ? "newApp__service-logo--disabled" : ""}`}
+                onClick={() => selectCard("TeamCity")}
+              >
+                <input type="checkbox"
+                  inline
+                  disabled={tools.includes("TeamCity") ? true : false}
+                  checked={isChecked.TeamCity && data["TeamCity"]}
+                  className="newApp__checkbox"
+                /> 
+                <img src={require("./imgs/team-city.png")} alt="Team City"/>
+                <span className="newApp__service-title">Team City</span>
+              </div>
+
+              <div
+              className={`newApp__service-logo ${tools.includes("Argocd") ? "newApp__service-logo--alredy-installed" : !isEKS ? "newApp__service-logo--disabled" : ""}`}
+              onClick={() => selectCard("Argocd")}
             >
               <input type="checkbox"
                 inline
-                disabled={tools.includes("Team City") ? true : false}
-                checked={isChecked.Teamcity}
+                disabled={tools.includes("Argocd") ? true : false}
+                checked={isChecked.Argocd && data["Argocd"]}
                 className="newApp__checkbox"
-              /> 
-              <img src={require("./imgs/team-city.png")} alt="Team City"/>
-              <span className="newApp__service-title">Team City</span>
+                onClick={() => selectCard("Argocd")}
+              />
+              <img src={require("./imgs/argocd.png")} />
+              <span className="newApp__service-title">Argocd</span>
             </div>
+
+            <div
+              className={`newApp__service-logo ${tools.includes("Spinnaker") ? "newApp__service-logo--alredy-installed" : !isEKS ? "newApp__service-logo--disabled" : ""}`}
+              onClick={() => selectCard("Spinnaker")}       
+            >
+              <input type="checkbox"
+                inline
+                disabled={tools.includes("Spinnaker") ? true : false}
+                checked={isChecked.Spinnaker && data["Spinnaker"]}
+                className="newApp__checkbox"
+                onClick={() => selectCard("Spinnaker")}
+              />
+              <img src={require("./imgs/spinnaker.png")} />
+              <span className="newApp__service-title">Spinnaker</span>
+            </div>
+
+            <div
+              className={`newApp__service-logo ${tools.includes("FluxCD") ? "newApp__service-logo--alredy-installed" : !isEKS ? "newApp__service-logo--disabled" : ""}`}
+              onClick={() => selectCard("FluxCD")}>
+              <input type="checkbox"
+                inline
+                disabled={tools.includes("FluxCD") ? true : false}
+                checked={isChecked.FluxCD && data["FluxCD"]}
+                className="newApp__checkbox"
+                onClick={() => selectCard("FluxCD")}
+              />
+              <img src={require("./imgs/flux.png")} />
+              <span className="newApp__service-title">FluxCD</span>
+            </div> 
+                       
           </div>
         </Card.Body>
       </Card>
@@ -97,6 +149,7 @@ function ContinousIntegration(props) {
 
 ContinousIntegration.propTypes = {
   tools: PropTypes.array,
+  isEKS: PropTypes.bool,
 };
 
 export default ContinousIntegration;
