@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { Button, Form, Row, Col, Card, Alert } from "react-bootstrap";
 import { ApiService } from "api/apiService";
 import { useHistory } from "react-router-dom";
@@ -6,76 +6,48 @@ import defaultSignupFormFields from "./signup-form-fields.js";
 import usStateList from "./states";
 
 import "./user.css";
-import TextInput from "../common/input/text-input";
-import SelectInput from "../common/input/select-input";
+import Model from "../../core/data_model/model";
+import {
+  getEmailAlreadyExistsErrorDialog,
+  getErrorDialog,
+  getFormValidationErrorDialog,
+  getUpdateFailureResultDialog
+} from "../common/toasts/toasts";
+import DtoTextInput from "../common/input/dto_input/dto-text-input";
+import DtoSelectInput from "../common/input/dto_input/dto-select-input";
+import LoadingDialog from "../common/status_notifications/loading";
+import SaveButton from "../common/buttons/SaveButton";
 
-const INITIAL_DATA = {
-  domain: "",
-  organizationName: "",
-  firstName: "",
-  lastName: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
-  street: "",
-  city: "",
-  state: "",
-  zip: "",
-  attributes: { title: "", company: "" },
-  configuration: { cloudProvider: "EKS", cloudProviderRegion: "us-east-2" },
-};
-
-function Signup(props) {
-  const [isLoading, setLoading] = useState(false);
+function Signup() {
   const history = useHistory();
-  const [signupFormFields, updateFormFields] = useState(defaultSignupFormFields);
-  const [formData, setFormData] = useState(INITIAL_DATA);
-  const [emailAlreadyExists, setEmailAlreadyExists] = useState(false);
-  const [formMessage, setFormMessage] = useState("");
-
-  const isFormValid = () => {
-    // TODO: Write way to check for required fields via the fields themselves
-    let { firstName, lastName, organizationName, email, password, confirmPassword, city, state, zip, domain, configuration } = formData;
-    if (
-      firstName.length === 0 ||
-      lastName.length === 0 ||
-      organizationName.length === 0 ||
-      email.length === 0 ||
-      password.length === 0 ||
-      confirmPassword.length === 0 ||
-      city.length === 0 ||
-      state.length === 0 ||
-      zip.length === 0 ||
-      configuration["cloudProvider"].length === 0 ||
-      configuration["cloudProviderRegion"].length === 0
-    ) {
-      setFormMessage("All required fields must be filled out.");
-      return false;
-    } else if (password.length < 8) {
-      setFormMessage("Your password must be at least 8 characters.");
-      return false;
-    } else if (password !== confirmPassword) {
-      setFormMessage("Both password fields must match.");
-      return false;
-    } else {
-      setFormMessage("");
-      return true;
-    }
-  };
+  const [isLoading, setIsLoading] = useState(false);
+  const [toast, setToast] = useState({});
+  const [showToast, setShowToast] = useState(false);
+  const [registrationDataDto, setRegistrationDataDto] = useState(undefined);
 
   // TODO: when pulling actual data with react-dropdown, change text to label
   const cloudProviders = [{ value: "EKS", text: "AWS" },{ value: "GKE", text: "GCP" }];
   const cloudProviderRegions = [{ value: "us-east-2", text: "us-east-2" }];
 
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    setIsLoading(true);
+    await setRegistrationDataDto(new Model(defaultSignupFormFields.newObjectFields, defaultSignupFormFields, true));
+    setIsLoading(false);
+  };
+
   //Check if the email is already registered in the system
   const isEmailAvailableFunc = async () => {
-    console.log("checking email: " + formData.email);
-    const apiCall = new ApiService("/users/check-email", {}, null, { email: formData.email });
+    console.log("checking email: " + registrationDataDto.getData("email"));
+    const apiCall = new ApiService("/users/check-email", {}, null, { email: registrationDataDto.getData("email") });
     return await apiCall.post()
       .then(function(response) {
         console.log("response in then: " + JSON.stringify(response));
         if (response.data) {
-          setFormMessage("Email address already exists.");
+          getErrorDialog("Email address already exists.", setShowToast, "top");
           return false;
         } else {
           return true;
@@ -88,65 +60,67 @@ function Signup(props) {
       });
   };
 
-
-  const cancelSignup = () => {
-    // eslint-disable-next-line react/prop-types
-    history.push("/");
-  };
-
   const loadRegistrationResponse = () => {
-    // eslint-disable-next-line react/prop-types
     history.push("/registration");
   };
 
   //Final form submit
-  const signupSubmit = async (event) => {
-    event.preventDefault();
-    event.stopPropagation();
+  const signupSubmit = async () => {
 
-    console.log("formData: ", formData);
+    console.log("persistData: ", JSON.stringify(registrationDataDto.getPersistData()));
 
-    //Check if the email is already exist in the system
-    const isEmailAvailable = await isEmailAvailableFunc();
+    if (registrationDataDto.isModelValid2()) {
+      //Check if the email is already exist in the system
+      const isEmailAvailable = await isEmailAvailableFunc();
 
-    //Only if form is valid, call API for signup 
-    if (isFormValid() && isEmailAvailable) {
-      setLoading(true);
-      const apiCall = new ApiService("/users/create", {}, null, formData);
-      await apiCall.post()
-        .then(function(response) {
-          console.debug(response);
-          setLoading(false);
-          //showSuccessAlert();
-          //TODO: Send user to new registration confirmation form:
-          loadRegistrationResponse();
-        })
-        .catch(function(error) {
-          console.error(error);
-          setLoading(false);
-          //showErrorAlert();
-        });
+      //Only if form is valid, call API for signup
+      if (isEmailAvailable) {
+        // setIsLoading(true);
 
-    } else {
-      setLoading(false);
+        let finalObject = {...registrationDataDto.getPersistData()};
+        let configuration = {
+          cloudProvider: registrationDataDto.getData("cloudProvider"),
+          cloudProviderRegion: registrationDataDto.getData("cloudProviderRegion")
+        };
+        let attributes = {title: "", company: ""};
+        delete finalObject["cloudProviderRegion"];
+        delete finalObject["cloudProvider"];
+        finalObject["configuration"] = configuration;
+        finalObject["attributes"] = attributes;
+
+        const apiCall = new ApiService("/users/create", {}, null, registrationDataDto.getPersistData());
+        await apiCall.post()
+          .then(function (response) {
+            console.debug(response);
+            setIsLoading(false);
+            //showSuccessAlert();
+            //TODO: Send user to new registration confirmation form:
+            loadRegistrationResponse();
+          })
+          .catch(function (error) {
+            console.error(error);
+            setIsLoading(false);
+            let toast = getUpdateFailureResultDialog("Account", error.message, setShowToast, "top");
+            setToast(toast);
+            setShowToast(true);
+            console.error(error.message);
+          });
+      }
+      else {
+        let toast = getEmailAlreadyExistsErrorDialog(setShowToast, "top");
+        setToast(toast);
+        setShowToast(true);
+      }
+    }else {
+      let toast = getFormValidationErrorDialog(setShowToast, "top");
+      setToast(toast);
+      setShowToast(true);
     }
   };
 
-  const setFormField = (field, value) => {
-    formData[field] = value;
-    setFormData({ ...formData });
-    console.log("Form data: " + JSON.stringify(formData));
-  };
-
-  const setAttribute = (field, value) => {
-    formData["attributes"][field] = value;
-    setFormData({ ...formData, attributes: formData["attributes"] });
-  };
-
-  const setConfiguration = (field, value) => {
-    formData["configuration"][field] = value;
-    setFormData({ ...formData, configuration: formData["configuration"] });
-  };
+  if (isLoading || registrationDataDto == null) {
+    return <LoadingDialog />
+  }
 
   return (
     <div className="new-user-signup-form">
@@ -154,42 +128,53 @@ function Signup(props) {
         <Card>
           <Card.Header as="h5" className="new-user-header">Sign Up For Opsera</Card.Header>
           <Card.Body className="new-user-body-full p-3">
-            {formMessage.length > 0 ? <p className="text-danger">{formMessage}</p> : null}
+            {showToast && toast}
             <Row>
-              <Col md={6}><TextInput field={signupFormFields.firstName} setData={setFormField}
-                                     formData={formData}/></Col>
-              <Col md={6}><TextInput field={signupFormFields.lastName} setData={setFormField}
-                                     formData={formData}/></Col>
-              <Col md={12}><TextInput field={signupFormFields.email} setData={setFormField} formData={formData}/></Col>
-              <Col md={6}><TextInput field={signupFormFields.password} setData={setFormField}
-                                     formData={formData}/></Col>
-              <Col md={6}><TextInput field={signupFormFields.confirmPassword} setData={setFormField}
-                                     formData={formData}/></Col>
-
-              <Col md={6}><TextInput field={signupFormFields.organizationName} setData={setFormField}
-                                     formData={formData}/></Col>
-              <Col md={6}><TextInput field={signupFormFields.domain} setData={setFormField} formData={formData}/></Col>
-
-
-              <Col md={12}><TextInput field={signupFormFields.street} setData={setFormField} formData={formData}/></Col>
-              <Col md={4}><TextInput field={signupFormFields.city} setData={setFormField} formData={formData}/></Col>
-              <Col md={4}><SelectInput selectOptions={usStateList} field={signupFormFields.state} setData={setFormField}
-                                       formData={formData}/></Col>
-              <Col md={4}><TextInput field={signupFormFields.zip} setData={setFormField} formData={formData}/></Col>
-
-              <Col md={6}><SelectInput selectOptions={cloudProviders} field={signupFormFields.cloudProvider}
-                                       setData={setConfiguration} formData={formData["configuration"]}/></Col>
-              <Col md={6}><SelectInput selectOptions={cloudProviderRegions} field={signupFormFields.cloudProviderRegion}
-                                       setData={setConfiguration} formData={formData["configuration"]}/></Col>
-
-
+              <Col md={6}>
+                <DtoTextInput fieldName={"firstName"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+              </Col>
+              <Col md={6}>
+                <DtoTextInput fieldName={"lastName"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+              </Col>
+              <Col md={12}>
+                <DtoTextInput fieldName={"email"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+              </Col>
+              <Col md={6}>
+                <DtoTextInput type="password" fieldName={"password"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+              </Col>
+              <Col md={6}>
+                <DtoTextInput type="password" fieldName={"confirmPassword"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+              </Col>
+              <Col md={6}>
+                <DtoTextInput fieldName={"organizationName"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+              </Col>
+              <Col md={6}>
+                <DtoTextInput fieldName={"domain"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+              </Col>
+              <Col md={12}>
+                <DtoTextInput fieldName={"street"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+              </Col>
+              <Col md={4}>
+                <DtoTextInput fieldName={"city"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+              </Col>
+              <Col md={4}>
+                <DtoSelectInput selectOptions={usStateList} fieldName={"state"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+              </Col>
+              <Col md={4}>
+                <DtoTextInput fieldName={"zip"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+              </Col>
+              <Col md={6}>
+                <DtoSelectInput selectOptions={cloudProviders} fieldName={"cloudProvider"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+              </Col>
+              <Col md={6}>
+                <DtoSelectInput selectOptions={cloudProviderRegions} fieldName={"cloudProviderRegion"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+              </Col>
             </Row>
-            <div className="mt-5 mb-3">
-              {isLoading ?
-                <Button id="login-button" disabled={true} variant="outline-success" className="mr-2 px-4" type="button"><span>Working...</span></Button> :
-                <Button size="md" className="register-button mx-auto" id="login-button" type="submit" variant="success"><span>Register Account</span></Button>
-              }</div>
-
+            <Row>
+              <div className="ml-auto m-3 px-3">
+                <SaveButton type={"account"} createRecord={signupSubmit} recordDto={registrationDataDto} altButtonText={"Register Account"}/>
+              </div>
+            </Row>
           </Card.Body>
           <Card.Footer className="new-user-footer">
             <div className="text-muted text-right pr-2"><span className="danger-red">*</span> Required Fields</div>
