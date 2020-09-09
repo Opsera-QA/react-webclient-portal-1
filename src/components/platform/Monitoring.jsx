@@ -62,18 +62,12 @@ function Monitoring(props) {
         <div>
           <div
             className={`newApp__service-logo ${tools.includes("Nagios") ? "newApp__service-logo--alredy-installed" : ""}`}
-            onClick={() =>
-              setState({
-                open: !tools.includes("Nagios"),
-                category: "Monitoring",
-                service: "Nagios",
-              })
-            }
+            onClick={() => selectCard("Nagios")}
           >
             <input type="checkbox"
               inline
               disabled={tools.includes("Nagios") ? true : false}
-              checked={isChecked.Nagios}
+              checked={isChecked.Nagios && data["Nagios"]}
               className="newApp__checkbox"
               onClick={() => selectCard("Nagios")}
             />
@@ -87,7 +81,7 @@ function Monitoring(props) {
             <input type="checkbox"
               inline
               disabled={tools.includes("ZooKeeper") ? true : false}
-              checked={isChecked.ZooKeeper}
+              checked={isChecked.ZooKeeper && data["ZooKeeper"]}
               className="newApp__checkbox"
             />
             <img src={require("./imgs/zookeeper.png")} />

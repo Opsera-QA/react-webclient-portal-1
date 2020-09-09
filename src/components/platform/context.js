@@ -17,6 +17,7 @@ class NewAppProvider extends React.Component {
       appid: "",
       saving: false,
       token: "",
+      isEKS: false,
       user: {}
     };
   }
@@ -33,11 +34,15 @@ class NewAppProvider extends React.Component {
     const { getAccessToken, getUserRecord } = this.context;
     const userInfo = await getUserRecord();
     const accessToken = await getAccessToken();
+    let isEKS =  false;
+
+    if(userInfo && userInfo.configuration && (userInfo.configuration.cloudProvider === "EKS") ) { isEKS = true; } 
     
     console.log("IN CONTEXT", userInfo);
     this.setState({
       token: accessToken,
-      user: userInfo
+      user: userInfo,
+      isEKS : isEKS
     });
   }
 
@@ -52,9 +57,10 @@ class NewAppProvider extends React.Component {
   }
 
   handleCancel = () => {
+    console.log("cancel clicked")
     const { service, data } = this.state;
     delete data[service];
-
+    console.log(service,data)
     this.setState({
       data,
       open: false,
@@ -115,6 +121,7 @@ class NewAppProvider extends React.Component {
   }
 
   render() {
+    console.log(this.state)
     return (
       <Ctx.Provider
         value={{

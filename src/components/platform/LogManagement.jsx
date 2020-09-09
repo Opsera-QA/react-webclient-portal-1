@@ -6,16 +6,19 @@ import { NewAppContext } from "./context";
 function LogManagement(props) {
 
   const { data, setState } = useContext(NewAppContext);
-  const { tools } = props;
+  const { tools, isEKS  } = props;
 
   const [isChecked, setCheckbox] = useState({
     ElasticSearch: tools.includes("ElasticSearch") ? true : false,
-    LogStash: tools.includes("LogStash") ? true : false
+    LogStash: tools.includes("LogStash") ? true : false,
+    Kibana: tools.includes("Kibana") ? true : false,
+   
   });
 
   useEffect(() => {
     setCheckbox({ 
       ElasticSearch: false,
+      Kibana: false,
       LogStash: false
     });
     if(tools.length > 0) {
@@ -65,7 +68,7 @@ function LogManagement(props) {
             <input type="checkbox"
               inline
               disabled={tools.includes("ElasticSearch") ? true : false}
-              checked={isChecked.ElasticSearch}
+              checked={isChecked.ElasticSearch && data["ElasticSearch"]}
               className="newApp__checkbox"
               onClick={() => selectCard("ElasticSearch")}
             />
@@ -74,12 +77,27 @@ function LogManagement(props) {
           </div>
 
           <div
+            className={`newApp__service-logo ${tools.includes("Kibana") ? "newApp__service-logo--alredy-installed" : !isEKS ? "newApp__service-logo--disabled" : ""}`}
+            onClick={() => selectCard("Kibana")}
+          >
+            <input type="checkbox"
+              inline
+              disabled={tools.includes("Kibana") ? true : false}
+              checked={isChecked.Kibana && data["Kibana"]}
+              className="newApp__checkbox"
+              onClick={() => selectCard("Kibana")}
+            />
+            <img src={require("./imgs/kibana.png")} />
+            <span className="newApp__service-title">Kibana</span>
+          </div>
+
+          <div
             className="newApp__service-logo newApp__service-logo--disabled"
           >
             <input type="checkbox"
               inline
               disabled={tools.includes("LogStash") ? true : false}
-              checked={isChecked.LogStash}
+              checked={isChecked.LogStash && data["LogStash"]}
               className="newApp__checkbox"
             />
             <img src={require("./imgs/log-stash.png")} />
@@ -92,7 +110,8 @@ function LogManagement(props) {
 } 
 
 LogManagement.propTypes = {
-  tools: PropTypes.array
+  tools: PropTypes.array,
+  isEKS: PropTypes.bool,
 };
 
 export default LogManagement;

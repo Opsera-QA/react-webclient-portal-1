@@ -3,17 +3,18 @@ import PropTypes from "prop-types";
 import { Card } from "react-bootstrap";
 import { NewAppContext } from "./context";
 
-function SAST(props) {
+
+function ContainerScan(props) {
 
   const { data, setState } = useContext(NewAppContext);
-  const { tools } = props;
+  const { tools, isEKS } = props;
   const [isChecked, setCheckbox] = useState({
-    SonarQube: tools.includes("SonarQube") ? true : false
-  });
+    Anchore: tools.includes("Anchore") ? true : false,
+   });
 
   useEffect(() => {
     setCheckbox({ 
-      SonarQube: false
+      Anchore: false,  
     });
     if(tools.length > 0) {
       tools.map((tool) => {
@@ -45,40 +46,41 @@ function SAST(props) {
       });
       setState({
         open: true,
-        category: "SASST",
+        category: "ContainerScan",
         service: serviceType,
       });
     }
   };
 
+
   return (
     <Card style={{ minWidth: "16rem" }}>
       <Card.Body className="text-center">
-        <Card.Title>Code Security</Card.Title>
+        <Card.Title>Container Scan</Card.Title>
           
-        <div>
           <div
-            className={`newApp__service-logo ${tools.includes("SonarQube") ? "newApp__service-logo--alredy-installed" : ""}`}
-            onClick={() => selectCard("SonarQube")}
+            className={`newApp__service-logo ${tools.includes("Anchore") ? "newApp__service-logo--alredy-installed" : !isEKS ? "newApp__service-logo--disabled" : ""}`}
+            onClick={() => selectCard("Anchore")}
           >
             <input type="checkbox"
               inline
-              disabled={tools.includes("SonarQube") ? true : false}
-              checked={isChecked.SonarQube && data["SonarQube"]}
+              disabled={tools.includes("Anchore") ? true : false}
+              checked={isChecked.Anchore && data["Anchore"]}
               className="newApp__checkbox"
-              onClick={() => selectCard("SonarQube")}
+              onClick={() => selectCard("Anchore")}
             />
-            <img src={require("./imgs/sonar.png")} />
-            <span className="newApp__service-title">SonarQube</span>
+            <img src={require("./imgs/anchore.png")} />
+            <span className="newApp__service-title">Anchore</span>
           </div>
-        </div>
+
       </Card.Body>
     </Card>
   );
 } 
 
-SAST.propTypes = {
-  tools: PropTypes.array
+ContainerScan.propTypes = {
+  tools: PropTypes.array,
+  isEKS: PropTypes.bool,
 };
 
-export default SAST;
+export default ContainerScan;

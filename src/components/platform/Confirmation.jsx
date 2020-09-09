@@ -7,7 +7,7 @@ import { NewAppContext } from "./context";
 function Confirmation(props) {
 
   const { data, setState } = useContext(NewAppContext);
-  const { tools, handleSaveTools } = props;
+  const { tools, handleCancel, handleSaveTools } = props;
 
   let isDisplayed = Object.keys(data).length > 0 ? true : false;
 

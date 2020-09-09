@@ -274,7 +274,7 @@ function ArgoCDStepConfiguration( { stepTool, pipelineId, plan, stepId, parentCa
             Loading Argo CD Applications</div>
           ) :(
             <>
-              {renderForm && argoAppsList && argoAppsList.length > 1 ? 
+              {renderForm && argoAppsList && argoAppsList.length > 0 ? 
                 <DropdownList
                   data={argoAppsList}
                   value={formData.applicationName ? argoAppsList[argoAppsList.findIndex(x => x.name === formData.applicationName)] : argoAppsList[0]}
