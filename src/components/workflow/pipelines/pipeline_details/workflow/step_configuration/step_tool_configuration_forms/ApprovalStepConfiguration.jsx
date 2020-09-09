@@ -71,7 +71,7 @@ function ApprovalStepConfiguration( { stepTool, pipelineId, plan, stepId, parent
   const validateRequiredFields = () => {
     let { message, contact } = formData;
     if (message.length === 0 || contact.length === 0) {
-      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "detailPanelTop");
+      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
       setToast(toast);
       setShowToast(true);
       return false;

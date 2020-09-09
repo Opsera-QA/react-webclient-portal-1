@@ -175,7 +175,7 @@ function AnchoreIntegratorStepConfiguration({ stepTool, pipelineId, plan, stepId
       anchoreUrl.length === 0 ||
       ecrPushStepId.length === 0 
     ) {
-      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "detailPanelTop");
+      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
       setToast(toast);
       setShowToast(true);
       return false;

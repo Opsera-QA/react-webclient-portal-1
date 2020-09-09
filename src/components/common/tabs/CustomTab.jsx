@@ -14,10 +14,10 @@ function CustomTab({ activeTab, tabName, tabText, handleTabClick, icon }) {
 }
 
 CustomTab.propTypes = {
-  tabSelection: PropTypes.string,
-  handleTabClick: PropTypes.func,
-  tabName: PropTypes.string,
-  tabText: PropTypes.string,
+  activeTab: PropTypes.string.isRequired,
+  handleTabClick: PropTypes.func.isRequired,
+  tabName: PropTypes.string.isRequired,
+  tabText: PropTypes.string.isRequired,
   icon: PropTypes.object
 };
 

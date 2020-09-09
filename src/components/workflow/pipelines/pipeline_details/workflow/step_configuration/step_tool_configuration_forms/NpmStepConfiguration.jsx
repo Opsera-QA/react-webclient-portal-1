@@ -54,7 +54,7 @@ function NpmStepConfiguration({ data, parentCallback, setToast, setShowToast }) 
   const validateRequiredFields = () => {
     let { commands } = formData;
     if (commands.length === 0) {
-      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "detailPanelTop");
+      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
       setToast(toast);
       setShowToast(true);
       return false;

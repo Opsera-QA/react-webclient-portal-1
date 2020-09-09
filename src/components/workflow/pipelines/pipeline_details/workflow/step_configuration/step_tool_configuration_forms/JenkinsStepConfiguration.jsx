@@ -367,7 +367,7 @@ function JenkinsStepConfiguration({
 
     if (jobType === "job") {
       if (jobName.length === 0) {
-        let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "detailPanelTop");
+        let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
         setToast(toast);
         setShowToast(true);
         return false;
@@ -381,7 +381,7 @@ function JenkinsStepConfiguration({
         jUserId.length === 0 ||
         (buildType === "docker" ? dockerName.length === 0 || dockerTagName.length === 0 : false)
       ) {
-        let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "detailPanelTop");
+        let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
         setToast(toast);
         setShowToast(true);
         return false;

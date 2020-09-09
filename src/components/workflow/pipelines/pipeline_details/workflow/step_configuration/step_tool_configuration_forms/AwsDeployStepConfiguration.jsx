@@ -52,7 +52,7 @@ function AwsDeployStepConfiguration( { data, parentCallback, setToast, setShowTo
   const validateRequiredFields = () => {
     let { buildScript } = formData;
     if (buildScript.length === 0) {
-      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "detailPanelTop");
+      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
       setToast(toast);
       setShowToast(true);
       return false;

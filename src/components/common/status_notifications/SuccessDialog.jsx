@@ -29,6 +29,21 @@ function SuccessDialog({ successMessage, setSuccessMessage, alignment }) {
     );
   }
 
+  if (alignment === "stepConfigurationTop") {
+    return (
+      <div className="w-100 success-block step-configuration-dialog-block mt-2">
+        <div className="my-auto text-center">
+          {setSuccessMessage && <div className="float-right ml-1">
+            <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
+              clearSuccess();
+            }}/>
+          </div>}
+          <span>{messageBody}</span>
+        </div>
+      </div>
+    );
+  }
+
   if (alignment === "detailPanelTop") {
     return (
       <div className="row success-block top-dialog-detail-panel-block top-error-block">

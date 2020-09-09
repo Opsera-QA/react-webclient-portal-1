@@ -9,6 +9,8 @@ import templateEditorMetadata from "../template-form-fields";
 import templateActions from "../template-actions";
 import TemplateSummaryPanel from "./TemplateSummaryPanel";
 import TemplateDetailPanel from "./TemplateDetailPanel";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faStream} from "@fortawesome/free-solid-svg-icons";
 
 function TemplateDetailView() {
   const {templateId} = useParams();
@@ -54,8 +56,8 @@ function TemplateDetailView() {
         <BreadcrumbTrail destination="templateDetailView"/>
         {templateData &&
         <div className="content-container content-card-1 max-content-width ml-2">
-          <div className="pt-2 pl-2 content-block-header"><h5>Template Details
-            [{templateData.getData("name")}]</h5></div>
+          <div className="pt-2 pl-2 content-block-header">
+            <h5><FontAwesomeIcon icon={faStream} fixedWidth className="mr-1"/>Template Details [{templateData.getData("name")}]</h5></div>
           <div className="detail-view-body">
             <div>
               <TemplateSummaryPanel templateData={templateData} setTemplateData={setTemplateData}/>

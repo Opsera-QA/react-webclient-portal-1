@@ -142,7 +142,7 @@ function SourceRepositoryConfiguration({ data, parentCallback, setToast, setShow
   const validateRequiredFields = () => {
     let { service, accountId, username, password, repository, branch } = formData;
     if (service.length === 0 || repository.length === 0 || branch.length === 0 || accountId.length === 0 || username.length === 0 || password.length === 0  ) {
-      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "detailPanelTop");
+      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
       setToast(toast);
       setShowToast(true);
       return false;

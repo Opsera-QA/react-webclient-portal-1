@@ -9,6 +9,8 @@ import LoadingDialog from "../../../common/status_notifications/loading";
 import AccessDeniedDialog from "../../../common/status_notifications/accessDeniedInfo";
 import Model from "../../../../core/data_model/model";
 import {ldapUsersMetaData} from "../ldap-users-metadata";
+import {faUser} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 function LdapUserDetailView() {
   const {userEmail, orgDomain} = useParams();
@@ -48,8 +50,8 @@ function LdapUserDetailView() {
         <BreadcrumbTrail destination="ldapUserDetailView"/>
         {ldapUserData &&
         <div className="content-container content-card-1 max-content-width ml-2">
-          <div className="pt-2 pl-2 content-block-header"><h5>LDAP User Details
-            [{ldapUserData && ldapUserData["name"]}]</h5></div>
+          <div className="pt-2 pl-2 content-block-header">
+            <h5><FontAwesomeIcon icon={faUser} fixedWidth className="mr-1" />LDAP User Details [{ldapUserData && ldapUserData["name"]}]</h5></div>
           <div className="detail-view-body">
             <div>
               <LdapUserSummaryPanel ldapUserData={ldapUserData} orgDomain={orgDomain}/>

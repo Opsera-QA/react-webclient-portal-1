@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../../../../../contexts/AuthContext";
 import { useParams } from "react-router-dom";
-import ErrorDialog from "../../../../../common/status_notifications/error";
 import LoadingDialog from "../../../../../common/status_notifications/loading";
 import "../../../accounts.css";
 import BreadcrumbTrail from "../../../../../common/navigation/breadcrumbTrail";
@@ -11,8 +10,9 @@ import accountsActions from "../../../accounts-actions";
 import LdapOrganizationAccountSummaryPanel from "./LdapOrganizationAccountSummaryPanel";
 import {ldapOrganizationAccountMetaData} from "../ldap-organization-account-form-fields";
 import LdapOrganizationAccountDetailPanel from "./LdapOrganizationAccountDetailPanel";
-import {getOrganizationList} from "../../organizations/organization-functions";
 import {getLoadingErrorDialog} from "../../../../../common/toasts/toasts";
+import {faUsers} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 function LdapOrganizationAccountDetailView() {
   const { organizationDomain } = useParams();
@@ -64,13 +64,11 @@ function LdapOrganizationAccountDetailView() {
     return (
       <>
         <BreadcrumbTrail destination="ldapOrganizationAccountDetailView"/>
-        <h5>Organization Account Management</h5>
         {showToast && toast}
-
         {ldapOrganizationAccountData &&
         <div className="content-container content-card-1 max-content-width ml-2">
           <div className="pt-2 pl-2 content-block-header">
-            <h6>Organization Account Details [{ldapOrganizationAccountData && ldapOrganizationAccountData["name"]}]</h6>
+            <h6><FontAwesomeIcon icon={faUsers} fixedWidth className="mr-1" />Organization Account Details [{ldapOrganizationAccountData && ldapOrganizationAccountData["name"]}]</h6>
           </div>
           <div className="detail-view-body">
             <div>

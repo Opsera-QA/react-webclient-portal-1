@@ -188,7 +188,7 @@ function ArgoCDStepConfiguration( { stepTool, pipelineId, plan, stepId, parentCa
       vaultSecretKey.length === 0 || 
       applicationName.length === 0
     ) {
-      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "detailPanelTop");
+      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
       setToast(toast);
       setShowToast(true);
       return false;

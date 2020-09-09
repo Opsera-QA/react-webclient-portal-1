@@ -11,6 +11,7 @@ import SummaryActionBar from "../../../../common/actions/SummaryActionBar";
 import Model from "../../../../../core/data_model/model";
 import {AuthContext} from "../../../../../contexts/AuthContext";
 import toolTypeActions from "../../tool-management-actions";
+import LoadingDialog from "../../../../common/status_notifications/loading";
 
 function ToolTypeSummaryPanel({toolTypeData, setToolTypeData}) {
   const { getAccessToken } = useContext(AuthContext);
@@ -29,6 +30,10 @@ function ToolTypeSummaryPanel({toolTypeData, setToolTypeData}) {
       }
     }
   };
+
+  if (toolTypeData == null) {
+    return <LoadingDialog size="sm" />
+  }
 
   return (
     <>

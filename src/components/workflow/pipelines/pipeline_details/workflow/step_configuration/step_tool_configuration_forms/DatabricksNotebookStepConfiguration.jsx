@@ -57,7 +57,7 @@ function DatabricksNotebookStepConfiguration({ data, parentCallback, setToast, s
   const validateRequiredFields = () => {
     let { endpointUrl, authToken, dataPackage } = formData;
     if (endpointUrl.length === 0 || authToken.length === 0 || dataPackage.length === 0) {
-      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "detailPanelTop");
+      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
       setToast(toast);
       setShowToast(true);
       return false;

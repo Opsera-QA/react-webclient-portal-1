@@ -9,6 +9,8 @@ import toolTypeActions from "../../tool-management-actions";
 import Model from "../../../../../core/data_model/model";
 import toolTypeMetadata from "../tool-type-metadata";
 import ToolTypeDetailPanel from "./ToolTypeDetailPanel";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faToolbox} from "@fortawesome/pro-solid-svg-icons";
 
 function ToolTypeDetailView() {
   const {toolTypeId} = useParams();
@@ -52,7 +54,7 @@ function ToolTypeDetailView() {
         {toolTypeData &&
         <div className="content-container content-card-1 max-content-width ml-2">
           <div className="pt-2 pl-2 content-block-header">
-            <h5>Tool Type Details [{toolTypeData.getData("name")}]</h5>
+            <h5><FontAwesomeIcon icon={faToolbox} fixedWidth className="mr-1" />Tool Type Details [{toolTypeData && toolTypeData.getData("name")}]</h5>
           </div>
           <div className="detail-view-body">
             <div>

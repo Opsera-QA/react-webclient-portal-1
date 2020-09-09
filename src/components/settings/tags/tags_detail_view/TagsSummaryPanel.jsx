@@ -101,7 +101,7 @@ function TagsSummaryPanel({ tagData, setTagData }) {
             </Col>
           </Row>
         </div>
-      </div>}
+      </div>
     </>
   );
 }

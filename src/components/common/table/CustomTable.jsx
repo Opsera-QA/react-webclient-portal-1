@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
 import Pagination from "components/common/pagination";
-import LoadingDialog from "../status_notifications/loading";
 import {Spinner} from "react-bootstrap";
 
 export const defaultRowStyling = (row) => {
@@ -173,7 +172,7 @@ CustomTable.propTypes = {
 };
 
 CustomTable.defaultProps = {
-  tableStyleName: "custom-table",
+  tableStyleName: "custom-table-2",
   rowStyling: defaultRowStyling,
   initialState: defaultInitialState,
   showHeaderText: true,

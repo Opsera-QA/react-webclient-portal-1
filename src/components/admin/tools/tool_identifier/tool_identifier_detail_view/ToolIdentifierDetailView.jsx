@@ -9,6 +9,9 @@ import Model from "../../../../../core/data_model/model";
 import toolIdentifierMetadata from "../tool-identifier-metadata";
 import ToolIdentifierSummaryPanel from "./ToolIdentifierSummaryPanel";
 import ToolIdentifierDetailPanel from "./ToolIdentifierDetailPanel";
+import {faUser} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faTools} from "@fortawesome/pro-solid-svg-icons";
 
 function ToolIdentifierDetailView() {
   const {toolIdentifierId} = useParams();
@@ -52,7 +55,7 @@ function ToolIdentifierDetailView() {
         {toolIdentifierData &&
         <div className="content-container content-card-1 max-content-width ml-2">
           <div className="pt-2 pl-2 content-block-header">
-            <h5>Tool Identifier Details [{toolIdentifierData.getData("name")}]</h5>
+            <h5><FontAwesomeIcon icon={faTools} fixedWidth className="mr-1" />Tool Identifier Details [{toolIdentifierData.getData("name")}]</h5>
           </div>
           <div className="detail-view-body">
             <div>

@@ -12,6 +12,9 @@ import {ldapOrganizationMetaData} from "../ldap-organizations-form-fields";
 import accountsActions from "../../../accounts-actions";
 import LdapOrganizationDetailPanel from "./LdapOrganizationDetailPanel";
 import {getLoadingErrorDialog} from "../../../../../common/toasts/toasts";
+import {faToolbox} from "@fortawesome/pro-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSitemap} from "@fortawesome/free-solid-svg-icons";
 
 function LdapOrganizationDetailView() {
   const { organizationName } = useParams();
@@ -62,11 +65,10 @@ function LdapOrganizationDetailView() {
       <>
         <BreadcrumbTrail destination="ldapOrganizationDetailView"/>
         {showToast && toast}
-        <h5>Organization Management</h5>
         {ldapOrganizationData &&
         <div className="content-container content-card-1 max-content-width ml-2">
           <div className="pt-2 pl-2 content-block-header">
-            <h6>Organization Details [{ldapOrganizationData && ldapOrganizationData["name"]}]</h6>
+            <h6><FontAwesomeIcon icon={faSitemap} fixedWidth className="mr-1" />Organization Details [{ldapOrganizationData && ldapOrganizationData["name"]}]</h6>
           </div>
           <div className="detail-view-body">
             <div>

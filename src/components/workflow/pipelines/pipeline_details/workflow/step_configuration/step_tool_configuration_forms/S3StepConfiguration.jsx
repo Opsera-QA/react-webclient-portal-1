@@ -198,7 +198,7 @@ function S3StepConfiguration({
       buildStepId.length === 0 ||
       bucketName.length === 0 
     ) {
-      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "detailPanelTop");
+      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
       setToast(toast);
       setShowToast(true);
       return false;
