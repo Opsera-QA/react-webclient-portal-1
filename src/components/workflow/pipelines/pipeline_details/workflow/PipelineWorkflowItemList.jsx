@@ -56,12 +56,15 @@ function PipelineWorkflowItemList({ pipeline, items, lastStep, editWorkflow, pip
   const deleteStep = async (index) => {
     setIsSaving(true);
     items.splice(index, 1);
+
     if (items.length === 0) {
       handleAddStep("", 0);
     } else {
       await quietSavePlan();
+
       await fetchPlan();
     }
+
     setStateItems({ items: items });
     setIsSaving(false);
   };

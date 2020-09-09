@@ -166,9 +166,9 @@ function PipelineWorkflow({
   };
 
   const handleDoneWorkflowEditsClick = async () => {
-    setIsSavingPipeline(true);
-    await fetchPlan();
-    setIsSavingPipeline(false);
+    //setIsSavingPipeline(true);
+    //await fetchPlan();
+    //setIsSavingPipeline(false);
     setEditWorkflow(false);
   };
 
