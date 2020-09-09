@@ -58,19 +58,17 @@ export class Model {
   }
 
   isModelValid = () => {
+    return validateData(this.data, this.metaData.fields);
+  }
+
+  // TODO Replace top method with getErrors and rename this
+  isModelValid2 = () => {
     let isValid = validateData(this.data, this.metaData.fields);
-
-    //console.log("isValid: " + JSON.stringify(isValid));
-
-    return isValid === true ? isValid : isValid;
+    return isValid === true;
   }
 
   isFieldValid = (fieldName) => {
-    let isValid = validateField(this.data, this.getFieldById(fieldName), {});
-
-    //console.log("isValid: " + JSON.stringify(isValid));
-
-    return isValid === true ? isValid : isValid;
+    return validateField(this.data, this.getFieldById(fieldName), {});
   }
 
   propertyChange = (id, newValue, oldValue) => {

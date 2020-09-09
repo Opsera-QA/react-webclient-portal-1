@@ -38,6 +38,10 @@ export const getFormValidationErrorDialog = (toggleToast, alignment = "top") => 
   return getErrorDialog(`WARNING! There are errors in your form`, toggleToast, alignment);
 };
 
+export const getEmailAlreadyExistsErrorDialog = (toggleToast, alignment = "top") => {
+  return getErrorDialog(`WARNING! The email address given has already been registered to an Opsera account`, toggleToast, alignment);
+};
+
 export const getMissingRequiredFieldsErrorDialog = (toggleToast, alignment = "top") => {
   return getErrorDialog(`Required Fields Missing!`, toggleToast, alignment);
 };

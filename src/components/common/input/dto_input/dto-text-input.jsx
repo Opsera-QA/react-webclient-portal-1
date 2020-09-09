@@ -10,17 +10,12 @@ function DtoTextInput({fieldName, dataObject, setDataObject, disabled, type}) {
     newDataObject.setData(fieldName, value);
     let errors = newDataObject.isFieldValid(field.id);
 
-    // TODO: Show all errors on all input fields
-    if (errors !== true) {
-     let errorMessage = errors[fieldName];
-
-     if (errorMessage && errorMessage.length > 0)
-     {
-       setErrorMessage(errorMessage[0]);
-     }
-     else {
-       setErrorMessage(undefined);
-     }
+    // TODO: Show all errors on all input fields or return just one error
+    if ( errors != null && errors !== true) {
+       setErrorMessage(errors[0]);
+    }
+    else {
+      setErrorMessage("");
     }
 
     setDataObject({...newDataObject});

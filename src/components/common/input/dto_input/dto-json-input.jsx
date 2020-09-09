@@ -14,8 +14,11 @@ function DtoJsonInput({fieldName, dataObject, setDataObject, disabled}) {
       newDataObject.setData(fieldName, JSON.parse(value.json));
       let errors = newDataObject.isFieldValid(field.id);
 
-      if (errors !== true) {
-       setErrorMessage(errors[fieldName]);
+      if (errors != null && errors !== true) {
+       setErrorMessage(errors[0]);
+      }
+      else {
+        setErrorMessage("");
       }
 
       setDataObject({...newDataObject});

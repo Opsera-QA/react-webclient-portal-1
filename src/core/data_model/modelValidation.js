@@ -1,10 +1,14 @@
 import {isAlphaNumeric, validateEmail} from "../../utils/helpers";
 
 export const validateData = (data, fields) => {
-  let errors = {};
+  let errors = [];
 
   for (const field of fields) {
-    errors = validateField(data, field, errors);
+    let fieldErrors = validateField(data, field);
+
+    if (fieldErrors) {
+      errors.push(fieldErrors);
+    }
   }
   if (errors.length < 1) {
     return true;
@@ -12,28 +16,16 @@ export const validateData = (data, fields) => {
   return errors;
 }
 
-export const validateField = (data, field, errors) => {
-  const validationErrors = fieldValidation(data[field.id], field);
-  if (validationErrors != null) {
-    errors[field.id] = validationErrors;
-    // console.log("validationErrors.errorMessages: " + JSON.stringify(validationErrors));
-  }
-
-  // console.log("Returning Errors: " + JSON.stringify(errors));
-  return errors;
+export const validateField = (data, field) => {
+  return fieldValidation(data[field.id], field);
 }
 
 export const fieldValidation = (value, field) => {
-  let isValid = true;
   let errorMessages = [];
-
-  // console.log("In field validation for: " + JSON.stringify(value));
-  // console.log("field: " + JSON.stringify(field));
 
   if (field.minLength != null) {
     if (!minLengthValidator(value, field.minLength))
     {
-      isValid = false;
       errorMessages.push("The value has to be at least " + field.minLength + " characters long.");
     }
   }
@@ -41,7 +33,6 @@ export const fieldValidation = (value, field) => {
   if (field.maxLength != null) {
     if (!maxLengthValidator(value, field.maxLength))
     {
-      isValid = false;
       errorMessages.push("The value has to be "+ field.maxLength +" characters or fewer.");
     }
   }
@@ -49,7 +40,6 @@ export const fieldValidation = (value, field) => {
   if (field.isRequired != null) {
     if (!requiredValidator(value))
     {
-      isValid = false;
       errorMessages.push("This field is required.");
     }
   }
@@ -57,7 +47,6 @@ export const fieldValidation = (value, field) => {
   if (field.isEmail != null) {
     if (!validateEmail(value))
     {
-      isValid = false;
       errorMessages.push("The email address given is not valid.");
     }
   }
@@ -67,7 +56,6 @@ export const fieldValidation = (value, field) => {
 
     if (!isAlphaNumeric(value))
     {
-      isValid = false;
       errorMessages.push("No special characters are allowed.");
     }
   }

@@ -4,16 +4,11 @@ import DropdownList from "react-widgets/lib/DropdownList";
 
 function DtoSelectInput({ fieldName, dataObject, setDataObject, groupBy, selectOptions, valueField, textField, filter, placeholderText, setDataFunction, allowCreate, setSelectOptions, valueFormatter}) {
   const [errorMessage, setErrorMessage] = useState("");
-  const [isValid, setIsValid] = useState(true);
   const [field] = useState(dataObject.getFieldById(fieldName));
 
   const validateAndSetData = (fieldName, value) => {
     let newDataObject = dataObject;
     newDataObject.setData(fieldName, value);
-    // let errorCount = dataObject.validateField(field, field);
-
-    // console.log("ErrorCount: " + JSON.stringify(errorCount));
-    // setErrorMessage(errorMessage);
     setDataObject({...newDataObject});
   };
 
