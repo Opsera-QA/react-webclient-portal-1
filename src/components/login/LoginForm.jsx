@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { axiosApiService } from "../../api/apiService";
 import { useHistory } from "react-router-dom";
+import ErrorDialog from "../common/status_notifications/error";
 
 
 const LoginForm = () => {
@@ -78,7 +79,7 @@ const LoginForm = () => {
     setLoading(true);
     const apiUrl = "/users/forgot-password";
     const params = { "email": resetEmailAddress };
-    await axiosApiService().post(apiUrl, params)
+    axiosApiService().post(apiUrl, params)
       .then(response => {
         console.log("response: ", response);
         setLoading(false);
@@ -94,31 +95,41 @@ const LoginForm = () => {
       });
   };
 
+
   const handleDomainLookupSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const apiUrl = "/users/account-by-domain";
-    const params = { "email": lookupAccountEmail };
-    /* await axiosApiService().post(apiUrl, params)
-      .then(response => { 
-        console.log("response: ", response);
-        setLoading(false);
-        setErrorMessage(false);
-        setMessage(response.data.message);
-        setViewType("login");     
-      })
-      .catch(err => { 
-        console.log(err.response);
-        setLoading(false);
-        setErrorMessage(err.response.data.message);
-        setMessage(false);                
-      }); */
+    const apiUrl = "/users/check-email";
+    const params = { "email": lookupAccountEmail, "checkAccountLoginStatus": true };
+
+    try {
+      const response = await axiosApiService().post(apiUrl, params); //this lookup is currently FF in Node
+      console.log("response: ", response)
+      setMessage(false);
+      setErrorMessage(false);
+
+      if (response.data) { //valid account so allow it to continue login
+        setUsername(lookupAccountEmail);
+        setViewType("login");
+        return
+      }
+
+      //account isn't ready for login (check customer DB settings)
+      setErrorMessage("We are sorry but your account is not ready.  Please wait for registration to complete or contact Opsera for assistance.");
+    } catch (err) {
+      console.log(err);
+      setErrorMessage(err.message);
+      setMessage(false);
+    } finally {
+      setLoading(false);
+    }
+
 
     //todo: call lookup API with email address:  
     // if successful, update Okta values to match, swap out logo (future) and switch to login form
-    setUsername(lookupAccountEmail);
+    /*setUsername(lookupAccountEmail);
     setViewType("login");
-    setLoading(false);
+    setLoading(false);*/
   };
 
 
@@ -135,7 +146,9 @@ const LoginForm = () => {
               <h4 className="auth-header">
                 Sign in
               </h4>
-              {errorMessage && <div className="mx-2 error-text">{errorMessage}</div>}
+
+              {errorMessage && <ErrorDialog error={errorMessage} align="top" setError={setErrorMessage} />}
+
               {message && <div className="mx-2 info-text">{message}</div>}
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
@@ -185,7 +198,8 @@ const LoginForm = () => {
             Reset Password
           </h4>
 
-          {errorMessage && <div className="mx-2 error-text">{errorMessage}</div>}
+          {errorMessage && <ErrorDialog error={errorMessage} align="top" setError={setErrorMessage} />}
+
           {message && <div className="mx-2 info-text">{message}</div>}
 
           <form onSubmit={handleResetPasswordSubmit}>
@@ -220,7 +234,7 @@ const LoginForm = () => {
       <Row>
         <Col md={5} className="p-4"><WelcomeMessage/></Col>
         <Col>
-          <div className="d-flex align-items-center justify-content-center" >
+          <div className="d-flex align-items-center justify-content-center">
             <div className="auth-box-w">
               <div className="logo-w">
                 <a href="index.html"><img alt="" src="img/opsera_logo_120x118.png"/></a>
@@ -229,7 +243,8 @@ const LoginForm = () => {
                 Sign in
               </h4>
 
-              {errorMessage && <div className="mx-2 error-text">{errorMessage}</div>}
+              {errorMessage && <ErrorDialog error={errorMessage} align="top" setError={setErrorMessage} />}
+
               {message && <div className="mx-2 info-text">{message}</div>}
 
               <form onSubmit={handleDomainLookupSubmit}>
@@ -243,7 +258,7 @@ const LoginForm = () => {
                 </div>
 
                 <div className="buttons-w">
-                  <Button variant="success" className="w-100 mb-3" type="submit" disabled={!lookupAccountEmail}>
+                  <Button variant="success" className="w-100 mb-3" type="submit" disabled={!lookupAccountEmail || errorMessage}>
                     {loading && <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth/>}
                     Next</Button>
                 </div>
@@ -265,27 +280,27 @@ const WelcomeMessage = () => {
 
   return (
     <div className="ml-4">
-    <h2 className="mb-3 bd-text-purple-bright">Welcome to Opsera!</h2>
-    <div style={{ fontSize: "1.1rem" }}>
-      Opsera’s vision is to enable and empower the developers, operations and release teams by giving the
-      flexibility in selecting the various DevOps
-      functional tools, build the pipeline with quality and security gates.
-    </div>
-    <div style={{ fontSize: "1.1rem" }} className="mt-3">Opsera provides out of the box monitoring dashboard,
-      giving an end to end visibility of DevOps landscape metrics
-      via an intelligent dashboard to improve the Agility, Operational excellence and help them to track
-      security and compliance metrics.
-    </div>
-
-    <div className="row mx-n2 mt-4">
-      <div className="col-md px-2">
-        <Button variant="success" className="btn-lg w-100 mb-3" onClick={gotoSignUp}>Register an Account</Button>
+      <h2 className="mb-3 bd-text-purple-bright">Welcome to Opsera!</h2>
+      <div style={{ fontSize: "1.1rem" }}>
+        Opsera’s vision is to enable and empower the developers, operations and release teams by giving the
+        flexibility in selecting the various DevOps
+        functional tools, build the pipeline with quality and security gates.
       </div>
-      {/*<div className="col-md px-2">
+      <div style={{ fontSize: "1.1rem" }} className="mt-3">Opsera provides out of the box monitoring dashboard,
+        giving an end to end visibility of DevOps landscape metrics
+        via an intelligent dashboard to improve the Agility, Operational excellence and help them to track
+        security and compliance metrics.
+      </div>
+
+      <div className="row mx-n2 mt-4">
+        <div className="col-md px-2">
+          <Button variant="success" className="btn-lg w-100 mb-3" onClick={gotoSignUp}>Register an Account</Button>
+        </div>
+        {/*<div className="col-md px-2">
         <Button variant="outline-success" className="btn-lg w-100 mb-3" onClick={login}>Log In</Button>
       </div>*/}
+      </div>
     </div>
-  </div>
   );
 };
 

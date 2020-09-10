@@ -548,7 +548,7 @@ a:hover, .active {
 
 .top-error-block {
     top: 0;
-    position: absolute;
+    position: fixed;
     left: 0;
     padding: 1em;
 }
