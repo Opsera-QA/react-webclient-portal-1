@@ -5,13 +5,13 @@ const JobTypeSFDC = {
     type: "select",
     value: "",
     options: [
-      {
-        name: "SFDC Create XML Package",
-        value: "CREATE PACKAGE XML"
-      },
+      // {
+      //   name: "SFDC Create XML Package",
+      //   value: "SFDC CREATE PACKAGE XML"
+      // },
       {
         name: "SFDC Validate XML Package",
-        value: "VALIDATE PACKAGE XML"
+        value: "SFDC VALIDATE PACKAGE XML"
       },
       {
         name: "SFDC Backup",
@@ -25,10 +25,10 @@ const JobTypeSFDC = {
         name: "SDFC Unit Test",
         value: "SFDC UNIT TESTING"
       },
-      {
-        name: "SDFC Deploy (PROD)",
-        value: "SFDC FETCH AND DEPLOY"
-      }
+      // {
+      //   name: "SDFC Deploy (PROD)",
+      //   value: "SFDC FETCH AND DEPLOY"
+      // }
     ],
     toShow: true,
     disabled: false,

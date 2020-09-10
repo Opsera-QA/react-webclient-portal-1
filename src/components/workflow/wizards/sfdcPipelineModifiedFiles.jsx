@@ -24,6 +24,7 @@ const SfdcPipelineModifiedFiles = ({
   stepId,
   handleClose,
   setView,
+  isProfiles,
   isOrgToOrg,
   stepToolConfig,
   modifiedFiles,
@@ -134,7 +135,8 @@ const SfdcPipelineModifiedFiles = ({
     const postBody = {
       pipelineId: pipelineId,
       stepId: stepId,
-      componentTypes: selectedComponentTypes,
+      isProfiles : isProfiles,
+      componentTypes: isProfiles ? selectedComponentTypes : [],
       commitList: list,
       isSfdc: fromSFDC || fromDestinationSFDC ? true : false,
     };
@@ -188,7 +190,7 @@ const SfdcPipelineModifiedFiles = ({
                   {/* sfdcModified.map */}
                   {sfdcModified && sfdcModified.length === 0 && <div className="info-text mt-3">NO FILES</div>}
                   <div className="px-2">
-                    <Form.Group controlId="nameSpacePrefix">
+                    <Form.Group controlId="fromSFDC">
                       <Form.Check
                         type="checkbox"
                         label="Push from SFDC"
@@ -233,8 +235,9 @@ const SfdcPipelineModifiedFiles = ({
                       {destSfdcModified && destSfdcModified.length === 0 && (
                         <div className="info-text mt-3">NO FILES</div>
                       )}
+                      {/* {!isProfiles && 
                       <div className="px-2">
-                        <Form.Group controlId="nameSpacePre">
+                        <Form.Group controlId="fromDestSFDC">
                           <Form.Check
                             type="checkbox"
                             label="Push From Destination SFDC"
@@ -245,6 +248,8 @@ const SfdcPipelineModifiedFiles = ({
                           />
                         </Form.Group>
                       </div>
+                      } */}
+                      
                       {typeof destSfdcModified === "object" &&
                         destSfdcModified.map((item, idx) => (
                           <div key={idx} className="d-flex justify-content-center">
@@ -276,7 +281,7 @@ const SfdcPipelineModifiedFiles = ({
                       <div className="h6 opsera-blue">Git Files</div>
                       {gitModified && gitModified.length === 0 && <div className="info-text mt-3">NO FILES</div>}
                       <div className="px-2">
-                        <Form.Group controlId="nameSpacePrefix">
+                        <Form.Group controlId="fromGIT">
                           <Form.Check
                             type="checkbox"
                             label="Push From Git"
@@ -375,6 +380,7 @@ SfdcPipelineModifiedFiles.propTypes = {
   stepId: PropTypes.string,
   setView: PropTypes.func,
   isOrgToOrg: PropTypes.bool,
+  isProfiles: PropTypes.bool,
   stepToolConfig: PropTypes.object,
   modifiedFiles: PropTypes.object,
   setFromSFDC: PropTypes.func,

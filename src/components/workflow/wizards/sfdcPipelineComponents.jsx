@@ -40,6 +40,7 @@ const SfdcPipelineComponents = ({
   pipelineId,
   stepId,
   setView,
+  isProfiles,
   setSelectedComponentTypes,
   selectedComponentTypes,
   setModifiedFiles,
@@ -63,24 +64,31 @@ const SfdcPipelineComponents = ({
 
   useEffect(() => {
     setConfigurationError(false);
-    loadData();
     setComponentTypeForm(INITIAL_COMPONENT_TYPES_FORM);
   }, []);
 
-  const loadData = async () => {
-    setLoading(true);
-    let apiUrl = "/pipelines/sfdc/component-types";
-
-    try {
-      const accessToken = await getAccessToken();
-      const response = await axiosApiService(accessToken).get(apiUrl, {});
-      setComponentTypes(response.data);
-    } catch (error) {
-      console.error("Error getting API Data: ", error);
-      setError(error);
+  useEffect(() => {
+    let ignore = false;
+  
+    async function loadData () {
+      setLoading(true);
+      console.log(isProfiles)
+      let apiUrl = "/pipelines/sfdc/component-types";
+  
+      try {
+        const accessToken = await getAccessToken();
+        const response = await axiosApiService(accessToken).post(apiUrl, {isProfiles});
+        if (!ignore) setComponentTypes(response.data);
+      } catch (error) {
+        console.error("Error getting API Data: ", error);
+        setError(error);
+      }
+      setLoading(false);
     }
-    setLoading(false);
-  };
+  
+    loadData();
+    return () => { ignore = true; }
+  }, [isProfiles]);
 
   const dateAsOf = (
     <DateTimePicker
@@ -122,8 +130,8 @@ const SfdcPipelineComponents = ({
     const postBody = componentTypeForm;
     postBody.pipelineId = pipelineId;
     postBody.stepId = stepId;
-    postBody.lastCommitTimeStamp = asOfDate;
-    postBody.componentTypes = selectedComponentTypes;
+    postBody.lastCommitTimeStamp = isProfiles ? "1900-01-01T00:00:00.000Z" : asOfDate;
+    postBody.componentTypes = isProfiles ? ["Profile"] : selectedComponentTypes;
     postBody.objectType = filtered[0];
     postBody.nameSpacePrefix = nameSpacePrefix;
 
@@ -166,11 +174,13 @@ const SfdcPipelineComponents = ({
             <>
               <div className="mt-3 mr-3">
                 <div className="d-flex justify-content-between">
+                  {!isProfiles && 
                   <div className="px-2">
                     <div className="text-muted pl-1 pb-1">Date Filter:</div>
                     {dateAsOf}
                   </div>
-
+                  }
+                  
                   <div className="px-2">
                     <div className="text-muted pl-1 pb-1">Prefix:</div>
                     <Form.Group controlId="nameSpacePrefix">
@@ -269,13 +279,13 @@ const SfdcPipelineComponents = ({
                     <>
                       {typeof componentTypes === "object" &&
                         componentTypes.map((item, idx) => (
-                          <div key={idx} className="p-2 w-25">
+                          <div key={item} className="p-2 w-25">
                             <Form.Check
                               inline
                               type={"checkbox"}
                               label={item}
                               name={item}
-                              id={idx}
+                              id={item}
                               checked={selectedComponentTypes.includes(item)}
                               onChange={handleComponentCheck}
                             />
@@ -331,6 +341,7 @@ SfdcPipelineComponents.propTypes = {
   pipelineId: PropTypes.string,
   stepId: PropTypes.string,
   setView: PropTypes.func,
+  isProfiles: PropTypes.bool,
   setSelectedComponentTypes: PropTypes.func,
   selectedComponentTypes: PropTypes.array,
   setModifiedFiles: PropTypes.func,

@@ -23,6 +23,7 @@ const SfdcPipelineWizard = ({
   const [stepId, setStepId] = useState("");
   const [stepToolConfigId, setStepToolConfigId] = useState("");
   const [isOrgToOrg, setIsOrgToOrg] = useState(false);
+  const [isProfiles, setIsProfiles] = useState(false);
   const [stepToolConfig, setStepToolConfig] = useState("");
   const [stepIndex, setStepIndex] = useState();
   const [sfdcComponentFilterObject, setSfdcComponentFilterObject] = useState({});
@@ -39,7 +40,7 @@ const SfdcPipelineWizard = ({
   //must find step ID of the Sfdc Jenkins Config step (typically first step and has step.tool.job_type set to "sfdc-ant")
   const loadSfdcInitStep = async (steps) => {
     let stepArrayIndex = steps.findIndex(
-      (x) => x.tool && x.tool.job_type === "sfdc-ant" && x.tool.tool_identifier === "jenkins"
+      (x) => x.tool && (x.tool.job_type === "sfdc-ant" || x.tool.job_type === "sfdc-ant-profile") && x.tool.tool_identifier === "jenkins"
     );
     console.log(stepArrayIndex);
     if (stepArrayIndex === -1) {
@@ -51,6 +52,7 @@ const SfdcPipelineWizard = ({
       setStepId(steps[stepArrayIndex]._id);
       setStepToolConfig(steps[stepArrayIndex].tool.configuration);
       setIsOrgToOrg(steps[stepArrayIndex].tool.configuration.isOrgToOrg);
+      setIsProfiles(steps[stepArrayIndex].tool.job_type === "sfdc-ant-profile" ? true : false);
       setStepToolConfigId(steps[stepArrayIndex].tool.configuration.toolConfigId);
       setStepIndex(stepArrayIndex);
     }
@@ -59,21 +61,6 @@ const SfdcPipelineWizard = ({
   const createJenkinsJob = async () => {
     const accessToken = await getAccessToken();
     const apiUrl = `/pipelines/sfdc/set-jobs`;
-    // old object
-
-    // const postBody = {
-    //   jobId: "",
-    //   pipelineId: pipelineId,
-    //   stepId: stepId,
-    //   buildParams: {
-    //     stepId: sfdcComponentFilterObject.stepId,
-    //     lastCommitTimeStamp: sfdcComponentFilterObject.lastCommitTimeStamp,
-    //     componentTypes: JSON.stringify(sfdcComponentFilterObject.componentTypes),
-    //     objectType: sfdcComponentFilterObject.objectType,
-    //     retrieveFilesFromSFDC: fromSFDC,
-    //     nameSpacePrefix: sfdcComponentFilterObject.nameSpacePrefix,
-    //   },
-    // };
 
     // new object with xml as param
     const postBody = {
@@ -104,6 +91,8 @@ const SfdcPipelineWizard = ({
 
       //trigger start of pipeline & close modal
       await handlePipelineWizardRequest(pipelineId, true);
+    } else {
+      setError(createJobResponse && createJobResponse.data && createJobResponse.data.message);
     }
   };
 
@@ -121,6 +110,7 @@ const SfdcPipelineWizard = ({
             pipelineId={pipelineId}
             stepId={stepId}
             isOrgToOrg={isOrgToOrg}
+            isProfiles={isProfiles}
             stepToolConfig={stepToolConfig}
             handleClose={handleClose}
             setView={setView}
@@ -138,6 +128,7 @@ const SfdcPipelineWizard = ({
             handleClose={handleClose}
             setView={setView}
             isOrgToOrg={isOrgToOrg}
+            isProfiles={isProfiles}
             stepToolConfig={stepToolConfig}
             modifiedFiles={modifiedFiles}
             fromSFDC={fromSFDC}
