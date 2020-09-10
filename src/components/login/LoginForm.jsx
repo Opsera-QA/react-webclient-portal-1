@@ -103,9 +103,6 @@ const LoginForm = () => {
     const apiUrl = "/users/check-email";
     const params = { "email": lookupAccountEmail, "checkAccountLoginStatus": true };
 
-    setMessage("THIS IS A TEST");
-return
-
     try {
       const response = await axiosApiService().post(apiUrl, params); //this lookup is currently FF in Node
       setMessage(false);
@@ -249,7 +246,7 @@ return
 
               {errorMessage && <ErrorDialog error={errorMessage} align="top" setError={setErrorMessage}/>}
 
-              {message && <InformationDialog message={message} align="top1" setMessage={setMessage}/>}
+              {message && <InformationDialog message={message} align="top" setMessage={setMessage}/>}
 
               <form onSubmit={handleDomainLookupSubmit}>
                 <div className="form-group">
