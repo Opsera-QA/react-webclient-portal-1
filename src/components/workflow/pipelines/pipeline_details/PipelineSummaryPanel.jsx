@@ -425,10 +425,12 @@ function PipelineSummaryPanel({
               <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Tags:</span>
 
                 {!editTags && pipeline.tags &&
-                pipeline.tags.map((item, idx) => (<span key={idx}>{item.type}:{item.value}</span>))
+                pipeline.tags.map((item, idx) => { if (typeof item !== "string") return (<span key={idx}>{item.type}:{item.value}</span>)})
                 }
 
-                {authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running" && getEditIcon("tags")}
+               {/*
+                Disabled until Noah implements the new Tag modal
+                {authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running" && getEditIcon("tags")}*/}
 
                 {editTags &&
                 <EditToolModal data={pipeline.tags} visible={editTags} onHide={() => {
