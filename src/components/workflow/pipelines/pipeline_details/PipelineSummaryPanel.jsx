@@ -423,15 +423,20 @@ function PipelineSummaryPanel({
                 className="text-muted mr-1">Created On:</span> {pipeline.createdAt && format(new Date(pipeline.createdAt), "yyyy-MM-dd', 'hh:mm a")}
               </Col>
               <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Tags:</span>
-                {!editTags && authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running" && <>
-                  {pipeline.tags.map((item, idx) => (<span key={idx}>{item}, </span>))}
-                  {getEditIcon("tags")}
-                </>}
-                {editTags && <EditToolModal data={pipeline.tags} visible={editTags} onHide={() => {
+
+                {!editTags && pipeline.tags &&
+                pipeline.tags.map((item, idx) => (<span key={idx}>{item.type}:{item.value}</span>))
+                }
+
+                {authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running" && getEditIcon("tags")}
+
+                {editTags &&
+                <EditToolModal data={pipeline.tags} visible={editTags} onHide={() => {
                   setEditTags(false);
                 }} onClick={(tags) => {
                   handleSavePropertyClick(pipeline._id, tags, "tags");
                 }}/>}
+
               </Col>
               <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-2">Type:</span>
                 {pipeline.type && !editType && pipelineHelpers.displayPipelineType(pipeline.type)}
