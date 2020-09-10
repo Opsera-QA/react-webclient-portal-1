@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import { useHistory, Link } from "react-router-dom";
-import { LinkContainer } from "react-router-bootstrap";
 import { Row, Col, Button, OverlayTrigger, Tooltip, Form } from "react-bootstrap";
 import PipelineActions from "../../pipeline-actions";
 import { format } from "date-fns";
@@ -20,12 +19,12 @@ import {
 import "../../workflows.css";
 import SchedulerWidget from "../../../common/schedulerWidget";
 import PipelineHelpers from "../../pipelineHelpers";
-import EditToolModal from "../../editToolModal";
 import DropdownList from "react-widgets/lib/DropdownList";
 import SummaryActionBar from "../../../common/actions/SummaryActionBar";
 import pipelineHelpers from "../../pipelineHelpers";
 import { getCreateSuccessResultDialog, getUpdateSuccessResultDialog } from "../../../common/toasts/toasts";
 import PipelineActionControls from "./PipelineActionControls";
+import EditTagModal from "../../EditTagModal";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -423,17 +422,20 @@ function PipelineSummaryPanel({
                 className="text-muted mr-1">Created On:</span> {pipeline.createdAt && format(new Date(pipeline.createdAt), "yyyy-MM-dd', 'hh:mm a")}
               </Col>
               <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Tags:</span>
+                {authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running" && getEditIcon("tags")}
 
                 {!editTags && pipeline.tags &&
-                pipeline.tags.map((item, idx) => { if (typeof item !== "string") return (<span key={idx}>{item.type}:{item.value}</span>)})
+                  pipeline.tags.map((item, idx) => {
+                    if (typeof item !== "string")
+                      return (
+                        <div>
+                          <span className="ml-1" key={idx}><span className="mr-1">{item.type}:</span>{item.value}</span>
+                        </div>
+                      );})
                 }
 
-               {/*
-                Disabled until Noah implements the new Tag modal
-                {authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running" && getEditIcon("tags")}*/}
-
                 {editTags &&
-                <EditToolModal data={pipeline.tags} visible={editTags} onHide={() => {
+                <EditTagModal data={pipeline.tags} visible={editTags} onHide={() => {
                   setEditTags(false);
                 }} onClick={(tags) => {
                   handleSavePropertyClick(pipeline._id, tags, "tags");
