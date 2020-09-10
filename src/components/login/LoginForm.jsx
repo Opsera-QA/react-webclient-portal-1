@@ -157,6 +157,7 @@ const LoginForm = () => {
                   <input className="form-control"
                          id="username" type="text"
                          value={username}
+                         disabled={true}
                          onChange={handleUsernameChange}/>
                   <div className="pre-icon os-icon os-icon-user-male-circle"></div>
                 </div>
