@@ -428,8 +428,8 @@ function PipelineSummaryPanel({
                   pipeline.tags.map((item, idx) => {
                     if (typeof item !== "string")
                       return (
-                        <div>
-                          <span className="ml-1" key={idx}><span className="mr-1">{item.type}:</span>{item.value}</span>
+                        <div key={idx}>
+                          <span className="ml-1"><span className="mr-1">{item.type}:</span>{item.value}</span>
                         </div>
                       );})
                 }
