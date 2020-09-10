@@ -17,6 +17,7 @@ import PipelineActions from "../../../workflow/pipeline-actions";
 import {AuthContext} from "../../../../contexts/AuthContext";
 import {axiosApiService} from "../../../../api/apiService";
 import JenkinsToolConfiguration from "./tool_jobs/jenkins/JenkinsToolConfiguration";
+import NexusToolConfiguration from "./tool_jobs/nexus/NexusToolConfiguration";
 import {
   getUpdateFailureResultDialog,
   getUpdateSuccessResultDialog
@@ -80,6 +81,8 @@ function ToolConfigurationPanel({ toolData }) {
         return <AWSToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
       case "sfdc-configurator":
         return <SFDCToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
+      case "nexus":
+        return <NexusToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
       default:
         return <div className="text-center p-5 text-muted mt-5">Configuration is not currently available for this tool.</div>
     }
