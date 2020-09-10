@@ -63,6 +63,7 @@ import LdapOrganizationAccountDetailView
   from "./components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountDetailView";
 import LdapOrganizationAccountManagement
   from "./components/admin/accounts/ldap/organization_accounts/LdapOrganizationAccountManagement";
+import ToastContextProvider from "./contexts/DialogToastContext";
 
 const OktaAuth = require("@okta/okta-auth-js");
 const config = require("./config");
@@ -181,91 +182,93 @@ const AppWithRouterAccess = () => {
         }
         <AuthContextProvider userData={data} refreshToken={refreshToken} authClient={authClient}>
           <Navbar hideAuthComponents={hideSideBar} userData={data}/>
-          <div className="container-fluid" style={{ margin: "0" }}>
-            <div className="d-flex flex-row">
-              <Sidebar userData={data} hideSideBar={hideSideBar}/>
+          <ToastContextProvider>
+            <div className="container-fluid" style={{ margin: "0" }}>
+              <div className="d-flex flex-row">
+                <Sidebar userData={data} hideSideBar={hideSideBar}/>
 
-              <div className="w-100 pt-4 pb-4">
-                <Route path="/" exact component={Home}/>
-                {/*<SecureRoute path="/" exact component={Overview}/>*/}
+                <div className="w-100 pt-4 pb-4">
+                  <Route path="/" exact component={Home}/>
+                  {/*<SecureRoute path="/" exact component={Overview}/>*/}
 
-                <Route path='/login' render={() => <Login redirectFromLogin={redirectFromLogin}/>}/>
-                <Route path='/implicit/callback' component={LoginCallback}/>
+                  <Route path='/login' render={() => <Login redirectFromLogin={redirectFromLogin}/>}/>
+                  <Route path='/implicit/callback' component={LoginCallback}/>
 
-                <Route path="/signup" exact component={Signup}/>
-                <Route path="/about" exact component={About}/>
-                <Route path="/about/pricing" component={Pricing}/>
-                <Route path="/help" component={OnlineHelp}/>
-                <Route path="/registration" exact component={Registration}/>
+                  <Route path="/signup" exact component={Signup}/>
+                  <Route path="/about" exact component={About}/>
+                  <Route path="/about/pricing" component={Pricing}/>
+                  <Route path="/help" component={OnlineHelp}/>
+                  <Route path="/registration" exact component={Registration}/>
 
 
-                <SecureRoute path="/profile" component={Profile}/>
-                <SecureRoute path="/inventory/:view" exact component={Inventory}/>
-                <SecureRoute path="/inventory/tools/details/:id" exact component={ToolDetailView}/>
-                <SecureRoute path="/dashboard" component={Dashboard}/>
-                <SecureRoute path="/tools/:id?" component={ApiConnector}/>
-                <SecureRoute path="/platform" component={Platform}/>
-                <SecureRoute path="/analytics" exact component={Analytics}/>
-                <SecureRoute path="/logs" exact component={Logs}/>
-                <SecureRoute path="/blueprint" exact component={OPBlueprintMain}/>
-                <SecureRoute path="/reports" exact component={Reports}/>
-                <SecureRoute path="/update" component={Update}/>
+                  <SecureRoute path="/profile" component={Profile}/>
+                  <SecureRoute path="/inventory/:view" exact component={Inventory}/>
+                  <SecureRoute path="/inventory/tools/details/:id" exact component={ToolDetailView}/>
+                  <SecureRoute path="/dashboard" component={Dashboard}/>
+                  <SecureRoute path="/tools/:id?" component={ApiConnector}/>
+                  <SecureRoute path="/platform" component={Platform}/>
+                  <SecureRoute path="/analytics" exact component={Analytics}/>
+                  <SecureRoute path="/logs" exact component={Logs}/>
+                  <SecureRoute path="/blueprint" exact component={OPBlueprintMain}/>
+                  <SecureRoute path="/reports" exact component={Reports}/>
+                  <SecureRoute path="/update" component={Update}/>
 
-                {/* Administration Pages */}
-                <SecureRoute path="/admin" exact component={AdminTools}/>
-                <SecureRoute path="/admin/delete" component={DeleteTools}/>
-                <SecureRoute path="/admin/manage_systems" component={ManageSystems}/>
-                <SecureRoute path="/admin/registered-users" exact component={RegisteredUsers}/>
-                <SecureRoute path="/admin/registered-users/:id" exact component={RegisteredUserDetail}/>
-                <SecureRoute path="/admin/systemstatus" component={SystemStatus}/>
-                <SecureRoute path="/admin/analytics/reports-registration" component={ReportsRegistration}/>
-                <SecureRoute path="/admin/tools/:tabKey?" exact component={ToolManagement}/>
-                <SecureRoute path="/admin/tools/types/details/:toolTypeId" exact component={ToolTypeDetailView}/>
-                <SecureRoute path="/admin/tools/identifiers/details/:toolIdentifierId" exact
-                             component={ToolIdentifierDetailView}/>
-                <SecureRoute path="/admin/kpis" exact component={KpiManagement}/>
-                <SecureRoute path="/admin/kpis/:id" exact component={KpiDetailView}/>
-                <SecureRoute path="/admin/templates" exact component={TemplateManagement}/>
-                <SecureRoute path="/admin/templates/details/:templateId" exact component={TemplateDetailView}/>
+                  {/* Administration Pages */}
+                  <SecureRoute path="/admin" exact component={AdminTools}/>
+                  <SecureRoute path="/admin/delete" component={DeleteTools}/>
+                  <SecureRoute path="/admin/manage_systems" component={ManageSystems}/>
+                  <SecureRoute path="/admin/registered-users" exact component={RegisteredUsers}/>
+                  <SecureRoute path="/admin/registered-users/:id" exact component={RegisteredUserDetail}/>
+                  <SecureRoute path="/admin/systemstatus" component={SystemStatus}/>
+                  <SecureRoute path="/admin/analytics/reports-registration" component={ReportsRegistration}/>
+                  <SecureRoute path="/admin/tools/:tabKey?" exact component={ToolManagement}/>
+                  <SecureRoute path="/admin/tools/types/details/:toolTypeId" exact component={ToolTypeDetailView}/>
+                  <SecureRoute path="/admin/tools/identifiers/details/:toolIdentifierId" exact
+                               component={ToolIdentifierDetailView}/>
+                  <SecureRoute path="/admin/kpis" exact component={KpiManagement}/>
+                  <SecureRoute path="/admin/kpis/:id" exact component={KpiDetailView}/>
+                  <SecureRoute path="/admin/templates" exact component={TemplateManagement}/>
+                  <SecureRoute path="/admin/templates/details/:templateId" exact component={TemplateDetailView}/>
 
-                {/* Ldap Account Pages */}
-                <SecureRoute path="/admin/organizations" exact component={LdapOrganizationsView}/>
-                <SecureRoute path="/admin/organizations/details/:organizationName" exact
-                             component={LdapOrganizationDetailView}/>
-                <SecureRoute path="/admin/organization-accounts/:organizationName?" exact
-                             component={LdapOrganizationAccountManagement}/>
-                <SecureRoute path="/admin/organization-accounts/:organizationDomain/details" exact
-                             component={LdapOrganizationAccountDetailView}/>
-                <SecureRoute path="/accounts/create" exact component={LdapCustomerOnboardView}/>
+                  {/* Ldap Account Pages */}
+                  <SecureRoute path="/admin/organizations" exact component={LdapOrganizationsView}/>
+                  <SecureRoute path="/admin/organizations/details/:organizationName" exact
+                               component={LdapOrganizationDetailView}/>
+                  <SecureRoute path="/admin/organization-accounts/:organizationName?" exact
+                               component={LdapOrganizationAccountManagement}/>
+                  <SecureRoute path="/admin/organization-accounts/:organizationDomain/details" exact
+                               component={LdapOrganizationAccountDetailView}/>
+                  <SecureRoute path="/accounts/create" exact component={LdapCustomerOnboardView}/>
 
-                {/*Pipelines*/}
-                <SecureRoute path="/pipeline" component={Pipeline}/> {/*Old Pipeline*/}
-                <SecureRoute path="/workflow/:tab?" exact component={Pipelines}/>
-                <SecureRoute path="/workflow/details/:id/:tab?" exact component={PipelineDetailView}/>
+                  {/*Pipelines*/}
+                  <SecureRoute path="/pipeline" component={Pipeline}/> {/*Old Pipeline*/}
+                  <SecureRoute path="/workflow/:tab?" exact component={Pipelines}/>
+                  <SecureRoute path="/workflow/details/:id/:tab?" exact component={PipelineDetailView}/>
 
-                {/*Settings*/}
-                <SecureRoute path="/settings" exact component={AccountSettingsView}/>
-                <SecureRoute path="/settings/:orgDomain?/groups/" exact component={LdapGroupManagement}/>
-                <SecureRoute path="/settings/:orgDomain/groups/details/:groupName" exact
-                             component={LdapGroupDetailView}/>
-                <SecureRoute path="/settings/:orgDomain?/users/" exact component={LdapUserManagement}/>
-                <SecureRoute path="/settings/:orgDomain/users/details/:userEmail" exact component={LdapUserDetailView}/>
-                <SecureRoute path="/settings/tags" exact component={TagEditor}/>
-                <SecureRoute path="/settings/tags/:id" exact component={TagDetailView}/>
-                <SecureRoute path="/settings/customerstatus" exact component={CustomerSystemStatus}/>
+                  {/*Settings*/}
+                  <SecureRoute path="/settings" exact component={AccountSettingsView}/>
+                  <SecureRoute path="/settings/:orgDomain?/groups/" exact component={LdapGroupManagement}/>
+                  <SecureRoute path="/settings/:orgDomain/groups/details/:groupName" exact
+                               component={LdapGroupDetailView}/>
+                  <SecureRoute path="/settings/:orgDomain?/users/" exact component={LdapUserManagement}/>
+                  <SecureRoute path="/settings/:orgDomain/users/details/:userEmail" exact component={LdapUserDetailView}/>
+                  <SecureRoute path="/settings/tags" exact component={TagEditor}/>
+                  <SecureRoute path="/settings/tags/:id" exact component={TagDetailView}/>
+                  <SecureRoute path="/settings/customerstatus" exact component={CustomerSystemStatus}/>
 
-                <SecureRoute path="/demo/api" component={ApiConnectionDemo}/>
-                <SecureRoute path="/demo/table" component={CommonTableDemo}/>
+                  <SecureRoute path="/demo/api" component={ApiConnectionDemo}/>
+                  <SecureRoute path="/demo/table" component={CommonTableDemo}/>
 
-                <Route path="/trial/registration" exact component={FreeTrialRegistration}/>
+                  <Route path="/trial/registration" exact component={FreeTrialRegistration}/>
 
+                </div>
+              </div>
+              <div className="row fixed-row-footer-bottom">
+                <div className="col text-center m-1" style={{ padding: 0, margin: 0, fontSize: ".6em" }}>© OpsERA 2020
+                </div>
               </div>
             </div>
-            <div className="row fixed-row-footer-bottom">
-              <div className="col text-center m-1" style={{ padding: 0, margin: 0, fontSize: ".6em" }}>© OpsERA 2020
-              </div>
-            </div>
-          </div>
+          </ToastContextProvider>
         </AuthContextProvider>
       </Security>
     );

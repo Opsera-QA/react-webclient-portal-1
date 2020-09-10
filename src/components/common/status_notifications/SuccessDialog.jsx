@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
-function SuccessDialog({ successMessage, setSuccessMessage, alignment }) {
+function SuccessDialog({ successMessage, setSuccessMessage, alignment, autoCloseDialog }) {
   const [messageBody, setMessageBody] = useState("");
 
   const clearSuccess = () => {
@@ -14,11 +14,34 @@ function SuccessDialog({ successMessage, setSuccessMessage, alignment }) {
 
   useEffect(() => {
     setMessageBody(successMessage);
+
+    if (autoCloseDialog) {
+      hideDialog();
+    }
   }, [successMessage]);
+
+  function hideDialog() {
+    setTimeout(function () {
+      clearSuccess();
+    }, 5000);
+  }
 
   if (alignment === "top") {
     return (
       <div className="w-100 success-block top-error-block">
+        {setSuccessMessage && <div className="float-right ml-1">
+          <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
+            clearSuccess();
+          }}/>
+        </div>}
+        <span>{messageBody}</span>
+      </div>
+    );
+  }
+
+  if (alignment === "dialogToast") {
+    return (
+      <div className="w-100 success-block top-dialog-block">
         {setSuccessMessage && <div className="float-right ml-1">
           <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
             clearSuccess();
@@ -78,6 +101,13 @@ function SuccessDialog({ successMessage, setSuccessMessage, alignment }) {
 
 SuccessDialog.propTypes = {
   successMessage: PropTypes.string,
+  setSuccessMessage: PropTypes.string,
+  alignment: PropTypes.string,
+  autoCloseDialog: PropTypes.bool
 };
+
+SuccessDialog.defaultProps = {
+  autoCloseDialog: true
+}
 
 export default SuccessDialog;

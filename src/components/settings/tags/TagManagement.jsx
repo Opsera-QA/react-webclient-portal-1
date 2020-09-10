@@ -12,6 +12,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import AccessDeniedDialog from "../../common/status_notifications/accessDeniedInfo";
 import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
 import {getLoadingErrorDialog} from "../../common/toasts/toasts";
+import {DialogToastContext} from "../../../contexts/DialogToastContext";
 
 function TagManagement() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -19,8 +20,7 @@ function TagManagement() {
   const [isLoading, setIsLoading] = useState(true);
   const [tagList, setTagList] = useState([]);
   const [showTagModal, setShowTagModal] = useState(false);
-  const [toast, setToast] = useState({});
-  const [showToast, setShowToast] = useState(false);
+  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     loadData();
@@ -36,9 +36,7 @@ function TagManagement() {
       const response = await adminTagsActions.getTags(getAccessToken);
       setTagList(response.data);
     } catch (error) {
-      let toast = getLoadingErrorDialog(error.message, setShowToast);
-      setToast(toast);
-      setShowToast(true);
+      toastContext.showLoadingErrorDialog(error.message);
       console.error(error.message);
     }
   };
@@ -67,7 +65,6 @@ function TagManagement() {
     return (
       <div>
         <BreadcrumbTrail destination={"tagManagement"}/>
-        {showToast && toast}
         <div className="justify-content-between mb-1 d-flex">
           <h5>Tag Management</h5>
           <div className="text-right">

@@ -4,11 +4,6 @@ import { AuthContext } from "contexts/AuthContext";
 import Row from "react-bootstrap/Row";
 import adminTagsActions from "../admin-tags-actions";
 import LoadingDialog from "../../../common/status_notifications/loading";
-import {
-  getCreateFailureResultDialog,
-  getCreateSuccessResultDialog,
-  getFormValidationErrorDialog, getUpdateFailureResultDialog, getUpdateSuccessResultDialog
-} from "../../../common/toasts/toasts";
 import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
 import DtoToggleInput from "../../../common/input/dto_input/dto-toggle-input";
 import DtoMultipleInput from "../../../common/input/dto_input/dto-multiple-input";
@@ -17,13 +12,13 @@ import Col from "react-bootstrap/Col";
 import Model from "../../../../core/data_model/model";
 import DtoSelectInput from "../../../common/input/dto_input/dto-select-input";
 import {defaultTags} from "../tags-form-fields";
+import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 
-function TagEditorPanel({ tagData, setTagData }) {
+function TagEditorPanel({ tagData, setTagData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const [tagDataDto, setTagDataDto] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const [showToast, setShowToast] = useState(false);
-  const [toast, setToast] = useState({});
+  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     loadData();
@@ -39,22 +34,17 @@ function TagEditorPanel({ tagData, setTagData }) {
     if (tagDataDto.isModelValid()) {
       try {
         let createTagResponse = await adminTagsActions.create(tagDataDto, getAccessToken);
-        let toast = getCreateSuccessResultDialog(tagDataDto.getType(), setShowToast);
-        setToast(toast);
-        setShowToast(true);
+        toastContext.showCreateSuccessResultDialog(tagDataDto.getType());
         let updatedDto = new Model(createTagResponse.data, tagDataDto.metaData, false);
         setTagDataDto(updatedDto);
         setTagData(updatedDto);
+        handleClose();
       } catch (error) {
-        let toast = getCreateFailureResultDialog(tagDataDto.getType(), error.message, setShowToast);
-        setToast(toast);
-        setShowToast(true);
+        toastContext.showCreateFailureResultDialog(tagDataDto.getType(), error.message);
         console.error(error.message);
       }
     } else {
-      let toast = getFormValidationErrorDialog(setShowToast);
-      setToast(toast);
-      setShowToast(true);
+      toastContext.showFormValidationErrorDialog();
     }
   };
 
@@ -62,22 +52,16 @@ function TagEditorPanel({ tagData, setTagData }) {
     if (tagDataDto.isModelValid()) {
       try {
         const response = await adminTagsActions.update(tagDataDto, getAccessToken);
-        let toast = getUpdateSuccessResultDialog(tagDataDto.getType(), setShowToast);
-        setToast(toast);
-        setShowToast(true);
+        toastContext.showUpdateSuccessResultDialog(tagDataDto.getType());
         let updatedDto = new Model(response.data, tagDataDto.metaData, false);
         setTagDataDto(updatedDto);
         setTagData(updatedDto);
       } catch (error) {
-        let toast = getUpdateFailureResultDialog(tagDataDto.getType(), error.message, setShowToast);
-        setToast(toast);
-        setShowToast(true);
+        toastContext.showUpdateFailureResultDialog(tagDataDto.getType(), error.message);
         console.error(error.message);
       }
     } else {
-      let toast = getFormValidationErrorDialog(setShowToast);
-      setToast(toast);
-      setShowToast(true);
+      toastContext.showFormValidationErrorDialog();
     }
   };
 
@@ -86,7 +70,6 @@ function TagEditorPanel({ tagData, setTagData }) {
   } else {
     return (
       <>
-        {showToast && toast}
         <div className="mx-2 my-3">
           <Row>
             <Col>
@@ -123,6 +106,7 @@ function TagEditorPanel({ tagData, setTagData }) {
 TagEditorPanel.propTypes = {
   tagData: PropTypes.object,
   setTagData: PropTypes.func,
+  handleClose: PropTypes.func
 };
 
 export default TagEditorPanel;
