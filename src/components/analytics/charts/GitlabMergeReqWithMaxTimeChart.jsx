@@ -23,10 +23,7 @@ function GitlabMergeReqWithMaxTimeChart({ persona, date }) {
       try {
         await fetchData();
       } catch (err) {
-        if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
-          return;
-        }
+        if (err.name === "AbortError") return;
       }
     };
     runEffect();
@@ -63,72 +60,69 @@ function GitlabMergeReqWithMaxTimeChart({ persona, date }) {
     }
   };
 
-  if (loading) {
-    return <LoadingDialog size="sm" />;
-  } else if (error) {
-    return <ErrorDialog error={error} />;
-  } else {
-    return (
-      <>
-        <ModalLogs
-          header="Merge Request with Maximum Time"
-          size="lg"
-          jsonMessage={data.data}
-          dataType="bar"
-          show={showModal}
-          setParentVisibility={setShowModal}
-        />
+  if (loading) return <LoadingDialog size="sm" />;
+  if (error) return <ErrorDialog error={error} />;
 
-        <div className="chart mb-3" style={{ height: "300px" }}>
-          <div className="chart-label-text">Merge Request with Maximum Time</div>
-          {typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200 ? (
-            <div
-              className="max-content-width p-5 mt-5"
-              style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-            >
-              <InfoDialog message="No Data is available for this chart at this time." />
-            </div>
-          ) : (
-            <ResponsiveBar
-              data={data ? data.data : []}
-              onClick={() => setShowModal(true)}
-              keys={config.keys}
-              indexBy="ProjectName"
-              margin={config.margin}
-              padding={0.3}
-              layout={"vertical"}
-              colors={{ scheme: "category10" }}
-              borderColor={{ theme: "background" }}
-              colorBy="id"
-              defs={config.defs}
-              fill={config.fill}
-              axisTop={null}
-              axisRight={null}
-              axisBottom={config.axisBottom}
-              axisLeft={config.axisLeft}
-              labelSkipWidth={12}
-              labelSkipHeight={12}
-              enableLabel={false}
-              borderRadius={5}
-              labelTextColor="inherit:darker(2)"
-              animate={true}
-              motionStiffness={90}
-              borderWidth={2}
-              motionDamping={15}
-              legends={config.legends}
-              theme={{
-                tooltip: {
-                  container: {
-                    fontSize: "16px",
-                  },
+  return (
+    <>
+      <ModalLogs
+        header="Merge Request with Maximum Time"
+        size="lg"
+        jsonMessage={data.data}
+        dataType="bar"
+        show={showModal}
+        setParentVisibility={setShowModal}
+      />
+
+      <div className="chart mb-3" style={{ height: "300px" }}>
+        <div className="chart-label-text">Merge Request with Maximum Time</div>
+        {typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200 ? (
+          <div
+            className="max-content-width p-5 mt-5"
+            style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+          >
+            <InfoDialog message="No Data is available for this chart at this time." />
+          </div>
+        ) : (
+          <ResponsiveBar
+            data={data ? data.data : []}
+            onClick={() => setShowModal(true)}
+            keys={config.keys}
+            indexBy="ProjectName"
+            margin={config.margin}
+            padding={0.3}
+            layout={"vertical"}
+            colors={{ scheme: "category10" }}
+            borderColor={{ theme: "background" }}
+            colorBy="id"
+            defs={config.defs}
+            fill={config.fill}
+            axisTop={null}
+            axisRight={null}
+            axisBottom={config.axisBottom}
+            axisLeft={config.axisLeft}
+            labelSkipWidth={12}
+            labelSkipHeight={12}
+            enableLabel={false}
+            borderRadius={5}
+            labelTextColor="inherit:darker(2)"
+            animate={true}
+            motionStiffness={90}
+            borderWidth={2}
+            motionDamping={15}
+            legends={config.legends}
+            theme={{
+              tooltip: {
+                container: {
+                  fontSize: "16px",
                 },
-              }}
-            />
-          )}
-        </div>
-      </>
-    );
-  }
+              },
+            }}
+          />
+        )}
+      </div>
+    </>
+  );
 }
 
 GitlabMergeReqWithMaxTimeChart.propTypes = {

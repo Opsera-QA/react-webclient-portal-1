@@ -54,10 +54,7 @@ function GitlabTotalCommitsByUserAndDate({ persona, date }) {
       try {
         await fetchData();
       } catch (err) {
-        if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
-          return;
-        }
+        if (err.name === "AbortError") return;
       }
     };
     runEffect();
@@ -67,68 +64,63 @@ function GitlabTotalCommitsByUserAndDate({ persona, date }) {
     };
   }, [fetchData]);
 
-  if (loading) {
-    return <LoadingDialog size="sm" />;
-  } else if (error) {
-    return <ErrorDialog error={error} />;
-    // } else if (typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) {
-    //   return (<ErrorDialog  error="No Data is available for this chart at this time." />);
-  } else {
-    return (
-      <>
-        <ModalLogs
-          header="Commits by Authors"
-          size="lg"
-          jsonMessage={data.data}
-          dataType="line"
-          show={showModal}
-          setParentVisibility={setShowModal}
-        />
+  if (loading) return <LoadingDialog size="sm" />;
+  if (error) return <ErrorDialog error={error} />;
 
-        <div className="chart mb-3" style={{ height: "300px" }}>
-          <div className="chart-label-text">Commits by Authors</div>
-          {typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200 ? (
-            <div
-              className="max-content-width p-5 mt-5"
-              style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-            >
-              <InfoDialog message="No Data is available for this chart at this time." />
-            </div>
-          ) : (
-            <ResponsiveHeatMap
-              data={data ? data.data : []}
-              keys={users}
-              indexBy="date"
-              onClick={() => setShowModal(true)}
-              margin={{ top: 10, right: 40, bottom: 40, left: 40 }}
-              forceSquare={true}
-              // axisTop={{ orient: 'top', tickSize: 5, tickPadding: 5, tickRotation: -90, legend: '', legendOffset: 36 }}
-              axisRight={null}
-              // axisBottom={null}
-              axisTop={null}
-              axisBottom={config.axisBottom}
-              axisLeft={config.axisLeft}
-              // sizeVariation={0.4}
-              // padding={1}
-              cellOpacity={1}
-              cellBorderColor={{ from: "color", modifiers: [["darker", 0.4]] }}
-              labelTextColor="#fdeded"
-              colors={["#9FC8E5", "#7fa8ca", "#537aa2", "#3F6891"]}
-              cellShape={"circle"}
-              enableLabels={true}
-              defs={config.defs}
-              fill={config.fill}
-              animate={true}
-              motionStiffness={80}
-              motionDamping={9}
-              hoverTarget="cell"
-              cellHoverOthersOpacity={0.25}
-            />
-          )}
-        </div>
-      </>
-    );
-  }
+  return (
+    <>
+      <ModalLogs
+        header="Commits by Authors"
+        size="lg"
+        jsonMessage={data.data}
+        dataType="line"
+        show={showModal}
+        setParentVisibility={setShowModal}
+      />
+
+      <div className="chart mb-3" style={{ height: "300px" }}>
+        <div className="chart-label-text">Commits by Authors</div>
+        {typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200 ? (
+          <div
+            className="max-content-width p-5 mt-5"
+            style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+          >
+            <InfoDialog message="No Data is available for this chart at this time." />
+          </div>
+        ) : (
+          <ResponsiveHeatMap
+            data={data ? data.data : []}
+            keys={users}
+            indexBy="date"
+            onClick={() => setShowModal(true)}
+            margin={{ top: 10, right: 40, bottom: 40, left: 40 }}
+            forceSquare={true}
+            // axisTop={{ orient: 'top', tickSize: 5, tickPadding: 5, tickRotation: -90, legend: '', legendOffset: 36 }}
+            axisRight={null}
+            // axisBottom={null}
+            axisTop={null}
+            axisBottom={config.axisBottom}
+            axisLeft={config.axisLeft}
+            // sizeVariation={0.4}
+            // padding={1}
+            cellOpacity={1}
+            cellBorderColor={{ from: "color", modifiers: [["darker", 0.4]] }}
+            labelTextColor="#fdeded"
+            colors={["#9FC8E5", "#7fa8ca", "#537aa2", "#3F6891"]}
+            cellShape={"circle"}
+            enableLabels={true}
+            defs={config.defs}
+            fill={config.fill}
+            animate={true}
+            motionStiffness={80}
+            motionDamping={9}
+            hoverTarget="cell"
+            cellHoverOthersOpacity={0.25}
+          />
+        )}
+      </div>
+    </>
+  );
 }
 
 GitlabTotalCommitsByUserAndDate.propTypes = {

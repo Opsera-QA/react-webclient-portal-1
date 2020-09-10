@@ -17,6 +17,7 @@ import GitlabTotalCommitsChart from "../../charts/GitlabTotalCommitsChart";
 // import GitlabCommitCountByDeveloper from "../../metrics/GitlabCommitCountByDeveloper";
 import GitlabMergeReqWithMaxTimeChart from "../../charts/GitlabMergeReqWithMaxTimeChart";
 import GitlabMergedMergeReqCommitsCountTable from "../../metrics/GitlabMergedMergeReqCommitsCountTable";
+import GitlabMostActiveUsers from "../../metrics/GitlabMostActiveUsers";
 import GitlabTotalCountOfMergeReqAndPushPerDay from "../../charts/GitlabTotalCountOfMergeReqAndPushPerDay";
 import GitlabTotalCommitsByUserAndDate from "../../charts/GitlabTotalCommitsByUserAndDate";
 
@@ -173,6 +174,14 @@ function SourceCodeView_developer({ persona, date }) {
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
             {/* <GitlabTimeTakenToCompleteMergeRequestReviewTable persona={persona} date={date}/> */}
+          </div>
+          <div className="align-self-stretch p-2 w-100">
+            {/* <GitlabMrTitleTimeAuthorNoOfCommits persona={persona} date={date}/>                         */}
+          </div>
+        </div>
+        <div className="d-flex">
+          <div className="align-self-stretch p-2 w-100">
+            <GitlabMostActiveUsers persona={persona} date={date} />
           </div>
           <div className="align-self-stretch p-2 w-100">
             {/* <GitlabMrTitleTimeAuthorNoOfCommits persona={persona} date={date}/>                         */}
