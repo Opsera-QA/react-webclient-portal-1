@@ -22,12 +22,10 @@ import GitlabTotalCommitsByUserAndDate from "../../charts/GitlabTotalCommitsByUs
 
 function SourceCodeView_developer({ persona, date }) {
   const contextType = useContext(AuthContext);
-  const { featureFlagItemInProd } = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [countBlockData, setCountBlockData] = useState([]);
-  const envIsProd = featureFlagItemInProd();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -142,7 +140,7 @@ function SourceCodeView_developer({ persona, date }) {
     return <LoadingDialog />;
   } else if (error) {
     return <ErrorDialog error={error} />;
-  } else if (!envIsProd) {
+  } else {
     return (
       <>
         <SummaryCountBlocksView data={countBlockData} />
@@ -152,7 +150,6 @@ function SourceCodeView_developer({ persona, date }) {
             <GitlabTotalCountOfMergeReqAndPushPerDay persona={persona} date={date} />
           </div>
           <div className="align-self-stretch p-2 w-100">
-            {/* Self Contained div */}
             <GitlabTotalCommitsByUserAndDate persona={persona} date={date} />
           </div>
         </div>
@@ -189,19 +186,6 @@ function SourceCodeView_developer({ persona, date }) {
         <div className="mt-2">
           {/* <GitlabLastCommitToCodeByUser date={date} />  */}
           <GitlabMergedMergeReqCommitsCountTable persona={persona} date={date} />
-        </div>
-      </>
-    );
-  } else {
-    return (
-      <>
-        <div className="d-flex">
-          <div className="align-self-stretch p-2 w-100">
-            <GitlabMergeRequestsByUserChart persona={persona} date={date} />
-          </div>
-          <div className="align-self-stretch p-2 w-100">
-            {/* <GitlabTimeTakenToCompleteMergeRequestReview persona={persona} date={date}/>           */}
-          </div>
         </div>
       </>
     );

@@ -18,15 +18,14 @@ import GitlabTotalCommitsChart from "../../charts/GitlabTotalCommitsChart";
 import GitlabMergeReqWithMaxTimeChart from "../../charts/GitlabMergeReqWithMaxTimeChart";
 import GitlabMergedMergeReqCommitsCountTable from "../../metrics/GitlabMergedMergeReqCommitsCountTable";
 import GitlabTotalCountOfMergeReqAndPushPerDay from "../../charts/GitlabTotalCountOfMergeReqAndPushPerDay";
+import GitlabTotalCommitsByUserAndDate from "../../charts/GitlabTotalCommitsByUserAndDate";
 
 function SourceCodeView_executive({ persona, date }) {
   const contextType = useContext(AuthContext);
-  const { featureFlagItemInProd } = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [countBlockData, setCountBlockData] = useState([]);
-  const envIsProd = featureFlagItemInProd();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -96,10 +95,7 @@ function SourceCodeView_executive({ persona, date }) {
       gitlabTotalNumberOfMergeRequestsOpenedByUser,
     } = data;
     let summaryCountsData = [];
-    if (
-      gitlabTotalNumberOfCommits.status === 200 &&
-      gitlabTotalNumberOfCommits.data !== undefined
-    ) {
+    if (gitlabTotalNumberOfCommits.status === 200 && gitlabTotalNumberOfCommits.data !== undefined) {
       summaryCountsData.push({
         name: "Total Commits",
         value: gitlabTotalNumberOfCommits.data[0].count,
@@ -107,10 +103,7 @@ function SourceCodeView_executive({ persona, date }) {
         status: "",
       });
     }
-    if (
-      gitlabTotalNumberOfBranches.status === 200 &&
-      gitlabTotalNumberOfBranches.data !== undefined
-    ) {
+    if (gitlabTotalNumberOfBranches.status === 200 && gitlabTotalNumberOfBranches.data !== undefined) {
       summaryCountsData.push({
         name: "Branches Created",
         value: gitlabTotalNumberOfBranches.data[0].count,
@@ -126,10 +119,7 @@ function SourceCodeView_executive({ persona, date }) {
         name: "Merge Requests Pending",
         value: gitlabTotalMergeRequestsPendingForReview.data[0].count,
         footer: "",
-        status:
-          gitlabTotalMergeRequestsPendingForReview.data[0].count > 0
-            ? "danger"
-            : null,
+        status: gitlabTotalMergeRequestsPendingForReview.data[0].count > 0 ? "danger" : null,
       });
     }
     if (
@@ -150,20 +140,17 @@ function SourceCodeView_executive({ persona, date }) {
     return <LoadingDialog />;
   } else if (error) {
     return <ErrorDialog error={error} />;
-  } else if (!envIsProd) {
+  } else {
     return (
       <>
         <SummaryCountBlocksView data={countBlockData} />
 
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
-            <GitlabTotalCountOfMergeReqAndPushPerDay
-              persona={persona}
-              date={date}
-            />
+            <GitlabTotalCountOfMergeReqAndPushPerDay persona={persona} date={date} />
           </div>
           <div className="align-self-stretch p-2 w-100">
-            {/* Self Contained div */}
+            <GitlabTotalCommitsByUserAndDate persona={persona} date={date} />
           </div>
         </div>
         <div className="d-flex">
@@ -171,10 +158,7 @@ function SourceCodeView_executive({ persona, date }) {
             <GitlabMergeRequestsByUserChart persona={persona} date={date} />
           </div>
           <div className="align-self-stretch p-2 w-100">
-            <GitlabTimeTakenToCompleteMergeRequestReview
-              persona={persona}
-              date={date}
-            />
+            <GitlabTimeTakenToCompleteMergeRequestReview persona={persona} date={date} />
           </div>
         </div>
         <div className="d-flex">
@@ -195,34 +179,13 @@ function SourceCodeView_executive({ persona, date }) {
           </div>
         </div>
         {/* <div className="d-flex">
-          <div className="align-self-stretch p-2 w-100">
-            <GitlabMergeReqWithMaximumTime date={date}/>
-          </div>          
-        </div> */}
-        {/* <div className="d-flex">          
-          <div className="align-self-stretch p-2 w-100">
-            <GitlabCommitCountByDeveloper date={date}/>
-          </div>    
-        </div> */}
+        <div className="align-self-stretch p-2 w-100">
+          <GitlabMergeReqWithMaximumTime date={date}/>
+        </div>          
+      </div> */}
         <div className="mt-2">
           {/* <GitlabLastCommitToCodeByUser date={date} />  */}
-          <GitlabMergedMergeReqCommitsCountTable
-            persona={persona}
-            date={date}
-          />
-        </div>
-      </>
-    );
-  } else {
-    return (
-      <>
-        <div className="d-flex">
-          <div className="align-self-stretch p-2 w-100">
-            <GitlabMergeRequestsByUserChart persona={persona} date={date} />
-          </div>
-          <div className="align-self-stretch p-2 w-100">
-            {/* <GitlabTimeTakenToCompleteMergeRequestReview persona={persona} date={date}/>           */}
-          </div>
+          <GitlabMergedMergeReqCommitsCountTable persona={persona} date={date} />
         </div>
       </>
     );
