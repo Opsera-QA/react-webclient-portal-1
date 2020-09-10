@@ -24,10 +24,7 @@ function GitlabTotalCommitsChart({ persona, date }) {
       try {
         await fetchData();
       } catch (err) {
-        if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
-          return;
-        }
+        if (err.name === "AbortError") return;
       }
     };
     runEffect();
@@ -65,71 +62,68 @@ function GitlabTotalCommitsChart({ persona, date }) {
     }
   };
 
-  if (loading) {
-    return <LoadingDialog size="sm" />;
-  } else if (error) {
-    return <ErrorDialog error={error} />;
-  } else {
-    return (
-      <>
-        <ModalLogs
-          header="Total Commits"
-          size="lg"
-          jsonMessage={data.data}
-          dataType="bar"
-          show={showModal}
-          setParentVisibility={setShowModal}
-        />
+  if (loading) return <LoadingDialog size="sm" />;
+  if (error) return <ErrorDialog error={error} />;
 
-        <div className="chart mb-3" style={{ height: "300px" }}>
-          <div className="chart-label-text">Total Commits</div>
-          {typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200 ? (
-            <div
-              className="max-content-width p-5 mt-5"
-              style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-            >
-              <InfoDialog message="No Data is available for this chart at this time." />
-            </div>
-          ) : (
-            <ResponsivePie
-              data={data ? data.data : []}
-              margin={{ top: 40, right: 80, bottom: 80, left: 60 }}
-              onClick={() => setShowModal(true)}
-              innerRadius={0.5}
-              padAngle={0.7}
-              cornerRadius={3}
-              colors={{ scheme: "nivo" }}
-              borderWidth={1}
-              borderColor={{ from: "color", modifiers: [["darker", 0.2]] }}
-              radialLabelsSkipAngle={10}
-              radialLabelsTextXOffset={6}
-              radialLabelsTextColor="#333333"
-              radialLabelsLinkOffset={0}
-              radialLabelsLinkDiagonalLength={16}
-              radialLabelsLinkHorizontalLength={24}
-              radialLabelsLinkStrokeWidth={1}
-              radialLabelsLinkColor={{ from: "color" }}
-              slicesLabelsSkipAngle={10}
-              slicesLabelsTextColor="#333333"
-              animate={true}
-              motionStiffness={90}
-              motionDamping={15}
-              sortByValue={true}
-              // innerRadius={0.6}
-              // padAngle={0.5}
-              // cornerRadius={5}
-              // radialLabelsLinkColor="inherit"
-              // radialLabelsLinkStrokeWidth={3}
-              // radialLabelsTextColor="inherit:darker(1.2)"
-              defs={config.defs}
-              fill={config.fill}
-              legends={config.legends}
-            />
-          )}
-        </div>
-      </>
-    );
-  }
+  return (
+    <>
+      <ModalLogs
+        header="Total Commits"
+        size="lg"
+        jsonMessage={data.data}
+        dataType="bar"
+        show={showModal}
+        setParentVisibility={setShowModal}
+      />
+
+      <div className="chart mb-3" style={{ height: "300px" }}>
+        <div className="chart-label-text">Total Commits</div>
+        {typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200 ? (
+          <div
+            className="max-content-width p-5 mt-5"
+            style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+          >
+            <InfoDialog message="No Data is available for this chart at this time." />
+          </div>
+        ) : (
+          <ResponsivePie
+            data={data ? data.data : []}
+            margin={{ top: 40, right: 80, bottom: 80, left: 60 }}
+            onClick={() => setShowModal(true)}
+            innerRadius={0.5}
+            padAngle={0.7}
+            cornerRadius={3}
+            colors={{ scheme: "nivo" }}
+            borderWidth={1}
+            borderColor={{ from: "color", modifiers: [["darker", 0.2]] }}
+            radialLabelsSkipAngle={10}
+            radialLabelsTextXOffset={6}
+            radialLabelsTextColor="#333333"
+            radialLabelsLinkOffset={0}
+            radialLabelsLinkDiagonalLength={16}
+            radialLabelsLinkHorizontalLength={24}
+            radialLabelsLinkStrokeWidth={1}
+            radialLabelsLinkColor={{ from: "color" }}
+            slicesLabelsSkipAngle={10}
+            slicesLabelsTextColor="#333333"
+            animate={true}
+            motionStiffness={90}
+            motionDamping={15}
+            sortByValue={true}
+            // innerRadius={0.6}
+            // padAngle={0.5}
+            // cornerRadius={5}
+            // radialLabelsLinkColor="inherit"
+            // radialLabelsLinkStrokeWidth={3}
+            // radialLabelsTextColor="inherit:darker(1.2)"
+            defs={config.defs}
+            fill={config.fill}
+            legends={config.legends}
+          />
+        )}
+      </div>
+    </>
+  );
 }
 
 GitlabTotalCommitsChart.propTypes = {
