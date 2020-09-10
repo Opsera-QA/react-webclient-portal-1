@@ -141,3 +141,11 @@
   width: 33%;
 }
 
+.tag-modal div.modal-dialog div.modal-content {
+    overflow: visible !important;
+}
+
+.pipeline-tag-modal-body .rw-state-focus .rw-popup-container {
+    z-index: 1200;
+}
+
