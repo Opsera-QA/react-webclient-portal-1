@@ -1,9 +1,7 @@
 import React, { useReducer, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "contexts/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faSave,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 

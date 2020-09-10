@@ -7,6 +7,7 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { axiosApiService } from "../../api/apiService";
 import { useHistory } from "react-router-dom";
 import ErrorDialog from "../common/status_notifications/error";
+import InformationDialog from "../common/status_notifications/info";
 
 
 const LoginForm = () => {
@@ -102,16 +103,18 @@ const LoginForm = () => {
     const apiUrl = "/users/check-email";
     const params = { "email": lookupAccountEmail, "checkAccountLoginStatus": true };
 
+    setMessage("THIS IS A TEST");
+return
+
     try {
       const response = await axiosApiService().post(apiUrl, params); //this lookup is currently FF in Node
-      console.log("response: ", response)
       setMessage(false);
       setErrorMessage(false);
 
       if (response.data) { //valid account so allow it to continue login
         setUsername(lookupAccountEmail);
         setViewType("login");
-        return
+        return;
       }
 
       //account isn't ready for login (check customer DB settings)
@@ -147,9 +150,10 @@ const LoginForm = () => {
                 Sign in
               </h4>
 
-              {errorMessage && <ErrorDialog error={errorMessage} align="top" setError={setErrorMessage} />}
+              {errorMessage && <ErrorDialog error={errorMessage} align="top" setError={setErrorMessage}/>}
 
-              {message && <div className="mx-2 info-text">{message}</div>}
+              {message && <InformationDialog message={message} align="top" setMessage={setMessage}/>}
+
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
                   <label htmlFor="username">Email Address</label>
@@ -198,9 +202,9 @@ const LoginForm = () => {
             Reset Password
           </h4>
 
-          {errorMessage && <ErrorDialog error={errorMessage} align="top" setError={setErrorMessage} />}
+          {errorMessage && <ErrorDialog error={errorMessage} align="top" setError={setErrorMessage}/>}
 
-          {message && <div className="mx-2 info-text">{message}</div>}
+          {message && <InformationDialog message={message} align="top" setMessage={setMessage}/>}
 
           <form onSubmit={handleResetPasswordSubmit}>
             <div className="form-group">
@@ -243,9 +247,9 @@ const LoginForm = () => {
                 Sign in
               </h4>
 
-              {errorMessage && <ErrorDialog error={errorMessage} align="top" setError={setErrorMessage} />}
+              {errorMessage && <ErrorDialog error={errorMessage} align="top" setError={setErrorMessage}/>}
 
-              {message && <div className="mx-2 info-text">{message}</div>}
+              {message && <InformationDialog message={message} align="top1" setMessage={setMessage}/>}
 
               <form onSubmit={handleDomainLookupSubmit}>
                 <div className="form-group">
@@ -258,7 +262,8 @@ const LoginForm = () => {
                 </div>
 
                 <div className="buttons-w">
-                  <Button variant="success" className="w-100 mb-3" type="submit" disabled={!lookupAccountEmail || errorMessage}>
+                  <Button variant="success" className="w-100 mb-3" type="submit"
+                          disabled={!lookupAccountEmail || errorMessage}>
                     {loading && <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth/>}
                     Next</Button>
                 </div>
