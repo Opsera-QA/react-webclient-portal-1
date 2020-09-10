@@ -11,16 +11,11 @@ import SummaryActionBar from "../../../common/actions/SummaryActionBar";
 import Model from "../../../../core/data_model/model";
 import paths from "../../../common/navigation/paths";
 import adminTagsActions from "../admin-tags-actions";
-import {
-  getFormValidationErrorDialog,
-  getLoadingErrorDialog,
-  getUpdateSuccessResultDialog
-} from "../../../common/toasts/toasts";
+import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 
 function TagsSummaryPanel({ tagData, setTagData }) {
   const { getAccessToken } = useContext(AuthContext);
-  const [toast, setToast] = useState({});
-  const [showToast, setShowToast] = useState(false);
+  const toastContext = useContext(DialogToastContext);
 
   const parseNameValueArray = (nameValueArray) => {
     let parsedValues = [];
@@ -44,20 +39,14 @@ function TagsSummaryPanel({ tagData, setTagData }) {
         let response = await adminTagsActions.update({...newTagData}, getAccessToken);
         let updatedDto = new Model(response.data, tagData.metaData, false);
         setTagData(updatedDto);
-        let toast = getUpdateSuccessResultDialog(newTagData.getType(), setShowToast);
-        setToast(toast);
-        setShowToast(true);
+        toastContext.showUpdateSuccessResultDialog(newTagData.getType());
       } catch (error) {
-        let toast = getLoadingErrorDialog(error.message, setShowToast);
-        setToast(toast);
-        setShowToast(true);
+        toastContext.showLoadingErrorDialog(error.message);
         console.error(error.message);
       }
     } else {
-        let toast = getFormValidationErrorDialog(setShowToast);
-        setToast(toast);
-        setShowToast(true);
-      }
+      toastContext.showFormValidationErrorDialog();
+    }
   };
 
   if (tagData == null) {
@@ -70,7 +59,6 @@ function TagsSummaryPanel({ tagData, setTagData }) {
         <SummaryActionBar backButtonPath={"/" + paths.tagManagement} handleActiveToggle={handleActiveToggle}
                           status={tagData.getData("active")}/>
         <div className="mb-3 flat-top-content-block p-3 detail-view-summary">
-          {showToast && toast}
           <Row>
             <Col lg={6}>
               <DtoTextField dataObject={tagData} fieldName={"_id"}/>

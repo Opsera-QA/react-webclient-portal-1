@@ -1,7 +1,9 @@
 import React, { useReducer, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
+import { AuthContext } from "contexts/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faSave,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -12,7 +14,7 @@ import {
  * type: passes the "variant" value from Bootstrap of danger, warning, info, etc.
  * @returns
  */
-function ErrorDialog({ error, align, type, setError }) {
+function ErrorDialog({ error, align, type, setError, autoCloseDialog }) {
   //const contextType = useContext(AuthContext);
   const [state, setState] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
@@ -52,7 +54,17 @@ function ErrorDialog({ error, align, type, setError }) {
       alignment: align ? align : state.alignment,
       variant: type ? type : state.variant,
     });
+
+    if (autoCloseDialog) {
+      hideDialog();
+    }
   }, [error]);
+
+  function hideDialog() {
+    setTimeout(function () {
+      clearError();
+    }, 5000);
+  }
 
   const { statusCode, alignment } = state;
 
@@ -67,6 +79,21 @@ function ErrorDialog({ error, align, type, setError }) {
           }}>Click here to renew session.</a></span>}
           </div>
         </div>
+      </div>
+    );
+  }
+
+  if (alignment === "dialogToast") {
+    return (
+      <div className="w-100 error-block top-dialog-block">
+        <div className="float-right ml-1">
+          <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
+            clearError();
+          }}/></div>
+        {state.message} {(statusCode === 401 || (state.message && state.message.includes("401"))) &&
+      <span className="ml-1"><a style={{ color: "#fff", textDecoration: "underline" }} href="#" onClick={() => {
+        reloadSession();
+      }}>Click here to renew session.</a></span>}
       </div>
     );
   }
@@ -141,8 +168,12 @@ ErrorDialog.propTypes = {
   align: PropTypes.string,
   type: PropTypes.string,
   setError: PropTypes.func,
+  autoCloseDialog: PropTypes.bool
 };
 
+ErrorDialog.defaultProps = {
+  autoCloseDialog: true
+}
 
 export default ErrorDialog;
 

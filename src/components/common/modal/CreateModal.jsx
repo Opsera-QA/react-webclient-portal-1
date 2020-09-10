@@ -1,10 +1,13 @@
-import React from "react";
+import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import { Button, Modal } from "react-bootstrap";
 import TooltipWrapper from "../tooltip/tooltipWrapper";
 import {unsavedChanges} from "../tooltip/popover-text";
+import {DialogToastContext} from "../../../contexts/DialogToastContext";
 
 function CreateModal({ children, objectType, showModal, handleCancelModal, loadData}) {
+  const toastContext = useContext(DialogToastContext);
+
   const handleClose = () => {
     loadData();
     handleCancelModal();
@@ -17,6 +20,7 @@ function CreateModal({ children, objectType, showModal, handleCancelModal, loadD
           <Modal.Title>Create New {objectType}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          {toastContext.getModalToast()}
           <div className="content-block m-3 full-height">
             <div className="p-3">
               {children}

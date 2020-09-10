@@ -552,6 +552,13 @@ a:hover, .active {
     z-index: 1200;
 }
 
+.top-dialog-block {
+    position: absolute;
+    left: 0;
+    padding: 1em;
+    z-index: 1200;
+}
+
 .top-error-block {
     top: 0;
     position: fixed;
