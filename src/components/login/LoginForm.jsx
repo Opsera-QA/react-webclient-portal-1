@@ -8,6 +8,7 @@ import { axiosApiService } from "../../api/apiService";
 import { useHistory } from "react-router-dom";
 import ErrorDialog from "../common/status_notifications/error";
 import InformationDialog from "../common/status_notifications/info";
+import { faArrowLeft } from "@fortawesome/pro-solid-svg-icons";
 
 
 const LoginForm = () => {
@@ -170,7 +171,18 @@ const LoginForm = () => {
                   <div className="pre-icon os-icon os-icon-fingerprint"></div>
                 </div>
                 <div className="buttons-w">
-                  <Button variant="success" className="w-100 mb-3" type="submit" disabled={!username || !password}>
+
+                  <Button variant="outline-secondary"
+                          className="w-50 mb-3"
+                          type="button"
+                          onClick={() => {
+                            setViewType("domain");
+                          }}>
+                    <FontAwesomeIcon icon={faArrowLeft} className="mr-1" size="sm" fixedWidth/>
+                    Back
+                  </Button>
+
+                  <Button variant="success" className="w-50 mb-3" type="submit" disabled={!username || !password}>
                     {loading && <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth/>}
                     Log In</Button>
                 </div>
