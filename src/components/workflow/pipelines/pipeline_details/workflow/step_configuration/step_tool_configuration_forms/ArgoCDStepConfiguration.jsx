@@ -199,7 +199,7 @@ function ArgoCDStepConfiguration( { stepTool, pipelineId, plan, stepId, parentCa
 
   const handleArgoChange = (selectedOption) => {
     setFormData({ ...formData, toolConfigId: selectedOption.id ? selectedOption.id : "", userName: selectedOption.configuration && selectedOption.configuration.userName  ? selectedOption.configuration.userName : "",
-      toolUrl: selectedOption.configuration && selectedOption.configuration.toolUrl  ? selectedOption.configuration.toolUrl : "",
+      toolUrl: selectedOption.configuration && selectedOption.configuration.toolURL  ? selectedOption.configuration.toolURL : "",
       password: selectedOption.configuration && selectedOption.configuration.password ? selectedOption.configuration.password : "",
       vaultSecretKey: selectedOption.configuration && selectedOption.configuration.password ? selectedOption.configuration.password.vaultKey : "",
       applicationName: ""
