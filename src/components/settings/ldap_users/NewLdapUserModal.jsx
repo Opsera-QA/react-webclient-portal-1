@@ -25,6 +25,7 @@ function NewLdapUserModal({ setShowModal, showModal, loadData } ) {
   }, []);
 
   const handleClose = () => {
+    loadData();
     setShowModal(false);
   };
 

@@ -21,6 +21,7 @@ function NewLdapUserModal({ ldapOrganizationData, currentUserEmail, setShowModal
   }, []);
 
   const handleClose = () => {
+    loadData();
     setShowModal(false);
   };
 

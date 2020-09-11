@@ -28,7 +28,7 @@ function TagManagement() {
 
   const loadData = async () => {
     setIsLoading(true);
-    getRoles();
+    await getRoles();
   };
 
   const getTags = async () => {
