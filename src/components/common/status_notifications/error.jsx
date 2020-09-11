@@ -63,7 +63,7 @@ function ErrorDialog({ error, align, type, setError, autoCloseDialog }) {
   function hideDialog() {
     setTimeout(function () {
       clearError();
-    }, 5000);
+    }, 20000);
   }
 
   const { statusCode, alignment } = state;

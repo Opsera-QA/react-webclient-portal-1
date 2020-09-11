@@ -23,7 +23,7 @@ function SuccessDialog({ successMessage, setSuccessMessage, alignment, autoClose
   function hideDialog() {
     setTimeout(function () {
       clearSuccess();
-    }, 5000);
+    }, 20000);
   }
 
   if (alignment === "top") {
