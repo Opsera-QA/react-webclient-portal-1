@@ -257,18 +257,17 @@ function PipelineActionControls({
 
   async function runPipeline(pipelineId) {
     setStartPipeline(true);
-    const response = await PipelineActions.run(pipelineId, {}, getAccessToken)
+
+    await PipelineActions.run(pipelineId, {}, getAccessToken)
       .catch(err => {
         setStartPipeline(false);
         console.log(err);
         setErrors(err.error);
       });
 
-    /*if (typeof (response.error) !== "undefined") {
+    setTimeout(function () {
       setStartPipeline(false);
-      console.log(response.error);
-      setErrors(response.error);
-    }*/
+    }, 30000);
   }
 
   const stopSocket = () => {
