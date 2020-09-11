@@ -16,12 +16,14 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCogs} from "@fortawesome/free-solid-svg-icons";
 import LoadingDialog from "../../../../common/status_notifications/loading";
 import SaveButton from "../../../../common/buttons/SaveButton";
+import WarningDialog from "../../../../common/status_notifications/WarningDialog";
 
 function LdapIdpAccountEditorPanel({ldapOrganizationAccountData, ldapIdpAccountData, setLdapIdpAccountData, setShowIdpEditPanel }) {
   const {getAccessToken} = useContext(AuthContext);
   const [ldapIdpAccountDataDto, setLdapIdpAccountDataDto] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [showToast, setShowToast] = useState(false);
+  const [showWarningMessage, setShowWarningMessage] = useState(true);
   const [toast, setToast] = useState({});
 
   useEffect(() => {
@@ -102,6 +104,7 @@ function LdapIdpAccountEditorPanel({ldapOrganizationAccountData, ldapIdpAccountD
     return (
     <>
         <div className="m-3">
+          {ldapIdpAccountDataDto.isNew() && showWarningMessage && <WarningDialog setWarningMessage={setShowWarningMessage} autoCloseDialog={false} warningMessage="IDP Account Creation is not currently available" />}
           {!ldapIdpAccountDataDto.isNew() && <div className="mb-2 text-muted">
             <TooltipWrapper innerText={"Edit this Account"}>
               <FontAwesomeIcon icon={faCogs} className="pointer float-right ml-3" onClick={() => {
@@ -141,7 +144,7 @@ function LdapIdpAccountEditorPanel({ldapOrganizationAccountData, ldapIdpAccountD
           </Row>
           <Row>
             <div className="ml-auto m-3 px-3">
-              <SaveButton recordDto={ldapIdpAccountDataDto} createRecord={createIdpAccount} updateRecord={updateLdapIdpAccount} />
+              <SaveButton disable={ldapIdpAccountDataDto.isNew()} recordDto={ldapIdpAccountDataDto} createRecord={createIdpAccount} updateRecord={updateLdapIdpAccount} />
             </div>
           </Row>
         </div>

@@ -544,6 +544,12 @@ a:hover, .active {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
+.warning-block {
+    background-color: #f9c116;
+    color: #fff;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
 .top-dialog-detail-panel-block {
     padding: 1em;
     width: 96%;
