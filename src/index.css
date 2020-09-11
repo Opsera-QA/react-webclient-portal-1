@@ -53,6 +53,15 @@
     color: #1989F9;
 }
 
+.dark-grey-background {
+    background-color: #6c757d;
+}
+
+.dark-grey-border {
+    border: #6c757d solid 2px;
+    border-radius: 0;
+}
+
 .pointer {
     cursor: pointer
 }

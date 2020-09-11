@@ -521,7 +521,7 @@ div.modal-footer {
 
 .alternate-tabs .nav-tabs > li a {
   padding: 10px 15px;
-  border-bottom: 5px solid #0f3e84;
+  border-bottom: 5px solid #6c757d;
   background: rgba(0, 0, 0, .05);
   color: #6c757d;
 }
@@ -529,7 +529,7 @@ div.modal-footer {
 .alternate-tabs .nav-tabs > li a.active {
   background: #1578dc;
   /*border-color: #1578dc;*/
-  border-bottom: 5px solid #0f3e84;
+  border-bottom: 5px solid #6c757d;
 }
 
 .alternate-tabs .nav-tabs .nav-item.show .nav-link, .alternate-tabs .nav-tabs .nav-link:hover {
