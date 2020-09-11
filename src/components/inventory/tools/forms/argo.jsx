@@ -9,7 +9,7 @@ import {getFormValidationErrorDialog} from "../../../common/toasts/toasts";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
-  toolUrl: "",
+  toolURL: "",
   userName: "",
   password: ""
 };
@@ -73,8 +73,8 @@ function ArgoToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVault 
   };
 
   const validateRequiredFields = () => {
-    let { toolUrl, userName, password } = formData;
-    if (toolUrl.length === 0 || userName.length === 0 || password.length === 0 ) {
+    let { toolURL, userName, password } = formData;
+    if (toolURL.length === 0 || userName.length === 0 || password.length === 0 ) {
       let toast = getFormValidationErrorDialog(setShowToast);
       setToast(toast);
       setShowToast(true);
@@ -92,7 +92,7 @@ function ArgoToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVault 
 
       <Form.Group controlId="repoField">
         <Form.Label>Argo URL*</Form.Label>
-        <Form.Control maxLength="100" type="text" placeholder="" value={formData.toolUrl || ""} onChange={e => setFormData({ ...formData, toolUrl: e.target.value })} />
+        <Form.Control maxLength="100" type="text" placeholder="" value={formData.toolURL || ""} onChange={e => setFormData({ ...formData, toolURL: e.target.value })} />
       </Form.Group>
       <Form.Group controlId="branchField">
         <Form.Label>User Name*</Form.Label>

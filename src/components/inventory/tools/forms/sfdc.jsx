@@ -10,6 +10,7 @@ import {getFormValidationErrorDialog} from "../../../common/toasts/toasts";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
+  toolURL: "https://login.salesforce.com",
   accountUsername : "",
   sfdc_client_id: "", 
   sfdc_client_secret: "",
@@ -110,8 +111,8 @@ function SFDCToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVault
   };
 
   const validateRequiredFields = () => {
-    let {  accountUsername, sfdc_client_id, sfdc_client_secret, sfdc_token, sfdc_password } = formData;
-    if ( accountUsername.length === 0 ||
+    let {  toolURL, accountUsername, sfdc_client_id, sfdc_client_secret, sfdc_token, sfdc_password } = formData;
+    if ( toolURL.length === 0 || accountUsername.length === 0 ||
       sfdc_client_id.length === 0 ||
       sfdc_client_secret.length === 0 ||
       sfdc_token.length === 0 ||
@@ -129,7 +130,11 @@ function SFDCToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVault
     <Form>
       {showToast && toast}
 
-      
+      <Form.Group controlId="repoField">
+        <Form.Label>SFDC URL*</Form.Label>
+        <Form.Control maxLength="100" type="text" placeholder="" value={formData.toolURL || ""} onChange={e => setFormData({ ...formData, toolURL: e.target.value })} />
+      </Form.Group>
+
       <Form.Group controlId="accessKey">
         <Form.Label>SFDC Username*</Form.Label>
         <Form.Control maxLength="256" type="text" placeholder="" value={formData.accountUsername || ""} onChange={e => setFormData({ ...formData, accountUsername: e.target.value })} />
