@@ -116,7 +116,7 @@ const LoginForm = () => {
       }
 
       //account isn't ready for login (check customer DB settings)
-      setErrorMessage("Congratulations, your account set up is in progress and it should be available shortly. Please check back in few minutes or contact us for assistance!");
+      setMessage("Congratulations, your account set up is in progress and it should be available shortly. Please check back in few minutes or contact us for assistance!");
     } catch (err) {
       console.log(err);
       setErrorMessage(err.message);
