@@ -55,7 +55,7 @@ const ToastContextProvider = (props) => {
 
   const showCreateFailureResultDialog = (type, errorMessage, modal = true) => {
     if (modal) {
-      setModalToast(getErrorDialog(`WARNING! An error has occurred creating this ${type}: ${errorMessage}`, "top"));
+      setModalToast(getErrorDialog(`WARNING! An error has occurred creating this ${type}: ${errorMessage}`, "dialogToast"));
     }
     else {
       setToast(getErrorDialog(`WARNING! An error has occurred creating this ${type}: ${errorMessage}`));
@@ -70,7 +70,7 @@ const ToastContextProvider = (props) => {
 
   const showDeleteFailureResultDialog = (type, errorMessage, modal = false) => {
     if (modal) {
-      setToast(getErrorDialog(`WARNING! An error has occurred deleting this ${type}: ${errorMessage}`, "top"));
+      setToast(getErrorDialog(`WARNING! An error has occurred deleting this ${type}: ${errorMessage}`, "dialogToast"));
     }
     else {
       setToast(getErrorDialog(`WARNING! An error has occurred deleting this ${type}: ${errorMessage}`));
