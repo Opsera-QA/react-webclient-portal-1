@@ -82,11 +82,14 @@ function TempTagManagerInput({ label, type, data, setData, disabled, filter, pla
       if (!tagSelected)
       {
         currentValues.push(existingTag);
-        console.log("Current Values: " + JSON.stringify(currentValues));
         setData(currentValues);
       }
       return;
     }
+
+    newValue = newValue.trim();
+    newValue = newValue.replaceAll(' ', '-');
+    newValue = newValue.toLowerCase();
 
     let currentOptions = [...tagOptions];
     let newTag = {type: type, value: newValue, active: true, configuration: {}};
