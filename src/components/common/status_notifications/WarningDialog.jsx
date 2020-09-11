@@ -1,0 +1,114 @@
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
+
+// TODO: Clean up code once dialogs are completed
+function WarningDialog({ warningMessage, setWarningMessage, alignment, autoCloseDialog }) {
+  const [messageBody, setMessageBody] = useState("");
+
+  const clearWarning = () => {
+    setWarningMessage(() => {
+      return false;
+    });
+  };
+
+  useEffect(() => {
+    setMessageBody(warningMessage);
+
+    if (autoCloseDialog) {
+      hideDialog();
+    }
+  }, [warningMessage]);
+
+  function hideDialog() {
+    setTimeout(function () {
+      clearWarning();
+    }, 5000);
+  }
+
+  if (alignment === "top") {
+    return (
+      <div className="w-100 warning-block top-error-block">
+        {setWarningMessage && <div className="float-right ml-1">
+          <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
+            clearWarning();
+          }}/>
+        </div>}
+        <span>{messageBody}</span>
+      </div>
+    );
+  }
+
+  if (alignment === "dialogToast") {
+    return (
+      <div className="w-100 warning-block top-dialog-block">
+        {setWarningMessage && <div className="float-right ml-1">
+          <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
+            clearWarning();
+          }}/>
+        </div>}
+        <span>{messageBody}</span>
+      </div>
+    );
+  }
+
+  if (alignment === "stepConfigurationTop") {
+    return (
+      <div className="w-100 warning-block step-configuration-dialog-block mt-2">
+        <div className="my-auto text-center">
+          {setWarningMessage && <div className="float-right ml-1">
+            <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
+              clearWarning();
+            }}/>
+          </div>}
+          <span>{messageBody}</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (alignment === "detailPanelTop") {
+    return (
+      <div className="row warning-block top-dialog-detail-panel-block top-error-block">
+        <div className="col-sm-12 my-auto text-center">
+          {setWarningMessage && <div className="float-right ml-1">
+            <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
+              clearWarning();
+            }}/>
+          </div>}
+          <span>{messageBody}</span>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="row">
+      <div className="col-sm-12 my-auto warning-block text-center p-2">
+        {/*{setWarningMessage && <div className="float-right ml-1">*/}
+        {/*  <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {*/}
+        {/*    clearWarning();*/}
+        {/*  }}/>*/}
+        {/*</div>}*/}
+        <div>
+          <span>{messageBody}</span>
+        </div>
+      </div>
+    </div>
+  );
+
+}
+
+WarningDialog.propTypes = {
+  warningMessage: PropTypes.string,
+  setWarningMessage: PropTypes.string,
+  alignment: PropTypes.string,
+  autoCloseDialog: PropTypes.bool
+};
+
+WarningDialog.defaultProps = {
+  autoCloseDialog: true
+}
+
+export default WarningDialog;

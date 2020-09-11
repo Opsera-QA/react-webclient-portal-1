@@ -5,7 +5,7 @@ import {DataState} from "../../../core/data_model/model";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSave, faSpinner} from "@fortawesome/free-solid-svg-icons";
 
-function SaveButton({recordDto, createRecord, updateRecord, altButtonText, type}) {
+function SaveButton({recordDto, createRecord, updateRecord, altButtonText, type, disable}) {
   const [isSaving, setIsSaving] = useState(false);
 
   const persistRecord = async (persistFunction) => {
@@ -30,7 +30,7 @@ function SaveButton({recordDto, createRecord, updateRecord, altButtonText, type}
       <>
         <div className="d-flex">
           {isSaving && <div className="text-center mr-3 mt-1"><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>Saving is in progress</div>}
-          <Button size="sm" variant="primary" disabled={isSaving} onClick={() => persistRecord(createRecord)}><FontAwesomeIcon icon={faSave} fixedWidth className="mr-2"/>{altButtonText ? altButtonText : "Create " + getType()}</Button>
+          <Button size="sm" variant="primary" disabled={isSaving || disable} onClick={() => persistRecord(createRecord)}><FontAwesomeIcon icon={faSave} fixedWidth className="mr-2"/>{altButtonText ? altButtonText : "Create " + getType()}</Button>
         </div>
       </>
     );
@@ -40,7 +40,7 @@ function SaveButton({recordDto, createRecord, updateRecord, altButtonText, type}
       <>
         <div className="d-flex">
           {isSaving && <div className="text-center mr-3 mt-1"><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>Saving is in progress</div>}
-          <Button size="sm" variant="primary" disabled={isSaving || recordDto.dataState === DataState.LOADED} onClick={() => persistRecord(updateRecord)}><FontAwesomeIcon icon={faSave} fixedWidth className="mr-2"/>Save</Button>
+          <Button size="sm" variant="primary" disabled={isSaving || recordDto.dataState === DataState.LOADED || disable} onClick={() => persistRecord(updateRecord)}><FontAwesomeIcon icon={faSave} fixedWidth className="mr-2"/>Save</Button>
         </div>
       </>
     );
@@ -51,7 +51,12 @@ SaveButton.propTypes = {
   recordDto: PropTypes.object,
   type: PropTypes.string, // TODO: Remove when everything is hooked up with metadata
   createRecord: PropTypes.func,
-  updateRecord: PropTypes.func
+  updateRecord: PropTypes.func,
+  disable: PropTypes.bool
 };
+
+SaveButton.defaultProps = {
+  disable: false
+}
 
 export default SaveButton;
