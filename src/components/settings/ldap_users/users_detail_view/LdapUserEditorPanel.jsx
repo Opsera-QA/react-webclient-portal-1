@@ -1,27 +1,20 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import accountsActions from "../../../admin/accounts/accounts-actions";
-import {
-  getCreateFailureResultDialog,
-  getCreateSuccessResultDialog,
-  getFormValidationErrorDialog,
-  getUpdateFailureResultDialog, getUpdateSuccessResultDialog
-} from "../../../common/toasts/toasts";
 import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
 import Model from "../../../../core/data_model/model";
 import LoadingDialog from "../../../common/status_notifications/loading";
 import SaveButton from "../../../common/buttons/SaveButton";
+import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 
-function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData }) {
+function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
-  const [showToast, setShowToast] = useState(false);
   const [ldapUserDataDto, setLdapUserDataDto] = useState({});
-  const [toast, setToast] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     loadData();
@@ -38,20 +31,15 @@ function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData }) {
 
       try {
         let createUserResponse = await accountsActions.createUser(ldapUserDataDto, getAccessToken);
-        let toast = getCreateSuccessResultDialog(ldapUserDataDto.getType(), setShowToast);
-        setToast(toast);
-        setShowToast(true);
+        handleClose();
+        toastContext.showCreateSuccessResultDialog(ldapUserDataDto.getType());
       } catch (error) {
-        let toast = getCreateFailureResultDialog(ldapUserDataDto.getType(), error.message, setShowToast);
-        setToast(toast);
-        setShowToast(true);
+        toastContext.showCreateFailureResultDialog(ldapUserDataDto.getType(), error.message);
         console.error(error.message);
       }
     }
     else {
-      let toast = getFormValidationErrorDialog(setShowToast);
-      setToast(toast);
-      setShowToast(true);
+      toastContext.showFormValidationErrorDialog();
     }
   };
 
@@ -62,13 +50,9 @@ function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData }) {
         let updatedDto = new Model(response.data, ldapUserDataDto.metaData, false);
         setLdapUserDataDto(updatedDto);
         setLdapUserData(updatedDto);
-        let toast = getUpdateSuccessResultDialog( ldapUserDataDto.getType(), setShowToast);
-        setToast(toast);
-        setShowToast(true);
+        toastContext.showUpdateSuccessResultDialog( ldapUserDataDto.getType());
       } catch (error) {
-        let toast = getUpdateFailureResultDialog(ldapUserDataDto.getType(), error.message, setShowToast);
-        setToast(toast);
-        setShowToast(true);
+        toastContext.showUpdateFailureResultDialog(ldapUserDataDto.getType(), error.message);
         console.error(error.message);
       }
     }
@@ -80,7 +64,6 @@ function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData }) {
   } else {
     return (
       <>
-        {showToast && toast}
         <div className="scroll-y full-height">
           <Row>
             <Col lg={12}>

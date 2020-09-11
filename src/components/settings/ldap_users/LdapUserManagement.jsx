@@ -15,7 +15,7 @@ import {
   getOrganizationByEmail,
   getOrganizationList
 } from "../../admin/accounts/ldap/organizations/organization-functions";
-import {getLoadingErrorDialog} from "../../common/toasts/toasts";
+import {DialogToastContext} from "../../../contexts/DialogToastContext";
 
 
 function LdapUserManagement() {
@@ -29,8 +29,7 @@ function LdapUserManagement() {
   const [organizationList, setOrganizationList] = useState(undefined);
   const [organization, setOrganization] = useState(undefined);
   const [showCreateUserModal, setShowCreateUserModal] = useState(false);
-  const [toast, setToast] = useState({});
-  const [showToast, setShowToast] = useState(false);
+  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     loadData();
@@ -54,9 +53,7 @@ function LdapUserManagement() {
       setOrganization(organization);
       setUserList(organization["users"]);
     } catch (error) {
-      let toast = getLoadingErrorDialog(error.message, setShowToast);
-      setToast(toast);
-      setShowToast(true);
+      toastContext.showLoadingErrorDialog(error.message);
       console.error(error.message);
     }
   };
@@ -83,9 +80,7 @@ function LdapUserManagement() {
           let organizationList = await getOrganizationList(getAccessToken);
           setOrganizationList(organizationList);
         } catch (error) {
-          let toast = getLoadingErrorDialog(error.message, setShowToast);
-          setToast(toast);
-          setShowToast(true);
+          toastContext.showLoadingErrorDialog(error.message);
           console.error(error.message);
         }
       }
@@ -113,7 +108,6 @@ function LdapUserManagement() {
     return (
       <div>
         <BreadcrumbTrail destination={"ldapUserManagement"} />
-        {showToast && toast}
         <div className="justify-content-between mb-1 d-flex">
           <h5>Users Management</h5>
           <div className="d-flex">

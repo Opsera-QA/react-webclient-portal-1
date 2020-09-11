@@ -31,7 +31,7 @@ function NewLdapUserModal({ setShowModal, showModal, loadData } ) {
   return (
     <>
       <CreateModal handleCancelModal={handleClose} objectType={"User"} showModal={showModal} loadData={loadData} >
-        {ldapUserData && <LdapUserEditorPanel setLdapUserData={setLdapUserData} ldapUserData={ldapUserData} />}
+        {ldapUserData && <LdapUserEditorPanel setLdapUserData={setLdapUserData} ldapUserData={ldapUserData} handleClose={handleClose} />}
       </CreateModal>
     </>
   );
