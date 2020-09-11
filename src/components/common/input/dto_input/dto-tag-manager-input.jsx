@@ -20,7 +20,7 @@ function DtoTagManagerInput({ fieldName, type, dataObject, setDataObject, disabl
   const loadData = async () => {
     setComponentLoading(true);
     await getTags();
-    // await loadExtraOptions();
+    removeOldTags();
     setComponentLoading(false);
   }
 
@@ -33,6 +33,20 @@ function DtoTagManagerInput({ fieldName, type, dataObject, setDataObject, disabl
       loadTagOptions(response.data);
     }
   };
+
+  const removeOldTags = () => {
+    let newTags = [];
+    dataObject.getData(fieldName).map((tag, index) => {
+      if (tag["type"] != null && tag["type"] !== "" && tag["value"] != null && tag["value"] !== "")
+      {
+        let tagOption = {type: tag["type"], value: tag["value"]};
+        newTags.push(tagOption);
+      }
+    });
+    let newDataObject = dataObject;
+    newDataObject.setData(fieldName, newTags);
+    setDataObject({...newDataObject});
+  }
 
   const saveNewTag = async (newTagDto) => {
     let createTagResponse = await adminTagsActions.create(newTagDto, getAccessToken);
@@ -77,6 +91,10 @@ function DtoTagManagerInput({ fieldName, type, dataObject, setDataObject, disabl
       }
       return;
     }
+
+    newValue = newValue.trim();
+    newValue = newValue.replaceAll(' ', '-');
+    newValue = newValue.toLowerCase();
 
     let currentOptions = [...tagOptions];
     let newTag = {type: type, value: newValue, active: true, configuration: {}};
