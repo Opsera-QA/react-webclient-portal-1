@@ -4,25 +4,19 @@ import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
 import accountsActions from "components/admin/accounts/accounts-actions.js";
 import Row from "react-bootstrap/Row";
-import {
-  getCreateFailureResultDialog,
-  getCreateSuccessResultDialog,
-  getFormValidationErrorDialog,
-  getUpdateFailureResultDialog, getUpdateSuccessResultDialog,
-} from "../../../common/toasts/toasts";
 import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
 import DtoSelectInput from "../../../common/input/dto_input/dto-select-input";
 import DtoToggleInput from "../../../common/input/dto_input/dto-toggle-input";
 import Model, {DataState} from "../../../../core/data_model/model";
 import LoadingDialog from "../../../common/status_notifications/loading";
 import SaveButton from "../../../common/buttons/SaveButton";
+import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 
 function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, ldapOrganizationData, setLdapGroupData, handleClose}) {
   const {getAccessToken} = useContext(AuthContext);
   const [ldapGroupDataDto, setLdapGroupDataDto] = useState({});
-  const [showToast, setShowToast] = useState(false);
-  const [toast, setToast] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const toastContext = useContext(DialogToastContext);
   const groupTypeOptions = [{value: "project", text: "project", groupId: "Group Types"},{value: "tag", text: "tag", groupId: "Group Types"},{value: "user", text: "user", groupId: "Group Types"}];
 
   useEffect(() => {
@@ -39,20 +33,15 @@ function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, ldapOrganization
     if (ldapGroupDataDto.isModelValid()) {
       try {
         const response = await accountsActions.createGroup(ldapOrganizationData, ldapGroupDataDto, currentUserEmail, getAccessToken);
-        let toast = getCreateSuccessResultDialog(ldapGroupDataDto.getType(), setShowToast);
-        setToast(toast);
-        setShowToast(true);
+        handleClose();
+        toastContext.showCreateSuccessResultDialog(ldapGroupDataDto.getType());
       } catch (error) {
-        let toast = getCreateFailureResultDialog(ldapGroupDataDto.getType(), error.message, setShowToast);
-        setToast(toast);
-        setShowToast(true);
+        toastContext.showCreateFailureResultDialog(ldapGroupDataDto.getType(), error.message);
         console.error(error.message);
       }
     }
     else {
-      let toast = getFormValidationErrorDialog(setShowToast);
-      setToast(toast);
-      setShowToast(true);
+      toastContext.showFormValidationErrorDialog();
     }
   };
 
@@ -60,23 +49,17 @@ function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, ldapOrganization
     if (ldapGroupDataDto.isModelValid()) {
       try {
         const response = await accountsActions.updateGroup(ldapOrganizationData, ldapGroupDataDto, getAccessToken);
-        let toast = getUpdateSuccessResultDialog(ldapGroupDataDto.getType(), setShowToast);
+        toastContext.showUpdateSuccessResultDialog(ldapGroupDataDto.getType());
         let updatedDto = new Model(response.data, ldapGroupDataDto.metaData, false);
         setLdapGroupData(updatedDto);
         setLdapGroupDataDto(updatedDto);
-        setToast(toast);
-        setShowToast(true);
       } catch (error) {
-        let toast = getUpdateFailureResultDialog(ldapGroupDataDto.getType(), error.message, setShowToast);
-        setToast(toast);
-        setShowToast(true);
+        toastContext.showUpdateFailureResultDialog(ldapGroupDataDto.getType(), error.message);
         console.error(error.message);
       }
     }
     else {
-      let toast = getFormValidationErrorDialog(setShowToast);
-      setToast(toast);
-      setShowToast(true);
+      toastContext.showFormValidationErrorDialog();
     }
   };
 
@@ -87,7 +70,6 @@ function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, ldapOrganization
       <>
         <div className="p-3">
           <>
-            {showToast && toast}
             <Row>
               <Col lg={12}>
                 <DtoTextInput disabled={!ldapGroupDataDto.isNew()} fieldName={"name"} dataObject={ldapGroupDataDto}

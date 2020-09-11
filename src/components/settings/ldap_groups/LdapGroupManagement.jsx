@@ -15,7 +15,7 @@ import {
   getOrganizationByEmail,
   getOrganizationList
 } from "../../admin/accounts/ldap/organizations/organization-functions";
-import {getLoadingErrorDialog} from "../../common/toasts/toasts";
+import {DialogToastContext} from "../../../contexts/DialogToastContext";
 
 
 function LdapGroupManagement() {
@@ -30,8 +30,7 @@ function LdapGroupManagement() {
   const [ldapOrganizationData, setLdapOrganizationData] = useState();
   const [currentUserEmail, setCurrentUserEmail] = useState(undefined);
   const [showCreateGroupModal, setShowCreateGroupModal] = useState(false);
-  const [toast, setToast] = useState({});
-  const [showToast, setShowToast] = useState(false);
+  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     loadData();
@@ -56,9 +55,7 @@ function LdapGroupManagement() {
         setLdapOrganizationData(organization);
         setGroupList(organization["groups"]);
       } catch (error) {
-        let toast = getLoadingErrorDialog(error.message, setShowToast);
-        setToast(toast);
-        setShowToast(true);
+        toastContext.showLoadingErrorDialog(error.message);
         console.error(error.message);
       }
     }
@@ -87,9 +84,7 @@ function LdapGroupManagement() {
           const organizationList = await getOrganizationList(getAccessToken);
           setOrganizationList(organizationList);
         } catch (error) {
-          let toast = getLoadingErrorDialog(error.message, setShowToast);
-          setToast(toast);
-          setShowToast(true);
+          toastContext.showLoadingErrorDialog(error.message);
           console.error(error.message);
         }
       }
@@ -118,7 +113,6 @@ function LdapGroupManagement() {
       <div>
         <>
           <BreadcrumbTrail destination={"ldapGroupManagement"} />
-          {showToast && toast}
           <div className="justify-content-between mb-1 d-flex">
             <h5>Groups Management</h5>
             <div className="d-flex">
