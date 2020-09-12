@@ -84,7 +84,7 @@ const funcOpseraAdminNav = () => {
     <div className={"w-20 pt-1 d-block pl-2"}>
       <div className="sidebar-container sticky-top pb-5 pt-1 pl-1">
         <div className="sidebar-menu pt-3">
-          <NavLink className="nav-link" activeClassName="chosen" to="/">
+          <NavLink className="nav-link" activeClassName="chosen" exact to="/">
             <FontAwesomeIcon size="lg" icon={faHome} fixedWidth/> <span
             className="menu-text">Overview</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" exact to="/dashboard">

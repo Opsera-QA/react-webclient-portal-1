@@ -51,6 +51,16 @@
       "src": "img/opsera_logo_120x118.png",
       "type": "image/png",
       "sizes": "120x118"
+    },
+    {
+      "src": "img/logos/opsera_logo_transparent_229x40.png",
+      "type": "image/png",
+      "sizes": "229x40"
+    },
+    {
+      "src": "img/logos/opsera_bird_transparent_158x120.png",
+      "type": "image/png",
+      "sizes": "158x120"
     }
   ],
   "start_url": ".",

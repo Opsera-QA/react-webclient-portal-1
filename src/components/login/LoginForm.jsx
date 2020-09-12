@@ -142,7 +142,11 @@ const LoginForm = () => {
           <div className="d-flex align-items-center justify-content-center">
             <div className="auth-box-w">
               <div className="logo-w">
-                <a href="index.html"><img alt="" src="img/opsera_logo_120x118.png"/></a>
+                <img alt="OpsERA"
+                     src="/img/logos/opsera_bird_transparent_158x120.png"
+                     width="158"
+                     height="120"
+                />
               </div>
               <h4 className="auth-header">
                 Sign in
@@ -206,7 +210,11 @@ const LoginForm = () => {
       <div className="d-flex align-items-center justify-content-center" style={{ minHeight: "500px" }}>
         <div className="auth-box-w">
           <div className="logo-w">
-            <a href="index.html"><img alt="" src="img/opsera_logo_120x118.png"/></a>
+            <img alt="OpsERA"
+                 src="/img/logos/opsera_bird_transparent_158x120.png"
+                 width="158"
+                 height="120"
+            />
           </div>
           <h4 className="auth-header">
             Reset Password
@@ -251,7 +259,11 @@ const LoginForm = () => {
           <div className="d-flex align-items-center justify-content-center">
             <div className="auth-box-w">
               <div className="logo-w">
-                <a href="index.html"><img alt="" src="img/opsera_logo_120x118.png"/></a>
+                <img alt="OpsERA"
+                     src="/img/logos/opsera_bird_transparent_158x120.png"
+                     width="158"
+                     height="120"
+                />
               </div>
               <h4 className="auth-header">
                 Sign in

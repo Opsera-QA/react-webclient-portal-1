@@ -12,7 +12,7 @@
 }
 
 .sub-header {
-  color: #0f3e84;
+  color: #241F3D;
   text-transform: uppercase;
   font-size: 0.72rem;
   letter-spacing: 1px;
@@ -23,18 +23,18 @@
 }
 
 .sidebar-menu .nav-link {
-  color: #1578dc;
+  color: #3D3B36; /*#1578dc;*/
 }
 .sidebar-menu a.chosen {
-  color: #0f3e84;
+  color: #CF940C; /* #0f3e84;*/
 }
 
 .sidebar-menu a:hover {
-  color: #0f3e84;
+  color: #7A756C; /* #0f3e84;*/
 }
 
 .sidebar-menu a.chosen:hover {
-  color: #1578dc;
+  color: #7A756C;
 }
 
 .fixed-row-footer-bottom { 
