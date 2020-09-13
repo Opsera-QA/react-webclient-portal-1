@@ -20,23 +20,23 @@
 
 .btn-link {
   font-weight: 400;
-  color: #1578dc;
+  color: #8F86BB;
   text-decoration: none;
 }
 
 .btn-link:hover {
   font-weight: 400;
-  color: #1578dc;
+  color: #5C5291;
   text-decoration: none;
 }
 
 .btn-link:focus, .btn-link.focus {
   font-weight: 400;
-  color: #1578dc;
+  color: #9F97CA;
   text-decoration: none;
 }
 
-
+/*Bootstrap Button Primary*/
 .btn-primary {
   color: #fff;
   background-color: #4D4283; /*#1578dc;*/
@@ -103,6 +103,79 @@
   box-shadow: 0 0 0 0.2rem #241F3D;
 }
 
+
+
+/*Bootstrap Button Success*/
+.btn-success {
+  color: #fff;
+  background-color: #F0B324;
+  border-color: #F6D179;
+}
+
+.btn-success:hover {
+  color: #fff;
+  background-color: #CF940C;
+  border-color: #F0B324;
+}
+
+.btn-success:focus, .btn-success.focus {
+  box-shadow: 0 0 0 0.2rem #CF940C;
+}
+
+.btn-success.disabled, .btn-success:disabled {
+  color: #7A756C;
+  background-color: #FAE8BC;
+  border-color: #FDF3DE;
+  cursor: default;
+}
+
+.btn-success:not(:disabled):not(.disabled):active, .btn-success:not(:disabled):not(.disabled).active, .show > .btn-success.dropdown-toggle {
+  color: #fff;
+  background-color: #CF940C;
+  border-color: #F0B324;
+}
+
+.btn-success:not(:disabled):not(.disabled):active:focus, .btn-success:not(:disabled):not(.disabled).active:focus, .show > .btn-success.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem #CF940C;
+}
+
+.btn-outline-success {
+  color: #F0B324;
+  background-color: transparent;
+  border-color: #F6D179;
+}
+
+.btn-outline-success:hover {
+  color: #fff;
+  background-color: #CF940C;
+  border-color: #F0B324;
+}
+
+.btn-outline-success:focus, .btn-outline-success.focus {
+  box-shadow: 0 0 0 0.2rem #CF940C;
+}
+
+.btn-outline-success.disabled, .btn-outline-success:disabled {
+  color: #7A756C;
+  background-color: transparent;
+  border-color: #FAE8BC;
+  cursor: default;
+}
+
+.btn-outline-success:not(:disabled):not(.disabled):active, .btn-outline-success:not(:disabled):not(.disabled).active, .show > .btn-outline-success.dropdown-toggle {
+  color: #fff;
+  background-color: #CF940C;
+  border-color: #F0B324;
+}
+
+.btn-outline-success:not(:disabled):not(.disabled):active:focus, .btn-outline-success:not(:disabled):not(.disabled).active:focus, .show > .btn-outline-success.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem #CF940C;
+}
+
+
+
+
+
 /* 
   Card Customizations
 */
@@ -152,12 +225,7 @@ button.bg-primary:focus {
 }
 
 
-.btn-success.disabled, .btn-success:disabled {
-  color: #fff;
-  background-color: #28a746bd;
-  border-color: #28a74650;
-  cursor: default;
-}
+
 
 /* active*/
 .nav-pills .nav-item .active {
