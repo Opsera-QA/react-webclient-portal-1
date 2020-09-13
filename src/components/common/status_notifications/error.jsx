@@ -29,11 +29,9 @@ function ErrorDialog({ error, align, type, setError, autoCloseDialog }) {
   };
 
   const clearError = () => {
-    if (setError) {
       setError(() => {
         return false;
       });
-    }
   };
 
   useEffect(() => {
