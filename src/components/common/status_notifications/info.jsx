@@ -22,10 +22,10 @@ function InformationDialog ({ message, align, setMessage }) {
   if (align === "top") {
     return (
       <div className="w-100 info-block top-error-block">
-        <div className="float-right ml-1">
+        {setMessage && <div className="float-right ml-1">
           <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
             clearMessage();
-          }}/></div>
+          }}/></div> }
         {message}
       </div>
     );

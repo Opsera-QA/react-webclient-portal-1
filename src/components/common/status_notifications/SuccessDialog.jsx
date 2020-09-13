@@ -21,9 +21,11 @@ function SuccessDialog({ successMessage, setSuccessMessage, alignment, autoClose
   }, [successMessage]);
 
   function hideDialog() {
-    setTimeout(function () {
-      clearSuccess();
-    }, 20000);
+    if (setSuccessMessage) {
+      setTimeout(function () {
+        clearSuccess();
+      }, 20000);
+    }
   }
 
   if (alignment === "top") {
