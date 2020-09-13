@@ -229,18 +229,26 @@ button.bg-primary:focus {
 
 /* active*/
 .nav-pills .nav-item .active {
-  background-color: #383060;
+  background-color: #46415C;
   color: white;
+  text-decoration: none;
 }
 
 .list-group-item-primary {
   color: #010913;
-  background-color: #599aee;
+  background-color: #46415C;
+}
+
+.list-group-item.active {
+  background-color: #46415C;
+  color: white;
+  text-decoration: none;
+  border-color: #010913;
 }
 
 .list-group-item-primary.list-group-item-action:hover, .list-group-item-primary.list-group-item-action:focus {
   color: #010913;
-  background-color: #418cec;
+  background-color: #241F3D;
 }
 
 .list-group-item-primary.list-group-item-action.active {
@@ -252,24 +260,24 @@ button.bg-primary:focus {
 .table-primary,
 .table-primary > th,
 .table-primary > td {
-  background-color: #599aee;
+  background-color: #857EA4;
 }
 
 .table-hover .table-primary:hover {
-  background-color: #418cec;
+  background-color: #6E6690;
 }
 
 .table-hover .table-primary:hover > td,
 .table-hover .table-primary:hover > th {
-  background-color: #418cec;
+  background-color: #6E6690;
 }
 
 .text-primary {
-  color: #1578dc !important;
+  color: #352F54 !important;
 }
 
 a.text-primary:hover, a.text-primary:focus {
-  color: #082954 !important;
+  color: #221E35 !important;
 }
 
 
@@ -411,7 +419,7 @@ a.text-primary:hover, a.text-primary:focus {
   margin-bottom: 2em;
   line-height: 2em;
   border-bottom: 1px solid #cdd1d5;
-  color: #334152;
+  color: #46415C;
   background-color: #fff;
 }
 
@@ -425,11 +433,11 @@ a.text-primary:hover, a.text-primary:focus {
 }
 
 .custom-table-2 .table-row:hover {
-  background-color: #1578dc1f;
+  background-color: #E7E5ED;
 }
 
 .custom-table-2 .table-footer {
-  background-color: #1578dc1f;
+  background-color: #E7E5ED;
   padding-top: 1em;
   height: 2em;
 }
@@ -489,6 +497,10 @@ div.modal-footer {
   border-bottom: none;
 }
 
+a.nav-link {
+  color: #3D3B36;
+}
+
 /* Default Custom Tab styling */
 .default-custom-tabs .nav-tabs .nav-item.show .nav-link, .default-custom-tabs .nav-tabs .nav-link {
   background: rgba(0, 0, 0, .05);
@@ -504,7 +516,7 @@ div.modal-footer {
 }
 
 .default-custom-tabs .nav-tabs .nav-item.show .nav-link, .default-custom-tabs .nav-tabs .nav-link:hover {
-  border-color: #241F3D;
+  border-color: #1E1D1B;
 }
 
 /* End Default Custom Tab styling */
