@@ -22,9 +22,11 @@ function WarningDialog({ warningMessage, setWarningMessage, alignment, autoClose
   }, [warningMessage]);
 
   function hideDialog() {
-    setTimeout(function () {
-      clearWarning();
-    }, 5000);
+    if (setWarningMessage) {
+      setTimeout(function () {
+        clearWarning();
+      }, 5000);
+    }
   }
 
   if (alignment === "top") {
