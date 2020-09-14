@@ -83,17 +83,19 @@ function StepToolConfiguration({
     const { workflow } = pipeline;
 
     try {
-      let pipelineResponse = {};
       const stepIndex = workflow.plan.findIndex((x) => x._id === stepId);
+
       workflow.plan[stepIndex].tool.configuration =
         toolConfiguration.configuration;
       workflow.plan[stepIndex].tool.threshold = toolConfiguration.threshold;
       workflow.plan[stepIndex].tool.job_type = toolConfiguration.job_type;
-      pipelineResponse = await PipelineActions.updatePipeline(
+
+      await PipelineActions.updatePipeline(
         pipeline._id,
         { workflow: workflow },
         getAccessToken
       );
+
       const createJobResponse = await PipelineActions.createJob(
         toolId,
         createJobPostBody,
@@ -102,13 +104,15 @@ function StepToolConfiguration({
 
       if (createJobResponse && createJobResponse.data.status === 200) {
         const { message } = createJobResponse.data;
+
         if (
           message &&
           typeof message.jobName === "string" &&
           message.jobName.length > 0
         ) {
           workflow.plan[stepIndex].tool.configuration.jobName = message.jobName;
-          pipelineResponse = await PipelineActions.updatePipeline(
+
+          await PipelineActions.updatePipeline(
             pipeline._id,
             { workflow: workflow },
             getAccessToken
@@ -116,21 +120,22 @@ function StepToolConfiguration({
         }
 
         await reloadParentPipeline();
+
         closeEditorPanel();
       } else {
-        const errorMsg = `Service Unavailable. Error reported creating the job for toolId: ${toolId}.  Error returned: ${JSON.stringify(
-          createJobResponse.data,
-          null,
-          2
-        )}`;
+
+        const errorMsg = `Service Unavailable. Error reported by services creating the job for toolId: ${toolId}.  Please see browser logs for details.`;
+        console.error(createJobResponse.data)
+
         let toast = getErrorDialog(errorMsg, setShowToast, "detailPanelTop");
         setToast(toast);
         setShowToast(true);
       }
     } catch (error) {
-      const errorMsg = `Error Creating and Saving Job Configuration for toolId: ${toolId} on $pipeline: ${
-        pipeline._id
-      }.  Error reported: ${JSON.stringify(error, null, 2)}`;
+
+      const errorMsg = `Error Creating and Saving Job Configuration for toolId: ${toolId} on $pipeline: ${ pipeline._id }.  Please see browser logs for details.`;
+      console.error(error);
+
       let toast = getErrorDialog(errorMsg, setShowToast, "detailPanelTop");
       setToast(toast);
       setShowToast(true);
