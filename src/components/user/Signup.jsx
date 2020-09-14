@@ -82,13 +82,13 @@ function Signup() {
           cloudProvider: registrationDataDto.getData("cloudProvider"),
           cloudProviderRegion: registrationDataDto.getData("cloudProviderRegion")
         };
-        let attributes = {title: "", company: ""};
+        let attributes = { title: registrationDataDto.getData("title"), company: registrationDataDto.getData("company") };
         delete finalObject["cloudProviderRegion"];
         delete finalObject["cloudProvider"];
         finalObject["configuration"] = configuration;
         finalObject["attributes"] = attributes;
 
-        const apiCall = new ApiService("/users/create", {}, null, registrationDataDto.getPersistData());
+        const apiCall = new ApiService("/users/create", {}, null, finalObject);
         await apiCall.post()
           .then(function (response) {
             console.debug(response);
