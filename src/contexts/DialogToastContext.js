@@ -1,6 +1,7 @@
 import React, {createContext, useState} from "react";
 import SuccessDialog from "../components/common/status_notifications/SuccessDialog";
 import ErrorDialog from "../components/common/status_notifications/error";
+import WarningDialog from "../components/common/status_notifications/WarningDialog";
 
 const ToastContextProvider = (props) => {
   const [showToast, setShowToast] = useState(false);
@@ -15,6 +16,11 @@ const ToastContextProvider = (props) => {
 
   const showErrorDialog = (errorMessage) => {
     setToast(getErrorDialog(errorMessage));
+    setShowToast(true);
+  }
+
+  const showWarningDialog = (warningMessage) => {
+    setToast(getWarningDialog(warningMessage));
     setShowToast(true);
   }
 
@@ -55,7 +61,7 @@ const ToastContextProvider = (props) => {
 
   const showCreateFailureResultDialog = (type, errorMessage, modal = true) => {
     if (modal) {
-      setModalToast(getErrorDialog(`WARNING! An error has occurred creating this ${type}: ${errorMessage}`, "top"));
+      setModalToast(getErrorDialog(`WARNING! An error has occurred creating this ${type}: ${errorMessage}`, "dialogToast"));
     }
     else {
       setToast(getErrorDialog(`WARNING! An error has occurred creating this ${type}: ${errorMessage}`));
@@ -70,7 +76,7 @@ const ToastContextProvider = (props) => {
 
   const showDeleteFailureResultDialog = (type, errorMessage, modal = false) => {
     if (modal) {
-      setToast(getErrorDialog(`WARNING! An error has occurred deleting this ${type}: ${errorMessage}`, "top"));
+      setToast(getErrorDialog(`WARNING! An error has occurred deleting this ${type}: ${errorMessage}`, "dialogToast"));
     }
     else {
       setToast(getErrorDialog(`WARNING! An error has occurred deleting this ${type}: ${errorMessage}`));
@@ -94,6 +100,10 @@ const ToastContextProvider = (props) => {
 
   const getErrorDialog = (message, alignment = "dialogToast") => {
     return <ErrorDialog error={message} align={alignment} setError={resetToast}/>
+  };
+
+  const getWarningDialog = (message, alignment = "dialogToast") => {
+    return <WarningDialog warningMessage={message} alignment={alignment} setWarningMessage={resetToast}/>
   };
 
   const getModalToast = () => {

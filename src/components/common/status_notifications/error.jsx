@@ -29,9 +29,9 @@ function ErrorDialog({ error, align, type, setError, autoCloseDialog }) {
   };
 
   const clearError = () => {
-    setError(() => {
-      return false;
-    });
+      setError(() => {
+        return false;
+      });
   };
 
   useEffect(() => {
@@ -61,9 +61,11 @@ function ErrorDialog({ error, align, type, setError, autoCloseDialog }) {
   }, [error]);
 
   function hideDialog() {
-    setTimeout(function () {
-      clearError();
-    }, 5000);
+    if (setError) {
+      setTimeout(function() {
+        clearError();
+      }, 20000);
+    }
   }
 
   const { statusCode, alignment } = state;
@@ -86,10 +88,10 @@ function ErrorDialog({ error, align, type, setError, autoCloseDialog }) {
   if (alignment === "dialogToast") {
     return (
       <div className="w-100 error-block top-dialog-block">
-        <div className="float-right ml-1">
+        { setError && <div className="float-right ml-1">
           <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
             clearError();
-          }}/></div>
+          }}/></div> }
         {state.message} {(statusCode === 401 || (state.message && state.message.includes("401"))) &&
       <span className="ml-1"><a style={{ color: "#fff", textDecoration: "underline" }} href="#" onClick={() => {
         reloadSession();
@@ -102,11 +104,11 @@ function ErrorDialog({ error, align, type, setError, autoCloseDialog }) {
     return (
       <div className="row error-block top-error-block top-dialog-detail-panel-block">
         <div className="col-sm-12 my-auto text-center">
-          <div className="float-right ml-1">
+          { setError && <div className="float-right ml-1">
             <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
               clearError();
             }}/>
-          </div>
+          </div> }
           {state.message} {(statusCode === 401 || (state.message && state.message.includes("401"))) &&
         <span className="ml-1"><a style={{ color: "#fff", textDecoration: "underline" }} href="#" onClick={() => {
           reloadSession();
@@ -119,10 +121,10 @@ function ErrorDialog({ error, align, type, setError, autoCloseDialog }) {
   if (alignment === "stepConfigurationTop") {
     return (
       <div className="w-100 error-block step-configuration-dialog-block mt-1">
-        <div className="float-right ml-1">
+        { setError && <div className="float-right ml-1">
           <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
             clearError();
-          }}/></div>
+          }}/></div>}
         {state.message} {(statusCode === 401 || (state.message && state.message.includes("401"))) &&
       <span className="ml-1"><a style={{ color: "#fff", textDecoration: "underline" }} href="#" onClick={() => {
         reloadSession();
@@ -134,10 +136,10 @@ function ErrorDialog({ error, align, type, setError, autoCloseDialog }) {
   if (alignment === "top") {
     return (
       <div className="w-100 error-block top-error-block">
-        <div className="float-right ml-1">
+        { setError && <div className="float-right ml-1">
           <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
             clearError();
-          }}/></div>
+          }}/></div>}
         {state.message} {(statusCode === 401 || (state.message && state.message.includes("401"))) &&
       <span className="ml-1"><a style={{ color: "#fff", textDecoration: "underline" }} href="#" onClick={() => {
         reloadSession();

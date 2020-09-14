@@ -116,7 +116,7 @@ const LoginForm = () => {
       }
 
       //account isn't ready for login (check customer DB settings)
-      setErrorMessage("We are sorry but your account is not ready.  Please wait for registration to complete or contact Opsera for assistance.");
+      setMessage("Congratulations, your account set up is in progress and it should be available shortly. Please check back in few minutes or contact us for assistance!");
     } catch (err) {
       console.log(err);
       setErrorMessage(err.message);
@@ -142,7 +142,11 @@ const LoginForm = () => {
           <div className="d-flex align-items-center justify-content-center">
             <div className="auth-box-w">
               <div className="logo-w">
-                <a href="index.html"><img alt="" src="img/opsera_logo_120x118.png"/></a>
+                <img alt="OpsERA"
+                     src="/img/logos/opsera_bird_transparent_158x120.png"
+                     width="158"
+                     height="120"
+                />
               </div>
               <h4 className="auth-header">
                 Sign in
@@ -206,7 +210,11 @@ const LoginForm = () => {
       <div className="d-flex align-items-center justify-content-center" style={{ minHeight: "500px" }}>
         <div className="auth-box-w">
           <div className="logo-w">
-            <a href="index.html"><img alt="" src="img/opsera_logo_120x118.png"/></a>
+            <img alt="OpsERA"
+                 src="/img/logos/opsera_bird_transparent_158x120.png"
+                 width="158"
+                 height="120"
+            />
           </div>
           <h4 className="auth-header">
             Reset Password
@@ -251,7 +259,11 @@ const LoginForm = () => {
           <div className="d-flex align-items-center justify-content-center">
             <div className="auth-box-w">
               <div className="logo-w">
-                <a href="index.html"><img alt="" src="img/opsera_logo_120x118.png"/></a>
+                <img alt="OpsERA"
+                     src="/img/logos/opsera_bird_transparent_158x120.png"
+                     width="158"
+                     height="120"
+                />
               </div>
               <h4 className="auth-header">
                 Sign in

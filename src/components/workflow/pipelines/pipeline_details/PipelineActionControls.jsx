@@ -257,18 +257,17 @@ function PipelineActionControls({
 
   async function runPipeline(pipelineId) {
     setStartPipeline(true);
-    const response = await PipelineActions.run(pipelineId, {}, getAccessToken)
+
+    await PipelineActions.run(pipelineId, {}, getAccessToken)
       .catch(err => {
         setStartPipeline(false);
         console.log(err);
         setErrors(err.error);
       });
 
-    /*if (typeof (response.error) !== "undefined") {
+    setTimeout(function () {
       setStartPipeline(false);
-      console.log(response.error);
-      setErrors(response.error);
-    }*/
+    }, 30000);
   }
 
   const stopSocket = () => {
@@ -359,15 +358,15 @@ function PipelineActionControls({
 
       {error && <ErrorDialog error={error} setError={setErrors} align="top"/> }
 
-      <div className="text-right" style={{ marginBottom: "5px" }}>
+      <div className="text-right">
         {workflowStatus === "running" &&
         <>
-          <Button variant="outline-dark"
+          <Button variant="dark"
                   className="mr-1"
                   size="sm"
                   disabled>
             <FontAwesomeIcon icon={faSpinner} spin className="mr-1"/> Running</Button>
-          <Button variant="outline-danger"
+          <Button variant="danger"
                   className="mr-1"
                   size="sm"
                   onClick={() => {
@@ -381,7 +380,7 @@ function PipelineActionControls({
 
         {workflowStatus === "paused" &&
         <>
-          <Button variant="outline-warning" className="mr-1" size="sm" disabled>
+          <Button variant="warning" className="mr-1" size="sm" disabled>
             <FontAwesomeIcon icon={faPause} className="mr-1"/> Paused</Button>
           <Button variant="warning"
                   className="mr-1"
@@ -397,7 +396,7 @@ function PipelineActionControls({
         {(workflowStatus === "stopped" || !workflowStatus) &&
         <>
           {startPipeline ?
-            <Button variant="outline-secondary"
+            <Button variant="secondary"
                     className="mr-1"
                     size="sm"
                     onClick={() => {
@@ -421,7 +420,7 @@ function PipelineActionControls({
           placement="top"
           delay={{ show: 250, hide: 400 }}
           overlay={renderTooltip({ message: "Restart pipeline from beginning as new run" })}>
-          <Button variant="outline-danger"
+          <Button variant="danger"
                   className="mr-1"
                   size="sm"
                   onClick={() => {

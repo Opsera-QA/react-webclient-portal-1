@@ -48,8 +48,8 @@ function PipelineWorkflowView({
       <>
         <div className="workflow-view h-100">
           <Row className="w-100" style={{margin:"0"}}>
-            <Col className="max-content-width content-block-collapse pt-3">
-              <div className="w-100 mb-1 pr-1 text-right">
+            <Col className="max-content-width content-block-collapse" style={{paddingLeft:"0"}}>
+              <div className="w-100 dark-grey-background p-1 text-right">
 
                   <PipelineActionControls pipeline={pipeline} disabledActionState={false}
                                           customerAccessRules={customerAccessRules}
@@ -68,7 +68,9 @@ function PipelineWorkflowView({
                                 refreshCount={refreshCount}
                                 softLoading={softLoading}/>
             </Col>
+
             {getPipelineWorkflowEditor(editItem)}
+
           </Row>
         </div>
       </>

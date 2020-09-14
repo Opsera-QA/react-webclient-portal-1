@@ -46,11 +46,11 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
 
   return (
     <Navbar className="nav-bar">
-      <Navbar.Brand href="/" style={{ minWidth:165 }}>
+      <Navbar.Brand href="/">
         <img alt="OpsERA"
-          src="/img/opsera_logo_170x35.png"
-          width="170"
-          height="35"
+          src="/img/logos/opsera_logo_transparent_229x40.png"
+          width="229"
+          height="40"
           className="d-inline-block align-top ml-3"
         />
       </Navbar.Brand>

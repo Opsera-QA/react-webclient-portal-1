@@ -25,12 +25,34 @@
     color: green;
 }
 
-.opsera-blue {
-    color: #1989F9;
+.opsera-yellow {
+    color: #F6D179;
+}
+.opsera-dark-purple {
+    color: #241F3D;
+}
+.opsera-purple {
+    color: #352F54;
+}
+.opsera-muted-purple {
+    color: #46415C;
+}
+.opsera-light-purple {
+    color: #9F97CA;
+}
+.opsera-light-gray {
+    color: #E6E5E3;
+}
+.opsera-gold {
+    color: #CF940C;
+}
+
+.opsera-blue { /*replacing blue with purple; 1989F9 */
+    color: #8F86BB;
 }
 
 .nav-blue {
-    color: #1989F9;
+    color: #6153A5;
 }
 
 .dark-grey {
@@ -50,7 +72,16 @@
 }
 
 .medium-blue {
-    color: #1989F9;
+    color: #8F86BB;
+}
+
+.dark-grey-background {
+    background-color: #CCCAC6;
+}
+
+.dark-grey-border {
+    border: #B1AEA7 solid 2px;
+    border-radius: 0;
 }
 
 .pointer {
@@ -75,13 +106,13 @@ body {
 }
 
 a {
-    color: #1578dc;
+    color: #8F86BB;  /*#1578dc;*/
     text-decoration: none;
 }
 
 a:hover, .active {
-    color: #1578dc;
-    text-decoration: none;
+    color: #5C5291;  /*#1578dc;*/
+    text-decoration: underline;
 }
 
 .title-text-5 {
@@ -376,7 +407,7 @@ a:hover, .active {
 
 .auth-box-w .auth-header:after {
     content: "";
-    background-color: #1578dc;
+    background-color: #352F54;
     width: 32px;
     height: 7px;
     border-radius: 2px;
@@ -540,6 +571,12 @@ a:hover, .active {
 
 .info-block {
     background-color: #1989F9;
+    color: #fff;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.warning-block {
+    background-color: #f9c116;
     color: #fff;
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }

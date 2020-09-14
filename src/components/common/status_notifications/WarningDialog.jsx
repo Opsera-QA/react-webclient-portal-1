@@ -3,37 +3,38 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
-function SuccessDialog({ successMessage, setSuccessMessage, alignment, autoCloseDialog }) {
+// TODO: Clean up code once dialogs are completed
+function WarningDialog({ warningMessage, setWarningMessage, alignment, autoCloseDialog }) {
   const [messageBody, setMessageBody] = useState("");
 
-  const clearSuccess = () => {
-    setSuccessMessage(() => {
+  const clearWarning = () => {
+    setWarningMessage(() => {
       return false;
     });
   };
 
   useEffect(() => {
-    setMessageBody(successMessage);
+    setMessageBody(warningMessage);
 
     if (autoCloseDialog) {
       hideDialog();
     }
-  }, [successMessage]);
+  }, [warningMessage]);
 
   function hideDialog() {
-    if (setSuccessMessage) {
+    if (setWarningMessage) {
       setTimeout(function () {
-        clearSuccess();
-      }, 20000);
+        clearWarning();
+      }, 5000);
     }
   }
 
   if (alignment === "top") {
     return (
-      <div className="w-100 success-block top-error-block">
-        {setSuccessMessage && <div className="float-right ml-1">
+      <div className="w-100 warning-block top-error-block">
+        {setWarningMessage && <div className="float-right ml-1">
           <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
-            clearSuccess();
+            clearWarning();
           }}/>
         </div>}
         <span>{messageBody}</span>
@@ -43,10 +44,10 @@ function SuccessDialog({ successMessage, setSuccessMessage, alignment, autoClose
 
   if (alignment === "dialogToast") {
     return (
-      <div className="w-100 success-block top-dialog-block">
-        {setSuccessMessage && <div className="float-right ml-1">
+      <div className="w-100 warning-block top-dialog-block">
+        {setWarningMessage && <div className="float-right ml-1">
           <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
-            clearSuccess();
+            clearWarning();
           }}/>
         </div>}
         <span>{messageBody}</span>
@@ -56,11 +57,11 @@ function SuccessDialog({ successMessage, setSuccessMessage, alignment, autoClose
 
   if (alignment === "stepConfigurationTop") {
     return (
-      <div className="w-100 success-block step-configuration-dialog-block mt-2">
+      <div className="w-100 warning-block step-configuration-dialog-block mt-2">
         <div className="my-auto text-center">
-          {setSuccessMessage && <div className="float-right ml-1">
+          {setWarningMessage && <div className="float-right ml-1">
             <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
-              clearSuccess();
+              clearWarning();
             }}/>
           </div>}
           <span>{messageBody}</span>
@@ -71,11 +72,11 @@ function SuccessDialog({ successMessage, setSuccessMessage, alignment, autoClose
 
   if (alignment === "detailPanelTop") {
     return (
-      <div className="row success-block top-dialog-detail-panel-block top-error-block">
+      <div className="row warning-block top-dialog-detail-panel-block top-error-block">
         <div className="col-sm-12 my-auto text-center">
-          {setSuccessMessage && <div className="float-right ml-1">
+          {setWarningMessage && <div className="float-right ml-1">
             <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
-              clearSuccess();
+              clearWarning();
             }}/>
           </div>}
           <span>{messageBody}</span>
@@ -86,13 +87,13 @@ function SuccessDialog({ successMessage, setSuccessMessage, alignment, autoClose
 
   return (
     <div className="row">
-      <div className="col-sm-12 my-auto text-center">
-        {setSuccessMessage && <div className="float-right ml-1">
-          <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
-            clearSuccess();
-          }}/>
-        </div>}
-        <div className="success-text">
+      <div className="col-sm-12 my-auto warning-block text-center p-2">
+        {/*{setWarningMessage && <div className="float-right ml-1">*/}
+        {/*  <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {*/}
+        {/*    clearWarning();*/}
+        {/*  }}/>*/}
+        {/*</div>}*/}
+        <div>
           <span>{messageBody}</span>
         </div>
       </div>
@@ -101,15 +102,15 @@ function SuccessDialog({ successMessage, setSuccessMessage, alignment, autoClose
 
 }
 
-SuccessDialog.propTypes = {
-  successMessage: PropTypes.string,
-  setSuccessMessage: PropTypes.string,
+WarningDialog.propTypes = {
+  warningMessage: PropTypes.string,
+  setWarningMessage: PropTypes.string,
   alignment: PropTypes.string,
   autoCloseDialog: PropTypes.bool
 };
 
-SuccessDialog.defaultProps = {
+WarningDialog.defaultProps = {
   autoCloseDialog: true
 }
 
-export default SuccessDialog;
+export default WarningDialog;

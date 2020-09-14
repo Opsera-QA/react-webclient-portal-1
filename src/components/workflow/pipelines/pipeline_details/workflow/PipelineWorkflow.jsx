@@ -241,7 +241,7 @@ function PipelineWorkflow({
               </div>
             </>
             }
-            <div className="pr-1 text-right m-1">
+            <div className="p-1 dark-grey-background">
 
               <Button variant="secondary"
                       className="mr-1"
@@ -303,7 +303,7 @@ function PipelineWorkflow({
             </div>
           </div>
 
-          <div className={"workflow-container max-content-width p-2" + (zoomValue > 2 ? " scale-120-container" : "")}>
+          <div className={"workflow-container max-content-width p-2 dark-grey-border" + (zoomValue > 2 ? " scale-120-container" : "")}>
             <div className={setZoomClass(zoomValue)}>
               <div className="source workflow-module-container workflow-module-container-width mt-2 mx-auto">
                 <div className="pt-2 text-center h6 mx-auto">Start of Workflow</div>

@@ -46,34 +46,34 @@
 }
 
 .pipeline-card-title {
-    background-color: #f6fafc;
-    color: #3551a1;
+    background-color: #E7E5ED;
+    color: #1E1D1B;
 }
 
 .pipeline-card-text {
     font-size: 15px;
     line-height: 1.54;
-    color: #0f3e84;
+    color: #241F3D;
     min-height: 100px;
 }
 
 .pipeline-blue-text {
-    color: #0f3e84;
+    color: #241F3D;
 }
 
 .pipeline-blue-text:hover {
-    color: #1578dc;
+    color: #46415C;
 }
 
 .stop-rectangle {
     width: 30px;
     height: 30px;
     border-radius: 3px;
-    border: solid 3px #3551a1;
+    border: solid 3px #241F3D;
 }
 
 .blue-underline {
-    background-color: #3551a1;
+    background-color: #241F3D;
 }
 
 .workflow-editor-panel {
