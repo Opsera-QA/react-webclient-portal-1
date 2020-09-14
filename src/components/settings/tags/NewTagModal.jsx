@@ -20,6 +20,7 @@ function NewTagModal({ setShowModal, showModal, loadData }) {
   }, []);
 
   const handleClose = () => {
+    loadData();
     setShowModal(false);
   };
 
