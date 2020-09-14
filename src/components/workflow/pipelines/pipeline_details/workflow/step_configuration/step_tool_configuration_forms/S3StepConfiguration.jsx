@@ -32,7 +32,12 @@ const INITIAL_DATA = {
   awsToolConfigId: "",
   buildStepId: "",
   bucketName: "",
+  bucketAccess: "private",
 };
+const BUCKET_ACCESS = [
+  {name: "Public", value: "public"},
+  {name: "Private", value: "private"}
+];
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
@@ -186,6 +191,12 @@ function S3StepConfiguration({
   const handleBuildStepChange = (selectedOption) => {
     setFormData({ ...formData, buildStepId: selectedOption._id });
   };
+
+  const handleBucketAccessChange = (selectedOption) => {
+    setFormData({...formData, bucketAccess: selectedOption.value})
+  }
+
+  console.log(formData)
 
   const validateRequiredFields = () => {
     let {
@@ -377,6 +388,28 @@ function S3StepConfiguration({
                   }
                 />
           </Form.Group>
+          <Form.Group controlId="s3bucketStep">
+            <Form.Label>Bucket Access*</Form.Label>
+            {BUCKET_ACCESS ? (
+              <DropdownList
+                data={BUCKET_ACCESS}
+                value={
+                  formData.bucketAccess ? formData.bucketAccess : "private"
+                }
+                valueField="value"
+                textField="name"
+                onChange={handleBucketAccessChange}
+              />
+            ) : (
+              <FontAwesomeIcon
+                icon={faSpinner}
+                spin
+                className="text-muted ml-2"
+                fixedWidth
+              />
+            )}
+          </Form.Group>
+
             <Form.Group controlId="s3Step">
             <Form.Label>Build Step Info*</Form.Label>
             {listOfSteps ? (

@@ -376,7 +376,6 @@ function CypressStepConfiguration({
       toolConfigId.length === 0 ||
       jenkinsUrl.length === 0 ||
       jUserId.length === 0 ||
-      jsonPath.length === 0 ||
       jAuthToken.length === 0 ||
       (buildType === "docker"
         ? dockerName.length === 0 || dockerTagName.length === 0
@@ -947,7 +946,7 @@ function CypressStepConfiguration({
         {formData.jobType === "CYPRESS UNIT TESTING" && (
           <>
             <Form.Group controlId="branchField">
-              <Form.Label>JSON Path*</Form.Label>
+              <Form.Label>JSON Path</Form.Label>
               <Form.Control
                 maxLength="250"
                 type="text"
