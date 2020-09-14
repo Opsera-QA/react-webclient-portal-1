@@ -14,7 +14,7 @@ function BreadcrumbTrail({destination}) {
     return (
         <ol className="breadcrumb">
           {breadcrumbTrail.trail && getParentTrail(breadcrumbTrail.trail)}
-          <li className="breadcrumb-item active">{breadcrumbTrail.destination.label}</li>
+          <li className="breadcrumb-item">{breadcrumbTrail.destination.label}</li>
         </ol>
     );
   }
