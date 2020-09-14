@@ -103,22 +103,14 @@ function Application(props) {
       })
       .catch(function (error) {
         let message = null;
-        
-        if(error.response.data && error.response.data.errmsg.includes("duplicate key error")) {
-          message = "Application already exists.";
-          setApplicationStatus("failed");
-          setAppStatus({
-            error: message,
-            message: message ? message : "Error reported accessing API."
-          });
-        } else { 
-          message = handleError(error);
-          setApplicationStatus("failed");
-          setAppStatus({
-            error: error,
-            messages: message ? message : "Error reported accessing API.",
-          });
-        }  
+
+        message = handleError(error);
+        setApplicationStatus("failed");
+        setAppStatus({
+          error: error,
+          messages: message ? message : "Error reported accessing API.",
+        });
+
       })
       .finally(function () {
         setFetching(false);
@@ -288,7 +280,7 @@ function Application(props) {
           {savingStatus === "success" && createAppStatus.message ? <>
             <SuccessDialog successMessage={createAppStatus.message} />
             <Button variant="outline-primary" className="ml-2" onClick={gotoInventory}>
-              <FontAwesomeIcon icon={faClipboardList} fixedWidth /> Inventory
+              <FontAwesomeIcon icon={faClipboardList} fixedWidth /> Registry
             </Button>
           </> : null}
 

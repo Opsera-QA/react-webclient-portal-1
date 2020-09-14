@@ -38,7 +38,6 @@ class NewAppProvider extends React.Component {
 
     if(userInfo && userInfo.configuration && (userInfo.configuration.cloudProvider === "EKS") ) { isEKS = true; } 
     
-    console.log("IN CONTEXT", userInfo);
     this.setState({
       token: accessToken,
       user: userInfo,
@@ -78,7 +77,7 @@ class NewAppProvider extends React.Component {
   }
 
   gotoInventory = () => {
-    this.props.history.push("/inventory");
+    this.props.history.push("/inventory/tools");
   }
 
   setAppDetails = (app) => {
@@ -121,7 +120,6 @@ class NewAppProvider extends React.Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <Ctx.Provider
         value={{

@@ -127,7 +127,7 @@ class rmProvider extends Component {
   }
 
   gotoInventory = () => {
-    this.props.history.push("/inventory");
+    this.props.history.push("/inventory/tools");
   }
 
   validate = () => {

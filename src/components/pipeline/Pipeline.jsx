@@ -301,7 +301,7 @@ class Pipeline extends React.PureComponent {
           {savingStatus === "success" && messages ? <>
             <SuccessDialog successMessage={messages} />
             <Button variant="outline-primary" className="ml-2" onClick={gotoInventory}>
-              <FontAwesomeIcon icon={faClipboardList} fixedWidth /> Inventory
+              <FontAwesomeIcon icon={faClipboardList} fixedWidth /> Registry
             </Button>
           </> : null}
           {status === "success" && savingStatus === null && (
