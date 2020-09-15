@@ -31,13 +31,13 @@ function JenkinsToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVau
     if (configurationData.isModelValid()) {
       let newConfiguration = {...configurationData.getPersistData()};
       
-      if (configurationData.isChanged("jAuthToken")) {
+      if (typeof(configurationData.getData("jAuthToken")) === "string" || configurationData.isChanged("jAuthToken")) {
         newConfiguration.jAuthToken = await saveToVault(toolId, toolData.tool_identifier, "jAuthToken", "Vault Secured Key", configurationData.getData("jAuthToken"));
       }
-      if (configurationData.isChanged("jPassword")) {
+      if (typeof(configurationData.getData("jPassword")) === "string" || configurationData.isChanged("jPassword")) {
         newConfiguration.jPassword = await saveToVault(toolId, toolData.tool_identifier, "jPassword", "Vault Secured Key", configurationData.getData("jPassword"));
       }
-      if (configurationData.isChanged("proxyPassword")) {
+      if (typeof(configurationData.getData("proxyPassword")) === "string" || configurationData.isChanged("proxyPassword")) {
         newConfiguration.proxyPassword = await saveToVault(toolId, toolData.tool_identifier, "proxyPassword", "Vault Secured Key",configurationData.getData("proxyPassword"));
       }
 
@@ -65,7 +65,7 @@ function JenkinsToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVau
     if (response.status === 200 ) {
       return { name: name, vaultKey: keyName };
     } else {
-      return "";
+      return {};
     }
   };
 
@@ -99,18 +99,23 @@ function JenkinsToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVau
         <Col sm={12}>
           <DtoToggleInput setData={toggleProxy} setDataObject={setConfigurationData} fieldName={"proxyEnable"} dataObject={configurationData} />
         </Col>
-        <Col sm={12}>
-          <DtoTextInput disabled={!configurationData.getData("proxyEnable")} setDataObject={setConfigurationData} fieldName={"proxyUserName"} dataObject={configurationData} />
-        </Col>
-        <Col sm={12}>
-          <DtoTextInput type={"password"} disabled={!configurationData.getData("proxyEnable")} setDataObject={setConfigurationData} fieldName={"proxyPassword"} dataObject={configurationData} />
-        </Col>
-        <Col sm={12}>
-          <DtoTextInput type={"password"} disabled={!configurationData.getData("proxyEnable")} setDataObject={setConfigurationData} fieldName={"jPassword"} dataObject={configurationData} />
-        </Col>
+        {configurationData.getData("proxyEnable") ?
+        <>
+          <Col sm={12}>
+            <DtoTextInput disabled={!configurationData.getData("proxyEnable")} setDataObject={setConfigurationData} fieldName={"proxyUserName"} dataObject={configurationData} />
+          </Col>
+          <Col sm={12}>
+            <DtoTextInput type={"password"} disabled={!configurationData.getData("proxyEnable")} setDataObject={setConfigurationData} fieldName={"proxyPassword"} dataObject={configurationData} />
+          </Col>
+          <Col sm={12}>
+            <DtoTextInput type={"password"} disabled={!configurationData.getData("proxyEnable")} setDataObject={setConfigurationData} fieldName={"jPassword"} dataObject={configurationData} />
+          </Col>
+        </> : 
         <Col sm={12}>
           <DtoTextInput type={"password"} disabled={configurationData.getData("proxyEnable")} setDataObject={setConfigurationData} fieldName={"jAuthToken"} dataObject={configurationData} />
         </Col>
+        }
+        
       </Row>
       <Row>
         <div className="ml-auto mt-3 px-3">
