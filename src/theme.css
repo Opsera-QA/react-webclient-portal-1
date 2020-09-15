@@ -43,7 +43,7 @@
   border-color: #6153A5; /*#1578dc;*/
 }
 
-.btn-primary:hover {
+.btn-primary.hover, .btn-primary:hover, .btn-primary:active, .btn-primary.active, .btn-primary:visited, .btn-primary.visited {
   color: #fff;
   background-color: #383060; /*#1a4e79;*/
   border-color: #6153A5; /*#1578dc;*/
@@ -112,7 +112,7 @@
   border-color: #F6D179;
 }
 
-.btn-success:hover {
+.btn-success.hover, .btn-success:hover, .btn-success:active, .btn-success.active, .btn-success:visited, .btn-success.visited {
   color: #fff;
   background-color: #CF940C;
   border-color: #F0B324;
