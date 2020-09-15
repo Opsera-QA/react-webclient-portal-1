@@ -31,6 +31,7 @@ import DropdownList from "react-widgets/lib/DropdownList";
 // import GitlabMergeRequestsView from "./views/GitlabMergeRequestsView";
 // import GitlabMergeRequestTimeTakenBarChart from "./charts/GitlabMergeRequestTimeTakenBarChart";
 import SourceCodeView from "./views/SourceCode/SourceCodeView_developer";
+import LoadingView from "../common/status_notifications/loading";
 
 const INDICES = [
   "jenkins",
@@ -115,7 +116,6 @@ function Analytics() {
         await fetchData();
       } catch (err) {
         if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
           return;
         }
       }
@@ -134,7 +134,7 @@ function Analytics() {
 
   const ValueInput = ({ item }) => (
     <span>
-      <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth />
+      <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth/>
       {" " + DATELABELS.find((o) => o.value.start === date.start && o.value.end === date.end).label.toString()}
     </span>
   );
@@ -215,19 +215,18 @@ function Analytics() {
 
       if (!profileResponse.data) {
         setErrors(
-          "Warning!  Profile settings associated with your account are incomplete.  Log searching will be unavailable until this is fixed."
+          "Warning!  Profile settings associated with your account are incomplete.  Log searching will be unavailable until this is fixed.",
         );
       } else if (profileResponse.data && profileResponse.data.vault !== 200) {
-        console.error("Error Code " + profileResponse.data.vault + " with the following message: " + profileResponse.data.message)
+        console.error("Error Code " + profileResponse.data.vault + " with the following message: " + profileResponse.data.message);
         setErrors(
-          "Error Reported: Vault has returned a message: " + profileResponse.data.message
+          "Error Reported: Vault has returned a message: " + profileResponse.data.message,
         );
       }
 
       const indices = await axiosApiService(accessToken).post("/analytics/index", { index: INDICES });
       let indicesList = indices.data && Array.isArray(indices.data) ? indices.data : [];
       setIndex(indicesList);
-      console.log(indicesList);
 
       if (!Array.isArray(profileResponse.data.profile) || profileResponse.data.profile.length > 0) {
         setProfile(profileResponse.data.profile[0]); //set profile state as an object
@@ -237,7 +236,7 @@ function Analytics() {
         setIndex(indicesList);
       } else {
         setErrors(
-          "Warning!  Profile settings associated with your account are incomplete.  Log searching will be unavailable until this is fixed."
+          "Warning!  Profile settings associated with your account are incomplete.  Log searching will be unavailable until this is fixed.",
         );
       }
 
@@ -245,7 +244,7 @@ function Analytics() {
     } catch (err) {
       console.log(err);
       setLoadingProfile(false);
-      setErrors(err.message);
+      setErrors(err);
     }
   }
 
@@ -254,318 +253,140 @@ function Analytics() {
     setSelection(param);
   };
 
+
   if (loadingProfile) {
-    return <LoadingDialog size="lg" />;
-  } else {
-    return (
-      <>
-        {loadingProfile ? <LoadingDialog size="lg" /> : null}
-        {profile.enabledToolsOn && (
-          <>
-            <div className="mt-3">
-              <div className="max-content-width">
-                <h4>Analytics</h4>
-                <p>
-                  OpsERA provides users with access to a vast repository of logging and analytics. Access all available
-                  logging, reports and configurations around the OpsERA Analytics Platform or search your currently
-                  configured logs repositories below.
-                </p>
-              </div>
-              <div className="p-2 mt-1 max-content-width mb-1">
-                <ConfigurationsForm settings={profile} token={token} />
-              </div>
-              {error ? <ErrorDialog error={error} /> :
-              <div className="p-2">
-                <div className="mt-1">
-                  <Row>
-                    <Col sm={8}>
-                      <ListGroup horizontal>
-                        <ListGroup.Item
-                          className={"pointer " + (selection === "pipeline" ? "active" : "")}
-                          onClick={handleTabClick("pipeline")}
-                        >
-                          Pipeline
-                        </ListGroup.Item>
-                        <ListGroup.Item
-                          className={"pointer " + (selection === "security" ? "active" : "")}
-                          onClick={handleTabClick("security")}
-                        >
-                          Security
-                        </ListGroup.Item>
-                        <ListGroup.Item
-                          className={"pointer " + (selection === "software_development" ? "active" : "")}
-                          onClick={handleTabClick("software_development")}
-                        >
-                          Software Development
-                        </ListGroup.Item>
-                        <ListGroup.Item
-                          className={"pointer " + (selection === "software_testing" ? "active" : "")}
-                          onClick={handleTabClick("software_testing")}
-                        >
-                          Software Testing
-                        </ListGroup.Item>
-                        <ListGroup.Item
-                          className={"pointer " + (selection === "source_code" ? "active" : "")}
-                          onClick={handleTabClick("source_code")}
-                        >
-                          Source Code
-                        </ListGroup.Item>
-                      </ListGroup>
-                    </Col>
-                    <Col sm={3}>
-                      <OverlayTrigger placement="top" delay={{ show: 250, hide: 250 }} overlay={renderTooltip}>
-                        <DropdownList
-                          filter
-                          data={DATELABELS}
-                          className="max-content-width"
-                          valueComponent={ValueInput}
-                          textField="label"
-                          allowCreate="onFilter"
-                          onCreate={handleCreate}
-                          defaultValue={
-                            date
-                              ? DATELABELS.find((o) => o.value.start === date.start && o.value.end === date.end)
-                              : DATELABELS[5]
-                          }
-                          onChange={handleDateChange}
-                        />
-                      </OverlayTrigger>
-                    </Col>
-                  </Row>
-                </div>
-                <div className="mt-3">
-                  <ChartView token={token} selection={selection} persona={null} date={date} index={index} />
-                </div>
-              </div>}
-            </div>
-          </>
-        )}
-        {/*
-        { !enabledOn || profile.esSearchApi === null || profile.vault !== 200 || profile.esSearchApi.status !== 200 ?
-          <div style={{ height: "250px" }} className="max-content-module-width-50">
-            <div className="max-content-width">
-              <h4>Analytics</h4>
-              <p>OpsERA provides users with access to a vast repository of logging and analytics.  Access all available
-           logging, reports and configurations around the OpsERA Analytics Platform or search your
-          currently configured logs repositories below.</p>
-            </div>
-            <div className="mt-1 max-content-width mb-1">
-              <ConfigurationsForm settings={data} token={token} />
-            </div>
-            <div className="row h-100">
-              <div className="col-sm-12 my-auto"> 
-                <Alert variant="warning">Your Analytics configurations are incomplete.  Please review the details below in order to determine what needs to be done.</Alert>
-                <div className="text-muted mt-4">
-                  <div className="mb-3">In order to take advantage of the robust analytics dashboards offered by OpsERA, the following configurations are necessary:</div>
-                  <ul className="list-group">
-                    <li className="list-group-item d-flex justify-content-between align-items-center">
-                      Your Analytics account must be enabled for yourself or your organization.
-                      {enabledOn ? 
-                        <span className="badge badge-success badge-pill"><FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth /></span>  :
-                        <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span> }
-                    </li>
-                    <li className="list-group-item d-flex justify-content-between align-items-center">
-                      An OpsERA Analytics instance must be spun up and configured with your pipeline tools.
-                      {profile.esSearchApi === undefined || profile.esSearchApi === null || profile.esSearchApi.status !== 200 ? 
-                        <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span> :
-                        <span className="badge badge-success badge-pill"><FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth /></span> }
-                    </li>
-                    <li className="list-group-item d-flex justify-content-between align-items-center">
-                      OpsERA Analytics authentication information must be secured and available.
-                      {profile.vault === undefined || profile.vault !== 200 ? 
-                        <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span> :
-                        <span className="badge badge-success badge-pill"><FontAwesomeIcon icon={faCheckCircle} className="" size="lg" fixedWidth /></span> }
-                    </li>
-                    <li className="list-group-item d-flex justify-content-between align-items-center">
-                        Pipeline activity must have occurred in order for the system to collect data for display.
-                      <span className="badge badge-warning badge-pill"><FontAwesomeIcon icon={faQuestion} className="" size="lg" fixedWidth /></span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div> :
-          */}
-      </>
-    );
+    return (<LoadingView size="sm"/>);
   }
+
+
+  return (
+    <>
+      <div className="mt-3">
+        {error && <ErrorDialog error={error} align="top"/>}
+
+        <div className="max-content-width">
+          <h4>Analytics</h4>
+          <p>
+            OpsERA provides users with access to a vast repository of logging and analytics. Access all available
+            logging, reports and configurations around the OpsERA Analytics Platform or search your currently
+            configured logs repositories below.
+          </p>
+        </div>
+        <div className="p-2 mt-1 max-content-width mb-1">
+          <ConfigurationsForm settings={profile} token={token}/>
+        </div>
+
+        {profile.enabledToolsOn && !error &&
+        <div className="p-2">
+          <div className="mt-1">
+            <Row>
+              <Col sm={8}>
+                <ListGroup horizontal>
+                  <ListGroup.Item
+                    className={"pointer " + (selection === "pipeline" ? "active" : "")}
+                    onClick={handleTabClick("pipeline")}
+                  >
+                    Pipeline
+                  </ListGroup.Item>
+                  <ListGroup.Item
+                    className={"pointer " + (selection === "security" ? "active" : "")}
+                    onClick={handleTabClick("security")}
+                  >
+                    Security
+                  </ListGroup.Item>
+                  <ListGroup.Item
+                    className={"pointer " + (selection === "software_development" ? "active" : "")}
+                    onClick={handleTabClick("software_development")}
+                  >
+                    Software Development
+                  </ListGroup.Item>
+                  <ListGroup.Item
+                    className={"pointer " + (selection === "software_testing" ? "active" : "")}
+                    onClick={handleTabClick("software_testing")}
+                  >
+                    Software Testing
+                  </ListGroup.Item>
+                  <ListGroup.Item
+                    className={"pointer " + (selection === "source_code" ? "active" : "")}
+                    onClick={handleTabClick("source_code")}
+                  >
+                    Source Code
+                  </ListGroup.Item>
+                </ListGroup>
+              </Col>
+              <Col sm={3}>
+                <OverlayTrigger placement="top" delay={{ show: 250, hide: 250 }} overlay={renderTooltip}>
+                  <DropdownList
+                    filter
+                    data={DATELABELS}
+                    className="max-content-width"
+                    valueComponent={ValueInput}
+                    textField="label"
+                    allowCreate="onFilter"
+                    onCreate={handleCreate}
+                    defaultValue={
+                      date
+                        ? DATELABELS.find((o) => o.value.start === date.start && o.value.end === date.end)
+                        : DATELABELS[5]
+                    }
+                    onChange={handleDateChange}
+                  />
+                </OverlayTrigger>
+              </Col>
+            </Row>
+          </div>
+          <div className="mt-3">
+            <ChartView token={token} selection={selection} persona={null} date={date} index={index}/>
+          </div>
+        </div>}
+      </div>
+    </>
+  );
+
 }
 
 function ChartView({ selection, persona, date, index }) {
-  useEffect(() => {}, [selection, persona, date.start, index]);
+  useEffect(() => {
+  }, [selection, persona, date.start, index]);
 
   if (selection) {
     switch (selection) {
-      case "pipeline":
-        return (
-          <>
-            <div className="mt-2">
-              <SummaryChartsView date={date} index={index} />
-            </div>
-          </>
-        );
+    case "pipeline":
+      return (
+        <>
+          <div className="mt-2">
+            <SummaryChartsView date={date} index={index}/>
+          </div>
+        </>
+      );
 
-      case "security":
-        return (
-          <>
-            {index.includes("sonar") ? (
-              <>
-                <div className="mt-2">
-                  <ReliabilityMetricsCharts persona={persona} date={date} />
-                </div>
-                <div className="d-flex">
-                  <div className="align-self-stretch p-2 w-100">
-                    <SonarSecurityLineChart persona={persona} sonarMeasure="vulnerabilities" date={date} />
-                  </div>
-                  <div className="align-self-stretch p-2 w-100">
-                    <SonarSecurityLineChart persona={persona} sonarMeasure="new_vulnerabilities" date={date} />
-                  </div>
-                </div>
-                <div className="d-flex">
-                  <div className="align-self-stretch p-2 w-100">
-                    <SonarSecurityLineChart persona={persona} sonarMeasure="code_smells" date={date} />
-                  </div>
-                  <div className="align-self-stretch p-2 w-100">
-                    <SonarSecurityLineChart persona={persona} sonarMeasure="new_technical_debt" date={date} />
-                  </div>
-                </div>
-              </>
-            ) : (
-              <div
-                className="mt-3 bordered-content-block p-3 max-content-width"
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Row>
-                  <InfoDialog message="No activity data has been captured for this dashboard. In order to activate security metrics contact support@opsera.io" />
-                </Row>
-              </div>
-            )}
-          </>
-        );
-
-      case "software_development":
-        return (
-          <>
-            {!index.includes("jenkins") && !index.includes("jira") ? (
-              <div
-                className="mt-3 bordered-content-block p-3 max-content-width"
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Row>
-                  <InfoDialog message="No activity data has been captured for this dashboard. In order to activate software development metrics contact support@opsera.io" />
-                </Row>
-              </div>
-            ) : (
-              <>
-                {index.includes("jenkins") ? (
-                  <div className="d-flex">
-                    <div className="align-self-stretch p-2 w-100">
-                      <DeploymentFrequencyLineChart persona={persona} date={date} />
-                    </div>
-                    <div className="align-self-stretch p-2 w-100">
-                      <DeploymentsStackedBarChart persona={persona} date={date} />
-                    </div>
-                  </div>
-                ) : (
-                  ""
-                )}
-                {index.includes("jira") ? (
-                  <div className="d-flex">
-                    <div className="align-self-stretch p-2 w-100">
-                      <JiraIssuesCreatedByDateLineChart persona={persona} date={date} />
-                    </div>
-                    <div className="align-self-stretch p-2 w-100">
-                      <JiraHealthBySprintBarChart persona={persona} date={date} />
-                    </div>
-                  </div>
-                ) : (
-                  ""
-                )}
-                {index.includes("jenkins") ? (
-                  <div className="d-flex">
-                    <div className="align-self-stretch p-2 w-100">
-                      <CircleChart persona={persona} date={date} />
-                    </div>
-                    <div className="align-self-stretch p-2 w-100">{/* Self Contained Chart Component 4  */}</div>
-                  </div>
-                ) : (
-                  ""
-                )}
-              </>
-            )}
-          </>
-        );
-
-      case "software_testing":
-        return (
-          <>
-            {!index.includes("sonar") && !index.includes("jmeter") ? (
-              <div
-                className="mt-3 bordered-content-block p-3 max-content-width"
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Row>
-                  <InfoDialog message="No activity data has been captured for this dashboard. In order to activate software testing metrics contact support@opsera.io" />
-                </Row>
-              </div>
-            ) : (
-              <>
-                {index.includes("sonar") ? (
-                  <div className="mt-2">
-                    <CodeCoverageMetricsView date={date} />
-                  </div>
-                ) : (
-                  ""
-                )}
-                {index.includes("jmeter") ? (
-                  <>
-                    <div className="d-flex">
-                      <div className="align-self-stretch p-2 w-100">
-                        <JMeterHitsLineChart persona={persona} date={date} />
-                      </div>
-                      <div className="align-self-stretch p-2 w-100">
-                        <JMeterErrorsLineChart persona={persona} date={date} />
-                      </div>
-                    </div>
-                    <div className="d-flex">
-                      <div className="align-self-stretch p-2 w-100">
-                        <JMeterThroughputLineChart persona={persona} date={date} />
-                      </div>
-                      <div className="align-self-stretch p-2 w-100">
-                        <JMeterResponseTimeLineChart persona={persona} date={date} />
-                      </div>
-                    </div>
-                    <JMeterResultsTable date={date} />
-                  </>
-                ) : (
-                  ""
-                )}
-              </>
-            )}
-          </>
-        );
-
-      case "source_code":
-        return (
-          <>
-            {index.includes("gitlab") ? (
+    case "security":
+      return (
+        <>
+          {index.includes("sonar") ? (
+            <>
               <div className="mt-2">
-                <SourceCodeView persona={persona} date={date} />
+                <ReliabilityMetricsCharts persona={persona} date={date}/>
               </div>
-            ) : (
-              <div
+              <div className="d-flex">
+                <div className="align-self-stretch p-2 w-100">
+                  <SonarSecurityLineChart persona={persona} sonarMeasure="vulnerabilities" date={date}/>
+                </div>
+                <div className="align-self-stretch p-2 w-100">
+                  <SonarSecurityLineChart persona={persona} sonarMeasure="new_vulnerabilities" date={date}/>
+                </div>
+              </div>
+              <div className="d-flex">
+                <div className="align-self-stretch p-2 w-100">
+                  <SonarSecurityLineChart persona={persona} sonarMeasure="code_smells" date={date}/>
+                </div>
+                <div className="align-self-stretch p-2 w-100">
+                  <SonarSecurityLineChart persona={persona} sonarMeasure="new_technical_debt" date={date}/>
+                </div>
+              </div>
+            </>
+          ) : (
+            <div
               className="mt-3 bordered-content-block p-3 max-content-width"
               style={{
                 display: "flex",
@@ -574,15 +395,153 @@ function ChartView({ selection, persona, date, index }) {
               }}
             >
               <Row>
-                <InfoDialog message="No activity data has been captured for this dashboard. In order to activate source code metrics contact support@opsera.io" />
+                <InfoDialog
+                  message="No activity data has been captured for this dashboard. In order to activate security metrics contact support@opsera.io"/>
               </Row>
             </div>
-            )}
-          </>
-        );
+          )}
+        </>
+      );
 
-      default:
-        return null;
+    case "software_development":
+      return (
+        <>
+          {!index.includes("jenkins") && !index.includes("jira") ? (
+            <div
+              className="mt-3 bordered-content-block p-3 max-content-width"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Row>
+                <InfoDialog
+                  message="No activity data has been captured for this dashboard. In order to activate software development metrics contact support@opsera.io"/>
+              </Row>
+            </div>
+          ) : (
+            <>
+              {index.includes("jenkins") ? (
+                <div className="d-flex">
+                  <div className="align-self-stretch p-2 w-100">
+                    <DeploymentFrequencyLineChart persona={persona} date={date}/>
+                  </div>
+                  <div className="align-self-stretch p-2 w-100">
+                    <DeploymentsStackedBarChart persona={persona} date={date}/>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+              {index.includes("jira") ? (
+                <div className="d-flex">
+                  <div className="align-self-stretch p-2 w-100">
+                    <JiraIssuesCreatedByDateLineChart persona={persona} date={date}/>
+                  </div>
+                  <div className="align-self-stretch p-2 w-100">
+                    <JiraHealthBySprintBarChart persona={persona} date={date}/>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+              {index.includes("jenkins") ? (
+                <div className="d-flex">
+                  <div className="align-self-stretch p-2 w-100">
+                    <CircleChart persona={persona} date={date}/>
+                  </div>
+                  <div className="align-self-stretch p-2 w-100">{/* Self Contained Chart Component 4  */}</div>
+                </div>
+              ) : (
+                ""
+              )}
+            </>
+          )}
+        </>
+      );
+
+    case "software_testing":
+      return (
+        <>
+          {!index.includes("sonar") && !index.includes("jmeter") ? (
+            <div
+              className="mt-3 bordered-content-block p-3 max-content-width"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Row>
+                <InfoDialog
+                  message="No activity data has been captured for this dashboard. In order to activate software testing metrics contact support@opsera.io"/>
+              </Row>
+            </div>
+          ) : (
+            <>
+              {index.includes("sonar") ? (
+                <div className="mt-2">
+                  <CodeCoverageMetricsView date={date}/>
+                </div>
+              ) : (
+                ""
+              )}
+              {index.includes("jmeter") ? (
+                <>
+                  <div className="d-flex">
+                    <div className="align-self-stretch p-2 w-100">
+                      <JMeterHitsLineChart persona={persona} date={date}/>
+                    </div>
+                    <div className="align-self-stretch p-2 w-100">
+                      <JMeterErrorsLineChart persona={persona} date={date}/>
+                    </div>
+                  </div>
+                  <div className="d-flex">
+                    <div className="align-self-stretch p-2 w-100">
+                      <JMeterThroughputLineChart persona={persona} date={date}/>
+                    </div>
+                    <div className="align-self-stretch p-2 w-100">
+                      <JMeterResponseTimeLineChart persona={persona} date={date}/>
+                    </div>
+                  </div>
+                  <JMeterResultsTable date={date}/>
+                </>
+              ) : (
+                ""
+              )}
+            </>
+          )}
+        </>
+      );
+
+    case "source_code":
+      return (
+        <>
+          {index.includes("gitlab") ? (
+            <div className="mt-2">
+              <SourceCodeView persona={persona} date={date}/>
+            </div>
+          ) : (
+            <div
+              className="mt-3 bordered-content-block p-3 max-content-width"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Row>
+                <InfoDialog
+                  message="No activity data has been captured for this dashboard. In order to activate source code metrics contact support@opsera.io"/>
+              </Row>
+            </div>
+          )}
+        </>
+      );
+
+    default:
+      return null;
     }
   }
 }

@@ -1,6 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext"; //New AuthContext State
 import { axiosApiService } from "../../api/apiService";
 import ErrorDialog from "../common/status_notifications/error";
@@ -11,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import "./logs.css";
+import LoadingView from "../common/status_notifications/loading";
 
 function Logs() {
   const contextType = useContext(AuthContext);
@@ -80,12 +79,12 @@ function Logs() {
 
       if (typeof data.profile === "object" && data.profile.length === 0) {
         setErrors(
-          "Warning!  Profile settings associated with your account are incomplete.  Log searching will be unavailable until this is fixed."
+          "Warning!  Profile settings associated with your account are incomplete.  Log searching will be unavailable until this is fixed.",
         );
       } else if (profile.data && profile.data.vault !== 200) {
-        console.error("Error Code " + profile.data.vault + " with the following message: " + profile.data.message)
+        console.error("Error Code " + profile.data.vault + " with the following message: " + profile.data.message);
         setErrors(
-          "Error Reported: Vault has returned a message: " + profile.data.message
+          "Error Reported: Vault has returned a message: " + profile.data.message,
         );
       }
 
@@ -93,31 +92,33 @@ function Logs() {
     } catch (err) {
       // console.log(err.message);
       setLoadingProfile(false);
-      setErrors(err.message);
+      setErrors(err);
     }
+  }
+
+  if (loadingProfile) {
+    return (<LoadingView size="sm"/>);
   }
 
   return (
     <div className="mb-3 max-charting-width">
-      {loadingProfile ? <LoadingDialog size="lg" /> : null}
-      {!loadingProfile ? (
-        <>
-          <div className="mt-2 mb-3"></div>
 
-          <div className="max-content-width">
-            <h4>Logs</h4>
-            <p>
-              OpsERA provides users with access to a vast repository of logging with industry leading search and
-              filtering capability. Access all available logging, reports and configurations around the OpsERA Analytics
-              Platform or search your currently configured logs repositories below.{" "}
-            </p>
-          </div>
-          {error ? <ErrorDialog error={error} /> : 
-          <div className="pr-2 mt-1">
-              <SearchLogs tools={tools} />
-            </div>}
-        </>
-      ) : null}
+      {error && <ErrorDialog error={error} align="top"/>}
+
+      <div className="max-content-width">
+        <h4>Logs</h4>
+        <p>
+          OpsERA provides users with access to a vast repository of logging with industry leading search and
+          filtering capability. Access all available logging, reports and configurations around the OpsERA Analytics
+          Platform or search your currently configured logs repositories below.{" "}
+        </p>
+      </div>
+
+      {!error &&
+        <div className="pr-2 mt-1">
+          <SearchLogs tools={tools}/>
+        </div>}
+
     </div>
   );
 }

@@ -23,6 +23,7 @@ import "react-date-range/dist/theme/default.css";
 import { Alert, OverlayTrigger, Tooltip, Row, Col } from "react-bootstrap";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import ConfigurationsForm from "../analytics/configurationsForm";
+import LoadingView from "../common/status_notifications/loading";
 
 const INDICES = [
   "jenkins",
@@ -149,12 +150,12 @@ function DashboardHome() {
 
       if (!result.data) {
         setErrors(
-          "Warning!  Profile settings associated with your account are incomplete.  Log searching will be unavailable until this is fixed."
+          "Warning!  Profile settings associated with your account are incomplete.  Log searching will be unavailable until this is fixed.",
         );
       } else if (result.data && result.data.vault !== 200) {
-        console.error("Error Code " + result.data.vault + " with the following message: " + result.data.message)
+        console.error("Error Code " + result.data.vault + " with the following message: " + result.data.message);
         setErrors(
-          "Error Reported: Vault has returned a message: " + result.data.message
+          "Error Reported: Vault has returned a message: " + result.data.message,
         );
       }
 
@@ -195,7 +196,7 @@ function DashboardHome() {
 
   const ValueInput = ({ item }) => (
     <span>
-      <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth />
+      <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth/>
       {" " + DATELABELS.find((o) => o.value.start === date.start && o.value.end === date.end).label.toString()}
     </span>
   );
@@ -264,105 +265,109 @@ function DashboardHome() {
     );
   }
 
+  if (loading) {
+    return (<LoadingView size="sm"/>);
+  }
+
   return (
     <div className="mb-3 max-charting-width">
-      {loading ? <LoadingDialog size="lg" /> : null}
-      {!loading ? (
-        <>
-          <div className="mt-2 mb-3">
-            <div className="max-content-width mb-4">
-              <h4>My Dashboard</h4>
-              <p>
-                OpsERA offers the best, easy to use solutions for deploying, monitoring and managing your entire
-                automation and workflow pipelines, enabling organizations to build optimized and efficient DevOps based
-                projects.
-              </p>
-            </div>
 
-            {hasError ? <ErrorDialog error={hasError} className="max-content-width mt-4 mb-4" /> : 
-                          <>
-                          <Row>
-                            <Col sm={8}>
-                              <ul className="nav nav-pills ml-2 mb-2">
-                                <li className="nav-item">
-                                  <a
-                                    className={"nav-link " + (selection === "pipeline" ? "active" : "")}
-                                    onClick={handleTabClick("pipeline")}
-                                    href="#"
-                                  >
-                                    Pipeline
-                                  </a>
-                                </li>
-                                <li className="nav-item">
-                                  <a
-                                    className={"nav-link " + (selection === "planning" ? "active" : "")}
-                                    onClick={handleTabClick("planning")}
-                                    href="#"
-                                  >
-                                    Planning
-                                  </a>
-                                </li>
-                                <li className="nav-item">
-                                  <a
-                                    className={"nav-link " + (selection === "secops_v2" ? "active" : "")}
-                                    onClick={handleTabClick("secops_v2")}
-                                    href="#"
-                                  >
-                                    SecOps
-                                  </a>
-                                </li>
-                                <li className="nav-item">
-                                  <a
-                                    className={"nav-link " + (selection === "quality_v2" ? "active" : "")}
-                                    onClick={handleTabClick("quality_v2")}
-                                    href="#"
-                                  >
-                                    Quality
-                                  </a>
-                                </li>
-                                <li className="nav-item">
-                                  <a
-                                    className={"nav-link " + (selection === "operations_v2" ? "active" : "")}
-                                    onClick={handleTabClick("operations_v2")}
-                                    href="#"
-                                  >
-                                    Operations
-                                  </a>
-                                </li>
-                              </ul>
-                            </Col>
-                            <Col sm={2}>
-                              <OverlayTrigger placement="top" delay={{ show: 250, hide: 250 }} overlay={renderTooltip}>
-                                <DropdownList
-                                  filter
-                                  disabled={selection === "operations_v2"}
-                                  data={DATELABELS}
-                                  className="max-content-width"
-                                  valueComponent={ValueInput}
-                                  textField="label"
-                                  allowCreate="onFilter"
-                                  onCreate={handleCreate}
-                                  defaultValue={
-                                    date
-                                      ? DATELABELS.find((o) => o.value.start === date.start && o.value.end === date.end)
-                                      : DATELABELS[5]
-                                  }
-                                  onChange={handleDateChange}
-                                />
-                              </OverlayTrigger>
-                            </Col>
-          
-                            <Col sm={2}>
-                              {personaDisabled ? (
-                                <OverlayTrigger
-                                  placement="top"
-                                  delay={{ show: 250, hide: 250 }}
-                                  overlay={
-                                    <Tooltip id="tooltip-disabled">
-                                      Persona based analytics is unavailable as part of the free trial.
-                                    </Tooltip>
-                                  }
-                                >
+      {hasError && <ErrorDialog error={hasError} align="top"/>}
+
+      <div className="mt-2 mb-3">
+        <div className="max-content-width mb-4">
+          <h4>My Dashboard</h4>
+          <p>
+            OpsERA offers the best, easy to use solutions for deploying, monitoring and managing your entire
+            automation and workflow pipelines, enabling organizations to build optimized and efficient DevOps based
+            projects.
+          </p>
+        </div>
+
+        {!hasError &&
+        <>
+          <Row>
+            <Col sm={8}>
+              <ul className="nav nav-pills ml-2 mb-2">
+                <li className="nav-item">
+                  <a
+                    className={"nav-link " + (selection === "pipeline" ? "active" : "")}
+                    onClick={handleTabClick("pipeline")}
+                    href="#"
+                  >
+                    Pipeline
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a
+                    className={"nav-link " + (selection === "planning" ? "active" : "")}
+                    onClick={handleTabClick("planning")}
+                    href="#"
+                  >
+                    Planning
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a
+                    className={"nav-link " + (selection === "secops_v2" ? "active" : "")}
+                    onClick={handleTabClick("secops_v2")}
+                    href="#"
+                  >
+                    SecOps
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a
+                    className={"nav-link " + (selection === "quality_v2" ? "active" : "")}
+                    onClick={handleTabClick("quality_v2")}
+                    href="#"
+                  >
+                    Quality
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a
+                    className={"nav-link " + (selection === "operations_v2" ? "active" : "")}
+                    onClick={handleTabClick("operations_v2")}
+                    href="#"
+                  >
+                    Operations
+                  </a>
+                </li>
+              </ul>
+            </Col>
+            <Col sm={2}>
+              <OverlayTrigger placement="top" delay={{ show: 250, hide: 250 }} overlay={renderTooltip}>
+                <DropdownList
+                  filter
+                  disabled={selection === "operations_v2"}
+                  data={DATELABELS}
+                  className="max-content-width"
+                  valueComponent={ValueInput}
+                  textField="label"
+                  allowCreate="onFilter"
+                  onCreate={handleCreate}
+                  defaultValue={
+                    date
+                      ? DATELABELS.find((o) => o.value.start === date.start && o.value.end === date.end)
+                      : DATELABELS[5]
+                  }
+                  onChange={handleDateChange}
+                />
+              </OverlayTrigger>
+            </Col>
+
+            <Col sm={2}>
+              {personaDisabled ? (
+                <OverlayTrigger
+                  placement="top"
+                  delay={{ show: 250, hide: 250 }}
+                  overlay={
+                    <Tooltip id="tooltip-disabled">
+                      Persona based analytics is unavailable as part of the free trial.
+                    </Tooltip>
+                  }
+                >
                                   <span>
                                     <DropdownList
                                       data={PERSONAS}
@@ -374,33 +379,32 @@ function DashboardHome() {
                                       onChange={handleSelectPersonaChange}
                                     />
                                   </span>
-                                </OverlayTrigger>
-                              ) : (
-                                <DropdownList
-                                  data={PERSONAS}
-                                  className="basic-single mr-2"
-                                  valueField="value"
-                                  textField="label"
-                                  disabled={personaDisabled}
-                                  defaultValue={persona ? PERSONAS.find((o) => o.value === persona) : PERSONAS[0]}
-                                  onChange={handleSelectPersonaChange}
-                                />
-                              )}
-                            </Col>
-                          </Row>
-          
-                          <DashboardView selection={selection} persona={persona} date={date} index={index} />
-                        </>}
+                </OverlayTrigger>
+              ) : (
+                <DropdownList
+                  data={PERSONAS}
+                  className="basic-single mr-2"
+                  valueField="value"
+                  textField="label"
+                  disabled={personaDisabled}
+                  defaultValue={persona ? PERSONAS.find((o) => o.value === persona) : PERSONAS[0]}
+                  onChange={handleSelectPersonaChange}
+                />
+              )}
+            </Col>
+          </Row>
 
-            {profile && !profile.enabledToolsOn && (
-              <div className="mt-1 max-content-width mb-1">
-                <ConfigurationsForm settings={profile} token={token} />
-              </div>
-            )}
-            
+          <DashboardView selection={selection} persona={persona} date={date} index={index}/>
+        </>}
+
+        {profile && !profile.enabledToolsOn && (
+          <div className="mt-1 max-content-width mb-1">
+            <ConfigurationsForm settings={profile} token={token}/>
           </div>
-        </>
-      ) : null}
+        )}
+
+      </div>
+
     </div>
   );
 }
@@ -412,20 +416,20 @@ function DashboardView({ selection, persona, date, index }) {
 
   if (selection) {
     switch (selection) {
-      case "logs":
-        return <LogsDashboard persona={persona} />;
-      case "pipeline":
-        return <PipelineDashboard_v2 persona={persona} date={date} index={index} />;
-      case "secops_v2":
-        return <SecOpsDashboard_v2 persona={persona} date={date} index={index} />;
-      case "quality_v2":
-        return <QualityDashboard persona={persona} date={date} index={index} />;
-      case "operations_v2":
-        return <OperationsDashboard persona={persona} index={index} />;
-      case "planning":
-        return <PlanningDashboard persona={persona} date={date} index={index} />;
-      default:
-        return null;
+    case "logs":
+      return <LogsDashboard persona={persona}/>;
+    case "pipeline":
+      return <PipelineDashboard_v2 persona={persona} date={date} index={index}/>;
+    case "secops_v2":
+      return <SecOpsDashboard_v2 persona={persona} date={date} index={index}/>;
+    case "quality_v2":
+      return <QualityDashboard persona={persona} date={date} index={index}/>;
+    case "operations_v2":
+      return <OperationsDashboard persona={persona} index={index}/>;
+    case "planning":
+      return <PlanningDashboard persona={persona} date={date} index={index}/>;
+    default:
+      return null;
     }
   }
 }
