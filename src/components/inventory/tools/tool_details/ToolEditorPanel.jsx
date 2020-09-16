@@ -3,14 +3,7 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import {
-  getCreateFailureResultDialog, getCreateSuccessResultDialog,
-  getFormValidationErrorDialog,
-  getLoadingErrorDialog,
-  getUpdateFailureResultDialog, getUpdateSuccessResultDialog
-} from "../../../common/toasts/toasts";
 import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
-import Model from "../../../../core/data_model/model";
 import DtoSelectInput from "../../../common/input/dto_input/dto-select-input";
 import DtoToggleInput from "../../../common/input/dto_input/dto-toggle-input";
 import DtoMultipleInput from "../../../common/input/dto_input/dto-multiple-input";
@@ -18,14 +11,13 @@ import toolsActions from "../tools-actions";
 import SaveButton from "../../../common/buttons/SaveButton";
 import LoadingDialog from "../../../common/status_notifications/loading";
 import DtoTagManagerInput from "../../../common/input/dto_input/dto-tag-manager-input";
+import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 
-function ToolEditorPanel({ toolData, setToolData }) {
+function ToolEditorPanel({ toolData, setToolData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
-  const [showToast, setShowToast] = useState(false);
+  const toastContext = useContext(DialogToastContext);
   const [toolDataDto, setToolDataDto] = useState({});
-  const [toast, setToast] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const [loadingError, setLoadingError] = useState(false);
   const [ toolList, setToolList ] = useState([]);
 
   useEffect(() => {
@@ -39,83 +31,23 @@ function ToolEditorPanel({ toolData, setToolData }) {
     setIsLoading(false);
   };
 
-  // TODO: Rewrite
   const getToolList = async () => {
     try {
       const toolResponse = await toolsActions.getTools(getAccessToken);
       setToolList(toolResponse.data);
     }
     catch (error) {
-      let toast = getLoadingErrorDialog(error.message, setShowToast);
-      setToast(toast);
-      setShowToast(true);
-      setLoadingError(true);
-      console.error(error.message);
+      toastContext.showLoadingErrorDialog(error);
     }
   };
 
   const createTool = async () => {
-    if (toolDataDto.isModelValid()) {
-      try {
-        let createToolTypeResponse = await toolsActions.createTool(toolDataDto, getAccessToken);
-        let toast = getCreateSuccessResultDialog(toolDataDto.getType(), setShowToast);
-        setToast(toast);
-        setShowToast(true);
-      }
-      catch (error) {
-        let toast = getCreateFailureResultDialog(toolDataDto.getType(), error.message, setShowToast);
-        setToast(toast);
-        setShowToast(true);
-        console.error(error.message);
-      }
-    }
-    else {
-      let toast = getFormValidationErrorDialog(setShowToast);
-      setToast(toast);
-      setShowToast(true);
-    }
+    return await toolsActions.createTool(toolDataDto, getAccessToken);
   };
 
   const updateTool = async () => {
-    if(toolDataDto.isModelValid()) {
-      try {
-        let response = await toolsActions.updateTool(toolDataDto, getAccessToken);
-        let updatedDto = new Model(response.data, toolDataDto.metaData, false);
-        setToolDataDto(updatedDto);
-        setToolData(updatedDto);
-        let toast = getUpdateSuccessResultDialog(toolDataDto.getType(), setShowToast);
-        setToast(toast);
-        setShowToast(true);
-      }
-      catch (error) {
-        let toast = getUpdateFailureResultDialog(toolDataDto.getType(), error.message, setShowToast);
-        setToast(toast);
-        setShowToast(true);
-        console.error(error.message);
-      }
-    }
-    else {
-      let toast = getFormValidationErrorDialog(setShowToast);
-      setToast(toast);
-      setShowToast(true);
-    }
+    return await toolsActions.updateTool(toolDataDto, getAccessToken);
   };
-
-  // const deleteTool = async () => {
-  //   setShowDeleteModal(false);
-  //   try {
-  //     setLoading(true);
-  //     const accessToken = await getAccessToken();
-  //     let apiUrl = "/registry/" + toolId;
-  //     await axiosApiService(accessToken).delete(apiUrl, {});
-  //     toggleViewModal(false);
-  //   }
-  //   catch (err) {
-  //     console.log(err.message);
-  //     setErrors(err.message);
-  //   }
-  //   getToolRegistryList(null);
-  // };
 
   const handleToolIdentifierChange = (fieldName, value) => {
     let newDataObject = toolDataDto;
@@ -126,12 +58,8 @@ function ToolEditorPanel({ toolData, setToolData }) {
 
   if (isLoading) {
     return (<LoadingDialog size="sm"/>);
-  } else if (loadingError) {
-    return (<span>{showToast && toast}</span>);
-  } else {
+  }
     return (
-      <>
-        {showToast && toast}
         <div className="scroll-y full-height p-2">
           <Row>
             <Col lg={6}>
@@ -172,19 +100,17 @@ function ToolEditorPanel({ toolData, setToolData }) {
           </Row>
           <Row>
             <div className="ml-auto mt-3 px-3">
-              <SaveButton recordDto={toolDataDto} createRecord={createTool} updateRecord={updateTool} />
+              <SaveButton recordDto={toolDataDto} handleClose={handleClose} createRecord={createTool} updateRecord={updateTool} setData={setToolData} setRecordDto={setToolDataDto} />
             </div>
-            }
           </Row>
         </div>
-      </>
     );
-  }
 }
 
 ToolEditorPanel.propTypes = {
   toolData: PropTypes.object,
   setToolData: PropTypes.func,
+  handleClose: PropTypes.func
 };
 
 export default ToolEditorPanel;
