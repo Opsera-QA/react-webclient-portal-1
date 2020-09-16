@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import {Form, Button, Row} from "react-bootstrap";
-import {getFormValidationErrorDialog, getUpdateFailureResultDialog} from "components/common/toasts/toasts";
+import {Form, Row} from "react-bootstrap";
+import {getFormValidationErrorDialog} from "components/common/toasts/toasts";
 import SaveButton from "components/common/buttons/SaveButton";
 import Model from "core/data_model/model";
 import nexusConnectionMetadata from "./nexus-connection-metadata";
@@ -20,7 +20,7 @@ function NexusToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVault
 
   const loadData = async () => {
     if (toolData["configuration"] != null) {
-        setConfigurationData(new Model(toolData["configuration"], nexusConnectionMetadata, false))
+      setConfigurationData(new Model(toolData["configuration"], nexusConnectionMetadata, false))
     } else {
       setConfigurationData(new Model({...nexusConnectionMetadata.newModelBase}, nexusConnectionMetadata, true));
     }
@@ -29,9 +29,9 @@ function NexusToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVault
   const callbackFunction = async () => {
     if (configurationData.isModelValid()) {
       let newConfiguration = {...configurationData.getPersistData()};
-      
-      if (configurationData.isChanged("accountPassword")) {
-        newConfiguration.accountPassword = await saveToVault(toolId, toolData.tool_identifier, "accountPassword", "Vault Secured Key", configurationData.getData("accountPassword"));
+
+      if (configurationData.isChanged("secretKey")) {
+        newConfiguration.secretKey = await saveToVault(toolId, toolData.tool_identifier, "secretKey", "Vault Secured Key", configurationData.getData("secretKey"));
       }
 
       const item = {
@@ -52,7 +52,7 @@ function NexusToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVault
       "key": keyName,
       "value": value
     };
-    const response = await fnSaveToVault(body);    
+    const response = await fnSaveToVault(body);
     if (response.status === 200 ) {
       return { name: name, vaultKey: keyName };
     } else {
@@ -67,7 +67,7 @@ function NexusToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVault
   return (
     <Form>
       <Row>
-      {showToast && toast}
+        {showToast && toast}
         <Col sm={12}>
           <DtoTextInput setDataObject={setConfigurationData} fieldName={"toolURL"} dataObject={configurationData} />
         </Col>
@@ -75,12 +75,12 @@ function NexusToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVault
           <DtoTextInput setDataObject={setConfigurationData} fieldName={"userName"} dataObject={configurationData} />
         </Col>
         <Col sm={12}>
-          <DtoTextInput type={"password"} setDataObject={setConfigurationData} fieldName={"accountPassword"} dataObject={configurationData} />
+          <DtoTextInput type={"password"} setDataObject={setConfigurationData} fieldName={"secretKey"} dataObject={configurationData} />
         </Col>
       </Row>
       <Row>
         <div className="ml-auto mt-3 px-3">
-        <SaveButton recordDto={configurationData} createRecord={callbackFunction} updateRecord={callbackFunction} />
+          <SaveButton recordDto={configurationData} createRecord={callbackFunction} updateRecord={callbackFunction} />
         </div>
       </Row>
       <small className="form-text text-muted mt-2 text-right">* Required Fields</small>

@@ -27,7 +27,10 @@ import ArgoCDStepConfiguration from "./step_tool_configuration_forms/ArgoCDStepC
 import AnchoreStepConfiguration from "./step_tool_configuration_forms/AnchoreStepConfiguration";
 import AnchoreIntegratorStepConfiguration from "./step_tool_configuration_forms/AnchoreIntegratorStepConfiguration";
 import SFDCStepConfiguration from "./step_tool_configuration_forms/SFDCStepConfiguration";
+import NexusStepConfiguration from "./step_tool_configuration_forms/NexusStepConfiguration";
 import {getErrorDialog} from "../../../../../common/toasts/toasts";
+import pipelineActions from "../../../../pipeline-actions";
+import ToastContext from "react-bootstrap/cjs/ToastContext";
 
 function StepToolConfiguration({
   pipeline,
@@ -40,17 +43,22 @@ function StepToolConfiguration({
 }) {
   const contextType = useContext(AuthContext);
   const { plan } = pipeline.workflow;
-  const [stepTool, setStepTool] = useState({});
-  const [stepName, setStepName] = useState();
-  const [stepId, setStepId] = useState("");
+  const [stepTool, setStepTool] = useState(undefined);
+  const [stepName, setStepName] = useState(undefined);
+  const [stepId, setStepId] = useState(undefined);
   const { getAccessToken } = contextType;
+  const { toastContext } = useContext(ToastContext);
 
   useEffect(() => {
+    loadData();
+  }, [editItem, pipeline]);
+
+  const loadData = async () => {
     let stepIndex = getStepIndex(editItem.step_id);
     setStepTool(plan[stepIndex].tool);
     setStepName(plan[stepIndex].name);
     setStepId(plan[stepIndex]._id);
-  }, [editItem, pipeline]);
+  };
 
   const getStepIndex = (step_id) => {
     let stepArrayIndex = plan.findIndex((x) => x._id === step_id);
@@ -139,6 +147,14 @@ function StepToolConfiguration({
       let toast = getErrorDialog(errorMsg, setShowToast, "detailPanelTop");
       setToast(toast);
       setShowToast(true);
+    }
+  };
+
+  const getToolsList = async (service) => {
+    try {
+      return await pipelineActions.getToolsList(service, getAccessToken);
+    } catch (error) {
+      toastContext.showErrorDialog(error);
     }
   };
 
@@ -444,6 +460,20 @@ function StepToolConfiguration({
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
             createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+          />
+        );
+      case "nexus":
+        return (
+          <NexusStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            getToolsList={getToolsList}
             setToast={setToast}
             setShowToast={setShowToast}
           />

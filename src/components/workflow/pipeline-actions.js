@@ -1,4 +1,5 @@
-import { axiosApiService } from "../../api/apiService";
+import {axiosApiService} from "../../api/apiService";
+
 const pipelineActions = {};
 
 pipelineActions.getPipelines = async (currentPage, pageSize, sortOption, type, getAccessToken) => {
@@ -95,6 +96,34 @@ pipelineActions.getLogs = async (pipelineId, getAccessToken) => {
   const apiUrl = `/pipelines/${pipelineId}/status`;   
   const response = await axiosApiService(accessToken).get(apiUrl)
     .then((result) =>  {return result;})
+    .catch(error => {throw { error };});
+  return response;
+};
+
+
+pipelineActions.getToolsList = async (service, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/registry/properties/${service}`;
+  const response = await axiosApiService(accessToken).get(apiUrl)
+    .then((result) =>  {
+      if (result.data) {
+        let respObj = [];
+        let arrOfObj = result.data;
+        arrOfObj.map((item) => {
+          respObj.push({
+            name: item.name,
+            id: item._id,
+            configuration: item.configuration,
+            accounts: item.accounts,
+            jobs: item.jobs,
+          });
+        });
+        return respObj;
+      }
+      else {
+        throw "Tool information is missing or unavailable!  Please ensure the required creds are registered and up to date in Tool Registry.";
+      }
+    })
     .catch(error => {throw { error };});
   return response;
 };
