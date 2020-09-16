@@ -3,30 +3,18 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
-function SuccessDialog({ successMessage, setSuccessMessage, alignment, autoCloseDialog }) {
+function SuccessDialog({ successMessage, setSuccessMessage, alignment }) {
   const [messageBody, setMessageBody] = useState("");
 
   const clearSuccess = () => {
-    setSuccessMessage(() => {
-      return false;
-    });
+      setSuccessMessage(() => {
+        return false;
+      });
   };
 
   useEffect(() => {
     setMessageBody(successMessage);
-
-    if (autoCloseDialog) {
-      hideDialog();
-    }
   }, [successMessage]);
-
-  function hideDialog() {
-    if (setSuccessMessage) {
-      setTimeout(function () {
-        clearSuccess();
-      }, 20000);
-    }
-  }
 
   if (alignment === "top") {
     return (
@@ -54,6 +42,7 @@ function SuccessDialog({ successMessage, setSuccessMessage, alignment, autoClose
     );
   }
 
+  // TODO: Remove when toastContext is wired up everywhere on pipeline forms
   if (alignment === "stepConfigurationTop") {
     return (
       <div className="w-100 success-block step-configuration-dialog-block mt-2">
@@ -69,6 +58,7 @@ function SuccessDialog({ successMessage, setSuccessMessage, alignment, autoClose
     );
   }
 
+  // TODO: Remove when toastContext is wired up everywhere on detail panels
   if (alignment === "detailPanelTop") {
     return (
       <div className="row success-block top-dialog-detail-panel-block top-error-block">
@@ -103,13 +93,9 @@ function SuccessDialog({ successMessage, setSuccessMessage, alignment, autoClose
 
 SuccessDialog.propTypes = {
   successMessage: PropTypes.string,
-  setSuccessMessage: PropTypes.string,
+  setSuccessMessage: PropTypes.func,
   alignment: PropTypes.string,
   autoCloseDialog: PropTypes.bool
 };
-
-SuccessDialog.defaultProps = {
-  autoCloseDialog: true
-}
 
 export default SuccessDialog;

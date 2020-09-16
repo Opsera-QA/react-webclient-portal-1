@@ -1,32 +1,43 @@
-import React, { useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
+// TODO: Use React JSX standards for file name in separate merge request
+function InformationDialog ({ informationMessage, setInformationMessage, alignment }) {
+  const [messageBody, setMessageBody] = useState(undefined);
 
-function InformationDialog ({ message, align, setMessage }) {
-
-/*
   useEffect(() => {
+    setMessageBody(informationMessage);
+  }, [informationMessage]);
 
-  }, []);
-*/
-
-
-  const clearMessage = () => {
-    setMessage(() => {
-      return false;
-    });
+  const clearInformationMessage = () => {
+      setInformationMessage(() => {
+        return false;
+      });
   };
 
-  if (align === "top") {
+  if (alignment === "dialogToast") {
+    return (
+      <div className="w-100 info-block top-dialog-block">
+        {setInformationMessage && <div className="float-right ml-1">
+          <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
+            clearInformationMessage();
+          }}/>
+        </div>}
+        <span>{messageBody}</span>
+      </div>
+    );
+  }
+
+  if (alignment === "top") {
     return (
       <div className="w-100 info-block top-error-block">
-        {setMessage && <div className="float-right ml-1">
+        {setInformationMessage && <div className="float-right ml-1">
           <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
-            clearMessage();
+            clearInformationMessage();
           }}/></div> }
-        {message}
+        {messageBody}
       </div>
     );
   }
@@ -34,15 +45,16 @@ function InformationDialog ({ message, align, setMessage }) {
   return (
     <div className="mt-1 mb-3">
       <div className="info-text p-1">
-        {message}
+        {messageBody}
       </div>
     </div>
   );
 }
 
 InformationDialog.propTypes = {
-  message: PropTypes.string,
-  align: PropTypes.string,
-  setMessage: PropTypes.func
+  informationMessage: PropTypes.string,
+  setInformationMessage: PropTypes.func,
+  alignment: PropTypes.string,
 };
+
 export default InformationDialog;
