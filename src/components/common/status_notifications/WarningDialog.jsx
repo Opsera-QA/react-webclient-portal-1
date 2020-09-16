@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 // TODO: Clean up code once dialogs are completed
-function WarningDialog({ warningMessage, setWarningMessage, alignment, autoCloseDialog }) {
+function WarningDialog({warningMessage, setWarningMessage, alignment}) {
   const [messageBody, setMessageBody] = useState("");
 
   const clearWarning = () => {
@@ -15,10 +15,6 @@ function WarningDialog({ warningMessage, setWarningMessage, alignment, autoClose
 
   useEffect(() => {
     setMessageBody(warningMessage);
-
-    if (autoCloseDialog) {
-      hideDialog();
-    }
   }, [warningMessage]);
 
   function hideDialog() {
@@ -55,44 +51,14 @@ function WarningDialog({ warningMessage, setWarningMessage, alignment, autoClose
     );
   }
 
-  if (alignment === "stepConfigurationTop") {
-    return (
-      <div className="w-100 warning-block step-configuration-dialog-block mt-2">
-        <div className="my-auto text-center">
-          {setWarningMessage && <div className="float-right ml-1">
-            <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
-              clearWarning();
-            }}/>
-          </div>}
-          <span>{messageBody}</span>
-        </div>
-      </div>
-    );
-  }
-
-  if (alignment === "detailPanelTop") {
-    return (
-      <div className="row warning-block top-dialog-detail-panel-block top-error-block">
-        <div className="col-sm-12 my-auto text-center">
-          {setWarningMessage && <div className="float-right ml-1">
-            <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
-              clearWarning();
-            }}/>
-          </div>}
-          <span>{messageBody}</span>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="row">
       <div className="col-sm-12 my-auto warning-block text-center p-2">
-        {/*{setWarningMessage && <div className="float-right ml-1">*/}
-        {/*  <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {*/}
-        {/*    clearWarning();*/}
-        {/*  }}/>*/}
-        {/*</div>}*/}
+        {setWarningMessage && <div className="float-right ml-1">
+          <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
+            clearWarning();
+          }}/>
+        </div>}
         <div>
           <span>{messageBody}</span>
         </div>

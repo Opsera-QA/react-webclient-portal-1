@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useContext, useMemo } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Button } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
 
 import TagsTable from "./TagsTable";
 import adminTagsActions from "./admin-tags-actions";
@@ -11,7 +10,6 @@ import NewTagModal from "./NewTagModal";
 import LoadingDialog from "components/common/status_notifications/loading";
 import AccessDeniedDialog from "../../common/status_notifications/accessDeniedInfo";
 import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
-import {getLoadingErrorDialog} from "../../common/toasts/toasts";
 import {DialogToastContext} from "../../../contexts/DialogToastContext";
 
 function TagManagement() {

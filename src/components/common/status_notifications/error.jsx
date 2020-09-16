@@ -1,9 +1,7 @@
-import React, { useReducer, useEffect, useContext } from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "contexts/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faSave,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -14,12 +12,11 @@ import {
  * type: passes the "variant" value from Bootstrap of danger, warning, info, etc.
  * @returns
  */
-function ErrorDialog({ error, align, type, setError, autoCloseDialog }) {
-  //const contextType = useContext(AuthContext);
-  const [state, setState] = useReducer(
-    (state, newState) => ({ ...state, ...newState }),
-    { message: null, detail: null, statusCode: null, alignment: "inline", variant: "danger" },
-  );
+// TODO: Rename props and use React JSX standards for file name in separate merge request
+function ErrorDialog({ error, align, setError, prependMessage }) {
+  const [messageBody, setMessageBody] = useState(undefined);
+  const [detailedError, setDetailedError] = useState(undefined);
+  const [statusCode, setStatusCode] = useState(undefined);
 
   const reloadSession = function() {
     //const { renewUserToken } = contextType;
@@ -29,9 +26,9 @@ function ErrorDialog({ error, align, type, setError, autoCloseDialog }) {
   };
 
   const clearError = () => {
-      setError(() => {
-        return false;
-      });
+    setError(() => {
+      return false;
+    });
   };
 
   useEffect(() => {
@@ -44,38 +41,21 @@ function ErrorDialog({ error, align, type, setError, autoCloseDialog }) {
         messageBody = error.message;
       }
     } else {
-      error = "Undefined";
+      messageBody = "Undefined";
     }
 
-    setState({
-      message: messageBody ? messageBody : error,
-      detail: JSON.stringify(error),
-      statusCode: error.response ? error.response.status : null,
-      alignment: align ? align : state.alignment,
-      variant: type ? type : state.variant,
-    });
+    setMessageBody(messageBody ? messageBody : error);
+    setDetailedError(JSON.stringify(error));
+    setStatusCode(error.response ? error.response.status : null);
 
-    if (autoCloseDialog) {
-      hideDialog();
-    }
   }, [error]);
 
-  function hideDialog() {
-    if (setError) {
-      setTimeout(function() {
-        clearError();
-      }, 20000);
-    }
-  }
-
-  const { statusCode, alignment } = state;
-
-  if (alignment === "center") {
+  if (align === "center") {
     return (
       <div className="row h-100">
         <div className="col-sm-12 my-auto text-center">
           <div className="error-text">
-            {state.message} {(statusCode === 401 || (state.message && state.message.includes("401"))) &&
+            {prependMessage} {messageBody} {(statusCode === 401 || (messageBody && messageBody.includes("401"))) &&
           <span className="ml-1"><a href="#" onClick={() => {
             reloadSession();
           }}>Click here to renew session.</a></span>}
@@ -85,14 +65,14 @@ function ErrorDialog({ error, align, type, setError, autoCloseDialog }) {
     );
   }
 
-  if (alignment === "dialogToast") {
+  if (align === "dialogToast") {
     return (
       <div className="w-100 error-block top-dialog-block">
         { setError && <div className="float-right ml-1">
           <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
             clearError();
           }}/></div> }
-        {state.message} {(statusCode === 401 || (state.message && state.message.includes("401"))) &&
+        {prependMessage} {messageBody} {(statusCode === 401 || (messageBody && messageBody.includes("401"))) &&
       <span className="ml-1"><a style={{ color: "#fff", textDecoration: "underline" }} href="#" onClick={() => {
         reloadSession();
       }}>Click here to renew session.</a></span>}
@@ -100,7 +80,8 @@ function ErrorDialog({ error, align, type, setError, autoCloseDialog }) {
     );
   }
 
-  if (alignment === "detailPanelTop") {
+  // TODO: Remove when toastContext is wired up everywhere on detail panels
+  if (align === "detailPanelTop") {
     return (
       <div className="row error-block top-error-block top-dialog-detail-panel-block">
         <div className="col-sm-12 my-auto text-center">
@@ -109,7 +90,7 @@ function ErrorDialog({ error, align, type, setError, autoCloseDialog }) {
               clearError();
             }}/>
           </div> }
-          {state.message} {(statusCode === 401 || (state.message && state.message.includes("401"))) &&
+          {prependMessage} {messageBody} {(statusCode === 401 || (messageBody && messageBody.includes("401"))) &&
         <span className="ml-1"><a style={{ color: "#fff", textDecoration: "underline" }} href="#" onClick={() => {
           reloadSession();
         }}>Click here to renew session.</a></span>}
@@ -118,14 +99,15 @@ function ErrorDialog({ error, align, type, setError, autoCloseDialog }) {
     );
   }
 
-  if (alignment === "stepConfigurationTop") {
+  // TODO: Remove when toastContext is wired up everywhere on pipeline forms
+  if (align === "stepConfigurationTop") {
     return (
       <div className="w-100 error-block step-configuration-dialog-block mt-1">
         { setError && <div className="float-right ml-1">
           <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
             clearError();
           }}/></div>}
-        {state.message} {(statusCode === 401 || (state.message && state.message.includes("401"))) &&
+        {prependMessage} {messageBody} {(statusCode === 401 || (messageBody && messageBody.includes("401"))) &&
       <span className="ml-1"><a style={{ color: "#fff", textDecoration: "underline" }} href="#" onClick={() => {
         reloadSession();
       }}>Click here to renew session.</a></span>}
@@ -133,14 +115,14 @@ function ErrorDialog({ error, align, type, setError, autoCloseDialog }) {
     );
   }
 
-  if (alignment === "top") {
+  if (align === "top") {
     return (
       <div className="w-100 error-block top-error-block">
         { setError && <div className="float-right ml-1">
           <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
             clearError();
           }}/></div>}
-        {state.message} {(statusCode === 401 || (state.message && state.message.includes("401"))) &&
+        {prependMessage} {messageBody} {(statusCode === 401 || (messageBody && messageBody.includes("401"))) &&
       <span className="ml-1"><a style={{ color: "#fff", textDecoration: "underline" }} href="#" onClick={() => {
         reloadSession();
       }}>Click here to renew session.</a></span>}
@@ -151,7 +133,7 @@ function ErrorDialog({ error, align, type, setError, autoCloseDialog }) {
   return (
     <div className="mx-3 my-3 max-content-module-width-50">
       <div className="error-text">
-        {state.message} {(statusCode === 401 || (state.message && state.message.includes("401"))) &&
+        {prependMessage} {messageBody} {(statusCode === 401 || (messageBody && messageBody.includes("401"))) &&
       <span className="ml-1"><a href="#" onClick={() => {
         reloadSession();
       }}>Click here to renew session.</a></span>}
@@ -168,15 +150,13 @@ ErrorDialog.propTypes = {
     PropTypes.object,
   ]),
   align: PropTypes.string,
-  type: PropTypes.string,
   setError: PropTypes.func,
-  autoCloseDialog: PropTypes.bool
+  prependMessage: PropTypes.string
 };
 
 ErrorDialog.defaultProps = {
-  autoCloseDialog: true
+  align: "inline",
+  type: "danger"
 }
 
 export default ErrorDialog;
-
-//max-content-module-width-50
