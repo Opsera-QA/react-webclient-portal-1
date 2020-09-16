@@ -103,38 +103,6 @@ const JenkinsJobTypeBuild = {
       isRequired: false 
     }
   },
-  dockerName: {
-    label: "Docker Name",
-    id: "dockerName",
-    type: "",
-    value: "",
-    linkedId: "buildType",
-    linkedValue: "docker",      
-    toShow: true,
-    disabled: false,
-    touched: false,
-    isValid: false,
-    errorMessage: "",    
-    rules: {
-      isRequired: false 
-    }
-  },
-  dockerTagName: {
-    label: "Docker Tag Name",
-    id: "dockerTagName",
-    type: "",
-    value: "",
-    linkedId: "buildType",
-    linkedValue: "docker",      
-    toShow: true,
-    disabled: false,
-    touched: false,
-    isValid: false,
-    errorMessage: "",    
-    rules: {
-      isRequired: false 
-    }
-  },
   // buildArgs: {
   //   label: "Build Args",
   //   id: "buildArgs",
