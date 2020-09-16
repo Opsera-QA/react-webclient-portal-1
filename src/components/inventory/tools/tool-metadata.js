@@ -1,6 +1,9 @@
 const toolMetadata = {
   idProperty: "_id",
   type: "Tool",
+  detailView: function(record) {
+    return `/inventory/tools/details/${record.getData("_id")}`;
+  },
   fields: [
     {
       label: "ID",
@@ -89,7 +92,25 @@ const toolMetadata = {
       label: "Created",
       id: "createdAt",
     }
-  ]
+  ],
+  newObjectFields: {
+    name: "",
+    description: "",
+    tool_identifier: "",
+    compliance: [],
+    licensing: [],
+    location: [],
+    projects: [],
+    contacts: [],
+    applications: [],
+    organization: [],
+    external_reference: [],
+    active: true,
+    roles: [],
+    configuration: {},
+    status: "",
+    tags: []
+  }
 };
 
 export default toolMetadata;

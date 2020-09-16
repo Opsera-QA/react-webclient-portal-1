@@ -52,14 +52,7 @@ function ToolsTable({ data, filterOptionList, loadData, isLoading }) {
       <NewToolModal loadData={loadData} setShowModal={setShowCreateToolModal} showModal={showCreateToolModal}/>
       <div className="p-2">
         <div className="custom-table-filter d-flex flex-row-reverse">
-          <div className="mb-1 text-right">
-            <Button variant="primary" size="sm"
-                    onClick={() => { createNewTool(); }}>
-              <FontAwesomeIcon icon={faPlus} className="mr-1"/> New Tool
-            </Button>
-            <br />
-          </div>
-          <div className="tool-filter mr-2">
+          <div className="tool-filter mr-2 mb-1">
             { filterOptionList && <DropdownList
               busy={Object.keys(filterOptionList).length === 1}
               disabled={Object.keys(filterOptionList).length === 1}
@@ -81,6 +74,9 @@ function ToolsTable({ data, filterOptionList, loadData, isLoading }) {
             rowStyling={rowStyling}
             tableFilter={tableFilter}
             tableStyleName="custom-table-2"
+            tableTitle={"Tools"}
+            type={"Tool"}
+            createNewRecord={createNewTool}
           >
           </CustomTable>
         </div>

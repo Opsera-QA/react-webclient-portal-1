@@ -398,7 +398,6 @@ a.text-primary:hover, a.text-primary:focus {
   border-bottom: 1px solid #7368AA;  /*#3598fc;*/
   color: #fff;
   line-height: 2.4em;
-  text-align: center;
   vertical-align: middle;
   white-space: nowrap;
 }

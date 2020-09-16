@@ -8,6 +8,7 @@ import {createFilterOptionList} from "../../../utils/tableHelpers";
 import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
 import {getLoadingErrorDialog} from "../../common/toasts/toasts";
 
+// TODO: Rename ToolManagement?, implement DialogToastContext
 function ToolInventory () {
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setLoading] = useState(false);

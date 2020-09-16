@@ -114,8 +114,16 @@ export class Model {
     return this.dataState === DataState.DELETED;
   };
 
+  getDetailViewLink = () => {
+    return this.metaData.detailView(this);
+  };
+
   getLabel = (field) => {
     return this.metaData[field].label;
+  };
+
+  getMetaData = () => {
+    return this.metaData;
   };
 
   getMaxLength = (field) => {
@@ -141,6 +149,11 @@ export class Model {
   getFieldById = (id) => {
     return this.metaData.fields.find(field => {
       return field.id === id });
+  };
+
+  // TODO: Should we make view definitions?
+  getNewObjectFields = () => {
+    return this.metaData.newObjectFields != null ? this.metaData.newObjectFields : {};
   };
 }
 

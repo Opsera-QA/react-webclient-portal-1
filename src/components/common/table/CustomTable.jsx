@@ -2,9 +2,9 @@ import React from "react";
 import { useTable, usePagination, useSortBy } from "react-table";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
+import {faSortUp, faSortDown, faPlus} from "@fortawesome/free-solid-svg-icons";
 import Pagination from "components/common/pagination";
-import {Spinner} from "react-bootstrap";
+import {Button, Spinner} from "react-bootstrap";
 
 export const defaultRowStyling = (row) => {
   return "";
@@ -20,7 +20,7 @@ export const defaultInitialState = {
   ]
 };
 
-function CustomTable({ tableStyleName, columns, data, noDataMessage, onRowSelect, rowStyling, initialState, tableFilter, paginationOptions, showHeaderText, isLoading }) {
+function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRowSelect, rowStyling, initialState, tableFilter, paginationOptions, showHeaderText, isLoading, tableTitle, createNewRecord }) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -86,64 +86,111 @@ function CustomTable({ tableStyleName, columns, data, noDataMessage, onRowSelect
     );
   }
 
-  return (
-    <>
-      {/* TODO: Create Title bar and action bar components */}
-      {/* <div className="table-title-bar mt-3 mr-1">
-        <div className="table-title ml-2">Table header</div>
-      </div> */}
-      <table className={tableStyleName} responsive="true" hover="true" {...getTableProps()}>
-        <thead>
-          {!isLoading && headerGroups ? headerGroups.map((headerGroup, i) => (
+  const getTableTitleBar = () => {
+    return (
+      <tr>
+        <th colSpan="100%">
+          <div className="d-flex justify-content-between">
+            <div className="mx-2 d-flex">{tableTitle}</div>
+            {isLoading &&
+              <span className="">
+                <Spinner className="mr-2" as="span" animation="border" variant="light" size="sm" role="status" aria-hidden="true" />
+                Loading Data
+              </span>
+              }
+              {/*TODO: Implement Table Action Bar with ability for filters*/}
+            <div className="d-flex text-right">
+              {createNewRecord && <Button size="sm" className={"o"}
+                      onClick={() => { createNewRecord(); }}>
+                <FontAwesomeIcon icon={faPlus} />
+                <span className="ml-1">New {type}</span>
+              </Button>}
+            </div>
+          </div>
+        </th>
+      </tr>
+    );
+  };
+
+  const getTableHeader = () => {
+    if ((isLoading && data == null) || !showHeaderText || !headerGroups) {
+      return (
+        <tr>
+          <th>
+            <div className="no-header-text" />
+          </th>
+        </tr>
+      );
+    }
+    else {
+      return (
+        <>
+          {getTableTitleBar()}
+          {headerGroups.map((headerGroup, i) => (
             <tr key={i}  {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column, j) => (
-                <th className="px-2" key={j} {...column.getHeaderProps(column.getSortByToggleProps())}>
-                  <div style={{ display: "flex",  flexWrap: "nowrap" }}>
-                    {showHeaderText && !isLoading ?
-                    <>
-                      <div>{column.render("Header")}</div>
-                      <div className="ml-1">
-                        {column.isSorted
-                          ? column.isSortedDesc
-                            ? <FontAwesomeIcon icon={faSortDown} />
-                            : <FontAwesomeIcon icon={faSortUp} />
-                          : null}
-                      </div>
-                    </>
-                      :
-                      <div className="no-header-text" />
-                    }
-                  </div>                  
-                </th>
+                getHeaderColumn(column, j)
               ))}
             </tr>
-          ))
-          :
-            <tr>
-              <th>
-                <div className="no-header-text" />
-              </th>
-            </tr>
+          ))}
+        </>
+      );
+    }
+  };
+
+  const getHeaderColumn = (column, key) => {
+    return (
+      <th className="px-2" key={key} {...column.getHeaderProps(column.getSortByToggleProps())}>
+        <div style={{display: "flex", flexWrap: "nowrap"}}>
+          <div>{column.render("Header")}</div>
+          <div className="ml-1">
+            {column.isSorted && <FontAwesomeIcon icon={column.isSortedDesc ? faSortDown : faSortUp}/>}
+          </div>
+        </div>
+      </th>
+    );
+  };
+
+  const getTableBody = () => {
+    if (isLoading && (data == null || data.length === 0)) {
+      return (
+        <tr>
+          <td colSpan="8" className="info-text text-center p-3">{tableLoading()}</td>
+        </tr>
+      );
+    } else {
+      return (
+        <>
+          {rows.map((row, i) => {
+            prepareRow(row);
+            return filterRow(row) ? null : (
+              <tr className={getRowClassNames(i, row)}
+                  key={i} {...row.getRowProps({onClick: () => onRowSelect ? onRowSelect(row) : null})}>
+                {row.cells.map((cell, j) => {
+                  return <td key={j} {...cell.getCellProps()}
+                             className={"table-cell px-2 " + setColumnClass(cell.column.id, columns)}>{cell.render("Cell")}</td>;
+                })}
+              </tr>
+            );
+          })
           }
+          {!isLoading && rows.length === 0 &&
+            <tr>
+              <td colSpan="8" className="info-text text-center p-5">{noDataMessage ? noDataMessage : defaultNoDataMessage}</td>
+            </tr>}
+        </>
+      );
+    }
+  };
+
+  return (
+    <>
+      <table className={tableStyleName} responsive="true" hover="true" {...getTableProps()}>
+        <thead>
+          {getTableHeader()}
         </thead>
         <tbody {...getTableBodyProps()}>
-        <>
-          { isLoading ? <tr><td colSpan="8" className="info-text text-center p-3">{tableLoading()}</td></tr> :
-            rows.map((row, i) => {
-              prepareRow(row);
-              return filterRow(row) ? null : (
-                <tr className={getRowClassNames(i, row)}
-                    key={i} {...row.getRowProps({onClick: () => onRowSelect ? onRowSelect(row) : null})}>
-                  {row.cells.map((cell, j) => {
-                    return <td key={j} {...cell.getCellProps()}
-                               className={"table-cell px-2 " + setColumnClass(cell.column.id, columns)}>{cell.render("Cell")}</td>;
-                  })}
-                </tr>
-              );
-            })
-        }
-        {!isLoading && rows.length === 0 && <tr><td colSpan="8" className="info-text text-center p-5">{noDataMessage ? noDataMessage : defaultNoDataMessage}</td></tr>}
-        </>
+            {getTableBody()}
         </tbody>
         <tfoot>
           <tr>
@@ -168,7 +215,10 @@ CustomTable.propTypes = {
   tableFilter: PropTypes.object,
   paginationOptions: PropTypes.object,
   showHeaderText: PropTypes.bool,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  tableTitle: PropTypes.string,
+  createNewRecord: PropTypes.func,
+  type: PropTypes.string
 };
 
 CustomTable.defaultProps = {
@@ -177,7 +227,8 @@ CustomTable.defaultProps = {
   initialState: defaultInitialState,
   showHeaderText: true,
   data: [],
-  isLoading: false
+  isLoading: false,
+  tableTitle: ""
 };
 
 export default CustomTable;
