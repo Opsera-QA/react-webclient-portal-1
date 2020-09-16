@@ -201,6 +201,22 @@ function PipelineDetailView() {
 
           {pipeline ? <div className="title-text-5 mb-2">{pipeline.name}</div> : <div className="title-text-5 mb-2">Pipelines</div> }
 
+          {pipeline.owner !== customerAccessRules.UserId &&
+            <>
+              <div className="mb-2 w-100 max-charting-width info-text">
+                {customerAccessRules.Role === "administrator" && <>Administrator Access Role: Your account has full
+                  access to this pipeline and its settings.</>}
+                {customerAccessRules.Role === "power_user" && <>Power User Role: Your account has elevated privileges
+                  to this pipeline which include changing settings and running the pipeline.</>}
+                {customerAccessRules.Role === "user" && <>Standard User Role: Your account has basic access to this
+                  pipeline which is limited to viewing and running pipeline operations only.</>}
+                {customerAccessRules.Role === "readonly" && <>Read Only Role: Your account does not have any
+                  privileges associated with this pipeline. You are being temporarily granted Viewer permissions and
+                  will not be able to perform any actions.</>}
+              </div>
+            </>
+            }
+
           <div className="alternate-tabs">
             <ul className="nav nav-tabs">
               <li className="nav-item">

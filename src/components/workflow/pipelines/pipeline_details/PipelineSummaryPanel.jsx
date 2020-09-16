@@ -327,24 +327,6 @@ function PipelineSummaryPanel({
 
             </div>
           </div>
-          <div>
-            {pipeline.owner !== customerAccessRules.UserId &&
-            <>
-              <div className="mb-2 max-charting-width info-text">
-                {customerAccessRules.Role === "administrator" && <>Administrator Access Role: Your account has full
-                  access to this pipeline and its settings.</>}
-                {customerAccessRules.Role === "power_user" && <>Power User Role: Your account has elevated privileges to
-                  this pipeline which include changing settings and running the pipeline.</>}
-                {customerAccessRules.Role === "user" && <>Standard User Role: Your account has basic access to this
-                  pipeline which is limited to viewing and running pipeline operations only.</>}
-                {customerAccessRules.Role === "readonly" && <>Read Only Role: Your account does not have any privileges
-                  associated with this pipeline. You are being temporarily granted Viewer permissions and will not be
-                  able to perform any
-                  actions.</>}
-              </div>
-            </>
-            }
-          </div>
 
           <div className="mb-3 flat-top-content-block p-3">
 
