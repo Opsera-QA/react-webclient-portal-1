@@ -207,9 +207,11 @@ function SshUploadDeployStepConfiguration({ data, pipelineId, stepId, parentCall
 
   const validateRequiredFields = () => {
     let { accessKey, secretKey, sshKey } = formData;
-    if (accessKey.length === 0 || 
-      secretKey.length === 0 || 
+    if (
+      // accessKey.length === 0 || 
+      // secretKey.length === 0 || 
       Object.keys(sshKey).length === 0) {
+        console.log(Object.keys(sshKey).length)
       let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
       setToast(toast);
       setShowToast(true);
@@ -242,7 +244,7 @@ function SshUploadDeployStepConfiguration({ data, pipelineId, stepId, parentCall
     reader.onload = async (e) => { 
       const text = (e.target.result);       
       if (fileSize < 3000) {
-        const vaultResponse = await saveToVault(pipelineId, stepId, "sshKey", text);
+        const vaultResponse = await saveToVault(pipelineId, stepId, "sshKey", "", text);
         if (vaultResponse) {
           const keyName = `${pipelineId}-${stepId}-sshKey`;
           setSshKeyFile({ fileName: fileName, vaultKey: keyName });
