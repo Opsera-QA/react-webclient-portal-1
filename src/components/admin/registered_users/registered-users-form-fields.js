@@ -1,39 +1,53 @@
 const registeredUsersMetadata = {
   idProperty: "_id",
-  type: "Template",
+  type: "Registered User",
   fields: [
-  {
-    label: "Name",
-    id: "firstName",
-      minLength: 3,
-      isRequired: true 
-  },
     {
       label: "User ID",
       id: "_id",
     },
-  {
-    label: "Email",
-    id: "email",
+    {
+      label: "First Name",
+      id: "firstName",
       minLength: 3,
-      isRequired: true 
-  },
-  {
-    label: "Organization",
-    id: "organizationName",
-    // value: [],
-  },
+      isRequired: true
+    },
+    {
+      label: "Last Name",
+      id: "lastName",
+    },
+    {
+      label: "Email",
+      id: "email",
+      minLength: 3,
+      isRequired: true,
+      isEmail: true
+    },
+    {
+      label: "Organization",
+      id: "organizationName",
+    },
+    {
+      label: "SSO System",
+      id: "ssoSystem",
+    },
+    {
+      label: "SSO Client ID",
+      id: "ssoClientId",
+    },
+    {
+      label: "Database Connection String",
+      id: "dbConnectionString",
+    },
     {
       label: "Domain",
       id: "domain",
-      // value: [],
     },
-  {
-    label: "Created",
-    id: "createdAt",
-    // value: ["opsera", "everyone"],
-  },
-]
+    {
+      label: "Created",
+      id: "createdAt",
+    },
+  ]
 };
 
 export default registeredUsersMetadata;

@@ -24,8 +24,8 @@ import Logs from "./components/logs/Logs";
 import Update from "./components/update/Update";
 import AdminTools from "./components/admin/AdminTools";
 import DeleteTools from "./components/admin/delete_tools/DeleteTools";
-import RegisteredUsers from "./components/admin/registered_users/RegisteredUsers";
-import RegisteredUserDetail from "./components/admin/registered_users/registered_user_details/RegisteredUserDetail";
+import RegisteredUsersManagement from "./components/admin/registered_users/RegisteredUsersManagement";
+import RegisteredUserDetailView from "./components/admin/registered_users/registered_user_details/RegisteredUserDetailView";
 import ManageSystems from "./components/admin/manage_systems/ManageSystems";
 import ReportsRegistration from "./components/admin/analytics/ReportsRegistration";
 import SystemStatus from "./components/admin/status/SystemStatus";
@@ -217,8 +217,8 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/admin" exact component={AdminTools}/>
                   <SecureRoute path="/admin/delete" component={DeleteTools}/>
                   <SecureRoute path="/admin/manage_systems" component={ManageSystems}/>
-                  <SecureRoute path="/admin/registered-users" exact component={RegisteredUsers}/>
-                  <SecureRoute path="/admin/registered-users/:id" exact component={RegisteredUserDetail}/>
+                  <SecureRoute path="/admin/registered-users" exact component={RegisteredUsersManagement}/>
+                  <SecureRoute path="/admin/registered-users/:id" exact component={RegisteredUserDetailView}/>
                   <SecureRoute path="/admin/systemstatus" component={SystemStatus}/>
                   <SecureRoute path="/admin/analytics/reports-registration" component={ReportsRegistration}/>
                   <SecureRoute path="/admin/tools/:tabKey?" exact component={ToolManagement}/>
