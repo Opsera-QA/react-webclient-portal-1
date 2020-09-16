@@ -14,6 +14,8 @@ const trails = {
   toolIdentifierDetailView: {parent: "toolManagement", destination: {name: "toolIdentifierDetailView", path: paths.toolIdentifierDetailView, label: "Tool Identifier Details"}},
   kpiManagement: {parent: "admin", destination: {name: "kpiManagement", path: paths.kpiManagement, label: "Kpi Management"}},
   kpiDetailView: {parent: "kpiManagement", destination: {name: "kpiDetailView", path: paths.kpiManagement, label: "Kpi Details"}},
+  registeredUsersManagement: {parent: "admin", destination: {name: "registeredUsersManagement", path: paths.registeredUsersManagement, label: "Registered Users Management"}},
+  registeredUsersDetailView: {parent: "registeredUsersManagement", destination: {name: "registeredUsersDetailView", path: paths.registeredUsersManagement, label: "Registered User Details"}},
 
   // Account settings
   accountSettings: {parent: undefined, destination: {name: "accountSettings", path: paths.accountSettings, label: "Account Settings"}},

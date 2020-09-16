@@ -1,5 +1,5 @@
 import React, {Fragment, useContext, useMemo, useState} from "react";
-import {Table, Button, Row, Col, Spinner} from "react-bootstrap";
+import {Table, Button, Row, Col} from "react-bootstrap";
 import { useTable, useExpanded, useSortBy } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {  faSortUp, faSortDown, faSort } from "@fortawesome/free-solid-svg-icons";
@@ -12,7 +12,7 @@ import {AuthContext} from "../../../contexts/AuthContext";
 import registeredUsersMetadata from "./registered-users-form-fields";
 import {getTableDateColumn, getTableTextColumn} from "../../common/table/table-column-helpers";
 
-function RegisteredUserTable({  data, deployingElk, handleDeletePress, handleDeployElkStack, gotoProfile }) {
+function RegisteredUsersTable({  data, deployingElk, handleDeletePress, handleDeployElkStack, gotoProfile }) {
   const fields = registeredUsersMetadata.fields;
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState({});
@@ -35,6 +35,7 @@ function RegisteredUserTable({  data, deployingElk, handleDeletePress, handleDep
         },
       },
       getTableTextColumn(fields.find(field => { return field.id === "firstName"})),
+      getTableTextColumn(fields.find(field => { return field.id === "lastName"})),
       getTableTextColumn(fields.find(field => { return field.id === "email"})),
       getTableTextColumn(fields.find(field => { return field.id === "organizationName"})),
       getTableTextColumn(fields.find(field => { return field.id === "domain"})),
@@ -66,8 +67,8 @@ function RegisteredUserTable({  data, deployingElk, handleDeletePress, handleDep
   const actionButtons = (cellData) => {
     return(
       <>
-        <Button variant="primary" size="sm" onClick={() => { gotoProfile(cellData.row.original._id); }} className="mr-4"> Analytics Profile</Button> 
-        <Button variant="danger" size="sm" onClick={() => { handleDeletePress(cellData.row.original._id); }} > Deactivate User</Button>     
+        <Button variant="primary" size="sm" onClick={() => { gotoProfile(cellData.row.original._id); }} className="mr-2">User Settings</Button>
+        <Button variant="danger" size="sm" onClick={() => { handleDeletePress(cellData.row.original._id); }}>Deactivate User</Button>
       </>
     );
   };
@@ -155,5 +156,8 @@ function RegisteredUserTable({  data, deployingElk, handleDeletePress, handleDep
   );
 }
 
+RegisteredUsersTable.propTypes = {
 
-export default RegisteredUserTable;
+};
+
+export default RegisteredUsersTable;
