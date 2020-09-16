@@ -9,8 +9,9 @@ import Model from "../../../../core/data_model/model";
 import LoadingDialog from "../../../common/status_notifications/loading";
 import SaveButton from "../../../common/buttons/SaveButton";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
+import WarningDialog from "../../../common/status_notifications/WarningDialog";
 
-function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, handleClose }) {
+function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, authorizedActions, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const [ldapUserDataDto, setLdapUserDataDto] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -61,7 +62,12 @@ function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, handleC
 
   if (isLoading) {
     return (<LoadingDialog size="sm"/>);
-  } else {
+  }
+
+  if (!authorizedActions.includes("update_user")) {
+    return <WarningDialog warningMessage={"You do not have the required permissions to update this user"} />;
+  }
+
     return (
       <>
         <div className="scroll-y full-height">
@@ -105,7 +111,6 @@ function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, handleC
         </div>
       </>
     );
-  }
 }
 
 LdapUserEditorPanel.propTypes = {
@@ -113,7 +118,8 @@ LdapUserEditorPanel.propTypes = {
   orgDomain: PropTypes.string,
   ldapUserData: PropTypes.object,
   setLdapUserData: PropTypes.func,
-  handleClose: PropTypes.func
+  handleClose: PropTypes.func,
+  authorizedActions: PropTypes.array
 };
 
 LdapUserEditorPanel.defaultProps = {

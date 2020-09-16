@@ -1,7 +1,6 @@
 import React, {useContext, useState, useEffect} from "react";
 import {AuthContext} from "../../../../contexts/AuthContext";
 import {useParams} from "react-router-dom";
-import ErrorDialog from "../../../common/status_notifications/error";
 import LoadingDialog from "../../../common/status_notifications/loading";
 import "../../../admin/accounts/accounts.css";
 import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
@@ -13,23 +12,49 @@ import {ldapGroupMetaData} from "../ldap-groups-metadata";
 import Model from "../../../../core/data_model/model";
 import {faUserFriends} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {DialogToastContext} from "../../../../contexts/DialogToastContext";
+
+// TODO: Can we get an API Call to get role group names associated with an organization?
+const roleGroups = ["Administrators", "PowerUsers", "Users"];
 
 function LdapGroupDetailView() {
   const {groupName, orgDomain} = useParams();
+  const toastContext = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState({});
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
   const [ldapOrganizationData, setLdapOrganizationData] = useState(undefined);
   const [ldapGroupData, setLdapGroupData] = useState(undefined);
   const [currentUserEmail, setCurrentUserEmail] = useState(undefined);
-  const [pageLoading, setPageLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [authorizedActions, setAuthorizedActions] = useState([]);
 
   useEffect(() => {
-    getRoles();
+    loadData();
   }, []);
 
+  const loadData = async () => {
+    try {
+      setIsLoading(true);
+      await getRoles();
+    }
+    catch (error) {
+      toastContext.showLoadingErrorDialog(error);
+    }
+    finally {
+      setIsLoading(false);
+    }
+  }
+
+  // TODO: Can we get a getGroupOwnerEmail api with name, so we can cut off loading the group
   const getGroup = async () => {
+    const user = await getUserRecord();
     const response = await accountsActions.getGroup(orgDomain, groupName, getAccessToken);
     setLdapGroupData(new Model(response.data, ldapGroupMetaData, false));
+    let isOwner = user.email === response.data["ownerEmail"];
+
+    if (isOwner) {
+      setAuthorizedActions(["get_group_details", "update_group", "update_group_membership"]);
+    }
   };
 
   const getOrganization = async (domain) => {
@@ -41,25 +66,41 @@ function LdapGroupDetailView() {
   };
 
   const getRoles = async () => {
-    setPageLoading(true);
     const user = await getUserRecord();
+    let {ldap} = user;
     setCurrentUserEmail(user.email);
     const userRoleAccess = await setAccessRoles(user);
+
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
+      let authorizedActions;
 
-      if (userRoleAccess["Administrator"] === true)
+      if (roleGroups.includes(groupName)) {
+        authorizedActions = await accountsActions.getAllowedRoleGroupActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
+        console.log("Authorized Role Group Actions: " + JSON.stringify(authorizedActions));
+        setAuthorizedActions(authorizedActions);
+      }
+      else {
+        authorizedActions = await accountsActions.getAllowedGroupActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
+        console.log("Authorized Custom Group Actions: " + JSON.stringify(authorizedActions));
+        setAuthorizedActions(authorizedActions);
+      }
+
+      if (authorizedActions.includes("get_group_details")) {
         await getOrganization(orgDomain);
-      await getGroup();
+        await getGroup();
+      }
     }
-    setPageLoading(false);
   };
 
-  if (!accessRoleData || pageLoading) {
+  if (!accessRoleData || isLoading) {
     return (<LoadingDialog size="sm"/>);
-  } else if (accessRoleData.Administrator === false) {
+  }
+
+  if (!authorizedActions.includes("get_group_details") && !isLoading) {
     return (<AccessDeniedDialog roleData={accessRoleData} />);
-  } else {
+  }
+
     return (
       <>
         {ldapOrganizationData && ldapGroupData &&
@@ -75,7 +116,7 @@ function LdapGroupDetailView() {
               </div>
               <div>
                 <LdapGroupDetailPanel orgDomain={orgDomain} ldapGroupData={ldapGroupData} ldapOrganizationData={ldapOrganizationData}
-                                      currentUserEmail={currentUserEmail} setLdapGroupData={setLdapGroupData} loadData={getRoles}/>
+                                      currentUserEmail={currentUserEmail} setLdapGroupData={setLdapGroupData} loadData={getRoles} authorizedActions={authorizedActions}/>
               </div>
             </div>
             <div className="content-block-footer"/>
@@ -83,7 +124,6 @@ function LdapGroupDetailView() {
         </div>
         }
       </>);
-  }
 }
 
 export default LdapGroupDetailView;
