@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import DropdownList from "react-widgets/lib/DropdownList";
 
-function DtoSelectInput({ fieldName, dataObject, setDataObject, groupBy, selectOptions, valueField, textField, filter, placeholderText, setDataFunction, allowCreate, setSelectOptions, valueFormatter}) {
+function DtoSelectInput({ fieldName, dataObject, setDataObject, groupBy, selectOptions, valueField, textField, filter, placeholderText, setDataFunction, allowCreate, setSelectOptions, valueFormatter, busy}) {
   const [errorMessage, setErrorMessage] = useState("");
   const [field] = useState(dataObject.getFieldById(fieldName));
 
@@ -34,6 +34,7 @@ function DtoSelectInput({ fieldName, dataObject, setDataObject, groupBy, selectO
               groupBy={groupBy}
               defaultValue={dataObject.getData(fieldName)}
               valueComponent={valueFormatter}
+              busy={busy}
               placeholder={placeholderText}
               onChange={data => setDataFunction ? setDataFunction(fieldName, data) : validateAndSetData(fieldName, data[valueField])}
             />
@@ -62,7 +63,8 @@ DtoSelectInput.propTypes = {
   setDataFunction: PropTypes.func,
   allowCreate: PropTypes.string,
   setSelectOptions: PropTypes.func,
-  valueFormatter: PropTypes.func
+  valueFormatter: PropTypes.func,
+  busy: PropTypes.bool
 };
 
 DtoSelectInput.defaultProps = {

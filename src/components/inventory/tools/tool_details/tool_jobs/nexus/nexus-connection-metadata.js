@@ -13,14 +13,14 @@ const nexusConnectionMetadata = {
     },
     {
       label: "Nexus Password",
-      id: "accountPassword",
+      id: "secretKey",
       isRequired: true
     }
 ],
   newModelBase: {
     toolURL: "",
     userName: "",
-    accountPassword: "",
+    secretKey: "",
     proxyEnable: false
   }
 };
