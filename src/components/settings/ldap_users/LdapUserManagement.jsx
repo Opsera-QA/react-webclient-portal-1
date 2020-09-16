@@ -16,6 +16,7 @@ import {
   getOrganizationList
 } from "../../admin/accounts/ldap/organizations/organization-functions";
 import {DialogToastContext} from "../../../contexts/DialogToastContext";
+import accountsActions from "../../admin/accounts/accounts-actions";
 
 
 function LdapUserManagement() {
@@ -23,22 +24,30 @@ function LdapUserManagement() {
   const {orgDomain} = useParams();
   const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const [pageLoading, setPageLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [userList, setUserList] = useState([]);
   const [currentOrganizationDomain, setCurrentOrganizationDomain] = useState(undefined);
   const [organizationList, setOrganizationList] = useState(undefined);
   const [organization, setOrganization] = useState(undefined);
   const [showCreateUserModal, setShowCreateUserModal] = useState(false);
   const toastContext = useContext(DialogToastContext);
+  const [authorizedActions, setAuthorizedActions] = useState([]);
 
   useEffect(() => {
     loadData();
   }, []);
 
   const loadData = async () => {
-    setPageLoading(true);
-    await getRoles();
-    setPageLoading(false);
+    try {
+      setIsLoading(true);
+      await getRoles();
+    }
+    catch (error) {
+      toastContext.showLoadingErrorDialog(error);
+    }
+    finally {
+      setIsLoading(false);
+    }
   }
 
   const getUsersByEmail = async (email) => {
@@ -66,14 +75,9 @@ function LdapUserManagement() {
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
 
-      if (orgDomain != null && userRoleAccess.OpseraAdministrator) {
-        setCurrentOrganizationDomain(orgDomain);
-        await getUsersByDomain(orgDomain);
-      } else if ((userRoleAccess.Administrator || userRoleAccess.PowerUser) && ldap.domain != null) {
-        history.push(`/settings/${ldap.domain}/users/`);
-        setCurrentOrganizationDomain(ldap.email);
-        await getUsersByDomain(ldap.domain);
-      }
+      let authorizedActions = await accountsActions.getAllowedUserActions(userRoleAccess, ldap.organization, undefined, getUserRecord, getAccessToken);
+      console.log("Authorized Actions: " + JSON.stringify(authorizedActions));
+      setAuthorizedActions(authorizedActions);
 
       if (userRoleAccess.OpseraAdministrator) {
         try {
@@ -83,6 +87,20 @@ function LdapUserManagement() {
           toastContext.showLoadingErrorDialog(error.message);
           console.error(error.message);
         }
+
+        if (orgDomain != null) {
+          setCurrentOrganizationDomain(orgDomain);
+          await getUsersByDomain(orgDomain);
+        }
+        else {
+          history.push(`/settings/${ldap.domain}/users/`);
+          setCurrentOrganizationDomain(ldap.email);
+          await getUsersByDomain(ldap.domain);
+        }
+      } else if (ldap.organization != null && authorizedActions.includes("get_users")) {
+        history.push(`/settings/${ldap.domain}/users/`);
+        setCurrentOrganizationDomain(ldap.email);
+        await getUsersByDomain(ldap.domain);
       }
     }
   };
@@ -92,20 +110,23 @@ function LdapUserManagement() {
   };
 
   const handleOrganizationChange = async (selectedOption) => {
-    setPageLoading(true);
+    setIsLoading(true);
     console.log("Setting organization to: " + JSON.stringify(selectedOption));
     history.push(`/settings/${selectedOption.id}/users`);
     setCurrentOrganizationDomain(selectedOption.id);
     await getUsersByDomain(selectedOption.id);
-    setPageLoading(false);
+    setIsLoading(false);
   };
 
   if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
-  } else if (!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator) {
+  }
+
+  if (!authorizedActions.includes("get_users") && !isLoading) {
     return (<AccessDeniedDialog roleData={accessRoleData}/>);
-  } else {
-    return (
+  }
+
+  return (
       <div>
         <BreadcrumbTrail destination={"ldapUserManagement"} />
         <div className="justify-content-between mb-1 d-flex">
@@ -123,26 +144,24 @@ function LdapUserManagement() {
                 onChange={handleOrganizationChange}
               />}
             </div>
-            <div className="mt-1">
+            {organization != null && authorizedActions.includes("create_user") && <div className="mt-1">
               <Button variant="primary" size="sm"
                       onClick={() => {
                         createUser();
                       }}>
                 <FontAwesomeIcon icon={faPlus} className="mr-1"/>New User
               </Button>
-            </div>
+            </div>}
             <br/>
           </div>
         </div>
 
         <div className="full-height">
-          {userList && <LdapUsersTable orgDomain={orgDomain} isLoading={pageLoading} userData={userList}/>}
+          {userList && <LdapUsersTable orgDomain={orgDomain} isLoading={isLoading} userData={userList}/>}
         </div>
         <NewLdapUserModal organizationName={organization && organization.name} showModal={showCreateUserModal} setShowModal={setShowCreateUserModal} loadData={loadData}/>
       </div>
     );
-  }
-
 }
 
 

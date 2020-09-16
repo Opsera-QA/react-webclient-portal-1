@@ -11,7 +11,7 @@ import CustomTab from "../../../common/tabs/CustomTab";
 import {faCogs} from "@fortawesome/pro-solid-svg-icons/faCogs";
 import {faIdCard, faUsers} from "@fortawesome/pro-solid-svg-icons";
 
-function LdapGroupDetailPanel({ currentUserEmail, ldapGroupData, setLdapGroupData, ldapOrganizationData, orgDomain, loadData }) {
+function LdapGroupDetailPanel({ currentUserEmail, ldapGroupData, setLdapGroupData, ldapOrganizationData, orgDomain, loadData, authorizedActions }) {
   const [activeTab, setActiveTab] = useState("membership");
 
   const handleTabClick = (activeTab) => e => {
@@ -38,7 +38,7 @@ function LdapGroupDetailPanel({ currentUserEmail, ldapGroupData, setLdapGroupDat
           <Col>
             <div className="tabbed-content-block detail-view-detail-panel">
               {ldapGroupData &&
-              <LdapGroupDetailsView currentUserEmail={currentUserEmail} ldapGroupData={ldapGroupData} orgDomain={orgDomain} setLdapGroupData={setLdapGroupData} loadData={loadData} activeTab={activeTab} ldapOrganizationData={ldapOrganizationData}/>}
+              <LdapGroupDetailsView currentUserEmail={currentUserEmail} ldapGroupData={ldapGroupData} authorizedActions={authorizedActions} orgDomain={orgDomain} setLdapGroupData={setLdapGroupData} loadData={loadData} activeTab={activeTab} ldapOrganizationData={ldapOrganizationData}/>}
             </div>
           </Col>
         </Row>
@@ -47,7 +47,7 @@ function LdapGroupDetailPanel({ currentUserEmail, ldapGroupData, setLdapGroupDat
   );
 }
 
-function LdapGroupDetailsView({activeTab, currentUserEmail, ldapGroupData, orgDomain, setLdapGroupData, ldapOrganizationData, loadData}) {
+function LdapGroupDetailsView({activeTab, currentUserEmail, authorizedActions, ldapGroupData, orgDomain, setLdapGroupData, ldapOrganizationData, loadData}) {
   useEffect(() => {
     // console.log("CHANGE HAPPENED");
   }, [activeTab]);
@@ -56,9 +56,9 @@ function LdapGroupDetailsView({activeTab, currentUserEmail, ldapGroupData, orgDo
       case "membership":
         return <LdapUsersTable orgDomain={orgDomain} userData={ldapGroupData.members} />;
       case "manage":
-        return <LdapGroupManagePanel ldapGroupData={ldapGroupData.data} ldapOrganizationData={ldapOrganizationData} loadData={loadData}/>;
+        return <LdapGroupManagePanel ldapGroupData={ldapGroupData.data} authorizedActions={authorizedActions} ldapOrganizationData={ldapOrganizationData} loadData={loadData}/>;
       case "settings":
-        return <LdapGroupEditorPanel currentUserEmail={currentUserEmail} setLdapGroupData={setLdapGroupData} ldapGroupData={ldapGroupData} ldapOrganizationData={ldapOrganizationData} />;
+        return <LdapGroupEditorPanel currentUserEmail={currentUserEmail} authorizedActions={authorizedActions} setLdapGroupData={setLdapGroupData} ldapGroupData={ldapGroupData} ldapOrganizationData={ldapOrganizationData} />;
       default:
         return null;
     }
@@ -71,7 +71,8 @@ LdapGroupDetailPanel.propTypes = {
   ldapOrganizationData: PropTypes.object,
   orgDomain: PropTypes.string,
   currentUserEmail: PropTypes.string,
-  loadData: PropTypes.func
+  loadData: PropTypes.func,
+  authorizedActions: PropTypes.array
 };
 
 export default LdapGroupDetailPanel;

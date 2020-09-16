@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
 
 import Col from "react-bootstrap/Col";
@@ -9,7 +9,7 @@ import CustomTabContainer from "../../../../../common/tabs/CustomTabContainer";
 import CustomTab from "../../../../../common/tabs/CustomTab";
 import {faCogs, faUsers} from "@fortawesome/pro-solid-svg-icons";
 
-function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationData, setLdapOrganizationData, loadData}) {
+function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationData, setLdapOrganizationData, loadData, authorizedActions}) {
   const [activeTab, setActiveTab] = useState("accounts");
 
   const handleTabClick = (tabSelection) => e => {
@@ -36,7 +36,14 @@ function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationDat
           <Col>
             <div className="tabbed-content-block detail-view-detail-panel">
               {ldapOrganizationData &&
-              <LdapOrganizationDetailsView organizationAccounts={organizationAccounts} loadData={loadData} activeTab={activeTab} setLdapOrganizationData={setLdapOrganizationData} ldapOrganizationData={ldapOrganizationData}/>}
+              <LdapOrganizationDetailsView
+                organizationAccounts={organizationAccounts}
+                loadData={loadData}
+                activeTab={activeTab}
+                setLdapOrganizationData={setLdapOrganizationData}
+                ldapOrganizationData={ldapOrganizationData}
+                authorizedActions={authorizedActions}
+              />}
             </div>
           </Col>
         </Row>
@@ -45,7 +52,7 @@ function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationDat
   );
 }
 
-function LdapOrganizationDetailsView({activeTab, loadData, setLdapOrganizationData, ldapOrganizationData, organizationAccounts}) {
+function LdapOrganizationDetailsView({activeTab, loadData, setLdapOrganizationData, ldapOrganizationData, organizationAccounts, authorizedActions}) {
   useEffect(() => {
     // console.log("CHANGE HAPPENED");
   }, [activeTab]);
@@ -54,7 +61,7 @@ function LdapOrganizationDetailsView({activeTab, loadData, setLdapOrganizationDa
       case "accounts":
         return <LdapOrganizationAccountsTable ldapOrganizationAccounts={organizationAccounts} loadData={loadData} />
       case "settings":
-        return <LdapOrganizationEditorPanel setLdapOrganizationData={setLdapOrganizationData} ldapOrganizationData={ldapOrganizationData} />;
+        return <LdapOrganizationEditorPanel setLdapOrganizationData={setLdapOrganizationData} ldapOrganizationData={ldapOrganizationData} authorizedActions={authorizedActions} />;
       default:
         return null;
     }
@@ -68,6 +75,7 @@ LdapOrganizationDetailPanel.propTypes = {
   loadData: PropTypes.func,
   ldapOrganizationData: PropTypes.object,
   setLdapOrganizationData: PropTypes.func,
+  authorizedActions: PropTypes.array
 };
 
 export default LdapOrganizationDetailPanel;

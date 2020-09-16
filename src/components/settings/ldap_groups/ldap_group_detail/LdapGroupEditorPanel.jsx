@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useContext} from "react";
-import {Button, Form, Col} from "react-bootstrap";
+import {Col} from "react-bootstrap";
 import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
 import accountsActions from "components/admin/accounts/accounts-actions.js";
@@ -7,12 +7,13 @@ import Row from "react-bootstrap/Row";
 import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
 import DtoSelectInput from "../../../common/input/dto_input/dto-select-input";
 import DtoToggleInput from "../../../common/input/dto_input/dto-toggle-input";
-import Model, {DataState} from "../../../../core/data_model/model";
+import Model from "../../../../core/data_model/model";
 import LoadingDialog from "../../../common/status_notifications/loading";
 import SaveButton from "../../../common/buttons/SaveButton";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
+import WarningDialog from "../../../common/status_notifications/WarningDialog";
 
-function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, ldapOrganizationData, setLdapGroupData, handleClose}) {
+function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, ldapOrganizationData, setLdapGroupData, handleClose, authorizedActions}) {
   const {getAccessToken} = useContext(AuthContext);
   const [ldapGroupDataDto, setLdapGroupDataDto] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -65,7 +66,12 @@ function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, ldapOrganization
 
   if (isLoading) {
     return (<LoadingDialog/>);
-  } else {
+  }
+
+  if (!authorizedActions.includes("update_group")) {
+    return <WarningDialog warningMessage={"You do not have the required permissions to update this group"} />;
+  }
+
     return (
       <>
         <div className="p-3">
@@ -101,7 +107,6 @@ function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, ldapOrganization
         </div>
       </>
     );
-  }
 }
 
 LdapGroupEditorPanel.propTypes = {
@@ -109,7 +114,8 @@ LdapGroupEditorPanel.propTypes = {
   setLdapGroupData: PropTypes.func,
   ldapGroupData: PropTypes.object,
   ldapOrganizationData: PropTypes.object,
-  handleClose: PropTypes.func
+  handleClose: PropTypes.func,
+  authorizedActions: PropTypes.array
 };
 
 export default LdapGroupEditorPanel;

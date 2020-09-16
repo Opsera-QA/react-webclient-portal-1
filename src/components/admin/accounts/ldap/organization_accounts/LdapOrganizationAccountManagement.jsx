@@ -1,6 +1,5 @@
 import React, {useContext, useState, useEffect} from "react";
 import {AuthContext} from "../../../../../contexts/AuthContext";
-import ErrorDialog from "../../../../common/status_notifications/error";
 import LoadingDialog from "../../../../common/status_notifications/loading";
 import "../../accounts.css";
 import accountsActions from "../../accounts-actions";
@@ -14,7 +13,7 @@ import Button from "react-bootstrap/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import NewLdapOrganizationAccountModal from "./NewLdapOrganizationAccountModal";
-import {getLoadingErrorDialog} from "../../../../common/toasts/toasts";
+import ToastContext from "react-bootstrap/cjs/ToastContext";
 
 function LdapOrganizationAccountManagement() {
   const history = useHistory();
@@ -27,18 +26,25 @@ function LdapOrganizationAccountManagement() {
   const [organizations, setOrganizations] = useState(undefined);
   const [currentOrganizationName, setCurrentOrganizationName] = useState(undefined);
   const [showCreateOrganizationAccountModal, setShowCreateOrganizationAccountModal] = useState(false);
-  const [toast, setToast] = useState({});
-  const [showToast, setShowToast] = useState(false);
+  const toastContext = useContext(ToastContext);
+  const [authorizedActions, setAuthorizedActions] = useState([]);
 
   useEffect(() => {
     loadData();
   }, []);
 
   const loadData = async () => {
-    setIsLoading(true);
-    await getRoles();
-    setIsLoading(false);
-  };
+    try {
+      setIsLoading(true);
+      await getRoles();
+    }
+    catch (error) {
+      toastContext.showLoadingErrorDialog(error);
+    }
+    finally {
+      setIsLoading(false);
+    }
+  }
 
   const loadOrganizationByName = async (name) => {
     try {
@@ -48,11 +54,9 @@ function LdapOrganizationAccountManagement() {
         setOrganizationAccounts(response.data["orgAccounts"]);
       }
     } catch (error) {
-        let toast = getLoadingErrorDialog(error.message, setShowToast);
-        setToast(toast);
-        setShowToast(true);
-        console.error(error.message);
-      }
+      toastContext.showLoadingErrorDialog(error.message);
+      console.error(error.message);
+    }
   };
 
   const getRoles = async () => {
@@ -61,40 +65,51 @@ function LdapOrganizationAccountManagement() {
     const {ldap} = user;
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
+
+      let authorizedActions = await accountsActions.getAllowedOrganizationAccountActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
+      console.log("Authorized Actions: " + JSON.stringify(authorizedActions));
+      setAuthorizedActions(authorizedActions);
+
       if (userRoleAccess.OpseraAdministrator) {
+        let organizationList = await getOrganizationDropdownList("name", getAccessToken);
+        setOrganizations(organizationList);
 
         if (organizationName != null) {
           setCurrentOrganizationName(organizationName);
           await loadOrganizationByName(organizationName);
-        } else if ((userRoleAccess.Administrator || userRoleAccess.PowerUser) && ldap.domain != null) {
+        }
+        else
+        {
           history.push(`/admin/organization-accounts/${ldap.organization}`);
           setCurrentOrganizationName(ldap.organization);
           await loadOrganizationByName(ldap.organization);
         }
-
-          let organizationList = await getOrganizationDropdownList("name", getAccessToken);
-          setOrganizations(organizationList);
+      } else if (ldap.organization != null && authorizedActions.includes("get_organization_accounts")) {
+        history.push(`/admin/organization-accounts/${ldap.organization}`);
+        setCurrentOrganizationName(ldap.organization);
+        await loadOrganizationByName(ldap.organization);
       }
     }
   };
 
   const handleOrganizationChange = async (selectedOption) => {
-    history.push(`/admin/organization-accounts/${selectedOption.id}/`);
+    history.push(`/admin/organization-accounts/${selectedOption.id}`);
     setCurrentOrganizationName(selectedOption.id);
+    setIsLoading(true);
     await loadOrganizationByName(selectedOption.id);
+    setIsLoading(false);
   };
 
   if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   }
 
-  if (!accessRoleData.OpseraAdministrator) {
+  if (!authorizedActions.includes("get_organization_accounts") && !isLoading) {
     return (<AccessDeniedDialog roleData={accessRoleData} />);
   }
 
     return (
       <>
-        {showToast && toast}
         <BreadcrumbTrail destination="ldapOrganizationAccountManagement" />
         <div className="max-content-width ml-2">
           <div className="justify-content-between mb-1 d-flex">
@@ -113,12 +128,12 @@ function LdapOrganizationAccountManagement() {
                 />}
               </div>
               <div className="my-1 text-right">
-                <Button variant="primary" size="sm"
+                {authorizedActions.includes("create_organization_account") && <Button variant="primary" size="sm"
                         onClick={() => {
                           setShowCreateOrganizationAccountModal(true);
                         }}>
                   <FontAwesomeIcon icon={faPlus} className="mr-1"/>New Organization Account
-                </Button>
+                </Button>}
               </div>
             </div>
           </div>

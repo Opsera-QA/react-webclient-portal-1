@@ -17,8 +17,9 @@ import PropTypes from "prop-types";
 import UserPanel from "../../../common/panels/user_panel/usersPanel";
 import LoadingDialog from "../../../common/status_notifications/loading";
 import {getErrorDialog, getSuccessDialog} from "../../../common/toasts/toasts";
+import WarningDialog from "../../../common/status_notifications/WarningDialog";
 
-function LdapGroupManagePanel({ldapGroupData, ldapOrganizationData, loadData}) {
+function LdapGroupManagePanel({ldapGroupData, ldapOrganizationData, loadData, authorizedActions}) {
   const {name} = useParams();
   const {getUserRecord, getAccessToken} = useContext(AuthContext);
   const [members, setMembers] = useState([]);
@@ -124,7 +125,12 @@ function LdapGroupManagePanel({ldapGroupData, ldapOrganizationData, loadData}) {
 
   if (isLoading) {
     return (<LoadingDialog/>);
-  } else {
+  }
+
+  if (!authorizedActions.includes("update_group_membership")) {
+    return <WarningDialog warningMessage={"You do not have the required permissions to update group membership."} />;
+  }
+
     return (<>
       <div>
         <div className="mb-3">
@@ -179,13 +185,13 @@ function LdapGroupManagePanel({ldapGroupData, ldapOrganizationData, loadData}) {
         </div>
       </div>
     </>);
-  }
 }
 
 LdapGroupManagePanel.propTypes = {
   ldapGroupData: PropTypes.object,
   ldapOrganizationData: PropTypes.object,
-  getGroup: PropTypes.func
+  getGroup: PropTypes.func,
+  authorizedActions: PropTypes.array
 };
 
 export default LdapGroupManagePanel;

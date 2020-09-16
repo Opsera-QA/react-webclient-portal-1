@@ -8,7 +8,7 @@ import {faCogs} from "@fortawesome/pro-solid-svg-icons/faCogs";
 import CustomTab from "../../../common/tabs/CustomTab";
 import CustomTabContainer from "../../../common/tabs/CustomTabContainer";
 
-function LdapUserDetailPanel({ ldapUserData, setLdapUserData, orgDomain }) {
+function LdapUserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, authorizedActions }) {
   const [activeTab, setActiveTab] = useState("settings");
 
   const handleTabClick = (activeTab) => e => {
@@ -29,7 +29,7 @@ function LdapUserDetailPanel({ ldapUserData, setLdapUserData, orgDomain }) {
         <Row>
           <Col>
             <div className="tabbed-content-block detail-view-detail-panel">
-              {ldapUserData && <LdapDetailsView activeTab={activeTab} setLdapUserData={setLdapUserData} ldapUserData={ldapUserData} orgDomain={orgDomain} /> }
+              {ldapUserData && <LdapDetailsView activeTab={activeTab} authorizedActions={authorizedActions} setLdapUserData={setLdapUserData} ldapUserData={ldapUserData} orgDomain={orgDomain} /> }
             </div>
           </Col>
         </Row>
@@ -38,14 +38,14 @@ function LdapUserDetailPanel({ ldapUserData, setLdapUserData, orgDomain }) {
   );
 }
 
-function LdapDetailsView({ activeTab, setLdapUserData, ldapUserData, orgDomain }) {
+function LdapDetailsView({ activeTab, setLdapUserData, ldapUserData, authorizedActions, orgDomain }) {
   useEffect(() => {
     // console.log("CHANGE HAPPENED");
   }, [activeTab]);
   if (activeTab) {
     switch (activeTab) {
     case "settings":
-      return <LdapUserEditorPanel setLdapUserData={setLdapUserData} ldapUserData={ldapUserData} orgDomain={orgDomain} />;
+      return <LdapUserEditorPanel setLdapUserData={setLdapUserData} authorizedActions={authorizedActions} ldapUserData={ldapUserData} orgDomain={orgDomain} />;
     default:
       return null;
     }
@@ -55,7 +55,8 @@ function LdapDetailsView({ activeTab, setLdapUserData, ldapUserData, orgDomain }
 LdapUserDetailPanel.propTypes = {
   ldapUserData: PropTypes.object,
   setLdapUserData: PropTypes.func,
-  orgDomain: PropTypes.string
+  orgDomain: PropTypes.string,
+  authorizedActions: PropTypes.array
 };
 
 export default LdapUserDetailPanel;

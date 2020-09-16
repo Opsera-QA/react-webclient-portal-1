@@ -6,27 +6,21 @@ import DropdownList from "react-widgets/lib/DropdownList";
 import accountsActions from "../../../accounts-actions";
 import {AuthContext} from "../../../../../../contexts/AuthContext";
 import {capitalizeFirstLetter} from "../../../../../common/helpers/string-helpers";
-import {
-  getCreateFailureResultDialog,
-  getCreateSuccessResultDialog,
-  getFormValidationErrorDialog,
-  getUpdateFailureResultDialog,
-  getUpdateSuccessResultDialog
-} from "../../../../../common/toasts/toasts";
 import DtoTextInput from "../../../../../common/input/dto_input/dto-text-input";
-import Model, {DataState} from "../../../../../../core/data_model/model";
+import Model from "../../../../../../core/data_model/model";
 import DtoToggleInput from "../../../../../common/input/dto_input/dto-toggle-input";
 import SaveButton from "../../../../../common/buttons/SaveButton";
 import LoadingDialog from "../../../../../common/status_notifications/loading";
+import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
+import WarningDialog from "../../../../../common/status_notifications/WarningDialog";
 
-function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOrganization, setLdapOrganizationAccountData}) {
+function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOrganization, setLdapOrganizationAccountData, authorizedActions}) {
   const {getAccessToken} = useContext(AuthContext);
   const [ldapOrganizationAccountDataDto, setLdapOrganizationAccountDataDto] = useState({});
   const [opseraUserList, setOpseraUsersList] = useState([]);
   const [currentOpseraUser, setCurrentOpseraUser] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const [showToast, setShowToast] = useState(false);
-  const [toast, setToast] = useState({});
+  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     loadData();
@@ -42,7 +36,6 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
     let ldapOrganizationAccountDataDto = ldapOrganizationAccountData;
     if (ldapOrganizationAccountDataDto.isNew() && ldapOrganization != null) {
       let orgDomain = ldapOrganization.orgOwnerEmail.substring(ldapOrganization.orgOwnerEmail.lastIndexOf("@") + 1);
-      console.log("Parsed domain: " + JSON.stringify(orgDomain));
       ldapOrganizationAccountDataDto.setData("orgDomain", orgDomain);
       ldapOrganizationAccountDataDto.setData("name", ldapOrganization["name"] + "-acc");
       ldapOrganizationAccountDataDto.setData("org", ldapOrganization["name"] != null ? ldapOrganization["name"] : "");
@@ -78,20 +71,14 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
     if (ldapOrganizationAccountDataDto.isModelValid()) {
       try {
         let createLdapOrganizationAccountResponse = await accountsActions.createOrganizationAccount(ldapOrganizationAccountDataDto, getAccessToken);
-        let toast = getCreateSuccessResultDialog(ldapOrganizationAccountDataDto.getType(), setShowToast);
-        setToast(toast);
-        setShowToast(true);
+        toastContext.showCreateSuccessResultDialog(ldapOrganizationAccountDataDto.getType());
       } catch (error) {
-        let toast = getCreateFailureResultDialog(ldapOrganizationAccountDataDto.getType(), error, setShowToast);
-        setToast(toast);
-        setShowToast(true);
+        toastContext.showCreateFailureResultDialog(ldapOrganizationAccountDataDto.getType(), error);
         console.error(error.message);
       }
     }
     else {
-      let toast = getFormValidationErrorDialog(setShowToast);
-      setToast(toast);
-      setShowToast(true);
+      toastContext.showFormValidationErrorDialog();
     }
   };
 
@@ -99,24 +86,17 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
     if (ldapOrganizationAccountDataDto.isModelValid()) {
       try {
         const updateOrganizationAccountResponse = await accountsActions.updateOrganizationAccount(ldapOrganizationAccountDataDto, getAccessToken);
-        let toast = getUpdateSuccessResultDialog(ldapOrganizationAccountDataDto.getType(), setShowToast);
-        setToast(toast);
-        setShowToast(true);
-        console.log("updateOrganizationAccountResponse.data: " + JSON.stringify(updateOrganizationAccountResponse.data))
+        toastContext.showUpdateSuccessResultDialog(ldapOrganizationAccountDataDto.getType());
         let updatedDto = new Model(updateOrganizationAccountResponse.data, ldapOrganizationAccountDataDto.metaData, false);
         setLdapOrganizationAccountData(updatedDto);
         setLdapOrganizationAccountDataDto(updatedDto);
       } catch (error) {
-        let toast = getUpdateFailureResultDialog(ldapOrganizationAccountDataDto.getType(), error.message, setShowToast);
-        setToast(toast);
-        setShowToast(true);
+        toastContext.showUpdateFailureResultDialog(ldapOrganizationAccountDataDto.getType(), error.message);
         console.error(error.message);
       }
     }
     else {
-      let toast = getFormValidationErrorDialog(setShowToast);
-      setToast(toast);
-      setShowToast(true);
+      toastContext.showFormValidationErrorDialog();
     }
   };
 
@@ -149,11 +129,15 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
 
   if (isLoading) {
     return (<LoadingDialog size="sm"/>);
-  } else {
+  }
+
+  if (!authorizedActions.includes("update_organization_account")) {
+    return <WarningDialog warningMessage={"You do not have the required permissions to update this organization account"} />;
+  }
+
     return (
       <>
         <div className="scroll-y full-height">
-          {showToast && toast}
           <Row>
             <Col>
               <div className="custom-select-input m-2">
@@ -244,13 +228,13 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
         </div>
       </>
     );
-  }
 }
 
 LdapOrganizationAccountEditorPanel.propTypes = {
   ldapOrganization: PropTypes.object,
   ldapOrganizationAccountData: PropTypes.object,
   setLdapOrganizationAccountData: PropTypes.func,
+  authorizedActions: PropTypes.array
 };
 
 export default LdapOrganizationAccountEditorPanel;

@@ -16,6 +16,7 @@ import {
   getOrganizationList
 } from "../../admin/accounts/ldap/organizations/organization-functions";
 import {DialogToastContext} from "../../../contexts/DialogToastContext";
+import accountsActions from "../../admin/accounts/accounts-actions";
 
 
 function LdapGroupManagement() {
@@ -31,15 +32,23 @@ function LdapGroupManagement() {
   const [currentUserEmail, setCurrentUserEmail] = useState(undefined);
   const [showCreateGroupModal, setShowCreateGroupModal] = useState(false);
   const toastContext = useContext(DialogToastContext);
+  const [authorizedActions, setAuthorizedActions] = useState([]);
 
   useEffect(() => {
     loadData();
   }, []);
 
   const loadData = async () => {
-    setIsLoading(true);
-    await getRoles();
-    setIsLoading(false);
+    try {
+      setIsLoading(true);
+      await getRoles();
+    }
+    catch (error) {
+      toastContext.showLoadingErrorDialog(error);
+    }
+    finally {
+      setIsLoading(false);
+    }
   }
 
   const getGroupsByEmail = async (email) => {
@@ -64,16 +73,20 @@ function LdapGroupManagement() {
   const getRoles = async () => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
-    const {ldap, groups} = user;
+    const {ldap} = user;
     setCurrentUserEmail(user.email);
 
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
 
+      let authorizedActions = await accountsActions.getAllowedGroupActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
+      console.log("Authorized Actions: " + JSON.stringify(authorizedActions));
+      setAuthorizedActions(authorizedActions);
+
       if (orgDomain != null && userRoleAccess.OpseraAdministrator) {
         setCurrentOrganizationDomain(orgDomain);
         await getGroupsByDomain(orgDomain);
-      } else if ((userRoleAccess.Administrator || userRoleAccess.PowerUser) && ldap.domain != null) {
+      } else if (ldap.domain != null && authorizedActions.includes("get_groups")) {
         history.push(`/settings/${ldap.domain}/groups`);
         setCurrentOrganizationDomain(ldap.domain);
         await getGroupsByDomain(ldap.domain);
@@ -106,9 +119,12 @@ function LdapGroupManagement() {
 
   if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
-  } else if (!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator) {
+  }
+
+  if (!authorizedActions.includes("get_groups") && !isLoading) {
     return (<AccessDeniedDialog roleData={accessRoleData}/>);
-  } else {
+  }
+
     return (
       <div>
         <>
@@ -128,12 +144,12 @@ function LdapGroupManagement() {
                 />}
               </div>
               <div className="">
-                <Button variant="primary" size="sm"
+                {authorizedActions.includes("create_group") && <Button variant="primary" size="sm"
                         onClick={() => {
                           createGroup(ldapOrganizationData);
                         }}>
                   <FontAwesomeIcon icon={faPlus} className="mr-1"/>New Group
-                </Button>
+                </Button>}
               </div>
               <br/>
               <br/>
@@ -148,8 +164,6 @@ function LdapGroupManagement() {
           </>
       </div>
     );
-  }
-
 }
 
 

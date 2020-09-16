@@ -6,24 +6,19 @@ import DropdownList from "react-widgets/lib/DropdownList";
 import accountsActions from "../../../accounts-actions";
 import { AuthContext } from "../../../../../../contexts/AuthContext";
 import {capitalizeFirstLetter} from "../../../../../common/helpers/string-helpers";
-import {
-  getCreateFailureResultDialog,
-  getCreateSuccessResultDialog,
-  getFormValidationErrorDialog,
-  getUpdateFailureResultDialog, getUpdateSuccessResultDialog
-} from "../../../../../common/toasts/toasts";
 import DtoTextInput from "../../../../../common/input/dto_input/dto-text-input";
-import Model, {DataState} from "../../../../../../core/data_model/model";
+import Model from "../../../../../../core/data_model/model";
 import LoadingDialog from "../../../../../common/status_notifications/loading";
 import SaveButton from "../../../../../common/buttons/SaveButton";
+import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
+import WarningDialog from "../../../../../common/status_notifications/WarningDialog";
 
-function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganizationData }) {
+function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganizationData, authorizedActions }) {
   const { getAccessToken } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [ldapOrganizationDataDto, setLdapOrganizationDataDto] = useState({});
   const [ opseraUserList, setOpseraUsersList] = useState([]);
   const [ currentOpseraUser, setCurrentOpseraUser ] = useState(undefined);
-  const [toast, setToast] = useState({});
-  const [showToast, setShowToast] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -55,20 +50,14 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganization
     if(ldapOrganizationDataDto.isModelValid()) {
       try {
         let createLdapOrganizationResponse = await accountsActions.createOrganization(ldapOrganizationDataDto, getAccessToken);
-        let toast = getCreateSuccessResultDialog(ldapOrganizationDataDto.getType(), setShowToast);
-        setToast(toast);
-        setShowToast(true);
+        toastContext.showCreateSuccessResultDialog(ldapOrganizationDataDto.getType());
       } catch (error) {
-        let toast = getCreateFailureResultDialog(ldapOrganizationDataDto.getType(), error.message, setShowToast);
-        setToast(toast);
-        setShowToast(true);
+        toastContext.showCreateFailureResultDialog(ldapOrganizationDataDto.getType(), error.message);
         console.error(error.message);
       }
     }
     else {
-      let toast = getFormValidationErrorDialog(setShowToast);
-      setToast(toast);
-      setShowToast(true);
+      toastContext.showFormValidationErrorDialog();
     }
   };
 
@@ -76,23 +65,17 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganization
     if(ldapOrganizationDataDto.isModelValid()) {
       try {
           let updateOrganizationResponse = await accountsActions.updateOrganization(ldapOrganizationDataDto, getAccessToken);
-          let toast = getUpdateSuccessResultDialog(ldapOrganizationDataDto.getType(), setShowToast);
-          setToast(toast);
-          setShowToast(true);
+          toastContext.showUpdateSuccessResultDialog(ldapOrganizationDataDto.getType());
           let updatedDto = new Model(updateOrganizationResponse.data, ldapOrganizationDataDto.metaData, false);
           setLdapOrganizationData(updatedDto);
         setLdapOrganizationDataDto(updatedDto);
         } catch (error) {
-          let toast = getUpdateFailureResultDialog(ldapOrganizationDataDto.getType(), error.message, setShowToast);
-          setToast(toast);
-          setShowToast(true);
+          toastContext.showUpdateFailureResultDialog(ldapOrganizationDataDto.getType(), error.message);
           console.error(error.message);
         }
       }
     else {
-      let toast = getFormValidationErrorDialog(setShowToast);
-      setToast(toast);
-      setShowToast(true);
+      toastContext.showFormValidationErrorDialog();
     }
   };
 
@@ -106,11 +89,15 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganization
 
   if (isLoading) {
     return (<LoadingDialog size="sm"/>);
-  } else {
+  }
+
+  if (!authorizedActions.includes("update_organization")) {
+    return <WarningDialog warningMessage={"You do not have the required permissions to update this organization"} />;
+  }
+
     return (
       <>
         <div className="scroll-y full-height">
-          {showToast && toast}
           <Row>
             <Col lg={12}>
               <div className="p-2">
@@ -163,13 +150,13 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganization
         </div>
       </>
     );
-  }
 }
 
 LdapOrganizationEditorPanel.propTypes = {
   ldapOrganizationData: PropTypes.object,
   setLdapOrganizationData: PropTypes.func,
-  handleClose: PropTypes.func
+  handleClose: PropTypes.func,
+  authorizedActions: PropTypes.array
 };
 
 export default LdapOrganizationEditorPanel;

@@ -2,6 +2,190 @@ import { axiosApiService } from "../../../api/apiService";
 
 const accountsActions = {};
 
+accountsActions.isOrganizationAccountOwner = (user) => {
+  let {ldap} = user;
+  return ldap["orgAccountOwnerEmail"] === user["email"];
+};
+
+accountsActions.isOrganizationOwner = async (organizationName, getUserRecord, getAccessToken) => {
+    let response = await accountsActions.getOrganizationOwnerEmailWithName(organizationName, getAccessToken);
+    let organizationOwnerEmail = response.data["orgOwnerEmail"];
+    let user = await getUserRecord();
+
+    return organizationOwnerEmail === user["email"];
+};
+
+accountsActions.getAllowedOrganizationActions = async (customerAccessRules, organizationName, getUserRecord, getAccessToken) => {
+  const user = await getUserRecord();
+  const {ldap} = user;
+  const userOrganization = ldap["organization"];
+  if (customerAccessRules.OpseraAdministrator) {
+    return ["get_organizations", "get_organization_details", "create_organization", "update_organization"];
+  }
+  else if (userOrganization !== organizationName) {
+    // User from another organization not allowed to do anything with another org, unless they are an Opsera administrator
+    return [];
+  }
+
+  let orgOwner = await accountsActions.isOrganizationOwner(organizationName, getUserRecord, getAccessToken);
+
+  if (orgOwner) {
+    return ["get_organization_details", "update_organization"];
+  }
+  else {
+    return [];
+  }
+};
+
+accountsActions.getAllowedOrganizationAccountActions = async (customerAccessRules, organizationName, getUserRecord, getAccessToken) => {
+  const user = await getUserRecord();
+  const {ldap} = user;
+  const userOrganization = ldap["organization"];
+  if (customerAccessRules.OpseraAdministrator) {
+    return ["get_organization_accounts", "get_organization_account_details", "create_organization_account", "update_organization_account"];
+  }
+  else if (userOrganization !== organizationName) {
+    // User from another organization not allowed to do anything with another org, unless they are an Opsera administrator
+    return [];
+  }
+
+  let orgAccountOwner = await accountsActions.isOrganizationAccountOwner(user);
+  let orgOwner = await accountsActions.isOrganizationOwner(organizationName, getUserRecord, getAccessToken);
+
+  if (orgOwner) {
+    return ["get_organization_account_details", "create_organization_account", "update_organization_account"];
+  }
+  else if (orgAccountOwner || customerAccessRules.Administrator) {
+    return ["get_organization_account_details", "update_organization_account"];
+  }
+  else {
+    return [];
+  }
+};
+
+accountsActions.getAllowedIdpAccountActions = async (customerAccessRules, organizationName, getUserRecord, getAccessToken) => {
+  const user = await getUserRecord();
+  const {ldap} = user;
+  const userOrganization = ldap["organization"];
+  if (customerAccessRules.OpseraAdministrator) {
+    return ["get_idp_account_details", "create_idp_account", "update_idp_account"];
+  }
+  else if (userOrganization !== organizationName) {
+    // User from another organization not allowed to do anything with another org, unless they are an Opsera administrator
+    return [];
+  }
+
+  let orgAccountOwner = await accountsActions.isOrganizationAccountOwner(user);
+  let orgOwner = await accountsActions.isOrganizationOwner(organizationName, getUserRecord, getAccessToken);
+
+  if (orgOwner) {
+    return ["get_idp_account_details", "create_idp_account", "update_idp_account"];
+  }
+  else if (orgAccountOwner || customerAccessRules.Administrator) {
+    return ["get_idp_account_details", "create_idp_account", "update_idp_account"];
+  }
+  else {
+    return [];
+  }
+};
+
+accountsActions.getAllowedUserActions = async (customerAccessRules, organizationName, selected_user_email, getUserRecord, getAccessToken) => {
+  const user = await getUserRecord();
+  const {ldap} = user;
+  const userOrganization = ldap["organization"];
+  if (customerAccessRules.OpseraAdministrator) {
+    return ["get_users", "get_user_details", "create_user", "update_user"];
+  }
+  else if (userOrganization !== organizationName) {
+    // User from another organization not allowed to do anything with another org, unless they are an Opsera administrator
+    return [];
+  }
+
+  // TODO: How to determine group owner?
+  let groupOwner = false;
+  let orgAccountOwner = await accountsActions.isOrganizationAccountOwner(user);
+  let orgOwner = await accountsActions.isOrganizationOwner(organizationName, getUserRecord, getAccessToken);
+
+  if (orgOwner) {
+    return ["get_users", "get_user_details", "create_user", "update_user"];
+  }
+  else if (orgAccountOwner || customerAccessRules.Administrator) {
+    return ["get_users", "get_user_details", "create_user", "update_user"];
+  }
+  else if (customerAccessRules.PowerUser || customerAccessRules.User || groupOwner) {
+    let permissions = ["get_users", "get_user_details"];
+
+    // Users can update their own records
+    if (selected_user_email && selected_user_email === user.email) {
+      permissions.push("update_user");
+    }
+
+    return permissions;
+  }
+  else {
+    return [];
+  }
+};
+
+accountsActions.getAllowedGroupActions = async (customerAccessRules, organizationName, getUserRecord, getAccessToken) => {
+  const user = await getUserRecord();
+  const {ldap} = user;
+  const userOrganization = ldap["organization"];
+  if (customerAccessRules.OpseraAdministrator) {
+    return ["get_groups", "get_group_details", "create_group", "update_group", "update_group_membership"];
+  }
+  else if (userOrganization !== organizationName) {
+    // User from another organization not allowed to do anything with another org, unless they are an Opsera administrator
+    return [];
+  }
+
+  let orgAccountOwner = await accountsActions.isOrganizationAccountOwner(user);
+  let orgOwner = await accountsActions.isOrganizationOwner(organizationName, getUserRecord, getAccessToken);
+
+  if (orgOwner) {
+    return ["get_groups", "get_group_details", "create_group", "update_group", "update_group_membership"];
+  }
+  else if (orgAccountOwner || customerAccessRules.Administrator) {
+    return ["get_groups", "get_group_details", "create_group", "update_group", "update_group_membership"];
+  }
+  else if (customerAccessRules.PowerUser) {
+    return ["get_groups", "get_group_details", "create_group", "update_group", "update_group_membership"];
+  }
+  // TODO: If we have a better way to get group owner, enable this
+  // else if (groupOwner) {
+  //   return ["get_group_details", "update_group", "update_group_membership"];
+  // }
+  else {
+    return [];
+  }
+};
+
+accountsActions.getAllowedRoleGroupActions = async (customerAccessRules, organizationName, getUserRecord, getAccessToken) => {
+  const user = await getUserRecord();
+  const {ldap} = user;
+  const userOrganization = ldap["organization"];
+  if (customerAccessRules.OpseraAdministrator) {
+    return ["get_groups", "get_group_details", "create_group", "update_group", "update_group_membership"];
+  }
+  else if (userOrganization !== organizationName) {
+    // User from another organization not allowed to do anything with another org, unless they are an Opsera administrator
+    return [];
+  }
+
+  let orgAccountOwner = await accountsActions.isOrganizationAccountOwner(user);
+  let orgOwner = await accountsActions.isOrganizationOwner(organizationName, getUserRecord, getAccessToken);
+
+  if (orgOwner) {
+    return ["get_groups", "get_group_details", "update_group_membership"];
+  }
+  else if (orgAccountOwner || customerAccessRules.Administrator) {
+    return ["get_groups", "get_group_details", "update_group_membership"];
+  }
+  else {
+    return [];
+  }
+};
+
 accountsActions.updateUser = async (orgDomain, ldapUserDataDto, getAccessToken) => {
   const postBody = {
     domain: orgDomain,
@@ -168,6 +352,17 @@ accountsActions.getOrganizationByName = async (organizationName, getAccessToken)
   return response;
 };
 
+accountsActions.getOrganizationOwnerEmailWithName = async (organizationName, getAccessToken) => {
+  console.log("Trying to get owner email for: " + organizationName);
+  const accessToken = await getAccessToken();
+  const apiUrl = `/users/account/organization/${organizationName}?emailOnly=true`;
+  const response = await axiosApiService(accessToken).post(apiUrl, {})
+    .then((result) =>  {return result;})
+    .catch(error => {throw error;});
+  return response;
+};
+
+
 accountsActions.getOrganizationAccountByDomain = async (domain, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = "/users/account";
@@ -191,6 +386,7 @@ accountsActions.getOrganizationAccountByEmail = async (email, getAccessToken) =>
     .catch(error => {throw error;});
   return response;
 };
+
 accountsActions.activateElk = async (userId, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = `/users/tools/activate-elk/${userId}`;

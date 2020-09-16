@@ -10,61 +10,82 @@ import accountsActions from "../../../accounts-actions";
 import LdapOrganizationAccountSummaryPanel from "./LdapOrganizationAccountSummaryPanel";
 import {ldapOrganizationAccountMetaData} from "../ldap-organization-account-form-fields";
 import LdapOrganizationAccountDetailPanel from "./LdapOrganizationAccountDetailPanel";
-import {getLoadingErrorDialog} from "../../../../../common/toasts/toasts";
 import {faUsers} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 
 function LdapOrganizationAccountDetailView() {
   const { organizationDomain } = useParams();
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState({});
-  const [loading, setLoading] = useState(false); //this is how we toggle showing/hiding stuff when API calls or other functions are loading
-  const [error, setError] = useState(false); //if any errors on API call or anything else need to be shown to use, this is used
+  const [isLoading, setIsLoading] = useState(false); //this is how we toggle showing/hiding stuff when API calls or other functions are loading
   const [ldapOrganizationAccountData, setLdapOrganizationAccountData] = useState(undefined);
   const [organizationName, setOrganizationName] = useState(undefined);
-  const [toast, setToast] = useState({});
-  const [showToast, setShowToast] = useState(false);
+  const [authorizedActions, setAuthorizedActions] = useState([]);
+  const [authorizedIdpActions, setAuthorizedIdpActions] = useState([]);
 
 
   useEffect(() => {
-    setLoading(true);
-    getRoles();
     loadData();
   }, []);
 
+  const loadData = async () => {
+    try {
+      setIsLoading(true);
+      await getRoles();
+    }
+    catch (error) {
+      toastContext.showLoadingErrorDialog(error);
+    }
+    finally {
+      setIsLoading(false);
+    }
+  }
+
   const getRoles = async () => {
     const user = await getUserRecord();
+    const {ldap} = user;
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
+
+      let authorizedActions = await accountsActions.getAllowedOrganizationAccountActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
+      console.log("Authorized Actions: " + JSON.stringify(authorizedActions));
+      setAuthorizedActions(authorizedActions);
+      let authorizedIdpActions = await accountsActions.getAllowedIdpAccountActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
+      console.log("Authorized IDP Actions: " + JSON.stringify(authorizedIdpActions));
+      setAuthorizedIdpActions(authorizedIdpActions);
+
+      if (authorizedActions.includes("get_organization_account_details")) {
+        await loadOrganizationAccount();
+      }
     }
   };
 
-  const loadData = async () => {
+  const loadOrganizationAccount = async () => {
     try {
       const response = await accountsActions.getOrganizationAccountByDomain(organizationDomain, getAccessToken);
       setLdapOrganizationAccountData(new Model(response.data, ldapOrganizationAccountMetaData, false));
       setOrganizationName(response.data["org"]["name"])
     } catch (error) {
-      let toast = getLoadingErrorDialog(error.message, setShowToast);
-      setToast(toast);
-      setShowToast(true);
+      toastContext.showLoadingErrorDialog(error.message);
       console.error(error.message);
     }
-    setLoading(false);
+    setIsLoading(false);
   };
 
-  if (!accessRoleData) {
+  if (!accessRoleData || isLoading) {
     return (<LoadingDialog size="sm"/>);
   }
 
-  if (!accessRoleData.OpseraAdministrator) {
+  if (!authorizedActions.includes("get_organization_account_details") && !isLoading) {
     return (<AccessDeniedDialog roleData={accessRoleData}/>);
   }
+
     return (
       <>
         <BreadcrumbTrail destination="ldapOrganizationAccountDetailView"/>
-        {showToast && toast}
         {ldapOrganizationAccountData &&
         <div className="content-container content-card-1 max-content-width ml-2">
           <div className="pt-2 pl-2 content-block-header">
@@ -75,7 +96,7 @@ function LdapOrganizationAccountDetailView() {
               <LdapOrganizationAccountSummaryPanel ldapOrganizationAccountData={ldapOrganizationAccountData} organizationName={organizationName}/>
             </div>
             <div>
-              <LdapOrganizationAccountDetailPanel ldapOrganizationAccountData={ldapOrganizationAccountData} setLdapOrganizationAccountData={setLdapOrganizationAccountData} loadData={loadData}/>
+              <LdapOrganizationAccountDetailPanel authorizedActions={authorizedActions} authorizedIdpActions={authorizedIdpActions} ldapOrganizationAccountData={ldapOrganizationAccountData} setLdapOrganizationAccountData={setLdapOrganizationAccountData} loadData={loadData}/>
             </div>
           </div>
           <div className="content-block-footer"/>
