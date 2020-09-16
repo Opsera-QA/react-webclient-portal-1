@@ -47,6 +47,7 @@ function PipelineSummaryPanel({
   refreshCount,
 }) {
   const contextType = useContext(AuthContext);
+  const { featureFlagItemInProd } = contextType;
   const [error, setErrors] = useState();
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
@@ -475,8 +476,9 @@ function PipelineSummaryPanel({
                         className="ml-2">Frequency: {pipeline.workflow.schedule ? pipeline.workflow.schedule.frequency : "undefined"}</span>
                     </> : null}
 
-                  {authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running" ?
-                    getEditIcon("schedule") : null}
+                    {/*TODO: Remove FF after schedler is fixed*/}
+                  {authorizedAction("edit_pipeline_attribute", pipeline.owner) && featureFlagItemInProd && parentWorkflowStatus !== "running" ?
+                    getEditIcon("schedule",true) : null}
                 </Col>
               }
               <Col lg className="py-1"><span className="text-muted mr-1">Org Account:</span> {pipeline.account}</Col>
