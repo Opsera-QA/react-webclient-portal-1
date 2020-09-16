@@ -31,7 +31,7 @@ const JOB_OPTIONS = [
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
-  jobType: "BUILD", //hardcoded, every step wil have a hardcoded jobType is what i know needs to check with Todd.
+  jobType: "",
   toolConfigId: "",
   jenkinsUrl: "",
   jenkinsPort: "",
@@ -327,8 +327,13 @@ function JenkinsStepConfiguration({
   };
 
   const validateRequiredFields = () => {
-    let { toolConfigId, jenkinsUrl, jUserId, jobName, buildType, dockerName, dockerTagName } = formData;
-
+    let { toolConfigId, toolJobId, jenkinsUrl, jUserId, jobName, buildType, dockerName, dockerTagName } = formData;
+    if(!toolJobId && toolJobId.length < 0 ) {
+      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
+      setToast(toast);
+      setShowToast(true);
+      return false;
+    }
     if (jobType === "job") {
       if (jobName.length === 0) {
         let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
@@ -401,6 +406,8 @@ function JenkinsStepConfiguration({
     }
     //setLoading(false);
   };
+
+  console.log(formData);
 
   const handleJobChange = (selectedOption) => {
     switch (selectedOption.type[0]) {
@@ -792,7 +799,7 @@ function JenkinsStepConfiguration({
               setShowToast={setShowToast}
             />
 
-            {formData.jenkinsUrl && jenkinsList.length > 0 && (
+            {formData.jenkinsUrl && jenkinsList.length > 0 && formData.jobType && formData.jobType.length > 0 && (
               <>
                 {formData.jobType != "SFDC VALIDATE PACKAGE XML" &&
                   formData.jobType != "SFDC UNIT TESTING" &&
@@ -910,7 +917,7 @@ function JenkinsStepConfiguration({
               )}
 
               
-              {formData.jobType === "SFDC BACK UP" ? (
+              {formData.jobType === "SFDC BACK UP" && (
                   <Form.Group controlId="branchName">
                     <Form.Label>Rollback Branch Name*</Form.Label>
                     <Form.Control
@@ -921,9 +928,32 @@ function JenkinsStepConfiguration({
                       onChange={(e) => setFormData({ ...formData, rollbackBranchName: e.target.value })}
                     />
                   </Form.Group>
-                ) : (
-                  <></>
                 )}
+                {formData.buildType === "docker" && (
+                  <>
+                  <Form.Group controlId="dockerName">
+                    <Form.Label>Docker Name*</Form.Label>
+                    <Form.Control
+                      maxLength="50"
+                      type="text"
+                      placeholder=""
+                      value={formData.dockerName || ""}
+                      onChange={(e) => setFormData({ ...formData, dockerName: e.target.value })}
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="dockerTag">
+                    <Form.Label>Docker Tag*</Form.Label>
+                    <Form.Control
+                      maxLength="50"
+                      type="text"
+                      placeholder=""
+                      value={formData.dockerTagName || ""}
+                      onChange={(e) => setFormData({ ...formData, dockerTagName: e.target.value })}
+                    />
+                  </Form.Group>
+                  </>
+                )}
+                
               </>
             )}
 

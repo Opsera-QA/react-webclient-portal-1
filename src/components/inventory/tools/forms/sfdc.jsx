@@ -131,7 +131,7 @@ function SFDCToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVault
       {showToast && toast}
 
       <Form.Group controlId="repoField">
-        <Form.Label>SFDC URL*</Form.Label>
+        <Form.Label>Domain URL*</Form.Label>
         <Form.Control maxLength="100" type="text" placeholder="" value={formData.toolURL || ""} onChange={e => setFormData({ ...formData, toolURL: e.target.value })} />
       </Form.Group>
 

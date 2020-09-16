@@ -1,6 +1,6 @@
 const JobTypeSFDC = {
   jobType: {
-    label: "Job Type",
+    label: "Build Step",
     id: "jobType",
     type: "select",
     value: "",
@@ -18,7 +18,7 @@ const JobTypeSFDC = {
         value: "SFDC BACK UP"
       },
       {
-        name: "SFDC Deploy (QA)",
+        name: "SFDC Deploy",
         value: "SFDC DEPLOY"
       },
       {
