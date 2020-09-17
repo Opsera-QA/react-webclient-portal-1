@@ -20,11 +20,11 @@ const NEXUS_STEP_TYPES = [
   {
     name: "Push Artifacts",
     value: "push",
-  },
-  {
-    name: "Pull Artifact",
-    value: "pull",
-  },
+  }
+  // {
+  //   name: "Pull Artifact",
+  //   value: "pull",
+  // },
 ];
 
 function NexusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, setToast, setShowToast }) {
