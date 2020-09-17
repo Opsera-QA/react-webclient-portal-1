@@ -47,15 +47,6 @@ function TemplateTable({ data, loadData, isLoading }) {
     <>
       <div className="justify-content-between mb-1 d-flex">
         <h5>Template Management</h5>
-        <div className="text-right">
-          <Button variant="primary" size="sm"
-                  onClick={() => {
-                    createTemplate();
-                  }}>
-            <FontAwesomeIcon icon={faPlus} className="mr-1"/> New Template
-          </Button>
-          <br/>
-        </div>
       </div>
       <div className="table-content-block">
         <CustomTable
@@ -66,6 +57,9 @@ function TemplateTable({ data, loadData, isLoading }) {
           isLoading={isLoading}
           rowStyling={rowStyling}
           tableStyleName="custom-table-2"
+          tableTitle={"Pipeline Templates"}
+          type={"Pipeline Template"}
+          createNewRecord={createTemplate}
         >
         </CustomTable>
       </div>

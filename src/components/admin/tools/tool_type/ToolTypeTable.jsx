@@ -44,18 +44,6 @@ function ToolTypeTable({ data, loadData, isLoading }) {
 
   return (
     <>
-      {showCreateToolTypeModal && <NewToolTypeModal setShowModal={setShowCreateToolTypeModal} showModal={showCreateToolTypeModal} loadData={loadData}/>}
-      <div className="flex-row-reverse mb-1 d-flex">
-        <div className="text-right">
-          <Button variant="primary" size="sm"
-                  onClick={() => {
-                    createToolType();
-                  }}>
-            <FontAwesomeIcon icon={faPlus} className="mr-1"/> New Tool Type
-          </Button>
-          <br/>
-        </div>
-      </div>
       <div className="table-content-block">
         <CustomTable
           columns={columns}
@@ -65,8 +53,12 @@ function ToolTypeTable({ data, loadData, isLoading }) {
           onRowSelect={selectedRow}
           isLoading={isLoading}
           tableStyleName="custom-table-2"
+          tableTitle={"Tool Types"}
+          type={"Tool Type"}
+          createNewRecord={createToolType}
         />
       </div>
+      {showCreateToolTypeModal && <NewToolTypeModal setShowModal={setShowCreateToolTypeModal} showModal={showCreateToolTypeModal} loadData={loadData}/>}
     </>
   );
 }
