@@ -93,7 +93,6 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
           <span className="ml-2">
                     <Spinner className="mr-2" as="span" animation="border" variant="dark" size="sm" role="status"
                              aria-hidden="true"/>
-                    Loading Data
           </span>
         }
       </>
@@ -103,8 +102,8 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
   const getTableTitleBar = () => {
     return (
       <div>
-        <div className="d-flex justify-content-between">
-          <div className="mx-2 d-flex my-auto">{tableTitle}{getTableTitleLoader()}</div>
+        <div className="d-flex justify-content-between mb-1">
+          <div className="h6 d-flex my-auto">{tableTitle}{getTableTitleLoader()}</div>
           {/*TODO: Implement Table Action Bar with ability for filters*/}
           <div className="d-flex text-right">
             {createNewRecord && <Button size="sm" className={"o"}
@@ -204,7 +203,7 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
           <tfoot>
             <tr>
               <td colSpan="100%" className="px-2 pt-2 table-footer">
-                {paginationOptions && <Pagination total={paginationOptions.totalCount} currentPage={paginationOptions.currentPage} pageSize={paginationOptions.pageSize} onClick={(pageNumber, pageSize) => paginationOptions.gotoPageFn(pageNumber, pageSize)} />}
+                {paginationOptions && !isLoading && <Pagination total={paginationOptions.totalCount} currentPage={paginationOptions.currentPage} pageSize={paginationOptions.pageSize} onClick={(pageNumber, pageSize) => paginationOptions.gotoPageFn(pageNumber, pageSize)} />}
               </td>
             </tr>
           </tfoot>
