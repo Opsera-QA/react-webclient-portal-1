@@ -2,7 +2,7 @@ import React from "react";
 import { useTable, usePagination, useSortBy } from "react-table";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faSortUp, faSortDown, faPlus} from "@fortawesome/free-solid-svg-icons";
+import { faSortUp, faSortDown, faPlus, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import Pagination from "components/common/pagination";
 import {Button, Spinner} from "react-bootstrap";
 
@@ -90,10 +90,7 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
     return (
       <>
         {isLoading && tableTitle && data != null && data.length !== 0 &&
-          <span className="ml-2">
-                    <Spinner className="mr-2" as="span" animation="border" variant="dark" size="sm" role="status"
-                             aria-hidden="true"/>
-          </span>
+            <FontAwesomeIcon icon={faSpinner} spin className="mx-1 mt-1"/>
         }
       </>
     );
