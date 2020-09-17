@@ -4,71 +4,57 @@ import CustomTable from "components/common/table/CustomTable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faTimesCircle, faCheckCircle, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {Button} from "react-bootstrap";
-import NewJenkinsJobModal from "./NewJenkinsJobModal";
+import {
+  getTableBooleanIconColumn,
+  getTableTextColumn
+} from "../../../../../../common/table/table-column-helpers";
+import argoApplicationsMetadata from "../argo-metadata";
+import NewArgoApplicationModal from "./NewArgoApplicationModal";
 
-function JenkinsJobsTable({ toolData, loadData, selectedRow, isLoading }) {
-  const [showCreateJobModal, setShowCreateJobModal] = useState(false);
+function ArgoApplicationsTable({ toolData, loadData, selectedRow, isLoading }) {
+  let fields = argoApplicationsMetadata.fields;
+  const [showCreateArgoApplicationModal, setShowCreateArgoApplicationModal] = useState(false);
 
-  const createJenkinsJob = () => {
-    setShowCreateJobModal(true);
+  const createArgoApplication = () => {
+    setShowCreateArgoApplicationModal(true);
   }
 
   const columns = useMemo(
     () => [
-      {
-        Header: "Name",
-        accessor: "name",
-      },
-      {
-        Header: "Description",
-        accessor: "description",
-      },
-      {
-        Header: "Type",
-        accessor: "type",
-        Cell: (props) => {
-          return props.value[0];
-        },
-      },     
-      {
-        Header: "Active",
-        accessor: "active",
-        Cell: (props) => {
-          return props.value ?  <FontAwesomeIcon icon={faCheckCircle} className="green ml-3" /> :  <FontAwesomeIcon icon={faTimesCircle} className="red ml-3" />;
-        },
-      },   
+      getTableTextColumn(fields.find(field => { return field.id === "name"})),
+      getTableTextColumn(fields.find(field => { return field.id === "description"})),
+      getTableTextColumn(fields.find(field => { return field.id === "type"})),
+      getTableBooleanIconColumn(fields.find(field => { return field.id === "active"})),
     ],
     []
   );
 
   return (
     <>
-      <NewJenkinsJobModal toolData={toolData} loadData={loadData} setShowModal={setShowCreateJobModal} showModal={showCreateJobModal} />
       <div className="my-1 text-right">
         <Button variant="primary" size="sm"
-                onClick={() => createJenkinsJob()}>
-          <FontAwesomeIcon icon={faPlus} className="mr-1"/> Create Job
+                onClick={() => createArgoApplication()}>
+          <FontAwesomeIcon icon={faPlus} className="mr-1"/> Create Argo Application
         </Button>
         <br/>
       </div>
-      <div className="table-content-block">
-        <CustomTable
-          columns={columns}
-          data={toolData.getData("jobs")}
-          onRowSelect={selectedRow}
-          isLoading={isLoading}
-        >
-        </CustomTable>
-      </div>
+      <CustomTable
+        columns={columns}
+        data={toolData.getData("jobs")}
+        onRowSelect={selectedRow}
+        isLoading={isLoading}
+      >
+      </CustomTable>
+      <NewArgoApplicationModal toolData={toolData} loadData={loadData} setShowModal={setShowCreateArgoApplicationModal} showModal={showCreateArgoApplicationModal} />
     </>
   );
 }
 
-JenkinsJobsTable.propTypes = {
+ArgoApplicationsTable.propTypes = {
   toolData: PropTypes.object,
   loadData: PropTypes.func,
   selectedRow: PropTypes.func,
   isLoading: PropTypes.bool
 };
 
-export default JenkinsJobsTable;
+export default ArgoApplicationsTable;

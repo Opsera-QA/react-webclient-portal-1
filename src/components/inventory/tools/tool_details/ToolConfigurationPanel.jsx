@@ -7,7 +7,7 @@ import GitlabToolConfiguration from "../forms/gitlab";
 import BitbucketToolConfiguration from "../forms/bitbucket";
 import SpinnakerToolConfiguration from "../forms/spinnaker";
 import CypressToolConfiguration from "../forms/cypress";
-import ArgoToolConfiguration from "../forms/argo";
+import ArgoToolConfiguration from "./tool_jobs/argo/ArgoToolConfiguration";
 import AnchoreToolConfiguration from "../forms/anchore";
 import AnchoreIntegratorToolConfiguration from "../forms/anchore-integrator";
 import SonarToolConfiguration from "../forms/sonar";
