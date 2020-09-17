@@ -106,7 +106,6 @@ function PipelineActivityLogTable({ data, isLoading, paginationOptions, selectRu
       <ModalActivityLogs header="Pipeline Activity Log" size="lg" jsonData={modalData} show={showModal} setParentVisibility={setShowModal} />
       <>
         <div className="mt-1 d-flex justify-content-between">
-          <div className="h6 mt-2 d-flex">Activity Log {isLoading && <FontAwesomeIcon icon={faSpinner} spin className="ml-1" fixedWidth/>}</div>
           <div className="custom-table-filter pipeline-activity-filter">
             {/*<NumberPicker*/}
             {/*    type="number"*/}
@@ -120,19 +119,18 @@ function PipelineActivityLogTable({ data, isLoading, paginationOptions, selectRu
             {/*    />*/}
           </div>
         </div>
-        {data &&
-            <>
-              <div className="table-content-block">
-                <CustomTable
-                  columns={columns}
-                  data={data}
-                  rowStyling={rowStyling}
-                  noDataMessage={noDataMessage}
-                  initialState={initialState}
-                  paginationOptions={paginationOptions}
-                />
-              </div>
-            </>}
+        <div className="table-content-block">
+          <CustomTable
+            columns={columns}
+            data={data}
+            rowStyling={rowStyling}
+            isLoading={isLoading}
+            noDataMessage={noDataMessage}
+            initialState={initialState}
+            tableTitle={"Pipeline Activity Logs"}
+            paginationOptions={paginationOptions}
+          />
+        </div>
       </>
     </>
   );

@@ -195,7 +195,7 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
         <tfoot>
           <tr>
             <td colSpan="100%" className="px-2 pt-2 table-footer">
-              {paginationOptions && <Pagination total={paginationOptions.totalCount} currentPage={paginationOptions.currentPage} pageSize={paginationOptions.pageSize} onClick={(pageNumber, pageSize) => paginationOptions.gotoPageFn(pageNumber, pageSize)} />}
+              {paginationOptions && !isLoading && <Pagination total={paginationOptions.totalCount} currentPage={paginationOptions.currentPage} pageSize={paginationOptions.pageSize} onClick={(pageNumber, pageSize) => paginationOptions.gotoPageFn(pageNumber, pageSize)} />}
             </td>
           </tr>
         </tfoot>
