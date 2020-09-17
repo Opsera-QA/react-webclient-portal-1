@@ -82,7 +82,7 @@ function TagsSummaryPanel({ tagData, setTagData }) {
           <Row>
             <Col>
               <div className="mt-3">
-                <NameValueTable tableStyleName="custom-table-2" label="Configuration"
+                <NameValueTable label="Configuration"
                                 data={parseNameValueArray(tagData.configuration)}
                                 noDataMessage="No configurations are assigned to this tag."/>
               </div>

@@ -35,7 +35,6 @@ function LdapOrganizationAccountsTable({ldapOrganizationAccounts, isLoading }) {
             isLoading={isLoading}
             data={ldapOrganizationAccounts}
             onRowSelect={onRowSelect}
-            tableStyleName="custom-table-2"
           />
         </div>
     </>

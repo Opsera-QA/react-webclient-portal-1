@@ -122,7 +122,6 @@ function OpseraRecentPipelineStatus({ date }) {
             </div>
             <div className="table-content-block">
               <CustomTable
-                tableStyleName="custom-table-2"
                 columns={columns}
                 data={data.data}
                 noDataMessage={noDataMessage}

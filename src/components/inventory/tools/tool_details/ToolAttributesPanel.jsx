@@ -34,7 +34,6 @@ function ToolAttributesPanel({ toolData }) {
             columns={tableColumns}
             data={parseEmptyRows(data)}
             noDataMessage={"No " + object + " are assigned to this tool."}
-            tableStyleName="custom-table-2"
           >
           </CustomTable>
         </div>

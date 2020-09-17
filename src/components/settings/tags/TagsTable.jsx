@@ -50,7 +50,6 @@ function TagsTable({ data, isLoading }) {
                      columns={columns}
                      initialState={initialState}
                      isLoading={isLoading}
-                     tableStyleName={"custom-table-2"}
         />
       </div>
     </>

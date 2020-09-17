@@ -73,7 +73,6 @@ function ToolsTable({ data, filterOptionList, loadData, isLoading }) {
             onRowSelect={onRowSelect}
             rowStyling={rowStyling}
             tableFilter={tableFilter}
-            tableStyleName="custom-table-2"
             tableTitle={"Tools"}
             type={"Tool"}
             createNewRecord={createNewTool}

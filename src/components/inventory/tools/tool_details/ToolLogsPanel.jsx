@@ -155,7 +155,6 @@ function ToolLogsPanel(props) {
           data={logData}
           initialState={initialState}
           paginationOptions={getPaginationOptions()}
-          tableStyleName="custom-table-2"
         >
         </CustomTable>
       </div>

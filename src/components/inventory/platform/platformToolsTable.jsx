@@ -27,7 +27,6 @@ function PlatformToolsTable({ data, isLoading }) {
       <CustomTable 
         columns={columns} 
         data={data}
-        tableStyleName="custom-table-2"
         isLoading={isLoading}
       />
       </div>

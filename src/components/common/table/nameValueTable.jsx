@@ -66,7 +66,7 @@ NameValueTable.propTypes = {
 };
 
 NameValueTable.defaultProps = {
-  tableStyleName: "custom-table-2",
+  tableStyleName: "custom-table",
   valueFormat: "text",
   showHeaderText: false,
 }

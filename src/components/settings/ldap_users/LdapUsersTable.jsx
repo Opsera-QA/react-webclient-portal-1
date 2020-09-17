@@ -31,7 +31,7 @@ function LdapUsersTable({ userData, orgDomain, isLoading }) {
   return (
     <>
       <div className="table-content-block">
-        <CustomTable tableStyleName="custom-table-2" isLoading={isLoading} onRowSelect={onRowSelect} data={userData} columns={columns} />
+        <CustomTable isLoading={isLoading} onRowSelect={onRowSelect} data={userData} columns={columns} />
       </div>
     </>
   );
