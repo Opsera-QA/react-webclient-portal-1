@@ -48,7 +48,6 @@ function TemplateTable({ data, loadData, isLoading }) {
       <div className="justify-content-between mb-1 d-flex">
         <h5>Template Management</h5>
       </div>
-      <div className="table-content-block">
         <CustomTable
           columns={columns}
           data={data}
@@ -56,13 +55,11 @@ function TemplateTable({ data, loadData, isLoading }) {
           noDataMessage={noDataMessage}
           isLoading={isLoading}
           rowStyling={rowStyling}
-          tableStyleName="custom-table-2"
           tableTitle={"Pipeline Templates"}
           type={"Pipeline Template"}
           createNewRecord={createTemplate}
         >
         </CustomTable>
-      </div>
       <NewTemplateModal setShowModal={setShowCreateTemplateModal} loadData={loadData} showModal={showCreateTemplateModal}/>
     </>
   );

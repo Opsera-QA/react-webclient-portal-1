@@ -119,7 +119,6 @@ function PipelineActivityLogTable({ data, isLoading, paginationOptions, selectRu
             {/*    />*/}
           </div>
         </div>
-        <div className="table-content-block">
           <CustomTable
             columns={columns}
             data={data}
@@ -130,7 +129,6 @@ function PipelineActivityLogTable({ data, isLoading, paginationOptions, selectRu
             tableTitle={"Pipeline Activity Logs"}
             paginationOptions={paginationOptions}
           />
-        </div>
       </>
     </>
   );

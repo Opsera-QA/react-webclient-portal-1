@@ -38,9 +38,7 @@ function KpiTable({ data, isLoading, loadData }) {
 
   return (
     <>
-      <div className="table-content-block">
-        <CustomTable onRowSelect={onRowSelect} isLoading={isLoading} data={data} rowStyling={rowStyling} columns={columns} createNewRecord={createKpi} type={"KPI"} tableTitle={"KPIs"} />
-      </div>
+      <CustomTable onRowSelect={onRowSelect} isLoading={isLoading} data={data} rowStyling={rowStyling} columns={columns} createNewRecord={createKpi} type={"KPI"} tableTitle={"KPIs"} />
       <NewKpiModal showModal={showKpiModal} setShowModal={setShowKpiModal} loadData={loadData}/>
     </>
   );
