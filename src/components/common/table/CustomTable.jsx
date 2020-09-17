@@ -74,7 +74,7 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
     return(
       <div className="row" style={{ height:"150px", width: "100%"}}>
         <div className="col-sm-12 my-auto text-center">
-          <FontAwesomeIcon icon={faSpinner} spin className="mx-1 mt-1"/>
+          <FontAwesomeIcon icon={faSpinner} spin className="mr-2 mt-1"/>
           {/*<Spinner className="mr-2" as="span"
                    animation="border"
                    variant="primary"
