@@ -82,8 +82,8 @@ function ErrorDialog({ error, align, setError, prependMessage }) {
 
   // TODO: Remove when toastContext is wired up everywhere on detail panels
   if (align === "detailPanelTop") {
-    return (
-      <div className="row error-block top-error-block top-dialog-detail-panel-block">
+    return (/*removed this class: top-dialog-detail-panel-block*/
+      <div className="row error-block top-error-block">
         <div className="col-sm-12 my-auto text-center">
           { setError && <div className="float-right ml-1">
             <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
