@@ -65,7 +65,6 @@ function ToolsTable({ data, filterOptionList, loadData, isLoading }) {
             />}
           </div>
         </div>
-        <div className="table-content-block">
           <CustomTable
             columns={columns}
             data={data}
@@ -78,7 +77,6 @@ function ToolsTable({ data, filterOptionList, loadData, isLoading }) {
             createNewRecord={createNewTool}
           >
           </CustomTable>
-        </div>
       </div>
     </>
   );
