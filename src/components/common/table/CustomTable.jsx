@@ -103,7 +103,7 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
     return (
       <div>
         <div className="d-flex justify-content-between mb-1">
-          <div className="h6 d-flex my-auto">{tableTitle}{getTableTitleLoader()}</div>
+          <div className="h6 my-2 d-flex">{tableTitle}{getTableTitleLoader()}</div>
           {/*TODO: Implement Table Action Bar with ability for filters*/}
           <div className="d-flex text-right">
             {createNewRecord && <Button size="sm" className={"o"}
