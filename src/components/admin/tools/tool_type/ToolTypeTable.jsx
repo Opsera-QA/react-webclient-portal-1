@@ -44,7 +44,6 @@ function ToolTypeTable({ data, loadData, isLoading }) {
 
   return (
     <>
-      <div className="table-content-block">
         <CustomTable
           columns={columns}
           data={data}
@@ -52,12 +51,10 @@ function ToolTypeTable({ data, loadData, isLoading }) {
           noDataMessage={noDataMessage}
           onRowSelect={selectedRow}
           isLoading={isLoading}
-          tableStyleName="custom-table-2"
           tableTitle={"Tool Types"}
           type={"Tool Type"}
           createNewRecord={createToolType}
         />
-      </div>
       {showCreateToolTypeModal && <NewToolTypeModal setShowModal={setShowCreateToolTypeModal} showModal={showCreateToolTypeModal} loadData={loadData}/>}
     </>
   );

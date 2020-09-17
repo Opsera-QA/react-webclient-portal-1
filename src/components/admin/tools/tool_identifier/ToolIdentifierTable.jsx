@@ -44,7 +44,6 @@ function ToolIdentifierTable({data, loadData, isLoading}) {
 
   return (
     <>
-      <div className="table-content-block">
         <CustomTable
           columns={columns}
           data={data}
@@ -52,12 +51,10 @@ function ToolIdentifierTable({data, loadData, isLoading}) {
           noDataMessage={noDataMessage}
           isLoading={isLoading}
           onRowSelect={selectedRow}
-          tableStyleName="custom-table-2"
           tableTitle={"Tool Identifiers"}
           type={"Tool Identifier"}
           createNewRecord={createToolType}
         />
-      </div>
       {showCreateToolIdentifierModal && <NewToolIdentifierModal setShowModal={setShowCreateToolIdentifierModal} loadData={loadData} showModal={showCreateToolIdentifierModal}/>}
     </>
   );

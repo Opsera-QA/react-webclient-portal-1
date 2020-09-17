@@ -50,7 +50,6 @@ function TagsTable({ data, loadData, isLoading }) {
 
   return (
     <>
-      <div className="table-content-block">
         <CustomTable onRowSelect={onRowSelect}
                      data={data}
                      rowStyling={rowStyling}
@@ -61,7 +60,6 @@ function TagsTable({ data, loadData, isLoading }) {
                      type={"Tag"}
                      createNewRecord={createTag}
         />
-      </div>
       <NewTagModal showModal={showTagModal} loadData={loadData} setShowModal={setShowTagModal}/>
     </>
   );
