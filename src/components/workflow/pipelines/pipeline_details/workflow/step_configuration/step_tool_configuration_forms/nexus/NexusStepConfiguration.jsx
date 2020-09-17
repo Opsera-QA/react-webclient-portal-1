@@ -5,16 +5,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle, faSpinner, faEllipsisH, faSave } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import { Link } from "react-router-dom";
-import nexusStepFormMetadata from "./step_tool_configuration_forms_metadata/nexus-stepForm-metadata";
+import nexusStepFormMetadata from "../step_tool_configuration_forms_metadata/nexus-stepForm-metadata";
 import Model from "core/data_model/model";
 import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
 import DtoTextInput from "components/common/input/dto_input/dto-text-input";
 import LoadingDialog from "components/common/status_notifications/loading";
-import ToastContext from "react-bootstrap/cjs/ToastContext";
-import { axiosApiService } from "../../../../../../../api/apiService";
+import { axiosApiService } from "../../../../../../../../api/apiService";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
-import { getErrorDialog, getMissingRequiredFieldsErrorDialog } from "components/common/toasts/toasts";
 import _ from "lodash";
+import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
+import SaveButton from "../../../../../../../common/buttons/SaveButton";
+import nexusStepActions from "./nexus-step-actions";
 
 const NEXUS_STEP_TYPES = [
   {
@@ -27,10 +28,10 @@ const NEXUS_STEP_TYPES = [
   // },
 ];
 
-function NexusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, setToast, setShowToast }) {
-  const contextType = useContext(AuthContext);
+function NexusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList }) {
+  const {getAccessToken} = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [listOfSteps, setListOfSteps] = useState([]);
 
   const [nexusList, setNexusList] = useState([]);
@@ -97,102 +98,59 @@ function NexusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToo
       }
     } else {
       setNexusStepConfigurationDataDto(
-        new Model({ ...nexusStepFormMetadata.newModelBase }, nexusStepFormMetadata, true)
+        new Model({ ...nexusStepFormMetadata.newModelBase }, nexusStepFormMetadata, false)
       );
     }
   };
 
   const callbackFunction = async () => {
-    setLoading(true);
-    if (validateRequiredFields()) {
-      const item = {
-        configuration: nexusStepConfigurationDto.getPersistData(),
-        threshold: {
-          type: thresholdType,
-          value: thresholdVal,
-        },
-      };
-      parentCallback(item);
-    }
-    setLoading(false);
-  };
-
-  const validateRequiredFields = () => {
-    let {
-      artifactStepId,
-      type,
-      groupName,
-      artifactName,
-      repositoryName,
-      repositoryGroup,
-      nexusToolConfigId,
-    } = nexusStepConfigurationDto.data;
-    if (
-      !nexusStepConfigurationDto.isModelValid() ||
-      (type.length !== 0 && type === "push" && artifactStepId.length === 0) ||
-      groupName.length === 0 ||
-      artifactName.length === 0 ||
-      repositoryName.length === 0 ||
-      repositoryGroup.length === 0 ||
-      nexusToolConfigId.length === 0 ||
-      type.length === 0
-    ) {
-      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
-      setToast(toast);
-      setShowToast(true);
-      return false;
-    } else {
-      return true;
-    }
+    const item = {
+      configuration: nexusStepConfigurationDto.getPersistData(),
+      threshold: {
+        type: thresholdType,
+        value: thresholdVal,
+      },
+    };
+    parentCallback(item);
   };
 
   const getNexusRepositoriesList = async (toolID) => {
+    setNexusRepositoriesList([]);
     setIsRepoSearching(true);
-    const { getAccessToken } = contextType;
-    const accessToken = await getAccessToken();
-    const apiUrl = "/tools/nexus/repositories";
     try {
-      const res = await axiosApiService(accessToken).get(apiUrl, {
-        params: {
-          tool: "nexus",
-          toolId: toolID,
-        },
-      });
-      if (res.data && res.data.data) {
-        let respObj = [];
-        let arrOfObj = res.data.data;
-        arrOfObj.map((item) => {
-          respObj.push({
-            name: item.name,
-            format: item.format,
-            type: item.type,
-            url: item.url,
-            attributes: item.attributes,
-          });
-        });
-        if (res.data.data.length === 0) {
-          respObj.push({
+      const response = await nexusStepActions.getNexusRepositoriesList(toolID, getAccessToken);
+      if (response.data && response.data.data) {
+        let nexusRepositories = [];
+        if (response.data.data.length === 0) {
+          nexusRepositories.push({
             name: "Configure nexus repositories to activate this step",
             format: "N/A",
             isDisabled: "yes",
           });
         }
-        setNexusRepositoriesList(respObj);
-        setIsRepoSearching(false);
+        else {
+          response.data.data.map((item) => {
+            nexusRepositories.push({
+              name: item.name,
+              format: item.format,
+              type: item.type,
+              url: item.url,
+              attributes: item.attributes,
+            });
+          });
+        }
+        setNexusRepositoriesList(nexusRepositories);
       } else {
         let errorMessage =
           "Error fetching nexus repositories!  Please validate nexus credentials and configured repositories.";
-        let toast = getErrorDialog(errorMessage, setShowToast, "detailPanelTop");
-        setToast(toast);
-        setShowToast(true);
-        setIsRepoSearching(false);
+        toastContext.showErrorDialog(errorMessage);
       }
     } catch (error) {
       const errorMsg = `Service Unavailable. Error reported by services while fetching repositories for toolId: ${toolID}.  Please see browser logs for details.`;
       console.error(error);
-      let toast = getErrorDialog(errorMsg, setShowToast, "detailPanelTop");
-      setToast(toast);
-      setShowToast(true);
+      toastContext.showErrorDialog(errorMsg);
+    }
+    finally {
       setIsRepoSearching(false);
     }
   };
@@ -204,9 +162,8 @@ function NexusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToo
     newDataObject.setData("toolURL", value.configuration.toolURL);
     newDataObject.setData("userName", value.configuration.userName);
     newDataObject.setData("secretKey", value.configuration.secretKey);
-    setNexusRepositoriesList([]);
     await getNexusRepositoriesList(newDataObject.nexusToolConfigId);
-    setNexusStepConfigurationDataDto(new Model(newDataObject.data, nexusStepFormMetadata, false));
+    setNexusStepConfigurationDataDto({...newDataObject});
     setIsLoading(false);
   };
 
@@ -214,26 +171,26 @@ function NexusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToo
     let newDataObject = nexusStepConfigurationDto;
     newDataObject.setData("type", value.value);
     if (newDataObject.type === "pull") newDataObject.setData("artifactStepId", "");
-    setNexusStepConfigurationDataDto(new Model(newDataObject.data, nexusStepFormMetadata, false));
+    setNexusStepConfigurationDataDto({...newDataObject});
   };
 
   const handleGroupNameChange = (fieldName, value) => {
     let newDataObject = nexusStepConfigurationDto;
     newDataObject.setData("groupName", value);
-    setNexusStepConfigurationDataDto(new Model(newDataObject.data, nexusStepFormMetadata, false));
+    setNexusStepConfigurationDataDto({...newDataObject});
   };
 
   const handleArtifactNameChange = (fieldName, value) => {
     let newDataObject = nexusStepConfigurationDto;
     newDataObject.setData("artifactName", value);
-    setNexusStepConfigurationDataDto(new Model(newDataObject.data, nexusStepFormMetadata, false));
+    setNexusStepConfigurationDataDto({...newDataObject});
   };
 
   const handleRepositoryChange = (fieldName, value) => {
     let newDataObject = nexusStepConfigurationDto;
     newDataObject.setData("repositoryGroup", value.format);
     newDataObject.setData("repositoryName", value.name);
-    setNexusStepConfigurationDataDto(new Model(newDataObject.data, nexusStepFormMetadata, false));
+    setNexusStepConfigurationDataDto({...newDataObject});
   };
 
   if (isLoading || nexusStepConfigurationDto == null) {
@@ -266,7 +223,7 @@ function NexusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToo
         rootClose
         placement="left"
         overlay={pipelineHelpers.getRegistryPopover(
-          nexusList[nexusList.findIndex((x) => x.id === nexusStepConfigurationDto.nexusToolConfigId)]
+          nexusList[nexusList.findIndex((x) => x.id === nexusStepConfigurationDto.getData("nexusToolConfigId"))]
         )}
       >
         <FontAwesomeIcon
@@ -285,91 +242,59 @@ function NexusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToo
         selectOptions={nexusList ? nexusList : []}
         fieldName={"nexusToolConfigId"}
       />
-      {nexusStepConfigurationDto.getData("nexusToolConfigId") !== "" && (
-        <DtoSelectInput
-          setDataObject={setNexusStepConfigurationDataDto}
-          setDataFunction={handleNexusStepTypeChange}
-          textField={"name"}
-          valueField={"value"}
-          dataObject={nexusStepConfigurationDto}
-          filter={"contains"}
-          selectOptions={NEXUS_STEP_TYPES ? NEXUS_STEP_TYPES : []}
-          fieldName={"type"}
-        />
-      )}
-      {isRepoSearching ? (
-        <div className="form-text text-muted mt-2 p-2">
-          <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth />
-          Loading Repositories from Nexus Tool
-        </div>
-      ) : nexusStepConfigurationDto.getData("nexusToolConfigId") !== "" && nexusRepositoriesList ? (
-        <DtoSelectInput
-          setDataFunction={handleRepositoryChange}
-          setDataObject={setNexusStepConfigurationDataDto}
-          textField={"name"}
-          valueField={"name"}
-          busy={isRepoSearching}
-          dataObject={nexusStepConfigurationDto}
-          filter={"contains"}
-          selectOptions={nexusRepositoriesList ? nexusRepositoriesList : []}
-          fieldName={"repositoryName"}
-        />
-      ) : (
-        ""
-      )}
       {nexusStepConfigurationDto.getData("nexusToolConfigId") !== "" &&
-        nexusStepConfigurationDto.getData("type") !== "" && (
-          <DtoTextInput
-            setDataFunction={handleGroupNameChange}
+        <>
+          <DtoSelectInput
             setDataObject={setNexusStepConfigurationDataDto}
+            setDataFunction={handleNexusStepTypeChange}
+            textField={"name"}
+            valueField={"value"}
             dataObject={nexusStepConfigurationDto}
-            fieldName={"groupName"}
+            filter={"contains"}
+            selectOptions={NEXUS_STEP_TYPES ? NEXUS_STEP_TYPES : []}
+            fieldName={"type"}
           />
-        )}
-      {nexusStepConfigurationDto.getData("nexusToolConfigId") !== "" &&
-        nexusStepConfigurationDto.getData("type") !== "" && (
-          <DtoTextInput
-            setDataFunction={handleArtifactNameChange}
+          <DtoSelectInput
+            setDataFunction={handleRepositoryChange}
             setDataObject={setNexusStepConfigurationDataDto}
+            textField={"name"}
+            valueField={"name"}
+            busy={isRepoSearching}
             dataObject={nexusStepConfigurationDto}
-            fieldName={"artifactName"}
+            filter={"contains"}
+            selectOptions={nexusRepositoriesList ? nexusRepositoriesList : []}
+            fieldName={"repositoryName"}
           />
-        )}
-
-      {nexusStepConfigurationDto.getData("nexusToolConfigId") !== "" &&
-      nexusStepConfigurationDto.getData("type") !== "" &&
-      nexusStepConfigurationDto.getData("type") === "push" &&
-      listOfSteps ? (
-        <DtoSelectInput
-          setDataObject={setNexusStepConfigurationDataDto}
-          textField={"name"}
-          valueField={"_id"}
-          dataObject={nexusStepConfigurationDto}
-          filter={"contains"}
-          selectOptions={listOfSteps ? listOfSteps : []}
-          fieldName={"artifactStepId"}
-        />
-      ) : (
-        ""
-      )}
-      <Button
-        variant="primary"
-        type="button"
-        className="mt-3 ml-2"
-        onClick={() => {
-          callbackFunction();
-        }}
-      >
-        {loading ? (
-          <>
-            <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth /> Saving
-          </>
-        ) : (
-          <>
-            <FontAwesomeIcon icon={faSave} className="mr-1" /> Save
-          </>
-        )}
-      </Button>
+          {nexusStepConfigurationDto.getData("type") !== "" &&
+            <>
+              <DtoTextInput
+                setDataFunction={handleGroupNameChange}
+                setDataObject={setNexusStepConfigurationDataDto}
+                dataObject={nexusStepConfigurationDto}
+                fieldName={"groupName"}
+              />
+              <DtoTextInput
+                setDataFunction={handleArtifactNameChange}
+                setDataObject={setNexusStepConfigurationDataDto}
+                dataObject={nexusStepConfigurationDto}
+                fieldName={"artifactName"}
+              />
+              {nexusStepConfigurationDto.getData("type") === "push" &&
+                <DtoSelectInput
+                  setDataObject={setNexusStepConfigurationDataDto}
+                  textField={"name"}
+                  valueField={"_id"}
+                  dataObject={nexusStepConfigurationDto}
+                  filter={"contains"}
+                  selectOptions={listOfSteps ? listOfSteps : []}
+                  fieldName={"artifactStepId"}
+                />
+              }
+              </>
+            }
+        </>
+      }
+      <SaveButton disable={nexusStepConfigurationDto.getData("type") === "push" && nexusStepConfigurationDto.getData("artifactStepId").length === 0} recordDto={nexusStepConfigurationDto} setRecordDto={setNexusStepConfigurationDataDto} createRecord={callbackFunction} updateRecord={callbackFunction} />
       <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
     </>
   );
