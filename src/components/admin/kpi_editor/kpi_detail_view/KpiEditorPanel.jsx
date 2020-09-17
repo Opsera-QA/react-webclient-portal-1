@@ -9,77 +9,39 @@ import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
 import DtoToggleInput from "../../../common/input/dto_input/dto-toggle-input";
 import SaveButton from "../../../common/buttons/SaveButton";
 import DtoSelectInput from "../../../common/input/dto_input/dto-select-input";
-import {
-  getFormValidationErrorDialog,
-  getUpdateFailureResultDialog,
-  getUpdateSuccessResultDialog
-} from "../../../common/toasts/toasts";
-import Model from "../../../../core/data_model/model";
+import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 
-function KpiEditorPanel({ kpiData, setKpiData }) {
+function KpiEditorPanel({ kpiData, setKpiData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
   const [toolList, setToolList] = useState([]);
   const [kpiDataDto, setKpiDataDto] = useState(undefined);
-  const [toast, setToast] = useState({});
-  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
     loadData();
   }, []);
 
   const loadData = async () => {
-    setIsLoading(true);
-    setKpiDataDto(kpiData);
-    await getToolList();
-    setIsLoading(false);
+    try {
+      setIsLoading(true);
+      setKpiDataDto(kpiData);
+      await getToolList();
+    }
+    catch (error) {
+      toastContext.showLoadingErrorDialog(error);
+    }
+    finally {
+      setIsLoading(false);
+    }
   };
 
   const createKpi = async () => {
-    if (kpiDataDto.isModelValid()) {
-      try {
-        let createKpiResponse = await KpiActions.createKpi(kpiDataDto, getAccessToken);
-        let toast = getUpdateSuccessResultDialog(kpiDataDto.getType(), setShowToast);
-        setToast(toast);
-        setShowToast(true);
-        let updatedDto = new Model(createKpiResponse.data, kpiDataDto.metaData, false);
-        setKpiData(updatedDto);
-        setKpiDataDto(updatedDto);
-      } catch (error) {
-        let toast = getUpdateFailureResultDialog(kpiDataDto.getType(), error.message, setShowToast);
-        setToast(toast);
-        setShowToast(true);
-        console.error(error.message);
-      }
-    } else {
-      let toast = getFormValidationErrorDialog(setShowToast);
-      setToast(toast);
-      setShowToast(true);
-    }
+    return await KpiActions.createKpi(kpiDataDto, getAccessToken);
   }
 
   const updateKpi = async () => {
-    if(kpiDataDto.isModelValid()) {
-      try {
-        let updateOrganizationResponse = await KpiActions.updateKpi(kpiDataDto, getAccessToken);
-        let toast = getUpdateSuccessResultDialog( kpiDataDto.getType(), setShowToast);
-        setToast(toast);
-        setShowToast(true);
-        let updatedDto = new Model(updateOrganizationResponse.data, kpiDataDto.metaData, false);
-        setKpiData(updatedDto);
-        setKpiDataDto(updatedDto);
-      } catch (error) {
-        let toast = getUpdateFailureResultDialog(kpiDataDto.getType(), error.message, setShowToast);
-        setToast(toast);
-        setShowToast(true);
-        console.error(error.message);
-      }
-    }
-    else {
-      let toast = getFormValidationErrorDialog(setShowToast);
-      setToast(toast);
-      setShowToast(true);
-    }
+   return await KpiActions.updateKpi(kpiDataDto, getAccessToken);
   };
 
   const getToolList = async () => {
@@ -93,28 +55,28 @@ function KpiEditorPanel({ kpiData, setKpiData }) {
 
   return (
     <>
-        <div className="scroll-y full-height">
-          {showToast && toast}
-          <Row>
-            <Col lg={12}>
-              <DtoTextInput dataObject={kpiDataDto} fieldName={"name"} setDataObject={setKpiDataDto} />
-            </Col>
-            <Col lg={12}>
-              <DtoToggleInput setDataObject={setKpiDataDto} fieldName={"active"} dataObject={kpiData} />
-            </Col>
-            <Col lg={12}>
-              <DtoTextInput dataObject={kpiDataDto} fieldName={"description"} setDataObject={setKpiDataDto} />
-            </Col>
-            <Col lg={12}>
-              <DtoSelectInput selectOptions={toolList} dataObject={kpiDataDto} fieldName={"tool_identifier"} setDataObject={setKpiDataDto} textField={"name"} valueField={"identifier"} />
-            </Col>
-          </Row>
-          <Row>
-            <div className="ml-auto mt-3 px-3">
-              <SaveButton updateRecord={updateKpi} createRecord={createKpi} recordDto={kpiDataDto} />
-            </div>
-          </Row>
-        </div>
+      <div className="scroll-y full-height">
+        <Row>
+          <Col lg={12}>
+            <DtoTextInput dataObject={kpiDataDto} fieldName={"name"} setDataObject={setKpiDataDto}/>
+          </Col>
+          <Col lg={12}>
+            <DtoToggleInput setDataObject={setKpiDataDto} fieldName={"active"} dataObject={kpiData}/>
+          </Col>
+          <Col lg={12}>
+            <DtoTextInput dataObject={kpiDataDto} fieldName={"description"} setDataObject={setKpiDataDto}/>
+          </Col>
+          <Col lg={12}>
+            <DtoSelectInput selectOptions={toolList} dataObject={kpiDataDto} fieldName={"tool_identifier"}
+                            setDataObject={setKpiDataDto} textField={"name"} valueField={"identifier"}/>
+          </Col>
+        </Row>
+        <Row>
+          <div className="ml-auto mt-3 px-3">
+            <SaveButton updateRecord={updateKpi} setRecordDto={setKpiDataDto} setData={setKpiData} handleClose={handleClose} createRecord={createKpi} recordDto={kpiDataDto}/>
+          </div>
+        </Row>
+      </div>
     </>
   );
 }
@@ -122,7 +84,7 @@ function KpiEditorPanel({ kpiData, setKpiData }) {
 KpiEditorPanel.propTypes = {
   kpiData: PropTypes.object,
   setKpiData: PropTypes.func,
-  canDelete: PropTypes.bool,
+  handleClose: PropTypes.func,
 };
 
 export default KpiEditorPanel;

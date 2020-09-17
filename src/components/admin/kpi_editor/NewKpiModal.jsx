@@ -1,41 +1,26 @@
-import React, {useState, useContext, useEffect} from "react";
-import { Button, Modal, Popover, OverlayTrigger } from "react-bootstrap";
+import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "contexts/AuthContext";
 import KpiEditorPanel from "./kpi_detail_view/KpiEditorPanel";
 import CreateModal from "../../common/modal/CreateModal";
-import LdapOrganizationEditorPanel
-  from "../accounts/ldap/organizations/organizations_detail_view/LdapOrganizationEditorPanel";
 import Model from "../../../core/data_model/model";
-import {ldapOrganizationMetaData} from "../accounts/ldap/organizations/ldap-organizations-form-fields";
 import kpiMetaData from "./kpi_detail_view/kpi-form-fields";
 
-const INITIAL_DATA = {
-  "name": "",
-  "description": "",
-  "tool_identifier": [],
-  "type": "",
-  "active": true,
-  "persona": ["manager","developer", "executive"]
-};
-
-
-
 function NewKpiModal( { setShowModal, showModal, loadData } ) {
-  const [kpiData, setKpiData] = useState(INITIAL_DATA);
+  const [kpiData, setKpiData] = useState(undefined);
 
   useEffect(() => {
     setKpiData(new Model({...kpiMetaData.newObjectFields}, kpiMetaData, true));
   }, []);
 
   const handleClose = () => {
+    loadData();
     setShowModal(false);
   };
 
   return (
     <>
       <CreateModal handleCancelModal={handleClose} objectType={"Organization"} showModal={showModal} loadData={loadData} >
-        {kpiData && <KpiEditorPanel setKpiData={setKpiData} kpiData={kpiData} />}
+        {kpiData && <KpiEditorPanel setKpiData={setKpiData} kpiData={kpiData} handleClose={handleClose} />}
       </CreateModal>
     </>
   );
