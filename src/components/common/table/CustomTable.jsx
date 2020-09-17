@@ -86,29 +86,37 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
     );
   }
 
+  const getTableTitleLoader = () => {
+    return (
+      <>
+        {isLoading && tableTitle && data != null && data.length !== 0 &&
+          <span className="ml-2">
+                    <Spinner className="mr-2" as="span" animation="border" variant="dark" size="sm" role="status"
+                             aria-hidden="true"/>
+                    Loading Data
+          </span>
+        }
+      </>
+    );
+  };
+
   const getTableTitleBar = () => {
     return (
-      <tr>
-        <th colSpan="100%">
-          <div className="d-flex justify-content-between">
-            <div className="mx-2 d-flex">{tableTitle}</div>
-            {isLoading &&
-              <span className="">
-                <Spinner className="mr-2" as="span" animation="border" variant="light" size="sm" role="status" aria-hidden="true" />
-                Loading Data
-              </span>
-              }
-              {/*TODO: Implement Table Action Bar with ability for filters*/}
-            <div className="d-flex text-right">
-              {createNewRecord && <Button size="sm" className={"o"}
-                      onClick={() => { createNewRecord(); }}>
-                <FontAwesomeIcon icon={faPlus} />
-                <span className="ml-1">New {type}</span>
-              </Button>}
-            </div>
+      <div>
+        <div className="d-flex justify-content-between">
+          <div className="mx-2 d-flex my-auto">{tableTitle}{getTableTitleLoader()}</div>
+          {/*TODO: Implement Table Action Bar with ability for filters*/}
+          <div className="d-flex text-right">
+            {createNewRecord && <Button size="sm" className={"o"}
+                                        onClick={() => {
+                                          createNewRecord();
+                                        }}>
+              <FontAwesomeIcon icon={faPlus}/>
+              <span className="ml-1">New {type}</span>
+            </Button>}
           </div>
-        </th>
-      </tr>
+        </div>
+      </div>
     );
   };
 
@@ -125,7 +133,6 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
     else {
       return (
         <>
-          {getTableTitleBar()}
           {headerGroups.map((headerGroup, i) => (
             <tr key={i}  {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column, j) => (
@@ -185,21 +192,24 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
 
   return (
     <>
-      <table className={tableStyleName} responsive="true" hover="true" {...getTableProps()}>
-        <thead>
-          {getTableHeader()}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-            {getTableBody()}
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colSpan="100%" className="px-2 pt-2 table-footer">
-              {paginationOptions && !isLoading && <Pagination total={paginationOptions.totalCount} currentPage={paginationOptions.currentPage} pageSize={paginationOptions.pageSize} onClick={(pageNumber, pageSize) => paginationOptions.gotoPageFn(pageNumber, pageSize)} />}
-            </td>
-          </tr>
-        </tfoot>
-      </table>
+      {tableTitle && getTableTitleBar()}
+      <div className="table-content-block">
+        <table className={tableStyleName} responsive="true" hover="true" {...getTableProps()}>
+          <thead>
+            {getTableHeader()}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+              {getTableBody()}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colSpan="100%" className="px-2 pt-2 table-footer">
+                {paginationOptions && <Pagination total={paginationOptions.totalCount} currentPage={paginationOptions.currentPage} pageSize={paginationOptions.pageSize} onClick={(pageNumber, pageSize) => paginationOptions.gotoPageFn(pageNumber, pageSize)} />}
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
     </>
   );
 }
