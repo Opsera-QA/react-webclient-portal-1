@@ -44,18 +44,6 @@ function ToolIdentifierTable({data, loadData, isLoading}) {
 
   return (
     <>
-      {showCreateToolIdentifierModal && <NewToolIdentifierModal setShowModal={setShowCreateToolIdentifierModal} loadData={loadData} showModal={showCreateToolIdentifierModal}/>}
-      <div className="flex-row-reverse mb-1 d-flex">
-        <div className="text-right">
-          <Button variant="primary" size="sm"
-                  onClick={() => {
-                    createToolType();
-                  }}>
-            <FontAwesomeIcon icon={faPlus} className="mr-1"/> New Tool Identifier
-          </Button>
-          <br/>
-        </div>
-      </div>
       <div className="table-content-block">
         <CustomTable
           columns={columns}
@@ -65,8 +53,12 @@ function ToolIdentifierTable({data, loadData, isLoading}) {
           isLoading={isLoading}
           onRowSelect={selectedRow}
           tableStyleName="custom-table-2"
+          tableTitle={"Tool Identifiers"}
+          type={"Tool Identifier"}
+          createNewRecord={createToolType}
         />
       </div>
+      {showCreateToolIdentifierModal && <NewToolIdentifierModal setShowModal={setShowCreateToolIdentifierModal} loadData={loadData} showModal={showCreateToolIdentifierModal}/>}
     </>
   );
 }
