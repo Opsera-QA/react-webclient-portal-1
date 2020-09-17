@@ -83,8 +83,7 @@ function ErrorDialog({ error, align, setError, prependMessage }) {
   // TODO: Remove when toastContext is wired up everywhere on detail panels
   if (align === "detailPanelTop") {
     return (/*removed this class: top-dialog-detail-panel-block*/
-      <div className="row error-block top-error-block">
-        <div className="col-sm-12 my-auto text-center">
+      <div className="w-100 error-block top-error-block">
           { setError && <div className="float-right ml-1">
             <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
               clearError();
@@ -94,7 +93,6 @@ function ErrorDialog({ error, align, setError, prependMessage }) {
         <span className="ml-1"><a style={{ color: "#fff", textDecoration: "underline" }} href="#" onClick={() => {
           reloadSession();
         }}>Click here to renew session.</a></span>}
-        </div>
       </div>
     );
   }
