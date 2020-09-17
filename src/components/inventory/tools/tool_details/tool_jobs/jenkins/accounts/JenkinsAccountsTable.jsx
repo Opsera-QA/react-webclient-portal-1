@@ -45,7 +45,6 @@ function JenkinsAccountsTable({ data, selectedRow, isLoading }) {
           initialState={initialState}
           onRowSelect={selectedRow}
           isLoading={isLoading}
-          tableStyleName={"custom-table-2"}
         >
         </CustomTable>
       </div>

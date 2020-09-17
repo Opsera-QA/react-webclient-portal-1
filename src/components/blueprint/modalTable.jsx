@@ -139,7 +139,6 @@ function ModalTable({ header, column_data, size, jsonData, stats, show, setParen
               noDataMessage={noDataMessage}
               initialState={initialState}
               paginationOptions={getPaginationOptions()}
-              tableStyleName="custom-table-2"
             ></CustomTable>
           </div>
         </Modal.Body>

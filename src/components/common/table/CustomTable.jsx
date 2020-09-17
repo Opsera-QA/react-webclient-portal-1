@@ -222,7 +222,7 @@ CustomTable.propTypes = {
 };
 
 CustomTable.defaultProps = {
-  tableStyleName: "custom-table-2",
+  tableStyleName: "custom-table",
   rowStyling: defaultRowStyling,
   initialState: defaultInitialState,
   showHeaderText: true,

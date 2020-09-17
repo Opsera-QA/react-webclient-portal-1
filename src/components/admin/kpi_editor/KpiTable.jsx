@@ -33,7 +33,7 @@ function KpiTable({ data, isLoading }) {
   return (
     <>
       <div className="table-content-block">
-        <CustomTable onRowSelect={onRowSelect} tableStyleName="custom-table-2" isLoading={isLoading} data={data} rowStyling={rowStyling} columns={columns} />
+        <CustomTable onRowSelect={onRowSelect} isLoading={isLoading} data={data} rowStyling={rowStyling} columns={columns} />
       </div>
     </>
   );

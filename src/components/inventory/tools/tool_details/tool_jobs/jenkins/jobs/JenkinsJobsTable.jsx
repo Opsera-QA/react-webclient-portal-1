@@ -57,7 +57,6 @@ function JenkinsJobsTable({ toolData, loadData, selectedRow, isLoading }) {
           data={toolData.getData("jobs")}
           onRowSelect={selectedRow}
           isLoading={isLoading}
-          tableStyleName="custom-table-2"
         >
         </CustomTable>
       </div>
