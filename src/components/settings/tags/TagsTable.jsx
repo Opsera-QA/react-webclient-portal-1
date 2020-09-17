@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
@@ -8,10 +8,12 @@ import {
   getTableDateColumn,
   getTableTextColumn
 } from "../../common/table/table-column-helpers";
+import NewTagModal from "./NewTagModal";
 
-function TagsTable({ data, isLoading }) {
+function TagsTable({ data, loadData, isLoading }) {
   const history = useHistory();
   let fields = tagEditorMetadata.fields;
+  const [showTagModal, setShowTagModal] = useState(false);
   const columns = useMemo(
     () => [
       getTableTextColumn(fields.find(field => { return field.id === "type"})),
@@ -41,6 +43,11 @@ function TagsTable({ data, isLoading }) {
     ]
   };
 
+
+  const createTag = () => {
+    setShowTagModal(true);
+  };
+
   return (
     <>
       <div className="table-content-block">
@@ -50,14 +57,19 @@ function TagsTable({ data, isLoading }) {
                      columns={columns}
                      initialState={initialState}
                      isLoading={isLoading}
+                     tableTitle={"Tags"}
+                     type={"Tag"}
+                     createNewRecord={createTag}
         />
       </div>
+      <NewTagModal showModal={showTagModal} loadData={loadData} setShowModal={setShowTagModal}/>
     </>
   );
 }
 
 TagsTable.propTypes = {
   data: PropTypes.array,
+  loadData: PropTypes.func,
   isLoading: PropTypes.bool
 };
 

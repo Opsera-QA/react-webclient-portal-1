@@ -9,16 +9,13 @@ import DtoToggleInput from "../../../common/input/dto_input/dto-toggle-input";
 import DtoMultipleInput from "../../../common/input/dto_input/dto-multiple-input";
 import SaveButton from "../../../common/buttons/SaveButton";
 import Col from "react-bootstrap/Col";
-import Model from "../../../../core/data_model/model";
 import DtoSelectInput from "../../../common/input/dto_input/dto-select-input";
 import {defaultTags} from "../tags-form-fields";
-import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 
 function TagEditorPanel({ tagData, setTagData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const [tagDataDto, setTagDataDto] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     loadData();
@@ -31,38 +28,11 @@ function TagEditorPanel({ tagData, setTagData, handleClose }) {
   };
 
   const createTag = async () => {
-    if (tagDataDto.isModelValid()) {
-      try {
-        let createTagResponse = await adminTagsActions.create(tagDataDto, getAccessToken);
-        toastContext.showCreateSuccessResultDialog(tagDataDto.getType());
-        let updatedDto = new Model(createTagResponse.data, tagDataDto.metaData, false);
-        setTagDataDto(updatedDto);
-        setTagData(updatedDto);
-        handleClose();
-      } catch (error) {
-        toastContext.showCreateFailureResultDialog(tagDataDto.getType(), error.message);
-        console.error(error.message);
-      }
-    } else {
-      toastContext.showFormValidationErrorDialog();
-    }
+    return await adminTagsActions.create(tagDataDto, getAccessToken);
   };
 
   const updateTag = async () => {
-    if (tagDataDto.isModelValid()) {
-      try {
-        const response = await adminTagsActions.update(tagDataDto, getAccessToken);
-        toastContext.showUpdateSuccessResultDialog(tagDataDto.getType());
-        let updatedDto = new Model(response.data, tagDataDto.metaData, false);
-        setTagDataDto(updatedDto);
-        setTagData(updatedDto);
-      } catch (error) {
-        toastContext.showUpdateFailureResultDialog(tagDataDto.getType(), error.message);
-        console.error(error.message);
-      }
-    } else {
-      toastContext.showFormValidationErrorDialog();
-    }
+    return await adminTagsActions.update(tagDataDto, getAccessToken);
   };
 
   if (isLoading) {
@@ -94,7 +64,7 @@ function TagEditorPanel({ tagData, setTagData, handleClose }) {
           </Row>
           <Row>
             <div className="ml-auto mt-3 px-3">
-              <SaveButton recordDto={tagDataDto} createRecord={createTag} updateRecord={updateTag} />
+              <SaveButton handleClose={handleClose} recordDto={tagDataDto} setRecordDto={setTagDataDto} setData={setTagData} createRecord={createTag} updateRecord={updateTag} />
             </div>
           </Row>
         </div>

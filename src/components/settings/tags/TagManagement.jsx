@@ -17,7 +17,6 @@ function TagManagement() {
   const [accessRoleData, setAccessRoleData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [tagList, setTagList] = useState([]);
-  const [showTagModal, setShowTagModal] = useState(false);
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
@@ -50,10 +49,6 @@ function TagManagement() {
     setIsLoading(false);
   };
 
-  const createTag = () => {
-    setShowTagModal(true);
-  };
-
   if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   } else if (!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator) {
@@ -65,21 +60,10 @@ function TagManagement() {
         <BreadcrumbTrail destination={"tagManagement"}/>
         <div className="justify-content-between mb-1 d-flex">
           <h5>Tag Management</h5>
-          <div className="text-right">
-            <Button variant="primary" size="sm"
-                    onClick={() => {
-                      createTag();
-                    }}>
-              <FontAwesomeIcon icon={faPlus} className="mr-1"/>New Tag
-            </Button>
-            <br/>
-          </div>
         </div>
-
         <div className="full-height">
-          {tagList && <TagsTable isLoading={isLoading} data={tagList}/>}
+          {tagList && <TagsTable loadData={loadData} isLoading={isLoading} data={tagList}/>}
         </div>
-        <NewTagModal showModal={showTagModal} loadData={loadData} setShowModal={setShowTagModal}/>
       </div>
     );
   }
