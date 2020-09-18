@@ -24,11 +24,7 @@ function LdapOrganizationsTable({data, isLoading}) {
   };
 
   return (
-    <>
-      <div className="table-content-block">
-        <CustomTable isLoading={isLoading} onRowSelect={onRowSelect} data={data} columns={columns} />
-      </div>
-    </>
+    <CustomTable isLoading={isLoading} onRowSelect={onRowSelect} tableTitle={"Organizations"} type={"Organization"} data={data} columns={columns}/>
   );
 }
 
