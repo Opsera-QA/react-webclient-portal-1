@@ -26,10 +26,17 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganization
   }, []);
 
   const loadData = async () => {
-    setIsLoading(true);
-    await loadOpseraUsers();
-    setLdapOrganizationDataDto(ldapOrganizationData)
-    setIsLoading(false);
+    try{
+      setIsLoading(true);
+      await loadOpseraUsers();
+      setLdapOrganizationDataDto(ldapOrganizationData)
+    }
+    catch (error) {
+      toastContext.showLoadingErrorDialog(error);
+    }
+    finally {
+      setIsLoading(false);
+    }
   };
 
   const loadOpseraUsers = async () => {
@@ -47,36 +54,11 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganization
   };
 
   const createOrganization = async () => {
-    if(ldapOrganizationDataDto.isModelValid()) {
-      try {
-        let createLdapOrganizationResponse = await accountsActions.createOrganization(ldapOrganizationDataDto, getAccessToken);
-        toastContext.showCreateSuccessResultDialog(ldapOrganizationDataDto.getType());
-      } catch (error) {
-        toastContext.showCreateFailureResultDialog(ldapOrganizationDataDto.getType(), error.message);
-        console.error(error.message);
-      }
-    }
-    else {
-      toastContext.showFormValidationErrorDialog();
-    }
+    return await accountsActions.createOrganization(ldapOrganizationDataDto, getAccessToken);
   };
 
   const updateLdapOrganization = async () => {
-    if(ldapOrganizationDataDto.isModelValid()) {
-      try {
-          let updateOrganizationResponse = await accountsActions.updateOrganization(ldapOrganizationDataDto, getAccessToken);
-          toastContext.showUpdateSuccessResultDialog(ldapOrganizationDataDto.getType());
-          let updatedDto = new Model(updateOrganizationResponse.data, ldapOrganizationDataDto.metaData, false);
-          setLdapOrganizationData(updatedDto);
-        setLdapOrganizationDataDto(updatedDto);
-        } catch (error) {
-          toastContext.showUpdateFailureResultDialog(ldapOrganizationDataDto.getType(), error.message);
-          console.error(error.message);
-        }
-      }
-    else {
-      toastContext.showFormValidationErrorDialog();
-    }
+    return await accountsActions.updateOrganization(ldapOrganizationDataDto, getAccessToken);
   };
 
   const handleOpseraUserChange = (selectedOption) => {
@@ -143,8 +125,7 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganization
           </Row>
           <Row>
             <div className="ml-auto mt-3 px-3">
-              <SaveButton recordDto={ldapOrganizationDataDto} createRecord={createOrganization}
-                          updateRecord={updateLdapOrganization}/>
+              <SaveButton recordDto={ldapOrganizationDataDto} setRecordDto={setLdapOrganizationDataDto} setData={setLdapOrganizationData} createRecord={createOrganization} updateRecord={updateLdapOrganization}/>
             </div>
           </Row>
         </div>
