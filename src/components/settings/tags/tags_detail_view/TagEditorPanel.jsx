@@ -37,7 +37,8 @@ function TagEditorPanel({ tagData, setTagData, handleClose }) {
 
   if (isLoading) {
     return (<LoadingDialog size="sm"/>);
-  } else {
+  }
+
     return (
       <>
         <div className="mx-2 my-3">
@@ -70,7 +71,6 @@ function TagEditorPanel({ tagData, setTagData, handleClose }) {
         </div>
       </>
     );
-  }
 }
 
 TagEditorPanel.propTypes = {
