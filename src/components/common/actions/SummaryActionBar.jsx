@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import {Form, OverlayTrigger, Tooltip} from "react-bootstrap";
+import {OverlayTrigger, Tooltip} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCopy, faToggleOn, faToggleOff, faTrash, faArrowLeft, faFileAlt} from "@fortawesome/free-solid-svg-icons";
+import { faToggleOn, faToggleOff, faTrash, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import {useHistory} from "react-router-dom";
+import { faShareSquare, faCopy, faFileAlt } from "@fortawesome/pro-light-svg-icons";
 
-function SummaryActionBar({itemName, itemId, backButtonPath, handleDuplicateClick, handleDeleteClick, handleActiveToggle, handleViewClick, data, status}) {
+function SummaryActionBar({itemName, itemId, backButtonPath, handleDuplicateClick, handleDeleteClick, handleActiveToggle, handleViewClick, handlePublishClick, data, status}) {
   const history = useHistory();
   // TODO: Move to helper
   function renderTooltip(message) {
@@ -38,6 +39,11 @@ function SummaryActionBar({itemName, itemId, backButtonPath, handleDuplicateClic
             delay={{ show: 250, hide: 400 }}
             overlay={renderTooltip(`Duplicate this ${itemName} configuration`)} >
             <span className="pointer float-right ml-3"><FontAwesomeIcon icon={faCopy} onClick={() => {handleDuplicateClick(itemId);}}/></span></OverlayTrigger> }
+          {handlePublishClick && <OverlayTrigger
+            placement="top"
+            delay={{ show: 250, hide: 400 }}
+            overlay={renderTooltip(`Publish this Pipeline to the shared Catalog`)} >
+            <span className="pointer float-right ml-3"><FontAwesomeIcon icon={faShareSquare} onClick={() => {handlePublishClick(itemId);}}/></span></OverlayTrigger> }
           {handleViewClick && <OverlayTrigger
             placement="top"
             delay={{ show: 250, hide: 400 }}
@@ -60,6 +66,7 @@ SummaryActionBar.propTypes = {
   backButtonPath: PropTypes.string,
   handleActiveToggle: PropTypes.func,
   handleViewClick: PropTypes.func,
+  handlePublishClick: PropTypes.func,
   data: PropTypes.object,
   status: PropTypes.bool,
   itemName: PropTypes.string,

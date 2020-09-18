@@ -91,6 +91,15 @@ pipelineActions.duplicate = async (pipelineId, getAccessToken) => {
   return response;
 };
 
+pipelineActions.publish = async (pipelineId, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/pipelines/${pipelineId}/publish-template/`;
+  const response = await axiosApiService(accessToken).put(apiUrl)
+    .then((result) =>  {return result;})
+    .catch(error => {throw { error };});
+  return response;
+};
+
 pipelineActions.getLogs = async (pipelineId, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = `/pipelines/${pipelineId}/status`;   

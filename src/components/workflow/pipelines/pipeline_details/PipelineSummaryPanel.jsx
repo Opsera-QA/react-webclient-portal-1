@@ -151,10 +151,23 @@ function PipelineSummaryPanel({
     setInfoModal({
       show: true,
       header: "Duplicate Pipeline",
-      message: "A new pipeline configuration has been created, duplicating all of the settings from this one.  That pipeline is now in your list of Pipelines for viewing.  No tools or activity logs were duplicated in this process.",
+      message: "A new pipeline configuration has been created, duplicating all of the settings from this one.  That pipeline is now in your list of Pipelines for viewing.  No tools or activity logs have been duplicated in this process.",
       button: "OK",
     });
   };
+
+
+  const handlePublishPipelineClick = async (pipelineId) => {
+    const { getAccessToken } = contextType;
+    await PipelineActions.publish(pipelineId, getAccessToken);
+    setInfoModal({
+      show: true,
+      header: "Publish Pipeline to Catalog",
+      message: "You have published a copy of this pipeline in your shared Catalog for others to use.  Overall settings of the pipeline are shared but no tools or activity logs have been duplicated in this process.",
+      button: "OK",
+    });
+  };
+
 
   async function deleteItem(pipelineId) {
     const { getAccessToken } = contextType;
@@ -340,6 +353,7 @@ function PipelineSummaryPanel({
                 handleDeleteClick={authorizedAction("delete_pipeline_btn", pipeline.owner) ? handleDeleteClick : undefined}
                 handleDuplicateClick={handleCopyPipeline}
                 handleViewClick={handleViewClick}
+                handlePublishClick={authorizedAction("publish_pipeline_btn", pipeline.owner) ? handlePublishPipelineClick : undefined}
               />
             </div>
             {showToast && toast}
