@@ -11,16 +11,32 @@ import toolTypeMetadata from "../tool-type-metadata";
 import ToolTypeDetailPanel from "./ToolTypeDetailPanel";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faToolbox} from "@fortawesome/pro-solid-svg-icons";
+import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 
 function ToolTypeDetailView() {
   const {toolTypeId} = useParams();
+  const toastContext = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState({});
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
   const [toolTypeData, setToolTypeData] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getRoles();
+    loadData();
   }, []);
+
+  const loadData = async () => {
+    try {
+      setIsLoading(true);
+      await getRoles();
+    }
+    catch (error) {
+    toastContext.showLoadingErrorDialog(error);
+    }
+    finally {
+      setIsLoading(false);
+    }
+  };
 
   const getToolType = async (toolTypeId) => {
     const response = await toolTypeActions.getToolTypeById(toolTypeId, getAccessToken);
@@ -43,33 +59,36 @@ function ToolTypeDetailView() {
     }
   };
 
-  if (!accessRoleData) {
+  if (isLoading || !accessRoleData) {
     return (<LoadingDialog size="sm"/>);
-  } else if (accessRoleData.OpseraAdministrator === false) {
-    return (<AccessDeniedDialog roleData={accessRoleData} />);
-  } else {
-    return (
-      <>
-        <BreadcrumbTrail destination="toolTypeDetailView"/>
-        {toolTypeData &&
-        <div className="content-container content-card-1 max-content-width ml-2">
-          <div className="pt-2 pl-2 content-block-header">
-            <h5><FontAwesomeIcon icon={faToolbox} fixedWidth className="mr-1" />Tool Type Details [{toolTypeData && toolTypeData.getData("name")}]</h5>
-          </div>
-          <div className="detail-view-body">
-            <div>
-              <ToolTypeSummaryPanel toolTypeData={toolTypeData} setToolTypeData={setToolTypeData}/>
-            </div>
-            <div>
-              <ToolTypeDetailPanel toolTypeData={toolTypeData} setToolTypeData={setToolTypeData}/>
-            </div>
-          </div>
-          <div className="content-block-footer"/>
-        </div>
-        }
-      </>
-    );
   }
+
+  if (accessRoleData.OpseraAdministrator === false) {
+    return (<AccessDeniedDialog roleData={accessRoleData}/>);
+  }
+
+  return (
+    <>
+      <BreadcrumbTrail destination="toolTypeDetailView"/>
+      {toolTypeData &&
+      <div className="content-container content-card-1 max-content-width ml-2">
+        <div className="pt-2 pl-2 content-block-header">
+          <h5><FontAwesomeIcon icon={faToolbox} fixedWidth className="mr-1"/>Tool Type Details
+            [{toolTypeData && toolTypeData.getData("name")}]</h5>
+        </div>
+        <div className="detail-view-body">
+          <div>
+            <ToolTypeSummaryPanel toolTypeData={toolTypeData} setToolTypeData={setToolTypeData}/>
+          </div>
+          <div>
+            <ToolTypeDetailPanel toolTypeData={toolTypeData} setToolTypeData={setToolTypeData}/>
+          </div>
+        </div>
+        <div className="content-block-footer"/>
+      </div>
+      }
+    </>
+  );
 }
 
 export default ToolTypeDetailView;

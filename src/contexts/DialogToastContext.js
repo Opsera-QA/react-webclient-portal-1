@@ -120,7 +120,7 @@ const ToastContextProvider = (props) => {
   };
 
   const getInformationDialog = (message, alignment = "dialogToast") => {
-    return <InformationDialog informationMessage={message} alignment={alignment} setInformationMessage={resetToast}/>
+    return <InformationDialog message={message} alignment={alignment} setInformationMessage={resetToast}/>
   };
 
   const getModalToast = () => {

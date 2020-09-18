@@ -60,7 +60,24 @@ const registrationMetadata = {
       label: "Title",
       id: "title",
     },
-  ]
+  ],
+  newObjectFields:
+    {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      domain: "",
+      street: "",
+      city: "",
+      state: "",
+      zip: "",
+      // TODO: Figure out better way to deal with inner objects, but for now deconstruct and construct before sending
+      // attributes: { title: "", company: "" },
+      title: "",
+      company: "",
+    }
 };
 
 export default registrationMetadata;

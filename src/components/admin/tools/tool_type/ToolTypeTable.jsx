@@ -8,9 +8,6 @@ import {
   getTableTextColumn
 } from "../../../common/table/table-column-helpers";
 import {useHistory} from "react-router-dom";
-import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import NewToolTypeModal from "./NewToolTypeModal";
 
 function ToolTypeTable({ data, loadData, isLoading }) {

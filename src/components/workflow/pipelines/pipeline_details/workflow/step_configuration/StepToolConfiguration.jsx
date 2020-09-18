@@ -27,7 +27,7 @@ import ArgoCDStepConfiguration from "./step_tool_configuration_forms/ArgoCDStepC
 import AnchoreStepConfiguration from "./step_tool_configuration_forms/AnchoreStepConfiguration";
 import AnchoreIntegratorStepConfiguration from "./step_tool_configuration_forms/AnchoreIntegratorStepConfiguration";
 import SFDCStepConfiguration from "./step_tool_configuration_forms/SFDCStepConfiguration";
-import NexusStepConfiguration from "./step_tool_configuration_forms/NexusStepConfiguration";
+import NexusStepConfiguration from "./step_tool_configuration_forms/nexus/NexusStepConfiguration";
 import {getErrorDialog} from "../../../../../common/toasts/toasts";
 import pipelineActions from "../../../../pipeline-actions";
 import ToastContext from "react-bootstrap/cjs/ToastContext";

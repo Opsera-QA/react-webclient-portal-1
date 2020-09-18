@@ -15,39 +15,28 @@ import DtoJsonField from "../../../common/form_fields/dto_form_fields/dto-json-f
 import DtoItemField from "../../../common/form_fields/dto_form_fields/dto-item-field";
 import DtoTagField from "../../../common/form_fields/dto_form_fields/dto-tag-field";
 import LoadingDialog from "../../../common/status_notifications/loading";
-import {
-  getFormValidationErrorDialog,
-  getLoadingErrorDialog,
-  getUpdateSuccessResultDialog
-} from "../../../common/toasts/toasts";
+import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 
 function TemplateSummaryPanel({templateData, setTemplateData}) {
   const { getAccessToken } = useContext(AuthContext);
-  const [toast, setToast] = useState({});
-  const [showToast, setShowToast] = useState(false);
+  const toastContext = useContext(DialogToastContext);
 
   const handleActiveToggle = async () => {
-    if(templateData.isModelValid()) {
+    if(templateData.isModelValid2()) {
       try {
         let newTemplateData = {...templateData};
         newTemplateData.setData("active", !newTemplateData.getData("active"));
         let response = await templateActions.updateTemplate({...newTemplateData}, getAccessToken);
         let updatedDto = new Model(response.data, templateData.metaData, false);
         setTemplateData(updatedDto);
-        let toast = getUpdateSuccessResultDialog(newTemplateData.getType(), setShowToast);
-        setToast(toast);
-        setShowToast(true);
+        toastContext.showUpdateSuccessResultDialog(newTemplateData.getType());
       } catch (error) {
-        let toast = getLoadingErrorDialog(error.message, setShowToast);
-        setToast(toast);
-        setShowToast(true);
-        console.error(error.message);
+        toastContext.showUpdateFailureResultDialog(error);
+        console.error(error);
       }
     }
     else {
-      let toast = getFormValidationErrorDialog(setShowToast);
-      setToast(toast);
-      setShowToast(true);
+      toastContext.showFormValidationErrorDialog();
     }
   };
 
@@ -57,7 +46,6 @@ function TemplateSummaryPanel({templateData, setTemplateData}) {
 
   return (
     <>
-      {showToast && toast}
         <div className="scroll-y pt-2 px-3">
           <SummaryActionBar backButtonPath={"/admin/templates"} handleActiveToggle={handleActiveToggle}
                             status={templateData.getData("active")}/>

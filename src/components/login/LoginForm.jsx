@@ -154,7 +154,7 @@ const LoginForm = () => {
 
               {errorMessage && <ErrorDialog error={errorMessage} align="top" setError={setErrorMessage}/>}
 
-              {message && <InformationDialog informationMessage={message} alignment="top" setInformationMessage={setMessage}/>}
+              {message && <InformationDialog message={message} alignment="top" setInformationMessage={setMessage}/>}
 
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
@@ -222,7 +222,7 @@ const LoginForm = () => {
 
           {errorMessage && <ErrorDialog error={errorMessage} align="top" setError={setErrorMessage}/>}
 
-          {message && <InformationDialog informationMessage={message} alignment="top" setInformationMessage={setMessage}/>}
+          {message && <InformationDialog message={message} alignment="top" setInformationMessage={setMessage}/>}
 
           <form onSubmit={handleResetPasswordSubmit}>
             <div className="form-group">

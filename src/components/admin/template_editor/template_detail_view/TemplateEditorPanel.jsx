@@ -1,12 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Button, Col, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext";
-import Model, {DataState} from "../../../../core/data_model/model";
-import {
-  getCreateFailureResultDialog, getCreateSuccessResultDialog,
-  getFormValidationErrorDialog,
-  getUpdateFailureResultDialog, getUpdateSuccessResultDialog
-} from "../../../common/toasts/toasts";
 import templateActions from "../template-actions";
 import PropTypes from "prop-types";
 import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
@@ -21,14 +15,14 @@ import DtoTagManagerInput from "../../../common/input/dto_input/dto-tag-manager-
 import LoadingDialog from "../../../common/status_notifications/loading";
 import SaveButton from "../../../common/buttons/SaveButton";
 import pipelineHelpers from "../../../workflow/pipelineHelpers";
+import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 
-function TemplateEditorPanel({ templateData, setTemplateData }) {
+function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [templateDataDto, setTemplateDataDto] = useState({});
   const [ldapOrganizationAccountList, setLdapOrganizationAccountList] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const [showToast, setShowToast] = useState(false);
-  const [toast, setToast] = useState({});
   const [roleOptions, setRoleOptions] = useState(["everyone", "Free Trial", "Administrators", "PowerUsers"]);
 
   useEffect(() => {
@@ -36,10 +30,17 @@ function TemplateEditorPanel({ templateData, setTemplateData }) {
   }, []);
 
   const loadData = async () => {
-    setIsLoading(true);
-    await getLdapOrganizationAccounts();
-    setTemplateDataDto(templateData);
-    setIsLoading(false);
+    try {
+      setIsLoading(true);
+      await getLdapOrganizationAccounts();
+      setTemplateDataDto(templateData);
+    }
+    catch (error) {
+      toastContext.showLoadingErrorDialog(error);
+    }
+    finally {
+      setIsLoading(false);
+    }
   };
 
   const getLdapOrganizationAccounts = async () => {
@@ -48,53 +49,11 @@ function TemplateEditorPanel({ templateData, setTemplateData }) {
   };
 
   const createTemplate = async () => {
-    if(templateDataDto.isModelValid()) {
-      try {
-        let response = await templateActions.createTemplate(templateDataDto, getAccessToken);
-        let updatedDto = new Model(response.data, templateDataDto.metaData, false);
-        setTemplateDataDto(updatedDto);
-        setTemplateData(updatedDto);
-        let toast = getCreateSuccessResultDialog(templateDataDto.getType(), setShowToast);
-        setToast(toast);
-        setShowToast(true);
-      }
-      catch (error) {
-        let toast = getCreateFailureResultDialog(templateDataDto.getType(), error.message, setShowToast);
-        setToast(toast);
-        setShowToast(true);
-        console.error(error.message);
-      }
-    }
-    else {
-      let toast = getFormValidationErrorDialog(setShowToast);
-      setToast(toast);
-      setShowToast(true);
-    }
+    return await templateActions.createTemplate(templateDataDto, getAccessToken);
   };
 
   const updateTemplate = async () => {
-    if(templateDataDto.isModelValid()) {
-      try {
-        let response = await templateActions.updateTemplate(templateDataDto, getAccessToken);
-        let updatedDto = new Model(response.data, templateDataDto.metaData, false);
-        setTemplateDataDto(updatedDto);
-        setTemplateData(updatedDto);
-        let toast = getUpdateSuccessResultDialog(templateDataDto.getType(), setShowToast);
-        setToast(toast);
-        setShowToast(true);
-      }
-      catch (error) {
-        let toast = getUpdateFailureResultDialog(templateDataDto.getType(), error.message, setShowToast);
-        setToast(toast);
-        setShowToast(true);
-        console.error(error.message);
-      }
-    }
-    else {
-      let toast = getFormValidationErrorDialog(setShowToast);
-      setToast(toast);
-      setShowToast(true);
-    }
+    return await templateActions.updateTemplate(templateDataDto, getAccessToken);
   };
 
   // TODO: Remove and use multi-select once implemented for types.
@@ -111,7 +70,6 @@ function TemplateEditorPanel({ templateData, setTemplateData }) {
     return (
       <>
         <div className="mx-2 my-3">
-          {showToast && toast}
           <Row>
             <Col lg={6}>
               <DtoTextInput disabled={!templateDataDto.isNew()} fieldName={"name"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
@@ -147,7 +105,7 @@ function TemplateEditorPanel({ templateData, setTemplateData }) {
           </Row>
           <Row>
             <div className="ml-auto m-3 px-3">
-              <SaveButton updateRecord={updateTemplate} createRecord={createTemplate} recordDto={templateDataDto} />
+              <SaveButton updateRecord={updateTemplate} setData={setTemplateData} setRecordDto={setTemplateDataDto} handleClose={handleClose} createRecord={createTemplate} recordDto={templateDataDto} />
             </div>
           </Row>
         </div>
@@ -159,6 +117,7 @@ function TemplateEditorPanel({ templateData, setTemplateData }) {
 TemplateEditorPanel.propTypes = {
   templateData: PropTypes.object,
   setTemplateData: PropTypes.func,
+  handleClose: PropTypes.func
 };
 
 export default TemplateEditorPanel;
