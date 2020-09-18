@@ -4,12 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 // TODO: Use React JSX standards for file name in separate merge request
-function InformationDialog ({ informationMessage, setInformationMessage, alignment }) {
+function InformationDialog ({ message, setInformationMessage, alignment }) {
   const [messageBody, setMessageBody] = useState(undefined);
 
   useEffect(() => {
-    setMessageBody(informationMessage);
-  }, [informationMessage]);
+    setMessageBody(message);
+  }, [message]);
 
   const clearInformationMessage = () => {
       setInformationMessage(() => {
@@ -52,7 +52,7 @@ function InformationDialog ({ informationMessage, setInformationMessage, alignme
 }
 
 InformationDialog.propTypes = {
-  informationMessage: PropTypes.string,
+  message: PropTypes.string,
   setInformationMessage: PropTypes.func,
   alignment: PropTypes.string,
 };
