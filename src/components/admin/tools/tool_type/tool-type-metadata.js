@@ -32,7 +32,14 @@ const toolTypeMetadata = {
       label: "Created At",
       id: "createdAt",
     },
-]
+],
+  newObjectFields: {
+    "name": "",
+    "description": "",
+    "identifier": "",
+    "tags": [],
+    "active": true,
+  }
 };
 
 export default toolTypeMetadata;
