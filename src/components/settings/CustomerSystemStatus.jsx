@@ -131,8 +131,8 @@ function CustomerSystemStatus() {
         </Alert>}
 
       {fetching && <LoadingDialog />}
-      {!fetching && !state.modal && state.data.length > 0 &&
-<>
+    {!fetching && !state.modal && state.data.length > 0 &&
+    <>
       <Row>
         <Col sm={6}></Col>
         <Col sm={6}>

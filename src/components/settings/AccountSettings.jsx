@@ -11,6 +11,7 @@ import AccessDeniedDialog from "../common/status_notifications/accessDeniedInfo"
 function AccountSettings() {
   const [accessRoleData, setAccessRoleData] = useState({});
   const { getUserRecord, setAccessRoles, featureFlagItemInProd } = useContext(AuthContext);
+  const envIsProd = featureFlagItemInProd();
 
   useEffect(() => {
     getRoles();
@@ -47,9 +48,10 @@ function AccountSettings() {
             <Col xs={12} md={6} lg={4} className="p-2">
               <Link to={"/settings/tags"}><FontAwesomeIcon icon={faTags} fixedWidth className="mr-1"/> Tags</Link>
             </Col>
+            {!envIsProd ?
             <Col xs={12} md={6} lg={4} className="p-2">
               <Link to="/settings/customerstatus"><FontAwesomeIcon icon={faHeartbeat} fixedWidth/> Customer Status</Link>
-            </Col>
+            </Col> : null}
           </Row>
         </div>
       </>
