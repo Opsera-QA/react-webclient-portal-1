@@ -11,16 +11,32 @@ import TemplateSummaryPanel from "./TemplateSummaryPanel";
 import TemplateDetailPanel from "./TemplateDetailPanel";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faStream} from "@fortawesome/free-solid-svg-icons";
+import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 
 function TemplateDetailView() {
   const {templateId} = useParams();
-  const [accessRoleData, setAccessRoleData] = useState({});
+  const toastContext = useContext(DialogToastContext);
+  const [accessRoleData, setAccessRoleData] = useState(undefined);
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
   const [templateData, setTemplateData] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getRoles();
+    loadData();
   }, []);
+
+  const loadData = async () => {
+    try {
+      setIsLoading(true);
+      await getRoles();
+    }
+    catch (error) {
+      toastContext.showLoadingErrorDialog(error);
+    }
+    finally {
+      setIsLoading(false);
+    }
+  };
 
   const getTemplate = async (templateId) => {
     const response = await templateActions.getTemplateById(templateId, getAccessToken);

@@ -5,25 +5,15 @@ import CreateModal from "../../common/modal/CreateModal";
 import TemplateEditorPanel from "./template_detail_view/TemplateEditorPanel";
 import templateEditorMetadata from "./template-form-fields";
 
-const INITIAL_TEMPLATE_DATA = {
-  "type": [],
-  "tags": [],
-  "name": "",
-  "description": "",
-  "active": true,
-  "roles": ["opsera", "everyone"],
-  "account": "",
-  "plan": [{}]
-};
-
 function NewTemplateModal({ setShowModal, showModal, loadData } ) {
   const [templateData, setTemplateData] = useState(undefined);
 
   useEffect(() => {
-    setTemplateData(new Model({...INITIAL_TEMPLATE_DATA}, templateEditorMetadata, true));
+    setTemplateData(new Model({...templateEditorMetadata.newObjectFields}, templateEditorMetadata, true));
   }, []);
 
   const handleClose = () => {
+    loadData();
     setShowModal(false);
   };
 
