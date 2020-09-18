@@ -64,7 +64,17 @@ const templateEditorMetadata = {
       }
     ],
   },
-]
+],
+  newObjectFields: {
+    "type": [],
+    "tags": [],
+    "name": "",
+    "description": "",
+    "active": true,
+    "roles": ["opsera", "everyone"],
+    "account": "",
+    "plan": [{}]
+  }
 };
 
 export default templateEditorMetadata;
