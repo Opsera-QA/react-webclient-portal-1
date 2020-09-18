@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { Button, Card, Form } from "react-bootstrap";
 import { ApiService } from "api/apiService";
 import { useHistory } from "react-router-dom";
@@ -6,31 +6,13 @@ import registrationMetadata from "./freetrial-metadata";
 import DtoTextInput from "../common/input/dto_input/dto-text-input";
 import Model from "../../core/data_model/model";
 import LoadingDialog from "../common/status_notifications/loading";
-import { getErrorDialog, getFormValidationErrorDialog, getUpdateFailureResultDialog } from "../common/toasts/toasts";
+import {DialogToastContext} from "../../contexts/DialogToastContext";
 
-const INITIAL_DATA = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
-  domain: "",
-  street: "",
-  city: "",
-  state: "",
-  zip: "",
-  // TODO: Figure out better way to deal with inner objects, but for now deconstruct and construct before sending
-  // attributes: { title: "", company: "" },
-  title: "",
-  company: "",
-};
-
-function FreeTrialSignup(props) {
+function FreeTrialSignup() {
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
-  const [showToast, setShowToast] = useState(false);
-  const [toast, setToast] = useState({});
   const [registrationDataDto, setRegistrationDataDto] = useState(undefined);
+  const toastContext =useContext(DialogToastContext);
 
   useEffect(() => {
     loadData();
@@ -38,7 +20,7 @@ function FreeTrialSignup(props) {
 
   const loadData = async () => {
     setIsLoading(true);
-    await setRegistrationDataDto(new Model(INITIAL_DATA, registrationMetadata, true));
+    await setRegistrationDataDto(new Model(registrationMetadata.newObjectFields, registrationMetadata, true));
     setIsLoading(false);
   };
 
@@ -70,19 +52,15 @@ function FreeTrialSignup(props) {
     event.stopPropagation();
 
     if (registrationDataDto.getData("email").length === 0) {
-      let toast = getErrorDialog("You did not enter an email address.", setShowToast);
-      setToast(toast);
-      setShowToast(true);
+      toastContext.showErrorDialog("You did not enter an email address.")
       return;
     }
     //Check if the email is already exist in the system
     const emailIsAvailable = await isEmailAvailable();
 
     if (!emailIsAvailable) {
-      let toast = getErrorDialog("Email address already exists.", setShowToast);
-      setToast(toast);
-      setShowToast(true);
-    } else if (registrationDataDto.isModelValid()) {
+      toastContext.showEmailAlreadyExistsErrorDialog();
+    } else if (registrationDataDto.isModelValid2()) {
       let finalObject = registrationDataDto.getPersistData();
       let attributes = { title: registrationDataDto.getData("title"), company: registrationDataDto.getData("company") };
       let configuration = { cloudProvider: "GKE", cloudProviderRegion: "" };
@@ -103,22 +81,19 @@ function FreeTrialSignup(props) {
           loadRegistrationResponse();
         })
         .catch(function (error) {
-          let toast = getUpdateFailureResultDialog("Tag", error.message, setShowToast);
-          setToast(toast);
-          setShowToast(true);
+          toastContext.showCreateFailureResultDialog("Opsera Account", error);
           console.error(error.message);
           setIsLoading(false);
         });
     } else {
-      let toast = getFormValidationErrorDialog(setShowToast, "detailPanelTop");
-      setToast(toast);
-      setShowToast(true);
+      toastContext.showFormValidationErrorDialog();
     }
   };
 
   if (isLoading || registrationDataDto == null) {
-    return <LoadingDialog size="sm" />;
-  } else {
+    return <LoadingDialog size="sm"/>;
+  }
+
     return (
       <div className="new-user-signup-form">
         <Form className="m-auto" noValidate onSubmit={signupSubmit}>
@@ -127,7 +102,6 @@ function FreeTrialSignup(props) {
               Sign Up For Opsera
             </Card.Header>
             <Card.Body className="new-user-body">
-              {showToast && toast}
               <div className="signupForm p-2">
                 <div className="pr-3 pb-3">
                   <DtoTextInput
@@ -207,7 +181,6 @@ function FreeTrialSignup(props) {
         </Form>
       </div>
     );
-  }
 }
 
 export default FreeTrialSignup;
