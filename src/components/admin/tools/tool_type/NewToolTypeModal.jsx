@@ -5,22 +5,15 @@ import Model from "../../../../core/data_model/model";
 import CreateModal from "../../../common/modal/CreateModal";
 import ToolTypeEditorPanel from "./tool_type_detail_view/ToolTypeEditorPanel";
 
-const INITIAL_TOOL_TYPE_DATA = {
-  "name": "",
-  "description": "",
-  "identifier": "",
-  "tags": [],
-  "active": true,
-};
-
 function NewToolTypeModal({ setShowModal, showModal, loadData } ) {
   const [toolTypeData, setToolTypeData] = useState(undefined);
 
   useEffect(() => {
-    setToolTypeData(new Model({...INITIAL_TOOL_TYPE_DATA}, toolTypeMetadata, true));
+    setToolTypeData(new Model({...toolTypeMetadata.newObjectFields}, toolTypeMetadata, true));
   }, []);
 
   const handleClose = () => {
+    loadData();
     setShowModal(false);
   };
 
