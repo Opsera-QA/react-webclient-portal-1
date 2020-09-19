@@ -9,7 +9,6 @@ import Model from "../../../../../core/data_model/model";
 import toolIdentifierMetadata from "../tool-identifier-metadata";
 import ToolIdentifierSummaryPanel from "./ToolIdentifierSummaryPanel";
 import ToolIdentifierDetailPanel from "./ToolIdentifierDetailPanel";
-import {faUser} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTools} from "@fortawesome/pro-solid-svg-icons";
 

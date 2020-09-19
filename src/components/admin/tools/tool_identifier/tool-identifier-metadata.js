@@ -40,8 +40,19 @@ const toolIdentifierMetadata = {
     label: "Active",
     id: "active",
   },
-]
-};
+],
+  newObjectFields: {
+    name: "",
+    description: "",
+    identifier: "",
+    tags: [],
+    rules: {},
+    properties: {
+      isLiveStream: false
+    },
+    active: true,
+  }
+}
 
 
 export default toolIdentifierMetadata;

@@ -4,108 +4,56 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import DtoTextInput from "../../../../common/input/dto_input/dto-text-input";
 import DtoToggleInput from "../../../../common/input/dto_input/dto-toggle-input";
-import DtoItemInput from "../../../../common/input/dto_input/item-displayer/dto-item-input";
-import Model from "../../../../../core/data_model/model";
 import toolTypeActions from "../../tool-management-actions";
-import {
-  getCreateFailureResultDialog, getCreateSuccessResultDialog,
-  getFormValidationErrorDialog, getLoadingErrorDialog,
-  getUpdateFailureResultDialog,
-  getUpdateSuccessResultDialog
-} from "../../../../common/toasts/toasts";
 import DtoSelectInput from "../../../../common/input/dto_input/dto-select-input";
 import DtoPropertiesInput from "../../../../common/input/dto_input/dto-properties-input";
 import SaveButton from "../../../../common/buttons/SaveButton";
 import LoadingDialog from "../../../../common/status_notifications/loading";
 import DtoTagManagerInput from "../../../../common/input/dto_input/dto-tag-manager-input";
+import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 
-function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData} ) {
+function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData, handleClose} ) {
   const {getAccessToken} = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [toolList, setToolList] = useState([]);
   const [toolIdentifierDataDto, setToolIdentifierDataDto] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const [loadingError, setLoadingError] = useState(false);
-  const [showToast, setShowToast] = useState(false);
-  const [toast, setToast] = useState({});
 
   useEffect(() => {
     loadData();
   }, []);
 
   const loadData = async () => {
-    setIsLoading(true);
-    setToolIdentifierDataDto(toolIdentifierData);
-    await getToolList();
-    setIsLoading(false);
+    try {
+      setIsLoading(true);
+      setToolIdentifierDataDto(toolIdentifierData);
+      await getToolList();
+    }
+    catch (error) {
+      toastContext.showLoadingErrorDialog(error);
+    }
+    finally {
+      setIsLoading(false);
+    }
   };
 
   const getToolList = async () => {
-    try {
-      const toolResponse = await toolTypeActions.getToolTypes(getAccessToken, false);
-      setToolList(toolResponse.data);
-    } catch (error) {
-      let toast = getLoadingErrorDialog(error.message, setShowToast);
-      setToast(toast);
-      setShowToast(true);
-      setLoadingError(true);
-      console.error(error.message);
-    }
+    return await toolTypeActions.getToolTypes(getAccessToken, false);
   };
 
   const createToolIdentifier = async () => {
-    if (toolIdentifierDataDto.isModelValid()) {
-      try {
-        const response = await toolTypeActions.createToolIdentifier(toolIdentifierDataDto, getAccessToken);
-        let toast = getCreateSuccessResultDialog("Tool Identifier", setShowToast);
-        setToast(toast);
-        setShowToast(true);
-        let updatedDto = new Model(response.data, toolIdentifierDataDto.metaData, false);
-        setToolIdentifierData(updatedDto);
-        setToolIdentifierDataDto(updatedDto);
-      } catch (error) {
-        let toast = getCreateFailureResultDialog("Tool Identifier", error.message);
-        setToast(toast);
-        setShowToast(true);
-        console.error(error.message);
-      }
-    } else {
-      let toast = getFormValidationErrorDialog(setShowToast);
-      setToast(toast);
-      setShowToast(true);
-    }
+    return await toolTypeActions.createToolIdentifier(toolIdentifierDataDto, getAccessToken);
   };
 
   const updateToolIdentifier = async () => {
-    if (toolIdentifierDataDto.isModelValid()) {
-      try {
-        const response = await toolTypeActions.updateToolIdentifier(toolIdentifierDataDto, getAccessToken);
-        let toast = getUpdateSuccessResultDialog("Tool Identifier", setShowToast);
-        setToast(toast);
-        setShowToast(true);
-        let updatedDto = new Model(response.data, toolIdentifierDataDto.metaData, false);
-        setToolIdentifierData(updatedDto);
-        setToolIdentifierDataDto(updatedDto);
-      } catch (error) {
-        let toast = getUpdateFailureResultDialog("Tool Identifier", error.message, setShowToast);
-        setToast(toast);
-        setShowToast(true);
-        console.error(error.message);
-      }
-    } else {
-      let toast = getFormValidationErrorDialog(setShowToast);
-      setToast(toast);
-      setShowToast(true);
-    }
+    return await toolTypeActions.updateToolIdentifier(toolIdentifierDataDto, getAccessToken);
   };
 
   if (isLoading) {
     return (<LoadingDialog size="sm"/>);
-  } else if (loadingError) {
-    return (<span>{showToast && toast}</span>);
-  } else {
+  }
     return (
       <>
-        {showToast && toast}
         <div className="mx-2 my-3">
           <Row>
             <Col lg={6}>
@@ -132,19 +80,25 @@ function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData} 
           </Row>
           <Row>
             <div className="ml-auto mt-3 px-3">
-              <SaveButton recordDto={toolIdentifierDataDto} createRecord={createToolIdentifier}
-                          updateRecord={updateToolIdentifier} type={"Tool Identifier"}/>
+              <SaveButton recordDto={toolIdentifierDataDto}
+                          createRecord={createToolIdentifier}
+                          updateRecord={updateToolIdentifier}
+                          type={"Tool Identifier"}
+                          setRecordDto={setToolIdentifierDataDto}
+                          setData={setToolIdentifierData}
+                          handleClose={handleClose}
+              />
             </div>
           </Row>
         </div>
       </>
     );
-  }
 }
 
 ToolIdentifierEditorPanel.propTypes = {
   toolIdentifierData: PropTypes.object,
-  setToolIdentifierData: PropTypes.func
+  setToolIdentifierData: PropTypes.func,
+  handleClose: PropTypes.func,
 };
 
 export default ToolIdentifierEditorPanel;

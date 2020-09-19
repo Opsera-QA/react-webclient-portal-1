@@ -5,35 +5,22 @@ import ToolIdentifierEditorPanel from "./tool_identifier_detail_view/ToolIdentif
 import toolIdentifierMetadata from "./tool-identifier-metadata";
 import Model from "../../../../core/data_model/model";
 
-const INITIAL_TOOL_IDENTIFIER_DATA = {
-  name: "",
-  description: "",
-  identifier: "",
-  tags: [],
-  rules: {},
-  properties: {
-    isLiveStream: false
-  },
-  active: true,
-};
-
 function NewToolIdentifierModal({ setShowModal, loadData, showModal } ) {
   const [toolIdentifierData, setToolIdentifierData] = useState(undefined);
 
   useEffect(() => {
-    setToolIdentifierData(new Model({...INITIAL_TOOL_IDENTIFIER_DATA}, toolIdentifierMetadata, true));
+    setToolIdentifierData(new Model({...toolIdentifierMetadata.newObjectFields}, toolIdentifierMetadata, true));
   }, []);
 
   const handleClose = () => {
+    loadData();
     setShowModal(false);
   };
 
   return (
-    <>
       <CreateModal handleCancelModal={handleClose} objectType={"Tool Identifier"} showModal={showModal} loadData={loadData} >
-        {toolIdentifierData && <ToolIdentifierEditorPanel setToolIdentifierData={setToolIdentifierData} toolIdentifierData={toolIdentifierData} />}
+        {toolIdentifierData && <ToolIdentifierEditorPanel setToolIdentifierData={setToolIdentifierData} toolIdentifierData={toolIdentifierData} handleClose={handleClose} />}
       </CreateModal>
-    </>
   );
 }
 
