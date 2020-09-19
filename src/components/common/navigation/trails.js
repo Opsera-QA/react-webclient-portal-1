@@ -16,6 +16,7 @@ const trails = {
   kpiDetailView: {parent: "kpiManagement", destination: {name: "kpiDetailView", path: paths.kpiManagement, label: "Kpi Details"}},
   registeredUsersManagement: {parent: "admin", destination: {name: "registeredUsersManagement", path: paths.registeredUsersManagement, label: "Registered Users Management"}},
   registeredUsersDetailView: {parent: "registeredUsersManagement", destination: {name: "registeredUsersDetailView", path: paths.registeredUsersManagement, label: "Registered User Details"}},
+  apiManagement: {parent: "admin", destination: {name: "apiManagement", path: paths.apiManagement, label: "API Management"}},
 
   // Account settings
   accountSettings: {parent: undefined, destination: {name: "accountSettings", path: paths.accountSettings, label: "Account Settings"}},

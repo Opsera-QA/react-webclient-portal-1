@@ -63,6 +63,15 @@ RegisteredUserActions.deployElkStack = async (userId, getAccessToken) => {
   return response;
 };
 
+RegisteredUserActions.getRegisteredUserTools = async (userId, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/tools/user/${userId}`;
+  const response = await axiosApiService(accessToken).get(apiUrl)
+    .then((result) =>  {return result;})
+    .catch(error => {throw error;});
+  return response;
+};
+
 RegisteredUserActions.deactivateUser = async (userId, getAccessToken) => {
   let postBody = {
     userId: userId
