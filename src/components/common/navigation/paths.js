@@ -18,6 +18,8 @@ paths.ldapOrganizationDetailView = paths.admin + "/organization-accounts";
 
 paths.registeredUsersManagement = paths.admin + "/registered-users";
 
+paths.apiManagement = "demo/api";
+
 paths.kpiManagement = paths.admin + "/kpis";
 paths.kpiDetailView = paths.kpiManagement;
 

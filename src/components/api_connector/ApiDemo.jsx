@@ -1,90 +1,110 @@
 import React, { useContext, useState, useEffect } from "react";
 import { axiosApiServiceMultiGet } from "../../api/apiService";
-import ErrorDialog from "../common/status_notifications/error";
 import LoadingDialog from "../common/status_notifications/loading";
 import { AuthContext } from "../../contexts/AuthContext";
 import Modal from "../common/modal/modal";
 import ReactJson from "react-json-view";
-import { Link } from "react-router-dom";
+import {DialogToastContext} from "../../contexts/DialogToastContext";
+import BreadcrumbTrail from "../common/navigation/breadcrumbTrail";
+import RegisteredUserActions from "../admin/registered_users/registered-user-actions";
+import Model from "../../core/data_model/model";
+import registeredUserToolsMetadata
+  from "../admin/registered_users/registered_user_details/tools/registered-user-tools-form-fields";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import DtoJsonField from "../common/form_fields/dto_form_fields/dto-json-field";
 
 function ApiDemo() {
-  const contextType = useContext(AuthContext);
+  const {getAccessToken, getUserRecord} = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [loading, setLoading] = useState(false);
   const [authData, setAuthData] = useState([]);
   const [user, setUser] = useState([]);
   const [analyticsProfile, setAnalyticsProfile] = useState([]);
   const [tools, setTools] = useState([]);
-  const [error, setErrors] = useState();
-  const [authenticated, setAuthenticated] = useState();
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
+  const [registeredUserToolsDto, setRegisteredUserToolsDto] = useState(undefined);
 
   useEffect(() => {
-    const controller = new AbortController();
-    const runEffect = async () => {
-      try {
-        await fetchData();
-      } catch (err) {
-        if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
-          return;
-        }
-      }
-    };
-
-    runEffect();
-
-    return () => {
-      controller.abort();
-    };
+    loadData();
   }, []);
 
+  const loadData = async () => {
+    try {
+      setLoading(true);
+      await fetchData();
+      await getUserTools();
+    }
+    catch (error) {
+      toastContext.showLoadingErrorDialog(error);
+    }
+    finally {
+      setLoading(false);
+    }
+  };
 
-  async function fetchData() {
-    setLoading(true);
-    const { getAccessToken, authenticated } = contextType;
+  const getUserTools = async () => {
+    const user = await getUserRecord();
+    const response = await RegisteredUserActions.getRegisteredUserTools(user["_id"], getAccessToken);
+    // console.log("JSON RESPONSE: " + JSON.stringify(response));
+    setRegisteredUserToolsDto(new Model({...response.data}, registeredUserToolsMetadata, false));
+  };
+
+  const fetchData = async () => {
     const accessToken = await getAccessToken();
-    setAuthenticated(authenticated);
     const apiUrls = ["/auth-demo", "/users", "/analytics/settings", "/tools"];
     try {
       const [authDemo, userProfile, analyticsProfile, tools] = await axiosApiServiceMultiGet(accessToken, apiUrls);
       setAuthData(authDemo.data);
       setUser(userProfile.data);
-      setAnalyticsProfile(analyticsProfile.data.profile[0]);
+
+      if (analyticsProfile != null && analyticsProfile.data != null) {
+        setAnalyticsProfile(analyticsProfile.data.profile[0]);
+        console.log("analyticsProfile: ", analyticsProfile.data.profile[0]);
+      }
       setTools(tools.data);
-      setLoading(false);
       console.log("authDemo", authDemo.data);
       console.log("userProfile", userProfile.data);
       console.log("tools: ", tools.data);
-      console.log("analyticsProfile: ", analyticsProfile.data.profile[0]);
-    } catch (err) {
-      console.log(err.message);
-      setLoading(false);
-      setErrors(err);
+    } catch (error) {
+      console.error(error);
+      toastContext.showLoadingErrorDialog(error);
     }
+  };
+
+  // TODO: Remove if unnecessary, but for now leaving here in case we want to use it again
+  const getOldToolsDisplayer = () => {
+    return (
+      <>
+        {tools !== undefined && tools.length > 0 && <div className="mb-5">
+          <div className="lead mt-3">Tools:</div>
+          <div className="text-muted">Tool entries from Platform MongoDB registered by microservices.</div>
+          {tools.map((item, idx) => (
+            <div key={idx} className="mb-2">
+              <div>instanceStatus: {JSON.stringify(item.instanceStatus)}</div>
+              <div>ID: {JSON.stringify(item._id)}</div>
+              <div>User: {JSON.stringify(item.user)}</div>
+
+              <div>Name: {JSON.stringify(item.name)}</div>
+              <div>Instance ID: {JSON.stringify(item.instanceId)}</div>
+              <div>DNS Name: {JSON.stringify(item.dnsName)}</div>
+            </div>
+          ))}
+        </div>}
+      </>
+    );
   }
 
-
-  if (loading) {
+  if (loading || registeredUserToolsDto == null) {
     return (<LoadingDialog size="lg"/>);
-  } else {
+  }
+
     return (
       <div>
-        {/* <h4>Administration Tools</h4> */}
-
-        <nav aria-label="breadcrumb">
-          <ol className="breadcrumb" style={{ backgroundColor: "#fafafb" }}>
-            <li className="breadcrumb-item">
-              <Link to="/admin">Admin</Link>
-            </li>
-            <li className="breadcrumb-item active">API Management</li>
-          </ol>
-        </nav>
-
+        <BreadcrumbTrail destination={"apiManagement"} />
         <h5>API Management</h5>
         <h2>API Test w/ Okta Authentication Token and Axios.js</h2>
-        {error ? <ErrorDialog error={error}/> : null}
-
         <h6 style={{ marginTop: 20 }}>Response Package Breakdown:<br/>
           <small className="text-muted">This is confirmation the data is returned from the server and an example of
             breaking it down
@@ -144,22 +164,19 @@ function ApiDemo() {
           <ReactJson src={authData}/>
         </div>
 
+        {/*{getOldToolsDisplayer()}*/}
 
-        {tools !== undefined && tools.length > 0 && <div className="mb-5">
-          <div className="lead mt-3">Tools:</div>
-          <div className="text-muted">Tool entries from Platform MongoDB registered by microservices.</div>
-          {tools.map((item, idx) => (
-            <div key={idx} className="mb-2">
-              <div>instanceStatus: {JSON.stringify(item.instanceStatus)}</div>
-              <div>ID: {JSON.stringify(item._id)}</div>
-              <div>User: {JSON.stringify(item.user)}</div>
 
-              <div>Name: {JSON.stringify(item.name)}</div>
-              <div>Instance ID: {JSON.stringify(item.instanceId)}</div>
-              <div>DNS Name: {JSON.stringify(item.dnsName)}</div>
-            </div>
-          ))}
-        </div>}
+        <Row>
+          <Col md={12} lg={6}>
+            <DtoJsonField dataObject={registeredUserToolsDto} fieldName={"platformDbTools"}/>
+          </Col>
+        </Row>
+        <Row>
+          <Col md={12} lg={6}>
+            <DtoJsonField dataObject={registeredUserToolsDto} fieldName={"customerDbTools"}/>
+          </Col>
+        </Row>
 
 
 
@@ -172,8 +189,6 @@ function ApiDemo() {
           handleConfirmModal={() => setShowModal(false)}/> : null}
       </div>
     );
-  }
-
 }
 
 
