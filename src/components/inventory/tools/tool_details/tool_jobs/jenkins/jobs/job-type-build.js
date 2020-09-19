@@ -24,7 +24,7 @@ const JenkinsJobTypeBuild = {
     isValid: false,
     errorMessage: "",    
     rules: {
-      isRequired: false 
+      isRequired: true 
     }
   }, 
   buildTool: {
@@ -52,7 +52,7 @@ const JenkinsJobTypeBuild = {
     isValid: false,
     errorMessage: "",    
     rules: {
-      isRequired: false 
+      isRequired: true 
     }
   },
   // buildToolVersion: {
@@ -84,7 +84,7 @@ const JenkinsJobTypeBuild = {
     isValid: false,
     errorMessage: "",    
     rules: {
-      isRequired: false 
+      isRequired: true 
     }
   },
   mavenTask: {
@@ -100,7 +100,7 @@ const JenkinsJobTypeBuild = {
     isValid: false,
     errorMessage: "",    
     rules: {
-      isRequired: false 
+      isRequired: true 
     }
   },
   // buildArgs: {

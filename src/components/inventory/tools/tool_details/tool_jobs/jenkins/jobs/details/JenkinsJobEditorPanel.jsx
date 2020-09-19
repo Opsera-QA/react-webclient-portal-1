@@ -123,9 +123,9 @@ function JenkinsJobEditorPanel({ toolData, jobData, loadData }) {
     });
   };
 
-  const handleFormChange = (jenkinsFormList, value) => {
+  const handleFormChange = (jenkinsFormList, value) => {   
     let validateInput = {
-      errorMessage: "",
+      errorMessage: jenkinsFormList.rules.isRequired ? (value.length > 0 ? "" : "This Feild is required")  : "",
       touched: true, 
       isValid: true,
       value: value
@@ -139,6 +139,12 @@ function JenkinsJobEditorPanel({ toolData, jobData, loadData }) {
     }));
   };
 
+const validateForm = () => {
+  let formData = Object.keys(jenkinsFormList).reduce((obj, item) => Object.assign(obj, { [item]: { "value" : jenkinsFormList[item].value, "errorMessage" :  jenkinsFormList[item].errorMessage} }), {});
+  console.log("::::::::")
+  console.log(formData)
+  console.log("::::::::")
+}
   const formFieldType = (formField) => {
     switch (formField.type) {   
     case "select":
@@ -277,7 +283,7 @@ function JenkinsJobEditorPanel({ toolData, jobData, loadData }) {
       <Form className="newToolFormContainer">
         <Form.Group  controlId="formPlaintextEmail" className="mt-2 vertical-center-cols-in-row">
           <Form.Label column sm="3">
-            Name
+            Name *
           </Form.Label>
           <Col sm="9" className="text-right">
             <Form.Control value={jobName} disabled={viewForm} onChange={e => setJobName(e.target.value)} />
@@ -328,7 +334,7 @@ function JenkinsJobEditorPanel({ toolData, jobData, loadData }) {
 
       <div className="text-right m-2">
         {!viewForm && <Button size="sm" variant="secondary" onClick={() => toggleViewForm(false)} className="mr-2">Cancel</Button>}
-        {!viewForm && <Button size="sm" variant="primary" onClick={updateJob}><FontAwesomeIcon icon={faSave} fixedWidth />Save Job</Button>}
+        {!viewForm && <Button size="sm" variant="primary" onClick={validateForm}><FontAwesomeIcon icon={faSave} fixedWidth />Save Job</Button>}
       </div>
 
       {showDeleteModal ? <Modal header="Confirm Jenkins Job Delete"
