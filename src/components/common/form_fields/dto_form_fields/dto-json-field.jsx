@@ -9,7 +9,7 @@ function DtoJsonField({dataObject, fieldName}) {
       <div className="my-2">
         <label className="text-muted mr-2">{field.label}:</label>
         <div className="ml-3">
-          <ReactJson src={dataObject.getData("plan")} enableClipboard={false} displayDataTypes={false}/>
+          <ReactJson src={dataObject.getData(fieldName)} enableClipboard={false} displayDataTypes={false}/>
         </div>
       </div>
     </>
