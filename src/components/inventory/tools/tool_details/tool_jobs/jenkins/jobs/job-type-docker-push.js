@@ -164,7 +164,7 @@ const JenkinsJobTypeDockerPush = {
     isValid: false,
     errorMessage: "",    
     rules: {
-      isRequired: true 
+      isRequired: false 
     }
   },            
 };
