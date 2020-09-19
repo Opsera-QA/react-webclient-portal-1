@@ -10,7 +10,7 @@ const JenkinsJobTypePerformanceTesting = {
     isValid: false,
     errorMessage: "",    
     rules: {
-      isRequired: true 
+      isRequired: false 
     }
   }, 
   jmeterFileName: {
@@ -24,7 +24,7 @@ const JenkinsJobTypePerformanceTesting = {
     isValid: false,
     errorMessage: "",    
     rules: {
-      isRequired: true 
+      isRequired: false 
     }
   },
 };
