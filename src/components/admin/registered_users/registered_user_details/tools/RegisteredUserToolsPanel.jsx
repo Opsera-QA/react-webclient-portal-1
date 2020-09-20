@@ -9,6 +9,7 @@ import RegisteredUserActions from "../../registered-user-actions";
 import DtoJsonField from "../../../../common/form_fields/dto_form_fields/dto-json-field";
 import Model from "../../../../../core/data_model/model";
 import registeredUserToolsMetadata from "./registered-user-tools-form-fields";
+import DetailPanelLoadingDialog from "../../../../common/loading/DetailPanelLoadingDialog";
 
 function RegisteredUserToolsPanel({ registeredUserId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -40,11 +41,7 @@ function RegisteredUserToolsPanel({ registeredUserId }) {
   };
 
   if (isLoading) {
-    return (
-      <div>
-        <LoadingDialog size={"sm"} />
-      </div>
-    );
+    return <DetailPanelLoadingDialog type={"Registered User Tools"} />;
   }
 
   return (
