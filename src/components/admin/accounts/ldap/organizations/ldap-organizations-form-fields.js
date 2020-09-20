@@ -123,5 +123,16 @@ export const ldapOrganizationMetaData = {
       label: "Subscriptions",
       id: "subscription",
     },
-  ]
+  ],
+  newObjectFields: {
+    name: "",
+    description: "",
+    envCount: "5",
+    numberOfLicenses: "2000",
+    objectCount: "50000",
+    orgName: "",
+    orgOwner: "",
+    orgOwnerEmail: "",
+    subscription: ["apps", "eventHooks"]
+  }
 };

@@ -139,7 +139,7 @@ function LdapOrganizationAccountManagement() {
           </div>
           <LdapOrganizationAccountsTable isLoading={isLoading} showDropdown={true} ldapOrganizationAccounts={organizationAccounts} loadData={loadData}  />
         </div>
-        <NewLdapOrganizationAccountModal ldapOrganizationData={ldapOrganizationData} showModal={showCreateOrganizationAccountModal} loadData={loadData} setShowModal={setShowCreateOrganizationAccountModal}/>
+        <NewLdapOrganizationAccountModal ldapOrganizationData={ldapOrganizationData} authorizedActions={authorizedActions} showModal={showCreateOrganizationAccountModal} loadData={loadData} setShowModal={setShowCreateOrganizationAccountModal}/>
   </>);
 }
 

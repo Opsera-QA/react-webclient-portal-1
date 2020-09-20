@@ -5,33 +5,23 @@ import Model from "../../../../../core/data_model/model";
 import {ldapOrganizationMetaData} from "./ldap-organizations-form-fields";
 import CreateModal from "../../../../common/modal/CreateModal";
 
-const INITIAL_ORGANIZATION_DATA = {
-  name: "",
-  description: "",
-  envCount: "5",
-  numberOfLicenses: "2000",
-  objectCount: "50000",
-  orgName: "",
-  orgOwner: "",
-  orgOwnerEmail: "",
-  subscription: ["apps", "eventHooks"]
-};
 
-function NewLdapOrganizationModal({ setShowModal, showModal, loadData }) {
+function NewLdapOrganizationModal({ setShowModal, showModal, loadData, authorizedActions }) {
   const [ldapOrganizationData, setLdapOrganizationData] = useState(undefined);
 
   useEffect(() => {
-    setLdapOrganizationData(new Model({...INITIAL_ORGANIZATION_DATA}, ldapOrganizationMetaData, true));
+    setLdapOrganizationData(new Model({...ldapOrganizationMetaData.newObjectFields}, ldapOrganizationMetaData, true));
   }, []);
 
   const handleClose = () => {
     setShowModal(false);
+    loadData();
   };
 
   return (
     <>
       <CreateModal handleCancelModal={handleClose} objectType={"Organization"} showModal={showModal} loadData={loadData} >
-        {ldapOrganizationData && <LdapOrganizationEditorPanel setLdapOrganizationData={setLdapOrganizationData} newLdapOrganization={true} handleClose={handleClose} ldapOrganizationData={ldapOrganizationData} />}
+        {ldapOrganizationData && <LdapOrganizationEditorPanel authorizedActions={authorizedActions} setLdapOrganizationData={setLdapOrganizationData} newLdapOrganization={true} handleClose={handleClose} ldapOrganizationData={ldapOrganizationData} />}
       </CreateModal>
     </>
   );
@@ -40,7 +30,8 @@ function NewLdapOrganizationModal({ setShowModal, showModal, loadData }) {
 NewLdapOrganizationModal.propTypes = {
   showModal: PropTypes.bool,
   setShowModal: PropTypes.func,
-  loadData: PropTypes.func
+  loadData: PropTypes.func,
+  authorizedActions: PropTypes.array
 };
 
 export default NewLdapOrganizationModal;

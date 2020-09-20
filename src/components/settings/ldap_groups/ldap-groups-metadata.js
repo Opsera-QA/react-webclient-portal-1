@@ -29,5 +29,12 @@ export const ldapGroupMetaData = {
     label: "Owner Email",
     id: "ownerEmail",
   },
-]
+],
+  newObjectFields: {
+    name: "",
+    groupType: "user",
+    // TODO: Set Default Value When user groups can use it
+    externalSyncGroup: undefined,
+    isSync: true,
+  }
 }

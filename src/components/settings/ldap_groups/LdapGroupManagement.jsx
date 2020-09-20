@@ -80,7 +80,6 @@ function LdapGroupManagement() {
       setAccessRoleData(userRoleAccess);
 
       let authorizedActions = await accountsActions.getAllowedGroupActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
-      console.log("Authorized Actions: " + JSON.stringify(authorizedActions));
       setAuthorizedActions(authorizedActions);
 
       if (orgDomain != null && userRoleAccess.OpseraAdministrator) {
@@ -160,7 +159,7 @@ function LdapGroupManagement() {
             {groupList && <LdapGroupsTable isLoading={isLoading} groupData={groupList} orgDomain={orgDomain}/>}
           </div>
 
-          <NewLdapGroupModal loadData={loadData} ldapOrganizationData={ldapOrganizationData} showModal={showCreateGroupModal} currentUserEmail={currentUserEmail} setShowModal={setShowCreateGroupModal}/>
+          <NewLdapGroupModal loadData={loadData} authorizedActions={authorizedActions} ldapOrganizationData={ldapOrganizationData} showModal={showCreateGroupModal} currentUserEmail={currentUserEmail} setShowModal={setShowCreateGroupModal}/>
           </>
       </div>
     );

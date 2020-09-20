@@ -5,41 +5,22 @@ import Model from "../../../../../core/data_model/model";
 import {ldapOrganizationAccountMetaData} from "./ldap-organization-account-form-fields";
 import CreateModal from "../../../../common/modal/CreateModal";
 
-const INITIAL_ORGANIZATION_ACCOUNT_DATA = {
-  org: "",
-  name: "",
-  localAuth: true,
-  samlEnabled: true,
-  oAuthEnabled: true,
-  idpPostURL: "https://testurl.com",
-  idpVendor: "OKTA",
-  configEntryType: "Not sure",
-  entityID: "https://dev-842100.oktapreview.com",
-  description: "",
-  isMultipleIDP: false,
-  idpReturnAttributes: [
-    "mail",
-    "cn"],
-  accountName: "",
-  orgDomain: "",
-  administrator: {}
-};
-
-function NewLdapOrganizationAccountModal({ setShowModal, showModal, ldapOrganizationData, loadData } ) {
+function NewLdapOrganizationAccountModal({ setShowModal, showModal, ldapOrganizationData, loadData,authorizedActions } ) {
   const [ldapOrganizationAccountData, setLdapOrganizationAccountData] = useState(undefined);
 
   useEffect(() => {
-    setLdapOrganizationAccountData(new Model({...INITIAL_ORGANIZATION_ACCOUNT_DATA}, ldapOrganizationAccountMetaData, true));
+    setLdapOrganizationAccountData(new Model({...ldapOrganizationAccountMetaData.newObjectFields}, ldapOrganizationAccountMetaData, true));
   }, []);
 
   const handleClose = () => {
     setShowModal(false);
+    loadData();
   };
 
   return (
     <>
       <CreateModal handleCancelModal={handleClose} objectType={"Organization Account"} showModal={showModal} loadData={loadData} >
-        {ldapOrganizationAccountData && <LdapOrganizationAccountEditorPanel ldapOrganization={ldapOrganizationData} setLdapOrganizationAccountData={setLdapOrganizationAccountData} handleClose={handleClose} ldapOrganizationAccountData={ldapOrganizationAccountData} />}
+        {ldapOrganizationAccountData && <LdapOrganizationAccountEditorPanel authorizedActions={authorizedActions} ldapOrganization={ldapOrganizationData} setLdapOrganizationAccountData={setLdapOrganizationAccountData} handleClose={handleClose} ldapOrganizationAccountData={ldapOrganizationAccountData} />}
       </CreateModal>
     </>
   );
@@ -49,7 +30,8 @@ NewLdapOrganizationAccountModal.propTypes = {
   ldapOrganizationData: PropTypes.object,
   showModal: PropTypes.bool,
   setShowModal: PropTypes.func,
-  loadData: PropTypes.func
+  loadData: PropTypes.func,
+  authorizedActions: PropTypes.array
 };
 
 export default NewLdapOrganizationAccountModal;

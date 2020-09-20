@@ -7,13 +7,12 @@ import accountsActions from "../../../accounts-actions";
 import { AuthContext } from "../../../../../../contexts/AuthContext";
 import {capitalizeFirstLetter} from "../../../../../common/helpers/string-helpers";
 import DtoTextInput from "../../../../../common/input/dto_input/dto-text-input";
-import Model from "../../../../../../core/data_model/model";
 import LoadingDialog from "../../../../../common/status_notifications/loading";
 import SaveButton from "../../../../../common/buttons/SaveButton";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import WarningDialog from "../../../../../common/status_notifications/WarningDialog";
 
-function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganizationData, authorizedActions }) {
+function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganizationData, authorizedActions, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [ldapOrganizationDataDto, setLdapOrganizationDataDto] = useState({});
@@ -125,7 +124,7 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganization
           </Row>
           <Row>
             <div className="ml-auto mt-3 px-3">
-              <SaveButton recordDto={ldapOrganizationDataDto} setRecordDto={setLdapOrganizationDataDto} setData={setLdapOrganizationData} createRecord={createOrganization} updateRecord={updateLdapOrganization}/>
+              <SaveButton recordDto={ldapOrganizationDataDto} setRecordDto={setLdapOrganizationDataDto} setData={setLdapOrganizationData} createRecord={createOrganization} updateRecord={updateLdapOrganization} handleClose={handleClose}/>
             </div>
           </Row>
         </div>

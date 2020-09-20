@@ -28,16 +28,13 @@ function LdapOrganizationAccountsTable({ldapOrganizationAccounts, isLoading }) {
   };
 
   return (
-    <>
-        <div className="table-content-block">
-          <CustomTable
-            columns={columns}
-            isLoading={isLoading}
-            data={ldapOrganizationAccounts}
-            onRowSelect={onRowSelect}
-          />
-        </div>
-    </>
+    <CustomTable
+      columns={columns}
+      isLoading={isLoading}
+      data={ldapOrganizationAccounts}
+      onRowSelect={onRowSelect}
+      tableTitle={"Organization Accounts"}
+    />
   );
 }
 
