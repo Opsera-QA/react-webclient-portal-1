@@ -159,7 +159,7 @@ function LdapUserManagement() {
         <div className="full-height">
           {userList && <LdapUsersTable orgDomain={orgDomain} isLoading={isLoading} userData={userList}/>}
         </div>
-        <NewLdapUserModal organizationName={organization && organization.name} showModal={showCreateUserModal} setShowModal={setShowCreateUserModal} loadData={loadData}/>
+        <NewLdapUserModal authorizedActions={authorizedActions} organizationName={organization && organization.name} showModal={showCreateUserModal} setShowModal={setShowCreateUserModal} loadData={loadData}/>
       </div>
     );
 }

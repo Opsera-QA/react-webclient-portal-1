@@ -5,17 +5,14 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import accountsActions from "../../../admin/accounts/accounts-actions";
 import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
-import Model from "../../../../core/data_model/model";
 import LoadingDialog from "../../../common/status_notifications/loading";
 import SaveButton from "../../../common/buttons/SaveButton";
-import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import WarningDialog from "../../../common/status_notifications/WarningDialog";
 
 function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, authorizedActions, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const [ldapUserDataDto, setLdapUserDataDto] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     loadData();
@@ -28,36 +25,11 @@ function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, authori
   };
 
   const createLdapUser = async () => {
-    if (ldapUserDataDto.isModelValid()) {
-
-      try {
-        let createUserResponse = await accountsActions.createUser(ldapUserDataDto, getAccessToken);
-        handleClose();
-        toastContext.showCreateSuccessResultDialog(ldapUserDataDto.getType());
-      } catch (error) {
-        toastContext.showCreateFailureResultDialog(ldapUserDataDto.getType(), error.message);
-        console.error(error.message);
-      }
-    }
-    else {
-      toastContext.showFormValidationErrorDialog();
-    }
+    return await accountsActions.createUser(ldapUserDataDto, getAccessToken);
   };
 
   const updateLdapUser = async () => {
-    if(ldapUserDataDto.isModelValid()) {
-      try {
-        const response = await accountsActions.updateUser(orgDomain, ldapUserDataDto, getAccessToken);
-        let updatedDto = new Model(response.data, ldapUserDataDto.metaData, false);
-        setLdapUserDataDto(updatedDto);
-        setLdapUserData(updatedDto);
-        toastContext.showUpdateSuccessResultDialog( ldapUserDataDto.getType());
-      } catch (error) {
-        toastContext.showUpdateFailureResultDialog(ldapUserDataDto.getType(), error.message);
-        console.error(error.message);
-      }
-    }
-
+    return await accountsActions.updateUser(orgDomain, ldapUserDataDto, getAccessToken);
   };
 
   if (isLoading) {
@@ -105,7 +77,7 @@ function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, authori
           </Row>
           <Row>
             <div className="ml-auto mt-3 px-3">
-              <SaveButton recordDto={ldapUserDataDto} createRecord={createLdapUser} updateRecord={updateLdapUser} />
+              <SaveButton recordDto={ldapUserDataDto} setData={setLdapUserData} setRecordDto={setLdapUserDataDto} handleClose={handleClose} createRecord={createLdapUser} updateRecord={updateLdapUser} />
             </div>
           </Row>
         </div>

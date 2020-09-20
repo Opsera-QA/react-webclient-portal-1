@@ -164,5 +164,16 @@ export const ldapUsersMetaData = {
       label: "Region",
       id: "region",
     },
-  ]
+  ],
+  newObjectFields: {
+    name: "",
+    firstName: "",
+    lastName: "",
+    preferredName: "",
+    emailAddress: "",
+    departmentName: "",
+    teams: [],
+    division: "",
+    site: "",
+  }
 };
