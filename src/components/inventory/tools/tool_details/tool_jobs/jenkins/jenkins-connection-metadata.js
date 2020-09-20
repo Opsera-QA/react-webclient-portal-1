@@ -18,7 +18,7 @@ const jenkinsConnectionMetadata = {
     {
       label: "Jenkins Token",
       id: "jAuthToken",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Proxy Enabled?",
@@ -27,17 +27,17 @@ const jenkinsConnectionMetadata = {
     {
       label: "Proxy Username",
       id: "proxyUserName",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Proxy Password",
       id: "proxyPassword",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Jenkins Password",
       id: "jPassword",
-      isRequired: true
+      // isRequired: true
     },
 ],
   newModelBase: {
