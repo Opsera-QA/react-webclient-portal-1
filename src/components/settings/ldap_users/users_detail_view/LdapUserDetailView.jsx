@@ -75,7 +75,8 @@ function LdapUserDetailView() {
 
   return (
     <>
-      <BreadcrumbTrail destination="ldapUserDetailView"/>
+      {/*TODO: The permissions matrix says that users can see all users. If necessary, change this to allowedActions.includes("get_users")*/}
+      <BreadcrumbTrail destination={(accessRoleData.PowerUser || accessRoleData.Administrator || accessRoleData.OpseraAdministrator) ? "ldapUserDetailView" : "ldapUserDetailViewLimited"} />
       {ldapUserData &&
       <div className="content-container content-card-1 max-content-width ml-2">
         <div className="pt-2 pl-2 content-block-header">
