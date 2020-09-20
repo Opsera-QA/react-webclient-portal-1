@@ -144,5 +144,11 @@ function JenkinsToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVau
   );
 }
 
+JenkinsToolConfiguration.propTypes = {
+  toolData: PropTypes.object,
+  toolId:  PropTypes.string,
+  fnSaveChanges: PropTypes.func,
+  fnSaveToVault: PropTypes.func
+};
 
 export default JenkinsToolConfiguration;
