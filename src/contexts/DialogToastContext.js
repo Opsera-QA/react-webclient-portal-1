@@ -42,9 +42,14 @@ const ToastContextProvider = (props) => {
     setShowToast(true);
   }
 
-  const showFormValidationErrorDialog = () => {
-    setToast(getErrorDialog(`WARNING! There are errors in your form`));
-    setShowToast(true);
+  const showFormValidationErrorDialog = (modal = false) => {
+    if (modal) {
+      setModalToast(getErrorDialog(`WARNING! There are errors in your form`));
+    }
+    else {
+      setToast(getErrorDialog(`WARNING! There are errors in your form`));
+      setShowToast(true);
+    }
   };
 
   const showLoadingErrorDialog = (error) => {
@@ -67,12 +72,18 @@ const ToastContextProvider = (props) => {
     setShowToast(true);
   }
 
-  const showCreateSuccessResultDialog = (type) => {
-    setToast(getSuccessDialog(`${type} created successfully!`));
-    setShowToast(true);
+  const showCreateSuccessResultDialog = (type,  modal = false) => {
+    if (modal) {
+      setModalToast(getSuccessDialog(`${type} created successfully!`));
+    }
+    else {
+      setToast(getSuccessDialog(`${type} created successfully!`));
+      setShowToast(true);
+    }
   }
 
   const showCreateFailureResultDialog = (type, error, modal = true) => {
+    console.log("in showCreateFailureResultDialog: " + modal)
     if (modal) {
       setModalToast(getErrorDialog(error, `WARNING! An error has occurred creating this ${type}:`));
     }
