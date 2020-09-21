@@ -3,7 +3,6 @@ import {useHistory} from "react-router-dom";
 import LoadingDialog from "../../common/status_notifications/loading";
 import {AuthContext} from "../../../contexts/AuthContext";
 import Modal from "../../common/modal/modal";
-import {ApiService} from "../../../api/apiService";
 import RegisteredUsersTable from "./RegisteredUsersTable";
 import Pagination from "components/common/pagination";
 
@@ -11,39 +10,43 @@ import AccessDeniedDialog from "../../common/status_notifications/accessDeniedIn
 import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
 import RegisteredUserActions from "./registered-user-actions";
 import {DialogToastContext} from "../../../contexts/DialogToastContext";
+import DetailPanelLoadingDialog from "../../common/loading/DetailPanelLoadingDialog";
+import InformationDialog from "../../common/status_notifications/info";
 
 function RegisteredUsersManagement() {
   let history = useHistory();
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [accessRoleData, setAccessRoleData] = useState({});
+  const [accessRoleData, setAccessRoleData] = useState(undefined);
   const toastContext = useContext(DialogToastContext);
-  const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState(undefined);
   const [confirm, setConfirm] = useState(false);
   const [delUserId, setDelUserId] = useState("");
-  const [administrator, setAdministrator] = useState(false);
-  const [fetching, setFetching] = useState(true);
-  const [error, setError] = useState(false);
-  const [messages, setMessages] = useState(null);
   const [deployingElk, setDeployingElk] = useState(false);
-  const [userInfo, setUserInfo] = useState(null);
-  const [deactivate, setDeactivate] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Executed every time page number or page size changes
   useEffect(() => {
-    getApiData();
+    loadData();
   }, [currentPage, pageSize]);
 
-  useEffect(() => {
-    getRoles();
-  }, []);
+  const loadData = async () => {
+    try {
+      setIsLoading(true);
+      await getRoles();
+    }
+    catch (error) {
+      toastContext.showLoadingErrorDialog(error);
+    }
+    finally {
+      setIsLoading(false)
+    }
+  };
 
   const gotoPage = (pageNumber, pageSize) => {
     setCurrentPage(pageNumber);
     setPageSize(pageSize);
   };
-
 
   const getRoles = async () => {
     const user = await getUserRecord();
@@ -54,9 +57,7 @@ function RegisteredUsersManagement() {
     }
 
     if (userRoleAccess.OpseraAdministrator) {
-      getApiData();
-    } else {
-      history.push("/");
+      await getRegisteredUsers();
     }
   };
 
@@ -91,61 +92,52 @@ function RegisteredUsersManagement() {
     setDeployingElk(true);
     await deployElkStack(userId);
     //refresh page
-    await getApiData();
+    await getRegisteredUsers();
     setDeployingElk(false);
   }
 
   const deployElkStack = async (id) => {
     try {
       const response = await RegisteredUserActions.deployElkStack(id, getAccessToken);
-      toastContext.showSuccessDialog("Successfully Deployed ELK Stack");
+      let statusCode = response.status;
+      if (statusCode === 200) {
+        toastContext.showSuccessDialog("Successfully Deployed ELK Stack");
+      }
+      else {
+        toastContext.showErrorDialog("Something went wrong deploying ELK stack. View browser logs for more details");
+        console.error(response);
+      }
     } catch (error) {
       toastContext.showErrorDialog(error.message);
     }
   }
 
-  // TODO: Move to registeredUsersActions
   const deactivateUser = async (userId) => {
-    const accessToken = await getAccessToken();
-    const apiCall = new ApiService("/users/deactivate-user", null, accessToken, { userId: userId });
-    apiCall.post()
-      .then(function(response) {
-        setDeactivate(response.data);
-        setError(null);
-        setFetching(false);
-      })
-      .catch(function(error) {
-        toastContext.showErrorDialog(error);
-      });
+    try {
+      const response = await RegisteredUserActions.deactivateUser(userId, getAccessToken);
+      toastContext.showSuccessDialog("Successfully deactivated user");
+      await getRegisteredUsers();
+    }
+    catch (error) {
+      toastContext.showErrorDialog(error);
+    }
   }
 
-  // TODO: Move to registeredUsersActions
-  const getApiData = async () => {
-    const accessToken = await getAccessToken();
-    const urlParams = {
-      page: currentPage,
-      size: pageSize,
-    };
-    const apiCall = new ApiService("/users/get-users", urlParams, accessToken);
-    apiCall.get()
-      .then(function(response) {
-        //console.log(response.data);
-        setUserData(response.data.users);
-      })
-      .catch(function(error) {
-        toastContext.showErrorDialog(error);
-      });
+  const getRegisteredUsers = async () => {
+    const response = await RegisteredUserActions.getRegisteredUsers(currentPage, pageSize, getAccessToken);
+    setUserData(response.data.users);
   }
 
   if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   }
 
-  if (!accessRoleData.OpseraAdministrator) {
+  if (!accessRoleData.OpseraAdministrator && !isLoading) {
     return (<AccessDeniedDialog roleData={accessRoleData}/>);
   }
 
   return (
+    <>
       <div>
         <BreadcrumbTrail destination={"registeredUsersManagement"} />
         <h5>Registered Users</h5>
@@ -155,21 +147,29 @@ function RegisteredUsersManagement() {
                           handleCancelModal={handleCancel}
                           handleConfirmModal={handleConfirm}/> : null}
 
-        {Object.keys(userData).length > 0 && <RegisteredUsersTable
-          data={userData}
-          deployingElk={deployingElk}
-          gotoProfile={(id) => gotoProfile(id) }
-          handleDeletePress={(id) => {
-            handleDeletePress(id);
-          }}
-          handleDeployElkStack={(id) => {
-            handleDeployElkStack(id);
-          }}/>}
-
-        {Object.keys(userData).length > 0 &&
-        <Pagination total={userData.count || 30} currentPage={currentPage} pageSize={pageSize}
-                    onClick={(pageNumber, pageSize) => gotoPage(pageNumber, pageSize)}/>}
+        {isLoading  ? <DetailPanelLoadingDialog type={"Registered Users"} />
+        :
+          Object.keys(userData).length === 0 ? <InformationDialog message="No registered users found" />
+            :
+            <>
+            <RegisteredUsersTable
+              data={userData}
+              deployingElk={deployingElk}
+              gotoProfile={(id) => gotoProfile(id)}
+              handleDeletePress={(id) => {
+                handleDeletePress(id);
+              }}
+              handleDeployElkStack={(id) => {
+                handleDeployElkStack(id);
+              }}/>
+            <div className="mt-2">
+              <Pagination total={userData.count || 30} currentPage={currentPage} pageSize={pageSize}
+                        onClick={(pageNumber, pageSize) => gotoPage(pageNumber, pageSize)}/>
+            </div>
+          </>
+        }
       </div>
+      </>
     );
 }
 

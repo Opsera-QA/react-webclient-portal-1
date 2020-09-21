@@ -2,7 +2,8 @@ import React, {Fragment, useContext, useMemo, useState} from "react";
 import {Table, Button, Row, Col} from "react-bootstrap";
 import { useTable, useExpanded, useSortBy } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {  faSortUp, faSortDown, faSort } from "@fortawesome/free-solid-svg-icons";
+import {faSortUp, faSortDown, faSort, faSpinner} from "@fortawesome/free-solid-svg-icons";
+import PropTypes from "prop-types";
 
 import "../admin.css";
 import ModalActivityLogs from "../../common/modal/modalActivityLogs";
@@ -12,7 +13,7 @@ import {AuthContext} from "../../../contexts/AuthContext";
 import registeredUsersMetadata from "./registered-users-form-fields";
 import {getTableDateColumn, getTableTextColumn} from "../../common/table/table-column-helpers";
 
-function RegisteredUsersTable({  data, deployingElk, handleDeletePress, handleDeployElkStack, gotoProfile }) {
+function RegisteredUsersTable({  data, deployingElk, isLoading, handleDeletePress, handleDeployElkStack, gotoProfile }) {
   const fields = registeredUsersMetadata.fields;
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState({});
@@ -90,20 +91,19 @@ function RegisteredUsersTable({  data, deployingElk, handleDeletePress, handleDe
 
   return (
     <>
-      <Table {...getTableProps()}>
+      <div className="table-content-block">
+      <Table className="custom-table" {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup, i) => (
             <tr key={i}  {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column, j) => (
-                <th key={j} {...column.getHeaderProps(column.getSortByToggleProps())}>
-                  {column.render("Header")}
-                  <span>
-                    {column.isSorted
-                      ? column.isSortedDesc
-                        ? <FontAwesomeIcon icon={faSortDown} className="float-right" />
-                        : <FontAwesomeIcon icon={faSortUp} className="float-right" />
-                      : <FontAwesomeIcon icon={faSort} className="float-right"/>}
-                  </span>
+                <th key={j} className="px-2 py-1" {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  <div style={{display: "flex", flexWrap: "nowrap"}}>
+                    {column.render("Header")}
+                    <span className="ml-1">
+                      {column.isSorted && <FontAwesomeIcon icon={column.isSortedDesc ? faSortDown : faSortUp}/>}
+                    </span>
+                  </div>
                 </th>
               ))}
             </tr>
@@ -139,7 +139,7 @@ function RegisteredUsersTable({  data, deployingElk, handleDeletePress, handleDe
                   <tr className="tools-block">
                     <td colSpan="2" className="text-muted text-center"> No tools are associated with this user account! </td>
                     <td colSpan="2" className="text-muted text-center">
-                      <Button variant="outline-secondary" disabled={deployingElk} size="sm" 
+                      <Button variant="secondary" disabled={deployingElk} size="sm"
                         onClick={() => { handleDeployElkStack(row.original._id); }} >
                             Deploy ELK Stack Now</Button> 
                     </td>
@@ -151,13 +151,19 @@ function RegisteredUsersTable({  data, deployingElk, handleDeletePress, handleDe
           })}
         </tbody>
       </Table>
+      </div>
       <ModalActivityLogs header="User Information" size="lg" jsonData={modalData} show={showModal} setParentVisibility={setShowModal} />
     </>
   );
 }
 
 RegisteredUsersTable.propTypes = {
-
+  data: PropTypes.array,
+  deployingElk: PropTypes.bool,
+  isLoading: PropTypes.bool,
+  handleDeletePress: PropTypes.func,
+  handleDeployElkStack: PropTypes.func,
+  gotoProfile: PropTypes.func
 };
 
 export default RegisteredUsersTable;
