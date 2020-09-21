@@ -119,6 +119,16 @@ pipelineActions.getLogs = async (pipelineId, getAccessToken) => {
   return response;
 };
 
+pipelineActions.deployTemplate = async (templateId, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/pipelines/deploy/${templateId}`;
+  const postBody = {};
+  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
+    .then((result) =>  {return result;})
+    .catch(error => {throw { error };});
+  return response;
+};
+
 
 pipelineActions.getToolsList = async (service, getAccessToken) => {
   const accessToken = await getAccessToken();
