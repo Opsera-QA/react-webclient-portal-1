@@ -238,6 +238,21 @@ function CypressStepConfiguration({
     }
   }, [jenkinsList, formData.toolConfigId]);
 
+  
+  useEffect(() => {
+    if (jobsList && jobsList.length > 0 && !jobsList[jobsList.findIndex((x) => x._id === formData.toolJobId)]) {
+     let toast = getErrorDialog(
+        "Preselected job is no longer available.  It may have been deleted.  Please select another job from the list or recreate the job in Tool Reigstry.",
+        setShowToast,
+        "detailPanelTop"
+      );
+      setToast(toast);
+      setShowToast(true);
+      return;
+    }
+    setShowToast(false);
+  }, [jobsList, formData.toolJobId]);
+
 
   useEffect(() => {
     if (formData.toolJobType && formData.toolJobType.includes("SFDC")) {
