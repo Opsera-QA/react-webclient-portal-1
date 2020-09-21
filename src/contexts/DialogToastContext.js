@@ -31,8 +31,8 @@ const ToastContextProvider = (props) => {
     setShowToast(true);
   }
 
-  const showSuccessDialog = (errorMessage, prependMessage) => {
-    setToast(getErrorDialog(errorMessage, prependMessage));
+  const showSuccessDialog = (successMessage) => {
+    setToast(getSuccessDialog(successMessage));
     setShowToast(true);
     autoHideDialog();
   }

@@ -590,7 +590,8 @@ a:hover, .active {
 }
 
 .top-dialog-block {
-    position: absolute;
+    top: 0;
+    position: fixed;
     left: 0;
     padding: 1em;
     z-index: 1200;
