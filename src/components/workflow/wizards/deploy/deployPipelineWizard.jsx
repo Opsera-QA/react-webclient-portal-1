@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
 
-import ErrorDialog from "components/common/status_notifications/error";
 import PipelineActions from "../../pipeline-actions";
+import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import LoadingDialog from "../../../common/status_notifications/loading";
 
 const DeployPipelineWizard = ({
@@ -14,13 +14,27 @@ const DeployPipelineWizard = ({
   refreshPipelineActivityData,
 }) => {
   const { getAccessToken } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [error, setErrors] = useState(false);
   const [view, setView] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    loadTemplate(templateId);
+    loadData();
   }, []);
+
+  const loadData = async () => {
+    try {
+      setIsLoading(true);
+      await loadTemplate(templateId);
+    }
+    catch (error) {
+      toastContext.showLoadingErrorDialog(error);
+    }
+    finally {
+      setIsLoading(false);
+    }
+  }
 
   const loadTemplate = async (templateId) => {
     //Lookup template
@@ -31,19 +45,22 @@ const DeployPipelineWizard = ({
 
   //overall logic to deploy pipeline should happen here
   const deployTemplate = async (templateId) => {
-    const deployResponse = await PipelineActions.deployTemplate(templateId, getAccessToken);
-    console.log(deployResponse);
+    try {
+      const deployResponse = await PipelineActions.deployTemplate(templateId, getAccessToken);
+      console.log(deployResponse);
+    }
+    catch (error) {
+      toastContext.showErrorDialog(error);
+    }
 
   };
 
-
-  if (error) {
-    return (<ErrorDialog error={error} align="top"/>);
-  }
-
-  if (loading) {
+  if (isLoading) {
     return (<LoadingDialog size={"sm"}/>);
   }
+
+  // TODO: Add whatever early return method should be returned when a failure occurs,
+  //  I've been doing different things depending on what the error is (loading, persisting, etc.)
 
   return (
     <>
