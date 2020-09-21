@@ -76,7 +76,6 @@ function LdapUserManagement() {
       setAccessRoleData(userRoleAccess);
 
       let authorizedActions = await accountsActions.getAllowedUserActions(userRoleAccess, ldap.organization, undefined, getUserRecord, getAccessToken);
-      console.log("Authorized Actions: " + JSON.stringify(authorizedActions));
       setAuthorizedActions(authorizedActions);
 
       if (userRoleAccess.OpseraAdministrator) {

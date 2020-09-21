@@ -61,7 +61,7 @@ function AccountSettings() {
 
         <Row className="ml-3 mt-3 admin-tools">
           {userDetailsLink && <Col xs={12} md={6} lg={4} className="p-2">
-            <Link to={userDetailsLink}><FontAwesomeIcon icon={faUser} fixedWidth className="mr-2"/>My LDAP User Record</Link>
+            <Link to={userDetailsLink}><FontAwesomeIcon icon={faUser} fixedWidth className="mr-2"/>My User Record</Link>
           </Col>}
           {(accessRoleData.PowerUser || accessRoleData.Administrator || accessRoleData.OpseraAdministrator) &&
             <>
