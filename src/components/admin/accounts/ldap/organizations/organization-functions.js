@@ -1,12 +1,13 @@
 import accountsActions from "../../accounts-actions";
 
 export const getOrganizationList = async (getAccessToken) => {
-  return getOrganizationDropdownList("orgDomain", getAccessToken);
+  return getOrganizationAccountDropdownList("orgDomain", getAccessToken);
 };
 
-export const getOrganizationDropdownList = async (valueField, getAccessToken) => {
+export const getOrganizationAccountDropdownList = async (valueField, getAccessToken) => {
   const response = await accountsActions.getOrganizations(getAccessToken);
   if (response.data) {
+    console.log("JSON: " + JSON.stringify(response));
     let parsedOrganizationNames = [];
     response.data.map(organization => {
       organization["orgAccounts"].map(orgAccount => {
@@ -15,6 +16,23 @@ export const getOrganizationDropdownList = async (valueField, getAccessToken) =>
           groupId: organization["name"],
           id: orgAccount[valueField]
         });
+      });
+    });
+    // console.log("Parsed Organization Names: " + JSON.stringify(parsedOrganizationNames));
+    return parsedOrganizationNames;
+  }
+};
+
+export const getOrganizationDropdownList = async (valueField, getAccessToken) => {
+  const response = await accountsActions.getOrganizations(getAccessToken);
+  if (response.data) {
+    let parsedOrganizationNames = [];
+    response.data.map(organization => {
+      console.log("org: " + JSON.stringify(organization))
+      parsedOrganizationNames.push({
+        text: organization["name"] + ": " + organization["orgOwner"],
+        groupId: organization["orgOwnerEmail"],
+        id: organization[valueField]
       });
     });
     // console.log("Parsed Organization Names: " + JSON.stringify(parsedOrganizationNames));
