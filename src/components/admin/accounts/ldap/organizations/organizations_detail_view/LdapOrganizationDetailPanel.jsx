@@ -60,7 +60,7 @@ function LdapOrganizationDetailsView({activeTab, loadData, setLdapOrganizationDa
   if (activeTab) {
     switch (activeTab) {
       case "accounts":
-        return <LdapOrganizationAccountsTable ldapOrganizationAccounts={organizationAccounts} authorizedActions={authorizedOrganizationAccountActions} loadData={loadData} />
+        return <LdapOrganizationAccountsTable ldapOrganizationAccounts={organizationAccounts} authorizedActions={authorizedOrganizationAccountActions} ldapOrganizationData={ldapOrganizationData} loadData={loadData} />
       case "settings":
         return <LdapOrganizationEditorPanel setLdapOrganizationData={setLdapOrganizationData} ldapOrganizationData={ldapOrganizationData} authorizedActions={authorizedActions} />;
       default:
