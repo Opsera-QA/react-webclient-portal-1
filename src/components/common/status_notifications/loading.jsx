@@ -25,7 +25,7 @@ function LoadingDialog({ size, message }) {
     return (
       <div className="loading">
         <div className="loader">
-          <FontAwesomeIcon icon={faSpinner} spin/>
+          <FontAwesomeIcon icon={faSpinner} size="2x" spin/>
         </div>
       </div>
     );
