@@ -96,4 +96,13 @@ RegisteredUserActions.getRegisteredUserTools = async (userId, getAccessToken) =>
   return response;
 };
 
+RegisteredUserActions.getRegisteredUserDb = async (userId, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/tools/user/${userId}?name=mongodb`;
+  const response = await axiosApiService(accessToken).get(apiUrl)
+    .then((result) =>  {return result;})
+    .catch(error => {throw error;});
+  return response;
+};
+
 export default RegisteredUserActions;
