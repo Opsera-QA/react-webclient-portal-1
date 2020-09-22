@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Spinner } from "react-bootstrap";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function LoadingDialog({ size }) {
+function LoadingDialog({ size, message }) {
   const [type, setType] = useState({});
 
   useEffect( () => {
@@ -14,11 +16,8 @@ function LoadingDialog({ size }) {
     return (
       <div className="row" style={{ height:"250px", width: "100%" }}>
         <div className="col-sm-12 my-auto text-center">
-          <Spinner as="span"
-            animation="grow"
-            size="sm"
-            role="status"
-            aria-hidden="true" /> 
+          <FontAwesomeIcon icon={faSpinner} spin className="mr-2"/>
+          {message && message}
         </div>
       </div>     
     );
@@ -26,11 +25,7 @@ function LoadingDialog({ size }) {
     return (
       <div className="loading">
         <div className="loader">
-          <Spinner as="span"
-            animation="grow"
-            size="sm"
-            role="status"
-            aria-hidden="true" />
+          <FontAwesomeIcon icon={faSpinner} spin/>
         </div>
       </div>
     );
@@ -40,7 +35,8 @@ function LoadingDialog({ size }) {
 }
 
 LoadingDialog.propTypes = {
-  size: PropTypes.string
+  size: PropTypes.string,
+  message: PropTypes.string
 };
 
 
