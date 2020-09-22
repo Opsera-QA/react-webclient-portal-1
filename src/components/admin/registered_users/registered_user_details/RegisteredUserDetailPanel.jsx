@@ -52,11 +52,11 @@ function RegisteredUserTabView({ activeTab, userData, setUserData, analyticsProf
       case "tools":
         return <RegisteredUserToolsPanel registeredUserId={userData["_id"]} />
       case "customerDB":
-        return <CustomerDatabaseEditorPanel customerDatabaseData={analyticsProfileData} setCustomerDatabaseData={setAnalyticsProfileData} />;
+        return <CustomerDatabaseEditorPanel userId={userData["_id"]} customerDatabaseData={analyticsProfileData} setCustomerDatabaseData={setAnalyticsProfileData} />;
       case "analyticsSettings":
         return <AnalyticsProfileEditorPanel setAnalyticsProfileData={setAnalyticsProfileData} analyticsProfileData={analyticsProfileData} />;
       case "settings":
-        return <AnalyticsProfileEditorPanel setAnalyticsProfileData={setAnalyticsProfileData} analyticsProfileData={analyticsProfileData} />;
+        // return <AnalyticsProfileEditorPanel setAnalyticsProfileData={setAnalyticsProfileData} analyticsProfileData={analyticsProfileData} />;
       default:
         return null;
     }
