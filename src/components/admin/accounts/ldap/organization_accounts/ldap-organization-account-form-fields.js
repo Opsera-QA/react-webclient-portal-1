@@ -161,7 +161,6 @@ export const ldapOrganizationAccountMetaData = {
       label: "Administrator",
       id: "administrator",
       fieldText: "This user is created based on the Opsera Customer Record selected.",
-      isRequired: true
     },
     {
       label: "Common Account Name",

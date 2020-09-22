@@ -24,6 +24,7 @@ function LdapOrganizationDetailView() {
   const [ldapOrganizationData, setLdapOrganizationData] = useState(undefined);
   const [organizationAccounts, setOrganizationAccounts] = useState(undefined);
   const [authorizedActions, setAuthorizedActions] = useState([]);
+  const [authorizedOrganizationAccountActions, setAuthorizedOrganizationAccountActions] = useState([]);
 
 
   useEffect(() => {
@@ -49,9 +50,11 @@ function LdapOrganizationDetailView() {
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
       let authorizedActions = await accountsActions.getAllowedOrganizationActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
-      console.log("Authorized Actions: " + JSON.stringify(authorizedActions));
       setAuthorizedActions(authorizedActions);
       setAccessRoleData(userRoleAccess);
+
+      let authorizedOrganizationAccountActions = await accountsActions.getAllowedOrganizationAccountActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
+      setAuthorizedOrganizationAccountActions(authorizedOrganizationAccountActions);
 
       if (authorizedActions.includes("get_organization_details")) {
         await loadOrganization();
@@ -95,6 +98,7 @@ function LdapOrganizationDetailView() {
               <LdapOrganizationDetailPanel organizationAccounts={organizationAccounts}
                                            ldapOrganizationData={ldapOrganizationData}
                                            setLdapOrganizationData={setLdapOrganizationData}
+                                           authorizedOrganizationAccountActions={authorizedOrganizationAccountActions}
                                            loadData={loadData}
                                            authorizedActions={authorizedActions}
               />
