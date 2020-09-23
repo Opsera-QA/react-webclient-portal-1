@@ -33,6 +33,8 @@ class NewApplication extends React.PureComponent {
 
   handleAppNameChange = ({ target: { name, value } }) => {
     let error = null;
+    const regex = RegExp('^[ A-Za-z0-9-]*$');
+    if( !regex.test(value)) error = "No special chars allowed except '-'";
     if (value.length > 20) error = "App Name has to be 20 chars or less";
     if (value.length > 1 && !isAlphaNumeric(value))
       error = "App Name has to be alphanumeric";

@@ -5,7 +5,7 @@ import { NewAppContext } from "./context";
 
 function SAST(props) {
 
-  const { data, setState } = useContext(NewAppContext);
+  const { data, setState, handleCancel } = useContext(NewAppContext);
   const { tools } = props;
   const [isChecked, setCheckbox] = useState({
     SonarQube: tools.includes("SonarQube") ? true : false
@@ -36,7 +36,8 @@ function SAST(props) {
         [serviceType] : false
       });
       //remove the entry from master dataset ( data from context here )
-      delete data[serviceType];
+      // delete data[serviceType];
+      handleCancel();
     }else {
       //If it's a new selection, select the checkbox, show the modal and update the dataset (data from context here )
       setCheckbox({ 

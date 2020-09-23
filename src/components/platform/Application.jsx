@@ -66,6 +66,8 @@ function Application(props) {
 
   const handleAppNameChange = ({ target: { name, value } }) => {
     let error = null;
+    const regex = RegExp('^[ A-Za-z0-9-]*$');
+    if( !regex.test(value)) error = "No special chars allowed except '-'";
     if (value.length > 20) error = "App Name has to be 20 chars or less";
     if (value.length > 1 && !isAlphaNumeric(value))
       error = "App Name has to be alphanumeric";
@@ -296,10 +298,10 @@ function Application(props) {
                 <ContainerScan app={applicationDetails.data} tools={applicationDetails.tools} isEKS ={isEKS} />            
               </CardColumns>
               <div className="text-right">
-                <Button variant="outline-primary" onClick={cancelTools} disabled={Object.keys(data).length == 0} className="m-2">
+                <Button variant="outline-primary" onClick={cancelTools} disabled={Object.keys(data).length === 0} className="m-2">
                 Cancel
                 </Button>
-                <Button variant="primary" onClick={saveTools} disabled={Object.keys(data).length == 0}>
+                <Button variant="primary" onClick={saveTools} disabled={Object.keys(data).length === 0}>
                 Deploy Tool Selection
                 </Button>
               </div>

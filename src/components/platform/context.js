@@ -56,10 +56,8 @@ class NewAppProvider extends React.Component {
   }
 
   handleCancel = () => {
-    console.log("cancel clicked")
     const { service, data } = this.state;
     delete data[service];
-    console.log(service,data)
     this.setState({
       data,
       open: false,
@@ -134,6 +132,7 @@ class NewAppProvider extends React.Component {
           handleChange: this.handleChange,
           setAppDetails: this.setAppDetails,
           isChecked: this.isChecked,
+          checkTile: this.checkTile,
           reset: this.reset
         }}
       >
