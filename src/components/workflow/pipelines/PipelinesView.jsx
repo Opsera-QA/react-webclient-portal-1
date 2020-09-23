@@ -62,7 +62,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
   };
 
   if (loading && !showToast) {
-    return (<LoadingDialog size="sm"/>);
+    return (<LoadingDialog size="sm" message="Loading..."/>);
   }
 
   if (showToast && !loading) {

@@ -15,7 +15,7 @@ function LoadingDialog({ size, message }) {
   if (type === "sm") {
     return (
       <div className="row" style={{ height:"250px", width: "100%" }}>
-        <div className="col-sm-12 my-auto text-center">
+        <div className="col-sm-12 my-auto text-center text-muted" style={{fontSize: "larger"}}>
           <FontAwesomeIcon icon={faSpinner} spin className="mr-2"/>
           {message && message}
         </div>
