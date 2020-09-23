@@ -152,12 +152,7 @@ function DashboardHome() {
         setErrors(
           "Warning!  Profile settings associated with your account are incomplete.  Log searching will be unavailable until this is fixed.",
         );
-      } else if (result.data && result.data.vault !== 200) {
-        console.error("Error Code " + result.data.vault + " with the following message: " + result.data.message);
-        setErrors(
-          "Error Reported: Vault has returned a message: " + result.data.message,
-        );
-      }
+      } 
 
       const indices = await axiosApiService(accessToken).post("/analytics/index", { index: INDICES });
       let indicesList = indices.data && Array.isArray(indices.data) ? indices.data : [];

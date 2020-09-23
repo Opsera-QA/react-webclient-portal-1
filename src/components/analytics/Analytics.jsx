@@ -217,11 +217,6 @@ function Analytics() {
         setErrors(
           "Warning!  Profile settings associated with your account are incomplete.  Log searching will be unavailable until this is fixed.",
         );
-      } else if (profileResponse.data && profileResponse.data.vault !== 200) {
-        console.error("Error Code " + profileResponse.data.vault + " with the following message: " + profileResponse.data.message);
-        setErrors(
-          "Error Reported: Vault has returned a message: " + profileResponse.data.message,
-        );
       }
 
       const indices = await axiosApiService(accessToken).post("/analytics/index", { index: INDICES });

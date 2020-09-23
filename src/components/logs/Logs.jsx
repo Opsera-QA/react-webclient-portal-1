@@ -81,12 +81,7 @@ function Logs() {
         setErrors(
           "Warning!  Profile settings associated with your account are incomplete.  Log searching will be unavailable until this is fixed.",
         );
-      } else if (profile.data && profile.data.vault !== 200) {
-        console.error("Error Code " + profile.data.vault + " with the following message: " + profile.data.message);
-        setErrors(
-          "Error Reported: Vault has returned a message: " + profile.data.message,
-        );
-      }
+      } 
 
       setLoadingProfile(false);
     } catch (err) {
