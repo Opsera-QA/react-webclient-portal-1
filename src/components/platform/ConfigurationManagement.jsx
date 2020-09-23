@@ -6,7 +6,7 @@ import { NewAppContext } from "./context";
 
 function ConfigurationManagement(props) {
 
-  const { data, setState } = useContext(NewAppContext);
+  const { data, setState, handleCancel } = useContext(NewAppContext);
   const { tools } = props;
   const [isChecked, setCheckbox] = useState({
     Ansible: tools.includes("Ansible") ? true : false,
@@ -15,6 +15,7 @@ function ConfigurationManagement(props) {
   });
 
   useEffect(() => {
+    console.log("tools use effect")
     setCheckbox({ 
       Ansible: false,
       Chef: false,
@@ -31,7 +32,7 @@ function ConfigurationManagement(props) {
       });
     }
   }, [tools]);
-
+  
   const selectCard = (serviceType) => {
     //On each click, check if it's already selected 
     if(isChecked[serviceType] ) {
@@ -41,9 +42,11 @@ function ConfigurationManagement(props) {
         [serviceType] : false
       });
       //remove the entry from master dataset ( data from context here )
-      delete data[serviceType];
+      // delete data[serviceType];
+      handleCancel();
     }else {
       //If it's a new selection, select the checkbox, show the modal and update the dataset (data from context here )
+      // but when cancel is clicked it still true here - needs to be fixed
       setCheckbox({ 
         ...isChecked, 
         [serviceType] : true
@@ -70,7 +73,7 @@ function ConfigurationManagement(props) {
                 disabled={tools.includes("Ansible") ? true : false}
                 checked={isChecked.Ansible && data["Ansible"]}
                 className="newApp__checkbox"
-                onChange={() => selectCard("Ansible")}
+                onClick={() => selectCard("Ansible")}
               />
               <img src={require("./imgs/ansible.png")} alt="Ansible" />
               <span className="newApp__service-title">Ansible</span>

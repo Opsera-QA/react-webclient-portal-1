@@ -5,7 +5,7 @@ import { NewAppContext } from "./context";
 
 function LogManagement(props) {
 
-  const { data, setState } = useContext(NewAppContext);
+  const { data, setState, handleCancel } = useContext(NewAppContext);
   const { tools, isEKS  } = props;
 
   const [isChecked, setCheckbox] = useState({
@@ -42,7 +42,8 @@ function LogManagement(props) {
         [serviceType] : false
       });
       //remove the entry from master dataset ( data from context here )
-      delete data[serviceType];
+      // delete data[serviceType];
+      handleCancel();
     }else {
       //If it's a new selection, select the checkbox, show the modal and update the dataset (data from context here )
       setCheckbox({ 
@@ -92,13 +93,15 @@ function LogManagement(props) {
           </div>
 
           <div
-            className="newApp__service-logo newApp__service-logo--disabled"
+           className={`newApp__service-logo ${tools.includes("LogStash") ? "newApp__service-logo--alredy-installed" : !isEKS ? "newApp__service-logo--disabled" : ""}`}
+           onClick={() => selectCard("LogStash")}
           >
             <input type="checkbox"
               inline
               disabled={tools.includes("LogStash") ? true : false}
               checked={isChecked.LogStash && data["LogStash"]}
               className="newApp__checkbox"
+              onClick={() => selectCard("LogStash")}
             />
             <img src={require("./imgs/log-stash.png")} />
             <span className="newApp__service-title">LogStash</span>

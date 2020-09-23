@@ -5,8 +5,8 @@ import { NewAppContext } from "./context";
 
 function Monitoring(props) {
 
-  const { data, setState } = useContext(NewAppContext);
-  const { tools } = props;
+  const { data, setState, handleCancel } = useContext(NewAppContext);
+  const { tools, isEKS } = props;
   const [isChecked, setCheckbox] = useState({
     Nagios: tools.includes("Nagios") ? true : false,
     ZooKeeper: tools.includes("ZooKeeper") ? true : false
@@ -38,7 +38,8 @@ function Monitoring(props) {
         [serviceType] : false
       });
       //remove the entry from master dataset ( data from context here )
-      delete data[serviceType];
+      // delete data[serviceType];
+      handleCancel();
     }else {
       //If it's a new selection, select the checkbox, show the modal and update the dataset (data from context here )
       setCheckbox({ 
@@ -94,7 +95,8 @@ function Monitoring(props) {
 } 
 
 Monitoring.propTypes = {
-  tools: PropTypes.array
+  tools: PropTypes.array,
+  isEKS: PropTypes.bool,
 };
 
 export default Monitoring;

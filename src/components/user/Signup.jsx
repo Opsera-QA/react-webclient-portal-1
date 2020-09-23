@@ -26,7 +26,10 @@ function Signup() {
   const [registrationDataDto, setRegistrationDataDto] = useState(undefined);
 
   // TODO: when pulling actual data with react-dropdown, change text to label
-  const cloudProviders = [{ value: "EKS", text: "AWS" },{ value: "GKE", text: "GCP" }];
+  const cloudProviders = [
+    { value: "EKS", text: "AWS" },
+    // { value: "GKE", text: "GCP" }
+  ];
   const cloudProviderRegions = [{ value: "us-east-2", text: "us-east-2" }];
 
   useEffect(() => {

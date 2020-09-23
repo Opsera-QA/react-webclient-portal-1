@@ -6,7 +6,7 @@ import { NewAppContext } from "./context";
 
 function ContainerScan(props) {
 
-  const { data, setState } = useContext(NewAppContext);
+  const { data, setState, handleCancel } = useContext(NewAppContext);
   const { tools, isEKS } = props;
   const [isChecked, setCheckbox] = useState({
     Anchore: tools.includes("Anchore") ? true : false,
@@ -37,7 +37,8 @@ function ContainerScan(props) {
         [serviceType] : false
       });
       //remove the entry from master dataset ( data from context here )
-      delete data[serviceType];
+      // delete data[serviceType];
+      handleCancel();
     }else {
       //If it's a new selection, select the checkbox, show the modal and update the dataset (data from context here )
       setCheckbox({ 
