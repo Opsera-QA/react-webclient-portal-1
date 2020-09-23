@@ -32,7 +32,7 @@ function DtoSelectInput({ fieldName, dataObject, setDataObject, groupBy, selectO
               textField={textField}
               filter={filter}
               groupBy={groupBy}
-              defaultValue={dataObject.getData(fieldName)}
+              value={dataObject.getData(fieldName)}
               valueComponent={valueFormatter}
               busy={busy}
               placeholder={placeholderText}

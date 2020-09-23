@@ -7,7 +7,7 @@ import CustomTabContainer from "../../../common/tabs/CustomTabContainer";
 import CustomTab from "../../../common/tabs/CustomTab";
 import {faClipboardList, faDatabase, faCogs} from "@fortawesome/pro-solid-svg-icons";
 import CustomerDatabaseEditorPanel from "./customer_database/CustomerDatabaseEditorPanel";
-import ToolsTable from "../../../inventory/tools/ToolsTable";
+import RegisteredUserToolsPanel from "./tools/RegisteredUserToolsPanel";
 
 function RegisteredUserDetailPanel({ userData, setUserData, analyticsProfileData, setAnalyticsProfileData }) {
   const [activeTab, setActiveTab] = useState("analyticsSettings");
@@ -23,10 +23,10 @@ function RegisteredUserDetailPanel({ userData, setUserData, analyticsProfileData
         <Row>
           <Col>
             <CustomTabContainer>
-              {/*<CustomTab icon={faClipboardList} tabName={"tools"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Tools"} />*/}
               <CustomTab icon={faDatabase} tabName={"customerDB"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Customer DB"} />
               <CustomTab icon={faCogs} tabName={"analyticsSettings"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Analytics Profile"} />
               {/*<CustomTab icon={faCogs} tabName={"settings"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Settings"} />*/}
+              <CustomTab icon={faClipboardList} tabName={"tools"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Tools"} />
             </CustomTabContainer>
           </Col>
         </Row>
@@ -49,14 +49,14 @@ function RegisteredUserTabView({ activeTab, userData, setUserData, analyticsProf
 
   if (activeTab) {
     switch (activeTab) {
-      // case "tools":
-      // return <ToolsTable  />;
+      case "tools":
+        return <RegisteredUserToolsPanel registeredUserId={userData["_id"]} />
       case "customerDB":
-        return <CustomerDatabaseEditorPanel customerDatabaseData={analyticsProfileData} setCustomerDatabaseData={setAnalyticsProfileData} />;
+        return <CustomerDatabaseEditorPanel userId={userData["_id"]} customerDatabaseData={analyticsProfileData} setCustomerDatabaseData={setAnalyticsProfileData} />;
       case "analyticsSettings":
         return <AnalyticsProfileEditorPanel setAnalyticsProfileData={setAnalyticsProfileData} analyticsProfileData={analyticsProfileData} />;
       case "settings":
-        return <AnalyticsProfileEditorPanel setAnalyticsProfileData={setAnalyticsProfileData} analyticsProfileData={analyticsProfileData} />;
+        // return <AnalyticsProfileEditorPanel setAnalyticsProfileData={setAnalyticsProfileData} analyticsProfileData={analyticsProfileData} />;
       default:
         return null;
     }

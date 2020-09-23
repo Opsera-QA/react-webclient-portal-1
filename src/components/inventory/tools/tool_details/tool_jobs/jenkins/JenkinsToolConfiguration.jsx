@@ -27,8 +27,25 @@ function JenkinsToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVau
     }
   };
 
+  const validateFields = () => {
+    const {proxyEnable , jenkinsUrl, jUserId, jAuthToken, proxyUserName, proxyPassword, jPassword  } = configurationData.data;
+    if(!proxyEnable) {
+      console.log(jAuthToken)
+      console.log(jAuthToken.length)
+      if(jenkinsUrl.length > 0 && jUserId.length > 0 && ( typeof(jAuthToken) === "string" ? jAuthToken.length > 0 : true)) {
+        return true;
+      }
+      return false;
+    } else {
+      if(jenkinsUrl.length > 0 && jUserId.length > 0 && proxyUserName.length > 0 && ( typeof(jPassword) === "string" ? jPassword.length > 0 : true) && ( typeof(proxyPassword) === "string" ? proxyPassword.length > 0 : true) ) {
+        return true;
+      }
+      return false;
+    }
+  }
+
   const callbackFunction = async () => {
-    if (configurationData.isModelValid()) {
+    if (configurationData.isModelValid() && validateFields()) {
       let newConfiguration = {...configurationData.getPersistData()};
       
       if (typeof(configurationData.getData("jAuthToken")) === "string" || configurationData.isChanged("jAuthToken")) {

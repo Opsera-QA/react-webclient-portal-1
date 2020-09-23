@@ -9,7 +9,7 @@ import CustomTabContainer from "../../../../../common/tabs/CustomTabContainer";
 import CustomTab from "../../../../../common/tabs/CustomTab";
 import {faCogs, faUsers} from "@fortawesome/pro-solid-svg-icons";
 
-function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationData, setLdapOrganizationData, loadData, authorizedActions}) {
+function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationData, setLdapOrganizationData, loadData, authorizedActions, authorizedOrganizationAccountActions}) {
   const [activeTab, setActiveTab] = useState("accounts");
 
   const handleTabClick = (tabSelection) => e => {
@@ -43,6 +43,7 @@ function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationDat
                 setLdapOrganizationData={setLdapOrganizationData}
                 ldapOrganizationData={ldapOrganizationData}
                 authorizedActions={authorizedActions}
+                authorizedOrganizationAccountActions={authorizedOrganizationAccountActions}
               />}
             </div>
           </Col>
@@ -52,14 +53,14 @@ function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationDat
   );
 }
 
-function LdapOrganizationDetailsView({activeTab, loadData, setLdapOrganizationData, ldapOrganizationData, organizationAccounts, authorizedActions}) {
+function LdapOrganizationDetailsView({activeTab, loadData, setLdapOrganizationData, ldapOrganizationData, organizationAccounts, authorizedActions, authorizedOrganizationAccountActions}) {
   useEffect(() => {
     // console.log("CHANGE HAPPENED");
   }, [activeTab]);
   if (activeTab) {
     switch (activeTab) {
       case "accounts":
-        return <LdapOrganizationAccountsTable ldapOrganizationAccounts={organizationAccounts} loadData={loadData} />
+        return <LdapOrganizationAccountsTable ldapOrganizationAccounts={organizationAccounts} authorizedActions={authorizedOrganizationAccountActions} ldapOrganizationData={ldapOrganizationData} loadData={loadData} />
       case "settings":
         return <LdapOrganizationEditorPanel setLdapOrganizationData={setLdapOrganizationData} ldapOrganizationData={ldapOrganizationData} authorizedActions={authorizedActions} />;
       default:
@@ -75,7 +76,8 @@ LdapOrganizationDetailPanel.propTypes = {
   loadData: PropTypes.func,
   ldapOrganizationData: PropTypes.object,
   setLdapOrganizationData: PropTypes.func,
-  authorizedActions: PropTypes.array
+  authorizedActions: PropTypes.array,
+  authorizedOrganizationAccountActions: PropTypes.array
 };
 
 export default LdapOrganizationDetailPanel;

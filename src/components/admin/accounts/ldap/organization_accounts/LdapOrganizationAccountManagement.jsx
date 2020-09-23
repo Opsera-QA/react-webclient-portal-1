@@ -9,10 +9,6 @@ import LdapOrganizationAccountsTable from "./LdapOrganizationAccountsTable";
 import {getOrganizationDropdownList} from "../organizations/organization-functions";
 import {useHistory, useParams} from "react-router-dom";
 import DropdownList from "react-widgets/lib/DropdownList";
-import Button from "react-bootstrap/Button";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
-import NewLdapOrganizationAccountModal from "./NewLdapOrganizationAccountModal";
 import ToastContext from "react-bootstrap/cjs/ToastContext";
 
 function LdapOrganizationAccountManagement() {
@@ -25,7 +21,6 @@ function LdapOrganizationAccountManagement() {
   const [organizationAccounts, setOrganizationAccounts] = useState(undefined);
   const [organizations, setOrganizations] = useState(undefined);
   const [currentOrganizationName, setCurrentOrganizationName] = useState(undefined);
-  const [showCreateOrganizationAccountModal, setShowCreateOrganizationAccountModal] = useState(false);
   const toastContext = useContext(ToastContext);
   const [authorizedActions, setAuthorizedActions] = useState([]);
 
@@ -67,7 +62,6 @@ function LdapOrganizationAccountManagement() {
       setAccessRoleData(userRoleAccess);
 
       let authorizedActions = await accountsActions.getAllowedOrganizationAccountActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
-      console.log("Authorized Actions: " + JSON.stringify(authorizedActions));
       setAuthorizedActions(authorizedActions);
 
       if (userRoleAccess.OpseraAdministrator) {
@@ -114,33 +108,20 @@ function LdapOrganizationAccountManagement() {
         <div className="max-content-width ml-2">
           <div className="justify-content-between mb-1 d-flex">
             <h5>Organization Account Management</h5>
-            <div className="d-flex">
-              <div className="tableDropdown mr-2">
-                {accessRoleData.OpseraAdministrator && organizations && <DropdownList
-                  data={organizations}
-                  value={currentOrganizationName}
-                  filter="contains"
-                  valueField='id'
-                  textField='text'
-                  placeholder="Select an Organization Account"
-                  groupBy={org => org["groupId"]}
-                  onChange={handleOrganizationChange}
-                />}
-              </div>
-              <div className="my-1 text-right">
-                {authorizedActions.includes("create_organization_account") && <Button variant="primary" size="sm"
-                        onClick={() => {
-                          setShowCreateOrganizationAccountModal(true);
-                        }}>
-                  <FontAwesomeIcon icon={faPlus} className="mr-1"/>New Organization Account
-                </Button>}
-              </div>
-            </div>
           </div>
-          <LdapOrganizationAccountsTable isLoading={isLoading} showDropdown={true} ldapOrganizationAccounts={organizationAccounts} loadData={loadData}  />
+          <LdapOrganizationAccountsTable
+            isLoading={isLoading}
+            authorizedActions={authorizedActions}
+            ldapOrganizationData={ldapOrganizationData}
+            showDropdown={true}
+            ldapOrganizationAccounts={organizationAccounts}
+            organizations={organizations}
+            currentOrganizationName={currentOrganizationName}
+            handleOrganizationChange={handleOrganizationChange}
+            loadData={loadData}
+          />
         </div>
-        <NewLdapOrganizationAccountModal ldapOrganizationData={ldapOrganizationData} showModal={showCreateOrganizationAccountModal} loadData={loadData} setShowModal={setShowCreateOrganizationAccountModal}/>
-  </>);
+      </>);
 }
 
 export default LdapOrganizationAccountManagement;

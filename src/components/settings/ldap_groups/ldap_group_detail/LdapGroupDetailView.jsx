@@ -77,12 +77,10 @@ function LdapGroupDetailView() {
 
       if (roleGroups.includes(groupName)) {
         authorizedActions = await accountsActions.getAllowedRoleGroupActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
-        console.log("Authorized Role Group Actions: " + JSON.stringify(authorizedActions));
         setAuthorizedActions(authorizedActions);
       }
       else {
         authorizedActions = await accountsActions.getAllowedGroupActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
-        console.log("Authorized Custom Group Actions: " + JSON.stringify(authorizedActions));
         setAuthorizedActions(authorizedActions);
       }
 

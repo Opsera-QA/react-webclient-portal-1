@@ -146,6 +146,21 @@ function JenkinsStepConfiguration({
     }
   }, [jenkinsList, formData.toolConfigId]);
 
+  
+  useEffect(() => {
+    if (jobsList && jobsList.length > 0 && !jobsList[jobsList.findIndex((x) => x._id === formData.toolJobId)]) {
+     let toast = getErrorDialog(
+        "Preselected job is no longer available.  It may have been deleted.  Please select another job from the list or recreate the job in Tool Reigstry.",
+        setShowToast,
+        "detailPanelTop"
+      );
+      setToast(toast);
+      setShowToast(true);
+      return;
+    }
+    setShowToast(false);
+  }, [jobsList, formData.toolJobId]);
+
   // fetch repos
   useEffect(() => {
     setShowToast(false);
@@ -742,7 +757,7 @@ function JenkinsStepConfiguration({
           <>
             {jobType === "opsera-job" && (
               <>
-                {formData.jenkinsUrl && jenkinsList.length > 0 && (
+                {formData.jenkinsUrl && jenkinsList.length > 0 && jobsList.length > 0 && (
                   <Form.Group controlId="formBasicEmail">
                     <Form.Label className="w-100">
                       Job*
@@ -767,7 +782,7 @@ function JenkinsStepConfiguration({
                         and register a job for this Jenkins in order to proceed.{" "}
                       </div>
                     )}
-                    {jobsList !== undefined && jobsList.length > 0 ? (
+                    {jobsList !== undefined && jobsList.length > 0 && jobsList.length > 0  ? (
                       <DropdownList
                         data={jobsList}
                         valueField="id"

@@ -274,6 +274,20 @@ function DockerPushStepConfiguration({
   }, [jenkinsList, formData.toolConfigId]);
 
   useEffect(() => {
+    if (jobsList && jobsList.length > 0 && !jobsList[jobsList.findIndex((x) => x._id === formData.toolJobId)]) {
+     let toast = getErrorDialog(
+        "Preselected job is no longer available.  It may have been deleted.  Please select another job from the list or recreate the job in Tool Reigstry.",
+        setShowToast,
+        "detailPanelTop"
+      );
+      setToast(toast);
+      setShowToast(true);
+      return;
+    }
+    setShowToast(false);
+  }, [jobsList, formData.toolJobId]);
+
+  useEffect(() => {
     if (formData.toolJobType && formData.toolJobType.includes("SFDC")) {
       setFormData({ ...formData, buildType: "ant" });
     }
@@ -940,7 +954,7 @@ function DockerPushStepConfiguration({
           </Form.Group>
         )}
 
-<Form.Group controlId="s3Step">
+        <Form.Group controlId="s3Step">
           <Form.Label>Build Step Info*</Form.Label>
           {listOfSteps ? (
             <DropdownList
@@ -975,192 +989,6 @@ function DockerPushStepConfiguration({
               fixedWidth
             />
           )}
-        </Form.Group>
-
-        {formData.jenkinsUrl && jenkinsList.length > 0 && (
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label className="w-100">
-              Account*
-              <OverlayTrigger
-                trigger="click"
-                rootClose
-                placement="left"
-                overlay={RegistryPopover(
-                  accountsList[
-                    accountsList.findIndex(
-                      (x) => x.gitCredential === formData.gitCredential
-                    )
-                  ]
-                )}
-              >
-                <FontAwesomeIcon
-                  icon={faEllipsisH}
-                  className="fa-pull-right pointer pr-1"
-                  onClick={() => document.body.click()}
-                />
-              </OverlayTrigger>
-            </Form.Label>
-            {accountsList.length < 1 && (
-              <div className="form-text text-muted p-2">
-                <FontAwesomeIcon
-                  icon={faExclamationCircle}
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
-                No Credentials have been created for{" "}
-                <span>{formData.jenkinsUrl}</span>. Please go to
-                <Link to="/inventory/tools"> Tool Registry</Link> and add
-                credentials for this Jenkins in order to proceed.
-              </div>
-            )}
-            {accountsList !== undefined && accountsList.length > 0 ? (
-              <DropdownList
-                data={accountsList}
-                valueField="gitCredential"
-                textField="gitCredential"
-                defaultValue={
-                  accountsList && accountsList.length > 0 &&
-                  accountsList[
-                    accountsList.findIndex(
-                      (x) => x.gitCredential === formData.gitCredential
-                    )
-                  ]
-                }
-                filter="contains"
-                onChange={handleAccountChange}
-              />
-            ) : null}
-          </Form.Group>
-        )}
-
-        {formData.service && formData.gitToolId && (
-          <Form.Group controlId="account" className="mt-2">
-            <Form.Label>Repository*</Form.Label>
-            {isRepoSearching ? (
-              <div className="form-text text-muted mt-2 p-2">
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
-                Loading repositories from registry
-              </div>
-            ) : (
-              <>
-                {repoList ? (
-                  <DropdownList
-                    data={repoList}
-                    value={
-                      repoList[
-                        repoList.findIndex(
-                          (x) => x.name === formData.repository
-                        )
-                      ]
-                    }
-                    valueField="value"
-                    textField="name"
-                    filter="contains"
-                    onChange={handleRepoChange}
-                  />
-                ) : (
-                  <FontAwesomeIcon
-                    icon={faSpinner}
-                    spin
-                    className="text-muted mr-1"
-                    fixedWidth
-                  />
-                )}
-              </>
-            )}
-            {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
-          </Form.Group>
-        )}
-
-        {formData.service && formData.gitToolId && formData.repoId && (
-          <Form.Group controlId="account" className="mt-2">
-            <Form.Label>Branch*</Form.Label>
-            {isBranchSearching ? (
-              <div className="form-text text-muted mt-2 p-2">
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
-                Loading branches from selected repository
-              </div>
-            ) : (
-              <>
-                {branchList ? (
-                  <DropdownList
-                    data={branchList}
-                    value={
-                      branchList[
-                        branchList.findIndex((x) => x.value === formData.branch)
-                      ]
-                    }
-                    valueField="value"
-                    textField="name"
-                    filter="contains"
-                    onChange={handleBranchChange}
-                  />
-                ) : (
-                  <FontAwesomeIcon
-                    icon={faSpinner}
-                    spin
-                    className="text-muted mr-1"
-                    fixedWidth
-                  />
-                )}
-              </>
-            )}
-            {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
-          </Form.Group>
-        )}
-{/* 
-        {formData.jobType === "VALIDATE PACKAGE XML" ? (
-          <Form.Group controlId="s3Step">
-            <Form.Label>Generate XML Step Info*</Form.Label>
-            {listOfSteps ? (
-              <DropdownList
-                data={listOfSteps}
-                value={
-                  formData.stepIdXML
-                    ? listOfSteps[
-                        listOfSteps.findIndex(
-                          (x) => x._id === formData.stepIdXML
-                        )
-                      ]
-                    : listOfSteps[0]
-                }
-                valueField="_id"
-                textField="name"
-                filter="contains"
-                onChange={handleXMLStepChange}
-              />
-            ) : (
-              <FontAwesomeIcon
-                icon={faSpinner}
-                spin
-                className="text-muted ml-2"
-                fixedWidth
-              />
-            )}
-          </Form.Group>
-        ) : (
-          <></>
-        )} */}
-
-        <Form.Group controlId="threshold">
-          <Form.Label>Success Threshold</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder=""
-            value={thresholdVal || ""}
-            onChange={(e) => setThresholdValue(e.target.value)}
-            disabled={true}
-          />
         </Form.Group>
         </>
         }

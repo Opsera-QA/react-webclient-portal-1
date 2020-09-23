@@ -5,19 +5,11 @@ import Model from "../../../core/data_model/model";
 import {ldapGroupMetaData} from "./ldap-groups-metadata";
 import CreateModal from "../../common/modal/CreateModal";
 
-const INITIAL_GROUP_DATA = {
-  name: "",
-  groupType: "user",
-  // TODO: Set Default Value When user groups can use it
-  externalSyncGroup: undefined,
-  isSync: true,
-};
-
-function NewLdapUserModal({ ldapOrganizationData, currentUserEmail, setShowModal, showModal, loadData }) {
+function NewLdapUserModal({ ldapOrganizationData, authorizedActions, currentUserEmail, setShowModal, showModal, loadData }) {
   const [ldapGroupData, setLdapGroupData] = useState(undefined);
 
   useEffect(() => {
-    setLdapGroupData(new Model({...INITIAL_GROUP_DATA}, ldapGroupMetaData, true));
+    setLdapGroupData(new Model({...ldapGroupMetaData.newObjectFields}, ldapGroupMetaData, true));
   }, []);
 
   const handleClose = () => {
@@ -28,7 +20,7 @@ function NewLdapUserModal({ ldapOrganizationData, currentUserEmail, setShowModal
   return (
     <>
       <CreateModal handleCancelModal={handleClose} objectType={"Group"} showModal={showModal} loadData={loadData}>
-        {ldapGroupData && <LdapGroupEditorPanel currentUserEmail={currentUserEmail} ldapGroupData={ldapGroupData} handleClose={handleClose} ldapOrganizationData={ldapOrganizationData} />}
+        {ldapGroupData && <LdapGroupEditorPanel authorizedActions={authorizedActions} currentUserEmail={currentUserEmail} ldapGroupData={ldapGroupData} handleClose={handleClose} ldapOrganizationData={ldapOrganizationData} />}
       </CreateModal>
     </>
   );
@@ -36,6 +28,7 @@ function NewLdapUserModal({ ldapOrganizationData, currentUserEmail, setShowModal
 
 NewLdapUserModal.propTypes = {
   ldapOrganizationData: PropTypes.object,
+  authorizedActions: PropTypes.array,
   currentUserEmail: PropTypes.string,
   showModal: PropTypes.bool,
   setShowModal: PropTypes.func,

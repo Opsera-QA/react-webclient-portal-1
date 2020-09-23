@@ -29,6 +29,30 @@ RegisteredUserActions.getTools = async (getAccessToken) => {
   return response;
 };
 
+RegisteredUserActions.getRegisteredUsers = async (currentPage, pageSize, getAccessToken) => {
+  const postBody = {
+    page: currentPage,
+    size: pageSize,
+  };
+  const accessToken = await getAccessToken();
+  const apiUrl = `/users/get-users`;
+  const response = await axiosApiService(accessToken).get(apiUrl, postBody)
+    .then((result) =>  {return result;})
+    .catch(error => {throw error;});
+  return response;
+};
+
+RegisteredUserActions.deactivateUser = async (userId, getAccessToken) => {
+  const postBody = {
+    userId: userId,
+  };
+  const accessToken = await getAccessToken();
+  const apiUrl = `/users/deactivate-user`;
+  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
+    .then((result) =>  {return result;})
+    .catch(error => {throw error;});
+  return response;
+};
 
 RegisteredUserActions.updateAnalyticsProfile = async (analyticsProfileDto, getAccessToken) => {
   let persistData = analyticsProfileDto.getPersistData();
@@ -63,13 +87,19 @@ RegisteredUserActions.deployElkStack = async (userId, getAccessToken) => {
   return response;
 };
 
-RegisteredUserActions.deactivateUser = async (userId, getAccessToken) => {
-  let postBody = {
-    userId: userId
-  };
+RegisteredUserActions.getRegisteredUserTools = async (userId, getAccessToken) => {
   const accessToken = await getAccessToken();
-  const apiUrl = `/users/deactivate-user`;
-  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
+  const apiUrl = `/tools/user/${userId}`;
+  const response = await axiosApiService(accessToken).get(apiUrl)
+    .then((result) =>  {return result;})
+    .catch(error => {throw error;});
+  return response;
+};
+
+RegisteredUserActions.getRegisteredUserDb = async (userId, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/tools/user/${userId}?name=mongodb`;
+  const response = await axiosApiService(accessToken).get(apiUrl)
     .then((result) =>  {return result;})
     .catch(error => {throw error;});
   return response;

@@ -31,11 +31,7 @@ function LdapGroupsTable({ groupData, orgDomain, isLoading }) {
   };
 
   return (
-    <>
-      <div className="table-content-block">
-        <CustomTable isLoading={isLoading} onRowSelect={onRowSelect} data={groupData} columns={columns} />
-      </div>
-    </>
+    <CustomTable isLoading={isLoading} onRowSelect={onRowSelect} data={groupData} columns={columns} tableTitle={"Groups"}/>
   );
 }
 

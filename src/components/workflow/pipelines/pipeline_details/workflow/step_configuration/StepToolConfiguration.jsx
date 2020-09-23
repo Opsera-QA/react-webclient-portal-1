@@ -104,6 +104,10 @@ function StepToolConfiguration({
         getAccessToken
       );
 
+
+      // TODO: replace code below with this once all the different job types are registered in the new Node service
+      //const createJobResponse = await pipelineActions.processStepJob(pipeline._id, stepId);
+
       const createJobResponse = await PipelineActions.createJob(
         toolId,
         createJobPostBody,

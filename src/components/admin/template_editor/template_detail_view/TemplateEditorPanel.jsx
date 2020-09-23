@@ -7,7 +7,7 @@ import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
 import DtoToggleInput from "../../../common/input/dto_input/dto-toggle-input";
 import DtoJsonInput from "../../../common/input/dto_input/dto-json-input";
 import {
-  getOrganizationDropdownList,
+  getOrganizationAccountDropdownList,
 } from "../../accounts/ldap/organizations/organization-functions";
 import DtoSelectInput from "../../../common/input/dto_input/dto-select-input";
 import DtoMultiselectInput from "../../../common/input/dto_input/dto-multiselect-input";
@@ -44,7 +44,7 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
   };
 
   const getLdapOrganizationAccounts = async () => {
-    let ldapOrganizationAccountList = await getOrganizationDropdownList("name", getAccessToken);
+    let ldapOrganizationAccountList = await getOrganizationAccountDropdownList("name", getAccessToken);
     setLdapOrganizationAccountList(ldapOrganizationAccountList);
   };
 

@@ -161,7 +161,6 @@ export const ldapOrganizationAccountMetaData = {
       label: "Administrator",
       id: "administrator",
       fieldText: "This user is created based on the Opsera Customer Record selected.",
-      isRequired: true
     },
     {
       label: "Common Account Name",
@@ -211,5 +210,24 @@ export const ldapOrganizationAccountMetaData = {
       label: "Entity ID",
       id: "entityID",
     }
-  ]
+  ],
+  newObjectFields: {
+    org: "",
+    name: "",
+    localAuth: true,
+    samlEnabled: true,
+    oAuthEnabled: true,
+    idpPostURL: "https://testurl.com",
+    idpVendor: "OKTA",
+    configEntryType: "Not sure",
+    entityID: "https://dev-842100.oktapreview.com",
+    description: "",
+    isMultipleIDP: false,
+    idpReturnAttributes: [
+      "mail",
+      "cn"],
+    accountName: "",
+    orgDomain: "",
+    administrator: {}
+  }
 };

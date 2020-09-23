@@ -82,6 +82,16 @@ pipelineActions.createJob = async (toolId, postBody, getAccessToken) => {
   return response;
 };
 
+//TODO: This should replace createJob above as this logic will lookup the settings in the pipeline, run create job and then update pipeline with job name.
+pipelineActions.processStepJob = async (pipelineId, stepId, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/pipelines/${pipelineId}/action/jenkins/process-step-job?step=${stepId}`;
+  const response = await axiosApiService(accessToken).put(apiUrl)
+    .then((result) =>  {return result;})
+    .catch(error => {throw { error };});
+  return response;
+};
+
 pipelineActions.duplicate = async (pipelineId, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = `/pipelines/${pipelineId}/duplicate/`;   
@@ -104,6 +114,16 @@ pipelineActions.getLogs = async (pipelineId, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = `/pipelines/${pipelineId}/status`;   
   const response = await axiosApiService(accessToken).get(apiUrl)
+    .then((result) =>  {return result;})
+    .catch(error => {throw { error };});
+  return response;
+};
+
+pipelineActions.deployTemplate = async (templateId, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/pipelines/deploy/${templateId}`;
+  const postBody = {};
+  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
     .then((result) =>  {return result;})
     .catch(error => {throw { error };});
   return response;

@@ -62,7 +62,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
   };
 
   if (loading && !showToast) {
-    return (<LoadingDialog size="sm"/>);
+    return (<LoadingDialog size="sm" message="Loading..."/>);
   }
 
   if (showToast && !loading) {
@@ -104,7 +104,11 @@ function PipelinesView({ currentTab, setActiveTab }) {
     );
   }
 
-  return (<></>);
+  return (
+    <div className="px-2 max-content-width" style={{ minWidth: "505px" }}>
+      <div className="my-5"><InfoDialog message="Invalid route"/></div>
+    </div>
+  );
 
 }
 

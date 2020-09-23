@@ -16,6 +16,7 @@ const trails = {
   kpiDetailView: {parent: "kpiManagement", destination: {name: "kpiDetailView", path: paths.kpiManagement, label: "Kpi Details"}},
   registeredUsersManagement: {parent: "admin", destination: {name: "registeredUsersManagement", path: paths.registeredUsersManagement, label: "Registered Users Management"}},
   registeredUsersDetailView: {parent: "registeredUsersManagement", destination: {name: "registeredUsersDetailView", path: paths.registeredUsersManagement, label: "Registered User Details"}},
+  apiManagement: {parent: "admin", destination: {name: "apiManagement", path: paths.apiManagement, label: "API Management"}},
 
   // Account settings
   accountSettings: {parent: undefined, destination: {name: "accountSettings", path: paths.accountSettings, label: "Account Settings"}},
@@ -23,6 +24,7 @@ const trails = {
   // LDAP Users Administration
   ldapUserManagement: {parent: "accountSettings", destination: {name: "ldapUserManagement", path: paths.ldapUserManagement, label: "Users"}},
   ldapUserDetailView: {parent: "ldapUserManagement", destination: {name: "ldapUserDetailView", path: paths.ldapUserDetailView, label: "User Details"}},
+  ldapUserDetailViewLimited: {parent: "accountSettings", destination: {name: "ldapUserDetailViewLimited", path: paths.ldapUserDetailView, label: "User Details"}},
 
   // LDAP Groups Administration
   ldapGroupManagement: {parent: "accountSettings", destination: {name: "ldapGroupManagement", path: paths.ldapGroupManagement, label: "Groups"}},

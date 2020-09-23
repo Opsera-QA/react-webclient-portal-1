@@ -100,7 +100,7 @@ function ToolEditorPanel({ toolData, setToolData, handleClose }) {
           </Row>
           <Row>
             <div className="ml-auto mt-3 px-3">
-              <SaveButton recordDto={toolDataDto} handleClose={handleClose} createRecord={createTool} updateRecord={updateTool} setData={setToolData} setRecordDto={setToolDataDto} />
+              <SaveButton recordDto={toolDataDto} showCreateAnother={true} showViewDetails={true} handleClose={handleClose} createRecord={createTool} updateRecord={updateTool} setData={setToolData} setRecordDto={setToolDataDto} />
             </div>
           </Row>
         </div>

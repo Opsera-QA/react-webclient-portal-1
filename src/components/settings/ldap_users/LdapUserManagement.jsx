@@ -76,7 +76,6 @@ function LdapUserManagement() {
       setAccessRoleData(userRoleAccess);
 
       let authorizedActions = await accountsActions.getAllowedUserActions(userRoleAccess, ldap.organization, undefined, getUserRecord, getAccessToken);
-      console.log("Authorized Actions: " + JSON.stringify(authorizedActions));
       setAuthorizedActions(authorizedActions);
 
       if (userRoleAccess.OpseraAdministrator) {
@@ -159,7 +158,7 @@ function LdapUserManagement() {
         <div className="full-height">
           {userList && <LdapUsersTable orgDomain={orgDomain} isLoading={isLoading} userData={userList}/>}
         </div>
-        <NewLdapUserModal organizationName={organization && organization.name} showModal={showCreateUserModal} setShowModal={setShowCreateUserModal} loadData={loadData}/>
+        <NewLdapUserModal authorizedActions={authorizedActions} organizationName={organization && organization.name} showModal={showCreateUserModal} setShowModal={setShowCreateUserModal} loadData={loadData}/>
       </div>
     );
 }

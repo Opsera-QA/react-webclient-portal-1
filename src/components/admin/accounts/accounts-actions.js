@@ -222,6 +222,18 @@ accountsActions.getUsers = async (getAccessToken) => {
   return response;
 };
 
+accountsActions.getUserDetailViewLink = async (getUserRecord) => {
+  const user = await getUserRecord();
+  const {ldap} = user;
+  if (ldap == null) {
+    return undefined;
+  }
+  else {
+    return `/settings/${ldap.domain}/users/details/${user.email}`;
+  }
+};
+
+
 accountsActions.getLdapUsers = async (getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = "/users/accounts";

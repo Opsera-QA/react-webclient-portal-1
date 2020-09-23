@@ -19,6 +19,7 @@ function LdapOrganizationManagement() {
   const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
   const [ldapOrganizationData, setLdapOrganizationData] = useState([]);
   const [showCreateOrganizationModal, setShowCreateOrganizationModal] = useState(false);
+  const [authorizedActions, setAuthorizedActions] = useState(undefined);
   const history = useHistory();
   const toastContext = useContext(DialogToastContext);
 
@@ -61,7 +62,7 @@ function LdapOrganizationManagement() {
       setAccessRoleData(userRoleAccess);
 
       let authorizedActions = await accountsActions.getAllowedOrganizationActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
-      console.log("Authorized Actions: " + JSON.stringify(authorizedActions));
+      setAuthorizedActions(authorizedActions);
 
       if (userRoleAccess.OpseraAdministrator) {
         await loadOrganizations();
@@ -100,7 +101,7 @@ function LdapOrganizationManagement() {
         </div>
         <LdapOrganizationsTable isLoading={isLoading} data={ldapOrganizationData}/>
         <NewLdapOrganizationModal showModal={showCreateOrganizationModal} loadData={loadData}
-                                  setShowModal={setShowCreateOrganizationModal}/>
+                                  authorizedActions={authorizedActions} setShowModal={setShowCreateOrganizationModal}/>
       </div>
     </>);
 }
