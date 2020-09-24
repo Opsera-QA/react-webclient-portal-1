@@ -24,7 +24,7 @@ const platformMetadata = {
       id: "versionNumber",
     },
     {
-      label: "Install Data",
+      label: "Install Date",
       id: "installationDate",
     },
     {
