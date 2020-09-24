@@ -47,7 +47,7 @@ function ToolManagement() {
   const getRoles = async () => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
-    if (userRoleAccess.OpseraAdministrator) {
+    if (userRoleAccess && userRoleAccess.OpseraAdministrator) {
       setAccessRoleData(userRoleAccess);
       await getToolTypes();
       await getToolIdentifiers();

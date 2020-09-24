@@ -56,7 +56,7 @@ function RegisteredUsersManagement() {
       setAccessRoleData(userRoleAccess);
     }
 
-    if (userRoleAccess.OpseraAdministrator) {
+    if (userRoleAccess && userRoleAccess.OpseraAdministrator) {
       await getRegisteredUsers();
     }
   };

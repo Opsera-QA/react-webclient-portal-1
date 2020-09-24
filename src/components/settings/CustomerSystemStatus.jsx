@@ -39,7 +39,7 @@ function CustomerSystemStatus() {
       setAccessRoleData(userRoleAccess);
     }
 
-    if (userRoleAccess.OpseraAdministrator) {
+    if (userRoleAccess && userRoleAccess.OpseraAdministrator) {
       await getStatus();
     } else {
       history.push("/");
