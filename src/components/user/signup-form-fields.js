@@ -62,6 +62,7 @@ const defaultSignupFormFields = {
     id: "domain",
     fieldText: "When new resources are created for this account, this will be the default sub-domain name used when building DNS records.",
     isAlphaNumeric: true,
+    isRequired: true,
     maxLength: 10,
   },
     {

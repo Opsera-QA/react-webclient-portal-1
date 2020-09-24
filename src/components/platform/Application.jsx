@@ -66,8 +66,8 @@ function Application(props) {
 
   const handleAppNameChange = ({ target: { name, value } }) => {
     let error = null;
-    const regex = RegExp('^[ A-Za-z0-9-]*$');
-    if( !regex.test(value)) error = "No special chars allowed except '-'";
+    const regex = RegExp('^[A-Za-z0-9][A-Za-z0-9-]*$');
+    if( !regex.test(value)) error = "No special chars allowed except";
     if (value.length > 20) error = "App Name has to be 20 chars or less";
     if (value.length > 1 && !isAlphaNumeric(value))
       error = "App Name has to be alphanumeric";
@@ -293,7 +293,7 @@ function Application(props) {
                 <SAST app={applicationDetails.data} tools={applicationDetails.tools} />
                 <ContinousIntegration app={applicationDetails.data} tools={applicationDetails.tools} isEKS ={isEKS}  />
                 <LogManagement app={applicationDetails.data} tools={applicationDetails.tools} isEKS ={isEKS}  />
-                <RepositoryManagement app={applicationDetails.data} tools={applicationDetails.tools} />
+                <RepositoryManagement app={applicationDetails.data} tools={applicationDetails.tools} isEKS ={isEKS}  />
                 <Monitoring app={applicationDetails.data} tools={applicationDetails.tools} isEKS ={isEKS} />              
                 <ContainerScan app={applicationDetails.data} tools={applicationDetails.tools} isEKS ={isEKS} />            
               </CardColumns>
