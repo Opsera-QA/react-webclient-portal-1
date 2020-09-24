@@ -12,12 +12,14 @@ import RegisteredUserActions from "./registered-user-actions";
 import {AuthContext} from "../../../contexts/AuthContext";
 import registeredUsersMetadata from "./registered-users-form-fields";
 import {getTableDateColumn, getTableTextColumn} from "../../common/table/table-column-helpers";
+import {DialogToastContext} from "../../../contexts/DialogToastContext";
 
 function RegisteredUsersTable({  data, deployingElk, isLoading, handleDeletePress, handleDeployElkStack, gotoProfile }) {
   const fields = registeredUsersMetadata.fields;
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState({});
   const { getAccessToken } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
 
   const columns = useMemo(
     () => [
@@ -61,6 +63,7 @@ function RegisteredUsersTable({  data, deployingElk, isLoading, handleDeletePres
       setModalData(response.data);
     } catch (error) {
       console.error("Error getting API Data: ", error);
+      toastContext.showLoadingErrorDialog(error);
       // setError(error);
     }
   }
@@ -125,7 +128,7 @@ function RegisteredUsersTable({  data, deployingElk, isLoading, handleDeletePres
                 {Object.keys(row.original.tools).length > 0 && <tr><td colSpan="7">Tools:</td></tr>}
                 {Object.keys(row.original.tools).length > 0 ? (
                   <tr key={i} className="tools-block">
-                    <td colSpan="7">
+                    <td colSpan="12">
                       {row.original.tools.map((tool, index) => (
                         <Row key={index} style={{ marginLeft: "10px", fontSize: ".9em" }}>
                           <Col xs={3}>{tool._id}</Col>
@@ -137,11 +140,11 @@ function RegisteredUsersTable({  data, deployingElk, isLoading, handleDeletePres
                     </td>
                   </tr>) :
                   <tr className="tools-block">
-                    <td colSpan="2" className="text-muted text-center"> No tools are associated with this user account! </td>
+                    <td colSpan="2" className="text-muted text-center"> No tools are associated with this user account! Go into the User Settings Tools tab to deploy ELK stack</td>
                     <td colSpan="2" className="text-muted text-center">
                       <Button variant="secondary" disabled={deployingElk} size="sm"
                         onClick={() => { handleDeployElkStack(row.original._id); }} >
-                            Deploy ELK Stack Now</Button> 
+                            Deploy ELK Stack Now</Button>
                     </td>
                   </tr>
                 }
