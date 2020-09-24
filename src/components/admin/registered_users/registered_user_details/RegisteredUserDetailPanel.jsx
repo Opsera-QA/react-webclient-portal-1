@@ -11,6 +11,7 @@ import RegisteredUserToolsPanel from "./tools/RegisteredUserToolsPanel";
 
 function RegisteredUserDetailPanel({ userData, setUserData, analyticsProfileData, setAnalyticsProfileData }) {
   const [activeTab, setActiveTab] = useState("analyticsSettings");
+  const [isDeployingElk, setIsDeployingElk] = useState(false);
 
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
@@ -33,7 +34,14 @@ function RegisteredUserDetailPanel({ userData, setUserData, analyticsProfileData
         <Row>
           <Col>
             <div className="tabbed-content-block">
-              {userData && <RegisteredUserTabView activeTab={activeTab} analyticsProfileData={analyticsProfileData} setAnalyticsProfileData={setAnalyticsProfileData} userData={userData} setUserData={setUserData} />}
+              {userData && <RegisteredUserTabView
+                activeTab={activeTab}
+                analyticsProfileData={analyticsProfileData}
+                setAnalyticsProfileData={setAnalyticsProfileData}
+                userData={userData}
+                setUserData={setUserData}
+                isDeployingElk={isDeployingElk}
+                setIsDeployingElk={setIsDeployingElk}/>}
             </div>
           </Col>
         </Row>
@@ -42,7 +50,7 @@ function RegisteredUserDetailPanel({ userData, setUserData, analyticsProfileData
   );
 }
 
-function RegisteredUserTabView({ activeTab, userData, setUserData, analyticsProfileData, setAnalyticsProfileData }) {
+function RegisteredUserTabView({ activeTab, userData, setUserData, isDeployingElk, setIsDeployingElk, analyticsProfileData, setAnalyticsProfileData }) {
   useEffect(() => {
     // console.log("CHANGE HAPPENED");
   }, [activeTab, analyticsProfileData, userData]);
@@ -50,7 +58,7 @@ function RegisteredUserTabView({ activeTab, userData, setUserData, analyticsProf
   if (activeTab) {
     switch (activeTab) {
       case "tools":
-        return <RegisteredUserToolsPanel registeredUserId={userData["_id"]} />
+        return <RegisteredUserToolsPanel userData={userData} setIsDeployingElk={setIsDeployingElk} isDeployingElk={isDeployingElk} />
       case "customerDB":
         return <CustomerDatabaseEditorPanel userId={userData["_id"]} customerDatabaseData={analyticsProfileData} setCustomerDatabaseData={setAnalyticsProfileData} />;
       case "analyticsSettings":
