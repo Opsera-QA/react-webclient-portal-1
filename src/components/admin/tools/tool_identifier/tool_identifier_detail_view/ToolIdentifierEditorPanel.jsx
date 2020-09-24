@@ -27,7 +27,8 @@ function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData, 
     try {
       setIsLoading(true);
       setToolIdentifierDataDto(toolIdentifierData);
-      await getToolList();
+      const toolList = await getToolList();
+      setToolList(toolList.data);
     }
     catch (error) {
       toastContext.showLoadingErrorDialog(error);

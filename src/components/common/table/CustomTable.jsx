@@ -121,7 +121,7 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
     if ((isLoading && data == null) || !showHeaderText || !headerGroups) {
       return (
         <tr>
-          <th>
+          <th colSpan="12">
             <div className="no-header-text" />
           </th>
         </tr>
