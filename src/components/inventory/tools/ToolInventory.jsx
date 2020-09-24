@@ -44,7 +44,7 @@ function ToolInventory () {
       // https://opsera.atlassian.net/wiki/spaces/OAD/pages/317751606/Tool+Registry+Tags+APIs
       //todo: can we swap the "new Tool" button placement and filters.  I'd like the button to be either
       // the top item or above the table all together, then filters should be directly above the table title bar
-      let apiUrl = "/registry?hidden=true&size=100";
+      let apiUrl = "/registry?size=100";
       const response = await axiosApiService(accessToken).get(apiUrl, params);
       setToolRegistryList(response.data.data);
     } catch (error) {
