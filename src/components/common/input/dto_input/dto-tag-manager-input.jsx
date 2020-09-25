@@ -5,10 +5,12 @@ import adminTagsActions from "../../../settings/tags/admin-tags-actions";
 import {AuthContext} from "../../../../contexts/AuthContext";
 import tagEditorMetadata, {defaultTags} from "../../../settings/tags/tags-form-fields";
 import Model from "../../../../core/data_model/model";
+import {DialogToastContext} from "../../../../contexts/DialogToastContext";
+import WarningDialog from "../../status_notifications/WarningDialog";
 
 function DtoTagManagerInput({ fieldName, type, dataObject, setDataObject, disabled, filter, placeholderText, setDataFunction, allowCreate, groupBy}) {
   const { getAccessToken } = useContext(AuthContext);
-  const [errorMessage, setErrorMessage] = useState("");
+  const toastContext = useContext(DialogToastContext);
   const [field] = useState(dataObject.getFieldById(fieldName));
   const [tagOptions, setTagOptions] = useState(defaultTags);
   const [componentLoading, setComponentLoading] = useState(true);
@@ -18,10 +20,17 @@ function DtoTagManagerInput({ fieldName, type, dataObject, setDataObject, disabl
   }, []);
 
   const loadData = async () => {
-    setComponentLoading(true);
-    await getTags();
-    removeOldTags();
-    setComponentLoading(false);
+    try {
+      setComponentLoading(true);
+      await getTags();
+      removeOldTags();
+    }
+    catch (error) {
+      toastContext.showLoadingErrorDialog("Could not load tags.");
+    }
+    finally {
+      setComponentLoading(false);
+    }
   }
 
   const getTags = async () => {
@@ -30,7 +39,7 @@ function DtoTagManagerInput({ fieldName, type, dataObject, setDataObject, disabl
 
     if (tags && tags.length > 0)
     {
-      loadTagOptions(response.data);
+      loadTagOptions(tags);
     }
   };
 
@@ -49,7 +58,12 @@ function DtoTagManagerInput({ fieldName, type, dataObject, setDataObject, disabl
   }
 
   const saveNewTag = async (newTagDto) => {
-    let createTagResponse = await adminTagsActions.create(newTagDto, getAccessToken);
+    try {
+      let createTagResponse = await adminTagsActions.create(newTagDto, getAccessToken);
+    }
+    catch (error) {
+      toastContext.showCreateFailureResultDialog("Tag");
+    }
   };
 
   const loadTagOptions = (tags) => {
@@ -111,7 +125,7 @@ function DtoTagManagerInput({ fieldName, type, dataObject, setDataObject, disabl
   {
     return (<div className="danger-red">Error for tag manager input: You forgot to wire up type!</div>);
   }
-  else {
+
     return (
       field && type &&
       <>
@@ -130,16 +144,15 @@ function DtoTagManagerInput({ fieldName, type, dataObject, setDataObject, disabl
             disabled={disabled}
             onChange={tag => setDataFunction ? setDataFunction(field.id, tag) : validateAndSetData(field.id, tag)}
           />
-          <div className="invalid-feedback">
-            <div>{errorMessage}</div>
-          </div>
+          {/*<div className="invalid-feedback">*/}
+          {/*  <div>{errorMessage}</div>*/}
+          {/*</div>*/}
           <small className="form-text text-muted">
             <div>{field.formText}</div>
           </small>
         </div>
       </>
     );
-  }
 }
 
 DtoTagManagerInput.propTypes = {
