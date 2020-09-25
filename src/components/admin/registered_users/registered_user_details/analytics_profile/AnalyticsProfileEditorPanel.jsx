@@ -31,10 +31,12 @@ function AnalyticsProfileEditorPanel({ analyticsProfileData, setAnalyticsProfile
   };
 
   const unpackData = (analyticsProfileData) => {
-    let unpackedData = {...analyticsProfileData};
-    unpackedData.setData("Infrastructure", analyticsProfileData.getData("workflowType")["Infrastructure"]);
-    unpackedData.setData("Pipeline", analyticsProfileData.getData("workflowType")["Pipeline"]);
-    setAnalyticsProfileDataDto(unpackedData)
+    if (analyticsProfileData != null) {
+      let unpackedData = {...analyticsProfileData};
+      unpackedData.setData("Infrastructure", analyticsProfileData.getData("workflowType")["Infrastructure"]);
+      unpackedData.setData("Pipeline", analyticsProfileData.getData("workflowType")["Pipeline"]);
+      setAnalyticsProfileDataDto(unpackedData);
+    }
   }
 
   const updateProfile = async () => {
@@ -63,6 +65,10 @@ function AnalyticsProfileEditorPanel({ analyticsProfileData, setAnalyticsProfile
 
   if (isLoading) {
     return <LoadingDialog size={"sm"} />
+  }
+
+  if (analyticsProfileDataDto == null) {
+    return <div className="text-center p-5 text-muted">No analytics profile is available for this user.</div>;
   }
 
   return (
