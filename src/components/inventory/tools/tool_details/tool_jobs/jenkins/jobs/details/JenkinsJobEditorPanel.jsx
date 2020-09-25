@@ -13,6 +13,7 @@ import JenkinsJobTypeDockerPush from "../job-type-docker-push.js";
 import JenkinsJobTypeSendToS3 from "../job-type-sent-to-s3.js";
 import JobTypePerformanceTesting from "../job-type-performance-testing.js";
 import JenkinsJobTypeShellScript from "../job-type-shell-script.js";
+import JenkinsJobTypeUnitFunctionalTest from "../job-type-unit-functional-testing.js"
 import JobTypeSFDC from "../job-type-sfdc";
 import {jobTypes} from "../jenkins-job-metadata";
 import {AuthContext} from "../../../../../../../../contexts/AuthContext";
@@ -60,9 +61,11 @@ function JenkinsJobEditorPanel({ toolData, jobData, loadData }) {
       updateJenkinsForm({ ...JobTypeSFDC });
       break;    
     case "CODE SCAN":  
+      updateJenkinsForm({ ...JobTypeCodeScan });
+      break;
     case "UNIT TESTING":   
     case "FUNCTIONAL TESTING":        
-      updateJenkinsForm({ ...JobTypeCodeScan });
+      updateJenkinsForm({ ...JenkinsJobTypeUnitFunctionalTest });
       break;   
     case "PERFORMANCE TESTING":
       updateJenkinsForm({ ...JobTypePerformanceTesting });

@@ -61,6 +61,8 @@ const INITIAL_DATA = {
   gitUserName: "",
   repository: "",
   branch: "",
+  jmeterExportFileName: "",
+  jmeterFileName: "",
 };
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
@@ -376,6 +378,8 @@ function JmeterStepConfiguration({
       buildType,
       dockerName,
       dockerTagName,
+      jmeterExportFileName,
+      jmeterFileName,
     } = formData;
 
     if(jobType === "job") {
@@ -394,10 +398,8 @@ function JmeterStepConfiguration({
       jenkinsUrl.length === 0 ||
       jUserId.length === 0 ||
       jAuthToken.length === 0 ||
-      // jobName.length === 0 ||
-      (buildType === "docker"
-        ? dockerName.length === 0 || dockerTagName.length === 0
-        : false)
+      jmeterExportFileName.length  === 0 ||
+      jmeterFileName.length  === 0      
     ) {
       let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
       setToast(toast);
@@ -967,6 +969,30 @@ function JmeterStepConfiguration({
             {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
           </Form.Group>
         )}
+
+         <Form.Group controlId="jmeterExportFileName">
+            <Form.Label>JMeter Export File Name *</Form.Label>
+            <Form.Control
+              maxLength="50"
+              type="text"
+              placeholder=""
+              value={formData.jmeterExportFileName || ""}
+              className={"mb-1"}
+              onChange={(e) => setFormData({ ...formData, jmeterExportFileName: e.target.value})}
+            />
+          </Form.Group>
+
+          <Form.Group controlId="jmeterFileName">
+          <Form.Label>JMeter File Name *</Form.Label>
+          <Form.Control
+            maxLength="50"
+            type="text"
+            placeholder=""
+            value={formData.jmeterFileName || ""}
+            className={"mb-1"}
+            onChange={(e) => setFormData({ ...formData, jmeterFileName: e.target.value})}
+          />
+        </Form.Group>
 
         <Form.Group controlId="threshold">
           <Form.Label>Success Threshold</Form.Label>
