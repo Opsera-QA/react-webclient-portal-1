@@ -11,22 +11,31 @@ import {
   faLink,
   faChartBar,
   faWrench,
-  faTags,
   faStream,
-  faUsers,
   faFileInvoice, faSitemap, faUserPlus
 } from "@fortawesome/free-solid-svg-icons";
 import AccessDeniedDialog from "../common/status_notifications/accessDeniedInfo";
 import LoadingDialog from "../common/status_notifications/loading";
+import {DialogToastContext} from "../../contexts/DialogToastContext";
 
 
 function AdminTools(props) {
   const [accessRoleData, setAccessRoleData] = useState({});
   const { getUserRecord, setAccessRoles, featureFlagItemInProd } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
-    getRoles();
+    loadData();
   }, []);
+
+  const loadData = async () => {
+    try {
+      await getRoles();
+    }
+    catch (error) {
+      toastContext.showLoadingErrorDialog(error);
+    }
+  };
 
   const getRoles = async () => {
     const user = await getUserRecord();
@@ -38,9 +47,12 @@ function AdminTools(props) {
 
   if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
-  } else if (!accessRoleData.OpseraAdministrator) {
+  }
+
+  if (!accessRoleData.OpseraAdministrator) {
     return (<AccessDeniedDialog roleData={accessRoleData} />);
-  } else {
+  }
+
     return (
       <>
         <div className="max-content-width mt-1">
@@ -93,9 +105,6 @@ function AdminTools(props) {
                 <Link to="/admin/organizations"><FontAwesomeIcon icon={faSitemap} fixedWidth /> Organizations (LDAP)</Link>
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/organization-accounts"><FontAwesomeIcon icon={faUsers} fixedWidth /> Organization Accounts (LDAP)</Link>
-              </Col>
-              <Col xs={12} md={6} lg={4} className="p-2">
                 <Link to="/accounts/create"><FontAwesomeIcon icon={faUserPlus} fixedWidth /> Customer Onboarding</Link>
               </Col>
             </Row>
@@ -103,7 +112,6 @@ function AdminTools(props) {
         </div>
       </>
     );
-  }
 }
 
 AdminTools.propTypes = {};

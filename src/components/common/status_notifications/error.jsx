@@ -44,9 +44,9 @@ function ErrorDialog({ error, align, setError, prependMessage }) {
       messageBody = "Undefined";
     }
 
-    setMessageBody(messageBody ? messageBody : error);
+    setMessageBody(messageBody);
     setDetailedError(JSON.stringify(error));
-    setStatusCode(error.response ? error.response.status : null);
+    setStatusCode(error && error.response ? error.response.status : null);
 
   }, [error]);
 

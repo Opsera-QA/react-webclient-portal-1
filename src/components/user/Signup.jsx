@@ -1,28 +1,21 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { Button, Form, Row, Col, Card, Alert } from "react-bootstrap";
 import { ApiService } from "api/apiService";
 import { useHistory } from "react-router-dom";
 import defaultSignupFormFields from "./signup-form-fields.js";
 import usStateList from "./states";
-
 import "./user.css";
 import Model from "../../core/data_model/model";
-import {
-  getEmailAlreadyExistsErrorDialog,
-  getErrorDialog,
-  getFormValidationErrorDialog,
-  getUpdateFailureResultDialog
-} from "../common/toasts/toasts";
 import DtoTextInput from "../common/input/dto_input/dto-text-input";
 import DtoSelectInput from "../common/input/dto_input/dto-select-input";
 import LoadingDialog from "../common/status_notifications/loading";
 import SaveButton from "../common/buttons/SaveButton";
+import {DialogToastContext} from "../../contexts/DialogToastContext";
 
 function Signup() {
   const history = useHistory();
+  const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [toast, setToast] = useState({});
-  const [showToast, setShowToast] = useState(false);
   const [registrationDataDto, setRegistrationDataDto] = useState(undefined);
 
   // TODO: when pulling actual data with react-dropdown, change text to label
@@ -50,7 +43,7 @@ function Signup() {
       .then(function(response) {
         console.log("response in then: " + JSON.stringify(response));
         if (response.data) {
-          getErrorDialog("Email address already exists.", setShowToast, "top");
+          toastContext.showEmailAlreadyExistsErrorDialog();
           return false;
         } else {
           return true;
@@ -72,7 +65,6 @@ function Signup() {
 
     console.log("persistData: ", JSON.stringify(registrationDataDto.getPersistData()));
 
-    if (registrationDataDto.isModelValid2()) {
       //Check if the email is already exist in the system
       const isEmailAvailable = await isEmailAvailableFunc();
 
@@ -96,6 +88,7 @@ function Signup() {
           .then(function (response) {
             console.debug(response);
             setIsLoading(false);
+            toastContext.showCreateSuccessResultDialog("Account", false);
             //showSuccessAlert();
             //TODO: Send user to new registration confirmation form:
             loadRegistrationResponse();
@@ -103,22 +96,13 @@ function Signup() {
           .catch(function (error) {
             console.error(error);
             setIsLoading(false);
-            let toast = getUpdateFailureResultDialog("Account", error.message, setShowToast, "top");
-            setToast(toast);
-            setShowToast(true);
-            console.error(error.message);
+            toastContext.showUpdateFailureResultDialog("Account", error);
+            console.error(error);
           });
       }
       else {
-        let toast = getEmailAlreadyExistsErrorDialog(setShowToast, "top");
-        setToast(toast);
-        setShowToast(true);
+        toastContext.showEmailAlreadyExistsErrorDialog();
       }
-    }else {
-      let toast = getFormValidationErrorDialog(setShowToast, "top");
-      setToast(toast);
-      setShowToast(true);
-    }
   };
 
   if (isLoading || registrationDataDto == null) {
@@ -131,7 +115,6 @@ function Signup() {
         <Card>
           <Card.Header as="h5" className="new-user-header">Sign Up For Opsera</Card.Header>
           <Card.Body className="new-user-body-full p-3">
-            {showToast && toast}
             <Row>
               <Col md={6}>
                 <DtoTextInput fieldName={"firstName"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
@@ -175,7 +158,7 @@ function Signup() {
             </Row>
             <Row>
               <div className="ml-auto m-3 px-3">
-                <SaveButton type={"account"} createRecord={signupSubmit} recordDto={registrationDataDto} altButtonText={"Register Account"}/>
+                <SaveButton createRecord={signupSubmit} type={"Account"} showToasts={false} updateRecord={signupSubmit} modal={false} recordDto={registrationDataDto} altButtonText={"Register Account"}/>
               </div>
             </Row>
           </Card.Body>

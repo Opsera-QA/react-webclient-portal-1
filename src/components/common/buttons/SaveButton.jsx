@@ -7,7 +7,7 @@ import {faSave, faSpinner} from "@fortawesome/free-solid-svg-icons";
 import {DialogToastContext} from "../../../contexts/DialogToastContext";
 import {useHistory} from "react-router-dom";
 
-function SaveButton({recordDto, setRecordDto, setData, createRecord, updateRecord, altButtonText, type, disable, handleClose, showCreateAnother, showViewDetails}) {
+function SaveButton({recordDto, setRecordDto, setData, createRecord, updateRecord, altButtonText, type, disable, handleClose, showCreateAnother, showViewDetails, modal, showToasts}) {
   let toastContext = useContext(DialogToastContext);
   const history = useHistory();
   const [isSaving, setIsSaving] = useState(false);
@@ -18,14 +18,17 @@ function SaveButton({recordDto, setRecordDto, setData, createRecord, updateRecor
 
     try {
       if(!recordDto.isModelValid2()) {
-        toastContext.showFormValidationErrorDialog(isNew);
+        toastContext.showFormValidationErrorDialog(isNew && modal);
         return;
       }
 
       let response = await persistFunction();
 
       if (isNew) {
-        toastContext.showCreateSuccessResultDialog(getType(), createAnother);
+        if (showToasts)
+        {
+          toastContext.showCreateSuccessResultDialog(getType(), createAnother);
+        }
 
         if (setData && createAnother) {
           let newModel = new Model({...recordDto.getNewObjectFields()}, recordDto.getMetaData(), true);
@@ -39,7 +42,10 @@ function SaveButton({recordDto, setRecordDto, setData, createRecord, updateRecor
         }
       }
       else {
-        toastContext.showUpdateSuccessResultDialog(getType());
+        if (showToasts)
+        {
+          toastContext.showUpdateSuccessResultDialog(getType());
+        }
 
         if (setData && createAnother) {
           let updatedDto = new Model(response.data, recordDto.getMetaData(), false);
@@ -55,6 +61,7 @@ function SaveButton({recordDto, setRecordDto, setData, createRecord, updateRecor
     catch (error) {
       console.error(error);
 
+      // Always show error toasts?
       if (isNew) {
         toastContext.showCreateFailureResultDialog(getType(), error);
       }
@@ -122,13 +129,17 @@ SaveButton.propTypes = {
   setRecordDto: PropTypes.func,
   handleClose: PropTypes.func,
   showCreateAnother: PropTypes.bool,
-  showViewDetails: PropTypes.bool
+  showViewDetails: PropTypes.bool,
+  modal: PropTypes.bool,
+  showToasts: PropTypes.bool
 };
 
 SaveButton.defaultProps = {
   disable: false,
   showCreateAnother: false,
-  showViewDetails: false
+  showViewDetails: false,
+  modal: true,
+  showToasts: true
 }
 
 export default SaveButton;

@@ -1,63 +1,65 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
-import { ApiService } from "../../api/apiService";
-import { Table, Card } from "react-bootstrap";
-import ConfigurationsForm from "../analytics/configurationsForm";
+import { Table } from "react-bootstrap";
 import LoadingDialog from "../common/status_notifications/loading";
-import ErrorDialog from "../common/status_notifications/error";
+import {DialogToastContext} from "../../contexts/DialogToastContext";
+import userActions from "./user-actions";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faUser} from "@fortawesome/pro-solid-svg-icons/faUser";
 
 function Profile() {
-  const contextType = useContext(AuthContext);
-  const [error, setErrors] = useState();
+  const {getAccessToken, getUserRecord} = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [data, setData] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [token, setToken] = useState();
   const [user, setUser] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    fetchData();
+    loadData();
   }, []);
 
-  async function fetchData() {
-    setLoading(true);
-    const { getUserRecord, getAccessToken } = contextType;
-    const accessToken = await getAccessToken();
-    const userInfoResponse = await getUserRecord();
-    setToken(accessToken);
-
-    const apiCall = new ApiService("/analytics/settings", {}, accessToken);
-    apiCall.get()
-      .then(function(result) {
-        setData(result.data.profile[0]);
-        setLoading(false);
-        setUser(userInfoResponse);
-      })
-      .catch(function(error) {
-        setLoading(false);
-        setErrors(error);
-        console.log(`Error Reported: ${error}`);
-      });
+  const loadData = async () => {
+    try {
+      setIsLoading(true);
+      await fetchData();
+    }
+    catch (error) {
+      toastContext.showLoadingErrorDialog(error);
+      console.error(error);
+    }
+    finally {
+      setIsLoading(false);
+    }
   }
 
-  return (
-    <div className="mt-3 max-content-width">
+  const fetchData = async () => {
+    const response = await userActions.getAnalyticsSettings(getAccessToken);
+    setData(response.data.profile[0]);
+    setUser(await getUserRecord());
+  }
 
-      <div className="max-content-width mt-3 mb-4">
-        <h4>My User Profile</h4>
-        <p>Review and manage your user profile information as well as platform settings from this page. Please note,
-          profile details are
-          stored in your identify provider so some changes may not be possible from this portal at this time.</p>
-      </div>
+  const getLdapUserInfo = () => {
+    return (
+      <tr>
+        <td>Organization & Account</td>
+        <td>
+          <div className="pb-1"><span className="text-muted mr-2">Organization:</span> {user.ldap.organization}</div>
+          <div className="pb-1"><span className="text-muted mr-2">Account:</span> {user.ldap.account}</div>
+          <div className="pb-1"><span className="text-muted mr-2">Domain:</span> {user.ldap.domain}</div>
+          <div className="pb-1"><span className="text-muted mr-2">Division:</span> {user.ldap.division}</div>
+          <div className="pb-1"><span
+            className="text-muted mr-2">Account Owner:</span> {user.ldap.orgAccountOwnerEmail}</div>
+          <div className="pb-1"><span className="text-muted mr-2">Account Type:</span> {user.ldap.type}</div>
+        </td>
+      </tr>
+    );
+  };
 
-      <h6 className="mt-4">My Profile</h6>
-
-      {loading && <LoadingDialog size={"sm"} message={"Loading User Details"}/>}
-
-      <div className="p-2 mt-1">
-        {user &&
-        <>
-          <Table>
-            <tbody>
+  const getUserInfo = () => {
+    return (
+      <div>
+        <Table className="custom-table mb-0">
+          <tbody>
             <tr>
               <td>OpsERA User ID</td>
               <td>{user._id}</td>
@@ -102,28 +104,31 @@ function Profile() {
                 })}
               </td>
             </tr>
-
-            {user.ldap &&
+            {user.ldap && getLdapUserInfo()}
+          </tbody>
+          <tfoot>
             <tr>
-              <td>Organization & Account</td>
-              <td>
-                <div className="pb-1"><span className="text-muted mr-2">Organization:</span> {user.ldap.organization}
-                </div>
-                <div className="pb-1"><span className="text-muted mr-2">Account:</span> {user.ldap.account}</div>
-                <div className="pb-1"><span className="text-muted mr-2">Domain:</span> {user.ldap.domain}</div>
-                <div className="pb-1"><span className="text-muted mr-2">Division:</span> {user.ldap.division}</div>
-                <div className="pb-1"><span
-                  className="text-muted mr-2">Account Owner:</span> {user.ldap.orgAccountOwnerEmail}</div>
-                <div className="pb-1"><span className="text-muted mr-2">Account Type:</span> {user.ldap.type}</div>
-              </td>
-            </tr>}
-            </tbody>
-          </Table>
-        </>}
-
+              <td colSpan="100%" className="px-2 pt-2 table-footer" />
+            </tr>
+          </tfoot>
+        </Table>
       </div>
+    );
+  }
 
-
+  return (
+    <div className="mt-3 max-content-width">
+      <div className="max-content-width mt-3 mb-4">
+        <h4>My User Profile</h4>
+        <p>Review and manage your user profile information as well as platform settings from this page. Please note,
+          profile details are
+          stored in your identify provider so some changes may not be possible from this portal at this time.</p>
+      </div>
+      <div className="content-container content-card-1 max-content-width ml-2 mb-2">
+        <div className="pt-2 pl-2 content-block-header"><h6><FontAwesomeIcon icon={faUser} fixedWidth className="mr-1"/>My Profile</h6></div>
+        {isLoading && <LoadingDialog size={"sm"} message={"Loading User Details"}/>}
+        {user && getUserInfo()}
+      </div>
     </div>
   );
 }

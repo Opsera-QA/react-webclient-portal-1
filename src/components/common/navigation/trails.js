@@ -40,7 +40,8 @@ const trails = {
 
   // Ldap Organization Account Administration
   ldapOrganizationAccountManagement: {parent: "admin", destination: {name: "ldapOrganizationAccountManagement", path: paths.ldapOrganizationAccountManagement, label: "Organization Accounts"}},
-  ldapOrganizationAccountDetailView: {parent: "ldapOrganizationAccountManagement", destination: {name: "ldapOrganizationAccountDetailView", path: paths.ldapOrganizationDetailView, label: "Organization Account Details"}},
+  // TODO: set parent to ldapOrganizationAccountManagement when organization accounts screen is put to use
+  ldapOrganizationAccountDetailView: {parent: "admin", destination: {name: "ldapOrganizationAccountDetailView", path: paths.ldapOrganizationDetailView, label: "Organization Account Details"}},
 
   //Pipelines
   pipelines: {parent: undefined, destination: {name: "pipelines", path: paths.pipelines, label: "Pipelines"}},
