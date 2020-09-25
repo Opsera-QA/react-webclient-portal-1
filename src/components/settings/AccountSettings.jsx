@@ -4,7 +4,7 @@ import LoadingDialog from "../common/status_notifications/loading";
 import { Link } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faUserFriends, faUser, faTags} from "@fortawesome/free-solid-svg-icons";
+import {faUserFriends, faUser, faTags, faUsers} from "@fortawesome/free-solid-svg-icons";
 import BreadcrumbTrail from "../common/navigation/breadcrumbTrail";
 import AccessDeniedDialog from "../common/status_notifications/accessDeniedInfo";
 import accountsActions from "../admin/accounts/accounts-actions";
@@ -77,6 +77,9 @@ function AccountSettings() {
               {/*<Col xs={12} md={6} lg={4} className="p-2">
                   <Link to="/settings/customerstatus"><FontAwesomeIcon icon={faHeartbeat} fixedWidth/> Customer Status</Link>
                 </Col>*/}
+              {/*<Col xs={12} md={6} lg={4} className="p-2">*/}
+              {/*  <Link to="/admin/organization-accounts"><FontAwesomeIcon icon={faUsers} fixedWidth /> Organization Accounts (LDAP)</Link>*/}
+              {/*</Col>*/}
             </>
           }
         </Row>

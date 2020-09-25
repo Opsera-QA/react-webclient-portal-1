@@ -159,7 +159,7 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
     if (isLoading && (data == null || data.length === 0)) {
       return (
         <tr>
-          <td colSpan="8" className="info-text text-center p-3">{tableLoading()}</td>
+          <td colSpan="12" className="info-text text-center p-3">{tableLoading()}</td>
         </tr>
       );
     } else {
@@ -180,7 +180,7 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
           }
           {!isLoading && rows.length === 0 &&
             <tr>
-              <td colSpan="8" className="info-text text-center p-5">{noDataMessage ? noDataMessage : defaultNoDataMessage}</td>
+              <td colSpan="12" className="info-text text-center p-5">{noDataMessage ? noDataMessage : defaultNoDataMessage}</td>
             </tr>}
         </>
       );
