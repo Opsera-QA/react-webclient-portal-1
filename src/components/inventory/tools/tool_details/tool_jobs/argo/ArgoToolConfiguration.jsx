@@ -11,7 +11,7 @@ import {getFormValidationErrorDialog} from "../../../../../common/toasts/toasts"
 const INITIAL_DATA = {
   toolURL: "",
   userName: "",
-  password: ""
+  accountPassword: ""
 };
 
 
@@ -40,8 +40,8 @@ function ArgoToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVault 
       setIsSaving(true);
       let newConfiguration = formData;
       
-      if (typeof(newConfiguration.password) === "string") {
-        newConfiguration.password = await saveToVault(toolId, toolData.tool_identifier, "secretKey", "Vault Secured Key", newConfiguration.password);
+      if (typeof(newConfiguration.accountPassword) === "string") {
+        newConfiguration.accountPassword = await saveToVault(toolId, toolData.tool_identifier, "accountPassword", "Vault Secured Key", newConfiguration.accountPassword);
       }
 
       const item = {
@@ -66,15 +66,15 @@ function ArgoToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVault 
       return { name: name, vaultKey: keyName };
     } else {
       setFormData(formData => {
-        return { ...formData, password: {} };
+        return { ...formData, accountPassword: {} };
       });
       return "";
     }
   };
 
   const validateRequiredFields = () => {
-    let { toolURL, userName, password } = formData;
-    if (toolURL.length === 0 || userName.length === 0 || password.length === 0 ) {
+    let { toolURL, userName, accountPassword } = formData;
+    if (toolURL.length === 0 || userName.length === 0 || accountPassword.length === 0 ) {
       let toast = getFormValidationErrorDialog(setShowToast);
       setToast(toast);
       setShowToast(true);
@@ -100,7 +100,7 @@ function ArgoToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVault 
       </Form.Group>
       <Form.Group controlId="branchField">
         <Form.Label>Password*</Form.Label>
-        <Form.Control maxLength="50" type="password" placeholder="" value={formData.password || ""} onChange={e => setFormData({ ...formData, password: e.target.value })} />
+        <Form.Control maxLength="50" type="password" placeholder="" value={formData.accountPassword || ""} onChange={e => setFormData({ ...formData, accountPassword: e.target.value })} />
       </Form.Group>
 
       {/*TODO: Replace with SaveButton once converted to using data model*/}
