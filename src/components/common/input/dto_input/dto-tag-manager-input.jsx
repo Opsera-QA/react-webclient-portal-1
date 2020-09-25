@@ -26,7 +26,7 @@ function DtoTagManagerInput({ fieldName, type, dataObject, setDataObject, disabl
 
   const getTags = async () => {
     const response = await adminTagsActions.getTags(getAccessToken);
-    let tags = response.data;
+    let tags = response.data.data;
 
     if (tags && tags.length > 0)
     {

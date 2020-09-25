@@ -35,7 +35,7 @@ function TagManagement() {
   const getTags = async () => {
     try {
       const response = await adminTagsActions.getTags(getAccessToken);
-      setTagList(response.data);
+      setTagList(response.data.data);
     } catch (error) {
       toastContext.showLoadingErrorDialog(error.message);
       console.error(error.message);
