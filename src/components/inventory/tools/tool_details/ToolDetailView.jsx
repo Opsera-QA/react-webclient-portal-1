@@ -1,78 +1,50 @@
-import React, { useState, useEffect, useContext, useMemo } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
 import { AuthContext } from "../../../../contexts/AuthContext";
-import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
 import Model from "../../../../core/data_model/model";
 import ToolSummaryPanel from "./ToolSummaryPanel";
 import inventoryActions from "../../inventory-actions";
 import toolMetadata from "../tool-metadata";
 import ToolDetailPanel from "./ToolDetailPanel";
-import {getLoadingErrorDialog} from "../../../common/toasts/toasts";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTools} from "@fortawesome/pro-solid-svg-icons";
+import DetailViewContainer from "../../../common/panels/detail_view_container/DetailViewContainer";
+import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 
 function ToolDetailView() {
   const { id } = useParams();
   const { getAccessToken } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [toolData, setToolData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const [toast, setToast] = useState({});
-  const [showToast, setShowToast] = useState(false);
 
 
   useEffect(() => {
-    // getRoles();
     getTool();
   }, []);
 
   const getTool = async () => {
-    console.log("loading tool");
-    setIsLoading(true);
     try {
+      setIsLoading(true);
       const response = await inventoryActions.getToolById(id, getAccessToken);
       setToolData(new Model(...response.data, toolMetadata, false));
     } catch (error) {
-      let toast = getLoadingErrorDialog(error.message, setShowToast);
-      setToast(toast);
-      setShowToast(true);
+      toastContext.showLoadingErrorDialog(error);
       console.error(error.message);
     }
-    setIsLoading(false);
+    finally {
+      setIsLoading(false);
+    }
   };
 
-  // TODO: Implement Roles if required
-  // const getRoles = async () => {
-  //   const user = await getUserRecord();
-  //   const userRoleAccess = await setAccessRoles(user);
-  //   if (userRoleAccess) {
-  //     setAccessRoleData(userRoleAccess);
-  //
-  //     if (userRoleAccess["Administrator"] === true) {
-  //       await getTool();
-  //     }
-  //   }
-  // };
-
     return (
-      <>
-        <BreadcrumbTrail destination="toolDetailView"/>
-        {showToast && toast}
-        {toolData &&
-        <div className="content-container content-card-1 max-content-width ml-2">
-          <div className="pt-2 pl-2 content-block-header">
-            <h5><FontAwesomeIcon icon={faTools} fixedWidth className="mr-1"/>Tool Details [{toolData["name"]}]</h5></div>
-          <div className="detail-view-body">
-            <div>
-              <ToolSummaryPanel toolData={toolData} setToolData={setToolData}/>
-            </div>
-            <div>
-              <ToolDetailPanel toolData={toolData} isLoading={isLoading} setToolData={setToolData} loadData={getTool} />
-            </div>
-          </div>
-          <div className="content-block-footer"/>
-        </div>
-        }
-      </>
+      <DetailViewContainer
+        breadcrumbDestination={"toolDetailView"}
+        title={toolData != null ? `Tool Details [${toolData["name"]}]` : undefined}
+        titleIcon={faTools}
+        isLoading={isLoading}
+        summaryPanel={<ToolSummaryPanel toolData={toolData} setToolData={setToolData}/>}
+        detailPanel={<ToolDetailPanel toolData={toolData} isLoading={isLoading} setToolData={setToolData} loadData={getTool}/>}
+      />
     );
 }
 

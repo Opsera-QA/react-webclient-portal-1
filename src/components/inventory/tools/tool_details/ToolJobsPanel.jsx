@@ -17,7 +17,7 @@ function ToolJobsPanel({ toolData, loadData, isLoading }) {
 
   return (
     <>
-      <div className="text-muted p-2">
+      <div className="text-muted p-3">
         <div className="h6">Managed Jobs Creation</div>
         <div className="mb-3">Create settings for custom jobs to be triggered in Pipeline steps (when configuring a
           pipeline). These settings can be entered once and reused across the Opsera platform.

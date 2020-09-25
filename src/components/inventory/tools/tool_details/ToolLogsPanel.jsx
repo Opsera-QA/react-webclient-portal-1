@@ -131,12 +131,11 @@ function ToolLogsPanel(props) {
 
   return (
     <>
-      <div className="text-muted p-2">
+      <div className="text-muted p-3">
         <div className="h6">Tool Management Logs</div>
         <div className="mb-3">View log activity for actions performed by Opsera against this tool. This includes
           creation or deletion of jobs as well as registering accounts.
         </div>
-      </div>
       {/*<div className="tool-filter mr-2">*/}
       {/*  { filterOptionList && <DropdownList*/}
       {/*    busy={Object.keys(filterOptionList).length === 1}*/}
@@ -157,6 +156,7 @@ function ToolLogsPanel(props) {
           paginationOptions={getPaginationOptions()}
         >
         </CustomTable>
+      </div>
       </div>
       <Modal show={showModal} size="lg" onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>

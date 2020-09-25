@@ -43,7 +43,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading }) {
         </Row>
         <Row>
           <Col>
-            <div className="tabbed-content-block detail-view-detail-panel">
+            <div className="content-block-collapse">
               {toolData &&
               <ToolDetailsView toolData={toolData} setToolData={setToolData} loadData={loadData} activeTab={activeTab}
                                isLoading={isLoading}/>}
