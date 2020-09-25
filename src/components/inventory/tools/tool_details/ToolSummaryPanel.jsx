@@ -30,9 +30,9 @@ function ToolSummaryPanel({ toolData, setToolData }) {
 
   return (
     <>{ toolData && <>
-      <div className="scroll-y pt-2 px-3">
+      <div className="scroll-y px-3">
         <SummaryActionBar backButtonPath={"/inventory/tools"} handleActiveToggle={toggleToolType} status={toolData.getData("active")} />
-        <div className="mb-3 flat-top-content-block p-3 detail-view-summary">
+        <div className="mb-3 content-block-collapse p-3 detail-view-summary">
           <Row>
             <Col lg={6}>
               <DtoTextField dataObject={toolData} fieldName={"name"} />

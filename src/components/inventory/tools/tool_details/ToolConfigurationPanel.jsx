@@ -90,7 +90,7 @@ function ToolConfigurationPanel({ toolData }) {
   
 
   return (
-    <div className="m-2">
+    <div className="p-3">
       {showToast && toast}
       <div className="text-muted pb-3">Enter tool specific configuration information below.  These settings will be used for pipelines.</div>
       {toolData && getConfiguation(toolData.getData("tool_identifier").toLowerCase()) }

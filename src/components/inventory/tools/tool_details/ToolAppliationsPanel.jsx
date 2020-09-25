@@ -23,7 +23,7 @@ function ToolApplicationsPanel({ toolData, loadData, isLoading }) {
 
   return (
     <>
-      <div className="text-muted p-2">
+      <div className="text-muted p-3">
         <div className="h6">Managed Application Creation</div>
         <div className="mb-3">Use this feature to create applications in the managed tool.
         </div>

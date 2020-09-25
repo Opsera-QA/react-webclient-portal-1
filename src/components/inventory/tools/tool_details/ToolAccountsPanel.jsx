@@ -15,7 +15,7 @@ function ToolAccountsPanel({ toolData, loadData }) {
 
   return (
     <>
-      <div className="text-muted p-2">
+      <div className="text-muted p-3">
         <div className="h6">Opsera Managed Account Creation</div>
         <div className="mb-3">Register account credentials in the tool for use in pipelines.</div>
         {toolData && getAccountPanel(toolData["tool_identifier"].toLowerCase(), loadData)}
