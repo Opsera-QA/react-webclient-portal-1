@@ -6,7 +6,6 @@ import {AuthContext} from "../../../../contexts/AuthContext";
 import tagEditorMetadata, {defaultTags} from "../../../settings/tags/tags-form-fields";
 import Model from "../../../../core/data_model/model";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
-import WarningDialog from "../../status_notifications/WarningDialog";
 
 function DtoTagManagerInput({ fieldName, type, dataObject, setDataObject, disabled, filter, placeholderText, setDataFunction, allowCreate, groupBy}) {
   const { getAccessToken } = useContext(AuthContext);
@@ -23,7 +22,7 @@ function DtoTagManagerInput({ fieldName, type, dataObject, setDataObject, disabl
     try {
       setComponentLoading(true);
       await getTags();
-      removeOldTags();
+      await removeOldTags();
     }
     catch (error) {
       toastContext.showLoadingErrorDialog("Could not load tags.");
@@ -43,7 +42,7 @@ function DtoTagManagerInput({ fieldName, type, dataObject, setDataObject, disabl
     }
   };
 
-  const removeOldTags = () => {
+  const removeOldTags = async () => {
     let newTags = [];
     dataObject.getData(fieldName).map((tag, index) => {
       if (tag["type"] != null && tag["type"] !== "" && tag["value"] != null && tag["value"] !== "")
@@ -67,7 +66,7 @@ function DtoTagManagerInput({ fieldName, type, dataObject, setDataObject, disabl
   };
 
   const loadTagOptions = (tags) => {
-    let currentOptions = tagOptions;
+    let currentOptions = [...defaultTags];
     tags.map((tag, index) => {
       let tagOption = {type: tag["type"], value: tag["value"]};
       currentOptions.push(tagOption);

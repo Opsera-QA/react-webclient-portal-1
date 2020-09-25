@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSortUp, faSortDown, faPlus, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import Pagination from "components/common/pagination";
 import {Button, Spinner} from "react-bootstrap";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 export const defaultRowStyling = (row) => {
   return "";
@@ -20,7 +22,7 @@ export const defaultInitialState = {
   ]
 };
 
-function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRowSelect, rowStyling, initialState, tableFilter, paginationOptions, showHeaderText, isLoading, tableTitle, createNewRecord }) {
+function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRowSelect, rowStyling, initialState, tableFilter, paginationOptions, showHeaderText, isLoading, tableTitle, createNewRecord, tableFilterBar }) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -91,7 +93,7 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
     return (
       <>
         {isLoading && tableTitle && data != null && data.length !== 0 &&
-            <FontAwesomeIcon icon={faSpinner} spin className="mx-1 mt-1"/>
+            <FontAwesomeIcon icon={faSpinner} spin className="ml-2 my-auto"/>
         }
       </>
     );
@@ -100,10 +102,12 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
   const getTableTitleBar = () => {
     return (
       <div>
-        <div className="d-flex justify-content-between mb-1">
-          <div className="h6 my-2 d-flex">{tableTitle}{getTableTitleLoader()}</div>
-          {/*TODO: Implement Table Action Bar with ability for filters*/}
-          <div className="d-flex text-right">
+        <Row className="d-flex justify-content-between mx-0">
+          <Col sm={3} className="h6 d-flex pl-0"><span className="my-1">{tableTitle}{getTableTitleLoader()}</span></Col>
+          {/*TODO: Remove old add button after removing everywhere*/}
+          {tableFilterBar
+            ? <Col className="pr-0"><div className="mt-0"><div className="ml-auto">{tableFilterBar}</div></div></Col>
+            : <div className="d-flex text-right">
             {createNewRecord && <Button size="sm" className={"o"}
                                         onClick={() => {
                                           createNewRecord();
@@ -111,8 +115,9 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
               <FontAwesomeIcon icon={faPlus}/>
               <span className="ml-1">New {type}</span>
             </Button>}
-          </div>
-        </div>
+            </div>
+          }
+        </Row>
       </div>
     );
   };
@@ -225,7 +230,8 @@ CustomTable.propTypes = {
   isLoading: PropTypes.bool,
   tableTitle: PropTypes.string,
   createNewRecord: PropTypes.func,
-  type: PropTypes.string
+  type: PropTypes.string,
+  tableFilterBar: PropTypes.object
 };
 
 CustomTable.defaultProps = {

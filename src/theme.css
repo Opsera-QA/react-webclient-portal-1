@@ -904,3 +904,27 @@ a.nav-link {
 }
 
 /* End Detail View Styling */
+
+/* Filter bar styling */
+.filter-bar {
+    height: 30px;
+}
+
+.filter-bar label {
+    display: inline-flex;
+    margin-right: 1em;
+    height: 30px;
+}
+
+.filter-bar .custom-filter-input .rw-dropdown-list {
+    display: inline-flex;
+    min-width: 200px;
+    max-width: 500px;
+    height: 20px;
+}
+
+.filter-bar .custom-filter-input .rw-widget-input {
+    max-height: 30px;
+    /*max-width: 150px;*/
+}
+/* End filter bar styling */
