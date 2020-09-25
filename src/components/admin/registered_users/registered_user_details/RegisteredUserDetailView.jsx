@@ -40,7 +40,10 @@ function RegisteredUserDetailView() {
 
   const getAnalyticsProfile = async () => {
     const response = await RegisteredUserActions.getAnalyticsProfile(id, getAccessToken);
-    setAnalyticsProfileData(new Model(response.data, analyticsProfileMetadata, false));
+
+    if (response.data != null) {
+      setAnalyticsProfileData(new Model(response.data, analyticsProfileMetadata, false));
+    }
   };
 
   const getRoles = async () => {
@@ -51,7 +54,7 @@ function RegisteredUserDetailView() {
     }
   };
 
-  if (!accessRoleData || isLoading || analyticsProfileData == null || userData == null) {
+  if (!accessRoleData || isLoading || userData == null) {
     return (<LoadingDialog size="sm"/>);
   }
 
