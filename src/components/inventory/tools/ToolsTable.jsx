@@ -12,11 +12,12 @@ import NewToolModal from "./NewToolModal";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
-import {DropdownList} from "react-widgets";
+import FilterBar from "../../common/filters/FilterBar";
+import StatusFilter from "../../common/filters/status/StatusFilter";
+import ToolIdentifierFilter from "../../common/filters/tools/ToolIdentifierFilter";
 
-function ToolsTable({ data, filterOptionList, loadData, isLoading }) {
+function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading }) {
   const [showCreateToolModal, setShowCreateToolModal] = useState(false);
-  const [tableFilter, setTableFilter] = useState();
   let history = useHistory();
   const fields = toolMetadata.fields;
 
@@ -43,8 +44,13 @@ function ToolsTable({ data, filterOptionList, loadData, isLoading }) {
     history.push(`/inventory/tools/details/${rowData.original._id}`);
   };
 
-  const updateFilterOption = (filterOption) => {
-    setTableFilter(filterOption);
+  const getFilterBar = () => {
+    return(
+      <FilterBar loadData={loadData}>
+        <StatusFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
+        <ToolIdentifierFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
+      </FilterBar>
+    );
   };
 
   return (
@@ -52,17 +58,12 @@ function ToolsTable({ data, filterOptionList, loadData, isLoading }) {
       <NewToolModal loadData={loadData} setShowModal={setShowCreateToolModal} showModal={showCreateToolModal}/>
       <div className="p-2">
         <div className="custom-table-filter d-flex flex-row-reverse">
-          <div className="tool-filter mr-2 mb-1">
-            { filterOptionList && <DropdownList
-              busy={Object.keys(filterOptionList).length === 1}
-              disabled={Object.keys(filterOptionList).length === 1}
-              data={filterOptionList}
-              valueField='filterText'
-              textField='text'
-              filter="contains"
-              defaultValue={tableFilter}
-              onChange={updateFilterOption}
-            />}
+          <div className="mb-1 text-right">
+            <Button variant="primary" size="sm"
+                    onClick={() => { createNewTool(); }}>
+              <FontAwesomeIcon icon={faPlus} className="mr-1"/> New Tool
+            </Button>
+            <br />
           </div>
         </div>
           <CustomTable
@@ -71,10 +72,8 @@ function ToolsTable({ data, filterOptionList, loadData, isLoading }) {
             isLoading={isLoading}
             onRowSelect={onRowSelect}
             rowStyling={rowStyling}
-            tableFilter={tableFilter}
+            tableFilterBar={getFilterBar()}
             tableTitle={"Tools"}
-            type={"Tool"}
-            createNewRecord={createNewTool}
           >
           </CustomTable>
       </div>
@@ -85,7 +84,11 @@ function ToolsTable({ data, filterOptionList, loadData, isLoading }) {
 ToolsTable.propTypes = {
   data: PropTypes.array,
   loadData: PropTypes.func,
-  filterOptionList: PropTypes.array
+  filterData: PropTypes.func,
+  filterOptionList: PropTypes.array,
+  isLoading: PropTypes.bool,
+  toolFilterDto: PropTypes.object,
+  setToolFilterDto: PropTypes.func
 };
 
 export default ToolsTable;
