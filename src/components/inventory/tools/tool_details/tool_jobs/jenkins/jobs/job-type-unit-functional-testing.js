@@ -1,5 +1,5 @@
 const JenkinsJobTypeUnitFunctionalTest = {
-  buildType: {
+ buildType: {
     label: "Build Type",
     id: "buildType",
     type: "select",
@@ -12,8 +12,8 @@ const JenkinsJobTypeUnitFunctionalTest = {
       {
         name: "Maven",
         value: "maven"
-      }      
-    ],
+      }          
+    ],    
     toShow: true,
     disabled: false,
     touched: false,
@@ -36,8 +36,8 @@ const JenkinsJobTypeUnitFunctionalTest = {
       {
         name: "Maven",
         value: "maven"
-      }      
-    ],
+      }           
+    ],    
     toShow: true,
     disabled: false,
     touched: false,
@@ -47,29 +47,13 @@ const JenkinsJobTypeUnitFunctionalTest = {
       isRequired: false 
     }
   },
-  // buildToolVersion: {
-  //   label: "Build Tool Version",
-  //   id: "buildToolVersion",
-  //   type: "",
-  //   value: "",
-  //   linkedId: "buildType",
-  //   linkedValue: "gradle",    
-  //   toShow: true,
-  //   disabled: false,
-  //   touched: false,
-  //   isValid: false,
-  //   errorMessage: "",    
-  //   rules: {
-  //     isRequired: false 
-  //   }
-  // },
   gradleTask: {
     label: "Gradle Task",
     id: "gradleTask",
     type: "",
     value: "",
     linkedId: "buildType",
-    linkedValue: "gradle",
+    linkedValue: "gradle",      
     toShow: true,
     disabled: false,
     touched: false,
@@ -85,7 +69,7 @@ const JenkinsJobTypeUnitFunctionalTest = {
     type: "",
     value: "",
     linkedId: "buildType",
-    linkedValue: "maven",
+    linkedValue: "maven",      
     toShow: true,
     disabled: false,
     touched: false,
