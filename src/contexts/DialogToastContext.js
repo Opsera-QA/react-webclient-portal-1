@@ -65,6 +65,7 @@ const ToastContextProvider = (props) => {
   const showUpdateSuccessResultDialog = (type) => {
     setToast(getSuccessDialog(`${type} updated successfully!`));
     setShowToast(true);
+    autoHideDialog();
   }
 
   const showDeleteSuccessResultDialog = (type) => {
@@ -80,6 +81,7 @@ const ToastContextProvider = (props) => {
       setToast(getSuccessDialog(`${type} created successfully!`));
       setShowToast(true);
     }
+    autoHideDialog();
   }
 
   const showCreateFailureResultDialog = (type, error, modal = true) => {

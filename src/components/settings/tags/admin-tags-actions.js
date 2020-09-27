@@ -44,13 +44,15 @@ adminTagsActions.update = async (tagDataDto, getAccessToken) => {
   return response;
 };
 
-adminTagsActions.getTags = async (getAccessToken) => {
+adminTagsActions.getTags = async (tagFilterDto, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = "/tags";
   const urlParams = {
     params: {
       size: 100,
       page: 1,
+      type: tagFilterDto.getData("type"),
+      status: tagFilterDto.getData("status")
     },
   };
   const response = await axiosApiService(accessToken).get(apiUrl, urlParams)

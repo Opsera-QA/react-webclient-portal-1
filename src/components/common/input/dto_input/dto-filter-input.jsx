@@ -18,7 +18,7 @@ function DtoFilterInput({ fieldName, dataObject, setDataObject, groupBy, selectO
 
   return (
           <div className="custom-filter-input my-auto mx-2">
-            <label><span>{field.label}</span></label>
+            {/*<label><span>{field.label}</span></label>*/}
             <DropdownList
               data={selectOptions}
               valueField={valueField}
