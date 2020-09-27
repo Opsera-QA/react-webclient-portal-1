@@ -64,7 +64,7 @@ toolsActions.getToolRegistryList = async (toolFilterDto, getAccessToken) => {
       order: 1,
       status: status,
       tool: toolIdentifier,
-      size: 100
+      size: 10000
     }
   }
 
@@ -87,7 +87,7 @@ toolsActions.getToolRegistryList = async (toolFilterDto, getAccessToken) => {
   // TODO: Construct actual pagination
   // sort by name ascending &sort=name&order=1
 
-  console.log("urlParams: " + urlParams);
+  console.log("urlParams: " + JSON.stringify(urlParams));
 
   const accessToken = await getAccessToken();
   const apiUrl = `/registry`;

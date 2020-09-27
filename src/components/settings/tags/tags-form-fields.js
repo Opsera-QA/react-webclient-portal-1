@@ -44,7 +44,6 @@ const tagEditorMetadata = {
 };
 
 export const defaultTags = [
-  {type: null, value: "None"},
   {type: "pipeline", value: "Pipeline"},
   {type: "application", value: "Application"},
   {type: "project", value: "Project"},

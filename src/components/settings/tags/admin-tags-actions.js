@@ -44,12 +44,31 @@ adminTagsActions.update = async (tagDataDto, getAccessToken) => {
   return response;
 };
 
+adminTagsActions.getAllTags = async (getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = "/tags";
+  const urlParams = {
+    params: {
+      size: 10000,
+      page: 1,
+    },
+  };
+  const response = await axiosApiService(accessToken).get(apiUrl, urlParams)
+    .then((result) => {
+      return result;
+    })
+    .catch(error => {
+      throw { error };
+    });
+  return response;
+};
+
 adminTagsActions.getTags = async (tagFilterDto, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = "/tags";
   const urlParams = {
     params: {
-      size: 100,
+      size: 10000,
       page: 1,
       type: tagFilterDto.getData("type"),
       status: tagFilterDto.getData("status")
