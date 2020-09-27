@@ -9,7 +9,7 @@ import XUnitStepConfiguration from "./step_tool_configuration_forms/XUnitStepCon
 import SonarStepConfiguration from "./step_tool_configuration_forms/SonarStepConfiguration";
 import NpmStepConfiguration from "./step_tool_configuration_forms/NpmStepConfiguration";
 import CommandLineStepConfiguration from "./step_tool_configuration_forms/CommandLineStepConfiguration";
-import TeamCityStepConfiguration from "./step_tool_configuration_forms/TeamCityStepConfiguration";
+import TeamCityStepConfiguration from "./step_tool_configuration_forms/team_city/TeamCityStepConfiguration";
 import GcpDeployStepConfiguration from "./step_tool_configuration_forms/GcpDeployStepConfiguration";
 import AwsDeployStepConfiguration from "./step_tool_configuration_forms/AwsDeployStepConfiguration";
 import JmeterStepConfiguration from "./step_tool_configuration_forms/JmeterStepConfiguration";
@@ -246,10 +246,8 @@ function StepToolConfiguration({
       case "teamcity":
         return (
           <TeamCityStepConfiguration
-            data={stepTool}
+            configurationData={stepTool}
             parentCallback={callbackFunction}
-            setToast={setToast}
-            setShowToast={setShowToast}
           />
         );
       case "jmeter":
