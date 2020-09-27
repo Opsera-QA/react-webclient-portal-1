@@ -7,6 +7,7 @@ import Pagination from "components/common/pagination";
 import {Button, Spinner} from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import DtoPagination from "../pagination/DtoPagination";
 
 export const defaultRowStyling = (row) => {
   return "";
@@ -22,7 +23,7 @@ export const defaultInitialState = {
   ]
 };
 
-function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRowSelect, rowStyling, initialState, tableFilter, paginationOptions, showHeaderText, isLoading, tableTitle, createNewRecord, tableFilterBar }) {
+function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRowSelect, rowStyling, initialState, tableFilter, paginationOptions, showHeaderText, isLoading, tableTitle, createNewRecord, tableFilterBar, paginationDto, setPaginationDto, loadData }) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -207,6 +208,7 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
             <tr>
               <td colSpan="100%" className="px-2 pt-2 table-footer">
                 {paginationOptions && !isLoading && <Pagination total={paginationOptions.totalCount} currentPage={paginationOptions.currentPage} pageSize={paginationOptions.pageSize} onClick={(pageNumber, pageSize) => paginationOptions.gotoPageFn(pageNumber, pageSize)} />}
+                {/*{paginationDto && !isLoading && <DtoPagination paginationDto={paginationDto} setPaginationDto={setPaginationDto} loadData={loadData} />}*/}
               </td>
             </tr>
           </tfoot>

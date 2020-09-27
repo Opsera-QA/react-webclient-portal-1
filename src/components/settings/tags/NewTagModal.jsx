@@ -5,19 +5,12 @@ import CreateModal from "../../common/modal/CreateModal";
 import Model from "../../../core/data_model/model";
 import tagEditorMetadata from "./tags-form-fields";
 
-const INITIAL_DATA = {
-  key: "",
-  value: "",
-  configuration: {},
-  active: true,
-};
-
 function NewTagModal({ setShowModal, showModal, loadData }) {
   const [tagData, setTagData] = useState(undefined);
 
   useEffect(() => {
-    setTagData(new Model({...INITIAL_DATA}, tagEditorMetadata, true));
-  }, []);
+    setTagData(new Model({...tagEditorMetadata.newObjectFields}, tagEditorMetadata, true));
+  }, [showModal]);
 
   const handleClose = () => {
     loadData();
@@ -27,7 +20,7 @@ function NewTagModal({ setShowModal, showModal, loadData }) {
   return (
     <>
       <CreateModal handleCancelModal={handleClose} objectType={"Tag"} showModal={showModal} loadData={loadData} >
-        {tagData && <TagEditorPanel setTagData={setTagData} newTag={true} handleClose={handleClose} tagData={tagData} />}
+        {tagData && <TagEditorPanel setTagData={setTagData} handleClose={handleClose} tagData={tagData} />}
       </CreateModal>
     </>
   );

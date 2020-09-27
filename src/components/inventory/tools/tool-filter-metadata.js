@@ -10,8 +10,19 @@ const toolFilterMetadata = {
       label: "Tool Identifier",
       id: "toolIdentifier",
     },
+    {
+      label: "Page Size",
+      id: "pageSize",
+    },
+    {
+      label: "Total Count",
+      id: "totalCount",
+    },
   ],
   newObjectFields: {
+    pageSize: 25,
+    currentPage: 1,
+    sortOption: { name: "createdAt", text: "Newest", order: -1 },
   }
 };
 

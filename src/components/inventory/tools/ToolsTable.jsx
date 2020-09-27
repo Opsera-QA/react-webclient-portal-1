@@ -71,7 +71,9 @@ function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading
             data={data}
             isLoading={isLoading}
             onRowSelect={onRowSelect}
+            paginationDto={toolFilterDto}
             rowStyling={rowStyling}
+            loadData={loadData}
             tableFilterBar={getFilterBar()}
             tableTitle={"Tools"}
           >

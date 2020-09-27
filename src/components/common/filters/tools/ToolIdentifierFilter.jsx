@@ -31,11 +31,11 @@ function ToolIdentifierFilter({ filterDto, setFilterDto}) {
 
   const getToolList = async () => {
     const toolResponse = await toolsActions.getTools(getAccessToken);
-    setToolIdentifierFilterOptions(createFilterOptions(toolResponse.data, "name", "identifier"));
+    setToolIdentifierFilterOptions(createFilterOptions(toolResponse.data, "Tool", "name", "identifier"));
   };
 
   return (
-    <DtoFilterInput busy={isLoading} fieldName={"toolIdentifier"} setDataObject={setFilterDto} dataObject={filterDto} selectOptions={toolIdentifierFilterOptions} />
+    <div><DtoFilterInput busy={isLoading} fieldName={"toolIdentifier"} setDataObject={setFilterDto} dataObject={filterDto} selectOptions={toolIdentifierFilterOptions} /></div>
   );
 }
 

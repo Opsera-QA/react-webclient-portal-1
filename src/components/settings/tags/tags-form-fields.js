@@ -34,10 +34,17 @@ const tagEditorMetadata = {
       label: "Status",
       id: "active",
     },
-  ]
+  ],
+  newObjectFields: {
+    key: "",
+    value: "",
+    configuration: {},
+    active: true,
+  }
 };
 
 export const defaultTags = [
+  {type: null, value: "None"},
   {type: "pipeline", value: "Pipeline"},
   {type: "application", value: "Application"},
   {type: "project", value: "Project"},

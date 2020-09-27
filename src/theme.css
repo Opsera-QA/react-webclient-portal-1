@@ -918,8 +918,8 @@ a.nav-link {
 
 .filter-bar .custom-filter-input .rw-dropdown-list {
     display: inline-flex;
-    min-width: 200px;
-    max-width: 500px;
+    min-width: 300px;
+    max-width: 1200px;
     height: 20px;
 }
 

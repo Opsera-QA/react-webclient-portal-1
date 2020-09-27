@@ -9,8 +9,15 @@ import {
   getTableTextColumn
 } from "../../common/table/table-column-helpers";
 import NewTagModal from "./NewTagModal";
+import {Button} from "react-bootstrap";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import FilterBar from "../../common/filters/FilterBar";
+import StatusFilter from "../../common/filters/status/StatusFilter";
+import ToolIdentifierFilter from "../../common/filters/tools/ToolIdentifierFilter";
+import TagTypeFilter from "../../common/filters/tags/TagTypeFilter";
 
-function TagsTable({ data, loadData, isLoading }) {
+function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto }) {
   const history = useHistory();
   let fields = tagEditorMetadata.fields;
   const [showTagModal, setShowTagModal] = useState(false);
@@ -48,27 +55,48 @@ function TagsTable({ data, loadData, isLoading }) {
     setShowTagModal(true);
   };
 
+  const getFilterBar = () => {
+    return(
+      <FilterBar loadData={loadData}>
+        <StatusFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} />
+        <TagTypeFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} />
+      </FilterBar>
+    );
+  };
+
   return (
-    <>
-        <CustomTable onRowSelect={onRowSelect}
-                     data={data}
-                     rowStyling={rowStyling}
-                     columns={columns}
-                     initialState={initialState}
-                     isLoading={isLoading}
-                     tableTitle={"Tags"}
-                     type={"Tag"}
-                     createNewRecord={createTag}
-        />
+    <div className="p-2">
+      <div className="custom-table-filter d-flex flex-row-reverse">
+        <div className="mb-1 text-right">
+          <Button variant="primary" size="sm"
+                  onClick={() => {
+                    createTag();
+                  }}>
+            <FontAwesomeIcon icon={faPlus} className="mr-1"/> New Tag
+          </Button>
+          <br/>
+        </div>
+      </div>
+      <CustomTable onRowSelect={onRowSelect}
+                   data={data}
+                   rowStyling={rowStyling}
+                   columns={columns}
+                   initialState={initialState}
+                   isLoading={isLoading}
+                   tableTitle={"Tags"}
+                   tableFilterBar={getFilterBar()}
+      />
       <NewTagModal showModal={showTagModal} loadData={loadData} setShowModal={setShowTagModal}/>
-    </>
+    </div>
   );
 }
 
 TagsTable.propTypes = {
   data: PropTypes.array,
   loadData: PropTypes.func,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  tagFilterDto: PropTypes.object,
+  setTagFilterDto: PropTypes.func
 };
 
 export default TagsTable;
