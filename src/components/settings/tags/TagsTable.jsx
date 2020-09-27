@@ -14,10 +14,9 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import FilterBar from "../../common/filters/FilterBar";
 import StatusFilter from "../../common/filters/status/StatusFilter";
-import ToolIdentifierFilter from "../../common/filters/tools/ToolIdentifierFilter";
 import TagTypeFilter from "../../common/filters/tags/TagTypeFilter";
 
-function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto }) {
+function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto, resetFilters }) {
   const history = useHistory();
   let fields = tagEditorMetadata.fields;
   const [showTagModal, setShowTagModal] = useState(false);
@@ -57,7 +56,7 @@ function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto })
 
   const getFilterBar = () => {
     return(
-      <FilterBar loadData={loadData}>
+      <FilterBar loadData={loadData} resetFilters={resetFilters}>
         <StatusFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} />
         <TagTypeFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} />
       </FilterBar>
@@ -96,7 +95,8 @@ TagsTable.propTypes = {
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   tagFilterDto: PropTypes.object,
-  setTagFilterDto: PropTypes.func
+  setTagFilterDto: PropTypes.func,
+  resetFilters: PropTypes.func
 };
 
 export default TagsTable;

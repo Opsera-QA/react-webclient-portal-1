@@ -16,7 +16,7 @@ import FilterBar from "../../common/filters/FilterBar";
 import StatusFilter from "../../common/filters/status/StatusFilter";
 import ToolIdentifierFilter from "../../common/filters/tools/ToolIdentifierFilter";
 
-function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading }) {
+function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading, resetFilters }) {
   const [showCreateToolModal, setShowCreateToolModal] = useState(false);
   let history = useHistory();
   const fields = toolMetadata.fields;
@@ -46,7 +46,7 @@ function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading
 
   const getFilterBar = () => {
     return(
-      <FilterBar loadData={loadData}>
+      <FilterBar loadData={loadData} resetFilters={resetFilters}>
         <StatusFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
         <ToolIdentifierFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
       </FilterBar>
@@ -90,7 +90,8 @@ ToolsTable.propTypes = {
   filterOptionList: PropTypes.array,
   isLoading: PropTypes.bool,
   toolFilterDto: PropTypes.object,
-  setToolFilterDto: PropTypes.func
+  setToolFilterDto: PropTypes.func,
+  resetFilters: PropTypes.func
 };
 
 export default ToolsTable;

@@ -32,6 +32,27 @@ function ToolInventory () {
     }
   }
 
+  // TODO: Determine best way to deal with this-- might be best to put in FilterBar
+  const resetFilters = async () => {
+    try {
+      setLoading(true);
+      let newFilterDto = new Model({...toolFilterDto.getNewObjectFields()}, toolFilterDto.getMetaData(), false);
+      // TODO: Enable this when wiring up pagination
+      // Make sure to keep any relevant pagination-- but always reset current page to 1 as the filters have changed
+      // let pageSize = filterDto.getData("pageSize");
+      // newFilterDto.setData("pageSize", pageSize);
+      setToolFilterDto(newFilterDto);
+      const response = await toolsActions.getToolRegistryList(newFilterDto, getAccessToken);
+      setToolRegistryList(response.data.data);
+    }
+    catch (error) {
+      toastContext.showLoadingErrorDialog(error);
+    }
+    finally {
+      setLoading(false);
+    }
+  };
+
   const getToolRegistryList = async () => {
       const response = await toolsActions.getToolRegistryList(toolFilterDto, getAccessToken);
       setToolRegistryList(response.data.data);
@@ -44,6 +65,7 @@ function ToolInventory () {
       data={toolRegistryList}
       toolFilterDto={toolFilterDto}
       setToolFilterDto={setToolFilterDto}
+      resetFilters={resetFilters}
     />
   );
 }

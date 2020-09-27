@@ -37,7 +37,7 @@ function TempTagManagerInput({ label, type, data, setData, disabled, filter, pla
   }
 
   const getTags = async () => {
-    const response = await adminTagsActions.getTags(getAccessToken);
+    const response = await adminTagsActions.getAllTags(getAccessToken);
     let tags = response.data.data;
 
     if (tags && tags.length > 0)
