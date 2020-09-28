@@ -54,40 +54,15 @@ toolsActions.getTools = async (getAccessToken) => {
 };
 
 toolsActions.getToolRegistryList = async (toolFilterDto, getAccessToken) => {
-  let status = toolFilterDto.getData("status");
-  let toolIdentifier = toolFilterDto.getData("toolIdentifier");
-
-  // TODO: Wire up sort, page, etc
   let urlParams = {
     params: {
-      sort: "name",
-      order: 1,
-      status: status,
-      tool: toolIdentifier,
-      size: 10000
+      sort: toolFilterDto.getData("sortOption"),
+      status: toolFilterDto.getData("status"),
+      tool: toolFilterDto.getData("toolIdentifier"),
+      page: toolFilterDto.getData("currentPage"),
+      size: toolFilterDto.getData("pageSize")
     }
   }
-
-  // if (status != null) {
-  //   urlParams += `&status=${status}`
-  // }
-  //
-  // if (toolIdentifier != null) {
-  //   urlParams += `&tool=${toolIdentifier}`
-  // }
-
-  //todo: make hidden an optional filter, by default only show active
-  //todo: wire up paging and replace "size" with a default of 50 records.
-  //todo: wire up a sorting option with these explicit values: "oldest", "newest", "name", "lastupdated"
-  // All details on how to use sorting, paging and filters will be here:
-  // https://opsera.atlassian.net/wiki/spaces/OAD/pages/317751606/Tool+Registry+Tags+APIs
-  //todo: can we swap the "new Tool" button placement and filters.  I'd like the button to be either
-  // the top item or above the table all together, then filters should be directly above the table title bar
-
-  // TODO: Construct actual pagination
-  // sort by name ascending &sort=name&order=1
-
-  console.log("urlParams: " + JSON.stringify(urlParams));
 
   const accessToken = await getAccessToken();
   const apiUrl = `/registry`;

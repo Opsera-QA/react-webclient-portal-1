@@ -15,6 +15,7 @@ import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import FilterBar from "../../common/filters/FilterBar";
 import StatusFilter from "../../common/filters/status/StatusFilter";
 import TagTypeFilter from "../../common/filters/tags/TagTypeFilter";
+import SortFilter from "../../common/filters/sort/SortFilter";
 
 function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto, resetFilters }) {
   const history = useHistory();
@@ -40,15 +41,8 @@ function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto, r
   };
 
   const initialState = {
-    pageIndex: 0,
-    sortBy: [
-      {
-        id: "type",
-        desc: false
-      }
-    ]
+    pageIndex: 0
   };
-
 
   const createTag = () => {
     setShowTagModal(true);
@@ -56,9 +50,10 @@ function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto, r
 
   const getFilterBar = () => {
     return(
-      <FilterBar loadData={loadData} resetFilters={resetFilters}>
+      <FilterBar loadData={loadData} filterDto={tagFilterDto}>
         <StatusFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} />
         <TagTypeFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} />
+        <SortFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} />
       </FilterBar>
     );
   };
@@ -83,7 +78,10 @@ function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto, r
                    initialState={initialState}
                    isLoading={isLoading}
                    tableTitle={"Tags"}
+                   loadData={loadData}
                    tableFilterBar={getFilterBar()}
+                   paginationDto={tagFilterDto}
+                   setPaginationDto={setTagFilterDto}
       />
       <NewTagModal showModal={showTagModal} loadData={loadData} setShowModal={setShowTagModal}/>
     </div>
@@ -96,7 +94,6 @@ TagsTable.propTypes = {
   isLoading: PropTypes.bool,
   tagFilterDto: PropTypes.object,
   setTagFilterDto: PropTypes.func,
-  resetFilters: PropTypes.func
 };
 
 export default TagsTable;

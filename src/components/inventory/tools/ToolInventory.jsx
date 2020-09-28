@@ -19,10 +19,10 @@ function ToolInventory () {
     loadData();
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (filterDto = toolFilterDto) => {
     try {
       setLoading(true);
-      await getToolRegistryList();
+      await getToolRegistryList(filterDto);
     }
     catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -32,30 +32,12 @@ function ToolInventory () {
     }
   }
 
-  // TODO: Determine best way to deal with this-- might be best to put in FilterBar
-  const resetFilters = async () => {
-    try {
-      setLoading(true);
-      let newFilterDto = new Model({...toolFilterDto.getNewObjectFields()}, toolFilterDto.getMetaData(), false);
-      // TODO: Enable this when wiring up pagination
-      // Make sure to keep any relevant pagination-- but always reset current page to 1 as the filters have changed
-      // let pageSize = filterDto.getData("pageSize");
-      // newFilterDto.setData("pageSize", pageSize);
-      setToolFilterDto(newFilterDto);
-      const response = await toolsActions.getToolRegistryList(newFilterDto, getAccessToken);
+  const getToolRegistryList = async (filterDto = toolFilterDto) => {
+      const response = await toolsActions.getToolRegistryList(filterDto, getAccessToken);
       setToolRegistryList(response.data.data);
-    }
-    catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-    }
-    finally {
-      setLoading(false);
-    }
-  };
-
-  const getToolRegistryList = async () => {
-      const response = await toolsActions.getToolRegistryList(toolFilterDto, getAccessToken);
-      setToolRegistryList(response.data.data);
+      let newFilterDto = filterDto;
+    newFilterDto.setData("totalCount", response.data.count);
+      setToolFilterDto({...newFilterDto});
   };
 
   return (
@@ -65,7 +47,6 @@ function ToolInventory () {
       data={toolRegistryList}
       toolFilterDto={toolFilterDto}
       setToolFilterDto={setToolFilterDto}
-      resetFilters={resetFilters}
     />
   );
 }
