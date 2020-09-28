@@ -9,9 +9,9 @@ import LoadingDialog from "../../../common/status_notifications/loading";
 
 const DeployPipelineWizard = ({
   templateId,
+  templateType,
   handleWizardRequest,
-  handleClose,
-  refreshPipelineActivityData,
+  handleClose
 }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -90,7 +90,7 @@ DeployPipelineWizard.propTypes = {
   templateId: PropTypes.string,
   handleWizardRequest: PropTypes.func,
   handleClose: PropTypes.func,
-  refreshPipelineActivityData: PropTypes.func,
+  templateType: PropTypes.string,
 };
 
 export default DeployPipelineWizard;

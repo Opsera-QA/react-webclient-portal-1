@@ -145,6 +145,8 @@ const SfdcPipelineModifiedFiles = ({
   };
 
   const generateXML = async (data) => {
+    console.log(data)
+
     const accessToken = await getAccessToken();
     const apiUrl = "/pipelines/sfdc/generatexml";
 

@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Card, Row, Col, Button } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import { AuthContext } from "../../../contexts/AuthContext"; //New AuthContext State
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
@@ -10,25 +10,26 @@ import ModalActivityLogs from "../../common/modal/modalActivityLogs";
 
 import "../workflows.css";
 import WorkflowCatalogItem from "./WorkflowCatalogItem";
-import {getLoadingErrorDialog} from "../../common/toasts/toasts";
+import { getLoadingErrorDialog } from "../../common/toasts/toasts";
+import PipelineStartWizard from "../pipelines/pipeline_details/PipelineStartWizard";
 
 
 function WorkflowCatalog() {
   const contextType = useContext(AuthContext);
-  const [error, setErrors] = useState();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
   const [toast, setToast] = useState({});
   const [showToast, setShowToast] = useState(false);
-  
+
+
   const callbackFunction = (item) => {
     setModalMessage(item);
     setShowModal(true);
   };
 
-  useEffect(() => {    
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -37,7 +38,7 @@ function WorkflowCatalog() {
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
 
-    const apiUrl = "/pipelines/workflows";   
+    const apiUrl = "/pipelines/workflows";
     try {
       const result = await axiosApiService(accessToken).get(apiUrl);
       setData(result.data ? result.data : []);
@@ -46,43 +47,43 @@ function WorkflowCatalog() {
       setToast(toast);
       setShowToast(true);
       console.error(error.message);
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
   }
+
 
   if (loading) {
     return (<LoadingDialog size="sm"/>);
   }
 
-    return (
-      <>
-          <>
-            <div className="px-2 max-content-width" style={{minWidth:"505px"}}>
-              <div className="my-2 p-1">
-                <div>Choose a pipeline template below to add to your pipelines library.</div>
-              </div>
-              {showToast && toast}
-              {data !== undefined && data.length > 0 ?
-                <Row>
-                  {data.map((item, idx) => (
-                    <Col xl={6} md={12} key={idx} className="p-2">
-                      <WorkflowCatalogItem item={item} parentCallback={callbackFunction} />
-                    </Col>))}
-                </Row>
-                :
-                <InfoDialog message="No Catalog Items Found" />}
-            </div>
+  return (
+    <>
+      <div className="px-2 max-content-width" style={{ minWidth: "505px" }}>
+        <div className="my-2 p-1">
+          <div>Choose a pipeline template below to add to your pipelines library.</div>
+        </div>
+        {showToast && toast}
+        {data !== undefined && data.length > 0 ?
+          <Row>
+            {data.map((item, idx) => (
+              <Col xl={6} md={12} key={idx} className="p-2">
+                <WorkflowCatalogItem item={item} parentCallback={callbackFunction}/>
+              </Col>))}
+          </Row>
+          :
+          <InfoDialog message="No Catalog Items Found"/>}
+      </div>
 
-            <ModalActivityLogs header="Template Details" size="lg" jsonData={modalMessage} show={showModal} setParentVisibility={setShowModal} />
-          </>
-      </>
-    );
+      <ModalActivityLogs header="Template Details" size="lg" jsonData={modalMessage} show={showModal}
+                         setParentVisibility={setShowModal}/>
+
+    </>
+  );
 }
 
 WorkflowCatalog.propTypes = {
-  data: PropTypes.array
+  data: PropTypes.array,
 };
 
 export default WorkflowCatalog;

@@ -12,10 +12,10 @@ import PipelineSummaryPanel from "./PipelineSummaryPanel";
 import PipelineHelpers from "../../pipelineHelpers";
 import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
 import { useHistory } from "react-router-dom";
-import {faBracketsCurly, faSearchPlus} from "@fortawesome/pro-regular-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faDraftingCompass, faInfinity, faMicrochip, faArrowLeft} from "@fortawesome/pro-light-svg-icons";
-import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
+import { faBracketsCurly, faSearchPlus } from "@fortawesome/pro-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDraftingCompass, faInfinity, faMicrochip, faArrowLeft } from "@fortawesome/pro-light-svg-icons";
+import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 
 
 function PipelineDetailView() {
@@ -66,6 +66,13 @@ function PipelineDetailView() {
   useEffect(() => {
     getActivityLogs();
   }, [currentPage, pageSize]);
+
+
+
+  useEffect(() => {
+    console.log("Pipeline update detected, determining status!!!");
+    updatePipelineStatusByInterval(pipeline);
+  }, [JSON.stringify(pipeline.workflow)]);
 
 
   useEffect(() => {
@@ -125,6 +132,66 @@ function PipelineDetailView() {
     }
   }
 
+  let timer;
+  let staleRefreshCount = 0;
+  const updatePipelineStatusByInterval = () => {
+    if (!pipeline || Object.entries(pipeline).length === 0) {
+      return;
+    }
+
+    const pipelineStatus = analyzePipelineStatus(pipeline);
+    if (pipelineStatus === "stopped" || !pipelineStatus) {
+      console.log("Pipeline stopped, ending timer. Status: ", pipelineStatus);
+      clearTimeout(timer);
+      return;
+    }
+
+    timer = setInterval(async function() {
+      staleRefreshCount++;
+      console.log("running pipeline refresh interval. Step status: ");
+      console.log(staleRefreshCount)
+      await fetchPlan();
+
+      if (staleRefreshCount % 3 === 0) {
+        console.log("divisible by 3 refresh");
+        await getSilentActivityLogs();
+      }
+
+      const pipelineStatus = analyzePipelineStatus(pipeline);
+
+      if (pipelineStatus === "stopped" || !pipelineStatus || staleRefreshCount > 20) {
+        console.log("Pipeline stopped inside timer, ending timer. Status: ", pipelineStatus);
+        clearTimeout(timer);
+        return;
+      }
+    }, 15000);
+
+  };
+
+  const getSilentActivityLogs = async () => {
+    const accessToken = await getAccessToken();
+    const apiUrl = `/pipelines/${id}/activity?page=${currentPage}&size=${pageSize}`;
+    try {
+      const activity = await axiosApiService(accessToken).get(apiUrl);
+      setActivityData(activity.data);
+    } catch (err) {
+      setErrors(err.message);
+      console.log(err.message);
+    }
+  }
+
+
+
+  const analyzePipelineStatus = (pipeline) => {
+    if (!pipeline || Object.entries(pipeline).length === 0) {
+      return;
+    }
+    const { workflow } = pipeline;
+    let status = workflow.last_step !== undefined && workflow.last_step.hasOwnProperty("status") ? workflow.last_step.status : false;
+    return status;
+  };
+
+
   const selectRunCountFilter = item => {
     setRunCount(item);
   };
@@ -173,14 +240,14 @@ function PipelineDetailView() {
 
   const getTypeIcon = (type) => {
     switch (type) {
-      case "sfdc":
-        return faSalesforce;
-      case "sdlc":
+    case "sfdc":
+      return faSalesforce;
+    case "sdlc":
       return faBracketsCurly;
-      case "ai-ml":
-        return faMicrochip;
-      default:
-        return faInfinity;
+    case "ai-ml":
+      return faMicrochip;
+    default:
+      return faInfinity;
     }
   };
 
@@ -199,37 +266,39 @@ function PipelineDetailView() {
             <BreadcrumbTrail destination={"pipelineDetailView"}/>
           </div>*/}
 
-          {pipeline ? <div className="title-text-5 mb-2">{pipeline.name}</div> : <div className="title-text-5 mb-2">Pipelines</div> }
+          {pipeline ? <div className="title-text-5 mb-2">{pipeline.name}</div> :
+            <div className="title-text-5 mb-2">Pipelines</div>}
 
           {pipeline.owner !== customerAccessRules.UserId &&
-            <>
-              <div className="mb-2 w-100 max-charting-width info-text">
-                {customerAccessRules.Role === "administrator" && <>Administrator Access Role: Your account has full
-                  access to this pipeline and its settings.</>}
-                {customerAccessRules.Role === "power_user" && <>Power User Role: Your account has elevated privileges
-                  to this pipeline which include changing settings and running the pipeline.</>}
-                {customerAccessRules.Role === "user" && <>Standard User Role: Your account has basic access to this
-                  pipeline which is limited to viewing and running pipeline operations only.</>}
-                {customerAccessRules.Role === "readonly" && <>Read Only Role: Your account does not have any
-                  privileges associated with this pipeline. You are being temporarily granted Viewer permissions and
-                  will not be able to perform any actions.</>}
-              </div>
-            </>
-            }
+          <>
+            <div className="mb-2 w-100 max-charting-width info-text">
+              {customerAccessRules.Role === "administrator" && <>Administrator Access Role: Your account has full
+                access to this pipeline and its settings.</>}
+              {customerAccessRules.Role === "power_user" && <>Power User Role: Your account has elevated privileges
+                to this pipeline which include changing settings and running the pipeline.</>}
+              {customerAccessRules.Role === "user" && <>Standard User Role: Your account has basic access to this
+                pipeline which is limited to viewing and running pipeline operations only.</>}
+              {customerAccessRules.Role === "readonly" && <>Read Only Role: Your account does not have any
+                privileges associated with this pipeline. You are being temporarily granted Viewer permissions and
+                will not be able to perform any actions.</>}
+            </div>
+          </>
+          }
 
           <div className="alternate-tabs">
             <ul className="nav nav-tabs">
               <li className="nav-item">
                 <a className={"nav-link"} href="#"
-                   onClick={handleTabClick("pipelines")}><FontAwesomeIcon icon={faArrowLeft} className="mr-2" />Pipelines</a>
+                   onClick={handleTabClick("pipelines")}><FontAwesomeIcon icon={faArrowLeft} className="mr-2"/>Pipelines</a>
               </li>
               <li className="nav-item">
                 <a className={"nav-link " + (activeTab === "summary" ? "active" : "")} href="#"
-                   onClick={handleTabClick("summary")}><FontAwesomeIcon icon={getTypeIcon(pipeline["type"] ? pipeline["type"][0] : "default")} className="mr-2" />Summary</a>
+                   onClick={handleTabClick("summary")}><FontAwesomeIcon
+                  icon={getTypeIcon(pipeline["type"] ? pipeline["type"][0] : "default")} className="mr-2"/>Summary</a>
               </li>
               <li className="nav-item">
                 <a className={"nav-link " + (activeTab === "model" ? "active" : "")} href="#"
-                   onClick={handleTabClick("model")}><FontAwesomeIcon icon={faDraftingCompass} className="mr-2" />Workflow</a>
+                   onClick={handleTabClick("model")}><FontAwesomeIcon icon={faDraftingCompass} className="mr-2"/>Workflow</a>
               </li>
               {/*<li className="nav-item">*/}
               {/*  <a className={"nav-link " + (activeTab === "editor" ? "active" : "")} href="#"*/}
@@ -239,7 +308,7 @@ function PipelineDetailView() {
           </div>
 
           {activeTab === "summary" &&
-          <div className="max-content-width-1080 content-block-no-height pl-3 pb-2" style={{width:"80vw"}}>
+          <div className="max-content-width-1080 content-block-no-height pl-3 pb-2" style={{ width: "80vw" }}>
             <PipelineSummaryPanel
               pipeline={pipeline}
               setPipeline={setPipeline}

@@ -285,6 +285,8 @@ function PipelineWorkflow({
                 </>}
               </>}
 
+              {softLoading && <span className={"ml-2"}><FontAwesomeIcon icon={faSpinner} size={"lg"} spin/></span>}
+
             </div>
           </div>
 
@@ -356,8 +358,6 @@ function PipelineWorkflow({
               </div>
 
               <div style={{ height: "40px" }}>&nbsp;</div>
-
-              {softLoading && <LoadingDialog/>}
 
               <div className="step-items workflow-module-container-width mx-auto">
                 <PipelineWorkflowItemList

@@ -8,12 +8,18 @@ import { format } from "date-fns";
 import React, { useContext, useState } from "react";
 import { axiosApiService } from "../../../api/apiService";
 import { AuthContext } from "../../../contexts/AuthContext";
+import DeployPipelineWizard from "../wizards/deploy/deployPipelineWizard";
 
 const WorkflowCatalogItem = ({ item, parentCallback }) => {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
   const [loading, setLoading] = useState(false);
   let history = useHistory();
+  const [wizardModal, setWizardModal] = useState({
+    show: false,
+    templateType: "",
+    templateId: "",
+  });
 
   const handleDetailsClick = param => e => {
     e.preventDefault();
@@ -23,8 +29,41 @@ const WorkflowCatalogItem = ({ item, parentCallback }) => {
   const handleAddClick = param => e => {
     console.log("Adding: ", param);
     e.preventDefault();
-    postData(param._id);
+
+    //todo: determine if this is a type of template that needs the wizard or if it can just post to deploy.
+
+    //call function to launch pipelineWizard
+    launchPipelineDeployWizard(param._id, param.type);
+
+    // OR
+
+    //await postData(param._id);
   };
+
+
+  const launchPipelineDeployWizard = (templateType, templateId) => {
+    console.log("launching wizard");
+    console.log("templateType ", templateType);
+    console.log("pipelineId ", templateId);
+    setWizardModal({
+      show: true,
+      templateType: templateType,
+      templateId: templateId,
+    });
+  };
+
+  const handlePipelineStartWizardClose = () => {
+    console.log("closing wizard");
+    setWizardModal({ show: false, templateType: "", templateId: "" });
+  };
+
+  const handleWizardRequest = async (templateId) => {
+    console.log("handling pipeline run");
+    setWizardModal({ ...wizardModal, show: false });
+
+    //await postData(templateId);  likely need to move this into wozard so it can do more work
+  };
+
 
   async function postData(templateId) {
     setLoading(true);
@@ -40,16 +79,25 @@ const WorkflowCatalogItem = ({ item, parentCallback }) => {
       if (newPipelineId) {
         history.push(`/workflow/details/${newPipelineId}/summary`);
       }
-      setLoading(false);
     } catch (err) {
       console.log(err.message);
-      setLoading(false);
       setErrors(err.message);
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
     <>
+
+
+      {wizardModal.show &&
+      <DeployPipelineWizard templateType={wizardModal.templateType}
+                            templateId={wizardModal.pipelineId}
+                            handleClose={handlePipelineStartWizardClose}
+                            handleWizardRequest={handleWizardRequest}/>}
+
+
       <Card style={{ height: "100%" }}>
         <Card.Title className="pb-0">
           <div className="d-flex catalog-card-title p-2">
