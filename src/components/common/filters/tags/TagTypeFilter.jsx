@@ -6,7 +6,7 @@ import {defaultTags} from "../../../settings/tags/tags-form-fields";
 
 function TagTypeFilter({ filterDto, setFilterDto}) {
   return (
-    <div><DtoFilterInput fieldName={"type"} setDataObject={setFilterDto} dataObject={filterDto} selectOptions={createFilterOptions(defaultTags, "Tag", "value", "type")} /></div>
+    <div><DtoFilterInput fieldName={"type"}  placeholderText={"Filter by Tag Type"} setDataObject={setFilterDto} dataObject={filterDto} selectOptions={createFilterOptions(defaultTags, "Tag", "value", "type")} /></div>
   );
 }
 

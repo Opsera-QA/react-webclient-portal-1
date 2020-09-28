@@ -9,17 +9,22 @@ import {
 import toolMetadata from "./tool-metadata";
 import {useHistory} from "react-router-dom";
 import NewToolModal from "./NewToolModal";
-import {Button} from "react-bootstrap";
+import {Col, Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import FilterBar from "../../common/filters/FilterBar";
 import StatusFilter from "../../common/filters/status/StatusFilter";
 import ToolIdentifierFilter from "../../common/filters/tools/ToolIdentifierFilter";
+import SortFilter from "../../common/filters/sort/SortFilter";
 
 function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading, resetFilters }) {
   const [showCreateToolModal, setShowCreateToolModal] = useState(false);
   let history = useHistory();
   const fields = toolMetadata.fields;
+
+  const tableInitialState = {
+    pageIndex: 0,
+  };
 
   const rowStyling = (row) => {
     return !row["values"].active ? " inactive-row" : "";
@@ -45,17 +50,21 @@ function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading
   };
 
   const getFilterBar = () => {
+    if (toolFilterDto == null) {
+      return null;
+    }
+
     return(
-      <FilterBar loadData={loadData} resetFilters={resetFilters}>
+      <FilterBar loadData={loadData} filterDto={toolFilterDto}>
         <StatusFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
         <ToolIdentifierFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
+        <SortFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
       </FilterBar>
     );
   };
 
   return (
     <>
-      <NewToolModal loadData={loadData} setShowModal={setShowCreateToolModal} showModal={showCreateToolModal}/>
       <div className="p-2">
         <div className="custom-table-filter d-flex flex-row-reverse">
           <div className="mb-1 text-right">
@@ -72,13 +81,16 @@ function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading
             isLoading={isLoading}
             onRowSelect={onRowSelect}
             paginationDto={toolFilterDto}
+            setPaginationDto={setToolFilterDto}
             rowStyling={rowStyling}
             loadData={loadData}
             tableFilterBar={getFilterBar()}
             tableTitle={"Tools"}
+            initialState={tableInitialState}
           >
           </CustomTable>
       </div>
+      <NewToolModal loadData={loadData} setShowModal={setShowCreateToolModal} showModal={showCreateToolModal}/>
     </>
   );
 }
@@ -91,7 +103,6 @@ ToolsTable.propTypes = {
   isLoading: PropTypes.bool,
   toolFilterDto: PropTypes.object,
   setToolFilterDto: PropTypes.func,
-  resetFilters: PropTypes.func
 };
 
 export default ToolsTable;

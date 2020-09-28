@@ -208,7 +208,7 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
             <tr>
               <td colSpan="100%" className="px-2 pt-2 table-footer">
                 {paginationOptions && !isLoading && <Pagination total={paginationOptions.totalCount} currentPage={paginationOptions.currentPage} pageSize={paginationOptions.pageSize} onClick={(pageNumber, pageSize) => paginationOptions.gotoPageFn(pageNumber, pageSize)} />}
-                {/*{paginationDto && !isLoading && <DtoPagination paginationDto={paginationDto} setPaginationDto={setPaginationDto} loadData={loadData} />}*/}
+                {paginationDto && paginationDto.getData("totalCount") != null && <DtoPagination paginationDto={paginationDto} setPaginationDto={setPaginationDto} isLoading={isLoading} loadData={loadData} />}
               </td>
             </tr>
           </tfoot>

@@ -22,10 +22,10 @@ function TagManagement() {
     loadData();
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (filterDto = tagFilterDto) => {
     try {
       setIsLoading(true);
-      await getRoles();
+      await getRoles(filterDto);
     }
     catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -35,24 +35,27 @@ function TagManagement() {
     }
   };
 
-  const getTags = async () => {
+  const getTags = async (filterDto = tagFilterDto) => {
     try {
-      const response = await adminTagsActions.getTags(tagFilterDto, getAccessToken);
+      const response = await adminTagsActions.getTags(filterDto, getAccessToken);
       setTagList(response.data.data);
+      let newFilterDto = filterDto;
+      filterDto.setData("totalCount", response.data.count);
+      setTagFilterDto({...newFilterDto});
     } catch (error) {
       toastContext.showLoadingErrorDialog(error.message);
       console.error(error.message);
     }
   };
 
-  const getRoles = async () => {
+  const getRoles = async (filterDto = tagFilterDto) => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
     }
 
-    await getTags();
+    await getTags(filterDto);
   };
 
   // TODO: Determine best way to deal with this-- might be best to put in FilterBar

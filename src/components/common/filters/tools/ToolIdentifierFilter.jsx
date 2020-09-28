@@ -35,7 +35,7 @@ function ToolIdentifierFilter({ filterDto, setFilterDto}) {
   };
 
   return (
-    <div><DtoFilterInput busy={isLoading} fieldName={"toolIdentifier"} setDataObject={setFilterDto} dataObject={filterDto} selectOptions={toolIdentifierFilterOptions} /></div>
+    <div><DtoFilterInput busy={isLoading} placeholderText={"Filter by Tool"} fieldName={"toolIdentifier"} setDataObject={setFilterDto} dataObject={filterDto} selectOptions={toolIdentifierFilterOptions} /></div>
   );
 }
 
