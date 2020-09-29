@@ -539,29 +539,6 @@ function DockerPushStepConfiguration({
     });
   };
 
-  const handleRepoChange = (selectedOption) => {
-    setFormData({
-      ...formData,
-      repository: selectedOption.name,
-      repoId: selectedOption.id,
-      projectId: selectedOption.id,
-      gitUrl: selectedOption.httpUrl,
-      sshUrl: selectedOption.sshUrl,
-      branch: "",
-      defaultBranch: "",
-      gitBranch: "",
-    });
-  };
-
-  const handleBranchChange = (selectedOption) => {
-    setFormData({
-      ...formData,
-      branch: selectedOption.value,
-      defaultBranch: selectedOption.value,
-      gitBranch: selectedOption.value,
-    });
-  };
-
   const handleJobTypeChange = (selectedOption) => {
     setShowToast(false);
     setJobType(selectedOption.value);
@@ -623,7 +600,7 @@ function DockerPushStepConfiguration({
         if (arrOfObj) {
           var result = arrOfObj.map(function (el) {
             var o = Object.assign({});
-            o.value = el.toLowerCase();
+            o.value = el;
             o.name = el;
             return o;
           });

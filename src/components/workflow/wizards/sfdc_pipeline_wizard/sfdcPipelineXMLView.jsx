@@ -12,7 +12,7 @@ import {
   faPen,
   faCode,
 } from "@fortawesome/free-solid-svg-icons";
-import "../workflows.css";
+import "../../workflows.css";
 import ErrorDialog from "components/common/status_notifications/error";
 import LoadingDialog from "components/common/status_notifications/loading";
 

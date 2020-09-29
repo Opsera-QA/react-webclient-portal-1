@@ -249,7 +249,7 @@ function SFDCConfiguration({
                <Form.Group controlId="formBasicCheckboxOrgToOrg" className="mt-4 ml-1">
                <Form.Check
                  type="checkbox"
-                 label="SFDC to SFDC comparison?"
+                 label="Compare with destination SFDC Org"
                  checked={formData.isOrgToOrg}
                  onChange={(e) =>
                    setFormData({
@@ -328,6 +328,21 @@ function SFDCConfiguration({
               </Form.Group>
             )}
 
+            {formData.jobType === "SFDC BACK UP" && 
+               <Form.Group controlId="formBasicCheckboxIsFullBackup" className="mt-4 ml-1">
+               <Form.Check
+                 type="checkbox"
+                 label="Full Backup"
+                 checked={formData.isFullBackup}
+                 onChange={(e) =>
+                   setFormData({
+                     ...formData,
+                     isFullBackup: e.target.checked,
+                   })
+                 }
+               />
+             </Form.Group>
+            }
 
             {formData.jobType === "SFDC VALIDATE PACKAGE XML" || formData.jobType === "SFDC DEPLOY" ? (
               <Form.Group controlId="s3Step">

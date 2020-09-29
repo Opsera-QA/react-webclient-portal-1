@@ -566,7 +566,7 @@ function SeleniumStepConfiguration({
         if (arrOfObj) {
           let result = arrOfObj.map(function (el) {
             let o = Object.assign({});
-            o.value = el.toLowerCase();
+            o.value = el;
             o.name = el;
             return o;
           });

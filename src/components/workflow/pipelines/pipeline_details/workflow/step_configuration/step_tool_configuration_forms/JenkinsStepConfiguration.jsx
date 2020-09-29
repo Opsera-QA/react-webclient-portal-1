@@ -62,6 +62,7 @@ const INITIAL_DATA = {
   branch: "",
   buildArgs: {},
   isOrgToOrg: false,
+  isFullBackup: false,
 };
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
@@ -598,7 +599,8 @@ function JenkinsStepConfiguration({
         if (arrOfObj) {
           var result = arrOfObj.map(function (el) {
             var o = Object.assign({});
-            o.value = el.toLowerCase();
+            // o.value = el.toLowerCase();
+            o.value = el;
             o.name = el;
             return o;
           });
