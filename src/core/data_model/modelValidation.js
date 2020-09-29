@@ -53,11 +53,17 @@ export const fieldValidation = (value, field) => {
 
   // TODO: Pass to function that deals with multiple formats
   if (field.format != null) {
+    // let format = field.format;
+    // let meetsRegex = format.test(value);
+    //
+    // if (value !== '' && !meetsRegex) {
+    //   errorMessages.push(field.regexErrorMessage);
+    // }
+  }
 
-    if (!isAlphaNumeric(value))
-    {
-      errorMessages.push("No special characters are allowed.");
-    }
+  if (field.isAlphaNumeric != null && !isAlphaNumeric(value))
+  {
+    errorMessages.push("No special characters are allowed.");
   }
 
   if (errorMessages.length === 0) {

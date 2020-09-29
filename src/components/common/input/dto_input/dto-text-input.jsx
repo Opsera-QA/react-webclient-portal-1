@@ -7,6 +7,23 @@ function DtoTextInput({fieldName, dataObject, setDataObject, disabled, type}) {
 
   const validateAndSetData = (fieldName, value) => {
     let newDataObject = dataObject;
+
+    if (field.lowercase === true) {
+      value = value.toLowerCase();
+    }
+    // else if (field.uppercase === true) {
+    //   value = value.toUpperCase();
+    // }
+
+    if (field.format != null) {
+      let format = field.format;
+      let meetsRegex = format.test(value);
+
+      if (value !== '' && !meetsRegex) {
+        return;
+      }
+    }
+
     newDataObject.setData(fieldName, value);
     let errors = newDataObject.isFieldValid(field.id);
 

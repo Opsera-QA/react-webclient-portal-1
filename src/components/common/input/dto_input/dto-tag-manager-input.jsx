@@ -107,6 +107,7 @@ function DtoTagManagerInput({ fieldName, type, dataObject, setDataObject, disabl
 
     newValue = newValue.trim();
     newValue = newValue.replaceAll(' ', '-');
+    newValue = newValue.replace(/[^A-Za-z0-9-.]/gi, '');
     newValue = newValue.toLowerCase();
 
     let currentOptions = [...tagOptions];
