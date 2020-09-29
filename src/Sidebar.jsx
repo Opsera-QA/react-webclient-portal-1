@@ -137,7 +137,7 @@ const funcSassNav = () => {
     <div className={"w-20 pt-1 d-block"}>
       <div className="sidebar-container sticky-top pb-5 pt-1 pl-1">
         <div className="sidebar-menu pt-3">
-          <NavLink className="nav-link" activeClassName="chosen" to="/">
+          <NavLink className="nav-link" activeClassName="chosen" exact to="/">
             <FontAwesomeIcon size="lg" icon={faHome} fixedWidth/> <span
             className="menu-text">Overview</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" exact to="/dashboard">
@@ -186,7 +186,7 @@ const funcAccountPowerUserNav = () => {
     <div className={"w-20 pt-1 d-block"}>
       <div className="sidebar-container sticky-top pb-5 pt-1 pl-1">
         <div className="sidebar-menu pt-3">
-          <NavLink className="nav-link" activeClassName="chosen" to="/">
+          <NavLink className="nav-link" activeClassName="chosen" exact to="/">
             <FontAwesomeIcon size="lg" icon={faHome} fixedWidth/> <span
             className="menu-text">Overview</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" exact to="/dashboard">
@@ -235,7 +235,7 @@ const funcAccountAdminNav = () => {
     <div className={"w-20 pt-1 d-block"}>
       <div className="sidebar-container sticky-top pb-5 pt-1 pl-1">
         <div className="sidebar-menu pt-3">
-          <NavLink className="nav-link" activeClassName="chosen" to="/">
+          <NavLink className="nav-link" activeClassName="chosen" exact to="/">
             <FontAwesomeIcon size="lg" icon={faHome} fixedWidth/> <span
             className="menu-text">Overview</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" exact to="/dashboard">
@@ -285,7 +285,7 @@ const funcFreeTrialNav = () => {
     <div className="w-20 pt-1 d-block">
       <div className="sidebar-container sticky-top pb-5 pt-1 pl-1">
         <div className="sidebar-menu pt-3">
-          <NavLink className="nav-link" activeClassName="chosen" to="/">
+          <NavLink className="nav-link" activeClassName="chosen" exact to="/">
             <FontAwesomeIcon size="lg" icon={faHome} fixedWidth/> <span
             className="menu-text">Overview</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" exact to="/dashboard">
@@ -329,7 +329,7 @@ const funcDefaultNav = () => {
     <div className="w-20 pt-1 d-block">
       <div className="sidebar-container sticky-top pb-5 pt-1 pl-1">
         <div className="sidebar-menu pt-3">
-          <NavLink className="nav-link" activeClassName="chosen" to="/">
+          <NavLink className="nav-link" activeClassName="chosen" exact to="/">
             <FontAwesomeIcon size="lg" icon={faHome} fixedWidth/> <span
             className="menu-text">Overview</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" exact to="/dashboard">
