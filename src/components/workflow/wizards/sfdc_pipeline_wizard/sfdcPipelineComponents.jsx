@@ -16,9 +16,10 @@ import Moment from "moment";
 import momentLocalizer from "react-widgets-moment";
 import DateTimePicker from "react-widgets/lib/DateTimePicker";
 import DropdownList from "react-widgets/lib/DropdownList";
-import "../workflows.css";
+import "../../workflows.css";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
+import sfdcPipelineActions from "./sfdc-pipeline-actions";
 
 const INITIAL_COMPONENT_TYPES_FORM = {
   customerId: "", //ssoUsersID assgined at the Node layer
@@ -39,7 +40,9 @@ const INITIAL_OBJECT_TYPES = {
 const SfdcPipelineComponents = ({
   pipelineId,
   stepId,
-  setView,
+  setView,  
+  nameSpacePrefix,
+  setNameSpacePrefix,
   isProfiles,
   setSelectedComponentTypes,
   selectedComponentTypes,
@@ -56,7 +59,6 @@ const SfdcPipelineComponents = ({
   // const [selectedComponentTypes, setSelectedComponentTypes] = useState([]);
   const [componentTypeForm, setComponentTypeForm] = useState(INITIAL_COMPONENT_TYPES_FORM);
   const [formData, setFormData] = useState(INITIAL_OBJECT_TYPES);
-  const [nameSpacePrefix, setNameSpacePrefix] = useState("");
 
   Moment.locale("en");
   momentLocalizer();
@@ -72,12 +74,11 @@ const SfdcPipelineComponents = ({
   
     async function loadData () {
       setLoading(true);
-      console.log(isProfiles)
-      let apiUrl = "/pipelines/sfdc/component-types";
   
       try {
-        const accessToken = await getAccessToken();
-        const response = await axiosApiService(accessToken).post(apiUrl, {isProfiles});
+        // const accessToken = await getAccessToken();
+        const response = await sfdcPipelineActions.getComponentTypes({isProfiles}, getAccessToken);
+        
         if (!ignore) setComponentTypes(response.data);
       } catch (error) {
         console.error("Error getting API Data: ", error);
@@ -93,6 +94,7 @@ const SfdcPipelineComponents = ({
   const dateAsOf = (
     <DateTimePicker
       time={true}
+      min={new Date().setMonth(new Date().getMonth() - 3)}
       max={new Date()}
       defaultValue={new Date(new Date().setHours(0, 0, 0, 0))}
       onChange={(value) => handleAsOfDateChange({ value })}
@@ -141,11 +143,9 @@ const SfdcPipelineComponents = ({
 
   const postComponentTypes = async (data) => {
     setSfdcComponentFilterObject(data);
-    const accessToken = await getAccessToken();
-    const apiUrl = "/pipelines/sfdc/modified-files";
 
     try {
-      const result = await axiosApiService(accessToken).post(apiUrl, data);
+      const result = await sfdcPipelineActions.getModifiedFiles(data, getAccessToken);
       setModifiedFiles(result.data);
 
       if (result.data.status === 500) {
@@ -341,6 +341,8 @@ SfdcPipelineComponents.propTypes = {
   pipelineId: PropTypes.string,
   stepId: PropTypes.string,
   setView: PropTypes.func,
+  nameSpacePrefix: PropTypes.string,
+  setNameSpacePrefix: PropTypes.func,
   isProfiles: PropTypes.bool,
   setSelectedComponentTypes: PropTypes.func,
   selectedComponentTypes: PropTypes.array,

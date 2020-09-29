@@ -30,8 +30,8 @@ function JenkinsToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVau
   const validateFields = () => {
     const {proxyEnable , jenkinsUrl, jUserId, jAuthToken, proxyUserName, proxyPassword, jPassword  } = configurationData.data;
     if(!proxyEnable) {
-      console.log(jAuthToken)
-      console.log(jAuthToken.length)
+      // console.log(jAuthToken)
+      // console.log(jAuthToken.length)
       if(jenkinsUrl.length > 0 && jUserId.length > 0 && ( typeof(jAuthToken) === "string" ? jAuthToken.length > 0 : true)) {
         return true;
       }

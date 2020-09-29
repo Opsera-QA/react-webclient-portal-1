@@ -5,9 +5,10 @@ import { axiosApiService } from "api/apiService";
 import SfdcPipelineComponents from "./sfdcPipelineComponents";
 import SfdcPipelineModifiedFiles from "./sfdcPipelineModifiedFiles";
 import ErrorDialog from "components/common/status_notifications/error";
-import PipelineActions from "../pipeline-actions";
+import PipelineActions from "../../pipeline-actions";
 import SfdcPipelineXMLView from "./sfdcPipelineXMLView";
 import { faGalacticSenate } from "@fortawesome/free-brands-svg-icons";
+import sfdcPipelineActions from "./sfdc-pipeline-actions";
 
 const SfdcPipelineWizard = ({
   pipelineId,
@@ -31,6 +32,13 @@ const SfdcPipelineWizard = ({
   const [fromSFDC, setFromSFDC] = useState(false);
   const [fromDestinationSFDC, setFromDestinationSFDC] = useState(false);
   const [fromGit, setFromGit] = useState(false);
+  
+  const [nameSpacePrefix, setNameSpacePrefix] = useState("");
+  const [gitSelectedComponent, setGitSelectedComponent] = useState([]);
+  const [sfdcSelectedComponent, setSFDCSelectedComponent] = useState([]);
+  const [destSFDCSelectedComponent, setDestSFDCSelectedComponent] = useState([]);
+
+
   const [xml, setXML] = useState("");
 
   useEffect(() => {
@@ -59,16 +67,26 @@ const SfdcPipelineWizard = ({
   };
 
   const createJenkinsJob = async () => {
-    const accessToken = await getAccessToken();
-    const apiUrl = `/pipelines/sfdc/set-jobs`;
 
     // new object with xml as param
-    const postBody = {
+    // const postBody = {
+    //   pipelineId: pipelineId,
+    //   stepId: stepId,
+    //   buildParams: {
+    //     packageXml: xml,
+    //     retrieveFilesFromSFDC: fromSFDC || fromDestinationSFDC ? true : false,
+    //   },
+    // };
+
+     const postBody = {
       pipelineId: pipelineId,
       stepId: stepId,
       buildParams: {
-        packageXml: xml,
-        retrieveFilesFromSFDC: fromSFDC || fromDestinationSFDC ? true : false,
+      componentTypes: isProfiles ? JSON.stringify(selectedComponentTypes) : "",
+      commitList: isProfiles ? JSON.stringify(sfdcSelectedComponent) : "",
+        packageXml: isProfiles ? "" : xml,
+        retrieveFilesFromSFDC: fromSFDC || fromDestinationSFDC ? "true" : "false",
+        nameSpacePrefix: nameSpacePrefix
       },
     };
 
@@ -77,7 +95,7 @@ const SfdcPipelineWizard = ({
     //create jenkins job and automate job creation/updation of validate and deploy jobs
     let createJobResponse;
     try {
-      createJobResponse = await axiosApiService(accessToken).post(apiUrl, postBody);
+      createJobResponse = await sfdcPipelineActions.createJobs(postBody, getAccessToken);
       console.log("createJobResponse: ", createJobResponse);
     } catch (error) {
       console.log("Error posting to API: ", error);
@@ -114,6 +132,8 @@ const SfdcPipelineWizard = ({
             stepToolConfig={stepToolConfig}
             handleClose={handleClose}
             setView={setView}
+            nameSpacePrefix={nameSpacePrefix} 
+            setNameSpacePrefix={setNameSpacePrefix}
             setSelectedComponentTypes={setSelectedComponentTypes}
             selectedComponentTypes={selectedComponentTypes}
             setModifiedFiles={setModifiedFiles}
@@ -139,7 +159,12 @@ const SfdcPipelineWizard = ({
             fromDestinationSFDC={fromDestinationSFDC}
             setFromDestinationSFDC={setFromDestinationSFDC}
             selectedComponentTypes={selectedComponentTypes}
-            createJenkinsJob={createJenkinsJob}
+            gitSelectedComponent={gitSelectedComponent}
+            setGitSelectedComponent={setGitSelectedComponent}
+            sfdcSelectedComponent={sfdcSelectedComponent}
+            setSFDCSelectedComponent={setSFDCSelectedComponent}
+            destSFDCSelectedComponent={destSFDCSelectedComponent}
+            setDestSFDCSelectedComponent={setDestSFDCSelectedComponent}
           />
         )}
 

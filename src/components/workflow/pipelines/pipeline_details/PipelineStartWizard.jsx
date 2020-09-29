@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Button, OverlayTrigger, Popover, Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStepForward, faPlay, faSync, faSpinner, faStopCircle, faHistory, faPause, faFlag } from "@fortawesome/free-solid-svg-icons";
-import SfdcPipelineWizard from "../../wizards/sfdcPipelineWizard";
+import SfdcPipelineWizard from "../../wizards/sfdc_pipeline_wizard/sfdcPipelineWizard";
 
 import "../../workflows.css";
 
