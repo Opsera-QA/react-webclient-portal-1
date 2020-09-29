@@ -1,7 +1,6 @@
 // TODO: Pull directly from node server --
 //  also write way to pull text from a properties file for easier language localization
 const defaultSignupFormFields = {
-
   fields: [
     {
     label: "First Name",
@@ -62,6 +61,7 @@ const defaultSignupFormFields = {
     id: "domain",
     fieldText: "When new resources are created for this account, this will be the default sub-domain name used when building DNS records.",
     isAlphaNumeric: true,
+    // format: /^[A-Za-z0-9][A-Za-z0-9-]*$/,
     isRequired: true,
     maxLength: 10,
   },

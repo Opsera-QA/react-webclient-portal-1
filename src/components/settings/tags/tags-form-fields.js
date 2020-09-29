@@ -23,7 +23,9 @@ const tagEditorMetadata = {
     {
       label: "Value",
       id: "value",
-      isRequired: true
+      isRequired: true,
+      format: /^[A-Za-z0-9][A-Za-z0-9-.]*$/,
+      lowercase: true
     },
     {
       label: "Configuration Properties",

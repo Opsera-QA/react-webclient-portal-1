@@ -89,6 +89,7 @@ function TempTagManagerInput({ label, type, data, setData, disabled, filter, pla
 
     newValue = newValue.trim();
     newValue = newValue.replaceAll(' ', '-');
+    newValue = newValue.replace(/[^A-Za-z0-9-.]/gi, '');
     newValue = newValue.toLowerCase();
 
     let currentOptions = [...tagOptions];
