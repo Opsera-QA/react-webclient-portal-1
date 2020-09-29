@@ -71,6 +71,10 @@ const SfdcPipelineModifiedFiles = ({
     setGitModified(modifiedFiles.gitModified);
     setSfdcModified(modifiedFiles.sfdcModified);
     setDestSfdcModified(modifiedFiles.destSfdcModified);
+    // selected components
+    setGitSelectedComponent(modifiedFiles.gitModified);
+    setSFDCSelectedComponent(modifiedFiles.sfdcModified);
+    setDestSFDCSelectedComponent(modifiedFiles.destSfdcModified);
   }, [modifiedFiles]);
 
   useEffect(() => {
@@ -320,7 +324,7 @@ const SfdcPipelineModifiedFiles = ({
                     <div className="col-9">
                     {fromSFDC && (
                       <div className="align-self-end">
-                        {/* <Button variant="secondary" size="sm" className="mr-1" onClick={()=>handleCheckAllClickComponentTypes("sfdc")}>
+                        <Button variant="secondary" size="sm" className="mr-1" onClick={()=>handleCheckAllClickComponentTypes("sfdc")}>
                           <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1" />
                           Check All
                         </Button>
@@ -332,7 +336,7 @@ const SfdcPipelineModifiedFiles = ({
                         >
                           <FontAwesomeIcon icon={faSquare} fixedWidth className="mr-1" />
                           Uncheck All
-                        </Button> */}
+                        </Button>
                       </div>
                     )}
                     </div>
@@ -448,7 +452,7 @@ const SfdcPipelineModifiedFiles = ({
                           <div className="col-9">
                           {fromGit && (
                             <div className="align-self-end">
-                              {/* <Button variant="secondary" size="sm" className="mr-1" onClick={()=>handleCheckAllClickComponentTypes("git")}>
+                              <Button variant="secondary" size="sm" className="mr-1" onClick={()=>handleCheckAllClickComponentTypes("git")}>
                                 <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1" />
                                 Check All
                               </Button>
@@ -460,7 +464,7 @@ const SfdcPipelineModifiedFiles = ({
                               >
                                 <FontAwesomeIcon icon={faSquare} fixedWidth className="mr-1" />
                                 Uncheck All
-                              </Button> */}
+                              </Button>
                             </div>
                           )}
                           </div>
