@@ -41,10 +41,10 @@ function PipelinesView({ currentTab, setActiveTab }) {
         setSortOption(getSortOptionByText(storedSortOption));
       }
     } catch (error) {
+      console.log(error)
       let toast = getLoadingErrorDialog(error.message, setShowToast);
       setToast(toast);
       setShowToast(true);
-      console.error(error.message);
     } finally {
       setLoading(false);
     }

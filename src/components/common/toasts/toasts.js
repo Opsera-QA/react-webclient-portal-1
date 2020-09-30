@@ -3,7 +3,7 @@ import SuccessDialog from "../status_notifications/SuccessDialog";
 import ErrorDialog from "../status_notifications/error";
 
 export const getLoadingErrorDialog = (errorMessage, toggleToast, alignment = "top") => {
-  return getErrorDialog(`WARNING! An error has occurred loading: ${errorMessage}`, toggleToast, alignment);
+  return getErrorDialog(`WARNING! An error has occurred: ${errorMessage}`, toggleToast, alignment);
 }
 
 export const getServiceUnavailableDialog = (toggleToast, alignment) => {
