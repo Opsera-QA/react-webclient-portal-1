@@ -147,12 +147,14 @@ const MapActivityData = (props) => {
               />
             </div>
           </div>
-          <div className="row">
-            <div className="col">
-              <strong> CPU Usage: </strong>
-              {item.CpuUsage}%
+          {item.CpuUsage && (
+            <div className="row">
+              <div className="col">
+                <strong> CPU Usage: </strong>
+                {item.CpuUsage}%
+              </div>
             </div>
-          </div>
+          )}
         </Alert>
       ))}
 
