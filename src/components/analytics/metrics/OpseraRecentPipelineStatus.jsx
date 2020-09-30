@@ -7,6 +7,7 @@ import ErrorDialog from "../../common/status_notifications/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import CustomTable from "../../common/table/CustomTable";
+import { format } from "date-fns";
 
 function OpseraRecentPipelineStatus({ date }) {
   const contextType = useContext(AuthContext);
@@ -21,10 +22,7 @@ function OpseraRecentPipelineStatus({ date }) {
       try {
         await fetchData();
       } catch (err) {
-        if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
-          return;
-        }
+        if (err.name === "AbortError") return;
       }
     };
     runEffect();
@@ -39,7 +37,7 @@ function OpseraRecentPipelineStatus({ date }) {
       {
         Header: "Run",
         accessor: "run_count",
-        class: "cell-center no-wrap-inline"
+        class: "cell-center no-wrap-inline",
       },
       {
         Header: "Pipeline Name",
@@ -48,6 +46,9 @@ function OpseraRecentPipelineStatus({ date }) {
       {
         Header: "Completed At",
         accessor: "timestamp",
+        Cell: (props) => {
+          return format(new Date(props.value), "yyyy-MM-dd', 'hh:mm a");
+        },
       },
       {
         Header: "Duration (Mins)",
@@ -57,13 +58,31 @@ function OpseraRecentPipelineStatus({ date }) {
         Header: "Result",
         accessor: "status",
         Cell: (props) => {
-          return props.value ?
-            (props.value === "failure" || props.value === "failed")
-              ? <><div style={{ display: "flex",  flexWrap: "nowrap" }}><div><FontAwesomeIcon icon={faTimesCircle} className="cell-icon red" /></div><div className="ml-1">{props.value}</div></div></>
-              : <><div style={{ display: "flex",  flexWrap: "nowrap" }}><div><FontAwesomeIcon icon={faCheckCircle} className="cell-icon green" /></div><div className="ml-1">{props.value}</div></div></>
-            : "unknown";
+          return props.value ? (
+            props.value === "failure" || props.value === "failed" ? (
+              <>
+                <div style={{ display: "flex", flexWrap: "nowrap" }}>
+                  <div>
+                    <FontAwesomeIcon icon={faTimesCircle} className="cell-icon red" />
+                  </div>
+                  <div className="ml-1">{props.value}</div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div style={{ display: "flex", flexWrap: "nowrap" }}>
+                  <div>
+                    <FontAwesomeIcon icon={faCheckCircle} className="cell-icon green" />
+                  </div>
+                  <div className="ml-1">{props.value}</div>
+                </div>
+              </>
+            )
+          ) : (
+            "unknown"
+          );
         },
-      }
+      },
     ],
     []
   );
@@ -86,8 +105,7 @@ function OpseraRecentPipelineStatus({ date }) {
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject =
-        res && res.data ? res.data.data[0].opseraPipelineInfo : [];
+      let dataObject = res && res.data ? res.data.data[0].opseraPipelineInfo : [];
       setData(dataObject);
       setLoading(false);
     } catch (err) {
@@ -105,30 +123,28 @@ function OpseraRecentPipelineStatus({ date }) {
   } else {
     return (
       <>
-        {(typeof data !== "object" || data === undefined || Object.keys(data).length === 1 || data.status !== 200) ?
+        {typeof data !== "object" || data === undefined || Object.keys(data).length === 1 || data.status !== 200 ? (
           <>
             <div className="chart mb-3" style={{ height: "300px" }}>
               <div className="chart-label-text">Opsera: Recent Pipeline Status</div>
-              <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
+              <div
+                className="max-content-width p-5 mt-5"
+                style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+              >
                 <InfoDialog message="No Data is available for this chart at this time." />
               </div>
             </div>
           </>
-          :
+        ) : (
           <>
             <div className="mt-3 d-flex justify-content-between">
               <div className="h6 activity-label-text mb-2">Opsera: Recent Pipeline Status</div>
-
             </div>
             <div className="table-content-block">
-              <CustomTable
-                columns={columns}
-                data={data.data}
-                noDataMessage={noDataMessage}
-              />
+              <CustomTable columns={columns} data={data.data} noDataMessage={noDataMessage} />
             </div>
           </>
-        }
+        )}
       </>
     );
   }

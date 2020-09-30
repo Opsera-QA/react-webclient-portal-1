@@ -4,7 +4,6 @@ import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 import ErrorDialog from "../../common/status_notifications/error";
-import { Table } from "react-bootstrap";
 import { format } from "date-fns";
 import CustomTable from "../../common/table/CustomTable";
 
@@ -85,10 +84,12 @@ function GitlabMergedMergeReqCommitsCountTable({ date }) {
       {
         Header: "Time taken to merge (Hours)",
         accessor: "MergeRequestTimeTaken",
+        class: "cell-center no-wrap-inline",
       },
       {
         Header: "Push Time (Hours)",
         accessor: "PushCodeTime",
+        class: "cell-center no-wrap-inline",
       },
       {
         Header: "Branch Name",
@@ -98,10 +99,13 @@ function GitlabMergedMergeReqCommitsCountTable({ date }) {
         Header: "Project Name",
         accessor: "ProjectName",
       },
-      // {
-      //   Header: "Time",
-      //   accessor: "mrCompletionTimeTimeStamp",
-      // },
+      {
+        Header: "Time",
+        accessor: "mrCompletionTimeTimeStamp",
+        Cell: (props) => {
+          return format(new Date(props.value), "yyyy-MM-dd', 'hh:mm a");
+        },
+      },
     ],
     []
   );
