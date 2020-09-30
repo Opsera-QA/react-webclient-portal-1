@@ -371,7 +371,7 @@ const SfdcPipelineModifiedFiles = ({
                                    
                   {typeof sfdcModified === "object" &&
                   sfdcModified
-                  .filter(item => item.componentType.includes(formData.SFDCComponentType) && item.committedFile.toLowerCase().includes(formData.SFDCCommittedFile) )
+                  .filter(item => item.componentType.includes(formData.SFDCComponentType) && item.committedFile.toLowerCase().includes(formData.SFDCCommittedFile.toLowerCase()) )
                   .map((item,idx) => (
                       <div key={idx} className="d-flex justify-content-center">
                         <div className="thick-list-item-container-green  w-100 force-text-wrap p-1">
@@ -499,7 +499,7 @@ const SfdcPipelineModifiedFiles = ({
                             
                       {typeof gitModified === "object" &&
                       gitModified
-                        .filter(item => item.componentType.includes(formData.gitComponentType) && item.committedFile.toLowerCase().includes(formData.gitCommittedFile) )
+                        .filter(item => item.componentType.includes(formData.gitComponentType) && item.committedFile.toLowerCase().includes(formData.gitCommittedFile.toLowerCase()) )
                         .map((item,idx) => (
                           <div key={idx} className="d-flex justify-content-center">
                             <div className="thick-list-item-container-green  w-100 force-text-wrap p-1">

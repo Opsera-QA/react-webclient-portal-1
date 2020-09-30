@@ -1,6 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
 import PropTypes from "prop-types";
-import { Card } from "react-bootstrap";
+import { 
+  Card,
+  OverlayTrigger,
+  Popover,
+  Tooltip } from "react-bootstrap";
 import { NewAppContext } from "./context";
 
 function ContinousIntegration(props) {
@@ -127,19 +131,31 @@ function ContinousIntegration(props) {
               <span className="newApp__service-title">Spinnaker</span>
             </div>
 
+            <OverlayTrigger
+              key="top"
+              placement="top"
+              overlay={
+                <Tooltip id={`tooltip-top`}>
+                  For spinning up this tool, please contact <strong>support@opsera.io</strong>
+                </Tooltip>
+              }
+            >
             <div
-              className={`newApp__service-logo ${tools.includes("FluxCD") ? "newApp__service-logo--alredy-installed" : !isEKS ? "newApp__service-logo--disabled" : ""}`}
-              onClick={() => selectCard("FluxCD")}>
+              // className={`newApp__service-logo ${tools.includes("FluxCD") ? "newApp__service-logo--alredy-installed" : !isEKS ? "newApp__service-logo--disabled" : ""}`} 
+              className="newApp__service-logo newApp__service-logo--disabledButAvailable"
+              // onClick={() => selectCard("FluxCD")}
+              >
               <input type="checkbox"
                 inline
                 disabled={tools.includes("FluxCD") ? true : false}
                 checked={isChecked.FluxCD && data["FluxCD"]}
                 className="newApp__checkbox"
-                onClick={() => selectCard("FluxCD")}
+                // onClick={() => selectCard("FluxCD")}
               />
               <img src={require("./imgs/flux.png")} />
               <span className="newApp__service-title">FluxCD</span>
             </div> 
+            </OverlayTrigger>
                        
           </div>
         </Card.Body>
