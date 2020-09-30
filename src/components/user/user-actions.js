@@ -12,4 +12,18 @@ userActions.getAnalyticsSettings = async (getAccessToken) => {
   return response;
 };
 
+// TODO: Figure out best way to approach this
+userActions.isEmailAvailable = async (emailAddress, getAccessToken) => {
+  console.log("checking if email exists: " + emailAddress);
+  let postBody = {
+    email: emailAddress
+  }
+  const accessToken = await getAccessToken();
+  const apiUrl = `/users/check-email`;
+  const response = await axiosApiService(accessToken).post()(apiUrl, postBody)
+    .then((result) =>  {return result;})
+    .catch(error => {throw { error };});
+  return response;
+};
+
 export default userActions;
