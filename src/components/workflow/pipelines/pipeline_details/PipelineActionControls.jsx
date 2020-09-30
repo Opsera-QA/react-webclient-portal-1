@@ -22,6 +22,7 @@ import {
 
 import "../../workflows.css";
 import ErrorDialog from "../../../common/status_notifications/error";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 function PipelineActionControls({
   pipeline,
@@ -35,6 +36,7 @@ function PipelineActionControls({
   setRefreshCount,
 }) {
   const { getAccessToken } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [workflowStatus, setWorkflowStatus] = useState(false);
   //const [socketRunning, setSocketRunning] = useState(false);
   const [resetPipeline, setResetPipeline] = useState(false);
@@ -52,8 +54,8 @@ function PipelineActionControls({
   const [error, setErrors] = useState();
   /*const endPointUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
   let tmpDataObject = {};
-  let staleRefreshCount = 0;*/
-  let socket;
+  let staleRefreshCount = 0;
+  let socket;*/
 
   const authorizedAction = (action, owner) => {
     if (customerAccessRules.Administrator) {
@@ -100,7 +102,7 @@ function PipelineActionControls({
     //analyzeWorkflowStatus(workflowStatus);
   }, [workflowStatus]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (startPipeline) {
       console.log("Effect: Setting Start Pipeline True");
       setWorkflowStatus("running");
@@ -108,7 +110,7 @@ function PipelineActionControls({
       setWorkflowStatus("stopped");
     }
 
-  }, [startPipeline]);
+  }, [startPipeline]);*/
 
   useEffect(() => {
     console.log("Pipeline workflow update detected, determining status!!!");
@@ -186,7 +188,6 @@ function PipelineActionControls({
   };
 
   const handlePipelineWizardRequest = async (pipelineId, restartBln) => {
-    console.log("handling pipeline run");
     setWizardModal({ ...wizardModal, show: false });
     if (restartBln) {
       console.log("clearing pipeline activity and then starting over");
@@ -240,11 +241,11 @@ function PipelineActionControls({
   //action functions
   async function cancelPipelineRun(pipelineId) {
     setStopPipeline(true);
-    const response = await PipelineActions.cancel(pipelineId, getAccessToken)
+    await PipelineActions.cancel(pipelineId, getAccessToken)
       .catch(err => {
-        setStartPipeline(false);
         console.log(err);
-        setErrors(err.error);
+        //setErrors(err.error);
+        toastContext.showLoadingErrorDialog(err);
       });
     setStopPipeline(false);
     setStartPipeline(false);
@@ -252,18 +253,20 @@ function PipelineActionControls({
 
   async function runPipeline(pipelineId) {
     setStartPipeline(true);
+    toastContext.showInformationDialog("A request to start this pipeline has been submitted.  It will begin shortly.",20)
 
     await PipelineActions.run(pipelineId, {}, getAccessToken)
       .catch(err => {
         setStartPipeline(false);
         console.log(err);
-        setErrors(err.error);
+        //setErrors(err.error);
+        toastContext.showLoadingErrorDialog(err);
       });
 
     setTimeout(async function() {
       await fetchData();
       setStartPipeline(false);
-    }, 45000);
+    }, 30000);
   }
 
   /*const stopSocket = () => {
@@ -407,7 +410,7 @@ function PipelineActionControls({
                       handleRunPipelineClick(pipeline._id);
                     }}
                     disabled={true}>
-              <FontAwesomeIcon icon={faSpinner} fixedWidth spin className="mr-1"/> Running</Button>
+              <FontAwesomeIcon icon={faSpinner} fixedWidth spin className="mr-1"/> Starting</Button>
             :
             <Button variant="success"
                     className="mr-1"

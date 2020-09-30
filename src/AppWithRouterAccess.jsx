@@ -64,19 +64,23 @@ import LdapOrganizationAccountDetailView
 import LdapOrganizationAccountManagement
   from "./components/admin/accounts/ldap/organization_accounts/LdapOrganizationAccountManagement";
 import ToastContextProvider from "./contexts/DialogToastContext";
+import InfoDialog from "./components/common/status_notifications/info";
 
 const OktaAuth = require("@okta/okta-auth-js");
 const config = require("./config");
 
 
 const AppWithRouterAccess = () => {
+  //const [test, setTest] = useState(false);
   const [hideSideBar, setHideSideBar] = useState(false);
   const history = useHistory();
   const onAuthRequired = (authService) => {
     console.log("onAuthRequired being called!");
     console.log(authService._authState);
-    //history.push("/login"); //TODD: Disabled this feature due to a potential loop the browser gets into when the token is expired.
-    //Noah: Can we show a login toast message that gives users a link to click to take them to the login form?
+
+    if (authService && !authService.isAuthenticated) {
+      history.push("/login");
+    }
   };
 
   const OKTA_CONFIG = {

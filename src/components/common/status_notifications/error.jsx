@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -34,14 +34,7 @@ function ErrorDialog({ error, align, setError, prependMessage }) {
   useEffect(() => {
     let messageBody = "";
     if (error) {
-      if (error.response) {
-        messageBody = `Status ${error.response.status}: `;
-        messageBody += error.response.data.message ? error.response.data.message : JSON.stringify(error.response.data);
-      } else if (error.message) {
-        messageBody = error.message;
-      } else {
-        messageBody = JSON.stringify(error);
-      }
+      messageBody = processError(error);
     }
 
     setMessageBody(messageBody);
@@ -49,6 +42,33 @@ function ErrorDialog({ error, align, setError, prependMessage }) {
     setStatusCode(error && error.response ? error.response.status : null);
 
   }, [error]);
+
+  const processError = (e) => {
+    if (typeof e === "string") {
+      return e;
+    }
+
+    if (typeof e === "object") {
+      if (e.error) {
+        if (e.error.message) {
+          return e.error.message;
+        }
+        return JSON.stringify(e.error);
+      }
+
+      if (e.response) {
+        let messageBody = `Status ${error.response.status}: `;
+        messageBody += error.response.data.message ? error.response.data.message : JSON.stringify(error.response.data);
+        return messageBody;
+      }
+
+      if (error.message) {
+        return error.message;
+      }
+
+      return JSON.stringify(error);
+    }
+  };
 
   if (align === "center") {
     return (
@@ -68,10 +88,10 @@ function ErrorDialog({ error, align, setError, prependMessage }) {
   if (align === "dialogToast") {
     return (
       <div className="w-100 error-block top-dialog-block">
-        { setError && <div className="float-right ml-1">
+        {setError && <div className="float-right ml-1">
           <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
             clearError();
-          }}/></div> }
+          }}/></div>}
         {prependMessage} {messageBody} {(statusCode === 401 || (messageBody && messageBody.includes("401"))) &&
       <span className="ml-1"><a style={{ color: "#fff", textDecoration: "underline" }} href="#" onClick={() => {
         reloadSession();
@@ -84,15 +104,15 @@ function ErrorDialog({ error, align, setError, prependMessage }) {
   if (align === "detailPanelTop") {
     return (/*removed this class: top-dialog-detail-panel-block*/
       <div className="w-100 error-block top-error-block">
-          { setError && <div className="float-right ml-1">
-            <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
-              clearError();
-            }}/>
-          </div> }
-          {prependMessage} {messageBody} {(statusCode === 401 || (messageBody && messageBody.includes("401"))) &&
-        <span className="ml-1"><a style={{ color: "#fff", textDecoration: "underline" }} href="#" onClick={() => {
-          reloadSession();
-        }}>Click here to renew session.</a></span>}
+        {setError && <div className="float-right ml-1">
+          <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
+            clearError();
+          }}/>
+        </div>}
+        {prependMessage} {messageBody} {(statusCode === 401 || (messageBody && messageBody.includes("401"))) &&
+      <span className="ml-1"><a style={{ color: "#fff", textDecoration: "underline" }} href="#" onClick={() => {
+        reloadSession();
+      }}>Click here to renew session.</a></span>}
       </div>
     );
   }
@@ -101,7 +121,7 @@ function ErrorDialog({ error, align, setError, prependMessage }) {
   if (align === "stepConfigurationTop") {
     return (
       <div className="w-100 error-block step-configuration-dialog-block mt-1">
-        { setError && <div className="float-right ml-1">
+        {setError && <div className="float-right ml-1">
           <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
             clearError();
           }}/></div>}
@@ -116,7 +136,7 @@ function ErrorDialog({ error, align, setError, prependMessage }) {
   if (align === "top") {
     return (
       <div className="w-100 error-block top-error-block">
-        { setError && <div className="float-right ml-1">
+        {setError && <div className="float-right ml-1">
           <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
             clearError();
           }}/></div>}
@@ -149,12 +169,12 @@ ErrorDialog.propTypes = {
   ]),
   align: PropTypes.string,
   setError: PropTypes.func,
-  prependMessage: PropTypes.string
+  prependMessage: PropTypes.string,
 };
 
 ErrorDialog.defaultProps = {
   align: "inline",
-  type: "danger"
-}
+  type: "danger",
+};
 
 export default ErrorDialog;

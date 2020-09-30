@@ -254,7 +254,7 @@ function PipelineDetailView() {
   if (error && !loading) {
     return (<ErrorDialog error={error} align={"detailPanelTop"} setError={setErrors}/>);
   } else if (loading && !error) {
-    return (<LoadingDialog size="lg"/>);
+    return (<LoadingDialog size="sm"/>);
   } else if (!loading && (data.length === 0 || data.pipeline == null)) {
     return (<InfoDialog
       message="No Pipeline details found.  Please ensure you have access to view the requested pipeline."/>);
