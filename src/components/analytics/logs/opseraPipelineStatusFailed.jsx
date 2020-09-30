@@ -6,34 +6,30 @@ import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
 import { Alert, Button } from "react-bootstrap";
-import { format } from "date-fns";
+// import { format } from "date-fns";
 import Modal from "../../common/modal/modal";
 import "./logs.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
-import { faCalendar, faDraftingCompass, faDownload } from "@fortawesome/free-solid-svg-icons";
+// import { faCalendar, faDraftingCompass, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
 
-
-
-function OpseraPipelineStatusFailed( { persona, date } ) {
+function OpseraPipelineStatusFailed({ persona, date }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
-  
-  useEffect(() => {    
+  useEffect(() => {
     const controller = new AbortController();
     const runEffect = async () => {
       try {
         await fetchData();
       } catch (err) {
-        if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
+        if (err.name === "AbortError")
+          //console.log("Request was canceled via controller.abort");
           return;
-        }        
       }
     };
     runEffect();
@@ -43,63 +39,45 @@ function OpseraPipelineStatusFailed( { persona, date } ) {
     };
   }, []);
 
-
   const fetchData = async () => {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";   
+    const apiUrl = "/analytics/data";
     const postBody = {
       data: [
-        { 
+        {
           request: "opseraPipelineInfoFailed",
-          metric: "bar" 
-        }
-      ]
-      ,
-      startDate: date.start, 
-      endDate: date.end
+          metric: "bar",
+        },
+      ],
+      startDate: date.start,
+      endDate: date.end,
     };
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res && res.data ? res.data.data[0].opseraPipelineInfoFailed.data : [];
-      console.log(dataObject);
       setData(dataObject);
       setLoading(false);
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err.message);
       setLoading(false);
       setErrors(err.message);
     }
   };
 
-  if(loading) {
-    return (<LoadingDialog size="sm" />);
-  } else if (error) {
-    return (<ErrorDialog  error={error} />);
-  } else if (typeof data === "undefined" || data.length === 0) {
-    return (
-      ""
-    );
-  } else if (data.length > 0 && Object.keys(data[0]).length === 0) {
-    return (
-      ""
-    );
-  }
-  else {
-    return (
-      <>
-        <div className="activity-label-text mb-2">Recent Failed OpsERA Pipelines</div>
-        <MapActivityData data={data} className="mr-3 ml-3 p-4" />
-        
-      </>
-    );
-  }
+  if (loading) return <LoadingDialog size="sm" />;
+  if (error) return <ErrorDialog error={error} />;
+  if (typeof data === "undefined" || data.length === 0) return "";
+  if (data.length > 0 && Object.keys(data[0]).length === 0) return "";
+  return (
+    <>
+      <div className="activity-label-text mb-2">Recent Failed OpsERA Pipelines</div>
+      <MapActivityData data={data} className="mr-3 ml-3 p-4" />
+    </>
+  );
 }
-
-
 
 const MapActivityData = (props) => {
   const [showModal, setShowModal] = useState(false);
@@ -116,60 +94,90 @@ const MapActivityData = (props) => {
     history.push(`/workflow/details/${item}/summary`);
   };
 
-  if (typeof data === "undefined" || data.length === 0) {
-    return (
-      ""
-    );
-  } else {
-    return (
-      <>
-        { data.map((item, idx) => (
-          <Alert key={idx} variant={(item.status === "failure") ? "danger" : item.status}>
-            <div className="row">
-              {item.name !== "N/A" ? <div className="col"><strong> Pipeline: </strong> {item.pipeline_name} </div> : ""}
-              <div className="col" style={{
-                textAlign: "right"
-              }}><strong></strong>{item.timestamp}</div>
-              {/* <Button variant="outline-dark mr-3" size="sm" onClick={() => { goToPipeline(item.pipeline_id); }}><FontAwesomeIcon icon={faDraftingCompass} fixedWidth/>View Pipeline</Button> */}
+  if (typeof data === "undefined" || data.length === 0) return "";
 
+  return (
+    <>
+      {data.map((item, idx) => (
+        <Alert key={idx} variant={item.status === "failure" ? "danger" : item.status}>
+          <div className="row">
+            {item.name !== "N/A" ? (
+              <div className="col">
+                <strong> Pipeline: </strong> {item.pipeline_name}{" "}
+              </div>
+            ) : (
+              ""
+            )}
+            <div
+              className="col"
+              style={{
+                textAlign: "right",
+              }}
+            >
+              <strong></strong>
+              {item.timestamp}
             </div>
-            <div className="row">
-              <div className="col"><strong> Pipeline ID: </strong>{item.pipeline_id}</div>
+            {/* <Button variant="outline-dark mr-3" size="sm" onClick={() => { goToPipeline(item.pipeline_id); }}><FontAwesomeIcon icon={faDraftingCompass} fixedWidth/>View Pipeline</Button> */}
+          </div>
+          <div className="row">
+            <div className="col">
+              <strong> Pipeline ID: </strong>
+              {item.pipeline_id}
             </div>
-            <div className="row">
-              <div className="col"><strong> Duration: </strong>{item.duration} Minutes</div>
+          </div>
+          <div className="row">
+            <div className="col">
+              <strong> Duration: </strong>
+              {item.duration} Minutes
             </div>
-            <div className="row">
-              {/* <div className="col">Version: {item["version"]}</div> */}
-              <div className="col"><strong> Run Count: </strong> {item.run_count} 
-                <FontAwesomeIcon icon={faSearchPlus} size="xs" 
-                  className="ml-1" 
-                  style={{ cursor: "pointer" }}
-                  onClick={() => { handleClick(item); }} /></div>
+          </div>
+          <div className="row">
+            {/* <div className="col">Version: {item["version"]}</div> */}
+            <div className="col">
+              <strong> Run Count: </strong> {item.run_count}
+              <FontAwesomeIcon
+                icon={faSearchPlus}
+                size="xs"
+                className="ml-1"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  handleClick(item);
+                }}
+              />
             </div>
-          </Alert>
-        ))}
+          </div>
+          <div className="row">
+            <div className="col">
+              <strong> CPU Usage: </strong>
+              {item.CpuUsage}%
+            </div>
+          </div>
+        </Alert>
+      ))}
 
-        {showModal ? <Modal header="Log Details"
+      {showModal ? (
+        <Modal
+          header="Log Details"
           message={<pre>{JSON.stringify(modalMessage, null, 2)}</pre>}
           button="OK"
           size="lg"
           handleCancelModal={() => setShowModal(false)}
-          handleConfirmModal={() => setShowModal(false)} /> : null}
-      </>
-    );}
+          handleConfirmModal={() => setShowModal(false)}
+        />
+      ) : null}
+    </>
+  );
 };
 
 MapActivityData.propTypes = {
   data: PropTypes.array,
-  type: PropTypes.string
+  type: PropTypes.string,
 };
 
 OpseraPipelineStatusFailed.propTypes = {
   persona: PropTypes.string,
   searchQuery: PropTypes.string,
-  filterType: PropTypes.string
+  filterType: PropTypes.string,
 };
 
 export default OpseraPipelineStatusFailed;
-
