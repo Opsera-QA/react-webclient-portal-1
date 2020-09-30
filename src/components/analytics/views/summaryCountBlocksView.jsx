@@ -7,7 +7,9 @@ Expecting data in this format:
  */
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-// import { CardDeck, Card } from "react-bootstrap";
+import { OverlayTrigger, Popover } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEllipsisH, faTimes } from "@fortawesome/free-solid-svg-icons";
 import Card from "react-bootstrap/Card";
 // import CardDeck from "react-bootstrap/CardDeck";
 import CardGroup from "react-bootstrap/CardGroup";
@@ -18,15 +20,25 @@ function SummaryCountBlocksView({ data, view }) {
   }, [data]);
 
   const setStatusLevel = (status) => {
-    if (status === "danger") {
-      return "red";
-    } else if (status === "warning") {
-      return "yellow";
-    } else if (status === "success") {
-      return "green";
-    } else {
-      return null;
-    }
+    if (status === "danger") return "red";
+    if (status === "warning") return "yellow";
+    if (status === "success") return "green";
+
+    return null;
+  };
+
+  const infoPopover = (item) => {
+    return (
+      <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
+        <Popover.Title as="h3">
+          {item.name}
+          <FontAwesomeIcon icon={faTimes} className="fa-pull-right pointer" onClick={() => document.body.click()} />
+        </Popover.Title>
+        <Popover.Content>
+          <div className="text-muted mb-2">{item.info}</div>
+        </Popover.Content>
+      </Popover>
+    );
   };
 
   return (
@@ -49,6 +61,17 @@ function SummaryCountBlocksView({ data, view }) {
                         </Card.Title>
                         <Card.Text className={"count-block-subtext mt-2 " + setStatusLevel(item.status)}>
                           {item.name}
+                        </Card.Text>
+                        <Card.Text style={{ position: "absolute", right: "10px", bottom: "15px" }}>
+                          {item.info && (
+                            <OverlayTrigger trigger="click" rootClose placement="top" overlay={infoPopover(item)}>
+                              <FontAwesomeIcon
+                                icon={faEllipsisH}
+                                className="fa-pull-right pointer pr-1"
+                                onClick={() => document.body.click()}
+                              />
+                            </OverlayTrigger>
+                          )}
                         </Card.Text>
                       </Card.Body>
                       {item.footer && <Card.Text className="w-100 text-muted mb-1">{item.footer}</Card.Text>}
