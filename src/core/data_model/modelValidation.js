@@ -26,21 +26,21 @@ export const fieldValidation = (value, field) => {
   if (field.minLength != null) {
     if (!minLengthValidator(value, field.minLength))
     {
-      errorMessages.push("The value has to be at least " + field.minLength + " characters long.");
+      errorMessages.push(field.label + "'s value has to be at least " + field.minLength + " characters long.");
     }
   }
 
   if (field.maxLength != null) {
     if (!maxLengthValidator(value, field.maxLength))
     {
-      errorMessages.push("The value has to be "+ field.maxLength +" characters or fewer.");
+      errorMessages.push(field.label + "'s value has to be "+ field.maxLength +" characters or fewer.");
     }
   }
 
   if (field.isRequired != null) {
     if (!requiredValidator(value))
     {
-      errorMessages.push("This field is required.");
+      errorMessages.push(field.label + " is required.");
     }
   }
 
