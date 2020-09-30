@@ -1,6 +1,11 @@
 import React, { useEffect, useState, useContext } from "react";
 import PropTypes from "prop-types";
-import { Card, Form } from "react-bootstrap";
+import { 
+  Card, 
+  Form,
+  OverlayTrigger,
+  Popover,
+  Tooltip } from "react-bootstrap";
 import { NewAppContext } from "./context";
 
 function LogManagement(props) {
@@ -63,49 +68,83 @@ function LogManagement(props) {
       <Card.Body className="text-center">
         <Card.Title>Log Management</Card.Title>
         <div>
+        <OverlayTrigger
+              key="top"
+              placement="top"
+              overlay={
+                <Tooltip id={`tooltip-top`}>
+                  For spinning up this tool, please contact <strong>support@opsera.io</strong>
+                </Tooltip>
+              }
+            >
           <div 
-            className={`newApp__service-logo ${tools.includes("ElasticSearch") ? "newApp__service-logo--alredy-installed" : ""}`} 
-            onClick={() => selectCard("ElasticSearch")} >
+            // className={`newApp__service-logo ${tools.includes("ElasticSearch") ? "newApp__service-logo--alredy-installed" : ""}`} 
+            className="newApp__service-logo newApp__service-logo--disabledButAvailable"
+            // onClick={() => selectCard("ElasticSearch")} 
+            >
             <input type="checkbox"
               inline
               disabled={tools.includes("ElasticSearch") ? true : false}
               checked={isChecked.ElasticSearch && data["ElasticSearch"]}
               className="newApp__checkbox"
-              onClick={() => selectCard("ElasticSearch")}
+              // onClick={() => selectCard("ElasticSearch")}
             />
             <img src={require("./imgs/elastic-search.png")} />
             <span className="newApp__service-title">ElasticSearch</span>
           </div>
+          </OverlayTrigger>
 
+          <OverlayTrigger
+              key="top"
+              placement="top"
+              overlay={
+                <Tooltip id={`tooltip-top`}>
+                  For spinning up this tool, please contact <strong>support@opsera.io</strong>
+                </Tooltip>
+              }
+            >
           <div
-            className={`newApp__service-logo ${tools.includes("Kibana") ? "newApp__service-logo--alredy-installed" : !isEKS ? "newApp__service-logo--disabled" : ""}`}
-            onClick={() => selectCard("Kibana")}
+            // className={`newApp__service-logo ${tools.includes("Kibana") ? "newApp__service-logo--alredy-installed" : !isEKS ? "newApp__service-logo--disabled" : ""}`}
+            className="newApp__service-logo newApp__service-logo--disabledButAvailable"
+            // onClick={() => selectCard("Kibana")}
           >
             <input type="checkbox"
               inline
               disabled={tools.includes("Kibana") ? true : false}
               checked={isChecked.Kibana && data["Kibana"]}
               className="newApp__checkbox"
-              onClick={() => selectCard("Kibana")}
+              // onClick={() => selectCard("Kibana")}
             />
             <img src={require("./imgs/kibana.png")} />
             <span className="newApp__service-title">Kibana</span>
           </div>
+          </OverlayTrigger>
 
+          <OverlayTrigger
+              key="top"
+              placement="top"
+              overlay={
+                <Tooltip id={`tooltip-top`}>
+                  For spinning up this tool, please contact <strong>support@opsera.io</strong>
+                </Tooltip>
+              }
+          >
           <div
-           className={`newApp__service-logo ${tools.includes("LogStash") ? "newApp__service-logo--alredy-installed" : !isEKS ? "newApp__service-logo--disabled" : ""}`}
-           onClick={() => selectCard("LogStash")}
+          //  className={`newApp__service-logo ${tools.includes("LogStash") ? "newApp__service-logo--alredy-installed" : !isEKS ? "newApp__service-logo--disabled" : ""}`}
+          className="newApp__service-logo newApp__service-logo--disabledButAvailable"
+          //  onClick={() => selectCard("LogStash")}
           >
             <input type="checkbox"
               inline
               disabled={tools.includes("LogStash") ? true : false}
               checked={isChecked.LogStash && data["LogStash"]}
               className="newApp__checkbox"
-              onClick={() => selectCard("LogStash")}
+              // onClick={() => selectCard("LogStash")}
             />
             <img src={require("./imgs/log-stash.png")} />
             <span className="newApp__service-title">LogStash</span>
           </div>
+          </OverlayTrigger>
         </div>
       </Card.Body>
     </Card>

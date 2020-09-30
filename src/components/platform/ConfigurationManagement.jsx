@@ -1,6 +1,11 @@
 import React, { useEffect, useState, useContext } from "react";
 import PropTypes from "prop-types";
-import { Card } from "react-bootstrap";
+import { 
+  Card,
+  OverlayTrigger,
+  Popover,
+  Tooltip
+ } from "react-bootstrap";
 
 import { NewAppContext } from "./context";
 
@@ -65,22 +70,44 @@ function ConfigurationManagement(props) {
         <Card.Body className="text-center">
           <Card.Title>Configuration Management</Card.Title>
           <div>
+            <OverlayTrigger
+              key="top"
+              placement="top"
+              overlay={
+                <Tooltip id={`tooltip-top`}>
+                  For spinning up this tool, please contact <strong>support@opsera.io</strong>
+                </Tooltip>
+              }
+            >
             <div
-              className={`newApp__service-logo ${tools.includes("Ansible") ? "newApp__service-logo--alredy-installed" : ""}`}
-              onClick={() => selectCard("Ansible")}>
-              <input type="checkbox"
-                inline
-                disabled={tools.includes("Ansible") ? true : false}
-                checked={isChecked.Ansible && data["Ansible"]}
-                className="newApp__checkbox"
-                onClick={() => selectCard("Ansible")}
-              />
-              <img src={require("./imgs/ansible.png")} alt="Ansible" />
-              <span className="newApp__service-title">Ansible</span>
-            </div>
+                // className={`newApp__service-logo ${tools.includes("Ansible") ? "newApp__service-logo--alredy-installed" : ""}`}
+                className="newApp__service-logo newApp__service-logo--disabledButAvailable"
+                // onClick={() => selectCard("Ansible")}
+                >
+                <input type="checkbox"
+                  inline
+                  disabled={tools.includes("Ansible") ? true : false}
+                  checked={isChecked.Ansible && data["Ansible"]}
+                  className="newApp__checkbox"
+                  // onClick={() => selectCard("Ansible")}
+                />
+                <img src={require("./imgs/ansible.png")} alt="Ansible" />
+                <span className="newApp__service-title">Ansible</span>
+              </div>
+            </OverlayTrigger>
 
+            <OverlayTrigger
+              key="top"
+              placement="top"
+              overlay={
+                <Tooltip id={`tooltip-top`}>
+                  For spinning up this tool, please contact <strong>support@opsera.io</strong>
+                </Tooltip>
+              }
+            >
             <div
-              className="newApp__service-logo newApp__service-logo--disabled"
+              // className="newApp__service-logo newApp__service-logo--disabled"
+              className="newApp__service-logo newApp__service-logo--disabledButAvailable"
             >
               <input type="checkbox"
                 inline
@@ -91,9 +118,20 @@ function ConfigurationManagement(props) {
               <img src={require("./imgs/chef.png")} alt="Chef" />
               <span className="newApp__service-title">Chef</span>
             </div>
-
+            </OverlayTrigger>
+            
+            <OverlayTrigger
+              key="top"
+              placement="top"
+              overlay={
+                <Tooltip id={`tooltip-top`}>
+                  For spinning up this tool, please contact <strong>support@opsera.io</strong>
+                </Tooltip>
+              }
+            >
             <div
-              className="newApp__service-logo newApp__service-logo--disabled"
+              // className="newApp__service-logo newApp__service-logo--disabled"
+              className="newApp__service-logo newApp__service-logo--disabledButAvailable"
             >
               <input type="checkbox"
                 inline
@@ -104,6 +142,7 @@ function ConfigurationManagement(props) {
               <img src={require("./imgs/puppet.png")} alt="Puppet"/>
               <span className="newApp__service-title">Puppet</span>
             </div>
+            </OverlayTrigger>
           </div>
         </Card.Body>
       </Card>

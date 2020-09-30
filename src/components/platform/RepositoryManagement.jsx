@@ -1,6 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
 import PropTypes from "prop-types";
-import { Card } from "react-bootstrap";
+import { 
+  Card,
+  OverlayTrigger,
+  Popover,
+  Tooltip } from "react-bootstrap";
 import { NewAppContext } from "./context";
 
 function RepositoryManagement(props) {
@@ -59,16 +63,30 @@ function RepositoryManagement(props) {
       <Card.Body className="text-center">
         <Card.Title>Repository Management</Card.Title>
         <div>
-          <div className="newApp__service-logo newApp__service-logo--disabled">
+          
+        <OverlayTrigger
+              key="top"
+              placement="top"
+              overlay={
+                <Tooltip id={`tooltip-top`}>
+                  For spinning up this tool, please contact <strong>support@opsera.io</strong>
+                </Tooltip>
+              }
+            >
+          <div 
+          // className="newApp__service-logo newApp__service-logo--disabled"
+          className="newApp__service-logo newApp__service-logo--disabledButAvailable"
+          >
             <input type="checkbox"
               inline
               disabled={tools.includes("ArtiFactory") ? true : false}
-              checked={isChecked.ArtiFactory && data["FluxCD"]}
+              checked={isChecked.ArtiFactory && data["ArtiFactory"]}
               className="newApp__checkbox"
             />
             <img src={require("./imgs/artifactory.png")} alt="artifactory" />
             <span className="newApp__service-title">ArtiFactory</span>
           </div>
+          </OverlayTrigger>
 
           <div  className={`newApp__service-logo ${tools.includes("Nexus") ? "newApp__service-logo--alredy-installed" : !isEKS ? "newApp__service-logo--disabled" : ""}`}
             onClick={() => selectCard("Nexus")} >
