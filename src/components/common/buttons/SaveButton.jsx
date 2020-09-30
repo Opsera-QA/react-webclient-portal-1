@@ -18,7 +18,9 @@ function SaveButton({recordDto, setRecordDto, setData, createRecord, updateRecor
 
     try {
       if(!recordDto.isModelValid2()) {
-        toastContext.showFormValidationErrorDialog(isNew && modal);
+        let errors = recordDto.isModelValid();
+        console.error(errors);
+        toastContext.showFormValidationErrorDialog(isNew && modal, errors && errors.length > 0 ? errors[0] : undefined);
         return;
       }
 

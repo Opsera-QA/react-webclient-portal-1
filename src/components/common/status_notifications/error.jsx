@@ -40,8 +40,6 @@ function ErrorDialog({ error, align, setError, prependMessage }) {
       } else if (error.message) {
         messageBody = error.message;
       }
-    } else {
-      messageBody = "Undefined";
     }
 
     setMessageBody(messageBody);
