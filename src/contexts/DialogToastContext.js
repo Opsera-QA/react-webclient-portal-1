@@ -15,10 +15,10 @@ const ToastContextProvider = (props) => {
     setModalToast(undefined);
   }
 
-  function autoHideDialog() {
+  function autoHideDialog(autoCloseLength = 20000) {
       setTimeout(function () {
         resetToast();
-      }, 20000);
+      }, autoCloseLength);
   }
 
   const showErrorDialog = (errorMessage) => {
@@ -37,9 +37,13 @@ const ToastContextProvider = (props) => {
     autoHideDialog();
   }
 
-  const showInformationDialog = (informationMessage) => {
+  const showInformationDialog = (informationMessage, autoCloseLengthInSeconds) => {
     setToast(getInformationDialog(informationMessage));
     setShowToast(true);
+
+    if (autoCloseLengthInSeconds != null) {
+      autoHideDialog(autoCloseLengthInSeconds * 1000);
+    }
   }
 
   const showFormValidationErrorDialog = (modal = false, errorMessage) => {
