@@ -75,7 +75,8 @@ const AppWithRouterAccess = () => {
   const onAuthRequired = (authService) => {
     console.log("onAuthRequired being called!");
     console.log(authService._authState);
-    history.push("/login");
+    //history.push("/login"); //TODD: Disabled this feature due to a potential loop the browser gets into when the token is expired.
+    //Noah: Can we show a login toast message that gives users a link to click to take them to the login form?
   };
 
   const OKTA_CONFIG = {
