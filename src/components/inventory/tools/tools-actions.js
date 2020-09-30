@@ -81,4 +81,13 @@ toolsActions.getToolTypes = async (getAccessToken) => {
   return response;
 };
 
+toolsActions.updateToolConfiguration = async (toolData, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/registry/${toolData._id}/update`;
+  const response = await axiosApiService(accessToken).post(apiUrl, toolData)
+    .then((result) =>  {return result;})
+    .catch(error => {throw error;});
+  return response;
+}
+
 export default toolsActions;

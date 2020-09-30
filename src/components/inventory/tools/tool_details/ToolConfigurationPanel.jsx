@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 
@@ -15,47 +15,33 @@ import AWSToolConfiguration from "../forms/aws";
 import SFDCToolConfiguration from "../forms/sfdc";
 import PipelineActions from "../../../workflow/pipeline-actions";
 import {AuthContext} from "../../../../contexts/AuthContext";
-import {axiosApiService} from "../../../../api/apiService";
 import JenkinsToolConfiguration from "./tool_jobs/jenkins/JenkinsToolConfiguration";
 import NexusToolConfiguration from "./tool_jobs/nexus/NexusToolConfiguration";
-import {
-  getUpdateFailureResultDialog,
-  getUpdateSuccessResultDialog
-} from "../../../common/toasts/toasts";
-
+import {DialogToastContext} from "../../../../contexts/DialogToastContext";
+import toolsActions from "../tools-actions";
 
 function ToolConfigurationPanel({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
-  const [toast, setToast] = useState({});
-  const [showToast, setShowToast] = useState(false);
+  const toastContext = useContext(DialogToastContext);
 
   const saveToolConfiguration = async (configurationItem) => {
-    let newToolData = toolData;
-    newToolData["configuration"] = configurationItem.configuration;
-    
-    const accessToken = await getAccessToken();
-    const apiUrl = `/registry/${newToolData._id}/update`;
     try {
-      let response = await axiosApiService(accessToken).post(apiUrl, newToolData.data);
-      let toast = getUpdateSuccessResultDialog( "Tool Configuration", setShowToast);
-      setToast(toast);
-      setShowToast(true);
-      // console.log("response: " + JSON.stringify(response));
+      let newToolData = toolData;
+      newToolData["configuration"] = configurationItem.configuration;
+      await toolsActions.updateToolConfiguration(newToolData.data, getAccessToken);
+      toastContext.showUpdateSuccessResultDialog("Tool Configuration")
     } catch (error) {
-      let toast = getUpdateFailureResultDialog("Tool Type", error.message, setShowToast);
-      setToast(toast);
-      setShowToast(true);
-      console.error(error.message);
+      toastContext.showUpdateFailureResultDialog("Tool Configuration", error);
+      console.error(error);
     }
   };
 
   const saveToVault = async (postBody) => {
-    const response = await PipelineActions.saveToVault(postBody, getAccessToken);
-    return response;
+    return await PipelineActions.saveToVault(postBody, getAccessToken);
   };
 
   // TODO: Rewrite so just tooldata is sent instead of id and tooldata
-  const getConfiguation = (toolIdentifier) => {
+  const getConfiguration = (toolIdentifier) => {
     switch (toolIdentifier) {
       case "jenkins":
         return <JenkinsToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
@@ -91,9 +77,8 @@ function ToolConfigurationPanel({ toolData }) {
 
   return (
     <div className="p-3">
-      {showToast && toast}
       <div className="text-muted pb-3">Enter tool specific configuration information below.  These settings will be used for pipelines.</div>
-      {toolData && getConfiguation(toolData.getData("tool_identifier").toLowerCase()) }
+      {toolData && getConfiguration(toolData.getData("tool_identifier").toLowerCase()) }
     </div>
   );
 }
