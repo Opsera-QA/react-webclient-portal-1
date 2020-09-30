@@ -32,6 +32,7 @@ function Logs() {
     "heartbeat",
     "codeship",
     "gitlab",
+    "metricbeat",
   ];
 
   useEffect(() => {
@@ -79,9 +80,9 @@ function Logs() {
 
       if (typeof data.profile === "object" && data.profile.length === 0) {
         setErrors(
-          "Warning!  Profile settings associated with your account are incomplete.  Log searching will be unavailable until this is fixed.",
+          "Warning!  Profile settings associated with your account are incomplete.  Log searching will be unavailable until this is fixed."
         );
-      } 
+      }
 
       setLoadingProfile(false);
     } catch (err) {
@@ -92,28 +93,27 @@ function Logs() {
   }
 
   if (loadingProfile) {
-    return (<LoadingView size="sm"/>);
+    return <LoadingView size="sm" />;
   }
 
   return (
     <div className="mb-3 max-charting-width">
-
-      {error && <ErrorDialog error={error} align="top"/>}
+      {error && <ErrorDialog error={error} align="top" />}
 
       <div className="max-content-width">
         <h4>Logs</h4>
         <p>
-          OpsERA provides users with access to a vast repository of logging with industry leading search and
-          filtering capability. Access all available logging, reports and configurations around the OpsERA Analytics
-          Platform or search your currently configured logs repositories below.{" "}
+          OpsERA provides users with access to a vast repository of logging with industry leading search and filtering
+          capability. Access all available logging, reports and configurations around the OpsERA Analytics Platform or
+          search your currently configured logs repositories below.{" "}
         </p>
       </div>
 
-      {!error &&
+      {!error && (
         <div className="pr-2 mt-1">
-          <SearchLogs tools={tools}/>
-        </div>}
-
+          <SearchLogs tools={tools} />
+        </div>
+      )}
     </div>
   );
 }
