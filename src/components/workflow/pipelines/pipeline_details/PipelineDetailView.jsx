@@ -159,7 +159,7 @@ function PipelineDetailView() {
 
       const pipelineStatus = analyzePipelineStatus(pipeline);
 
-      if (pipelineStatus === "stopped" || !pipelineStatus || staleRefreshCount > 20) {
+      if (pipelineStatus === "stopped" || !pipelineStatus || staleRefreshCount > 15) {
         console.log("Pipeline stopped inside timer, ending timer. Status: ", pipelineStatus);
         clearTimeout(timer);
         return;
