@@ -1,13 +1,13 @@
 import React, {useContext, useState} from 'react';
 import PropTypes from "prop-types";
-import {Button, Form} from "react-bootstrap";
+import {Button} from "react-bootstrap";
 import Model, {DataState} from "../../../core/data_model/model";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSave, faSpinner} from "@fortawesome/free-solid-svg-icons";
 import {DialogToastContext} from "../../../contexts/DialogToastContext";
 import {useHistory} from "react-router-dom";
 
-function SaveButton({recordDto, setRecordDto, setData, createRecord, updateRecord, altButtonText, type, disable, handleClose, showCreateAnother, showViewDetails, modal, showToasts}) {
+function SaveButton({recordDto, setRecordDto, setData, createRecord, updateRecord, altButtonText, type, disable, handleClose, showCreateAnother, showViewDetails, modal, showToasts, loginButton}) {
   let toastContext = useContext(DialogToastContext);
   const history = useHistory();
   const [isSaving, setIsSaving] = useState(false);
@@ -19,7 +19,7 @@ function SaveButton({recordDto, setRecordDto, setData, createRecord, updateRecor
     try {
       if(!recordDto.isModelValid2()) {
         let errors = recordDto.isModelValid();
-        console.error(errors);
+        console.error(JSON.stringify(errors));
         toastContext.showFormValidationErrorDialog(isNew && modal, errors && errors.length > 0 ? errors[0] : undefined);
         return;
       }
@@ -97,6 +97,25 @@ function SaveButton({recordDto, setRecordDto, setData, createRecord, updateRecor
   {/*  onClick={() => { callbackFunction(); }}> */}
   {/*  {isSaving ? <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> : <FontAwesomeIcon icon={faSave} className="mr-1"/>} Save*/}
   {/*</Button>*/}
+  // TODO: Come up with better name
+  if (loginButton) {
+    return (
+    isSaving ?
+      (
+        <Button id="login-button" disabled={true} variant="outline-success" className="mr-2 px-4" type="button">
+          <span>Working...</span>
+        </Button>
+      )
+      :
+      (
+        <Button size="md" className="register-button mx-auto" id="login-button" type="submit" variant="success" onClick={() => persistRecord(createRecord)}>
+          <span>Register Account</span>
+        </Button>
+      )
+    );
+  }
+
+
   if (recordDto.isNew()) {
     return (
       <>
@@ -133,7 +152,8 @@ SaveButton.propTypes = {
   showCreateAnother: PropTypes.bool,
   showViewDetails: PropTypes.bool,
   modal: PropTypes.bool,
-  showToasts: PropTypes.bool
+  showToasts: PropTypes.bool,
+  loginButton: PropTypes.bool
 };
 
 SaveButton.defaultProps = {

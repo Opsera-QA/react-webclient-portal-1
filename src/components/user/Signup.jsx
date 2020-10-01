@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import { Button, Form, Row, Col, Card, Alert } from "react-bootstrap";
-import { ApiService } from "api/apiService";
+import { Form, Row, Col, Card } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import defaultSignupFormFields from "./signup-form-fields.js";
 import usStateList from "./states";
@@ -11,6 +10,7 @@ import DtoSelectInput from "../common/input/dto_input/dto-select-input";
 import LoadingDialog from "../common/status_notifications/loading";
 import SaveButton from "../common/buttons/SaveButton";
 import {DialogToastContext} from "../../contexts/DialogToastContext";
+import userActions from "./user-actions";
 
 function Signup() {
   const history = useHistory();
@@ -35,74 +35,31 @@ function Signup() {
     setIsLoading(false);
   };
 
-  //Check if the email is already registered in the system
-  const isEmailAvailableFunc = async () => {
-    console.log("checking email: " + registrationDataDto.getData("email"));
-    const apiCall = new ApiService("/users/check-email", {}, null, { email: registrationDataDto.getData("email") });
-    return await apiCall.post()
-      .then(function(response) {
-        console.log("response in then: " + JSON.stringify(response));
-        if (response.data) {
-          toastContext.showEmailAlreadyExistsErrorDialog();
-          return false;
-        } else {
-          return true;
-        }
-      })
-      .catch(function(error) {
-        console.log("response in catch: " + JSON.stringify(error));
-        console.error(error);
-        return true;
-      });
-  };
-
   const loadRegistrationResponse = () => {
     history.push("/registration");
   };
 
-  //Final form submit
-  const signupSubmit = async () => {
+  const createAccount = async () => {
+      // console.log("persistData: ", JSON.stringify(registrationDataDto.getPersistData()));
 
-    console.log("persistData: ", JSON.stringify(registrationDataDto.getPersistData()));
+      const isEmailAvailable = await userActions.isEmailAvailable(registrationDataDto.getData("email"));
 
-      //Check if the email is already exist in the system
-      const isEmailAvailable = await isEmailAvailableFunc();
-
-      //Only if form is valid, call API for signup
-      if (isEmailAvailable) {
-        // setIsLoading(true);
-
-        let finalObject = {...registrationDataDto.getPersistData()};
-        let configuration = {
-          cloudProvider: registrationDataDto.getData("cloudProvider"),
-          cloudProviderRegion: registrationDataDto.getData("cloudProviderRegion")
-        };
-        let attributes = { title: registrationDataDto.getData("title"), company: registrationDataDto.getData("company") };
-        delete finalObject["cloudProviderRegion"];
-        delete finalObject["cloudProvider"];
-        finalObject["configuration"] = configuration;
-        finalObject["attributes"] = attributes;
-
-        const apiCall = new ApiService("/users/create", {}, null, finalObject);
-        await apiCall.post()
-          .then(function (response) {
-            console.debug(response);
-            setIsLoading(false);
-            toastContext.showCreateSuccessResultDialog("Account", false);
-            //showSuccessAlert();
-            //TODO: Send user to new registration confirmation form:
-            loadRegistrationResponse();
-          })
-          .catch(function (error) {
-            console.error(error);
-            setIsLoading(false);
-            toastContext.showUpdateFailureResultDialog("Account", error);
-            console.error(error);
-          });
-      }
-      else {
+      if (!isEmailAvailable) {
         toastContext.showEmailAlreadyExistsErrorDialog();
+        return;
       }
+
+    if (registrationDataDto.isModelValid2()) {
+      try {
+        await userActions.createFreeTrialAccount(registrationDataDto);
+        // TODO: Do we want to pop up success toast?
+        // toastContext.showCreateSuccessResultDialog("Opsera Account")
+        loadRegistrationResponse();
+      }
+      catch (error) {
+        toastContext.showCreateFailureResultDialog("Opsera Account", error);
+      }
+    }
   };
 
   if (isLoading || registrationDataDto == null) {
@@ -111,7 +68,7 @@ function Signup() {
 
   return (
     <div className="new-user-signup-form">
-      <Form className="full-signup-form m-auto" noValidate onSubmit={signupSubmit}>
+      <Form className="full-signup-form m-auto" noValidate onSubmit={e => e.preventDefault()}>
         <Card>
           <Card.Header as="h5" className="new-user-header">Sign Up For Opsera</Card.Header>
           <Card.Body className="new-user-body-full p-3">
@@ -158,7 +115,7 @@ function Signup() {
             </Row>
             <Row>
               <div className="ml-auto m-3 px-3">
-                <SaveButton createRecord={signupSubmit} type={"Account"} showToasts={false} updateRecord={signupSubmit} modal={false} recordDto={registrationDataDto} altButtonText={"Register Account"}/>
+                <SaveButton createRecord={createAccount} loginButton={true} type={"Opsera Account"} showToasts={false} updateRecord={createAccount} modal={false} recordDto={registrationDataDto} altButtonText={"Register Account"}/>
               </div>
             </Row>
           </Card.Body>

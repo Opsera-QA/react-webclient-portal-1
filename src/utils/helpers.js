@@ -21,6 +21,12 @@ export function validateEmail(email) {
   return re.test(String(email).toLowerCase());
 }
 
+// TODO: Add better regex for domain checking
+export function isDomain(domain) {
+ var re =  /^[A-Za-z0-9]?[A-Za-z0-9-]*[A-Za-z0-9]$/;
+ return re.test(String(domain).toLowerCase());
+}
+
 export function handleError(error) {
   let errMessage = null;
 
