@@ -29,7 +29,7 @@ function PipelineWorkflowItemList({
   useEffect(() => {
     if (pipeline) {
       setPipelineSteps(pipeline.workflow.plan)
-      console.log("STEPS: ", pipeline.workflow.plan)
+      //console.log("STEPS: ", pipeline.workflow.plan)
     }
 
   }, [refreshCount, JSON.stringify(lastStep), JSON.stringify(pipeline)]);

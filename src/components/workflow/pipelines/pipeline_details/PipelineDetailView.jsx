@@ -23,7 +23,7 @@ function PipelineDetailView() {
   const [data, setData] = useState({});
   const [pipeline, setPipeline] = useState({});
   const [activityData, setActivityData] = useState({});
-  const [stepStatus, setStepStatus] = useState({});
+  //const [stepStatus, setStepStatus] = useState({});
   const [loading, setLoading] = useState(false);
   const [softLoading, setSoftLoading] = useState(false);
   const [logsIsLoading, setLogsIsLoading] = useState(false);
@@ -37,48 +37,41 @@ function PipelineDetailView() {
   const [refreshCount, setRefreshCount] = useState(0);
   const history = useHistory();
 
+  const [refreshTimer, setRefreshTimer] = useState(null);
+
   /* Role based Access Controls */
   const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
   const [customerAccessRules, setCustomerAccessRules] = useState({});
 
   useEffect(() => {
+    //console.log("Effect  1");
     initComponent();
   }, []);
 
-  const handleTabClick = (tabSelection) => e => {
+  const handleTabClick = (tabSelection) => async e => {
     e.preventDefault();
+    clearTimeout(refreshTimer);
+
     if (tabSelection === "pipelines") {
       history.push(`/workflow/`);
       return;
     }
 
     setActiveTab(tabSelection);
+
     if (tab !== tabSelection) {
       history.push(`/workflow/details/${id}/${tabSelection}`);
-      fetchData();
+      await fetchData();
     }
-    // if (tabSelection !== "catalog") {
-    //   cookieHelpers.setCookie("pipelines", "selectedTab", tabSelection);
-    // }
   };
 
   useEffect(() => {
     getActivityLogs();
   }, [currentPage, pageSize]);
 
-
-
   useEffect(() => {
-    console.log("Pipeline update detected, determining status!!!");
-    updatePipelineStatusByInterval(pipeline);
+    console.log("Effect  3: Pipeline update detected, determining status!!!");
   }, [JSON.stringify(pipeline.workflow), refreshCount]);
-
-
-/*
-  useEffect(() => {
-    console.log("Pipeline update detected!!!");
-  }, [refreshCount, JSON.stringify(pipeline)]);
-*/
 
 
   const initComponent = async () => {
@@ -117,9 +110,7 @@ function PipelineDetailView() {
 
         if (pipeline && pipeline.data[0] && typeof (pipeline.data[0].workflow) !== "undefined") {
           if (typeof (pipeline.data[0].workflow.last_step) !== "undefined") {
-            setStepStatus(pipeline.data[0].workflow.last_step);
-          } else {
-            setStepStatus({});
+            evaluatePipelineStatus(pipeline.data[0]);
           }
         }
       } else {
@@ -133,40 +124,32 @@ function PipelineDetailView() {
     }
   }
 
-  let timer;
-  let staleRefreshCount = 0;
-  const updatePipelineStatusByInterval = () => {
+
+  let staleRefreshCount = 1;
+  const evaluatePipelineStatus = (pipeline) => {
+    console.log("evaluating pipeline status function");
     if (!pipeline || Object.entries(pipeline).length === 0) {
       return;
     }
 
     const pipelineStatus = analyzePipelineStatus(pipeline);
+
     if (pipelineStatus === "stopped" || !pipelineStatus) {
-      console.log("Pipeline stopped, ending timer. Status: ", pipelineStatus);
-      clearTimeout(timer);
+      console.log("Pipeline stopped, no need to schedule refresh. Status: ", pipelineStatus);
       return;
     }
 
-    timer = setInterval(async function() {
-      staleRefreshCount++;
+    console.log(`Scheduling status check followup for Pipeline: ${pipeline._id}, counter: ${staleRefreshCount} `);
+    const refreshTimer = setTimeout(async function() {
       console.log("running pipeline refresh interval. Step status: ");
-      console.log(staleRefreshCount)
-      await fetchPlan();
-
+      staleRefreshCount++;
+      await fetchData();
       if (staleRefreshCount % 3 === 0) {
-        console.log("divisible by 3 refresh");
+        console.log("divisible by 3 refresh: getting activity logs");
         await getSilentActivityLogs();
       }
-
-      const pipelineStatus = analyzePipelineStatus(pipeline);
-
-      if (pipelineStatus === "stopped" || !pipelineStatus || staleRefreshCount > 15) {
-        console.log("Pipeline stopped inside timer, ending timer. Status: ", pipelineStatus);
-        clearTimeout(timer);
-        return;
-      }
     }, 15000);
-
+    setRefreshTimer(refreshTimer);
   };
 
   const getSilentActivityLogs = async () => {
@@ -179,8 +162,7 @@ function PipelineDetailView() {
       setErrors(err.message);
       console.log(err.message);
     }
-  }
-
+  };
 
 
   const analyzePipelineStatus = (pipeline) => {

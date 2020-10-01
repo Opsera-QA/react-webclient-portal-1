@@ -101,13 +101,13 @@ const AppWithRouterAccess = () => {
 // Triggered when a token has expired
   authClient.tokenManager.on("expired", function(key, expiredToken) {
     console.log("Token with key", key, " has expired:");
-    console.log(expiredToken);
+    //console.log(expiredToken);
   });
 // Triggered when a token has been renewed
   authClient.tokenManager.on("renewed", function(key, newToken, oldToken) {
     console.log("Token with key", key, "has been renewed");
-    console.log("Old token:", oldToken);
-    console.log("New token:", newToken);
+    //console.log("Old token:", oldToken);
+    //console.log("New token:", newToken);
   });
 // Triggered when an OAuthError is returned via the API (typically during token renew)
   authClient.tokenManager.on("error", function(err) {
