@@ -26,7 +26,9 @@ const registrationMetadata = {
     {
       label: "Domain",
       id: "domain",
-      isRequired: true
+      isRequired: true,
+      format: /^[A-Za-z0-9][A-Za-z0-9-]*$/,
+      isDomain: true,
     },
     {
       label: "Password",

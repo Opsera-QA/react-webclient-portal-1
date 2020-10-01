@@ -1,4 +1,4 @@
-import {isAlphaNumeric, validateEmail} from "../../utils/helpers";
+import {isAlphaNumeric, isDomain, validateEmail} from "../../utils/helpers";
 
 export const validateData = (data, fields) => {
   let errors = [];
@@ -64,6 +64,11 @@ export const fieldValidation = (value, field) => {
   if (field.isAlphaNumeric != null && !isAlphaNumeric(value))
   {
     errorMessages.push("No special characters are allowed.");
+  }
+
+  if (field.isDomain != null && !isDomain(value))
+  {
+    errorMessages.push("Domains must begin and end with an alphanumeric character.");
   }
 
   if (errorMessages.length === 0) {
