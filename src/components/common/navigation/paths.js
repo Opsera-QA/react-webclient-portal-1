@@ -3,6 +3,8 @@ const paths = {};
 // Admin Paths
 paths.admin = "admin";
 
+paths.systemStatus = paths.admin + "/system-status";
+
 paths.templateManagement = paths.admin+ "/templates";
 paths.templateDetailView = paths.templateManagement + "/details/";
 
@@ -35,6 +37,7 @@ paths.ldapGroupManagement = paths.accountSettings + "/groups";
 paths.ldapGroupDetailView = paths.ldapUserManagement;
 paths.tagManagement = paths.accountSettings + "/tags";
 paths.tagDetailView = paths.tagManagement + "/details/";
+paths.customerSystemStatus = paths.accountSettings + "/customer-system-status";
 
 //Inventory (Tool Registry) paths
 paths.toolRegistry = "inventory/tools";

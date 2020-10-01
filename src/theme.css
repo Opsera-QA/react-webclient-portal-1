@@ -905,6 +905,21 @@ a.nav-link {
 
 /* End Detail View Styling */
 
+/* Status Card Styling */
+.statusCard {
+    min-height: 50px;
+}
+
+.status-legend {
+    background-color: rgba(203, 205, 205, 0.1);
+    border-radius: 5px 5px 0 0;
+}
+
+.status-table {
+    background-color: rgba(203, 205, 205, 0.1);
+    border-radius: 5px 5px 5px 5px;
+}
+/* End Status Card Styling */
 /* Filter bar styling */
 .filter-bar {
     height: 30px;
