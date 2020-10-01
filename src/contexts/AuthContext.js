@@ -5,7 +5,7 @@ const AuthContextProvider = (props) => {
     const { userData, refreshToken, authClient } = props;
 
     const logoutUserContext = () => {
-      //authClient.closeSession();
+      authClient.closeSession();
       authClient.tokenManager.clear();
       window.location = "/";
     };
@@ -23,7 +23,7 @@ const AuthContextProvider = (props) => {
       if (!isAuthenticated) {
         console.log("!getAccessToken: refreshing UI to trigger login");
         //window.location = "/login"; //if not authenticated, may just need to take user to login page
-        window.location.reload(false);
+        //window.location.reload(false);
         return false;
       }
 
