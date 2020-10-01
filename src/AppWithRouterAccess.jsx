@@ -43,7 +43,7 @@ import LdapCustomerOnboardView from "./components/admin/accounts/ldap/customer_o
 import FreeTrialRegistration from "./components/free_trial/Registration";
 import ApiConnectionDemo from "./components/api_connector/ApiDemo";
 import CommonTableDemo from "./components/common/samples/tableImplementation";
-import CustomerSystemStatus from "./components/settings/CustomerSystemStatus";
+import CustomerSystemStatus from "./components/settings/customer_system_status/CustomerSystemStatus";
 import LdapUserManagement from "./components/settings/ldap_users/LdapUserManagement";
 import LdapUserDetailView from "./components/settings/ldap_users/users_detail_view/LdapUserDetailView";
 import AccountSettingsView from "./components/settings/AccountSettings";
@@ -224,7 +224,7 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/admin/manage_systems" component={ManageSystems}/>
                   <SecureRoute path="/admin/registered-users" exact component={RegisteredUsersManagement}/>
                   <SecureRoute path="/admin/registered-users/:id" exact component={RegisteredUserDetailView}/>
-                  <SecureRoute path="/admin/systemstatus" component={SystemStatus}/>
+                  <SecureRoute path="/admin/system-status" component={SystemStatus}/>
                   <SecureRoute path="/admin/analytics/reports-registration" component={ReportsRegistration}/>
                   <SecureRoute path="/admin/tools/:tabKey?" exact component={ToolManagement}/>
                   <SecureRoute path="/admin/tools/types/details/:toolTypeId" exact component={ToolTypeDetailView}/>
@@ -259,7 +259,7 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/settings/:orgDomain/users/details/:userEmail" exact component={LdapUserDetailView}/>
                   <SecureRoute path="/settings/tags" exact component={TagEditor}/>
                   <SecureRoute path="/settings/tags/:id" exact component={TagDetailView}/>
-                  <SecureRoute path="/settings/customerstatus" exact component={CustomerSystemStatus}/>
+                  <SecureRoute path="/settings/customer-system-status" exact component={CustomerSystemStatus}/>
 
                   <SecureRoute path="/demo/api" component={ApiConnectionDemo}/>
                   <SecureRoute path="/demo/table" component={CommonTableDemo}/>

@@ -3,18 +3,18 @@ import { Row, Col } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import {DialogToastContext} from "../../../contexts/DialogToastContext";
-import systemStatusActions from "./system-status-actions";
+import customerSystemStatusActions from "./customer-system-status-actions";
 import AccessDeniedDialog from "../../common/status_notifications/accessDeniedInfo";
 import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
 import SystemStatusCard from "./SystemStatusCard";
 import StatusLegend from "../../common/status/StatusLegend";
 
-function SystemStatus() {
+function CustomerSystemStatus() {
   const toastContext = useContext(DialogToastContext);
   const {getAccessToken, getUserRecord, setAccessRoles} = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const [systemStatusData, setSystemStatusData] = useState(undefined);
+  const [customerSystemStatusData, setCustomerSystemStatusData] = useState(undefined);
 
   useEffect(() => {
     loadData();
@@ -41,32 +41,29 @@ function SystemStatus() {
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
     }
-    if (userRoleAccess.OpseraAdministrator) {
-      await getSystemStatuses();
-    }
+
+    await getSystemStatuses();
   };
 
   const getSystemStatuses = async () => {
-    const response = await systemStatusActions.getSystemStatuses(getAccessToken);
-    let data = response.data && response.data.message ? response.data.message : [];
-    setSystemStatusData(data);
+    const response = await customerSystemStatusActions.getSystemStatuses(getAccessToken);
+    let data = response.data ? response.data : [];
+    setCustomerSystemStatusData(data);
   }
-
-  console.log(systemStatusData);
 
   if (isLoading) {
     return (<LoadingDialog />);
   }
 
-  if (!accessRoleData.OpseraAdministrator) {
+  if (!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator) {
     return (<AccessDeniedDialog roleData={accessRoleData}/>);
   }
 
   return (
     <div className="mt-3 max-content-width">
-      <BreadcrumbTrail destination="systemStatus"/>
-      <h5>System Status</h5>
-      <div>Listed below are system tools for Opsera.</div>
+      <BreadcrumbTrail destination="customerSystemStatus" />
+      <h5>Customer System Status</h5>
+      <div>Listed below are Customer tools for Opsera.</div>
       <Row>
         <Col sm={12} className="p-0">
           <Row>
@@ -78,11 +75,10 @@ function SystemStatus() {
         </Col>
         <Col sm={12} className="status-table p-3">
           <Row>
-            {systemStatusData && systemStatusData.map((systemStatus, key) => (
-              systemStatus.instance && systemStatus.instance[0] && systemStatus.instance[0].status ?
+            {customerSystemStatusData && customerSystemStatusData.map((customerSystemStatus, key) => (
               <Col key={key} md={3} sm={6}>
-                <SystemStatusCard systemStatus={systemStatus}/>
-              </Col> : null
+                <SystemStatusCard systemStatus={customerSystemStatus}/>
+              </Col>
             ))
             }
           </Row>
@@ -93,4 +89,4 @@ function SystemStatus() {
 }
 
 
-export default SystemStatus;
+export default CustomerSystemStatus;

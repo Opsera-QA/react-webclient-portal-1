@@ -61,7 +61,7 @@ function AdminTools(props) {
           <div className="p-3">
             <Row className="mt-3 admin-tools">
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/systemstatus"><FontAwesomeIcon icon={faHeartbeat} fixedWidth/> System Status</Link>
+                <Link to="/admin/system-status"><FontAwesomeIcon icon={faHeartbeat} fixedWidth/> System Status</Link>
               </Col>
 
               {/* <Col xs={12} md={6} lg={4} className="p-2">

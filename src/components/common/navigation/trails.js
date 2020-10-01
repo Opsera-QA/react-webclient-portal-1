@@ -7,6 +7,7 @@ const trails = {
 
   // Administration
   admin: {parent: undefined, destination: {name: "admin", path: paths.admin, label: "Administration"}},
+  systemStatus: {parent: "admin", destination: {name: "systemStatus", path: paths.systemStatus, label: "System Status"}},
   templateManagement: {parent: "admin", destination: {name: "templateManagement", path: paths.templateManagement, label: "Template Management"}},
   templateDetailView: {parent: "templateManagement", destination: {name: "templateDetailView", path: paths.templateDetailView, label: "Template Details"}},
   toolManagement: {parent: "admin", destination: {name: "toolManagement", path: paths.toolManagement, label: "Tool Management"}},
@@ -20,6 +21,9 @@ const trails = {
 
   // Account settings
   accountSettings: {parent: undefined, destination: {name: "accountSettings", path: paths.accountSettings, label: "Account Settings"}},
+
+  // Customer System Status
+  customerSystemStatus: {parent: "accountSettings", destination: {name: "customerSystemStatus", path: paths.customerSystemStatus, label: "Customer System Status"}},
 
   // LDAP Users Administration
   ldapUserManagement: {parent: "accountSettings", destination: {name: "ldapUserManagement", path: paths.ldapUserManagement, label: "Users"}},
