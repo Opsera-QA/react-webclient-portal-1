@@ -5,7 +5,6 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import PipelinesView from "./PipelinesView";
 import WorkflowCatalog from "../catalog/WorkflowCatalog";
 import cookieHelpers from "../../../core/cookies/cookie-helpers";
-import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBracketsCurly, faHexagon, faUser } from "@fortawesome/pro-regular-svg-icons";
@@ -16,8 +15,6 @@ import TooltipWrapper from "../../common/tooltip/tooltipWrapper";
 
 function Pipelines() {
   const { tab } = useParams();
-  const [errors, setErrors] = useState();
-  const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState(undefined);
   const history = useHistory();
 
@@ -26,7 +23,6 @@ function Pipelines() {
   }, []);
 
   const initializeComponent = async () => {
-    setLoading(true);
     if (tab != null) {
       setActiveTab(tab);
     } else {
@@ -39,7 +35,6 @@ function Pipelines() {
         setActiveTab("owner");
       }
     }
-    setLoading(false);
   };
 
   const handleTabClick = (tabSelection) => e => {
@@ -65,9 +60,6 @@ function Pipelines() {
     );
   };
 
-  if (loading) {
-    return (<LoadingDialog size="sm" message="Loading Pipelines"/>);
-  }
   return (
     <>
       <div className="max-content-width">

@@ -59,7 +59,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
   };
 
   if (loading) {
-    return (<LoadingDialog size="sm" message="Loading..."/>);
+    return (<LoadingDialog size="md" message="Loading..."/>);
   }
 
   if (data && data.count === 0 && currentTab === "owner") {

@@ -10,7 +10,6 @@ import { useParams } from "react-router-dom";
 import PipelineWorkflowView from "./workflow/PipelineWorkflowView";
 import PipelineSummaryPanel from "./PipelineSummaryPanel";
 import PipelineHelpers from "../../pipelineHelpers";
-import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
 import { useHistory } from "react-router-dom";
 import { faBracketsCurly, faSearchPlus } from "@fortawesome/pro-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -72,12 +71,14 @@ function PipelineDetailView() {
   useEffect(() => {
     console.log("Pipeline update detected, determining status!!!");
     updatePipelineStatusByInterval(pipeline);
-  }, [JSON.stringify(pipeline.workflow)]);
+  }, [JSON.stringify(pipeline.workflow), refreshCount]);
 
 
+/*
   useEffect(() => {
     console.log("Pipeline update detected!!!");
   }, [refreshCount, JSON.stringify(pipeline)]);
+*/
 
 
   const initComponent = async () => {
@@ -254,7 +255,7 @@ function PipelineDetailView() {
   if (error && !loading) {
     return (<ErrorDialog error={error} align={"detailPanelTop"} setError={setErrors}/>);
   } else if (loading && !error) {
-    return (<LoadingDialog size="sm"/>);
+    return (<LoadingDialog size="md" message={"Loading pipeline..."}/>);
   } else if (!loading && (data.length === 0 || data.pipeline == null)) {
     return (<InfoDialog
       message="No Pipeline details found.  Please ensure you have access to view the requested pipeline."/>);
@@ -262,10 +263,6 @@ function PipelineDetailView() {
     return (
       <>
         <div>
-          {/*<div className="max-content-width">
-            <BreadcrumbTrail destination={"pipelineDetailView"}/>
-          </div>*/}
-
           {pipeline ? <div className="title-text-5 mb-2">{pipeline.name}</div> :
             <div className="title-text-5 mb-2">Pipelines</div>}
 
