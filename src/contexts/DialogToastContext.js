@@ -8,6 +8,7 @@ const ToastContextProvider = (props) => {
   const [showToast, setShowToast] = useState(false);
   const [toast, setToast] = useState(undefined);
   const [modalToast, setModalToast] = useState(undefined);
+  let autoCloseTimer;
 
   const resetToast = () => {
     setShowToast(false);
@@ -15,35 +16,45 @@ const ToastContextProvider = (props) => {
     setModalToast(undefined);
   }
 
+  const refreshTimer = (autoCloseLength) => {
+    if (autoCloseTimer != null) {
+      console.log("Cleared out auto close timer");
+      clearTimeout(autoCloseTimer);
+      autoCloseTimer = null;
+    }
+
+    if (autoCloseLength) {
+      console.log("setting toast auto close timer to " + autoCloseLength + " seconds.");
+      autoHideDialog(autoCloseLength * 1000);
+    }
+  };
+
   function autoHideDialog(autoCloseLength = 20000) {
-      setTimeout(function () {
-        resetToast();
-      }, autoCloseLength);
+    autoCloseTimer = setTimeout(function () { resetToast(); }, autoCloseLength);
   }
 
   const showErrorDialog = (errorMessage) => {
     setToast(getErrorDialog(errorMessage));
     setShowToast(true);
+    refreshTimer();
   }
 
   const showWarningDialog = (warningMessage) => {
     setToast(getWarningDialog(warningMessage));
     setShowToast(true);
+    refreshTimer();
   }
 
-  const showSuccessDialog = (successMessage) => {
+  const showSuccessDialog = (successMessage, autoCloseLengthInSeconds = 20) => {
     setToast(getSuccessDialog(successMessage));
     setShowToast(true);
-    autoHideDialog();
+    refreshTimer(autoCloseLengthInSeconds);
   }
 
   const showInformationDialog = (informationMessage, autoCloseLengthInSeconds) => {
     setToast(getInformationDialog(informationMessage));
     setShowToast(true);
-
-    if (autoCloseLengthInSeconds != null) {
-      autoHideDialog(autoCloseLengthInSeconds * 1000);
-    }
+    refreshTimer(autoCloseLengthInSeconds);
   }
 
   const showFormValidationErrorDialog = (modal = false, errorMessage) => {
@@ -54,30 +65,35 @@ const ToastContextProvider = (props) => {
       setToast(getErrorDialog(undefined,`WARNING! There are errors in your form: ${errorMessage}`));
       setShowToast(true);
     }
+    refreshTimer();
   };
 
   const showLoadingErrorDialog = (error) => {
     setToast(getErrorDialog(error,`WARNING! An error has occurred loading:`));
     setShowToast(true);
+    refreshTimer();
   }
 
   const showServiceUnavailableDialog = (error) => {
     setToast(getErrorDialog(error,`Service Unavailable. Please try again or report this issue:`));
     setShowToast(true);
+    refreshTimer();
   }
 
-  const showUpdateSuccessResultDialog = (type) => {
+  const showUpdateSuccessResultDialog = (type, autoCloseLengthInSeconds = 20) => {
     setToast(getSuccessDialog(`${type} updated successfully!`));
     setShowToast(true);
     autoHideDialog();
+    refreshTimer(autoCloseLengthInSeconds);
   }
 
   const showDeleteSuccessResultDialog = (type) => {
     setToast(getSuccessDialog(`${type} deleted successfully!`));
     setShowToast(true);
+    refreshTimer();
   }
 
-  const showCreateSuccessResultDialog = (type,  modal = false) => {
+  const showCreateSuccessResultDialog = (type,  modal = false, autoCloseLengthInSeconds = 20) => {
     if (modal) {
       setModalToast(getSuccessDialog(`${type} created successfully!`));
     }
@@ -85,7 +101,7 @@ const ToastContextProvider = (props) => {
       setToast(getSuccessDialog(`${type} created successfully!`));
       setShowToast(true);
     }
-    autoHideDialog();
+    refreshTimer(autoCloseLengthInSeconds);
   }
 
   const showCreateFailureResultDialog = (type, error, modal = true) => {
@@ -97,11 +113,13 @@ const ToastContextProvider = (props) => {
       setToast(getErrorDialog(error, `WARNING! An error has occurred creating this ${type}:`));
       setShowToast(true);
     }
+    refreshTimer();
   }
 
   const showUpdateFailureResultDialog = (type, error) => {
     setToast(getErrorDialog(error, `WARNING! An error has occurred updating this ${type}:`));
     setShowToast(true);
+    refreshTimer();
   }
 
   const showDeleteFailureResultDialog = (type, error, modal = false) => {
@@ -112,16 +130,19 @@ const ToastContextProvider = (props) => {
       setToast(getErrorDialog(error,`WARNING! An error has occurred deleting this ${type}`));
       setShowToast(true);
     }
+    refreshTimer();
   }
 
   const showEmailAlreadyExistsErrorDialog = () => {
     setToast(getErrorDialog(null, `WARNING! The email address given has already been registered to an Opsera account`));
     setShowToast(true);
+    refreshTimer();
   };
 
   const showMissingRequiredFieldsErrorDialog = () => {
     setToast(getErrorDialog(null, `Required Fields Missing!`));
     setShowToast(true);
+    refreshTimer();
   };
 
   const getSuccessDialog = (message, alignment = "dialogToast") => {
