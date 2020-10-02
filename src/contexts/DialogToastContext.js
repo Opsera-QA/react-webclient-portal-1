@@ -39,10 +39,10 @@ const ToastContextProvider = (props) => {
     refreshTimer();
   }
 
-  const showWarningDialog = (warningMessage) => {
+  const showWarningDialog = (warningMessage, autoCloseLengthInSeconds) => {
     setToast(getWarningDialog(warningMessage));
     setShowToast(true);
-    refreshTimer();
+    refreshTimer(autoCloseLengthInSeconds);
   }
 
   const showSuccessDialog = (successMessage, autoCloseLengthInSeconds = 20) => {
@@ -180,6 +180,7 @@ const ToastContextProvider = (props) => {
           showServiceUnavailableDialog: showServiceUnavailableDialog,
           showLoadingErrorDialog: showLoadingErrorDialog,
           showInformationDialog: showInformationDialog,
+          showWarningDialog: showWarningDialog,
           showErrorDialog: showErrorDialog,
           showSuccessDialog: showSuccessDialog,
           getModalToast: getModalToast
