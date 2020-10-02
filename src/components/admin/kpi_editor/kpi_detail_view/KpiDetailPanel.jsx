@@ -33,7 +33,7 @@ function KpiDetailPanel({ kpiData, setKpiData }) {
         </Row>
         <Row>
           <Col>
-            <div className="tabbed-content-block">
+            <div className="content-block-collapse">
               {kpiData && <TagDetailsView activeTab={activeTab} setKpiData={setKpiData} kpiData={kpiData} /> }
             </div>
           </Col>
