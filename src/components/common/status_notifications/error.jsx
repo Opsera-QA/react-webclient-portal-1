@@ -32,10 +32,7 @@ function ErrorDialog({ error, align, setError, prependMessage }) {
   };
 
   useEffect(() => {
-    let messageBody = "";
-    if (error) {
-      messageBody = processError(error);
-    }
+    const messageBody = processError(error);
 
     setMessageBody(messageBody);
     setDetailedError(JSON.stringify(error));
@@ -44,6 +41,11 @@ function ErrorDialog({ error, align, setError, prependMessage }) {
   }, [error]);
 
   const processError = (e) => {
+    if (!error || error.length === 0) {
+      return "Unknown error reported.  Please check console log."
+    }
+    console.error(e); //log all errors to console
+
     if (typeof e === "string") {
       return e;
     }

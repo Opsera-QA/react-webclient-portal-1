@@ -100,7 +100,7 @@ const AuthContextProvider = (props) => {
             OpseraAdministrator: groups.includes("Administrators"),
           };
         }
-        console.table(customerAccessRules);
+        //console.table(customerAccessRules);
         return customerAccessRules;
       } else {
         console.log("unable to set user access rules: ", user);

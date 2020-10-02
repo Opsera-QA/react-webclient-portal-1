@@ -235,7 +235,7 @@ function PipelineDetailView() {
   };
 
   if (error && !loading) {
-    return (<ErrorDialog error={error} align={"detailPanelTop"} setError={setErrors}/>);
+    return (<ErrorDialog error={error} align={"top"} setError={setErrors}/>);
   } else if (loading && !error) {
     return (<LoadingDialog size="md" message={"Loading pipeline..."}/>);
   } else if (!loading && (data.length === 0 || data.pipeline == null)) {
