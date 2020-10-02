@@ -1,22 +1,21 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "../../../../../contexts/AuthContext";
-import { axiosApiService } from "../../../../../api/apiService";
-import LoadingDialog from "../../../../common/status_notifications/loading";
-import ErrorDialog from "../../../../common/status_notifications/error";
+import { AuthContext } from "contexts/AuthContext";
+import { axiosApiService } from "api/apiService";
+import LoadingDialog from "components/common/status_notifications/loading";
 import { Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faTimes } from "@fortawesome/pro-light-svg-icons";
 import SourceRepositoryConfiguration from "./step_configuration/SourceRepositoryConfiguration";
 import StepToolConfiguration from "./step_configuration/StepToolConfiguration";
 import StepConfiguration from "./step_configuration/StepConfiguration";
-import {getUpdateFailureResultDialog, getUpdateSuccessResultDialog} from "../../../../common/toasts/toasts";
 import StepNotificationConfiguration from "./step_configuration/StepNotificationConfiguration";
+import { DialogToastContext } from "contexts/DialogToastContext";
 
 
 const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPlan }) => {
   const contextType = useContext(AuthContext);
-  const [error, setErrors] = useState();
+  const toastContext = useContext(DialogToastContext);
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState(undefined);
   const [showToast, setShowToast] = useState(false);
@@ -25,26 +24,20 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
     setShowToast(false);
     setToast(undefined);
   }, [editItem]);
-  
+
   const postData = async (pipeline, type) => {
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = `/pipelines/${pipeline._id}/update`;   
+    const apiUrl = `/pipelines/${pipeline._id}/update`;
     try {
       await axiosApiService(accessToken).post(apiUrl, pipeline);
       await fetchPlan();
-      let toast = getUpdateSuccessResultDialog(type, setShowToast, "stepConfigurationTop");
-      setToast(toast);
-      setShowToast(true);
-    }
-    catch (error) {
-      console.error(error.message);
+      toastContext.showUpdateSuccessResultDialog("Step Configuration");
+    } catch (err) {
       setLoading(false);
-      let toast = getUpdateFailureResultDialog(type, error, setShowToast, "stepConfigurationTop");
-      setToast(toast);
-      setShowToast(true);
+      toastContext.showLoadingErrorDialog(err);
     }
-  }
+  };
 
   const handleCloseClick = async () => {
     closeEditorPanel();
@@ -75,74 +68,83 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
       <div className="pt-2 px-2 content-block-header">
         <Row>
           <Col sm={10}><h5>{title}</h5></Col>
-          <Col sm={2} className="text-right" style={{bottom: "5px"}}>
+          <Col sm={2} className="text-right" style={{ bottom: "5px" }}>
             <FontAwesomeIcon
               icon={faTimes}
               className="mr-1"
-              style={{ cursor:"pointer" }}
-              onClick={() => { handleCloseClick(); }} />
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                handleCloseClick();
+              }}/>
           </Col>
         </Row>
       </div>
     );
+  };
+
+  if (loading) {
+    return (<LoadingDialog size="sm"/>);
   }
-  
-  if (error) {
-    return (<ErrorDialog error={error} />);
-  } else if (loading) {
-    return (<LoadingDialog size="sm" />);
-  } else if (editItem.type === "source") {
+
+  if (editItem.type === "source") {
     return (<>
       {getTitleBar("Source Repository")}
       <div className="p-3 bg-white">
         {showToast && toast}
-        <SourceRepositoryConfiguration data={pipeline} setToast={setToast} setShowToast={setShowToast} parentCallback={callbackFunctionSource} />
+        <SourceRepositoryConfiguration data={pipeline} setToast={setToast} setShowToast={setShowToast}
+                                       parentCallback={callbackFunctionSource}/>
       </div>
     </>);
-  } else if (editItem.type === "notification") {
+  }
+
+  if (editItem.type === "notification") {
     return (<>
       {getTitleBar("Step Notification")}
       <div className="p-3 bg-white">
         {showToast && toast}
-        <StepNotificationConfiguration data={pipeline} setToast={setToast} setShowToast={setShowToast} stepId={editItem.step_id} parentCallback={callbackFunctionTools} />
+        <StepNotificationConfiguration data={pipeline} setToast={setToast} setShowToast={setShowToast}
+                                       stepId={editItem.step_id} parentCallback={callbackFunctionTools}/>
       </div>
     </>);
-  } else if (editItem.type === "step") {
+  }
+
+  if (editItem.type === "step") {
     return (<>
       {getTitleBar("Step Setup")}
       <div className="p-3 bg-white">
-        <StepConfiguration data={pipeline} setToast={setToast} setShowToast={setShowToast} stepId={editItem.step_id} parentCallback={callbackConfigureStep} />
+        <StepConfiguration data={pipeline} setToast={setToast} setShowToast={setShowToast} stepId={editItem.step_id}
+                           parentCallback={callbackConfigureStep}/>
         {showToast && toast}
       </div>
     </>);
-  } else {
-    return (
-      <>
-        {getTitleBar("Step Configuration")}
-        <div className="p-3 bg-white">
-          <StepToolConfiguration
-            pipeline={pipeline}
-            editItem={editItem}
-            parentCallback={callbackFunctionTools}
-            reloadParentPipeline={fetchPlan}
-            closeEditorPanel={closeEditorPanel}
-            setToast={setToast}
-            setShowToast={setShowToast}
-          />
-          {showToast && toast}
-        </div>
-      </>
-    );
   }
-};
 
+  return (
+    <>
+      {getTitleBar("Step Configuration")}
+      <div className="p-3 bg-white">
+        <StepToolConfiguration
+          pipeline={pipeline}
+          editItem={editItem}
+          parentCallback={callbackFunctionTools}
+          reloadParentPipeline={fetchPlan}
+          closeEditorPanel={closeEditorPanel}
+          setToast={setToast}
+          setShowToast={setShowToast}
+        />
+        {showToast && toast}
+      </div>
+    </>
+  );
+
+};
 
 
 PipelineWorkflowEditor.propTypes = {
   editItem: PropTypes.object,
   pipeline: PropTypes.object,
   parentCallback: PropTypes.func,
-  fetchPlan: PropTypes.func
+  fetchPlan: PropTypes.func,
 };
 
 export default PipelineWorkflowEditor;
