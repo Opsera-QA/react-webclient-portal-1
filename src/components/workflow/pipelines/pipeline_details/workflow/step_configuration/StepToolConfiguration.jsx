@@ -65,12 +65,12 @@ function StepToolConfiguration({
     return stepArrayIndex;
   };
 
-  const callbackFunction = (tool) => {
+  const callbackFunction = async (tool) => {
     let stepArrayIndex = getStepIndex(editItem.step_id);
     plan[stepArrayIndex].tool.configuration = tool.configuration;
     plan[stepArrayIndex].tool.threshold = tool.threshold;
     plan[stepArrayIndex].tool.job_type = tool.job_type;
-    parentCallback(plan);
+    await parentCallback(plan);
     // setStepTool({});
   };
 
@@ -374,14 +374,8 @@ function StepToolConfiguration({
       case "approval":
         return (
           <ApprovalStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
             stepTool={stepTool}
             parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            setToast={setToast}
-            setShowToast={setShowToast}
           />
         );
       case "cypress":
@@ -485,17 +479,16 @@ function StepToolConfiguration({
 
   return (
     <div>
-      <h6 className="upper-case-first ml-1">
+      <h6 className="upper-case-first mb-3">
         {typeof stepName !== "undefined" ? stepName + ": " : null}
         {typeof stepTool !== "undefined" ? stepTool.tool_identifier : null}
       </h6>
-      <div className="text-muted m-1">
-        Select a tool and then configure settings for this step. To register
-        additional tools, visit the <Link to="/inventory/tools">Tool Registry</Link>.
-      </div>
+
       {typeof stepTool !== "undefined" ? (
         getConfigurationTool(editItem.tool_name.toLowerCase())
       ) : null}
+
+      <div className="text-muted small">Tools and Accounts can be saved in <Link to="/inventory/tools">Tool Registry</Link>.</div>
     </div>
   );
 }

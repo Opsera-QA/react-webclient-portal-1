@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave } from "@fortawesome/free-solid-svg-icons";
+import { faSave } from "@fortawesome/pro-light-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
-import {getErrorDialog, getLoadingErrorDialog} from "../../../../../common/toasts/toasts";
+import { DialogToastContext } from "contexts/DialogToastContext";
 
 const NOTIFICATION_OPTIONS = [
   { value: "finished", label: "Step Completed", message: "You will receive notifications on this step's completion no matter what the status." },
@@ -32,7 +32,8 @@ const INITIAL_APPROVAL = {
   enabled: false
 };
 
-function StepNotificationConfiguration( { data, stepId, parentCallback, setToast, setShowToast }) {
+function StepNotificationConfiguration( { data, stepId, parentCallback }) {
+  const toastContext = useContext(DialogToastContext);
   const { plan } = data.workflow;
   const [stepName, setStepName] = useState();
   const [stepTool, setStepTool] = useState({});
@@ -97,40 +98,31 @@ function StepNotificationConfiguration( { data, stepId, parentCallback, setToast
 
   const getStepIndex = (step_id) => {
     let stepArrayIndex = plan.findIndex(x => x._id === step_id); 
-    console.log(plan[stepArrayIndex]);
     return stepArrayIndex;
   };
 
   const validateRequiredFields = () => {    
     if (formDataEmail.enabled) {
       if (formDataEmail.address.length === 0 || !emailIsValid(formDataEmail.address)) {
-        let toast = getErrorDialog("Warning: Email address missing or invalid!", setShowToast, "detailPanelTop");
-        setToast(toast);
-        setShowToast(true);
+        toastContext.showErrorDialog("Warning:  Email address missing or invalid!");
         return false;
       }
     }
     
     if (formDataSlack.enabled) {
       if (formDataSlack.channel.charAt(0) === "#") {
-        let toast = getErrorDialog("Error: Please remove the pound symbol '#' from the Slack channel name.", setShowToast, "detailPanelTop");
-        setToast(toast);
-        setShowToast(true);
+        toastContext.showErrorDialog("Error: Please remove the pound symbol '#' from the Slack channel name.");
         return false;
       }
       if (formDataSlack.channel.length === 0) {
-        let toast = getErrorDialog("Warning: Slack channel value missing!", setShowToast, "detailPanelTop");
-        setToast(toast);
-        setShowToast(true);
+        toastContext.showErrorDialog("Warning: Slack channel value missing!");
         return false;
       }
     }
 
     if (formDataApproval.enabled) {
       if (!formDataEmail.enabled && !formDataSlack.enabled){
-        let toast = getErrorDialog("Error: Cannot enable approval requirement for this step without Slack or email notification enabled!", setShowToast, "detailPanelTop");
-        setToast(toast);
-        setShowToast(true);
+        toastContext.showErrorDialog("Error: Cannot enable approval requirement for this step without Slack or email notification enabled!");
         return false;
       }
     }
@@ -150,11 +142,13 @@ function StepNotificationConfiguration( { data, stepId, parentCallback, setToast
     <Form>
       <h6 className="upper-case-first">{typeof(stepName) !== "undefined" ? stepName + ": " : null}
         {typeof(stepTool) !== "undefined" ? stepTool.tool_identifier : null}</h6>
-      <div className="text-muted mt-1 mb-3">Each step in the workflow can be configured with notification triggers upon completion. More help on notification configurations is available <Link to="/tools">here</Link>.</div>
+
+      <div className="text-muted mt-2 mb-3">Each step in the workflow can be configured with notification triggers upon completion. More help on notification configurations is available <Link to="/tools">here</Link>.</div>
 
       <div className="mt-4 mb-4">
         <Form.Check 
           type="switch"
+          className="mb-2"
           id="slack-switch"
           label="Slack Notifications" 
           checked={formDataSlack.enabled ? true : false}   
@@ -182,6 +176,7 @@ function StepNotificationConfiguration( { data, stepId, parentCallback, setToast
         <Form.Check 
           type="switch" disabled
           id="email-switch"
+          className="mb-2"
           label="Email Notifications" 
           checked={formDataEmail.enabled ? true : false}   
           onChange={() => setFormDataEmail({ ...formDataEmail, enabled: !formDataEmail.enabled })}    
@@ -234,9 +229,7 @@ const emailIsValid = (email) => {
 StepNotificationConfiguration.propTypes = {
   data: PropTypes.object,
   stepId: PropTypes.string,
-  parentCallback: PropTypes.func,
-  setToast: PropTypes.func,
-  setShowToast: PropTypes.func
+  parentCallback: PropTypes.func
 };
 
 export default StepNotificationConfiguration;

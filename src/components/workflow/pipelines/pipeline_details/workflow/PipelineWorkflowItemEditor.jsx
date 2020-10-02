@@ -72,7 +72,8 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
             <FontAwesomeIcon
               icon={faTimes}
               className="mr-1"
-              style={{ cursor: "pointer" }}
+              size={"2x"}
+              style={{ cursor: "pointer", verticalAlign:"middle" }}
               onClick={() => {
                 handleCloseClick();
               }}/>
@@ -102,8 +103,10 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
       {getTitleBar("Step Notification")}
       <div className="p-3 bg-white">
         {showToast && <div className="mb-2">{toast}</div>}
-        <StepNotificationConfiguration data={pipeline} setToast={setToast} setShowToast={setShowToast}
-                                       stepId={editItem.step_id} parentCallback={callbackFunctionTools}/>
+        <StepNotificationConfiguration
+          data={pipeline}
+          stepId={editItem.step_id}
+          parentCallback={callbackFunctionTools}/>
       </div>
     </>);
   }
