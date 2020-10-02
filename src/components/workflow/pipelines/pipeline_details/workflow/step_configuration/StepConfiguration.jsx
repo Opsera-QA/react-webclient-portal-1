@@ -4,10 +4,11 @@ import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
 import { Form, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faSave, faSpinner } from "@fortawesome/pro-light-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
-import { capitalizeFirstLetter } from "../../../../../common/helpers/string-helpers";
-import {getMissingRequiredFieldsErrorDialog} from "../../../../../common/toasts/toasts";
+import { capitalizeFirstLetter } from "components/common/helpers/string-helpers";
+import {getMissingRequiredFieldsErrorDialog} from "components/common/toasts/toasts";
+import { DialogToastContext } from "contexts/DialogToastContext";
 
 const INITIAL_DATA = {
   name: "",
@@ -19,6 +20,7 @@ const INITIAL_DATA = {
 
 function StepConfiguration( { data, stepId, parentCallback, setToast, setShowToast }) {
   const { getAccessToken } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const { plan } = data.workflow;
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [isLoading, setIsLoading] = useState(true);
@@ -68,7 +70,7 @@ function StepConfiguration( { data, stepId, parentCallback, setToast, setShowToa
           setIsToolTypeSearching(false);      
         }
         catch (err) {
-          console.log(err.message);
+          toastContext.showLoadingErrorDialog(err);
         }
       }
       // Fire off our API call
@@ -88,7 +90,7 @@ function StepConfiguration( { data, stepId, parentCallback, setToast, setShowToa
       setIsToolListSearching(false);      
     }
     catch (err) {
-      console.log(err.message);
+      toastContext.showLoadingErrorDialog(err);
     }
   };
 
@@ -103,8 +105,8 @@ function StepConfiguration( { data, stepId, parentCallback, setToast, setShowToa
       const toolResponse = await axiosApiService(accessToken).get("/registry/tool/properties/"+tool_identifier, {});      
       return toolResponse.data;
     }
-    catch (error) {
-      console.error(error.message);
+    catch (err) {
+      toastContext.showLoadingErrorDialog(err);
     }
   };
 
@@ -136,10 +138,10 @@ function StepConfiguration( { data, stepId, parentCallback, setToast, setShowToa
 
   const callbackFunction = async () => {
     setIsSaving(true);
-    // console.log(stepId);
-    const stepArrayIndex = getStepIndex(stepId); 
-    // console.log(plan[stepArrayIndex]);
-    if (validateRequiredFields() && plan[stepArrayIndex] !== undefined) {            
+
+    const stepArrayIndex = getStepIndex(stepId);
+
+    if (validateRequiredFields() && plan[stepArrayIndex] !== undefined) {
       plan[stepArrayIndex].name = formData.name;
       plan[stepArrayIndex].type[0] = formData.type;
       plan[stepArrayIndex].tool = { ...plan[stepArrayIndex].tool, tool_identifier: formData.tool_identifier };    
@@ -155,11 +157,8 @@ function StepConfiguration( { data, stepId, parentCallback, setToast, setShowToa
   };
 
   const validateRequiredFields = () => {    
-    // console.log("form", formData);
     if (formData.name.length === 0 || formData.tool_identifier.length === 0) {
-      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
-      setToast(toast)
-      setShowToast(true);
+      toastContext.showMissingRequiredFieldsErrorDialog();
       return false;
     }    
     return true;
