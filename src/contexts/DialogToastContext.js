@@ -59,10 +59,10 @@ const ToastContextProvider = (props) => {
 
   const showFormValidationErrorDialog = (modal = false, errorMessage) => {
     if (modal) {
-      setModalToast(getErrorDialog(undefined,`WARNING! There are errors in your form: ${errorMessage}`));
+      setModalToast(getErrorDialog(`WARNING! There are errors in your form: ${errorMessage}`));
     }
     else {
-      setToast(getErrorDialog(undefined,`WARNING! There are errors in your form: ${errorMessage}`));
+      setToast(getErrorDialog(`WARNING! There are errors in your form: ${errorMessage}`));
       setShowToast(true);
     }
     refreshTimer();
@@ -134,13 +134,13 @@ const ToastContextProvider = (props) => {
   }
 
   const showEmailAlreadyExistsErrorDialog = () => {
-    setToast(getErrorDialog(null, `WARNING! The email address given has already been registered to an Opsera account`));
+    setToast(getErrorDialog( `WARNING! The email address given has already been registered to an Opsera account`));
     setShowToast(true);
     refreshTimer();
   };
 
   const showMissingRequiredFieldsErrorDialog = () => {
-    setToast(getErrorDialog(null, `Required Fields Missing!`));
+    setToast(getErrorDialog(`Required Fields Missing!`));
     setShowToast(true);
     refreshTimer();
   };
