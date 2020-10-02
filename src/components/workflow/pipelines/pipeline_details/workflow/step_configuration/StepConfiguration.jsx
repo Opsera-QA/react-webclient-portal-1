@@ -18,7 +18,7 @@ const INITIAL_DATA = {
   active: true
 };
 
-function StepConfiguration( { data, stepId, parentCallback, setToast, setShowToast }) {
+function StepConfiguration( { data, stepId, parentCallback }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const { plan } = data.workflow;
@@ -228,9 +228,7 @@ function StepConfiguration( { data, stepId, parentCallback, setToast, setShowToa
 StepConfiguration.propTypes = {
   data: PropTypes.object,
   stepId: PropTypes.string,
-  parentCallback: PropTypes.func,
-  setToast: PropTypes.func,
-  setShowToast: PropTypes.func
+  parentCallback: PropTypes.func
 };
 
 export default StepConfiguration;

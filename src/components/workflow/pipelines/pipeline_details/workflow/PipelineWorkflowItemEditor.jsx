@@ -90,7 +90,7 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
     return (<>
       {getTitleBar("Source Repository")}
       <div className="p-3 bg-white">
-        {showToast && toast}
+        {showToast && <div className="mb-2">{toast}</div>}
         <SourceRepositoryConfiguration data={pipeline} setToast={setToast} setShowToast={setShowToast}
                                        parentCallback={callbackFunctionSource}/>
       </div>
@@ -101,7 +101,7 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
     return (<>
       {getTitleBar("Step Notification")}
       <div className="p-3 bg-white">
-        {showToast && toast}
+        {showToast && <div className="mb-2">{toast}</div>}
         <StepNotificationConfiguration data={pipeline} setToast={setToast} setShowToast={setShowToast}
                                        stepId={editItem.step_id} parentCallback={callbackFunctionTools}/>
       </div>
@@ -112,9 +112,10 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
     return (<>
       {getTitleBar("Step Setup")}
       <div className="p-3 bg-white">
-        <StepConfiguration data={pipeline} setToast={setToast} setShowToast={setShowToast} stepId={editItem.step_id}
-                           parentCallback={callbackConfigureStep}/>
-        {showToast && toast}
+        <StepConfiguration
+          data={pipeline}
+          stepId={editItem.step_id}
+          parentCallback={callbackConfigureStep}/>
       </div>
     </>);
   }
@@ -123,6 +124,7 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
     <>
       {getTitleBar("Step Configuration")}
       <div className="p-3 bg-white">
+        {showToast && <div className="mb-2">{toast}</div>}
         <StepToolConfiguration
           pipeline={pipeline}
           editItem={editItem}
@@ -132,7 +134,7 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
           setToast={setToast}
           setShowToast={setShowToast}
         />
-        {showToast && toast}
+
       </div>
     </>
   );
