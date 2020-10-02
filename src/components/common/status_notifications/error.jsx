@@ -41,7 +41,7 @@ function ErrorDialog({ error, align, setError, prependMessage }) {
   }, [error]);
 
   const processError = (e) => {
-    if (!error || error.length === 0) {
+    if (!e || e.length === 0) {
       return "Unknown error reported.  Please check console log."
     }
     console.error(e); //log all errors to console
@@ -59,16 +59,16 @@ function ErrorDialog({ error, align, setError, prependMessage }) {
       }
 
       if (e.response) {
-        let messageBody = `Status ${error.response.status}: `;
-        messageBody += error.response.data.message ? error.response.data.message : JSON.stringify(error.response.data);
+        let messageBody = `Status ${e.response.status}: `;
+        messageBody += e.response.data.message ? e.response.data.message : JSON.stringify(e.response.data);
         return messageBody;
       }
 
-      if (error.message) {
-        return error.message;
+      if (e.message) {
+        return e.message;
       }
 
-      return JSON.stringify(error);
+      return JSON.stringify(e);
     }
   };
 
