@@ -4,24 +4,36 @@ import KpiDetailPanel from "./KpiDetailPanel";
 import { Link, useParams } from "react-router-dom";
 import KpiTagsActions from "../kpi-editor-actions";
 import { AuthContext } from "contexts/AuthContext";
-import ErrorDialog from "components/common/status_notifications/error";
 import Model from "../../../../core/data_model/model";
 import kpiMetaData from "./kpi-form-fields";
-import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
 import {faFileInvoice} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {DialogToastContext} from "../../../../contexts/DialogToastContext";
+import DetailViewContainer from "../../../common/panels/detail_view_container/DetailViewContainer";
 
 function KpiDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState({});
   const [kpiData, setKpiData] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(false);
   const { id } = useParams();
-  const [canDelete, setCanDelete] = useState(false);
-  const [error, setError] = useState(false); //if any errors on API call or anything else need to be shown to use, this is used
 
   useEffect(() => {
-    getRoles();
+    loadData();
   }, []);
+
+  const loadData = async () => {
+    try {
+      setIsLoading(true);
+      await getRoles();
+    }
+    catch (error) {
+      toastContext.showLoadingErrorDialog(error);
+    }
+    finally {
+      setIsLoading(false);
+    }
+  };
 
   const getKpi = async (tagId) => {
     const response = await KpiTagsActions.get(tagId, getAccessToken);
@@ -38,30 +50,14 @@ function KpiDetailView() {
   };
 
   return (
-    <>
-      <BreadcrumbTrail destination={"kpiDetailView"}/>
-      <div className="content-container content-card-1 max-content-width ml-2">
-        <div className="pt-2 pl-2 content-block-header">
-          <h5><FontAwesomeIcon icon={faFileInvoice} fixedWidth className="mr-1" />KPI Configuration Details [{kpiData && kpiData.name}]</h5>
-        </div>
-        {error &&
-        <div className="absolute-center-content"><ErrorDialog align="center" error={error.message}></ErrorDialog></div>}
-        <div>
-          <div>
-            <div>
-              <KpiSummaryPanel kpiData={kpiData} setKpiData={setKpiData}/>
-            </div>
-            <div>
-              <KpiDetailPanel
-                setKpiData={setKpiData}
-                kpiData={kpiData}
-                canDelete={canDelete}/>
-            </div>
-          </div>
-        </div>
-        <div className="content-block-footer" />
-      </div>
-    </>
+    <DetailViewContainer
+      breadcrumbDestination={"kpiDetailView"}
+      title={kpiData != null ? `KPI Details [${kpiData["name"]}]` : undefined}
+      titleIcon={faFileInvoice}
+      isLoading={isLoading}
+      summaryPanel={<KpiSummaryPanel kpiData={kpiData} setKpiData={setKpiData}/>}
+      detailPanel={<KpiDetailPanel setKpiData={setKpiData} kpiData={kpiData} />}
+    />
   );
 }
 

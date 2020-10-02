@@ -5,7 +5,6 @@ import KpiActions from "./kpi-editor-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
 import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
-import {getLoadingErrorDialog} from "../../common/toasts/toasts";
 import {DialogToastContext} from "../../../contexts/DialogToastContext";
 
 function KpiManagement() {

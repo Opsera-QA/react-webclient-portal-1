@@ -10,6 +10,7 @@ import DtoToggleInput from "../../../common/input/dto_input/dto-toggle-input";
 import SaveButton from "../../../common/buttons/SaveButton";
 import DtoSelectInput from "../../../common/input/dto_input/dto-select-input";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
+import DtoMultiselectInput from "../../../common/input/dto_input/dto-multiselect-input";
 
 function KpiEditorPanel({ kpiData, setKpiData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -54,30 +55,31 @@ function KpiEditorPanel({ kpiData, setKpiData, handleClose }) {
   }
 
   return (
-    <>
-      <div className="scroll-y full-height">
-        <Row>
-          <Col lg={12}>
-            <DtoTextInput dataObject={kpiDataDto} fieldName={"name"} setDataObject={setKpiDataDto}/>
-          </Col>
-          <Col lg={12}>
-            <DtoToggleInput setDataObject={setKpiDataDto} fieldName={"active"} dataObject={kpiData}/>
-          </Col>
-          <Col lg={12}>
-            <DtoTextInput dataObject={kpiDataDto} fieldName={"description"} setDataObject={setKpiDataDto}/>
-          </Col>
-          <Col lg={12}>
-            <DtoSelectInput selectOptions={toolList} dataObject={kpiDataDto} fieldName={"tool_identifier"}
-                            setDataObject={setKpiDataDto} textField={"name"} valueField={"identifier"}/>
-          </Col>
-        </Row>
-        <Row>
-          <div className="ml-auto mt-3 px-3">
-            <SaveButton updateRecord={updateKpi} setRecordDto={setKpiDataDto} setData={setKpiData} handleClose={handleClose} createRecord={createKpi} recordDto={kpiDataDto}/>
-          </div>
-        </Row>
-      </div>
-    </>
+    <div className="scroll-y full-height p-2">
+      <Row>
+        <Col lg={12}>
+          <DtoTextInput dataObject={kpiDataDto} fieldName={"name"} setDataObject={setKpiDataDto}/>
+        </Col>
+        <Col lg={12}>
+          <DtoToggleInput setDataObject={setKpiDataDto} fieldName={"active"} dataObject={kpiData}/>
+        </Col>
+        <Col lg={12}>
+          <DtoTextInput dataObject={kpiDataDto} fieldName={"description"} setDataObject={setKpiDataDto}/>
+        </Col>
+        <Col lg={12}>
+          {/*//TODO: Not sure if this is broken. Is it supposed to be multi select? If so, it was never wired up correctly.*/}
+          {/*// Node side might be sending the wrong response, too. Not sure.*/}
+          <DtoSelectInput selectOptions={toolList} dataObject={kpiDataDto} fieldName={"tool_identifier"}
+                          setDataObject={setKpiDataDto} textField={"name"} valueField={"identifier"}/>
+        </Col>
+      </Row>
+      <Row>
+        <div className="ml-auto mt-3 pr-3">
+          <SaveButton updateRecord={updateKpi} setRecordDto={setKpiDataDto} setData={setKpiData}
+                      handleClose={handleClose} createRecord={createKpi} recordDto={kpiDataDto}/>
+        </div>
+      </Row>
+    </div>
   );
 }
 
