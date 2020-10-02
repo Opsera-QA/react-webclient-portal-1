@@ -1,7 +1,6 @@
-import React, { useContext, useState, useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Row, Col } from "react-bootstrap";
-import ErrorDialog from "../../../../common/status_notifications/error";
 import InfoDialog from "../../../../common/status_notifications/info";
 import PipelineWorkflow from "./PipelineWorkflow";
 import PipelineWorkflowEditor from "./PipelineWorkflowItemEditor";
@@ -19,7 +18,7 @@ function PipelineWorkflowView({
   refreshCount,
   setRefreshCount,
   setPipeline,
-  softLoading
+  softLoading,
 }) {
 
   const closeEditorPanel = () => {
@@ -43,39 +42,40 @@ function PipelineWorkflowView({
   if (!pipeline) {
     return (<InfoDialog
       message="No Pipeline details found.  Please ensure you have access to view the requested pipeline."/>);
-  } else {
-    return (
-      <>
-        <div className="workflow-view h-100">
-          <Row className="w-100" style={{margin:"0"}}>
-            <Col className="max-content-width content-block-collapse" style={{paddingLeft:"0"}}>
-              <div className="w-100 dark-grey-background p-1 text-right">
-
-                  <PipelineActionControls pipeline={pipeline} disabledActionState={false}
-                                          customerAccessRules={customerAccessRules}
-                                          fetchData={fetchPlan}
-                                          setPipeline={setPipeline}
-                                          setRefreshCount={setRefreshCount}
-                                          refreshCount={refreshCount}
-                                          fetchActivityLogs={getActivityLogs}
-                                          setParentWorkflowStatus={setWorkflowStatus}/>
-
-              </div>
-              <PipelineWorkflow pipeline={pipeline}
-                                editItemId={editItem.step_id}
-                                fetchPlan={fetchPlan}
-                                customerAccessRules={customerAccessRules}
-                                refreshCount={refreshCount}
-                                softLoading={softLoading}/>
-            </Col>
-
-            {getPipelineWorkflowEditor(editItem)}
-
-          </Row>
-        </div>
-      </>
-    );
   }
+
+  return (
+    <>
+      <div className="workflow-view h-100">
+        <Row className="w-100" style={{ margin: "0" }}>
+          <Col className="max-content-width content-block-collapse" style={{ paddingLeft: "0" }}>
+            <div className="w-100 dark-grey-background p-1 text-right">
+
+              <PipelineActionControls pipeline={pipeline} disabledActionState={false}
+                                      customerAccessRules={customerAccessRules}
+                                      fetchData={fetchPlan}
+                                      setPipeline={setPipeline}
+                                      setRefreshCount={setRefreshCount}
+                                      refreshCount={refreshCount}
+                                      fetchActivityLogs={getActivityLogs}
+                                      setParentWorkflowStatus={setWorkflowStatus}/>
+
+            </div>
+            <PipelineWorkflow pipeline={pipeline}
+                              editItemId={editItem.step_id}
+                              fetchPlan={fetchPlan}
+                              customerAccessRules={customerAccessRules}
+                              refreshCount={refreshCount}
+                              softLoading={softLoading}/>
+          </Col>
+
+          {getPipelineWorkflowEditor(editItem)}
+
+        </Row>
+      </div>
+    </>
+  );
+
 }
 
 
@@ -87,11 +87,12 @@ PipelineWorkflowView.propTypes = {
   setActiveTab: PropTypes.func,
   fetchPlan: PropTypes.func,
   setWorkflowStatus: PropTypes.func,
+  getActivityLogs: PropTypes.func,
   setPipeline: PropTypes.func,
   refreshCount: PropTypes.number,
   setRefreshCount: PropTypes.func,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  softLoading: PropTypes.bool
+  softLoading: PropTypes.bool,
 };
 
 export default PipelineWorkflowView;

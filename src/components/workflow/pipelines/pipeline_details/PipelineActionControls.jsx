@@ -18,11 +18,10 @@ import {
   faHistory,
   faPause,
   faFlag,
-} from "@fortawesome/free-solid-svg-icons";
-
+} from "@fortawesome/pro-light-svg-icons";
 import "../../workflows.css";
 import ErrorDialog from "../../../common/status_notifications/error";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
 
 function PipelineActionControls({
   pipeline,
@@ -97,10 +96,10 @@ function PipelineActionControls({
 
 
   useEffect(() => {
+    console.log("Pipeline workflow update detected, determining status!!!");
     loadData(pipeline);
-    setParentWorkflowStatus(workflowStatus);
-    //analyzeWorkflowStatus(workflowStatus);
-  }, [workflowStatus]);
+    //setParentWorkflowStatus(workflowStatus);
+  }, [workflowStatus, JSON.stringify(pipeline.workflow)]);
 
   /*useEffect(() => {
     if (startPipeline) {
@@ -112,32 +111,36 @@ function PipelineActionControls({
 
   }, [startPipeline]);*/
 
-  useEffect(() => {
+  /*useEffect(() => {
     console.log("Pipeline workflow update detected, determining status!!!");
     loadData(pipeline);
-  }, [JSON.stringify(pipeline.workflow)]);
+  }, [JSON.stringify(pipeline.workflow)]);*/
 
-/*
-  const analyzeWorkflowStatus = (workflowStatus) => {
-    if (workflowStatus === "paused" || workflowStatus === "stopped") {
-      fetchActivityLogs();
-    }
-  };*/
+  /*
+    const analyzeWorkflowStatus = (workflowStatus) => {
+      if (workflowStatus === "paused" || workflowStatus === "stopped") {
+        fetchActivityLogs();
+      }
+    };*/
 
   const loadData = (pipeline) => {
-    if (pipeline.workflow !== undefined) {
-      if (pipeline.workflow.last_step !== undefined) {
-        let status = pipeline.workflow.last_step.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;
-        if (status === "stopped" && pipeline.workflow.last_step.running && pipeline.workflow.last_step.running.paused) {
-          setWorkflowStatus("paused");
-        } else {
-          setWorkflowStatus(status);
-        }
-
-      } else {
-        setWorkflowStatus("stopped");
-      }
+    if (pipeline.workflow === undefined) {
+      return;
     }
+
+    if (pipeline.workflow.last_step === undefined) {
+      setWorkflowStatus("stopped");
+      return;
+    }
+
+    let status = pipeline.workflow.last_step.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;
+
+    if (status === "stopped" && pipeline.workflow.last_step.running && pipeline.workflow.last_step.running.paused) {
+      setWorkflowStatus("paused");
+      return;
+    }
+
+    setWorkflowStatus(status);
   };
 
   // button handlers
@@ -253,7 +256,7 @@ function PipelineActionControls({
 
   async function runPipeline(pipelineId) {
     setStartPipeline(true);
-    toastContext.showInformationDialog("A request to start this pipeline has been submitted.  It will begin shortly.",20)
+    toastContext.showInformationDialog("A request to start this pipeline has been submitted.  It will begin shortly.", 20);
 
     await PipelineActions.run(pipelineId, {}, getAccessToken)
       .catch(err => {
@@ -282,7 +285,7 @@ function PipelineActionControls({
     setTimeout(async function() {
       await fetchData();
     }, 30000);
-  }
+  };
 
 
   /*const subscribeToTimer = (socket) => {
@@ -454,10 +457,12 @@ function PipelineActionControls({
         </OverlayTrigger>
 
       </div>
+
       {showApprovalModal &&
       <ApprovalModal pipelineId={pipeline._id} visible={showApprovalModal} setVisible={setShowApprovalModal}
                      refreshActivity={handleApprovalActivity}/>}
-      {infoModal.show && <Modal header={infoModal.header} message={infoModal.message} button={infoModal.button}
+
+                     {infoModal.show && <Modal header={infoModal.header} message={infoModal.message} button={infoModal.button}
                                 handleCancelModal={() => setInfoModal({ ...infoModal, show: false })}/>}
     </>);
 }

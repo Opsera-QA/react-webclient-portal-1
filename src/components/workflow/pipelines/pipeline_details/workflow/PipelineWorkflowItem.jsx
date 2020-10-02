@@ -20,7 +20,7 @@ import {
   faTrash,
   faBan,
   faTerminal, faToolbox,
-} from "@fortawesome/free-solid-svg-icons";
+} from "@fortawesome/pro-light-svg-icons";
 import ModalActivityLogs from "../../../../common/modal/modalActivityLogs";
 //import ApprovalModal from "./approvalModal";
 import StepToolActivityView from "./step_configuration/StepToolActivityView";

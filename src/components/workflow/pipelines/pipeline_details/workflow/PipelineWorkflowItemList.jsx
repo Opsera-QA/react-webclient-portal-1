@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { SteppedLineTo } from "react-lineto";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusSquare, faCaretSquareDown, faCaretSquareUp, faCopy } from "@fortawesome/free-solid-svg-icons";
+import { faPlusSquare, faCaretSquareDown, faCaretSquareUp, faCopy } from "@fortawesome/pro-light-svg-icons";
 import PipelineWorkflowItem from "./PipelineWorkflowItem";
 import "../../../workflows.css";
 
