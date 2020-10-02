@@ -22,7 +22,6 @@ import PipelineWorkflowItemList from "./PipelineWorkflowItemList";
 import Modal from "components/common/modal/modal";
 import "../../../workflows.css";
 import { DialogToastContext } from "contexts/DialogToastContext";
-//import LoadingDialog from "../../../../common/status_notifications/loading";
 
 function PipelineWorkflow({
   pipeline,
@@ -165,10 +164,7 @@ function PipelineWorkflow({
     setEditWorkflow(true);
   };
 
-  const handleDoneWorkflowEditsClick = async () => {
-    //setIsSavingPipeline(true);
-    //await fetchPlan();
-    //setIsSavingPipeline(false);
+  const handleDoneWorkflowEditsClick = () => {
     setEditWorkflow(false);
   };
 

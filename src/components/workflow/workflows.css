@@ -130,7 +130,8 @@
 
 .workflow-tool-activity-window {
   height: 400px;
-  overflow:scroll;
+  overflow-x: hidden;
+  overflow-y: scroll;
   display: flex;
   flex-direction: column-reverse;
   overscroll-behavior: contain;

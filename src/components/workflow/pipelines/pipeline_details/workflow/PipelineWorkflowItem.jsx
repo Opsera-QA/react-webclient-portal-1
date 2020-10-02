@@ -1,8 +1,8 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { axiosApiService } from "../../../../../api/apiService";
+import { axiosApiService } from "api/apiService";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
-import Modal from "../../../../common/modal/modal";
+import Modal from "components/common/modal/modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSearchPlus,
@@ -21,14 +21,14 @@ import {
   faBan,
   faTerminal, faToolbox,
 } from "@fortawesome/pro-light-svg-icons";
-import ModalActivityLogs from "../../../../common/modal/modalActivityLogs";
-//import ApprovalModal from "./approvalModal";
+import ModalActivityLogs from "components/common/modal/modalActivityLogs";
 import StepToolActivityView from "./step_configuration/StepToolActivityView";
-import { format } from "date-fns";
 import "../../../workflows.css";
+import { DialogToastContext } from "contexts/DialogToastContext";
 
 
 const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineId, accessToken, editWorkflow, parentCallbackEditItem, deleteStep, parentHandleViewSourceActivityLog, customerAccessRules, parentWorkflowStatus, refreshCount }) => {
+  const toastContext = useContext(DialogToastContext);
   const [currentStatus, setCurrentStatus] = useState({});
   const [itemState, setItemState] = useState(false);
   const [stepConfigured, setStepConfigured] = useState(true);
@@ -52,10 +52,16 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
       return false;
     }
   };
+/*
 
   useEffect(() => {
     loadFormData(item, lastStep, index, plan);
-  }, [item, lastStep, JSON.stringify(pipeline), refreshCount]);
+  }, [item, lastStep, JSON.stringify(pipeline.workflow), refreshCount]);
+*/
+
+  useEffect(() => {
+    loadFormData(item, lastStep, index, plan);
+  }, [JSON.stringify(item)]);
 
 
   const loadFormData = (item, lastStep1, index, plan) => {
@@ -127,7 +133,6 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
   };
 
   const handleEditClick = (type, tool, itemId) => {
-
     if (!authorizedAction("edit_step_details", pipeline.owner)) {
       setInfoModal({
         show: true,
@@ -156,12 +161,12 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
   };
 
   const getToolDetails = async (tool_identifier) => {
-    //take tool ID (too_identifier in pipeline), pass to Node route that returns both tool record and type from registry
+    console.log("Getting tool details for: ", tool_identifier)
     try {
       const toolResponse = await axiosApiService(accessToken).get("/registry/tool/properties/" + tool_identifier, {});
       setToolProperties(toolResponse.data);
     } catch (err) {
-      console.log(err.message);
+      toastContext.showLoadingErrorDialog(err);
     }
   };
 

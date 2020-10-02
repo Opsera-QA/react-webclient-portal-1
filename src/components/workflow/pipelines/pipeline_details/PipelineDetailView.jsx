@@ -11,9 +11,8 @@ import PipelineWorkflowView from "./workflow/PipelineWorkflowView";
 import PipelineSummaryPanel from "./PipelineSummaryPanel";
 import PipelineHelpers from "../../pipelineHelpers";
 import { useHistory } from "react-router-dom";
-import { faBracketsCurly, faSearchPlus } from "@fortawesome/pro-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDraftingCompass, faInfinity, faMicrochip, faArrowLeft } from "@fortawesome/pro-light-svg-icons";
+import { faDraftingCompass, faInfinity, faMicrochip, faArrowLeft, faBracketsCurly } from "@fortawesome/pro-light-svg-icons";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 
 

@@ -29,10 +29,8 @@ function PipelineWorkflowItemList({
   useEffect(() => {
     if (pipeline) {
       setPipelineSteps(pipeline.workflow.plan)
-      //console.log("STEPS: ", pipeline.workflow.plan)
     }
-
-  }, [refreshCount, JSON.stringify(lastStep), JSON.stringify(pipeline)]);
+  }, [refreshCount, JSON.stringify(lastStep), JSON.stringify(pipeline.workflow)]);
 
 
   const handleAddStep = async (itemId, index) => {
