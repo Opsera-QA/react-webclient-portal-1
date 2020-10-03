@@ -80,30 +80,22 @@ function SaveButton({recordDto, setRecordDto, setData, createRecord, updateRecor
     return type != null ? type : recordDto.getType();
   }
 
-  // TODO: Implement
   const prepareNewModel = async () => {
     await persistRecord(createRecord, true);
   }
 
-  // TODO: Implement
   const goToDetails = async () => {
     await persistRecord(createRecord, false, true);
   }
 
   // TODO: Disable button with record is not valid
-  // TODO: Put saving message in button like this
-
-  {/*<Button variant="primary" type="button" disabled={isSaving}*/}
-  {/*  onClick={() => { callbackFunction(); }}> */}
-  {/*  {isSaving ? <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> : <FontAwesomeIcon icon={faSave} className="mr-1"/>} Save*/}
-  {/*</Button>*/}
   // TODO: Come up with better name
   if (loginButton) {
     return (
     isSaving ?
       (
         <Button id="login-button" disabled={true} variant="outline-success" className="mr-2 px-4" type="button">
-          <span>Working...</span>
+          <span><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth />Creating Account...</span>
         </Button>
       )
       :
@@ -116,29 +108,66 @@ function SaveButton({recordDto, setRecordDto, setData, createRecord, updateRecor
   }
 
 
+  {/*TODO: When all modals are hooked up, change to always say Create and Close*/}
+  const getCreateAndCloseButton = () => {
+    return (
+      <Button size="sm" variant="primary" disabled={isSaving || disable} onClick={() => persistRecord(createRecord)}>
+        {isSaving
+          ? <span><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>Creating</span>
+          : <span><FontAwesomeIcon icon={faSave} fixedWidth className="mr-2"/>{altButtonText ? altButtonText : "Create " + getType()}{setRecordDto && " And Close"}</span>
+        }
+      </Button>
+    );
+  };
+
+  const getCreateAndAddAnotherButton = () => {
+    return (
+      <Button size="sm" className="mx-2" variant="primary" disabled={isSaving || recordDto.dataState === DataState.LOADED || disable} onClick={() => prepareNewModel(updateRecord)}>
+        {isSaving
+          ? <span><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>Creating</span>
+          : <span><FontAwesomeIcon icon={faSave} fixedWidth className="mr-2"/>Create And Add Another</span>
+        }
+
+      </Button>
+    )
+  };
+
+  const getCreateAndViewDetailsButton = () => {
+    return (
+      <Button size="sm" variant="primary" disabled={isSaving || recordDto.dataState === DataState.LOADED || disable} onClick={() => goToDetails()}>
+        {isSaving
+          ? <span><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>Creating</span>
+          : <span><FontAwesomeIcon icon={faSave} className="mr-2" fixedWidth/>Create And View Details</span>
+        }
+      </Button>
+    );
+  };
+
   if (recordDto.isNew()) {
     return (
       <>
         <div className="d-flex">
-          {isSaving && <div className="text-center mr-3 mt-1"><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>Saving is in progress</div>}
-          {/*TODO: When all modals are hooked up, change to Create and Close*/}
-          <Button size="sm" variant="primary" disabled={isSaving || disable} onClick={() => persistRecord(createRecord)}><FontAwesomeIcon icon={faSave} fixedWidth className="mr-2"/>{altButtonText ? altButtonText : "Create " + getType()}{setRecordDto && " And Close"}</Button>
-          {showCreateAnother && setRecordDto && <Button size="sm" className="mx-2" variant="primary" disabled={isSaving || recordDto.dataState === DataState.LOADED || disable} onClick={() => prepareNewModel(updateRecord)}><FontAwesomeIcon icon={faSave} fixedWidth/>Create And Add Another</Button>}
-          {showViewDetails && recordDto.getDetailViewLink != null && <Button size="sm" variant="primary" disabled={isSaving || recordDto.dataState === DataState.LOADED || disable} onClick={() => goToDetails()}><FontAwesomeIcon icon={faSave} fixedWidth/>Create And View Details</Button>}
+          {getCreateAndCloseButton()}
+          {showCreateAnother && setRecordDto && getCreateAndAddAnotherButton()}
+          {showViewDetails && recordDto.getDetailViewLink != null && getCreateAndViewDetailsButton()}
         </div>
       </>
     );
   }
-  else {
-    return (
-      <>
-        <div className="d-flex">
-          {isSaving && <div className="text-center mr-3 mt-1"><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>Saving is in progress</div>}
-          <Button size="sm" variant="primary" disabled={isSaving || recordDto.dataState === DataState.LOADED || disable} onClick={() => persistRecord(updateRecord)}><FontAwesomeIcon icon={faSave} fixedWidth className="mr-2"/>Save</Button>
-        </div>
-      </>
-    );
-  }
+
+  return (
+    <div className="d-flex mr-2 px-4">
+      <Button size="sm" variant="primary"
+              disabled={isSaving || recordDto.dataState === DataState.LOADED}
+              onClick={() => persistRecord(updateRecord)}
+      >
+        {isSaving
+          ? <span><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>Saving</span>
+          : <span><FontAwesomeIcon icon={faSave} fixedWidth className="mr-2"/>Save</span>
+        }
+      </Button>
+    </div>
+  );
 }
 
 SaveButton.propTypes = {
@@ -153,7 +182,8 @@ SaveButton.propTypes = {
   showViewDetails: PropTypes.bool,
   modal: PropTypes.bool,
   showToasts: PropTypes.bool,
-  loginButton: PropTypes.bool
+  loginButton: PropTypes.bool,
+  altButtonText: PropTypes.string
 };
 
 SaveButton.defaultProps = {
