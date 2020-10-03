@@ -49,8 +49,9 @@ function PipelineWorkflowView({
       <div className="workflow-view h-100">
         <Row className="w-100" style={{ margin: "0" }}>
           <Col className="max-content-width content-block-collapse" style={{ paddingLeft: "0" }}>
-            <div className="w-100 dark-grey-background p-1 text-right">
+            <div className="w-100 dark-grey-background p-1 text-right" style={{minWidth:"860px"}}>
 
+              <div className="float-right pt-1">
               <PipelineActionControls pipeline={pipeline} disabledActionState={false}
                                       customerAccessRules={customerAccessRules}
                                       fetchData={fetchPlan}
@@ -58,7 +59,7 @@ function PipelineWorkflowView({
                                       setRefreshCount={setRefreshCount}
                                       refreshCount={refreshCount}
                                       fetchActivityLogs={getActivityLogs}
-                                      setParentWorkflowStatus={setWorkflowStatus}/>
+                                      setParentWorkflowStatus={setWorkflowStatus}/></div>
 
             </div>
             <PipelineWorkflow pipeline={pipeline}

@@ -214,7 +214,7 @@ function PipelineWorkflow({
   return (
     <>
         <div className="max-content-width">
-          <div className="p-1 dark-grey-background">
+          <div className="pl-1 pb-1 dark-grey-background">
 
             <Button variant="secondary"
                     className="mr-1"
