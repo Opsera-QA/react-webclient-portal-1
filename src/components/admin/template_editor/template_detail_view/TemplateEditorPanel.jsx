@@ -23,6 +23,7 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
   const [templateDataDto, setTemplateDataDto] = useState({});
   const [ldapOrganizationAccountList, setLdapOrganizationAccountList] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  // TODO: Pull roles from node
   const [roleOptions, setRoleOptions] = useState(["everyone", "Free Trial", "Administrators", "PowerUsers"]);
 
   useEffect(() => {
@@ -66,7 +67,8 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
 
   if (isLoading) {
     return (<LoadingDialog size="sm"/>);
-  } else {
+  }
+
     return (
       <>
         <div className="mx-2 my-3">
@@ -84,13 +86,11 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
               <DtoSelectInput valueField={"id"} fieldName={"account"} dataObject={templateDataDto} setDataObject={setTemplateDataDto} selectOptions={ldapOrganizationAccountList}/>
             </Col>
             <Col lg={6}>
-              <DtoSelectInput textField={"name"}
+              <DtoMultiselectInput textField={"name"}
                               valueField={"id"}
                               fieldName={"type"}
                               dataObject={templateDataDto}
                               setDataObject={setTemplateDataDto}
-                              setDataFunction={updateSelectArray}
-                              groupBy={"groupId"}
                               selectOptions={pipelineHelpers.PIPELINE_TYPES}/>
             </Col>
             <Col lg={6}>
@@ -111,7 +111,6 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
         </div>
       </>
     );
-  }
 }
 
 TemplateEditorPanel.propTypes = {

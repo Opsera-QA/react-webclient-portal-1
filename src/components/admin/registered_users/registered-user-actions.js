@@ -20,15 +20,6 @@ RegisteredUserActions.getUserRecord = async (userId, getAccessToken) => {
   return response;
 };
 
-RegisteredUserActions.getTools = async (getAccessToken) => {
-  const accessToken = await getAccessToken();
-  const apiUrl = `/registry/tools?hidden=true`;
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
-};
-
 RegisteredUserActions.getRegisteredUsers = async (currentPage, pageSize, getAccessToken) => {
   const postBody = {
     page: currentPage,

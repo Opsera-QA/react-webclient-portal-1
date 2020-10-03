@@ -20,15 +20,6 @@ KpiActions.get = async (kpiId, getAccessToken) => {
   return response;
 };
 
-KpiActions.getTools = async (getAccessToken) => {
-  const accessToken = await getAccessToken();
-  const apiUrl = `/registry/tools?hidden=true`;
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
-};
-
 KpiActions.createKpi = async (kpiDataDto, getAccessToken) => {
   let postData = {
     ...kpiDataDto.getPersistData()

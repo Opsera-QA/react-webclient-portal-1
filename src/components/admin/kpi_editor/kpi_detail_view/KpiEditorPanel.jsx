@@ -8,9 +8,9 @@ import Loading from "components/common/status_notifications/loading";
 import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
 import DtoToggleInput from "../../../common/input/dto_input/dto-toggle-input";
 import SaveButton from "../../../common/buttons/SaveButton";
-import DtoSelectInput from "../../../common/input/dto_input/dto-select-input";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import DtoMultiselectInput from "../../../common/input/dto_input/dto-multiselect-input";
+import toolsActions from "../../../inventory/tools/tools-actions";
 
 function KpiEditorPanel({ kpiData, setKpiData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -46,8 +46,8 @@ function KpiEditorPanel({ kpiData, setKpiData, handleClose }) {
   };
 
   const getToolList = async () => {
-    const response = await KpiActions.getTools(getAccessToken);
-    setToolList(response.data)
+    const response = await toolsActions.getTools(getAccessToken);
+    setToolList(response.data);
   }
 
   if (isLoading || kpiDataDto == null) {
@@ -67,10 +67,8 @@ function KpiEditorPanel({ kpiData, setKpiData, handleClose }) {
           <DtoTextInput dataObject={kpiDataDto} fieldName={"description"} setDataObject={setKpiDataDto}/>
         </Col>
         <Col lg={12}>
-          {/*//TODO: Not sure if this is broken. Is it supposed to be multi select? If so, it was never wired up correctly.*/}
-          {/*// Node side might be sending the wrong response, too. Not sure.*/}
-          <DtoSelectInput selectOptions={toolList} dataObject={kpiDataDto} fieldName={"tool_identifier"}
-                          setDataObject={setKpiDataDto} textField={"name"} valueField={"identifier"}/>
+          <DtoMultiselectInput selectOptions={toolList} dataObject={kpiDataDto} fieldName={"tool_identifier"}
+                          setDataObject={setKpiDataDto} textField={"name"} valueField={"identifier"} />
         </Col>
       </Row>
       <Row>
