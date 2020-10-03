@@ -48,10 +48,10 @@ function PipelineWorkflowView({
     <>
       <div className="workflow-view h-100">
         <Row className="w-100" style={{ margin: "0" }}>
-          <Col className="max-content-width content-block-collapse" style={{ paddingLeft: "0" }}>
-            <div className="w-100 dark-grey-background p-1 text-right" style={{minWidth:"860px"}}>
+          <Col className="max-content-width content-block-collapse" style={{ paddingLeft: "0", paddingRight: "0" }}>
+            <div className="dark-grey-background py-1 text-right" style={{minWidth:"860px"}}>
 
-              <div className="float-right pt-1">
+              <div className="float-right pt-1 mr-2 dark-grey-background">
               <PipelineActionControls pipeline={pipeline} disabledActionState={false}
                                       customerAccessRules={customerAccessRules}
                                       fetchData={fetchPlan}

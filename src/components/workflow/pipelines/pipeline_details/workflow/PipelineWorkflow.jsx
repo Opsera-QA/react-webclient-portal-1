@@ -140,11 +140,11 @@ function PipelineWorkflow({
     setShowModal(true);
   };
 
-  const callbackFunctionEditItem = (item) => {
+  const callbackFunctionEditItem = async (item) => {
     window.scrollTo(0, 0);
     setEditWorkflow(false);
     item.id = pipeline._id;
-    fetchPlan(item);
+    await fetchPlan(item);
   };
 
   const updatePipeline = async (pipeline) => {
@@ -351,7 +351,6 @@ function PipelineWorkflow({
             <div className="step-items workflow-module-container-width mx-auto">
               <PipelineWorkflowItemList
                 pipeline={pipeline}
-
                 lastStep={lastStep}
                 lastStepId={lastStep && lastStep.step_id}
                 editWorkflow={editWorkflow}

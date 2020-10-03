@@ -25,6 +25,10 @@
   max-width: 275px;
 }
 
+.workflow-module-container-height {
+  min-height: 102px
+}
+
 .workflow-module-container {  
   background-color: #fff;
   color: #334152;

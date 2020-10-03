@@ -25,6 +25,7 @@ import ModalActivityLogs from "components/common/modal/modalActivityLogs";
 import StepToolActivityView from "./step_configuration/StepToolActivityView";
 import "../../../workflows.css";
 import { DialogToastContext } from "contexts/DialogToastContext";
+import LoadingDialog from "../../../../common/status_notifications/loading";
 
 
 const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineId, accessToken, editWorkflow, parentCallbackEditItem, deleteStep, parentHandleViewSourceActivityLog, customerAccessRules, parentWorkflowStatus, refreshCount }) => {
@@ -38,6 +39,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
   const [activityLogModal, setActivityLogModal] = useState({ show: false, header: "", message: "", button: "OK" });
   const [showToolActivity, setShowToolActivity] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const authorizedAction = (action, owner) => {
     if (customerAccessRules.Administrator) {
@@ -64,7 +66,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
   }, [JSON.stringify(item)]);
 
 
-  const loadFormData = (item, lastStep1, index, plan) => {
+  const loadFormData = async (item, lastStep1, index, plan) => {
     setStepConfigured(false);
     setToolProperties({});
     setCurrentStatus({});
@@ -119,11 +121,13 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
         }
       }
 
-      if (item.tool !== undefined && (typeof (item.tool.tool_identifier) === "string" && item.tool.tool_identifier.length > 0)) {
-        getToolDetails(item.tool.tool_identifier);
-        if (item.type && item.type[0] && item.type[0].length > 0) {
-          setStepConfigured(true);
-        }
+
+      if (item.tool && typeof (item.tool.tool_identifier) === "string" && Object.keys(toolProperties).length === 0) {
+        await getToolDetails(item.tool.tool_identifier);
+      }
+
+      if (item && item.type && item.type[0] && item.type[0].length > 0) {
+        setStepConfigured(true);
       }
     }
   };
@@ -132,7 +136,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
     setActivityLogModal({ show: true, header: header, message: data, button: "OK" });
   };
 
-  const handleEditClick = (type, tool, itemId) => {
+  const handleEditClick = async (type, tool, itemId) => {
     if (!authorizedAction("edit_step_details", pipeline.owner)) {
       setInfoModal({
         show: true,
@@ -143,11 +147,13 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
       return;
     }
 
+    setIsLoading(true);
     if (tool && tool.tool_identifier !== undefined) {
-      parentCallbackEditItem({ type: type, tool_name: tool.tool_identifier, step_id: itemId });
+      await parentCallbackEditItem({ type: type, tool_name: tool.tool_identifier, step_id: itemId });
     } else {
-      parentCallbackEditItem({ type: type, tool_name: "", step_id: itemId });
+      await parentCallbackEditItem({ type: type, tool_name: "", step_id: itemId });
     }
+    setIsLoading(false)
   };
 
   const handleDeleteStepClick = (index) => {
@@ -161,22 +167,27 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
   };
 
   const getToolDetails = async (tool_identifier) => {
-    console.log("Getting tool details for: ", tool_identifier)
+    setIsLoading(true);
     try {
       const toolResponse = await axiosApiService(accessToken).get("/registry/tool/properties/" + tool_identifier, {});
       setToolProperties(toolResponse.data);
     } catch (err) {
       toastContext.showLoadingErrorDialog(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
 
   return (
     <>
-      <div>
+      <div className="workflow-module-container-height">
         <div className="title-text-6 upper-case-first ml-1 mt-1">
           <span
             className="text-muted mr-1">{item.name || "Un-configured Step"}</span>
+
+          {isLoading && <FontAwesomeIcon icon={faSpinner} spin className="ml-1"/>}
+
           <div className="float-right text-right">
             {stepConfigured === true && editWorkflow === false ?
               <>
@@ -242,7 +253,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
                                    }}/>
                 </OverlayTrigger>}
 
-                {(itemState === "pending" && item.active) &&
+                {/*{(itemState === "pending" && item.active) &&
                 <OverlayTrigger
                   placement="top"
                   delay={{ show: 250, hide: 400 }}
@@ -258,7 +269,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
                                      });
                                    }}/>
                 </OverlayTrigger>
-                }
+                }*/}
 
                 {!item.active &&
                 <OverlayTrigger
@@ -313,19 +324,6 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
                            className="mr-1"/> Tool: {toolProperties.name || ""}
         </div>
 
-        {/*{item.last_status && Object.keys(item.last_status).length > 0 && typeof (item.last_status.data) === "object" ?
-          <div>
-            {item.last_status.updatedAt ? <div className="pl-1 text-muted small">Last status
-              on {format(new Date(item.last_status.updatedAt), "hh:mm a 'on' MMM dd yyyy'")}:</div> : null}
-            <div className="pt-1 pl-1 code json-block-text small">
-              {Object.keys(item.last_status.data).slice(0, 5).map(key => {
-                if (typeof (item.last_status.data[key]) === "string" || typeof (item.last_status.data[key]) === "number") {
-                  return <div key={key} className="json-block-text small ml-1"
-                              style={{ padding: 0, margin: 0 }}>{key}: {item.last_status.data[key]}</div>;
-                }
-              })}
-            </div>
-          </div> : null}*/}
 
         <div className="p-1 text-muted small">
           <FontAwesomeIcon icon={faIdBadge} size="sm" fixedWidth
@@ -348,7 +346,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
                                  }}/>
               </OverlayTrigger>
 
-              {itemState !== "running" ?
+              {itemState !== "running" ? //if THIS step is running
                 <>
                   <OverlayTrigger
                     placement="top"
@@ -377,7 +375,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
                   </OverlayTrigger>}
                 </>}
 
-              {parentWorkflowStatus !== "running" ?
+              {parentWorkflowStatus !== "running" ? //if the overall pipeline is in a running state
                 <>
                   <OverlayTrigger
                     placement="top"
