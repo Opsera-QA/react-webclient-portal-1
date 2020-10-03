@@ -11,6 +11,7 @@ import DtoMultiselectInput from "../../../../common/input/dto_input/dto-multisel
 import SaveButton from "../../../../common/buttons/SaveButton";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import Model from "../../../../../core/data_model/model";
+import toolsActions from "../../../../inventory/tools/tools-actions";
 
 function AnalyticsProfileEditorPanel({ analyticsProfileData, setAnalyticsProfileData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -59,8 +60,8 @@ function AnalyticsProfileEditorPanel({ analyticsProfileData, setAnalyticsProfile
 
 
   const getToolList = async () => {
-    const response = await RegisteredUserActions.getTools(getAccessToken);
-    setToolList(response.data)
+    const response = await toolsActions.getTools(getAccessToken);
+    setToolList(response["data"]);
   }
 
   if (isLoading) {
