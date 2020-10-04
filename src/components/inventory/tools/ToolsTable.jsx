@@ -15,9 +15,11 @@ import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import FilterBar from "../../common/filters/FilterBar";
 import StatusFilter from "../../common/filters/status/StatusFilter";
 import ToolIdentifierFilter from "../../common/filters/tools/ToolIdentifierFilter";
-import SortFilter from "../../common/filters/sort/SortFilter";
+import TagFilter from "../../common/filters/tags/TagFilter";
+import TagTypeFilter from "../../common/filters/tags/TagTypeFilter";
+import SearchFilter from "../../common/filters/search/StatusFilter";
 
-function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading, resetFilters }) {
+function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading }) {
   const [showCreateToolModal, setShowCreateToolModal] = useState(false);
   let history = useHistory();
   const fields = toolMetadata.fields;
@@ -58,7 +60,8 @@ function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading
       <FilterBar loadData={loadData} filterDto={toolFilterDto}>
         <StatusFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
         <ToolIdentifierFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
-        <SortFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
+        <TagFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
+        <SearchFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
       </FilterBar>
     );
   };
@@ -98,8 +101,6 @@ function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading
 ToolsTable.propTypes = {
   data: PropTypes.array,
   loadData: PropTypes.func,
-  filterData: PropTypes.func,
-  filterOptionList: PropTypes.array,
   isLoading: PropTypes.bool,
   toolFilterDto: PropTypes.object,
   setToolFilterDto: PropTypes.func,

@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Row, Col, Pagination } from "react-bootstrap";
-import DropdownList from "react-widgets/lib/DropdownList";
 
-function DtoPagination({paginationDto, setPaginationDto, loadData, isLoading }) {
+function DtoBottomPagination({paginationDto, setPaginationDto, loadData, isLoading }) {
   const [totalPages, setTotalPages] = useState(undefined);
-  const pageSizeList = [25, 50, 100];
 
   useEffect(()=> {
     let pageSize = paginationDto.getData("pageSize");
@@ -25,15 +23,6 @@ function DtoPagination({paginationDto, setPaginationDto, loadData, isLoading }) 
     window.scrollTo(0, 50);
   };
 
-  const updatePageSize = (pageSize) => {
-    paginationDto.setData("currentPage", 1);
-    paginationDto.setData("pageSize", pageSize);
-    setPaginationDto({...paginationDto});
-    let totalPages = Math.ceil(paginationDto.getData("totalCount") / pageSize);
-    setTotalPages(totalPages);
-    loadData();
-  };
-
   const getPaginationItems = () => {
     let paginationItems = [];
     let currentPage = paginationDto.getData("currentPage");
@@ -47,7 +36,7 @@ function DtoPagination({paginationDto, setPaginationDto, loadData, isLoading }) 
     const lowerResultsViewLimit = ((paginationDto.getData("currentPage") - 1) * paginationDto.getData("pageSize")) + 1;
     const upperResultsViewLimit = (lowerResultsViewLimit + paginationDto.getData("pageSize")) - 1;
     let countOffsetUpper = (upperResultsViewLimit < paginationDto.getData("totalCount")) ? upperResultsViewLimit : paginationDto.getData("totalCount");
-    return (<Col className="page-summary">Results {lowerResultsViewLimit} - {countOffsetUpper} of {paginationDto.getData("totalCount")}</Col>);
+    return (<Col sm={4} className="page-summary">Results {lowerResultsViewLimit} - {countOffsetUpper} of {paginationDto.getData("totalCount")}</Col>);
   };
 
   // TODO: Should we just always show pagination but disable it if irrelevant?
@@ -58,7 +47,7 @@ function DtoPagination({paginationDto, setPaginationDto, loadData, isLoading }) 
   return (
     <Row className="pagination-block small">
       {getResultSummary()}
-      <Col>
+      <Col sm={4}>
         <Pagination disabled={isLoading || paginationDto.getData("totalCount") < paginationDto.getData("pageSize")}
                     className="justify-content-center">
           <Pagination.Item disabled={isLoading || paginationDto.getData("currentPage") === 1}
@@ -72,20 +61,12 @@ function DtoPagination({paginationDto, setPaginationDto, loadData, isLoading }) 
                            onClick={() => setPage(totalPages)}>Last</Pagination.Item>
         </Pagination>
       </Col>
-      <Col className="justify-content-right">
-        <DropdownList
-          data={pageSizeList}
-          disabled={isLoading}
-          valueField='value'
-          textField={item => item + " results per page"}
-          defaultValue={paginationDto.getData("pageSize")}
-          onChange={updatePageSize}
-        /></Col>
+      <Col sm={4} />
     </Row>
   );
 }
 
-DtoPagination.propTypes = {
+DtoBottomPagination.propTypes = {
   paginationDto: PropTypes.object,
   total: PropTypes.number,
   location: PropTypes.string,
@@ -94,4 +75,4 @@ DtoPagination.propTypes = {
   isLoading: PropTypes.bool
 };
 
-export default DtoPagination;
+export default DtoBottomPagination;

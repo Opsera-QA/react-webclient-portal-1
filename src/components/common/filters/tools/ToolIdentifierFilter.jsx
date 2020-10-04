@@ -4,7 +4,7 @@ import toolsActions from "../../../inventory/tools/tools-actions";
 import {AuthContext} from "../../../../contexts/AuthContext";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import {createFilterOptions} from "../filterHelpers";
-import DtoFilterInput from "../../input/dto_input/dto-filter-input";
+import DtoFilterSelectInput from "../../input/dto_input/filter/DtoFilterSelectInput";
 
 function ToolIdentifierFilter({ filterDto, setFilterDto}) {
   const { getAccessToken } = useContext(AuthContext);
@@ -35,7 +35,7 @@ function ToolIdentifierFilter({ filterDto, setFilterDto}) {
   };
 
   return (
-    <div><DtoFilterInput busy={isLoading} placeholderText={"Filter by Tool"} fieldName={"toolIdentifier"} setDataObject={setFilterDto} dataObject={filterDto} selectOptions={toolIdentifierFilterOptions} /></div>
+    <div><DtoFilterSelectInput busy={isLoading} placeholderText={"Filter by Tool"} fieldName={"toolIdentifier"} setDataObject={setFilterDto} dataObject={filterDto} selectOptions={toolIdentifierFilterOptions} /></div>
   );
 }
 

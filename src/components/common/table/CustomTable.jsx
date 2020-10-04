@@ -7,7 +7,8 @@ import Pagination from "components/common/pagination";
 import {Button, Spinner} from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import DtoPagination from "../pagination/DtoPagination";
+import DtoBottomPagination from "../pagination/DtoBottomPagination";
+import DtoTopPagination from "../pagination/DtoTopPagination";
 
 export const defaultRowStyling = (row) => {
   return "";
@@ -23,7 +24,7 @@ export const defaultInitialState = {
   ]
 };
 
-function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRowSelect, rowStyling, initialState, tableFilter, paginationOptions, showHeaderText, isLoading, tableTitle, createNewRecord, tableFilterBar, paginationDto, setPaginationDto, loadData }) {
+function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRowSelect, rowStyling, initialState, paginationOptions, showHeaderText, isLoading, tableTitle, createNewRecord, tableFilterBar, paginationDto, setPaginationDto, loadData }) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -54,6 +55,7 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
     return response;
   };
 
+  // TODO: Redo the way this works
   const getRowClassNames = (index, row) => {
     let rowClassNames = "table-row";
     rowClassNames += onRowSelect ? " pointer" : "";
@@ -61,30 +63,11 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
     return rowClassNames;
   };
 
-  const filterRow = (row) => {
-    if (tableFilter && tableFilter.filterText) {
-      
-      if (tableFilter.matchPartial){
-        return row.values[tableFilter.field].includes(tableFilter.filterText);
-      }
-      
-      return row.values[tableFilter.field] !== tableFilter.filterText;
-    }
-    return false;
-  };
-
   const tableLoading = () => {
     return(
       <div className="row" style={{ height:"150px", width: "100%"}}>
         <div className="col-sm-12 my-auto text-center">
-          <FontAwesomeIcon icon={faSpinner} spin className="mr-2 mt-1"/>
-          {/*<Spinner className="mr-2" as="span"
-                   animation="border"
-                   variant="primary"
-                   size="sm"
-                   role="status"
-                   aria-hidden="true" />*/}
-          Loading Data
+          <span><FontAwesomeIcon icon={faSpinner} spin className="mr-2 mt-1"/>Loading Data</span>
         </div>
       </div>
     );
@@ -93,9 +76,7 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
   const getTableTitleLoader = () => {
     return (
       <>
-        {isLoading && tableTitle && data != null && data.length !== 0 &&
-            <FontAwesomeIcon icon={faSpinner} spin className="ml-2 my-auto"/>
-        }
+        {isLoading && tableTitle && data != null && data.length !== 0 && <FontAwesomeIcon icon={faSpinner} spin className="ml-2 my-auto"/> }
       </>
     );
   };
@@ -104,10 +85,12 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
     return (
       <div>
         <Row className="d-flex justify-content-between mx-0">
-          <Col sm={3} className="h6 d-flex pl-0"><span className="my-1">{tableTitle}{getTableTitleLoader()}</span></Col>
+          <Col sm={3} className="d-flex pl-0 my-1">
+            <div><span className="h6">{tableTitle}{getTableTitleLoader()}</span></div>
+          </Col>
           {/*TODO: Remove old add button after removing everywhere*/}
           {tableFilterBar
-            ? <Col className="pr-0"><div className="mt-0"><div className="ml-auto">{tableFilterBar}</div></div></Col>
+            ? <Col className="pr-0"><div className="mt-0 mb-1"><div className="ml-auto">{tableFilterBar}</div></div></Col>
             : <div className="d-flex text-right">
             {createNewRecord && <Button size="sm" className={"o"}
                                         onClick={() => {
@@ -137,11 +120,16 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
       return (
         <>
           {headerGroups.map((headerGroup, i) => (
+            <>
             <tr key={i}  {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column, j) => (
                 getHeaderColumn(column, j)
               ))}
             </tr>
+            <tr>
+            <td className="table-footer pt-1" colSpan="12">{paginationDto && paginationDto.getData("totalCount") != null && <DtoTopPagination paginationDto={paginationDto} setPaginationDto={setPaginationDto} isLoading={isLoading} loadData={loadData} />}</td>
+            </tr>
+              </>
           ))}
         </>
       );
@@ -161,32 +149,35 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
     );
   };
 
+  const getTableRow = (row, index) => {
+    prepareRow(row);
+    return (
+      <tr className={getRowClassNames(index, row)}
+          key={index} {...row.getRowProps({onClick: () => onRowSelect ? onRowSelect(row) : null})}>
+        {row.cells.map((cell, j) => {
+          return <td key={j} {...cell.getCellProps()}
+                     className={"table-cell px-2 " + setColumnClass(cell.column.id, columns)}>{cell.render("Cell")}</td>;
+        })}
+      </tr>);
+  };
+
   const getTableBody = () => {
     if (isLoading && (data == null || data.length === 0)) {
       return (
         <tr>
-          <td colSpan="12" className="info-text text-center p-3">{tableLoading()}</td>
+          <td colSpan="100%" className="info-text text-center p-3">{tableLoading()}</td>
         </tr>
       );
     } else {
       return (
         <>
           {rows.map((row, i) => {
-            prepareRow(row);
-            return filterRow(row) ? null : (
-              <tr className={getRowClassNames(i, row)}
-                  key={i} {...row.getRowProps({onClick: () => onRowSelect ? onRowSelect(row) : null})}>
-                {row.cells.map((cell, j) => {
-                  return <td key={j} {...cell.getCellProps()}
-                             className={"table-cell px-2 " + setColumnClass(cell.column.id, columns)}>{cell.render("Cell")}</td>;
-                })}
-              </tr>
-            );
+            return getTableRow(row, i);
           })
           }
           {!isLoading && rows.length === 0 &&
             <tr>
-              <td colSpan="12" className="info-text text-center p-5">{noDataMessage ? noDataMessage : defaultNoDataMessage}</td>
+              <td colSpan="100%" className="info-text text-center p-5">{noDataMessage ? noDataMessage : defaultNoDataMessage}</td>
             </tr>}
         </>
       );
@@ -208,7 +199,7 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
             <tr>
               <td colSpan="100%" className="px-2 pt-2 table-footer">
                 {paginationOptions && !isLoading && <Pagination total={paginationOptions.totalCount} currentPage={paginationOptions.currentPage} pageSize={paginationOptions.pageSize} onClick={(pageNumber, pageSize) => paginationOptions.gotoPageFn(pageNumber, pageSize)} />}
-                {paginationDto && paginationDto.getData("totalCount") != null && <DtoPagination paginationDto={paginationDto} setPaginationDto={setPaginationDto} isLoading={isLoading} loadData={loadData} />}
+                {paginationDto && paginationDto.getData("totalCount") != null && <DtoBottomPagination paginationDto={paginationDto} setPaginationDto={setPaginationDto} isLoading={isLoading} loadData={loadData} />}
               </td>
             </tr>
           </tfoot>
@@ -226,14 +217,16 @@ CustomTable.propTypes = {
   onRowSelect: PropTypes.func,
   rowStyling: PropTypes.func,
   initialState: PropTypes.object,
-  tableFilter: PropTypes.object,
   paginationOptions: PropTypes.object,
   showHeaderText: PropTypes.bool,
   isLoading: PropTypes.bool,
   tableTitle: PropTypes.string,
   createNewRecord: PropTypes.func,
   type: PropTypes.string,
-  tableFilterBar: PropTypes.object
+  tableFilterBar: PropTypes.object,
+  paginationDto: PropTypes.object,
+  setPaginationDto: PropTypes.func,
+  loadData: PropTypes.func
 };
 
 CustomTable.defaultProps = {

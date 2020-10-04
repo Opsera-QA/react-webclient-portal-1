@@ -15,9 +15,9 @@ import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import FilterBar from "../../common/filters/FilterBar";
 import StatusFilter from "../../common/filters/status/StatusFilter";
 import TagTypeFilter from "../../common/filters/tags/TagTypeFilter";
-import SortFilter from "../../common/filters/sort/SortFilter";
+import SearchFilter from "../../common/filters/search/StatusFilter";
 
-function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto, resetFilters }) {
+function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto }) {
   const history = useHistory();
   let fields = tagEditorMetadata.fields;
   const [showTagModal, setShowTagModal] = useState(false);
@@ -53,7 +53,7 @@ function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto, r
       <FilterBar loadData={loadData} filterDto={tagFilterDto}>
         <StatusFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} />
         <TagTypeFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} />
-        <SortFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} />
+        <SearchFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} />
       </FilterBar>
     );
   };

@@ -11,21 +11,23 @@ function BreadcrumbTrail({destination}) {
 
   const getBreadcrumbTrail = (destination) => {
     let breadcrumbTrail = getTrail(destination);
+
+    // TODO: Do we want to show trail when the only path is current screen?
+    // if (breadcrumbTrail.trail.length === 0) {
+    //   return (<></>);
+    // }
+
     return (
+      <nav aria-label="breadcrumb">
         <ol className="breadcrumb">
           {breadcrumbTrail.trail && getParentTrail(breadcrumbTrail.trail)}
           <li className="breadcrumb-item">{breadcrumbTrail.destination.label}</li>
         </ol>
+      </nav>
     );
   }
 
-  return (
-    <>
-      <nav aria-label="breadcrumb">
-        {getBreadcrumbTrail(destination)}
-      </nav>
-    </>
-  );
+  return (<>{getBreadcrumbTrail(destination)}</>);
 }
 
 BreadcrumbTrail.propTypes = {

@@ -91,7 +91,8 @@ adminTagsActions.getTags = async (tagFilterDto, getAccessToken) => {
       size: tagFilterDto.getData("pageSize"),
       page: tagFilterDto.getData("currentPage"),
       type: tagFilterDto.getData("type"),
-      status: tagFilterDto.getData("status")
+      status: tagFilterDto.getData("status"),
+      search: tagFilterDto.getData("search")
     },
   };
   const response = await axiosApiService(accessToken).get(apiUrl, urlParams)

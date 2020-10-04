@@ -60,7 +60,9 @@ toolsActions.getToolRegistryList = async (toolFilterDto, getAccessToken) => {
       status: toolFilterDto.getData("status"),
       tool: toolFilterDto.getData("toolIdentifier"),
       page: toolFilterDto.getData("currentPage"),
-      size: toolFilterDto.getData("pageSize")
+      size: toolFilterDto.getData("pageSize"),
+      tag: toolFilterDto.getData("tag"),
+      search: toolFilterDto.getData("search")
     }
   }
 
