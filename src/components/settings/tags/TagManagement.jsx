@@ -36,16 +36,11 @@ function TagManagement() {
   };
 
   const getTags = async (filterDto = tagFilterDto) => {
-    try {
-      const response = await adminTagsActions.getTags(filterDto, getAccessToken);
-      setTagList(response.data.data);
-      let newFilterDto = filterDto;
-      filterDto.setData("totalCount", response.data.count);
-      setTagFilterDto({...newFilterDto});
-    } catch (error) {
-      toastContext.showLoadingErrorDialog(error.message);
-      console.error(error.message);
-    }
+    const response = await adminTagsActions.getTags(filterDto, getAccessToken);
+    setTagList(response.data.data);
+    let newFilterDto = filterDto;
+    filterDto.setData("totalCount", response.data.count);
+    setTagFilterDto({...newFilterDto});
   };
 
   const getRoles = async (filterDto = tagFilterDto) => {
@@ -56,27 +51,6 @@ function TagManagement() {
     }
 
     await getTags(filterDto);
-  };
-
-  // TODO: Determine best way to deal with this-- might be best to put in FilterBar
-  const resetFilters = async () => {
-    try {
-      setIsLoading(true);
-      let newFilterDto = new Model({...tagFilterDto.getNewObjectFields()}, tagFilterDto.getMetaData(), false);
-      // TODO: Enable this when wiring up pagination
-      // Make sure to keep any relevant pagination-- but always reset current page to 1 as the filters have changed
-      // let pageSize = filterDto.getData("pageSize");
-      // newFilterDto.setData("pageSize", pageSize);
-      setTagFilterDto(newFilterDto);
-      const response = await adminTagsActions.getTags(newFilterDto, getAccessToken);
-      setTagList(response.data.data);
-    }
-    catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-    }
-    finally {
-      setIsLoading(false);
-    }
   };
 
   if (!accessRoleData) {
@@ -94,7 +68,7 @@ function TagManagement() {
         <h5>Tag Management</h5>
       </div>
       <div className="full-height">
-        <TagsTable loadData={loadData} isLoading={isLoading} data={tagList} resetFilters={resetFilters} tagFilterDto={tagFilterDto} setTagFilterDto={setTagFilterDto}/>
+        <TagsTable loadData={loadData} isLoading={isLoading} data={tagList} tagFilterDto={tagFilterDto} setTagFilterDto={setTagFilterDto}/>
       </div>
     </div>
   );

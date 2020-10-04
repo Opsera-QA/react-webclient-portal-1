@@ -925,6 +925,18 @@ a.nav-link {
     height: 30px;
 }
 
+.filter-title {
+    background-color: #4D4283;
+    border-bottom: 1px solid #46415C;
+    color: #fff;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.filter-body {
+    min-width: 250px;
+}
+
 .filter-bar label {
     display: inline-flex;
     margin-right: 1em;
@@ -936,6 +948,10 @@ a.nav-link {
     min-width: 300px;
     max-width: 1200px;
     height: 20px;
+}
+
+.filter-bar .custom-filter-input .form-control {
+    height: 1.9em;
 }
 
 .filter-bar .custom-filter-input .rw-widget-input {

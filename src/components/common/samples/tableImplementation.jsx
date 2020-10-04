@@ -235,7 +235,6 @@ function TableImplementationDemo() {
         onRowSelect={onRowSelect}
         rowStyling={rowStyling}
         initialState={initialState}
-        tableFilter={filterOption}
       >
       </CustomTable>
     </>);

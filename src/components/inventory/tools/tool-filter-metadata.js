@@ -22,13 +22,21 @@ const toolFilterMetadata = {
       label: "Sort Option",
       id: "sortOption",
     },
+    {
+      label: "Tag",
+      id: "tag",
+    },
+    {
+      label: "Search",
+      id: "search",
+    },
   ],
   newObjectFields: {
     pageSize: 50,
     currentPage: 1,
     sortOption: "name"
   },
-  // TODO: If these are the same options everywhere, move to SortFilter
+  // TODO: If these are the same options everywhere, move to PageSort
   sortOptions: [
     {text: "Oldest", option: "oldest"},
     {text: "Newest", option: "newest"},

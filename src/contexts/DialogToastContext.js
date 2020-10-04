@@ -33,8 +33,8 @@ const ToastContextProvider = (props) => {
     autoCloseTimer = setTimeout(function () { resetToast(); }, autoCloseLength);
   }
 
-  const showErrorDialog = (errorMessage) => {
-    setToast(getErrorDialog(errorMessage));
+  const showErrorDialog = (error, errorMessage) => {
+    setToast(getErrorDialog(error, errorMessage));
     setShowToast(true);
     refreshTimer();
   }
