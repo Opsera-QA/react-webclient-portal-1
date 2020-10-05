@@ -126,7 +126,7 @@ class LoginForm extends React.Component {
                   </div>
 
                   <div className="buttons-w">
-                    <Button variant="success" className="w-100 mb-3" type="submit" disabled={!this.state.email}>
+                    <Button variant="warning" className="w-100 mb-3" type="submit" disabled={!this.state.email}>
                       {this.state.loading ? <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth /> : null}
                       Reset Password</Button>
 
@@ -165,7 +165,7 @@ class LoginForm extends React.Component {
                     <div className="pre-icon os-icon os-icon-fingerprint"></div>
                   </div>
                   <div className="buttons-w">
-                    <Button variant="success" className="w-100 mb-3" type="submit" disabled={!this.state.username || !this.state.password}>
+                    <Button variant="warning" className="w-100 mb-3" type="submit" disabled={!this.state.username || !this.state.password}>
                       {this.state.loading ? <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth /> : null}
                         Log In</Button>
                     <Row>

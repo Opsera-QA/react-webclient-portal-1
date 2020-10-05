@@ -57,7 +57,7 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
       <Navbar.Toggle aria-controls="basic-navbar-nav"/>
       <Navbar.Collapse id="basic-navbar-nav">
         {!hideAuthComponents && <Nav className="ml-auto">
-          { !accessRoleData && <Button variant="success" className="mr-2" onClick={gotoSignUp}>Sign Up</Button>}
+          { !accessRoleData && <Button variant="warning" className="mr-2" onClick={gotoSignUp}>Sign Up</Button>}
           { !accessRoleData && <Button variant="outline-success" onClick={login}>Login</Button>}
           { accessRoleData &&
           <NavDropdown title={fullName} id="basic-nav-dropdown" alignRight>

@@ -174,10 +174,10 @@ const LoginForm = () => {
                          onChange={handlePasswordChange}/>
                   <div className="pre-icon os-icon os-icon-fingerprint"></div>
                 </div>
-                <div className="buttons-w">
+                <div className="buttons-w text-center">
 
                   <Button variant="outline-secondary"
-                          className="w-50 mb-3"
+                          className="mb-3 mr-1" style={{width:"46%"}}
                           type="button"
                           onClick={() => {
                             setViewType("domain");
@@ -186,7 +186,11 @@ const LoginForm = () => {
                     Back
                   </Button>
 
-                  <Button variant="success" className="w-50 mb-3" type="submit" disabled={!username || !password}>
+                  <Button variant="warning"
+                          className="ml-1 mb-3"
+                          style={{width:"46%"}}
+                          type="submit"
+                          disabled={!username || !password}>
                     {loading && <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth/>}
                     Log In</Button>
                 </div>
@@ -284,7 +288,7 @@ const LoginForm = () => {
                 </div>
 
                 <div className="buttons-w">
-                  <Button variant="success" className="w-100 mb-3" type="submit"
+                  <Button variant="warning" className="w-100 mb-3" type="submit"
                           disabled={!lookupAccountEmail || errorMessage}>
                     {loading && <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth/>}
                     Next</Button>
@@ -321,7 +325,7 @@ const WelcomeMessage = () => {
 
       <div className="row mx-n2 mt-4">
         <div className="col-md px-2">
-          <Button variant="success" className="btn-lg w-100 mb-3" onClick={gotoSignUp}>Register an Account</Button>
+          <Button variant="warning" className="btn-lg w-100 mb-3" onClick={gotoSignUp}>Register an Account</Button>
         </div>
         {/*<div className="col-md px-2">
         <Button variant="outline-success" className="btn-lg w-100 mb-3" onClick={login}>Log In</Button>

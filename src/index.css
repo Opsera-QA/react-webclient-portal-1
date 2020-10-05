@@ -55,6 +55,10 @@
     color: #6153A5;
 }
 
+.green-gradient {
+ color: #00AA84;
+}
+
 .dark-grey {
     color: #6c757d;
 }
@@ -86,6 +90,10 @@
 
 .pointer {
     cursor: pointer
+}
+
+.vertical-align-item {
+    vertical-align: middle;
 }
 
 html {
