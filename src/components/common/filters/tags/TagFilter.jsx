@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import DtoFilterSelectInput from "../../input/dto_input/filter/DtoFilterSelectInput";
+import DtoFilterSelectInput from "../input/DtoFilterSelectInput";
 import adminTagsActions from "../../../settings/tags/admin-tags-actions";
 import {AuthContext} from "../../../../contexts/AuthContext";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";

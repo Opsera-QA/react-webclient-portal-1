@@ -118,8 +118,11 @@ export class Model {
     return this.metaData.detailView(this);
   };
 
-  getLabel = (field) => {
-    return this.metaData[field].label;
+  getLabel = (fieldName) => {
+    let fields = this.metaData.fields;
+    // TODO: Replace with metadata helper call once finished
+    let field = fields.find(field => { return field.id === fieldName});
+    return field.label;
   };
 
   getMetaData = () => {
@@ -155,6 +158,10 @@ export class Model {
   getNewObjectFields = () => {
     return this.metaData.newObjectFields != null ? this.metaData.newObjectFields : {};
   };
+
+  clone = () => {
+    return new Model(JSON.parse(JSON.stringify(this.data)), this.metaData, this.newModel);
+  }
 }
 
 export default Model;

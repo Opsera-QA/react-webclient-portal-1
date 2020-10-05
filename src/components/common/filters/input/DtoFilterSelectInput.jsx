@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import DropdownList from "react-widgets/lib/DropdownList";
-import WarningDialog from "../../../status_notifications/WarningDialog";
+import WarningDialog from "../../status_notifications/WarningDialog";
 
 function DtoFilterSelectInput({ fieldName, dataObject, setDataObject, groupBy, selectOptions, valueField, textField, filter, placeholderText, busy}) {
   const [field] = useState(dataObject.getFieldById(fieldName));

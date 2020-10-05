@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import DtoFilterTextInput from "../../input/dto_input/filter/DtoFilterTextInput";
+import DtoFilterTextInput from "../input/DtoFilterTextInput";
 
 function SearchFilter({ filterDto, setFilterDto}) {
   return (

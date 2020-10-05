@@ -19,7 +19,7 @@ import TagFilter from "../../common/filters/tags/TagFilter";
 import TagTypeFilter from "../../common/filters/tags/TagTypeFilter";
 import SearchFilter from "../../common/filters/search/StatusFilter";
 
-function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading }) {
+function ToolsTable({ data, toolFilterDto, activeToolFilterDto, setToolFilterDto, loadData, isLoading }) {
   const [showCreateToolModal, setShowCreateToolModal] = useState(false);
   let history = useHistory();
   const fields = toolMetadata.fields;
@@ -57,7 +57,13 @@ function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading
     }
 
     return(
-      <FilterBar loadData={loadData} filterDto={toolFilterDto}>
+      <FilterBar loadData={loadData}
+                 filterDto={toolFilterDto}
+                 setFilterDto={setToolFilterDto}
+                 activeFilterDto={activeToolFilterDto}
+                 filters={["status", "toolIdentifier", "tag", "search"]}
+                 addRecordFunction={createNewTool}
+      >
         <StatusFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
         <ToolIdentifierFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
         <TagFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
@@ -67,34 +73,22 @@ function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading
   };
 
   return (
-    <>
-      <div className="p-2">
-        <div className="custom-table-filter d-flex flex-row-reverse">
-          <div className="mb-1 text-right">
-            <Button variant="primary" size="sm"
-                    onClick={() => { createNewTool(); }}>
-              <FontAwesomeIcon icon={faPlus} className="mr-1"/> New Tool
-            </Button>
-            <br />
-          </div>
-        </div>
-          <CustomTable
-            columns={columns}
-            data={data}
-            isLoading={isLoading}
-            onRowSelect={onRowSelect}
-            paginationDto={toolFilterDto}
-            setPaginationDto={setToolFilterDto}
-            rowStyling={rowStyling}
-            loadData={loadData}
-            tableFilterBar={getFilterBar()}
-            tableTitle={"Tools"}
-            initialState={tableInitialState}
-          >
-          </CustomTable>
-      </div>
+    <div className="p-2">
+      <CustomTable
+        columns={columns}
+        data={data}
+        isLoading={isLoading}
+        onRowSelect={onRowSelect}
+        paginationDto={toolFilterDto}
+        setPaginationDto={setToolFilterDto}
+        rowStyling={rowStyling}
+        loadData={loadData}
+        tableFilterBar={getFilterBar()}
+        tableTitle={"Tools"}
+        initialState={tableInitialState}
+      />
       <NewToolModal loadData={loadData} setShowModal={setShowCreateToolModal} showModal={showCreateToolModal}/>
-    </>
+    </div>
   );
 }
 
@@ -103,6 +97,7 @@ ToolsTable.propTypes = {
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   toolFilterDto: PropTypes.object,
+  activeToolFilterDto: PropTypes.object,
   setToolFilterDto: PropTypes.func,
 };
 

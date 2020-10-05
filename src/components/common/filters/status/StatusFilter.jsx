@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import DtoFilterSelectInput from "../../input/dto_input/filter/DtoFilterSelectInput";
+import DtoFilterSelectInput from "../input/DtoFilterSelectInput";
 
 function StatusFilter({ filterDto, setFilterDto}) {
   const statusOptions = [{text: "Status: All", value: undefined}, {text: "Status: Active", value: "active"}, {text: "Status: Inactive", value: "inactive"} ];
