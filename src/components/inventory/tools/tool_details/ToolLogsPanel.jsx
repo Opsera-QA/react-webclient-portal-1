@@ -18,6 +18,7 @@ function ToolLogsPanel(props) {
   const [modalData, setModalData] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(25);
+  const [loading, isLoading] = useState(true);
 
   const initialState = {
     pageIndex: 0,
@@ -96,6 +97,7 @@ function ToolLogsPanel(props) {
   }, [currentPage, pageSize]);
 
   const getToolLog = async () => {
+    isLoading(true)
     try {
       const apiUrl = `/registry/log/${toolData.getData("_id")}?page=${currentPage}&size=${pageSize}`;
       const tool_logs = await axiosApiService(accessToken).get(apiUrl, {});
@@ -104,6 +106,7 @@ function ToolLogsPanel(props) {
     } catch (err) {
       console.log(err.message);
     }
+    isLoading(false)
   };
 
   const getRowInfo = (row) => {
@@ -153,6 +156,7 @@ function ToolLogsPanel(props) {
           columns={columns}
           data={logData}
           initialState={initialState}
+          isLoading={loading}
           paginationOptions={getPaginationOptions()}
         >
         </CustomTable>
