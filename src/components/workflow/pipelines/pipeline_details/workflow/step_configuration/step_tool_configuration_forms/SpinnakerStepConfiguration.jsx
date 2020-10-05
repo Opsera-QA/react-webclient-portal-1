@@ -1,13 +1,19 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { Form, Button } from "react-bootstrap";
+import { 
+  Form,
+  Button,
+  OverlayTrigger,
+  Popover 
+} from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faSave, faSpinner, faTimes, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
 import { AuthContext } from "../../../../../../../contexts/AuthContext";
 import { axiosApiService } from "../../../../../../../api/apiService";
 import ErrorDialog from "../../../../../../common/status_notifications/error";
 import JUnitStepConfiguration from "./JUnitStepConfiguration";
+import { Link } from "react-router-dom";
 import {
   getErrorDialog,
   getMissingRequiredFieldsErrorDialog,
@@ -18,30 +24,10 @@ import {
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
   spinnakerId: "",
-  spinnakerUrl: "",
-  appName: "",
-  toolName: "",
+  toolURL: "",
+  applicationName: "",
+  pipelineName: "",
 };
-
-// Debounce function
-function useDebounce(value, delay) {
-  const [debouncedValue, setDebouncedValue] = useState(value);
-
-  useEffect(
-    () => {
-      // Set debouncedValue to value (passed in) after the specified delay
-      const handler = setTimeout(() => {
-        setDebouncedValue(value);
-      }, delay);
-      return () => {
-        clearTimeout(handler);
-      };
-    },
-    [value] 
-  );
-
-  return debouncedValue;
-}
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
@@ -57,8 +43,6 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
   const [isSpinnakerSearching, setIsSpinnakerSearching] = useState(true);
   const [isAppSearching, setIsAppSearching] = useState(true);
   const [isToolSearching, setIsToolSearching] = useState(true);
-
-  const debouncedSearchURL = useDebounce(formData.spinnakerUrl, 1000);
 
   useEffect(() => {    
     const controller = new AbortController();
@@ -134,7 +118,6 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
         arrOfObj.map((item) => {
           respObj.push({ "name" : item.name, "id" : item._id, "configuration" : item.configuration });
         });
-        console.log(respObj);
         return respObj;
       } else {
         let errorMessage = "Spinnaker information is missing or unavailable!  Please ensure the required details are registered and up to date in Tool Registry.";
@@ -149,21 +132,20 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
     }
   };
 
-  const searchApplications = async (spinnakerId, spinnakerURL) => {  
+  const searchApplications = async (spinnakerId) => {  
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
     const apiUrl = "/tools/properties";   
     const postBody = {
       tool : "spinnaker",
       metric : "applications",
-      id: spinnakerId,
-      url: spinnakerURL
+      id: spinnakerId
     };
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      if( res.data && res.data.data ) {
-        let arrOfObj = res.data.data;
+      if( res.data && res.data ) {
+        let arrOfObj = res.data.spinnakerApplications;
         if(arrOfObj) {
           let result = arrOfObj.map(function(el) {
             let o = Object.assign({}, el);
@@ -184,20 +166,21 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
     }
   };
 
-  const searchTools = async (appName) => {    
+  const searchTools = async (spinnakerId, appName) => {    
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
     const apiUrl = "/tools/properties";   
     const postBody = {
       tool : "spinnaker",
       metric : "tools",
+      id: spinnakerId,
       appname: appName
     };
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      if( res.data && res.data.data) {
-        let arrOfObj = res.data.data;
+      if( res.data && res.data) {
+        let arrOfObj = res.data.spinnakerPipelines;
         if(arrOfObj) {
           var result = arrOfObj.map(function(el) {
             var o = Object.assign({}, el);
@@ -221,7 +204,6 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
   useEffect(
     () => {
       setShowToast(false);
-      setFormData({ ...formData, spinnakerId: "", spinnakerUrl: "", appName: "", toolName: "" });
       async function fetchApplications(id, url){
         // Set results state
         let results = await searchApplications(id, url);
@@ -233,7 +215,7 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
       // Make sure we have a value (user has entered something in input)
       if (formData.spinnakerId && formData.spinnakerId.length > 0 ) {
         // API call
-        fetchApplications(formData.spinnakerId, formData.spinnakerUrl);      
+        fetchApplications(formData.spinnakerId);      
       } else {
         setApplicationList([{ value: "", name : "Select One",  isDisabled: "yes" }]);
       }
@@ -244,22 +226,22 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
   useEffect(
     () => {
       setShowToast(false); 
-      async function fetchTools(appname){
+      async function fetchTools(id, appname){
         // Set results state
-        let results = await searchTools(appname);
+        let results = await searchTools(id, appname);
         if(results) {
           setToolsList(formatOptions(results));
           setIsToolSearching(false);
         }
       }
-      if (formData.appName) {
+      if (formData.applicationName) {
         // Fire off our API call
-        fetchTools(formData.appName);
+        fetchTools(formData.spinnakerId, formData.applicationName);
       } else {
         setToolsList([{ value: "", name : "Select One",  isDisabled: "yes" }]);
       }
     },
-    [formData.appName]
+    [formData.applicationName]
   );
  
   const formatOptions = (options) => {
@@ -268,12 +250,11 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
   };
 
   const validateRequiredFields = () => {
-    let { spinnakerId, spinnakerUrl, appName, toolName } = formData;
-    if (
-      spinnakerUrl.length === 0 ||    
+    let { spinnakerId, toolURL, applicationName, pipelineName } = formData;
+    if ( 
       spinnakerId.length === 0 || 
-      appName.length === 0 || 
-      toolName.length === 0 ) {
+      applicationName.length === 0 || 
+      pipelineName.length === 0 ) {
       let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
       setToast(toast);
       setShowToast(true);
@@ -284,32 +265,111 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
   };
 
   const handleSpinnakerChange = (selectedOption) => {
-    setFormData({ ...formData, spinnakerId: selectedOption.id, spinnakerUrl: selectedOption.configuration ? selectedOption.configuration.spinnakerURL : "" });    
+    setFormData({ ...formData, spinnakerId: selectedOption.id, toolURL: selectedOption.configuration && selectedOption.configuration.toolURL ?  selectedOption.configuration.toolURL : "", applicationName: "", pipelineName: "" });    
   };
 
   const handleApplicationChange = (selectedOption) => {
-    setFormData({ ...formData, appName: selectedOption.value });    
+    setFormData({ ...formData, applicationName: selectedOption.value, pipelineName: "" });    
   };
-  
+
   const handleToolChange = (selectedOption) => {
-    setFormData({ ...formData, toolName: selectedOption.value });    
+    setFormData({ ...formData, pipelineName: selectedOption.value });    
+  };
+
+  const RegistryPopover = (data) => {
+    if (data) {
+      return (
+        <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
+          <Popover.Title as="h3">
+            Tool and Account Details{" "}
+            <FontAwesomeIcon
+              icon={faTimes}
+              className="fa-pull-right pointer"
+              onClick={() => document.body.click()}
+            />
+          </Popover.Title>
+
+          <Popover.Content>
+            <div className="text-muted mb-2">
+              Configuration details for this item are listed below. Tool and
+              account specific settings are stored in the
+              <Link to="/inventory/tools">Tool Registry</Link>. To add a new
+              entry to a dropdown or update settings, make those changes there.
+            </div>
+            {data.configuration && (
+              <>
+                {Object.entries(data.configuration).map(function(a) {
+                  return (
+                    <div key={a}>
+                      {a[1].length > 0 && (
+                        <>
+                          <span className="text-muted pr-1">{a[0]}: </span>{" "}
+                          {a[1]}
+                        </>
+                      )}
+                    </div>
+                  );
+                })}
+              </>
+            )}
+          </Popover.Content>
+        </Popover>
+      );
+    } else {
+      return (
+        <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
+          <Popover.Title as="h3">
+            Tool and Account Details{" "}
+            <FontAwesomeIcon
+              icon={faTimes}
+              className="fa-pull-right pointer"
+              onClick={() => document.body.click()}
+            />
+          </Popover.Title>
+
+          <Popover.Content>
+            <div className="text-muted mb-2">
+              Please select any tool/account to get the details.
+            </div>
+          </Popover.Content>
+        </Popover>
+      );
+    }
   };
 
   return (
     <>
-      <Form>
-        {/* <Form.Group controlId="spinnakerURL">
-          <Form.Label>Spinnaker URL*</Form.Label>
-          <Form.Control maxLength="256" type="text" placeholder="" value={formData.spinnakerUrl || ""} onChange={e => setFormData({ ...formData, spinnakerUrl: e.target.value })} />
-        </Form.Group> */}
-
-        {/* use this if we get the spinnaker url from tools registry */}
-      
-
+      <Form>   
         <Form.Group controlId="spinnakarlist">
-          <Form.Label>Select Spinnaker*</Form.Label>
+          <Form.Label className="w-100">
+            Select Spinnaker*
+            <OverlayTrigger
+              trigger="click"
+              rootClose
+              placement="left"
+              overlay={RegistryPopover(
+                spinnakerList[
+                  spinnakerList.findIndex((x) => x.id === formData.spinnakerId)
+                  ],
+              )}
+            >
+              <FontAwesomeIcon
+                icon={faEllipsisH}
+                className="fa-pull-right pointer pr-1"
+                onClick={() => document.body.click()}
+              />
+            </OverlayTrigger>
+          </Form.Label>
           {isSpinnakerSearching ? (
-            <small className="form-text text-muted mt-2 text-center">Getting list of spinnakers from tools.</small>
+             <div className="form-text text-muted mt-2 p-2">
+             <FontAwesomeIcon
+               icon={faSpinner}
+               spin
+               className="text-muted mr-1"
+               fixedWidth
+             />
+             Loading Jenkins accounts from registry
+           </div>
           ) :(
             <>
               {renderForm && spinnakerList ? 
@@ -328,7 +388,7 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
         <Form.Group controlId="platform">
           <Form.Label>application Name*</Form.Label>
           {isAppSearching ? (
-            <small className="form-text text-muted mt-2 text-center">Type in Spinnaker URL to get application list</small>
+            <small className="form-text text-muted mt-2 text-center">Select Spinnaker details to get application list</small>
           ) :(
             <>
               {renderForm && applicationList ? 
@@ -336,7 +396,8 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
                   data={applicationList}
                   valueField='name'
                   textField='name'
-                  defaultValue={formData.appName ? applicationList[applicationList.findIndex(x => x.name === formData.appName)] : applicationList[0]}
+                  defaultValue={formData.applicationName ? applicationList[applicationList.findIndex(x => x.name === formData.applicationName)] : applicationList[0]}
+                  value={formData.applicationName ? applicationList[applicationList.findIndex(x => x.name === formData.applicationName)] : applicationList[0]}
                   onChange={handleApplicationChange}             
                 /> : null }
             </>
@@ -355,7 +416,8 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
                   data={toolsList}
                   valueField='value'
                   textField='name'
-                  defaultValue={formData.toolName ? toolsList[toolsList.findIndex(x => x.value === formData.toolName)] : toolsList[0]}
+                  defaultValue={formData.pipelineName ? toolsList[toolsList.findIndex(x => x.value === formData.pipelineName)] : toolsList[0]}
+                  value={formData.pipelineName ? toolsList[toolsList.findIndex(x => x.value === formData.pipelineName)] : toolsList[0]}
                   onChange={handleToolChange}             
                 /> : null }
             </>
