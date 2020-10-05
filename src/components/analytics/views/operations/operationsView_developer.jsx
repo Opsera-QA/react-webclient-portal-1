@@ -272,14 +272,16 @@ function OperationsView_Developer({ persona, index }) {
             <OpseraRecentCDTable persona={persona} date={{ start: "now-30d", end: "now" }} />
           </div>
         )}
-        {index.includes("heartbeat") && (
+
+        {/* {index.includes("heartbeat") && (
           <div className="d-flex">
             <div className="align-self-stretch p-2 w-100">
               <TimeToRestoreBarChart persona={persona} />
             </div>
-            <div className="align-self-stretch p-2 w-100">{/* Self Contained Chart Component 2 */}</div>
+            <div className="align-self-stretch p-2 w-100"></div>
           </div>
-        )}
+        )} */}
+        
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">{/* Self Contained Chart Component 3 */}</div>
           <div className="align-self-stretch p-2 w-100">{/* Self Contained Chart Component 4 */}</div>

@@ -237,14 +237,14 @@ function OperationsView_Manager({ persona, index }) {
       <>
         <SummaryCountBlocksView data={countBlockData} />
 
-        {index.includes("heartbeat") && (
+        {/* {index.includes("heartbeat") && (
           <div className="d-flex">
             <div className="align-self-stretch p-2 w-100">
               <TimeToRestoreBarChart persona={persona} />
             </div>
-            <div className="align-self-stretch p-2 w-100">{/* Self Contained Chart Component 2 */}</div>
+            <div className="align-self-stretch p-2 w-100"></div>
           </div>
-        )}
+        )} */}
 
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">{/* Self Contained Chart Component 3 */}</div>

@@ -1,120 +1,93 @@
 // This is where the custom ToolsConfiguration.configuration form will reside for this tool.
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import {Form, Button, Row} from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import {Form, Row} from "react-bootstrap";
+import SaveButton from "components/common/buttons/SaveButton";
 import {getFormValidationErrorDialog} from "../../../../../common/toasts/toasts";
+import argoConnectionMetadata from "./argo-connection-metadata";
+import LoadingDialog from "components/common/status_notifications/loading";
+import Model from "core/data_model/model";
+import Col from "react-bootstrap/Col";
+import DtoTextInput from "components/common/input/dto_input/dto-text-input";
 
-
-//This must match the form below and the data object expected.  Each tools' data object is different
-const INITIAL_DATA = {
-  toolURL: "",
-  userName: "",
-  accountPassword: ""
-};
 
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
 function ArgoToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVault }) {
-  const [formData, setFormData] = useState(INITIAL_DATA);
-  const [isSaving, setIsSaving] = useState(false);
+  const [configurationData, setConfigurationData] = useState(undefined);
   const [showToast, setShowToast] = useState(false);
   const [toast, setToast] = useState({});
 
   useEffect(() => {
-    if (typeof(toolData) !== "undefined") {
-      let { configuration } = toolData;
-      if (typeof(configuration) !== "undefined") {
-        setFormData(configuration);
-      }      
-    } else {
-      setFormData(INITIAL_DATA);
-    }    
+    loadData();
   }, [toolData]);
 
+  const loadData = async () => {
+    if (toolData["configuration"] != null) {
+      setConfigurationData(new Model(toolData["configuration"], argoConnectionMetadata, false))
+    } else {
+      setConfigurationData(new Model({...argoConnectionMetadata.newModelBase}, argoConnectionMetadata, true));
+    }
+  };
 
   const callbackFunction = async () => {
-    if (validateRequiredFields()) {
-      setIsSaving(true);
-      let newConfiguration = formData;
-      
-      if (typeof(newConfiguration.accountPassword) === "string") {
-        newConfiguration.accountPassword = await saveToVault(toolId, toolData.tool_identifier, "accountPassword", "Vault Secured Key", newConfiguration.accountPassword);
+    if (configurationData.isModelValid()) {
+      let newConfiguration = {...configurationData.getPersistData()};
+
+      if (configurationData.isChanged("accountPassword")) {
+        newConfiguration.accountPassword = await saveToVault(toolId, toolData.tool_identifier, "accountPassword", "Vault Secured Key", configurationData.getData("accountPassword"));
       }
 
       const item = {
         configuration: newConfiguration
       };
-      console.log("item: ", item);
-      await fnSaveChanges(item); 
-      setIsSaving(false);
+      await fnSaveChanges(item);
+    }
+    else {
+      let toast = getFormValidationErrorDialog(setShowToast);
+      setToast(toast);
+      setShowToast(true);
     }
   };
 
   const saveToVault = async (toolId, toolIdentifier, key, name, value) => {
-    //const keyName = `${pipelineId}-${stepId}-${key}`;  //old keyname with pipelineID
-    // const keyName = `${toolId}-${toolIdentifier}-${key}`; 
-    const keyName = `${toolId}-${toolIdentifier}`; 
+    const keyName = `${toolId}-${toolIdentifier}-${key}`;
     const body = {
       "key": keyName,
       "value": value
     };
-    const response = await fnSaveToVault(body);    
+    const response = await fnSaveToVault(body);
     if (response.status === 200 ) {
       return { name: name, vaultKey: keyName };
     } else {
-      setFormData(formData => {
-        return { ...formData, accountPassword: {} };
-      });
       return "";
     }
   };
 
-  const validateRequiredFields = () => {
-    let { toolURL, userName, accountPassword } = formData;
-    if (toolURL.length === 0 || userName.length === 0 || accountPassword.length === 0 ) {
-      let toast = getFormValidationErrorDialog(setShowToast);
-      setToast(toast);
-      setShowToast(true);
-      return false;
-    } else {
-      return true;
-    }
-  };
-
-  // console.log(formData);
+  if (configurationData == null) {
+    return <LoadingDialog size="sm" />;
+  }
 
   return (
     <Form>
-      {showToast && toast}
-
-      <Form.Group controlId="repoField">
-        <Form.Label>Argo URL*</Form.Label>
-        <Form.Control maxLength="100" type="text" placeholder="" value={formData.toolURL || ""} onChange={e => setFormData({ ...formData, toolURL: e.target.value })} />
-      </Form.Group>
-      <Form.Group controlId="branchField">
-        <Form.Label>User Name*</Form.Label>
-        <Form.Control maxLength="5" type="text" placeholder="" value={formData.userName || ""} onChange={e => setFormData({ ...formData, userName: e.target.value })} />
-      </Form.Group>
-      <Form.Group controlId="branchField">
-        <Form.Label>Password*</Form.Label>
-        <Form.Control maxLength="50" type="password" placeholder="" value={formData.accountPassword || ""} onChange={e => setFormData({ ...formData, accountPassword: e.target.value })} />
-      </Form.Group>
-
-      {/*TODO: Replace with SaveButton once converted to using data model*/}
+      <Row>
+        {showToast && toast}
+        <Col sm={12}>
+          <DtoTextInput setDataObject={setConfigurationData} fieldName={"toolURL"} dataObject={configurationData} />
+        </Col>
+        <Col sm={12}>
+          <DtoTextInput setDataObject={setConfigurationData} fieldName={"userName"} dataObject={configurationData} />
+        </Col>
+        <Col sm={12}>
+          <DtoTextInput type={"password"} setDataObject={setConfigurationData} fieldName={"accountPassword"} dataObject={configurationData} />
+        </Col>
+      </Row>
       <Row>
         <div className="ml-auto mt-3 px-3">
-          <div className="d-flex">
-            {isSaving &&
-            <div className="text-center mr-3 mt-1"><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>Saving is in progress</div>}
-            <Button size="sm" variant="primary" disabled={isSaving} onClick={() => callbackFunction()}><FontAwesomeIcon
-              icon={faSave} fixedWidth className="mr-2"/>Save</Button>
-          </div>
+          <SaveButton recordDto={configurationData} createRecord={callbackFunction} updateRecord={callbackFunction} />
         </div>
       </Row>
-      
       <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
     </Form>
   );
