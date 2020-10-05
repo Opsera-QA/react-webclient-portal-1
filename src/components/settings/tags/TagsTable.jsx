@@ -9,15 +9,12 @@ import {
   getTableTextColumn
 } from "../../common/table/table-column-helpers";
 import NewTagModal from "./NewTagModal";
-import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import FilterBar from "../../common/filters/FilterBar";
 import StatusFilter from "../../common/filters/status/StatusFilter";
 import TagTypeFilter from "../../common/filters/tags/TagTypeFilter";
 import SearchFilter from "../../common/filters/search/StatusFilter";
 
-function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto }) {
+function TagsTable({ data, loadData, isLoading, tagFilterDto, activeTagFilterDto, setTagFilterDto }) {
   const history = useHistory();
   let fields = tagEditorMetadata.fields;
   const [showTagModal, setShowTagModal] = useState(false);
@@ -50,7 +47,14 @@ function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto })
 
   const getFilterBar = () => {
     return(
-      <FilterBar loadData={loadData} filterDto={tagFilterDto}>
+      <FilterBar
+        addRecordFunction={createTag}
+        loadData={loadData}
+        filterDto={tagFilterDto}
+        setFilterDto={setTagFilterDto}
+        filters={["status", "type", "search"]}
+        activeFilterDto={activeTagFilterDto}
+      >
         <StatusFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} />
         <TagTypeFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} />
         <SearchFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} />
@@ -59,18 +63,7 @@ function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto })
   };
 
   return (
-    <div className="p-2">
-      <div className="custom-table-filter d-flex flex-row-reverse">
-        <div className="mb-1 text-right">
-          <Button variant="primary" size="sm"
-                  onClick={() => {
-                    createTag();
-                  }}>
-            <FontAwesomeIcon icon={faPlus} className="mr-1"/> New Tag
-          </Button>
-          <br/>
-        </div>
-      </div>
+    <div>
       <CustomTable onRowSelect={onRowSelect}
                    data={data}
                    rowStyling={rowStyling}
@@ -93,6 +86,7 @@ TagsTable.propTypes = {
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   tagFilterDto: PropTypes.object,
+  activeTagFilterDto: PropTypes.object,
   setTagFilterDto: PropTypes.func,
 };
 

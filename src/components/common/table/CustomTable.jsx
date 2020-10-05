@@ -126,9 +126,16 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
                 getHeaderColumn(column, j)
               ))}
             </tr>
-            <tr>
-            <td className="table-footer pt-1" colSpan="12">{paginationDto && paginationDto.getData("totalCount") != null && <DtoTopPagination paginationDto={paginationDto} setPaginationDto={setPaginationDto} isLoading={isLoading} loadData={loadData} />}</td>
-            </tr>
+              {paginationDto && paginationDto.getData("totalCount") != null &&
+              <tr>
+                <td className="table-footer pt-1" colSpan="12">
+                  <DtoTopPagination paginationDto={paginationDto}
+                                    setPaginationDto={setPaginationDto}
+                                    isLoading={isLoading}
+                                    loadData={loadData}/>
+                </td>
+              </tr>
+              }
               </>
           ))}
         </>

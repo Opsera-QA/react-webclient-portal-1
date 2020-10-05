@@ -14,6 +14,7 @@ function ToolInventory () {
   const [isLoading, setLoading] = useState(false);
   const [toolRegistryList, setToolRegistryList] = useState([]);
   const [toolFilterDto, setToolFilterDto] = useState(new Model({...toolFilterMetadata.newObjectFields}, toolFilterMetadata, false));
+  const [activeToolFilterDto, setActiveToolFilterDto] = useState(undefined);
 
   useEffect(() => {    
     loadData();
@@ -36,8 +37,9 @@ function ToolInventory () {
       const response = await toolsActions.getToolRegistryList(filterDto, getAccessToken);
       setToolRegistryList(response.data.data);
       let newFilterDto = filterDto;
-    newFilterDto.setData("totalCount", response.data.count);
+      newFilterDto.setData("totalCount", response.data.count);
       setToolFilterDto({...newFilterDto});
+      setActiveToolFilterDto(newFilterDto.clone());
   };
 
   return (
@@ -47,6 +49,7 @@ function ToolInventory () {
       data={toolRegistryList}
       toolFilterDto={toolFilterDto}
       setToolFilterDto={setToolFilterDto}
+      activeToolFilterDto={activeToolFilterDto}
     />
   );
 }

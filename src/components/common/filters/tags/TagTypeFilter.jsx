@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import DtoFilterSelectInput from "../../input/dto_input/filter/DtoFilterSelectInput";
+import DtoFilterSelectInput from "../input/DtoFilterSelectInput";
 import {createFilterOptions} from "../filterHelpers";
 import {defaultTags} from "../../../settings/tags/tags-form-fields";
 

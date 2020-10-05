@@ -1,6 +1,6 @@
 const tagFilterMetadata = {
   idProperty: "_id",
-  type: "Tag Filter",
+  type: "Tag",
   fields: [
     {
       label: "Status",
@@ -30,7 +30,8 @@ const tagFilterMetadata = {
   newObjectFields: {
     pageSize: 50,
     currentPage: 1,
-    sortOption: "type"
+    sortOption: "type",
+    search: ""
   },
   // TODO: If these are the same options everywhere, move to PageSort
   sortOptions: [

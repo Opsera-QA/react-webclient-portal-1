@@ -1,6 +1,6 @@
 const toolFilterMetadata = {
   idProperty: "_id",
-  type: "Tool Filter",
+  type: "Tool",
   fields: [
     {
       label: "Status",
@@ -34,7 +34,8 @@ const toolFilterMetadata = {
   newObjectFields: {
     pageSize: 50,
     currentPage: 1,
-    sortOption: "name"
+    sortOption: "name",
+    search: ""
   },
   // TODO: If these are the same options everywhere, move to PageSort
   sortOptions: [
