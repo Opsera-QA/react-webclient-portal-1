@@ -163,7 +163,7 @@ function PipelineActionControls({
     setInfoModal({
       show: true,
       header: "Approval Status",
-      message: "Your approval action has been recorded in this pipeline's Activity Logs.  The pipeline will resume operations shortly.",
+      message: "Your approval action has been recorded in this pipeline's Activity Logs.  The pipeline will resume operations shortly in order to review and update the system accordingly.",
       button: "OK",
     });
     setWorkflowStatus("running");
@@ -391,8 +391,8 @@ function PipelineActionControls({
         {workflowStatus === "paused" &&
         <>
           <Button variant="warning" className="mr-1" size="sm" disabled>
-            <FontAwesomeIcon icon={faPause} className="mr-1"/> Paused</Button>
-          <Button variant="warning"
+            <FontAwesomeIcon icon={faPause} className="mr-1"/> Pipeline Paused</Button>
+          <Button variant="success"
                   className="mr-1"
                   size="sm"
                   onClick={() => {

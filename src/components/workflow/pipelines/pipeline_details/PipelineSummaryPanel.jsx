@@ -7,7 +7,6 @@ import PipelineActions from "../../pipeline-actions";
 import { format } from "date-fns";
 import Modal from "../../../common/modal/modal";
 import ModalActivityLogs from "../../../common/modal/modalActivityLogs";
-import ErrorDialog from "../../../common/status_notifications/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPencilAlt,
@@ -15,14 +14,15 @@ import {
   faTimes,
   faCogs,
   faFlag,
-} from "@fortawesome/free-solid-svg-icons";
+} from "@fortawesome/pro-light-svg-icons";
 import "../../workflows.css";
 import SchedulerWidget from "../../../common/schedulerWidget";
 import PipelineHelpers from "../../pipelineHelpers";
 import DropdownList from "react-widgets/lib/DropdownList";
 import SummaryActionBar from "../../../common/actions/SummaryActionBar";
 import pipelineHelpers from "../../pipelineHelpers";
-import { getCreateSuccessResultDialog, getUpdateSuccessResultDialog } from "../../../common/toasts/toasts";
+//import { getCreateSuccessResultDialog, getUpdateSuccessResultDialog } from "../../../common/toasts/toasts";
+import { DialogToastContext } from "contexts/DialogToastContext";
 import PipelineActionControls from "./PipelineActionControls";
 import EditTagModal from "../../EditTagModal";
 
@@ -47,8 +47,8 @@ function PipelineSummaryPanel({
   refreshCount,
 }) {
   const contextType = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const { featureFlagItemInProd } = contextType;
-  const [error, setErrors] = useState();
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -63,8 +63,6 @@ function PipelineSummaryPanel({
   const [approvalStep, setApprovalStep] = useState({});
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
   let history = useHistory();
-  const [toast, setToast] = useState({});
-  const [showToast, setShowToast] = useState(false);
 
 
   const authorizedAction = (action, owner) => {
@@ -111,8 +109,6 @@ function PipelineSummaryPanel({
 
   const loadFormData = async (pipeline) => {
     if (pipeline.workflow !== undefined) {
-      const { getAccessToken } = contextType;
-
       if (pipeline.workflow.last_step !== undefined) {
         let status = pipeline.workflow.last_step.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;
 
@@ -230,29 +226,23 @@ function PipelineSummaryPanel({
 
       if (Object.keys(postBody).length > 0) {
         try {
-          const response = await PipelineActions.updatePipeline(pipelineId, postBody, getAccessToken);
+          await PipelineActions.updatePipeline(pipelineId, postBody, getAccessToken);
           setFormData(INITIAL_FORM_DATA);
-          let toast = getUpdateSuccessResultDialog("Pipeline", setShowToast);
-          setToast(toast);
-          setShowToast(true);
+          toastContext.showUpdateSuccessResultDialog("Pipeline");
           await fetchPlan();
         } catch (error) {
-          console.error(error);
-          setErrors(error);
+          toastContext.showErrorDialog(error);
         }
       }
-    } else {
-      console.error("Missing value or type for edit field");
     }
   };
 
   const handleSetSchedule = async (schedule) => {
-    handleSavePropertyClick(pipeline._id, schedule, "schedule");
+    await handleSavePropertyClick(pipeline._id, schedule, "schedule");
     setEditSchedule(false);
   };
 
   const handleEditPropertyClick = (type) => {
-    console.log("in handle edit property click: " + type);
     switch (type) {
     case "name":
       setEditTitle(true);
@@ -324,7 +314,6 @@ function PipelineSummaryPanel({
 
   return (
     <>
-      {error ? <ErrorDialog error={error}/> : null}
       {typeof (pipeline) !== "undefined" && pipeline !== {} ?
         <>
           <div>
@@ -356,7 +345,7 @@ function PipelineSummaryPanel({
                 handlePublishClick={authorizedAction("publish_pipeline_btn", pipeline.owner) ? handlePublishPipelineClick : undefined}
               />
             </div>
-            {showToast && toast}
+
             <Row>
               <Col sm={12}>
                 <div className="d-flex py-2">
@@ -372,7 +361,8 @@ function PipelineSummaryPanel({
                     </>
                     :
                     <>
-                      {Object.keys(approvalStep).length > 0 && <FontAwesomeIcon icon={faFlag} className="red mr-1"/>}
+                      {/*{Object.keys(approvalStep).length > 0 &&
+                      <FontAwesomeIcon icon={faFlag} className="red mr-1 vertical-align-item" fixedWidth/>}*/}
                       <span className="text-muted mr-1">Name:</span> {pipeline.name}
                       {authorizedAction("edit_pipeline_attribute", pipeline.owner)
                       && parentWorkflowStatus !== "running"
@@ -422,13 +412,14 @@ function PipelineSummaryPanel({
                 {authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running" && getEditIcon("tags")}
 
                 {!editTags && pipeline.tags &&
-                  pipeline.tags.map((item, idx) => {
-                    if (typeof item !== "string")
-                      return (
-                        <div key={idx}>
-                          <span className="ml-1"><span className="mr-1">{item.type}:</span>{item.value}</span>
-                        </div>
-                      );})
+                pipeline.tags.map((item, idx) => {
+                  if (typeof item !== "string")
+                    return (
+                      <div key={idx}>
+                        <span className="ml-1"><span className="mr-1">{item.type}:</span>{item.value}</span>
+                      </div>
+                    );
+                })
                 }
 
                 {editTags &&
@@ -490,9 +481,9 @@ function PipelineSummaryPanel({
                         className="ml-2">Frequency: {pipeline.workflow.schedule ? pipeline.workflow.schedule.frequency : "undefined"}</span>
                     </> : null}
 
-                    {/*TODO: Remove FF after schedler is fixed*/}
+                  {/*TODO: Remove FF after schedler is fixed*/}
                   {authorizedAction("edit_pipeline_attribute", pipeline.owner) && featureFlagItemInProd && parentWorkflowStatus !== "running" ?
-                    getEditIcon("schedule",true) : null}
+                    getEditIcon("schedule", true) : null}
                 </Col>
               }
               <Col lg className="py-1"><span className="text-muted mr-1">Org Account:</span> {pipeline.account}</Col>
@@ -533,13 +524,14 @@ function PipelineSummaryPanel({
         : null}
 
       {showDeleteModal ? <Modal header="Confirm Pipeline Delete"
-                                message="Warning! pipeline cannot be recovered once this pipeline is deleted. Do you still want to proceed?"
+                                message="Warning! This pipeline cannot be recovered once this pipeline is deleted. Do you still want to proceed?"
                                 button="Confirm"
                                 handleCancelModal={() => setShowDeleteModal(false)}
                                 handleConfirmModal={() => deleteItem(modalDeleteId)}/> : null}
 
       <ModalActivityLogs header="Pipeline Details" size="lg" jsonData={modalMessage} show={showModal}
                          setParentVisibility={setShowModal}/>
+
       {infoModal.show && <Modal header={infoModal.header} message={infoModal.message} button={infoModal.button}
                                 handleCancelModal={() => setInfoModal({ ...infoModal, show: false })}/>}
 

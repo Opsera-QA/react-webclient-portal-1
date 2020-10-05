@@ -28,8 +28,7 @@ function LoadingDialog({ size, message }) {
     return (
       <div className="row" style={{ height:"250px", width: "100%" }}>
         <div className="col-sm-12 my-auto text-center text-muted" style={{fontSize: "1.3em"}}>
-          <FontAwesomeIcon icon={faSpinner} spin className="mr-2"
-          style={{verticalAlign: "middle"}}/>
+          <FontAwesomeIcon icon={faSpinner} spin className="mr-2 vertical-align-item" />
           {message && message}
         </div>
       </div>

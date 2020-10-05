@@ -129,6 +129,24 @@ pipelineActions.deployTemplate = async (templateId, getAccessToken) => {
   return response;
 };
 
+pipelineActions.approve = async (templateId, postBody, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/pipelines/${templateId}/approve`;
+  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
+    .then((result) =>  {return result;})
+    .catch(error => {throw { error };});
+  return response;
+};
+
+pipelineActions.deny = async (templateId, postBody, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/pipelines/${templateId}/deny`;
+  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
+    .then((result) =>  {return result;})
+    .catch(error => {throw { error };});
+  return response;
+};
+
 
 pipelineActions.getToolsList = async (service, getAccessToken) => {
   const accessToken = await getAccessToken();
