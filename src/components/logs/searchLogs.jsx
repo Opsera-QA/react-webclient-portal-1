@@ -32,7 +32,7 @@ function SearchLogs(props) {
   const [noResults, setNoResults] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOptions, setFilters] = useState([]);
-  const [filterType, setFilterType] = useState("blueprint");
+  const [filterType, setFilterType] = useState(Array.isArray(FILTER) && FILTER.length > 0 ? FILTER[0] : "");
   const [multiFilter, setMultiFilter] = useState([]);
   const [jobFilter, setJobFilter] = useState("");
   const [pipelineFilter, setPipelineFilter] = useState("");
@@ -369,8 +369,19 @@ function SearchLogs(props) {
 
   if (error) {
     return <ErrorDialog error={error} />;
-  } else {
+  } 
+
+  if (!FILTER.length > 0) {
     return (
+    <div className="mt-3 bordered-content-block p-3 max-content-width" style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}> 
+    <Row>
+        <InfoDialog message="No logs found for this account" />
+    </Row>
+  </div>
+    )
+  }
+
+  return (
       <>
         <div className="max-content-width">
           <Form onSubmit={handleFormSubmit}>
@@ -540,6 +551,9 @@ function SearchLogs(props) {
       </>
     );
   }
-}
+
+  SearchLogs.propTypes = {
+    tools: PropTypes.array
+  };
 
 export default SearchLogs;
