@@ -569,6 +569,17 @@ function DockerPushStepConfiguration({
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       if (res.data && res.data.data) {
         let arrOfObj = res.data.data;
+        if( typeof arrOfObj !== "object" ) {
+          let toast = getErrorDialog(
+            "Error fetching repositories: "+ arrOfObj,
+            setShowToast,
+            "detailPanelTop"
+          );
+          setToast(toast);
+          setShowToast(true);
+          setBranchList([]);
+          return [];
+        }
         return arrOfObj;
       } else {
         let toast = getServiceUnavailableDialog(setShowToast, "detailPanelTop");
@@ -597,6 +608,16 @@ function DockerPushStepConfiguration({
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       if (res.data && res.data.data) {
         let arrOfObj = res.data.data;
+        if( typeof arrOfObj !== "object" ) {
+          let toast = getErrorDialog(
+            "Error fetching branches: "+ arrOfObj,
+            setShowToast,
+            "detailPanelTop"
+          );
+          setToast(toast);
+          setShowToast(true);
+          return [];
+        }
         if (arrOfObj) {
           var result = arrOfObj.map(function (el) {
             var o = Object.assign({});
