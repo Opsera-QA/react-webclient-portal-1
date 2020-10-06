@@ -253,7 +253,7 @@ const SfdcPipelineComponents = ({
                   <div className="px-2"></div>
 
                   <div className="align-self-end">
-                    {/* <Button variant="secondary" size="sm" className="mr-2" onClick={handleCheckAllClickComponentTypes}>
+                    <Button variant="secondary" size="sm" className="mr-2" onClick={handleCheckAllClickComponentTypes}>
                       <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1" />
                       Check All
                     </Button>
@@ -265,7 +265,7 @@ const SfdcPipelineComponents = ({
                     >
                       <FontAwesomeIcon icon={faSquare} fixedWidth className="mr-1" />
                       Uncheck All
-                    </Button> */}
+                    </Button>
                   </div>
                 </div>
               </div>

@@ -344,30 +344,6 @@ function SFDCConfiguration({
              </Form.Group>
             }
 
-            {formData.jobType === "SFDC VALIDATE PACKAGE XML" || formData.jobType === "SFDC DEPLOY" ? (
-              <Form.Group controlId="s3Step">
-                <Form.Label>Generate XML Step Info*</Form.Label>
-                {listOfSteps ? (
-                  <DropdownList
-                    data={listOfSteps}
-                    value={
-                      formData.stepIdXML
-                        ? listOfSteps[listOfSteps.findIndex((x) => x._id === formData.stepIdXML)]
-                        : listOfSteps[0]
-                    }
-                    valueField="_id"
-                    textField="name"
-                    filter="contains"
-                    onChange={handleXMLStepChange}
-                  />
-                ) : (
-                  <FontAwesomeIcon icon={faSpinner} spin className="text-muted ml-2" fixedWidth />
-                )}
-              </Form.Group>
-            ) : (
-              <></>
-            )}
-
       </Form>
       </>
   );
