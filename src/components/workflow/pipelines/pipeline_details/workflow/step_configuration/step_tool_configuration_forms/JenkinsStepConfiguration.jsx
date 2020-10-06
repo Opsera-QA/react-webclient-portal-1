@@ -171,18 +171,16 @@ function JenkinsStepConfiguration({
       setIsRepoSearching(true);
       // Set results state
       let results = await searchRepositories(service, gitToolId);
-      if (results) {
         //console.log(results);
         setRepoList(results);
         setIsRepoSearching(false);
-      }
     }
 
     if (formData.service && formData.service.length > 0 && formData.gitToolId && formData.gitToolId.length > 0) {
       // Fire off our API call
       fetchRepos(formData.service, formData.gitToolId);
     } else {
-      setIsRepoSearching(true);
+      // setIsRepoSearching(true);
       setRepoList([{ value: "", name: "Select One", isDisabled: "yes" }]);
     }
   }, [formData.service, formData.gitToolId, formData.gitCredential]);
@@ -196,11 +194,8 @@ function JenkinsStepConfiguration({
       setIsBranchSearching(true);
       // Set results state
       let results = await searchBranches(service, gitToolId, repoId);
-      if (results) {
-        //console.log(results);
-        setBranchList(results);
-        setIsBranchSearching(false);
-      }
+      setBranchList(results);
+      setIsBranchSearching(false);
     }
 
     if (
@@ -551,7 +546,6 @@ function JenkinsStepConfiguration({
         break;
     }
   };
-  console.log(jobType);
   //todo: the api needs to be moved to actions.jsx
   const searchRepositories = async (service, gitAccountId) => {
     const { getAccessToken } = contextType;
@@ -567,6 +561,17 @@ function JenkinsStepConfiguration({
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       if (res.data && res.data.data) {
         let arrOfObj = res.data.data;
+        if( typeof arrOfObj !== "object" ) {
+          let toast = getErrorDialog(
+            "Error fetching repositories: "+ arrOfObj,
+            setShowToast,
+            "detailPanelTop"
+          );
+          setToast(toast);
+          setShowToast(true);
+          setBranchList([]);
+          return [];
+        }
         return arrOfObj;
       } else {
         let toast = getServiceUnavailableDialog(setShowToast, "detailPanelTop");
@@ -596,6 +601,16 @@ function JenkinsStepConfiguration({
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       if (res.data && res.data.data) {
         let arrOfObj = res.data.data;
+        if( typeof arrOfObj !== "object" ) {
+          let toast = getErrorDialog(
+            "Error fetching branches: "+ arrOfObj,
+            setShowToast,
+            "detailPanelTop"
+          );
+          setToast(toast);
+          setShowToast(true);
+          return [];
+        }
         if (arrOfObj) {
           var result = arrOfObj.map(function (el) {
             var o = Object.assign({});
@@ -880,7 +895,7 @@ function JenkinsStepConfiguration({
                     </div>
                   ) : (
                     <>
-                      {repoList ? (
+                      {repoList && repoList.length > 0 ? (
                         <DropdownList
                           data={repoList}
                           value={repoList[repoList.findIndex((x) => x.name === formData.repository)]}
@@ -915,7 +930,7 @@ function JenkinsStepConfiguration({
                     </div>
                   ) : (
                     <>
-                      {branchList ? (
+                      {branchList && branchList.length > 0 ? (
                         <DropdownList
                           data={branchList}
                           value={branchList[branchList.findIndex((x) => x.value === formData.branch)]}
