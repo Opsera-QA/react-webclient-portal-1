@@ -41,7 +41,6 @@ function LdapUserDetailView() {
 
   const getLdapUser = async (userEmail) => {
     const response = await accountsActions.getUserByEmail(userEmail, getAccessToken);
-    console.log("response: " + JSON.stringify(response.data));
     setLdapUserData(new Model(response.data, ldapUsersMetaData, false));
   };
 
@@ -52,10 +51,9 @@ function LdapUserDetailView() {
       setAccessRoleData(userRoleAccess);
       let {ldap} = user;
 
-      if (ldap.domain === orgDomain)
+      if (userRoleAccess.OpseraAdministrator || ldap.domain === orgDomain)
       {
         let authorizedActions = await accountsActions.getAllowedUserActions(userRoleAccess, ldap.organization, userEmail, getUserRecord, getAccessToken);
-        console.log("Authorized Actions: " + JSON.stringify(authorizedActions));
         setAuthorizedActions(authorizedActions);
 
         if (authorizedActions.includes("get_user_details")) {
