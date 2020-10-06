@@ -52,7 +52,7 @@ function Signup() {
     if (registrationDataDto.isModelValid2()) {
       try {
         await userActions.createOpseraAccount(registrationDataDto);
-        toastContext.showCreateSuccessResultDialog("Opsera Account")
+        //toastContext.showCreateSuccessResultDialog("Opsera Account")
         loadRegistrationResponse();
       }
       catch (error) {
