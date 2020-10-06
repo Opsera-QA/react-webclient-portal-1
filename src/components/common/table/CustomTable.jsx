@@ -74,11 +74,9 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
   }
 
   const getTableTitleLoader = () => {
-    return (
-      <>
-        {isLoading && tableTitle && data != null && data.length !== 0 && <FontAwesomeIcon icon={faSpinner} spin className="ml-2 my-auto"/> }
-      </>
-    );
+    if (isLoading && tableTitle && data != null && data.length !== 0) {
+      return (<FontAwesomeIcon icon={faSpinner} spin className="ml-2 my-auto"/>);
+    }
   };
 
   const getTableTitleBar = () => {
@@ -88,17 +86,16 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
           <Col sm={3} className="d-flex pl-0 my-1">
             <div><span className="h6">{tableTitle}{getTableTitleLoader()}</span></div>
           </Col>
-          {/*TODO: Remove old add button after removing everywhere*/}
           {tableFilterBar
             ? <Col className="pr-0"><div className="mt-0 mb-1"><div className="ml-auto">{tableFilterBar}</div></div></Col>
-            : <div className="d-flex text-right">
-            {createNewRecord && <Button size="sm" className={"o"}
-                                        onClick={() => {
-                                          createNewRecord();
-                                        }}>
-              <FontAwesomeIcon icon={faPlus}/>
-              <span className="ml-1">New {type}</span>
-            </Button>}
+            :
+            <div className="d-flex text-right">
+              {/*TODO: Remove old add button after removing everywhere*/}
+              {createNewRecord &&
+                <Button size="sm" onClick={() => { createNewRecord(); }}>
+                  <FontAwesomeIcon icon={faPlus}/><span className="ml-1">New {type}</span>
+                </Button>
+              }
             </div>
           }
         </Row>
@@ -120,24 +117,20 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
       return (
         <>
           {headerGroups.map((headerGroup, i) => (
-            <>
             <tr key={i}  {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column, j) => (
-                getHeaderColumn(column, j)
-              ))}
+              {headerGroup.headers.map((column, j) => (getHeaderColumn(column, j)))}
             </tr>
-              {paginationDto && paginationDto.getData("totalCount") != null &&
-              <tr>
-                <td className="table-footer pt-1" colSpan="12">
-                  <DtoTopPagination paginationDto={paginationDto}
-                                    setPaginationDto={setPaginationDto}
-                                    isLoading={isLoading}
-                                    loadData={loadData}/>
-                </td>
-              </tr>
-              }
-              </>
           ))}
+          {paginationDto && paginationDto.getData("totalCount") != null &&
+          <tr key={"topPaginator"}>
+            <td className="top-pagination pt-1" colSpan="12">
+              <DtoTopPagination paginationDto={paginationDto}
+                                setPaginationDto={setPaginationDto}
+                                isLoading={isLoading}
+                                loadData={loadData}/>
+            </td>
+          </tr>
+          }
         </>
       );
     }
@@ -159,11 +152,13 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
   const getTableRow = (row, index) => {
     prepareRow(row);
     return (
-      <tr className={getRowClassNames(index, row)}
-          key={index} {...row.getRowProps({onClick: () => onRowSelect ? onRowSelect(row) : null})}>
+      <tr className={getRowClassNames(index, row)} key={index} {...row.getRowProps({onClick: () => onRowSelect ? onRowSelect(row) : null})}>
         {row.cells.map((cell, j) => {
-          return <td key={j} {...cell.getCellProps()}
-                     className={"table-cell px-2 " + setColumnClass(cell.column.id, columns)}>{cell.render("Cell")}</td>;
+          return (
+            <td key={j} {...cell.getCellProps()} className={"table-cell px-2 " + setColumnClass(cell.column.id, columns)}>
+              {cell.render("Cell")}
+            </td>
+          );
         })}
       </tr>);
   };
@@ -191,8 +186,29 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
     }
   };
 
+  // TODO: Remove when all tables are updated
+  const getOldPaginator = () => {
+    if (!paginationOptions || isLoading) {
+      return null;
+    }
+
+    return (
+      <td colSpan="100%" className="px-2 pt-2 table-footer">
+        {paginationOptions && !isLoading && <Pagination total={paginationOptions.totalCount} currentPage={paginationOptions.currentPage} pageSize={paginationOptions.pageSize} onClick={(pageNumber, pageSize) => paginationOptions.gotoPageFn(pageNumber, pageSize)} />}
+      </td>
+    );
+  };
+
+  const getNewPaginator = () => {
+    return (
+      <td colSpan="100%" className="px-2 py-1 table-footer">
+        {paginationDto && paginationDto.getData("totalCount") != null && <DtoBottomPagination paginationDto={paginationDto} setPaginationDto={setPaginationDto} isLoading={isLoading} loadData={loadData} />}
+      </td>
+    );
+  }
+
   return (
-    <>
+    <div>
       {tableTitle && getTableTitleBar()}
       <div className="table-content-block">
         <table className={tableStyleName} responsive="true" hover="true" {...getTableProps()}>
@@ -204,15 +220,13 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
           </tbody>
           <tfoot>
             <tr>
-              <td colSpan="100%" className="px-2 pt-2 table-footer">
-                {paginationOptions && !isLoading && <Pagination total={paginationOptions.totalCount} currentPage={paginationOptions.currentPage} pageSize={paginationOptions.pageSize} onClick={(pageNumber, pageSize) => paginationOptions.gotoPageFn(pageNumber, pageSize)} />}
-                {paginationDto && paginationDto.getData("totalCount") != null && <DtoBottomPagination paginationDto={paginationDto} setPaginationDto={setPaginationDto} isLoading={isLoading} loadData={loadData} />}
-              </td>
+              {getOldPaginator()}
+              {getNewPaginator()}
             </tr>
           </tfoot>
         </table>
       </div>
-    </>
+    </div>
   );
 }
 

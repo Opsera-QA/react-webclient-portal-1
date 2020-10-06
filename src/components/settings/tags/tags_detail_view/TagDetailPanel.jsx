@@ -8,7 +8,7 @@ import {faCogs} from "@fortawesome/pro-solid-svg-icons/faCogs";
 import CustomTab from "../../../common/tabs/CustomTab";
 import CustomTabContainer from "../../../common/tabs/CustomTabContainer";
 
-function TagDetailPanel({ tagData, setTagData, canDelete }) {
+function TagDetailPanel({ tagData, setTagData }) {
   const [activeTab, setTabSelection] = useState("settings");
 
   const handleTabClick = (activeTab) => e => {
@@ -28,8 +28,8 @@ function TagDetailPanel({ tagData, setTagData, canDelete }) {
         </Row>
         <Row>
           <Col>
-            <div className="tabbed-content-block">
-              {tagData && <TagDetailsView activeTab={activeTab} setTagData={setTagData} tagData={tagData} canDelete={canDelete} /> }
+            <div className="content-block-collapse">
+              {tagData && <TagDetailsView activeTab={activeTab} setTagData={setTagData} tagData={tagData} /> }
             </div>
           </Col>
         </Row>
@@ -38,7 +38,7 @@ function TagDetailPanel({ tagData, setTagData, canDelete }) {
   );
 }
 
-function TagDetailsView({ activeTab, setTagData, tagData, canDelete }) {
+function TagDetailsView({ activeTab, setTagData, tagData }) {
   useEffect(() => {
     // console.log("CHANGE HAPPENED");
   }, [activeTab, tagData]);
@@ -46,7 +46,7 @@ function TagDetailsView({ activeTab, setTagData, tagData, canDelete }) {
   if (activeTab) {
     switch (activeTab) {
     case "settings":
-      return <TagEditorPanel setTagData={setTagData} tagData={tagData} canDelete={canDelete} />;
+      return <TagEditorPanel setTagData={setTagData} tagData={tagData} />;
     default:
       return null;
     }

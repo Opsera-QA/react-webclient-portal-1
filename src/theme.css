@@ -480,6 +480,11 @@ a.text-primary:hover, a.text-primary:focus {
   padding-top: 1em;
   height: 2em;
 }
+
+.custom-table .top-pagination {
+    background-color: #E7E5ED;
+    height: 2em;
+}
 /* End Table Styling */
 
 /* End custom table styling */
@@ -774,6 +779,11 @@ a.nav-link {
 .content-block {
   border-radius: 5px;
   border: 1px solid #d2d2d2;
+}
+
+.content-block-shaded {
+    border-radius: 5px;
+    background-color: rgba(203, 205, 205, 0.1);
 }
 
 .content-block-collapse {

@@ -13,6 +13,7 @@ import FilterBar from "../../common/filters/FilterBar";
 import StatusFilter from "../../common/filters/status/StatusFilter";
 import TagTypeFilter from "../../common/filters/tags/TagTypeFilter";
 import SearchFilter from "../../common/filters/search/StatusFilter";
+import {getField} from "../../common/metadata/metadata-helpers";
 
 function TagsTable({ data, loadData, isLoading, tagFilterDto, activeTagFilterDto, setTagFilterDto }) {
   const history = useHistory();
@@ -20,11 +21,11 @@ function TagsTable({ data, loadData, isLoading, tagFilterDto, activeTagFilterDto
   const [showTagModal, setShowTagModal] = useState(false);
   const columns = useMemo(
     () => [
-      getTableTextColumn(fields.find(field => { return field.id === "type"})),
-      getTableTextColumn(fields.find(field => { return field.id === "value"})),
-      getTableTextColumn(fields.find(field => { return field.id === "account"})),
-      getTableBooleanIconColumn(fields.find(field => { return field.id === "active"})),
-      getTableDateColumn(fields.find(field => { return field.id === "createdAt"})),
+      getTableTextColumn(getField(fields, "type")),
+      getTableTextColumn(getField(fields, "value")),
+      getTableTextColumn(getField(fields, "account")),
+      getTableBooleanIconColumn(getField(fields, "active")),
+      getTableDateColumn(getField(fields, "createdAt")),
     ],
     []
   );

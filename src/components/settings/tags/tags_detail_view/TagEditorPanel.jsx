@@ -11,6 +11,7 @@ import SaveButton from "../../../common/buttons/SaveButton";
 import Col from "react-bootstrap/Col";
 import DtoSelectInput from "../../../common/input/dto_input/dto-select-input";
 import {defaultTags} from "../tags-form-fields";
+import DetailPanelContainer from "../../../common/panels/detail_panel_container/DetailPanelContainer";
 
 function TagEditorPanel({ tagData, setTagData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -35,13 +36,9 @@ function TagEditorPanel({ tagData, setTagData, handleClose }) {
     return await adminTagsActions.update(tagDataDto, getAccessToken);
   };
 
-  if (isLoading) {
-    return (<LoadingDialog size="sm"/>);
-  }
-
     return (
-      <>
-        <div className="mx-2 my-3">
+      <DetailPanelContainer isLoading={isLoading}>
+        <div className="mx-2">
           <Row>
             <Col>
               <DtoSelectInput textField={"value"}
@@ -64,12 +61,12 @@ function TagEditorPanel({ tagData, setTagData, handleClose }) {
             </Col>
           </Row>
           <Row>
-            <div className="ml-auto mt-3 px-3">
+            <div className="ml-auto mt-3">
               <SaveButton handleClose={handleClose} recordDto={tagDataDto} setRecordDto={setTagDataDto} setData={setTagData} createRecord={createTag} updateRecord={updateTag} />
             </div>
           </Row>
         </div>
-      </>
+      </DetailPanelContainer>
     );
 }
 

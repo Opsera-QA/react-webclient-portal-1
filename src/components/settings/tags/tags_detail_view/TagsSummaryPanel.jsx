@@ -12,6 +12,7 @@ import Model from "../../../../core/data_model/model";
 import paths from "../../../common/navigation/paths";
 import adminTagsActions from "../admin-tags-actions";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
+import LoadingDialog from "../../../common/status_notifications/loading";
 
 function TagsSummaryPanel({ tagData, setTagData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -50,15 +51,14 @@ function TagsSummaryPanel({ tagData, setTagData }) {
   };
 
   if (tagData == null) {
-    return
+    return <LoadingDialog size="sm" />;
   }
 
   return (
-    <>
       <div className="scroll-y pt-2 px-3">
         <SummaryActionBar backButtonPath={"/" + paths.tagManagement} handleActiveToggle={handleActiveToggle}
                           status={tagData.getData("active")}/>
-        <div className="mb-3 flat-top-content-block p-3 detail-view-summary">
+        <div className="mb-3 content-block-collapse p-3 detail-view-summary">
           <Row>
             <Col lg={6}>
               <DtoTextField dataObject={tagData} fieldName={"_id"}/>
@@ -90,7 +90,6 @@ function TagsSummaryPanel({ tagData, setTagData }) {
           </Row>
         </div>
       </div>
-    </>
   );
 }
 

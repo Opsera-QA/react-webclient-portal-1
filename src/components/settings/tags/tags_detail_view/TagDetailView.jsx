@@ -9,30 +9,38 @@ import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
 import Model from "../../../../core/data_model/model";
 import tagEditorMetadata from "../tags-form-fields";
 import {faTags} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import DetailViewContainer from "../../../common/panels/detail_view_container/DetailViewContainer";
+import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 
 function TagDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState({});
   const [tagData, setTagData] = useState(undefined);
   const { id } = useParams();
-  const [canDelete, setCanDelete] = useState(false);
-  const [error, setErrors] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    getTag(id);
-    getRoles();
+    loadData();
   }, []);
 
-  const getTag = async (tagId) => {
-    const response = await adminTagsActions.get(tagId, getAccessToken);
-    setTagData(response.data.length > 0 ? response.data[0] : null);
+  const loadData = async () => {
     try {
+      setIsLoading(true);
+      await getRoles();
+      await getTag(id);
+    }
+    catch (error) {
+      toastContext.showLoadingErrorDialog(error);
+    }
+    finally {
+      setIsLoading(false);
+    }
+  };
+
+  const getTag = async (tagId) => {
       const response = await adminTagsActions.get(tagId, getAccessToken);
       setTagData(new Model(response.data, tagEditorMetadata, false));
-    } catch (e) {
-      setErrors(e)
-    }
   };
 
   const getRoles = async () => {
@@ -43,32 +51,15 @@ function TagDetailView() {
     }
   };
 
-
   return (
-    <>
-      <BreadcrumbTrail destination={"tagDetailView"} />
-      {error && <ErrorDialog error={error} align={"top"} setError={setErrors}/>}
-      {tagData &&
-      <div className="content-container content-card-1 max-content-width ml-2">
-        <div className="pt-2 pl-2 content-block-header"><h5><FontAwesomeIcon icon={faTags} fixedWidth className="mr-1"/>Tag Details [{tagData && tagData.type}]</h5></div>
-
-        <div>
-          <div>
-            <div>
-              <TagsSummaryPanel tagData={tagData} setTagData={setTagData} />
-            </div>
-            <div>
-              <TagDetailPanel
-                setTagData={setTagData}
-                tagData={tagData}
-                canDelete={canDelete}/>
-            </div>
-          </div>
-        </div>
-        <div className="content-block-footer" />
-      </div>
-      }
-    </>
+    <DetailViewContainer
+      breadcrumbDestination={"tagDetailView"}
+      title={tagData != null ? `Tag Details [${tagData["type"]}]` : undefined}
+      titleIcon={faTags}
+      isLoading={isLoading}
+      summaryPanel={<TagsSummaryPanel tagData={tagData} setTagData={setTagData} />}
+      detailPanel={<TagDetailPanel setTagData={setTagData} tagData={tagData} />}
+    />
   );
 }
 
