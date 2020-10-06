@@ -50,12 +50,14 @@ function ArgoApplicationsTable({ toolData, loadData, selectedRow, isLoading }) {
 
   return (
     <>
-      <div className="my-1 text-right">
-        <Button variant="primary" size="sm" onClick={() => createArgoApplication()}>
-          <FontAwesomeIcon icon={faPlus} className="mr-1" /> Create Argo Application
-        </Button>
-        <br />
-      </div>
+      {toolData && toolData.data.configuration && (
+        <div className="my-1 text-right">
+          <Button variant="primary" size="sm" onClick={() => createArgoApplication()}>
+            <FontAwesomeIcon icon={faPlus} className="mr-1" /> Create Argo Application
+          </Button>
+          <br />
+        </div>
+      )}
       <CustomTable columns={columns} data={data} onRowSelect={selectedRow} isLoading={isLoading}></CustomTable>
       <ExistingArgoApplicationModal
         toolData={toolData}
