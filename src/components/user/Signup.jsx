@@ -51,7 +51,7 @@ function Signup() {
 
     if (registrationDataDto.isModelValid2()) {
       try {
-        await userActions.createFreeTrialAccount(registrationDataDto);
+        await userActions.createOpseraAccount(registrationDataDto);
         // TODO: Do we want to pop up success toast?
         // toastContext.showCreateSuccessResultDialog("Opsera Account")
         loadRegistrationResponse();
