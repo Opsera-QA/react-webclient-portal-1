@@ -33,8 +33,8 @@ function Profile() {
   }
 
   const fetchData = async () => {
-    const response = await userActions.getAnalyticsSettings(getAccessToken);
-    setData(response.data.profile[0]);
+    /*const response = await userActions.getAnalyticsSettings(getAccessToken);
+    setData(response.data.profile[0]);*/
     setUser(await getUserRecord());
   }
 
