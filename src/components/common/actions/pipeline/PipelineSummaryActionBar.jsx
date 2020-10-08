@@ -13,7 +13,7 @@ function PipelineSummaryActionBar({handlePipelineTransferClick, handleDuplicateC
       {handlePublishClick && <div className="ml-3"><ActionBarPublishPipelineButton handlePublishClick={handlePublishClick} itemId={pipeline._id} /></div>}
       {handleDuplicateClick && <div className="ml-3"><ActionBarDuplicateButton handleDuplicateClick={handleDuplicateClick} itemName={"Pipeline"} itemId={pipeline._id} /></div>}
       {handlePipelineTransferClick && <div className="ml-3"><ActionBarTransferPipelineButton pipeline={pipeline} transferPipeline={handlePipelineTransferClick} itemId={pipeline._id} /></div>}
-      {handleDeleteClick && <div className="ml-3"><ActionBarDeleteButton handleDeleteClick={handleDeleteClick} itemName={"Pipeline"}  /></div>}
+      {handleDeleteClick && <div className="ml-3"><ActionBarDeleteButton handleDeleteClick={handleDeleteClick} itemId={pipeline._id} itemName={"Pipeline"}  /></div>}
     </div>
   );
 }
