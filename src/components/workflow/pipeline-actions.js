@@ -55,6 +55,19 @@ pipelineActions.updatePipeline = async (pipelineId, postBody, getAccessToken) =>
   return response;
 };
 
+pipelineActions.transferPipeline = async (pipelineId, newOwnerId, getAccessToken) => {
+  const postBody = {
+    owner: newOwnerId
+  };
+
+  const accessToken = await getAccessToken();
+  const apiUrl = `/pipelines/${pipelineId}/update/`;
+  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
+    .then((result) =>  {return result;})
+    .catch(error => {throw { error };});
+  return response;
+};
+
 pipelineActions.get = async (pipelineId, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = `/pipelines/${pipelineId}`;   

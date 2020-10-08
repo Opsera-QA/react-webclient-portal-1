@@ -7,6 +7,7 @@ import {useHistory} from "react-router-dom";
 import { faShareSquare, faCopy, faFileAlt } from "@fortawesome/pro-light-svg-icons";
 import {faSearchPlus} from "@fortawesome/pro-regular-svg-icons";
 
+// TODO: Note, please use the new component when ironed out going forward. We will create area specific summary bars, using SummaryActionBarContainer
 function SummaryActionBar({itemName, itemId, backButtonPath, handleDuplicateClick, handleDeleteClick, handleActiveToggle, handleViewClick, handlePublishClick, handleDetailsClick, data, status}) {
   const history = useHistory();
   // TODO: Move to helper
