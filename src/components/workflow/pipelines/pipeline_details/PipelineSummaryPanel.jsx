@@ -25,6 +25,7 @@ import pipelineHelpers from "../../pipelineHelpers";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import PipelineActionControls from "./PipelineActionControls";
 import EditTagModal from "../../EditTagModal";
+import PipelineSummaryActionBar from "../../../common/actions/pipeline/PipelineSummaryActionBar";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -48,7 +49,7 @@ function PipelineSummaryPanel({
 }) {
   const contextType = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const { featureFlagItemInProd } = contextType;
+  const { featureFlagItemInProd, getAccessToken } = contextType;
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -87,6 +88,19 @@ function PipelineSummaryPanel({
     }
   };
 
+  const canTransferPipeline = (owner) => {
+    if (customerAccessRules.OpseraAdministrator) {
+      return true; //all actions are authorized to opsera administrator
+    }
+
+    return owner === customerAccessRules.UserId;
+  };
+
+  const transferPipeline = async (pipelineId, newOwnerId) => {
+    console.log("old owner id: " + pipeline.owner);
+    console.log("Received new owner id: " + newOwnerId);
+    // return await transferPipeline(pipelineId, newOwnerId, getAccessToken);
+  }
 
   useEffect(() => {
     const controller = new AbortController();
@@ -163,7 +177,6 @@ function PipelineSummaryPanel({
       button: "OK",
     });
   };
-
 
   async function deleteItem(pipelineId) {
     const { getAccessToken } = contextType;
@@ -334,15 +347,14 @@ function PipelineSummaryPanel({
           <div className="mb-3 flat-top-content-block p-3">
 
             <div className="text-muted float-right">
-              <SummaryActionBar
-                itemId={pipeline._id}
-                itemName={"Pipeline"}
-                data={pipeline}
-                /*backButtonPath={"/workflow"}*/
+              <PipelineSummaryActionBar
+                pipeline={pipeline}
                 handleDeleteClick={authorizedAction("delete_pipeline_btn", pipeline.owner) ? handleDeleteClick : undefined}
                 handleDuplicateClick={handleCopyPipeline}
                 handleViewClick={handleViewClick}
                 handlePublishClick={authorizedAction("publish_pipeline_btn", pipeline.owner) ? handlePublishPipelineClick : undefined}
+                // TODO: Waiting on org account lookup api call
+                // handlePipelineTransferClick={canTransferPipeline(pipeline.owner) ? transferPipeline : undefined}
               />
             </div>
 

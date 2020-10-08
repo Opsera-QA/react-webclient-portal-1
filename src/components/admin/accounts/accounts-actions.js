@@ -374,6 +374,19 @@ accountsActions.getOrganizationOwnerEmailWithName = async (organizationName, get
   return response;
 };
 
+// TODO: Implement
+// accountsActions.getOrganizationAccountByName = async (organizationAccountName, getAccessToken) => {
+//   let postBody = {
+//     accountName: organizationAccountName
+//   }
+//
+//   const accessToken = await getAccessToken();
+//   const apiUrl = `/users/account/organization/`;
+//   const response = await axiosApiService(accessToken).post(apiUrl, postBody)
+//     .then((result) =>  {return result;})
+//     .catch(error => {throw error;});
+//   return response;
+// };
 
 accountsActions.getOrganizationAccountByDomain = async (domain, getAccessToken) => {
   const accessToken = await getAccessToken();
