@@ -22,9 +22,11 @@ import OutNetworkTrafficByTimeLineChart from "../../charts/OutNetworkTrafficByTi
 
 function OperationsView_Developer({ persona, index }) {
   const contextType = useContext(AuthContext);
+  const { featureFlagItemInProd } = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
   const [countBlockData, setCountBlockData] = useState([]);
+  const envIsProd = featureFlagItemInProd();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -143,7 +145,7 @@ function OperationsView_Developer({ persona, index }) {
       });
     }
 
-    if (index.includes("metricbeat")) {
+    if (!envIsProd && index.includes("metricbeat")) {
       if (
         TotalClusterUsage &&
         TotalClusterUsage.status === 200 &&
@@ -281,7 +283,7 @@ function OperationsView_Developer({ persona, index }) {
             <div className="align-self-stretch p-2 w-100"></div>
           </div>
         )} */}
-        
+
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">{/* Self Contained Chart Component 3 */}</div>
           <div className="align-self-stretch p-2 w-100">{/* Self Contained Chart Component 4 */}</div>
@@ -290,28 +292,28 @@ function OperationsView_Developer({ persona, index }) {
           <div className="align-self-stretch p-2 w-100">{/* Self Contained Chart Component 5 */}</div>
           <div className="align-self-stretch p-2 w-100">{/* Self Contained Chart Component 6 */}</div>
         </div>
-        {index.includes("metricbeat") && (
+        {!envIsProd && index.includes("metricbeat") && (
           <div className="d-flex">
             <div className="align-self-stretch p-2 w-100">
               <CpuUsageByTimeLineChart persona={persona} date={{ start: "now-30d", end: "now" }} />
             </div>
           </div>
         )}
-        {index.includes("metricbeat") && (
+        {!envIsProd && index.includes("metricbeat") && (
           <div className="d-flex">
             <div className="align-self-stretch p-2 w-100">
               <MemoryUsageByTimeLineChart persona={persona} date={{ start: "now-30d", end: "now" }} />
             </div>
           </div>
         )}
-        {index.includes("metricbeat") && (
+        {!envIsProd && index.includes("metricbeat") && (
           <div className="d-flex">
             <div className="align-self-stretch p-2 w-100">
               <InNetworkTrafficByTimeLineChart persona={persona} date={{ start: "now-30d", end: "now" }} />
             </div>
           </div>
         )}
-        {index.includes("metricbeat") && (
+        {!envIsProd && index.includes("metricbeat") && (
           <div className="d-flex">
             <div className="align-self-stretch p-2 w-100">
               <OutNetworkTrafficByTimeLineChart persona={persona} date={{ start: "now-30d", end: "now" }} />
