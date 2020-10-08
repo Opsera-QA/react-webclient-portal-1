@@ -10,9 +10,9 @@ function PipelineSummaryActionBar({handlePipelineTransferClick, handleDuplicateC
   return (
     <div className="text-muted action-bar justify-content-between d-flex pb-2">
       {handleViewClick && <div className="ml-3"><ActionBarViewButton handleViewClick={handleViewClick} itemName={"Pipeline"} data={pipeline} /></div>}
-      {handlePublishClick && <div className="ml-3"><ActionBarPublishPipelineButton handlePublishClick={handlePublishClick} itemId={pipeline.id} /></div>}
-      {handleDuplicateClick && <div className="ml-3"><ActionBarDuplicateButton handleDuplicateClick={handleDuplicateClick} itemName={"Pipeline"} itemId={pipeline.id} /></div>}
-      {handlePipelineTransferClick && <div className="ml-3"><ActionBarTransferPipelineButton pipeline={pipeline} transferPipeline={handlePipelineTransferClick} itemId={pipeline.id} /></div>}
+      {handlePublishClick && <div className="ml-3"><ActionBarPublishPipelineButton handlePublishClick={handlePublishClick} itemId={pipeline._id} /></div>}
+      {handleDuplicateClick && <div className="ml-3"><ActionBarDuplicateButton handleDuplicateClick={handleDuplicateClick} itemName={"Pipeline"} itemId={pipeline._id} /></div>}
+      {handlePipelineTransferClick && <div className="ml-3"><ActionBarTransferPipelineButton pipeline={pipeline} transferPipeline={handlePipelineTransferClick} itemId={pipeline._id} /></div>}
       {handleDeleteClick && <div className="ml-3"><ActionBarDeleteButton handleDeleteClick={handleDeleteClick} itemName={"Pipeline"}  /></div>}
     </div>
   );
