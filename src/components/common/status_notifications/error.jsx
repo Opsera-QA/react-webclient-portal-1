@@ -19,10 +19,7 @@ function ErrorDialog({ error, align, setError, prependMessage }) {
   const [statusCode, setStatusCode] = useState(undefined);
 
   const reloadSession = function() {
-    //const { renewUserToken } = contextType;
-    console.log("Error.jsx: triggering login function in error.jsx (window reload)");
-    //renewUserToken(); //This triggers a full state refresh of the application, downside is it redirect to home
-    window.location.reload(false); //trying this out for improved user experience if it works
+    window.location.reload();
   };
 
   const clearError = () => {

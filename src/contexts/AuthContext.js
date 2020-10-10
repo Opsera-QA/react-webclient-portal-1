@@ -1,5 +1,6 @@
 import React, { createContext } from "react";
 import PropTypes from "prop-types";
+import moment from "moment";
 
 const AuthContextProvider = (props) => {
     const { userData, refreshToken, authClient } = props;
@@ -28,8 +29,23 @@ const AuthContextProvider = (props) => {
       }
 
       const tokenObject = await authClient.tokenManager.get("accessToken");
+
       if (tokenObject.accessToken) {
-        return tokenObject.accessToken;
+        let now = moment();
+        let tokenExp = moment.unix(tokenObject.expiresAt);
+        console.log("Current token: ", tokenObject.accessToken)
+
+        if (now.isBefore(tokenExp)) { //maybe check if 30min has passed and then force refresh?  Be proactive?
+          console.log("TOKEN NOT EXPIRED: ", tokenExp.format('MMMM Do YYYY, h:mm:ss a'));
+          return tokenObject.accessToken;
+        } else {
+          console.log("EXPIRED TOKEN FOUND ON:", tokenExp.format('MMMM Do YYYY, h:mm:ss a'));
+          const newToken = await authClient.tokenManager.renew("accessToken");
+          console.log("REFRESHED TOKEN FOR:", moment.unix(newToken.expiresAt).format('MMMM Do YYYY, h:mm:ss a'));
+          console.log("token being returned from getAccessToken:", newToken.accessToken)
+          return newToken.accessToken;
+        }
+
       } else {
         return false;
       }

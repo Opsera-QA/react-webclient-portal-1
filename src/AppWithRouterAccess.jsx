@@ -64,14 +64,12 @@ import LdapOrganizationAccountDetailView
 import LdapOrganizationAccountManagement
   from "./components/admin/accounts/ldap/organization_accounts/LdapOrganizationAccountManagement";
 import ToastContextProvider from "./contexts/DialogToastContext";
-import InfoDialog from "./components/common/status_notifications/info";
 
 const OktaAuth = require("@okta/okta-auth-js");
 const config = require("./config");
 
 
 const AppWithRouterAccess = () => {
-  //const [test, setTest] = useState(false);
   const [hideSideBar, setHideSideBar] = useState(false);
   const history = useHistory();
   const onAuthRequired = (authService) => {
@@ -96,11 +94,17 @@ const AppWithRouterAccess = () => {
     issuer: OKTA_CONFIG.issuer,
     clientId: OKTA_CONFIG.client_id,
     redirectUri: OKTA_CONFIG.redirect_uri,
+    tokenManager: {
+      autoRenew: true,
+      expireEarlySeconds: 160
+    }
   });
 
 // Triggered when a token has expired
   authClient.tokenManager.on("expired", function(key, expiredToken) {
     console.log("Token with key", key, " has expired:");
+    //console.log("could this trigger getting new token here?");
+    //authClient.getAccessToken();
     //console.log(expiredToken);
   });
 // Triggered when a token has been renewed
@@ -132,7 +136,6 @@ const AppWithRouterAccess = () => {
         if (tokenObject && tokenObject.accessToken) {
           config.headers["authorization"] = `Bearer ${tokenObject.accessToken}`;
           config.headers["cache-control"] = `no-cache`;
-          console.debug("Setting Token Header: ", tokenObject.accessToken.substring(0, 50));
         }
         return config;
       } catch (err) {
@@ -196,7 +199,7 @@ const AppWithRouterAccess = () => {
                   <Route path="/" exact component={Home}/>
                   {/*<SecureRoute path="/" exact component={Overview}/>*/}
 
-                  <Route path='/login' render={() => <Login redirectFromLogin={redirectFromLogin}/>}/>
+                  <Route path='/login' render={(authClient) => <Login redirectFromLogin={redirectFromLogin} authClient={authClient}/>}/>
                   <Route path='/implicit/callback' component={LoginCallback}/>
 
                   <Route path="/signup" exact component={Signup}/>

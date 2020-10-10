@@ -22,7 +22,6 @@ const LoginForm = () => {
   const [message, setMessage] = useState(false);
   const [viewType, setViewType] = useState("domain"); //login, reset or domain
 
-
   useEffect(() => {
     if (viewType !== "login") {
       setUsername("");
@@ -40,6 +39,10 @@ const LoginForm = () => {
       issuer: process.env.REACT_APP_OKTA_ISSUER,
       clientId: process.env.REACT_APP_OKTA_CLIENT_ID,
       redirectUri: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
+      tokenManager: {
+        autoRenew: true,
+        expireEarlySeconds: 160
+      }
     });
 
     //const oktaAuth = new OktaAuth({ issuer: issuer });

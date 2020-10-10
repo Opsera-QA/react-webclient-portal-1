@@ -6,29 +6,34 @@ const axiosInstance = axios.create({
   timeout: 50000,
 });
 
-const setInterceptorToken = (authToken) => {
+/*const setInterceptorToken = (authToken) => {
+
   axiosInstance.interceptors.request.use(function(config) {
     config.headers["authorization"] = `Bearer ${authToken}`;
     config.headers["cache-control"] = `no-cache`;
+    console.log("Updating token?")
     return config;
   }, function(error) {
+    console.error(error)
     if (error.message.includes("401")){
-      console.log("apiService detected 401 and would redirect to login, if allowed")
+      console.error("apiService detected 401 and would redirect to login, if allowed")
       //window.location = "/login";
       window.location.reload(false);
     }
     return Promise.reject(error);
 
   }, authToken);
-};
+};*/
 
 export function axiosApiService(token) {
-  setInterceptorToken(token);
+  axiosInstance.defaults.headers.common['authorization'] = `Bearer ${token}`;
+
   return axiosInstance;
 }
 
 export function axiosApiServiceMultiGet(token, urls) {
-  setInterceptorToken(token);
+  axiosInstance.defaults.headers.common['authorization'] = `Bearer ${token}`;
+
   const requests = urls.map(URL => axiosInstance.get(URL).catch(err => null));
   return axios.all(requests);
 }
@@ -40,7 +45,7 @@ export class ApiService {
     this.params = params;
     this.data = data; //POST BODY Data JSON format
     if (token) {
-      setInterceptorToken(token);
+      axiosInstance.defaults.headers.common['authorization'] = `Bearer ${token}`;
     }
   }
 
