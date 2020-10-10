@@ -29,7 +29,7 @@ function TemplateDetailPanel({ templateData, setTemplateData }) {
         </Row>
         <Row>
           <Col>
-            <div className="tabbed-content-block detail-view-detail-panel">
+            <div className="shaded-panel detail-view-detail-panel">
               {templateData && <TemplateDetailsView activeTab={activeTab} setTemplateData={setTemplateData} templateData={templateData} /> }
             </div>
           </Col>

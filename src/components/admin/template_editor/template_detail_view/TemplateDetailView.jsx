@@ -9,9 +9,9 @@ import templateEditorMetadata from "../template-form-fields";
 import templateActions from "../template-actions";
 import TemplateSummaryPanel from "./TemplateSummaryPanel";
 import TemplateDetailPanel from "./TemplateDetailPanel";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faStream} from "@fortawesome/free-solid-svg-icons";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
+import DetailViewContainer from "../../../common/panels/detail_view_container/DetailViewContainer";
 
 function TemplateDetailView() {
   const {templateId} = useParams();
@@ -40,7 +40,7 @@ function TemplateDetailView() {
 
   const getTemplate = async (templateId) => {
     const response = await templateActions.getTemplateById(templateId, getAccessToken);
-    console.log("response: " + JSON.stringify(response.data));
+    // console.log("response: " + JSON.stringify(response.data));
     // TODO: remove grabbing first when it only sends object instead of array
     if (response.data != null && response.data.length > 0) {
       setTemplateData(new Model(response.data[0], templateEditorMetadata, false));
@@ -68,25 +68,15 @@ function TemplateDetailView() {
   }
 
   return (
-      <>
-        <BreadcrumbTrail destination="templateDetailView"/>
-        {templateData &&
-        <div className="content-container content-card-1 max-content-width ml-2">
-          <div className="pt-2 pl-2 content-block-header">
-            <h5><FontAwesomeIcon icon={faStream} fixedWidth className="mr-1"/>Template Details [{templateData.getData("name")}]</h5></div>
-          <div className="detail-view-body">
-            <div>
-              <TemplateSummaryPanel templateData={templateData} setTemplateData={setTemplateData}/>
-            </div>
-            <div>
-              <TemplateDetailPanel setTemplateData={setTemplateData} templateData={templateData}/>
-            </div>
-          </div>
-          <div className="content-block-footer"/>
-        </div>
-        }
-      </>
-    );
+    <DetailViewContainer
+      breadcrumbDestination={"templateDetailView"}
+      title={templateData != null ? `Template Details [${templateData.getData("name")}]` : undefined}
+      titleIcon={faStream}
+      isLoading={isLoading}
+      summaryPanel={<TemplateSummaryPanel templateData={templateData} setTemplateData={setTemplateData}/>}
+      detailPanel={<TemplateDetailPanel setTemplateData={setTemplateData} templateData={templateData}/>}
+    />
+  );
 }
 
 export default TemplateDetailView;

@@ -990,6 +990,11 @@ a.nav-link {
   min-height: 30vh;
 }
 
+.shaded-panel {
+    border-radius: 5px;
+    background-color: rgba(203, 205, 205, 0.1);
+}
+
 /* End Detail View Styling */
 
 /* Status Card Styling */

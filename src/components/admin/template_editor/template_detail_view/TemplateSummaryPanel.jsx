@@ -1,9 +1,7 @@
-import React, {useContext, useState} from "react";
+import React, {useContext} from "react";
 import {Row, Col} from "react-bootstrap";
 import PropTypes from "prop-types";
-import ReactJson from "react-json-view";
 
-import "components/inventory/tools/tools.css";
 import DtoTextField from "../../../common/form_fields/dto_form_fields/dto-text-field";
 import DtoToggleField from "../../../common/form_fields/dto_form_fields/dto-toggle-field";
 import DtoDateField from "../../../common/form_fields/dto_form_fields/dto-date-field";
@@ -16,6 +14,7 @@ import DtoItemField from "../../../common/form_fields/dto_form_fields/dto-item-f
 import DtoTagField from "../../../common/form_fields/dto_form_fields/dto-tag-field";
 import LoadingDialog from "../../../common/status_notifications/loading";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
+import SummaryPanelContainer from "../../../common/panels/detail_view/SummaryPanelContainer";
 
 function TemplateSummaryPanel({templateData, setTemplateData}) {
   const { getAccessToken } = useContext(AuthContext);
@@ -45,11 +44,14 @@ function TemplateSummaryPanel({templateData, setTemplateData}) {
   }
 
   return (
-    <>
-        <div className="scroll-y pt-2 px-3">
-          <SummaryActionBar backButtonPath={"/admin/templates"} handleActiveToggle={handleActiveToggle}
-                            status={templateData.getData("active")}/>
-          <div className="mb-3 flat-top-content-block p-3 detail-view-summary">
+    <SummaryPanelContainer
+      summaryActionBar={
+        <SummaryActionBar
+          backButtonPath={"/admin/templates"}
+          handleActiveToggle={handleActiveToggle}
+          status={templateData.getData("active")}/>
+      }
+    >
             <Row>
               <Col lg={6}>
                 <DtoTextField dataObject={templateData} fieldName={"name"}/>
@@ -86,9 +88,7 @@ function TemplateSummaryPanel({templateData, setTemplateData}) {
                 <DtoJsonField dataObject={templateData} fieldName={"plan"} />
               </Col>
             </Row>
-          </div>
-        </div>
-    </>
+    </SummaryPanelContainer>
   );
 }
 

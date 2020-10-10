@@ -16,6 +16,7 @@ import LoadingDialog from "../../../common/status_notifications/loading";
 import SaveButton from "../../../common/buttons/SaveButton";
 import pipelineHelpers from "../../../workflow/pipelineHelpers";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
+import DetailPanelContainer from "../../../common/panels/detail_panel_container/DetailPanelContainer";
 
 function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -70,8 +71,7 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
   }
 
     return (
-      <>
-        <div className="mx-2 my-3">
+      <DetailPanelContainer>
           <Row>
             <Col lg={6}>
               <DtoTextInput disabled={!templateDataDto.isNew()} fieldName={"name"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
@@ -108,8 +108,7 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
               <SaveButton updateRecord={updateTemplate} setData={setTemplateData} setRecordDto={setTemplateDataDto} handleClose={handleClose} createRecord={createTemplate} recordDto={templateDataDto} />
             </div>
           </Row>
-        </div>
-      </>
+      </DetailPanelContainer>
     );
 }
 

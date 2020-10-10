@@ -6,25 +6,31 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import AccessDeniedDialog from "../../common/status_notifications/accessDeniedInfo";
 import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
 import templateActions from "./template-actions";
-import {getLoadingErrorDialog} from "../../common/toasts/toasts";
+import {DialogToastContext} from "../../../contexts/DialogToastContext";
 
 function TemplateManagement() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [templateList, setTemplateList] = useState([]);
-  const [toast, setToast] = useState({});
-  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
     loadData();
   }, []);
 
   const loadData = async () => {
-    setIsLoading(true);
-    await getRoles();
-    await getTemplates();
-    setIsLoading(false);
+    try {
+      setIsLoading(true);
+      await getRoles();
+      await getTemplates();
+    }
+    catch (error) {
+      toastContext.showLoadingErrorDialog(error);
+    }
+    finally {
+      setIsLoading(false);
+    }
   }
 
   const getRoles = async () => {
@@ -36,16 +42,8 @@ function TemplateManagement() {
   };
 
   const getTemplates = async () => {
-    try {
-      const templateListResponse = await templateActions.getTemplates(getAccessToken);
-      console.log(templateListResponse.data);
-      setTemplateList(templateListResponse.data);
-    } catch (error) {
-      let toast = getLoadingErrorDialog(error.message, setShowToast);
-      setToast(toast);
-      setShowToast(true);
-      console.error(error.message);
-    }
+    const templateListResponse = await templateActions.getTemplates(getAccessToken);
+    setTemplateList(templateListResponse.data);
   };
 
   if (!accessRoleData) {
@@ -57,7 +55,6 @@ function TemplateManagement() {
   return (
     <div>
       <BreadcrumbTrail destination={"templateManagement"}/>
-      {showToast && toast}
       <TemplatesTable data={templateList} isLoading={isLoading} loadData={loadData}/>
     </div>
   );

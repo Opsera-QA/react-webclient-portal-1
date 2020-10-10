@@ -1,10 +1,7 @@
 import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CustomTable from "components/common/table/CustomTable";
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {useHistory} from "react-router-dom";
-import {Button} from "react-bootstrap";
 import NewTemplateModal from "./NewTemplateModal";
 import templateEditorMetadata from "./template-form-fields";
 import {
