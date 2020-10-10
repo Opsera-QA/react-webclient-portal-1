@@ -16,6 +16,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWrench, faClipboardList } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import ContainerScan from "./ContainerScan";
+import LoadingDialog from "../common/status_notifications/loading";
 
 function Application(props) {
   const { data, saving, gotoInventory, token, user, reset, setAppDetails, appid, setState, isEKS } = useContext(NewAppContext);
@@ -210,7 +211,7 @@ function Application(props) {
             </li>
           </ul>
         </div>
-        <div className="tabbed-content-block px-2 pt-3 pb-4">
+        <div className="shaded-panel px-2 pt-3 pb-4">
           <div className="row m-2">
 
             {applicationStatus !== "success" && !showEditTools && savingStatus !== "success" ? (
@@ -231,7 +232,7 @@ function Application(props) {
                     </Form.Group>
                   </Form.Row>
                   <Button
-                    variant="outline-primary"
+                    variant="primary"
                     type="submit"
                     onClick={handleCreateClick}
                     loading={checkingAppName ? "true" : undefined}
@@ -242,7 +243,8 @@ function Application(props) {
               </div>
             ) : null}
 
-            {showEditTools && dropdownData  && savingStatus !== "success" && (
+            { fetching && showEditTools ? <LoadingDialog size={"sm"} message={"Loading Applications"} />
+            : showEditTools && dropdownData && savingStatus !== "success" && (
               <>
                 {dropdownData.length > 0 ? (
                   <div className="col ml-auto">
