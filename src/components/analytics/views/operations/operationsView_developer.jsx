@@ -185,40 +185,35 @@ function OperationsView_Developer({ persona, index }) {
         });
       }
 
-      maxCpuMemoryUsage.data[0].count.forEach((thisElement) => {
-        if (thisElement && thisElement.type === "CPU") {
-          if (
-            maxCpuMemoryUsage &&
-            maxCpuMemoryUsage.status === 200 &&
-            maxCpuMemoryUsage.data !== undefined &&
-            maxCpuMemoryUsage.data[0].count.count !== null
-          ) {
-            summaryCountsData.push({
-              name: "Max CPU Usage",
-              value: thisElement.cpuUsage + "%",
-              footer: "",
-              status: thisElement.cpuUsage > 75 ? "danger" : "",
-              info: thisElement.podName,
-            });
+      if (
+        maxCpuMemoryUsage &&
+        maxCpuMemoryUsage.status === 200 &&
+        maxCpuMemoryUsage.data !== undefined &&
+        Object.keys(maxCpuMemoryUsage.data[0]).length > 0 &&
+        maxCpuMemoryUsage.data[0].count.length > 0
+      ) {
+        maxCpuMemoryUsage.data[0].count.forEach((thisElement) => {
+          if (thisElement) {
+            if (thisElement.type === "CPU") {
+              summaryCountsData.push({
+                name: "Max CPU Usage",
+                value: thisElement.cpuUsage + "%",
+                footer: "",
+                status: thisElement.cpuUsage > 75 ? "danger" : "",
+                info: thisElement.podName,
+              });
+            } else {
+              summaryCountsData.push({
+                name: "Max Memory Usage",
+                value: thisElement.memoryUsage + "%",
+                footer: "",
+                status: thisElement.memoryUsage > 75 ? "danger" : "",
+                info: thisElement.podName,
+              });
+            }
           }
-        } else {
-          if (
-            thisElement &&
-            maxCpuMemoryUsage &&
-            maxCpuMemoryUsage.status === 200 &&
-            maxCpuMemoryUsage.data !== undefined &&
-            maxCpuMemoryUsage.data[0].count !== null
-          ) {
-            summaryCountsData.push({
-              name: "Max Memory Usage",
-              value: thisElement.memoryUsage + "%",
-              footer: "",
-              status: thisElement.memoryUsage > 75 ? "danger" : "",
-              info: thisElement.podName,
-            });
-          }
-        }
-      });
+        });
+      }
     }
 
     return summaryCountsData;

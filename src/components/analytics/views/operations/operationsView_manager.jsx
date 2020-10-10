@@ -17,9 +17,11 @@ import OutNetworkTrafficByTimeLineChart from "../../charts/OutNetworkTrafficByTi
 
 function OperationsView_Manager({ persona, index }) {
   const contextType = useContext(AuthContext);
+  const { featureFlagItemInProd } = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
   const [countBlockData, setCountBlockData] = useState([]);
+  const envIsProd = featureFlagItemInProd();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -89,8 +91,7 @@ function OperationsView_Manager({ persona, index }) {
       twistlockMidVulnerabilities,
       twistlockLowVulnerabilities,
       sonarBugs,
-      maxCpuUsage,
-      maxMemoryUsage,
+      maxCpuMemoryUsage,
       TotalNodesUsage,
       TotalClusterUsage,
       TotalPodsUsage,
@@ -143,73 +144,76 @@ function OperationsView_Manager({ persona, index }) {
       });
     }
 
-    if (
-      TotalClusterUsage &&
-      TotalClusterUsage.status === 200 &&
-      TotalClusterUsage.data !== undefined &&
-      TotalClusterUsage.data[0].count !== null
-    ) {
-      summaryCountsData.push({
-        name: "Total Clusters",
-        value: TotalClusterUsage.data[0].count,
-        footer: "",
-      });
-    }
+    if (!envIsProd && index.includes("metricbeat")) {
+      if (
+        TotalClusterUsage &&
+        TotalClusterUsage.status === 200 &&
+        TotalClusterUsage.data !== undefined &&
+        TotalClusterUsage.data[0].count !== null
+      ) {
+        summaryCountsData.push({
+          name: "Total Clusters",
+          value: TotalClusterUsage.data[0].count,
+          footer: "",
+        });
+      }
 
-    if (
-      TotalNodesUsage &&
-      TotalNodesUsage.status === 200 &&
-      TotalNodesUsage.data !== undefined &&
-      TotalNodesUsage.data[0].count !== null
-    ) {
-      summaryCountsData.push({
-        name: "Total Nodes",
-        value: TotalNodesUsage.data[0].count,
-        footer: "",
-      });
-    }
+      if (
+        TotalNodesUsage &&
+        TotalNodesUsage.status === 200 &&
+        TotalNodesUsage.data !== undefined &&
+        TotalNodesUsage.data[0].count !== null
+      ) {
+        summaryCountsData.push({
+          name: "Total Nodes",
+          value: TotalNodesUsage.data[0].count,
+          footer: "",
+        });
+      }
 
-    if (
-      TotalPodsUsage &&
-      TotalPodsUsage.status === 200 &&
-      TotalPodsUsage.data !== undefined &&
-      TotalPodsUsage.data[0].count !== null
-    ) {
-      summaryCountsData.push({
-        name: "Total Pods",
-        value: TotalPodsUsage.data[0].count,
-        footer: "",
-      });
-    }
+      if (
+        TotalPodsUsage &&
+        TotalPodsUsage.status === 200 &&
+        TotalPodsUsage.data !== undefined &&
+        TotalPodsUsage.data[0].count !== null
+      ) {
+        summaryCountsData.push({
+          name: "Total Pods",
+          value: TotalPodsUsage.data[0].count,
+          footer: "",
+        });
+      }
 
-    if (
-      maxCpuUsage &&
-      maxCpuUsage.status === 200 &&
-      maxCpuUsage.data !== undefined &&
-      maxCpuUsage.data[0].count.count !== null
-    ) {
-      summaryCountsData.push({
-        name: "Max CPU Usage",
-        value: maxCpuUsage.data[0].count.count + "%",
-        footer: "",
-        status: maxCpuUsage.data[0].count.count > 75 ? "danger" : "",
-        info: maxCpuUsage.data[0].count.podName,
-      });
-    }
-
-    if (
-      maxMemoryUsage &&
-      maxMemoryUsage.status === 200 &&
-      maxMemoryUsage.data !== undefined &&
-      maxMemoryUsage.data[0].count !== null
-    ) {
-      summaryCountsData.push({
-        name: "Max Memory Usage",
-        value: maxMemoryUsage.data[0].count.count + "%",
-        footer: "",
-        status: maxMemoryUsage.data[0].count.count > 75 ? "danger" : "",
-        info: maxMemoryUsage.data[0].count.podName,
-      });
+      if (
+        maxCpuMemoryUsage &&
+        maxCpuMemoryUsage.status === 200 &&
+        maxCpuMemoryUsage.data !== undefined &&
+        maxCpuMemoryUsage.data[0].count !== null &&
+        maxCpuMemoryUsage.data.length > 0 &&
+        maxCpuMemoryUsage.data[0].count.length > 0
+      ) {
+        maxCpuMemoryUsage.data[0].count.forEach((thisElement) => {
+          if (thisElement) {
+            if (thisElement.type === "CPU") {
+              summaryCountsData.push({
+                name: "Max CPU Usage",
+                value: thisElement.cpuUsage + "%",
+                footer: "",
+                status: thisElement.cpuUsage > 75 ? "danger" : "",
+                info: thisElement.podName,
+              });
+            } else {
+              summaryCountsData.push({
+                name: "Max Memory Usage",
+                value: thisElement.memoryUsage + "%",
+                footer: "",
+                status: thisElement.memoryUsage > 75 ? "danger" : "",
+                info: thisElement.podName,
+              });
+            }
+          }
+        });
+      }
     }
 
     return summaryCountsData;
@@ -256,21 +260,34 @@ function OperationsView_Manager({ persona, index }) {
           <div className="align-self-stretch p-2 w-100">{/* Self Contained Chart Component 6 */}</div>
         </div>
 
-        <div>
-          <CpuUsageByTimeLineChart persona={persona} date={{ start: "now-30d", end: "now" }} />
-        </div>
-
-        <div>
-          <MemoryUsageByTimeLineChart persona={persona} date={{ start: "now-30d", end: "now" }} />
-        </div>
-
-        <div>
-          <InNetworkTrafficByTimeLineChart persona={persona} date={{ start: "now-30d", end: "now" }} />
-        </div>
-
-        <div>
-          <OutNetworkTrafficByTimeLineChart persona={persona} date={{ start: "now-30d", end: "now" }} />
-        </div>
+        {!envIsProd && index.includes("metricbeat") && (
+          <div className="d-flex">
+            <div className="align-self-stretch p-2 w-100">
+              <CpuUsageByTimeLineChart persona={persona} date={{ start: "now-30d", end: "now" }} />
+            </div>
+          </div>
+        )}
+        {!envIsProd && index.includes("metricbeat") && (
+          <div className="d-flex">
+            <div className="align-self-stretch p-2 w-100">
+              <MemoryUsageByTimeLineChart persona={persona} date={{ start: "now-30d", end: "now" }} />
+            </div>
+          </div>
+        )}
+        {!envIsProd && index.includes("metricbeat") && (
+          <div className="d-flex">
+            <div className="align-self-stretch p-2 w-100">
+              <InNetworkTrafficByTimeLineChart persona={persona} date={{ start: "now-30d", end: "now" }} />
+            </div>
+          </div>
+        )}
+        {!envIsProd && index.includes("metricbeat") && (
+          <div className="d-flex">
+            <div className="align-self-stretch p-2 w-100">
+              <OutNetworkTrafficByTimeLineChart persona={persona} date={{ start: "now-30d", end: "now" }} />
+            </div>
+          </div>
+        )}
       </>
     );
   }
