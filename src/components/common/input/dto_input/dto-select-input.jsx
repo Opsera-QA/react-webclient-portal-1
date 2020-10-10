@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import DropdownList from "react-widgets/lib/DropdownList";
 
-function DtoSelectInput({ fieldName, dataObject, setDataObject, groupBy, selectOptions, valueField, textField, filter, placeholderText, setDataFunction, allowCreate, setSelectOptions, valueFormatter, busy}) {
+function DtoSelectInput({ fieldName, dataObject, setDataObject, groupBy, selectOptions, valueField, textField, filter, placeholderText, setDataFunction, allowCreate, setSelectOptions, valueFormatter, busy, disabled}) {
   const [errorMessage, setErrorMessage] = useState("");
   const [field] = useState(dataObject.getFieldById(fieldName));
 
@@ -37,6 +37,7 @@ function DtoSelectInput({ fieldName, dataObject, setDataObject, groupBy, selectO
               busy={busy}
               placeholder={placeholderText}
               onChange={data => setDataFunction ? setDataFunction(fieldName, data) : validateAndSetData(fieldName, data[valueField])}
+              disabled={disabled}
             />
             <div className="invalid-feedback">
               <div>{errorMessage}</div>
@@ -64,7 +65,8 @@ DtoSelectInput.propTypes = {
   allowCreate: PropTypes.string,
   setSelectOptions: PropTypes.func,
   valueFormatter: PropTypes.func,
-  busy: PropTypes.bool
+  busy: PropTypes.bool,
+  disabled: PropTypes.bool
 };
 
 DtoSelectInput.defaultProps = {
