@@ -19,7 +19,6 @@ import "../../workflows.css";
 import SchedulerWidget from "../../../common/schedulerWidget";
 import PipelineHelpers from "../../pipelineHelpers";
 import DropdownList from "react-widgets/lib/DropdownList";
-import SummaryActionBar from "../../../common/actions/SummaryActionBar";
 import pipelineHelpers from "../../pipelineHelpers";
 //import { getCreateSuccessResultDialog, getUpdateSuccessResultDialog } from "../../../common/toasts/toasts";
 import { DialogToastContext } from "contexts/DialogToastContext";
@@ -95,12 +94,6 @@ function PipelineSummaryPanel({
 
     return owner === customerAccessRules.UserId;
   };
-
-  const transferPipeline = async (pipelineId, newOwnerId) => {
-    console.log("old owner id: " + pipeline.owner);
-    console.log("Received new owner id: " + newOwnerId);
-    // return await transferPipeline(pipelineId, newOwnerId, getAccessToken);
-  }
 
   useEffect(() => {
     const controller = new AbortController();
@@ -353,8 +346,8 @@ function PipelineSummaryPanel({
                 handleDuplicateClick={handleCopyPipeline}
                 handleViewClick={handleViewClick}
                 handlePublishClick={authorizedAction("publish_pipeline_btn", pipeline.owner) ? handlePublishPipelineClick : undefined}
-                // TODO: Waiting on org account lookup api call
-                // handlePipelineTransferClick={canTransferPipeline(pipeline.owner) ? transferPipeline : undefined}
+                canTransferPipeline={canTransferPipeline(pipeline.owner)}
+                loadPipeline={fetchPlan}
               />
             </div>
 

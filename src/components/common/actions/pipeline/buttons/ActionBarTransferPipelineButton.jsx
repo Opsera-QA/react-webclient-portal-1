@@ -12,14 +12,16 @@ import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import ActionBarPopoverButton from "../../buttons/ActionBarPopoverButton";
 import DropdownList from "react-widgets/lib/DropdownList";
 import accountsActions from "../../../../admin/accounts/accounts-actions";
+import pipelineActions from "../../../../workflow/pipeline-actions";
+import PopoverContainer from "../../../tooltip/PopoverContainer";
 
-// TODO: Should this be made into a transfer owner button for reuse?
-function ActionBarTransferPipelineButton({pipeline, transferPipeline}) {
-  const { getAccessToken, getUserRecord } = useContext(AuthContext);
+function ActionBarTransferPipelineButton({ pipeline, loadPipeline }) {
+  const { getAccessToken } = useContext(AuthContext);
   const toastContext  = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
   const [userList, setUserList] = useState([]);
   const [newUserId, setNewUserId] = useState(undefined);
+  const [transferringPipeline, setTransferringPipeline] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -39,45 +41,45 @@ function ActionBarTransferPipelineButton({pipeline, transferPipeline}) {
   }
 
   const getUsers = async () => {
-    // let response = await accountsActions.getOrganizationAccountByName(pipeline.account, getAccessToken);
-    //
-    // if (response.data != null) {
-    //   setUserList(response.data["users"]);
-    // }
+    let response = await accountsActions.getOrganizationAccountMembers(pipeline.account, getAccessToken);
+    setUserList(response.data);
   };
 
-  // TODO: Make general use popover container
-  const popover = (
-    <Popover id="popover-basic">
-      <Popover.Title as="h3" className="filter-title">
-        <Row>
-          <Col sm={10} className="my-auto">Transfer Pipeline</Col>
-          <Col sm={2} className="text-right">
-            <FontAwesomeIcon
-              icon={faTimes}
-              className="pointer"
-              onClick={() => { document.body.click();}}
-            />
-          </Col>
-        </Row>
-      </Popover.Title>
-      <Popover.Content className="filter-body">
-        <div>
+  const changePipelineOwner = async () => {
+    try {
+      setTransferringPipeline(true);
+      await pipelineActions.transferPipeline(pipeline._id, newUserId, getAccessToken);
+      toastContext.showUpdateSuccessResultDialog("Pipeline Owner");
+      await loadPipeline();
+      document.body.click();
+    }
+    catch (error) {
+      toastContext.showUpdateFailureResultDialog("Pipeline Owner", error);
+    }
+    finally {
+      setTransferringPipeline(false);
+    }
+  }
+
+  const popoverContent = (
+      <div>
+        <div className="pb-2">
           <DropdownList
             data={userList}
-            valueField='_id'
+            valueField="_id"
             value={userList[userList.findIndex(x => x._id === pipeline.owner)]}
             busy={isLoading}
             disabled={isLoading}
-            textField='firstName'
+            textField={data => data != null ? `${data["firstName"]} ${data["lastName"]} (${data["email"]})` : ``}
             filter='contains'
             // groupBy={tool => capitalizeFirstLetter(tool.tool_type_identifier, "-", "No Tool Type Identifier")}
-            onChange={data => setNewUserId(data['_id'])}
+            onChange={data => setNewUserId(data._id)}
           />
         </div>
         <div className="d-flex justify-content-between">
           <div className="w-50 mr-1">
-            <Button type="primary" size="sm" onClick={() => transferPipeline()} className="w-100">
+            <Button type="primary" size="sm" disabled={transferringPipeline} onClick={() => changePipelineOwner()}
+                    className="w-100">
               <span className="pr-3"><FontAwesomeIcon icon={faUserEdit} fixedWidth className="mr-2"/>Transfer</span>
             </Button>
           </div>
@@ -87,22 +89,25 @@ function ActionBarTransferPipelineButton({pipeline, transferPipeline}) {
             </Button>
           </div>
         </div>
-      </Popover.Content>
-    </Popover>
-  );
+      </div>
+    );
 
   return (
-    <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={popover} className="filter-popover">
+    <PopoverContainer
+      className={"pipeline-owner-popover"}
+      isLoading={isLoading}
+      title={"Transfer Pipeline"}
+      content={popoverContent}>
       <div>
-        <ActionBarPopoverButton icon={faUserEdit} popoverText={`Transfer Pipeline to new Owner`} />
+        <ActionBarPopoverButton disabled={isLoading} icon={faUserEdit} popoverText={`Transfer Pipeline to new Owner`} />
       </div>
-    </OverlayTrigger>
+    </PopoverContainer>
   );
 }
 
 ActionBarTransferPipelineButton.propTypes = {
-  transferPipeline: PropTypes.func,
-  pipeline: PropTypes.object
+  pipeline: PropTypes.object,
+  loadPipeline: PropTypes.func
 };
 
 export default ActionBarTransferPipelineButton;

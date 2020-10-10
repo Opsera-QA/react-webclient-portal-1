@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React  from "react";
 import PropTypes from "prop-types";
 import ActionBarDeleteButton from "../buttons/ActionBarDeleteButton";
 import ActionBarDuplicateButton from "../buttons/ActionBarDuplicateButton";
@@ -6,14 +6,14 @@ import ActionBarTransferPipelineButton from "./buttons/ActionBarTransferPipeline
 import ActionBarViewButton from "../buttons/ActionBarViewButton";
 import ActionBarPublishPipelineButton from "./buttons/ActionBarPublishPipelineButton";
 
-function PipelineSummaryActionBar({handlePipelineTransferClick, handleDuplicateClick, handleDeleteClick, handleViewClick, handlePublishClick, pipeline}) {
+function PipelineSummaryActionBar({canTransferPipeline, handleDuplicateClick, handleDeleteClick, handleViewClick, handlePublishClick, pipeline, loadPipeline}) {
   return (
     <div className="text-muted action-bar justify-content-between d-flex pb-2">
       {handleViewClick && <div className="ml-3"><ActionBarViewButton handleViewClick={handleViewClick} itemName={"Pipeline"} data={pipeline} /></div>}
       {handlePublishClick && <div className="ml-3"><ActionBarPublishPipelineButton handlePublishClick={handlePublishClick} itemId={pipeline._id} /></div>}
       {handleDuplicateClick && <div className="ml-3"><ActionBarDuplicateButton handleDuplicateClick={handleDuplicateClick} itemName={"Pipeline"} itemId={pipeline._id} /></div>}
-      {handlePipelineTransferClick && <div className="ml-3"><ActionBarTransferPipelineButton pipeline={pipeline} transferPipeline={handlePipelineTransferClick} itemId={pipeline._id} /></div>}
-      {handleDeleteClick && <div className="ml-3"><ActionBarDeleteButton handleDeleteClick={handleDeleteClick} itemId={pipeline._id} itemName={"Pipeline"}  /></div>}
+      {canTransferPipeline && pipeline.account != null && <div className="ml-3"><ActionBarTransferPipelineButton loadPipeline={loadPipeline} pipeline={pipeline} itemId={pipeline._id} /></div>}
+      {handleDeleteClick && <div className="ml-3"><ActionBarDeleteButton handleDeleteClick={handleDeleteClick} itemId={pipeline._id} itemName={"Pipeline"} /></div>}
     </div>
   );
 }
@@ -21,7 +21,8 @@ function PipelineSummaryActionBar({handlePipelineTransferClick, handleDuplicateC
 PipelineSummaryActionBar.propTypes = {
   handleDeleteClick: PropTypes.func,
   handleDuplicateClick: PropTypes.func,
-  handlePipelineTransferClick: PropTypes.func,
+  loadPipeline: PropTypes.func,
+  canTransferPipeline: PropTypes.bool,
   handleViewClick: PropTypes.func,
   handlePublishClick: PropTypes.func,
   pipeline: PropTypes.object,
