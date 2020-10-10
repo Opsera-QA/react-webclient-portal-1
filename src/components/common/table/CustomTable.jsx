@@ -193,17 +193,13 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
     }
 
     return (
-      <td colSpan="100%" className="px-2 pt-2 table-footer">
-        {paginationOptions && !isLoading && <Pagination total={paginationOptions.totalCount} currentPage={paginationOptions.currentPage} pageSize={paginationOptions.pageSize} onClick={(pageNumber, pageSize) => paginationOptions.gotoPageFn(pageNumber, pageSize)} />}
-      </td>
+        <div>{paginationOptions && !isLoading && <Pagination total={paginationOptions.totalCount} currentPage={paginationOptions.currentPage} pageSize={paginationOptions.pageSize} onClick={(pageNumber, pageSize) => paginationOptions.gotoPageFn(pageNumber, pageSize)} />}</div>
     );
   };
 
   const getNewPaginator = () => {
     return (
-      <td colSpan="100%" className="px-2 py-1 table-footer">
-        {paginationDto && paginationDto.getData("totalCount") != null && <DtoBottomPagination paginationDto={paginationDto} setPaginationDto={setPaginationDto} isLoading={isLoading} loadData={loadData} />}
-      </td>
+        <div>{paginationDto && paginationDto.getData("totalCount") != null && <DtoBottomPagination paginationDto={paginationDto} setPaginationDto={setPaginationDto} isLoading={isLoading} loadData={loadData} />}</div>
     );
   }
 
@@ -220,8 +216,10 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
           </tbody>
           <tfoot>
             <tr>
-              {getOldPaginator()}
-              {getNewPaginator()}
+              <td colSpan="100%" className="px-2 py-1 table-footer">
+                {getOldPaginator()}
+                {getNewPaginator()}
+              </td>
             </tr>
           </tfoot>
         </table>
