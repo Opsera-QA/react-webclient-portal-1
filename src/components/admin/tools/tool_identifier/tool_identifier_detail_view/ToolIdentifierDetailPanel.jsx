@@ -29,7 +29,7 @@ function ToolIdentifierDetailPanel({ toolIdentifierData, setToolIdentifierData }
         </Row>
         <Row>
           <Col>
-            <div className="tabbed-content-block detail-view-detail-panel">
+            <div className="shaded-panel detail-view-detail-panel">
               {toolIdentifierData && <ToolTypeDetailsView activeTab={activeTab} setToolIdentifierData={setToolIdentifierData} toolIdentifierData={toolIdentifierData} /> }
             </div>
           </Col>
