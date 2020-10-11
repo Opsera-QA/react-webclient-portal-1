@@ -2,16 +2,15 @@ import React, { useState, useEffect, useContext, useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 import LoadingDialog from "../../../../common/status_notifications/loading";
 import AccessDeniedDialog from "../../../../common/status_notifications/accessDeniedInfo";
-import BreadcrumbTrail from "../../../../common/navigation/breadcrumbTrail";
 import {AuthContext} from "../../../../../contexts/AuthContext";
 import ToolTypeSummaryPanel from "./ToolTypeSummaryPanel";
 import toolTypeActions from "../../tool-management-actions";
 import Model from "../../../../../core/data_model/model";
 import toolTypeMetadata from "../tool-type-metadata";
 import ToolTypeDetailPanel from "./ToolTypeDetailPanel";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faToolbox} from "@fortawesome/pro-solid-svg-icons";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
+import DetailViewContainer from "../../../../common/panels/detail_view_container/DetailViewContainer";
 
 function ToolTypeDetailView() {
   const {toolTypeId} = useParams();
@@ -59,7 +58,7 @@ function ToolTypeDetailView() {
     }
   };
 
-  if (isLoading || !accessRoleData) {
+  if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   }
 
@@ -68,26 +67,14 @@ function ToolTypeDetailView() {
   }
 
   return (
-    <>
-      <BreadcrumbTrail destination="toolTypeDetailView"/>
-      {toolTypeData &&
-      <div className="content-container content-card-1 max-content-width ml-2">
-        <div className="pt-2 pl-2 content-block-header">
-          <h5><FontAwesomeIcon icon={faToolbox} fixedWidth className="mr-1"/>Tool Type Details
-            [{toolTypeData && toolTypeData.getData("name")}]</h5>
-        </div>
-        <div className="detail-view-body">
-          <div>
-            <ToolTypeSummaryPanel toolTypeData={toolTypeData} setToolTypeData={setToolTypeData}/>
-          </div>
-          <div>
-            <ToolTypeDetailPanel toolTypeData={toolTypeData} setToolTypeData={setToolTypeData}/>
-          </div>
-        </div>
-        <div className="content-block-footer"/>
-      </div>
-      }
-    </>
+    <DetailViewContainer
+      breadcrumbDestination={"toolTypeDetailView"}
+      title={toolTypeData != null ? `Tool Type Details [${toolTypeData.getData("name")}]` : undefined}
+      titleIcon={faToolbox}
+      isLoading={isLoading}
+      summaryPanel={<ToolTypeSummaryPanel toolTypeData={toolTypeData} setToolTypeData={setToolTypeData}/>}
+      detailPanel={<ToolTypeDetailPanel toolTypeData={toolTypeData} setToolTypeData={setToolTypeData}/>}
+    />
   );
 }
 

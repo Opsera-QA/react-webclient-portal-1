@@ -12,6 +12,7 @@ import Model from "../../../../../core/data_model/model";
 import {AuthContext} from "../../../../../contexts/AuthContext";
 import toolTypeActions from "../../tool-management-actions";
 import LoadingDialog from "../../../../common/status_notifications/loading";
+import SummaryPanelContainer from "../../../../common/panels/detail_view/SummaryPanelContainer";
 
 function ToolTypeSummaryPanel({toolTypeData, setToolTypeData}) {
   const { getAccessToken } = useContext(AuthContext);
@@ -36,12 +37,9 @@ function ToolTypeSummaryPanel({toolTypeData, setToolTypeData}) {
   }
 
   return (
-    <>
-      {toolTypeData &&
-      <div className="scroll-y pt-2 px-3">
-        <SummaryActionBar backButtonPath={"/admin/tools/types"} handleActiveToggle={handleActiveToggle}
-                          status={toolTypeData.getData("active")}/>
-        <div className="mb-3 flat-top-content-block p-3 detail-view-summary">
+    <SummaryPanelContainer
+      summaryActionBar={<SummaryActionBar backButtonPath={"/admin/tools/types"} handleActiveToggle={handleActiveToggle}
+                                          status={toolTypeData.getData("active")}/>}>
           <Row>
             <Col lg={6}>
               <DtoTextField dataObject={toolTypeData} fieldName={"name"}/>
@@ -65,9 +63,7 @@ function ToolTypeSummaryPanel({toolTypeData, setToolTypeData}) {
               <DtoItemField dataObject={toolTypeData} fieldName={"tags"}/>
             </Col>
           </Row>
-        </div>
-      </div>}
-    </>
+    </SummaryPanelContainer>
   );
 }
 
