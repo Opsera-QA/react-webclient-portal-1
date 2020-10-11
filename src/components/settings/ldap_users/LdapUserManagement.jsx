@@ -129,7 +129,7 @@ function LdapUserManagement() {
       <div>
         <BreadcrumbTrail destination={"ldapUserManagement"} />
         <div className="justify-content-between mb-1 d-flex">
-          <h5>Users Management</h5>
+          <h5>User Accounts Management</h5>
           <div className="d-flex">
             <div className="tableDropdown mr-2">
               {accessRoleData.OpseraAdministrator && organizationList && <DropdownList
