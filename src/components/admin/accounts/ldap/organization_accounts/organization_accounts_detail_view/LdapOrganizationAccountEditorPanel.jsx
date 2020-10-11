@@ -13,6 +13,7 @@ import SaveButton from "../../../../../common/buttons/SaveButton";
 import LoadingDialog from "../../../../../common/status_notifications/loading";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import WarningDialog from "../../../../../common/status_notifications/WarningDialog";
+import DetailPanelContainer from "../../../../../common/panels/detail_panel_container/DetailPanelContainer";
 
 function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOrganization, setLdapOrganizationAccountData, authorizedActions, handleClose}) {
   const {getAccessToken} = useContext(AuthContext);
@@ -111,8 +112,7 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
   }
 
     return (
-      <>
-        <div className="scroll-y full-height">
+      <DetailPanelContainer>
           <Row>
             <Col>
               <div className="custom-select-input m-2">
@@ -202,8 +202,7 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
               />
             </div>
           </Row>
-        </div>
-      </>
+      </DetailPanelContainer>
     );
 }
 

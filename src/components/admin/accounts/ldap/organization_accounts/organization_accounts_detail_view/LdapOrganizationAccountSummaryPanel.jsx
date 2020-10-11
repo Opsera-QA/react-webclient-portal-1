@@ -6,6 +6,7 @@ import DtoToggleField from "../../../../../common/form_fields/dto_form_fields/dt
 import DtoItemField from "../../../../../common/form_fields/dto_form_fields/dto-item-field";
 import SummaryActionBar from "../../../../../common/actions/SummaryActionBar";
 import LoadingDialog from "../../../../../common/status_notifications/loading";
+import SummaryPanelContainer from "../../../../../common/panels/detail_view/SummaryPanelContainer";
 
 function LdapOrganizationAccountSummaryPanel({ldapOrganizationAccountData, organizationName}) {
 
@@ -14,11 +15,10 @@ function LdapOrganizationAccountSummaryPanel({ldapOrganizationAccountData, organ
   }
 
   return (
-    <>
-      <div className="scroll-y pt-2 px-3">
-        <SummaryActionBar backButtonPath={`/admin/organization-accounts/${organizationName}`} />
-        <div className="mb-3 flat-top-content-block p-3 detail-view-summary">
-          <Row className="mt-1">
+    <SummaryPanelContainer
+      summaryActionBar={<SummaryActionBar backButtonPath={`/admin/organization-accounts/${organizationName}`} />}
+    >
+          <Row>
             <Col lg={6}>
               <DtoTextField dataObject={ldapOrganizationAccountData} fieldName={"orgOwner"}/>
             </Col>
@@ -64,9 +64,7 @@ function LdapOrganizationAccountSummaryPanel({ldapOrganizationAccountData, organ
               <DtoToggleField fieldName={"oAuthEnabled"} dataObject={ldapOrganizationAccountData}/>
             </Col>
           </Row>
-        </div>
-      </div>
-    </>
+    </SummaryPanelContainer>
   );
 }
 

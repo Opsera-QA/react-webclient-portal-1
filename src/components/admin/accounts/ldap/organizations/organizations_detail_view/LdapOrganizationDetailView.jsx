@@ -11,9 +11,9 @@ import Model from "../../../../../../core/data_model/model";
 import {ldapOrganizationMetaData} from "../ldap-organizations-form-fields";
 import accountsActions from "../../../accounts-actions";
 import LdapOrganizationDetailPanel from "./LdapOrganizationDetailPanel";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSitemap} from "@fortawesome/free-solid-svg-icons";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
+import DetailViewContainer from "../../../../../common/panels/detail_view_container/DetailViewContainer";
 
 function LdapOrganizationDetailView() {
   const { organizationName } = useParams();
@@ -74,7 +74,7 @@ function LdapOrganizationDetailView() {
     }
   };
 
-  if (!accessRoleData || isLoading) {
+  if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   }
 
@@ -83,32 +83,21 @@ function LdapOrganizationDetailView() {
   }
 
     return (
-      <>
-        <BreadcrumbTrail destination="ldapOrganizationDetailView"/>
-        {ldapOrganizationData &&
-        <div className="content-container content-card-1 max-content-width ml-2">
-          <div className="pt-2 pl-2 content-block-header">
-            <h6><FontAwesomeIcon icon={faSitemap} fixedWidth className="mr-1" />Organization Details [{ldapOrganizationData && ldapOrganizationData["name"]}]</h6>
-          </div>
-          <div className="detail-view-body">
-            <div>
-              <LdapOrganizationSummaryPanel ldapOrganizationData={ldapOrganizationData}/>
-            </div>
-            <div>
-              <LdapOrganizationDetailPanel organizationAccounts={organizationAccounts}
-                                           ldapOrganizationData={ldapOrganizationData}
-                                           setLdapOrganizationData={setLdapOrganizationData}
-                                           authorizedOrganizationAccountActions={authorizedOrganizationAccountActions}
-                                           loadData={loadData}
-                                           authorizedActions={authorizedActions}
-              />
-            </div>
-          </div>
-          <div className="content-block-footer"/>
-        </div>
-
-        }
-      </>);
+      <DetailViewContainer
+        breadcrumbDestination={"ldapOrganizationDetailView"}
+        title={ldapOrganizationData != null ? `Organization Details [${ldapOrganizationData["name"]}]` : undefined}
+        titleIcon={faSitemap}
+        isLoading={isLoading}
+        summaryPanel={<LdapOrganizationSummaryPanel ldapOrganizationData={ldapOrganizationData}/>}
+        detailPanel={  <LdapOrganizationDetailPanel organizationAccounts={organizationAccounts}
+                                                    ldapOrganizationData={ldapOrganizationData}
+                                                    setLdapOrganizationData={setLdapOrganizationData}
+                                                    authorizedOrganizationAccountActions={authorizedOrganizationAccountActions}
+                                                    loadData={loadData}
+                                                    authorizedActions={authorizedActions}
+        />}
+      />
+    );
 }
 
 export default LdapOrganizationDetailView;

@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import DtoTextField from "../../../../../common/form_fields/dto_form_fields/dto-text-field";
 import SummaryActionBar from "../../../../../common/actions/SummaryActionBar";
 import LoadingDialog from "../../../../../common/status_notifications/loading";
+import SummaryPanelContainer from "../../../../../common/panels/detail_view/SummaryPanelContainer";
 
 function LdapOrganizationSummaryPanel({ldapOrganizationData}) {
 
@@ -12,11 +13,9 @@ function LdapOrganizationSummaryPanel({ldapOrganizationData}) {
   }
 
   return (
-    <>
-      <div className="scroll-y pt-2 px-3">
-        <SummaryActionBar backButtonPath={"/admin/organizations"}/>
-        <div className="mb-3 flat-top-content-block p-3 detail-view-summary">
-          {ldapOrganizationData &&
+    <SummaryPanelContainer summaryActionBar={
+      <SummaryActionBar backButtonPath={"/admin/organizations"}/>
+    }>
           <Row className="mt-1">
             <Col lg={6}>
               <DtoTextField dataObject={ldapOrganizationData} fieldName={"orgName"}/>
@@ -43,10 +42,7 @@ function LdapOrganizationSummaryPanel({ldapOrganizationData}) {
               <DtoTextField dataObject={ldapOrganizationData} fieldName={"orgOwnerEmail"}/>
             </Col>
           </Row>
-          }
-        </div>
-      </div>
-    </>
+    </SummaryPanelContainer>
   );
 }
 

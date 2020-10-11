@@ -8,6 +8,7 @@ import LdapOrganizationAccountsTable from "../../organization_accounts/LdapOrgan
 import CustomTabContainer from "../../../../../common/tabs/CustomTabContainer";
 import CustomTab from "../../../../../common/tabs/CustomTab";
 import {faCogs, faUsers} from "@fortawesome/pro-solid-svg-icons";
+import DetailPanelContainer from "../../../../../common/panels/detail_panel_container/DetailPanelContainer";
 
 function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationData, setLdapOrganizationData, loadData, authorizedActions, authorizedOrganizationAccountActions}) {
   const [activeTab, setActiveTab] = useState("accounts");
@@ -34,7 +35,7 @@ function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationDat
         </Row>
         <Row>
           <Col>
-            <div className="tabbed-content-block detail-view-detail-panel">
+            <div className="shaded-panel detail-view-detail-panel">
               {ldapOrganizationData &&
               <LdapOrganizationDetailsView
                 organizationAccounts={organizationAccounts}
@@ -60,7 +61,7 @@ function LdapOrganizationDetailsView({activeTab, loadData, setLdapOrganizationDa
   if (activeTab) {
     switch (activeTab) {
       case "accounts":
-        return <LdapOrganizationAccountsTable ldapOrganizationAccounts={organizationAccounts} authorizedActions={authorizedOrganizationAccountActions} ldapOrganizationData={ldapOrganizationData} loadData={loadData} />
+        return <div className="p-3"><LdapOrganizationAccountsTable ldapOrganizationAccounts={organizationAccounts} authorizedActions={authorizedOrganizationAccountActions} ldapOrganizationData={ldapOrganizationData} loadData={loadData} /></div>
       case "settings":
         return <LdapOrganizationEditorPanel setLdapOrganizationData={setLdapOrganizationData} ldapOrganizationData={ldapOrganizationData} authorizedActions={authorizedActions} />;
       default:
