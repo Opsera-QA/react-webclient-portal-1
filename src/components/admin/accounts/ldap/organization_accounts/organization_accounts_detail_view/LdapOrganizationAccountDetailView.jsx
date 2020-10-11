@@ -10,9 +10,12 @@ import accountsActions from "../../../accounts-actions";
 import LdapOrganizationAccountSummaryPanel from "./LdapOrganizationAccountSummaryPanel";
 import {ldapOrganizationAccountMetaData} from "../ldap-organization-account-form-fields";
 import LdapOrganizationAccountDetailPanel from "./LdapOrganizationAccountDetailPanel";
-import {faUsers} from "@fortawesome/free-solid-svg-icons";
+import {faTags, faUsers} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
+import DetailViewContainer from "../../../../../common/panels/detail_view_container/DetailViewContainer";
+import TagsSummaryPanel from "../../../../../settings/tags/tags_detail_view/TagsSummaryPanel";
+import TagDetailPanel from "../../../../../settings/tags/tags_detail_view/TagDetailPanel";
 
 function LdapOrganizationAccountDetailView() {
   const { organizationDomain } = useParams();
@@ -51,10 +54,8 @@ function LdapOrganizationAccountDetailView() {
       setAccessRoleData(userRoleAccess);
 
       let authorizedActions = await accountsActions.getAllowedOrganizationAccountActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
-      console.log("Authorized Actions: " + JSON.stringify(authorizedActions));
       setAuthorizedActions(authorizedActions);
       let authorizedIdpActions = await accountsActions.getAllowedIdpAccountActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
-      console.log("Authorized IDP Actions: " + JSON.stringify(authorizedIdpActions));
       setAuthorizedIdpActions(authorizedIdpActions);
 
       if (authorizedActions.includes("get_organization_account_details")) {
@@ -75,7 +76,7 @@ function LdapOrganizationAccountDetailView() {
     setIsLoading(false);
   };
 
-  if (!accessRoleData || isLoading) {
+  if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   }
 
@@ -84,26 +85,15 @@ function LdapOrganizationAccountDetailView() {
   }
 
     return (
-      <>
-        <BreadcrumbTrail destination="ldapOrganizationAccountDetailView"/>
-        {ldapOrganizationAccountData &&
-        <div className="content-container content-card-1 max-content-width ml-2">
-          <div className="pt-2 pl-2 content-block-header">
-            <h6><FontAwesomeIcon icon={faUsers} fixedWidth className="mr-1" />Organization Account Details [{ldapOrganizationAccountData && ldapOrganizationAccountData["name"]}]</h6>
-          </div>
-          <div className="detail-view-body">
-            <div>
-              <LdapOrganizationAccountSummaryPanel ldapOrganizationAccountData={ldapOrganizationAccountData} organizationName={organizationName}/>
-            </div>
-            <div>
-              <LdapOrganizationAccountDetailPanel authorizedActions={authorizedActions} authorizedIdpActions={authorizedIdpActions} ldapOrganizationAccountData={ldapOrganizationAccountData} setLdapOrganizationAccountData={setLdapOrganizationAccountData} loadData={loadData}/>
-            </div>
-          </div>
-          <div className="content-block-footer"/>
-        </div>
-
-        }
-      </>);
+      <DetailViewContainer
+        breadcrumbDestination={"ldapOrganizationAccountDetailView"}
+        title={ldapOrganizationAccountData != null ? `Organization Account Details [${ldapOrganizationAccountData["name"]}]` : undefined}
+        titleIcon={faUsers}
+        isLoading={isLoading}
+        summaryPanel={<LdapOrganizationAccountSummaryPanel ldapOrganizationAccountData={ldapOrganizationAccountData} organizationName={organizationName}/>}
+        detailPanel={<LdapOrganizationAccountDetailPanel authorizedActions={authorizedActions} authorizedIdpActions={authorizedIdpActions} ldapOrganizationAccountData={ldapOrganizationAccountData} setLdapOrganizationAccountData={setLdapOrganizationAccountData} loadData={loadData}/>}
+      />
+    );
 }
 
 export default LdapOrganizationAccountDetailView;

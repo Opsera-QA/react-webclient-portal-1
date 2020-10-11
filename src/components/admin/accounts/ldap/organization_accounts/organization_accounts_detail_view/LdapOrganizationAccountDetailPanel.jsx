@@ -76,7 +76,7 @@ function LdapOrganizationAccountDetailPanel({ldapOrganizationAccountData, setLda
         </Row>
         <Row>
           <Col>
-            <div className="tabbed-content-block detail-view-detail-panel">
+            <div className="shaded-panel detail-view-detail-panel">
               {ldapOrganizationAccountData &&
               <LdapOrganizationAccountTabView showIdpEditPanel={showIdpEditPanel}
                                               ldapIdpAccountData={ldapIdpAccountData}
@@ -104,9 +104,9 @@ function LdapOrganizationAccountTabView({activeTab, authorizedActions, authorize
   if (activeTab) {
     switch (activeTab) {
       case "users":
-        return <LdapUsersTable orgDomain={ldapOrganizationAccountData["orgDomain"]} userData={ldapOrganizationAccountData.getData("users")} />
+        return <div className="p-3"><LdapUsersTable orgDomain={ldapOrganizationAccountData["orgDomain"]} userData={ldapOrganizationAccountData.getData("users")} /></div>
       case "groups":
-        return <LdapGroupsTable orgDomain={ldapOrganizationAccountData["orgDomain"]} groupData={ldapOrganizationAccountData.getData("groups")} />
+        return <div className="p-3"><LdapGroupsTable orgDomain={ldapOrganizationAccountData["orgDomain"]} groupData={ldapOrganizationAccountData.getData("groups")} /></div>
       case "idpAccounts":
         return(<>
             {showIdpEditPanel || ldapIdpAccountData.isNew()
