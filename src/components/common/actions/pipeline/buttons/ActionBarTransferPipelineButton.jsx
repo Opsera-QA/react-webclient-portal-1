@@ -20,7 +20,7 @@ function ActionBarTransferPipelineButton({ pipeline, loadPipeline }) {
   const toastContext  = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
   const [userList, setUserList] = useState([]);
-  const [newUserId, setNewUserId] = useState(undefined);
+  const [user, setUser] = useState(undefined);
   const [transferringPipeline, setTransferringPipeline] = useState(false);
 
   useEffect(() => {
@@ -42,13 +42,17 @@ function ActionBarTransferPipelineButton({ pipeline, loadPipeline }) {
 
   const getUsers = async () => {
     let response = await accountsActions.getOrganizationAccountMembers(pipeline.account, getAccessToken);
+
+    if (pipeline.owner != null) {
+      setUser(response.data.find(x => x._id === pipeline.owner));
+    }
     setUserList(response.data);
   };
 
   const changePipelineOwner = async () => {
     try {
       setTransferringPipeline(true);
-      await pipelineActions.transferPipeline(pipeline._id, newUserId, getAccessToken);
+      await pipelineActions.transferPipeline(pipeline._id, user._id, getAccessToken);
       toastContext.showUpdateSuccessResultDialog("Pipeline Owner");
       await loadPipeline();
       document.body.click();
@@ -67,13 +71,12 @@ function ActionBarTransferPipelineButton({ pipeline, loadPipeline }) {
           <DropdownList
             data={userList}
             valueField="_id"
-            value={userList[userList.findIndex(x => x._id === pipeline.owner)]}
+            value={user}
             busy={isLoading}
             disabled={isLoading}
             textField={data => data != null ? `${data["firstName"]} ${data["lastName"]} (${data["email"]})` : ``}
             filter='contains'
-            // groupBy={tool => capitalizeFirstLetter(tool.tool_type_identifier, "-", "No Tool Type Identifier")}
-            onChange={data => setNewUserId(data._id)}
+            onChange={(data) => setUser(data)}
           />
         </div>
         <div className="d-flex justify-content-between">
