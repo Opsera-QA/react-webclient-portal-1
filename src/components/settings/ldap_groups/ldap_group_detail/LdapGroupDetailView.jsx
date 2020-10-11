@@ -10,9 +10,12 @@ import accountsActions from "../../../admin/accounts/accounts-actions";
 import AccessDeniedDialog from "../../../common/status_notifications/accessDeniedInfo";
 import {ldapGroupMetaData} from "../ldap-groups-metadata";
 import Model from "../../../../core/data_model/model";
-import {faUserFriends} from "@fortawesome/free-solid-svg-icons";
+import {faUser, faUserFriends} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
+import DetailViewContainer from "../../../common/panels/detail_view_container/DetailViewContainer";
+import LdapUserSummaryPanel from "../../ldap_users/users_detail_view/LdapUserSummaryPanel";
+import LdapUserDetailPanel from "../../ldap_users/users_detail_view/LdapUserDetailPanel";
 
 // TODO: Can we get an API Call to get role group names associated with an organization?
 const roleGroups = ["Administrators", "PowerUsers", "Users"];
@@ -91,7 +94,7 @@ function LdapGroupDetailView() {
     }
   };
 
-  if (!accessRoleData || isLoading) {
+  if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   }
 
@@ -100,28 +103,16 @@ function LdapGroupDetailView() {
   }
 
     return (
-      <>
-        {ldapOrganizationData && ldapGroupData &&
-        <div className="max-content-width">
-          <BreadcrumbTrail destination="ldapGroupDetailView"/>
-          <div className="content-container content-card-1 ml-2">
-            <div className="pt-2 pl-2 content-block-header">
-              <h6><FontAwesomeIcon icon={faUserFriends} fixedWidth className="mr-1" />Group Details [{ldapGroupData && ldapGroupData.name}]</h6>
-            </div>
-            <div className="detail-view-body">
-              <div>
-                <LdapGroupSummaryPanel ldapGroupData={ldapGroupData} domain={orgDomain}/>
-              </div>
-              <div>
-                <LdapGroupDetailPanel orgDomain={orgDomain} ldapGroupData={ldapGroupData} ldapOrganizationData={ldapOrganizationData}
-                                      currentUserEmail={currentUserEmail} setLdapGroupData={setLdapGroupData} loadData={getRoles} authorizedActions={authorizedActions}/>
-              </div>
-            </div>
-            <div className="content-block-footer"/>
-          </div>
-        </div>
-        }
-      </>);
+      <DetailViewContainer
+        breadcrumbDestination={"ldapGroupDetailView"}
+        title={ldapGroupData != null ? `Group Details [${ldapGroupData && ldapGroupData.name}]` : undefined}
+        titleIcon={faUserFriends}
+        isLoading={isLoading}
+        summaryPanel={<LdapGroupSummaryPanel ldapGroupData={ldapGroupData} domain={orgDomain}/>}
+        detailPanel={<LdapGroupDetailPanel orgDomain={orgDomain} ldapGroupData={ldapGroupData} ldapOrganizationData={ldapOrganizationData}
+                                           currentUserEmail={currentUserEmail} setLdapGroupData={setLdapGroupData} loadData={getRoles} authorizedActions={authorizedActions}/>}
+      />
+    );
 }
 
 export default LdapGroupDetailView;

@@ -16,16 +16,16 @@ import "components/admin/accounts/accounts.css";
 import PropTypes from "prop-types";
 import UserPanel from "../../../common/panels/user_panel/usersPanel";
 import LoadingDialog from "../../../common/status_notifications/loading";
-import {getErrorDialog, getSuccessDialog} from "../../../common/toasts/toasts";
 import WarningDialog from "../../../common/status_notifications/WarningDialog";
+import DetailPanelContainer from "../../../common/panels/detail_panel_container/DetailPanelContainer";
+import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 
 function LdapGroupManagePanel({ldapGroupData, ldapOrganizationData, loadData, authorizedActions}) {
   const {name} = useParams();
+  const toastContext = useContext(DialogToastContext);
   const {getUserRecord, getAccessToken} = useContext(AuthContext);
   const [members, setMembers] = useState([]);
   const [nonMembers, setNonMembers] = useState([]);
-  const [showToast, setShowToast] = useState(false);
-  const [toast, setToast] = useState("");
   const [selectedMembers, setSelectedMembers] = useState([]);
   const [selectedNonMembers, setSelectedNonMembers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -35,9 +35,16 @@ function LdapGroupManagePanel({ldapGroupData, ldapOrganizationData, loadData, au
   }, []);
 
   const loadMembers = async () => {
-    setIsLoading(true);
-    await changeMemberStatus();
-    setIsLoading(false);
+    try {
+      setIsLoading(true);
+      await changeMemberStatus();
+    }
+    catch (error) {
+      toastContext.showLoadingErrorDialog(error);
+    }
+    finally {
+      setIsLoading(false);
+    }
   }
 
   const changeMemberStatus = async () => {
@@ -111,15 +118,12 @@ function LdapGroupManagePanel({ldapGroupData, ldapOrganizationData, loadData, au
         acc.push(item.emailAddress);
         return acc;
       }, []);
-      const syncMembershipResponse = await accountsActions.syncMembership(ldapOrganizationData, ldapGroupData.name, emailList, getAccessToken);
-      // console.log("syncMembershipResponse: " + JSON.stringify(syncMembershipResponse));
-      // TODO: Refresh data without reloading the page
+      await accountsActions.syncMembership(ldapOrganizationData, ldapGroupData.name, emailList, getAccessToken);
+      toastContext.showUpdateSuccessResultDialog("Group Membership");
       loadData();
     }
     catch (error) {
-      let errorToast = getErrorDialog(error.message, setShowToast);
-      setToast(errorToast);
-      setShowToast(true);
+      toastContext.showErrorDialog(error);
     }
   };
 
@@ -131,10 +135,9 @@ function LdapGroupManagePanel({ldapGroupData, ldapOrganizationData, loadData, au
     return <WarningDialog warningMessage={"You do not have the required permissions to update group membership."} />;
   }
 
-    return (<>
-      <div>
+    return (
+      <DetailPanelContainer showRequiredFieldsMessage={false}>
         <div className="mb-3">
-          {showToast && getSuccessDialog("Group Members Saved Successfully", setShowToast)}
           <Row>
             <Col xs={5}>
               <div className="mb-2 text-right">
@@ -183,14 +186,15 @@ function LdapGroupManagePanel({ldapGroupData, ldapOrganizationData, loadData, au
             </Col>
           </Row>
         </div>
-      </div>
-    </>);
+      </DetailPanelContainer>
+    );
 }
 
 LdapGroupManagePanel.propTypes = {
   ldapGroupData: PropTypes.object,
   ldapOrganizationData: PropTypes.object,
   getGroup: PropTypes.func,
+  loadData: PropTypes.func,
   authorizedActions: PropTypes.array
 };
 
