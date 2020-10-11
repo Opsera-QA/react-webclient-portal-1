@@ -29,7 +29,7 @@ function ToolTypeDetailPanel({ toolTypeData, setToolTypeData }) {
         </Row>
         <Row>
           <Col>
-            <div className="tabbed-content-block detail-view-detail-panel">
+            <div className="shaded-panel detail-view-detail-panel">
               {toolTypeData && <ToolTypeDetailsView activeTab={activeTab} setToolTypeData={setToolTypeData} toolTypeData={toolTypeData} /> }
             </div>
           </Col>

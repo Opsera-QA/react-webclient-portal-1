@@ -8,6 +8,7 @@ import toolTypeActions from "../../tool-management-actions";
 import LoadingDialog from "../../../../common/status_notifications/loading";
 import SaveButton from "../../../../common/buttons/SaveButton";
 import DtoTagManagerInput from "../../../../common/input/dto_input/dto-tag-manager-input";
+import DetailPanelContainer from "../../../../common/panels/detail_panel_container/DetailPanelContainer";
 
 function ToolTypeEditorPanel( { toolTypeData, setToolTypeData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -37,8 +38,7 @@ function ToolTypeEditorPanel( { toolTypeData, setToolTypeData, handleClose }) {
   }
 
     return (
-      <>
-        <div className="mx-2 my-3">
+      <DetailPanelContainer>
           <Row>
             <Col lg={6}>
               <DtoTextInput disabled={!toolTypeDataDto.isNew()} fieldName={"name"} dataObject={toolTypeDataDto}
@@ -63,8 +63,7 @@ function ToolTypeEditorPanel( { toolTypeData, setToolTypeData, handleClose }) {
                           updateRecord={updateToolType} handleClose={handleClose} setData={setToolTypeData} />
             </div>
           </Row>
-        </div>
-      </>
+      </DetailPanelContainer>
     );
 }
 
