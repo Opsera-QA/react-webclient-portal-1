@@ -108,7 +108,7 @@ function Logs() {
       {!error && (
         <div className="shaded-panel p-3 mt-1">
           {loadingProfile
-            ? <LoadingDialog size="sm" message="Loading Profile" />
+            ? <LoadingDialog size="sm" message="Loading..." />
             : <SearchLogs tools={tools} />}
         </div>
       )}
