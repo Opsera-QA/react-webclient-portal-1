@@ -8,6 +8,7 @@ import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
 import LoadingDialog from "../../../common/status_notifications/loading";
 import SaveButton from "../../../common/buttons/SaveButton";
 import WarningDialog from "../../../common/status_notifications/WarningDialog";
+import DetailPanelContainer from "../../../common/panels/detail_panel_container/DetailPanelContainer";
 
 function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, authorizedActions, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -41,8 +42,7 @@ function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, authori
   }
 
     return (
-      <>
-        <div className="scroll-y full-height">
+      <DetailPanelContainer>
           <Row>
             <Col lg={12}>
               <DtoTextInput disabled={!ldapUserDataDto.isNew()} setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"name"} />
@@ -80,8 +80,7 @@ function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, authori
               <SaveButton recordDto={ldapUserDataDto} setData={setLdapUserData} setRecordDto={setLdapUserDataDto} handleClose={handleClose} createRecord={createLdapUser} updateRecord={updateLdapUser} />
             </div>
           </Row>
-        </div>
-      </>
+      </DetailPanelContainer>
     );
 }
 
