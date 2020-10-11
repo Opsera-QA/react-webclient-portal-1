@@ -10,6 +10,7 @@ import DtoToggleInput from "../../../common/input/dto_input/dto-toggle-input";
 import LoadingDialog from "../../../common/status_notifications/loading";
 import SaveButton from "../../../common/buttons/SaveButton";
 import WarningDialog from "../../../common/status_notifications/WarningDialog";
+import DetailPanelContainer from "../../../common/panels/detail_panel_container/DetailPanelContainer";
 
 function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, ldapOrganizationData, setLdapGroupData, handleClose, authorizedActions}) {
   const {getAccessToken} = useContext(AuthContext);
@@ -44,9 +45,7 @@ function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, ldapOrganization
   }
 
     return (
-      <>
-        <div className="p-3">
-          <>
+      <DetailPanelContainer>
             <Row>
               <Col lg={12}>
                 <DtoTextInput disabled={!ldapGroupDataDto.isNew()} fieldName={"name"} dataObject={ldapGroupDataDto}
@@ -71,12 +70,10 @@ function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, ldapOrganization
             </Row>
             <Row>
               <div className="ml-auto mt-3 px-3">
-                <SaveButton recordDto={ldapGroupDataDto} setData={setLdapGroupData} setRecordDto={ldapGroupDataDto} handleClose={handleClose} createRecord={createGroup} updateRecord={updateGroup} />
+                <SaveButton recordDto={ldapGroupDataDto} setData={setLdapGroupData} setRecordDto={setLdapGroupDataDto} handleClose={handleClose} createRecord={createGroup} updateRecord={updateGroup} />
               </div>
             </Row>
-          </>
-        </div>
-      </>
+      </DetailPanelContainer>
     );
 }
 

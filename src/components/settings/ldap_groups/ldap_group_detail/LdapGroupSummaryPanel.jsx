@@ -5,6 +5,7 @@ import DtoTextField from "../../../common/form_fields/dto_form_fields/dto-text-f
 import DtoToggleField from "../../../common/form_fields/dto_form_fields/dto-toggle-field";
 import TextField from "../../../common/form_fields/text-field";
 import SummaryActionBar from "../../../common/actions/SummaryActionBar";
+import SummaryPanelContainer from "../../../common/panels/detail_view/SummaryPanelContainer";
 
 function LdapGroupSummaryPanel({ldapGroupData, domain}) {
 
@@ -13,10 +14,7 @@ function LdapGroupSummaryPanel({ldapGroupData, domain}) {
   }
 
   return (
-    <>
-      <div className="scroll-y pt-2 px-3">
-        <SummaryActionBar backButtonPath={`/settings/${domain}/groups`} />
-        <div className="mb-3 flat-top-content-block p-3 detail-view-summary">
+    <SummaryPanelContainer summaryActionBar={<SummaryActionBar backButtonPath={`/settings/${domain}/groups`} />}>
           <Row>
             <Col lg={6}>
               <DtoTextField dataObject={ldapGroupData} fieldName={"name"} />
@@ -38,9 +36,7 @@ function LdapGroupSummaryPanel({ldapGroupData, domain}) {
               <DtoTextField dataObject={ldapGroupData} fieldName={"ownerEmail"} />
             </Col>
           </Row>
-        </div>
-      </div>
-    </>
+    </SummaryPanelContainer>
   );
 }
 

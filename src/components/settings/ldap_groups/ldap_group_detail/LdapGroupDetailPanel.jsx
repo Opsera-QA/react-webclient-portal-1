@@ -36,7 +36,7 @@ function LdapGroupDetailPanel({ currentUserEmail, ldapGroupData, setLdapGroupDat
         </Row>
         <Row>
           <Col>
-            <div className="tabbed-content-block detail-view-detail-panel">
+            <div className="shaded-panel detail-view-detail-panel">
               {ldapGroupData &&
               <LdapGroupDetailsView currentUserEmail={currentUserEmail} ldapGroupData={ldapGroupData} authorizedActions={authorizedActions} orgDomain={orgDomain} setLdapGroupData={setLdapGroupData} loadData={loadData} activeTab={activeTab} ldapOrganizationData={ldapOrganizationData}/>}
             </div>
@@ -54,9 +54,9 @@ function LdapGroupDetailsView({activeTab, currentUserEmail, authorizedActions, l
   if (activeTab) {
     switch (activeTab) {
       case "membership":
-        return <LdapUsersTable orgDomain={orgDomain} userData={ldapGroupData.members} />;
+        return (<div className="px-3 pt-2 pb-3"><LdapUsersTable orgDomain={orgDomain} userData={ldapGroupData.members} /></div>);
       case "manage":
-        return <LdapGroupManagePanel ldapGroupData={ldapGroupData.data} authorizedActions={authorizedActions} ldapOrganizationData={ldapOrganizationData} loadData={loadData}/>;
+        return (<LdapGroupManagePanel ldapGroupData={ldapGroupData.data} authorizedActions={authorizedActions} ldapOrganizationData={ldapOrganizationData} loadData={loadData}/>);
       case "settings":
         return <LdapGroupEditorPanel currentUserEmail={currentUserEmail} authorizedActions={authorizedActions} setLdapGroupData={setLdapGroupData} ldapGroupData={ldapGroupData} ldapOrganizationData={ldapOrganizationData} />;
       default:
