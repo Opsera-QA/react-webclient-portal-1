@@ -4,14 +4,13 @@ import { AuthContext } from "../../../../contexts/AuthContext";
 import LdapUserSummaryPanel from "./LdapUserSummaryPanel";
 import LdapUserDetailPanel from "./LdapUserDetailPanel";
 import accountsActions from "../../../admin/accounts/accounts-actions";
-import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
 import LoadingDialog from "../../../common/status_notifications/loading";
 import Model from "../../../../core/data_model/model";
 import {ldapUsersMetaData} from "../ldap-users-metadata";
 import {faUser} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import AccessDeniedDialog from "../../../common/status_notifications/accessDeniedInfo";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
+import DetailViewContainer from "../../../common/panels/detail_view_container/DetailViewContainer";
 
 function LdapUserDetailView() {
   const {userEmail, orgDomain} = useParams();
@@ -63,7 +62,7 @@ function LdapUserDetailView() {
     }
   };
 
-  if (isLoading || !accessRoleData) {
+  if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   }
 
@@ -72,26 +71,14 @@ function LdapUserDetailView() {
   }
 
   return (
-    <>
-      {/*TODO: The permissions matrix says that users can see all users. If necessary, change this to allowedActions.includes("get_users")*/}
-      <BreadcrumbTrail destination={(accessRoleData.PowerUser || accessRoleData.Administrator || accessRoleData.OpseraAdministrator) ? "ldapUserDetailView" : "ldapUserDetailViewLimited"} />
-      {ldapUserData &&
-      <div className="content-container content-card-1 max-content-width ml-2">
-        <div className="pt-2 pl-2 content-block-header">
-          <h5><FontAwesomeIcon icon={faUser} fixedWidth className="mr-1"/>User Details
-            [{ldapUserData && ldapUserData["name"]}]</h5></div>
-        <div className="detail-view-body">
-          <div>
-            <LdapUserSummaryPanel ldapUserData={ldapUserData} orgDomain={orgDomain}/>
-          </div>
-          <div>
-            <LdapUserDetailPanel setLdapUserData={setLdapUserData} orgDomain={orgDomain} ldapUserData={ldapUserData} authorizedActions={authorizedActions}/>
-          </div>
-        </div>
-        <div className="content-block-footer"/>
-      </div>
-      }
-    </>
+    <DetailViewContainer
+      breadcrumbDestination={(accessRoleData.PowerUser || accessRoleData.Administrator || accessRoleData.OpseraAdministrator) ? "ldapUserDetailView" : "ldapUserDetailViewLimited"}
+      title={ldapUserData != null ? `User Details [${ldapUserData["name"]}]` : undefined}
+      titleIcon={faUser}
+      isLoading={isLoading}
+      summaryPanel={<LdapUserSummaryPanel ldapUserData={ldapUserData} orgDomain={orgDomain}/>}
+      detailPanel={<LdapUserDetailPanel setLdapUserData={setLdapUserData} orgDomain={orgDomain} ldapUserData={ldapUserData} authorizedActions={authorizedActions}/>}
+    />
   );
 }
 

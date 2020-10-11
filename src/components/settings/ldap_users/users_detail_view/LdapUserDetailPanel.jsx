@@ -28,7 +28,7 @@ function LdapUserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, authori
         </Row>
         <Row>
           <Col>
-            <div className="tabbed-content-block detail-view-detail-panel">
+            <div className="shaded-panel detail-view-detail-panel">
               {ldapUserData && <LdapDetailsView activeTab={activeTab} authorizedActions={authorizedActions} setLdapUserData={setLdapUserData} ldapUserData={ldapUserData} orgDomain={orgDomain} /> }
             </div>
           </Col>
