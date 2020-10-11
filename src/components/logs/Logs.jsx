@@ -92,10 +92,6 @@ function Logs() {
     }
   }
 
-  if (loadingProfile) {
-    return <LoadingView size="sm" />;
-  }
-
   return (
     <div className="mb-3 max-charting-width">
       {error && <ErrorDialog error={error} align="top" />}
@@ -110,8 +106,10 @@ function Logs() {
       </div>
 
       {!error && (
-        <div className="pr-2 mt-1">
-          <SearchLogs tools={tools} />
+        <div className="shaded-panel p-3 mt-1">
+          {loadingProfile
+            ? <LoadingDialog size="sm" message="Loading Profile" />
+            : <SearchLogs tools={tools} />}
         </div>
       )}
     </div>
