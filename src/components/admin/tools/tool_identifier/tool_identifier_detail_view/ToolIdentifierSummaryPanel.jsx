@@ -18,11 +18,12 @@ import {
   getUpdateSuccessResultDialog
 } from "../../../../common/toasts/toasts";
 import LoadingDialog from "../../../../common/status_notifications/loading";
+import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
+import SummaryPanelContainer from "../../../../common/panels/detail_view/SummaryPanelContainer";
 
 function ToolIdentifierSummaryPanel({toolIdentifierData, setToolIdentifierData}) {
   const { getAccessToken } = useContext(AuthContext);
-  const [toast, setToast] = useState({});
-  const [showToast, setShowToast] = useState(false);
+  const toastContext = useContext(DialogToastContext);
 
   const handleActiveToggle = async () => {
     if(toolIdentifierData.isModelValid()) {
@@ -32,20 +33,14 @@ function ToolIdentifierSummaryPanel({toolIdentifierData, setToolIdentifierData})
         let response = await toolTypeActions.updateToolIdentifier({...newToolIdentifierData}, getAccessToken);
         let updatedDto = new Model(response.data, toolIdentifierData.metaData, false);
         setToolIdentifierData(updatedDto);
-        let toast = getUpdateSuccessResultDialog(newToolIdentifierData.getType(), setShowToast);
-        setToast(toast);
-        setShowToast(true);
+        toastContext.showUpdateSuccessResultDialog(newToolIdentifierData.getType());
       } catch (error) {
-        let toast = getLoadingErrorDialog(error.message, setShowToast);
-        setToast(toast);
-        setShowToast(true);
-        console.error(error.message);
+        toastContext.showUpdateFailureResultDialog(error);
+        console.error(error);
       }
     }
     else {
-      let toast = getFormValidationErrorDialog(setShowToast);
-      setToast(toast);
-      setShowToast(true);
+      toastContext.showFormValidationErrorDialog();
     }
   };
 
@@ -54,12 +49,9 @@ function ToolIdentifierSummaryPanel({toolIdentifierData, setToolIdentifierData})
   }
 
   return (
-    <>
-      <div className="scroll-y pt-2 px-3">
-        {showToast && toast}
-        <SummaryActionBar backButtonPath={"/admin/tools/identifiers"} handleActiveToggle={handleActiveToggle}
-                          status={toolIdentifierData.getData("active")}/>
-        <div className="mb-3 flat-top-content-block p-3 detail-view-summary">
+    <SummaryPanelContainer
+      summaryActionBar={<SummaryActionBar backButtonPath={"/admin/tools/identifiers"} handleActiveToggle={handleActiveToggle}
+                                          status={toolIdentifierData.getData("active")}/>}>
           <Row>
             <Col lg={6}>
               <DtoTextField dataObject={toolIdentifierData} fieldName={"name"}/>
@@ -67,7 +59,7 @@ function ToolIdentifierSummaryPanel({toolIdentifierData, setToolIdentifierData})
             <Col lg={6}>
               <DtoTextField dataObject={toolIdentifierData} fieldName={"identifier"}/>
             </Col>
-            <Col lg={6}>
+            <Col lg={12}>
               <DtoTextField dataObject={toolIdentifierData} fieldName={"description"}/>
             </Col>
             <Col lg={6}>
@@ -89,9 +81,7 @@ function ToolIdentifierSummaryPanel({toolIdentifierData, setToolIdentifierData})
               <DtoPropertiesField dataObject={toolIdentifierData} fieldName={"properties"}/>
             </Col>
           </Row>
-        </div>
-      </div>
-    </>
+    </SummaryPanelContainer>
   );
 }
 
@@ -99,6 +89,5 @@ ToolIdentifierSummaryPanel.propTypes = {
   toolIdentifierData: PropTypes.object,
   setToolIdentifierData: PropTypes.func
 };
-
 
 export default ToolIdentifierSummaryPanel;

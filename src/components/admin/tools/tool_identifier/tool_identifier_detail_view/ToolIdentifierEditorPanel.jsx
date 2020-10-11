@@ -11,6 +11,7 @@ import SaveButton from "../../../../common/buttons/SaveButton";
 import LoadingDialog from "../../../../common/status_notifications/loading";
 import DtoTagManagerInput from "../../../../common/input/dto_input/dto-tag-manager-input";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
+import DetailPanelContainer from "../../../../common/panels/detail_panel_container/DetailPanelContainer";
 
 function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData, handleClose} ) {
   const {getAccessToken} = useContext(AuthContext);
@@ -54,8 +55,7 @@ function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData, 
     return (<LoadingDialog size="sm"/>);
   }
     return (
-      <>
-        <div className="mx-2 my-3">
+      <DetailPanelContainer>
           <Row>
             <Col lg={6}>
               <DtoTextInput fieldName={"name"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto}/>
@@ -91,8 +91,7 @@ function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData, 
               />
             </div>
           </Row>
-        </div>
-      </>
+      </DetailPanelContainer>
     );
 }
 
