@@ -22,7 +22,6 @@ import { AuthContext } from "../../../../../../../contexts/AuthContext";
 import { axiosApiService } from "../../../../../../../api/apiService";
 import { Link } from "react-router-dom";
 import ErrorDialog from "../../../../../../common/status_notifications/error";
-import XUnitStepConfiguration from "./XUnitStepConfiguration";
 import {
   getErrorDialog,
   getMissingRequiredFieldsErrorDialog,
@@ -63,6 +62,7 @@ const INITIAL_DATA = {
   gitUserName: "",
   repository: "",
   branch: "",
+  sonarSourcePath: "",
 };
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
@@ -1101,39 +1101,16 @@ function SonarStepConfiguration({
                 {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
               </Form.Group>
             )}
-            {/*
-        {formData.jobType === "VALIDATE PACKAGE XML" ? (
-          <Form.Group controlId="s3Step">
-            <Form.Label>Generate XML Step Info*</Form.Label>
-            {listOfSteps ? (
-              <DropdownList
-                data={listOfSteps}
-                value={
-                  formData.stepIdXML
-                    ? listOfSteps[
-                        listOfSteps.findIndex(
-                          (x) => x._id === formData.stepIdXML
-                        )
-                      ]
-                    : listOfSteps[0]
-                }
-                valueField="_id"
-                textField="name"
-                filter="contains"
-                onChange={handleXMLStepChange}
+            <Form.Group controlId="path">
+              <Form.Label>Sonar Source Path</Form.Label>
+              <Form.Control
+                maxLength="50"
+                type="text"
+                placeholder=""
+                value={formData.sonarSourcePath || ""}
+                onChange={(e) => setFormData({ ...formData, sonarSourcePath: e.target.value })}
               />
-            ) : (
-              <FontAwesomeIcon
-                icon={faSpinner}
-                spin
-                className="text-muted ml-2"
-                fixedWidth
-              />
-            )}
-          </Form.Group>
-        ) : (
-          <></>
-        )} */}
+            </Form.Group>
 
             <Form.Group controlId="threshold">
               <Form.Label>Success Threshold</Form.Label>
