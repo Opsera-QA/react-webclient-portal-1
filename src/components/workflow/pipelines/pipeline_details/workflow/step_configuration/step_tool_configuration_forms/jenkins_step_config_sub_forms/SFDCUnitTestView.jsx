@@ -1,0 +1,192 @@
+import React, { useContext, useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { AuthContext } from "contexts/AuthContext";
+import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
+import { Button, Form } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faSpinner,
+  faCheck,
+  faSquare,
+} from "@fortawesome/free-solid-svg-icons";
+import LoadingDialog from "components/common/status_notifications/loading";
+import ErrorDialog from "components/common/status_notifications/error";
+import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
+
+const SFDCUnitTestView = ({
+  pipelineId,
+  stepId,
+  sfdcToolId,
+  handleClose,
+}) => {
+  const { getAccessToken } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [save, setSave] = useState(false);
+  const [testClasses, setTestClasses] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [recordId, setRecordId] = useState("");
+  const [selectedUnitTestClasses, setSelectedUnitTestClasses] = useState([]);
+  
+
+  useEffect(() => {  
+    async function loadData () {
+      setLoading(true);
+  
+      try {
+        // const accessToken = await getAccessToken();
+        const response = await sfdcPipelineActions.getTestClassesList({"sfdcToolId": sfdcToolId, "pipelineId": pipelineId, "stepId": stepId, "dataType": "sfdc-unitTesting" }, getAccessToken);
+        
+        if(!response.data.data || !response.data.paginatedData) {
+          toastContext.showLoadingErrorDialog("something went wrong! not a valid object");
+        }
+        setTestClasses(response.data.paginatedData.testClasses.data);
+        setSelectedUnitTestClasses(response.data.paginatedData.selectedTestClasses.data);
+        setRecordId(response.data._id);
+      } catch (error) {
+        console.error("Error getting API Data: ", error);
+        toastContext.showLoadingErrorDialog(error);
+      }
+      setLoading(false);
+    }
+  
+    loadData();
+  }, []);
+
+  const handleCheckAllClickUnitTestClasses = () => {
+    setSelectedUnitTestClasses(testClasses);
+  };
+
+  const handleUnCheckAllClickUnitTestClasses = () => {
+    setSelectedUnitTestClasses([]);
+  };
+
+  const handleComponentCheck = (e) => {
+    const newValue = e.target.name;
+    if (e.target.checked) {
+      setSelectedUnitTestClasses((selectedUnitTestClasses) => [...selectedUnitTestClasses, newValue]);
+    } else {
+      setSelectedUnitTestClasses(selectedUnitTestClasses.filter((item) => item !== newValue));
+    }
+  };
+
+  const handleSelectedClasses = async() => {
+    setSave(true);
+    try {
+      const saveResponse = await sfdcPipelineActions.setSelectedTestClassesList({ "recordId": recordId, "sfdcToolId": sfdcToolId, "pipelineId": pipelineId, "stepId": stepId, "dataType": "sfdc-unitTesting", "data": selectedUnitTestClasses}, getAccessToken);
+      // if we want to close this modal do it here!
+      handleClose();
+      setSave(false);
+    } catch (error) {
+      console.error("Error getting API Data: ", error);
+      toastContext.showLoadingErrorDialog(error);
+      setSave(false);
+    }
+  }
+
+  return (
+    <div className="ml-5">
+      <div className="flex-container">
+        <div className="flex-container-top"></div>
+        <div className="flex-container-content">
+          <div className="h5">SalesForce Test Classes</div>
+          <div className="text-muted">Only Apex Class with names having Test as suffix can be part of selection for Selective Unit Testing.</div>
+
+          {error && <ErrorDialog error={error} align={"top"} setError={setError} />}
+
+            <>
+              <div className="mt-3 mr-3">
+                <div className="d-flex justify-content-between">
+                  { testClasses.length > 0 &&
+                  <>
+                   <div className="px-2">
+                   <Form.Group controlId="searchField">
+                      <Form.Control type="text" placeholder="Search for Test Classes" value={searchQuery || ""} onChange={e => setSearchQuery(e.target.value)} />
+                    </Form.Group>
+                   </div>
+                   <div className="align-self-end">
+                     <Button variant="secondary" size="sm" className="mr-2" onClick={handleCheckAllClickUnitTestClasses}>
+                       <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1" />
+                       Check All
+                     </Button>
+                     <Button
+                       variant="secondary"
+                       size="sm"
+                       className="mr-2"
+                       onClick={handleUnCheckAllClickUnitTestClasses}
+                     >
+                       <FontAwesomeIcon icon={faSquare} fixedWidth className="mr-1" />
+                       Uncheck All
+                     </Button>
+                   </div>
+                   </>
+                  }
+                </div>
+              </div>
+
+              <div className="mx-2">
+                <div className="text-muted">Select Test Classes:</div>
+                <div className="d-flex flex-wrap">
+                {loading ? (
+                    <LoadingDialog size="sm" />
+                  ) : (
+                    <>
+                      {typeof testClasses === "object" && testClasses.length > 0 &&
+                        testClasses
+                        .filter(item => item.toLowerCase().includes(searchQuery.toLowerCase()))
+                        .map((item, idx) => (
+                          <div key={item} className="p-2 w-50">
+                            <Form.Check
+                              inline
+                              type={"checkbox"}
+                              label={item}
+                              name={item}
+                              id={item}
+                              checked={selectedUnitTestClasses.includes(item)}
+                              onChange={handleComponentCheck}
+                            />
+                          </div>
+                        ))}
+                    </>
+                  )}
+                </div>
+              </div>
+            </>
+        </div>
+
+        <div className="flex-container-bottom pr-2 mt-4 mb-2 text-right">
+          <Button
+            variant="success"
+            size="sm"
+            onClick={() => handleSelectedClasses()}
+            disabled={save}
+          >
+            {save ? (
+              <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth />
+            ) : (
+              <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1" />
+            )}
+            Save
+          </Button>
+
+          {/*<Button variant="outline-secondary" size="sm" className="ml-2"
+                  onClick={() => {
+                    handleClose();
+                  }}>
+            <FontAwesomeIcon icon={faTimes} fixedWidth className="mr-1"/>Cancel</Button>*/}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
+SFDCUnitTestView.propTypes = {
+  pipelineId: PropTypes.string,
+  stepId: PropTypes.string,
+  sfdcToolId: PropTypes.string,
+  handleClose: PropTypes.func,
+};
+
+export default SFDCUnitTestView;
