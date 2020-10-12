@@ -5,25 +5,32 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faExclamationCircle,
   faTimes,
-  faSave,
   faSpinner,
-  faEllipsisH,
-  faTools,
+  faEllipsisH
 } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
+import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
 import { axiosApiService } from "../../../../../../../../api/apiService";
 import { Link } from "react-router-dom";
 import {
   getErrorDialog,
-  getMissingRequiredFieldsErrorDialog,
-  getServiceUnavailableDialog,
-} from "../../../../../../../common/toasts/toasts";
+} from "components/common/toasts/toasts";
+import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
+import SFDCUnitTestModal from "./SFDCUnitTestModal";
+
+const UNIT_TEST_OPTIONS = [
+  { value: "", label: "Select One", isDisabled: "yes" },
+  { value: "RunLocalTests", label: "Run Local Tests" },
+  { value: "RunAllTestsInOrg", label: "Run All Tests In Org" },
+  { value: "RunSpecifiedTests", label: "Run Specified Tests" },
+];
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
 function SFDCConfiguration({  
   plan,
+  pipelineId,
   stepId,
   renderForm,
   jobType,
@@ -35,9 +42,13 @@ function SFDCConfiguration({
   setShowToast,
 }) {
   const contextType = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
+  const { getAccessToken } = useContext(AuthContext);
   const [listOfSteps, setListOfSteps] = useState([]);
   const [sfdcList, setSFDCList] = useState([]);
   const [isSFDCSearching, setisSFDCSearching] = useState(false);
+  const [show, setShow] = useState(false);
+  const [save, setSave] = useState(false);
 
   useEffect(() => {
     if (plan && stepId) {
@@ -105,9 +116,7 @@ function SFDCConfiguration({
         setShowToast(true);
       }
     } catch (error) {
-      let toast = getErrorDialog(error, setShowToast, "detailPanelTop");
-      setToast(toast);
-      setShowToast(true);
+      toastContext.showLoadingErrorDialog(error);
     }
   };
 
@@ -119,6 +128,7 @@ function SFDCConfiguration({
         ...formData,
         sfdcToolId: selectedOption.id,
         accountUsername: selectedOption.configuration ? selectedOption.configuration.accountUsername : "",
+        sfdcUnitTestType: ""
       });
     }
     //setLoading(false);
@@ -137,9 +147,44 @@ function SFDCConfiguration({
     //setLoading(false);
   };
 
-  const handleXMLStepChange = (selectedOption) => {
-    setFormData({ ...formData, stepIdXML: selectedOption._id });
-  };
+  const handleUnitTestChange = (selectedOption) => {
+    setFormData({
+      ...formData,
+      sfdcUnitTestType: selectedOption.value,
+    });
+  }
+
+  const handleClose = () => { 
+    setSave(false);
+    setShow(false);
+   };
+
+  const handleShow = () => setShow(true);
+
+  const getTestClasses = async() => {
+    
+    setSave(true);
+    // call api to get test classes
+    try {
+      // const accessToken = await getAccessToken();
+      const res = await sfdcPipelineActions.setTestClassesList({"sfdcToolId": formData.sfdcToolId, "pipelineId": pipelineId, "stepId": stepId }, getAccessToken);
+      if (res.data.status != 200 ) {
+        let toast = getErrorDialog(
+          res.data.message,
+          setShowToast,
+          "detailPanelTop"
+        );
+        setToast(toast);
+        setShowToast(true);
+        setSave(false);
+        return;
+      }
+      handleShow();
+    } catch (error) {
+      console.error("Error getting API Data: ", error);
+      toastContext.showLoadingErrorDialog(error);
+    }
+  }
 
   const RegistryPopover = (data) => {
     if (data) {
@@ -343,14 +388,61 @@ function SFDCConfiguration({
                />
              </Form.Group>
             }
-
+            
+            {formData.jobType === "SFDC UNIT TESTING" && formData.sfdcToolId.length > 0 && 
+            <>
+              <Form.Group controlId="unitTestSelection" className="mt-4 ml-1">
+                <Form.Label className="w-100">
+                    Unit Test Type*
+                </Form.Label>
+                <DropdownList
+                  data={UNIT_TEST_OPTIONS}
+                  value={UNIT_TEST_OPTIONS[UNIT_TEST_OPTIONS.findIndex((x) => x.value === formData.sfdcUnitTestType)]}
+                  valueField="id"
+                  textField="label"
+                  filter="contains"
+                  placeholder="Please select type of unit test"
+                  onChange={handleUnitTestChange}
+                />
+              </Form.Group>
+              {formData.sfdcUnitTestType === "RunSpecifiedTests" && 
+                <div className="flex-container-bottom pr-2 mt-4 mb-2 text-right">
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    onClick={() => {
+                      getTestClasses();
+                    }}
+                    disabled={save}
+                  >
+                  {save ? (
+                    <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth />
+                  ) : (
+                    <FontAwesomeIcon fixedWidth className="mr-1" />
+                  )}
+                  Select Test classes
+                </Button>
+              </div>
+              }
+             </>
+            }
       </Form>
+      
+      <SFDCUnitTestModal 
+        show={show}
+        pipelineId={pipelineId}
+        stepId={stepId}
+        sfdcToolId={formData.sfdcToolId}
+        handleClose={handleClose}
+      />
+
       </>
   );
 }
 
 SFDCConfiguration.propTypes = {
   plan: PropTypes.array,
+  pipelineId: PropTypes.string,
   stepId: PropTypes.string,
   renderForm: PropTypes.bool,
   jobType: PropTypes.string,

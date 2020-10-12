@@ -38,4 +38,31 @@ sfdcPipelineActions.createJobs = async (postBody, getAccessToken) => {
   return response;
 };
 
+sfdcPipelineActions.setTestClassesList = async (postBody, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/pipelines/sfdc/getTestClasses`;   
+  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
+    .then((result) =>  {return result;})
+    .catch(error => {throw { error };});
+  return response;
+};
+
+sfdcPipelineActions.getTestClassesList = async (postBody, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/pipelines/storage/get`;   
+  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
+    .then((result) =>  {return result;})
+    .catch(error => {throw { error };});
+  return response;
+};
+
+sfdcPipelineActions.setSelectedTestClassesList = async (postBody, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/pipelines/storage/update`;   
+  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
+    .then((result) =>  {return result;})
+    .catch(error => {throw { error };});
+  return response;
+};
+
 export default sfdcPipelineActions;

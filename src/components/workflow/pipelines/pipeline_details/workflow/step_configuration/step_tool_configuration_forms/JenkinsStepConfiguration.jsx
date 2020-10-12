@@ -63,6 +63,7 @@ const INITIAL_DATA = {
   buildArgs: {},
   isOrgToOrg: false,
   isFullBackup: false,
+  sfdcUnitTestType: "",
 };
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
@@ -338,7 +339,7 @@ function JenkinsStepConfiguration({
   };
 
   const validateRequiredFields = () => {
-    let { toolConfigId, toolJobId, jenkinsUrl, jUserId, jobName, buildType, dockerName, dockerTagName } = formData;
+    let { toolConfigId, toolJobId, jenkinsUrl, jUserId, jobName, buildType, dockerName, dockerTagName, sfdcUnitTestType } = formData;
     if(!toolJobId && toolJobId.length < 0 ) {
       let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
       setToast(toast);
@@ -359,7 +360,8 @@ function JenkinsStepConfiguration({
         toolConfigId.length === 0 ||
         jenkinsUrl.length === 0 ||
         jUserId.length === 0 ||
-        (buildType === "docker" ? dockerName.length === 0 || dockerTagName.length === 0 : false)
+        (formData.jobType === "SFDC UNIT TESTING" ? sfdcUnitTestType.length === 0 : false) ||
+        (buildType === "docker" ? dockerName.length === 0 || dockerTagName.length === 0 : false) 
       ) {
         let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
         setToast(toast);
@@ -418,7 +420,7 @@ function JenkinsStepConfiguration({
     //setLoading(false);
   };
 
-  console.log(formData);
+  // console.log(formData);
 
   const handleJobChange = (selectedOption) => {
     switch (selectedOption.type[0]) {
@@ -820,6 +822,7 @@ function JenkinsStepConfiguration({
 
             <SFDCConfiguration
               plan={plan}
+              pipelineId={pipelineId}
               stepId={stepId}
               renderForm={renderForm}
               jobType={jobType}
