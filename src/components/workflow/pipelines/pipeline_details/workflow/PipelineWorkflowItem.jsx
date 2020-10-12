@@ -25,11 +25,12 @@ import ModalActivityLogs from "components/common/modal/modalActivityLogs";
 import StepToolActivityView from "./step_configuration/StepToolActivityView";
 import "../../../workflows.css";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import LoadingDialog from "../../../../common/status_notifications/loading";
+import { AuthContext } from "../../../../../contexts/AuthContext";
 
 
-const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineId, accessToken, editWorkflow, parentCallbackEditItem, deleteStep, parentHandleViewSourceActivityLog, customerAccessRules, parentWorkflowStatus, refreshCount }) => {
+const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineId, editWorkflow, parentCallbackEditItem, deleteStep, parentHandleViewSourceActivityLog, customerAccessRules, parentWorkflowStatus, refreshCount }) => {
   const toastContext = useContext(DialogToastContext);
+  const {getAccessToken} = useContext(AuthContext);
   const [currentStatus, setCurrentStatus] = useState({});
   const [itemState, setItemState] = useState(false);
   const [stepConfigured, setStepConfigured] = useState(true);
@@ -168,6 +169,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
 
   const getToolDetails = async (tool_identifier) => {
     setIsLoading(true);
+    const accessToken = await getAccessToken();
     try {
       const toolResponse = await axiosApiService(accessToken).get("/registry/tool/properties/" + tool_identifier, {});
       setToolProperties(toolResponse.data);
@@ -469,7 +471,6 @@ PipelineWorkflowItem.propTypes = {
   index: PropTypes.number,
   lastStep: PropTypes.object,
   pipelineId: PropTypes.string,
-  accessToken: PropTypes.string,
   editWorkflow: PropTypes.bool,
   parentCallbackEditItem: PropTypes.func,
   deleteStep: PropTypes.func,

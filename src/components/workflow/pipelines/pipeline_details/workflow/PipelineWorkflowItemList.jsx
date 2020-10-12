@@ -13,7 +13,6 @@ function PipelineWorkflowItemList({
   lastStep,
   editWorkflow,
   pipelineId,
-  accessToken,
   parentCallbackEditItem,
   parentHandleViewSourceActivityLog,
   quietSavePlan,
@@ -167,7 +166,6 @@ function PipelineWorkflowItemList({
               editWorkflow={editWorkflow}
               pipelineId={pipelineId}
               customerAccessRules={customerAccessRules}
-              accessToken={accessToken}
               parentCallbackEditItem={parentCallbackEditItem}
               deleteStep={deleteStep}
               refreshCount={refreshCount}
@@ -256,7 +254,6 @@ PipelineWorkflowItemList.propTypes = {
   lastStep: PropTypes.object,
   editWorkflow: PropTypes.bool,
   pipelineId: PropTypes.string,
-  accessToken: PropTypes.string,
   parentCallbackEditItem: PropTypes.func,
   parentHandleViewSourceActivityLog: PropTypes.func,
   setStateItems: PropTypes.func,

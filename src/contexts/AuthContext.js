@@ -47,6 +47,7 @@ const AuthContextProvider = (props) => {
         }
 
       } else {
+        console.log("returning a false result from getAccessToken")
         return false;
       }
     };

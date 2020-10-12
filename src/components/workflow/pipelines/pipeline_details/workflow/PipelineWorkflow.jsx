@@ -31,22 +31,16 @@ function PipelineWorkflow({
   refreshCount,
   softLoading,
 }) {
-  //const [error, setErrors] = useState();
-  //const [userInfo, setUserInfo] = useState();
   const [modalHeader, setModalHeader] = useState("");
-  const contextType = useContext(AuthContext);
+  const {getAccessToken} = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  //const [state, setState] = useState({ items: [] });
-
   const [lastStep, setLastStep] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [zoomValue, setZoomValue] = useState(2); //1,2, or 3 with 2 being default zoom
   const [modalMessage, setModalMessage] = useState({});
   const [workflowStatus, setWorkflowStatus] = useState(false);
   const [editWorkflow, setEditWorkflow] = useState(false);
-  const [accessToken, setAccessToken] = useState();
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
-  //const [isSavingPipeline, setIsSavingPipeline] = useState(false);
 
   const authorizedAction = (action, owner) => {
     if (customerAccessRules.Administrator) {
@@ -62,18 +56,18 @@ function PipelineWorkflow({
     }
   };
 
-  useEffect(() => {
+  /*useEffect(() => {
     loadData();
-  }, []);
+  }, []);*/
 
   useEffect(() => {
     loadFormData(pipeline);
   }, [refreshCount, JSON.stringify(pipeline)]);
 
 
-  const loadData = async () => {
+  /*const loadData = async () => {
     await checkAuthentication();
-  };
+  };*/
 
   const loadFormData = (pipeline) => {
     if (!pipeline.workflow) {
@@ -96,19 +90,19 @@ function PipelineWorkflow({
     }
   };
 
-  async function checkAuthentication() {
+  /*async function checkAuthentication() {
     const { getUserRecord, getAccessToken } = contextType;
     const accessToken = await getAccessToken();
     setAccessToken(accessToken);
-    /*try {
+    /!*try {
       const userInfoResponse = await getUserRecord();
       if (userInfoResponse !== undefined && Object.keys(userInfoResponse).length > 0) {
         setUserInfo(userInfoResponse);
       }
     } catch (err) {
       console.log("Error occurred getting user authentication status.", err);
-    }*/
-  }
+    }*!/
+  }*/
 
 
   const handleViewClick = (data, header) => {
@@ -118,6 +112,7 @@ function PipelineWorkflow({
   };
 
   const fetchPipelineActivityByTool = async (pipelineId, tool, stepId, activityId) => {
+    const accessToken = await getAccessToken();
     let apiUrl = `/pipelines/${pipelineId}/activity`;
     const params = {
       tool: tool,
@@ -148,6 +143,7 @@ function PipelineWorkflow({
   };
 
   const updatePipeline = async (pipeline) => {
+    const accessToken = await getAccessToken();
     const apiUrl = `/pipelines/${pipeline._id}/update`;
     try {
       await axiosApiService(accessToken).post(apiUrl, pipeline);
@@ -355,7 +351,6 @@ function PipelineWorkflow({
                 lastStepId={lastStep && lastStep.step_id}
                 editWorkflow={editWorkflow}
                 pipelineId={pipeline._id}
-                accessToken={accessToken}
                 fetchPlan={fetchPlan}
                 refreshCount={refreshCount}
                 customerAccessRules={customerAccessRules}
