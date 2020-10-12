@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import JSONInput from "react-json-editor-ajrm"
-import locale    from "react-json-editor-ajrm/locale/en";
+import JSONInput from "react-json-editor-ajrm";
+import locale from "react-json-editor-ajrm/locale/en";
 
 function DtoJsonInput({fieldName, dataObject, setDataObject, disabled}) {
   const [errorMessage, setErrorMessage] = useState("");

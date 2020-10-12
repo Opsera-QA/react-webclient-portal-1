@@ -37,7 +37,7 @@
     "react-date-range": "^1.0.3",
     "react-dom": "^16.12.0",
     "react-highlighter": "^0.4.3",
-    "react-json-editor-ajrm": "^2.5.11",
+    "react-json-editor-ajrm": "2.5.10",
     "react-json-view": "^1.19.1",
     "react-lineto": "^3.2.0",
     "react-router-bootstrap": "^0.25.0",
