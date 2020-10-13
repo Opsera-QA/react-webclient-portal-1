@@ -10,21 +10,16 @@ import {AuthContext} from "../../../../../../../contexts/AuthContext";
 import DtoTextInput from "../../../../../../common/input/dto_input/dto-text-input";
 import LoadingDialog from "../../../../../../common/status_notifications/loading";
 import SaveButton from "../../../../../../common/buttons/SaveButton";
-import {
-  getCreateFailureResultDialog,
-  getCreateSuccessResultDialog,
-  getFormValidationErrorDialog, getLoadingErrorDialog,
-} from "../../../../../../common/toasts/toasts";
+import {DialogToastContext} from "../../../../../../../contexts/DialogToastContext";
 
 function JenkinsAccountEditorPanel({ toolData, jenkinsAccountData }) {
   const { getAccessToken } = useContext(AuthContext);
+  const toastContext  = useContext(DialogToastContext);
   const [ platformType, setPlatformType ] = useState("");
   const [jenkinsAccountDataDto, setJenkinsAccountDataDto] = useState(undefined);
   const [ accountList, setAccountList ] = useState([]);
   const [ account, setAccount ] = useState(undefined);
-  const [showToast, setShowToast] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [toast, setToast] = useState({});
 
   useEffect(() => {
     loadData();
@@ -68,41 +63,21 @@ function JenkinsAccountEditorPanel({ toolData, jenkinsAccountData }) {
       setAccountList(accountList);
     }
     catch (error) {
-      let toast = getLoadingErrorDialog(error.message, setShowToast);
-      setToast(toast);
-      setShowToast(true);
+      toastContext.showLoadingErrorDialog(error);
       console.error(error.message);
     }
   };
 
   const createJenkinsAccount = async () => {
-    if(jenkinsAccountDataDto.isModelValid()) {
       let payload = {
         service: platformType,
         credentailsToolId: account._id,
         accountUserName: account.configuration.accountUsername,
         ...jenkinsAccountDataDto.getPersistData()
       };
-      try {
         const url = "/registry/action/" + toolData["_id"] + "/createcredential";
         const accessToken = await getAccessToken();
-        await axiosApiService(accessToken).post(url, {...payload});
-
-        let toast = getCreateSuccessResultDialog("Jenkins Account Credential", setShowToast, "top");
-        setToast(toast);
-        setShowToast(true);
-      } catch (error) {
-        let toast = getCreateFailureResultDialog("Jenkins Account Credential", error.message, setShowToast, "top");
-        setToast(toast);
-        setShowToast(true);
-        console.error(error.message);
-      }
-    }
-    else {
-      let toast = getFormValidationErrorDialog(setShowToast);
-      setToast(toast);
-      setShowToast(true);
-    }
+        return await axiosApiService(accessToken).post(url, {...payload});
   };
 
   if (isLoading) {
@@ -110,7 +85,6 @@ function JenkinsAccountEditorPanel({ toolData, jenkinsAccountData }) {
   } else {
     return (
       <>
-        {showToast && toast}
       <div className="scroll-y full-height">
         <Row>
           <Col lg={12}>

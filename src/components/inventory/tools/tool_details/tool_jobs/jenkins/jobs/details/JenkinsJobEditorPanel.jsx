@@ -18,15 +18,11 @@ import JobTypeSFDC from "../job-type-sfdc";
 import { jobTypes } from "../jenkins-job-metadata";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import Modal from "../../../../../../../common/modal/modal";
-import {
-  getCreateFailureResultDialog,
-  getCreateSuccessResultDialog,
-  getDeleteFailureResultDialog,
-  getUpdateFailureResultDialog, getUpdateSuccessResultDialog,
-} from "../../../../../../../common/toasts/toasts";
+import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
 
 function JenkinsJobEditorPanel({ toolData, jobData, loadData }) {
   const { getAccessToken } = useContext(AuthContext);
+  const toastContext  = useContext(DialogToastContext);
   let toolDataSet = toolData;
   const [jenkinsFormList, updateJenkinsForm] = useState({ ...JobTypeBuild });
   const [formType, setFormType] = useState("");
@@ -34,8 +30,6 @@ function JenkinsJobEditorPanel({ toolData, jobData, loadData }) {
   const [jobDescription, setJobDescription] = useState("");
   const [viewForm, toggleViewForm] = useState(true);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [toast, setToast] = useState({});
-  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
     //Check if data is available before update
@@ -185,25 +179,19 @@ function JenkinsJobEditorPanel({ toolData, jobData, loadData }) {
       const accessToken = await getAccessToken();
       await axiosApiService(accessToken).post(url, { ...toolDataSet });
 
-      let toast;
       if (action === "update") {
-        toast = getUpdateSuccessResultDialog("Jenkins Job", setShowToast);
+        toastContext.showUpdateSuccessResultDialog("Jenkins Job");
         loadData();
       } else {
-        toast = getCreateSuccessResultDialog("Jenkins Job", setShowToast);
+        toastContext.showCreateSuccessResultDialog("Jenkins Job");
       }
-      setToast(toast);
-      setShowToast(true);
     } catch (error) {
       console.error(error.message);
-      let toast;
       if (action === "update") {
-        toast = getUpdateFailureResultDialog("Jenkins Job", error, setShowToast, "top");
+        toastContext.showUpdateFailureResultDialog("Jenkins Job", error);
       } else {
-        toast = getCreateFailureResultDialog("Jenkins Job", error, setShowToast);
+        toastContext.showCreateFailureResultDialog("Jenkins Job", error);
       }
-      setToast(toast);
-      setShowToast(true);
     }
   };
 
@@ -219,11 +207,10 @@ function JenkinsJobEditorPanel({ toolData, jobData, loadData }) {
 
       await axiosApiService(accessToken).post(url, { ...toolDataSet });
       loadData();
+      toastContext.showDeleteSuccessResultDialog("Jenkins Job");
     } catch (error) {
       console.error(error.message);
-      let toast = getDeleteFailureResultDialog("Jenkins Job", error, setShowToast, "top");
-      setToast(toast);
-      setShowToast(true);
+      toastContext.showDeleteFailureResultDialog("Jenkins Job", error);
     }
   };
 
@@ -245,7 +232,6 @@ function JenkinsJobEditorPanel({ toolData, jobData, loadData }) {
 
   return (
     <>
-      {showToast && toast}
       {viewForm && <ButtonToolbar className="justify-content-between my-2 ml-2 mr-2">
         <ButtonGroup>
           <Button size="sm" className="mr-2" variant="primary" onClick={() => {
