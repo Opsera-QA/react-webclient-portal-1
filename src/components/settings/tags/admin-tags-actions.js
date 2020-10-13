@@ -68,25 +68,6 @@ adminTagsActions.getTags = async (tagFilterDto, getAccessToken) => {
   const apiUrl = "/tags";
   const urlParams = {
     params: {
-      size: 10000,
-      page: 1,
-    },
-  };
-  const response = await axiosApiService(accessToken).get(apiUrl, urlParams)
-    .then((result) => {
-      return result;
-    })
-    .catch(error => {
-      throw { error };
-    });
-  return response;
-};
-
-adminTagsActions.getTags = async (tagFilterDto, getAccessToken) => {
-  const accessToken = await getAccessToken();
-  const apiUrl = "/tags";
-  const urlParams = {
-    params: {
       sort: tagFilterDto.getData("sortOption"),
       size: tagFilterDto.getData("pageSize"),
       page: tagFilterDto.getData("currentPage"),
