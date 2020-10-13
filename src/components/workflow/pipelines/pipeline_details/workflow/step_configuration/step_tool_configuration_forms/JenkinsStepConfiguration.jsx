@@ -923,6 +923,7 @@ function JenkinsStepConfiguration({
               formData.jobType != "SFDC UNIT TESTING" &&
               formData.jobType != "SFDC DEPLOY" &&
               formData.jobType != "SFDC BACK UP" &&
+              formData.jobType != "SFDC PUSH ARTIFACTS" &&
               !formData.isOrgToOrg && (
                 <Form.Group controlId="account" className="mt-2">
                   <Form.Label>Branch*</Form.Label>
@@ -964,6 +965,20 @@ function JenkinsStepConfiguration({
                     />
                   </Form.Group>
                 )}
+                
+              {formData.jobType === "SFDC PUSH ARTIFACTS" && (
+                  <Form.Group controlId="gitBranchName">
+                    <Form.Label>Branch Name*</Form.Label>
+                    <Form.Control
+                      maxLength="50"
+                      type="text"
+                      placeholder=""
+                      value={formData.gitBranch || ""}
+                      onChange={(e) => setFormData({ ...formData, gitBranch: e.target.value })}
+                    />
+                  </Form.Group>
+                )}
+
                 {formData.buildType === "docker" && (
                   <>
                   <Form.Group controlId="dockerName">
