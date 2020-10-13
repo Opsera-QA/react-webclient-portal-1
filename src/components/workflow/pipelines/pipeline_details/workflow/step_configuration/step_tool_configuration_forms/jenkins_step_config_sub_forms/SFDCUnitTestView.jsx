@@ -12,6 +12,9 @@ import {
 import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
+import DtoBottomPagination from "../../../../../../../common/pagination/DtoBottomPagination"
+import filterMetadata from "./filter-metadata";
+import Model from "../../../../../../../../core/data_model/model";
 
 const SFDCUnitTestView = ({
   pipelineId,
@@ -28,21 +31,23 @@ const SFDCUnitTestView = ({
   const [searchQuery, setSearchQuery] = useState("");
   const [recordId, setRecordId] = useState("");
   const [selectedUnitTestClasses, setSelectedUnitTestClasses] = useState([]);
+  const [toolFilterDto, setToolFilterDto] = useState(new Model({...filterMetadata.newObjectFields}, filterMetadata, false));
   
 
   useEffect(() => {  
-    async function loadData () {
+    async function loadInitialData (filterDto = toolFilterDto) {
       setLoading(true);
-  
       try {
-        // const accessToken = await getAccessToken();
-        const response = await sfdcPipelineActions.getTestClassesList({"sfdcToolId": sfdcToolId, "pipelineId": pipelineId, "stepId": stepId, "dataType": "sfdc-unitTesting" }, getAccessToken);
+        const response = await sfdcPipelineActions.getTestClassesList({"sfdcToolId": sfdcToolId, "pipelineId": pipelineId, "stepId": stepId, "dataType": "sfdc-unitTesting" },filterDto, getAccessToken);
         
         if(!response.data.data || !response.data.paginatedData) {
           toastContext.showLoadingErrorDialog("something went wrong! not a valid object");
         }
+        let newFilterDto = filterDto;
+        newFilterDto.setData("totalCount", response.data.paginatedData.testClasses.count);
+        setToolFilterDto({...newFilterDto});
         setTestClasses(response.data.paginatedData.testClasses.data);
-        setSelectedUnitTestClasses(response.data.paginatedData.selectedTestClasses.data);
+        setSelectedUnitTestClasses(response.data.paginatedData.selectedTestClasses);
         setRecordId(response.data._id);
       } catch (error) {
         console.error("Error getting API Data: ", error);
@@ -51,15 +56,37 @@ const SFDCUnitTestView = ({
       setLoading(false);
     }
   
-    loadData();
+    loadInitialData();
   }, []);
+
+  const loadData = async (filterDto = toolFilterDto) => {
+    setLoading(true);
+    try {
+      const response = await sfdcPipelineActions.getTestClassesList({"sfdcToolId": sfdcToolId, "pipelineId": pipelineId, "stepId": stepId, "dataType": "sfdc-unitTesting" }, filterDto, getAccessToken);
+      
+      if(!response.data.data || !response.data.paginatedData) {
+        toastContext.showLoadingErrorDialog("something went wrong! not a valid object");
+      }
+      let newFilterDto = filterDto;
+      newFilterDto.setData("totalCount", response.data.paginatedData.testClasses.count);
+      setToolFilterDto({...newFilterDto});
+      setTestClasses(response.data.paginatedData.testClasses.data);
+      // setSelectedUnitTestClasses(response.data.paginatedData.selectedTestClasses);
+      setRecordId(response.data._id);
+    } catch (error) {
+      console.error("Error getting API Data: ", error);
+      toastContext.showLoadingErrorDialog(error);
+    }
+    setLoading(false);
+  }
 
   const handleCheckAllClickUnitTestClasses = () => {
     setSelectedUnitTestClasses(testClasses);
   };
 
   const handleUnCheckAllClickUnitTestClasses = () => {
-    setSelectedUnitTestClasses([]);
+    // setSelectedUnitTestClasses([]); // as we have pagination uncheck all should uncheck from current page
+    setSelectedUnitTestClasses(selectedUnitTestClasses.filter((item) =>  !testClasses.includes( item )));
   };
 
   const handleComponentCheck = (e) => {
@@ -84,7 +111,11 @@ const SFDCUnitTestView = ({
       setSave(false);
     }
   }
-
+  const getPaginator = () => {
+    return (
+        <div>{toolFilterDto && toolFilterDto.getData("totalCount") != null && <DtoBottomPagination paginationDto={toolFilterDto} setPaginationDto={setToolFilterDto} isLoading={loading} loadData={loadData} />}</div>
+    );
+  }
   return (
     <div className="ml-5">
       <div className="flex-container">
@@ -151,6 +182,9 @@ const SFDCUnitTestView = ({
                     </>
                   )}
                 </div>
+              </div>
+              <div className="mx-2">
+                {getPaginator()}
               </div>
             </>
         </div>
