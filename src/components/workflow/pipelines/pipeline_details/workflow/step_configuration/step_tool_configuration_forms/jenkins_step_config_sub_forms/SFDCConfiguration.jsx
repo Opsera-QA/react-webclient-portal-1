@@ -240,7 +240,8 @@ function SFDCConfiguration({
       <Form>
         {(jobType === "sfdc-ant" || jobType === "sfdc-ant-profile"  || (formData.toolJobType && formData.toolJobType.includes("SFDC"))) && (
               <>
-                <Form.Group controlId="sfdcList">
+              {formData.jobType != "SFDC PUSH ARTIFACTS" && 
+                  <Form.Group controlId="sfdcList">
                   <Form.Label className="w-100">
                     SalesForce Credentials*
                     <OverlayTrigger
@@ -287,6 +288,7 @@ function SFDCConfiguration({
                     </>
                   )}
                 </Form.Group>
+              }
               </>
             )}
 
