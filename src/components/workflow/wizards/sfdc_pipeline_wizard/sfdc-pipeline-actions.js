@@ -47,7 +47,9 @@ sfdcPipelineActions.setTestClassesList = async (postBody, getAccessToken) => {
   return response;
 };
 
-sfdcPipelineActions.getTestClassesList = async (postBody, getAccessToken) => {
+sfdcPipelineActions.getTestClassesList = async (postBody, toolFilterDto, getAccessToken) => {
+  postBody.page = toolFilterDto.getData("currentPage");
+  postBody.size = toolFilterDto.getData("pageSize");
   const accessToken = await getAccessToken();
   const apiUrl = `/pipelines/storage/get`;   
   const response = await axiosApiService(accessToken).post(apiUrl, postBody)
