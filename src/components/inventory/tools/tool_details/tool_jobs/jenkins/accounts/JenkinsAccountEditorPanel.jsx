@@ -47,7 +47,9 @@ function JenkinsAccountEditorPanel({ toolData, jenkinsAccountData }) {
 
   const getPlatformData = async (data) => {
     try {
-      const platformResponse = await axiosApiService(getAccessToken).get("/registry/properties/" + data, {});
+      const url = "/registry/properties/" + data;
+      const accessToken = await getAccessToken();
+      const platformResponse = await axiosApiService(accessToken).get(url, {});
       let accountList = [];
 
       platformResponse.data.map(account => {
@@ -82,7 +84,10 @@ function JenkinsAccountEditorPanel({ toolData, jenkinsAccountData }) {
         ...jenkinsAccountDataDto.getPersistData()
       };
       try {
-        const response = await axiosApiService(getAccessToken).post("/registry/action/" + toolData["_id"] + "/createcredential", {...payload});
+        const url = "/registry/action/" + toolData["_id"] + "/createcredential";
+        const accessToken = await getAccessToken();
+        await axiosApiService(accessToken).post(url, {...payload});
+
         let toast = getCreateSuccessResultDialog("Jenkins Account Credential", setShowToast, "top");
         setToast(toast);
         setShowToast(true);
