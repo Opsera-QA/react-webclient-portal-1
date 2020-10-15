@@ -23,11 +23,11 @@ import SpinnakerStepConfiguration from "./step_tool_configuration_forms/Spinnake
 import ApprovalStepConfiguration from "./step_tool_configuration_forms/ApprovalStepConfiguration";
 import CypressStepConfiguration from "./step_tool_configuration_forms/CypressStepConfiguration";
 import DockerPushStepConfiguration from "./step_tool_configuration_forms/DockerPushStepConfiguration";
-import ArgoCDStepConfiguration from "./step_tool_configuration_forms/ArgoCDStepConfiguration";
 import AnchoreStepConfiguration from "./step_tool_configuration_forms/AnchoreStepConfiguration";
 import AnchoreIntegratorStepConfiguration from "./step_tool_configuration_forms/AnchoreIntegratorStepConfiguration";
 import SFDCStepConfiguration from "./step_tool_configuration_forms/SFDCStepConfiguration";
 import NexusStepConfiguration from "./step_tool_configuration_forms/nexus/NexusStepConfiguration";
+import ArgoCDStepConfiguration from "./step_tool_configuration_forms/argo_cd/ArgoCDStepConfiguration";
 import {getErrorDialog} from "../../../../../common/toasts/toasts";
 import pipelineActions from "../../../../pipeline-actions";
 import ToastContext from "react-bootstrap/cjs/ToastContext";
@@ -415,6 +415,7 @@ function StepToolConfiguration({
             stepTool={stepTool}
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
+            getToolsList={getToolsList}
             setToast={setToast}
             setShowToast={setShowToast}
           />
