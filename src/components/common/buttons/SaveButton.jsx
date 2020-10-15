@@ -156,7 +156,7 @@ function SaveButton({recordDto, setRecordDto, setData, createRecord, updateRecor
   }
 
   return (
-    <div className="d-flex mr-2 px-4">
+    <div className="d-flex mr-2 px-2 py-1">
       <Button size="sm" variant="primary"
               disabled={isSaving || recordDto.dataState === DataState.LOADED}
               onClick={() => persistRecord(updateRecord)}
