@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
-import { Button, Form, InputGroup} from "react-bootstrap";
+import { Button, Form, InputGroup } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheck,
@@ -18,16 +18,15 @@ import ErrorDialog from "components/common/status_notifications/error";
 import LoadingDialog from "components/common/status_notifications/loading";
 import { propTypes } from "react-widgets/lib/SelectList";
 import { AuthContext } from "contexts/AuthContext";
-import { axiosApiService } from "api/apiService";
 import { DialogToastContext } from "../../../../contexts/DialogToastContext";
 import sfdcPipelineActions from "./sfdc-pipeline-actions";
 import filterMetadata from "./filter-metadata";
 import Model from "../../../../core/data_model/model";
-import DtoBottomPagination from "components/common/pagination/DtoBottomPagination"
+import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
-  componentType: "", 
+  componentType: "",
   committedFile: "",
 };
 
@@ -44,7 +43,7 @@ const SfdcPipelineProfileComponents = ({
   selectedProfileComponent,
   setSelectedProfileComponent,
   recordId,
-  setRecordId
+  setRecordId,
 }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -55,35 +54,41 @@ const SfdcPipelineProfileComponents = ({
   const [allProfileComponentType, setAllProfileComponentType] = useState([]);
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [profileComponentList, setProfileComponentList] = useState([]);
-  const [filterDto, setFilterDto] = useState(new Model({...filterMetadata.newObjectFields}, filterMetadata, false));
+  const [filterDto, setFilterDto] = useState(new Model({ ...filterMetadata.newObjectFields }, filterMetadata, false));
 
-  useEffect(() => {  
-    async function loadInitialData () {
+  useEffect(() => {
+    async function loadInitialData() {
       loadData();
-      let componentTypesArr =[{"componentType": "All", "value" : ""}];
+      let componentTypesArr = [{ "componentType": "All", "value": "" }];
       let uniqueComponentTypes = [...new Set(selectedComponentTypes.map(item => item))];
-      uniqueComponentTypes.map(item=> componentTypesArr.push({"componentType": item, "value": item}));
+      uniqueComponentTypes.map(item => componentTypesArr.push({ "componentType": item, "value": item }));
       setComponentType(componentTypesArr);
     }
+
     loadInitialData();
   }, []);
 
-  
+
   const loadData = async () => {
     setLoading(true);
     try {
-      const response = await sfdcPipelineActions.getListFromPipelineStorage({"pipelineId": pipelineId, "stepId": stepId, "dataType": "sfdc-packageXml", "fetchAttribute": "profileComponentList" },filterDto, getAccessToken);
-      
-      if( !response.data.data || !response.data.paginatedData ) {
+      const response = await sfdcPipelineActions.getListFromPipelineStorage({
+        "pipelineId": pipelineId,
+        "stepId": stepId,
+        "dataType": "sfdc-packageXml",
+        "fetchAttribute": "profileComponentList",
+      }, filterDto, getAccessToken);
+
+      if (!response.data.data || !response.data.paginatedData) {
         toastContext.showLoadingErrorDialog("something went wrong! not a valid object");
       }
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", response.data.paginatedData.profileComponentList.count);
-      setFilterDto({...newFilterDto});
-      
+      setFilterDto({ ...newFilterDto });
+
       setProfileComponentList(response.data.paginatedData.profileComponentList.data);
       setAllProfileComponentType(response.data.data.profileComponentList);
-      
+
       //storing _id so that we can edit this object
       setRecordId(response.data._id);
 
@@ -92,11 +97,11 @@ const SfdcPipelineProfileComponents = ({
       toastContext.showLoadingErrorDialog(error);
     }
     setLoading(false);
-  }
+  };
 
   const handleComponentCheck = (e) => {
     const newValue = e.target.name;
-    if(!e.target.checked) {      
+    if (!e.target.checked) {
       setSelectedProfileComponent(selectedProfileComponent.filter((item) => item.committedFile !== newValue));
       return;
     }
@@ -105,8 +110,8 @@ const SfdcPipelineProfileComponents = ({
     for (let i = 0; i < newObj.length; i++) {
       if (newObj[i].committedFile === newValue) {
         index = i;
-        setSelectedProfileComponent((selectedProfileComponent) => [...selectedProfileComponent, newObj[index]]); 
-      } 
+        setSelectedProfileComponent((selectedProfileComponent) => [...selectedProfileComponent, newObj[index]]);
+      }
     }
   };
 
@@ -118,36 +123,43 @@ const SfdcPipelineProfileComponents = ({
     // setSelectedProfileComponent(selectedProfileComponent.filter((item) =>  !profileComponentList.includes( item )));
     setSelectedProfileComponent([]);
   };
-  
+
   const checkDisabled = () => {
     if (fromProfiles) return false;
     return true;
   };
-  
-  const handleSearch = async() => {
+
+  const handleSearch = async () => {
     let newFilterDto = filterDto;
     newFilterDto.setData("pageSize", 50);
     newFilterDto.setData("currentPage", 1);
     newFilterDto.setData("classFilter", formData.componentType);
     newFilterDto.setData("search", formData.committedFile);
-    setFilterDto({...newFilterDto});
-    
+    setFilterDto({ ...newFilterDto });
+
     await loadData();
-  }
+  };
 
   const handleApproveChanges = async () => {
     // let selectedList = [];
     // if (fromProfiles) {
-      let selectedList = [...selectedProfileComponent];
+    let selectedList = [...selectedProfileComponent];
     // }
-    if ( selectedList.length < 1 ) {
+    if (selectedList.length < 1) {
       setError("Please select atlest one component to proceed!");
       setSave(false);
       return;
     }
     // saving selected files to mongo before calling generate xml func
-    try{
-      await sfdcPipelineActions.setListToPipelineStorage({ "recordId": recordId, "pipelineId": pipelineId, "stepId": stepId, "dataType": "sfdc-packageXml","updateAttribute": "selectedFileList" , "data": selectedList}, getAccessToken);
+    try {
+      await sfdcPipelineActions.setListToPipelineStorage({
+        "recordId": recordId,
+        "pipelineId": pipelineId,
+        "stepId": stepId,
+        "dataType": "sfdc-packageXml",
+        "updateAttribute": "selectedFileList",
+        "data": selectedList,
+      }, getAccessToken);
     } catch (err) {
       console.error("Error saving selected data: ", error);
       toastContext.showLoadingErrorDialog(error);
@@ -155,7 +167,7 @@ const SfdcPipelineProfileComponents = ({
     const postBody = {
       pipelineId: pipelineId,
       stepId: stepId,
-      isProfiles : isProfiles,
+      isProfiles: isProfiles,
       componentTypes: isProfiles ? selectedComponentTypes : "",
       isSfdc: true,
     };
@@ -186,14 +198,26 @@ const SfdcPipelineProfileComponents = ({
     console.log(selectedOption);
     setFormData({
       ...formData,
-      componentType: selectedOption.value, committedFile: ""
-    })
-  } 
-  
-  const getPaginator = (dtoObj,setDto,loading,loadData) => {
+      componentType: selectedOption.value, committedFile: "",
+    });
+  };
+
+  const getPaginator = (dtoObj, setDto, loading, loadData) => {
     return (
-        <div>{dtoObj && dtoObj.getData("totalCount") != null && <DtoBottomPagination paginationDto={dtoObj} setPaginationDto={setDto} isLoading={loading} loadData={loadData} />}</div>
+      <div>{dtoObj && dtoObj.getData("totalCount") != null &&
+      <DtoBottomPagination paginationDto={dtoObj} setPaginationDto={setDto} isLoading={loading}
+                           loadData={loadData}/>}</div>
     );
+  };
+
+  if (error) {
+    return (<div className="mt-3">
+      <ErrorDialog error={error}/>
+    </div>);
+  }
+
+  if (save || loading) {
+    return (<LoadingDialog size="sm" message="Loading Selection..."/>);
   }
 
   return (
@@ -206,22 +230,17 @@ const SfdcPipelineProfileComponents = ({
             Listed below are the files with changes impacted in this pipeline run. Please confirm that you want to
             proceed with this operation.
           </div>
-          {error && (
-            <div className="mt-3">
-              <ErrorDialog error={error} />
-            </div>
-          )}
-          {save && <LoadingDialog />}
 
           <div className="d-flex w-100 pr-2">
             <div className="list-item-container mr-1">
               <div className="h6 opsera-blue">SFDC Files</div>
-              
-              {profileComponentList && profileComponentList.length === 0 && <div className="info-text mt-3">NO FILES</div>}
-                                
+
+              {profileComponentList && profileComponentList.length === 0 &&
+              <div className="info-text mt-3">NO FILES</div>}
+
               <div className="d-flex w-100">
                 <div className="col-5">
-                <Form.Group controlId="fromProfiles">
+                  <Form.Group controlId="fromProfiles">
                     <Form.Check
                       type="checkbox"
                       label="Push from SFDC"
@@ -233,101 +252,97 @@ const SfdcPipelineProfileComponents = ({
                   </Form.Group>
                 </div>
                 <div className="col-9">
-                {fromProfiles && (
-                  <div className="align-self-end">
-                    <Button variant="secondary" size="sm" className="mr-1" onClick={()=>handleCheckAllClickComponentTypes()}>
-                      <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1" />
-                      Check All
-                    </Button>
-                    <Button
-                      variant="secondary"
-                      size="sm"
-                      className="mr-1"
-                      onClick={()=>handleUnCheckAllClickComponentTypes()}
-                    >
-                      <FontAwesomeIcon icon={faSquare} fixedWidth className="mr-1" />
-                      Uncheck All
-                    </Button>
-                  </div>
-                )}
+                  {fromProfiles && (
+                    <div className="align-self-end">
+                      <Button variant="secondary" size="sm" className="mr-1"
+                              onClick={() => handleCheckAllClickComponentTypes()}>
+                        <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1"/>
+                        Check All
+                      </Button>
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        className="mr-1"
+                        onClick={() => handleUnCheckAllClickComponentTypes()}
+                      >
+                        <FontAwesomeIcon icon={faSquare} fixedWidth className="mr-1"/>
+                        Uncheck All
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </div>
-              
-              {fromProfiles && 
+
+              {fromProfiles &&
               <div className="d-flex w-100 pr-2">
-              <div className="col-5 mr-1">
-                <DropdownList
+                <div className="col-5 mr-1">
+                  <DropdownList
                     data={componentType}
                     value={
-                    componentType[
-                      componentType.findIndex(
-                          (x) => x.value === formData.componentType
+                      componentType[
+                        componentType.findIndex(
+                          (x) => x.value === formData.componentType,
                         )
-                      ]
+                        ]
                     }
                     valueField="value"
                     textField="componentType"
                     placeholder="Please select a component type"
                     filter="contains"
                     onChange={handleComponentTypeChange}
-              />
-              </div>
-              <div className="col-7 mr-1">
-                <InputGroup className="mb-3">
-                  <Form.Control
-                    placeholder="Search for the file name"
-                    value={formData.committedFile || ""} 
-                    onChange={e => setFormData({ ...formData, committedFile: e.target.value })}
                   />
-                  <InputGroup.Append>
-                    <Button variant="secondary" size="sm" onClick={handleSearch}>
-                      {loading ? (
-                        <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth />
-                      ) : (
-                        <FontAwesomeIcon icon={faSearch} fixedWidth className="mr-1" />
-                      )}
-                    </Button>
-                  </InputGroup.Append>
-                </InputGroup>
-              </div>
+                </div>
+                <div className="col-7 mr-1">
+                  <InputGroup className="mb-3">
+                    <Form.Control
+                      placeholder="Search for the file name"
+                      value={formData.committedFile || ""}
+                      onChange={e => setFormData({ ...formData, committedFile: e.target.value })}
+                    />
+                    <InputGroup.Append>
+                      <Button variant="secondary" size="sm" onClick={handleSearch}>
+                        {loading ? (
+                          <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>
+                        ) : (
+                          <FontAwesomeIcon icon={faSearch} fixedWidth className="mr-1"/>
+                        )}
+                      </Button>
+                    </InputGroup.Append>
+                  </InputGroup>
+                </div>
               </div>
               }
-                      
-              {loading ? (
-                <LoadingDialog size="sm" />
-              ) : (
-                <>
-                  {typeof profileComponentList === "object" &&
-                  profileComponentList
-                  .map((item,idx) => (
-                      <div key={idx} className="d-flex justify-content-center">
-                        <div className="thick-list-item-container-green  w-100 force-text-wrap p-1">
-                          {item.commitAction && item.commitAction === "active" ? (
-                            <FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1 green" />
-                          ) : (
-                            <FontAwesomeIcon icon={faCode} fixedWidth className="mr-1 dark-grey" />
-                          )}
-                          {item.componentType}: {item.committedFile}
-                        </div>
-                        <div className="p-1">
-                          {fromProfiles && (
-                            <Form.Check
-                              inline
-                              type={"checkbox"}
-                              name={item.committedFile}
-                              id={idx}
-                              checked={selectedProfileComponent.some(selected => selected.componentType === item.componentType && selected.committedFile === item.committedFile && selected.commitAction === item.commitAction && selected.committedTime === item.committedTime)}
-                              onChange={handleComponentCheck}
-                            />
-                          )}
-                        </div>
+
+              {
+                typeof profileComponentList === "object" &&
+                profileComponentList
+                  .map((item, idx) => (
+                    <div key={idx} className="d-flex justify-content-center">
+                      <div className="thick-list-item-container-green  w-100 force-text-wrap p-1">
+                        {item.commitAction && item.commitAction === "active" ? (
+                          <FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1 green"/>
+                        ) : (
+                          <FontAwesomeIcon icon={faCode} fixedWidth className="mr-1 dark-grey"/>
+                        )}
+                        {item.componentType}: {item.committedFile}
                       </div>
-                    ))}
-                    </>
-                  )} 
-                  {/*pagination component goes here */}
-                  {getPaginator(filterDto, setFilterDto, loading, loadData)}
-              </div>
+                      <div className="p-1">
+                        {fromProfiles && (
+                          <Form.Check
+                            inline
+                            type={"checkbox"}
+                            name={item.committedFile}
+                            id={idx}
+                            checked={selectedProfileComponent.some(selected => selected.componentType === item.componentType && selected.committedFile === item.committedFile && selected.commitAction === item.commitAction && selected.committedTime === item.committedTime)}
+                            onChange={handleComponentCheck}
+                          />
+                        )}
+                      </div>
+                    </div>
+                  ))}
+
+              {getPaginator(filterDto, setFilterDto, loading, loadData)}
+            </div>
           </div>
         </div>
         <div className="flex-container-bottom pr-2 mt-3 mb-2 text-right">
@@ -339,7 +354,7 @@ const SfdcPipelineProfileComponents = ({
               setView(2);
             }}
           >
-            <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-1" />
+            <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-1"/>
             Back
           </Button>
 
@@ -353,9 +368,9 @@ const SfdcPipelineProfileComponents = ({
             disabled={checkDisabled()}
           >
             {save ? (
-              <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth />
+              <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>
             ) : (
-              <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1" />
+              <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1"/>
             )}
             Next
           </Button>
@@ -368,7 +383,7 @@ const SfdcPipelineProfileComponents = ({
               handleClose();
             }}
           >
-            <FontAwesomeIcon icon={faTimes} fixedWidth className="mr-1" />
+            <FontAwesomeIcon icon={faTimes} fixedWidth className="mr-1"/>
             Cancel
           </Button>
         </div>
@@ -389,7 +404,7 @@ SfdcPipelineProfileComponents.propTypes = {
   setSelectedProfileComponent: PropTypes.func,
   handleClose: PropTypes.func,
   recordId: PropTypes.string,
-  setRecordId: PropTypes.func, 
+  setRecordId: PropTypes.func,
   fromProfiles: PropTypes.bool,
   setFromProfiles: PropTypes.func,
 };
