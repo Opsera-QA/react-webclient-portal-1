@@ -14,6 +14,7 @@ import JenkinsJobTypeSendToS3 from "../job-type-sent-to-s3.js";
 import JobTypePerformanceTesting from "../job-type-performance-testing.js";
 import JenkinsJobTypeShellScript from "../job-type-shell-script.js";
 import JenkinsJobTypeUnitFunctionalTest from "../job-type-unit-functional-testing.js";
+import JenkinsJobTypePushToGit from "../job-type-push-to-git.js";
 import JobTypeSFDC from "../job-type-sfdc";
 import { jobTypes } from "../jenkins-job-metadata";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
@@ -77,6 +78,9 @@ function JenkinsJobEditorPanel({ toolData, jobData, loadData }) {
       break;
     case "BUILD":
       updateJenkinsForm({ ...JobTypeBuild });
+      break;
+    case "SFDC PUSH ARTIFACTS":
+      updateJenkinsForm({ ...JenkinsJobTypePushToGit });
       break;
     }
     setFormType(type);

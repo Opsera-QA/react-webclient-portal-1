@@ -146,8 +146,8 @@ const SfdcPipelineComponents = ({
 
     try {
       const result = await sfdcPipelineActions.getModifiedFiles(data, getAccessToken);
-      setModifiedFiles(result.data);
-
+      // setModifiedFiles(result.data); 
+      console.log(result.data)
       if (result.data.status === 500) {
         console.error("Error getting API Data: ", result.data.message);
         setError(result.data.message);

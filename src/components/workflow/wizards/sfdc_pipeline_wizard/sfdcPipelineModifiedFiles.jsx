@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
-import { Button, Form, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Button, Form, OverlayTrigger, Tooltip, InputGroup } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheck,
@@ -12,6 +12,7 @@ import {
   faPen,
   faCode,
   faSquare,
+  faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import "../../workflows.css";
 import DropdownList from "react-widgets/lib/DropdownList";
@@ -20,7 +21,11 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import { propTypes } from "react-widgets/lib/SelectList";
 import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
+import { DialogToastContext } from "../../../../contexts/DialogToastContext";
 import sfdcPipelineActions from "./sfdc-pipeline-actions";
+import filterMetadata from "./filter-metadata";
+import Model from "../../../../core/data_model/model";
+import DtoBottomPagination from "components/common/pagination/DtoBottomPagination"
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
@@ -54,37 +59,125 @@ const SfdcPipelineModifiedFiles = ({
   sfdcSelectedComponent,
   setSFDCSelectedComponent,
   destSFDCSelectedComponent,
-  setDestSFDCSelectedComponent
+  setDestSFDCSelectedComponent,
+  recordId,
+  setRecordId
 }) => {
   const { getAccessToken } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
+  const [loading, setLoading] = useState(false);
+  const [sfdcLoading, setSfdcLoading] = useState(false);
+  const [gitLoading, setGitLoading] = useState(false);
+  const [destSfdcLoading, setDestSfdcLoading] = useState(false);
   const [error, setError] = useState(false);
   const [save, setSave] = useState(false);
   const [gitModified, setGitModified] = useState([]);
   const [sfdcModified, setSfdcModified] = useState([]);
   const [destSfdcModified, setDestSfdcModified] = useState([]);
   const [formData, setFormData] = useState(INITIAL_DATA);
-  const [SFDCComponentType, setSFDCComponentType] = useState([]);
-  const [gitComponentType, setGitComponentType] = useState([]);
 
-  useEffect(() => {
-    console.log(modifiedFiles);    
-    setGitModified(modifiedFiles.gitModified);
-    setSfdcModified(modifiedFiles.sfdcModified);
-    setDestSfdcModified(modifiedFiles.destSfdcModified);
-    // selected components
-    setGitSelectedComponent(modifiedFiles.gitModified);
-    setSFDCSelectedComponent(modifiedFiles.sfdcModified);
-    setDestSFDCSelectedComponent(modifiedFiles.destSfdcModified);
-  }, [modifiedFiles]);
+  const [componentType, setComponentType] = useState([]);
+
+  const [allGitComponentType, setAllGitComponentType] = useState([]);
+  const [allSFDCComponentType, setAllSFDCComponentType] = useState([]);
+  const [allDestSfdcComponentType, setAllDestSfdcComponentType] = useState([]);
+
+  const [sfdcFilterDto, setSfdcFilterDto] = useState(new Model({...filterMetadata.newObjectFields}, filterMetadata, false));
+  const [gitFilterDto, setGitFilterDto] = useState(new Model({...filterMetadata.newObjectFields}, filterMetadata, false));
+  const [destSfdcFilterDto, setDestSfdcFilterDto] = useState(new Model({...filterMetadata.newObjectFields}, filterMetadata, false));
+
+  useEffect(() => {  
+    async function loadInitialData () {
+      setLoading(true);
+      loadSfdcData();
+      loadGitData();
+      loadDestSfdcData();
+      let componentTypesArr =[{"componentType": "All", "value" : ""}];
+      let uniqueComponentTypes = [...new Set(selectedComponentTypes.map(item => item))];
+      uniqueComponentTypes.map(item=> componentTypesArr.push({"componentType": item, "value": item}));
+      setComponentType(componentTypesArr);
+      setLoading(false);
+    }
+    loadInitialData();
+  }, []);
+
+  
+  const loadSfdcData = async () => {
+    setSfdcLoading(true);
+    try {
+      const sfdcResponse = await sfdcPipelineActions.getListFromPipelineStorage({"pipelineId": pipelineId, "stepId": stepId, "dataType": "sfdc-packageXml", "fetchAttribute": "sfdcCommitList" },sfdcFilterDto, getAccessToken);
+      
+      if( !sfdcResponse.data.data || !sfdcResponse.data.paginatedData ) {
+        toastContext.showLoadingErrorDialog("something went wrong! not a valid object");
+      }
+      let newSfdcFilterDto = sfdcFilterDto;
+      newSfdcFilterDto.setData("totalCount", sfdcResponse.data.paginatedData.sfdcCommitList.count);
+      setSfdcFilterDto({...newSfdcFilterDto});
+      
+      setSfdcModified(sfdcResponse.data.paginatedData.sfdcCommitList.data);
+      setAllSFDCComponentType(sfdcResponse.data.data.sfdcCommitList);
+      
+      //storing _id so that we can edit this object
+      setRecordId(sfdcResponse.data._id);
+
+    } catch (error) {
+      console.error("Error getting API Data: ", error);
+      toastContext.showLoadingErrorDialog(error);
+    }
+    setSfdcLoading(false);
+  }
+  
+  const loadGitData = async () => {
+    setGitLoading(true);
+    try {
+      const gitResponse = await sfdcPipelineActions.getListFromPipelineStorage({"pipelineId": pipelineId, "stepId": stepId, "dataType": "sfdc-packageXml", "fetchAttribute": "gitCommitList" },gitFilterDto, getAccessToken);
+      
+      if( !gitResponse.data.data || !gitResponse.data.paginatedData ) {
+        toastContext.showLoadingErrorDialog("something went wrong! not a valid object");
+      }
+      let newGitFilterDto = gitFilterDto;
+      newGitFilterDto.setData("totalCount", gitResponse.data.paginatedData.gitCommitList.count);
+      setGitFilterDto({...newGitFilterDto});
+      
+      setGitModified(gitResponse.data.paginatedData.gitCommitList.data);
+      setAllGitComponentType(gitResponse.data.data.gitCommitList);
+
+      //storing _id so that we can edit this object
+      setRecordId(gitResponse.data._id);
+
+    } catch (error) {
+      console.error("Error getting API Data: ", error);
+      toastContext.showLoadingErrorDialog(error);
+    }
+    setGitLoading(false);
+  }
+
+  const loadDestSfdcData = async () => {
+    setDestSfdcLoading(true);
+    try {
+      const destSfdcResponse = await sfdcPipelineActions.getListFromPipelineStorage({"pipelineId": pipelineId, "stepId": stepId, "dataType": "sfdc-packageXml", "fetchAttribute": "destSfdcCommitList" },destSfdcFilterDto, getAccessToken);
+      
+      if( !destSfdcResponse.data.data || !destSfdcResponse.data.paginatedData ) {
+        toastContext.showLoadingErrorDialog("something went wrong! not a valid object");
+      }
+      let newDestSfdcFilterDto = destSfdcFilterDto;
+      newDestSfdcFilterDto.setData("totalCount", destSfdcResponse.data.paginatedData.destSfdcCommitList.count);
+      setDestSfdcFilterDto({...newDestSfdcFilterDto});
+
+      setDestSfdcModified(destSfdcResponse.data.paginatedData.destSfdcCommitList.data);
+      setAllDestSfdcComponentType(destSfdcResponse.data.data.destSfdcCommitList);
+
+    } catch (error) {
+      console.error("Error getting API Data: ", error);
+      toastContext.showLoadingErrorDialog(error);
+    }
+    setDestSfdcLoading(false);
+  }
 
   useEffect(() => {
     if (fromSFDC) {
       setFromDestinationSFDC(false);
       setFromGit(false);
-      let componentTypesArr =[{"componentType": "All", "value" : ""}];
-      let uniqueComponentTypes = [...new Set(sfdcModified.map(item => item.componentType))];
-      uniqueComponentTypes.map(item=> componentTypesArr.push({"componentType": item, "value": item}));
-      setSFDCComponentType(componentTypesArr);
     }
   }, [fromSFDC]);
 
@@ -92,11 +185,6 @@ const SfdcPipelineModifiedFiles = ({
     if (fromDestinationSFDC) {
       setFromSFDC(false);
       setFromGit(false);
-      
-      // let componentTypesArr =[];
-      // let uniqueComponentTypes = [...new Set(destSfdcModified.map(item => item.componentType))];
-      // uniqueComponentTypes.map(item=> componentTypesArr.push({"componentType": item}));
-      // setComponentType(componentTypesArr);
     }
   }, [fromDestinationSFDC]);
 
@@ -104,23 +192,8 @@ const SfdcPipelineModifiedFiles = ({
     if (fromGit) {
       setFromDestinationSFDC(false);
       setFromSFDC(false);
-      
-      let componentTypesArr =[{"componentType": "All", "value" : ""}];
-      let uniqueComponentTypes = [...new Set(gitModified.map(item => item.componentType))];
-      uniqueComponentTypes.map(item=> componentTypesArr.push({"componentType": item, "value": item}));
-      setGitComponentType(componentTypesArr);
     }
   }, [fromGit]);
-
-  // useEffect(() => {
-  //   if (sfdcSelectedComponent.length > 1000 || destSFDCSelectedComponent.length > 1000 || gitSelectedComponent.length > 1000 ) {
-  //    setError("You have selected the maximum limit of components");
-  //   } else {
-  //     setError(false);
-  //   }
-
-  // }, [sfdcSelectedComponent,destSFDCSelectedComponent,gitSelectedComponent]);
-
 
   const handleSFDCComponentCheck = (e) => {
     const newValue = e.target.name;
@@ -173,13 +246,13 @@ const SfdcPipelineModifiedFiles = ({
   const handleCheckAllClickComponentTypes = (type) => {
     switch(type) { 
       case "sfdc":
-        setSFDCSelectedComponent([...sfdcModified])
+        setSFDCSelectedComponent(allSFDCComponentType)
         break; 
       case "destSFDC":
-        setDestSFDCSelectedComponent([...destSfdcModified])
+        setDestSFDCSelectedComponent(allDestSfdcComponentType)
         break;
       case "git":
-        setGitSelectedComponent([...gitModified])
+        setGitSelectedComponent(allGitComponentType)
         break;
       default :
         break; 
@@ -206,6 +279,39 @@ const SfdcPipelineModifiedFiles = ({
     if (fromGit || fromSFDC || fromDestinationSFDC) return false;
     return true;
   };
+  
+  const handleSfdcSearch = async() => {
+    let newFilterDto = sfdcFilterDto;
+    newFilterDto.setData("pageSize", 50);
+    newFilterDto.setData("currentPage", 1);
+    newFilterDto.setData("classFilter", formData.SFDCComponentType);
+    newFilterDto.setData("search", formData.SFDCCommittedFile);
+    setSfdcFilterDto({...newFilterDto});
+    
+    await loadSfdcData();
+  }
+  
+  const handleGitSearch = async() => {
+    let newFilterDto = gitFilterDto;
+    newFilterDto.setData("pageSize", 50);
+    newFilterDto.setData("currentPage", 1);
+    newFilterDto.setData("classFilter", formData.gitComponentType);
+    newFilterDto.setData("search", formData.gitCommittedFile);
+    setGitFilterDto({...newFilterDto});
+    
+    await loadGitData();
+  }
+  
+  const handleDestSfdcSearch = async() => {
+    let newFilterDto = destSfdcFilterDto;
+    newFilterDto.setData("pageSize", 50);
+    newFilterDto.setData("currentPage", 1);
+    newFilterDto.setData("classFilter", formData.destSFDCComponentType);
+    newFilterDto.setData("search", formData.destSFDCCommittedFile);
+    setDestSfdcFilterDto({...newFilterDto});
+    
+    await loadDestSfdcData();
+  }
 
   const handleApproveChanges = async () => {
     // console.log(fromSFDC,fromDestinationSFDC,fromGit);
@@ -224,22 +330,57 @@ const SfdcPipelineModifiedFiles = ({
       setSave(false);
       return;
     }
-    // if ( selectedList.length > 1000 ) {
-    //   setError("Too many components selected!");
-    //   setSave(false);
-    //   return;
-    // }
+    // saving selected files to mongo before calling generate xml func
+    try{
+      if(isProfiles) {
+        await saveSelectedList(selectedList);
+        return;
+      } else {
+        await sfdcPipelineActions.setListToPipelineStorage({ "recordId": recordId, "pipelineId": pipelineId, "stepId": stepId, "dataType": "sfdc-packageXml","updateAttribute": "selectedFileList" , "data": selectedList}, getAccessToken);
+      }
+    } catch (err) {
+      console.error("Error saving selected data: ", error);
+      toastContext.showLoadingErrorDialog(error);
+    }
     const postBody = {
       pipelineId: pipelineId,
       stepId: stepId,
       isProfiles : isProfiles,
       componentTypes: isProfiles ? selectedComponentTypes : [],
-      commitList: selectedList,
+      // commitList: selectedList,
       isSfdc: fromSFDC || fromDestinationSFDC ? true : false,
     };
 
     await generateXML(postBody);
   };
+
+  const saveSelectedList = async (selectedList) => {
+    try{
+      await sfdcPipelineActions.setListToPipelineStorage({ "recordId": recordId, "pipelineId": pipelineId, "stepId": stepId, "dataType": "sfdc-packageXml","updateAttribute": "profilesList" , "data": selectedList}, getAccessToken);
+      getProfileComponentList();
+    } catch (err) {
+      console.error("Error saving selected data: ", error);
+      toastContext.showLoadingErrorDialog(error);
+    }
+  }
+ const getProfileComponentList = async () => { 
+    const postBody = {
+      pipelineId: pipelineId,
+      stepId: stepId,
+      isProfiles : isProfiles,
+      componentTypes: isProfiles ? selectedComponentTypes : [],
+      // commitList: selectedList,
+      isSfdc: fromSFDC || fromDestinationSFDC ? true : false,
+    };
+
+    try{
+      await sfdcPipelineActions.getProfileComponentList(postBody, getAccessToken);
+      setView(3);
+    } catch (err) {
+      console.error("Error saving selected data: ", error);
+      toastContext.showLoadingErrorDialog(error);
+    }
+  }
 
   const generateXML = async (data) => {
     try {
@@ -248,14 +389,16 @@ const SfdcPipelineModifiedFiles = ({
       if (result.data.status != 200) {
         console.error("Error getting API Data: ", result.data.message);
         setSave(false);
-        setError(result.data.message);
+        // setError(result.data.message);
+        toastContext.showLoadingErrorDialog(error);
       } else {
-        setXML(result.data.message);
-        setView(3); //move to next view
+        // setXML(result.data.message); // not saving anything from response here
+        setView(4); //move to next view
       }
     } catch (err) {
       console.error(err.message);
-      setError(error);
+      toastContext.showLoadingErrorDialog(error);
+      setSave(false);
     }
   };
 
@@ -283,6 +426,12 @@ const SfdcPipelineModifiedFiles = ({
     })
   }
   
+  
+  const getPaginator = (dtoObj,setDto,loading,loadData) => {
+    return (
+        <div>{dtoObj && dtoObj.getData("totalCount") != null && <DtoBottomPagination paginationDto={dtoObj} setPaginationDto={setDto} isLoading={loading} loadData={loadData} />}</div>
+    );
+  }
 
   return (
     <div className="ml-5">
@@ -301,11 +450,12 @@ const SfdcPipelineModifiedFiles = ({
           )}
           {save && <LoadingDialog />}
 
-          {modifiedFiles && (
+          {!loading ? (
             <>
               <div className="d-flex w-100 pr-2">
                 <div className="col-5 list-item-container mr-1">
                   <div className="h6 opsera-blue">SFDC Files</div>
+                  
                   {sfdcModified && sfdcModified.length === 0 && <div className="info-text mt-3">NO FILES</div>}
                                    
                   <div className="d-flex w-100">
@@ -346,11 +496,11 @@ const SfdcPipelineModifiedFiles = ({
                   <div className="d-flex w-100 pr-2">
                   <div className="col-5 mr-1">
                    <DropdownList
-                       data={SFDCComponentType}
+                       data={componentType}
                        value={
-                        SFDCComponentType[
-                          SFDCComponentType.findIndex(
-                             (x) => x === formData.SFDCComponentType
+                        componentType[
+                          componentType.findIndex(
+                             (x) => x.value === formData.SFDCComponentType
                            )
                          ]
                        }
@@ -362,41 +512,62 @@ const SfdcPipelineModifiedFiles = ({
                  />
                  </div>
                  <div className="col-7 mr-1">
-                   <Form.Group controlId="searchField">
-                     <Form.Control type="text" placeholder="Search for the file name" value={formData.SFDCCommittedFile || ""} onChange={e => setFormData({ ...formData, SFDCCommittedFile: e.target.value })} />
-                   </Form.Group>
+                   <InputGroup className="mb-3">
+                      <Form.Control
+                        placeholder="Search for the file name"
+                        value={formData.SFDCCommittedFile || ""} 
+                        onChange={e => setFormData({ ...formData, SFDCCommittedFile: e.target.value })}
+                      />
+                      <InputGroup.Append>
+                        <Button variant="secondary" size="sm" onClick={handleSfdcSearch}>
+                          {sfdcLoading ? (
+                            <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth />
+                          ) : (
+                            <FontAwesomeIcon icon={faSearch} fixedWidth className="mr-1" />
+                          )}
+                        </Button>
+                      </InputGroup.Append>
+                   </InputGroup>
                  </div>
                  </div>
                   }
-                                   
-                  {typeof sfdcModified === "object" &&
-                  sfdcModified
-                  .filter(item => item.componentType.includes(formData.SFDCComponentType) && item.committedFile.toLowerCase().includes(formData.SFDCCommittedFile.toLowerCase()) )
-                  .map((item,idx) => (
-                      <div key={idx} className="d-flex justify-content-center">
-                        <div className="thick-list-item-container-green  w-100 force-text-wrap p-1">
-                          {item.commitAction && item.commitAction === "active" ? (
-                            <FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1 green" />
-                          ) : (
-                            <FontAwesomeIcon icon={faCode} fixedWidth className="mr-1 dark-grey" />
-                          )}
-                          {item.componentType}: {item.committedFile}
-                        </div>
-                        <div className="p-1">
-                          {fromSFDC && (
-                            <Form.Check
-                              inline
-                              type={"checkbox"}
-                              name={item.committedFile}
-                              id={idx}
-                              checked={sfdcSelectedComponent.includes(item)}
-                              onChange={handleSFDCComponentCheck}
-                            />
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                </div>
+                         
+                  {sfdcLoading ? (
+                    <LoadingDialog size="sm" />
+                  ) : (
+                    <>
+                      {typeof sfdcModified === "object" &&
+                      sfdcModified
+                      // .filter(item => item.componentType.includes(formData.SFDCComponentType) && item.committedFile.toLowerCase().includes(formData.SFDCCommittedFile.toLowerCase()) )
+                      .map((item,idx) => (
+                          <div key={idx} className="d-flex justify-content-center">
+                            <div className="thick-list-item-container-green  w-100 force-text-wrap p-1">
+                              {item.commitAction && item.commitAction === "active" ? (
+                                <FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1 green" />
+                              ) : (
+                                <FontAwesomeIcon icon={faCode} fixedWidth className="mr-1 dark-grey" />
+                              )}
+                              {item.componentType}: {item.committedFile}
+                            </div>
+                            <div className="p-1">
+                              {fromSFDC && (
+                                <Form.Check
+                                  inline
+                                  type={"checkbox"}
+                                  name={item.committedFile}
+                                  id={idx}
+                                  checked={sfdcSelectedComponent.some(selected => selected.componentType === item.componentType && selected.committedFile === item.committedFile && selected.commitAction === item.commitAction && selected.committedTime === item.committedTime)}
+                                  onChange={handleSFDCComponentCheck}
+                                />
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                       </>
+                      )} 
+                      {/*pagination component goes here */}
+                      {getPaginator(sfdcFilterDto,setSfdcFilterDto,sfdcLoading,loadSfdcData)}
+                  </div>
                 <div className="col-7 list-item-container">
                   {isOrgToOrg ? (
                     <>
@@ -405,6 +576,10 @@ const SfdcPipelineModifiedFiles = ({
                         <div className="info-text mt-3">NO FILES</div>
                       )}
                       
+                      {destSfdcLoading ? (
+                        <LoadingDialog size="sm" />
+                      ) : (
+                        <>     
                       {typeof destSfdcModified === "object" &&
                         destSfdcModified.map((item, idx) => (
                           <div key={idx} className="d-flex justify-content-center">
@@ -423,13 +598,17 @@ const SfdcPipelineModifiedFiles = ({
                                   type={"checkbox"}
                                   name={item.committedFile}
                                   id={idx}
-                                  checked={destSFDCSelectedComponent.includes(item)}
+                                  checked={destSFDCSelectedComponent.some(selected => selected.componentType === item.componentType && selected.committedFile === item.committedFile && selected.commitAction === item.commitAction && selected.committedTime === item.committedTime)}
                                   onChange={handleDestSFDCComponentCheck}
                                 />
                               )}
                             </div>
                           </div>
                         ))}
+                        </>
+                      )}
+                      {/* pagination goes here */}
+                      {getPaginator(destSfdcFilterDto,setDestSfdcFilterDto,destSfdcLoading,loadDestSfdcData)}
                     </>
                   ) : (
                     <>
@@ -472,13 +651,13 @@ const SfdcPipelineModifiedFiles = ({
                       
                         {fromGit && 
                         <div className="d-flex w-100 pr-2">
-                        <div className="col-5 mr-1">
+                        <div className="col-5">
                         <DropdownList
-                            data={gitComponentType}
+                            data={componentType}
                             value={
-                              gitComponentType[
-                                gitComponentType.findIndex(
-                                  (x) => x === formData.gitComponentType
+                              componentType[
+                                componentType.findIndex(
+                                  (x) => x.value === formData.gitComponentType
                                 )
                               ]
                             }
@@ -489,50 +668,73 @@ const SfdcPipelineModifiedFiles = ({
                             onChange={handleGitComponentTypeChange}
                       />
                       </div>
-                      <div className="col-7 mr-1">
-                        <Form.Group controlId="searchField">
-                          <Form.Control type="text" placeholder="Search for the file name" value={formData.gitCommittedFile || ""} onChange={e => setFormData({ ...formData, gitCommittedFile: e.target.value })} />
-                        </Form.Group>
+                      <div className="col-7">
+                        <InputGroup className="mb-3">
+                          <Form.Control
+                            placeholder="Search for the file name"
+                            value={formData.gitCommittedFile || ""} 
+                            onChange={e => setFormData({ ...formData, gitCommittedFile: e.target.value })}
+                          />
+                          <InputGroup.Append>
+                            <Button variant="secondary" size="sm" onClick={handleGitSearch}>
+                              {gitLoading ? (
+                                <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth />
+                              ) : (
+                                <FontAwesomeIcon icon={faSearch} fixedWidth className="mr-1" />
+                              )}
+                            </Button>
+                          </InputGroup.Append>
+                        </InputGroup>
                       </div>
                       </div>
                       }
-                            
-                      {typeof gitModified === "object" &&
-                      gitModified
-                        .filter(item => item.componentType.includes(formData.gitComponentType) && item.committedFile.toLowerCase().includes(formData.gitCommittedFile.toLowerCase()) )
-                        .map((item,idx) => (
-                          <div key={idx} className="d-flex justify-content-center">
-                            <div className="thick-list-item-container-green  w-100 force-text-wrap p-1">
-                              {item.commitAction && item.commitAction === "added" && (
-                                <FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1 green" />
-                              )}
-                              {item.commitAction && item.commitAction === "modified" && (
-                                <FontAwesomeIcon icon={faPen} fixedWidth className="mr-1 yellow" />
-                              )}
-                              {item.commitAction && item.commitAction === "deleted" && (
-                                <FontAwesomeIcon icon={faMinus} fixedWidth className="mr-1 dark-grey" />
-                              )}
-                              {item.componentType}: {item.committedFile}
+                      
+                      {gitLoading ? (
+                        <LoadingDialog size="sm" />
+                      ) : (
+                        <>     
+                        {typeof gitModified === "object" &&
+                        gitModified
+                          // .filter(item => item.componentType.includes(formData.gitComponentType) && item.committedFile.toLowerCase().includes(formData.gitCommittedFile.toLowerCase()) )
+                          .map((item,idx) => (
+                            <div key={idx} className="d-flex justify-content-center">
+                              <div className="thick-list-item-container-green  w-100 force-text-wrap p-1">
+                                {item.commitAction && item.commitAction === "added" && (
+                                  <FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1 green" />
+                                )}
+                                {item.commitAction && item.commitAction === "modified" && (
+                                  <FontAwesomeIcon icon={faPen} fixedWidth className="mr-1 yellow" />
+                                )}
+                                {item.commitAction && item.commitAction === "deleted" && (
+                                  <FontAwesomeIcon icon={faMinus} fixedWidth className="mr-1 dark-grey" />
+                                )}
+                                {item.componentType}: {item.committedFile}
+                              </div>
+                              <div className="p-1">
+                                {fromGit && (
+                                  <Form.Check
+                                    inline
+                                    type={"checkbox"}
+                                    name={item.committedFile}
+                                    id={idx}
+                                    checked={gitSelectedComponent.some(selected => selected.componentType === item.componentType && selected.committedFile === item.committedFile && selected.commitAction === item.commitAction && selected.committedTime === item.committedTime)}
+                                    onChange={handleGitComponentCheck}
+                                  />
+                                )}
+                              </div>
                             </div>
-                            <div className="p-1">
-                              {fromGit && (
-                                <Form.Check
-                                  inline
-                                  type={"checkbox"}
-                                  name={item.committedFile}
-                                  id={idx}
-                                  checked={gitSelectedComponent.includes(item)}
-                                  onChange={handleGitComponentCheck}
-                                />
-                              )}
-                            </div>
-                          </div>
-                        ))}
+                          ))}
+                         </>
+                      )}
+                      {/* pagination goes here */}
+                      {getPaginator(gitFilterDto,setGitFilterDto,gitLoading,loadGitData)}
                     </>
                   )}
                 </div>
               </div>
             </>
+          ) : (
+            <LoadingDialog size="sm" />
           )}
         </div>
         <div className="flex-container-bottom pr-2 mt-3 mb-2 text-right">
@@ -605,6 +807,8 @@ SfdcPipelineModifiedFiles.propTypes = {
   setSFDCSelectedComponent: PropTypes.func,
   destSFDCSelectedComponent: PropTypes.array,
   setDestSFDCSelectedComponent: PropTypes.func,
+  recordId: PropTypes.string,
+  setRecordId: PropTypes.func,
 };
 
 export default SfdcPipelineModifiedFiles;

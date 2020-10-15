@@ -6,15 +6,14 @@ import {
   faCheck,
   faSpinner,
   faTimes,
-  faStepBackward,
-  faPlus,
-  faMinus,
-  faPen,
-  faCode,
+  faStepBackward
 } from "@fortawesome/free-solid-svg-icons";
 import "../../workflows.css";
+import { AuthContext } from "contexts/AuthContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
 import ErrorDialog from "components/common/status_notifications/error";
 import LoadingDialog from "components/common/status_notifications/loading";
+import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 
 // syntax highlightner
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
@@ -24,12 +23,31 @@ import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 SyntaxHighlighter.registerLanguage("xml", xml);
 
-const SfdcPipelineXMLView = ({ handleClose, setView, modifiedFiles, xml, createJenkinsJob }) => {
-  const [error, setError] = useState(false);
+const SfdcPipelineXMLView = ({ pipelineId, stepId, handleClose, setXML, setDestructiveXml, isProfiles, setView, modifiedFiles, xml, destructiveXml, createJenkinsJob, recordId }) => {
+  const { getAccessToken } = useContext(AuthContext);
   const [save, setSave] = useState(false);
+  const toastContext = useContext(DialogToastContext);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    async function loadInitialData () {
+      setLoading(true);
+      try {
+        const response = await sfdcPipelineActions.getListFromPipelineStorage({"pipelineId": pipelineId, "stepId": stepId, "dataType": "sfdc-packageXml", "fetchAttribute": "packageXml" }, "", getAccessToken);
+        
+        if(!response.data.data || !response.data.data.packageXml) {
+          toastContext.showLoadingErrorDialog("something went wrong! not a valid object");
+        }
+        setXML(response.data.data.packageXml);
+        setDestructiveXml(response.data.data.destructiveXml ? response.data.data.destructiveXml : "");
+      } catch (error) {
+        console.error("Error getting API Data: ", error);
+        toastContext.showLoadingErrorDialog(error);
+      }
+      setLoading(false);
+    }
+  
+    loadInitialData();
   }, []);
 
   const handleApproveChanges = () => {
@@ -47,23 +65,46 @@ const SfdcPipelineXMLView = ({ handleClose, setView, modifiedFiles, xml, createJ
           <div className="h5">SalesForce Pipeline Run: XML Viewer</div>
           <div className="text-muted mb-4">Please confirm that you want to proceed with this operation.</div>
           <div className="px-2"></div>
-          {error && (
-            <div className="mt-3">
-              <ErrorDialog error={error} />
-            </div>
-          )}
-          {save && <LoadingDialog />}
 
-          {xml && (
+          {save && <LoadingDialog />}
+          
+          {loading ? (
+            <LoadingDialog size="sm" />
+          ) : (
             <>
-              <div className="d-flex w-100 pr-2">
-                {/* xml display goes here */}
-                <SyntaxHighlighter language="xml" style={docco}>
-                  {xml}
-                </SyntaxHighlighter>
-              </div>
-            </>
-          )}
+            <div className="d-flex w-30 pr-2">
+            {loading ? (
+              <LoadingDialog size="sm" />
+            ) : (
+              <>
+              {xml && (
+                <div className="col-7 mr-1">
+                <div className="h6 opsera-blue">Package XML</div>
+                  {/* xml display goes here */}
+                  <SyntaxHighlighter language="xml" style={docco}>
+                    {xml}
+                  </SyntaxHighlighter>
+                </div>
+                )}
+              </>
+            )}
+            {loading ? (
+              <LoadingDialog size="sm" />
+            ) : (
+              <>
+              {destructiveXml && destructiveXml.length > 0 && (
+                <div className="col-5 mr-1">
+                <div className="h6 opsera-blue">Destructive Package XML</div>
+                  {/* xml display goes here */}
+                  <SyntaxHighlighter language="xml" style={docco}>
+                    {destructiveXml}
+                  </SyntaxHighlighter>
+                </div>
+                )}
+              </>
+            )}
+            </div>
+          </>)}
         </div>
         <div className="flex-container-bottom pr-2 mt-3 mb-2 text-right">
           <Button
@@ -71,6 +112,10 @@ const SfdcPipelineXMLView = ({ handleClose, setView, modifiedFiles, xml, createJ
             size="sm"
             className="mr-2"
             onClick={() => {
+              if(isProfiles){
+                setView(3);
+                return;
+              }  
               setView(2);
             }}
           >
@@ -113,10 +158,17 @@ const SfdcPipelineXMLView = ({ handleClose, setView, modifiedFiles, xml, createJ
 };
 
 SfdcPipelineXMLView.propTypes = {
+  pipelineId: PropTypes.string,
+  stepId: PropTypes.string,
   setView: PropTypes.func,
+  isProfiles: PropTypes.bool,
+  setXML: PropTypes.func,
+  setDestructiveXml: PropTypes.func,
   modifiedFiles: PropTypes.object,
   handleClose: PropTypes.func,
   xml: PropTypes.string,
+  destructiveXml: PropTypes.string,
+  recordId: PropTypes.string,
   createJenkinsJob: PropTypes.func,
 };
 
