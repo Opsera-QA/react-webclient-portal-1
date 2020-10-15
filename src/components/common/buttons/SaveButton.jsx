@@ -114,7 +114,7 @@ function SaveButton({recordDto, setRecordDto, setData, createRecord, updateRecor
       <Button size="sm" variant="primary" disabled={isSaving || disable} onClick={() => persistRecord(createRecord)}>
         {isSaving
           ? <span><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>Creating</span>
-          : <span><FontAwesomeIcon icon={faSave} fixedWidth className="mr-2"/>{altButtonText ? altButtonText : "Create " + getType()}{setRecordDto && " And Close"}</span>
+          : <span><FontAwesomeIcon icon={faSave} fixedWidth className="mr-2"/>{altButtonText ? altButtonText : "Create " + getType()}{setRecordDto && modal && " And Close"}</span>
         }
       </Button>
     );

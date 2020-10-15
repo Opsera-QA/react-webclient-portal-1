@@ -19,6 +19,7 @@ import JenkinsToolConfiguration from "./tool_jobs/jenkins/JenkinsToolConfigurati
 import NexusToolConfiguration from "./tool_jobs/nexus/NexusToolConfiguration";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import toolsActions from "../tools-actions";
+import JiraToolConfiguration from "./tool_jobs/jira/JiraToolConfiguration";
 
 function ToolConfigurationPanel({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -45,6 +46,8 @@ function ToolConfigurationPanel({ toolData }) {
     switch (toolIdentifier) {
       case "jenkins":
         return <JenkinsToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
+      case "jira":
+        return <JiraToolConfiguration toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
       case "github":
         return <GitHubConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
       case "gitlab":
