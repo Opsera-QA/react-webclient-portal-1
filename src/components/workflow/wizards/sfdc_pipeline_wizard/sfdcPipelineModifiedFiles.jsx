@@ -465,7 +465,7 @@ const SfdcPipelineModifiedFiles = ({
     </div>);
   }
 
-  if (save || loading || sfdcLoading) {
+  if (save || loading ) {
     return (<LoadingDialog size="sm" message="Loading Files..."/>);
   }
 
@@ -560,8 +560,12 @@ const SfdcPipelineModifiedFiles = ({
                 </div>
               </div>
               }
+              
+              { sfdcLoading && (
+                <LoadingDialog size="sm"/>
+              ) }
 
-              {typeof sfdcModified === "object" &&
+              {!sfdcLoading && typeof sfdcModified === "object" &&
               sfdcModified
                 // .filter(item => item.componentType.includes(formData.SFDCComponentType) && item.committedFile.toLowerCase().includes(formData.SFDCCommittedFile.toLowerCase()) )
                 .map((item, idx) => (

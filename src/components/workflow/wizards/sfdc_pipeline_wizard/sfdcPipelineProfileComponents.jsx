@@ -48,6 +48,7 @@ const SfdcPipelineProfileComponents = ({
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [loading, setLoading] = useState(false);
+  const [componentsLoading, setComponentsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [save, setSave] = useState(false);
   const [componentType, setComponentType] = useState([]);
@@ -58,11 +59,13 @@ const SfdcPipelineProfileComponents = ({
 
   useEffect(() => {
     async function loadInitialData() {
+      setLoading(true);
       loadData();
       let componentTypesArr = [{ "componentType": "All", "value": "" }];
       let uniqueComponentTypes = [...new Set(selectedComponentTypes.map(item => item))];
       uniqueComponentTypes.map(item => componentTypesArr.push({ "componentType": item, "value": item }));
       setComponentType(componentTypesArr);
+      setLoading(true);
     }
 
     loadInitialData();
@@ -70,7 +73,7 @@ const SfdcPipelineProfileComponents = ({
 
 
   const loadData = async () => {
-    setLoading(true);
+    setComponentsLoading(true);
     try {
       const response = await sfdcPipelineActions.getListFromPipelineStorage({
         "pipelineId": pipelineId,
@@ -96,7 +99,7 @@ const SfdcPipelineProfileComponents = ({
       console.error("Error getting API Data: ", error);
       toastContext.showLoadingErrorDialog(error);
     }
-    setLoading(false);
+    setComponentsLoading(false);
   };
 
   const handleComponentCheck = (e) => {
@@ -312,9 +315,11 @@ const SfdcPipelineProfileComponents = ({
                 </div>
               </div>
               }
-
+              { componentsLoading && (
+                <LoadingDialog size="sm"/> ) 
+              }
               {
-                typeof profileComponentList === "object" &&
+                !componentsLoading && typeof profileComponentList === "object" &&
                 profileComponentList
                   .map((item, idx) => (
                     <div key={idx} className="d-flex justify-content-center">
