@@ -12,8 +12,10 @@ const filterMetadata = {
     },
   ],
   newObjectFields: {
-    pageSize: 100,
+    pageSize: 50,
     currentPage: 1,
+    classFilter: "",
+    search: ""
   }
 };
 

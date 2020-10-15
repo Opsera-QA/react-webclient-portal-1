@@ -96,6 +96,23 @@ function JenkinsStepConfiguration({
   const [branchList, setBranchList] = useState([]);
   const [isBranchSearching, setIsBranchSearching] = useState(false);
 
+  const [listOfSteps, setListOfSteps] = useState([]);
+
+  useEffect(() => {
+    if (plan && stepId) {
+      setListOfSteps(formatStepOptions(plan, stepId));
+    }
+  }, [plan, stepId]);
+
+  const formatStepOptions = (plan, stepId) => {
+    let STEP_OPTIONS = plan.slice(
+      0,
+      plan.findIndex((element) => element._id === stepId)
+    );
+    STEP_OPTIONS.unshift({ _id: "", name: "Select One", isDisabled: "yes" });
+    return STEP_OPTIONS;
+  };
+
   useEffect(() => {
     const controller = new AbortController();
     const runEffect = async () => {
@@ -502,7 +519,7 @@ function JenkinsStepConfiguration({
       case "sfdc-ant":
         setFormData({
           ...formData,
-          jobName: "",
+          // jobName: "",
           buildType: "ant",
           jobDescription: "PACKAGEXML_CREATION",
           jobType: "SFDC CREATE PACKAGE XML",
@@ -517,7 +534,7 @@ function JenkinsStepConfiguration({
       case "sfdc-ant-profile":
         setFormData({
           ...formData,
-          jobName: "",
+          // jobName: "",
           buildType: "ant",
           jobDescription: "Profile-migration",
           jobType: "SFDC PROFILE DEPLOY",
@@ -534,7 +551,7 @@ function JenkinsStepConfiguration({
           ...formData,
           sfdcToolId: "",
           accountUsername: "",
-          jobName: "",
+          // jobName: "",
           buildType: "gradle", // defaults
           jobDescription: "",
           jobType: "BUILD", // defaults
@@ -634,6 +651,10 @@ function JenkinsStepConfiguration({
       setShowToast(true);
       console.error(error.message);
     }
+  };
+
+  const handleBuildStepChange = (selectedOption) => {
+    setFormData({ ...formData, stepIdXML: selectedOption._id });
   };
 
   const RegistryPopover = (data) => {
@@ -967,6 +988,7 @@ function JenkinsStepConfiguration({
                 )}
                 
               {formData.jobType === "SFDC PUSH ARTIFACTS" && (
+                <>
                   <Form.Group controlId="gitBranchName">
                     <Form.Label>Branch Name*</Form.Label>
                     <Form.Control
@@ -977,6 +999,43 @@ function JenkinsStepConfiguration({
                       onChange={(e) => setFormData({ ...formData, gitBranch: e.target.value })}
                     />
                   </Form.Group>
+                  <Form.Group controlId="xmlStep">
+                    <Form.Label>Build/Xml Step Info*</Form.Label>
+                    {listOfSteps ? (
+                      <DropdownList
+                        data={listOfSteps}
+                        value={
+                          formData.stepIdXML
+                            ? listOfSteps[
+                                listOfSteps.findIndex(
+                                  (x) => x._id === formData.stepIdXML
+                                )
+                              ]
+                            : listOfSteps[0]
+                        }
+                        valueField="_id"
+                        textField="name"
+                        defaultValue={
+                          formData.stepIdXML
+                            ? listOfSteps[
+                                listOfSteps.findIndex(
+                                  (x) => x._id === formData.stepIdXML
+                                )
+                              ]
+                            : listOfSteps[0]
+                        }
+                        onChange={handleBuildStepChange}
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={faSpinner}
+                        spin
+                        className="text-muted ml-2"
+                        fixedWidth
+                      />
+                    )}
+                  </Form.Group>
+                </>
                 )}
 
                 {formData.buildType === "docker" && (

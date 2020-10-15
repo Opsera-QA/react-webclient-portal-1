@@ -25,10 +25,10 @@ const JobTypeSFDC = {
         name: "SDFC Unit Test",
         value: "SFDC UNIT TESTING"
       },
-      {
-        name: "SDFC Push Artifacts",
-        value: "SFDC PUSH ARTIFACTS"
-      }
+      // {
+      //   name: "SDFC Push Artifacts",
+      //   value: "SFDC PUSH ARTIFACTS"
+      // }
     ],
     toShow: true,
     disabled: false,

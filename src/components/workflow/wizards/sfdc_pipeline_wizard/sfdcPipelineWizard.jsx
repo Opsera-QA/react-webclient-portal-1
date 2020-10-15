@@ -9,6 +9,7 @@ import PipelineActions from "../../pipeline-actions";
 import SfdcPipelineXMLView from "./sfdcPipelineXMLView";
 import { faGalacticSenate } from "@fortawesome/free-brands-svg-icons";
 import sfdcPipelineActions from "./sfdc-pipeline-actions";
+import SfdcPipelineProfileComponents from "./sfdcPipelineProfileComponents";
 
 const SfdcPipelineWizard = ({
   pipelineId,
@@ -32,14 +33,18 @@ const SfdcPipelineWizard = ({
   const [fromSFDC, setFromSFDC] = useState(false);
   const [fromDestinationSFDC, setFromDestinationSFDC] = useState(false);
   const [fromGit, setFromGit] = useState(false);
+  const [fromProfiles, setFromProfiles] = useState(false);
   
   const [nameSpacePrefix, setNameSpacePrefix] = useState("");
   const [gitSelectedComponent, setGitSelectedComponent] = useState([]);
   const [sfdcSelectedComponent, setSFDCSelectedComponent] = useState([]);
   const [destSFDCSelectedComponent, setDestSFDCSelectedComponent] = useState([]);
+  const [selectedProfileComponent, setSelectedProfileComponent] = useState([]);
+  const [recordId, setRecordId] = useState("");
 
 
   const [xml, setXML] = useState("");
+  const [destructiveXml, setDestructiveXml] = useState("");
 
   useEffect(() => {
     loadSfdcInitStep(pipeline.workflow.plan);
@@ -68,25 +73,14 @@ const SfdcPipelineWizard = ({
 
   const createJenkinsJob = async () => {
 
-    // new object with xml as param
-    // const postBody = {
-    //   pipelineId: pipelineId,
-    //   stepId: stepId,
-    //   buildParams: {
-    //     packageXml: xml,
-    //     retrieveFilesFromSFDC: fromSFDC || fromDestinationSFDC ? true : false,
-    //   },
-    // };
-
      const postBody = {
       pipelineId: pipelineId,
       stepId: stepId,
       buildParams: {
       componentTypes: isProfiles ? JSON.stringify(selectedComponentTypes) : "",
-      commitList: isProfiles ? JSON.stringify(sfdcSelectedComponent) : "",
-        packageXml: isProfiles ? "" : xml,
-        retrieveFilesFromSFDC: fromSFDC || fromDestinationSFDC ? "true" : "false",
-        nameSpacePrefix: nameSpacePrefix
+      packageXml: isProfiles ? "" : xml,
+      retrieveFilesFromSFDC: fromSFDC || fromDestinationSFDC ? "true" : "false",
+      nameSpacePrefix: nameSpacePrefix
       },
     };
 
@@ -156,6 +150,7 @@ const SfdcPipelineWizard = ({
             fromGit={fromGit}
             setFromGit={setFromGit}
             setXML={setXML}
+            setModifiedFiles={setModifiedFiles}
             fromDestinationSFDC={fromDestinationSFDC}
             setFromDestinationSFDC={setFromDestinationSFDC}
             selectedComponentTypes={selectedComponentTypes}
@@ -165,18 +160,51 @@ const SfdcPipelineWizard = ({
             setSFDCSelectedComponent={setSFDCSelectedComponent}
             destSFDCSelectedComponent={destSFDCSelectedComponent}
             setDestSFDCSelectedComponent={setDestSFDCSelectedComponent}
+            recordId={recordId}
+            setRecordId={setRecordId}
           />
         )}
 
         {view === 3 && (
+          <SfdcPipelineProfileComponents
+            pipelineId={pipelineId}
+            stepId={stepId}
+            handleClose={handleClose}
+            setView={setView}
+            isOrgToOrg={isOrgToOrg}
+            isProfiles={isProfiles}
+            stepToolConfig={stepToolConfig}
+            modifiedFiles={modifiedFiles}
+            fromSFDC={fromSFDC}
+            setFromSFDC={setFromSFDC}
+            fromProfiles={fromProfiles}
+            setFromProfiles={setFromProfiles}
+            setXML={setXML}
+            selectedComponentTypes={selectedComponentTypes}
+            setModifiedFiles={setModifiedFiles}
+            setSelectedProfileComponent={setSelectedProfileComponent}
+            selectedProfileComponent={selectedProfileComponent}
+            recordId={recordId}
+            setRecordId={setRecordId}
+          />
+        )}
+
+        {view === 4 && (
           <SfdcPipelineXMLView
+            pipelineId={pipelineId}
+            stepId={stepId}
+            setXML={setXML}
+            isProfiles={isProfiles}
+            setDestructiveXml={setDestructiveXml}
             handleClose={handleClose}
             setView={setView}
             isOrgToOrg={isOrgToOrg}
             stepToolConfig={stepToolConfig}
             modifiedFiles={modifiedFiles}
             xml={xml}
+            destructiveXml={destructiveXml}
             createJenkinsJob={createJenkinsJob}
+            recordId={recordId}
           />
         )}
       </>

@@ -1,19 +1,20 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
-import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
-import { Button, Form } from "react-bootstrap";
+import { DialogToastContext } from "contexts/DialogToastContext";
+import { Button, Form, InputGroup } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSpinner,
   faCheck,
   faSquare,
+  faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
-import DtoBottomPagination from "../../../../../../../common/pagination/DtoBottomPagination"
-import filterMetadata from "./filter-metadata";
+import DtoBottomPagination from "components/common/pagination/DtoBottomPagination"
+import filterMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/filter-metadata";
 import Model from "../../../../../../../../core/data_model/model";
 
 const SFDCUnitTestView = ({
@@ -31,6 +32,7 @@ const SFDCUnitTestView = ({
   const [searchQuery, setSearchQuery] = useState("");
   const [recordId, setRecordId] = useState("");
   const [selectedUnitTestClasses, setSelectedUnitTestClasses] = useState([]);
+  const [allTestClasses, setAllTestClasses] = useState([]);
   const [toolFilterDto, setToolFilterDto] = useState(new Model({...filterMetadata.newObjectFields}, filterMetadata, false));
   
 
@@ -38,7 +40,7 @@ const SFDCUnitTestView = ({
     async function loadInitialData (filterDto = toolFilterDto) {
       setLoading(true);
       try {
-        const response = await sfdcPipelineActions.getTestClassesList({"sfdcToolId": sfdcToolId, "pipelineId": pipelineId, "stepId": stepId, "dataType": "sfdc-unitTesting" },filterDto, getAccessToken);
+        const response = await sfdcPipelineActions.getListFromPipelineStorage({"sfdcToolId": sfdcToolId, "pipelineId": pipelineId, "stepId": stepId, "dataType": "sfdc-unitTesting" },filterDto, getAccessToken);
         
         if(!response.data.data || !response.data.paginatedData) {
           toastContext.showLoadingErrorDialog("something went wrong! not a valid object");
@@ -48,6 +50,7 @@ const SFDCUnitTestView = ({
         setToolFilterDto({...newFilterDto});
         setTestClasses(response.data.paginatedData.testClasses.data);
         setSelectedUnitTestClasses(response.data.paginatedData.selectedTestClasses);
+        setAllTestClasses(response.data.data.testClasses);
         setRecordId(response.data._id);
       } catch (error) {
         console.error("Error getting API Data: ", error);
@@ -62,7 +65,7 @@ const SFDCUnitTestView = ({
   const loadData = async (filterDto = toolFilterDto) => {
     setLoading(true);
     try {
-      const response = await sfdcPipelineActions.getTestClassesList({"sfdcToolId": sfdcToolId, "pipelineId": pipelineId, "stepId": stepId, "dataType": "sfdc-unitTesting" }, filterDto, getAccessToken);
+      const response = await sfdcPipelineActions.getListFromPipelineStorage({"sfdcToolId": sfdcToolId, "pipelineId": pipelineId, "stepId": stepId, "dataType": "sfdc-unitTesting" }, filterDto, getAccessToken);
       
       if(!response.data.data || !response.data.paginatedData) {
         toastContext.showLoadingErrorDialog("something went wrong! not a valid object");
@@ -81,12 +84,13 @@ const SFDCUnitTestView = ({
   }
 
   const handleCheckAllClickUnitTestClasses = () => {
-    setSelectedUnitTestClasses(testClasses);
+    // setSelectedUnitTestClasses(testClasses);
+    setSelectedUnitTestClasses(allTestClasses);
   };
 
   const handleUnCheckAllClickUnitTestClasses = () => {
-    // setSelectedUnitTestClasses([]); // as we have pagination uncheck all should uncheck from current page
-    setSelectedUnitTestClasses(selectedUnitTestClasses.filter((item) =>  !testClasses.includes( item )));
+    setSelectedUnitTestClasses([]); // as we have pagination uncheck all should uncheck from current page
+    // setSelectedUnitTestClasses(selectedUnitTestClasses.filter((item) =>  !testClasses.includes( item )));
   };
 
   const handleComponentCheck = (e) => {
@@ -101,7 +105,7 @@ const SFDCUnitTestView = ({
   const handleSelectedClasses = async() => {
     setSave(true);
     try {
-      const saveResponse = await sfdcPipelineActions.setSelectedTestClassesList({ "recordId": recordId, "sfdcToolId": sfdcToolId, "pipelineId": pipelineId, "stepId": stepId, "dataType": "sfdc-unitTesting", "data": selectedUnitTestClasses}, getAccessToken);
+      const saveResponse = await sfdcPipelineActions.setListToPipelineStorage({ "recordId": recordId, "sfdcToolId": sfdcToolId, "pipelineId": pipelineId, "stepId": stepId, "dataType": "sfdc-unitTesting", "data": selectedUnitTestClasses}, getAccessToken);
       // if we want to close this modal do it here!
       handleClose();
       setSave(false);
@@ -115,6 +119,15 @@ const SFDCUnitTestView = ({
     return (
         <div>{toolFilterDto && toolFilterDto.getData("totalCount") != null && <DtoBottomPagination paginationDto={toolFilterDto} setPaginationDto={setToolFilterDto} isLoading={loading} loadData={loadData} />}</div>
     );
+  }
+  const handleSearch = async() => {
+    let newFilterDto = toolFilterDto;
+    newFilterDto.setData("pageSize", 50);
+    newFilterDto.setData("currentPage", 1);
+    newFilterDto.setData("search", searchQuery);
+    setToolFilterDto({...newFilterDto});
+    
+    await loadData();
   }
   return (
     <div className="ml-5">
@@ -132,9 +145,22 @@ const SFDCUnitTestView = ({
                   { testClasses.length > 0 &&
                   <>
                    <div className="px-2">
-                   <Form.Group controlId="searchField">
-                      <Form.Control type="text" placeholder="Search for Test Classes" value={searchQuery || ""} onChange={e => setSearchQuery(e.target.value)} />
-                    </Form.Group>
+                   <InputGroup className="mb-3">
+                      <Form.Control
+                        placeholder="Search for the file name"
+                        value={searchQuery || ""} 
+                        onChange={e => setSearchQuery(e.target.value)}
+                      />
+                      <InputGroup.Append>
+                        <Button variant="secondary" size="sm" onClick={handleSearch}>
+                          {loading ? (
+                            <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth />
+                          ) : (
+                            <FontAwesomeIcon icon={faSearch} fixedWidth className="mr-1" />
+                          )}
+                        </Button>
+                      </InputGroup.Append>
+                   </InputGroup>
                    </div>
                    <div className="align-self-end">
                      <Button variant="secondary" size="sm" className="mr-2" onClick={handleCheckAllClickUnitTestClasses}>
@@ -165,7 +191,7 @@ const SFDCUnitTestView = ({
                     <>
                       {typeof testClasses === "object" && testClasses.length > 0 &&
                         testClasses
-                        .filter(item => item.toLowerCase().includes(searchQuery.toLowerCase()))
+                        // .filter(item => item.toLowerCase().includes(searchQuery.toLowerCase()))
                         .map((item, idx) => (
                           <div key={item} className="p-2 w-50">
                             <Form.Check
@@ -216,11 +242,5 @@ const SFDCUnitTestView = ({
 };
 
 
-SFDCUnitTestView.propTypes = {
-  pipelineId: PropTypes.string,
-  stepId: PropTypes.string,
-  sfdcToolId: PropTypes.string,
-  handleClose: PropTypes.func,
-};
 
 export default SFDCUnitTestView;
