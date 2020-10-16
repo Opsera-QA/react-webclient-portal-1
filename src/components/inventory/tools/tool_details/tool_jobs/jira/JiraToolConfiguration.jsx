@@ -9,11 +9,15 @@ import {DialogToastContext} from "../../../../../../contexts/DialogToastContext"
 import jiraConnectionMetadata from "./jira-connection-metadata";
 import DetailPanelContainer from "../../../../../common/panels/detail_panel_container/DetailPanelContainer";
 import Col from "react-bootstrap/Col";
+import {getFormValidationErrorDialog} from "components/common/toasts/toasts";
+
 
 function JiraToolConfiguration({ toolData, fnSaveChanges, fnSaveToVault }) {
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [jiraConfigurationDto, setJiraConfigurationDto] = useState(undefined);
+  const [showToast, setShowToast] = useState(false);
+  const [toast, setToast] = useState({});
 
   useEffect(() => {
     loadData();
@@ -36,12 +40,38 @@ function JiraToolConfiguration({ toolData, fnSaveChanges, fnSaveToVault }) {
     }
   };
 
-  const updateJiraConnection = async () => {
-    let newConfiguration = {...jiraConfigurationDto.getPersistData()};
-    const item = {
-      configuration: newConfiguration
+  const saveJiraConfig = async () => {
+    if (jiraConfigurationDto.isModelValid()) {
+      let newConfiguration = {...jiraConfigurationDto.getPersistData()};
+
+      if (jiraConfigurationDto.isChanged("vaultSecretKey")) {
+        newConfiguration.vaultSecretKey = await saveToVault(toolData._id, toolData.tool_identifier, "secretKey", "Vault Secured Key", jiraConfigurationDto.getData("vaultSecretKey"));
+      }
+
+      const item = {
+        configuration: newConfiguration
+      };
+      await fnSaveChanges(item);
+    }
+    else {
+      let toast = getFormValidationErrorDialog(setShowToast);
+      setToast(toast);
+      setShowToast(true);
+    }
+  };
+
+  const saveToVault = async (toolId, toolIdentifier, key, name, value) => {
+    const keyName = `${toolId}-${toolIdentifier}-${key}`;
+    const body = {
+      "key": keyName,
+      "value": value
     };
-    await fnSaveChanges(item);
+    const response = await fnSaveToVault(body);
+    if (response.status === 200 ) {
+      return { name: name, vaultKey: keyName };
+    } else {
+      return "";
+    }
   };
 
   if (jiraConfigurationDto == null) {
@@ -50,22 +80,19 @@ function JiraToolConfiguration({ toolData, fnSaveChanges, fnSaveToVault }) {
 
   return (
     <DetailPanelContainer>
+      {showToast && toast}
       <div className="h5">Jira Credentials</div>
         {isLoading ? <LoadingDialog size={"sm"} message={"Loading JIRA Configuration Details"} /> :
         <div>
           <Row>
-            <Col sm={6}><DtoTextInput dataObject={jiraConfigurationDto} setDataObject={setJiraConfigurationDto} fieldName={"jiraUrl"} /></Col>
+            <Col sm={6}><DtoTextInput dataObject={jiraConfigurationDto} setDataObject={setJiraConfigurationDto} fieldName={"toolURL"} /></Col>
             <Col sm={6}><DtoTextInput dataObject={jiraConfigurationDto} setDataObject={setJiraConfigurationDto} fieldName={"jiraPort"} /></Col>
-            <Col sm={12}><DtoTextInput dataObject={jiraConfigurationDto} setDataObject={setJiraConfigurationDto} fieldName={"jiraUserName"} /></Col>
-            <Col sm={12}><DtoTextInput type={"password"} dataObject={jiraConfigurationDto} setDataObject={setJiraConfigurationDto} fieldName={"jiraPassword"} /></Col>
-            <Col sm={12}><DtoTextInput dataObject={jiraConfigurationDto} setDataObject={setJiraConfigurationDto} fieldName={"projectName"} /></Col>
-          </Row>
-          <Row className="m-2">
-            <div className="text-muted italic">Please Note: All fields are required for connectivity.</div>
+            <Col sm={12}><DtoTextInput dataObject={jiraConfigurationDto} setDataObject={setJiraConfigurationDto} fieldName={"userName"} /></Col>
+            <Col sm={12}><DtoTextInput type={"password"} dataObject={jiraConfigurationDto} setDataObject={setJiraConfigurationDto} fieldName={"vaultSecretKey"} /></Col>
           </Row>
           <Row>
-            <div className="ml-auto">
-              <SaveButton setRecordDto={setJiraConfigurationDto} modal={false} recordDto={jiraConfigurationDto} createRecord={updateJiraConnection} updateRecord={updateJiraConnection} />
+            <div className="ml-auto px-2">
+              <SaveButton setRecordDto={setJiraConfigurationDto} modal={false} recordDto={jiraConfigurationDto} createRecord={saveJiraConfig} updateRecord={saveJiraConfig} />
             </div>
           </Row>
         </div>
