@@ -34,13 +34,13 @@ const registrationMetadata = {
       label: "Password",
       id: "password",
       isRequired: true,
-      minLength: 8
+      isOpseraPassword: true
     },
     {
       label: "Confirm Password",
       id: "confirmPassword",
       isRequired: true,
-      minLength: 8
+      isOpseraPassword: true
     },
     {
       label: "Street",

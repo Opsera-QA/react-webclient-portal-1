@@ -38,6 +38,22 @@ function DtoTextInput({fieldName, dataObject, setDataObject, disabled, type}) {
     setDataObject({...newDataObject});
   };
 
+  const getInfoText = () => {
+    if (errorMessage != null && errorMessage !== "") {
+      return (
+        <div className="invalid-feedback">
+          <div>{errorMessage}</div>
+        </div>
+      );
+    }
+
+    return (
+      <small className="text-muted form-text">
+        <div>{field.formText}</div>
+      </small>
+    )
+  }
+
   return (
     <>
       {dataObject &&
@@ -46,12 +62,7 @@ function DtoTextInput({fieldName, dataObject, setDataObject, disabled, type}) {
           <span className="danger-red">*</span> : null}</label>
         <input type={type} disabled={disabled} value={dataObject.getData(fieldName)} className="form-control"
                onChange={e => validateAndSetData(fieldName, e.target.value)}/>
-        <div className="invalid-feedback text-right">
-          <div>{errorMessage}</div>
-        </div>
-        <small className="text-muted form-text text-right">
-          <div>{field.formText}</div>
-        </small>
+        {getInfoText()}
       </div>}
     </>
   );
