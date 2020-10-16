@@ -49,8 +49,8 @@ const SFDCUnitTestView = ({
         newFilterDto.setData("totalCount", response.data.paginatedData.testClasses.count);
         setToolFilterDto({...newFilterDto});
         setTestClasses(response.data.paginatedData.testClasses.data);
-        setSelectedUnitTestClasses(response.data.paginatedData.selectedTestClasses);
         setAllTestClasses(response.data.data.testClasses);
+        setSelectedUnitTestClasses( response.data.data.testClasses.filter((ele)=> response.data.paginatedData.selectedTestClasses.includes(ele)) );
         setRecordId(response.data._id);
       } catch (error) {
         console.error("Error getting API Data: ", error);

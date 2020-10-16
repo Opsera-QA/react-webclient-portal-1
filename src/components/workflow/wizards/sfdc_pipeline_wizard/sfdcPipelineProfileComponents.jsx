@@ -59,15 +59,14 @@ const SfdcPipelineProfileComponents = ({
 
   useEffect(() => {
     async function loadInitialData() {
-      setLoading(true);
-      loadData();
+      await loadData();
       let componentTypesArr = [{ "componentType": "All", "value": "" }];
       let uniqueComponentTypes = [...new Set(selectedComponentTypes.map(item => item))];
       uniqueComponentTypes.map(item => componentTypesArr.push({ "componentType": item, "value": item }));
       setComponentType(componentTypesArr);
-      setLoading(true);
     }
 
+    setLoading(true);
     loadInitialData();
   }, []);
 
@@ -100,6 +99,7 @@ const SfdcPipelineProfileComponents = ({
       toastContext.showLoadingErrorDialog(error);
     }
     setComponentsLoading(false);
+    setLoading(false);
   };
 
   const handleComponentCheck = (e) => {
@@ -304,7 +304,7 @@ const SfdcPipelineProfileComponents = ({
                     />
                     <InputGroup.Append>
                       <Button variant="secondary" size="sm" onClick={handleSearch}>
-                        {loading ? (
+                        {componentsLoading ? (
                           <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>
                         ) : (
                           <FontAwesomeIcon icon={faSearch} fixedWidth className="mr-1"/>
