@@ -27,6 +27,15 @@ export function isDomain(domain) {
  return re.test(String(domain).toLowerCase());
 }
 
+export function isOpseraPassword(password) {
+  var re =  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/;
+  return re.test(String(password));
+}
+
+export function matchesRegex(regex, value) {
+  return regex.test(String(value).toLowerCase());
+}
+
 export function handleError(error) {
   let errMessage = null;
 

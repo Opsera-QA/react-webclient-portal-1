@@ -1,4 +1,4 @@
-import {isAlphaNumeric, isDomain, validateEmail} from "../../utils/helpers";
+import {isAlphaNumeric, isDomain, isOpseraPassword, matchesRegex, validateEmail} from "../../utils/helpers";
 
 export const validateData = (data, fields) => {
   let errors = [];
@@ -70,6 +70,17 @@ export const fieldValidation = (value, field) => {
   {
     errorMessages.push("Domains must begin and end with an alphanumeric character.");
   }
+
+  if (field.isOpseraPassword != null && !isOpseraPassword(value))
+  {
+    errorMessages.push("Password requirements: at least 8 characters, a lowercase letter, an uppercase letter, a number, a symbol");
+  }
+
+  // TODO: Implement
+  // if (field.regexValidator != null && !matchesRegex(field.regexValidator, value))
+  // {
+  //   errorMessages.push("Does not meet regex requirements.");
+  // }
 
   if (errorMessages.length === 0) {
     return undefined;

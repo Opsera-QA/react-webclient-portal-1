@@ -1,5 +1,7 @@
 // TODO: Pull directly from node server --
 //  also write way to pull text from a properties file for easier language localization
+import {isOpseraPassword} from "../../utils/helpers";
+
 const defaultSignupFormFields = {
   fields: [
     {
@@ -28,14 +30,14 @@ const defaultSignupFormFields = {
     id: "password",
     type: "password",
     isRequired: true,
-    minLength: 8
+    isOpseraPassword: true,
   },
     {
     label: "Confirm Password",
     id: "confirmPassword",
     type: "password",
     isRequired: true,
-    minLength: 8
+    isOpseraPassword: true,
   },
     {
     label: "Street",
