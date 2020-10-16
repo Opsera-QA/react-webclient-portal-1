@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Row, Col, Pagination } from "react-bootstrap";
+import {Col, Pagination, Row} from "react-bootstrap";
 import {getResultSummary} from "./pagination-helpers";
 
 function DtoBottomPagination({ paginationDto, setPaginationDto, loadData, isLoading }) {
@@ -18,16 +18,18 @@ function DtoBottomPagination({ paginationDto, setPaginationDto, loadData, isLoad
   const getTotalPages = () => {
     let pageSize = paginationDto.getData("pageSize");
     let totalCount = paginationDto.getData("totalCount");
-    let totalPages = Math.ceil(totalCount / pageSize);
-    return totalPages;
+    return Math.ceil(totalCount / pageSize);
   };
 
   const getPaginationItems = () => {
     let paginationItems = [];
     let currentPage = paginationDto.getData("currentPage");
-    for (let pageNumber = 1; pageNumber <= getTotalPages(); pageNumber++) {
-        paginationItems.push(<Pagination.Item disabled={isLoading} active={pageNumber === currentPage} key={pageNumber} onClick={() => setPage(pageNumber)}>{pageNumber}</Pagination.Item>);
+    let startingPage = currentPage - 2 >= 1 ? currentPage - 2 : 1;
+
+    for (let pageNumber = startingPage; pageNumber < startingPage + 5 && pageNumber <= getTotalPages(); pageNumber++) {
+      paginationItems.push(<Pagination.Item disabled={isLoading} active={pageNumber === currentPage} key={pageNumber} onClick={() => setPage(pageNumber)}>{pageNumber}</Pagination.Item>);
     }
+
     return paginationItems;
   };
 
