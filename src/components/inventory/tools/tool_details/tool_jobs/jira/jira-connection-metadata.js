@@ -5,37 +5,30 @@ const jiraConnectionMetadata = {
   fields: [
     {
       label: "Jira URL",
-      id: "jiraUrl",
+      id: "toolURL",
       isRequired: true
     },
     {
       label: "Jira Port",
       id: "jiraPort",
-      isRequired: true
     },
     {
       label: "Jira Username",
-      id: "jiraUserName",
+      id: "userName",
       isRequired: true
     },
     {
       label: "Jira Password",
-      id: "jiraPassword",
+      id: "vaultSecretKey",
       isRequired: true
-    },
-    {
-      label: "Jira Project Name",
-      id: "projectName",
-      isRequired: true,
-    },
+    }
   ],
   newObjectFields:
     {
-      jiraUrl: "",
+      toolURL: "",
       jiraPort: "",
-      jiraUserName: "",
-      jiraPassword: "",
-      projectName: "",
+      userName: "",
+      vaultSecretKey: ""
     }
 };
 
