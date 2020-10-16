@@ -142,8 +142,6 @@ const SFDCUnitTestView = ({
             <>
               <div className="mt-3 mr-3">
                 <div className="d-flex justify-content-between">
-                  { testClasses.length > 0 &&
-                  <>
                    <div className="px-2">
                    <InputGroup className="mb-3">
                       <Form.Control
@@ -177,8 +175,6 @@ const SFDCUnitTestView = ({
                        Uncheck All
                      </Button>
                    </div>
-                   </>
-                  }
                 </div>
               </div>
 
