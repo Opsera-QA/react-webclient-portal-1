@@ -44,6 +44,7 @@ const INDICES = [
   "heartbeat",
   "codeship",
   "gitlab",
+  "cypress"
 ];
 
 const DATELABELS = [

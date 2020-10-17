@@ -3,7 +3,6 @@ export default {
     "orient": "bottom",
     "tickSize": 5,
     "format": "%b %d",
-    "tickValues": "every day",
     "tickPadding": 5,
     "tickRotation": -65,
     "legendOffset": 40,
