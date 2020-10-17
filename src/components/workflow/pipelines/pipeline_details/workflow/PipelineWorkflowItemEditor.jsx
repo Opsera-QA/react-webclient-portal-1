@@ -90,7 +90,7 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
   if (editItem.type === "source") {
     return (<>
       {getTitleBar("Source Repository")}
-      <div className="p-3 bg-white">
+      <div className="p-3 bg-white h-100">
         {showToast && <div className="mb-2">{toast}</div>}
         <SourceRepositoryConfiguration data={pipeline} setToast={setToast} setShowToast={setShowToast}
                                        parentCallback={callbackFunctionSource}/>
@@ -101,7 +101,7 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
   if (editItem.type === "notification") {
     return (<>
       {getTitleBar("Step Notification")}
-      <div className="p-3 bg-white">
+      <div className="p-3 bg-white h-100">
         {showToast && <div className="mb-2">{toast}</div>}
         <StepNotificationConfiguration
           data={pipeline}
@@ -114,7 +114,7 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
   if (editItem.type === "step") {
     return (<>
       {getTitleBar("Step Setup")}
-      <div className="p-3 bg-white">
+      <div className="p-3 bg-white h-100">
         <StepConfiguration
           data={pipeline}
           stepId={editItem.step_id}
@@ -126,7 +126,7 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
   return (
     <>
       {getTitleBar("Step Configuration")}
-      <div className="p-3 bg-white">
+      <div className="p-3 bg-white h-100">
         {showToast && <div className="mb-2">{toast}</div>}
         <StepToolConfiguration
           pipeline={pipeline}

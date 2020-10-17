@@ -210,7 +210,7 @@ function PipelineWorkflow({
   return (
     <>
         <div className="max-content-width">
-          <div className="pl-1 pb-1 dark-grey-background">
+          <div className="pl-1 pb-1 dark-grey-background" style={{borderBottom: "5px solid #6c757d"}}>
 
             <Button variant="secondary"
                     className="mr-1"
@@ -361,7 +361,7 @@ function PipelineWorkflow({
               />
             </div>
 
-            <SteppedLineTo from="source" to="step-items" delay={100} orientation="v"
+            <SteppedLineTo from="source" to="step-items" delay={100} orientation="v" zIndex={-1}
                            borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="top"/>
 
 

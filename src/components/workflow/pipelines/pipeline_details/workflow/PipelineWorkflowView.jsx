@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Row, Col } from "react-bootstrap";
 import InfoDialog from "../../../../common/status_notifications/info";
 import PipelineWorkflow from "./PipelineWorkflow";
 import PipelineWorkflowEditor from "./PipelineWorkflowItemEditor";
@@ -27,15 +26,15 @@ function PipelineWorkflowView({
 
   const getPipelineWorkflowEditor = (editingItem) => {
     if (editingItem) {
-      return (
-        <Col xs lg="4" className="pl-2">
+      return (<>
+        <div className="settings-sidebar">
           <div className="content-card-1 table-content-block h-100">
             <PipelineWorkflowEditor editItem={editItem} pipeline={pipeline} closeEditorPanel={closeEditorPanel}
                                     fetchPlan={fetchPlan}/>
           </div>
           <div className="content-block-footer"/>
-        </Col>
-      );
+        </div>
+      </>);
     }
   };
 
@@ -47,36 +46,31 @@ function PipelineWorkflowView({
   return (
     <>
       <div className="workflow-view h-100">
-        <Row className="w-100" style={{ margin: "0" }}>
-          <Col className="max-content-width content-block-collapse" style={{ paddingLeft: "0", paddingRight: "0" }}>
-            <div className="dark-grey-background py-1 text-right" style={{minWidth:"860px"}}>
+        {getPipelineWorkflowEditor(editItem)}
 
-              <div className="float-right pt-1 mr-2 dark-grey-background">
-              <PipelineActionControls pipeline={pipeline} disabledActionState={false}
-                                      customerAccessRules={customerAccessRules}
-                                      fetchData={fetchPlan}
-                                      setPipeline={setPipeline}
-                                      setRefreshCount={setRefreshCount}
-                                      refreshCount={refreshCount}
-                                      fetchActivityLogs={getActivityLogs}
-                                      setParentWorkflowStatus={setWorkflowStatus}/></div>
-
-            </div>
-            <PipelineWorkflow pipeline={pipeline}
-                              editItemId={editItem.step_id}
-                              fetchPlan={fetchPlan}
-                              customerAccessRules={customerAccessRules}
-                              refreshCount={refreshCount}
-                              softLoading={softLoading}/>
-          </Col>
-
-          {getPipelineWorkflowEditor(editItem)}
-
-        </Row>
+        <div className="dark-grey-background py-1 text-right">
+          {!editItem && <div className="float-right pt-1 mr-2 dark-grey-background">
+            <PipelineActionControls pipeline={pipeline} disabledActionState={false}
+                                    customerAccessRules={customerAccessRules}
+                                    fetchData={fetchPlan}
+                                    setPipeline={setPipeline}
+                                    setRefreshCount={setRefreshCount}
+                                    refreshCount={refreshCount}
+                                    fetchActivityLogs={getActivityLogs}
+                                    setParentWorkflowStatus={setWorkflowStatus}/>
+          </div>}
+        </div>
+        <div style={{ minWidth: "740px" }}>
+          <PipelineWorkflow pipeline={pipeline}
+                            editItemId={editItem.step_id}
+                            fetchPlan={fetchPlan}
+                            customerAccessRules={customerAccessRules}
+                            refreshCount={refreshCount}
+                            softLoading={softLoading}/>
+        </div>
       </div>
     </>
   );
-
 }
 
 
