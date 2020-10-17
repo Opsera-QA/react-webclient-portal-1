@@ -1,27 +1,84 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
+import { AuthContext } from "../../../contexts/AuthContext";
+import { axiosApiService } from "../../../api/apiService";
+import InfoDialog from "../../common/status_notifications/info";
 import ErrorDialog from "../../common/status_notifications/error";
 import config from "./xunitMaxMinPercBarChartConfigs";
 import "./charts.css";
+import LoadingDialog from "../../common/status_notifications/loading";
 import ModalLogs from "../../common/modal/modalLogs";
 
 
-function XUnitMaxMinPercBarChart( { data, persona } ) {
-  const { xunitMaxMinPerc }  =  data;
+function XUnitMaxMinPercBarChart( { persona, date} ) {
+  const contextType = useContext(AuthContext);
+  const [error, setErrors] = useState(false);
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [exist, setExist] = useState(0);
+
+
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    const { getAccessToken } = contextType;
+    const accessToken = await getAccessToken();
+    const apiUrl = "/analytics/data";   
+    const postBody = {
+      data: [
+        {
+          "request": "xunitMaxMinPerc",
+          "metric": "bar"
+        }
+      ], 
+      startDate: date.start, 
+      endDate: date.end
+    };
+
+    try {
+      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
+      let dataObject = res && res.data ? res.data.data[0].opseraPipelineDuration : [];
+      setData(dataObject);
+      setLoading(false);
+    }
+    catch (err) {
+      console.log(err.message);
+      setLoading(false);
+      setErrors(err.message);
+    }
+  }, [contextType]);
+  
+  useEffect(() => {    
+    const controller = new AbortController();
+    const runEffect = async () => {
+      try {
+        await fetchData();
+      } catch (err) {
+        if (err.name === "AbortError") {
+          console.log("Request was canceled via controller.abort");
+          return;
+        }        
+      }
+    };
+    runEffect();
+
+    return () => {
+      controller.abort();
+    };
+  }, [fetchData]);
 
   
-  if (typeof data !== "object" || Object.keys(data).length === 0 || xunitMaxMinPerc.status !== 200) {
+  if (typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) {
     return (<ErrorDialog error="No Data is available for this chart at this time." />);
   } else {
     return (
       <>
-        <ModalLogs header="Max/Min/Percentiles Test Duration" size="lg" jsonMessage={xunitMaxMinPerc ? xunitMaxMinPerc.data : []} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
+        <ModalLogs header="Max/Min/Percentiles Test Duration" size="lg" jsonMessage={data ? data.data : []} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
 
         <div className="chart-label-text">X Unit: Max/Min/Percentiles Test Duration</div>
         <ResponsiveBar
-          data={xunitMaxMinPerc ? xunitMaxMinPerc.data : []}
+          data={data ? data.data : []}
           onClick={() => setShowModal(true)}
           keys={config.keys}
           groupMode="grouped"

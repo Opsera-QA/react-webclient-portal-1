@@ -33,6 +33,7 @@ function Logs() {
     "codeship",
     "gitlab",
     "metricbeat",
+    "cypress"
   ];
 
   useEffect(() => {

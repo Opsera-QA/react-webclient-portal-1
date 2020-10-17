@@ -75,16 +75,18 @@ function XUnitTestDurationBarChart( { persona, date } ) {
     return (<LoadingDialog size="sm" />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
-  } else if (typeof data !== "object" || Object.keys(data).length === 0 || data.xunitTestDuration.status !== 200 || data.xunitTestNames.status !== 200) {
-    return (
-      <div className="chart mb-3" style={{ height: "300px" }}>
-        <div className="chart-label-text">X Unit: Maximum Test Durations
-        </div><InfoDialog  message="No log activity has been captured for this dashboard yet." /></div>);
+  } 
+  // else if (typeof data !== "object" || Object.keys(data).length === 0 || data.xunitTestDuration.status !== 200 || data.xunitTestNames.status !== 200) {
+  //   return (
+  //     <div className="chart mb-3" style={{ height: "300px" }}>
+  //       <div className="chart-label-text">X Unit: Maximum Test Durations
+  //       </div><InfoDialog  message="No log activity has been captured for this dashboard yet." /></div>);
 
-  } else {
+  // } 
+  else {
     return (
       <>
-        <ModalLogs header="Maximum Test Durations" size="lg" jsonMessage={data.xunitTestDuration !== undefined ? data.xunitTestDuration.data : []} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
+        <ModalLogs header="Maximum Test Durations" size="lg" jsonMessage={data ? data.data : []} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
 
         <div className="chart mb-3" style={{ height: "300px" }}>
           <div className="chart-label-text">X Unit: Maximum Test Durations</div>

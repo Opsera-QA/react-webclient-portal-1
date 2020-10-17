@@ -36,6 +36,7 @@ const INDICES = [
   "heartbeat",
   "codeship",
   "gitlab",
+  "cypress",
   "metricbeat",
 ];
 const PERSONAS = [
