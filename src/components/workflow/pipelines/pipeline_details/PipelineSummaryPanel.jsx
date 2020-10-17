@@ -25,6 +25,7 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import PipelineActionControls from "./PipelineActionControls";
 import EditTagModal from "../../EditTagModal";
 import PipelineSummaryActionBar from "../../../common/actions/pipeline/PipelineSummaryActionBar";
+import InfoDialog from "../../../common/status_notifications/info";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -318,215 +319,216 @@ function PipelineSummaryPanel({
     );
   };
 
+  if (!pipeline || Object.keys(pipeline).length <= 0) {
+    return (<InfoDialog
+      message="No Pipeline details found.  Please ensure you have access to view the requested pipeline."/>);
+  }
+
   return (
     <>
-      {typeof (pipeline) !== "undefined" && pipeline !== {} ?
-        <>
-          <div>
-            <div className="text-right py-2">
-              <PipelineActionControls pipeline={pipeline} disabledActionState={false}
-                                      customerAccessRules={customerAccessRules}
-                                      fetchData={fetchPlan}
-                                      setPipeline={setPipeline}
-                                      setRefreshCount={setRefreshCount}
-                                      refreshCount={refreshCount}
-                                      fetchActivityLogs={getActivityLogs}
-                                      setParentWorkflowStatus={setWorkflowStatus}/>
+      <div>
+        <div className="text-right py-2">
+          <PipelineActionControls pipeline={pipeline} disabledActionState={false}
+                                  customerAccessRules={customerAccessRules}
+                                  fetchData={fetchPlan}
+                                  setPipeline={setPipeline}
+                                  setRefreshCount={setRefreshCount}
+                                  refreshCount={refreshCount}
+                                  fetchActivityLogs={getActivityLogs}
+                                  setParentWorkflowStatus={setWorkflowStatus}/>
 
 
-            </div>
-          </div>
+        </div>
+      </div>
 
-          <div className="mb-3 flat-top-content-block p-3">
+      <div className="mb-3 flat-top-content-block p-3">
 
-            <div className="text-muted float-right">
-              <PipelineSummaryActionBar
-                pipeline={pipeline}
-                handleDeleteClick={authorizedAction("delete_pipeline_btn", pipeline.owner) ? handleDeleteClick : undefined}
-                handleDuplicateClick={handleCopyPipeline}
-                handleViewClick={handleViewClick}
-                handlePublishClick={authorizedAction("publish_pipeline_btn", pipeline.owner) ? handlePublishPipelineClick : undefined}
-                canTransferPipeline={canTransferPipeline(pipeline.owner)}
-                loadPipeline={fetchPlan}
-              />
-            </div>
+        <div className="text-muted float-right">
+          <PipelineSummaryActionBar
+            pipeline={pipeline}
+            handleDeleteClick={authorizedAction("delete_pipeline_btn", pipeline.owner) ? handleDeleteClick : undefined}
+            handleDuplicateClick={handleCopyPipeline}
+            handleViewClick={handleViewClick}
+            handlePublishClick={authorizedAction("publish_pipeline_btn", pipeline.owner) ? handlePublishPipelineClick : undefined}
+            canTransferPipeline={canTransferPipeline(pipeline.owner)}
+            loadPipeline={fetchPlan}
+          />
+        </div>
 
-            <Row>
-              <Col sm={12}>
-                <div className="d-flex py-2">
-                  {editTitle ?
-                    <>
-                      <div className="flex-fill p-2">
-                        <Form.Control maxLength="500" type="text" placeholder="" value={formData.name || ""}
-                                      onChange={e => setFormData({ ...formData, name: e.target.value })}/></div>
-                      <div className="flex-fill p-2">
-                        {getSaveIcon("name")}
-                        {getCancelIcon(setEditTitle)}
-                      </div>
-                    </>
-                    :
-                    <>
-                      {/*{Object.keys(approvalStep).length > 0 &&
-                      <FontAwesomeIcon icon={faFlag} className="red mr-1 vertical-align-item" fixedWidth/>}*/}
-                      <span className="text-muted mr-1">Name:</span> {pipeline.name}
-                      {authorizedAction("edit_pipeline_attribute", pipeline.owner)
-                      && parentWorkflowStatus !== "running"
-                        ? getEditIcon("name")
-                        : null}
-                    </>
-                  }</div>
-              </Col>
-              <Col sm={12} md={6} className="py-2"><span className="text-muted mr-1">ID:</span> {pipeline._id}</Col>
-              <Col sm={12} md={6} className="py-2"><span
-                className="text-muted mr-1">Pipeline Run Count:</span> {pipeline.workflow.run_count || "0"}</Col>
-              <Col sm={12} md={6} className="py-2">
-                {editProject ?
-                  <>
-                    <Row className="">
-                      <Col sm={9}>
-                        <Form.Control maxLength="150" type="text" placeholder="Project Name"
-                                      value={formData.project.name || ""}
-                                      onChange={e => setFormData({
-                                        ...formData,
-                                        project: { name: e.target.value },
-                                      })}/></Col>
-                      <Col sm={3} className="my-auto">
-                        {getSaveIcon("project")}
-                        {getCancelIcon(setEditProject)}
-                      </Col>
-                    </Row>
-                  </>
-                  :
-                  <>
-                    <span
-                      className="text-muted">Project: </span> {pipeline.project !== undefined && pipeline.project.hasOwnProperty("name") ? <>{pipeline.project.name}</> :
-                    <span className="text-muted font-italic">untitled</span>}
-                    {authorizedAction("edit_pipeline_attribute", pipeline.owner)
-                    && parentWorkflowStatus !== "running"
-                      ? getEditIcon("project")
-                      : null}
-                  </>}
-              </Col>
-              <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Owner:</span> {ownerName}</Col>
-              <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Organization:</span> <span
-                className="upper-case-first">{pipeline.organizationName}</span></Col>
-              <Col xs={12} sm={6} className="py-2"><span
-                className="text-muted mr-1">Created On:</span> {pipeline.createdAt && format(new Date(pipeline.createdAt), "yyyy-MM-dd', 'hh:mm a")}
-              </Col>
-              <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Tags:</span>
-                {authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running" && getEditIcon("tags")}
-
-                {!editTags && pipeline.tags &&
-                pipeline.tags.map((item, idx) => {
-                  if (typeof item !== "string")
-                    return (
-                      <div key={idx}>
-                        <span className="ml-1"><span className="mr-1">{item.type}:</span>{item.value}</span>
-                      </div>
-                    );
-                })
-                }
-
-                {editTags &&
-                <EditTagModal data={pipeline.tags} visible={editTags} onHide={() => {
-                  setEditTags(false);
-                }} onClick={(tags) => {
-                  handleSavePropertyClick(pipeline._id, tags, "tags");
-                }}/>}
-
-              </Col>
-              <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-2">Type:</span>
-                {pipeline.type && !editType && pipelineHelpers.displayPipelineType(pipeline.type)}
-                {authorizedAction("edit_pipeline_attribute", pipeline.owner)
-                && parentWorkflowStatus !== "running" && !editType
-                  ? getEditIcon("type")
-                  : null}
-                {editType &&
-                <div className="d-flex mt-1">
-                  <div className="w-75">
-                    <DropdownList
-                      data={pipelineHelpers.PIPELINE_TYPES}
-                      defaultValue={pipeline.type[0]}
-                      valueField='id'
-                      textField='name'
-                      onChange={e => {
-                        let type = formData.type;
-                        type[0] = e.id;
-                        setFormData({ ...formData, type: type });
-                      }}
-                    />
-                  </div>
-                  <div className="px-2 pt-1">
-                    {getSaveIcon("type")}
-                    {getCancelIcon(setEditType)}
-                  </div>
-                </div>
-                }
-              </Col>
-              {editSchedule ?
+        <Row>
+          <Col sm={12}>
+            <div className="d-flex py-2">
+              {editTitle ?
                 <>
-                  <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Schedule:</span>
-                    <SchedulerWidget
-                      startDate={pipeline.workflow.schedule ? pipeline.workflow.schedule.start_date : new Date()}
-                      frequency={pipeline.workflow.schedule ? pipeline.workflow.schedule.frequency : ""}
-                      schedule={pipeline.workflow.schedule ? pipeline.workflow.schedule : null}
-                      setEditSchedule={setEditSchedule}
-                      setSchedule={handleSetSchedule}></SchedulerWidget>
-                  </Col>
-                </> :
-
-                <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Schedule:</span>
-                  {pipeline.workflow.schedule
-                  && pipeline.workflow.schedule.start_date !== null
-                  && !editSchedule
-                    ? <>
-                      <span
-                        className="ml-1">Run next on: {format(new Date(pipeline.workflow.schedule.start_date), "yyyy-MM-dd', 'hh:mm a")}</span>
-                      <span
-                        className="ml-2">Frequency: {pipeline.workflow.schedule ? pipeline.workflow.schedule.frequency : "undefined"}</span>
-                    </> : null}
-
-                  {/*TODO: Remove FF after schedler is fixed*/}
-                  {authorizedAction("edit_pipeline_attribute", pipeline.owner) && featureFlagItemInProd && parentWorkflowStatus !== "running" ?
-                    getEditIcon("schedule", true) : null}
-                </Col>
-              }
-              <Col lg className="py-1"><span className="text-muted mr-1">Org Account:</span> {pipeline.account}</Col>
-
-              {editDescription ?
-                <>
-                  <Col xs={11}>
-                    <Form.Control maxLength="2000" as="textarea" type="text" placeholder=""
-                                  value={formData.description || ""}
-                                  onChange={e => setFormData({ ...formData, description: e.target.value })}/></Col>
-                  <Col xs={1} className="my-auto">
-                    {getSaveIcon("description")}
-                    {getCancelIcon(setEditDescription)}
-                  </Col>
+                  <div className="flex-fill p-2">
+                    <Form.Control maxLength="500" type="text" placeholder="" value={formData.name || ""}
+                                  onChange={e => setFormData({ ...formData, name: e.target.value })}/></div>
+                  <div className="flex-fill p-2">
+                    {getSaveIcon("name")}
+                    {getCancelIcon(setEditTitle)}
+                  </div>
                 </>
                 :
                 <>
-                  <Col sm={12} className="py-2">
-                    <span className="text-muted mr-1">Description:</span>{pipeline.description}
-                    {authorizedAction("edit_pipeline_attribute", pipeline.owner)
-                    && parentWorkflowStatus !== "running"
-                      ? getEditIcon("description")
-                      : null}
-                  </Col>
+                  {/*{Object.keys(approvalStep).length > 0 &&
+                      <FontAwesomeIcon icon={faFlag} className="red mr-1 vertical-align-item" fixedWidth/>}*/}
+                  <span className="text-muted mr-1">Name:</span> {pipeline.name}
+                  {authorizedAction("edit_pipeline_attribute", pipeline.owner)
+                  && parentWorkflowStatus !== "running"
+                    ? getEditIcon("name")
+                    : null}
                 </>
-              }
-              {_configuredToolsCount(pipeline.workflow.plan) === 0 &&
-              <Col className="mt-3 mb-1">
-                <Button variant="success" className="mr-2 mt-2" size="sm" onClick={() => setActiveTab("model")}>
-                  <FontAwesomeIcon icon={faCogs} className="mr-1" fixedWidth/>
-                  Build Workflow
-                </Button>
+              }</div>
+          </Col>
+          <Col sm={12} md={6} className="py-2"><span className="text-muted mr-1">ID:</span> {pipeline._id}</Col>
+          <Col sm={12} md={6} className="py-2"><span
+            className="text-muted mr-1">Pipeline Run Count:</span> {pipeline.workflow.run_count || "0"}</Col>
+          <Col sm={12} md={6} className="py-2">
+            {editProject ?
+              <>
+                <Row className="">
+                  <Col sm={9}>
+                    <Form.Control maxLength="150" type="text" placeholder="Project Name"
+                                  value={formData.project.name || ""}
+                                  onChange={e => setFormData({
+                                    ...formData,
+                                    project: { name: e.target.value },
+                                  })}/></Col>
+                  <Col sm={3} className="my-auto">
+                    {getSaveIcon("project")}
+                    {getCancelIcon(setEditProject)}
+                  </Col>
+                </Row>
+              </>
+              :
+              <>
+                    <span
+                      className="text-muted">Project: </span> {pipeline.project !== undefined && pipeline.project.hasOwnProperty("name") ? <>{pipeline.project.name}</> :
+                <span className="text-muted font-italic">untitled</span>}
+                {authorizedAction("edit_pipeline_attribute", pipeline.owner)
+                && parentWorkflowStatus !== "running"
+                  ? getEditIcon("project")
+                  : null}
+              </>}
+          </Col>
+          <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Owner:</span> {ownerName}</Col>
+          <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Organization:</span> <span
+            className="upper-case-first">{pipeline.organizationName}</span></Col>
+          <Col xs={12} sm={6} className="py-2"><span
+            className="text-muted mr-1">Created On:</span> {pipeline.createdAt && format(new Date(pipeline.createdAt), "yyyy-MM-dd', 'hh:mm a")}
+          </Col>
+          <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Tags:</span>
+            {authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running" && getEditIcon("tags")}
+
+            {!editTags && pipeline.tags &&
+            pipeline.tags.map((item, idx) => {
+              if (typeof item !== "string")
+                return (
+                  <div key={idx}>
+                    <span className="ml-1"><span className="mr-1">{item.type}:</span>{item.value}</span>
+                  </div>
+                );
+            })
+            }
+
+            {editTags &&
+            <EditTagModal data={pipeline.tags} visible={editTags} onHide={() => {
+              setEditTags(false);
+            }} onClick={(tags) => {
+              handleSavePropertyClick(pipeline._id, tags, "tags");
+            }}/>}
+
+          </Col>
+          <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-2">Type:</span>
+            {pipeline.type && !editType && pipelineHelpers.displayPipelineType(pipeline.type)}
+            {authorizedAction("edit_pipeline_attribute", pipeline.owner)
+            && parentWorkflowStatus !== "running" && !editType
+              ? getEditIcon("type")
+              : null}
+            {editType &&
+            <div className="d-flex mt-1">
+              <div className="w-75">
+                <DropdownList
+                  data={pipelineHelpers.PIPELINE_TYPES}
+                  defaultValue={pipeline.type[0]}
+                  valueField='id'
+                  textField='name'
+                  onChange={e => {
+                    let type = formData.type;
+                    type[0] = e.id;
+                    setFormData({ ...formData, type: type });
+                  }}
+                />
+              </div>
+              <div className="px-2 pt-1">
+                {getSaveIcon("type")}
+                {getCancelIcon(setEditType)}
+              </div>
+            </div>
+            }
+          </Col>
+          {editSchedule ?
+            <>
+              <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Schedule:</span>
+                <SchedulerWidget
+                  startDate={pipeline.workflow.schedule ? pipeline.workflow.schedule.start_date : new Date()}
+                  frequency={pipeline.workflow.schedule ? pipeline.workflow.schedule.frequency : ""}
+                  schedule={pipeline.workflow.schedule ? pipeline.workflow.schedule : null}
+                  setEditSchedule={setEditSchedule}
+                  setSchedule={handleSetSchedule}></SchedulerWidget>
               </Col>
-              }
-            </Row>
-          </div>
-        </>
-        : null}
+            </> :
+
+            <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Schedule:</span>
+              {pipeline.workflow.schedule
+              && pipeline.workflow.schedule.start_date !== null
+              && !editSchedule
+                ? <>
+                      <span
+                        className="ml-1">Run next on: {format(new Date(pipeline.workflow.schedule.start_date), "yyyy-MM-dd', 'hh:mm a")}</span>
+                  <span
+                    className="ml-2">Frequency: {pipeline.workflow.schedule ? pipeline.workflow.schedule.frequency : "undefined"}</span>
+                </> : null}
+
+              {/*TODO: Remove FF after schedler is fixed*/}
+              {authorizedAction("edit_pipeline_attribute", pipeline.owner) && featureFlagItemInProd && parentWorkflowStatus !== "running" ?
+                getEditIcon("schedule", true) : null}
+            </Col>
+          }
+          <Col lg className="py-1"><span className="text-muted mr-1">Org Account:</span> {pipeline.account}</Col>
+
+          {editDescription ?
+            <>
+              <Col xs={11}>
+                <Form.Control maxLength="2000" as="textarea" type="text" placeholder=""
+                              value={formData.description || ""}
+                              onChange={e => setFormData({ ...formData, description: e.target.value })}/></Col>
+              <Col xs={1} className="my-auto">
+                {getSaveIcon("description")}
+                {getCancelIcon(setEditDescription)}
+              </Col>
+            </>
+            :
+            <>
+              <Col sm={12} className="py-2">
+                <span className="text-muted mr-1">Description:</span>{pipeline.description}
+                {authorizedAction("edit_pipeline_attribute", pipeline.owner)
+                && parentWorkflowStatus !== "running"
+                  ? getEditIcon("description")
+                  : null}
+              </Col>
+            </>
+          }
+          {_configuredToolsCount(pipeline.workflow.plan) === 0 &&
+          <Col className="mt-3 mb-1">
+            <Button variant="success" className="mr-2 mt-2" size="sm" onClick={() => setActiveTab("model")}>
+              <FontAwesomeIcon icon={faCogs} className="mr-1" fixedWidth/>
+              Build Workflow
+            </Button>
+          </Col>
+          }
+        </Row>
+      </div>
 
       {showDeleteModal ? <Modal header="Confirm Pipeline Delete"
                                 message="Warning! This pipeline cannot be recovered once this pipeline is deleted. Do you still want to proceed?"
@@ -541,7 +543,6 @@ function PipelineSummaryPanel({
                                 handleCancelModal={() => setInfoModal({ ...infoModal, show: false })}/>}
 
     </>
-
   );
 }
 

@@ -27,8 +27,9 @@ function PipelineWorkflowView({
   const getPipelineWorkflowEditor = (editingItem) => {
     if (editingItem) {
       return (<>
-        <div className="settings-sidebar">
-          <div className="content-card-1 table-content-block h-100">
+        <div className="settings-sidebar d-flex w-100">
+          <div className="w-75">&nbsp;</div>
+          <div className="content-card-1 table-content-block h-100" style={{width:"600px"}}>
             <PipelineWorkflowEditor editItem={editItem} pipeline={pipeline} closeEditorPanel={closeEditorPanel}
                                     fetchPlan={fetchPlan}/>
           </div>
@@ -38,7 +39,7 @@ function PipelineWorkflowView({
     }
   };
 
-  if (!pipeline) {
+  if (!pipeline || Object.keys(pipeline).length <= 0) {
     return (<InfoDialog
       message="No Pipeline details found.  Please ensure you have access to view the requested pipeline."/>);
   }

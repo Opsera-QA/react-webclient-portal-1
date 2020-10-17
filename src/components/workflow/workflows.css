@@ -156,11 +156,11 @@
 
 .settings-sidebar {
   height: 100%; /* 100% Full-height */
-  width: 550px; /* 0 width - change this with JavaScript */
+  width: 100%; /* 0 width - change this with JavaScript */
   position: fixed; /* Stay in place */
   bottom: 0; /* Stay at the top */
   right: 0;
-  background-color: #fff;; /* Black*/
+  background-color: #33415278;; /* Black*/
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 65px;
   transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
