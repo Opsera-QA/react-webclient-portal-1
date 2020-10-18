@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {Col, Pagination, Row} from "react-bootstrap";
 import {getResultSummary} from "./pagination-helpers";
 
-function DtoBottomPagination({ paginationDto, setPaginationDto, loadData, isLoading }) {
+function DtoBottomPagination({ paginationDto, setPaginationDto, paginationStyle, loadData, isLoading }) {
   const setPage = (page) => {
     if (page === paginationDto.getData("currentPage")) {
       return;
@@ -41,7 +41,6 @@ function DtoBottomPagination({ paginationDto, setPaginationDto, loadData, isLoad
     let paginationDisabled = isLoading || paginationDto.getData("totalCount") <= paginationDto.getData("pageSize");
 
     return (
-      <Col sm={4} className="my-auto">
         <Pagination disabled={paginationDisabled} className="justify-content-center my-1">
           <Pagination.Item disabled={paginationDisabled} onClick={() => setPage(1)}>First</Pagination.Item>
           <Pagination.Item disabled={paginationDisabled} onClick={() => setPage(paginationDto.getData("currentPage") - 1)}>Previous</Pagination.Item>
@@ -49,15 +48,27 @@ function DtoBottomPagination({ paginationDto, setPaginationDto, loadData, isLoad
           <Pagination.Item disabled={paginationDisabled} onClick={() => setPage(paginationDto.getData("currentPage") + 1)}>Next</Pagination.Item>
           <Pagination.Item disabled={paginationDisabled} onClick={() => setPage(getTotalPages())}>Last</Pagination.Item>
         </Pagination>
-      </Col>
     )
   };
+
+  if (paginationStyle === "stacked") {
+    return (
+      <Row className="pagination-block small">
+        <Col sm={12} className="my-auto text-center">{getResultSummary(paginationDto)}</Col>
+        <Col sm={12} className="my-auto">
+          {getPaginator()}
+        </Col>
+      </Row>
+    )
+  }
 
   return (
     <Row className="pagination-block small">
       <Col sm={4} className="my-auto">{getResultSummary(paginationDto)}</Col>
-      {getPaginator()}
-      <Col sm={4} />
+      <Col sm={4} className="my-auto">
+        {getPaginator()}
+      </Col>
+      <Col sm={4}/>
     </Row>
   );
 }
@@ -68,7 +79,10 @@ DtoBottomPagination.propTypes = {
   location: PropTypes.string,
   setPaginationDto: PropTypes.func,
   loadData: PropTypes.func,
+  paginationStyle: PropTypes.string,
   isLoading: PropTypes.bool
 };
+
+
 
 export default DtoBottomPagination;
