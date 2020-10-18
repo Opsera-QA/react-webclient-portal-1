@@ -453,7 +453,7 @@ const SfdcPipelineModifiedFiles = ({
   const getPaginator = (dtoObj, setDto, loading, loadData) => {
     return (
       <div>{dtoObj && dtoObj.getData("totalCount") != null &&
-      <DtoBottomPagination paginationDto={dtoObj} setPaginationDto={setDto} isLoading={loading}
+      <DtoBottomPagination paginationStyle={"stacked"} paginationDto={dtoObj} setPaginationDto={setDto} isLoading={loading}
                            loadData={loadData}/>}</div>
     );
   };

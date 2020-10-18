@@ -117,7 +117,7 @@ const SFDCUnitTestView = ({
   }
   const getPaginator = () => {
     return (
-        <div>{toolFilterDto && toolFilterDto.getData("totalCount") != null && <DtoBottomPagination paginationDto={toolFilterDto} setPaginationDto={setToolFilterDto} isLoading={loading} loadData={loadData} />}</div>
+        <div>{toolFilterDto && toolFilterDto.getData("totalCount") != null && <DtoBottomPagination paginationStyle={"stacked"} paginationDto={toolFilterDto} setPaginationDto={setToolFilterDto} isLoading={loading} loadData={loadData} />}</div>
     );
   }
   const handleSearch = async() => {

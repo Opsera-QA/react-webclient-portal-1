@@ -209,6 +209,7 @@ const SfdcPipelineProfileComponents = ({
     return (
       <div>{dtoObj && dtoObj.getData("totalCount") != null &&
       <DtoBottomPagination paginationDto={dtoObj} setPaginationDto={setDto} isLoading={loading}
+                           paginationStyle={"stacked"}
                            loadData={loadData}/>}</div>
     );
   };
