@@ -523,6 +523,7 @@ const SfdcPipelineModifiedFiles = ({
 
               {fromSFDC &&
               <div className="d-flex w-100 pr-2">
+              {!isProfiles && 
                 <div className="col-5 mr-1">
                   <DropdownList
                     data={componentType}
@@ -540,6 +541,7 @@ const SfdcPipelineModifiedFiles = ({
                     onChange={handleSFDCComponentTypeChange}
                   />
                 </div>
+                }
                 <div className="col-7 mr-1">
                   <InputGroup className="mb-3">
                     <Form.Control
