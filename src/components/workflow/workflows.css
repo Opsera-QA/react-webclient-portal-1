@@ -155,7 +155,7 @@
 }
 
 .settings-sidebar {
-  height: 100vh; /* 100% Full-height */
+  height: 90vh; /* 100% Full-height */
   width: 100%; /* 0 width - change this with JavaScript */
   position: fixed; /* Stay in place */
   bottom: 0; /* Stay at the top */
@@ -166,4 +166,15 @@
   padding-top: 65px;
   /*transition: 0.5s;*/ /* 0.5 second transition effect to slide in the sidenav */
   z-index:100;
+}
+
+.step-setting-editor {
+  /*height: 100vh;*/
+height:100%;
+  width: 600px;
+}
+
+.step-settings-container {
+  min-height:75vh;
+  overflow:auto;
 }
