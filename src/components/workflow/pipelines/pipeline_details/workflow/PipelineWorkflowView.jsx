@@ -29,7 +29,7 @@ function PipelineWorkflowView({
       return (<>
         <div className="settings-sidebar d-flex w-100">
           <div className="w-75">&nbsp;</div>
-          <div className="content-card-1 table-content-block" style={{minHeight:"80vh", width:"600px"}}>
+          <div className="content-card-1 table-content-block" style={{minHeight:"80vh", width:"600px", backgroundColor:"#FFF"}}>
             <PipelineWorkflowEditor editItem={editItem} pipeline={pipeline} closeEditorPanel={closeEditorPanel}
                                     fetchPlan={fetchPlan}/>
           </div>
