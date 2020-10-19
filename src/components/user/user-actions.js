@@ -1,4 +1,5 @@
 import {ApiService, axiosApiService} from "../../api/apiService";
+import toolsActions from "../inventory/tools/tools-actions";
 
 // TODO: Rename with whatever name makes sense
 const userActions = {};
@@ -69,5 +70,21 @@ userActions.createOpseraAccount = async (registrationDataDto) => {
     .catch(error => {throw { error };});
   return response;
 };
+
+
+userActions.logout = async (getAccessToken) => {
+  const postBody = {}
+  const accessToken = await getAccessToken();
+  const apiUrl = "/users/logout";
+  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
+    .then((result) => {
+      return result;
+    })
+    .catch(error => {
+      throw error;
+    });
+  return response;
+};
+
 
 export default userActions;

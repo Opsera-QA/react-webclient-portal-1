@@ -4,11 +4,14 @@ import PropTypes from "prop-types";
 import { Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
 import { AuthContext } from "./contexts/AuthContext";
 import "./navbar.css";
+import userActions from "./components/user/user-actions";
+import { DialogToastContext } from "./contexts/DialogToastContext";
 
 
 function HeaderNavBar({ hideAuthComponents, userData }) {
   const contextType = useContext(AuthContext);
-  const { setAccessRoles } = contextType;
+  const toastContext = useContext(DialogToastContext);
+  const { setAccessRoles, getAccessToken } = contextType;
   const history = useHistory();
   const [fullName, setFullName] = useState("User Profile");
   const [accessRoleData, setAccessRoleData] = useState(null);
@@ -35,9 +38,19 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
     loginUserContext();
   };
 
-  const logout = function() {
+  const logout = async function() {
     const { logoutUserContext } = contextType;
-    logoutUserContext();
+
+    //call logout API to clear cache
+    try {
+      await userActions.logout(getAccessToken);
+      logoutUserContext();
+    }
+    catch (error) {
+      toastContext.showErrorDialog(error.message);
+    }
+
+
   };
 
   const gotoSignUp = function () {

@@ -145,10 +145,10 @@ const LoginForm = () => {
           <div className="d-flex align-items-center justify-content-center">
             <div className="auth-box-w">
               <div className="logo-w">
-                <img alt="OpsERA"
-                     src="/img/logos/opsera_bird_transparent_158x120.png"
-                     width="158"
-                     height="120"
+                <img alt="Opsera"
+                     src="/img/logos/opsera_bird_infinity_171_126.png"
+                     width="171"
+                     height="126"
                 />
               </div>
               <h4 className="auth-header">
@@ -217,10 +217,10 @@ const LoginForm = () => {
       <div className="d-flex align-items-center justify-content-center" style={{ minHeight: "500px" }}>
         <div className="auth-box-w">
           <div className="logo-w">
-            <img alt="OpsERA"
-                 src="/img/logos/opsera_bird_transparent_158x120.png"
-                 width="158"
-                 height="120"
+            <img alt="Opsera"
+                 src="/img/logos/opsera_bird_infinity_171_126.png"
+                 width="171"
+                 height="126"
             />
           </div>
           <h4 className="auth-header">
@@ -266,10 +266,10 @@ const LoginForm = () => {
           <div className="d-flex align-items-center justify-content-center">
             <div className="auth-box-w">
               <div className="logo-w">
-                <img alt="OpsERA"
-                     src="/img/logos/opsera_bird_transparent_158x120.png"
-                     width="158"
-                     height="120"
+                <img alt="Opsera"
+                     src="/img/logos/opsera_bird_infinity_171_126.png"
+                     width="171"
+                     height="126"
                 />
               </div>
               <h4 className="auth-header">
