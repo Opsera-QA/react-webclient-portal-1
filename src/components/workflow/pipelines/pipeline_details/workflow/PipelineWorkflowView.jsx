@@ -29,7 +29,7 @@ function PipelineWorkflowView({
       return (<>
         <div className="settings-sidebar d-flex w-100">
           <div className="w-75">&nbsp;</div>
-          <div className="step-setting-editor content-card-1 table-content-block">
+          <div className="step-setting-editor content-card-1">
             <PipelineWorkflowEditor editItem={editItem} pipeline={pipeline} closeEditorPanel={closeEditorPanel}
                                     fetchPlan={fetchPlan}/>
           </div>
