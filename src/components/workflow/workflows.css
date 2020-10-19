@@ -169,7 +169,7 @@
 }
 
 .step-setting-editor {
-  /*height: 100vh;*/
+  background-color: #fff;
 height:100%;
   width: 600px;
 }
