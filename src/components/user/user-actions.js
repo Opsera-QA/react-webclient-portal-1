@@ -87,4 +87,19 @@ userActions.logout = async (getAccessToken) => {
 };
 
 
+userActions.syncUser = async (getAccessToken) => {
+  let urlParams = {
+    params: {
+      sync: true
+    }
+  }
+  const accessToken = await getAccessToken();
+  const apiUrl = `/users`;
+  const response = await axiosApiService(accessToken).get(apiUrl, urlParams)
+    .then((result) =>  {return result;})
+    .catch(error => {throw error;});
+  return response;
+};
+
+
 export default userActions;
