@@ -98,7 +98,14 @@ export class Model {
     let data = this.data;
 
     // Trim strings before sending to node
-    return Object.keys(data).map(item => data[item] = typeof data[item] == 'string' ? data[item].trim() : data[item]);
+    // TODO: this is only at the top level, add support for trimming inner objects
+    Object.keys(data).forEach(key => {
+      if (typeof data[key] == 'string') {
+        data[key] = data[key].trim();
+      }
+    });
+
+    return data;
   }
 
   isNew = () => {
