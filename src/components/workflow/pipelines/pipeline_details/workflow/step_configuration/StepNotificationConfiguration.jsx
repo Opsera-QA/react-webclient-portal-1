@@ -1,11 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { Form, Button } from "react-bootstrap";
+import {Form, Button, OverlayTrigger} from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLink, faSave, faSpinner } from "@fortawesome/pro-light-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
 import { DialogToastContext } from "contexts/DialogToastContext";
+import {AuthContext} from "../../../../../../contexts/AuthContext";
+import pipelineStepNotificationActions from "./pipeline-step-notification-actions";
+import {faEllipsisH, faExclamationCircle} from "@fortawesome/free-solid-svg-icons";
+import pipelineActions from "../../../../pipeline-actions";
 
 const NOTIFICATION_OPTIONS = [
   {
@@ -28,6 +32,8 @@ const INITIAL_JIRA = {
   type: "jira",
   account: "",
   project: "",
+  // sprint: undefined,
+  // user: undefined,
   enabled: false,
 };
 
@@ -40,6 +46,7 @@ const INITIAL_SLACK = {
 
 function StepNotificationConfiguration({ data, stepId, parentCallback }) {
   const toastContext = useContext(DialogToastContext);
+  const { getAccessToken } = useContext(AuthContext);
   const { plan } = data.workflow;
   const [stepName, setStepName] = useState();
   const [stepTool, setStepTool] = useState({});
@@ -48,28 +55,52 @@ function StepNotificationConfiguration({ data, stepId, parentCallback }) {
   const [formDataJira, setFormDataJira] = useState(INITIAL_JIRA);
   const [renderForm, setRenderForm] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [jiraToolId, setJiraToolId] = useState(undefined);
+  const [jiraTools, setJiraTools] = useState([]);
+  const [jiraProjects, setJiraProjects] = useState([]);
+  const [jiraProjectUsers, setJiraProjectUsers] = useState([]);
+  const [jiraSprints, setJiraSprints] = useState([]);
 
 
   useEffect(() => {
-    const controller = new AbortController();
-    const runEffect = async () => {
-      try {
-        const stepIndex = getStepIndex(stepId);
-        await loadFormData(plan[stepIndex]);
-        setRenderForm(true);
-      } catch (err) {
-        if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
-          return;
-        }
-      }
-    };
-    runEffect();
-    return () => {
-      setRenderForm(false);
-      controller.abort();
-    };
+    loadData();
   }, [stepId]);
+
+  const loadData = async () => {
+    try {
+      const stepIndex = getStepIndex(stepId);
+      await loadFormData(plan[stepIndex]);
+      // await loadJiraTools();
+    } catch (error) {
+      toastContext.showLoadingErrorDialog(error);
+    }
+    finally {
+      setRenderForm(true);
+    }
+  };
+
+  const loadJiraTools = async () => {
+    const response = await pipelineActions.getToolsList("jira", getAccessToken);
+    setJiraTools(response);
+  };
+
+  const loadJiraProjects = async (toolId = jiraToolId) => {
+    const response = await pipelineStepNotificationActions.getJiraProjects(toolId, getAccessToken);
+    console.log("Jira loadJiraProjects: " + JSON.stringify(response.data));
+    setJiraProjects(response.data);
+  };
+
+  const loadJiraProjectUsers = async (toolId = jiraToolId) => {
+    const response = await pipelineStepNotificationActions.getJiraProjectUsers(toolId, getAccessToken);
+    console.log("Jira loadJiraProjectUsers: " + JSON.stringify(response.data));
+    setJiraProjectUsers(response.data);
+  };
+
+  const loadJiraSprints = async (toolId = jiraToolId) => {
+    const response = await pipelineStepNotificationActions.getJiraSprints(toolId, getAccessToken);
+    console.log("Jira loadJiraSprints: " + JSON.stringify(response.data));
+    setJiraSprints(response.data);
+  };
 
 
   const loadFormData = async (step) => {
@@ -88,6 +119,7 @@ function StepNotificationConfiguration({ data, stepId, parentCallback }) {
         setFormDataSlack(step.notification[slackArrayIndex]);
       }
       if (jiraArrayIndex >= 0) {
+        // console.log("Jira Form Data: " + step.notification[jiraArrayIndex]);
         setFormDataJira(step.notification[jiraArrayIndex]);
       }
     }
@@ -151,15 +183,52 @@ function StepNotificationConfiguration({ data, stepId, parentCallback }) {
   };
 
 
-  return (
-    <Form>
-      <h6 className="upper-case-first">{typeof (stepName) !== "undefined" ? stepName + ": " : null}
-        {typeof (stepTool) !== "undefined" ? stepTool.tool_identifier : null}</h6>
+  const handleJiraToolChange = async (selectedOption) => {
+    let toolId = selectedOption.id;
+    await setJiraToolId(toolId);
+    await loadJiraProjects(toolId);
+    // await loadJiraProjectUsers(toolId);
+    // await loadJiraSprints(toolId);
 
-      <div className="text-muted mt-2 mb-3">Each step in the workflow can be configured with notification triggers upon
-        completion. More help on notification configurations is available <Link to="/tools">here</Link>.
-      </div>
+    console.log("Selected option: " + JSON.stringify(selectedOption));
+    setFormDataJira({
+      ...formDataJira,
+      account: "",
+      project: "",
+      // sprint: "undefined",
+      // user: undefined,
+    });
+  };
 
+  const getJiraCredentialsField = () => {
+    if (jiraTools == null || jiraTools.length === 0) {
+      // TODO: Create generic component for pipeline tool not found message
+      return (
+        <div className="form-text text-muted p-2">
+          <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+          No JIRA tools have been registered for <span className="upper-case-first">Jira</span>.
+          Please go to
+          <Link to="/inventory/tools"> Tool Registry</Link> and add an entry for this repository in order to
+          proceed.
+        </div>
+      )
+    }
+
+    return (
+      <DropdownList
+        data={jiraTools}
+        value={jiraTools[jiraTools.findIndex((x) => x.id === formDataJira.account)]}
+        valueField="id"
+        textField="name"
+        placeholder="Please select an account"
+        filter="contains"
+        onChange={handleJiraToolChange}
+      />
+    );
+  };
+
+  const getSlackFormFields = () => {
+    return (
       <div className="mt-4 mb-4">
         <Form.Check
           type="switch"
@@ -195,7 +264,77 @@ function StepNotificationConfiguration({ data, stepId, parentCallback }) {
 
         </Form.Group>
       </div>
+    );
+  };
 
+  const getJiraFormFields = () => {
+    return (
+      <div className="my-4 pt-3">
+        <Form.Check
+          type="switch"
+          id="jira-switch"
+          className="mb-2"
+          label="Jira Notifications"
+          checked={formDataJira.enabled}
+          onChange={() => setFormDataJira({ ...formDataJira, enabled: !formDataJira.enabled })}
+        />
+        {renderForm && formDataJira.enabled &&
+          <>
+            <Form.Label className="w-100">
+              JIRA Credentials*
+              {/*<FontAwesomeIcon*/}
+              {/*  icon={faEllipsisH}*/}
+              {/*  className="fa-pull-right pointer pr-1"*/}
+              {/*  onClick={() => document.body.click()}*/}
+              {/*/>*/}
+            </Form.Label>
+            {getJiraCredentialsField()}
+            {formDataJira.account != null && formDataJira.account !== "" &&
+              <>
+                <Form.Group controlId="formBasicEmail">
+                  <Form.Label>Jira Project</Form.Label>
+                  <DropdownList
+                    data={NOTIFICATION_OPTIONS}
+                    valueField='id'
+                    disabled={!formDataJira.enabled}
+                    textField='label'
+                    value={formDataJira.project}
+                    onChange={(option) => setFormDataJira({...formDataJira, project: option.value})}
+                  />
+                </Form.Group>
+                {formDataJira.project != null && formDataJira.project !== "" &&
+                  <>
+                    <Form.Group controlId="formBasicEmail">
+                      <Form.Label>Project Users</Form.Label>
+                      <DropdownList
+                        data={NOTIFICATION_OPTIONS}
+                        valueField='id'
+                        disabled={!formDataJira.enabled}
+                        textField='label'
+                        value={formDataJira.user}
+                        onChange={(option) => setFormDataJira({...formDataJira, user: option.value})}
+                      />
+                    </Form.Group>
+                    <Form.Group controlId="formBasicEmail">
+                      <Form.Label>Sprint or Parent Story</Form.Label>
+                      <DropdownList
+                        data={NOTIFICATION_OPTIONS}
+                        valueField='id'
+                        disabled={!formDataJira.enabled}
+                        textField='label'
+                        value={formDataJira.sprint}
+                        onChange={(option) => setFormDataJira({...formDataJira, sprint: option.value})}
+                      />
+                    </Form.Group>
+                  </>}
+              </>}
+          </>}
+      </div>
+    );
+  };
+
+  const getEmailFormFields = () => {
+    return (
       <div className="my-4 pt-3">
         <Form.Check
           type="switch" disabled
@@ -224,28 +363,22 @@ function StepNotificationConfiguration({ data, stepId, parentCallback }) {
             /> : null}
         </Form.Group>
       </div>
+    )
+  }
 
 
+  return (
+    <Form>
+      <h6 className="upper-case-first">{typeof (stepName) !== "undefined" ? stepName + ": " : null}
+        {typeof (stepTool) !== "undefined" ? stepTool.tool_identifier : null}</h6>
 
-      <div className="my-4 pt-3">
-        <Form.Check
-          type="switch" disabled
-          id="jira-switch"
-          className="mb-2"
-          label="Jira Notifications"
-          checked={formDataJira.enabled ? true : false}
-          onChange={() => setFormDataJira({ ...formDataJira, enabled: !formDataJira.enabled })}
-        />
-        <Form.Group controlId="branchField">
-          <Form.Label>Jira Account</Form.Label>
-          <Form.Control maxLength="100" type="text" disabled={!formDataJira.enabled} placeholder="" value={formDataJira.account || ""} onChange={e => setFormDataJira({ ...formDataJira, account: e.target.value })} />
-        </Form.Group>
-        <Form.Group controlId="formBasicEmail">
-          <Form.Label>Jira Project</Form.Label>
-          <Form.Control maxLength="100" type="text" disabled={!formDataJira.enabled} placeholder="" value={formDataJira.project || ""} onChange={e => setFormDataJira({ ...formDataJira, project: e.target.value })} />
-        </Form.Group>
+      <div className="text-muted mt-2 mb-3">Each step in the workflow can be configured with notification triggers upon
+        completion. More help on notification configurations is available <Link to="/tools">here</Link>.
       </div>
 
+      {getSlackFormFields()}
+      {/*{getJiraFormFields()}*/}
+      {getEmailFormFields()}
 
       <Button variant="primary"
               type="button"
