@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useContext, useMemo } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
 import { AuthContext } from "../../../../contexts/AuthContext";
-import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
 import LoadingDialog from "../../../common/status_notifications/loading";
 import AccessDeniedDialog from "../../../common/status_notifications/accessDeniedInfo";
 import Model from "../../../../core/data_model/model";
@@ -12,6 +11,8 @@ import TemplateDetailPanel from "./TemplateDetailPanel";
 import {faStream} from "@fortawesome/free-solid-svg-icons";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import DetailViewContainer from "../../../common/panels/detail_view_container/DetailViewContainer";
+import DataNotFoundContainer from "../../../common/panels/detail_view_container/DataNotFoundContainer";
+import DataNotFoundDialog from "../../../common/status_notifications/data_not_found/DataNotFoundDialog";
 
 function TemplateDetailView() {
   const {templateId} = useParams();
@@ -31,7 +32,9 @@ function TemplateDetailView() {
       await getRoles();
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (!error.error.message.includes(404)) {
+        toastContext.showLoadingErrorDialog(error);
+      }
     }
     finally {
       setIsLoading(false);
@@ -40,7 +43,6 @@ function TemplateDetailView() {
 
   const getTemplate = async (templateId) => {
     const response = await templateActions.getTemplateById(templateId, getAccessToken);
-    // console.log("response: " + JSON.stringify(response.data));
     // TODO: remove grabbing first when it only sends object instead of array
     if (response.data != null && response.data.length > 0) {
       setTemplateData(new Model(response.data[0], templateEditorMetadata, false));
@@ -65,6 +67,14 @@ function TemplateDetailView() {
 
   if (accessRoleData.OpseraAdministrator === false) {
     return (<AccessDeniedDialog roleData={accessRoleData} />);
+  }
+
+  if (!isLoading && templateData == null) {
+    return (
+      <DataNotFoundContainer type={"Pipeline Template"} breadcrumbDestination={"templateDetailView"}>
+        <DataNotFoundDialog type={"Pipeline Template"} managementViewIcon={faStream} managementViewTitle={"Pipeline Template Management"} managementViewLink={"/admin/templates"} />
+      </DataNotFoundContainer>
+    )
   }
 
   return (
