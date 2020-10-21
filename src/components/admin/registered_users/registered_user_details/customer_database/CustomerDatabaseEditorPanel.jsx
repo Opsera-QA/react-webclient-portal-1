@@ -10,6 +10,7 @@ import DetailPanelLoadingDialog from "../../../../common/loading/DetailPanelLoad
 import registeredUserToolsMetadata from "../tools/registered-user-tools-form-fields";
 import DtoJsonField from "../../../../common/form_fields/dto_form_fields/dto-json-field";
 import ErrorDialog from "../../../../common/status_notifications/error";
+import DetailPanelContainer from "../../../../common/panels/detail_panel_container/DetailPanelContainer";
 
 function CustomerDatabaseEditorPanel({ customerDatabaseData, userId, setCustomerDatabaseData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -71,12 +72,9 @@ function CustomerDatabaseEditorPanel({ customerDatabaseData, userId, setCustomer
 
   // TODO: Create metadata and implement editor panel when necessary
   return (
-    <>
-      {/*<div className="text-center p-5 text-muted">Customer Database management is not currently available.</div>*/}
-      <div className="scroll-y full-height p-3">
-        {getJsonDisplayers()}
-      </div>
-    </>
+    <DetailPanelContainer showRequiredFieldsMessage={false}>
+      {getJsonDisplayers()}
+    </DetailPanelContainer>
   );
 }
 

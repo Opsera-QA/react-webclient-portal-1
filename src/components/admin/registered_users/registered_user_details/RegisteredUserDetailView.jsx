@@ -1,16 +1,19 @@
 import React, { useState, useEffect, useContext } from "react";
 import RegisteredUserSummary from "./RegisteredUserSummary";
 import RegisteredUserDetailPanel from "./RegisteredUserDetailPanel";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import RegisteredUserActions from "../registered-user-actions";
 import { AuthContext } from "contexts/AuthContext";
 import LoadingDialog from "../../../common/status_notifications/loading";
 import AccessDeniedDialog from "../../../common/status_notifications/accessDeniedInfo";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
-import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
 import analyticsProfileMetadata from "./analytics_profile/analytics-profile-form-fields";
 import Model from "../../../../core/data_model/model";
 import registeredUsersMetadata from "../registered-users-form-fields";
+import DataNotFoundContainer from "../../../common/panels/detail_view_container/DataNotFoundContainer";
+import DataNotFoundDialog from "../../../common/status_notifications/data_not_found/DataNotFoundDialog";
+import {faUserCircle} from "@fortawesome/free-solid-svg-icons";
+import DetailViewContainer from "../../../common/panels/detail_view_container/DetailViewContainer";
 
 function RegisteredUserDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -26,16 +29,28 @@ function RegisteredUserDetailView() {
   }, []);
 
   const loadData = async () => {
-    setIsLoading(true);
-    await getAnalyticsProfile();
-    await getUser();
-    await getRoles();
-    setIsLoading(false);
+    try {
+      setIsLoading(true);
+      await getAnalyticsProfile();
+      await getUser();
+      await getRoles();
+    }
+    catch (error) {
+      if (!error.message.includes(404)) {
+        toastContext.showLoadingErrorDialog(error);
+      }
+    }
+    finally {
+      setIsLoading(false);
+    }
   };
 
   const getUser = async () => {
     const response = await RegisteredUserActions.getUserRecord(id, getAccessToken);
-    setUserData(new Model(response.data, registeredUsersMetadata, false));
+
+    if (response != null && response.data != null) {
+      setUserData(new Model(response.data, registeredUsersMetadata, false));
+    }
   };
 
   const getAnalyticsProfile = async () => {
@@ -54,7 +69,7 @@ function RegisteredUserDetailView() {
     }
   };
 
-  if (!accessRoleData || isLoading || userData == null) {
+  if (!accessRoleData || isLoading) {
     return (<LoadingDialog size="sm"/>);
   }
 
@@ -62,25 +77,23 @@ function RegisteredUserDetailView() {
     return (<AccessDeniedDialog roleData={accessRoleData}/>);
   }
 
+  if (!isLoading && userData == null) {
+    return (
+      <DataNotFoundContainer type={"Registered User"} breadcrumbDestination={"registeredUsersDetailView"}>
+        <DataNotFoundDialog type={"Registered User"} managementViewIcon={faUserCircle} managementViewTitle={"Registered Users"} managementViewLink={"/admin/registered-users"} />
+      </DataNotFoundContainer>
+    )
+  }
+
   return (
-    <>
-      <BreadcrumbTrail destination={"registeredUsersDetailView"} />
-      <div className="content-container content-card-1 max-content-width ml-2">
-        {/*TODO: pull user name (or first/last) once wired up*/}
-        <div className="pt-2 pl-2 content-block-header"><h5>Registered User Details [{userData.getData("email")}]</h5></div>
-        <div>
-          <div>
-            <div>
-              <RegisteredUserSummary userData={userData}/>
-            </div>
-            <div>
-             <RegisteredUserDetailPanel setAnalyticsProfileData={setAnalyticsProfileData} analyticsProfileData={analyticsProfileData} userData={userData} setUserData={setUserData} />
-            </div>
-          </div>
-        </div>
-        <div className="content-block-footer" />
-      </div>
-    </>
+    <DetailViewContainer
+      breadcrumbDestination={"registeredUsersDetailView"}
+      title={userData != null ? `Registered User Details [${userData.getData("email")}]` : undefined}
+      titleIcon={faUserCircle}
+      isLoading={isLoading}
+      summaryPanel={<RegisteredUserSummary userData={userData}/>}
+      detailPanel={<RegisteredUserDetailPanel setAnalyticsProfileData={setAnalyticsProfileData} analyticsProfileData={analyticsProfileData} userData={userData} setUserData={setUserData} />}
+    />
   );
 }
 

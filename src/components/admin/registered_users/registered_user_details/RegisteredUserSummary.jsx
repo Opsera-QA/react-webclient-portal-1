@@ -1,5 +1,5 @@
-import React, { useContext, useState, useEffect } from "react";
-import { Row, Col, Button } from "react-bootstrap";
+import React, { useState } from "react";
+import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 import DtoTextField from "../../../common/form_fields/dto_form_fields/dto-text-field";
@@ -7,6 +7,7 @@ import DtoDateField from "../../../common/form_fields/dto_form_fields/dto-date-f
 import SummaryActionBar from "../../../common/actions/SummaryActionBar";
 import paths from "../../../common/navigation/paths";
 import ModalActivityLogs from "../../../common/modal/modalActivityLogs";
+import SummaryPanelContainer from "../../../common/panels/detail_view/SummaryPanelContainer";
 
 function RegisteredUserSummary({userData}) {
   const [showModal, setShowModal] = useState(false);
@@ -16,9 +17,9 @@ function RegisteredUserSummary({userData}) {
   }
 
   return (
-    <div className="scroll-y pt-3 px-3">
-      <SummaryActionBar backButtonPath={`/${paths.registeredUsersManagement}`} handleDetailsClick={getUserData} />
-      <div className="mb-3 flat-top-content-block p-3">
+    <SummaryPanelContainer
+      summaryActionBar={<SummaryActionBar backButtonPath={`/${paths.registeredUsersManagement}`} handleDetailsClick={getUserData} />}
+    >
         <Row>
           <Col md={6}>
             <DtoTextField fieldName={"firstName"} dataObject={userData} />
@@ -51,9 +52,8 @@ function RegisteredUserSummary({userData}) {
             <DtoTextField fieldName={"dbConnectionString"} dataObject={userData} />
           </Col>
         </Row>
-      </div>
       <ModalActivityLogs header="User Information" size="lg" jsonData={userData["data"]} show={showModal} setParentVisibility={setShowModal} />
-    </div>
+    </SummaryPanelContainer>
   );
 }
 
