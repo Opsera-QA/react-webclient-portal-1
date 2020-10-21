@@ -9,6 +9,7 @@ import {
   faStepBackward,
   faPlus,
   faMinus,
+  faEdit,
   faPen,
   faCode,
   faSquare,
@@ -731,13 +732,36 @@ const SfdcPipelineModifiedFiles = ({
                           <div key={idx} className="d-flex justify-content-center">
                             <div className="thick-list-item-container-green  w-100 force-text-wrap p-1">
                               {item.commitAction && item.commitAction === "added" && (
+                                <OverlayTrigger
+                                  placement="top"
+                                  overlay={<Tooltip id="button-tooltip-2">Added File</Tooltip>}
+                                >
                                 <FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1 green"/>
+                                </OverlayTrigger>
                               )}
                               {item.commitAction && item.commitAction === "modified" && (
-                                <FontAwesomeIcon icon={faPen} fixedWidth className="mr-1 yellow"/>
+                                <OverlayTrigger
+                                  placement="top"
+                                  overlay={<Tooltip id="added-tooltip">Added File</Tooltip>}
+                                >
+                                <FontAwesomeIcon icon={faEdit} fixedWidth className="mr-1 yellow"/>
+                                </OverlayTrigger>
                               )}
-                              {item.commitAction && item.commitAction === "deleted" && (
-                                <FontAwesomeIcon icon={faMinus} fixedWidth className="mr-1 dark-grey"/>
+                              {item.commitAction && item.commitAction === "removed" && (
+                                <OverlayTrigger
+                                  placement="top"
+                                  overlay={<Tooltip id="removed-tooltip">Removed File</Tooltip>}
+                                >
+                                <FontAwesomeIcon icon={faMinus} fixedWidth className="mr-1 red"/>
+                                </OverlayTrigger>
+                              )}
+                              {item.commitAction && item.commitAction === "renamed" && (
+                                <OverlayTrigger
+                                  placement="top"
+                                  overlay={<Tooltip id="renamed-tooltip">Renamed File</Tooltip>}
+                                >
+                                <FontAwesomeIcon icon={faPen} fixedWidth className="mr-1 dark-grey"/>
+                                </OverlayTrigger>
                               )}
                               {item.componentType}: {item.committedFile}
                             </div>
