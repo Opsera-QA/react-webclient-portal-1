@@ -5,7 +5,6 @@ import Bitbucket from "./source_control/bitbucket";
 import Jira from "./defect_tracking/jira";
 import ServiceNow from "./itsm/serviceNow";
 import OpenStack from "./cloud_management/openStack";
-import Slack from "./collaboration/slack";
 import Tableau from "./analytics/tableau";
 import Splunk from "./analytics/splunk";
 import Sonar from "./code_scan/sonar";
@@ -16,8 +15,7 @@ import Twistlock from "./container_scan/twistlock";
 import JenkinsForm from "./automation_server/jenkinsForm";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome } from "@fortawesome/free-solid-svg-icons";
-import {
+import { faHome } from "@fortawesome/free-solid-svg-icons";import {
   faGithub,
   faGitlab,
   faBitbucket,
@@ -29,6 +27,7 @@ import {
 import CustomTabContainer from "../common/tabs/CustomTabContainer";
 import CustomTab from "../common/tabs/CustomTab";
 import MicrosoftTeamsApiConnector from "./microsoft_teams/MicrosoftTeamsApiConnector";
+import SlackApiConnector from "./collaboration/SlackApiConnector";
 
 function ApiConnector({}) {
   const [activeTab, setTabSelection] = useState("home");
@@ -122,7 +121,7 @@ function ApiConnectorTabView({ activeTab }) {
       case "openstack":
         return <OpenStack />;
       case "slack":
-        return <Slack />;
+        return <SlackApiConnector />;
       case "tableau":
         return <Tableau />;
       case "teams":
