@@ -11,6 +11,9 @@ import ToolTypeDetailPanel from "./ToolTypeDetailPanel";
 import {faToolbox} from "@fortawesome/pro-solid-svg-icons";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import DetailViewContainer from "../../../../common/panels/detail_view_container/DetailViewContainer";
+import DataNotFoundContainer from "../../../../common/panels/detail_view_container/DataNotFoundContainer";
+import DataNotFoundDialog from "../../../../common/status_notifications/data_not_found/DataNotFoundDialog";
+import {faWrench} from "@fortawesome/free-solid-svg-icons";
 
 function ToolTypeDetailView() {
   const {toolTypeId} = useParams();
@@ -30,7 +33,9 @@ function ToolTypeDetailView() {
       await getRoles();
     }
     catch (error) {
-    toastContext.showLoadingErrorDialog(error);
+      if (!error.message.includes(404)) {
+        toastContext.showLoadingErrorDialog(error);
+      }
     }
     finally {
       setIsLoading(false);
@@ -39,7 +44,6 @@ function ToolTypeDetailView() {
 
   const getToolType = async (toolTypeId) => {
     const response = await toolTypeActions.getToolTypeById(toolTypeId, getAccessToken);
-    console.log("response: " + JSON.stringify(response.data));
     // // TODO: remove grabbing first when it only sends object instead of array
     if (response.data != null && response.data.length > 0) {
       setToolTypeData(new Model(response.data[0], toolTypeMetadata, false));
@@ -64,6 +68,14 @@ function ToolTypeDetailView() {
 
   if (accessRoleData.OpseraAdministrator === false) {
     return (<AccessDeniedDialog roleData={accessRoleData}/>);
+  }
+
+  if (!isLoading && toolTypeData == null) {
+    return (
+      <DataNotFoundContainer type={"Tool Type"} breadcrumbDestination={"toolTypeDetailView"}>
+        <DataNotFoundDialog type={"Tool Type"} managementViewIcon={faWrench} managementViewTitle={"Tool Management"} managementViewLink={"/admin/tools"} />
+      </DataNotFoundContainer>
+    )
   }
 
   return (
