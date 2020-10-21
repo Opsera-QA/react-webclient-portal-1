@@ -11,14 +11,17 @@ import ToolIdentifierDetailPanel from "./ToolIdentifierDetailPanel";
 import {faTools} from "@fortawesome/pro-solid-svg-icons";
 import DetailViewContainer from "../../../../common/panels/detail_view_container/DetailViewContainer";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
+import DataNotFoundContainer from "../../../../common/panels/detail_view_container/DataNotFoundContainer";
+import DataNotFoundDialog from "../../../../common/status_notifications/data_not_found/DataNotFoundDialog";
+import {faWrench} from "@fortawesome/free-solid-svg-icons";
 
 function ToolIdentifierDetailView() {
   const {toolIdentifierId} = useParams();
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [accessRoleData, setAccessRoleData] = useState({});
+  const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [toolIdentifierData, setToolIdentifierData] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -30,7 +33,9 @@ function ToolIdentifierDetailView() {
       await getRoles();
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (!error.message.includes(404)) {
+        toastContext.showLoadingErrorDialog(error);
+      }
     }
     finally {
       setIsLoading(false);
@@ -64,6 +69,15 @@ function ToolIdentifierDetailView() {
   if (accessRoleData.OpseraAdministrator === false) {
     return (<AccessDeniedDialog roleData={accessRoleData} />);
   }
+
+  if (!isLoading && toolIdentifierData == null) {
+    return (
+      <DataNotFoundContainer type={"Tool Identifier"} breadcrumbDestination={"toolIdentifierDetailView"}>
+        <DataNotFoundDialog type={"Tool Identifier"} managementViewIcon={faWrench} managementViewTitle={"Tool Management"} managementViewLink={"/admin/tools"} />
+      </DataNotFoundContainer>
+    )
+  }
+
   return (
     <DetailViewContainer
       breadcrumbDestination={"toolIdentifierDetailView"}
