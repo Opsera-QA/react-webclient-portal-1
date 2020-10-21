@@ -62,7 +62,7 @@ const defaultSignupFormFields = {
     label: "Resource Subdomain Name",
     id: "domain",
     fieldText: "When new resources are created for this account, this will be the default sub-domain name used when building DNS records.",
-    format: /^[A-Za-z0-9][A-Za-z0-9-]*$/,
+    inputMaskRegex: /^[A-Za-z0-9][A-Za-z0-9-]*$/,
     isDomain: true,
     isRequired: true,
     maxLength: 10,

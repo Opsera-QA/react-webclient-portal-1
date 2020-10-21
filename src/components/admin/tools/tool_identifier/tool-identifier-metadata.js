@@ -18,11 +18,12 @@ const toolIdentifierMetadata = {
   {
     label: "Identifier",
     id: "identifier",
-      isRequired: true
+    isRequired: true
   },
   {
     label: "Tool Type Identifier",
     id: "tool_type_identifier",
+    isRequired: true
   },
   {
     label: "Tags",

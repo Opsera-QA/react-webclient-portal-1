@@ -37,50 +37,39 @@ export const fieldValidation = (value, field) => {
     }
   }
 
-  if (field.isRequired != null) {
+  if (field.isRequired === true) {
     if (!requiredValidator(value))
     {
       errorMessages.push(field.label + " is required.");
     }
   }
 
-  if (field.isEmail != null) {
+  if (field.isEmail === true) {
     if (!validateEmail(value))
     {
       errorMessages.push("The email address given is not valid.");
     }
   }
 
-  // TODO: Pass to function that deals with multiple formats
-  if (field.format != null) {
-    // let format = field.format;
-    // let meetsRegex = format.test(value);
-    //
-    // if (value !== '' && !meetsRegex) {
-    //   errorMessages.push(field.regexErrorMessage);
-    // }
-  }
-
-  if (field.isAlphaNumeric != null && !isAlphaNumeric(value))
+  if (field.isAlphaNumeric === true && !isAlphaNumeric(value))
   {
     errorMessages.push("No special characters are allowed.");
   }
 
-  if (field.isDomain != null && !isDomain(value))
+  if (field.isDomain === true && !isDomain(value))
   {
     errorMessages.push("Domains must begin and end with an alphanumeric character.");
   }
 
-  if (field.isOpseraPassword != null && !isOpseraPassword(value))
+  if (field.isOpseraPassword === true && !isOpseraPassword(value))
   {
     errorMessages.push("Password requirements: at least 8 characters, a lowercase letter, an uppercase letter, a number, a symbol");
   }
 
-  // TODO: Implement
-  // if (field.regexValidator != null && !matchesRegex(field.regexValidator, value))
-  // {
-  //   errorMessages.push("Does not meet regex requirements.");
-  // }
+  if (field.regexValidator != null && !matchesRegex(field.regexValidator, value))
+  {
+    errorMessages.push("Does not meet field requirements.");
+  }
 
   if (errorMessages.length === 0) {
     return undefined;

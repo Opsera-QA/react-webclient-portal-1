@@ -95,7 +95,10 @@ export class Model {
 
   // TODO: Only send changemap for updates after getting everything else working
   getPersistData = () => {
-    return this.data;
+    let data = this.data;
+
+    // Trim strings before sending to node
+    return Object.keys(data).map(item => data[item] = typeof data[item] == 'string' ? data[item].trim() : data[item]);
   }
 
   isNew = () => {

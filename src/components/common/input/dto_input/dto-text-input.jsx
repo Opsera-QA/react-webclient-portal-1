@@ -11,12 +11,15 @@ function DtoTextInput({fieldName, dataObject, setDataObject, disabled, type}) {
     if (field.lowercase === true) {
       value = value.toLowerCase();
     }
-    // else if (field.uppercase === true) {
-    //   value = value.toUpperCase();
-    // }
+    else if (field.uppercase === true) {
+      value = value.toUpperCase();
+    }
 
-    if (field.format != null) {
-      let format = field.format;
+    // The input mask will limit text entry,
+    // but complex validation can be done by using
+    // "regexValidator" in metadata to not prevent text entry
+    if (field.inputMaskRegex != null) {
+      let format = field.inputMaskRegex;
       let meetsRegex = format.test(value);
 
       if (value !== '' && !meetsRegex) {
