@@ -9,6 +9,8 @@ import ToolDetailPanel from "./ToolDetailPanel";
 import {faTools} from "@fortawesome/pro-solid-svg-icons";
 import DetailViewContainer from "../../../common/panels/detail_view_container/DetailViewContainer";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
+import DataNotFoundContainer from "../../../common/panels/detail_view_container/DataNotFoundContainer";
+import DataNotFoundDialog from "../../../common/status_notifications/data_not_found/DataNotFoundDialog";
 
 function ToolDetailView() {
   const { id } = useParams();
@@ -26,15 +28,26 @@ function ToolDetailView() {
     try {
       setIsLoading(true);
       const response = await inventoryActions.getToolById(id, getAccessToken);
-      setToolData(new Model(...response.data, toolMetadata, false));
+
+      if (response != null && response.data && response.data[0]) {
+        setToolData(new Model(response.data[0], toolMetadata, false));
+      }
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
-      console.error(error.message);
+      console.error(error);
     }
     finally {
       setIsLoading(false);
     }
   };
+
+  if (!isLoading && toolData == null) {
+    return (
+      <DataNotFoundContainer type={"Tool"} breadcrumbDestination={"toolDetailView"}>
+        <DataNotFoundDialog type={"Tool"} managementViewIcon={faTools} managementViewTitle={"Tool Registry"} managementViewLink={"/inventory/tools"} />
+      </DataNotFoundContainer>
+    )
+  }
 
     return (
       <DetailViewContainer
