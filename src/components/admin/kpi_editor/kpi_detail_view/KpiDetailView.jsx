@@ -9,6 +9,8 @@ import kpiMetaData from "./kpi-form-fields";
 import {faFileInvoice} from "@fortawesome/free-solid-svg-icons";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import DetailViewContainer from "../../../common/panels/detail_view_container/DetailViewContainer";
+import DataNotFoundContainer from "../../../common/panels/detail_view_container/DataNotFoundContainer";
+import DataNotFoundDialog from "../../../common/status_notifications/data_not_found/DataNotFoundDialog";
 
 function KpiDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -28,7 +30,9 @@ function KpiDetailView() {
       await getRoles();
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (!error.message.includes(404)) {
+        toastContext.showLoadingErrorDialog(error);
+      }
     }
     finally {
       setIsLoading(false);
@@ -48,6 +52,14 @@ function KpiDetailView() {
       await getKpi(id);
     }
   };
+
+  if (!isLoading && kpiData == null) {
+    return (
+      <DataNotFoundContainer type={"KPI"} breadcrumbDestination={"kpiDetailView"}>
+        <DataNotFoundDialog type={"KPI"} managementViewIcon={faFileInvoice} managementViewTitle={"KPI Management"} managementViewLink={"/admin/kpis"} />
+      </DataNotFoundContainer>
+    )
+  }
 
   return (
     <DetailViewContainer
