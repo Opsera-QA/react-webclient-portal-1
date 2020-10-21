@@ -33,7 +33,7 @@ function RegisteredUserDetailPanel({ userData, setUserData, analyticsProfileData
         </Row>
         <Row>
           <Col>
-            <div className="tabbed-content-block">
+            <div className="shaded-panel detail-view-detail-panel">
               {userData && <RegisteredUserTabView
                 activeTab={activeTab}
                 analyticsProfileData={analyticsProfileData}

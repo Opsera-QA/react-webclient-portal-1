@@ -13,6 +13,7 @@ import Button from "react-bootstrap/Button";
 import ErrorDialog from "../../../../common/status_notifications/error";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
+import DetailPanelContainer from "../../../../common/panels/detail_panel_container/DetailPanelContainer";
 
 function RegisteredUserToolsPanel({ userData, isDeployingElk, setIsDeployingElk }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -120,9 +121,9 @@ function RegisteredUserToolsPanel({ userData, isDeployingElk, setIsDeployingElk 
   }
 
   return (
-    <div className="scroll-y full-height p-3">
+    <DetailPanelContainer showRequiredFieldsMessage={false}>
       {getJsonDisplayers()}
-    </div>
+    </DetailPanelContainer>
   );
 }
 
