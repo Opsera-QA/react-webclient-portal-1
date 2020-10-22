@@ -5,15 +5,16 @@ import LoadingDialog from "../../../../../common/status_notifications/loading";
 import LdapOrganizationSummaryPanel from "./LdapOrganizationSummaryPanel";
 
 import "../../../accounts.css";
-import BreadcrumbTrail from "../../../../../common/navigation/breadcrumbTrail";
 import AccessDeniedDialog from "../../../../../common/status_notifications/accessDeniedInfo";
 import Model from "../../../../../../core/data_model/model";
 import {ldapOrganizationMetaData} from "../ldap-organizations-form-fields";
 import accountsActions from "../../../accounts-actions";
 import LdapOrganizationDetailPanel from "./LdapOrganizationDetailPanel";
-import {faSitemap} from "@fortawesome/free-solid-svg-icons";
+import {faFileInvoice, faSitemap} from "@fortawesome/free-solid-svg-icons";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import DetailViewContainer from "../../../../../common/panels/detail_view_container/DetailViewContainer";
+import DataNotFoundContainer from "../../../../../common/panels/detail_view_container/DataNotFoundContainer";
+import DataNotFoundDialog from "../../../../../common/status_notifications/data_not_found/DataNotFoundDialog";
 
 function LdapOrganizationDetailView() {
   const { organizationName } = useParams();
@@ -63,14 +64,11 @@ function LdapOrganizationDetailView() {
   };
 
   const loadOrganization = async () => {
-    try {
-      const response = await accountsActions.getOrganizationByName(organizationName, getAccessToken);
-      // console.log("[LdapOrganizationDetailView] Response: ", response.data);
+    const response = await accountsActions.getOrganizationByName(organizationName, getAccessToken);
+
+    if (response != null && response.data != null) {
       setLdapOrganizationData(new Model(response.data, ldapOrganizationMetaData, false));
       setOrganizationAccounts(response.data["orgAccounts"]);
-    } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-      console.error(error.message);
     }
   };
 
@@ -80,6 +78,14 @@ function LdapOrganizationDetailView() {
 
   if (!authorizedActions.includes("get_organization_details") && !isLoading) {
     return <AccessDeniedDialog roleData={accessRoleData}/>;
+  }
+
+  if (!isLoading && ldapOrganizationData == null) {
+    return (
+      <DataNotFoundContainer type={"Organization"} breadcrumbDestination={"ldapOrganizationDetailView"}>
+        <DataNotFoundDialog type={"Organization"} managementViewIcon={faSitemap} managementViewTitle={"Organization Management"} managementViewLink={"/admin/organizations"} />
+      </DataNotFoundContainer>
+    )
   }
 
     return (
