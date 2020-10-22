@@ -40,7 +40,6 @@ function SlackApiConnector() {
       }
     }
     catch (error) {
-      // TODO: Should errors pull status and select based on the error code?
       if (error.message.includes(503)) {
         toastContext.showServiceUnavailableDialog(error);
       }
@@ -53,7 +52,6 @@ function SlackApiConnector() {
 
   const getSlackUrl = async () => {
     let slackResponse = await slackConnectorActions.getSlackUrl(getAccessToken);
-    console.log("slack url: " + JSON.stringify(slackResponse));
 
     if (slackResponse.data != null && slackResponse.data.status === 200) {
       setSlackUrl(slackResponse.data.message);
@@ -95,7 +93,7 @@ function SlackApiConnector() {
         <div className="h5">Slack Configured!</div>
         <div>Your Slack token is active and ready for use in the pipelines.</div>
         <div>If you would like to replace it, add to Slack with a different account.</div>
-        {getSlackButton()}
+        <div className="pt-2">{getSlackButton()}</div>
       </div>
     );
   }
@@ -103,9 +101,7 @@ function SlackApiConnector() {
   return (
     <div className="p-3">
       <div>You have not connected to Slack with your account.</div>
-      <div className="pt-2">
-        {getSlackButton()}
-      </div>
+      <div className="pt-2">{getSlackButton()}</div>
     </div>
   );
 }
