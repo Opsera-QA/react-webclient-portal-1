@@ -11,6 +11,8 @@ import {faUser} from "@fortawesome/free-solid-svg-icons";
 import AccessDeniedDialog from "../../../common/status_notifications/accessDeniedInfo";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import DetailViewContainer from "../../../common/panels/detail_view_container/DetailViewContainer";
+import DataNotFoundContainer from "../../../common/panels/detail_view_container/DataNotFoundContainer";
+import DataNotFoundDialog from "../../../common/status_notifications/data_not_found/DataNotFoundDialog";
 
 function LdapUserDetailView() {
   const {userEmail, orgDomain} = useParams();
@@ -40,7 +42,10 @@ function LdapUserDetailView() {
 
   const getLdapUser = async (userEmail) => {
     const response = await accountsActions.getUserByEmail(userEmail, getAccessToken);
-    setLdapUserData(new Model(response.data, ldapUsersMetaData, false));
+
+    if (response != null && response.data != null) {
+      setLdapUserData(new Model(response.data, ldapUsersMetaData, false));
+    }
   };
 
   const getRoles = async () => {
@@ -68,6 +73,16 @@ function LdapUserDetailView() {
 
   if (!authorizedActions.includes("get_user_details") && !isLoading) {
     return (<AccessDeniedDialog roleData={accessRoleData}/>);
+  }
+
+  if (!isLoading && ldapUserData == null) {
+    return (
+      <DataNotFoundContainer
+        type={"User"}
+        breadcrumbDestination={(accessRoleData.PowerUser || accessRoleData.Administrator || accessRoleData.OpseraAdministrator) ? "ldapUserDetailView" : "ldapUserDetailViewLimited"}>
+        <DataNotFoundDialog type={"User"} managementViewIcon={faUser} managementViewTitle={"User Management"} managementViewLink={"/settings/users"} />
+      </DataNotFoundContainer>
+    )
   }
 
   return (
