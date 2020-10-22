@@ -29,7 +29,8 @@ const toolMetadata = {
     {
       label: "Tool Identifier",
       id: "tool_identifier",
-      isRequired: true
+      isRequired: true,
+      formText: "This field also updates the Tool Type value."
     },
     {
       label: "Tool Type",

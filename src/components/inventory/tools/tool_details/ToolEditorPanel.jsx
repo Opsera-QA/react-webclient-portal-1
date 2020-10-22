@@ -52,7 +52,7 @@ function ToolEditorPanel({ toolData, setToolData, handleClose }) {
   const handleToolIdentifierChange = (fieldName, value) => {
     let newDataObject = toolDataDto;
     newDataObject.setData("tool_identifier", value.identifier);
-    newDataObject.setData("type", value.tool_type_identifier);
+    newDataObject.setData("tool_type_identifier", value.tool_type_identifier);
     setToolDataDto({...newDataObject});
   };
 
