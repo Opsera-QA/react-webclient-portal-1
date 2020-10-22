@@ -99,11 +99,18 @@ export class Model {
 
     // Trim strings before sending to node
     // TODO: this is only at the top level, add support for trimming inner objects
-    Object.keys(data).forEach(key => {
-      if (typeof data[key] == 'string') {
-        data[key] = data[key].trim();
-      }
-    });
+    try {
+      Object.keys(data).forEach(key => {
+        if (typeof data[key] == 'string') {
+          data[key] = data[key].trim();
+        }
+      });
+    }
+    catch (error) {
+      console.error("Could not parse object's strings. Sending unparsed data.");
+      return this.data;
+    }
+
 
     return data;
   }
