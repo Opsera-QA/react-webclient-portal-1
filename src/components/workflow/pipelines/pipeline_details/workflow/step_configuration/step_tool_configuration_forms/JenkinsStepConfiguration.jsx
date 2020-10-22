@@ -50,6 +50,7 @@ const INITIAL_DATA = {
   defaultBranch: "",
   dockerName: "",
   dockerTagName: "",
+  dockerPath: "",
   buildType: "gradle", //hardcoded now but needs to get it from a dropdown
   gitToolId: "",
   repoId: "",
@@ -95,6 +96,9 @@ function JenkinsStepConfiguration({
   const [isRepoSearching, setIsRepoSearching] = useState(false);
   const [branchList, setBranchList] = useState([]);
   const [isBranchSearching, setIsBranchSearching] = useState(false);
+
+  const [dockerNameErr, setDockerNameErr] = useState(false);
+  const [dockerTagErr, setDockerTagErr] = useState(false);
 
   const [listOfSteps, setListOfSteps] = useState([]);
 
@@ -356,6 +360,7 @@ function JenkinsStepConfiguration({
   };
 
   const validateRequiredFields = () => {
+    const regex = RegExp("^[ a-z_.-]*$");
     let { toolConfigId, toolJobId, jenkinsUrl, jUserId, jobName, buildType, dockerName, dockerTagName, sfdcUnitTestType } = formData;
     if(!toolJobId && toolJobId.length < 0 ) {
       let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
@@ -378,7 +383,7 @@ function JenkinsStepConfiguration({
         jenkinsUrl.length === 0 ||
         jUserId.length === 0 ||
         (formData.jobType === "SFDC UNIT TESTING" ? sfdcUnitTestType.length === 0 : false) ||
-        (buildType === "docker" ? dockerName.length === 0 || dockerTagName.length === 0 : false) 
+        (buildType === "docker" ? dockerName.length === 0 || !regex.test(dockerName) || dockerTagName.length === 0 || !regex.test(dockerTagName) : false) 
       ) {
         let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
         setToast(toast);
@@ -1047,8 +1052,25 @@ function JenkinsStepConfiguration({
                       type="text"
                       placeholder=""
                       value={formData.dockerName || ""}
-                      onChange={(e) => setFormData({ ...formData, dockerName: e.target.value })}
+                      onChange={(e) =>{
+                        const regex = RegExp("^[ a-z_.-]*$");
+                        if (!regex.test(e.target.value)) {
+                          setFormData({ ...formData, dockerName: e.target.value })
+                          setDockerNameErr(true);
+                          return;
+                        }
+                        setDockerNameErr(false);
+                        setFormData({ ...formData, dockerName: e.target.value })
+                      }}
                     />
+                     {dockerNameErr ? 
+                      <Form.Control.Feedback type="invalid">
+                      Please provide a valid docker tag.
+                      </Form.Control.Feedback> : 
+                     <Form.Text className="text-muted">
+                       lowercase without spaces. only - . (dot) and _ are allowed
+                      </Form.Text>
+                    }
                   </Form.Group>
                   <Form.Group controlId="dockerTag">
                     <Form.Label>Docker Tag*</Form.Label>
@@ -1057,7 +1079,35 @@ function JenkinsStepConfiguration({
                       type="text"
                       placeholder=""
                       value={formData.dockerTagName || ""}
-                      onChange={(e) => setFormData({ ...formData, dockerTagName: e.target.value })}
+                      onChange={(e) =>{
+                        const regex = RegExp("^[ a-z_.-]*$");
+                        if (!regex.test(e.target.value)) {
+                          setFormData({ ...formData, dockerTagName: e.target.value })
+                          setDockerTagErr(true);
+                          return;
+                        }
+                        setDockerTagErr(false);
+                        setFormData({ ...formData, dockerTagName: e.target.value })
+                      }}
+                    />
+                    {dockerTagErr ? 
+                      <Form.Control.Feedback type="invalid">
+                      Please provide a valid docker tag.
+                      </Form.Control.Feedback> : 
+                     <Form.Text className="text-muted">
+                       lowercase without spaces. only - . (dot) and _ are allowed
+                      </Form.Text>
+                    }
+                      
+                  </Form.Group>
+                  <Form.Group controlId="dockerPath">
+                    <Form.Label>Docker File Path</Form.Label>
+                    <Form.Control
+                      maxLength="50"
+                      type="text"
+                      placeholder=""
+                      value={formData.dockerPath || ""}
+                      onChange={(e) => setFormData({ ...formData, dockerPath: e.target.value })}
                     />
                   </Form.Group>
                   </>
