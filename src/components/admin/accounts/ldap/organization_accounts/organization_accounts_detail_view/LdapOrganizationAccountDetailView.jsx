@@ -3,19 +3,17 @@ import { AuthContext } from "../../../../../../contexts/AuthContext";
 import { useParams } from "react-router-dom";
 import LoadingDialog from "../../../../../common/status_notifications/loading";
 import "../../../accounts.css";
-import BreadcrumbTrail from "../../../../../common/navigation/breadcrumbTrail";
 import AccessDeniedDialog from "../../../../../common/status_notifications/accessDeniedInfo";
 import Model from "../../../../../../core/data_model/model";
 import accountsActions from "../../../accounts-actions";
 import LdapOrganizationAccountSummaryPanel from "./LdapOrganizationAccountSummaryPanel";
 import {ldapOrganizationAccountMetaData} from "../ldap-organization-account-form-fields";
 import LdapOrganizationAccountDetailPanel from "./LdapOrganizationAccountDetailPanel";
-import {faTags, faUsers} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSitemap, faUsers} from "@fortawesome/free-solid-svg-icons";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import DetailViewContainer from "../../../../../common/panels/detail_view_container/DetailViewContainer";
-import TagsSummaryPanel from "../../../../../settings/tags/tags_detail_view/TagsSummaryPanel";
-import TagDetailPanel from "../../../../../settings/tags/tags_detail_view/TagDetailPanel";
+import DataNotFoundContainer from "../../../../../common/panels/detail_view_container/DataNotFoundContainer";
+import DataNotFoundDialog from "../../../../../common/status_notifications/data_not_found/DataNotFoundDialog";
 
 function LdapOrganizationAccountDetailView() {
   const { organizationDomain } = useParams();
@@ -65,15 +63,12 @@ function LdapOrganizationAccountDetailView() {
   };
 
   const loadOrganizationAccount = async () => {
-    try {
       const response = await accountsActions.getOrganizationAccountByDomain(organizationDomain, getAccessToken);
-      setLdapOrganizationAccountData(new Model(response.data, ldapOrganizationAccountMetaData, false));
-      setOrganizationName(response.data["org"]["name"])
-    } catch (error) {
-      toastContext.showLoadingErrorDialog(error.message);
-      console.error(error.message);
-    }
-    setIsLoading(false);
+
+      if (response != null && response.data != null) {
+        setLdapOrganizationAccountData(new Model(response.data, ldapOrganizationAccountMetaData, false));
+        setOrganizationName(response.data["org"]["name"]);
+      }
   };
 
   if (!accessRoleData) {
@@ -82,6 +77,14 @@ function LdapOrganizationAccountDetailView() {
 
   if (!authorizedActions.includes("get_organization_account_details") && !isLoading) {
     return (<AccessDeniedDialog roleData={accessRoleData}/>);
+  }
+
+  if (!isLoading && ldapOrganizationAccountData == null) {
+    return (
+      <DataNotFoundContainer type={"Organization Account"} breadcrumbDestination={"ldapOrganizationAccountDetailView"}>
+        <DataNotFoundDialog type={"Organization Account"} managementViewIcon={faSitemap} managementViewTitle={"Organization Management"} managementViewLink={"/admin/organizations"} />
+      </DataNotFoundContainer>
+    )
   }
 
     return (
