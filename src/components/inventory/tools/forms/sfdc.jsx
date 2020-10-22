@@ -132,32 +132,32 @@ function SFDCToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVault
 
       <Form.Group controlId="repoField">
         <Form.Label>Domain URL*</Form.Label>
-        <Form.Control maxLength="100" type="text" placeholder="" value={formData.toolURL || ""} onChange={e => setFormData({ ...formData, toolURL: e.target.value })} />
+        <Form.Control maxLength="100" type="text" placeholder="" value={formData.toolURL || ""} onChange={e => setFormData({ ...formData, toolURL: e.target.value.trim() })} />
       </Form.Group>
 
       <Form.Group controlId="accessKey">
         <Form.Label>SFDC Username*</Form.Label>
-        <Form.Control maxLength="256" type="text" placeholder="" value={formData.accountUsername || ""} onChange={e => setFormData({ ...formData, accountUsername: e.target.value })} />
+        <Form.Control maxLength="256" type="text" placeholder="" value={formData.accountUsername || ""} onChange={e => setFormData({ ...formData, accountUsername: e.target.value.trim() })} />
       </Form.Group>
      
       <Form.Group controlId="accessKey">
         <Form.Label>SFDC Client Id*</Form.Label>
-        <Form.Control maxLength="256" type="password" placeholder="" value={formData.sfdc_client_id || ""} onChange={e => setFormData({ ...formData, sfdc_client_id: e.target.value })} />            
+        <Form.Control maxLength="256" type="password" placeholder="" value={formData.sfdc_client_id || ""} onChange={e => setFormData({ ...formData, sfdc_client_id: e.target.value.trim() })} />            
       </Form.Group>
 
       <Form.Group controlId="awsRegion">
         <Form.Label>SFDC Client Secret*</Form.Label>
-        <Form.Control maxLength="256" type="password" placeholder="" value={formData.sfdc_client_secret || ""} onChange={e => setFormData({ ...formData, sfdc_client_secret: e.target.value })} />
+        <Form.Control maxLength="256" type="password" placeholder="" value={formData.sfdc_client_secret || ""} onChange={e => setFormData({ ...formData, sfdc_client_secret: e.target.value.trim() })} />
       </Form.Group>
 
       <Form.Group controlId="awsRegion">
         <Form.Label>SFDC Token*</Form.Label>
-        <Form.Control maxLength="256" type="password" placeholder="" value={formData.sfdc_token || ""} onChange={e => setFormData({ ...formData, sfdc_token: e.target.value })} />
+        <Form.Control maxLength="256" type="password" placeholder="" value={formData.sfdc_token || ""} onChange={e => setFormData({ ...formData, sfdc_token: e.target.value.trim() })} />
       </Form.Group>
 
       <Form.Group controlId="awsAccountId">
         <Form.Label>Password*</Form.Label>
-        <Form.Control maxLength="256" type="password" placeholder="" value={formData.sfdc_password || ""} onChange={e => setFormData({ ...formData, sfdc_password: e.target.value })} />
+        <Form.Control maxLength="256" type="password" placeholder="" value={formData.sfdc_password || ""} onChange={e => setFormData({ ...formData, sfdc_password: e.target.value.trim() })} />
       </Form.Group>
 
       {/*TODO: Replace with SaveButton once converted to using data model*/}

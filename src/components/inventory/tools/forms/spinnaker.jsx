@@ -65,7 +65,7 @@ function SpinnakerToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToV
 
       <Form.Group controlId="toolURL">
         <Form.Label>Spinnaker URL*</Form.Label>
-        <Form.Control maxLength="100" type="text" placeholder="" value={formData.toolURL || ""} onChange={e => setFormData({ ...formData, toolURL: e.target.value })} />
+        <Form.Control maxLength="100" type="text" placeholder="" value={formData.toolURL || ""} onChange={e => setFormData({ ...formData, toolURL: e.target.value.trim() })} />
       </Form.Group>
 
       {/*TODO: Replace with SaveButton once converted to using data model*/}

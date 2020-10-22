@@ -101,23 +101,23 @@ function AWSToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVault 
       
       <Form.Group controlId="accessKey">
         <Form.Label>AWS Access Key ID*</Form.Label>
-        <Form.Control maxLength="256" type="password" placeholder="" value={formData.accessKey || ""} onChange={e => setFormData({ ...formData, accessKey: e.target.value })} />
+        <Form.Control maxLength="256" type="password" placeholder="" value={formData.accessKey || ""} onChange={e => setFormData({ ...formData, accessKey: e.target.value.trim() })} />
       </Form.Group>
      
       <Form.Group controlId="accessKey">
         <Form.Label>AWS Secret Access Key*</Form.Label>
-        <Form.Control maxLength="256" type="password" placeholder="" value={formData.secretKey || ""} onChange={e => setFormData({ ...formData, secretKey: e.target.value })} />            
+        <Form.Control maxLength="256" type="password" placeholder="" value={formData.secretKey || ""} onChange={e => setFormData({ ...formData, secretKey: e.target.value.trim() })} />            
         <Form.Text className="text-muted">AWS access keys consist of two parts: an access key ID and a secret access key. Both are required for automated deployments.</Form.Text> 
       </Form.Group>
 
       <Form.Group controlId="awsRegion">
         <Form.Label>AWS Region*</Form.Label>
-        <Form.Control maxLength="150" type="text" placeholder="" value={formData.regions || ""} onChange={e => setFormData({ ...formData, regions: e.target.value })} />
+        <Form.Control maxLength="150" type="text" placeholder="" value={formData.regions || ""} onChange={e => setFormData({ ...formData, regions: e.target.value.trim() })} />
       </Form.Group>
 
       <Form.Group controlId="awsAccountId">
         <Form.Label>AWS Account ID*</Form.Label>
-        <Form.Control maxLength="150" type="password" placeholder="" value={formData.awsAccountId || ""} onChange={e => setFormData({ ...formData, awsAccountId: e.target.value })} />
+        <Form.Control maxLength="150" type="password" placeholder="" value={formData.awsAccountId || ""} onChange={e => setFormData({ ...formData, awsAccountId: e.target.value.trim() })} />
       </Form.Group>
 
       {/*TODO: Replace with SaveButton once converted to using data model*/}

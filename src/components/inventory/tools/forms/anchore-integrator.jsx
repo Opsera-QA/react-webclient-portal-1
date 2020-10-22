@@ -92,15 +92,15 @@ function AnchoreIntegratorToolConfiguration({ toolData, toolId, fnSaveChanges, f
 
       <Form.Group controlId="repoField">
         <Form.Label>Anchore URL*</Form.Label>
-        <Form.Control maxLength="100" type="text" placeholder="" value={formData.toolURL || ""} onChange={e => setFormData({ ...formData, toolURL: e.target.value })} />
+        <Form.Control maxLength="100" type="text" placeholder="" value={formData.toolURL || ""} onChange={e => setFormData({ ...formData, toolURL: e.target.value.trim() })} />
       </Form.Group>
       <Form.Group controlId="branchField">
         <Form.Label>User Name*</Form.Label>
-        <Form.Control maxLength="50" type="text" placeholder="" value={formData.accountUsername || ""} onChange={e => setFormData({ ...formData, accountUsername: e.target.value })} />
+        <Form.Control maxLength="50" type="text" placeholder="" value={formData.accountUsername || ""} onChange={e => setFormData({ ...formData, accountUsername: e.target.value.trim() })} />
       </Form.Group>
       <Form.Group controlId="branchField">
         <Form.Label>Password*</Form.Label>
-        <Form.Control maxLength="50" type="password" placeholder="" value={formData.accountPassword || ""} onChange={e => setFormData({ ...formData, accountPassword: e.target.value })} />
+        <Form.Control maxLength="50" type="password" placeholder="" value={formData.accountPassword || ""} onChange={e => setFormData({ ...formData, accountPassword: e.target.value.trim() })} />
       </Form.Group>
 
       {/*TODO: Replace with SaveButton once converted to using data model*/}

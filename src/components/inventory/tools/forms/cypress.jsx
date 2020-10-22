@@ -93,19 +93,19 @@ function CypressToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVau
 
       <Form.Group controlId="repoField">
         <Form.Label>Jenkins Container URL*</Form.Label>
-        <Form.Control maxLength="100" type="text" placeholder="" value={formData.jenkinsUrl || ""} onChange={e => setFormData({ ...formData, jenkinsUrl: e.target.value })} />
+        <Form.Control maxLength="100" type="text" placeholder="" value={formData.jenkinsUrl || ""} onChange={e => setFormData({ ...formData, jenkinsUrl: e.target.value.trim() })} />
       </Form.Group>
       <Form.Group controlId="branchField">
         <Form.Label>Jenkins Port</Form.Label>
-        <Form.Control maxLength="5" type="text" placeholder="" value={formData.jenkinsPort || ""} onChange={e => setFormData({ ...formData, jenkinsPort: e.target.value })} />
+        <Form.Control maxLength="5" type="text" placeholder="" value={formData.jenkinsPort || ""} onChange={e => setFormData({ ...formData, jenkinsPort: e.target.value.trim() })} />
       </Form.Group>
       <Form.Group controlId="branchField">
         <Form.Label>Jenkins User ID*</Form.Label>
-        <Form.Control maxLength="50" type="text" placeholder="" value={formData.jUserId || ""} onChange={e => setFormData({ ...formData, jUserId: e.target.value })} />
+        <Form.Control maxLength="50" type="text" placeholder="" value={formData.jUserId || ""} onChange={e => setFormData({ ...formData, jUserId: e.target.value.trim() })} />
       </Form.Group>
       <Form.Group controlId="branchField">
         <Form.Label>Jenkins Token*</Form.Label>
-        <Form.Control maxLength="500" type="password" placeholder="" value={formData.jAuthToken || ""} onChange={e => setFormData({ ...formData, jAuthToken: e.target.value })} />
+        <Form.Control maxLength="500" type="password" placeholder="" value={formData.jAuthToken || ""} onChange={e => setFormData({ ...formData, jAuthToken: e.target.value.trim() })} />
       </Form.Group>
 
       {/*TODO: Replace with SaveButton once converted to using data model*/}

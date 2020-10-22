@@ -30,8 +30,11 @@ function NexusToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVault
     if (configurationData.isModelValid()) {
       let newConfiguration = {...configurationData.getPersistData()};
 
+      newConfiguration.toolURL = configurationData.getData("toolURL").trim();
+      newConfiguration.userName = configurationData.getData("userName").trim();
+      
       if (configurationData.isChanged("secretKey")) {
-        newConfiguration.secretKey = await saveToVault(toolId, toolData.tool_identifier, "secretKey", "Vault Secured Key", configurationData.getData("secretKey"));
+        newConfiguration.secretKey = await saveToVault(toolId, toolData.tool_identifier, "secretKey", "Vault Secured Key", configurationData.getData("secretKey").trim());
       }
 
       const item = {
