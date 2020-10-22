@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useContext, useMemo } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import TagsSummaryPanel from "./TagsSummaryPanel";
 import TagDetailPanel from "./TagDetailPanel";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import adminTagsActions from "../admin-tags-actions";
 import { AuthContext } from "../../../../contexts/AuthContext";
-import ErrorDialog from "../../../common/status_notifications/error";
-import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
 import Model from "../../../../core/data_model/model";
 import tagEditorMetadata from "../tags-form-fields";
 import {faTags} from "@fortawesome/free-solid-svg-icons";
 import DetailViewContainer from "../../../common/panels/detail_view_container/DetailViewContainer";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
+import DataNotFoundContainer from "../../../common/panels/detail_view_container/DataNotFoundContainer";
+import DataNotFoundDialog from "../../../common/status_notifications/data_not_found/DataNotFoundDialog";
 
 function TagDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -31,7 +31,10 @@ function TagDetailView() {
       await getTag(id);
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (!error.error.message.includes(404)) {
+        toastContext.showLoadingErrorDialog(error);
+        console.error(error);
+      }
     }
     finally {
       setIsLoading(false);
@@ -39,8 +42,11 @@ function TagDetailView() {
   };
 
   const getTag = async (tagId) => {
-      const response = await adminTagsActions.get(tagId, getAccessToken);
+    const response = await adminTagsActions.get(tagId, getAccessToken);
+
+    if (response != null && response.data != null) {
       setTagData(new Model(response.data, tagEditorMetadata, false));
+    }
   };
 
   const getRoles = async () => {
@@ -50,6 +56,15 @@ function TagDetailView() {
       setAccessRoleData(userRoleAccess);
     }
   };
+
+  if (!isLoading && tagData == null) {
+    return (
+      <DataNotFoundContainer type={"Tag"} breadcrumbDestination={"tagDetailView"}>
+        <DataNotFoundDialog type={"Tag"} managementViewIcon={faTags} managementViewTitle={"Tag Management"} managementViewLink={"/settings/tags"} />
+      </DataNotFoundContainer>
+    )
+  }
+
 
   return (
     <DetailViewContainer
