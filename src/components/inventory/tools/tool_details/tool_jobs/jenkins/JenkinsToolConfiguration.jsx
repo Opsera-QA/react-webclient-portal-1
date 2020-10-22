@@ -47,15 +47,20 @@ function JenkinsToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVau
   const callbackFunction = async () => {
     if (configurationData.isModelValid() && validateFields()) {
       let newConfiguration = {...configurationData.getPersistData()};
-      
+
+      newConfiguration.jenkinsUrl = configurationData.getData("jenkinsUrl").trim();
+      newConfiguration.jenkinsPort = configurationData.getData("jenkinsPort").trim();
+      newConfiguration.jUserId = configurationData.getData("jUserId").trim();
+      newConfiguration.proxyUserName = configurationData.getData("proxyUserName").trim();
+
       if (typeof(configurationData.getData("jAuthToken")) === "string" || configurationData.isChanged("jAuthToken")) {
-        newConfiguration.jAuthToken = await saveToVault(toolId, toolData.tool_identifier, "jAuthToken", "Vault Secured Key", configurationData.getData("jAuthToken"));
+        newConfiguration.jAuthToken = await saveToVault(toolId, toolData.tool_identifier, "jAuthToken", "Vault Secured Key", configurationData.getData("jAuthToken").trim());
       }
       if (typeof(configurationData.getData("jPassword")) === "string" || configurationData.isChanged("jPassword")) {
-        newConfiguration.jPassword = await saveToVault(toolId, toolData.tool_identifier, "jPassword", "Vault Secured Key", configurationData.getData("jPassword"));
+        newConfiguration.jPassword = await saveToVault(toolId, toolData.tool_identifier, "jPassword", "Vault Secured Key", configurationData.getData("jPassword").trim());
       }
       if (typeof(configurationData.getData("proxyPassword")) === "string" || configurationData.isChanged("proxyPassword")) {
-        newConfiguration.proxyPassword = await saveToVault(toolId, toolData.tool_identifier, "proxyPassword", "Vault Secured Key",configurationData.getData("proxyPassword"));
+        newConfiguration.proxyPassword = await saveToVault(toolId, toolData.tool_identifier, "proxyPassword", "Vault Secured Key",configurationData.getData("proxyPassword").trim());
       }
 
       const item = {

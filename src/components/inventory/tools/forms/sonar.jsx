@@ -93,19 +93,19 @@ function SonarToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVaul
           
       <Form.Group controlId="sonarUrl">
         <Form.Label>Sonar Url*</Form.Label>
-        <Form.Control maxLength="100" type="text" placeholder="" value={formData.sonarUrl || ""} onChange={e => setFormData({ ...formData, sonarUrl: e.target.value })} />
+        <Form.Control maxLength="100" type="text" placeholder="" value={formData.sonarUrl || ""} onChange={e => setFormData({ ...formData, sonarUrl: e.target.value.trim() })} />
       </Form.Group>
       <Form.Group controlId="sonarPort">
         <Form.Label>Sonar Port</Form.Label>
-        <Form.Control  maxLength="5" type="text" placeholder="" value={formData.sonarPort || ""} onChange={e => setFormData({ ...formData, sonarPort: e.target.value })} />
+        <Form.Control  maxLength="5" type="text" placeholder="" value={formData.sonarPort || ""} onChange={e => setFormData({ ...formData, sonarPort: e.target.value.trim() })} />
       </Form.Group>
       <Form.Group controlId="sonarUserId">
         <Form.Label>Sonar UserId*</Form.Label>
-        <Form.Control  maxLength="50" type="text" placeholder="" value={formData.sonarUserId || ""} onChange={e => setFormData({ ...formData, sonarUserId: e.target.value })} />
+        <Form.Control  maxLength="50" type="text" placeholder="" value={formData.sonarUserId || ""} onChange={e => setFormData({ ...formData, sonarUserId: e.target.value.trim() })} />
       </Form.Group>
       <Form.Group controlId="sonarAuthToken">
         <Form.Label>Sonar Auth Token*</Form.Label>
-        <Form.Control maxLength="500" type="password" placeholder="" value={formData.sonarAuthToken || ""} onChange={e => setFormData({ ...formData, sonarAuthToken: e.target.value })} />
+        <Form.Control maxLength="500" type="password" placeholder="" value={formData.sonarAuthToken || ""} onChange={e => setFormData({ ...formData, sonarAuthToken: e.target.value.trim() })} />
       </Form.Group>
 
       {/*TODO: Replace with SaveButton once converted to using data model*/}

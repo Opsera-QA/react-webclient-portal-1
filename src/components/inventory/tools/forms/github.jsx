@@ -120,14 +120,14 @@ function GithubToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVaul
 
       <Form.Group controlId="userName">
         <Form.Label>Username*</Form.Label>
-        <Form.Control maxLength="100" type="text" placeholder="" value={formData.accountUsername || ""} onChange={e => setFormData({ ...formData, accountUsername: e.target.value })} />
+        <Form.Control maxLength="100" type="text" placeholder="" value={formData.accountUsername || ""} onChange={e => setFormData({ ...formData, accountUsername: e.target.value.trim() })} />
       </Form.Group>
       
 
       {!formData.twoFactorAuthentication && 
         <Form.Group controlId="password">
           <Form.Label>Password*</Form.Label>
-          <Form.Control maxLength="256" type="password" placeholder="" value={formData.accountPassword || ""} onChange={e => setFormData({ ...formData, accountPassword: e.target.value })} />            
+          <Form.Control maxLength="256" type="password" placeholder="" value={formData.accountPassword || ""} onChange={e => setFormData({ ...formData, accountPassword: e.target.value.trim() })} />            
           <Form.Text className="text-muted">These credentials will be securely stored in vault.</Form.Text> 
         </Form.Group>
       }
@@ -147,13 +147,13 @@ function GithubToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVaul
       <>
         <Form.Group controlId="password">
           <Form.Label>Private Key*</Form.Label>
-          <Form.Control as="textarea" type="password"  style={{WebkitTextSecurity: 'disc'}}  placeholder="" value={formData.secretPrivateKey || ""} onChange={e => setFormData({ ...formData, secretPrivateKey: e.target.value })} />            
+          <Form.Control as="textarea" type="password"  style={{WebkitTextSecurity: 'disc'}}  placeholder="" value={formData.secretPrivateKey || ""} onChange={e => setFormData({ ...formData, secretPrivateKey: e.target.value.trim() })} />            
           <Form.Text className="text-muted">These credentials will be securely stored in vault.</Form.Text> 
         </Form.Group>
 
         <Form.Group controlId="password">
           <Form.Label>Access Key*</Form.Label>
-          <Form.Control maxLength="256" type="password" placeholder="" value={formData.secretAccessTokenKey || ""} onChange={e => setFormData({ ...formData, secretAccessTokenKey: e.target.value })} />            
+          <Form.Control maxLength="256" type="password" placeholder="" value={formData.secretAccessTokenKey || ""} onChange={e => setFormData({ ...formData, secretAccessTokenKey: e.target.value.trim() })} />            
           <Form.Text className="text-muted">These credentials will be securely stored in vault.</Form.Text> 
         </Form.Group>
       </>
