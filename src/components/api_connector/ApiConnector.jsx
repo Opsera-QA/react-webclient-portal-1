@@ -50,7 +50,7 @@ function ApiConnector({}) {
             <CustomTab icon={faBitbucket} tabName={"bitbucket"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Bitbucket"} />
             <CustomTab icon={faJira} tabName={"jira"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Jira"} />
             <CustomTab icon={faSlack} tabName={"slack"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Slack"} />
-            {/*<CustomTab icon={faMicrosoft} tabName={"teams"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Teams"} />*/}
+            <CustomTab icon={faMicrosoft} tabName={"teams"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Teams"} />
             {/*<CustomTab icon={faJenkins} tabName={"jenkins"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Jenkins"} />*/}
             {/*<CustomTab icon={faCogs} tabName={"sonar"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Sonar"} />*/}
             {/*<CustomTab icon={faCogs} tabName={"junit"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"JUnit"} />*/}

@@ -39,8 +39,14 @@ const INITIAL_JIRA = {
 
 const INITIAL_SLACK = {
   type: "slack",
-  channel: "",
+  // channel: "",
   event: "finished",
+  enabled: false,
+};
+
+const INITIAL_TEAMS = {
+  type: "teams",
+  account: "",
   enabled: false,
 };
 
@@ -53,10 +59,12 @@ function StepNotificationConfiguration({ data, stepId, parentCallback }) {
   const [formDataEmail, setFormDataEmail] = useState(INITIAL_EMAIL);
   const [formDataSlack, setFormDataSlack] = useState(INITIAL_SLACK);
   const [formDataJira, setFormDataJira] = useState(INITIAL_JIRA);
+  const [formDataTeams, setFormDataTeams] = useState(INITIAL_TEAMS);
   const [renderForm, setRenderForm] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [jiraToolId, setJiraToolId] = useState(undefined);
   const [jiraTools, setJiraTools] = useState([]);
+  const [teamsTools, setTeamsTools] = useState([]);
   const [jiraProjects, setJiraProjects] = useState([]);
   const [jiraProjectUsers, setJiraProjectUsers] = useState([]);
   const [jiraSprints, setJiraSprints] = useState([]);
@@ -71,6 +79,7 @@ function StepNotificationConfiguration({ data, stepId, parentCallback }) {
       const stepIndex = getStepIndex(stepId);
       await loadFormData(plan[stepIndex]);
       // await loadJiraTools();
+      // await loadTeamsTools();
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
     }
@@ -82,6 +91,11 @@ function StepNotificationConfiguration({ data, stepId, parentCallback }) {
   const loadJiraTools = async () => {
     const response = await pipelineActions.getToolsList("jira", getAccessToken);
     setJiraTools(response);
+  };
+
+  const loadTeamsTools = async () => {
+    const response = await pipelineActions.getToolsList("teams", getAccessToken);
+    setTeamsTools(response);
   };
 
   const loadJiraProjects = async (toolId = jiraToolId) => {
@@ -107,11 +121,13 @@ function StepNotificationConfiguration({ data, stepId, parentCallback }) {
     setFormDataEmail(INITIAL_EMAIL);
     setFormDataSlack(INITIAL_SLACK);
     setFormDataJira(INITIAL_JIRA);
+    setFormDataTeams(INITIAL_TEAMS);
 
     if (step.notification !== undefined) {
       let emailArrayIndex = step.notification.findIndex(x => x.type === "email");
       let slackArrayIndex = step.notification.findIndex(x => x.type === "slack");
       let jiraArrayIndex = step.notification.findIndex(x => x.type === "jira");
+      let teamsArrayIndex = step.notification.findIndex(x => x.type === "teams");
       if (emailArrayIndex >= 0) {
         setFormDataEmail(step.notification[emailArrayIndex]);
       }
@@ -121,6 +137,10 @@ function StepNotificationConfiguration({ data, stepId, parentCallback }) {
       if (jiraArrayIndex >= 0) {
         // console.log("Jira Form Data: " + step.notification[jiraArrayIndex]);
         setFormDataJira(step.notification[jiraArrayIndex]);
+      }
+      if (teamsArrayIndex >= 0) {
+        // console.log("Teams Form Data: " + step.notification[teamsArrayIndex]);
+        setFormDataTeams(step.notification[teamsArrayIndex]);
       }
     }
     setStepTool(step.tool);
@@ -151,21 +171,21 @@ function StepNotificationConfiguration({ data, stepId, parentCallback }) {
     }
 
     if (formDataSlack.enabled) {
-      if (formDataSlack.channel.charAt(0) === "#") {
-        toastContext.showErrorDialog("Error: Please remove the pound symbol '#' from the Slack channel name.");
-        return false;
-      }
-      if (formDataSlack.channel.length === 0) {
-        toastContext.showErrorDialog("Warning: Slack channel value missing!");
-        return false;
-      }
+      // if (formDataSlack.channel.charAt(0) === "#") {
+      //   toastContext.showErrorDialog("Error: Please remove the pound symbol '#' from the Slack channel name.");
+      //   return false;
+      // }
+      // if (formDataSlack.channel.length === 0) {
+      //   toastContext.showErrorDialog("Warning: Slack channel value missing!");
+      //   return false;
+      // }
     }
 
     if (formDataJira.enabled) {
-      if (!formDataJira.account || !formDataJira.project) {
-        toastContext.showErrorDialog("Error: Cannot enable Jira notification without Account and Project settings.");
-        return false;
-      }
+      // if (!formDataJira.account || !formDataJira.project) {
+      //   toastContext.showErrorDialog("Error: Cannot enable Jira notification without Account and Project settings.");
+      //   return false;
+      // }
     }
     return true;
   };
@@ -227,6 +247,34 @@ function StepNotificationConfiguration({ data, stepId, parentCallback }) {
     );
   };
 
+  const getTeamsCredentialsField = () => {
+
+    if (teamsTools == null || teamsTools.length === 0) {
+      // TODO: Create generic component for pipeline tool not found message
+      return (
+        <div className="form-text text-muted p-2">
+          <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+          No Teams tools have been registered for <span className="upper-case-first">Teams</span>.
+          Please go to
+          <Link to="/inventory/tools"> Tool Registry</Link> and add an entry for this repository in order to
+          proceed.
+        </div>
+      )
+    }
+
+    return (
+      <DropdownList
+        data={teamsTools}
+        value={teamsTools[teamsTools.findIndex((x) => x.id === formDataTeams.account)]}
+        valueField="id"
+        textField="name"
+        placeholder="Please select an account"
+        filter="contains"
+        onChange={handleJiraToolChange}
+      />
+    );
+  };
+
   const getSlackFormFields = () => {
     return (
       <div className="mt-4 mb-4">
@@ -238,12 +286,12 @@ function StepNotificationConfiguration({ data, stepId, parentCallback }) {
           checked={formDataSlack.enabled ? true : false}
           onChange={() => setFormDataSlack({ ...formDataSlack, enabled: !formDataSlack.enabled })}
         />
-        <Form.Group controlId="repoField">
-          <Form.Label>Slack Channel</Form.Label>
-          <Form.Control maxLength="50" type="text" disabled={!formDataSlack.enabled} placeholder=""
-                        value={formDataSlack.channel || ""}
-                        onChange={e => setFormDataSlack({ ...formDataSlack, channel: e.target.value })}/>
-        </Form.Group>
+        {/*<Form.Group controlId="repoField">*/}
+        {/*  <Form.Label>Slack Channel</Form.Label>*/}
+        {/*  <Form.Control maxLength="50" type="text" disabled={!formDataSlack.enabled} placeholder=""*/}
+        {/*                value={formDataSlack.channel || ""}*/}
+        {/*                onChange={e => setFormDataSlack({ ...formDataSlack, channel: e.target.value })}/>*/}
+        {/*</Form.Group>*/}
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Notification Level</Form.Label>
           {renderForm ?
@@ -263,6 +311,26 @@ function StepNotificationConfiguration({ data, stepId, parentCallback }) {
           </small>
 
         </Form.Group>
+      </div>
+    );
+  };
+
+  const getTeamsFormFields = () => {
+    if (!renderForm) {
+      return null;
+    }
+
+    return (
+      <div className="mt-4 mb-4">
+        <Form.Check
+          type="switch"
+          className="mb-2"
+          id="teams-switch"
+          label="Teams Notifications"
+          checked={formDataTeams.enabled}
+          onChange={() => setFormDataTeams({ ...formDataTeams, enabled: !formDataTeams.enabled })}
+        />
+        {formDataTeams.enabled && getTeamsCredentialsField()}
       </div>
     );
   };
@@ -377,6 +445,7 @@ function StepNotificationConfiguration({ data, stepId, parentCallback }) {
       </div>
 
       {getSlackFormFields()}
+      {/*{getTeamsFormFields()}*/}
       {/*{getJiraFormFields()}*/}
       {getEmailFormFields()}
 

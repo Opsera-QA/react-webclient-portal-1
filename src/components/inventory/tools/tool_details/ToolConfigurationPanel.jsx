@@ -20,6 +20,7 @@ import NexusToolConfiguration from "./tool_jobs/nexus/NexusToolConfiguration";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import toolsActions from "../tools-actions";
 import JiraToolConfiguration from "./tool_jobs/jira/JiraToolConfiguration";
+import TeamsToolConfiguration from "./tool_jobs/teams/TeamsToolConfiguration";
 
 function ToolConfigurationPanel({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -72,6 +73,8 @@ function ToolConfigurationPanel({ toolData }) {
         return <SFDCToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
       case "nexus":
         return <NexusToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
+      case "teams":
+        return <TeamsToolConfiguration toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
       default:
         return <div className="text-center p-5 text-muted mt-5">Configuration is not currently available for this tool.</div>
     }
