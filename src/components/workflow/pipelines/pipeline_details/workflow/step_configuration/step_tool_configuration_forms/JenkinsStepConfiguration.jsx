@@ -12,6 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
 import { AuthContext } from "../../../../../../../contexts/AuthContext";
+import { DialogToastContext } from "../../../../../../../contexts/DialogToastContext";
 import { axiosApiService } from "../../../../../../../api/apiService";
 import { Link } from "react-router-dom";
 import {
@@ -20,6 +21,7 @@ import {
   getServiceUnavailableDialog,
 } from "../../../../../../common/toasts/toasts";
 import SFDCConfiguration from "./jenkins_step_config_sub_forms/SFDCConfiguration";
+import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 
 const JOB_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
@@ -81,6 +83,8 @@ function JenkinsStepConfiguration({
   setShowToast,
 }) {
   const contextType = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
+  const { getAccessToken } = useContext(AuthContext);
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [renderForm, setRenderForm] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -101,6 +105,8 @@ function JenkinsStepConfiguration({
   const [dockerTagErr, setDockerTagErr] = useState(false);
 
   const [listOfSteps, setListOfSteps] = useState([]);
+  const [show, setShow] = useState(false);
+  const [save, setSave] = useState(false);
 
   useEffect(() => {
     if (plan && stepId) {
@@ -279,6 +285,11 @@ function JenkinsStepConfiguration({
     console.log("saving and creating job for toolID: ", toolId);
     if (validateRequiredFields() && toolId) {
       setLoading(true);
+
+      if(formData.sfdcUnitTestType === "RunSpecifiedTests") {
+        await getTestClasses(pipelineId, stepId, toolId);
+        return;
+      }
 
       const createJobPostBody = {
         jobId: "",
@@ -661,6 +672,58 @@ function JenkinsStepConfiguration({
   const handleBuildStepChange = (selectedOption) => {
     setFormData({ ...formData, stepIdXML: selectedOption._id });
   };
+  
+  const handleShow = () => setShow(true);
+
+  const getTestClasses = async(pipelineId, stepId, toolId) => {
+    
+    setSave(true);
+    // call api to get test classes
+    try {
+      // const accessToken = await getAccessToken();
+      const res = await sfdcPipelineActions.setTestClassesList({"sfdcToolId": formData.sfdcToolId, "pipelineId": pipelineId, "stepId": stepId }, getAccessToken);
+      if (res.data.status != 200 ) {
+        let toast = getErrorDialog(
+          res.data.message,
+          setShowToast,
+          "detailPanelTop"
+        );
+        setToast(toast);
+        setShowToast(true);
+        setSave(false);
+        return;
+      }
+      handleShow();
+    } catch (error) {
+      console.error("Error getting API Data: ", error);
+      toastContext.showLoadingErrorDialog(error);
+    }
+  }
+
+  const saveConfig = async() => {
+    const createJobPostBody = {
+      jobId: "",
+      pipelineId: pipelineId,
+      stepId: stepId,
+      buildParams: {
+        stepId: formData.stepIdXML && formData.stepIdXML,
+      },
+    };
+    console.log("createJobPostBody: ", createJobPostBody);
+
+    const toolConfiguration = {
+      configuration: formData,
+      threshold: {
+        type: thresholdType,
+        value: thresholdVal,
+      },
+      job_type: jobType,
+    };
+    console.log("item: ", toolConfiguration);
+
+    await createJob( formData.toolConfigId, toolConfiguration, stepId, createJobPostBody);
+  
+  }
 
   const RegistryPopover = (data) => {
     if (data) {
@@ -850,6 +913,10 @@ function JenkinsStepConfiguration({
               plan={plan}
               pipelineId={pipelineId}
               stepId={stepId}
+              show={show}
+              setShow={setShow}
+              save={save}
+              setSave={setSave}
               renderForm={renderForm}
               jobType={jobType}
               jenkinsList={jenkinsList}
@@ -858,6 +925,7 @@ function JenkinsStepConfiguration({
               setFormData={setFormData}
               setToast={setToast}
               setShowToast={setShowToast}
+              saveConfig={saveConfig}
             />
 
             {formData.jenkinsUrl && jenkinsList.length > 0 && formData.jobType && formData.jobType.length > 0 && (

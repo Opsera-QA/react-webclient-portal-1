@@ -32,6 +32,10 @@ function SFDCConfiguration({
   plan,
   pipelineId,
   stepId,
+  show,
+  setShow,
+  save,
+  setSave,
   renderForm,
   jobType,
   jenkinsList,
@@ -40,6 +44,7 @@ function SFDCConfiguration({
   setFormData,
   setToast,
   setShowToast,
+  saveConfig,
 }) {
   const contextType = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -47,8 +52,6 @@ function SFDCConfiguration({
   const [listOfSteps, setListOfSteps] = useState([]);
   const [sfdcList, setSFDCList] = useState([]);
   const [isSFDCSearching, setisSFDCSearching] = useState(false);
-  const [show, setShow] = useState(false);
-  const [save, setSave] = useState(false);
 
   useEffect(() => {
     if (plan && stepId) {
@@ -157,34 +160,8 @@ function SFDCConfiguration({
   const handleClose = () => { 
     setSave(false);
     setShow(false);
+    saveConfig();
    };
-
-  const handleShow = () => setShow(true);
-
-  const getTestClasses = async() => {
-    
-    setSave(true);
-    // call api to get test classes
-    try {
-      // const accessToken = await getAccessToken();
-      const res = await sfdcPipelineActions.setTestClassesList({"sfdcToolId": formData.sfdcToolId, "pipelineId": pipelineId, "stepId": stepId }, getAccessToken);
-      if (res.data.status != 200 ) {
-        let toast = getErrorDialog(
-          res.data.message,
-          setShowToast,
-          "detailPanelTop"
-        );
-        setToast(toast);
-        setShowToast(true);
-        setSave(false);
-        return;
-      }
-      handleShow();
-    } catch (error) {
-      console.error("Error getting API Data: ", error);
-      toastContext.showLoadingErrorDialog(error);
-    }
-  }
 
   const RegistryPopover = (data) => {
     if (data) {
@@ -407,7 +384,8 @@ function SFDCConfiguration({
                   onChange={handleUnitTestChange}
                 />
               </Form.Group>
-              {formData.sfdcUnitTestType === "RunSpecifiedTests" && 
+              
+              {/* {formData.sfdcUnitTestType === "RunSpecifiedTests" && 
                 <div className="flex-container-bottom pr-2 mt-4 mb-2 text-right">
                   <Button
                     variant="secondary"
@@ -425,7 +403,8 @@ function SFDCConfiguration({
                   Select Test classes
                 </Button>
               </div>
-              }
+              } */}
+              
              </>
             }
       </Form>
@@ -434,6 +413,7 @@ function SFDCConfiguration({
         show={show}
         pipelineId={pipelineId}
         stepId={stepId}
+        saveConfig={saveConfig}
         sfdcToolId={formData.sfdcToolId}
         handleClose={handleClose}
       />
@@ -446,6 +426,10 @@ SFDCConfiguration.propTypes = {
   plan: PropTypes.array,
   pipelineId: PropTypes.string,
   stepId: PropTypes.string,
+  show: PropTypes.bool,
+  setShow: PropTypes.func,
+  save: PropTypes.bool,
+  setSave: PropTypes.func,
   renderForm: PropTypes.bool,
   jobType: PropTypes.string,
   jenkinsList: PropTypes.array,
@@ -454,6 +438,7 @@ SFDCConfiguration.propTypes = {
   setFormData: PropTypes.func,
   setToast: PropTypes.func,
   setShowToast: PropTypes.func,
+  saveConfig: PropTypes.func,
 };
 
 export default SFDCConfiguration;
