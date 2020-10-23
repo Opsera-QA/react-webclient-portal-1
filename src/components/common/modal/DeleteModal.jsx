@@ -1,58 +1,56 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import {Row, Col, Button, Modal } from "react-bootstrap";
 import TooltipWrapper from "../tooltip/tooltipWrapper";
-import {cannotBeUndone, unsavedChanges} from "../tooltip/popover-text";
-import {faTrash} from "@fortawesome/free-solid-svg-icons";
+import {cannotBeUndone} from "../tooltip/popover-text";
+import {faTrash} from "@fortawesome/pro-light-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-function DeleteModal({ objectType, showModal, handleCancelModal, handleDelete }) {
+// TODO: Improve styling
+function DeleteModal({ dataObject, showModal, setShowModal, handleDelete }) {
   const handleClose = () => {
-    handleCancelModal();
+    setShowModal(false);
   };
 
-  // TODO: Finish styling
   return (
-    <>
-      <Modal size="lg" show={showModal} onHide={handleClose} backdrop="static">
-        <Modal.Header closeButton>
-          <Modal.Title>Confirm {objectType} Delete</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="content-block m-3 full-height">
-            <div className="p-3">
-              <Row>
-                <Col lg={2}>
-                  <FontAwesomeIcon icon={faTrash} className="delete-icon pointer red float-right ml-3" />
-                </Col>
-                <Col lg={10}>
-                  <span>Warning! Data cannot be recovered once this {objectType} is deleted.</span>
-                  <span>Do you still want to proceed?</span>
-                </Col>
-              </Row>
-            </div>
+    <Modal size="md" show={showModal} onHide={handleClose} backdrop="static">
+      <Modal.Header closeButton>
+        <Modal.Title>Confirm {dataObject.getType()} Delete</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <div className="shaded-panel m-3">
+          <div className="p-3">
+            <Row>
+              <Col sm={1}>
+                <div className="mt-2">
+                  <FontAwesomeIcon icon={faTrash} size={"lg"} className="danger-red"/>
+                </div>
+              </Col>
+              <Col sm={11}>
+                <div>Data cannot be recovered once this {dataObject.getType()} is deleted.</div>
+                <div>Do you still want to proceed?</div>
+              </Col>
+            </Row>
           </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <TooltipWrapper innerText={unsavedChanges}>
-            <Button size="sm" variant="secondary" onClick={handleClose}>Close</Button>
-          </TooltipWrapper>
-          <TooltipWrapper innerText={cannotBeUndone}>
-            <Button size="sm" variant="warning" onClick={handleDelete}>Delete {objectType}</Button>
-          </TooltipWrapper>
-        </Modal.Footer>
-      </Modal>
-    </>
+        </div>
+      </Modal.Body>
+      <Modal.Footer>
+        <TooltipWrapper>
+          <Button size="sm" variant="secondary" onClick={handleClose}>Cancel</Button>
+        </TooltipWrapper>
+        <TooltipWrapper innerText={cannotBeUndone}>
+          <Button size="sm" variant="danger" onClick={handleDelete}>Delete {dataObject.getType()}</Button>
+        </TooltipWrapper>
+      </Modal.Footer>
+    </Modal>
   );
 }
 
 DeleteModal.propTypes = {
-  children: PropTypes.any,
-  objectType: PropTypes.string,
+  dataObject: PropTypes.object,
   showModal: PropTypes.bool,
   setShowModal: PropTypes.func,
   handleDelete: PropTypes.func,
-  handleCancelModal: PropTypes.func.isRequired,
 };
 
 export default DeleteModal;
