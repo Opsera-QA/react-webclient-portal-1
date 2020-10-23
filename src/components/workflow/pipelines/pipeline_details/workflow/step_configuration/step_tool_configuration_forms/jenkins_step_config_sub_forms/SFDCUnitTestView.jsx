@@ -22,6 +22,7 @@ const SFDCUnitTestView = ({
   stepId,
   sfdcToolId,
   handleClose,
+  saveConfig,
 }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -109,6 +110,7 @@ const SFDCUnitTestView = ({
       // if we want to close this modal do it here!
       handleClose();
       setSave(false);
+      await saveConfig();
     } catch (error) {
       console.error("Error getting API Data: ", error);
       toastContext.showLoadingErrorDialog(error);
@@ -238,5 +240,12 @@ const SFDCUnitTestView = ({
 };
 
 
+SFDCUnitTestView.propTypes = {
+  pipelineId: PropTypes.string,
+  stepId: PropTypes.string,
+  sfdcToolId: PropTypes.string,
+  handleClose: PropTypes.func,
+  saveConfig: PropTypes.func,
+};
 
 export default SFDCUnitTestView;

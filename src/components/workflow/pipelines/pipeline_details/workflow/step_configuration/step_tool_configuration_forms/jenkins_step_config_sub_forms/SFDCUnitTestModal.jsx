@@ -8,6 +8,7 @@ function SFDCUnitTestModal({
   pipelineId,
   stepId,
   sfdcToolId,
+  saveConfig,
   handleClose
 }) {
   return (
@@ -26,6 +27,7 @@ function SFDCUnitTestModal({
        pipelineId={pipelineId}
        stepId={stepId}
        sfdcToolId={sfdcToolId}
+       saveConfig={saveConfig}
        handleClose={handleClose}
      />
     </Modal.Body>
@@ -45,6 +47,7 @@ SFDCUnitTestModal.propTypes = {
   sfdcToolId: PropTypes.string,
   handleClose: PropTypes.func,
   pipelineId: PropTypes.string,
+  saveConfig: PropTypes.func,
   stepId: PropTypes.string,
 };
 
