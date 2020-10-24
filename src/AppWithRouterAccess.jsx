@@ -64,6 +64,9 @@ import LdapOrganizationAccountDetailView
 import LdapOrganizationAccountManagement
   from "./components/admin/accounts/ldap/organization_accounts/LdapOrganizationAccountManagement";
 import ToastContextProvider from "./contexts/DialogToastContext";
+import LdapDepartmentManagement from "./components/admin/accounts/ldap/ldap_departments/LdapDepartmentManagement";
+import LdapDepartmentDetailView
+  from "./components/admin/accounts/ldap/ldap_departments/department_detail_view/LdapDepartmentDetailView";
 
 const OktaAuth = require("@okta/okta-auth-js");
 const config = require("./config");
@@ -247,6 +250,10 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/admin/organization-accounts/:organizationDomain/details" exact
                                component={LdapOrganizationAccountDetailView}/>
                   <SecureRoute path="/accounts/create" exact component={LdapCustomerOnboardView}/>
+
+                  {/*TODO: Move to settings?*/}
+                  <SecureRoute path="/admin/departments" exact component={LdapDepartmentManagement}/>
+                  <SecureRoute path="/admin/:orgDomain/departments/details/:departmentName" exact component={LdapDepartmentDetailView}/>
 
                   {/*Pipelines*/}
                   <SecureRoute path="/pipeline" component={Pipeline}/> {/*Old Pipeline*/}

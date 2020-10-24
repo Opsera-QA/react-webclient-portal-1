@@ -17,6 +17,7 @@ import {
 import AccessDeniedDialog from "../common/status_notifications/accessDeniedInfo";
 import LoadingDialog from "../common/status_notifications/loading";
 import {DialogToastContext} from "../../contexts/DialogToastContext";
+import {faBuilding} from "@fortawesome/pro-solid-svg-icons";
 
 
 function AdminTools(props) {
@@ -103,6 +104,9 @@ function AdminTools(props) {
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
                 <Link to="/admin/organizations"><FontAwesomeIcon icon={faSitemap} fixedWidth /> Organizations (LDAP)</Link>
+              </Col>
+              <Col xs={12} md={6} lg={4} className="p-2">
+                <Link to="/admin/departments"><FontAwesomeIcon icon={faBuilding} fixedWidth /> Departments (LDAP)</Link>
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
                 <Link to="/accounts/create"><FontAwesomeIcon icon={faUserPlus} fixedWidth /> Customer Onboarding</Link>

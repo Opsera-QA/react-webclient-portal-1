@@ -3,7 +3,7 @@ import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 import DtoTextField from "../../../../../common/form_fields/dto_form_fields/dto-text-field";
-import SummaryActionBar from "../../../../../common/actions/SummaryActionBar";
+import SummaryPanelContainer from "../../../../../common/panels/detail_view/SummaryPanelContainer";
 
 function LdapDepartmentSummaryPanel({ ldapDepartmentData } ) {
 
@@ -12,18 +12,19 @@ function LdapDepartmentSummaryPanel({ ldapDepartmentData } ) {
   }
 
   return (
-    <>
-        <div className="scroll-y pt-2 px-3">
-          {/*<SummaryActionBar backButtonPath={`/settings/${orgDomain}/users`} />*/}
-          <div className="mb-3 flat-top-content-block p-3 detail-view-summary">
-            <Row>
-              <Col lg={6}>
-                <DtoTextField dataObject={ldapDepartmentData} fieldName={"name"} />
-              </Col>
-            </Row>
-          </div>
-        </div>
-    </>
+    <SummaryPanelContainer>
+      <Row>
+        <Col lg={6}>
+          <DtoTextField dataObject={ldapDepartmentData} fieldName={"name"}/>
+        </Col>
+        <Col lg={6}>
+          <DtoTextField dataObject={ldapDepartmentData} fieldName={"ownerEmail"}/>
+        </Col>
+        <Col lg={6}>
+          <DtoTextField dataObject={ldapDepartmentData} fieldName={"departmentGroupName"}/>
+        </Col>
+      </Row>
+    </SummaryPanelContainer>
   );
 }
 

@@ -89,6 +89,33 @@ accountsActions.getAllowedIdpAccountActions = async (customerAccessRules, organi
   }
 };
 
+accountsActions.getAllowedDepartmentActions = async (customerAccessRules, organizationName, getUserRecord, getAccessToken) => {
+  const user = await getUserRecord();
+  const {ldap} = user;
+  const userOrganization = ldap["organization"];
+  if (customerAccessRules.OpseraAdministrator) {
+    return ["get_departments", "get_department_details", "create_department", "update_department"];
+  }
+  else if (userOrganization !== organizationName) {
+    // User from another organization not allowed to do anything with another org, unless they are an Opsera administrator
+    return [];
+  }
+
+  let orgAccountOwner = await accountsActions.isOrganizationAccountOwner(user);
+  let orgOwner = await accountsActions.isOrganizationOwner(organizationName, getUserRecord, getAccessToken);
+
+  if (orgOwner) {
+    return ["get_departments", "get_department_details", "create_department", "update_department"];
+  }
+  else if (orgAccountOwner || customerAccessRules.Administrator) {
+    return ["get_departments", "get_department_details", "create_department", "update_department"];
+  }
+  else {
+    return [];
+  }
+};
+
+
 accountsActions.getAllowedUserActions = async (customerAccessRules, organizationName, selected_user_email, getUserRecord, getAccessToken) => {
   const user = await getUserRecord();
   const {ldap} = user;

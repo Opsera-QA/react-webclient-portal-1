@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
 import ldapDepartmentMetaData from "./ldap-department-metadata";
-import Model from "/core/data_model/model";
-import CreateModal from "/common/modal/CreateModal";
 import LdapDepartmentEditorPanel from "./department_detail_view/LdapDepartmentEditorPanel";
+import CreateModal from "../../../../common/modal/CreateModal";
+import Model from "../../../../../core/data_model/model";
 
 function NewLdapDepartmentModal({ setShowModal, showModal, loadData, authorizedActions } ) {
   const [ldapDepartmentData, setLdapDepartmentData] = useState(undefined);
