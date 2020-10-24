@@ -46,7 +46,7 @@ const INITIAL_SLACK = {
 
 const INITIAL_TEAMS = {
   type: "teams",
-  account: "",
+  toolId: "",
   enabled: false,
 };
 
@@ -79,7 +79,7 @@ function StepNotificationConfiguration({ data, stepId, parentCallback }) {
       const stepIndex = getStepIndex(stepId);
       await loadFormData(plan[stepIndex]);
       // await loadJiraTools();
-      // await loadTeamsTools();
+      await loadTeamsTools();
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
     }
@@ -151,7 +151,7 @@ function StepNotificationConfiguration({ data, stepId, parentCallback }) {
     if (validateRequiredFields()) {
       setIsSaving(true);
       let stepArrayIndex = getStepIndex(stepId);
-      plan[stepArrayIndex].notification = [formDataEmail, formDataSlack, formDataJira];
+      plan[stepArrayIndex].notification = [formDataEmail, formDataSlack, formDataJira, formDataTeams];
       await parentCallback(plan);
       setIsSaving(false);
     }
@@ -187,6 +187,14 @@ function StepNotificationConfiguration({ data, stepId, parentCallback }) {
       //   return false;
       // }
     }
+
+    if (formDataTeams.enabled) {
+      if (!formDataTeams.toolId) {
+        toastContext.showErrorDialog("Error: Cannot enable Teams notification without tool selected.");
+        return false;
+      }
+    }
+
     return true;
   };
 
@@ -220,6 +228,15 @@ function StepNotificationConfiguration({ data, stepId, parentCallback }) {
     });
   };
 
+  const handleTeamsToolChange = async (selectedOption) => {
+    let toolId = selectedOption.id;
+    console.log("Selected option: " + JSON.stringify(selectedOption));
+    setFormDataTeams({
+      ...formDataTeams,
+      toolId: toolId,
+    });
+  };
+
   const getJiraCredentialsField = () => {
     if (jiraTools == null || jiraTools.length === 0) {
       // TODO: Create generic component for pipeline tool not found message
@@ -250,7 +267,7 @@ function StepNotificationConfiguration({ data, stepId, parentCallback }) {
   const getTeamsCredentialsField = () => {
 
     if (teamsTools == null || teamsTools.length === 0) {
-      // TODO: Create generic component for pipeline tool not found message
+      // TODO: Create generic component for tool not found message
       return (
         <div className="form-text text-muted p-2">
           <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
@@ -265,12 +282,12 @@ function StepNotificationConfiguration({ data, stepId, parentCallback }) {
     return (
       <DropdownList
         data={teamsTools}
-        value={teamsTools[teamsTools.findIndex((x) => x.id === formDataTeams.account)]}
+        value={teamsTools[teamsTools.findIndex((x) => x.id === formDataTeams.toolId)]}
         valueField="id"
         textField="name"
-        placeholder="Please select an account"
+        placeholder="Please select a tool with Teams connection"
         filter="contains"
-        onChange={handleJiraToolChange}
+        onChange={handleTeamsToolChange}
       />
     );
   };
@@ -445,7 +462,7 @@ function StepNotificationConfiguration({ data, stepId, parentCallback }) {
       </div>
 
       {getSlackFormFields()}
-      {/*{getTeamsFormFields()}*/}
+      {getTeamsFormFields()}
       {/*{getJiraFormFields()}*/}
       {getEmailFormFields()}
 
