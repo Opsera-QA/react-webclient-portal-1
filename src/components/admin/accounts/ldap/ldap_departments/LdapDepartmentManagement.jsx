@@ -1,12 +1,13 @@
 import React, {useState, useEffect, useContext} from "react";
 import {AuthContext} from "contexts/AuthContext";
-import {useHistory, useParams} from "react-router-dom";
-import NewLdapDepartmentModal from "./NewLdapDepartmentModal";
+import {useHistory} from "react-router-dom";
 import LoadingDialog from "components/common/status_notifications/loading";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import accountsActions from "../../accounts-actions";
 import BreadcrumbTrail from "../../../../common/navigation/breadcrumbTrail";
 import LdapDepartmentsTable from "./LdapDepartmentsTable";
+import AccessDeniedDialog from "../../../../common/status_notifications/accessDeniedInfo";
+import departmentActions from "./department-functions";
 
 
 function LdapDepartmentManagement() {
@@ -15,7 +16,8 @@ function LdapDepartmentManagement() {
   const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const [departmentList, setDepartmentList] = useState([]);
+  const [departments, setDepartments] = useState([]);
+  const [domain, setDomain] = useState(undefined);
   const [authorizedActions, setAuthorizedActions] = useState([]);
 
   useEffect(() => {
@@ -35,10 +37,9 @@ function LdapDepartmentManagement() {
     }
   }
 
-  const getDepartmentsByDomain = async (ldapDomain) => {
-      // let organization = await getOrganizationByDomain(ldapDomain, getAccessToken);
-      // setOrganization(organization);
-      // setUserList(organization["users"]);
+  const getDepartments = async (ldapDomain) => {
+      let response = await departmentActions.getDepartmentsByDomain(ldapDomain, getAccessToken);
+      setDepartments(response.data);
   };
 
   const getRoles = async () => {
@@ -49,34 +50,30 @@ function LdapDepartmentManagement() {
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
 
-      let authorizedActions = await accountsActions.getAllowedUserActions(userRoleAccess, ldap.organization, undefined, getUserRecord, getAccessToken);
+      let authorizedActions = await accountsActions.getAllowedDepartmentActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
       setAuthorizedActions(authorizedActions);
 
       if (userRoleAccess.OpseraAdministrator) {
-        let departmentList = await getDepartmentsByDomain(getAccessToken);
-        setDepartmentList(departmentList.data);
+        setDomain(ldap.domain)
+        await getDepartments(ldap.domain);
       }
     }
   };
 
-  const createUser = () => {
-    setShowCreateUserModal(true);
-  };
-
-  const handleOrganizationChange = async (selectedOption) => {
-    setIsLoading(true);
-    console.log("Setting organization to: " + JSON.stringify(selectedOption));
-    history.push(`/settings/${selectedOption.id}/users`);
-    setCurrentOrganizationDomain(selectedOption.id);
-    await getUsersByDomain(selectedOption.id);
-    setIsLoading(false);
-  };
+  // const handleOrganizationChange = async (selectedOption) => {
+  //   setIsLoading(true);
+  //   console.log("Setting organization to: " + JSON.stringify(selectedOption));
+  //   history.push(`/settings/${selectedOption.id}/users`);
+  //   setCurrentOrganizationDomain(selectedOption.id);
+  //   await getUsersByDomain(selectedOption.id);
+  //   setIsLoading(false);
+  // };
 
   if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   }
 
-  if (!authorizedActions.includes("get_users") && !isLoading) {
+  if (!authorizedActions.includes("get_departments") && !isLoading) {
     return (<AccessDeniedDialog roleData={accessRoleData}/>);
   }
 
@@ -84,14 +81,11 @@ function LdapDepartmentManagement() {
       <div>
         <BreadcrumbTrail destination={"ldapDepartmentManagement"} />
         <div className="justify-content-between mb-1 d-flex">
-          <h5>Users Management</h5>
-          <div className="d-flex">
-            <br/>
-          </div>
+          <h5>Department Management</h5>
         </div>
 
         <div className="full-height">
-          {departmentList && <LdapDepartmentsTable isLoading={isLoading} departmentData={departmentList}/>}
+          {departments && <LdapDepartmentsTable loadData={loadData} domain={domain} isLoading={isLoading} departmentData={departments}/>}
         </div>
       </div>
     );

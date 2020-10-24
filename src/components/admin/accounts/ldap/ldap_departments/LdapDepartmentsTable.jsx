@@ -7,7 +7,7 @@ import {getTableTextColumn} from "../../../../common/table/table-column-helpers"
 import {getField} from "../../../../common/metadata/metadata-helpers";
 import NewLdapDepartmentModal from "./NewLdapDepartmentModal";
 
-function LdapDepartmentsTable({ departmentData, loadData, isLoading }) {
+function LdapDepartmentsTable({ departmentData, domain, loadData, isLoading }) {
   const [showCreateDepartmentModal, setShowCreateDepartmentModal] = useState(false);
   const fields = ldapDepartmentMetaData.fields;
   const history = useHistory();
@@ -15,12 +15,15 @@ function LdapDepartmentsTable({ departmentData, loadData, isLoading }) {
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name")),
+      getTableTextColumn(getField(fields, "ownerEmail")),
+      getTableTextColumn(getField(fields, "departmentGroupName")),
     ],
     [fields]
   );
 
   const onRowSelect = (rowData, type) => {
-    // history.push(`/accounts/${orgAccount}/departments/details/${departmentName}`);
+    console.log("rowData")
+    history.push(`/admin/${domain}/departments/details/${rowData.original.name}`);
   };
 
   return (
@@ -39,6 +42,7 @@ function LdapDepartmentsTable({ departmentData, loadData, isLoading }) {
 
 LdapDepartmentsTable.propTypes = {
   departmentData: PropTypes.array,
+  domain: PropTypes.string,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool
 };

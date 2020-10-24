@@ -15,6 +15,9 @@ paths.toolIdentifierDetailView = paths.toolManagement + "/identifiers/details/";
 paths.ldapOrganizationManagement = paths.admin + "/organizations";
 paths.ldapOrganizationDetailView = paths.admin + "/organizations";
 
+paths.ldapDepartmentManagement = paths.admin + "/departments";
+paths.ldapDepartmentDetailView = paths.admin + "/departments";
+
 paths.ldapOrganizationAccountManagement = paths.admin + "/organization-accounts";
 paths.ldapOrganizationDetailView = paths.admin + "/organization-accounts";
 
