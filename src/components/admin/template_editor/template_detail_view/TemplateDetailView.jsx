@@ -83,7 +83,7 @@ function TemplateDetailView() {
       title={templateData != null ? `Template Details [${templateData.getData("name")}]` : undefined}
       titleIcon={faStream}
       isLoading={isLoading}
-      summaryPanel={<TemplateSummaryPanel templateData={templateData} setTemplateData={setTemplateData}/>}
+      summaryPanel={<TemplateSummaryPanel templateData={templateData} opseraAdmin={accessRoleData.OpseraAdministrator === true}/>}
       detailPanel={<TemplateDetailPanel setTemplateData={setTemplateData} templateData={templateData}/>}
     />
   );
