@@ -54,7 +54,7 @@ function LdapDetailsView({ activeTab, setLdapDepartmentData, ldapDepartmentData,
       // case "manage":
         // return (<LdapGroupManagePanel ldapGroupData={ldapDepartmentData} authorizedActions={authorizedActions} ldapOrganizationData={ldapOrganizationData} loadData={loadData}/>);
     case "settings":
-      return <LdapDepartmentEditorPanel setLdapDepartmentData={setLdapDepartmentData} authorizedActions={authorizedActions} ldapDepartmentData={ldapDepartmentData} />;
+      return <LdapDepartmentEditorPanel setLdapDepartmentData={setLdapDepartmentData} authorizedActions={authorizedActions} orgDomain={orgDomain} ldapDepartmentData={ldapDepartmentData} />;
     default:
       return null;
     }

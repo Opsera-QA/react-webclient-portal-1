@@ -5,7 +5,7 @@ import LdapDepartmentEditorPanel from "./department_detail_view/LdapDepartmentEd
 import CreateModal from "../../../../common/modal/CreateModal";
 import Model from "../../../../../core/data_model/model";
 
-function NewLdapDepartmentModal({ setShowModal, showModal, loadData, authorizedActions } ) {
+function NewLdapDepartmentModal({ setShowModal, showModal, loadData, authorizedActions, orgDomain } ) {
   const [ldapDepartmentData, setLdapDepartmentData] = useState(undefined);
 
   useEffect(() => {
@@ -18,14 +18,15 @@ function NewLdapDepartmentModal({ setShowModal, showModal, loadData, authorizedA
   };
 
   return (
-      <CreateModal handleCancelModal={handleClose} objectType={"User"} showModal={showModal} loadData={loadData} >
-        {ldapDepartmentData && <LdapDepartmentEditorPanel authorizedActions={authorizedActions} setLdapDepartmentData={setLdapDepartmentData} ldapDepartmentData={ldapDepartmentData} handleClose={handleClose} />}
+      <CreateModal handleCancelModal={handleClose} objectType={"Department"} showModal={showModal} loadData={loadData} >
+        {ldapDepartmentData && <LdapDepartmentEditorPanel orgDomain={orgDomain} authorizedActions={authorizedActions} setLdapDepartmentData={setLdapDepartmentData} ldapDepartmentData={ldapDepartmentData} handleClose={handleClose} />}
       </CreateModal>
   );
 }
 
 NewLdapDepartmentModal.propTypes = {
   showModal: PropTypes.bool,
+  orgDomain: PropTypes.string,
   setShowModal: PropTypes.func,
   loadData: PropTypes.func,
   authorizedActions: PropTypes.array

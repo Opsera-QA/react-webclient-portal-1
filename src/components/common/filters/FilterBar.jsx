@@ -51,7 +51,7 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, addRe
         </Row>
         </Popover.Title>
       <Popover.Content className="filter-body">
-        {children.map((child, index) => {
+        {children && children.map((child, index) => {
           return (<div key={index} className="mb-2">{child}</div>);
         })}
         <div className="d-flex justify-content-between">
@@ -94,6 +94,24 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, addRe
     )
   };
 
+  const getFilterButtons = () => {
+    // Only show filter buttons, if filters exists
+    if (children === undefined) {
+      return null;
+    }
+
+    return (
+      <div>
+        <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={popover} className="filter-popover">
+          <div>
+            <Button type="primary" size="sm"><span><FontAwesomeIcon icon={faFilter} fixedWidth/></span></Button>
+          </div>
+        </OverlayTrigger>
+        <div><Button className={"ml-2"} type="primary" size="sm" onClick={() => resetFilters()}><span>{getStackedFilterRemovalIcon()}</span></Button></div>
+      </div>
+    )
+  };
+
   return (
     <div className="d-flex justify-content-between filter-bar">
       <div className="d-flex">
@@ -102,12 +120,7 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, addRe
       <div className="d-flex">
         <div>{getNewRecordButton()}</div>
         <div>{getRefreshButton()}</div>
-        <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={popover} className="filter-popover">
-          <div>
-            <Button type="primary" size="sm"><span><FontAwesomeIcon icon={faFilter} fixedWidth/></span></Button>
-          </div>
-        </OverlayTrigger>
-        <div><Button className={"ml-2"} type="primary" size="sm" onClick={() => resetFilters()}><span>{getStackedFilterRemovalIcon()}</span></Button></div>
+        <div>{getFilterButtons()}</div>
       </div>
     </div>
   );
