@@ -57,12 +57,12 @@ const ToastContextProvider = (props) => {
     refreshTimer(autoCloseLengthInSeconds);
   }
 
-  const showFormValidationErrorDialog = (modal = false, errorMessage) => {
+  const showFormValidationErrorDialog = (modal = false, errorMessage = "") => {
     if (modal) {
-      setModalToast(getErrorDialog(`WARNING! There are errors in your form: ${errorMessage}`));
+      setModalToast(getErrorDialog(`WARNING! There are errors in your form. ${errorMessage} Please review the details and ensure any required fields or special rules are met and try again.`));
     }
     else {
-      setToast(getErrorDialog(`WARNING! There are errors in your form: ${errorMessage}`));
+      setToast(getErrorDialog(`WARNING! There are errors in your form. ${errorMessage} Please review the details and ensure any required fields or special rules are met and try again.`));
       setShowToast(true);
     }
     refreshTimer();

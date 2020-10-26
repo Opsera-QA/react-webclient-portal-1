@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLink, faSave, faSpinner } from "@fortawesome/pro-light-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import {AuthContext} from "../../../../../../contexts/AuthContext";
+import {AuthContext} from "contexts/AuthContext";
 import pipelineStepNotificationActions from "./pipeline-step-notification-actions";
 import {faEllipsisH, faExclamationCircle} from "@fortawesome/free-solid-svg-icons";
 import pipelineActions from "../../../../pipeline-actions";

@@ -48,19 +48,16 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
   const callbackFunctionTools = async (plan) => {
     pipeline.workflow.plan = plan;
     await postData(pipeline, "Step Configuration Tool");
-    // closeEditorPanel();
   };
 
   const callbackConfigureStep = async (plan) => {
     pipeline.workflow.plan = plan;
     await postData(pipeline, "Pipeline Step");
-    // closeEditorPanel();
   };
 
   const callbackFunctionSource = async (source) => {
     pipeline.workflow.source = source;
     await postData(pipeline, "Source Repository");
-    // closeEditorPanel();
   };
 
   const getTitleBar = (title) => {
@@ -73,7 +70,7 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
               icon={faTimes}
               className="mr-1"
               size={"2x"}
-              style={{ cursor: "pointer", verticalAlign:"middle" }}
+              style={{ cursor: "pointer", verticalAlign: "middle" }}
               onClick={() => {
                 handleCloseClick();
               }}/>
@@ -92,8 +89,10 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
       {getTitleBar("Source Repository")}
       <div className="p-3 bg-white step-settings-container">
         {showToast && <div className="mb-2">{toast}</div>}
-        <SourceRepositoryConfiguration data={pipeline} setToast={setToast} setShowToast={setShowToast}
-                                       parentCallback={callbackFunctionSource}/>
+        <SourceRepositoryConfiguration
+          data={pipeline}
+          parentCallback={callbackFunctionSource}
+          handleCloseClick={handleCloseClick}/>
       </div>
     </>);
   }
