@@ -4,10 +4,12 @@ import {useHistory} from "react-router-dom";
 import LoadingDialog from "components/common/status_notifications/loading";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import accountsActions from "../../accounts-actions";
-import BreadcrumbTrail from "../../../../common/navigation/breadcrumbTrail";
 import LdapDepartmentsTable from "./LdapDepartmentsTable";
 import AccessDeniedDialog from "../../../../common/status_notifications/accessDeniedInfo";
 import departmentActions from "./department-functions";
+import TableScreenContainer from "../../../../common/panels/table_screen_container/TableScreenContainer";
+import Model from "../../../../../core/data_model/model";
+import departmentFilterMetadata from "./department-filter-metadata";
 
 
 function LdapDepartmentManagement() {
@@ -17,6 +19,7 @@ function LdapDepartmentManagement() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [departments, setDepartments] = useState([]);
+  const [departmentFilterDto, setDepartmentFilterDto] = useState(new Model({...departmentFilterMetadata.newObjectFields}, departmentFilterMetadata, false));
   const [domain, setDomain] = useState(undefined);
   const [authorizedActions, setAuthorizedActions] = useState([]);
 
@@ -78,16 +81,20 @@ function LdapDepartmentManagement() {
   }
 
   return (
-      <div>
-        <BreadcrumbTrail destination={"ldapDepartmentManagement"} />
-        <div className="justify-content-between mb-1 d-flex">
-          <h5>Department Management</h5>
-        </div>
-
-        <div className="full-height">
-          {departments && <LdapDepartmentsTable loadData={loadData} domain={domain} isLoading={isLoading} departmentData={departments}/>}
-        </div>
-      </div>
+    <TableScreenContainer
+      breadcrumbDestination={"ldapDepartmentManagement"}
+      title={"Department Management"}
+      tableComponent={
+        <LdapDepartmentsTable
+          authorizedActions={authorizedActions}
+          loadData={loadData}
+          domain={domain}
+          isLoading={isLoading}
+          departmentData={departments}
+          departmentFilterDto={departmentFilterDto}
+          setDepartmentFilterDto={setDepartmentFilterDto}
+        />}
+      />
     );
 }
 

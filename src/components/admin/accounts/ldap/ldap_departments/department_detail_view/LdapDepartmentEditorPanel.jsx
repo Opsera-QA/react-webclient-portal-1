@@ -8,10 +8,16 @@ import WarningDialog from "../../../../../common/status_notifications/WarningDia
 import DtoTextInput from "../../../../../common/input/dto_input/dto-text-input";
 import SaveButton from "../../../../../common/buttons/SaveButton";
 import DetailPanelContainer from "../../../../../common/panels/detail_panel_container/DetailPanelContainer";
+import departmentActions from "../department-functions";
+import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
+import {getUsersByDomain} from "../../../../../settings/ldap_users/user-functions";
+import DtoSelectInput from "../../../../../common/input/dto_input/dto-select-input";
 
-function LdapDepartmentEditorPanel({ ldapDepartmentData, setLdapDepartmentData, authorizedActions, handleClose }) {
+function LdapDepartmentEditorPanel({ ldapDepartmentData, setLdapDepartmentData, orgDomain, authorizedActions, handleClose }) {
+  const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [ldapDepartmentDataDto, setLdapDepartmentDataDto] = useState({});
+  const [ldapUsers, setLdapUsers] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -19,20 +25,36 @@ function LdapDepartmentEditorPanel({ ldapDepartmentData, setLdapDepartmentData, 
   }, []);
 
   const loadData = async () => {
-    setIsLoading(true);
-    setLdapDepartmentDataDto(ldapDepartmentData);
-    setIsLoading(false);
+    try {
+      setIsLoading(true);
+      setLdapDepartmentDataDto(ldapDepartmentData);
+      await getLdapOrganizationUsers();
+    }
+    catch (error) {
+      toastContext.showLoadingErrorDialog(error);
+    }
+    finally {
+      setIsLoading(false);
+    }
+  };
+
+  const getLdapOrganizationUsers = async () => {
+    const response = await getUsersByDomain(orgDomain, getAccessToken);
+
+    if (response != null && response.length > 0) {
+      setLdapUsers(response);
+    }
   };
 
   const createLdapDepartment = async () => {
-    // return await accountsActions.createDepartment(ldapDepartmentDataDto, getAccessToken);
+    return await departmentActions.createDepartment(orgDomain, ldapDepartmentDataDto, getAccessToken);
   };
 
   const updateLdapDepartment = async () => {
-    // return await accountsActions.updateDepartment(departmentName, ldapDepartmentDataDto, getAccessToken);
+    return await departmentActions.updateDepartment(orgDomain, ldapDepartmentDataDto, getAccessToken);
   };
 
-  if (isLoading) {
+  if (isLoading || ldapDepartmentDataDto == null) {
     return (<LoadingDialog size="sm"/>);
   }
 
@@ -47,7 +69,17 @@ function LdapDepartmentEditorPanel({ ldapDepartmentData, setLdapDepartmentData, 
               <DtoTextInput disabled={!ldapDepartmentDataDto.isNew()} setDataObject={setLdapDepartmentDataDto} dataObject={ldapDepartmentDataDto} fieldName={"name"} />
             </Col>
             <Col lg={12}>
-              <DtoTextInput disabled={!ldapDepartmentDataDto.isNew()} setDataObject={setLdapDepartmentDataDto} dataObject={ldapDepartmentDataDto} fieldName={"ownerEmail"} />
+              <DtoSelectInput
+                dataObject={ldapDepartmentDataDto}
+                setDataObject={setLdapDepartmentDataDto}
+                busy={isLoading}
+                fieldName={"ownerEmail"}
+                groupBy={"emailAddress"}
+                valueField={"emailAddress"}
+                textField={"name"}
+                filter={"contains"}
+                selectOptions={ldapUsers}
+              />
             </Col>
           </Row>
           <Row>
