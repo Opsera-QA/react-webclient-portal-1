@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle, faSpinner, faEllipsisH, faSave } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import { Link } from "react-router-dom";
-import nexusStepFormMetadata from "../step_tool_configuration_forms_metadata/nexus-stepForm-metadata";
+import nexusStepFormMetadata from "./nexus-stepForm-metadata";
 import Model from "core/data_model/model";
 import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
 import DtoTextInput from "components/common/input/dto_input/dto-text-input";
