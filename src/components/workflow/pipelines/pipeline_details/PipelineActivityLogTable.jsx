@@ -13,10 +13,10 @@ function PipelineActivityLogTable({ data, isLoading, paginationOptions, selectRu
   const initialState = {
     pageIndex: 0,
     sortBy: [
-      {
+      /*{
         id: "run_count",
         desc: true,
-      },
+      },*/
       {
         id: "createdAt",
         desc: true,
