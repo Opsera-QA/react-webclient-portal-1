@@ -189,4 +189,80 @@ pipelineActions.getToolsList = async (service, getAccessToken) => {
 };
 
 
+pipelineActions.searchWorkSpaces = async (service, gitAccountId, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/tools/properties`;
+  const postBody = {
+    tool: service,
+    metric: "getWorkSpaces",
+    gitAccountId: gitAccountId,
+  };
+  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
+    .then((result) =>  {
+      if (result.data) {
+        let arrOfObj = result.data.data;
+        return arrOfObj;
+      }
+      else {
+        throw "Tool workspaces information is missing or unavailable!  Please ensure the required creds are registered and up to date in Tool Registry.";
+      }
+    })
+    .catch(error => {throw { error };});
+  return response;
+};
+
+
+pipelineActions.searchRepositories = async (service, gitAccountId, workspaces, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/tools/properties`;
+  const postBody = {
+    tool: service,
+    metric: "getRepositories",
+    gitAccountId: gitAccountId,
+    workspaces: workspaces,
+  };
+  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
+    .then((result) =>  {
+      if (result.data) {
+        let arrOfObj = result.data.data;
+        return arrOfObj;
+      }
+      else {
+        throw "Tool repositories information is missing or unavailable!  Please ensure the required creds are registered and up to date in Tool Registry.";
+      }
+    })
+    .catch(error => {throw { error };});
+  return response;
+};
+
+pipelineActions.searchBranches = async (service, gitAccountId, repoId, workspaces, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/tools/properties`;
+  const postBody = {
+    tool: service,
+    metric: "getBranches",
+    gitAccountId: gitAccountId,
+    repoId: repoId,
+    workspaces: workspaces,
+  };
+  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
+    .then((result) =>  {
+      if (result.data) {
+        let arrOfObj = result.data.data;
+        let response = arrOfObj.map(function(el) {
+          let o = Object.assign({});
+          o.value = el;
+          o.name = el;
+          return o;
+        });
+        return response;
+      }
+      else {
+        throw "Tool repositories information is missing or unavailable!  Please ensure the required creds are registered and up to date in Tool Registry.";
+      }
+    })
+    .catch(error => {throw { error };});
+  return response;
+};
+
 export default pipelineActions;

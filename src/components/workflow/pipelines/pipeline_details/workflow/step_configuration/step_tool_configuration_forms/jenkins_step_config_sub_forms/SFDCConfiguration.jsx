@@ -17,6 +17,7 @@ import {
   getErrorDialog,
 } from "components/common/toasts/toasts";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
+import pipelineActions from "components/workflow/pipeline-actions.js";
 import SFDCUnitTestModal from "./SFDCUnitTestModal";
 
 const UNIT_TEST_OPTIONS = [
@@ -74,7 +75,7 @@ function SFDCConfiguration({
 
     async function fetchSFDCDetails(service) {
       setisSFDCSearching(true);
-      let results = await searchToolsList(service);
+      let results = await pipelineActions.getToolsList(service,getAccessToken);
 
       if (results) {
         const filteredList = results.filter((el) => el.configuration !== undefined); //filter out items that do not have any configuration data!
@@ -88,40 +89,6 @@ function SFDCConfiguration({
     // Fire off our API call
     fetchSFDCDetails("sfdc-configurator");
   }, []);
-
-  const searchToolsList = async (service) => {
-    const { getAccessToken } = contextType;
-    const accessToken = await getAccessToken();
-    const apiUrl = "/registry/properties/" + service; // this is to get all the service accounts from tool registry
-    try {
-      const res = await axiosApiService(accessToken).get(apiUrl);
-      if (res.data && res.status === 200) {
-        let respObj = [];
-        let arrOfObj = res.data;
-        arrOfObj.map((item) => {
-          respObj.push({
-            name: item.name,
-            id: item._id,
-            configuration: item.configuration,
-            accounts: item.accounts,
-            jobs: item.jobs,
-          });
-        });
-        //console.log(respObj);
-        return respObj;
-      } else {
-        let toast = getErrorDialog(
-          "Jenkins information is missing or unavailable!  Please ensure the required Jenkins creds are registered and up to date in Tool Registry.",
-          setShowToast,
-          "detailPanelTop"
-        );
-        setToast(toast);
-        setShowToast(true);
-      }
-    } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-    }
-  };
 
   const handleSFDCChange = (selectedOption) => {
     //setLoading(true);
