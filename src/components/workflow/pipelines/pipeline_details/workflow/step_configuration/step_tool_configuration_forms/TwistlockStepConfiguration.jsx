@@ -29,6 +29,9 @@ import {
   getServiceUnavailableDialog
 } from "../../../../../../common/toasts/toasts";
 
+import pipelineActions from "components/workflow/pipeline-actions";
+import { DialogToastContext, showServiceUnavailableDialog } from "contexts/DialogToastContext";
+
 const JOB_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
   { value: "job", label: "Custom Job" },
@@ -62,6 +65,7 @@ const INITIAL_DATA = {
   gitUserName: "",
   repository: "",
   branch: "",
+  workspace: "",
 };
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
@@ -78,6 +82,8 @@ function TwistlockStepConfiguration ({
   setShowToast
 }) {
   const contextType = useContext(AuthContext);
+  const { getAccessToken } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [renderForm, setRenderForm] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -89,6 +95,9 @@ function TwistlockStepConfiguration ({
   const [isBranchSearching, setIsBranchSearching] = useState(false);
   const [listOfSteps, setListOfSteps] = useState([]);
   
+  const [workspacesList, setWorkspacesList] = useState([]);
+  const [isWorkspacesSearching, setIsWorkspacesSearching] = useState(false);
+
   const [accountsList, setAccountsList] = useState([]);
   const [jobsList, setJobsList] = useState([]);
   const [thresholdVal, setThresholdValue] = useState("");
@@ -136,8 +145,16 @@ function TwistlockStepConfiguration ({
     async function fetchJenkinsDetails(service) {
       setisJenkinsSearching(true);
       // Set results state
-      let results = await searchToolsList(service);
+      let results = await pipelineActions.getToolsList(service, getAccessToken);
       //console.log(results);
+      if (typeof(results) != "object") {
+        setJenkinsList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+        let errorMessage =
+          "Jenkins information is missing or unavailable!";
+        toastContext.showErrorDialog(errorMessage);
+        setisJenkinsSearching(false);
+        return;
+      }
       const filteredList = results.filter(
         (el) => el.configuration !== undefined
       ); //filter out items that do not have any configuration data!
@@ -156,16 +173,55 @@ function TwistlockStepConfiguration ({
   useEffect(() => {
     setShowToast(false);
 
-    // setFormData({ ...formData, branch : "" });
     async function fetchRepos(service, gitToolId) {
+      setIsWorkspacesSearching(true);
+      // Set results state
+      let results = await pipelineActions.searchWorkSpaces(service, gitToolId, getAccessToken);
+      if (typeof(results) != "object") {
+        setWorkspacesList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+        let errorMessage =
+          "Workspace information is missing or unavailable!";
+        toastContext.showErrorDialog(errorMessage);
+        setIsWorkspacesSearching(false);
+        return;
+      }
+        //console.log(results);
+        setWorkspacesList(results);
+        setIsWorkspacesSearching(false);
+    }
+
+    if (
+      formData.service === "bitbucket" &&
+      formData.gitToolId &&
+      formData.gitToolId.length > 0
+    ) {
+      // Fire off our API call
+      fetchRepos(formData.service, formData.gitToolId);
+    } else {
+      setIsWorkspacesSearching(true);
+      setWorkspacesList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+    }
+  }, [formData.service, formData.gitToolId, formData.gitCredential]);
+
+  // fetch repos
+  useEffect(() => {
+    setShowToast(false);
+
+    async function fetchRepos(service, gitToolId, workspaces) {
       setIsRepoSearching(true);
       // Set results state
-      let results = await searchRepositories(service, gitToolId);
-      if (results) {
+      let results = await pipelineActions.searchRepositories(service, gitToolId, workspaces, getAccessToken);
+      if (typeof(results) != "object") {
+        setRepoList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+        let errorMessage =
+          "Repository information is missing or unavailable!";
+        toastContext.showErrorDialog(errorMessage);
+        setIsRepoSearching(false);
+        return;
+      }
         //console.log(results);
         setRepoList(results);
         setIsRepoSearching(false);
-      }
     }
 
     if (
@@ -175,27 +231,32 @@ function TwistlockStepConfiguration ({
       formData.gitToolId.length > 0
     ) {
       // Fire off our API call
-      fetchRepos(formData.service, formData.gitToolId);
+      fetchRepos(formData.service, formData.gitToolId, formData.workspace);
     } else {
       setIsRepoSearching(true);
       setRepoList([{ value: "", name: "Select One", isDisabled: "yes" }]);
     }
-  }, [formData.service, formData.gitToolId, formData.gitCredential]);
+  }, [formData.service, formData.gitToolId, formData.gitCredential, formData.workspace]);
+
 
   // fetch branches
   useEffect(() => {
     setShowToast(false);
 
-    // setFormData({ ...formData, branch : "" });
-    async function fetchBranches(service, gitToolId, repoId) {
+    async function fetchBranches(service, gitToolId, repoId, workspaces) {
       setIsBranchSearching(true);
       // Set results state
-      let results = await searchBranches(service, gitToolId, repoId);
-      if (results) {
-        //console.log(results);
+      let results = await pipelineActions.searchBranches(service, gitToolId, repoId, workspaces, getAccessToken);
+      if (typeof(results) != "object") {
+        setBranchList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+        let errorMessage =
+          "Branch information is missing or unavailable!";
+        toastContext.showErrorDialog(errorMessage);
+        setIsBranchSearching(false);
+        return;
+      }
         setBranchList(results);
         setIsBranchSearching(false);
-      }
     }
 
     if (
@@ -207,7 +268,7 @@ function TwistlockStepConfiguration ({
       formData.repoId.length > 0
     ) {
       // Fire off our API call
-      fetchBranches(formData.service, formData.gitToolId, formData.repoId);
+      fetchBranches(formData.service, formData.gitToolId, formData.repoId, formData.workspace);
     } else {
       setIsRepoSearching(true);
       setBranchList([{ value: "", name: "Select One", isDisabled: "yes" }]);
@@ -318,40 +379,6 @@ function TwistlockStepConfiguration ({
     }
   };
 
-  //TODO: Refactor this into actions.jsx
-  const searchToolsList = async (service) => {
-    const { getAccessToken } = contextType;
-    const accessToken = await getAccessToken();
-    const apiUrl = "/registry/properties/" + service; // this is to get all the service accounts from tool registry
-    try {
-      const res = await axiosApiService(accessToken).get(apiUrl);
-      if (res.data) {
-        let respObj = [];
-        let arrOfObj = res.data;
-        arrOfObj.map((item) => {
-          respObj.push({
-            name: item.name,
-            id: item._id,
-            configuration: item.configuration,
-            accounts: item.accounts,
-            jobs: item.jobs,
-          });
-        });
-        //console.log(respObj);
-        return respObj;
-      } else {
-        let errorMessage = "Jenkins information is missing or unavailable!  Please ensure the required Jenkins creds are registered and up to date in Tool Registry.";
-        let toast = getErrorDialog(errorMessage, setShowToast, "detailPanelTop");
-        setToast(toast);
-        setShowToast(true);
-      }
-    } catch (error) {
-      let toast = getErrorDialog(error, setShowToast, "detailPanelTop");
-      setToast(toast);
-      setShowToast(true);
-    }
-  };
-
   const validateRequiredFields = () => {
     let {
       toolConfigId,
@@ -414,6 +441,7 @@ function TwistlockStepConfiguration ({
         gitCredential: "",
         gitUserName: "",
         repository: "",
+        workspace:"",
         branch: "",
         toolJobId: "",
         toolJobType: "",
@@ -460,9 +488,25 @@ function TwistlockStepConfiguration ({
       gitUrl: "",
       sshUrl: "",
       repository: "",
+      workspace:"",
       branch: "",
       projectId: "",
       defaultBranch: "",
+    });
+  };
+
+  const handleWorkspacesChange = (selectedOption) => {
+    setFormData({
+      ...formData,
+      workspace: selectedOption,
+      repository: "",
+      repoId: "",
+      projectId: "",
+      gitUrl: "",
+      sshUrl: "",
+      branch: "",
+      defaultBranch: "",
+      gitBranch: "",
     });
   };
 
@@ -501,91 +545,6 @@ function TwistlockStepConfiguration ({
         toolJobId: "",
         toolJobType: "",
       });
-  };
-
-  //todo: the api needs to be moved to actions.jsx
-  const searchRepositories = async (service, gitAccountId) => {
-    const { getAccessToken } = contextType;
-    const accessToken = await getAccessToken();
-    const apiUrl = "/tools/properties";
-    const postBody = {
-      tool: service,
-      metric: "getRepositories",
-      gitAccountId: gitAccountId,
-    };
-    //console.log(postBody);
-    try {
-      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      if (res.data && res.data.data) {
-        let arrOfObj = res.data.data;
-        if( typeof arrOfObj !== "object" ) {
-          let toast = getErrorDialog(
-            "Error fetching repositories: "+ arrOfObj,
-            setShowToast,
-            "detailPanelTop"
-          );
-          setToast(toast);
-          setShowToast(true);
-          setBranchList([]);
-          return [];
-        }
-        return arrOfObj;
-      } else {
-        let toast = getServiceUnavailableDialog(setShowToast, "detailPanelTop");
-        setToast(toast);
-        setShowToast(true);
-      }
-    } catch (error) {
-      let toast = getErrorDialog(error, setShowToast, "detailPanelTop");
-      setToast(toast);
-      setShowToast(true);
-    }
-  };
-
-  //todo: the api needs to be moved to actions.jsx
-  const searchBranches = async (service, gitAccountId, repoId) => {
-    const { getAccessToken } = contextType;
-    const accessToken = await getAccessToken();
-    const apiUrl = "/tools/properties";
-    const postBody = {
-      tool: service,
-      metric: "getBranches",
-      gitAccountId: gitAccountId,
-      repoId: repoId,
-    };
-    try {
-      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      if (res.data && res.data.data) {
-        let arrOfObj = res.data.data;
-        if( typeof arrOfObj !== "object" ) {
-          let toast = getErrorDialog(
-            "Error fetching branches: "+ arrOfObj,
-            setShowToast,
-            "detailPanelTop"
-          );
-          setToast(toast);
-          setShowToast(true);
-          return [];
-        }
-        if (arrOfObj) {
-          let result = arrOfObj.map(function (el) {
-            let o = Object.assign({});
-            o.value = el;
-            o.name = el;
-            return o;
-          });
-          return result;
-        }
-      } else {
-        let toast = getServiceUnavailableDialog(setShowToast, "detailPanelTop");
-        setToast(toast);
-        setShowToast(true);
-      }
-    } catch (error) {
-      let toast = getErrorDialog(error, setShowToast, "detailPanelTop");
-      setToast(toast);
-      setShowToast(true);
-    }
   };
 
   const RegistryPopover = (data) => {
@@ -722,7 +681,7 @@ function TwistlockStepConfiguration ({
           )}
           {formData.toolConfigId.length > 0 && (
             <Form.Label className="mt-2 pl-1">
-              <Link to={"/inventory/tools/" + formData.toolConfigId}>
+              <Link to={"/inventory/tools/details/" + formData.toolConfigId}>
                 <FontAwesomeIcon icon={faTools} className="pr-1" /> View/edit
                 this tool's Registry settings
               </Link>
@@ -804,7 +763,7 @@ function TwistlockStepConfiguration ({
                     />
                     No jobs have been created for{" "}
                     <span>{formData.jenkinsUrl}</span>. Please go to
-                    <Link to={"/inventory/tools/" + formData.toolConfigId}>
+                    <Link to={"/inventory/tools/details/" + formData.toolConfigId}>
                       {" "}
                       Tool Registry
                     </Link>{" "}
@@ -888,7 +847,55 @@ function TwistlockStepConfiguration ({
           </Form.Group>
         )}
 
-        {formData.service && formData.gitToolId && (
+        {formData.service && formData.service === "bitbucket" && formData.gitToolId && (
+          <Form.Group controlId="account" className="mt-2">
+            <Form.Label>Workspace*</Form.Label>
+            {isWorkspacesSearching ? (
+              <div className="form-text text-muted mt-2 p-2">
+                <FontAwesomeIcon
+                  icon={faSpinner}
+                  spin
+                  className="text-muted mr-1"
+                  fixedWidth
+                />
+                Loading workspaces from registry
+              </div>
+            ) : (
+              <>
+                {workspacesList ? (
+                  <DropdownList
+                    data={workspacesList}
+                    value={
+                      workspacesList[
+                        workspacesList.findIndex(
+                          (x) => x === formData.workspace,
+                        )
+                        ]
+                    }
+                    valueField="value"
+                    textField="name"
+                    filter="contains"
+                    onChange={handleWorkspacesChange}
+                  />
+                ) : (
+                  <FontAwesomeIcon
+                    icon={faSpinner}
+                    spin
+                    className="text-muted mr-1"
+                    fixedWidth
+                  />
+                )}
+              </>
+            )}
+            {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
+          </Form.Group>
+        )}
+
+        {formData.service && 
+        formData.gitToolId && 
+        (formData.service === "bitbucket"? 
+          formData.workspace 
+          && formData.workspace.length > 0 : true ) && (
           <Form.Group controlId="account" className="mt-2">
             <Form.Label>Repository*</Form.Label>
             {isRepoSearching ? (
@@ -909,9 +916,9 @@ function TwistlockStepConfiguration ({
                     value={
                       repoList[
                         repoList.findIndex(
-                          (x) => x.name === formData.repository
+                          (x) => x.name === formData.repository,
                         )
-                      ]
+                        ]
                     }
                     valueField="value"
                     textField="name"

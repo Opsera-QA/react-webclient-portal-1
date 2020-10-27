@@ -22,6 +22,7 @@ import {
 } from "../../../../../../common/toasts/toasts";
 import SFDCConfiguration from "./jenkins_step_config_sub_forms/SFDCConfiguration";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
+import pipelineActions from "components/workflow/pipeline-actions";
 
 const JOB_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
@@ -67,6 +68,7 @@ const INITIAL_DATA = {
   isOrgToOrg: false,
   isFullBackup: false,
   sfdcUnitTestType: "",
+  workspace: "",
 };
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
@@ -107,6 +109,9 @@ function JenkinsStepConfiguration({
   const [listOfSteps, setListOfSteps] = useState([]);
   const [show, setShow] = useState(false);
   const [save, setSave] = useState(false);
+  
+  const [workspacesList, setWorkspacesList] = useState([]);
+  const [isWorkspacesSearching, setIsWorkspacesSearching] = useState(false);
 
   useEffect(() => {
     if (plan && stepId) {
@@ -148,13 +153,23 @@ function JenkinsStepConfiguration({
     async function fetchJenkinsDetails(service) {
       setisJenkinsSearching(true);
       // Set results state
-      let results = await searchToolsList(service);
-      if (results) {
-        setJenkinsList(results);
+      let results = await pipelineActions.getToolsList(service, getAccessToken);
+      if (typeof(results) != "object") {
+        setJenkinsList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+        let errorMessage =
+          "Jenkins information is missing or unavailable!";
+        toastContext.showErrorDialog(errorMessage);
+        setisJenkinsSearching(false);
+        return;
+      }
+      const filteredList = results.filter(
+        (el) => el.configuration !== undefined,
+      ); //filter out items that do not have any configuration data!
+      if (filteredList) {
+        setJenkinsList(filteredList);
         setisJenkinsSearching(false);
       }
     }
-
     fetchJenkinsDetails("jenkins");
   }, []);
 
@@ -194,36 +209,90 @@ function JenkinsStepConfiguration({
   useEffect(() => {
     setShowToast(false);
 
-    // setFormData({ ...formData, branch : "" });
     async function fetchRepos(service, gitToolId) {
+      setIsWorkspacesSearching(true);
+      // Set results state
+      let results = await pipelineActions.searchWorkSpaces(service, gitToolId, getAccessToken);
+      if (typeof(results) != "object") {
+        setWorkspacesList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+        let errorMessage =
+          "Workspace information is missing or unavailable!";
+        toastContext.showErrorDialog(errorMessage);
+        setIsWorkspacesSearching(false);
+        return;
+      }
+        //console.log(results);
+        setWorkspacesList(results);
+        setIsWorkspacesSearching(false);
+    }
+
+    if (
+      formData.service === "bitbucket" &&
+      formData.gitToolId &&
+      formData.gitToolId.length > 0
+    ) {
+      // Fire off our API call
+      fetchRepos(formData.service, formData.gitToolId);
+    } else {
+      setIsWorkspacesSearching(true);
+      setWorkspacesList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+    }
+  }, [formData.service, formData.gitToolId, formData.gitCredential]);
+
+  // fetch repos
+  useEffect(() => {
+    setShowToast(false);
+
+    async function fetchRepos(service, gitToolId, workspaces) {
       setIsRepoSearching(true);
       // Set results state
-      let results = await searchRepositories(service, gitToolId);
+      let results = await pipelineActions.searchRepositories(service, gitToolId, workspaces, getAccessToken);
+      if (typeof(results) != "object") {
+        setRepoList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+        let errorMessage =
+          "Repository information is missing or unavailable!";
+        toastContext.showErrorDialog(errorMessage);
+        setIsRepoSearching(false);
+        return;
+      }
         //console.log(results);
         setRepoList(results);
         setIsRepoSearching(false);
     }
 
-    if (formData.service && formData.service.length > 0 && formData.gitToolId && formData.gitToolId.length > 0) {
+    if (
+      formData.service &&
+      formData.service.length > 0 &&
+      formData.gitToolId &&
+      formData.gitToolId.length > 0
+    ) {
       // Fire off our API call
-      fetchRepos(formData.service, formData.gitToolId);
+      fetchRepos(formData.service, formData.gitToolId, formData.workspace);
     } else {
-      // setIsRepoSearching(true);
+      setIsRepoSearching(true);
       setRepoList([{ value: "", name: "Select One", isDisabled: "yes" }]);
     }
-  }, [formData.service, formData.gitToolId, formData.gitCredential]);
+  }, [formData.service, formData.gitToolId, formData.gitCredential, formData.workspace]);
+
 
   // fetch branches
   useEffect(() => {
     setShowToast(false);
 
-    // setFormData({ ...formData, branch : "" });
-    async function fetchBranches(service, gitToolId, repoId) {
+    async function fetchBranches(service, gitToolId, repoId, workspaces) {
       setIsBranchSearching(true);
       // Set results state
-      let results = await searchBranches(service, gitToolId, repoId);
-      setBranchList(results);
-      setIsBranchSearching(false);
+      let results = await pipelineActions.searchBranches(service, gitToolId, repoId, workspaces, getAccessToken);
+      if (typeof(results) != "object") {
+        setBranchList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+        let errorMessage =
+          "Branch information is missing or unavailable!";
+        toastContext.showErrorDialog(errorMessage);
+        setIsBranchSearching(false);
+        return;
+      }
+        setBranchList(results);
+        setIsBranchSearching(false);
     }
 
     if (
@@ -235,27 +304,12 @@ function JenkinsStepConfiguration({
       formData.repoId.length > 0
     ) {
       // Fire off our API call
-      fetchBranches(formData.service, formData.gitToolId, formData.repoId);
+      fetchBranches(formData.service, formData.gitToolId, formData.repoId, formData.workspace);
     } else {
       setIsRepoSearching(true);
       setBranchList([{ value: "", name: "Select One", isDisabled: "yes" }]);
     }
   }, [formData.repoId]);
-
-  /*
-  useEffect(() => {
-    if (formData.toolConfigId) {
-      setJobsList(
-        jenkinsList[
-          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-          ] ?
-          jenkinsList[
-            jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-            ].jobs : [],
-      );
-    }
-  }, [jenkinsList, formData.toolConfigId]);
-*/
 
   useEffect(() => {
     if (formData.toolJobType && formData.toolJobType.includes("SFDC")) {
@@ -334,42 +388,6 @@ function JenkinsStepConfiguration({
     }
   };
 
-  const searchToolsList = async (service) => {
-    const { getAccessToken } = contextType;
-    const accessToken = await getAccessToken();
-    const apiUrl = "/registry/properties/" + service; // this is to get all the service accounts from tool registry
-    try {
-      const res = await axiosApiService(accessToken).get(apiUrl);
-      if (res.data && res.status === 200) {
-        let respObj = [];
-        let arrOfObj = res.data;
-        arrOfObj.map((item) => {
-          respObj.push({
-            name: item.name,
-            id: item._id,
-            configuration: item.configuration,
-            accounts: item.accounts,
-            jobs: item.jobs,
-          });
-        });
-        //console.log(respObj);
-        return respObj;
-      } else {
-        let toast = getErrorDialog(
-          "Jenkins information is missing or unavailable!  Please ensure the required Jenkins creds are registered and up to date in Tool Registry.",
-          setShowToast,
-          "detailPanelTop"
-        );
-        setToast(toast);
-        setShowToast(true);
-      }
-    } catch (error) {
-      let toast = getErrorDialog(error, setShowToast, "detailPanelTop");
-      setToast(toast);
-      setShowToast(true);
-    }
-  };
-
   const validateRequiredFields = () => {
     const regex = RegExp("^[ a-z_.-]*$");
     let { toolConfigId, toolJobId, jenkinsUrl, jUserId, jobName, buildType, dockerName, dockerTagName, sfdcUnitTestType } = formData;
@@ -433,6 +451,7 @@ function JenkinsStepConfiguration({
         gitCredential: "",
         gitUserName: "",
         repository: "",
+        workspace:"",
         branch: "",
         toolJobId: "",
         toolJobType: "",
@@ -499,9 +518,25 @@ function JenkinsStepConfiguration({
       gitUrl: "",
       sshUrl: "",
       repository: "",
+      workspace:"",
       branch: "",
       projectId: "",
       defaultBranch: "",
+    });
+  };
+
+  const handleWorkspacesChange = (selectedOption) => {
+    setFormData({
+      ...formData,
+      workspace: selectedOption,
+      repository: "",
+      repoId: "",
+      projectId: "",
+      gitUrl: "",
+      sshUrl: "",
+      branch: "",
+      defaultBranch: "",
+      gitBranch: "",
     });
   };
 
@@ -579,93 +614,6 @@ function JenkinsStepConfiguration({
           isOrgToOrg: false,
         });
         break;
-    }
-  };
-  //todo: the api needs to be moved to actions.jsx
-  const searchRepositories = async (service, gitAccountId) => {
-    const { getAccessToken } = contextType;
-    const accessToken = await getAccessToken();
-    const apiUrl = "/tools/properties";
-    const postBody = {
-      tool: service,
-      metric: "getRepositories",
-      gitAccountId: gitAccountId,
-    };
-    //console.log(postBody);
-    try {
-      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      if (res.data && res.data.data) {
-        let arrOfObj = res.data.data;
-        if( typeof arrOfObj !== "object" ) {
-          let toast = getErrorDialog(
-            "Error fetching repositories: "+ arrOfObj,
-            setShowToast,
-            "detailPanelTop"
-          );
-          setToast(toast);
-          setShowToast(true);
-          setBranchList([]);
-          return [];
-        }
-        return arrOfObj;
-      } else {
-        let toast = getServiceUnavailableDialog(setShowToast, "detailPanelTop");
-        setToast(toast);
-        setShowToast(true);
-      }
-    } catch (error) {
-      let toast = getErrorDialog(error, setShowToast, "detailPanelTop");
-      setToast(toast);
-      setShowToast(true);
-      console.error(error.message);
-    }
-  };
-
-  //todo: the api needs to be moved to actions.jsx
-  const searchBranches = async (service, gitAccountId, repoId) => {
-    const { getAccessToken } = contextType;
-    const accessToken = await getAccessToken();
-    const apiUrl = "/tools/properties";
-    const postBody = {
-      tool: service,
-      metric: "getBranches",
-      gitAccountId: gitAccountId,
-      repoId: repoId,
-    };
-    try {
-      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      if (res.data && res.data.data) {
-        let arrOfObj = res.data.data;
-        if( typeof arrOfObj !== "object" ) {
-          let toast = getErrorDialog(
-            "Error fetching branches: "+ arrOfObj,
-            setShowToast,
-            "detailPanelTop"
-          );
-          setToast(toast);
-          setShowToast(true);
-          return [];
-        }
-        if (arrOfObj) {
-          var result = arrOfObj.map(function (el) {
-            var o = Object.assign({});
-            // o.value = el.toLowerCase();
-            o.value = el;
-            o.name = el;
-            return o;
-          });
-          return result;
-        }
-      } else {
-        let toast = getServiceUnavailableDialog(setShowToast, "detailPanelTop");
-        setToast(toast);
-        setShowToast(true);
-      }
-    } catch (error) {
-      let toast = getErrorDialog(error, setShowToast, "detailPanelTop");
-      setToast(toast);
-      setShowToast(true);
-      console.error(error.message);
     }
   };
 
@@ -827,7 +775,7 @@ function JenkinsStepConfiguration({
           )}
           {formData.toolConfigId && formData.toolConfigId.length > 0 && (
             <Form.Label className="mt-2 pl-1">
-              <Link to={"/inventory/tools/" + formData.toolConfigId}>
+              <Link to={"/inventory/tools/details/" + formData.toolConfigId}>
                 <FontAwesomeIcon icon={faTools} className="pr-1" /> View/edit this tool's Registry settings
               </Link>
             </Form.Label>
@@ -886,7 +834,7 @@ function JenkinsStepConfiguration({
                       <div className="form-text text-muted p-2">
                         <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
                         No jobs have been created for <span>{formData.jenkinsUrl}</span>. Please go to
-                        <Link to={"/inventory/tools/" + formData.toolConfigId}> Tool Registry</Link> and add credentials
+                        <Link to={"/inventory/tools/details/" + formData.toolConfigId}> Tool Registry</Link> and add credentials
                         and register a job for this Jenkins in order to proceed.{" "}
                       </div>
                     )}
@@ -977,11 +925,62 @@ function JenkinsStepConfiguration({
                     </Form.Group>
                   )}
 
+              {formData.service && formData.service === "bitbucket" && 
+              formData.gitToolId &&
+              formData.jobType != "SFDC VALIDATE PACKAGE XML" &&
+              formData.jobType != "SFDC UNIT TESTING" &&
+              formData.jobType != "SFDC DEPLOY" && !formData.isOrgToOrg && (
+              <Form.Group controlId="account" className="mt-2">
+                <Form.Label>Workspace*</Form.Label>
+                {isWorkspacesSearching ? (
+                  <div className="form-text text-muted mt-2 p-2">
+                    <FontAwesomeIcon
+                      icon={faSpinner}
+                      spin
+                      className="text-muted mr-1"
+                      fixedWidth
+                    />
+                    Loading workspaces from registry
+                  </div>
+                ) : (
+                  <>
+                    {workspacesList ? (
+                      <DropdownList
+                        data={workspacesList}
+                        value={
+                          workspacesList[
+                            workspacesList.findIndex(
+                              (x) => x === formData.workspace,
+                            )
+                            ]
+                        }
+                        valueField="value"
+                        textField="name"
+                        filter="contains"
+                        onChange={handleWorkspacesChange}
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={faSpinner}
+                        spin
+                        className="text-muted mr-1"
+                        fixedWidth
+                      />
+                    )}
+                  </>
+                )}
+                {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
+              </Form.Group>
+            )}
+
             {formData.service &&
               formData.gitToolId &&
               formData.jobType != "SFDC VALIDATE PACKAGE XML" &&
               formData.jobType != "SFDC UNIT TESTING" &&
               formData.jobType != "SFDC DEPLOY" &&
+              (formData.service === "bitbucket"? 
+                formData.workspace 
+                && formData.workspace.length > 0 : true ) && 
               !formData.isOrgToOrg && (
                 <Form.Group controlId="account" className="mt-2">
                   <Form.Label>Repository*</Form.Label>
@@ -992,7 +991,7 @@ function JenkinsStepConfiguration({
                     </div>
                   ) : (
                     <>
-                      {repoList && repoList.length > 0 ? (
+                      {repoList ? (
                         <DropdownList
                           data={repoList}
                           value={repoList[repoList.findIndex((x) => x.name === formData.repository)]}

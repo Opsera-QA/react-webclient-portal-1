@@ -333,7 +333,7 @@ console.log(formData)
           )}
           {formData.anchoreToolConfigId && formData.anchoreToolConfigId.length > 0 && (
             <Form.Label className="mt-2 pl-1">
-              <Link to={"/inventory/tools/" + formData.anchoreToolConfigId}>
+              <Link to={"/inventory/tools/details/" + formData.anchoreToolConfigId}>
                 <FontAwesomeIcon icon={faTools} className="pr-1" /> View/edit
                 this tool's Registry settings
               </Link>

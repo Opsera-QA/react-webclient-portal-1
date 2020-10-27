@@ -721,7 +721,7 @@ function CommandLineStepConfiguration({
           )}
           {formData.toolConfigId && formData.toolConfigId.length > 0 && (
             <Form.Label className="mt-2 pl-1">
-              <Link to={"/inventory/tools/" + formData.toolConfigId}>
+              <Link to={"/inventory/tools/details/" + formData.toolConfigId}>
                 <FontAwesomeIcon icon={faTools} className="pr-1" /> View/edit
                 this tool's Registry settings
               </Link>
@@ -803,7 +803,7 @@ function CommandLineStepConfiguration({
                     />
                     No jobs have been created for{" "}
                     <span>{formData.jenkinsUrl}</span>. Please go to
-                    <Link to={"/inventory/tools/" + formData.toolConfigId}>
+                    <Link to={"/inventory/tools/details/" + formData.toolConfigId}>
                       {" "}
                       Tool Registry
                     </Link>{" "}
