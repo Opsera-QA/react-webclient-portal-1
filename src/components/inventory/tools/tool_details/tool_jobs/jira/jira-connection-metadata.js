@@ -23,7 +23,7 @@ const jiraConnectionMetadata = {
       isRequired: true
     }
   ],
-  newObjectFields:
+  newModelBase:
     {
       toolURL: "",
       jiraPort: "",

@@ -44,12 +44,8 @@ function JiraToolConfiguration({ toolData, fnSaveChanges, fnSaveToVault }) {
     if (jiraConfigurationDto.isModelValid()) {
       let newConfiguration = {...jiraConfigurationDto.getPersistData()};
 
-      newConfiguration.toolURL = jiraConfigurationDto.getData("toolURL").trim();
-      newConfiguration.jiraPort = jiraConfigurationDto.getData("jiraPort").trim();
-      newConfiguration.userName = jiraConfigurationDto.getData("userName").trim();
-
       if (jiraConfigurationDto.isChanged("vaultSecretKey")) {
-        newConfiguration.vaultSecretKey = await saveToVault(toolData._id, toolData.tool_identifier, "secretKey", "Vault Secured Key", jiraConfigurationDto.getData("vaultSecretKey").trim());
+        newConfiguration.vaultSecretKey = await saveToVault(toolData._id, toolData.tool_identifier, "secretKey", "Vault Secured Key", jiraConfigurationDto.getData("vaultSecretKey"));
       }
 
       const item = {
