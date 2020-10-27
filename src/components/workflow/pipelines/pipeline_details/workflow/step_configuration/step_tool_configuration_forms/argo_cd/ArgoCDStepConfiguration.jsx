@@ -170,7 +170,7 @@ function ArgoCDStepConfiguration({ stepTool, plan, stepId, parentCallback, getTo
             setRepoList(formatOptions(result));
           }
           if (arrOfObj.length === 0) {
-            setArgoList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+            setRepoList([{ value: "", name: "Select One", isDisabled: "yes" }]);
             let errorMessage = "No Repositories Found!  Please check credentials or configure a repository.";
             toastContext.showErrorDialog(errorMessage);
           }

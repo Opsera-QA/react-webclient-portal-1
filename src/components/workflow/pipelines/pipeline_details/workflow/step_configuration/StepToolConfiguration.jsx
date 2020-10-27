@@ -28,6 +28,7 @@ import AnchoreIntegratorStepConfiguration from "./step_tool_configuration_forms/
 import SFDCStepConfiguration from "./step_tool_configuration_forms/SFDCStepConfiguration";
 import NexusStepConfiguration from "./step_tool_configuration_forms/nexus/NexusStepConfiguration";
 import ArgoCDStepConfiguration from "./step_tool_configuration_forms/argo_cd/ArgoCDStepConfiguration";
+import TerraformStepConfiguration from "./step_tool_configuration_forms/terraform/TerraformStepConfiguration";
 import {getErrorDialog} from "../../../../../common/toasts/toasts";
 import pipelineActions from "../../../../pipeline-actions";
 import ToastContext from "react-bootstrap/cjs/ToastContext";
@@ -475,6 +476,20 @@ function StepToolConfiguration({
             setShowToast={setShowToast}
           />
         );
+      case "terraform": 
+          return (
+            <TerraformStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            getToolsList={getToolsList}
+            setToast={setToast}
+            setShowToast={setShowToast}
+          />
+          );
     }
   }
 
