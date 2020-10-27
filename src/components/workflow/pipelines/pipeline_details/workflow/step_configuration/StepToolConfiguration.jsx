@@ -19,7 +19,7 @@ import S3StepConfiguration from "./step_tool_configuration_forms/S3StepConfigura
 import DatabricksNotebookStepConfiguration from "./step_tool_configuration_forms/DatabricksNotebookStepConfiguration";
 import SshUploadDeployStepConfiguration from "./step_tool_configuration_forms/SshUploadDeployStepConfiguration";
 import ElasticBeanstalkDeployStepConfiguration from "./step_tool_configuration_forms/ElasticBeanstalkDeployStepConfiguration";
-import SpinnakerStepConfiguration from "./step_tool_configuration_forms/SpinnakerStepConfiguration";
+import SpinnakerStepConfiguration from "./step_tool_configuration_forms/spinnaker/SpinnakerStepConfiguration";
 import ApprovalStepConfiguration from "./step_tool_configuration_forms/ApprovalStepConfiguration";
 import CypressStepConfiguration from "./step_tool_configuration_forms/CypressStepConfiguration";
 import DockerPushStepConfiguration from "./step_tool_configuration_forms/DockerPushStepConfiguration";
@@ -367,6 +367,7 @@ function StepToolConfiguration({
             stepTool={stepTool}
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
+            getToolsList={getToolsList}
             setToast={setToast}
             setShowToast={setShowToast}
           />
