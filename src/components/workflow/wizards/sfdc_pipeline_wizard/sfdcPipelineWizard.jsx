@@ -30,6 +30,7 @@ const SfdcPipelineWizard = ({
   const [stepIndex, setStepIndex] = useState();
   const [sfdcComponentFilterObject, setSfdcComponentFilterObject] = useState({});
   const [selectedComponentTypes, setSelectedComponentTypes] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(new Date(new Date().setHours(0, 0, 0, 0)));
   const [fromSFDC, setFromSFDC] = useState(false);
   const [fromDestinationSFDC, setFromDestinationSFDC] = useState(false);
   const [fromGit, setFromGit] = useState(false);
@@ -132,6 +133,8 @@ const SfdcPipelineWizard = ({
             selectedComponentTypes={selectedComponentTypes}
             setModifiedFiles={setModifiedFiles}
             setSfdcComponentFilterObject={setSfdcComponentFilterObject}
+            selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
           />
         )}
 

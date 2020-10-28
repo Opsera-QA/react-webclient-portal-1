@@ -1132,7 +1132,7 @@ function JenkinsStepConfiguration({
                     />
                      {dockerNameErr ? 
                       <Form.Control.Feedback type="invalid">
-                      Please provide a valid docker tag.
+                      Please provide a valid docker name.
                       </Form.Control.Feedback> : 
                      <Form.Text className="text-muted">
                        lowercase without spaces. only - . (dot) and _ are allowed
