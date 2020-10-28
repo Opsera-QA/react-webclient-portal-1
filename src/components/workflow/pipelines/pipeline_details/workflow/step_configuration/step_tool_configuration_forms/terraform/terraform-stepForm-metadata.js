@@ -27,14 +27,6 @@ const TerraformStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Runtime Argument Name",
-      id: "keyValueName",
-    },
-    {
-      label: "Runtime Argument Value",
-      id: "keyValue",
-    },
-    {
       label: "Runtime Argument Map",
       id: "keyValueMap",
     },
@@ -50,9 +42,7 @@ const TerraformStepFormMetadata = {
     type:"",
     gitToolId : "",
     gitRepositoryID: "",
-    keyValueName : "",
-    keyValue: "",
-    keyValueMap: ""
+    keyValueMap: {}
   }
 };
 
