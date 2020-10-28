@@ -49,6 +49,8 @@ const SfdcPipelineComponents = ({
   setModifiedFiles,
   handleClose,
   setSfdcComponentFilterObject,
+  selectedDate,
+  setSelectedDate,
 }) => {
   const { getAccessToken } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
@@ -96,7 +98,7 @@ const SfdcPipelineComponents = ({
       time={true}
       min={new Date().setMonth(new Date().getMonth() - 3)}
       max={new Date()}
-      defaultValue={new Date(new Date().setHours(0, 0, 0, 0))}
+      defaultValue={selectedDate}
       onChange={(value) => handleAsOfDateChange({ value })}
       initialValue={new Date(new Date().setHours(0, 0, 0, 0))}
     />
@@ -104,6 +106,7 @@ const SfdcPipelineComponents = ({
 
   const handleAsOfDateChange = (value) => {
     const date = Moment(value.value).toISOString();
+    setSelectedDate(value.value);
     setAsOfDate(date);
   };
 
@@ -349,6 +352,8 @@ SfdcPipelineComponents.propTypes = {
   setModifiedFiles: PropTypes.func,
   handleClose: PropTypes.func,
   setSfdcComponentFilterObject: PropTypes.func,
+  selectedDate: PropTypes.string,
+  setSelectedDate: PropTypes.func,
 };
 
 AccountDropDown.propTypes = {

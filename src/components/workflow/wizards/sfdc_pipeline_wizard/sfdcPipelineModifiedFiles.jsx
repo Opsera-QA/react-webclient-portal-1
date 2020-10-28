@@ -742,7 +742,7 @@ const SfdcPipelineModifiedFiles = ({
                               {item.commitAction && item.commitAction === "modified" && (
                                 <OverlayTrigger
                                   placement="top"
-                                  overlay={<Tooltip id="added-tooltip">Added File</Tooltip>}
+                                  overlay={<Tooltip id="added-tooltip">Modified File</Tooltip>}
                                 >
                                 <FontAwesomeIcon icon={faEdit} fixedWidth className="mr-1 yellow"/>
                                 </OverlayTrigger>
