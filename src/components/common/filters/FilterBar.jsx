@@ -101,7 +101,7 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, addRe
     }
 
     return (
-      <div>
+      <div className="d-flex">
         <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={popover} className="filter-popover">
           <div>
             <Button type="primary" size="sm"><span><FontAwesomeIcon icon={faFilter} fixedWidth/></span></Button>
