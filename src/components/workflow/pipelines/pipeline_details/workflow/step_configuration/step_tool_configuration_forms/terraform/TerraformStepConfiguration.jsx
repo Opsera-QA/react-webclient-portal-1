@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { OverlayTrigger, Popover } from "react-bootstrap";
+import { OverlayTrigger, Popover, Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
@@ -13,6 +13,9 @@ import DtoTextInput from "components/common/input/dto_input/dto-text-input";
 import { DialogToastContext, showServiceUnavailableDialog } from "contexts/DialogToastContext";
 import SaveButton from "components/common/buttons/SaveButton";
 import GitActionsHelper from "../../helpers/git-actions-helper.js";
+import JSONInput from "react-json-editor-ajrm";
+import locale    from "react-json-editor-ajrm/locale/en";
+
 
 const SCM_TOOL_LIST = [
   {
@@ -43,6 +46,9 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
   const [repoList, setRepoList] = useState([]);
   const [isRepoSearching, setIsRepoSearching] = useState(false);
   const [isBranchSearching, setIsBranchSearching] = useState(false);
+  const [jsonEditorInvalid, setJsonEditorInvalid] = useState(false);
+  const [jsonEditor, setJsonEditor] = useState({});
+
 
   useEffect(() => {
     loadFormData(stepTool);
@@ -170,13 +176,6 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
   };
 
   const callbackFunction = async () => {
-    let newDataObject = terraformStepConfigurationDto;
-    let keyMap = {};
-    if (terraformStepConfigurationDto.getData("keyValueName").length > 0 && terraformStepConfigurationDto.getData("keyValue").length > 0) {
-      keyMap[terraformStepConfigurationDto.getData("keyValueName")] = terraformStepConfigurationDto.getData("keyValue")
-      newDataObject.setData("keyValueMap", keyMap);
-      setTerraformStepConfigurationDataDto({ ...newDataObject });
-    }
     const item = {
       configuration: terraformStepConfigurationDto.getPersistData(),
       threshold: {
@@ -222,6 +221,20 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
       );
       return;
       }
+  };
+
+  const handleJsonInputUpdate = (e) => {
+    if (e.error) {
+      setJsonEditorInvalid(e.error)
+      return;
+    }
+    if (e.jsObject && Object.keys(e.jsObject).length > 0) {
+      setJsonEditor(e.jsObject);
+      let newDataObject = terraformStepConfigurationDto;
+      newDataObject.setData("keyValueMap", e.jsObject);
+      setTerraformStepConfigurationDataDto({ ...newDataObject });
+      return
+    }
   };
 
   if (isLoading || terraformStepConfigurationDto === undefined) {
@@ -300,27 +313,48 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
         fieldName={"gitFilePath"}
         disabled={terraformStepConfigurationDto && terraformStepConfigurationDto.getData("defaultBranch").length === 0}
       />
-      <DtoTextInput
-        setDataObject={setTerraformStepConfigurationDataDto}
-        dataObject={terraformStepConfigurationDto}
-        fieldName={"keyValueName"}
-        disabled={terraformStepConfigurationDto && terraformStepConfigurationDto.getData("gitFilePath").length === 0}
-      />
-      <DtoTextInput
-        setDataObject={setTerraformStepConfigurationDataDto}
-        dataObject={terraformStepConfigurationDto}
-        fieldName={"keyValue"}
-        disabled={terraformStepConfigurationDto && terraformStepConfigurationDto.getData("gitFilePath").length === 0}
-      />
+            <OverlayTrigger
+        trigger="click"
+        rootClose
+        placement="left"
+        overlay={
+          <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
+            <Popover.Title as="h3">Runtime Arguments</Popover.Title>
+
+            <Popover.Content>
+              <div className="text-muted mb-2">
+              Enter Runtime arguments as a key value pair JSON. You can add any number of runtime arguments to the JSON Object. 
+              Sample: {" { Key1: Value1, Key2: value2 }" }
+              </div>
+            </Popover.Content>
+          </Popover>
+        }
+      >
+        <FontAwesomeIcon
+          icon={faEllipsisH}
+          className="fa-pull-right pointer pr-1"
+          onClick={() => document.body.click()}
+        />
+      </OverlayTrigger>
+      <div className="form-group m-2" >
+      <label >Runtime Arguments (Optional)</label>
+      <div style={{ border: "1px solid #ced4da", borderRadius: ".25rem" }}>
+        <JSONInput
+          placeholder={Object.keys(terraformStepConfigurationDto.getData("keyValueMap")).length > 0 ? terraformStepConfigurationDto.getData("keyValueMap") : undefined}
+          value={terraformStepConfigurationDto.getData("keyValueMap")}
+          onChange={e => handleJsonInputUpdate(e) }
+          theme="light_mitsuketa_tribute"
+          locale={locale}
+          height="175px"
+        />
+      </div>
+      </div>
+      <small className="form-text text-muted form-group m-2 text-left">Enter runtime arguments as a JSON Object</small>
       <SaveButton
         recordDto={terraformStepConfigurationDto}
         setRecordDto={setTerraformStepConfigurationDataDto}
         createRecord={callbackFunction}
         updateRecord={callbackFunction}
-        disable={
-          terraformStepConfigurationDto.getData("keyValueName").length > 0 && terraformStepConfigurationDto.getData("keyValue").length === 0 ||
-    terraformStepConfigurationDto.getData("keyValueName").length === 0 && terraformStepConfigurationDto.getData("keyValue").length > 0
-        }
       />
       </>
       }
