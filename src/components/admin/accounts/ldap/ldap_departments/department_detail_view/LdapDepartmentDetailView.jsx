@@ -12,12 +12,14 @@ import departmentActions from "../department-functions";
 import ldapDepartmentMetaData from "../ldap-department-metadata";
 import Model from "../../../../../../core/data_model/model";
 import {faBuilding} from "@fortawesome/pro-light-svg-icons/faBuilding";
+import {ldapGroupMetaData} from "../../../../../settings/ldap_groups/ldap-groups-metadata";
 
 function LdapDepartmentDetailView() {
   const {departmentName, orgDomain} = useParams();
   const [accessRoleData, setAccessRoleData] = useState({});
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
+  const [ldapDepartmentGroupData, setLdapDepartmentGroupData] = useState(undefined);
   const [ldapDepartmentData, setLdapDepartmentData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [authorizedActions, setAuthorizedActions] = useState([]);
@@ -41,8 +43,16 @@ function LdapDepartmentDetailView() {
 
   const getLdapDepartment = async () => {
     const response = await departmentActions.getDepartment(orgDomain, departmentName, getAccessToken);
-    console.log("response: " + JSON.stringify(response));
-    setLdapDepartmentData(new Model({...response.data}, ldapDepartmentMetaData, false));
+
+    if (response != null && response.data != null) {
+      let newLdapDepartmentData = new Model({...response.data}, ldapDepartmentMetaData, false);
+      setLdapDepartmentData(newLdapDepartmentData);
+      const groupResponse = await accountsActions.getGroup(orgDomain, newLdapDepartmentData.getData("departmentGroupName"), getAccessToken);
+
+      if (groupResponse != null) {
+        setLdapDepartmentGroupData(new Model({...groupResponse.data}, ldapGroupMetaData, false))
+      }
+    }
   };
 
   const getRoles = async () => {
@@ -64,7 +74,7 @@ function LdapDepartmentDetailView() {
     }
   };
 
-  if (isLoading || !accessRoleData) {
+  if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   }
 
@@ -78,8 +88,16 @@ function LdapDepartmentDetailView() {
       title={ldapDepartmentData != null ? `Department Details [${ldapDepartmentData["name"]}]` : undefined}
       titleIcon={faBuilding}
       isLoading={isLoading}
-      summaryPanel={<LdapDepartmentSummaryPanel ldapDepartmentData={ldapDepartmentData} />}
-      detailPanel={<LdapDepartmentDetailPanel setLdapDepartmentData={setLdapDepartmentData} orgDomain={orgDomain} ldapDepartmentData={ldapDepartmentData} authorizedActions={authorizedActions}/>}
+      summaryPanel={<LdapDepartmentSummaryPanel ldapDepartmentData={ldapDepartmentData} orgDomain={orgDomain} />}
+      detailPanel={
+        <LdapDepartmentDetailPanel
+          ldapDepartmentGroupData={ldapDepartmentGroupData}
+          setLdapDepartmentData={setLdapDepartmentData}
+          orgDomain={orgDomain}
+          ldapDepartmentData={ldapDepartmentData}
+          authorizedActions={authorizedActions}
+          loadData={loadData}
+        />}
     />
   );
 }

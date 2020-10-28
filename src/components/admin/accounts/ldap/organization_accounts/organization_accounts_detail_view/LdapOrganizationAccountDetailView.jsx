@@ -14,6 +14,7 @@ import {DialogToastContext} from "../../../../../../contexts/DialogToastContext"
 import DetailViewContainer from "../../../../../common/panels/detail_view_container/DetailViewContainer";
 import DataNotFoundContainer from "../../../../../common/panels/detail_view_container/DataNotFoundContainer";
 import DataNotFoundDialog from "../../../../../common/status_notifications/data_not_found/DataNotFoundDialog";
+import departmentActions from "../../ldap_departments/department-functions";
 
 function LdapOrganizationAccountDetailView() {
   const { organizationDomain } = useParams();
@@ -22,9 +23,11 @@ function LdapOrganizationAccountDetailView() {
   const [accessRoleData, setAccessRoleData] = useState({});
   const [isLoading, setIsLoading] = useState(false); //this is how we toggle showing/hiding stuff when API calls or other functions are loading
   const [ldapOrganizationAccountData, setLdapOrganizationAccountData] = useState(undefined);
+  const [ldapDepartmentData, setLdapDepartmentData] = useState(undefined);
   const [organizationName, setOrganizationName] = useState(undefined);
   const [authorizedActions, setAuthorizedActions] = useState([]);
   const [authorizedIdpActions, setAuthorizedIdpActions] = useState([]);
+  const [authorizedDepartmentActions, setAuthorizedDepartmentActions] = useState([]);
 
 
   useEffect(() => {
@@ -55,9 +58,15 @@ function LdapOrganizationAccountDetailView() {
       setAuthorizedActions(authorizedActions);
       let authorizedIdpActions = await accountsActions.getAllowedIdpAccountActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
       setAuthorizedIdpActions(authorizedIdpActions);
+      let authorizedDepartmentActions = await accountsActions.getAllowedDepartmentActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
+      setAuthorizedDepartmentActions(authorizedDepartmentActions);
 
       if (authorizedActions.includes("get_organization_account_details")) {
         await loadOrganizationAccount();
+      }
+
+      if (authorizedDepartmentActions.includes("get_department_details")) {
+        await loadDepartments();
       }
     }
   };
@@ -69,6 +78,14 @@ function LdapOrganizationAccountDetailView() {
         setLdapOrganizationAccountData(new Model(response.data, ldapOrganizationAccountMetaData, false));
         setOrganizationName(response.data["org"]["name"]);
       }
+  };
+
+  const loadDepartments = async () => {
+    const response = await departmentActions.getDepartmentsByDomain(organizationDomain, getAccessToken);
+
+    if (response != null && response.data != null) {
+      setLdapDepartmentData(response.data);
+    }
   };
 
   if (!accessRoleData) {
@@ -94,7 +111,18 @@ function LdapOrganizationAccountDetailView() {
         titleIcon={faUsers}
         isLoading={isLoading}
         summaryPanel={<LdapOrganizationAccountSummaryPanel ldapOrganizationAccountData={ldapOrganizationAccountData} organizationName={organizationName}/>}
-        detailPanel={<LdapOrganizationAccountDetailPanel authorizedActions={authorizedActions} authorizedIdpActions={authorizedIdpActions} ldapOrganizationAccountData={ldapOrganizationAccountData} setLdapOrganizationAccountData={setLdapOrganizationAccountData} loadData={loadData}/>}
+        detailPanel={
+          <LdapOrganizationAccountDetailPanel
+            authorizedActions={authorizedActions}
+            authorizedIdpActions={authorizedIdpActions}
+            authorizedDepartmentActions={authorizedDepartmentActions}
+            ldapOrganizationAccountData={ldapOrganizationAccountData}
+            setLdapOrganizationAccountData={setLdapOrganizationAccountData}
+            loadData={loadData}
+            ldapDepartmentData={ldapDepartmentData}
+            organizationDomain={organizationDomain}
+          />
+        }
       />
     );
 }

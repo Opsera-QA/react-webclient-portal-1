@@ -12,16 +12,24 @@ function ActionBarDeleteButton2({handleDelete, relocationPath, dataObject}) {
   const history = useHistory();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const deleteObject = () => {
-    setShowDeleteModal(false);
+  const deleteObject = async () => {
     try {
-      handleDelete();
-      toastContext.showDeleteSuccessResultDialog("Pipeline Template");
-      setShowDeleteModal(false);
-      history.push(relocationPath);
+      let result = await handleDelete();
+
+      console.log("result: " + JSON.stringify(result));
+
+      if (result.error == null) {
+        toastContext.showDeleteSuccessResultDialog(dataObject.getType());
+        setShowDeleteModal(false);
+        history.push(relocationPath);
+      }
+      else
+      {
+        toastContext.showDeleteFailureResultDialog(dataObject.getType(), result.error);
+      }
     }
     catch (error) {
-      toastContext.showDeleteFailureResultDialog("Pipeline Template");
+      toastContext.showDeleteFailureResultDialog(dataObject.getType());
     }
   }
 

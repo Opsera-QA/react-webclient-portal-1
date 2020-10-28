@@ -35,9 +35,7 @@ function DeleteModal({ dataObject, showModal, setShowModal, handleDelete }) {
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <TooltipWrapper>
-          <Button size="sm" variant="secondary" onClick={handleClose}>Cancel</Button>
-        </TooltipWrapper>
+        <Button size="sm" variant="secondary" onClick={handleClose}>Cancel</Button>
         <TooltipWrapper innerText={cannotBeUndone}>
           <Button size="sm" variant="danger" onClick={handleDelete}>Delete {dataObject.getType()}</Button>
         </TooltipWrapper>
