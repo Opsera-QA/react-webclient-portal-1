@@ -64,7 +64,7 @@ function SpinnakerStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
     if (typeof configuration !== "undefined") {
       setSpinnakerStepConfigurationDataDto(new Model(configuration, spinnakerStepFormMetadata, false));
       await getspinnakerAppsList(configuration.spinnakerId);
-      await getspinnakerToolsList(configuration.spinnakerId);
+      await getspinnakerToolsList(configuration.spinnakerId, configuration.applicationName);
       if (typeof threshold !== "undefined") {
         setThresholdType(threshold.type);
         setThresholdValue(threshold.value);
@@ -92,8 +92,8 @@ function SpinnakerStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
     setIsSpinnakerAppsSearching(true);
     try {
       const response = await spinnakerStepActions.searchApps(toolID, getAccessToken);
-      if (response.data && response.data.data) {
-        if (response.data.data.length === 0) {
+      if (response.data) {
+        if (response.data.length === 0) {
           setspinnakerAppsList([
             {
               name: "Configure spinnaker applications to activate this step",
@@ -130,8 +130,8 @@ function SpinnakerStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
     setIsSpinnakerToolsSearching(true);
     try {
       const response = await spinnakerStepActions.searchTools(toolID, appName, getAccessToken);
-      if (response.data && response.data.data) {
-        if (response.data.data.length === 0) {
+      if (response.data) {
+        if (response.data.length === 0) {
           setspinnakerToolsList([
             {
               name: "Configure spinnaker applications to activate this step",
@@ -176,7 +176,7 @@ function SpinnakerStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
       let newDataObject = spinnakerStepConfigurationDto;
       newDataObject.setData("applicationName", value.name);
       setSpinnakerStepConfigurationDataDto({ ...newDataObject });
-      await getspinnakerToolsList(setSpinnakerStepConfigurationDataDto.getData("spinnakerId"), value.name);
+      await getspinnakerToolsList(spinnakerStepConfigurationDto.getData("spinnakerId"), value.name);
       return;
     }
   };
