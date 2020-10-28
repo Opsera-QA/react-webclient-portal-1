@@ -12,6 +12,7 @@ import LoadingDialog from "../../../../common/status_notifications/loading";
 import DtoTagManagerInput from "../../../../common/input/dto_input/dto-tag-manager-input";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import DetailPanelContainer from "../../../../common/panels/detail_panel_container/DetailPanelContainer";
+import ToolUsageTypeInput from "../ToolUsageTypeInput";
 
 function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData, handleClose} ) {
   const {getAccessToken} = useContext(AuthContext);
@@ -71,6 +72,9 @@ function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData, 
             </Col>
             <Col lg={6}>
               <DtoSelectInput textField={"name"} valueField={"identifier"} fieldName={"tool_type_identifier"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto} selectOptions={toolList}/>
+            </Col>
+            <Col lg={6}>
+              <ToolUsageTypeInput fieldName={"usageType"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto}/>
             </Col>
             <Col lg={6}>
               <DtoTagManagerInput type={"tool"} dataObject={toolIdentifierDataDto} fieldName={"tags"} setDataObject={setToolIdentifierDataDto}  />
