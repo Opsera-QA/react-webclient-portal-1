@@ -509,6 +509,20 @@ accountsActions.createGroup = async (ldapOrganizationData, ldapGroupDataDto, cur
   return response;
 };
 
+
+accountsActions.deleteGroup = async (orgDomain, ldapGroupDataDto, getAccessToken) => {
+  let putData = {
+    "domain": orgDomain,
+    "groupName": ldapGroupDataDto.getData("name")
+  }
+  const accessToken = await getAccessToken();
+  const apiUrl = "/users/account/group/delete";
+  const response = await axiosApiService(accessToken).post(apiUrl, putData)
+    .then((result) =>  {return result;})
+    .catch(error => {throw error;});
+  return response;
+};
+
 accountsActions.syncMembership = async (ldapOrganizationData, groupName, emailList, getAccessToken) => {
   let postData = {
     domain: ldapOrganizationData.orgDomain,
@@ -522,25 +536,5 @@ accountsActions.syncMembership = async (ldapOrganizationData, groupName, emailLi
     .catch(error => {throw error;});
   return response;
 };
-
-// TODO: Should this be broken into add/remove?
-accountsActions.modifyMemership = async (membershipData, getAccessToken) => {
-  const accessToken = await getAccessToken();
-  const apiUrl = "/users/account/group/modify-membership";
-  const response = await axiosApiService(accessToken).post(apiUrl, membershipData)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
-};
-
-// TODO: Implement if necessary
-// accountsActions.duplicate = async (tagId, getAccessToken) => {
-//   const accessToken = await getAccessToken();
-//   const apiUrl = `/pipelines/${tagId}/duplicate/`;
-//   const response = await axiosApiService(accessToken).put(apiUrl)
-//     .then((result) =>  {return result;})
-//     .catch(error => {return { error };});
-//   return response;
-// };
 
 export default accountsActions;

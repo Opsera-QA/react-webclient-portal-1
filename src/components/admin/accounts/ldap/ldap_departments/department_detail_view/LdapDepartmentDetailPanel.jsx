@@ -10,8 +10,9 @@ import LdapDepartmentEditorPanel from "./LdapDepartmentEditorPanel";
 import {faIdCard, faUsers} from "@fortawesome/pro-solid-svg-icons";
 import LdapUsersTable from "../../../../../settings/ldap_users/LdapUsersTable";
 import LdapGroupManagePanel from "../../../../../settings/ldap_groups/ldap_group_detail/LdapGroupManagePanel";
+import LdapGroupsTable from "../../../../../settings/ldap_groups/LdapGroupsTable";
 
-function LdapDepartmentDetailPanel({ ldapDepartmentData, setLdapDepartmentData, orgDomain, authorizedActions }) {
+function LdapDepartmentDetailPanel({ ldapDepartmentData, loadData, setLdapDepartmentData, ldapDepartmentGroupData, orgDomain, authorizedActions }) {
   const [activeTab, setActiveTab] = useState("membership");
 
   const handleTabClick = (activeTab) => e => {
@@ -26,7 +27,6 @@ function LdapDepartmentDetailPanel({ ldapDepartmentData, setLdapDepartmentData, 
           <Col>
             <CustomTabContainer>
               <CustomTab icon={faUsers} tabName={"membership"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Membership"} />
-              {/*<CustomTab icon={faIdCard} tabName={"manage"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Manage"} />*/}
               <CustomTab icon={faCogs} tabName={"settings"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Settings"} />
             </CustomTabContainer>
           </Col>
@@ -34,7 +34,16 @@ function LdapDepartmentDetailPanel({ ldapDepartmentData, setLdapDepartmentData, 
         <Row>
           <Col>
             <div className="shaded-panel detail-view-detail-panel">
-              {ldapDepartmentData && <LdapDetailsView activeTab={activeTab} orgDomain={orgDomain} authorizedActions={authorizedActions} setLdapDepartmentData={setLdapDepartmentData} ldapDepartmentData={ldapDepartmentData} /> }
+              {ldapDepartmentData &&
+                <LdapDetailsView
+                  activeTab={activeTab}
+                  orgDomain={orgDomain}
+                  authorizedActions={authorizedActions}
+                  setLdapDepartmentData={setLdapDepartmentData}
+                  ldapDepartmentData={ldapDepartmentData}
+                  ldapDepartmentGroupData={ldapDepartmentGroupData}
+                  loadData={loadData}
+                />}
             </div>
           </Col>
         </Row>
@@ -43,18 +52,30 @@ function LdapDepartmentDetailPanel({ ldapDepartmentData, setLdapDepartmentData, 
   );
 }
 
-function LdapDetailsView({ activeTab, setLdapDepartmentData, ldapDepartmentData, orgDomain, authorizedActions }) {
+function LdapDetailsView({ activeTab, setLdapDepartmentData, ldapDepartmentData, ldapDepartmentGroupData, orgDomain, loadData, authorizedActions }) {
   useEffect(() => {
     // console.log("CHANGE HAPPENED");
   }, [activeTab]);
   if (activeTab) {
     switch (activeTab) {
+      // TODO: Make a component for this
       case "membership":
-        return (<div className="px-3 pt-2 pb-3"><LdapUsersTable orgDomain={orgDomain} userData={ldapDepartmentData.members} /></div>);
-      // case "manage":
-        // return (<LdapGroupManagePanel ldapGroupData={ldapDepartmentData} authorizedActions={authorizedActions} ldapOrganizationData={ldapOrganizationData} loadData={loadData}/>);
+        return (
+          <div className="px-3 pt-2 pb-3">
+            <LdapGroupsTable orgDomain={orgDomain} groupData={[ldapDepartmentGroupData]} />
+            <div className={"mt-3"}><LdapUsersTable orgDomain={orgDomain} userData={ldapDepartmentData.members} /></div>
+          </div>
+        );
     case "settings":
-      return <LdapDepartmentEditorPanel setLdapDepartmentData={setLdapDepartmentData} authorizedActions={authorizedActions} orgDomain={orgDomain} ldapDepartmentData={ldapDepartmentData} />;
+      return (
+        <LdapDepartmentEditorPanel
+          setLdapDepartmentData={setLdapDepartmentData}
+          authorizedActions={authorizedActions}
+          orgDomain={orgDomain}
+          ldapDepartmentData={ldapDepartmentData}
+          reloadData={loadData}
+        />
+        );
     default:
       return null;
     }
@@ -62,6 +83,7 @@ function LdapDetailsView({ activeTab, setLdapDepartmentData, ldapDepartmentData,
 }
 
 LdapDepartmentDetailPanel.propTypes = {
+  ldapDepartmentGroupData: PropTypes.object,
   ldapDepartmentData: PropTypes.object,
   setLdapDepartmentData: PropTypes.func,
   authorizedActions: PropTypes.array,

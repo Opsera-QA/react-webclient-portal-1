@@ -68,4 +68,18 @@ departmentActions.deleteDepartment = async (orgDomain, departmentDto, getAccessT
   return response;
 };
 
+departmentActions.syncDepartmentMembership = async (orgDomain, groupName, emailList, getAccessToken) => {
+  let postData = {
+    domain: orgDomain,
+    groupName: groupName,
+    emails: emailList,
+  };
+  const accessToken = await getAccessToken();
+  const apiUrl = "/users/account/group/sync-membership";
+  const response = await axiosApiService(accessToken).post(apiUrl, postData)
+    .then((result) =>  {return result;})
+    .catch(error => {throw error;});
+  return response;
+};
+
 export default departmentActions;

@@ -25,7 +25,7 @@ function TemplateSummaryPanel({templateData, opseraAdmin}) {
   }
 
   const deletePipeline = () => {
-    templateActions.deleteTemplate(templateData, getAccessToken);
+    return templateActions.deleteTemplate(templateData, getAccessToken);
   };
 
   const getSummaryActionBar = () => {

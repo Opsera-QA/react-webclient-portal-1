@@ -48,25 +48,19 @@ function LdapGroupManagePanel({ldapGroupData, ldapOrganizationData, loadData, au
   }
 
   const changeMemberStatus = async () => {
-    console.log("Change Member status users: " + JSON.stringify(ldapOrganizationData.users));
-    // setMembers(ldapGroupData.members);
-
     //If the group have members already, pre-select checkbox
     ldapOrganizationData.users.map((user, index) => {
       let member = ldapGroupData.members.find((member) => member.emailAddress === user.emailAddress);
 
       if (member != null) {
-        console.log("Is member: " + JSON.stringify(member));
         addMember(member);
       } else {
-        console.log("Is not member: " + JSON.stringify(user));
         addNonMember(user);
       }
     });
   };
 
   const addMember = (user) => {
-    console.log("Nonmembers add: " + JSON.stringify());
     let newMembers = members;
     newMembers.push(user);
     setMembers(newMembers);
@@ -93,7 +87,6 @@ function LdapGroupManagePanel({ldapGroupData, ldapOrganizationData, loadData, au
   };
 
   const addSelectedToMembers = () => {
-    console.log("adding selected to members: " + JSON.stringify(selectedNonMembers));
     let newMembers = members;
     newMembers.push(...selectedNonMembers);
     let newNonMembers = nonMembers.filter(user => !newMembers.includes(user))
@@ -103,7 +96,6 @@ function LdapGroupManagePanel({ldapGroupData, ldapOrganizationData, loadData, au
   };
 
   const addSelectedToNonMembers = () => {
-    console.log("adding selected to nonmembers: " + JSON.stringify(selectedMembers));
     let newNonMembers = nonMembers;
     newNonMembers.push(...selectedMembers);
     let newMembers = members.filter(user => !newNonMembers.includes(user));

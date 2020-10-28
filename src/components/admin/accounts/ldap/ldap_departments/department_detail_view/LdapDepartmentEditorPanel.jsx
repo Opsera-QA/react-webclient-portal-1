@@ -13,7 +13,7 @@ import {DialogToastContext} from "../../../../../../contexts/DialogToastContext"
 import {getUsersByDomain} from "../../../../../settings/ldap_users/user-functions";
 import DtoSelectInput from "../../../../../common/input/dto_input/dto-select-input";
 
-function LdapDepartmentEditorPanel({ ldapDepartmentData, setLdapDepartmentData, orgDomain, authorizedActions, handleClose }) {
+function LdapDepartmentEditorPanel({ ldapDepartmentData, reloadData, setLdapDepartmentData, orgDomain, authorizedActions, handleClose }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [ldapDepartmentDataDto, setLdapDepartmentDataDto] = useState({});
@@ -46,12 +46,61 @@ function LdapDepartmentEditorPanel({ ldapDepartmentData, setLdapDepartmentData, 
     }
   };
 
+  const addOwnerIfNotPresent = async () => {
+    const newOwnerEmail = ldapDepartmentDataDto.getData("ownerEmail");
+    let member = ldapDepartmentData.members.find((member) => member.emailAddress === newOwnerEmail.emailAddress);
+
+    if (member == null) {
+      let members = ldapDepartmentData.members;
+      let emailList = members.reduce((acc, item) => {
+        acc.push(item.emailAddress);
+        return acc;
+      }, []);
+
+      emailList.push(newOwnerEmail);
+      await departmentActions.syncDepartmentMembership(orgDomain, ldapDepartmentDataDto.getData("departmentGroupName"), emailList, getAccessToken);
+      reloadData();
+    }
+  };
+
+
   const createLdapDepartment = async () => {
-    return await departmentActions.createDepartment(orgDomain, ldapDepartmentDataDto, getAccessToken);
+    let newDepartmentResponse;
+
+    try {
+      newDepartmentResponse = await departmentActions.createDepartment(orgDomain, ldapDepartmentDataDto, getAccessToken);
+      const newOwnerEmail = ldapDepartmentDataDto.getData("ownerEmail");
+      await departmentActions.syncDepartmentMembership(orgDomain, newDepartmentResponse.data.departmentGroupName, [newOwnerEmail], getAccessToken);
+    }
+    catch (error) {
+      if (newDepartmentResponse != null && newDepartmentResponse.data != null) {
+        toastContext.showInformationDialog("Department was successfully created, but owner could not be added to the department's group membership.");
+        return newDepartmentResponse;
+      }
+
+      return error;
+    }
+
+    return newDepartmentResponse;
   };
 
   const updateLdapDepartment = async () => {
-    return await departmentActions.updateDepartment(orgDomain, ldapDepartmentDataDto, getAccessToken);
+    let updatedDepartmentResponse;
+
+    try {
+      updatedDepartmentResponse = await departmentActions.updateDepartment(orgDomain, ldapDepartmentDataDto, getAccessToken);
+      await addOwnerIfNotPresent();
+    }
+    catch (error) {
+      if (updatedDepartmentResponse != null && updatedDepartmentResponse.data != null) {
+        toastContext.showInformationDialog("Department was successfully updated, but owner could not be added to the department's group membership.");
+        return updatedDepartmentResponse;
+      }
+
+      return error;
+    }
+
+    return updatedDepartmentResponse;
   };
 
   if (isLoading || ldapDepartmentDataDto == null) {

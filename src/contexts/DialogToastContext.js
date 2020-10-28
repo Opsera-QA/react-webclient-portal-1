@@ -127,7 +127,7 @@ const ToastContextProvider = (props) => {
       setToast(getErrorDialog(error,`WARNING! An error has occurred deleting this ${type}:`));
     }
     else {
-      setToast(getErrorDialog(error,`WARNING! An error has occurred deleting this ${type}`));
+      setToast(getErrorDialog(error,`WARNING! An error has occurred deleting this ${type}:`));
       setShowToast(true);
     }
     refreshTimer();

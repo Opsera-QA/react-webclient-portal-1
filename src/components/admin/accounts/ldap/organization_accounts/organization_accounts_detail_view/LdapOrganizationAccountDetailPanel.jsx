@@ -16,6 +16,7 @@ import Row from "react-bootstrap/Row";
 import {faUsersClass} from "@fortawesome/pro-solid-svg-icons/faUsersClass";
 import {faBuilding} from "@fortawesome/pro-solid-svg-icons/faBuilding";
 import {faCubes} from "@fortawesome/pro-solid-svg-icons/faCubes";
+import LdapDepartmentsTable from "../../ldap_departments/LdapDepartmentsTable";
 
 const INITIAL_IDP_ACCOUNT_DATA = {
   name: "",
@@ -29,7 +30,17 @@ const INITIAL_IDP_ACCOUNT_DATA = {
   idpNameIDMapping: "idmap"
 };
 
-function LdapOrganizationAccountDetailPanel({ldapOrganizationAccountData, setLdapOrganizationAccountData, loadData, authorizedActions, authorizedIdpActions}) {
+function LdapOrganizationAccountDetailPanel(
+  {
+    ldapOrganizationAccountData,
+    setLdapOrganizationAccountData,
+    authorizedDepartmentActions,
+    ldapDepartmentData,
+    loadData,
+    authorizedActions,
+    authorizedIdpActions,
+    organizationDomain,
+  }) {
   const [showIdpEditPanel, setShowIdpEditPanel] = useState(false);
   const [ldapIdpAccountData, setLdapIdpAccountData] = useState({});
   const [activeTab, setActiveTab] = useState("users");
@@ -78,17 +89,22 @@ function LdapOrganizationAccountDetailPanel({ldapOrganizationAccountData, setLda
           <Col>
             <div className="shaded-panel detail-view-detail-panel">
               {ldapOrganizationAccountData &&
-              <LdapOrganizationAccountTabView showIdpEditPanel={showIdpEditPanel}
-                                              ldapIdpAccountData={ldapIdpAccountData}
-                                              setLdapIdpAccountData={setLdapIdpAccountData}
-                                              setShowIdpEditPanel={setShowIdpEditPanel}
-                                              ldapOrganizationAccountData={ldapOrganizationAccountData}
-                                              loadData={loadData}
-                                              activeTab={activeTab}
-                                              setLdapOrganizationAccountData={setLdapOrganizationAccountData}
-                                              authorizedActions={authorizedActions}
-                                              authorizedIdpActions={authorizedIdpActions}
-              />}
+                <LdapOrganizationAccountTabView
+                  showIdpEditPanel={showIdpEditPanel}
+                  ldapIdpAccountData={ldapIdpAccountData}
+                  setLdapIdpAccountData={setLdapIdpAccountData}
+                  setShowIdpEditPanel={setShowIdpEditPanel}
+                  ldapOrganizationAccountData={ldapOrganizationAccountData}
+                  loadData={loadData}
+                  activeTab={activeTab}
+                  setLdapOrganizationAccountData={setLdapOrganizationAccountData}
+                  authorizedActions={authorizedActions}
+                  authorizedIdpActions={authorizedIdpActions}
+                  authorizedDepartmentActions={authorizedDepartmentActions}
+                  organizationDomain={organizationDomain}
+                  ldapDepartmentData={ldapDepartmentData}
+                />
+              }
             </div>
           </Col>
         </Row>
@@ -97,7 +113,23 @@ function LdapOrganizationAccountDetailPanel({ldapOrganizationAccountData, setLda
   );
 }
 
-function LdapOrganizationAccountTabView({activeTab, authorizedActions, authorizedIdpActions, ldapIdpAccountData, setLdapIdpAccountData, setLdapOrganizationAccountData, ldapOrganizationAccountData, showIdpEditPanel, setShowIdpEditPanel, loadData}) {
+function LdapOrganizationAccountTabView(
+  {
+    activeTab,
+    authorizedActions,
+    authorizedIdpActions,
+    authorizedDepartmentActions,
+    ldapIdpAccountData,
+    setLdapIdpAccountData,
+    setLdapOrganizationAccountData,
+    ldapOrganizationAccountData,
+    showIdpEditPanel,
+    setShowIdpEditPanel,
+    loadData,
+    ldapDepartmentData,
+    organizationDomain
+  }
+  ) {
   useEffect(() => {
     // console.log("CHANGE HAPPENED");
   }, [activeTab, ldapOrganizationAccountData]);
@@ -123,7 +155,16 @@ function LdapOrganizationAccountTabView({activeTab, authorizedActions, authorize
             }</>
         );
       case "departments":
-        return <div className="text-center p-5 text-muted mt-5">Department management is not currently available.</div>;
+        return (
+          <div className="p-3">
+            <LdapDepartmentsTable
+              loadData={loadData}
+              departmentData={ldapDepartmentData}
+              authorizedActions={authorizedDepartmentActions}
+              domain={organizationDomain}
+            />
+          </div>
+        );
       case "settings":
         return <LdapOrganizationAccountEditorPanel ldapOrganizationAccountData={ldapOrganizationAccountData} setLdapOrganizationAccountData={setLdapOrganizationAccountData} loadData={loadData} authorizedActions={authorizedActions} />;
       default:
@@ -135,9 +176,12 @@ function LdapOrganizationAccountTabView({activeTab, authorizedActions, authorize
 LdapOrganizationAccountDetailPanel.propTypes = {
   ldapOrganizationAccountData: PropTypes.object,
   setLdapOrganizationAccountData: PropTypes.func,
+  ldapDepartmentData: PropTypes.array,
+  organizationDomain: PropTypes.string,
   loadData: PropTypes.func,
   authorizedActions: PropTypes.array,
   authorizedIdpActions: PropTypes.array,
+  authorizedDepartmentActions: PropTypes.array
 };
 
 export default LdapOrganizationAccountDetailPanel;
