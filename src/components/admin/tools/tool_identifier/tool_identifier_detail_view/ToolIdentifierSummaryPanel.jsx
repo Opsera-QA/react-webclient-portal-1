@@ -74,6 +74,9 @@ function ToolIdentifierSummaryPanel({toolIdentifierData, setToolIdentifierData})
             <Col lg={6}>
               <DtoToggleField dataObject={toolIdentifierData} fieldName={"active"}/>
             </Col>
+            <Col lg={6}>
+              <DtoTextField dataObject={toolIdentifierData} fieldName={"usageType"}/>
+            </Col>
             <Col lg={12}>
               <DtoItemField dataObject={toolIdentifierData} fieldName={"tags"}/>
             </Col>

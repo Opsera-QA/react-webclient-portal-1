@@ -12,6 +12,10 @@ const toolIdentifierMetadata = {
     id: "description",
   },
     {
+      label: "Usage Type",
+      id: "usageType",
+    },
+    {
       label: "ID",
       id: "_id",
     },
