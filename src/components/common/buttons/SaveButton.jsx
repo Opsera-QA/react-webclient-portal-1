@@ -7,6 +7,7 @@ import {faSave, faSpinner} from "@fortawesome/free-solid-svg-icons";
 import {DialogToastContext} from "../../../contexts/DialogToastContext";
 import {useHistory} from "react-router-dom";
 
+// TODO: This button will be repurposed or removed once distinct buttons and a save bar is created and implemented
 function SaveButton({recordDto, setRecordDto, setData, createRecord, updateRecord, altButtonText, type, disable, handleClose, showCreateAnother, showViewDetails, modal, showToasts, loginButton}) {
   let toastContext = useContext(DialogToastContext);
   const history = useHistory();
