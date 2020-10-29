@@ -11,6 +11,12 @@ import { faGalacticSenate } from "@fortawesome/free-brands-svg-icons";
 import sfdcPipelineActions from "./sfdc-pipeline-actions";
 import SfdcPipelineProfileComponents from "./sfdcPipelineProfileComponents";
 
+const INITIAL_OBJECT_TYPES = {
+  managed: false,
+  custom: false,
+  all: true,
+};
+
 const SfdcPipelineWizard = ({
   pipelineId,
   pipeline,
@@ -43,7 +49,7 @@ const SfdcPipelineWizard = ({
   const [selectedProfileComponent, setSelectedProfileComponent] = useState([]);
   const [recordId, setRecordId] = useState("");
 
-
+  const [formData, setFormData] = useState(INITIAL_OBJECT_TYPES);
   const [xml, setXML] = useState("");
   const [destructiveXml, setDestructiveXml] = useState("");
 
@@ -135,6 +141,8 @@ const SfdcPipelineWizard = ({
             setSfdcComponentFilterObject={setSfdcComponentFilterObject}
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}
+            formData={formData}
+            setFormData={setFormData}
           />
         )}
 

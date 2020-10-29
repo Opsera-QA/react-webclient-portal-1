@@ -31,12 +31,6 @@ const INITIAL_COMPONENT_TYPES_FORM = {
   componentTypes: [],
 };
 
-const INITIAL_OBJECT_TYPES = {
-  managed: false,
-  custom: false,
-  all: true,
-};
-
 const SfdcPipelineComponents = ({
   pipelineId,
   stepId,
@@ -51,6 +45,8 @@ const SfdcPipelineComponents = ({
   setSfdcComponentFilterObject,
   selectedDate,
   setSelectedDate,
+  formData,
+  setFormData,
 }) => {
   const { getAccessToken } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
@@ -60,7 +56,6 @@ const SfdcPipelineComponents = ({
   const [componentTypes, setComponentTypes] = useState([]);
   // const [selectedComponentTypes, setSelectedComponentTypes] = useState([]);
   const [componentTypeForm, setComponentTypeForm] = useState(INITIAL_COMPONENT_TYPES_FORM);
-  const [formData, setFormData] = useState(INITIAL_OBJECT_TYPES);
 
   Moment.locale("en");
   momentLocalizer();
@@ -354,6 +349,8 @@ SfdcPipelineComponents.propTypes = {
   setSfdcComponentFilterObject: PropTypes.func,
   selectedDate: PropTypes.string,
   setSelectedDate: PropTypes.func,
+  formData: PropTypes.object,
+  setFormData: PropTypes.func,
 };
 
 AccountDropDown.propTypes = {
