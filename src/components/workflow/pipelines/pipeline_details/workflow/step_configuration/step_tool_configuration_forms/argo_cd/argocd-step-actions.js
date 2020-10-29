@@ -54,7 +54,7 @@ ArgoCDStepActions.searchArgoList = async (service, getAccessToken) => {
     return res;
   };
 
-  ArgoCDStepActions.searchBranches = async (service, gitAccountId, repoId, getAccessToken) => {
+  ArgoCDStepActions.searchBranches = async (service, gitAccountId, repoId, workspaces, getAccessToken) => {
     const accessToken = await getAccessToken();
     const apiUrl = "/tools/properties";
     const postBody = {
@@ -62,6 +62,7 @@ ArgoCDStepActions.searchArgoList = async (service, getAccessToken) => {
       metric: "getBranches",
       gitAccountId: gitAccountId,
       repoId: repoId,
+      workspaces: workspaces
     };
     const res = await axiosApiService(accessToken)
       .post(apiUrl, postBody)
