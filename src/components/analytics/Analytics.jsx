@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { AuthContext } from "../../contexts/AuthContext";
 import { axiosApiService } from "../../api/apiService";
 import ErrorDialog from "../common/status_notifications/error";
-import LoadingDialog from "../common/status_notifications/loading";
+// import LoadingDialog from "../common/status_notifications/loading";
 import ConfigurationsForm from "./configurationsForm";
-import { ListGroup, Alert, Tooltip, OverlayTrigger, Col, Row } from "react-bootstrap";
+import { ListGroup, Tooltip, OverlayTrigger, Col, Row } from "react-bootstrap";
 import SummaryChartsView from "./views/pipeline/buildView_developer";
 import ReliabilityMetricsCharts from "./views/reliability/ReliabilityMetricsView";
 import CodeCoverageMetricsView from "./views/sonarCodeCoverageView";
@@ -25,13 +25,14 @@ import JMeterResponseTimeLineChart from "./charts/jmeterResponseTimeLineChart";
 import JMeterResultsTable from "./metrics/jmeterResultsTable";
 // import GitlabPlanCodeView from "./views/GitlabPlanCodeView";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle, faQuestion } from "@fortawesome/free-solid-svg-icons";
+// import { faCheckCircle, faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
 // import GitlabMergeRequestsView from "./views/GitlabMergeRequestsView";
 // import GitlabMergeRequestTimeTakenBarChart from "./charts/GitlabMergeRequestTimeTakenBarChart";
 import SourceCodeView from "./views/SourceCode/SourceCodeView_developer";
 import LoadingView from "../common/status_notifications/loading";
+import OperationsView from "./views/opserations_analytics/operationsViewAnalytics_developer";
 
 const INDICES = [
   "jenkins",
@@ -44,7 +45,8 @@ const INDICES = [
   "heartbeat",
   "codeship",
   "gitlab",
-  "cypress"
+  "cypress",
+  "metricbeat",
 ];
 
 const DATELABELS = [
@@ -135,7 +137,7 @@ function Analytics() {
 
   const ValueInput = ({ item }) => (
     <span>
-      <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth/>
+      <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth />
       {" " + DATELABELS.find((o) => o.value.start === date.start && o.value.end === date.end).label.toString()}
     </span>
   );
@@ -216,7 +218,7 @@ function Analytics() {
 
       if (!profileResponse.data) {
         setErrors(
-          "Warning!  Profile settings associated with your account are incomplete.  Log searching will be unavailable until this is fixed.",
+          "Warning!  Profile settings associated with your account are incomplete.  Log searching will be unavailable until this is fixed."
         );
       }
 
@@ -232,13 +234,13 @@ function Analytics() {
         setIndex(indicesList);
       } else {
         setErrors(
-          "Warning!  Profile settings associated with your account are incomplete.  Log searching will be unavailable until this is fixed.",
+          "Warning!  Profile settings associated with your account are incomplete.  Log searching will be unavailable until this is fixed."
         );
       }
 
       setLoadingProfile(false);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       setLoadingProfile(false);
       setErrors(err);
     }
@@ -247,13 +249,22 @@ function Analytics() {
   const handleTabClick = (param) => (e) => {
     e.preventDefault();
     setSelection(param);
+    if (param === "operations") {
+      setDate({
+        start: "now-1d",
+        end: "now",
+        key: "selection",
+      });
+    } else {
+      setDate({
+        start: "now-90d",
+        end: "now",
+        key: "selection",
+      });
+    }
   };
 
-
-  if (loadingProfile) {
-    return (<LoadingView size="sm"/>);
-  }
-
+  if (loadingProfile) return <LoadingView size="sm" />;
 
   return (
     <>
@@ -339,11 +350,11 @@ function Analytics() {
     </>
   );
 
+
 }
 
 function ChartView({ selection, persona, date, index }) {
-  useEffect(() => {
-  }, [selection, persona, date.start, index]);
+  useEffect(() => {}, [selection, persona, date.start, index]);
 
   if (selection) {
     switch (selection) {
@@ -536,8 +547,32 @@ function ChartView({ selection, persona, date, index }) {
         </>
       );
 
-    default:
-      return null;
+      case "operations":
+        return (
+          <>
+            {index.includes("metricbeat") ? (
+              <div className="mt-2">
+                <OperationsView persona={persona} date={date} />
+              </div>
+            ) : (
+              <div
+                className="mt-3 bordered-content-block p-3 max-content-width"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Row>
+                  <InfoDialog message="No activity data has been captured for this dashboard. In order to activate source code metrics contact support@opsera.io" />
+                </Row>
+              </div>
+            )}
+          </>
+        );
+
+      default:
+        return null;
     }
   }
 }
