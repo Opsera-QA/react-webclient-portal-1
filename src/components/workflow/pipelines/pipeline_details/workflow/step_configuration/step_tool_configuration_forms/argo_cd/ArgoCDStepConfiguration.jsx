@@ -10,9 +10,10 @@ import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
 import DtoTextInput from "components/common/input/dto_input/dto-text-input";
-import { DialogToastContext, showServiceUnavailableDialog } from "contexts/DialogToastContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
 import SaveButton from "components/common/buttons/SaveButton";
 import GitYamlStepActions from "./argocd-step-actions";
+import pipelineActions from "components/workflow/pipeline-actions";
 
 const YAML_SCM_TOOL = [
   {
@@ -47,6 +48,8 @@ function ArgoCDStepConfiguration({ stepTool, plan, stepId, parentCallback, getTo
   const [isArgoSearching, setIsArgoSearching] = useState(false);
   const [isArgoAppsSearching, setIsArgoAppsSearching] = useState(false);
   const [argoAppsList, setArgoAppsList] = useState([]);
+  const [workspacesList, setWorkspacesList] = useState([]);
+  const [isWorkspacesSearching, setIsWorkspacesSearching] = useState(false);
 
   useEffect(() => {
     loadFormData(stepTool);
@@ -59,8 +62,14 @@ function ArgoCDStepConfiguration({ stepTool, plan, stepId, parentCallback, getTo
     if (typeof configuration !== "undefined") {
       setGitYAMLStepConfigurationDataDto(new Model(configuration, gitYAMLStepFormMetadata, false));
       await fetchSCMDetails(configuration);
-      await searchRepositories(configuration.type, configuration.gitToolId);
-      await searchBranches(configuration.type, configuration.gitToolId, configuration.gitRepositoryID);
+      if (configuration.type === "bitbucket") await getWorkspaces("bitbucket", configuration.gitToolId , getAccessToken)
+      await searchRepositories(configuration.type, configuration.gitToolId, configuration.bitbucketWorkspace);
+      await searchBranches(
+        configuration.type,
+        configuration.gitToolId,
+        configuration.gitRepositoryID,
+        configuration.bitbucketWorkspace
+      );
       if (typeof threshold !== "undefined") {
         setThresholdType(threshold.type);
         setThresholdValue(threshold.value);
@@ -153,79 +162,42 @@ function ArgoCDStepConfiguration({ stepTool, plan, stepId, parentCallback, getTo
     }
   };
 
-  const searchRepositories = async (service, gitAccountId) => {
+  const searchRepositories = async (service, gitAccountId, workspace) => {
     setIsRepoSearching(true);
     try {
-      const res = await GitYamlStepActions.searchRepositories(service, gitAccountId, getAccessToken);
-      if (res.data && res.data.data) {
-        let arrOfObj = res.data.data;
-        if (arrOfObj) {
-          let result = arrOfObj.map(function (el) {
-            let o = Object.assign({});
-            o.value = el.id;
-            o.name = el.name;
-            return o;
-          });
-          if (result) {
-            setRepoList(formatOptions(result));
-          }
-          if (arrOfObj.length === 0) {
-            setRepoList([{ value: "", name: "Select One", isDisabled: "yes" }]);
-            let errorMessage = "No Repositories Found!  Please check credentials or configure a repository.";
-            toastContext.showErrorDialog(errorMessage);
-          }
-        }
-      } else {
+      let results = await pipelineActions.searchRepositories(service, gitAccountId, workspace, getAccessToken);
+      if (typeof results != "object") {
         setRepoList([{ value: "", name: "Select One", isDisabled: "yes" }]);
-        let errorMessage = "Error fetching repositories!  Please validate credentials and configured repositories.";
+        let errorMessage = "Repository information is missing or unavailable!";
         toastContext.showErrorDialog(errorMessage);
       }
+      setRepoList(results);
     } catch (error) {
+      console.log(error);
       setRepoList([{ value: "", name: "Select One", isDisabled: "yes" }]);
-      console.error(error);
-      toastContext.showServiceUnavailableDialog();
+      let errorMessage = "Repository information is missing or unavailable!";
+      toastContext.showErrorDialog(errorMessage);
     } finally {
       setIsRepoSearching(false);
     }
   };
 
-  const searchBranches = async (service, gitAccountId, repoId) => {
+  const searchBranches = async (service, gitAccountId, repoId, workspace) => {
     setIsBranchSearching(true);
     try {
-      const res = await GitYamlStepActions.searchBranches(service, gitAccountId, repoId, getAccessToken);
-      if (res.data && res.data.data) {
-        let arrOfObj = res.data.data;
-        if (typeof arrOfObj !== "object") {
-          setBranchList([{ value: "", name: "Select One", isDisabled: "yes" }]);
-          let errorMessage = "No Branches Found for the tool";
-          toastContext.showErrorDialog(errorMessage);
-          return [];
-        }
-        if (arrOfObj) {
-          var result = arrOfObj.map(function (el) {
-            var o = Object.assign({});
-            o.value = el;
-            o.name = el;
-            return o;
-          });
-          if (result) {
-            setBranchList(result);
-          }
-          if (arrOfObj.length === 0) {
-            setBranchList([{ value: "", name: "Select One", isDisabled: "yes" }]);
-            let errorMessage = "No Branches Found!  Please check credentials or configure a branch.";
-            toastContext.showErrorDialog(errorMessage);
-          }
-        }
-      } else {
+      let results = await pipelineActions.searchBranches(service, gitAccountId, repoId, workspace, getAccessToken);
+      console.log(results);
+      if (typeof results != "object") {
         setBranchList([{ value: "", name: "Select One", isDisabled: "yes" }]);
-        let errorMessage = "Error fetching branches!  Please validate credentials and configured repositories.";
+        let errorMessage = "Branch information is missing or unavailable!";
         toastContext.showErrorDialog(errorMessage);
       }
+      setBranchList(results);
     } catch (error) {
+      console.log(error);
       setBranchList([{ value: "", name: "Select One", isDisabled: "yes" }]);
-      console.error(error);
-      toastContext.showServiceUnavailableDialog();
+      let errorMessage = "Branch information is missing or unavailable!";
+      toastContext.showErrorDialog(errorMessage);
     } finally {
       setIsBranchSearching(false);
     }
@@ -242,6 +214,26 @@ function ArgoCDStepConfiguration({ stepTool, plan, stepId, parentCallback, getTo
     parentCallback(item);
   };
 
+  const getWorkspaces = async (service, tool, getAccessToken) => {
+    setIsWorkspacesSearching(true);
+    try {
+      let results = await pipelineActions.searchWorkSpaces(service, tool, getAccessToken);
+      if (typeof results != "object") {
+        setWorkspacesList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+        let errorMessage = "Workspace information is missing or unavailable!";
+        toastContext.showErrorDialog(errorMessage);
+      }
+      setWorkspacesList(results);
+    } catch (error) {
+      console.log(error)
+      setWorkspacesList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+      let errorMessage = "Workspace information is missing or unavailable!";
+      toastContext.showErrorDialog(errorMessage);
+    } finally {
+      setIsWorkspacesSearching(false);
+    }
+  }
+
   const handleDTOChange = async (fieldName, value) => {
     if (fieldName === "type") {
       let newDataObject = gitYAMLStepConfigurationDto;
@@ -251,6 +243,7 @@ function ArgoCDStepConfiguration({ stepTool, plan, stepId, parentCallback, getTo
       newDataObject.setData("defaultBranch", "");
       newDataObject.setData("gitFilePath", "");
       newDataObject.setData("gitWorkspace", "");
+      newDataObject.setData("bitbucketWorkspace", "");
       setGitYAMLStepConfigurationDataDto({ ...newDataObject });
       fetchSCMDetails(gitYAMLStepConfigurationDto.data);
       return;
@@ -259,32 +252,61 @@ function ArgoCDStepConfiguration({ stepTool, plan, stepId, parentCallback, getTo
       let newDataObject = gitYAMLStepConfigurationDto;
       newDataObject.setData("gitToolId", value.id);
       setGitYAMLStepConfigurationDataDto({ ...newDataObject });
-      searchRepositories(gitYAMLStepConfigurationDto.getData("type"), gitYAMLStepConfigurationDto.getData("gitToolId"));
-      return;
+      if (gitYAMLStepConfigurationDto.getData("type") === "bitbucket") {
+        await getWorkspaces("bitbucket", value.id, getAccessToken)
+      } else {
+        searchRepositories(
+          gitYAMLStepConfigurationDto.getData("type"),
+          gitYAMLStepConfigurationDto.getData("gitToolId")
+        );
+        return;
+      }
     }
     if (fieldName === "gitRepository") {
       let newDataObject = gitYAMLStepConfigurationDto;
-      let repoName = value.name
+      let repoName = value.name;
       if (gitYAMLStepConfigurationDto.getData("type") === "gitlab") {
-        repoName = "opsera-repo/" + value.name
+        let re = /(?<=com:)([^\/]+)/
+        let matches = re.exec(value.sshUrl)
+        if (matches.length === 0) {
+          let errorMessage = "Error fetching gitlab workspace";
+          toastContext.showErrorDialog(errorMessage);
+          return;
+        }
+        repoName = matches[0] + "/" + value.name;
       }
       newDataObject.setData("gitRepository", repoName);
-      newDataObject.setData("gitRepositoryID", value.value);
+      newDataObject.setData("gitRepositoryID", value.id);
       setGitYAMLStepConfigurationDataDto({ ...newDataObject });
       searchBranches(
         gitYAMLStepConfigurationDto.getData("type"),
         gitYAMLStepConfigurationDto.getData("gitToolId"),
-        gitYAMLStepConfigurationDto.getData("gitRepositoryID"),
+        value.id,
+        gitYAMLStepConfigurationDto.getData("bitbucketWorkspace")
       );
       return;
     }
     if (fieldName === "toolConfigId") {
+      if (value && value.configuration) {
+        let newDataObject = gitYAMLStepConfigurationDto;
+        newDataObject.setData("toolConfigId", value.id);
+        newDataObject.setData("toolUrl", value.configuration.toolURL);
+        newDataObject.setData("userName", value.configuration.userName);
+        setGitYAMLStepConfigurationDataDto({ ...newDataObject });
+        searchArgoAppsList(value.id);
+      }
+      return;
+    }
+    if (fieldName === "bitbucketWorkspace") {
+      console.log(value);
       let newDataObject = gitYAMLStepConfigurationDto;
-      newDataObject.setData("toolConfigId", value.id);
-      newDataObject.setData("toolUrl", value.configuration.toolURL);
-      newDataObject.setData("userName", value.configuration.userName);
+      newDataObject.setData("bitbucketWorkspace", value);
       setGitYAMLStepConfigurationDataDto({ ...newDataObject });
-      searchArgoAppsList(value.id);
+      searchRepositories(
+        gitYAMLStepConfigurationDto.getData("type"),
+        gitYAMLStepConfigurationDto.getData("gitToolId"),
+        value
+      );
       return;
     }
   };
@@ -295,163 +317,185 @@ function ArgoCDStepConfiguration({ stepTool, plan, stepId, parentCallback, getTo
 
   return (
     <>
-    { gitYAMLStepConfigurationDto && 
-    <>
-      <OverlayTrigger
-        trigger="click"
-        rootClose
-        placement="left"
-        overlay={pipelineHelpers.getRegistryPopover(
-          argoList[argoList.findIndex((x) => x.id === gitYAMLStepConfigurationDto.getData("toolConfigId"))]
-        )}
-      >
-        <FontAwesomeIcon
-          icon={faEllipsisH}
-          className="fa-pull-right pointer pr-1"
-          onClick={() => document.body.click()}
-        />
-      </OverlayTrigger>
-      <DtoSelectInput
-        setDataFunction={handleDTOChange}
-        setDataObject={setGitYAMLStepConfigurationDataDto}
-        textField={"name"}
-        valueField={"id"}
-        dataObject={gitYAMLStepConfigurationDto}
-        filter={"contains"}
-        selectOptions={argoList ? argoList : []}
-        fieldName={"toolConfigId"}
-        busy={isArgoSearching}
-      />
-      <DtoSelectInput
-        setDataObject={setGitYAMLStepConfigurationDataDto}
-        textField={"name"}
-        valueField={"name"}
-        dataObject={gitYAMLStepConfigurationDto}
-        filter={"contains"}
-        selectOptions={argoAppsList ? argoAppsList : []}
-        fieldName={"applicationName"}
-        busy={isArgoAppsSearching}
-        disabled={gitYAMLStepConfigurationDto.getData("toolConfigId").length === 0 || isArgoAppsSearching}
-      />
-      <OverlayTrigger
-        trigger="click"
-        rootClose
-        placement="left"
-        overlay={
-          <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
-            <Popover.Title as="h3">Docker/ECR Step </Popover.Title>
+      {gitYAMLStepConfigurationDto && (
+        <>
+          <OverlayTrigger
+            trigger="click"
+            rootClose
+            placement="left"
+            overlay={pipelineHelpers.getRegistryPopover(
+              argoList[argoList.findIndex((x) => x.id === gitYAMLStepConfigurationDto.getData("toolConfigId"))]
+            )}
+          >
+            <FontAwesomeIcon
+              icon={faEllipsisH}
+              className="fa-pull-right pointer pr-1"
+              onClick={() => document.body.click()}
+            />
+          </OverlayTrigger>
+          <DtoSelectInput
+            setDataFunction={handleDTOChange}
+            setDataObject={setGitYAMLStepConfigurationDataDto}
+            textField={"name"}
+            valueField={"id"}
+            dataObject={gitYAMLStepConfigurationDto}
+            filter={"contains"}
+            selectOptions={argoList ? argoList : []}
+            fieldName={"toolConfigId"}
+            busy={isArgoSearching}
+          />
+          <DtoSelectInput
+            setDataObject={setGitYAMLStepConfigurationDataDto}
+            textField={"name"}
+            valueField={"name"}
+            dataObject={gitYAMLStepConfigurationDto}
+            filter={"contains"}
+            selectOptions={argoAppsList ? argoAppsList : []}
+            fieldName={"applicationName"}
+            busy={isArgoAppsSearching}
+            disabled={gitYAMLStepConfigurationDto.getData("toolConfigId").length === 0 || isArgoAppsSearching}
+          />
+          <OverlayTrigger
+            trigger="click"
+            rootClose
+            placement="left"
+            overlay={
+              <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
+                <Popover.Title as="h3">Docker/ECR Step </Popover.Title>
 
-            <Popover.Content>
-              <div className="text-muted mb-2">
-                This step must the corresponding ECR/Docker step being used in order to retrieve the Docker Image URL
-                generated by that step. If this is not selected properly the job may fail.
-              </div>
-            </Popover.Content>
-          </Popover>
-        }
-      >
-        <FontAwesomeIcon
-          icon={faEllipsisH}
-          className="fa-pull-right pointer pr-1"
-          onClick={() => document.body.click()}
-        />
-      </OverlayTrigger>
-      <DtoSelectInput
-        setDataObject={setGitYAMLStepConfigurationDataDto}
-        textField={"name"}
-        valueField={"_id"}
-        dataObject={gitYAMLStepConfigurationDto}
-        filter={"contains"}
-        selectOptions={listOfSteps ? listOfSteps : []}
-        fieldName={"dockerStepID"}
-        disabled={listOfSteps.length === 0 || gitYAMLStepConfigurationDto.getData("applicationName").length === 0}
-      />
+                <Popover.Content>
+                  <div className="text-muted mb-2">
+                    This step must the corresponding ECR/Docker step being used in order to retrieve the Docker Image
+                    URL generated by that step. If this is not selected properly the job may fail.
+                  </div>
+                </Popover.Content>
+              </Popover>
+            }
+          >
+            <FontAwesomeIcon
+              icon={faEllipsisH}
+              className="fa-pull-right pointer pr-1"
+              onClick={() => document.body.click()}
+            />
+          </OverlayTrigger>
+          <DtoSelectInput
+            setDataObject={setGitYAMLStepConfigurationDataDto}
+            textField={"name"}
+            valueField={"_id"}
+            dataObject={gitYAMLStepConfigurationDto}
+            filter={"contains"}
+            selectOptions={listOfSteps ? listOfSteps : []}
+            fieldName={"dockerStepID"}
+            disabled={listOfSteps.length === 0 || gitYAMLStepConfigurationDto.getData("applicationName").length === 0}
+          />
 
-      <DtoSelectInput
-        setDataObject={setGitYAMLStepConfigurationDataDto}
-        setDataFunction={handleDTOChange}
-        textField={"name"}
-        valueField={"value"}
-        dataObject={gitYAMLStepConfigurationDto}
-        filter={"contains"}
-        selectOptions={YAML_SCM_TOOL ? YAML_SCM_TOOL : []}
-        fieldName={"type"}
-        disabled={gitYAMLStepConfigurationDto.getData("dockerStepID").length === 0}
-      />
+          <DtoSelectInput
+            setDataObject={setGitYAMLStepConfigurationDataDto}
+            setDataFunction={handleDTOChange}
+            textField={"name"}
+            valueField={"value"}
+            dataObject={gitYAMLStepConfigurationDto}
+            filter={"contains"}
+            selectOptions={YAML_SCM_TOOL ? YAML_SCM_TOOL : []}
+            fieldName={"type"}
+            disabled={gitYAMLStepConfigurationDto.getData("dockerStepID").length === 0}
+          />
 
-      <OverlayTrigger
-        trigger="click"
-        rootClose
-        placement="left"
-        overlay={pipelineHelpers.getRegistryPopover(
-          SCMList[SCMList.findIndex((x) => x.id === gitYAMLStepConfigurationDto.getData("gitToolId"))]
-        )}
-      >
-        <FontAwesomeIcon
-          icon={faEllipsisH}
-          className="fa-pull-right pointer pr-1"
-          onClick={() => document.body.click()}
-        />
-      </OverlayTrigger>
-      <DtoSelectInput
-        setDataFunction={handleDTOChange}
-        setDataObject={setGitYAMLStepConfigurationDataDto}
-        textField={"name"}
-        valueField={"id"}
-        dataObject={gitYAMLStepConfigurationDto}
-        filter={"contains"}
-        selectOptions={SCMList ? SCMList : []}
-        fieldName={"gitToolId"}
-        busy={isGitSearching}
-        disabled={gitYAMLStepConfigurationDto.getData("type").length === 0 || isGitSearching}
-      />
+          <OverlayTrigger
+            trigger="click"
+            rootClose
+            placement="left"
+            overlay={pipelineHelpers.getRegistryPopover(
+              SCMList[SCMList.findIndex((x) => x.id === gitYAMLStepConfigurationDto.getData("gitToolId"))]
+            )}
+          >
+            <FontAwesomeIcon
+              icon={faEllipsisH}
+              className="fa-pull-right pointer pr-1"
+              onClick={() => document.body.click()}
+            />
+          </OverlayTrigger>
+          <DtoSelectInput
+            setDataFunction={handleDTOChange}
+            setDataObject={setGitYAMLStepConfigurationDataDto}
+            textField={"name"}
+            valueField={"id"}
+            dataObject={gitYAMLStepConfigurationDto}
+            filter={"contains"}
+            selectOptions={SCMList ? SCMList : []}
+            fieldName={"gitToolId"}
+            busy={isGitSearching}
+            disabled={gitYAMLStepConfigurationDto.getData("type").length === 0 || isGitSearching}
+          />
+          {gitYAMLStepConfigurationDto.getData("type") === "bitbucket" && (
+            <DtoSelectInput
+              setDataFunction={handleDTOChange}
+              setDataObject={setGitYAMLStepConfigurationDataDto}
+              textField={"name"}
+              valueField={"value"}
+              dataObject={gitYAMLStepConfigurationDto}
+              filter={"contains"}
+              selectOptions={workspacesList ? workspacesList : []}
+              fieldName={"bitbucketWorkspace"}
+              busy={isWorkspacesSearching}
+              disabled={gitYAMLStepConfigurationDto.getData("gitToolId").length === 0 || isWorkspacesSearching}
+            />
+          )}
+          <DtoSelectInput
+            setDataFunction={handleDTOChange}
+            setDataObject={setGitYAMLStepConfigurationDataDto}
+            textField={"name"}
+            valueField={"name"}
+            dataObject={gitYAMLStepConfigurationDto}
+            filter={"contains"}
+            selectOptions={repoList ? repoList : []}
+            fieldName={"gitRepository"}
+            busy={isRepoSearching}
+            disabled={
+              gitYAMLStepConfigurationDto.getData("gitToolId").length === 0 ||
+              isRepoSearching ||
+              (gitYAMLStepConfigurationDto.getData("type") === "bitbucket" &&
+                gitYAMLStepConfigurationDto.getData("bitbucketWorkspace").length === 0)
+            }
+          />
 
-      <DtoSelectInput
-        setDataFunction={handleDTOChange}
-        setDataObject={setGitYAMLStepConfigurationDataDto}
-        textField={"name"}
-        valueField={"name"}
-        dataObject={gitYAMLStepConfigurationDto}
-        filter={"contains"}
-        selectOptions={repoList ? repoList : []}
-        fieldName={"gitRepository"}
-        busy={isRepoSearching}
-        disabled={gitYAMLStepConfigurationDto.getData("gitToolId").length === 0 || isRepoSearching}
-      />
-
-      <DtoSelectInput
-        setDataObject={setGitYAMLStepConfigurationDataDto}
-        textField={"name"}
-        valueField={"value"}
-        dataObject={gitYAMLStepConfigurationDto}
-        filter={"contains"}
-        selectOptions={branchList ? branchList : []}
-        fieldName={"defaultBranch"}
-        busy={isBranchSearching}
-        disabled={gitYAMLStepConfigurationDto.getData("gitRepository").length === 0 || isBranchSearching}
-      />
-      <DtoTextInput
-        setDataObject={setGitYAMLStepConfigurationDataDto}
-        dataObject={gitYAMLStepConfigurationDto}
-        fieldName={"gitFilePath"}
-        disabled={gitYAMLStepConfigurationDto && gitYAMLStepConfigurationDto.getData("defaultBranch").length === 0}
-      />
-      {gitYAMLStepConfigurationDto.getData("type") === "bitbucket" && (
-        <DtoTextInput
-          setDataObject={setGitYAMLStepConfigurationDataDto}
-          dataObject={gitYAMLStepConfigurationDto}
-          fieldName={"gitWorkspace"}
-        />
+          <DtoSelectInput
+            setDataObject={setGitYAMLStepConfigurationDataDto}
+            textField={"name"}
+            valueField={"value"}
+            dataObject={gitYAMLStepConfigurationDto}
+            filter={"contains"}
+            selectOptions={branchList ? branchList : []}
+            fieldName={"defaultBranch"}
+            busy={isBranchSearching}
+            disabled={gitYAMLStepConfigurationDto.getData("gitRepository").length === 0 || isBranchSearching}
+          />
+          <DtoTextInput
+            setDataObject={setGitYAMLStepConfigurationDataDto}
+            dataObject={gitYAMLStepConfigurationDto}
+            fieldName={"gitFilePath"}
+            disabled={gitYAMLStepConfigurationDto && gitYAMLStepConfigurationDto.getData("defaultBranch").length === 0}
+          />
+          {gitYAMLStepConfigurationDto.getData("type") === "bitbucket" && (
+            <DtoTextInput
+              setDataObject={setGitYAMLStepConfigurationDataDto}
+              dataObject={gitYAMLStepConfigurationDto}
+              fieldName={"gitWorkspace"}
+              disabled={gitYAMLStepConfigurationDto && gitYAMLStepConfigurationDto.getData("gitFilePath").length === 0}
+            />
+          )}
+          <SaveButton
+            recordDto={gitYAMLStepConfigurationDto}
+            setRecordDto={setGitYAMLStepConfigurationDataDto}
+            createRecord={callbackFunction}
+            updateRecord={callbackFunction}
+            disable={
+              gitYAMLStepConfigurationDto.getData("type") === "bitbucket" &&
+              gitYAMLStepConfigurationDto.getData("gitWorkspace").length === 0
+            }
+          />
+        </>
       )}
-      <SaveButton
-        recordDto={gitYAMLStepConfigurationDto}
-        setRecordDto={setGitYAMLStepConfigurationDataDto}
-        createRecord={callbackFunction}
-        updateRecord={callbackFunction}
-        disable={gitYAMLStepConfigurationDto.getData("type") === "bitbucket" && gitYAMLStepConfigurationDto.getData("gitWorkspace").length === 0}
-      />
-      </>
-      }
       <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
     </>
   );
