@@ -389,7 +389,7 @@ function JenkinsStepConfiguration({
   };
 
   const validateRequiredFields = () => {
-    const regex = RegExp("^[ a-z_.-]*$");
+    const regex = RegExp("^[ a-z0-9_.-]*$");
     let { toolConfigId, toolJobId, jenkinsUrl, jUserId, jobName, buildType, dockerName, dockerTagName, sfdcUnitTestType } = formData;
     if(!toolJobId && toolJobId.length < 0 ) {
       let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
@@ -1120,7 +1120,7 @@ function JenkinsStepConfiguration({
                       placeholder=""
                       value={formData.dockerName || ""}
                       onChange={(e) =>{
-                        const regex = RegExp("^[ a-z_.-]*$");
+                        const regex = RegExp("^[ a-z0-9_.-]*$");
                         if (!regex.test(e.target.value)) {
                           setFormData({ ...formData, dockerName: e.target.value })
                           setDockerNameErr(true);
@@ -1147,7 +1147,7 @@ function JenkinsStepConfiguration({
                       placeholder=""
                       value={formData.dockerTagName || ""}
                       onChange={(e) =>{
-                        const regex = RegExp("^[ a-z_.-]*$");
+                        const regex = RegExp("^[ a-z0-9_.-]*$");
                         if (!regex.test(e.target.value)) {
                           setFormData({ ...formData, dockerTagName: e.target.value })
                           setDockerTagErr(true);
