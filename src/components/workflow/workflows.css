@@ -178,3 +178,10 @@ height:100%;
   min-height:75vh;
   overflow:auto;
 }
+
+.scroller {
+  margin: 0 auto;
+  max-height: 500px;
+  width: auto;
+  overflow: auto;
+}

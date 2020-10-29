@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faStepForward,
@@ -11,6 +11,7 @@ import {
   faStepBackward,
   faCheck,
   faSquare,
+  faInfoCircle
 } from "@fortawesome/free-solid-svg-icons";
 import Moment from "moment";
 import momentLocalizer from "react-widgets-moment";
@@ -59,7 +60,7 @@ const SfdcPipelineComponents = ({
 
   Moment.locale("en");
   momentLocalizer();
-  const [asOfDate, setAsOfDate] = useState(Moment(new Date(new Date().setHours(0, 0, 0, 0))).toISOString());
+  const [asOfDate, setAsOfDate] = useState(Moment(new Date(new Date(new Date().setDate(new Date().getDate() - 1)).setHours(0,0,0,0))).toISOString());
 
   useEffect(() => {
     setConfigurationError(false);
@@ -75,7 +76,6 @@ const SfdcPipelineComponents = ({
       try {
         // const accessToken = await getAccessToken();
         const response = await sfdcPipelineActions.getComponentTypes({isProfiles}, getAccessToken);
-        
         if (!ignore) setComponentTypes(response.data);
       } catch (error) {
         console.error("Error getting API Data: ", error);
@@ -95,7 +95,7 @@ const SfdcPipelineComponents = ({
       max={new Date()}
       defaultValue={selectedDate}
       onChange={(value) => handleAsOfDateChange({ value })}
-      initialValue={new Date(new Date().setHours(0, 0, 0, 0))}
+      initialValue={new Date(new Date(new Date().setDate(new Date().getDate() - 1)).setHours(0,0,0,0))}
     />
   );
 
@@ -112,6 +112,17 @@ const SfdcPipelineComponents = ({
   const handleUnCheckAllClickComponentTypes = () => {
     setSelectedComponentTypes([]);
   };
+
+  const handleCheckOrUncheckAllClickComponentTypes = () => {
+    if (selectedComponentTypes === componentTypes) {handleUnCheckAllClickComponentTypes();}
+    else {handleCheckAllClickComponentTypes();}
+  }
+
+  const renderTooltip = (message, props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      {message}
+    </Tooltip>
+  );
 
   const handleComponentCheck = (e) => {
     const newValue = e.target.name;
@@ -174,13 +185,30 @@ const SfdcPipelineComponents = ({
                 <div className="d-flex justify-content-between">
                   {!isProfiles && 
                   <div className="px-2">
+                    <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltip("All files committed after this date will be included")}
+                  ><FontAwesomeIcon
+                  icon={faInfoCircle}
+                  className="fa-pull-right pointer pr-1"
+                  onClick={() => document.body.click()}
+                /></OverlayTrigger>
                     <div className="text-muted pl-1 pb-1">Date Filter:</div>
                     {dateAsOf}
                   </div>
                   }
                   
                   <div className="px-2">
-                    <div className="text-muted pl-1 pb-1">Prefix:</div>
+                    <div className="text-muted pl-1 pb-1">  <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltip("Managed components with given NamespacePrefix will be included. Custom components prefixed with the given Prefix will be included")}
+                  ><FontAwesomeIcon
+                  icon={faInfoCircle}
+                  className="fa-pull-right pointer pr-1"
+                  onClick={() => document.body.click()}
+                /></OverlayTrigger>Prefix:</div>
                     <Form.Group controlId="nameSpacePrefix">
                       <Form.Control
                         maxLength="50"
@@ -194,7 +222,15 @@ const SfdcPipelineComponents = ({
                   </div>
 
                   <div className="px-2">
-                    <div className="text-muted pl-1 pb-1">Types:</div>
+                  <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltip("Select whether managed, custom, or all components will be included")}
+                  ><FontAwesomeIcon
+                  icon={faInfoCircle}
+                  className="fa-pull-right pointer pr-1"
+                  onClick={() => document.body.click()}
+                /></OverlayTrigger><div className="text-muted pl-1 pb-1">Types:</div>
 
                     <Form.Group controlId="formBasicCheckbox" className="ml-1 d-flex">
                       <Form.Check
@@ -251,7 +287,16 @@ const SfdcPipelineComponents = ({
                   <div className="px-2"></div>
 
                   <div className="align-self-end">
-                    <Button variant="secondary" size="sm" className="mr-2" onClick={handleCheckAllClickComponentTypes}>
+                  <Form.Check
+                              inline
+                              type={"switch"}
+                              label={"Check All"}
+                              name={"Check All"}
+                              id={"Check All"}
+                              checked={selectedComponentTypes === componentTypes}
+                              onChange={handleCheckOrUncheckAllClickComponentTypes}
+                            />
+                    {/* <Button variant="secondary" size="sm" className="mr-2" onClick={handleCheckAllClickComponentTypes}>
                       <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1" />
                       Check All
                     </Button>
@@ -263,13 +308,14 @@ const SfdcPipelineComponents = ({
                     >
                       <FontAwesomeIcon icon={faSquare} fixedWidth className="mr-1" />
                       Uncheck All
-                    </Button>
+                    </Button> */}
                   </div>
                 </div>
               </div>
 
               <div className="mx-2">
                 <div className="text-muted">Select Components:</div>
+                <div className="scroller">
                 <div className="d-flex flex-wrap">
                   {loading ? (
                     <LoadingDialog size="sm" />
@@ -288,9 +334,11 @@ const SfdcPipelineComponents = ({
                               onChange={handleComponentCheck}
                             />
                           </div>
+                          
                         ))}
                     </>
                   )}
+                </div>
                 </div>
               </div>
             </>
