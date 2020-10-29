@@ -1,5 +1,5 @@
-const nexusStepFormMetadata = {
-  type: "Nexus Tool Configuration",
+const spinnakerStepFormMetadata = {
+  type: "Spinnaker Tool Configuration",
   fields: [
     {
       label: "Select Spinnaker Tool",
@@ -30,4 +30,4 @@ const nexusStepFormMetadata = {
   }
 };
 
-export default nexusStepFormMetadata;
+export default spinnakerStepFormMetadata;
