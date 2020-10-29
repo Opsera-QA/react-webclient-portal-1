@@ -108,6 +108,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
             let o = Object.assign({});
             o.value = el.id;
             o.name = el.name;
+            o.sshUrl = el.sshUrl;
             return o;
           });
           if (result) {
@@ -209,7 +210,14 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
       let newDataObject = terraformStepConfigurationDto;
       let repoName = value.name
       if (terraformStepConfigurationDto.getData("type") === "gitlab") {
-        repoName = "opsera-repo/" + value.name
+        let re = /(?<=com:)([^\/]+)/
+        let matches = re.exec(value.sshUrl)
+        if (matches.length === 0) {
+          let errorMessage = "Error fetching gitlab workspace";
+          toastContext.showErrorDialog(errorMessage);
+          return;
+        }
+        repoName = matches[0] + "/" + value.name;
       }
       newDataObject.setData("gitRepository", repoName);
       newDataObject.setData("gitRepositoryID", value.value);
