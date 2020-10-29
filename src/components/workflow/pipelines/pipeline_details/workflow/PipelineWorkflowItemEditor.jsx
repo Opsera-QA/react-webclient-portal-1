@@ -9,7 +9,7 @@ import { faTimes } from "@fortawesome/pro-light-svg-icons";
 import SourceRepositoryConfiguration from "./step_configuration/SourceRepositoryConfiguration";
 import StepToolConfiguration from "./step_configuration/StepToolConfiguration";
 import StepConfiguration from "./step_configuration/StepConfiguration";
-import StepNotificationConfiguration from "./step_configuration/StepNotificationConfiguration";
+import StepNotificationConfiguration from "./step_configuration/step_notification_configuration/StepNotificationConfiguration";
 import { DialogToastContext } from "contexts/DialogToastContext";
 
 
