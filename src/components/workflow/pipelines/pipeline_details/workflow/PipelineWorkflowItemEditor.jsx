@@ -105,6 +105,7 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
         <StepNotificationConfiguration
           data={pipeline}
           stepId={editItem.step_id}
+          handleCloseClick={handleCloseClick}
           parentCallback={callbackFunctionTools}/>
       </div>
     </>);
