@@ -35,8 +35,7 @@ const jiraStepNotificationMetadata = {
     {
       label: "Jira Assignee",
       id: "jiraAssignee",
-      // TODO: Require when call is fixed or confirmed working properly
-      // isRequired: true
+      isRequired: true
     },
     {
       label: "Jira Board",
@@ -46,14 +45,12 @@ const jiraStepNotificationMetadata = {
     {
       label: "Jira Approval Step",
       id: "jiraApprovalStep",
-      // TODO: Require when call is fixed or confirmed working properly
-      // isRequired: true
+      isRequired: true
     },
     {
       label: "Jira Rejection Step",
       id: "jiraRejectionStep",
-      // TODO: Require when call is fixed or confirmed working properly
-      // isRequired: true
+      isRequired: true
     },
     {
       label: "Jira Notifications",
@@ -70,7 +67,7 @@ const jiraStepNotificationMetadata = {
     jiraSprint: "",
     jiraAssignee: "",
     jiraRejectionStep: "",
-    jiraRejectionRejection: "",
+    jiraApprovalStep: "",
     enabled: false,
   }
 };

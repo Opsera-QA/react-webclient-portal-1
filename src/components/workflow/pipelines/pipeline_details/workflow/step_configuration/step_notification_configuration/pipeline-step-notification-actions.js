@@ -21,10 +21,11 @@ pipelineStepNotificationActions.getJiraProjects = async (jiraStepNotificationDto
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
+// TODO: Hook up project
 pipelineStepNotificationActions.getJiraProjectUsers = async (jiraStepNotificationDto, getAccessToken) => {
   let toolId = jiraStepNotificationDto.getData("jiraToolId");
   let projectId = jiraStepNotificationDto.getData("jiraProject");
-  const apiUrl = `/connectors/jira/${toolId}/project/users?project=${projectId}`;
+  const apiUrl = `/connectors/jira/${toolId}/project/users`; //?project=${projectId}`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 

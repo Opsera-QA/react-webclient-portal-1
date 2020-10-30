@@ -33,10 +33,8 @@ function JiraStepNotificationWorkflowStepInput({jiraToolId, jiraProject, fieldNa
 
   const loadWorkflowSteps = async () => {
     const response = await pipelineStepNotificationActions.getJiraWorkflowSteps(dataObject, getAccessToken);
-    console.log("Workflow Steps: " + JSON.stringify(response));
 
     if (response.data != null && response.data.message != null && Array.isArray(response.data.message)) {
-      console.log("Workflow Steps: " + JSON.stringify(response.data.message));
       setWorkflowSteps(response.data.message);
     }
   };
