@@ -319,6 +319,12 @@ function Analytics() {
                   >
                     Source Code
                   </ListGroup.Item>
+                  <ListGroup.Item
+                    className={"pointer " + (selection === "operations" ? "active" : "")}
+                    onClick={handleTabClick("operations")}
+                  >
+                    Operations
+                  </ListGroup.Item>
                 </ListGroup>
               </Col>
               <Col sm={3}>
