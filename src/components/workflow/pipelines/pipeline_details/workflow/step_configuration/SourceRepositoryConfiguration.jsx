@@ -400,20 +400,30 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
                       checked={formData.trigger_active ? true : false}
                       onChange={() => setFormData({ ...formData, trigger_active: !formData.trigger_active })}/>
           <Form.Text className="text-muted">To use a webhook based event hook trigger with your source repository, the
-            hook
-            URL below (and optional security key) must be setup in your source repository.</Form.Text>
+            hook URL below (and optional security key) must be setup in your source repository.</Form.Text>
         </Form.Group>}
 
         {formData.trigger_active === true &&
         <>
           <EventBasedTriggerDetails pipelineId={data._id} userId={data.owner}/>
-          <Form.Group controlId="securityKeyField">
-            <Form.Label>Webhook Security Key</Form.Label>
-            <Form.Control maxLength="75" type="password" placeholder="Optional security key/token from service"
-                          value={formData.key || ""} onChange={e => setFormData({ ...formData, key: e.target.value })}/>
-            <Form.Text className="text-muted">Optional security key/token configured in Source Repository to ensure
-              secure webhook communication.</Form.Text>
-          </Form.Group>
+
+          {formData.service === "github" && <>
+            <h6>Settings:</h6>
+            <div className="text-muted pl-1 mb-3">
+
+              <b>Content Type:</b> application/json<br/>
+              <b>SSL verification:</b> enabled<br/>
+              <b>Selected events:</b> <i>just the push event</i><br/>
+            </div>
+
+            <Form.Group controlId="securityKeyField">
+              <h6>Webhook Secret: (optional)</h6>
+              <Form.Control maxLength="75" type="password"
+                            placeholder="Optional security key/token from service"
+                            value={formData.key || ""}
+                            onChange={e => setFormData({ ...formData, key: e.target.value })}/>
+            </Form.Group>
+          </>}
         </>}
 
         <Button variant="primary" type="button" className="mt-2"
@@ -458,9 +468,10 @@ function EventBasedTriggerDetails({ pipelineId, userId }) {
   };
 
   return (
-    <div className="mt-3">
+    <div className="mt-1">
       <Form.Group controlId="branchField">
-        <Form.Label>Webhook URL</Form.Label>
+        {copySuccess && <div className="info-text float-right small">Copied to Clipboard!</div>}
+        <h6>Webhook URL:</h6>
 
         <InputGroup className="mb-1">
           <Form.Control maxLength="75" type="text" value={triggerUrl || ""} disabled={true}/>
@@ -478,7 +489,6 @@ function EventBasedTriggerDetails({ pipelineId, userId }) {
           Type is: application/json.
         </Form.Text>
       </Form.Group>
-      {copySuccess ? <div className="info-text">Copied to Clipboard!</div> : <div className="py-2"></div>}
     </div>
   );
 }
