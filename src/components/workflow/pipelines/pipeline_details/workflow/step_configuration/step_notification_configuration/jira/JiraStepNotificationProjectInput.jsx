@@ -42,6 +42,9 @@ function JiraStepNotificationProjectInput({jiraToolId, visible, dataObject, setD
     let newDataObject = {...selectedOption};
     newDataObject.setData("jiraSprint", "");
     newDataObject.setData("jiraAssignee", "");
+    newDataObject.setData("jiraBoard", "");
+    newDataObject.setData("jiraRejectionStep", "");
+    newDataObject.setData("jiraApprovalStep", "");
     setDataObject({...newDataObject});
   };
 
