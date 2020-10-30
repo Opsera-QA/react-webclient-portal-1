@@ -141,6 +141,8 @@ function JUnitStepConfiguration({
     async function fetchJenkinsDetails(service) {
       setisJenkinsSearching(true);
       // Set results state
+      let results = await pipelineActions.getToolsList(service, getAccessToken);
+      // Set results state
       if (typeof(results) != "object") {
         setJenkinsList([{ value: "", name: "Select One", isDisabled: "yes" }]);
         let errorMessage =
@@ -149,8 +151,6 @@ function JUnitStepConfiguration({
         setisJenkinsSearching(false);
         return;
       }
-      let results = await pipelineActions.getToolsList(service, getAccessToken);
-      //console.log(results);
       const filteredList = results.filter(
         (el) => el.configuration !== undefined
       ); //filter out items that do not have any configuration data!
