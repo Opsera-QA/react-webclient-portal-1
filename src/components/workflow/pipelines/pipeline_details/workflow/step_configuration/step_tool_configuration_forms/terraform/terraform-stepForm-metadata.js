@@ -42,6 +42,8 @@ const TerraformStepFormMetadata = {
     type:"",
     gitToolId : "",
     gitRepositoryID: "",
+    sshUrl:"",
+    gitUrl:"",
     keyValueMap: {}
   }
 };

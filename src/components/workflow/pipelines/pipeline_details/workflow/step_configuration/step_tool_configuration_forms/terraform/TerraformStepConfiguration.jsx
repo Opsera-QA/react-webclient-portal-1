@@ -109,6 +109,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
             o.value = el.id;
             o.name = el.name;
             o.sshUrl = el.sshUrl;
+            o.httpUrl = el.httpUrl;
             return o;
           });
           if (result) {
@@ -221,6 +222,8 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
       }
       newDataObject.setData("gitRepository", repoName);
       newDataObject.setData("gitRepositoryID", value.value);
+      newDataObject.setData("sshUrl", value.sshUrl);
+      newDataObject.setData("gitUrl", value.httpUrl);
       setTerraformStepConfigurationDataDto({ ...newDataObject });
       searchBranches(
         terraformStepConfigurationDto.getData("type"),

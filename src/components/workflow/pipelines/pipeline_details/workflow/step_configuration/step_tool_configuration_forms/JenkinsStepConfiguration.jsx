@@ -1135,7 +1135,7 @@ function JenkinsStepConfiguration({
                       Please provide a valid docker name.
                       </Form.Control.Feedback> : 
                      <Form.Text className="text-muted">
-                       lowercase without spaces. only - . (dot) and _ are allowed
+                       Accepts aplhanumeric, lowercase without spaces. only - . (dot) and _ are allowed
                       </Form.Text>
                     }
                   </Form.Group>
@@ -1162,7 +1162,7 @@ function JenkinsStepConfiguration({
                       Please provide a valid docker tag.
                       </Form.Control.Feedback> : 
                      <Form.Text className="text-muted">
-                       lowercase without spaces. only - . (dot) and _ are allowed
+                       Accepts aplhanumeric, lowercase without spaces. only - . (dot) and _ are allowed
                       </Form.Text>
                     }
                       
