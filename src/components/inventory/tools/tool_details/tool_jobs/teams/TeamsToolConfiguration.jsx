@@ -39,10 +39,9 @@ function TeamsToolConfiguration({ toolData, fnSaveChanges, fnSaveToVault }) {
   const saveTeamsConfiguration = async () => {
       let newConfiguration = {...teamsConfigurationDto.getPersistData()};
       // TODO: Implement if needed
-      // if (teamsConfigurationDto.isChanged("vaultSecretKey")) {
-      //   newConfiguration.vaultSecretKey = await saveToVault(toolData._id, toolData.tool_identifier, "secretKey", "Vault Secured Key", teamsConfigurationDto.getData("vaultSecretKey").trim());
-      // }
-
+      if (teamsConfigurationDto.isChanged("webhookUrl")) {
+        newConfiguration.webhookUrl = await saveToVault(toolData._id, toolData.tool_identifier, "secretKey", "webhookUrl", teamsConfigurationDto.getData("webhookUrl"));
+      }
       const item = {
         configuration: newConfiguration
       };
@@ -50,7 +49,8 @@ function TeamsToolConfiguration({ toolData, fnSaveChanges, fnSaveToVault }) {
   };
 
   const saveToVault = async (toolId, toolIdentifier, key, name, value) => {
-    const keyName = `${toolId}-${toolIdentifier}-${key}`;
+    // key as only toolID as requested by purushoth!
+    const keyName = `${toolId}`;
     const body = {
       "key": keyName,
       "value": value
@@ -73,7 +73,7 @@ function TeamsToolConfiguration({ toolData, fnSaveChanges, fnSaveToVault }) {
         {isLoading ? <LoadingDialog size={"sm"} message={"Loading Teams Configuration Details"} /> :
         <div>
           <Row>
-            <Col sm={12}><DtoTextInput dataObject={teamsConfigurationDto} setDataObject={setTeamsConfigurationDto} fieldName={"webhookUrl"} /></Col>
+            <Col sm={12}><DtoTextInput type={"password"} dataObject={teamsConfigurationDto} setDataObject={setTeamsConfigurationDto} fieldName={"webhookUrl"} /></Col>
           </Row>
           <Row>
             <div className="ml-auto pr-3 pt-2">
