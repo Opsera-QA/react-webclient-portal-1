@@ -9,6 +9,7 @@ import ActionBarBackButton from "../../../../../common/actions/buttons/ActionBar
 import ActionBarDeleteButton2 from "../../../../../common/actions/buttons/ActionBarDeleteButton2";
 import {AuthContext} from "../../../../../../contexts/AuthContext";
 import departmentActions from "../department-functions";
+import ActionBarDestructiveDeleteButton from "../../../../../common/actions/buttons/ActionBarDestructiveDeleteButton";
 
 function LdapDepartmentSummaryPanel({ ldapDepartmentData, orgDomain }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -30,7 +31,12 @@ function LdapDepartmentSummaryPanel({ ldapDepartmentData, orgDomain }) {
         <div>
           {/*TODO: Confirm who can delete departments*/}
           {/*{opseraAdmin && */}
-          {/*<ActionBarDeleteButton2 relocationPath={"/admin/departments"} dataObject={ldapDepartmentData} handleDelete={deleteDepartment}/>*/}
+          {/*<ActionBarDestructiveDeleteButton*/}
+          {/*  relocationPath={"/admin/departments"}*/}
+          {/*  dataObject={ldapDepartmentData}*/}
+          {/*  handleDelete={deleteDepartment}*/}
+          {/*  deleteTopic={`Department [${ldapDepartmentData.getData("name")}]`}*/}
+          {/*/>*/}
           {/*// }*/}
         </div>
       </SummaryActionBarContainer>
