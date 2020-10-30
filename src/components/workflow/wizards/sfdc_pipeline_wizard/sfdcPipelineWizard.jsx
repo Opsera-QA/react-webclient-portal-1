@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
-import { axiosApiService } from "api/apiService";
+import Moment from "moment";
 import SfdcPipelineComponents from "./sfdcPipelineComponents";
 import SfdcPipelineModifiedFiles from "./sfdcPipelineModifiedFiles";
 import ErrorDialog from "components/common/status_notifications/error";
-import PipelineActions from "../../pipeline-actions";
 import SfdcPipelineXMLView from "./sfdcPipelineXMLView";
 import { faGalacticSenate } from "@fortawesome/free-brands-svg-icons";
 import sfdcPipelineActions from "./sfdc-pipeline-actions";
@@ -36,7 +35,7 @@ const SfdcPipelineWizard = ({
   const [stepIndex, setStepIndex] = useState();
   const [sfdcComponentFilterObject, setSfdcComponentFilterObject] = useState({});
   const [selectedComponentTypes, setSelectedComponentTypes] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(new Date(new Date(new Date().setDate(new Date().getDate() - 1)).setHours(0,0,0,0)));
+  const [selectedDate, setSelectedDate] = useState(new Date(new Date().setHours(0,0,0,0)));
   const [fromSFDC, setFromSFDC] = useState(false);
   const [fromDestinationSFDC, setFromDestinationSFDC] = useState(false);
   const [fromGit, setFromGit] = useState(false);
@@ -52,6 +51,8 @@ const SfdcPipelineWizard = ({
   const [formData, setFormData] = useState(INITIAL_OBJECT_TYPES);
   const [xml, setXML] = useState("");
   const [destructiveXml, setDestructiveXml] = useState("");
+
+  const [asOfDate, setAsOfDate] = useState(Moment(new Date(new Date().setHours(0,0,0,0))).toISOString());
 
   useEffect(() => {
     loadSfdcInitStep(pipeline.workflow.plan);
@@ -143,6 +144,8 @@ const SfdcPipelineWizard = ({
             setSelectedDate={setSelectedDate}
             formData={formData}
             setFormData={setFormData}
+            asOfDate={asOfDate}
+           setAsOfDate={setAsOfDate}
           />
         )}
 

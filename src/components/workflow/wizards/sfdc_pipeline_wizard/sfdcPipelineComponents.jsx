@@ -21,6 +21,7 @@ import "../../workflows.css";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
 import sfdcPipelineActions from "./sfdc-pipeline-actions";
+import {isEqual} from "components/common/helpers/array-helpers"
 
 const INITIAL_COMPONENT_TYPES_FORM = {
   customerId: "", //ssoUsersID assgined at the Node layer
@@ -48,6 +49,8 @@ const SfdcPipelineComponents = ({
   setSelectedDate,
   formData,
   setFormData,
+  asOfDate,
+  setAsOfDate
 }) => {
   const { getAccessToken } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
@@ -60,7 +63,6 @@ const SfdcPipelineComponents = ({
 
   Moment.locale("en");
   momentLocalizer();
-  const [asOfDate, setAsOfDate] = useState(Moment(new Date(new Date(new Date().setDate(new Date().getDate() - 1)).setHours(0,0,0,0))).toISOString());
 
   useEffect(() => {
     setConfigurationError(false);
@@ -95,7 +97,7 @@ const SfdcPipelineComponents = ({
       max={new Date()}
       defaultValue={selectedDate}
       onChange={(value) => handleAsOfDateChange({ value })}
-      initialValue={new Date(new Date(new Date().setDate(new Date().getDate() - 1)).setHours(0,0,0,0))}
+      initialValue={new Date(new Date().setHours(0,0,0,0))}
     />
   );
 
@@ -293,7 +295,7 @@ const SfdcPipelineComponents = ({
                               label={"Check All"}
                               name={"Check All"}
                               id={"Check All"}
-                              checked={selectedComponentTypes === componentTypes}
+                              checked={isEqual(selectedComponentTypes,componentTypes)}
                               onChange={handleCheckOrUncheckAllClickComponentTypes}
                             />
                     {/* <Button variant="secondary" size="sm" className="mr-2" onClick={handleCheckAllClickComponentTypes}>
@@ -399,6 +401,8 @@ SfdcPipelineComponents.propTypes = {
   setSelectedDate: PropTypes.func,
   formData: PropTypes.object,
   setFormData: PropTypes.func,
+  asOfDate: PropTypes.string,
+  setAsOfDate: PropTypes.func,
 };
 
 AccountDropDown.propTypes = {
