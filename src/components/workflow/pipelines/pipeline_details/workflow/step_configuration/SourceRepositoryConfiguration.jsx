@@ -407,7 +407,7 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
         <>
           <EventBasedTriggerDetails pipelineId={data._id} userId={data.owner}/>
 
-          {formData.service === "github" && <>
+          {(formData.service === "github" || formData.service === "gitlab") && <>
             <h6>Settings:</h6>
             <div className="text-muted pl-1 mb-3">
 
