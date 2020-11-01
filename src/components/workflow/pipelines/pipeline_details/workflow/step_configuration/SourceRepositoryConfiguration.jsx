@@ -601,7 +601,7 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
         </Button>
 
         <Button variant="secondary" type="button" className="mt-2 ml-2"
-                disabled={isSaving || isAccountSearching || isRepoSearching}
+                disabled={isSaving}
                 onClick={() => {
                   handleCloseClick();
                 }}>
