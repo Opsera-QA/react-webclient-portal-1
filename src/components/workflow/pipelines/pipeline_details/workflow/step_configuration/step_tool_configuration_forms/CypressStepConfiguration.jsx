@@ -903,7 +903,7 @@ function CypressStepConfiguration({
         (formData.service === "bitbucket"? 
           formData.workspace 
           && formData.workspace.length > 0 : true ) && (
-          <Form.Group controlId="account" className="mt-2">
+          <Form.Group controlId="repo" className="mt-2">
             <Form.Label>Repository*</Form.Label>
             {isRepoSearching ? (
               <div className="form-text text-muted mt-2 p-2">
