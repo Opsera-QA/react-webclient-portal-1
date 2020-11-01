@@ -590,7 +590,7 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
         </>}
 
         <Button variant="primary" type="button" className="mt-2"
-                disabled={isSaving || isAccountSearching || isRepoSearching}
+                disabled={isSaving}
                 onClick={() => {
                   callbackFunction();
                 }}>
