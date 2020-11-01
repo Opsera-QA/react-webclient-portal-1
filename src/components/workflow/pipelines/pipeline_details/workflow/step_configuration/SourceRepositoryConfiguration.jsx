@@ -159,7 +159,7 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
     try{
       let results = await pipelineActions.searchWorkSpaces(service, accountId, getAccessToken);
       if (typeof(results) != "object") {
-        workspacesList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+        setWorkspacesList([{ value: "", name: "Select One", isDisabled: "yes" }]);
         let errorMessage =
           "Workspace information is missing or unavailable!";
         toastContext.showErrorDialog(errorMessage);
@@ -167,10 +167,10 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
         return;
       }
       //console.log(results);
-      workspacesList(results);
+      setWorkspacesList(results);
     } catch (err){
       console.log(err);
-      workspacesList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+      setWorkspacesList([{ value: "", name: "Select One", isDisabled: "yes" }]);
       let errorMessage =
       "Workspace information is missing or unavailable!";
       toastContext.showErrorDialog(errorMessage);
