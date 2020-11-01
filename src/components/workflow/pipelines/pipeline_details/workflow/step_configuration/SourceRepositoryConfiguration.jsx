@@ -241,7 +241,9 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
       accountId: selectedOption.id ? selectedOption.id : "",
       username: selectedOption.configuration ? selectedOption.configuration.accountUsername : "",
       password: selectedOption.configuration ? selectedOption.configuration.accountPassword : "",
+      workspace: "",
       repository: "",
+      branch: "",
     });
   };
 
