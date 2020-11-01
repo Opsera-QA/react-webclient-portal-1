@@ -57,8 +57,10 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
       let { workflow } = data;
       if (workflow.source !== undefined) {
         setFormData(workflow.source);
-        setIsRepoSearching(false);
         setIsAccountSearching(false);
+        setIsWorkspacesSearching(false);
+        setIsRepoSearching(false);
+        setIsBranchSearching(false);
 
         if (workflow.source.accountId) {
           setIsRegisterAccount(true);
@@ -90,23 +92,6 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
 
   // fetch workspaces
   useEffect(() => {
-    async function fetchWorkspaces(service, accountId) {
-      setIsWorkspacesSearching(true);
-      // Set results state
-      let results = await pipelineActions.searchWorkSpaces(service, accountId, getAccessToken);
-      if (typeof(results) != "object") {
-        setWorkspacesList([{ value: "", name: "Select One", isDisabled: "yes" }]);
-        let errorMessage =
-          "Workspace information is missing or unavailable!";
-        toastContext.showErrorDialog(errorMessage);
-        setIsWorkspacesSearching(false);
-        return;
-      }
-        //console.log(results);
-        setWorkspacesList(results);
-        setIsWorkspacesSearching(false);
-      }
-
     if (
       formData.service === "bitbucket" &&
       formData.accountId &&
@@ -123,23 +108,6 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
 
   // fetch repos
   useEffect(() => {
-    async function fetchRepos(service, accountId, workspaces) {
-      setIsRepoSearching(true);
-      // Set results state
-      let results = await pipelineActions.searchRepositories(service, accountId, workspaces, getAccessToken);
-      if (typeof(results) != "object") {
-        setRepoList([{ value: "", name: "Select One", isDisabled: "yes" }]);
-        let errorMessage =
-          "Repository information is missing or unavailable!";
-        toastContext.showErrorDialog(errorMessage);
-        setIsRepoSearching(false);
-        return;
-      }
-        //console.log(results);
-        setRepoList(results);
-        setIsRepoSearching(false);
-    }
-
     if (
       formData.service &&
       formData.service.length > 0 &&
@@ -183,6 +151,56 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
     if (results) {
       setAccountList(formatOptions(results));
       setIsAccountSearching(false);
+    }
+  };
+
+  const fetchWorkspaces = async (service, accountId) => {
+    setIsWorkspacesSearching(true);
+    try{
+      let results = await pipelineActions.searchWorkSpaces(service, accountId, getAccessToken);
+      if (typeof(results) != "object") {
+        workspacesList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+        let errorMessage =
+          "Workspace information is missing or unavailable!";
+        toastContext.showErrorDialog(errorMessage);
+        setIsWorkspacesSearching(false);
+        return;
+      }
+      //console.log(results);
+      workspacesList(results);
+    } catch (err){
+      console.log(err);
+      workspacesList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+      let errorMessage =
+      "Workspace information is missing or unavailable!";
+      toastContext.showErrorDialog(errorMessage);
+    } finally {
+      setIsWorkspacesSearching(false);
+    }
+  };
+
+  const fetchRepos = async (service, accountId, workspaces) => {
+    setIsRepoSearching(true);
+    try{
+      let results = await pipelineActions.searchRepositories(service, accountId, workspaces, getAccessToken);
+      if (typeof(results) != "object") {
+        setRepoList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+        let errorMessage =
+          "Repository information is missing or unavailable!";
+        toastContext.showErrorDialog(errorMessage);
+        setIsRepoSearching(false);
+        return;
+      }
+      //console.log(results);
+      setRepoList(results);
+    } catch (err){
+      console.log(err);
+      setRepoList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+      let errorMessage =
+      "Repository information is missing or unavailable!";
+      toastContext.showErrorDialog(errorMessage);
+    } finally {
+      setIsRepoSearching(false);
     }
   };
 
