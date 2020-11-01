@@ -100,9 +100,6 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
     ) {
       // Fire off our API call
       fetchWorkspaces(formData.service, formData.accountId);
-    } else {
-      setIsWorkspacesSearching(true);
-      setWorkspacesList([{ value: "", name: "Select One", isDisabled: "yes" }]);
     }
   }, [formData.service, formData.accountId, isRegisterAccount]);
 
@@ -117,9 +114,6 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
     ) {
       // Fire off our API call
       fetchRepos(formData.service, formData.accountId, formData.workspace);
-    } else {
-      setIsRepoSearching(true);
-      setRepoList([{ value: "", name: "Select One", isDisabled: "yes" }]);
     }
   }, [formData.service, formData.accountId, formData.gitCredential, formData.workspace, isRegisterAccount]);
 
