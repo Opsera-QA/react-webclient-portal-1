@@ -58,7 +58,6 @@ function OPBlueprint(props) {
   const [xmlData, setXMLData] = useState(false);
   const [anchoreResponse, setAnchoreResponse] = useState(false);
   const [anchoreStats, setAnchoreStats] = useState(false);
-  const [XMLDisabled, setXMLDisable] = useState("disabled");
 
   simpleNumberLocalizer();
 
@@ -88,11 +87,6 @@ function OPBlueprint(props) {
     setXMLData(false);
     setAnchoreResponse(false);
     setAnchoreStats(false);
-    if (run_count === runCountFetch[multiFilter.value]) {
-      setXMLDisable("enabled")
-    } else {
-      setXMLDisable("disabled")
-    }
     getSearchResults();
   };
 
@@ -100,7 +94,6 @@ function OPBlueprint(props) {
     setXMLData(false);
     setAnchoreResponse(false);
     setAnchoreStats(false);
-    setXMLDisable("disabled");
     setSubmittedRunCount(null);
     // setDate([
     //   {
@@ -175,7 +168,7 @@ function OPBlueprint(props) {
           let anchoreStats = false;
           if (result) {
             searchResults = result.hasOwnProperty("data") ? result.data.data : [];
-            xmlFile = result.hasOwnProperty("data") ? result.data.reports && result.data.reports.xml ?  result.data.reports.xml : false : false;
+            xmlFile = result.hasOwnProperty("data") ? result.data.reports && result.data.reports.xml &&  result.data.reports.xml.status === 200 ?  result.data.reports.xml : false : false;
             anchoreResponse = result.hasOwnProperty("data") ? result.data.reports && result.data.reports.anchore_report ?  result.data.reports.anchore_report : false : false;
             anchoreStats = result.hasOwnProperty("data") ? result.data.reports && result.data.reports.anchore_stats ?  setAnchoreStats(result.data.reports.anchore_stats) : false : false;
           }
@@ -188,7 +181,6 @@ function OPBlueprint(props) {
             if (xmlFile) setXMLData(xmlFile);
             if (anchoreResponse) setAnchoreResponse(anchoreResponse)
             if (anchoreStats) setAnchoreStats(anchoreStats)
-            console.log(xmlFile)
           }
           setLoading(false);
         })
@@ -559,7 +551,6 @@ function OPBlueprint(props) {
             <BlueprintSearchResult searchResults={{
               data: logData,
               xmlData: xmlData,
-              xmlModal: XMLDisabled,
               anchore : anchoreResponse,
               stats: anchoreStats
             }}/>
@@ -570,15 +561,6 @@ function OPBlueprint(props) {
       </>
     );
   }
-}
-
-function renderTooltip(props) {
-  const { message } = props;
-  return (
-    <Tooltip id="button-tooltip" {...props}>
-      {message}
-    </Tooltip>
-  );
 }
 
 export default OPBlueprint;
