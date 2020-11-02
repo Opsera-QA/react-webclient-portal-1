@@ -28,7 +28,6 @@ const INITIAL_DATA = {
   gitUrl: "",
   sshUrl: "",
   repository: "",
-  projectId: "",
   branch: "",
   workspace: "",
   key: "",
@@ -257,7 +256,6 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
       ...formData, 
       repository: selectedOption.name,
       repoId: selectedOption.id,
-      projectId: selectedOption.id,
       gitUrl: selectedOption.httpUrl,
       sshUrl: selectedOption.sshUrl,
       branch: ""
