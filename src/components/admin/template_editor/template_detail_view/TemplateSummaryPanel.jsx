@@ -16,6 +16,7 @@ import ActionBarBackButton from "../../../common/actions/buttons/ActionBarBackBu
 import ActionBarDeleteButton2 from "../../../common/actions/buttons/ActionBarDeleteButton2";
 import templateActions from "../template-actions";
 import {AuthContext} from "../../../../contexts/AuthContext";
+import ActionBarShowJsonButton from "../../../common/actions/buttons/ActionBarShowJsonButton";
 
 function TemplateSummaryPanel({templateData, opseraAdmin}) {
   const { getAccessToken } = useContext(AuthContext)
@@ -35,6 +36,7 @@ function TemplateSummaryPanel({templateData, opseraAdmin}) {
           <ActionBarBackButton path={"/admin/templates"} />
         </div>
         <div>
+          <ActionBarShowJsonButton dataObject={templateData} />
           {opseraAdmin && <span className={"mr-2"}><ActionBarDeleteButton2 relocationPath={"/admin/templates"} dataObject={templateData} handleDelete={deletePipeline}/></span>}
           <ActionBarStatus status={templateData.getData("status")}/>
         </div>
