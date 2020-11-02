@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Button, Row, Col, Nav, OverlayTrigger, Tooltip } from "react-bootstrap";
 import ModalLogs from "components/common/modal/modalLogs";
 import ModalTable from "./modalTable";
+import ModalXML from "./modalXML";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faLayerGroup,
@@ -218,7 +219,7 @@ function BlueprintSearchResult({ searchResults }) {
     <>
       <br></br>
       <div className="mb-1 mt-3 bordered-content-block p-3 max-content-width">
-      {searchResults.anchore && (
+        {searchResults.anchore && (
           <Button
             variant="outline-dark mr-3"
             className="float-right mt-1 ml-1"
@@ -231,7 +232,7 @@ function BlueprintSearchResult({ searchResults }) {
             Security Report
           </Button>
         )}
-        {searchResults.xmlData && searchResults.xmlModal === "enabled" && (
+        {searchResults && searchResults.xmlData && (
           <Button
             variant="outline-dark mr-3"
             className="float-right mt-1 ml-1"
@@ -244,31 +245,31 @@ function BlueprintSearchResult({ searchResults }) {
             Package XML
           </Button>
         )}
-        {searchResults.xmlData && searchResults.xmlModal === "disabled" && (
-          <OverlayTrigger
-            overlay={
-              <Tooltip id="tooltip-disabled">
-                Package XML is currently only available for the latest pipeline run.
-              </Tooltip>
-            }
-          >
-            <span className="float-right mt-1 ml-1">
-              <Button
-                variant="outline-dark mr-3"
-                className="float-right mt-1 ml-1"
-                size="sm"
-                disabled
-                style={{ pointerEvents: "none" }}
-                onClick={() => {
-                  handleClick(searchResults.xmlData);
-                }}
-              >
-                <FontAwesomeIcon icon={faFileCode} fixedWidth />
-                Package XML
-              </Button>
-            </span>
-          </OverlayTrigger>
-        )}
+        {searchResults &&
+          searchResults.data.length > 0 &&
+          searchResults.data[0].step_configuration &&
+          searchResults.data[0].step_configuration.configuration &&
+          searchResults.data[0].step_configuration.configuration.buildType &&
+          searchResults.data[0].step_configuration.configuration.buildType === "ant" &&
+          !searchResults.xmlData && (
+            <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Package XML is unavailable for this job.</Tooltip>}>
+              <span className="float-right mt-1 ml-1">
+                <Button
+                  variant="outline-dark mr-3"
+                  className="float-right mt-1 ml-1"
+                  size="sm"
+                  disabled
+                  style={{ pointerEvents: "none" }}
+                  onClick={() => {
+                    handleClick(searchResults.xmlData);
+                  }}
+                >
+                  <FontAwesomeIcon icon={faFileCode} fixedWidth />
+                  Package XML
+                </Button>
+              </span>
+            </OverlayTrigger>
+          )}
         {searchResults.data.length > 0 && (
           <Tab.Container id="left-tabs-example" defaultActiveKey={0}>
             <Row>
@@ -314,10 +315,6 @@ function BlueprintSearchResult({ searchResults }) {
                         <div key={idx} className="console-text-invert">
                           {item.api_response.jenkins_console_log}
                         </div>
-                      ) : item.api_response.status ? (
-                        <div key={idx} className="console-text-invert">
-                          {item.api_response.status}
-                        </div>
                       ) : item.api_response.buildLog ? (
                         <div key={idx} className="console-text-invert">
                           {item.api_response.buildLog}
@@ -327,8 +324,8 @@ function BlueprintSearchResult({ searchResults }) {
                           {item.api_response}
                         </div>
                       ) : (
-                          renderStep(item.api_response)
-                        )}
+                        renderStep(item.api_response)
+                      )}
                     </Tab.Pane>
                   ))}
                   {completeInput.length > 0 && (
@@ -342,7 +339,7 @@ function BlueprintSearchResult({ searchResults }) {
           </Tab.Container>
         )}
       </div>
-      <ModalLogs
+      <ModalXML
         header={modalMessage._index}
         size="lg"
         jsonMessage={modalMessage}
@@ -350,14 +347,15 @@ function BlueprintSearchResult({ searchResults }) {
         show={showModal}
         setParentVisibility={setShowModal}
       />
-      <ModalTable 
-        header="Anchore Security Report" 
+      <ModalTable
+        header="Anchore Security Report"
         column_data={columns}
-        size="lg" 
-        jsonData={tableData} 
+        size="lg"
+        jsonData={tableData}
         stats={searchResults.stats}
         show={showTable}
-        setParentVisibility={setShowTable}/>
+        setParentVisibility={setShowTable}
+      />
     </>
   );
 }

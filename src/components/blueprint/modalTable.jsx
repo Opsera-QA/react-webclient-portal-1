@@ -131,11 +131,9 @@ function ModalTable({ header, column_data, size, jsonData, stats, show, setParen
               })}
           </CardGroup>
           <div className="m-3">
-            {/* {JSON.stringify(stats)} */}
             <CustomTable
               columns={columns}
               data={logData}
-              rowStyling={""}
               noDataMessage={noDataMessage}
               initialState={initialState}
               paginationOptions={getPaginationOptions()}
