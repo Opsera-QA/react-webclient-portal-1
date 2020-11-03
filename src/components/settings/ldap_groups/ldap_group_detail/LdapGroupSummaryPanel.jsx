@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import DtoTextField from "../../../common/form_fields/dto_form_fields/dto-text-field";
 import DtoToggleField from "../../../common/form_fields/dto_form_fields/dto-toggle-field";
 import TextField from "../../../common/form_fields/text-field";
-import SummaryActionBar from "../../../common/actions/SummaryActionBar";
 import SummaryPanelContainer from "../../../common/panels/detail_view/SummaryPanelContainer";
 import SummaryActionBarContainer from "../../../common/actions/SummaryActionBarContainer";
 import ActionBarBackButton from "../../../common/actions/buttons/ActionBarBackButton";
@@ -12,7 +11,7 @@ import ActionBarDeleteButton2 from "../../../common/actions/buttons/ActionBarDel
 import accountsActions from "../../../admin/accounts/accounts-actions";
 import {AuthContext} from "../../../../contexts/AuthContext";
 
-function LdapGroupSummaryPanel({ldapGroupData, domain}) {
+function LdapGroupSummaryPanel({ldapGroupData, domain, canDelete}) {
   const { getAccessToken } = useContext(AuthContext)
 
   if (ldapGroupData == null) {
@@ -30,10 +29,9 @@ function LdapGroupSummaryPanel({ldapGroupData, domain}) {
           <ActionBarBackButton path={`/settings/${domain}/groups`} />
         </div>
         <div>
-          {/*TODO: Confirm who can delete groups*/}
-          {/*{opseraAdmin && */}
-          {/*<span className={"mr-2"}><ActionBarDeleteButton2 relocationPath={`/settings/${domain}/groups`} dataObject={ldapGroupData} handleDelete={deleteGroup}/></span>*/}
-          {/*// }*/}
+          {canDelete &&
+            <span className={"mr-2"}><ActionBarDeleteButton2 relocationPath={`/settings/${domain}/groups`} dataObject={ldapGroupData} handleDelete={deleteGroup}/></span>
+          }
         </div>
       </SummaryActionBarContainer>
     );
@@ -69,6 +67,7 @@ function LdapGroupSummaryPanel({ldapGroupData, domain}) {
 LdapGroupSummaryPanel.propTypes = {
   ldapGroupData: PropTypes.object,
   domain: PropTypes.string,
+  canDelete: PropTypes.bool
 };
 
 

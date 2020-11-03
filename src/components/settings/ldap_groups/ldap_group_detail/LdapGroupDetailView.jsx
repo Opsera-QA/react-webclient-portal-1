@@ -30,6 +30,7 @@ function LdapGroupDetailView() {
   const [currentUserEmail, setCurrentUserEmail] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [authorizedActions, setAuthorizedActions] = useState([]);
+  const [canDelete, setCanDelete] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -56,7 +57,13 @@ function LdapGroupDetailView() {
     let isOwner = user.email === response.data["ownerEmail"];
 
     if (isOwner) {
-      setAuthorizedActions(["get_group_details", "update_group", "update_group_membership"]);
+      let authorizedActions = ["get_group_details", "update_group", "update_group_membership"];
+
+      if (!roleGroups.includes(groupName) && !groupName.startsWith("_dept")) {
+        authorizedActions.push("delete_group");
+      }
+
+      setAuthorizedActions(authorizedActions);
     }
   };
 
@@ -85,6 +92,10 @@ function LdapGroupDetailView() {
       else {
         authorizedActions = await accountsActions.getAllowedGroupActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
         setAuthorizedActions(authorizedActions);
+
+        if (!groupName.startsWith("_dept")) {
+          setCanDelete(authorizedActions.includes("delete_group"));
+        }
       }
 
       if (authorizedActions.includes("get_group_details")) {
@@ -108,7 +119,7 @@ function LdapGroupDetailView() {
         title={ldapGroupData != null ? `Group Details [${ldapGroupData && ldapGroupData.name}]` : undefined}
         titleIcon={faUserFriends}
         isLoading={isLoading}
-        summaryPanel={<LdapGroupSummaryPanel ldapGroupData={ldapGroupData} domain={orgDomain}/>}
+        summaryPanel={<LdapGroupSummaryPanel ldapGroupData={ldapGroupData} domain={orgDomain} canDelete={canDelete}/>}
         detailPanel={<LdapGroupDetailPanel orgDomain={orgDomain} ldapGroupData={ldapGroupData} ldapOrganizationData={ldapOrganizationData}
                                            currentUserEmail={currentUserEmail} setLdapGroupData={setLdapGroupData} loadData={getRoles} authorizedActions={authorizedActions}/>}
       />

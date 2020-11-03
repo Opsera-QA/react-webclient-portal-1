@@ -6,7 +6,6 @@ import DtoTextField from "../../../../../common/form_fields/dto_form_fields/dto-
 import SummaryPanelContainer from "../../../../../common/panels/detail_view/SummaryPanelContainer";
 import SummaryActionBarContainer from "../../../../../common/actions/SummaryActionBarContainer";
 import ActionBarBackButton from "../../../../../common/actions/buttons/ActionBarBackButton";
-import ActionBarDeleteButton2 from "../../../../../common/actions/buttons/ActionBarDeleteButton2";
 import {AuthContext} from "../../../../../../contexts/AuthContext";
 import departmentActions from "../department-functions";
 import ActionBarDestructiveDeleteButton from "../../../../../common/actions/buttons/ActionBarDestructiveDeleteButton";
@@ -29,15 +28,12 @@ function LdapDepartmentSummaryPanel({ ldapDepartmentData, orgDomain }) {
           <ActionBarBackButton path={"/admin/departments"} />
         </div>
         <div>
-          {/*TODO: Confirm who can delete departments*/}
-          {/*{opseraAdmin && */}
-          {/*<ActionBarDestructiveDeleteButton*/}
-          {/*  relocationPath={"/admin/departments"}*/}
-          {/*  dataObject={ldapDepartmentData}*/}
-          {/*  handleDelete={deleteDepartment}*/}
-          {/*  deleteTopic={`Department [${ldapDepartmentData.getData("name")}]`}*/}
-          {/*/>*/}
-          {/*// }*/}
+          <ActionBarDestructiveDeleteButton
+            relocationPath={"/admin/departments"}
+            dataObject={ldapDepartmentData}
+            handleDelete={deleteDepartment}
+            deleteTopic={`Department [${ldapDepartmentData.getData("name")}]`}
+          />
         </div>
       </SummaryActionBarContainer>
     );

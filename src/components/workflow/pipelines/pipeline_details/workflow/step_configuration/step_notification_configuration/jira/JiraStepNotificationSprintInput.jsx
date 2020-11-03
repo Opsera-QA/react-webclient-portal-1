@@ -53,6 +53,12 @@ function JiraStepNotificationSprintInput({visible, dataObject, setDataObject, di
     }
   };
 
+  const setJiraSprint = (selectedOption) => {
+    let newDataObject = {...selectedOption};
+    newDataObject.setData("jiraParentTicket", "");
+    setDataObject({...newDataObject});
+  };
+
   if (!visible) {
     return <></>;
   }
@@ -61,7 +67,7 @@ function JiraStepNotificationSprintInput({visible, dataObject, setDataObject, di
     <DtoSelectInput
       fieldName={"jiraSprint"}
       dataObject={dataObject}
-      setDataObject={setDataObject}
+      setDataObject={setJiraSprint}
       selectOptions={sprints}
       busy={isLoading}
       valueField="id"

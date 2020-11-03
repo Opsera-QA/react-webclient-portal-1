@@ -63,7 +63,7 @@ function JiraStepNotificationWorkflowStepInput({jiraToolId, jiraProject, fieldNa
       setDataObject={setDataObject}
       selectOptions={workflowSteps}
       busy={isLoading}
-      valueField="id"
+      valueField="name"
       textField="name"
       placeholderText={getPlaceholderText()}
       disabled={disabled || isLoading || jiraToolId == null || jiraProject == null || workflowSteps.length === 0}
