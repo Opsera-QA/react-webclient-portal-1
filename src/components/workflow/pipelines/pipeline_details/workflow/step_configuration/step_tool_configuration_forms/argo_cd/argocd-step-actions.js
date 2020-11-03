@@ -4,10 +4,9 @@ const ArgoCDStepActions = {};
 
 ArgoCDStepActions.searchArgoAppsList = async (id, getAccessToken) => {
   const accessToken = await getAccessToken();
-  const apiUrl = "/tools/properties";
+  const apiUrl = "/tools/argo/applications";
   const postBody = {
     tool: "argo",
-    metric: "getApplications",
     id: id,
   };
   const res = await axiosApiService(accessToken)

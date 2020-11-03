@@ -109,7 +109,7 @@ function ArgoCDStepConfiguration({ stepTool, plan, stepId, parentCallback, getTo
     try {
       const res = await GitYamlStepActions.searchArgoAppsList(id, getAccessToken);
       if (res.data) {
-        let arrOfObj = res.data.data ? res.data.data.applicationList : [];
+        let arrOfObj = res.data.data && res.data.data.length > 0 ? res.data.data : [];
         setArgoAppsList(arrOfObj);
         if (arrOfObj.length === 0) {
           setArgoAppsList([{ value: "", name: "Select One", isDisabled: "yes" }]);
