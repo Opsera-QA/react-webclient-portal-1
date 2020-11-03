@@ -4,7 +4,7 @@ import { Form, Button, InputGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import DropdownList from "react-widgets/lib/DropdownList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave, faCopy, faSpinner, faExclamationCircle, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faSave, faCopy, faSpinner, faExclamationCircle, faTimes, faCodeCommit } from "@fortawesome/pro-light-svg-icons";
 import { AuthContext } from "../../../../../../contexts/AuthContext";
 import { axiosApiService } from "../../../../../../api/apiService";
 import { DialogToastContext } from "contexts/DialogToastContext";
@@ -36,7 +36,6 @@ const INITIAL_DATA = {
 
 
 function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick }) {
-  const contextType = useContext(AuthContext);
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [formData, setFormData] = useState(INITIAL_DATA);
@@ -121,13 +120,13 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
     () => {
       if (
         formData.service &&
-        formData.service.length > 0 && 
-        formData.accountId && 
+        formData.service.length > 0 &&
+        formData.accountId &&
         formData.accountId.length > 0 &&
         formData.repoId &&
         formData.repoId.length > 0 &&
         isRegisterAccount
-        ) {
+      ) {
         // Fire off our API call
         fetchBranches(formData.service, formData.accountId, formData.repoId, formData.workspace).catch((err) => {
           console.error(err);
@@ -149,9 +148,9 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
 
   const fetchWorkspaces = async (service, accountId) => {
     setIsWorkspacesSearching(true);
-    try{
+    try {
       let results = await pipelineActions.searchWorkSpaces(service, accountId, getAccessToken);
-      if (typeof(results) != "object") {
+      if (typeof (results) != "object") {
         setWorkspacesList([{ value: "", name: "Select One", isDisabled: "yes" }]);
         let errorMessage =
           "Workspace information is missing or unavailable!";
@@ -161,11 +160,11 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
       }
       //console.log(results);
       setWorkspacesList(results);
-    } catch (err){
+    } catch (err) {
       console.log(err);
       setWorkspacesList([{ value: "", name: "Select One", isDisabled: "yes" }]);
       let errorMessage =
-      "Workspace information is missing or unavailable!";
+        "Workspace information is missing or unavailable!";
       toastContext.showErrorDialog(errorMessage);
     } finally {
       setIsWorkspacesSearching(false);
@@ -174,9 +173,9 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
 
   const fetchRepos = async (service, accountId, workspaces) => {
     setIsRepoSearching(true);
-    try{
+    try {
       let results = await pipelineActions.searchRepositories(service, accountId, workspaces, getAccessToken);
-      if (typeof(results) != "object") {
+      if (typeof (results) != "object") {
         setRepoList([{ value: "", name: "Select One", isDisabled: "yes" }]);
         let errorMessage =
           "Repository information is missing or unavailable!";
@@ -186,11 +185,11 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
       }
       //console.log(results);
       setRepoList(results);
-    } catch (err){
+    } catch (err) {
       console.log(err);
       setRepoList([{ value: "", name: "Select One", isDisabled: "yes" }]);
       let errorMessage =
-      "Repository information is missing or unavailable!";
+        "Repository information is missing or unavailable!";
       toastContext.showErrorDialog(errorMessage);
     } finally {
       setIsRepoSearching(false);
@@ -199,9 +198,9 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
 
   const fetchBranches = async (service, accountId, repoId, workspaces) => {
     setIsBranchSearching(true);
-    try{
+    try {
       let results = await pipelineActions.searchBranches(service, accountId, repoId, workspaces, getAccessToken);
-      if (typeof(results) != "object") {
+      if (typeof (results) != "object") {
         setBranchList([{ value: "", name: "Select One", isDisabled: "yes" }]);
         let errorMessage =
           "Branch information is missing or unavailable!";
@@ -211,11 +210,11 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
       }
       //console.log(results);
       setBranchList(results);
-    } catch (err){
+    } catch (err) {
       console.log(err);
       setBranchList([{ value: "", name: "Select One", isDisabled: "yes" }]);
       let errorMessage =
-      "Branch information is missing or unavailable!";
+        "Branch information is missing or unavailable!";
       toastContext.showErrorDialog(errorMessage);
     } finally {
       setIsBranchSearching(false);
@@ -252,20 +251,20 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
   };
 
   const handleRepoChange = (selectedOption) => {
-    setFormData({ 
-      ...formData, 
+    setFormData({
+      ...formData,
       repository: selectedOption.name,
       repoId: selectedOption.id,
       gitUrl: selectedOption.httpUrl,
       sshUrl: selectedOption.sshUrl,
-      branch: ""
+      branch: "",
     });
   };
 
   const handleBranchChange = (selectedOption) => {
     setFormData({
       ...formData,
-      branch: selectedOption.value
+      branch: selectedOption.value,
     });
   };
 
@@ -314,7 +313,7 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
         key: key,
         trigger_active: trigger_active,
       };
-      console.log(item)
+      console.log(item);
       await parentCallback(item);
       setIsSaving(false);
     }
@@ -364,7 +363,6 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
   };
 
   const searchAccounts = async (service) => {
-    const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
     const apiUrl = "/registry/properties/" + service;   // this is to get all the service accounts from tool registry
     try {
@@ -384,13 +382,42 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
     }
   };
 
+
+  const registerHook = async (formData) => {
+    const accessToken = await getAccessToken();
+
+    if (!formData.service || !formData.accountId || !formData.repository) {
+      toastContext.showWarningDialog("WARNING: Data is missing from the repository account configuration.  Unable to register webhook.");
+      return;
+    }
+
+    const nodeUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
+    const hookUrl = encodeURIComponent(`${nodeUrl}/hooks/${data.owner}/${data._id}/source`);
+
+    const queryParams = {
+      params: {
+        repo: formData.repository,
+        hook: hookUrl,
+        branch: formData.branch,
+      },
+    };
+    const apiUrl = `/connectors/${formData.service}/${formData.accountId}/hook/create`;
+
+    try {
+      await axiosApiService(accessToken).get(apiUrl, queryParams);
+    } catch (error) {
+      console.error(error);
+      toastContext.showErrorDialog("Error:An error has occurred registering the webhook.  Please ensure your registry account information is current or report this issue.");
+    }
+  };
+
   return (
     <>
       <Form>
         <div className="text-muted h6 mb-3">Configure Source Repository settings for this pipeline.</div>
 
         <Form.Group controlId="formBasicEmail">
-          <Form.Label>Platform*</Form.Label>
+          <h6>Platform*</h6>
           {data.workflow.source !== undefined ?
             <DropdownList
               data={SERVICE_OPTIONS}
@@ -405,11 +432,11 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
         <div className="d-flex w-100">
           <div className="w-50 pt-2 pl-1">
             <Form.Check type="checkbox" label="Register Git Account"
-                        disabled={!formData.service || isRegisterAccount}
+                        disabled={!formData.service || data.workflow.source.accountId || formData.accountId}
                         checked={isRegisterAccount ? true : false}
                         onChange={() => setIsRegisterAccount(isRegisterAccount => !isRegisterAccount)}/>
           </div>
-          {isRegisterAccount &&
+          {isRegisterAccount && formData.accountId &&
           <div className="w-50 text-right">
             <Button variant="outline-danger" type="button" className="mt-2 ml-2" disabled={isSaving} size={"sm"}
                     onClick={() => {
@@ -421,7 +448,6 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
 
 
         {isRegisterAccount && <>
-
           {formData.service &&
           <Form.Group controlId="account" className="mt-2">
             <Form.Label>Select Account*</Form.Label>
@@ -451,7 +477,6 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
                   </>}
               </>
             )}
-            {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
           </Form.Group>}
 
           {formData.accountId &&
@@ -463,54 +488,53 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
             </Form.Group>
           </>
           }
-        
-        {formData.service && formData.service === "bitbucket" && formData.accountId && (
-          <Form.Group controlId="account" className="mt-2">
-            <Form.Label>Workspace*</Form.Label>
-            {isWorkspacesSearching ? (
-              <div className="form-text text-muted mt-2 p-2">
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
-                Loading workspaces from registry
-              </div>
-            ) : (
-              <>
-                {workspacesList ? (
-                  <DropdownList
-                    data={workspacesList}
-                    value={
-                      workspacesList[
-                        workspacesList.findIndex(
-                          (x) => x === formData.workspace,
-                        )
-                        ]
-                    }
-                    valueField="value"
-                    textField="name"
-                    filter="contains"
-                    onChange={handleWorkspacesChange}
-                  />
-                ) : (
+
+          {formData.service && formData.service === "bitbucket" && formData.accountId && (
+            <Form.Group controlId="account" className="mt-2">
+              <Form.Label>Workspace*</Form.Label>
+              {isWorkspacesSearching ? (
+                <div className="form-text text-muted mt-2 p-2">
                   <FontAwesomeIcon
                     icon={faSpinner}
                     spin
                     className="text-muted mr-1"
                     fixedWidth
                   />
-                )}
-              </>
-            )}
-            {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
-          </Form.Group>
-        )}
+                  Loading workspaces from registry
+                </div>
+              ) : (
+                <>
+                  {workspacesList ? (
+                    <DropdownList
+                      data={workspacesList}
+                      value={
+                        workspacesList[
+                          workspacesList.findIndex(
+                            (x) => x === formData.workspace,
+                          )
+                          ]
+                      }
+                      valueField="value"
+                      textField="name"
+                      filter="contains"
+                      onChange={handleWorkspacesChange}
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      icon={faSpinner}
+                      spin
+                      className="text-muted mr-1"
+                      fixedWidth
+                    />
+                  )}
+                </>
+              )}
+            </Form.Group>
+          )}
 
-          {formData.service && formData.accountId && (formData.service === "bitbucket"? 
-          formData.workspace 
-          && formData.workspace.length > 0 : true ) &&
+          {formData.service && formData.accountId && (formData.service === "bitbucket" ?
+            formData.workspace
+            && formData.workspace.length > 0 : true) &&
           <Form.Group controlId="repo" className="mt-2">
             <Form.Label>Select Repository*</Form.Label>
             {(isRepoSearching) ? (
@@ -521,65 +545,76 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
               <>
                 {repoList ?
                   <DropdownList
-                  data={repoList}
-                  value={
-                    repoList[
-                      repoList.findIndex(
-                        (x) => x.name.toLowerCase() === formData.repository.toLowerCase(),
-                      )
-                      ]
-                  }
-                  valueField="value"
-                  textField="name"
-                  filter="contains"
+                    data={repoList}
+                    value={
+                      repoList[
+                        repoList.findIndex(
+                          (x) => x.name.toLowerCase() === formData.repository.toLowerCase(),
+                        )
+                        ]
+                    }
+                    valueField="value"
+                    textField="name"
+                    filter="contains"
                     onChange={handleRepoChange}
                   /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/>}
               </>
             )}
-            {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
           </Form.Group>}
 
           {formData.service && formData.repository &&
           <Form.Group controlId="branch" className="mt-2">
-          <Form.Label>Select Branch*</Form.Label>
-          {(isBranchSearching) ? (
-            <div className="form-text text-muted mt-2 p-2">
-              <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/>
-              Loading branches from repository</div>
-          ) : (
-            <>
-              {branchList ?
-                <DropdownList
-                data={branchList}
-                value={
-                  branchList[
-                    branchList.findIndex((x) => x.value === formData.branch)
-                    ]
-                }
-                valueField="value"
-                textField="name"
-                filter="contains"
-                onChange={handleBranchChange}
-                /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/>}
-            </>
-          )} 
-          <small className="form-text text-muted mt-2 text-center">Branch within repository to
-          watch: &quot;master&quot; or
-          &quot;feature X&quot;</small>
-        </Form.Group>}
+            <Form.Label>Select Branch*</Form.Label>
+            {(isBranchSearching) ? (
+              <div className="form-text text-muted mt-2 p-2">
+                <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/>
+                Loading branches from repository</div>
+            ) : (
+              <>
+                {branchList ?
+                  <DropdownList
+                    data={branchList}
+                    value={
+                      branchList[
+                        branchList.findIndex((x) => x.value === formData.branch)
+                        ]
+                    }
+                    valueField="value"
+                    textField="name"
+                    filter="contains"
+                    onChange={handleBranchChange}
+                  /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/>}
+              </>
+            )}
+            <small className="form-text text-muted mt-2 text-center">Branch within repository to
+              watch: &quot;master&quot; or
+              &quot;feature X&quot;</small>
+          </Form.Group>}
         </>}
 
         {formData.service &&
-        <Form.Group controlId="formBasicCheckbox" className="mt-4 ml-1">
+          <Form.Group controlId="formBasicCheckbox" className="mt-5 ml-1">
           <Form.Check type="checkbox" label="Enable Event Based Trigger"
-                      checked={formData.trigger_active ? true : false}
-                      onChange={() => setFormData({ ...formData, trigger_active: !formData.trigger_active })}/>
-          <Form.Text className="text-muted">To use a webhook based event hook trigger with your source repository, the
-            hook URL below (and optional security key) must be setup in your source repository.</Form.Text>
-        </Form.Group>}
+          checked={formData.trigger_active ? true : false}
+          onChange={() => setFormData({ ...formData, trigger_active: !formData.trigger_active })}/>
+          <Form.Text className="text-muted">To use a webhook event from in your repository to start this pipeline, the
+          hook URL below (and optional security key) must be registered in your source repository. The URL below can
+          manually be added or if you registered an account above, can be created for you.</Form.Text>
+          </Form.Group>}
 
         {formData.trigger_active === true &&
         <>
+
+          {formData.branch &&
+          <div className="w-100 text-right">
+            <Button variant="outline-success" type="button" className="mt-2 ml-2" disabled={isSaving} size={"sm"}
+                    onClick={() => {
+                      registerHook(formData);
+                    }}>
+              <FontAwesomeIcon icon={faCodeCommit} className="mr-1"/> Register Webhook
+            </Button>
+          </div>}
+
           <EventBasedTriggerDetails pipelineId={data._id} userId={data.owner}/>
 
           {(formData.service === "github" || formData.service === "gitlab") && <>
