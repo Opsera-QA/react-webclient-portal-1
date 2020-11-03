@@ -1,4 +1,5 @@
 import {axiosApiService} from "../../../../../api/apiService";
+import baseActions from "../../../../../utils/actionsBase";
 
 const departmentActions = {};
 
@@ -56,16 +57,8 @@ departmentActions.updateDepartment = async (orgDomain, departmentDto, getAccessT
 };
 
 departmentActions.deleteDepartment = async (orgDomain, departmentDto, getAccessToken) => {
-  let postData = {
-    domain: orgDomain,
-    name: departmentDto.getData("name"),
-  }
-  const accessToken = await getAccessToken();
-  const apiUrl = `/users/account/department/delete`;
-  const response = await axiosApiService(accessToken).delete(apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {return { error };});
-  return response;
+  const apiUrl = `/users/account/department/delete?domain=${orgDomain}&name=${departmentDto.getData("name")}`;
+  return await baseActions.apiDeleteCall(getAccessToken, apiUrl);
 };
 
 departmentActions.syncDepartmentMembership = async (orgDomain, groupName, emailList, getAccessToken) => {
