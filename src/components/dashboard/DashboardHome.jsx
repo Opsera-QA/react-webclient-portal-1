@@ -429,7 +429,7 @@ DashboardView.propTypes = {
   selection: PropTypes.string,
   persona: PropTypes.string,
   date: PropTypes.object,
-  index: PropTypes.object,
+  index: PropTypes.array,
 };
 
 export default DashboardHome;

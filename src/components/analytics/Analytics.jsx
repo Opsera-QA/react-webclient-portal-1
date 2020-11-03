@@ -355,8 +355,6 @@ function Analytics() {
       </div>
     </>
   );
-
-
 }
 
 function ChartView({ selection, persona, date, index }) {
@@ -587,7 +585,7 @@ ChartView.propTypes = {
   selection: PropTypes.string,
   persona: PropTypes.string,
   date: PropTypes.object,
-  index: PropTypes.object,
+  index: PropTypes.array,
 };
 
 export default Analytics;

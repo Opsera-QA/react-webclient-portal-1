@@ -15,30 +15,25 @@ import SonarCodeCategoriesOKPieChart from "../../charts/sonarCodeCategoriesOKPie
 import TwistlockVulnerability from "../../charts/twistlockVulnerabilityLineChart";
 import VulnerabilityLineChart from "../../charts/vulnerabilityTimeSeriesLineChart";
 import VulnerabilityByPackage from "../../charts/vulnerabilityByPackageBarChart";
-import {  Row } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 
-
-
-
-function CodeView_Manager ({ persona, date, index }) {
+function CodeView_Manager({ persona, date, index }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [countBlockData, setCountBlockData] = useState([]);
-  
 
-  useEffect(() => {    
+  useEffect(() => {
     const controller = new AbortController();
     const runEffect = async () => {
       try {
         await fetchData();
-        
       } catch (err) {
         if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
+          // console.log("Request was canceled via controller.abort");
           return;
-        }        
+        }
       }
     };
     runEffect();
@@ -52,113 +47,148 @@ function CodeView_Manager ({ persona, date, index }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";   
+    const apiUrl = "/analytics/data";
     const postBody = {
-      "data": [
+      data: [
         {
-          "request": "twistlockHighVulnerabilities",
-          "metric": "count"
+          request: "twistlockHighVulnerabilities",
+          metric: "count",
         },
         {
-          "request": "vulnerabilityCounts",
-          "metric": "complexCount"
+          request: "vulnerabilityCounts",
+          metric: "complexCount",
         },
         {
-          "request": "twistlockMidVulnerabilities",
-          "metric": "count"
+          request: "twistlockMidVulnerabilities",
+          metric: "count",
         },
         {
-          "request": "twistlockLowVulnerabilities",
-          "metric": "count"
+          request: "twistlockLowVulnerabilities",
+          metric: "count",
         },
         {
-          "request": "sonarBugs",
-          "metric": "sum"
+          request: "sonarBugs",
+          metric: "sum",
         },
         {
-          "request": "sonarCodeCoverage",
-          "metric": "bar"
+          request: "sonarCodeCoverage",
+          metric: "bar",
         },
         {
-          "request": "sonarMaintainability",
-          "metric": "line"
+          request: "sonarMaintainability",
+          metric: "line",
         },
         {
-          "request": "sonarCodeSmells",
-          "metric": "line"
+          request: "sonarCodeSmells",
+          metric: "line",
         },
         {
-          "request": "sonarCodeCategoriesNO_VALUE",
-          "metric": "pie"
+          request: "sonarCodeCategoriesNO_VALUE",
+          metric: "pie",
         },
         {
-          "request": "sonarCodeCategoriesOK",
-          "metric": "pie"
+          request: "sonarCodeCategoriesOK",
+          metric: "pie",
         },
         {
-          "request": "twistlockVulStatusHigh",
-          "metric": "line"
+          request: "twistlockVulStatusHigh",
+          metric: "line",
         },
         {
-          "request": "twistlockVulStatusMed",
-          "metric": "line"
+          request: "twistlockVulStatusMed",
+          metric: "line",
         },
         {
-          "request": "twistlockVulStatusLow",
-          "metric": "line"
-        }
+          request: "twistlockVulStatusLow",
+          metric: "line",
+        },
       ],
-      startDate: date.start, 
-      endDate: date.end
+      startDate: date.start,
+      endDate: date.end,
     };
-    
+
     try {
-      const res = await axiosApiService(accessToken).post(apiUrl, postBody);     
+      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res && res.data ? res.data.data[0] : [];
       setData(dataObject);
       const countsData = buildSummaryCounts(dataObject);
       setCountBlockData(countsData);
       setLoading(false);
-    }
-    catch (err) {
+    } catch (err) {
       setErrors(err);
       setLoading(false);
     }
   }
 
-  
   const buildSummaryCounts = (data) => {
-    const { vulnerabilityCounts, twistlockHighVulnerabilities, twistlockMidVulnerabilities, twistlockLowVulnerabilities, sonarBugs } = data;
+    const {
+      vulnerabilityCounts,
+      twistlockHighVulnerabilities,
+      twistlockMidVulnerabilities,
+      twistlockLowVulnerabilities,
+      sonarBugs,
+    } = data;
 
-    let summaryCountsData = [];    
+    let summaryCountsData = [];
 
     if (vulnerabilityCounts.status === 200 && vulnerabilityCounts.data !== undefined) {
       for (let item in vulnerabilityCounts.data[0].count) {
-        summaryCountsData.push({ name: vulnerabilityCounts.data[0].count[item].key + " Vulnerabilities", value: vulnerabilityCounts.data[0].count[item].doc_count, footer: "Anchore", status: vulnerabilityCounts.data[0].count[item].key === "High" || vulnerabilityCounts.data[0].count[item].key === "Critical" ? "danger" : vulnerabilityCounts.data[0].count[item].key === "Medium" || vulnerabilityCounts.data[0].count[item].key === "Low" ? "warning" : null});
+        summaryCountsData.push({
+          name: vulnerabilityCounts.data[0].count[item].key + " Vulnerabilities",
+          value: vulnerabilityCounts.data[0].count[item].doc_count,
+          footer: "Anchore",
+          status:
+            vulnerabilityCounts.data[0].count[item].key === "High" ||
+            vulnerabilityCounts.data[0].count[item].key === "Critical"
+              ? "danger"
+              : vulnerabilityCounts.data[0].count[item].key === "Medium" ||
+                vulnerabilityCounts.data[0].count[item].key === "Low"
+              ? "warning"
+              : null,
+        });
       }
-    } 
+    }
 
     if (twistlockHighVulnerabilities.status === 200 && twistlockHighVulnerabilities.data !== undefined) {
-      summaryCountsData.push({ name: "High Vulnerabilities", value: twistlockHighVulnerabilities.data[0].count, footer: twistlockHighVulnerabilities.tool, status: twistlockHighVulnerabilities.data[0].count > 0 ? "danger" : "success" });
+      summaryCountsData.push({
+        name: "High Vulnerabilities",
+        value: twistlockHighVulnerabilities.data[0].count,
+        footer: twistlockHighVulnerabilities.tool,
+        status: twistlockHighVulnerabilities.data[0].count > 0 ? "danger" : "success",
+      });
     }
     if (twistlockMidVulnerabilities.status === 200 && twistlockMidVulnerabilities.data !== undefined) {
-      summaryCountsData.push({ name: "Medium Vulnerabilities", value: twistlockMidVulnerabilities.data[0].count, footer: twistlockMidVulnerabilities.tool, status: twistlockMidVulnerabilities.data[0].count > 0 ? "warning" : "success" });
+      summaryCountsData.push({
+        name: "Medium Vulnerabilities",
+        value: twistlockMidVulnerabilities.data[0].count,
+        footer: twistlockMidVulnerabilities.tool,
+        status: twistlockMidVulnerabilities.data[0].count > 0 ? "warning" : "success",
+      });
     }
     if (twistlockLowVulnerabilities.status === 200 && twistlockLowVulnerabilities.data !== undefined) {
-      summaryCountsData.push({ name: "Low Vulnerabilities", value: twistlockLowVulnerabilities.data[0].count, footer: twistlockLowVulnerabilities.tool, status: twistlockLowVulnerabilities.data[0].count > 5 ? "warning" : "success" });
+      summaryCountsData.push({
+        name: "Low Vulnerabilities",
+        value: twistlockLowVulnerabilities.data[0].count,
+        footer: twistlockLowVulnerabilities.tool,
+        status: twistlockLowVulnerabilities.data[0].count > 5 ? "warning" : "success",
+      });
     }
     if (sonarBugs.status === 200 && sonarBugs.data !== undefined) {
-      summaryCountsData.push({ name: "Detected Bugs", value: sonarBugs.data[0], footer: sonarBugs.tool, status: sonarBugs.data[0] > 5 ? "warning" : "success" });
-    }   
-    
+      summaryCountsData.push({
+        name: "Detected Bugs",
+        value: sonarBugs.data[0],
+        footer: sonarBugs.tool,
+        status: sonarBugs.data[0] > 5 ? "warning" : "success",
+      });
+    }
+
     return summaryCountsData;
   };
 
-
-  if(loading) {
-    return (<LoadingDialog />);
+  if (loading) {
+    return <LoadingDialog />;
   } else if (error) {
-    return (<ErrorDialog  error={error} />);
+    return <ErrorDialog error={error} />;
   } else if (!index.includes("sonar")) {
     return (
       <div
@@ -174,98 +204,122 @@ function CodeView_Manager ({ persona, date, index }) {
         </Row>
       </div>
     );
-  } else if (data === undefined || Object.keys(data).length == 0 || Object.values(data).every(element => Object.keys(element.data[0]).length === 0)
-  || Object.values(data).every(element => element.status !== 200)) {
-    return (<InfoDialog  message="No log activity has been captured for this dashboard yet." />);
+  } else if (
+    data === undefined ||
+    Object.keys(data).length == 0 ||
+    Object.values(data).every((element) => Object.keys(element.data[0]).length === 0) ||
+    Object.values(data).every((element) => element.status !== 200)
+  ) {
+    return <InfoDialog message="No log activity has been captured for this dashboard yet." />;
   } else {
     return (
       <>
         <SummaryCountBlocksView data={countBlockData} />
 
         <div className="d-flex">
-        <div className="align-self-stretch p-2 w-100">
-            <VulnerabilityLineChart persona={persona} date={date}/>
+          <div className="align-self-stretch p-2 w-100">
+            <VulnerabilityLineChart persona={persona} date={date} />
           </div>
           <div className="align-self-stretch p-2 w-100">
-            <VulnerabilityByPackage persona={persona} date={date}/>
+            <VulnerabilityByPackage persona={persona} date={date} />
           </div>
         </div>
 
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
-            {Object.keys(data.sonarCodeSmells.data[0]).length > 0 && data.sonarCodeSmells.status === 200 ? <div className="chart mb-3" style={{ height: "300px" }}>
-              <SonarCodeSmellsLineChart data={data} persona={persona} date={date}/>
-            </div> :         <div className="chart mb-3" style={{ height: "300px" }}>
-              <div className="chart-label-text">Sonar: Code Smells</div><div
-      className="max-content-width p-5 mt-5"
-      style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-    >
-      <InfoDialog message="No Data is available for this chart at this time." />
-    </div></div>}
+            {Object.keys(data.sonarCodeSmells.data[0]).length > 0 && data.sonarCodeSmells.status === 200 ? (
+              <div className="chart mb-3" style={{ height: "300px" }}>
+                <SonarCodeSmellsLineChart data={data} persona={persona} date={date} />
+              </div>
+            ) : (
+              <div className="chart mb-3" style={{ height: "300px" }}>
+                <div className="chart-label-text">Sonar: Code Smells</div>
+                <div
+                  className="max-content-width p-5 mt-5"
+                  style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+                >
+                  <InfoDialog message="No Data is available for this chart at this time." />
+                </div>
+              </div>
+            )}
           </div>
           <div className="align-self-stretch p-2 w-100">
-            {Object.keys(data.sonarCodeCategoriesNO_VALUE.data[0]).length > 0 && data.sonarCodeCategoriesNO_VALUE.status === 200 ? <div className="chart mb-3" style={{ height: "300px" }}>
-              <SonarCodeCategoriesNO_VALUEPieChart data={data} persona={persona} date={date}/>
-            </div> : <div className="chart mb-3" style={{ height: "300px" }}>
-              <div className="chart-label-text">Sonar: Code Categories (Keyword = No Value)
-              </div><div
-      className="max-content-width p-5 mt-5"
-      style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-    >
-      <InfoDialog message="No Data is available for this chart at this time." />
-    </div></div>}
+            {Object.keys(data.sonarCodeCategoriesNO_VALUE.data[0]).length > 0 &&
+            data.sonarCodeCategoriesNO_VALUE.status === 200 ? (
+              <div className="chart mb-3" style={{ height: "300px" }}>
+                <SonarCodeCategoriesNO_VALUEPieChart data={data} persona={persona} date={date} />
+              </div>
+            ) : (
+              <div className="chart mb-3" style={{ height: "300px" }}>
+                <div className="chart-label-text">Sonar: Code Categories (Keyword = No Value)</div>
+                <div
+                  className="max-content-width p-5 mt-5"
+                  style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+                >
+                  <InfoDialog message="No Data is available for this chart at this time." />
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
-            {Object.keys(data.sonarCodeCategoriesOK.data[0]).length > 0 && data.sonarCodeCategoriesOK.status === 200 ? <div className="chart mb-3" style={{ height: "300px" }}>
-              <SonarCodeCategoriesOKPieChart data={data} persona={persona} date={date}/>
-            </div> : <div className="chart mb-3" style={{ height: "300px" }}>
-              <div className="chart-label-text">Sonar: Code Categories (Keyword = OK)
-              </div><div
-      className="max-content-width p-5 mt-5"
-      style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-    >
-      <InfoDialog message="No Data is available for this chart at this time." />
-    </div></div>}
+            {Object.keys(data.sonarCodeCategoriesOK.data[0]).length > 0 && data.sonarCodeCategoriesOK.status === 200 ? (
+              <div className="chart mb-3" style={{ height: "300px" }}>
+                <SonarCodeCategoriesOKPieChart data={data} persona={persona} date={date} />
+              </div>
+            ) : (
+              <div className="chart mb-3" style={{ height: "300px" }}>
+                <div className="chart-label-text">Sonar: Code Categories (Keyword = OK)</div>
+                <div
+                  className="max-content-width p-5 mt-5"
+                  style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+                >
+                  <InfoDialog message="No Data is available for this chart at this time." />
+                </div>
+              </div>
+            )}
           </div>
           <div className="align-self-stretch p-2 w-100">
-            {Object.keys(data.sonarMaintainability.data[0]).length > 0 && data.sonarMaintainability.status === 200 ? <div className="chart mb-3" style={{ height: "300px" }}>
-              <SonarMaintainabilityLineChart data={data} persona={persona} date={date}/>
-            </div> : <div className="chart mb-3" style={{ height: "300px" }}>
-              <div className="chart-label-text">Sonar: Maintainability Rating
-              </div><div
-      className="max-content-width p-5 mt-5"
-      style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-    >
-      <InfoDialog message="No Data is available for this chart at this time." />
-    </div></div>}
+            {Object.keys(data.sonarMaintainability.data[0]).length > 0 && data.sonarMaintainability.status === 200 ? (
+              <div className="chart mb-3" style={{ height: "300px" }}>
+                <SonarMaintainabilityLineChart data={data} persona={persona} date={date} />
+              </div>
+            ) : (
+              <div className="chart mb-3" style={{ height: "300px" }}>
+                <div className="chart-label-text">Sonar: Maintainability Rating</div>
+                <div
+                  className="max-content-width p-5 mt-5"
+                  style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+                >
+                  <InfoDialog message="No Data is available for this chart at this time." />
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
-            {Object.keys(data.twistlockVulStatusHigh.data[0]).length > 0 && data.twistlockVulStatusHigh.status === 200 ? <div className="chart mb-3" style={{ height: "300px" }}>
-              <TwistlockVulnerability data={data} persona={persona} date={date}/>
-            </div> : ""}
-            
+            {Object.keys(data.twistlockVulStatusHigh.data[0]).length > 0 &&
+            data.twistlockVulStatusHigh.status === 200 ? (
+              <div className="chart mb-3" style={{ height: "300px" }}>
+                <TwistlockVulnerability data={data} persona={persona} date={date} />
+              </div>
+            ) : (
+              ""
+            )}
           </div>
-          <div className="align-self-stretch p-2 w-100">
-           &nbsp;
-          </div>
+          <div className="align-self-stretch p-2 w-100">&nbsp;</div>
         </div>
       </>
-    );}
-
-
-
-
+    );
+  }
 }
 
-
 CodeView_Manager.propTypes = {
-  persona: PropTypes.string
+  persona: PropTypes.string,
 };
 
 export default CodeView_Manager;

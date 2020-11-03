@@ -7,8 +7,7 @@ import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import GitlabMergeRequestTimeTakenBarChart from "../charts/GitlabMergeRequestTimeTakenBarChart";
 
-
-function GitlabMergeRequestsView( { persona } ) {
+function GitlabMergeRequestsView({ persona }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -18,11 +17,10 @@ function GitlabMergeRequestsView( { persona } ) {
     const controller = new AbortController();
     const runEffect = async () => {
       try {
-        console.log("FETCHING DATA");
         await getApiData();
       } catch (err) {
         if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
+          // console.log("Request was canceled via controller.abort");
           return;
         }
       }
@@ -43,9 +41,9 @@ function GitlabMergeRequestsView( { persona } ) {
       data: [
         {
           request: "gitlabTimeTakeFromMergeCreationToComplete",
-          metric: "bar"
-        }
-      ]
+          metric: "bar",
+        },
+      ],
     };
 
     try {
@@ -53,38 +51,32 @@ function GitlabMergeRequestsView( { persona } ) {
       let dataObject = res && res.data ? res.data.data[0].gitlabTimeTakeFromMergeCreationToComplete.data : [];
       setData(dataObject);
       setLoading(false);
-    }
-    catch (err) {
-      console.log(err.message);
+    } catch (err) {
       setLoading(false);
       setErrors(err.message);
     }
   };
 
-  // console.log(data);
-
-  if(loading) {
-    return (<LoadingDialog size="sm" />);
-  } else if (error) {
-    return (<ErrorDialog  error={error} />);
-  } else {
+  if (loading) return <LoadingDialog size="sm" />;
+  if (error) return <ErrorDialog error={error} />;
+  else
     return (
       <>
-        {data && data.length>0 && data.map((item, key) => {
-          return (
-            <> 
-              <GitlabMergeRequestTimeTakenBarChart key={key} persona={persona} data={item}/>
-            </>
-          );
-        })}
-        
+        {data &&
+          data.length > 0 &&
+          data.map((item, key) => {
+            return (
+              <>
+                <GitlabMergeRequestTimeTakenBarChart key={key} persona={persona} data={item} />
+              </>
+            );
+          })}
       </>
     );
-  }
 }
 
 GitlabMergeRequestsView.propTypes = {
-  persona: PropTypes.string
+  persona: PropTypes.string,
 };
 
 export default GitlabMergeRequestsView;

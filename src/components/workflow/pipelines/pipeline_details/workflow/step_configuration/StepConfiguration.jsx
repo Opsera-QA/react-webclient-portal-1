@@ -33,7 +33,6 @@ function StepConfiguration({ data, stepId, parentCallback, handleCloseClick }) {
   const [isToolListSearching, setIsToolListSearching] = useState(false);
   //const [isToolTypeSearching, setIsToolTypeSearching] = useState(false);
 
-
   useEffect(() => {
     const controller = new AbortController();
     const runEffect = async () => {
@@ -73,13 +72,13 @@ function StepConfiguration({ data, stepId, parentCallback, handleCloseClick }) {
           toastContext.showLoadingErrorDialog(err);
         }
       }
+    }
 
       // Fire off our API call
       fetchToolTypes();
     },
     [],
   );*/
-
 
   const fetchToolDetails = async () => {
     try {
@@ -125,7 +124,6 @@ function StepConfiguration({ data, stepId, parentCallback, handleCloseClick }) {
     if (step.tool && step.tool.tool_identifier.length > 0) {
       setLockTool(true);
     }
-
   };
 
   /*const getStepType = async (tool) => {
@@ -153,7 +151,7 @@ function StepConfiguration({ data, stepId, parentCallback, handleCloseClick }) {
   };
 
   const getStepIndex = (step_id) => {
-    let stepArrayIndex = plan.findIndex(x => x._id === step_id);
+    let stepArrayIndex = plan.findIndex((x) => x._id === step_id);
     return stepArrayIndex;
   };
 
@@ -171,15 +169,12 @@ function StepConfiguration({ data, stepId, parentCallback, handleCloseClick }) {
 
   return (
     <Form>
-      <div className="text-muted mt-1 mb-3">A pipeline step represents a tool and an operation. Each step requires a
-        tool to be selected along with a display name.
-        After the tool is selected, the step can be edited by clicking on the cog icon (
-        <FontAwesomeIcon icon={faCog}
-                         fixedWidth
-                         className="text-muted"/>)
-        and then the individual operations for that step can be defined. If the tool requires configuration information,
-        jobs or accounts, you must configure those in
-        the Tool Registry before setting up the step.
+      <div className="text-muted mt-1 mb-3">
+        A pipeline step represents a tool and an operation. Each step requires a tool to be selected along with a
+        display name. After the tool is selected, the step can be edited by clicking on the cog icon (
+        <FontAwesomeIcon icon={faCog} fixedWidth className="text-muted" />) and then the individual operations for that
+        step can be defined. If the tool requires configuration information, jobs or accounts, you must configure those
+        in the Tool Registry before setting up the step.
       </div>
       <div className="mt-4 mb-4">
         <Form.Check
@@ -193,48 +188,80 @@ function StepConfiguration({ data, stepId, parentCallback, handleCloseClick }) {
 
         <Form.Group controlId="name" className="mt-2">
           <Form.Label>Step Name*</Form.Label>
-          <Form.Control maxLength="50" type="text" disabled={!formData.active} placeholder=""
-                        value={formData.name || ""} onChange={e => setFormData({ ...formData, name: e.target.value })}/>
+          <Form.Control
+            maxLength="50"
+            type="text"
+            disabled={!formData.active}
+            placeholder=""
+            value={formData.name || ""}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          />
         </Form.Group>
         <Form.Group controlId="tool" className="mt-3">
-          <Form.Label>Tool* {isToolListSearching &&
-          <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/>}</Form.Label>
-          {formData.tool_identifier && formData.tool_identifier.length > 0 && lockTool ?
+          <Form.Label>
+            Tool*{" "}
+            {isToolListSearching && <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth />}
+          </Form.Label>
+          {formData.tool_identifier && formData.tool_identifier.length > 0 && lockTool ? (
             <>
-              <Form.Control maxLength="50" type="text" disabled={true} placeholder=""
-                            value={toolList[toolList.findIndex(x => x.identifier === formData.tool_identifier)] && toolList[toolList.findIndex(x => x.identifier === formData.tool_identifier)].name || ""}/>
-            </> :
+              <Form.Control
+                maxLength="50"
+                type="text"
+                disabled={true}
+                placeholder=""
+                value={
+                  (toolList[toolList.findIndex((x) => x.identifier === formData.tool_identifier)] &&
+                    toolList[toolList.findIndex((x) => x.identifier === formData.tool_identifier)].name) ||
+                  ""
+                }
+              />
+            </>
+          ) : (
             <>
               <DropdownList
                 data={toolList}
-                valueField='identifier'
-                value={toolList[toolList.findIndex(x => x.identifier === formData.tool_identifier)]}
-                busy={(!formData.active) ? false : Object.keys(toolList).length == 0 ? true : false}
+                valueField="identifier"
+                value={toolList[toolList.findIndex((x) => x.identifier === formData.tool_identifier)]}
+                busy={!formData.active ? false : Object.keys(toolList).length === 0 ? true : false}
                 disabled={!formData.active}
-                textField='name'
-                filter='contains'
-                groupBy={tool => capitalizeFirstLetter(tool.tool_type_name, " ", "Undefined Type")}
+                textField="name"
+                filter="contains"
+                groupBy={(tool) => capitalizeFirstLetter(tool.tool_type_name, " ", "Undefined Type")}
                 onChange={handleToolIdentifierChange}
               />
-              <Form.Text className="text-muted">Tool cannot be changed after being set. The step would need to be
-                deleted and recreated to change the tool.</Form.Text>
-            </>}
+              <Form.Text className="text-muted">
+                Tool cannot be changed after being set. The step would need to be deleted and recreated to change the
+                tool.
+              </Form.Text>
+            </>
+          )}
         </Form.Group>
       </div>
 
-      <Button variant="primary" className="mt-2"
-              disabled={isLoading || isSaving}
-              onClick={() => callbackFunction()}>
-        {isSaving ?
-          <><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>Saving</> :
-          <><FontAwesomeIcon icon={faSave} fixedWidth className="mr-1"/>Save</>}
+      <Button variant="primary" className="mt-2" disabled={isLoading || isSaving} onClick={() => callbackFunction()}>
+        {isSaving ? (
+          <>
+            <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth />
+            Saving
+          </>
+        ) : (
+          <>
+            <FontAwesomeIcon icon={faSave} fixedWidth className="mr-1" />
+            Save
+          </>
+        )}
       </Button>
 
-      <Button variant="secondary" type="button" className="mt-2 ml-2" disabled={isSaving}
-              onClick={() => {
-                handleCloseClick();
-              }}>
-        <FontAwesomeIcon icon={faTimes} className="mr-1"/> Close
+      <Button
+        variant="secondary"
+        type="button"
+        className="mt-2 ml-2"
+        disabled={isSaving}
+        onClick={() => {
+          handleCloseClick();
+        }}
+      >
+        <FontAwesomeIcon icon={faTimes} className="mr-1" /> Close
       </Button>
 
       <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
@@ -242,12 +269,11 @@ function StepConfiguration({ data, stepId, parentCallback, handleCloseClick }) {
   );
 }
 
-
 StepConfiguration.propTypes = {
   data: PropTypes.object,
   stepId: PropTypes.string,
   parentCallback: PropTypes.func,
-  handleCloseClick: PropTypes.func
+  handleCloseClick: PropTypes.func,
 };
 
 export default StepConfiguration;

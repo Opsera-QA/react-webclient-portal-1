@@ -15,25 +15,22 @@ import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
 
-
-function JiraBurndownLineChart( { persona, date } ) {
+function JiraBurndownLineChart({ persona, date }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-
-  useEffect(() => {    
+  useEffect(() => {
     const controller = new AbortController();
     const runEffect = async () => {
       try {
         await fetchData();
       } catch (err) {
-        if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
+        if (err.name === "AbortError")
+          // console.log("Request was canceled via controller.abort");
           return;
-        }        
       }
     };
     runEffect();
@@ -43,21 +40,20 @@ function JiraBurndownLineChart( { persona, date } ) {
     };
   }, []);
 
-
   const fetchData = async () => {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";   
+    const apiUrl = "/analytics/data";
     const postBody = {
       data: [
-        { 
+        {
           request: "jiraBurndownChart",
-          metric: "stacked" 
-        }
+          metric: "stacked",
+        },
       ],
-      startDate: date.start, 
-      endDate: date.end
+      startDate: date.start,
+      endDate: date.end,
     };
 
     try {
@@ -65,46 +61,47 @@ function JiraBurndownLineChart( { persona, date } ) {
       let dataObject = res && res.data ? res.data.data[0].jiraBurndownChart : [];
       setData(dataObject);
       setLoading(false);
-    }
-    catch (err) {
-      console.log(err.message);
+    } catch (err) {
       setLoading(false);
       setErrors(err.message);
     }
   };
 
-
-  console.log("Rendering Dep Frequency Charts");
-
-  console.log(data);
-
-  if(loading) {
-    return (<LoadingDialog size="sm" />);
-  } else if (error) {
-    return (<ErrorDialog  error={error} />);
+  if (loading) return <LoadingDialog size="sm" />;
+  else if (error) return <ErrorDialog error={error} />;
   // } else if (typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) {
   //   return (<ErrorDialog  error="No Data is available for this chart at this time." />);
-  } else {
+  else
     return (
       <>
-        <ModalLogs header="Burndown Chart" size="lg" jsonMessage={data.data} dataType="line" show={showModal} setParentVisibility={setShowModal} />
+        <ModalLogs
+          header="Burndown Chart"
+          size="lg"
+          jsonMessage={data.data}
+          dataType="line"
+          show={showModal}
+          setParentVisibility={setShowModal}
+        />
 
         <div className="chart mb-3" style={{ height: "300px" }}>
           <div className="chart-label-text">Jira: Burndown Chart</div>
-          {(typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) ?
-            <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
+          {typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200 ? (
+            <div
+              className="max-content-width p-5 mt-5"
+              style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+            >
               <InfoDialog message="No Data is available for this chart at this time." />
             </div>
-            : 
+          ) : (
             <ResponsiveLine
               data={data ? data.data : []}
               onClick={() => setShowModal(true)}
               indexBy="date"
-              margin={{ top: 50, right: 130, bottom: 80, left: 100 }} 
+              margin={{ top: 50, right: 130, bottom: 80, left: 100 }}
               xScale={{
                 type: "time",
                 format: "%Y-%m-%d",
-                precision: "day"
+                precision: "day",
               }}
               yScale={{ type: "linear", min: 0, max: "auto", stacked: false }}
               curve="step"
@@ -121,12 +118,14 @@ function JiraBurndownLineChart( { persona, date } ) {
               legends={config.legends}
               colors={{ scheme: "category10" }}
               tooltip={({ point, color }) => (
-                <div style={{
-                  background: "white",
-                  padding: "9px 12px",
-                  border: "1px solid #ccc",
-                }}>
-                  <strong style={{ color }}>  Issues Remaining: </strong> {point.data.y}
+                <div
+                  style={{
+                    background: "white",
+                    padding: "9px 12px",
+                    border: "1px solid #ccc",
+                  }}
+                >
+                  <strong style={{ color }}> Issues Remaining: </strong> {point.data.y}
                 </div>
               )}
               theme={{
@@ -137,15 +136,13 @@ function JiraBurndownLineChart( { persona, date } ) {
                 },
               }}
             />
-          }
+          )}
         </div>
       </>
-      
     );
-  }
 }
 JiraBurndownLineChart.propTypes = {
-  persona: PropTypes.string
+  persona: PropTypes.string,
 };
 
 export default JiraBurndownLineChart;

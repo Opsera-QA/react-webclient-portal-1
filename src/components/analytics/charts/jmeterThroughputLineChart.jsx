@@ -15,25 +15,23 @@ import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
 
-
-function JMeterThroughputLineChart( { persona, date } ) {
+function JMeterThroughputLineChart({ persona, date }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  useEffect(() => {    
+  useEffect(() => {
     const controller = new AbortController();
     const runEffect = async () => {
       try {
-        console.log("FETCHING DATA");
-        await getApiData();        
+        await getApiData();
       } catch (err) {
         if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
+          // console.log("Request was canceled via controller.abort");
           return;
-        }        
+        }
       }
     };
     runEffect();
@@ -44,20 +42,19 @@ function JMeterThroughputLineChart( { persona, date } ) {
   }, [date]);
 
   const getApiData = async () => {
-    
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";   
+    const apiUrl = "/analytics/data";
     const postBody = {
       data: [
-        { 
+        {
           request: "jmeterThroughput",
-          metric: "line" 
-        }
+          metric: "line",
+        },
       ],
-      startDate: date.start, 
-      endDate: date.end
+      startDate: date.start,
+      endDate: date.end,
     };
 
     try {
@@ -65,32 +62,38 @@ function JMeterThroughputLineChart( { persona, date } ) {
       let dataObject = res && res.data ? res.data.data[0].jmeterThroughput : [];
       setData(dataObject);
       setLoading(false);
-    }
-    catch (err) {
-      console.log(err.message);
+    } catch (err) {
       setLoading(false);
       setErrors(err.message);
     }
   };
 
-  if(loading) {
-    return (<LoadingDialog size="sm" />);
-  } else if (error) {
-    return (<ErrorDialog  error={error} />);
+  if (loading) return <LoadingDialog size="sm" />;
+  if (error) return <ErrorDialog error={error} />;
   // } else if (typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) {
   //   return (<ErrorDialog error="No Data is available for this chart at this time." />);
-  } else {
+  else
     return (
       <>
-        <ModalLogs header="Throughput" size="lg" jsonMessage={data.data} dataType="line" show={showModal} setParentVisibility={setShowModal} />
+        <ModalLogs
+          header="Throughput"
+          size="lg"
+          jsonMessage={data.data}
+          dataType="line"
+          show={showModal}
+          setParentVisibility={setShowModal}
+        />
 
         <div className="chart mb-3" style={{ height: "300px" }}>
           <div className="chart-label-text">JMeter: Throughput</div>
-          {(typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) ?
-            <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
+          {typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200 ? (
+            <div
+              className="max-content-width p-5 mt-5"
+              style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+            >
               <InfoDialog message="No Data is available for this chart at this time." />
             </div>
-            : 
+          ) : (
             <ResponsiveLine
               data={data ? data.data : []}
               onClick={() => setShowModal(true)}
@@ -110,14 +113,17 @@ function JMeterThroughputLineChart( { persona, date } ) {
               legends={config.legends}
               colors={{ scheme: "category10" }}
               tooltip={({ point, color }) => (
-                <div style={{
-                  background: "white",
-                  padding: "9px 12px",
-                  border: "1px solid #ccc",
-                }}>
-                  <strong style={{ color }}>
-            Build ID: </strong> {point.data.x}<br></br>
-                  <strong style={{ color }}>  Throughput: </strong> {point.data.y}<br></br>
+                <div
+                  style={{
+                    background: "white",
+                    padding: "9px 12px",
+                    border: "1px solid #ccc",
+                  }}
+                >
+                  <strong style={{ color }}>Build ID: </strong> {point.data.x}
+                  <br></br>
+                  <strong style={{ color }}> Throughput: </strong> {point.data.y}
+                  <br></br>
                 </div>
               )}
               theme={{
@@ -128,14 +134,13 @@ function JMeterThroughputLineChart( { persona, date } ) {
                 },
               }}
             />
-          }
+          )}
         </div>
       </>
     );
-  }
 }
 JMeterThroughputLineChart.propTypes = {
-  persona: PropTypes.string
+  persona: PropTypes.string,
 };
 
 export default JMeterThroughputLineChart;

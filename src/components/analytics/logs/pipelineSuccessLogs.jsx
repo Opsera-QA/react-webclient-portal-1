@@ -27,7 +27,7 @@ function PipelineSuccessLogs({ persona }) {
         await fetchData();
       } catch (err) {
         if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
+          // console.log("Request was canceled via controller.abort");
           return;
         }
       }
@@ -51,28 +51,23 @@ function PipelineSuccessLogs({ persona }) {
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res && res.data ? res.data : [];
-      console.log(dataObject);
       setData(dataObject);
       setLoading(false);
     } catch (err) {
-      console.log(err.message);
       setLoading(false);
       setErrors(err.message);
     }
   };
 
-  if (loading) {
-    return <LoadingDialog size="sm" />;
-  } else if (error) {
-    return <ErrorDialog error={error} />;
-  } else {
+  if (loading) return <LoadingDialog size="sm" />;
+  if (error) return <ErrorDialog error={error} />;
+  else
     return (
       <>
         <div className="activity-label-text mb-2">Successful Builds</div>
         <MapActivityData data={data} type="success" />
       </>
     );
-  }
 }
 
 const MapActivityData = (props) => {
@@ -106,9 +101,7 @@ const MapActivityData = (props) => {
               </div>
             </div>
             <div className="row mt-1">
-              <div className="col">
-                {format(new Date(item["timestamp"]), "yyyy-MM-dd', 'hh:mm a")}
-              </div>
+              <div className="col">{format(new Date(item["timestamp"]), "yyyy-MM-dd', 'hh:mm a")}</div>
             </div>
             <div className="row mt-2">
               {/* <div className="col">Version: {item["version"]}</div> */}

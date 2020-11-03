@@ -12,17 +12,16 @@ function CodeCoverageMetricsView({ persona, date }) {
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  
-  useEffect(() => {    
+
+  useEffect(() => {
     const controller = new AbortController();
     const runEffect = async () => {
       try {
         await fetchData();
       } catch (err) {
-        if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
+        if (err.name === "AbortError")
+          // console.log("Request was canceled via controller.abort");
           return;
-        }        
       }
     };
     runEffect();
@@ -36,16 +35,16 @@ function CodeCoverageMetricsView({ persona, date }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";   
+    const apiUrl = "/analytics/data";
     const postBody = {
       data: [
-        { 
+        {
           request: "sonarCodeCoverage",
-          metric: "bar" 
-        }
+          metric: "bar",
+        },
       ],
-      startDate: date.start, 
-      endDate: date.end
+      startDate: date.start,
+      endDate: date.end,
     };
 
     try {
@@ -54,20 +53,14 @@ function CodeCoverageMetricsView({ persona, date }) {
       setData(dataObject);
       setLoading(false);
     } catch (err) {
-      console.log(err.message);
       setLoading(false);
       setErrors(err.message);
     }
   };
 
-  console.log("Rendering Code Coverage Charts");
-  console.log(data);
-
-  if(loading) {
-    return (<LoadingDialog size="sm" />);
-  } else if (error) {
-    return (<ErrorDialog  error={error} />);
-  } else {
+  if (loading) return <LoadingDialog size="sm" />;
+  else if (error) return <ErrorDialog error={error} />;
+  else
     return (
       <>
         <div className="d-flex">
@@ -79,11 +72,11 @@ function CodeCoverageMetricsView({ persona, date }) {
           </div>
         </div>
       </>
-    );}
+    );
 }
 
 CodeCoverageMetricsView.propTypes = {
-  persona: PropTypes.string
+  persona: PropTypes.string,
 };
 
 export default CodeCoverageMetricsView;

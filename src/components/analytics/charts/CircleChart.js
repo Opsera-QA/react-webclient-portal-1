@@ -12,23 +12,21 @@ import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 
-function CircleChart( { persona, date } ) {
+function CircleChart({ persona, date }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {    
+  useEffect(() => {
     const controller = new AbortController();
     const runEffect = async () => {
       try {
-        console.log("FETCHING DATA");
-        await getApiData();        
+        await getApiData();
       } catch (err) {
-        if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
+        if (err.name === "AbortError")
+          // console.log("Request was canceled via controller.abort");
           return;
-        }        
       }
     };
     runEffect();
@@ -42,16 +40,16 @@ function CircleChart( { persona, date } ) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";   
+    const apiUrl = "/analytics/data";
     const postBody = {
       data: [
-        { 
+        {
           request: "jenkinsDeploySuccess",
-          metric: "guage" 
-        }
+          metric: "guage",
+        },
       ],
-      startDate: date.start, 
-      endDate: date.end
+      startDate: date.start,
+      endDate: date.end,
     };
 
     try {
@@ -59,40 +57,45 @@ function CircleChart( { persona, date } ) {
       let dataObject = res && res.data ? res.data.data[0].jenkinsDeploySuccess : [];
       setData(dataObject);
       setLoading(false);
-    }
-    catch (err) {
-      console.log(err.message);
+    } catch (err) {
       setLoading(false);
       setErrors(err.message);
     }
   };
 
-  console.log(data);
-
-  if(loading) {
-    return (<LoadingDialog size="sm" />);
-  } else if (error) {
-    return (<ErrorDialog  error={error} />);
-  } else {
+  if (loading) return <LoadingDialog size="sm" />;
+  else if (error) return <ErrorDialog error={error} />;
+  else
     return (
       <>
         <div className="chart mb-3" style={{ height: "300px" }}>
           <div className="chart-label-text">Jenkins: Change Failure Rate</div>
-          {(typeof data.data !== "object" || Object.keys(data.data).length == 0 || data.status !== 200 || data.data.length == 0 || typeof data.data[0].failureRate !== "number") ?
-            <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
+          {typeof data.data !== "object" ||
+          Object.keys(data.data).length == 0 ||
+          data.status !== 200 ||
+          data.data.length == 0 ||
+          typeof data.data[0].failureRate !== "number" ? (
+            <div
+              className="max-content-width p-5 mt-5"
+              style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+            >
               <InfoDialog message="No Data is available for this chart at this time." />
             </div>
-            : 
-            <div className="circle" style={{ backgroundColor : data.data && data.data[0].failureRate>50 ? "#CB4335" : "#66C2A5" }} >{data.data && data.data[0].failureRate.toFixed(2)+"%"}</div>
-          }
+          ) : (
+            <div
+              className="circle"
+              style={{ backgroundColor: data.data && data.data[0].failureRate > 50 ? "#CB4335" : "#66C2A5" }}
+            >
+              {data.data && data.data[0].failureRate.toFixed(2) + "%"}
+            </div>
+          )}
         </div>
       </>
     );
-  }
 }
 
 CircleChart.propTypes = {
-  persona: PropTypes.string
+  persona: PropTypes.string,
 };
 
 export default CircleChart;
