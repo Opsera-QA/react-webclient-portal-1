@@ -585,7 +585,7 @@ a:hover, .active {
 
 .warning-block {
     background-color: #f9c116;
-    color: #fff;
+    color: #000;
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
