@@ -43,6 +43,20 @@ const jiraStepNotificationMetadata = {
       isRequired: true
     },
     {
+      label: "Jira Parent Ticket",
+      id: "jiraParentTicket",
+    },
+    {
+      label: "Jira Open Step",
+      id: "jiraOpenStep",
+      isRequired: true
+    },
+    {
+      label: "Jira Closure Step",
+      id: "jiraClosureStep",
+      isRequired: true
+    },
+    {
       label: "Jira Approval Step",
       id: "jiraApprovalStep",
       isRequired: true
@@ -65,9 +79,12 @@ const jiraStepNotificationMetadata = {
     jiraProject: "",
     jiraPriority: "",
     jiraSprint: "",
+    jiraParentTicket: "",
     jiraAssignee: "",
     jiraRejectionStep: "",
     jiraApprovalStep: "",
+    jiraOpenStep: "",
+    jiraClosureStep: "",
     enabled: false,
   }
 };

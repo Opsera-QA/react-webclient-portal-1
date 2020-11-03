@@ -41,10 +41,13 @@ function JiraStepNotificationProjectInput({jiraToolId, visible, dataObject, setD
   const setJiraProject = (selectedOption) => {
     let newDataObject = {...selectedOption};
     newDataObject.setData("jiraSprint", "");
+    newDataObject.setData("jiraParentTicket", "");
     newDataObject.setData("jiraAssignee", "");
     newDataObject.setData("jiraBoard", "");
     newDataObject.setData("jiraRejectionStep", "");
     newDataObject.setData("jiraApprovalStep", "");
+    newDataObject.setData("jiraOpenStep", "");
+    newDataObject.setData("jiraClosureStep", "");
     setDataObject({...newDataObject});
   };
 
@@ -73,7 +76,7 @@ function JiraStepNotificationProjectInput({jiraToolId, visible, dataObject, setD
       setDataObject={setJiraProject}
       selectOptions={projects}
       busy={isLoading}
-      valueField="id"
+      valueField="key"
       textField="name"
       placeholderText={getPlaceholderText()}
       disabled={disabled || isLoading || jiraToolId == null || projects.length === 0}
