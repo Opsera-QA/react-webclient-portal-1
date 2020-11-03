@@ -1,4 +1,5 @@
 import { axiosApiService } from "../../../api/apiService";
+import baseActions from "../../../utils/actionsBase";
 
 const accountsActions = {};
 
@@ -159,7 +160,7 @@ accountsActions.getAllowedGroupActions = async (customerAccessRules, organizatio
   const {ldap} = user;
   const userOrganization = ldap["organization"];
   if (customerAccessRules.OpseraAdministrator) {
-    return ["get_groups", "get_group_details", "create_group", "update_group", "update_group_membership"];
+    return ["get_groups", "get_group_details", "create_group", "update_group", "update_group_membership", "delete_group"];
   }
   else if (userOrganization !== organizationName) {
     // User from another organization not allowed to do anything with another org, unless they are an Opsera administrator
@@ -170,10 +171,10 @@ accountsActions.getAllowedGroupActions = async (customerAccessRules, organizatio
   let orgOwner = await accountsActions.isOrganizationOwner(organizationName, getUserRecord, getAccessToken);
 
   if (orgOwner) {
-    return ["get_groups", "get_group_details", "create_group", "update_group", "update_group_membership"];
+    return ["get_groups", "get_group_details", "create_group", "update_group", "update_group_membership", "delete_group"];
   }
   else if (orgAccountOwner || customerAccessRules.Administrator) {
-    return ["get_groups", "get_group_details", "create_group", "update_group", "update_group_membership"];
+    return ["get_groups", "get_group_details", "create_group", "update_group", "update_group_membership", "delete_group"];
   }
   else if (customerAccessRules.PowerUser) {
     return ["get_groups", "get_group_details", "create_group", "update_group", "update_group_membership"];
@@ -511,16 +512,8 @@ accountsActions.createGroup = async (ldapOrganizationData, ldapGroupDataDto, cur
 
 
 accountsActions.deleteGroup = async (orgDomain, ldapGroupDataDto, getAccessToken) => {
-  let putData = {
-    "domain": orgDomain,
-    "groupName": ldapGroupDataDto.getData("name")
-  }
-  const accessToken = await getAccessToken();
-  const apiUrl = "/users/account/group/delete";
-  const response = await axiosApiService(accessToken).post(apiUrl, putData)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  const apiUrl = `/users/account/group/delete?domain=${orgDomain}&name=${ldapGroupDataDto.getData("name")}`;
+  return await baseActions.apiDeleteCall(getAccessToken, apiUrl);
 };
 
 accountsActions.syncMembership = async (ldapOrganizationData, groupName, emailList, getAccessToken) => {
