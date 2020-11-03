@@ -4,7 +4,14 @@ import { Form, Button, InputGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import DropdownList from "react-widgets/lib/DropdownList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave, faCopy, faSpinner, faExclamationCircle, faTimes, faCodeCommit } from "@fortawesome/pro-light-svg-icons";
+import {
+  faSave,
+  faCopy,
+  faSpinner,
+  faExclamationCircle,
+  faTimes,
+  faCodeCommit,
+} from "@fortawesome/pro-light-svg-icons";
 import { AuthContext } from "../../../../../../contexts/AuthContext";
 import { axiosApiService } from "../../../../../../api/apiService";
 import { DialogToastContext } from "contexts/DialogToastContext";
@@ -49,6 +56,7 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
   const [isBranchSearching, setIsBranchSearching] = useState(false);
   const [workspacesList, setWorkspacesList] = useState([]);
   const [isWorkspacesSearching, setIsWorkspacesSearching] = useState(false);
+  const [isRegisteringHook, setIsRegisteringHook] = useState(false);
 
   useEffect(() => {
     if (data !== undefined) {
@@ -384,6 +392,7 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
 
 
   const registerHook = async (formData) => {
+    setIsRegisteringHook(true);
     const accessToken = await getAccessToken();
 
     if (!formData.service || !formData.accountId || !formData.repository) {
@@ -404,10 +413,13 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
     const apiUrl = `/connectors/${formData.service}/${formData.accountId}/hook/create`;
 
     try {
+      await callbackFunction(); //first save the settings, then trigger registration
       await axiosApiService(accessToken).get(apiUrl, queryParams);
     } catch (error) {
       console.error(error);
       toastContext.showErrorDialog("Error:An error has occurred registering the webhook.  Please ensure your registry account information is current or report this issue.");
+    } finally {
+      setIsRegisteringHook(false);
     }
   };
 
@@ -450,7 +462,7 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
         {isRegisterAccount && <>
           {formData.service &&
           <Form.Group controlId="account" className="mt-2">
-            <Form.Label>Select Account*</Form.Label>
+            <Form.Label>Select Account (from Registry)*</Form.Label>
             {(isAccountSearching) ? (
               <div className="form-text text-muted mt-2 p-2">
                 <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/>
@@ -471,23 +483,20 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
                       <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth/>
                       No accounts have been registered for <span className="upper-case-first">{formData.service}</span>.
                       Please go to
-                      <Link to="/inventory/tools"> Tool Registry</Link> and add an entry for this repository in order to
-                      proceed.
+                      <Link to="/inventory/tools"> Tool Registry</Link> and add an entry for this repository.
                     </div>
                   </>}
+
+                {formData.accountId &&
+                <div className="text-muted pl-2 mb-3 mt-1">
+                  <b>User:</b> {formData.username}
+                </div>
+                }
               </>
             )}
           </Form.Group>}
 
-          {formData.accountId &&
-          <>
-            <Form.Group controlId="userName">
-              <Form.Label>Account</Form.Label>
-              <Form.Control maxLength="75" type="text" disabled placeholder="Username" value={formData.username || ""}
-                            onChange={e => setFormData({ ...formData, username: e.target.value })}/>
-            </Form.Group>
-          </>
-          }
+
 
           {formData.service && formData.service === "bitbucket" && formData.accountId && (
             <Form.Group controlId="account" className="mt-2">
@@ -593,14 +602,14 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
         </>}
 
         {formData.service &&
-          <Form.Group controlId="formBasicCheckbox" className="mt-5 ml-1">
+        <Form.Group controlId="formBasicCheckbox" className="mt-5 ml-1">
           <Form.Check type="checkbox" label="Enable Event Based Trigger"
-          checked={formData.trigger_active ? true : false}
-          onChange={() => setFormData({ ...formData, trigger_active: !formData.trigger_active })}/>
+                      checked={formData.trigger_active ? true : false}
+                      onChange={() => setFormData({ ...formData, trigger_active: !formData.trigger_active })}/>
           <Form.Text className="text-muted">To use a webhook event from in your repository to start this pipeline, the
-          hook URL below (and optional security key) must be registered in your source repository. The URL below can
-          manually be added or if you registered an account above, can be created for you.</Form.Text>
-          </Form.Group>}
+            hook URL below (and optional security key) must be registered in your source repository. The URL below can
+            manually be added or if you registered an account above, can be created for you.</Form.Text>
+        </Form.Group>}
 
         {formData.trigger_active === true &&
         <>
@@ -611,7 +620,11 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
                     onClick={() => {
                       registerHook(formData);
                     }}>
-              <FontAwesomeIcon icon={faCodeCommit} className="mr-1"/> Register Webhook
+              {isRegisteringHook ?
+                <><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>Working</> :
+                <><FontAwesomeIcon icon={faCodeCommit} className="mr-1" fixedWidth /> Register Webhook</>
+              }
+
             </Button>
           </div>}
 
@@ -620,18 +633,18 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
           {(formData.service === "github" || formData.service === "gitlab") && <>
             <h6>Settings:</h6>
             <div className="text-muted pl-1 mb-3">
-
               <b>Content Type:</b> application/json<br/>
               <b>SSL verification:</b> enabled<br/>
               <b>Selected events:</b> <i>just the push event</i><br/>
             </div>
 
             <Form.Group controlId="securityKeyField">
-              <h6>Webhook Secret: (optional)</h6>
+              <h6>Secret:</h6>
               <Form.Control maxLength="75" type="password"
                             placeholder="Optional security key/token from service"
                             value={formData.key || ""}
                             onChange={e => setFormData({ ...formData, key: e.target.value })}/>
+              <Form.Text className="text-muted">(Optional secret for manual registration in Git Repository if supported)</Form.Text>
             </Form.Group>
           </>}
         </>}
