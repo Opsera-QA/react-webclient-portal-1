@@ -7,11 +7,14 @@ function JiraStepNotificationToolInput({visible, dataObject, setDataObject, disa
     let newDataObject = {...selectedOption};
     newDataObject.setData("jiraProject", "");
     newDataObject.setData("jiraSprint", "");
-    newDataObject.setData("jiraUser", "");
+    newDataObject.setData("jiraParentTicket", "");
+    newDataObject.setData("jiraAssignee", "");
     newDataObject.setData("jiraBoard", "");
     newDataObject.setData("jiraPriority", "");
     newDataObject.setData("jiraApprovalStep", "");
     newDataObject.setData("jiraRejectionStep", "");
+    newDataObject.setData("jiraOpenStep", "");
+    newDataObject.setData("jiraClosureStep", "");
     setDataObject({...newDataObject});
   };
 

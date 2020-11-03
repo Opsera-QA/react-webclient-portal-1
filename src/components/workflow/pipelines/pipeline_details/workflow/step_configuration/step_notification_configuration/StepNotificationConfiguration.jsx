@@ -22,6 +22,7 @@ import NotificationsToggle from "./NotificationsToggle";
 import NotificationLevelInput from "./NotificationLevelInput";
 import JiraStepNotificationWorkflowStepInput from "./jira/JiraStepNotificationWorkflowStepInput";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
+import JiraStepNotificationParentTicketInput from "./jira/JiraStepNotificationParentTicketInput";
 
 const NOTIFICATION_OPTIONS = [
   {
@@ -137,7 +138,7 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
       return false;
     }
 
-    if (jiraDto.getData("enabled") === true && !jiraDto.isModelValid2()) {
+    if (teamsDto.getData("enabled") === true && !teamsDto.isModelValid2()) {
       toastContext.showErrorDialog("Error: Cannot enable Teams notification without tool selected.");
       return false;
     }
@@ -221,6 +222,9 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
         <JiraStepNotificationProjectUserInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} />
         <JiraStepNotificationBoardInput jiraToolId={jiraDto.getData("jiraToolId")} setDataObject={setJiraDto} dataObject={jiraDto} />
         <JiraStepNotificationSprintInput jiraToolId={jiraDto.getData("jiraToolId")} jiraBoard={jiraDto.getData("jiraBoard")} setDataObject={setJiraDto} dataObject={jiraDto} />
+        <JiraStepNotificationParentTicketInput jiraToolId={jiraDto.getData("jiraToolId")} jiraSprintId={jiraDto.getData("jiraSprint")} setDataObject={setJiraDto} dataObject={jiraDto} />
+        <JiraStepNotificationWorkflowStepInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} fieldName={"jiraOpenStep"} />
+        <JiraStepNotificationWorkflowStepInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} fieldName={"jiraClosureStep"} />
         <JiraStepNotificationWorkflowStepInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} fieldName={"jiraApprovalStep"} />
         <JiraStepNotificationWorkflowStepInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} fieldName={"jiraRejectionStep"} />
       </div>

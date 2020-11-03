@@ -21,11 +21,10 @@ pipelineStepNotificationActions.getJiraProjects = async (jiraStepNotificationDto
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
-// TODO: Hook up project
 pipelineStepNotificationActions.getJiraProjectUsers = async (jiraStepNotificationDto, getAccessToken) => {
   let toolId = jiraStepNotificationDto.getData("jiraToolId");
-  let projectId = jiraStepNotificationDto.getData("jiraProject");
-  const apiUrl = `/connectors/jira/${toolId}/project/users`; //?project=${projectId}`;
+  let projectKey = jiraStepNotificationDto.getData("jiraProject");
+  const apiUrl = `/connectors/jira/${toolId}/project/users?project=${projectKey}`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
@@ -42,8 +41,15 @@ pipelineStepNotificationActions.getJiraTicketDetails = async (toolId, ticketId, 
 
 pipelineStepNotificationActions.getJiraWorkflowSteps = async (jiraStepNotificationDto, getAccessToken) => {
   let toolId = jiraStepNotificationDto.getData("jiraToolId");
-  let projectId = jiraStepNotificationDto.getData("jiraProject");
-  const apiUrl = `/connectors/jira/${toolId}/project/workflows?project=${projectId}`;
+  let projectKey = jiraStepNotificationDto.getData("jiraProject");
+  const apiUrl = `/connectors/jira/${toolId}/project/workflows?project=${projectKey}`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
+pipelineStepNotificationActions.getJiraParentTickets = async (jiraStepNotificationDto, getAccessToken) => {
+  let toolId = jiraStepNotificationDto.getData("jiraToolId");
+  let sprintId = jiraStepNotificationDto.getData("jiraSprint");
+  const apiUrl = `/connectors/jira/${toolId}/sprint/issues?sprint=${sprintId}`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
