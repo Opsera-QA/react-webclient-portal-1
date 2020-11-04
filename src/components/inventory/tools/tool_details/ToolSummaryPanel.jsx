@@ -16,9 +16,10 @@ function ToolSummaryPanel({ toolData, setToolData }) {
   const toggleToolType = async () => {
     if(toolData.isModelValid()) {
       try {
+        const accessToken = await getAccessToken();
         let newToolData = toolData.getPersistData();
         newToolData["active"] = !newToolData["active"];
-        let response = await axiosApiService(getAccessToken).post(`/registry/${newToolData._id}/update`, newToolData);
+        let response = await axiosApiService(accessToken).post(`/registry/${newToolData._id}/update`, newToolData);
         let updatedDto = new Model(response.data, toolData.metaData, false);
         setToolData(updatedDto);
       }

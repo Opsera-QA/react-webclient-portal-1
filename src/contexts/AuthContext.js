@@ -36,13 +36,13 @@ const AuthContextProvider = (props) => {
 
         if (now.isBefore(tokenExp)) { //maybe check if 30min has passed and then force refresh?  Be proactive?
           console.log("TOKEN NOT EXPIRED: ", tokenExp.format("MMMM Do YYYY, h:mm:ss a"));
-          console.log("Existing token: ", tokenObject.accessToken);
+          //console.log("Existing token: ", tokenObject.accessToken);
           return tokenObject.accessToken;
         } else {
           console.log("EXPIRED TOKEN FOUND ON:", tokenExp.format("MMMM Do YYYY, h:mm:ss a"));
           const newToken = await authClient.tokenManager.renew("accessToken");
           console.log("REFRESHED TOKEN FOR:", moment.unix(newToken.expiresAt).format("MMMM Do YYYY, h:mm:ss a"));
-          console.log("token being returned from getAccessToken:", newToken.accessToken);
+          //console.log("token being returned from getAccessToken:", newToken.accessToken);
           return newToken.accessToken;
         }
 

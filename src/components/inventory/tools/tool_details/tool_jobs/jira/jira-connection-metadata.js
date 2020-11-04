@@ -18,7 +18,7 @@ const jiraConnectionMetadata = {
       isRequired: true
     },
     {
-      label: "Jira Password",
+      label: "Jira API Token",
       id: "vaultSecretKey",
       isRequired: true
     }

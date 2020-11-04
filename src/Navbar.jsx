@@ -57,6 +57,37 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
     history.push("/signup");
   };
 
+  if (process.env.REACT_APP_STACK === "free-trial") {
+    return (
+      <Navbar className="nav-bar">
+        <Navbar.Brand href="/">
+          <img alt="OpsERA"
+               src="/img/logos/opsera_logo_transparent_229x40.png"
+               width="229"
+               height="40"
+               className="d-inline-block align-top ml-3"
+          />
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+        <Navbar.Collapse id="basic-navbar-nav">
+          {!hideAuthComponents && <Nav className="ml-auto">
+            { !accessRoleData && <Button variant="warning" className="mr-2" onClick={gotoSignUp}>Sign Up</Button>}
+            { !accessRoleData && <Button variant="outline-success" onClick={login}>Login</Button>}
+            { accessRoleData &&
+            <NavDropdown title={fullName} id="basic-nav-dropdown" alignRight>
+              <NavDropdown.Item href="https://opsera.atlassian.net/wiki/x/kIA5" target="_blank" className="nav-drop-down-item" id="kb-button">KnowledgeBase</NavDropdown.Item>
+              <NavDropdown.Item href="https://opsera.atlassian.net/wiki/x/AQBYAw" target="_blank" className="nav-drop-down-item" id="request-help-button">Request Help</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="https://opsera.io/" target="_blank" className="nav-drop-down-item" id="about-opsera">OpsERA.io</NavDropdown.Item>
+              <NavDropdown.Item href="" onClick={logout} className="nav-drop-down-item" id="logout-button">Logout</NavDropdown.Item>
+            </NavDropdown>}
+          </Nav> }
+
+        </Navbar.Collapse>
+      </Navbar>
+    );
+  }
+
   return (
     <Navbar className="nav-bar">
       <Navbar.Brand href="/">
