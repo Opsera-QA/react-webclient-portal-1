@@ -27,11 +27,12 @@ function OverviewLanding() {
     userAccess = await setAccessRoles(user);
     if (userAccess) {
       setAccessRoleData(userAccess);
-      console.log(userAccess.Role);
-      if (userAccess.Role !== "free_trial") {
-        await loadData();
-      }
     }
+
+    if (process.env.REACT_APP_STACK !== "free-trial") {
+      await loadData();
+    }
+
     setUserInfo(user);
   };
 
@@ -90,7 +91,7 @@ function OverviewLanding() {
 
   if (!accessRoleData) {
     return (<LoadingView size="sm"/>);
-  } else if (accessRoleData.Role === "free_trial") {
+  } else if (process.env.REACT_APP_STACK === "free-trial") {
     return (<FreeTrialLandingView/>);
   } else {
     return (

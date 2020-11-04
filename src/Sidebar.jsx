@@ -49,12 +49,12 @@ function Sidebar({ userData, hideSideBar }) {
   };
 
   const chooseRenderState = (accessRole) => {
-    console.log(accessRole)
+    if (process.env.REACT_APP_STACK === "free-trial") {
+      return funcFreeTrialNav;
+    }
 
     if (accessRole.OpseraAdministrator) {
       return funcOpseraAdminNav;
-    } else if (accessRole.Type === "free-trial-user") {
-      return funcFreeTrialNav;
     } else if (accessRole.Type === "sass-user") {
       return funcSassNav;
     } else { //drop into LDAP Org roles
