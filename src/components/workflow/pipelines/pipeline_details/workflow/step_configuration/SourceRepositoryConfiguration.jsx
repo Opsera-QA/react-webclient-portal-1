@@ -606,9 +606,10 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
           <Form.Check type="checkbox" label="Enable Event Based Trigger"
                       checked={formData.trigger_active ? true : false}
                       onChange={() => setFormData({ ...formData, trigger_active: !formData.trigger_active })}/>
-          <Form.Text className="text-muted">To use a webhook event from in your repository to start this pipeline, the
-            hook URL below (and optional security key) must be registered in your source repository. The URL below can
-            manually be added or if you registered an account above, can be created for you.</Form.Text>
+          <Form.Text className="text-muted">To enable webhook event based pipeline runs from your repository, either configure
+            the account above to register it automatically or use the URL below (and optional security key) to configure
+            your repository manually.  If a non-master branch is selected above, then ONLY events from that branch can trigger
+            this pipeline, if no branch is specified then only master branch events will work.</Form.Text>
         </Form.Group>}
 
         {formData.trigger_active === true &&
@@ -705,12 +706,10 @@ function EventBasedTriggerDetails({ pipelineId, userId }) {
           </InputGroup.Append>
         </InputGroup>
 
-        <Form.Text className="text-muted">
-          Use the URL above to configure your Webhook in the source repository. If a Secret Key/Token is required,
-          ensure the settings above match your hook configuration. Ensure
-          Enable SSL is selected in your repo, only PUSH events are configured and for GitHub, make sure the Content
-          Type is: application/json.
-        </Form.Text>
+        {/*<Form.Text className="text-muted">
+          Use the URL above to manually configure your Webhook in a source repository. If a Secret Key/Token is required,
+          ensure the settings above match your hook configuration. Ensure the settings noted are configured properly.
+        </Form.Text>*/}
       </Form.Group>
     </div>
   );
