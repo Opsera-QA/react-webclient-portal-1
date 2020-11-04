@@ -215,7 +215,7 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
     return (
       <div className="my-4">
         <NotificationsToggle dataObject={jiraDto} setDataObject={setJiraDto} />
-        <NotificationLevelInput dataObject={jiraDto} setDataObject={setJiraDto} fieldName={"jiraNotificationLevel"} />
+        {/*<NotificationLevelInput disabled={true} dataObject={jiraDto} setDataObject={setJiraDto} fieldName={"jiraNotificationLevel"} />*/}
         <JiraStepNotificationToolInput setDataObject={setJiraDto} dataObject={jiraDto} />
         <JiraStepNotificationPriorityInput jiraToolId={jiraDto.getData("jiraToolId")} setDataObject={setJiraDto} dataObject={jiraDto} />
         <JiraStepNotificationProjectInput jiraToolId={jiraDto.getData("jiraToolId")} setDataObject={setJiraDto} dataObject={jiraDto} />
