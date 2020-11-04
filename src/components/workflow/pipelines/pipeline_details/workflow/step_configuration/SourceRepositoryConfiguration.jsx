@@ -405,7 +405,7 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
 
     const queryParams = {
       params: {
-        repo: formData.repository,
+        repo: formData.repoId,
         hook: hookUrl,
         branch: formData.branch,
       },
