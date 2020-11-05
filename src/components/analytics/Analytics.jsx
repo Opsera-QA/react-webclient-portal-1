@@ -47,6 +47,7 @@ const INDICES = [
   "gitlab",
   "cypress",
   "metricbeat",
+  "anchore"
 ];
 
 const DATELABELS = [

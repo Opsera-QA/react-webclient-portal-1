@@ -59,7 +59,8 @@ function MaintainabilityLineChart({ data, persona }) {
               >
                 <strong style={{ color }}>Timestamp: </strong> {point.data.x}
                 <br></br>
-                <strong style={{ color }}> QualityGate Value: </strong> {point.data.y}
+                <strong style={{ color }}>  SQALE: </strong> {point.data.y}<br></br>
+              <strong style={{ color }}> Key: </strong> {point.data.key}
               </div>
             )}
             theme={{

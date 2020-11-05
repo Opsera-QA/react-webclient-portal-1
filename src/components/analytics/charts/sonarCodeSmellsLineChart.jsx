@@ -60,7 +60,8 @@ function CodeSmellLineChart({ data, persona }) {
               >
                 <strong style={{ color }}>Timestamp: </strong> {point.data.x}
                 <br></br>
-                <strong style={{ color }}> Code Smells: </strong> {point.data.y}
+                <strong style={{ color }}> Code Smells: </strong> {point.data.y}<br></br>
+                <strong style={{ color }}> Key: </strong> {point.data.key}
               </div>
             )}
             theme={{

@@ -114,19 +114,15 @@ function ReliabilityRatingLineChart({ persona, date }) {
               colors={{ scheme: "category10" }}
               legends={config.legends}
               tooltip={({ point, color }) => (
-                <div
-                  style={{
-                    background: "white",
-                    padding: "9px 12px",
-                    border: "1px solid #ccc",
-                  }}
-                >
-                  <strong style={{ color }}>Date: </strong> {new Date(point.data.x).toLocaleString()}
-                  <br></br>
-                  <strong style={{ color }}> Rating: </strong> {point.data.y === 1 && <>A</>}
-                  {point.data.y === 2 && <>B</>} {point.data.y === 3 && <>C</>} {point.data.y === 4 && <>D</>}
-                  {point.data.y === 5 && <>E</>} <br></br>
-                  <strong style={{ color }}> Build Number: </strong> {point.data.buildNumber}
+                <div style={{
+                  background: "white",
+                  padding: "9px 12px",
+                  border: "1px solid #ccc",
+                }}>
+                  <strong style={{ color }}>
+              Date: </strong> {new Date(point.data.x).toLocaleString()}<br></br>
+                  <strong style={{ color }}>  Rating: </strong> {point.data.y === 1 && <>A</>} {point.data.y === 2 && <>B</>} {point.data.y === 3 && <>C</>}  {point.data.y === 4 && <>D</>}  {point.data.y === 5 && <>E</>} <br></br>
+                  <strong style={{ color }}>  Project Key: </strong> {point.data.buildNumber}
                 </div>
               )}
               theme={{

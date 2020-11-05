@@ -114,16 +114,15 @@ function ReliabilityRemediationEffortLineChart({ persona, date }) {
               colors={{ scheme: "category10" }}
               // legends={config.legends}
               tooltip={({ point, color }) => (
-                <div
-                  style={{
-                    background: "white",
-                    padding: "9px 12px",
-                    border: "1px solid #ccc",
-                  }}
-                >
-                  <strong style={{ color }}>Date: </strong> {new Date(point.data.x).toLocaleString()}
-                  <br></br>
-                  <strong style={{ color }}> Time: </strong> {point.data.y} mins
+                <div style={{
+                  background: "white",
+                  padding: "9px 12px",
+                  border: "1px solid #ccc",
+                }}>
+                  <strong style={{ color }}>
+              Date: </strong> {new Date(point.data.x).toLocaleString()}<br></br>
+                  <strong style={{ color }}>  Time: </strong> {point.data.y} mins<br></br>
+                  <strong style={{ color }}>  Project Key: </strong> {point.data.buildNumber}
                 </div>
               )}
               theme={{

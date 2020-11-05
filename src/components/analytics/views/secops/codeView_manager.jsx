@@ -189,7 +189,7 @@ function CodeView_Manager({ persona, date, index }) {
     return <LoadingDialog />;
   } else if (error) {
     return <ErrorDialog error={error} />;
-  } else if (!index.includes("sonar")) {
+  } else if (!index.includes("sonar") && !index.includes("anchore")) {
     return (
       <div
         className="mt-3 bordered-content-block p-3 max-content-width"
@@ -216,103 +216,36 @@ function CodeView_Manager({ persona, date, index }) {
       <>
         <SummaryCountBlocksView data={countBlockData} />
 
-        <div className="d-flex">
+        {index.includes("anchore") ? <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
             <VulnerabilityLineChart persona={persona} date={date} />
           </div>
           <div className="align-self-stretch p-2 w-100">
             <VulnerabilityByPackage persona={persona} date={date} />
           </div>
-        </div>
+        </div> : ""}
 
-        <div className="d-flex">
+        {index.includes("sonar") ? <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
-            {Object.keys(data.sonarCodeSmells.data[0]).length > 0 && data.sonarCodeSmells.status === 200 ? (
-              <div className="chart mb-3" style={{ height: "300px" }}>
-                <SonarCodeSmellsLineChart data={data} persona={persona} date={date} />
-              </div>
-            ) : (
-              <div className="chart mb-3" style={{ height: "300px" }}>
-                <div className="chart-label-text">Sonar: Code Smells</div>
-                <div
-                  className="max-content-width p-5 mt-5"
-                  style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-                >
-                  <InfoDialog message="No Data is available for this chart at this time." />
-                </div>
-              </div>
-            )}
+            <SonarCodeSmellsLineChart data={data} persona={persona} date={date} />
           </div>
-          <div className="align-self-stretch p-2 w-100">
-            {Object.keys(data.sonarCodeCategoriesNO_VALUE.data[0]).length > 0 &&
-            data.sonarCodeCategoriesNO_VALUE.status === 200 ? (
-              <div className="chart mb-3" style={{ height: "300px" }}>
-                <SonarCodeCategoriesNO_VALUEPieChart data={data} persona={persona} date={date} />
-              </div>
-            ) : (
-              <div className="chart mb-3" style={{ height: "300px" }}>
-                <div className="chart-label-text">Sonar: Code Categories (Keyword = No Value)</div>
-                <div
-                  className="max-content-width p-5 mt-5"
-                  style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-                >
-                  <InfoDialog message="No Data is available for this chart at this time." />
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
 
-        <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
-            {Object.keys(data.sonarCodeCategoriesOK.data[0]).length > 0 && data.sonarCodeCategoriesOK.status === 200 ? (
-              <div className="chart mb-3" style={{ height: "300px" }}>
-                <SonarCodeCategoriesOKPieChart data={data} persona={persona} date={date} />
-              </div>
-            ) : (
-              <div className="chart mb-3" style={{ height: "300px" }}>
-                <div className="chart-label-text">Sonar: Code Categories (Keyword = OK)</div>
-                <div
-                  className="max-content-width p-5 mt-5"
-                  style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-                >
-                  <InfoDialog message="No Data is available for this chart at this time." />
-                </div>
-              </div>
-            )}
+            <SonarMaintainabilityLineChart data={data} persona={persona} date={date} />
           </div>
-          <div className="align-self-stretch p-2 w-100">
-            {Object.keys(data.sonarMaintainability.data[0]).length > 0 && data.sonarMaintainability.status === 200 ? (
-              <div className="chart mb-3" style={{ height: "300px" }}>
-                <SonarMaintainabilityLineChart data={data} persona={persona} date={date} />
-              </div>
-            ) : (
-              <div className="chart mb-3" style={{ height: "300px" }}>
-                <div className="chart-label-text">Sonar: Maintainability Rating</div>
-                <div
-                  className="max-content-width p-5 mt-5"
-                  style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-                >
-                  <InfoDialog message="No Data is available for this chart at this time." />
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
 
-        <div className="d-flex">
+        </div> : "" }
+
+        {/* {index.includes("sonar") ? <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
-            {Object.keys(data.twistlockVulStatusHigh.data[0]).length > 0 &&
-            data.twistlockVulStatusHigh.status === 200 ? (
-              <div className="chart mb-3" style={{ height: "300px" }}>
-                <TwistlockVulnerability data={data} persona={persona} date={date} />
-              </div>
-            ) : (
-              ""
-            )}
+            <SonarCodeCategoriesOKPieChart data={data} persona={persona} date={date} />
           </div>
-          <div className="align-self-stretch p-2 w-100">&nbsp;</div>
-        </div>
+
+          <div className="align-self-stretch p-2 w-100">
+            <SonarCodeCategoriesNO_VALUEPieChart data={data} persona={persona} date={date} />
+          </div>
+
+        </div> : "" } */}
       </>
     );
   }

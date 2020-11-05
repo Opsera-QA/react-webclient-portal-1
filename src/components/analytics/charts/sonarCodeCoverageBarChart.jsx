@@ -37,7 +37,7 @@ function SonarCodeCoverageBarChart( { data, persona } ) {
             ]}
             groupMode="stacked"
             layout="vertical"
-            indexBy="buildNum"
+            indexBy="analysedAt"
             margin={config.margin}
             padding={0.1}
             colors={{ scheme: "set1" }}
@@ -58,11 +58,12 @@ function SonarCodeCoverageBarChart( { data, persona } ) {
             motionStiffness={90}
             motionDamping={15}
             legends={config.legends}
-            tooltip={({ indexValue, value, id, color }) => (
+            tooltip={({ indexValue, value, id, color, data }) => (
               <div>
                 <strong style={{ color }}>
               Timestamp: </strong> {indexValue}<br></br>
-                <strong style={{ color }}>  {id}: </strong> {value}
+                <strong style={{ color }}>  {id}: </strong> {value} <br></br>
+                <strong style={{ color }}> Project Key: </strong> {data.key}
               </div>
             )}
             theme={{

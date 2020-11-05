@@ -38,6 +38,7 @@ const INDICES = [
   "gitlab",
   "cypress",
   "metricbeat",
+  "anchore"
 ];
 const PERSONAS = [
   { value: "developer", label: "Developer" },

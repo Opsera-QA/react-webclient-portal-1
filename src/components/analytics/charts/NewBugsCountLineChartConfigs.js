@@ -1,11 +1,10 @@
 export default {
   axisBottom: {
-    // "format": d => { var date = d.split(" "); return date[1]+" "+date[2]; },
+    "format": d => { var date = new Date(d).toDateString() ; date = date.split(" "); return date[1]+" "+date[2]; },
     "orient": "bottom",
     "tickSize": 5,
     "tickPadding": 5,
-    "tickRotation": 0,
-    "legend": "Build Number",
+    "tickRotation": -65,
     "legendOffset": 36,
     "legendPosition": "middle"
   },

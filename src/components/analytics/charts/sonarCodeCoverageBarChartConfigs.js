@@ -40,6 +40,7 @@ export default {
     }
   ],
   axisBottom: {
+    "format": d => { var date = new Date(d).toDateString() ; date = date.split(" "); return date[1]+" "+date[2]; },
     "tickSize": 5,
     "tickPadding": 5,
     "tickRotation": 0,
