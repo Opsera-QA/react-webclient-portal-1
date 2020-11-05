@@ -40,12 +40,9 @@ function SlackApiConnector() {
       }
     }
     catch (error) {
+      // If error is not service unavailable, assume Slack has just not been connected
       if (error.message.includes(503)) {
         toastContext.showServiceUnavailableDialog(error);
-      }
-      else {
-        // Does this always throw an error if connection does not exist? If so, ignore error.
-        toastContext.showLoadingErrorDialog(error);
       }
     }
   };
