@@ -18,7 +18,8 @@ const defaultSignupFormFields = {
     label: "Email",
     id: "email",
     isRequired: true,
-    isEmail: true
+    isEmail: true,
+    lowercase: true
   },
     {
     label: "Company",
