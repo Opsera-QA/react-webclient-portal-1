@@ -64,7 +64,7 @@ const LoginForm = () => {
   };
 
   const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
+    setUsername(e.target.value.toLowerCase());
   };
 
   const handlePasswordChange = (e) => {
@@ -72,11 +72,11 @@ const LoginForm = () => {
   };
 
   const handleResetEmailChange = (e) => {
-    setResetEmailAddress(e.target.value);
+    setResetEmailAddress(e.target.value.toLowerCase());
   };
 
   const handleLookupAccountEmailChange = (e) => {
-    setLookupAccountEmail(e.target.value);
+    setLookupAccountEmail(e.target.value.toLowerCase());
   };
 
   const handleResetPasswordSubmit = async (e) => {
@@ -106,7 +106,7 @@ const LoginForm = () => {
     setLoading(true);
     const apiUrl = "/users/check-email";
     const params = { "email": lookupAccountEmail, "checkAccountLoginStatus": true };
-
+console.log(params)
     try {
       const response = await axiosApiService().post(apiUrl, params); //this lookup is currently FF in Node
       setMessage(false);
