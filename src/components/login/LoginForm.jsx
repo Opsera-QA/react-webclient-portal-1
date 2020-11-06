@@ -308,7 +308,12 @@ const LoginForm = () => {
 const WelcomeMessage = () => {
   const history = useHistory();
   const gotoSignUp = () => {
-    history.push("/signup");
+    //if free trial, go that form, otherwise use normal
+    if (process.env.REACT_APP_STACK === "free-trial") {
+      history.push("/trial/registration");
+    } else {
+      history.push("/signup");
+    }
   };
 
   return (

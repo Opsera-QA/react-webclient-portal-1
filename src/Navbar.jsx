@@ -54,7 +54,11 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
   };
 
   const gotoSignUp = function () {
-    history.push("/signup");
+    if (process.env.REACT_APP_STACK === "free-trial") {
+      history.push("/trial/registration");
+    } else {
+      history.push("/signup");
+    }
   };
 
   if (process.env.REACT_APP_STACK === "free-trial") {
