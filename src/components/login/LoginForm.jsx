@@ -106,7 +106,6 @@ const LoginForm = () => {
     setLoading(true);
     const apiUrl = "/users/check-email";
     const params = { "email": lookupAccountEmail, "checkAccountLoginStatus": true };
-console.log(params)
     try {
       const response = await axiosApiService().post(apiUrl, params); //this lookup is currently FF in Node
       setMessage(false);
