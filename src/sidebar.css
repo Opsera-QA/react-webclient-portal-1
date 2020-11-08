@@ -11,6 +11,13 @@
   /* font-size: 1rem; */
 }
 
+.sidebar-menu .nav-link-sub {
+  /*padding-left: 15px !important;*/
+  /*font-size: .8rem;*/
+
+  /*padding-top: 0;*/
+}
+
 .sub-header {
   color: #241F3D;
   text-transform: uppercase;
@@ -19,12 +26,17 @@
 }
 
 .sidebar-menu .menu-text {
-  margin-left:8px;
+  margin-left: 5px;
+}
+
+.sidebar-menu .menu-text-sub {
+  margin-left: 2rem;
 }
 
 .sidebar-menu .nav-link {
   color: #3D3B36; /*#1578dc;*/
 }
+
 .sidebar-menu a.chosen {
   color: #CF940C; /* #0f3e84;*/
 }
@@ -37,8 +49,8 @@
   color: #7A756C;
 }
 
-.fixed-row-footer-bottom { 
-  position: fixed; 
+.fixed-row-footer-bottom {
+  position: fixed;
   bottom: 0;
   width: 100%;
   left: 15px;

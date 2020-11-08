@@ -1,7 +1,5 @@
-// This will be the landing page built based on OC-168.  
-// the content below is just copied from another landing page, so it needs to be updated to match new requirements.
-
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 
 import "../freeTrial.css";
@@ -10,11 +8,18 @@ import FreeTrialLandingPlatform from "./tabs/platform-tab";
 import FreeTrialLandingPipeline from "./tabs/pipeline-tab";
 import FreeTrialLandingAnalytics from "./tabs/analytics-tab";
 
+
 function FreeTrialLanding() {
+  const { id } = useParams();
   const [activeTab, setTabSelection] = useState("welcome");
 
+  useEffect(() => {
+    if (id && id.length > 0) {
+      setTabSelection(id)
+    }
+  }, [id]);
+
   const handleTabClick = (activeTab) => e => {
-    console.log(activeTab);
     e.preventDefault();
     setTabSelection(activeTab);
   };
@@ -55,7 +60,6 @@ function FreeTrialLanding() {
 
 function LandingView({ activeTab, handleTabClick }) {
   useEffect(() => {
-    console.log("CHANGE HAPPENED");
   }, [activeTab, handleTabClick]);
 
   if (activeTab) {

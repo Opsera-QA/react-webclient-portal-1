@@ -19,7 +19,10 @@ import {
   faLayerGroup,
   faLifeRing,
   faCogs,
-} from "@fortawesome/free-solid-svg-icons";
+  faChartNetwork,
+  faCaretSquareDown,
+  faCaretSquareUp
+} from "@fortawesome/pro-light-svg-icons";
 
 import "./sidebar.css";
 
@@ -32,6 +35,8 @@ function Sidebar({ userData, hideSideBar }) {
   const { setAccessRoles } = contextType;
   const [renderOutput, setRenderOutput] = useState(hiddenNav);
 
+  /*const [insights, setInsights] = useState(false);
+  const [pipelines, setPipelines] = useState(false);*/
 
   useEffect(() => {
     loadAccessRoles(userData);
@@ -50,7 +55,7 @@ function Sidebar({ userData, hideSideBar }) {
 
   const chooseRenderState = (accessRole) => {
     if (process.env.REACT_APP_STACK === "free-trial") {
-      return funcFreeTrialNav(accessRole);
+      return (<FreeTrialNav accessRole={accessRole}/>);
     }
 
     if (accessRole.OpseraAdministrator) {
@@ -100,8 +105,8 @@ const funcOpseraAdminNav = () => {
             <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
             className="menu-text">Pipelines</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/analytics">
-            <FontAwesomeIcon size="lg" icon={faChartBar} fixedWidth/> <span
-            className="menu-text">Analytics</span></NavLink>
+            <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
+            className="menu-text">Insights</span></NavLink>
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
           <NavLink className="nav-link" activeClassName="chosen" to="/inventory/tools">
@@ -153,8 +158,8 @@ const funcSassNav = () => {
             <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
             className="menu-text">Pipelines</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/analytics">
-            <FontAwesomeIcon size="lg" icon={faChartBar} fixedWidth/> <span
-            className="menu-text">Analytics</span></NavLink>
+            <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
+            className="menu-text">Insights</span></NavLink>
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
           <NavLink className="nav-link" activeClassName="chosen" to="/inventory/tools">
@@ -202,8 +207,8 @@ const funcAccountPowerUserNav = () => {
             <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
             className="menu-text">Pipelines</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/analytics">
-            <FontAwesomeIcon size="lg" icon={faChartBar} fixedWidth/> <span
-            className="menu-text">Analytics</span></NavLink>
+            <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
+            className="menu-text">Insights</span></NavLink>
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
           <NavLink className="nav-link" activeClassName="chosen" to="/inventory/tools">
@@ -251,8 +256,8 @@ const funcAccountAdminNav = () => {
             <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
             className="menu-text">Pipelines</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/analytics">
-            <FontAwesomeIcon size="lg" icon={faChartBar} fixedWidth/> <span
-            className="menu-text">Analytics</span></NavLink>
+            <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
+            className="menu-text">Insights</span></NavLink>
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
           <NavLink className="nav-link" activeClassName="chosen" to="/inventory/tools">
@@ -279,30 +284,41 @@ const funcAccountAdminNav = () => {
     </div>
   </>;
 };
+/*
+const funcFreeTrialNav = (accessRole, insights, setInsights) => {
 
-const funcFreeTrialNav = (accessRole) => {
   return <>
     <div className="w-20 pt-1 d-block">
       <div className="sidebar-container sticky-top pb-5 pt-1 pl-1">
         <div className="sidebar-menu pt-3">
-          <NavLink className="nav-link" activeClassName="chosen" exact to="/">
+          <NavLink className="nav-link" activeClassName="chosen" exact to="/trial/landing">
             <FontAwesomeIcon size="lg" icon={faHome} fixedWidth/> <span
             className="menu-text">Overview</span></NavLink>
-          <NavLink className="nav-link" activeClassName="chosen" exact to="/dashboard">
-            <FontAwesomeIcon size="lg" icon={faColumns} fixedWidth/> <span className="menu-text">Dashboards</span>
-            <div className="caret"></div>
-          </NavLink>
+
 
           <div className="mt-4 mb-2 sub-header">Products</div>
-          <NavLink className="nav-link" activeClassName="chosen" to="/platform">
+          <NavLink className="nav-link" activeClassName="chosen" to="/trial/landing/platform">
             <FontAwesomeIcon size="lg" icon={faBox} fixedWidth/> <span
             className="menu-text">Platforms</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/workflow">
             <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
             className="menu-text">Pipelines</span></NavLink>
-          <NavLink className="nav-link" activeClassName="chosen" to="/analytics">
-            <FontAwesomeIcon size="lg" icon={faChartBar} fixedWidth/> <span
-            className="menu-text">Analytics</span></NavLink>
+
+
+          <NavLink className="nav-link" activeClassName="chosen" to="/dashboard">
+            <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
+            className="menu-text">Insights</span>
+          </NavLink>
+          <div className="text-right pointer" onClick={() => setInsights(insights => !insights)}>
+            <FontAwesomeIcon size="sm" icon={faCaretSquareDown} fixedWidth/>
+          </div>
+
+          {insights && <>
+            <NavLink className="nav-link" activeClassName="chosen" exact to="/analytics">
+              <span className="menu-text-sub">Analytics</span>
+            </NavLink>
+          </>}
+
 
           <div className="mt-4 mb-2 sub-header">Resources</div>
           <NavLink className="nav-link" activeClassName="chosen" to="/help">
@@ -323,12 +339,12 @@ const funcFreeTrialNav = (accessRole) => {
               <FontAwesomeIcon size="lg" icon={faLayerGroup} fixedWidth/> <span
               className="menu-text">Blueprints</span></NavLink>
 
-            {/*<NavLink className="nav-link" activeClassName="chosen" to="/tools">
+            {/!*<NavLink className="nav-link" activeClassName="chosen" to="/tools">
               <FontAwesomeIcon size="lg" icon={faLink} fixedWidth/> <span
               className="menu-text">API Tools</span></NavLink>
             <NavLink className="nav-link" activeClassName="chosen" to="/update">
               <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span
-              className="menu-text">Updates</span></NavLink>*/}
+              className="menu-text">Updates</span></NavLink>*!/}
             <NavLink className="nav-link" activeClassName="chosen" to="/settings">
               <FontAwesomeIcon size="lg" icon={faCogs} fixedWidth/> <span
               className="menu-text">Settings</span></NavLink>
@@ -343,7 +359,7 @@ const funcFreeTrialNav = (accessRole) => {
       </div>
     </div>
   </>;
-};
+};*/
 
 const funcDefaultNav = () => {
   return <>
@@ -389,6 +405,99 @@ const funcDefaultNav = () => {
       </div>
     </div>
   </>;
+};
+
+
+function FreeTrialNav({ accessRole }) {
+  const [insights, setInsights] = useState(false);
+
+  return (<>
+    <div className="w-20 pt-1 d-block">
+      <div className="sidebar-container sticky-top pb-5 pt-1 pl-1">
+        <div className="sidebar-menu pt-3">
+          <NavLink className="nav-link" activeClassName="chosen" exact to="/trial/landing">
+            <FontAwesomeIcon size="lg" icon={faHome} fixedWidth/> <span
+            className="menu-text">Overview</span></NavLink>
+
+
+          <div className="mt-4 mb-2 sub-header">Products</div>
+          <NavLink className="nav-link" activeClassName="chosen" to="/trial/landing/platform">
+            <FontAwesomeIcon size="lg" icon={faBox} fixedWidth/> <span
+            className="menu-text">Platforms</span></NavLink>
+          <NavLink className="nav-link" activeClassName="chosen" to="/workflow">
+            <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
+            className="menu-text">Pipelines</span></NavLink>
+
+
+          <div className="d-flex flex-row">
+            <div>
+              <NavLink className="nav-link" activeClassName="chosen" to="/dashboard"
+                       onClick={() => setInsights(true)}>
+                <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
+                className="menu-text">Insights</span>
+              </NavLink>
+            </div>
+            <div className="text-right pointer flex-grow-1 pr-2 pt-2"
+                 onClick={() => setInsights(insights => !insights)}>
+              {insights ?
+              <FontAwesomeIcon size="sm" icon={faCaretSquareUp} fixedWidth/> :
+                <FontAwesomeIcon size="sm" icon={faCaretSquareDown} fixedWidth/>}
+            </div>
+          </div>
+
+          {insights && <>
+            <NavLink className="nav-link" activeClassName="chosen" exact to="/analytics">
+              <span className="menu-text-sub">Analytics</span>
+            </NavLink>
+          </>}
+
+
+          <div className="mt-4 mb-2 sub-header">Resources</div>
+          <NavLink className="nav-link" activeClassName="chosen" to="/logs">
+            <FontAwesomeIcon size="lg" icon={faArchive} fixedWidth/>
+            <span className="menu-text">Logs</span></NavLink>
+          <NavLink className="nav-link" activeClassName="chosen" to="/blueprint">
+            <FontAwesomeIcon size="lg" icon={faLayerGroup} fixedWidth/> <span
+            className="menu-text">Blueprints</span></NavLink>
+          <NavLink className="nav-link" activeClassName="chosen" to="/help">
+            <FontAwesomeIcon size="lg" icon={faLifeRing} fixedWidth/> <span
+            className="menu-text">Help</span></NavLink>
+          <NavLink className="nav-link" activeClassName="chosen" to="/about">
+            <FontAwesomeIcon size="lg" icon={faAddressBook} fixedWidth/> <span
+            className="menu-text">Contact Us</span></NavLink>
+
+          {accessRole.OpseraAdministrator && <>
+            <div className="mt-4 mb-2 sub-header">Administration</div>
+            <NavLink className="nav-link" activeClassName="chosen" to="/inventory/tools">
+              <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
+              className="menu-text">Tool Registry</span></NavLink>
+
+
+            {/*<NavLink className="nav-link" activeClassName="chosen" to="/tools">
+              <FontAwesomeIcon size="lg" icon={faLink} fixedWidth/> <span
+              className="menu-text">API Tools</span></NavLink>
+            <NavLink className="nav-link" activeClassName="chosen" to="/update">
+              <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span
+              className="menu-text">Updates</span></NavLink>*/}
+            <NavLink className="nav-link" activeClassName="chosen" to="/settings">
+              <FontAwesomeIcon size="lg" icon={faCogs} fixedWidth/> <span
+              className="menu-text">Settings</span></NavLink>
+            <NavLink className="nav-link" activeClassName="chosen" to="/admin">
+              <FontAwesomeIcon size="lg" icon={faTools} fixedWidth/> <span
+              className="menu-text">Admin Tools</span></NavLink>
+
+          </>}
+
+
+        </div>
+      </div>
+    </div>
+  </>);
+}
+
+
+FreeTrialNav.propTypes = {
+  accessRole: PropTypes.object,
 };
 
 Sidebar.propTypes = {

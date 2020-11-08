@@ -25,7 +25,8 @@ import Update from "./components/update/Update";
 import AdminTools from "./components/admin/AdminTools";
 import DeleteTools from "./components/admin/delete_tools/DeleteTools";
 import RegisteredUsersManagement from "./components/admin/registered_users/RegisteredUsersManagement";
-import RegisteredUserDetailView from "./components/admin/registered_users/registered_user_details/RegisteredUserDetailView";
+import RegisteredUserDetailView
+  from "./components/admin/registered_users/registered_user_details/RegisteredUserDetailView";
 import ManageSystems from "./components/admin/manage_systems/ManageSystems";
 import ReportsRegistration from "./components/admin/analytics/ReportsRegistration";
 import SystemStatus from "./components/admin/status/SystemStatus";
@@ -41,6 +42,7 @@ import LdapOrganizationDetailView
   from "./components/admin/accounts/ldap/organizations/organizations_detail_view/LdapOrganizationDetailView";
 import LdapCustomerOnboardView from "./components/admin/accounts/ldap/customer_onboard/LdapCustomerOnboard";
 import FreeTrialRegistration from "./components/free_trial/Registration";
+import FreeTrialLanding from "./components/free_trial/landing_page/Landing";
 import ApiConnectionDemo from "./components/api_connector/ApiDemo";
 import CommonTableDemo from "./components/common/samples/tableImplementation";
 import CustomerSystemStatus from "./components/settings/customer_system_status/CustomerSystemStatus";
@@ -99,8 +101,8 @@ const AppWithRouterAccess = () => {
     redirectUri: OKTA_CONFIG.redirect_uri,
     tokenManager: {
       autoRenew: true,
-      expireEarlySeconds: 160
-    }
+      expireEarlySeconds: 160,
+    },
   });
 
 // Triggered when a token has expired
@@ -202,7 +204,8 @@ const AppWithRouterAccess = () => {
                   <Route path="/" exact component={Home}/>
                   {/*<SecureRoute path="/" exact component={Overview}/>*/}
 
-                  <Route path='/login' render={(authClient) => <Login redirectFromLogin={redirectFromLogin} authClient={authClient}/>}/>
+                  <Route path='/login' render={(authClient) => <Login redirectFromLogin={redirectFromLogin}
+                                                                      authClient={authClient}/>}/>
                   <Route path='/implicit/callback' component={LoginCallback}/>
 
                   <Route path="/signup" exact component={Signup}/>
@@ -253,7 +256,8 @@ const AppWithRouterAccess = () => {
 
                   {/*TODO: Move to settings?*/}
                   <SecureRoute path="/admin/departments" exact component={LdapDepartmentManagement}/>
-                  <SecureRoute path="/admin/:orgDomain/departments/details/:departmentName" exact component={LdapDepartmentDetailView}/>
+                  <SecureRoute path="/admin/:orgDomain/departments/details/:departmentName" exact
+                               component={LdapDepartmentDetailView}/>
 
                   {/*Pipelines*/}
                   <SecureRoute path="/pipeline" component={Pipeline}/> {/*Old Pipeline*/}
@@ -266,7 +270,8 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/settings/:orgDomain/groups/details/:groupName" exact
                                component={LdapGroupDetailView}/>
                   <SecureRoute path="/settings/:orgDomain?/users/" exact component={LdapUserManagement}/>
-                  <SecureRoute path="/settings/:orgDomain/users/details/:userEmail" exact component={LdapUserDetailView}/>
+                  <SecureRoute path="/settings/:orgDomain/users/details/:userEmail" exact
+                               component={LdapUserDetailView}/>
                   <SecureRoute path="/settings/tags" exact component={TagEditor}/>
                   <SecureRoute path="/settings/tags/:id" exact component={TagDetailView}/>
                   <SecureRoute path="/settings/customer-system-status" exact component={CustomerSystemStatus}/>
@@ -274,8 +279,10 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/demo/api" component={ApiConnectionDemo}/>
                   <SecureRoute path="/demo/table" component={CommonTableDemo}/>
 
-                  <Route path="/trial/registration" exact component={FreeTrialRegistration}/>
-
+                  {(process.env.REACT_APP_STACK === "free-trial") && <>
+                    <Route path="/trial/registration" exact component={FreeTrialRegistration}/>
+                    <SecureRoute path="/trial/landing/:id?" exact component={FreeTrialLanding}/>
+                  </>}
                 </div>
               </div>
               <div className="row fixed-row-footer-bottom">
