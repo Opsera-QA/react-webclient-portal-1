@@ -1,4 +1,4 @@
-const jiraStepNotificationMetadata = {
+const jiraStepApprovalMetadata = {
   idProperty: "name",
   type: "Jira Step Notification",
   fields: [
@@ -14,7 +14,6 @@ const jiraStepNotificationMetadata = {
     {
       label: "Notification Level",
       id: "jiraNotificationLevel",
-      isRequired: true
     },
     {
       label: "Jira Project",
@@ -47,20 +46,20 @@ const jiraStepNotificationMetadata = {
     {
       label: "Jira Open Step",
       id: "jiraOpenStep",
-      isRequired: true
     },
     {
       label: "Jira Closure Step",
       id: "jiraClosureStep",
-      isRequired: true
     },
     {
       label: "Jira Approval Step",
       id: "jiraApprovalStep",
+      isRequired: true
     },
     {
       label: "Jira Rejection Step",
       id: "jiraRejectionStep",
+      isRequired: true
     },
     {
       label: "Jira Notifications",
@@ -85,4 +84,4 @@ const jiraStepNotificationMetadata = {
   }
 };
 
-export default jiraStepNotificationMetadata;
+export default jiraStepApprovalMetadata;

@@ -25,11 +25,13 @@ import slackStepNotificationMetadata from "./slack/slackStepNotificationMetadata
 import DtoTextInput from "../../../../../../common/input/dto_input/dto-text-input";
 import emailStepNotificationMetadata from "./email/emailStepNotificationMetadata";
 import {faLink} from "@fortawesome/pro-solid-svg-icons";
+import jiraStepApprovalMetadata from "./jira/jiraStepApprovalMetadata";
 
 function StepNotificationConfiguration({ data, stepId, parentCallback, handleCloseClick }) {
   const toastContext = useContext(DialogToastContext);
   const { plan } = data.workflow;
-  const [stepName, setStepName] = useState();
+  const [step, setStep] = useState(undefined)
+  const [stepName, setStepName] = useState(undefined);
   const [stepTool, setStepTool] = useState({});
   const [jiraDto, setJiraDto] = useState(undefined);
   const [teamsDto, setTeamsDto] = useState(undefined);
@@ -47,7 +49,15 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
     try {
       setIsLoading(true);
       const stepIndex = getStepIndex(stepId);
-      await loadFormData(plan[stepIndex]);
+      let step = plan[stepIndex];
+      setStep(step);
+
+      if (step.tool.tool_identifier === "approval") {
+        await loadConfiguration(step, jiraStepApprovalMetadata);
+      }
+      else {
+        await loadConfiguration(step, jiraStepNotificationMetadata);
+      }
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
     }
@@ -56,10 +66,11 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
     }
   };
 
-  const loadFormData = async (step) => {
+  // TODO: Tighten up
+  const loadConfiguration = async (step, jiraStepMetadata) => {
     setEmailDto(new Model({...emailStepNotificationMetadata.newObjectFields}, emailStepNotificationMetadata, true));
     setSlackDto(new Model({...slackStepNotificationMetadata.newObjectFields}, slackStepNotificationMetadata, true));
-    setJiraDto(new Model({...jiraStepNotificationMetadata.newObjectFields}, jiraStepNotificationMetadata, true));
+    setJiraDto(new Model({...jiraStepMetadata.newObjectFields}, jiraStepMetadata, true));
     setTeamsDto(new Model({...teamsStepNotificationMetadata.newObjectFields}, teamsStepNotificationMetadata, true));
 
     if (step.notification !== undefined) {
@@ -77,13 +88,14 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
       }
       if (jiraArrayIndex >= 0) {
         let jiraFormData = step.notification[jiraArrayIndex];
-        setJiraDto(new Model(jiraFormData, jiraStepNotificationMetadata, false));
+        setJiraDto(new Model(jiraFormData, jiraStepMetadata, false));
       }
       if (teamsArrayIndex >= 0) {
         let teamsFormData = step.notification[teamsArrayIndex];
         setTeamsDto(new Model(teamsFormData, teamsStepNotificationMetadata, false));
       }
     }
+    // TODO: We save step, so this is redundant
     setStepTool(step.tool);
     setStepName(step.name);
   };
@@ -162,6 +174,23 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
       return null;
     }
 
+    if (step.tool.tool_identifier === "approval") {
+      return (
+        <div className="my-4">
+          <NotificationsToggle dataObject={jiraDto} setDataObject={setJiraDto} />
+          <JiraStepNotificationToolInput setDataObject={setJiraDto} dataObject={jiraDto} />
+          <JiraStepNotificationPriorityInput jiraToolId={jiraDto.getData("jiraToolId")} setDataObject={setJiraDto} dataObject={jiraDto} />
+          <JiraStepNotificationProjectInput jiraToolId={jiraDto.getData("jiraToolId")} setDataObject={setJiraDto} dataObject={jiraDto} />
+          <JiraStepNotificationProjectUserInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} />
+          <JiraStepNotificationBoardInput jiraToolId={jiraDto.getData("jiraToolId")} setDataObject={setJiraDto} dataObject={jiraDto} />
+          <JiraStepNotificationSprintInput jiraToolId={jiraDto.getData("jiraToolId")} jiraBoard={jiraDto.getData("jiraBoard")} setDataObject={setJiraDto} dataObject={jiraDto} />
+          <JiraStepNotificationParentTicketInput jiraToolId={jiraDto.getData("jiraToolId")} jiraSprintId={jiraDto.getData("jiraSprint")} setDataObject={setJiraDto} dataObject={jiraDto} />
+          <JiraStepNotificationWorkflowStepInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} fieldName={"jiraApprovalStep"} />
+          <JiraStepNotificationWorkflowStepInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} fieldName={"jiraRejectionStep"} />
+        </div>
+      );
+    }
+
     return (
       <div className="my-4">
         <NotificationsToggle dataObject={jiraDto} setDataObject={setJiraDto} />
@@ -175,8 +204,6 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
         <JiraStepNotificationParentTicketInput jiraToolId={jiraDto.getData("jiraToolId")} jiraSprintId={jiraDto.getData("jiraSprint")} setDataObject={setJiraDto} dataObject={jiraDto} />
         <JiraStepNotificationWorkflowStepInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} fieldName={"jiraOpenStep"} />
         <JiraStepNotificationWorkflowStepInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} fieldName={"jiraClosureStep"} />
-        <JiraStepNotificationWorkflowStepInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} fieldName={"jiraApprovalStep"} />
-        <JiraStepNotificationWorkflowStepInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} fieldName={"jiraRejectionStep"} />
       </div>
     );
   };
