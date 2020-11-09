@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { OverlayTrigger, Popover } from "react-bootstrap";
+import { OverlayTrigger, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
@@ -9,20 +9,30 @@ import Model from "core/data_model/model";
 import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
-import DtoTextInput from "components/common/input/dto_input/dto-text-input";
-import { DialogToastContext, showServiceUnavailableDialog } from "contexts/DialogToastContext";
-import SaveButton from "components/common/buttons/SaveButton";
+import { DialogToastContext } from "contexts/DialogToastContext";
+import OctopusStepActions from "./octopus-step-actions";
+import SaveButton2 from "../../../../../../../common/buttons/saving/SaveButton2";
+import CloseButton from "../../../../../../../common/buttons/CloseButton";
 
-function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList }) {
+function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, closeEditorPanel }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [listOfSteps, setListOfSteps] = useState([]);
   const [octopusStepConfigurationDto, setOctopusStepConfigurationDataDto] = useState(undefined);
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
   const [octopusSearching, isOctopusSearching] = useState(false);
   const [octopusList, setOctopusList] = useState([]);
+  const [spacesSearching, setIsSpacesSearching] = useState(false);
+  const [spaces, setSpaces] = useState([]);
+  const [projectsSearching, setIsProjectsSearching] = useState(false);
+  const [projects, setProjects] = useState([]);
+  const [releasesSearching, setIsReleasesSearching] = useState(false);
+  const [releases, setReleases] = useState([]);
+  const [environmentsSearching, setIsEnvironmentsSearching] = useState(false);
+  const [environments, setEnvironments] = useState([]);
+  const [tenantsSearching, setIsTenantsSearching] = useState(false);
+  const [tenants, setTenants] = useState([]);
 
   useEffect(() => {
     loadFormData(stepTool);
@@ -33,6 +43,20 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
     let { configuration, threshold } = step;
     if (typeof configuration !== "undefined") {
       setOctopusStepConfigurationDataDto(new Model(configuration, OctopusStepFormMetadata, false));
+
+      if (configuration.octopusToolId.length > 0) {
+        await searchSpaces(configuration.octopusToolId);
+        if (configuration.spaceId.length > 0) {
+          await searchProjects(configuration.octopusToolId,configuration.spaceId);
+          await searchEnvironments(configuration.octopusToolId,configuration.spaceId);
+          if (configuration.projectId.length > 0) {
+            await searchReleases(configuration.octopusToolId,configuration.spaceId, configuration.projectId);
+            if (configuration.environmentId.length > 0) {
+              await searchTenants(configuration.octopusToolId,configuration.spaceId,configuration.projectId,configuration.environmentId);
+            }
+          }
+        }
+      }
       if (typeof threshold !== "undefined") {
         setThresholdType(threshold.type);
         setThresholdValue(threshold.value);
@@ -43,10 +67,6 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
       );
     }
 
-    if (plan && stepId) {
-      let pipelineSteps = pipelineHelpers.formatStepOptions(plan, stepId);
-      setListOfSteps(pipelineSteps);
-    }
     await fetchOctopusDetails();
     setIsLoading(false);
   };
@@ -74,12 +94,171 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
     parentCallback(item);
   };
 
+  const errorCatch = async (setterFunc, error) => {
+    setterFunc([{ value: "", name: "Select One", isDisabled: "yes" }]);
+    console.error(error);
+    toastContext.showServiceUnavailableDialog();
+  }
+
+  const credentialCatch = async (setterFunc, tool) => {
+    setterFunc([{ value: "", name: "Select One", isDisabled: "yes" }]);
+    let errorMessage =
+      `Error fetching Octopus ${tool}!  Please validate configured ${tool}.`;
+    toastContext.showErrorDialog(errorMessage);
+  }
+
+  const nullDataCatch = async (setterFunc, tool) => {
+    setterFunc([{ value: "", name: "Select One", isDisabled: "yes" }]);
+    let errorMessage = `No Octopus ${tool} Found!  Please validate credentials and configured  ${tool}.`;
+    toastContext.showErrorDialog(errorMessage);
+  }
+
+  const searchSpaces = async (id) => {
+    setIsSpacesSearching(true);
+    try {
+      const res = await OctopusStepActions.getSpaces(id, getAccessToken);
+      if (res.data) {
+        let arrOfObj = res.data.data ? res.data.data : [];
+        setSpaces(arrOfObj);
+        if (arrOfObj.length === 0) {
+          await nullDataCatch(setSpaces, "Spaces")
+        }
+      } else {
+        await credentialCatch(setSpaces, "Spaces")
+      }
+    } catch (error) {
+      await errorCatch(setSpaces, error)
+    } finally {
+      setIsSpacesSearching(false);
+    }
+  };
+
+  const searchProjects = async (id, spaceID) => {
+    setIsProjectsSearching(true);
+    try {
+      const res = await OctopusStepActions.getProjects(id,spaceID, getAccessToken);
+      if (res.data) {
+        let arrOfObj = res.data.data ? res.data.data : [];
+        setProjects(arrOfObj);
+        if (arrOfObj.length === 0) {
+          await nullDataCatch(setProjects, "Projects")
+        }
+      } else {
+        await credentialCatch(setProjects, "Projects")
+      }
+    } catch (error) {
+      await errorCatch(setProjects, error)
+    } finally {
+      setIsProjectsSearching(false);
+    }
+  };
+
+  const searchReleases = async (id, spaceID, projectID) => {
+    setIsReleasesSearching(true);
+    try {
+      const res = await OctopusStepActions.getReleases(id,spaceID,projectID, getAccessToken);
+      if (res.data) {
+        let arrOfObj = res.data.data ? res.data.data : [];
+        setReleases(arrOfObj);
+        if (arrOfObj.length === 0) {
+          await nullDataCatch(setReleases, "Releases")
+        }
+      } else {
+        await credentialCatch(setReleases, "Releases")
+      }
+    } catch (error) {
+      await errorCatch(setReleases, error)
+    } finally {
+      setIsReleasesSearching(false);
+    }
+  };
+
+  const searchEnvironments = async (id, spaceID) => {
+    setIsEnvironmentsSearching(true);
+    try {
+      const res = await OctopusStepActions.getEnvironments(id,spaceID, getAccessToken);
+      if (res.data) {
+        let arrOfObj = res.data.data ? res.data.data : [];
+        setEnvironments(arrOfObj);
+        if (arrOfObj.length === 0) {
+          await nullDataCatch(setEnvironments, "Environments")
+        }
+      } else {
+        await credentialCatch(setEnvironments, "Environments")
+      }
+    } catch (error) {
+      await errorCatch(setEnvironments, error)
+    } finally {
+      setIsEnvironmentsSearching(false);
+    }
+  };
+
+  const searchTenants = async (id, spaceID, projectID, environmentId) => {
+    setIsTenantsSearching(true);
+    try {
+      const res = await OctopusStepActions.getTenants(id,spaceID,projectID,environmentId, getAccessToken);
+      if (res.data) {
+        let arrOfObj = res.data.data ? res.data.data : [];
+        setTenants(arrOfObj);
+        if (arrOfObj.length === 0) {
+          await nullDataCatch(setTenants, "Tenants")
+        }
+      } else {
+        await credentialCatch(setTenants, "Tenants")
+      }
+    } catch (error) {
+      await errorCatch(setTenants, error)
+    } finally {
+      setIsTenantsSearching(false);
+    }
+  };
+
   const handleDTOChange = async (fieldName, value) => {
     if (fieldName === "octopusToolId") {
       let newDataObject = octopusStepConfigurationDto;
       newDataObject.setData("octopusToolId", value.id);
       newDataObject.setData("toolURL", value.configuration.toolURL);
       newDataObject.setData("octopusApiKey", value.configuration.octopusApiKey);
+      setOctopusStepConfigurationDataDto({ ...newDataObject });
+      await searchSpaces(value.id);
+      return;
+    }
+    if (fieldName === "spaceName") {
+      let newDataObject = octopusStepConfigurationDto;
+      newDataObject.setData("spaceName", value.name);
+      newDataObject.setData("spaceId", value.id);
+      setOctopusStepConfigurationDataDto({ ...newDataObject });
+      await searchProjects(octopusStepConfigurationDto.getData("octopusToolId"),value.id);
+      return;
+    }
+    if (fieldName === "projectName") {
+      let newDataObject = octopusStepConfigurationDto;
+      newDataObject.setData("projectName", value.name);
+      newDataObject.setData("projectId", value.id);
+      setOctopusStepConfigurationDataDto({ ...newDataObject });
+      await searchReleases(octopusStepConfigurationDto.getData("octopusToolId"),octopusStepConfigurationDto.getData("spaceId"), value.id);
+      return;
+    }
+    if (fieldName === "releaseVersion") {
+      let newDataObject = octopusStepConfigurationDto;
+      newDataObject.setData("releaseVersion", value.version);
+      newDataObject.setData("releaseVersionId", value.id);
+      setOctopusStepConfigurationDataDto({ ...newDataObject });
+      await searchEnvironments(octopusStepConfigurationDto.getData("octopusToolId"),octopusStepConfigurationDto.getData("spaceId"));
+      return;
+    }
+    if (fieldName === "environmentName") {
+      let newDataObject = octopusStepConfigurationDto;
+      newDataObject.setData("environmentName", value.name);
+      newDataObject.setData("environmentId", value.id);
+      setOctopusStepConfigurationDataDto({ ...newDataObject });
+      await searchTenants(octopusStepConfigurationDto.getData("octopusToolId"),octopusStepConfigurationDto.getData("spaceId"),octopusStepConfigurationDto.getData("projectId"),value.id);
+      return;
+    }
+    if (fieldName === "tenantName") {
+      let newDataObject = octopusStepConfigurationDto;
+      newDataObject.setData("tenantName", value.name);
+      newDataObject.setData("tenantId", value.id);
       setOctopusStepConfigurationDataDto({ ...newDataObject });
       return;
     }
@@ -119,42 +298,81 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
             busy={octopusSearching}
             disabled={octopusList.length === 0 || octopusSearching}
           />
-          <DtoTextInput
+          <DtoSelectInput
+            setDataFunction={handleDTOChange}
             setDataObject={setOctopusStepConfigurationDataDto}
+            textField={"name"}
+            valueField={"id"}
             dataObject={octopusStepConfigurationDto}
+            filter={"contains"}
+            selectOptions={spaces ? spaces : []}
             fieldName={"spaceName"}
+            busy={spacesSearching}
             disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusToolId").length === 0}
           />
-          <DtoTextInput
+          <DtoSelectInput
+            setDataFunction={handleDTOChange}
             setDataObject={setOctopusStepConfigurationDataDto}
+            textField={"name"}
+            valueField={"id"}
             dataObject={octopusStepConfigurationDto}
+            filter={"contains"}
+            selectOptions={projects ? projects : []}
             fieldName={"projectName"}
-            disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusToolId").length === 0}
+            busy={projectsSearching}
+            disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0}
           />
-          <DtoTextInput
+          <DtoSelectInput
+            setDataFunction={handleDTOChange}
             setDataObject={setOctopusStepConfigurationDataDto}
+            textField={"version"}
+            valueField={"id"}
             dataObject={octopusStepConfigurationDto}
+            filter={"contains"}
+            selectOptions={releases ? releases : []}
             fieldName={"releaseVersion"}
-            disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusToolId").length === 0}
+            busy={releasesSearching}
+            disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("projectName").length === 0}
           />
-        <DtoTextInput
+          <DtoSelectInput
+            setDataFunction={handleDTOChange}
             setDataObject={setOctopusStepConfigurationDataDto}
+            textField={"name"}
+            valueField={"id"}
             dataObject={octopusStepConfigurationDto}
+            filter={"contains"}
+            selectOptions={environments ? environments : []}
             fieldName={"environmentName"}
-            disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusToolId").length === 0}
+            busy={environmentsSearching}
+            disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("releaseVersion").length === 0}
           />
-        <DtoTextInput
+          <DtoSelectInput
+            setDataFunction={handleDTOChange}
             setDataObject={setOctopusStepConfigurationDataDto}
+            textField={"name"}
+            valueField={"id"}
             dataObject={octopusStepConfigurationDto}
+            filter={"contains"}
+            selectOptions={tenants ? tenants : []}
             fieldName={"tenantName"}
-            disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusToolId").length === 0}
+            busy={tenantsSearching}
+            disabled={
+              octopusStepConfigurationDto && octopusStepConfigurationDto.getData("environmentName").length === 0
+            }
           />
-          <SaveButton
-            recordDto={octopusStepConfigurationDto}
-            setRecordDto={setOctopusStepConfigurationDataDto}
-            createRecord={callbackFunction}
-            updateRecord={callbackFunction}
-          />
+          <Row className="mx-1 py-2">
+            <SaveButton2
+              recordDto={octopusStepConfigurationDto}
+              setRecordDto={setOctopusStepConfigurationDataDto}
+              createRecord={callbackFunction}
+              updateRecord={callbackFunction}
+              lenient={true}
+            />
+            <CloseButton
+              isLoading={isLoading}
+              closeEditorCallback={closeEditorPanel}
+            />
+          </Row>
         </>
       )}
       <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
@@ -169,6 +387,7 @@ OctopusStepConfiguration.propTypes = {
   parentCallback: PropTypes.func,
   callbackSaveToVault: PropTypes.func,
   getToolsList: PropTypes.func,
+  closeEditorPanel: PropTypes.func
 };
 
 export default OctopusStepConfiguration;

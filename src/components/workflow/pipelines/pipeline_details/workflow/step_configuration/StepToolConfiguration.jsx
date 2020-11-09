@@ -491,6 +491,7 @@ function StepToolConfiguration({
             getToolsList={getToolsList}
             setToast={setToast}
             setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
           />
         );
       case "terraform": 

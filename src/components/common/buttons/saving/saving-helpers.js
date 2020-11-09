@@ -68,7 +68,7 @@ export async function persistUpdatedRecord(recordDto, toastContext, showSuccessT
 
     if (showSuccessToasts) {
       if (lenient && !isModelValid) {
-        toastContext.showIncompleteUpdateSuccessResultDialog(recordDto.getType());
+        toastContext.showIncompleteCreateSuccessResultDialog(recordDto.getType());
       } else {
         toastContext.showUpdateSuccessResultDialog(recordDto.getType());
       }

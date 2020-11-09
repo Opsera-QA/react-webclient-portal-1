@@ -41,6 +41,31 @@ const octopusStepFormMetadata = {
         label: "Octopus Tool ID",
         id: "octopusToolId",
         isRequired: true
+      },
+      {
+        label: "Space Name ID",
+        id: "spaceId",
+        isRequired: true
+      },
+      {
+        label: "Project Name ID",
+        id: "projectId",
+        isRequired: true
+      },
+      {
+        label: "Release Name ID",
+        id: "releaseVersionId",
+        isRequired: true
+      },
+      {
+        label: "Tenant Name ID",
+        id: "tenantId",
+        isRequired: true
+      },
+      {
+        label: "Environment Name ID",
+        id: "environmentId",
+        isRequired: true
       }
     ],
     newModelBase:
@@ -53,6 +78,11 @@ const octopusStepFormMetadata = {
         environmentName: "",
         tenantName: "",	
         octopusToolId: "",
+        spaceId: "",
+        projectId: "",
+        tenantId: "",
+        environmentId: "",
+        releaseVersionId: ""
       }
   };
   
