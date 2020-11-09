@@ -17,8 +17,8 @@ function FreeTrialLandingWelcome({ handleTabClick }) {
                 <div className="content-image float-left mr-3 mt-3">
                   <img alt="Opsera"
                        src="/img/logos/opsera_bird_infinity_171_126.png"
-                       width="171"
-                       height="126"
+                       width="155"
+                       height="114"
                   />
                 </div>
                 <div className="text-muted mx-3 pt-3 pb-2">
@@ -40,7 +40,7 @@ function FreeTrialLandingWelcome({ handleTabClick }) {
         <Row>
           <Col>
             <div className="content-card-1">
-              <div className="content-block-header h5 pl-4 mb-0">Platforms</div>
+              <div className="content-block-header h5 pl-4 mb-0">Toolchain Automation</div>
               <div className="content-block-body px-2 pt-2 pb-3">
                 <div>
                   <div className="float-left mt-1 ml-1 mr-3">
@@ -71,7 +71,7 @@ function FreeTrialLandingWelcome({ handleTabClick }) {
         <Row>
           <Col>
             <div className="content-card-1">
-              <div className="content-block-header h5 pl-4 mb-0">Pipelines</div>
+              <div className="content-block-header h5 pl-4 mb-0">Declarative Pipelines</div>
               <div className="content-block-body px-2 pt-2 pb-3">
                 <div>
                   <div className="float-left mt-1 ml-1 mr-3">
@@ -100,7 +100,7 @@ function FreeTrialLandingWelcome({ handleTabClick }) {
         <Row>
           <Col>
             <div className="content-card-1">
-              <div className="content-block-header h5 pl-4 mb-0">Analytics</div>
+              <div className="content-block-header h5 pl-4 mb-0">Insights & Analytics</div>
               <div className="content-block-body px-2 pt-2 pb-3">
                 <div>
                   <div className="float-left mt-1 ml-1 mr-3">
