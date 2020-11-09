@@ -24,7 +24,7 @@ import ApprovalStepConfiguration from "./step_tool_configuration_forms/ApprovalS
 import CypressStepConfiguration from "./step_tool_configuration_forms/CypressStepConfiguration";
 import DockerPushStepConfiguration from "./step_tool_configuration_forms/DockerPushStepConfiguration";
 import AnchoreStepConfiguration from "./step_tool_configuration_forms/AnchoreStepConfiguration";
-import AnchoreIntegratorStepConfiguration from "./step_tool_configuration_forms/AnchoreIntegratorStepConfiguration";
+import AnchoreStepConfiguration2 from "./step_tool_configuration_forms/anchore/AnchoreStepConfiguration";
 import SFDCStepConfiguration from "./step_tool_configuration_forms/SFDCStepConfiguration";
 import NexusStepConfiguration from "./step_tool_configuration_forms/nexus/NexusStepConfiguration";
 import ArgoCDStepConfiguration from "./step_tool_configuration_forms/argo_cd/ArgoCDStepConfiguration";
@@ -437,17 +437,18 @@ function StepToolConfiguration({
           />
         );
       case "anchore-integrator":
-      {/*TODO: New Anchor step which is NOT setup yet.  This is related to OC-317/OC-391*/}
         return (
-          <AnchoreIntegratorStepConfiguration
+          <AnchoreStepConfiguration2
             pipelineId={pipeline._id}
             plan={pipeline.workflow.plan}
             stepId={stepId}
             stepTool={stepTool}
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
+            getToolsList={getToolsList}
             setToast={setToast}
             setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
           />
         );
       case "sfdc-configurator":
