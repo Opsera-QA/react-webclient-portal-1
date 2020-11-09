@@ -15,7 +15,7 @@ import {
   faCheck,
   faClipboardCheck,
   faCode,
-  faSearchMinus,
+  faSearchMinus, faFolder,
 } from "@fortawesome/pro-light-svg-icons";
 import ModalActivityLogs from "components/common/modal/modalActivityLogs";
 import PipelineWorkflowItemList from "./PipelineWorkflowItemList";
@@ -209,9 +209,8 @@ function PipelineWorkflow({
 
   return (
     <>
-        <div className="">
-          <div className="pl-1 pb-1 dark-grey-background" style={{borderBottom: "5px solid #6c757d"}}>
-
+        <div>
+          <div className="pb-1">
             <Button variant="secondary"
                     className="mr-1"
                     size="sm"
@@ -257,8 +256,8 @@ function PipelineWorkflow({
                 <OverlayTrigger
                   placement="top"
                   delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "Edit workflow" })}>
-                  <Button variant="secondary" size="sm"
+                  overlay={renderTooltip({ message: "Edit pipeline workflow: add or remove steps, edit step names and set tools for individual steps" })}>
+                  <Button variant="warning" size="sm"
                           onClick={() => {
                             handleEditWorkflowClick();
                           }}
@@ -268,9 +267,6 @@ function PipelineWorkflow({
                 }
               </>}
             </>}
-
-            {softLoading && <span className={"ml-2"}><FontAwesomeIcon icon={faSpinner} size={"lg"} spin/></span>}
-
           </div>
         </div>
 
@@ -278,8 +274,10 @@ function PipelineWorkflow({
           className={"workflow-container p-2 dark-grey-border" + (zoomValue > 2 ? " scale-120-container" : "")}>
           <div className={setZoomClass(zoomValue)}>
             <div className="source workflow-module-container workflow-module-container-width mt-2 mx-auto">
-              <div className="pt-2 text-center h6 mx-auto">Start of Workflow</div>
-
+                {!softLoading ?
+                  <div className="pt-2 text-center mx-auto">Start of Workflow</div> :
+                  <div className="pt-2 text-center mx-auto green"><FontAwesomeIcon icon={faSpinner}  className="mr-1" spin/> Processing Workflow...</div>
+                }
 
               {pipeline.workflow.source.trigger_active &&
               <div className="d-flex">
@@ -366,7 +364,7 @@ function PipelineWorkflow({
 
 
             <div
-              className="workflow-module-container workflow-module-container-width p-2 mb-4 text-center h6 mx-auto">
+              className="workflow-module-container workflow-module-container-width p-2 mb-4 text-center mx-auto">
               End of Workflow
             </div>
           </div>

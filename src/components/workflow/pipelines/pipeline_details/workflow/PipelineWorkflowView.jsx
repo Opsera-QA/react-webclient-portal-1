@@ -49,8 +49,8 @@ function PipelineWorkflowView({
       <div className="workflow-view h-100">
         {getPipelineWorkflowEditor(editItem)}
 
-        <div className="dark-grey-background py-1 text-right">
-          {!editItem && <div className="float-right pt-1 mr-2 dark-grey-background">
+        <div className="py-1 text-right">
+          {!editItem && <div className="float-right pt-1 mr-2">
             <PipelineActionControls pipeline={pipeline} disabledActionState={false}
                                     customerAccessRules={customerAccessRules}
                                     fetchData={fetchPlan}
