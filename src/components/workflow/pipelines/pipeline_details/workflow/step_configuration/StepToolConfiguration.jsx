@@ -30,6 +30,7 @@ import NexusStepConfiguration from "./step_tool_configuration_forms/nexus/NexusS
 import ArgoCDStepConfiguration from "./step_tool_configuration_forms/argo_cd/ArgoCDStepConfiguration";
 import TerraformStepConfiguration from "./step_tool_configuration_forms/terraform/TerraformStepConfiguration";
 import OctopusStepConfiguration from "./step_tool_configuration_forms/octopus/OctopusStepConfiguration";
+import EBSStepConfiguration from "./step_tool_configuration_forms/ebs/EBSStepConfiguration";
 import {getErrorDialog} from "../../../../../common/toasts/toasts";
 import pipelineActions from "../../../../pipeline-actions";
 import ToastContext from "react-bootstrap/cjs/ToastContext";
@@ -347,19 +348,19 @@ function StepToolConfiguration({
             setShowToast={setShowToast}
           />
         );
-      case "elastic-beanstalk":
-        return (
-          <ElasticBeanstalkDeployStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            setToast={setToast}
-            setShowToast={setShowToast}
-          />
-        );
+      // case "elastic-beanstalk":
+      //   return (
+      //     <ElasticBeanstalkDeployStepConfiguration
+      //       pipelineId={pipeline._id}
+      //       plan={pipeline.workflow.plan}
+      //       stepId={stepId}
+      //       stepTool={stepTool}
+      //       parentCallback={callbackFunction}
+      //       callbackSaveToVault={saveToVault}
+      //       setToast={setToast}
+      //       setShowToast={setShowToast}
+      //     />
+      //   );
       case "spinnaker":
         return (
           <SpinnakerStepConfiguration
@@ -506,6 +507,21 @@ function StepToolConfiguration({
             getToolsList={getToolsList}
             setToast={setToast}
             setShowToast={setShowToast}
+          />
+        );
+      case "elastic-beanstalk":
+        return (
+          <EBSStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            getToolsList={getToolsList}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
           />
         );
     }
