@@ -3,10 +3,8 @@ import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import {Button, Form} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faLink, faSave, faSpinner} from "@fortawesome/pro-light-svg-icons";
-import DropdownList from "react-widgets/lib/DropdownList";
+import {faSave, faSpinner} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import {AuthContext} from "contexts/AuthContext";
 import jiraStepNotificationMetadata from "./jira/jiraStepNotificationMetadata";
 import Model from "../../../../../../../core/data_model/model";
 import JiraStepNotificationToolInput from "./jira/JiraStepNotificationToolInput";
@@ -23,43 +21,20 @@ import NotificationLevelInput from "./NotificationLevelInput";
 import JiraStepNotificationWorkflowStepInput from "./jira/JiraStepNotificationWorkflowStepInput";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
 import JiraStepNotificationParentTicketInput from "./jira/JiraStepNotificationParentTicketInput";
-
-const NOTIFICATION_OPTIONS = [
-  {
-    value: "finished",
-    label: "Step Completed",
-    message: "You will receive notifications on this step's completion no matter what the status.",
-  },
-  { value: "error", label: "On Error", message: "You will receive notifications on any errors in this step." },
-  { value: "all", label: "All Activity", message: "You will receive notifications for any activity on this step." },
-];
-
-// TODO: Convert email section to use DTO components
-const INITIAL_EMAIL = {
-  type: "email",
-  address: "",
-  event: "error",
-  enabled: false,
-};
-
-// TODO: Convert slack section to use DTO components
-const INITIAL_SLACK = {
-  type: "slack",
-  // channel: "",
-  event: "finished",
-  enabled: false,
-};
+import slackStepNotificationMetadata from "./slack/slackStepNotificationMetadata";
+import DtoTextInput from "../../../../../../common/input/dto_input/dto-text-input";
+import emailStepNotificationMetadata from "./email/emailStepNotificationMetadata";
+import {faLink} from "@fortawesome/pro-solid-svg-icons";
 
 function StepNotificationConfiguration({ data, stepId, parentCallback, handleCloseClick }) {
   const toastContext = useContext(DialogToastContext);
-  const { getAccessToken } = useContext(AuthContext);
   const { plan } = data.workflow;
   const [stepName, setStepName] = useState();
   const [stepTool, setStepTool] = useState({});
-  const [formDataEmail, setFormDataEmail] = useState(INITIAL_EMAIL);
-  const [formDataSlack, setFormDataSlack] = useState(INITIAL_SLACK);
   const [jiraDto, setJiraDto] = useState(undefined);
   const [teamsDto, setTeamsDto] = useState(undefined);
+  const [slackDto, setSlackDto] = useState(undefined);
+  const [emailDto, setEmailDto] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -82,8 +57,8 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
   };
 
   const loadFormData = async (step) => {
-    setFormDataEmail(INITIAL_EMAIL);
-    setFormDataSlack(INITIAL_SLACK);
+    setEmailDto(new Model({...emailStepNotificationMetadata.newObjectFields}, emailStepNotificationMetadata, true));
+    setSlackDto(new Model({...slackStepNotificationMetadata.newObjectFields}, slackStepNotificationMetadata, true));
     setJiraDto(new Model({...jiraStepNotificationMetadata.newObjectFields}, jiraStepNotificationMetadata, true));
     setTeamsDto(new Model({...teamsStepNotificationMetadata.newObjectFields}, teamsStepNotificationMetadata, true));
 
@@ -93,10 +68,12 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
       let jiraArrayIndex = step.notification.findIndex(x => x.type === "jira");
       let teamsArrayIndex = step.notification.findIndex(x => x.type === "teams");
       if (emailArrayIndex >= 0) {
-        setFormDataEmail(step.notification[emailArrayIndex]);
+        let emailFormData = step.notification[emailArrayIndex];
+        setEmailDto(new Model(emailFormData, emailStepNotificationMetadata, false));
       }
       if (slackArrayIndex >= 0) {
-        setFormDataSlack(step.notification[slackArrayIndex]);
+        let slackFormData = step.notification[slackArrayIndex];
+        setSlackDto(new Model(slackFormData, slackStepNotificationMetadata, false));
       }
       if (jiraArrayIndex >= 0) {
         let jiraFormData = step.notification[jiraArrayIndex];
@@ -115,7 +92,7 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
     if (validateRequiredFields()) {
       setIsSaving(true);
       let stepArrayIndex = getStepIndex(stepId);
-      plan[stepArrayIndex].notification = [formDataEmail, formDataSlack, jiraDto.getPersistData(), teamsDto.getPersistData()];
+      plan[stepArrayIndex].notification = [emailDto.getPersistData(), slackDto.getPersistData(), jiraDto.getPersistData(), teamsDto.getPersistData()];
       await parentCallback(plan);
       setIsSaving(false);
     }
@@ -126,15 +103,13 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
   };
 
   const validateRequiredFields = () => {
-    if (formDataEmail.enabled) {
-      if (formDataEmail.address.length === 0 || !emailIsValid(formDataEmail.address)) {
-        toastContext.showErrorDialog("Warning:  Email address missing or invalid!");
-        return false;
-      }
+    if (emailDto.getData("enabled") === true && !emailDto.isModelValid2()) {
+      toastContext.showErrorDialog("Error: Cannot enable Email notification without all required fields filled out.");
+      return false;
     }
 
     if (jiraDto.getData("enabled") === true && !jiraDto.isModelValid2()) {
-      toastContext.showErrorDialog("Error: Cannot enable Jira notification without all fields filled out.");
+      toastContext.showErrorDialog("Error: Cannot enable Jira notification without all required fields filled out.");
       return false;
     }
 
@@ -143,53 +118,28 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
       return false;
     }
 
+    if (slackDto.getData("enabled") === true && !slackDto.isModelValid2()) {
+      toastContext.showErrorDialog("Error: Cannot enable Slack notifications without all required fields filled out.");
+      return false;
+    }
+
     return true;
   };
 
-  const handleEmailServiceChange = (selectedOption) => {
-    setFormDataEmail({ ...formDataEmail, event: selectedOption.value });
-  };
-
-  const handleSlackServiceChange = (selectedOption) => {
-    setFormDataSlack({ ...formDataSlack, event: selectedOption.value });
-  };
-
   const getSlackFormFields = () => {
+    if (isLoading || slackDto == null) {
+      return null;
+    }
+
     return (
-      <div className="my-4 px-2">
-        <Form.Check
-          type="switch"
-          className="mb-2"
-          id="slack-switch"
-          label="Slack Notifications"
-          checked={formDataSlack.enabled}
-          onChange={() => setFormDataSlack({ ...formDataSlack, enabled: !formDataSlack.enabled })}
-        />
-        {/*<Form.Group controlId="repoField">*/}
-        {/*  <Form.Label>Slack Channel</Form.Label>*/}
-        {/*  <Form.Control maxLength="50" type="text" disabled={!formDataSlack.enabled} placeholder=""*/}
-        {/*                value={formDataSlack.channel || ""}*/}
-        {/*                onChange={e => setFormDataSlack({ ...formDataSlack, channel: e.target.value })}/>*/}
-        {/*</Form.Group>*/}
-        <Form.Group controlId="formBasicEmail">
-          <Form.Label>Notification Level</Form.Label>
-          {!isLoading ?
-            <DropdownList
-              data={NOTIFICATION_OPTIONS}
-              disabled={!formDataSlack.enabled}
-              valueField='id'
-              textField='label'
-              defaultValue={NOTIFICATION_OPTIONS[NOTIFICATION_OPTIONS.findIndex(x => x.value === formDataSlack.event)]}
-              onChange={handleSlackServiceChange}
-            /> : null}
-
-          <small className="form-text text-muted">
-            Please Note: You must enter a valid Slack token in
-            <Link to="/tools"><FontAwesomeIcon icon={faLink} className="ml-1"/>API
-              Tools</Link> in order to use this feature.
-          </small>
-
-        </Form.Group>
+      <div className="my-4">
+        <NotificationsToggle dataObject={slackDto} setDataObject={setSlackDto} fieldName={"enabled"} />
+        <small className="form-text text-muted px-2">
+          Please Note: You must use the Add to Slack button on the
+          <Link to="/tools"><FontAwesomeIcon icon={faLink} className="ml-1"/>API Tools</Link> page in order to use this feature.
+        </small>
+        <NotificationLevelInput dataObject={slackDto} setDataObject={setSlackDto} fieldName={"event"} />
+        <DtoTextInput dataObject={slackDto} setDataObject={setSlackDto} fieldName={"channel"} />
       </div>
     );
   };
@@ -232,34 +182,15 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
   };
 
   const getEmailFormFields = () => {
+    if (isLoading || emailDto == null) {
+      return null;
+    }
+
     return (
-      <div className="my-4 px-2">
-        <Form.Check
-          type="switch" disabled
-          id="email-switch"
-          className="mb-2"
-          label="Email Notifications"
-          checked={formDataEmail.enabled}
-          onChange={() => setFormDataEmail({ ...formDataEmail, enabled: !formDataEmail.enabled })}
-        />
-        <Form.Group controlId="branchField">
-          <Form.Label>Email Address</Form.Label>
-          <Form.Control maxLength="100" type="text" disabled={!formDataEmail.enabled} placeholder=""
-                        value={formDataEmail.address || ""}
-                        onChange={e => setFormDataEmail({ ...formDataEmail, address: e.target.value })}/>
-        </Form.Group>
-        <Form.Group controlId="formBasicEmail">
-          <Form.Label>Notification Level</Form.Label>
-          {!isLoading ?
-            <DropdownList
-              data={NOTIFICATION_OPTIONS}
-              valueField='id'
-              disabled={!formDataEmail.enabled}
-              textField='label'
-              defaultValue={NOTIFICATION_OPTIONS[NOTIFICATION_OPTIONS.findIndex(x => x.value === formDataEmail.event)]}
-              onChange={handleEmailServiceChange}
-            /> : null}
-        </Form.Group>
+      <div className="my-4">
+        <NotificationsToggle disabled={true} dataObject={emailDto} setDataObject={setEmailDto} fieldName={"enabled"} />
+        <DtoTextInput disabled={true} dataObject={emailDto} setDataObject={setEmailDto} fieldName={"address"} />
+        <NotificationLevelInput disabled={true} dataObject={emailDto} setDataObject={setEmailDto} fieldName={"event"} />
       </div>
     )
   }
@@ -305,12 +236,6 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
     </Form>
   );
 }
-
-
-const emailIsValid = (email) => {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-};
-
 
 StepNotificationConfiguration.propTypes = {
   data: PropTypes.object,
