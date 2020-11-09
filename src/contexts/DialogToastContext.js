@@ -139,6 +139,12 @@ const ToastContextProvider = (props) => {
     refreshTimer();
   };
 
+  const showIncompleteCreateSuccessResultDialog = () => {
+    setToast(getInformationDialog( `WARNING! An incomplete configuration is being saved.  This step must be fully configured in order to use this feature.`));
+    setShowToast(true);
+    refreshTimer();
+  }
+
   const showMissingRequiredFieldsErrorDialog = () => {
     setToast(getErrorDialog(`Required Fields Missing!`));
     setShowToast(true);
@@ -165,6 +171,7 @@ const ToastContextProvider = (props) => {
     return <>{modalToast != null ? modalToast : null}</>;
   }
 
+
     return (
       <DialogToastContext.Provider
         value={{
@@ -183,7 +190,8 @@ const ToastContextProvider = (props) => {
           showWarningDialog: showWarningDialog,
           showErrorDialog: showErrorDialog,
           showSuccessDialog: showSuccessDialog,
-          getModalToast: getModalToast
+          getModalToast: getModalToast,
+          showIncompleteCreateSuccessResultDialog: showIncompleteCreateSuccessResultDialog
         }}>
         {showToast && toast}
         {props.children}
