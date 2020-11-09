@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { OverlayTrigger, Button, Popover } from "react-bootstrap";
+import { OverlayTrigger, Button, Popover, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle, faSpinner, faEllipsisH, faSave } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
@@ -12,10 +12,10 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import _ from "lodash";
 import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
-import SaveButton from "../../../../../../../common/buttons/SaveButton";
+import SaveButton2 from "../../../../../../../common/buttons/saving/SaveButton2";
 import CloseButton from "../../../../../../../common/buttons/CloseButton";
 
-function AnchoreStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList }) {
+function AnchoreStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, closeEditorPanel }) {
   const {getAccessToken} = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -185,8 +185,8 @@ function AnchoreStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
         fieldName={"ecrPushStepId"}
         disabled={listOfSteps.length === 0 || anchoreStepConfigurationDto.getData("anchoreToolConfigId").length === 0}
       />
-      <Row className="mx-1">
-        <SaveButton
+      <Row className="mx-1 py-2">
+        <SaveButton2
           disable={
             anchoreStepConfigurationDto.getData("type") === "push" &&
             anchoreStepConfigurationDto.getData("artifactStepId").length === 0
