@@ -35,13 +35,13 @@ function FreeTrialLanding() {
                   <a className={"nav-link " + (activeTab === "welcome" ? "active" : "")} onClick={handleTabClick("welcome")} href="#">Welcome</a>
                 </li>
                 <li className="nav-item"> 
-                  <a className={"nav-link " + (activeTab === "platform" ? "active" : "")} onClick={handleTabClick("platform")} href="#">Platform</a>
+                  <a className={"nav-link " + (activeTab === "platform" ? "active" : "")} onClick={handleTabClick("platform")} href="#">Toolchain Automation</a>
                 </li>
                 <li className="nav-item">
-                  <a className={"nav-link " + (activeTab === "pipeline" ? "active" : "")} onClick={handleTabClick("pipeline")} href="#">Pipeline</a>
+                  <a className={"nav-link " + (activeTab === "pipeline" ? "active" : "")} onClick={handleTabClick("pipeline")} href="#">Declarative Pipeline</a>
                 </li>
                 <li className="nav-item">
-                  <a className={"nav-link " + (activeTab === "analytics" ? "active" : "")} onClick={handleTabClick("analytics")} href="#">Analytics</a>
+                  <a className={"nav-link " + (activeTab === "analytics" ? "active" : "")} onClick={handleTabClick("analytics")} href="#">Insights</a>
                 </li>
               </ul>
             </div>

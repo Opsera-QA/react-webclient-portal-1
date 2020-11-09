@@ -423,7 +423,7 @@ function FreeTrialNav({ accessRole }) {
           <div className="mt-4 mb-2 sub-header">Products</div>
           <NavLink className="nav-link" activeClassName="chosen" to="/trial/landing/platform">
             <FontAwesomeIcon size="lg" icon={faBox} fixedWidth/> <span
-            className="menu-text">Platforms</span></NavLink>
+            className="menu-text">Toolchain</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/workflow">
             <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
             className="menu-text">Pipelines</span></NavLink>

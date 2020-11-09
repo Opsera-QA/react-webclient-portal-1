@@ -15,9 +15,10 @@ function FreeTrialLandingWelcome({ handleTabClick }) {
               <div className="content-block-header h5 pl-4 mb-0">Welcome to Opsera!  Your DevSecOps Solution.</div>
               <div className="content-block-body px-2 pt-2 pb-3">
                 <div className="content-image float-left mr-3 mt-3">
-                  <img alt="OpsERA"
-                    src="/img/opsera_logo_120x118.png"
-                       height="80"
+                  <img alt="Opsera"
+                       src="/img/logos/opsera_bird_infinity_171_126.png"
+                       width="171"
+                       height="126"
                   />
                 </div>
                 <div className="text-muted mx-3 pt-3 pb-2">

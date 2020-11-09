@@ -14,7 +14,7 @@ function FreeTrialLandingPlatform() {
           <Row>
             <Col>
               <div className="content-card-3">
-                <div className="content-block-header h5 pl-4 mb-0">Platforms</div>
+                <div className="content-block-header h5 pl-4 mb-0">Toolchain Automation</div>
                 <div className="content-block-body px-2 pt-2 pb-1">
                   <div className="content-image float-left mr-3">
                     <iframe src='https://www.youtube.com/embed/LFDrDnKPOTg'

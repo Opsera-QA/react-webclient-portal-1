@@ -17,7 +17,7 @@ function FreeTrialLandingAnalytics() {
           <Row>
             <Col>
               <div className="content-card-3">
-                <div className="content-block-header h5 pl-4 mb-0">Analytics</div>
+                <div className="content-block-header h5 pl-4 mb-0">Insights</div>
                 <div className="content-block-body px-2 pt-2 pb-1">
                   <div className="content-image float-left mr-3">
                     <div className="float-left mt-1 ml-1 mr-3">

@@ -15,7 +15,7 @@ function FreeTrialLandingPipeline() {
         <Row>
           <Col>
             <div className="content-card-3">
-              <div className="content-block-header text-center h5 pl-4 mb-0">What are Pipelines?</div>
+              <div className="content-block-header text-center h5 pl-4 mb-0">What are Declarative Pipelines?</div>
               <div className="content-block-body px-2 pt-2 pb-1">
                 <div className="text-muted mx-3 pt-3 pb-2">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit.
