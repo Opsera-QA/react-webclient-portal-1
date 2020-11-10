@@ -1,12 +1,12 @@
 import React, {useEffect, useContext, useState} from "react";
-import { AuthContext } from "../../../contexts/AuthContext";
-import LoadingDialog from "../../common/status_notifications/loading";
-import apiConnectorActions from "../api-connector-actions";
-import {DialogToastContext} from "../../../contexts/DialogToastContext";
+import { AuthContext } from "../../../../../../contexts/AuthContext";
+import LoadingDialog from "../../../../../common/status_notifications/loading";
+import apiConnectorActions from "../../../../../api_connector/api-connector-actions";
+import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import slackConnectorActions from "./slack-actions";
-import ErrorDialog from "../../common/status_notifications/error";
+import ErrorDialog from "../../../../../common/status_notifications/error";
 
-function SlackApiConnector() {
+function SlackToolConfiguration() {
   const {getAccessToken} = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [token, setToken] = useState(undefined);
@@ -103,4 +103,4 @@ function SlackApiConnector() {
   );
 }
 
-export default SlackApiConnector;
+export default SlackToolConfiguration;
