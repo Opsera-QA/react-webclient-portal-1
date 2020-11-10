@@ -245,7 +245,7 @@ function ArgoCDStepConfiguration({ stepTool, plan, stepId, parentCallback, getTo
       newDataObject.setData("gitWorkspace", "");
       newDataObject.setData("bitbucketWorkspace", "");
       setGitYAMLStepConfigurationDataDto({ ...newDataObject });
-      fetchSCMDetails(gitYAMLStepConfigurationDto.data);
+      await fetchSCMDetails(gitYAMLStepConfigurationDto.data);
       return;
     }
     if (fieldName === "gitToolId") {
@@ -255,7 +255,7 @@ function ArgoCDStepConfiguration({ stepTool, plan, stepId, parentCallback, getTo
       if (gitYAMLStepConfigurationDto.getData("type") === "bitbucket") {
         await getWorkspaces("bitbucket", value.id, getAccessToken)
       } else {
-        searchRepositories(
+        await searchRepositories(
           gitYAMLStepConfigurationDto.getData("type"),
           gitYAMLStepConfigurationDto.getData("gitToolId")
         );
@@ -266,19 +266,19 @@ function ArgoCDStepConfiguration({ stepTool, plan, stepId, parentCallback, getTo
       let newDataObject = gitYAMLStepConfigurationDto;
       let repoName = value.name;
       if (gitYAMLStepConfigurationDto.getData("type") === "gitlab") {
-        let re = /(?<=com:)([^\/]+)/
+        let re = /(?<=\.com:)(.*)(?=\.git)/
         let matches = re.exec(value.sshUrl)
         if (matches.length === 0) {
           let errorMessage = "Error fetching gitlab workspace";
           toastContext.showErrorDialog(errorMessage);
           return;
         }
-        repoName = matches[0] + "/" + value.name;
+        repoName = matches[0];
       }
       newDataObject.setData("gitRepository", repoName);
       newDataObject.setData("gitRepositoryID", value.id);
       setGitYAMLStepConfigurationDataDto({ ...newDataObject });
-      searchBranches(
+      await searchBranches(
         gitYAMLStepConfigurationDto.getData("type"),
         gitYAMLStepConfigurationDto.getData("gitToolId"),
         value.id,
@@ -293,16 +293,15 @@ function ArgoCDStepConfiguration({ stepTool, plan, stepId, parentCallback, getTo
         newDataObject.setData("toolUrl", value.configuration.toolURL);
         newDataObject.setData("userName", value.configuration.userName);
         setGitYAMLStepConfigurationDataDto({ ...newDataObject });
-        searchArgoAppsList(value.id);
+        await searchArgoAppsList(value.id);
       }
       return;
     }
     if (fieldName === "bitbucketWorkspace") {
-      console.log(value);
       let newDataObject = gitYAMLStepConfigurationDto;
       newDataObject.setData("bitbucketWorkspace", value);
       setGitYAMLStepConfigurationDataDto({ ...newDataObject });
-      searchRepositories(
+      await searchRepositories(
         gitYAMLStepConfigurationDto.getData("type"),
         gitYAMLStepConfigurationDto.getData("gitToolId"),
         value

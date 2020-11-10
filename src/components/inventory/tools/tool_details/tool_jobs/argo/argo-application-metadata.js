@@ -42,6 +42,11 @@ const argoApplicationsMetadata = {
     {
       label: "Active",
       id: "active",
+    },
+    {
+      label: "Branch Name",
+      id: "branchName",
+      isRequired: true
     }
 ],
   newModelBase: {
@@ -53,6 +58,7 @@ const argoApplicationsMetadata = {
     namespace : "",
     projectName : "",
     toolId : "",
+    branchName: "",
     active: true,
   }
 };
