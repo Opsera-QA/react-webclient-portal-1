@@ -67,6 +67,16 @@ const ArgoCDStepFormMetadata = {
       label: "BitBucket Workspace",
       id: "bitbucketWorkspace",
     },
+    {
+      label: "GIT URL",
+      id: "gitUrl",
+      isRequired: true,
+    },
+    {
+      label: "SSH URL",
+      id: "sshUrl",
+      isRequired: true,
+    },
   ],
   newModelBase: {
     existingContent: "image",
@@ -79,6 +89,8 @@ const ArgoCDStepFormMetadata = {
     gitToolId: "",
     toolConfigId: "",
     toolUrl: "",
+    gitUrl: "",
+    sshUrl: "",
     userName: "",
     applicationName: "",
     gitRepositoryID: "",

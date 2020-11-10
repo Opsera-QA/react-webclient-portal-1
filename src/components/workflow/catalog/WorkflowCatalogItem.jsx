@@ -9,7 +9,7 @@ import React, { useContext, useState } from "react";
 import { axiosApiService } from "../../../api/apiService";
 import { AuthContext } from "../../../contexts/AuthContext";
 
-const WorkflowCatalogItem = ({ item, parentCallback }) => {
+const WorkflowCatalogItem = ({ item, parentCallback, openFreeTrialWizard }) => {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
   const [loading, setLoading] = useState(false);
@@ -38,7 +38,12 @@ const WorkflowCatalogItem = ({ item, parentCallback }) => {
       let newPipelineId = result.data !== undefined ? result.data._id : false;
 
       if (newPipelineId) {
-        history.push(`/workflow/details/${newPipelineId}/summary`);
+        // check if its a free trial and then proceed
+      
+        if(!item.tags.some(el=> el.value === "freetrial") ) {
+          history.push(`/workflow/details/${newPipelineId}/summary`);
+        }
+        openFreeTrialWizard(newPipelineId,templateId,"freetrial")
       }
       setLoading(false);
     } catch (err) {
@@ -95,6 +100,7 @@ const WorkflowCatalogItem = ({ item, parentCallback }) => {
 WorkflowCatalogItem.propTypes = {
   item: PropTypes.object,
   parentCallback: PropTypes.func,
+  openFreeTrialWizard: PropTypes.func,
 };
 
 export default WorkflowCatalogItem;
