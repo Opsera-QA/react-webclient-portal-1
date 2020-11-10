@@ -35,13 +35,15 @@ const registrationMetadata = {
       label: "Password",
       id: "password",
       isRequired: true,
-      isOpseraPassword: true
+      isOpseraPassword: true,
+      matchField: "confirmPassword"
     },
     {
       label: "Confirm Password",
       id: "confirmPassword",
       isRequired: true,
-      isOpseraPassword: true
+      isOpseraPassword: true,
+      matchField: "password"
     },
     {
       label: "Street",

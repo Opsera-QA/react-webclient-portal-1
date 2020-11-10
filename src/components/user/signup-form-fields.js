@@ -32,6 +32,7 @@ const defaultSignupFormFields = {
     type: "password",
     isRequired: true,
     isOpseraPassword: true,
+    matchField: "confirmPassword"
   },
     {
     label: "Confirm Password",
@@ -39,6 +40,7 @@ const defaultSignupFormFields = {
     type: "password",
     isRequired: true,
     isOpseraPassword: true,
+    matchField: "password"
   },
     {
     label: "Street",

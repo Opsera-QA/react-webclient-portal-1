@@ -1,9 +1,9 @@
 import {isAlphaNumeric, isDomain, isOpseraPassword, matchesRegex, validateEmail} from "../../utils/helpers";
 
-export const validateData = (data, fields) => {
+export const validateData = (data) => {
   let errors = [];
 
-  for (const field of fields) {
+  for (const field of data.getFields()) {
     let fieldErrors = validateField(data, field);
 
     if (fieldErrors) {
@@ -17,10 +17,10 @@ export const validateData = (data, fields) => {
 }
 
 export const validateField = (data, field) => {
-  return fieldValidation(data[field.id], field);
+  return fieldValidation(data.getData(field.id), data, field);
 }
 
-export const fieldValidation = (value, field) => {
+export const fieldValidation = (value, data, field) => {
   let errorMessages = [];
 
   if (field.minLength != null) {
@@ -64,6 +64,10 @@ export const fieldValidation = (value, field) => {
   if (field.isOpseraPassword === true && !isOpseraPassword(value))
   {
     errorMessages.push("Password requirements: at least 8 characters, a lowercase letter, an uppercase letter, a number, a symbol");
+  }
+
+  if (field.matchField != null && value !== data[field.matchField]) {
+    errorMessages.push(`${data.getLabel(field.id)} and ${data.getLabel(field.matchField)} must match.`);
   }
 
   if (field.regexValidator != null && !matchesRegex(field.regexValidator, value))
