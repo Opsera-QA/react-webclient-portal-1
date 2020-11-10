@@ -1,4 +1,4 @@
-import {fieldValidation, validateData, validateField} from "./modelValidation";
+import {validateData, validateField} from "./modelValidation";
 
 export const DataState = {
   LOADED: 0,
@@ -58,17 +58,17 @@ export class Model {
   }
 
   isModelValid = () => {
-    return validateData(this.data, this.metaData.fields);
+    return validateData(this);
   }
 
   // TODO Replace top method with getErrors and rename this
   isModelValid2 = () => {
-    let isValid = validateData(this.data, this.metaData.fields);
+    let isValid = validateData(this);
     return isValid === true;
   }
 
   isFieldValid = (fieldName) => {
-    return validateField(this.data, this.getFieldById(fieldName), {});
+    return validateField(this, this.getFieldById(fieldName));
   }
 
   propertyChange = (id, newValue, oldValue) => {
