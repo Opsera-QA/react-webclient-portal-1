@@ -126,6 +126,13 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, appID, hand
             />
           </Col>
           <Col lg={12}>
+            <DtoTextInput
+              dataObject={argoApplicationDataDto}
+              fieldName={"branchName"}
+              setDataObject={setArgoApplicationDataDto}
+            />
+          </Col>
+          <Col lg={12}>
             <DtoToggleInput
               setDataObject={setArgoApplicationDataDto}
               fieldName={"active"}
