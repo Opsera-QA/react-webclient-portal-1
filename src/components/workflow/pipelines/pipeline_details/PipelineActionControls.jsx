@@ -22,6 +22,7 @@ import {
 import "../../workflows.css";
 import ErrorDialog from "../../../common/status_notifications/error";
 import { DialogToastContext } from "contexts/DialogToastContext";
+import FreeTrialPipelineWizard from "components/workflow/wizards/deploy/freetrialPipelineWizard";
 
 function PipelineActionControls({
   pipeline,
@@ -47,6 +48,12 @@ function PipelineActionControls({
     show: false,
     pipelineType: "",
     pipelineId: "",
+    pipelineOrientation: "",
+  });
+  const [freetrialWizardModal, setFreetrialWizardModal] = useState({
+    show: false,
+    pipelineId: "",
+    templateId: "",
     pipelineOrientation: "",
   });
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
@@ -190,6 +197,28 @@ function PipelineActionControls({
     setWizardModal({ show: false, pipelineType: "", pipelineId: "", pipelineOrientation: "" });
   };
 
+  const launchFreeTrialPipelineStartWizard = (pipelineId, pipelineOrientation, handleCloseFreeTrialDeploy) => {
+    console.log("launching deploy freetrial wizard");
+    console.log("pipelineOrientation ", pipelineOrientation);
+    console.log("pipelineId ", pipelineId);
+    setFreetrialWizardModal({
+      show: true,
+      pipelineId: pipelineId,
+      templateId: "",
+      pipelineOrientation: pipelineOrientation,
+    });
+  };
+
+  const handleCloseFreeTrialDeploy = () => {
+    console.log("closing freetrial deploy deploy wizard");
+    setFreetrialWizardModal({
+      show: false,
+      pipelineId: "",
+      pipelineOrientation: "",
+      handleCloseFreeTrialDeploy: ""
+    });
+  }
+
   const handlePipelineWizardRequest = async (pipelineId, restartBln) => {
     setWizardModal({ ...wizardModal, show: false });
     if (restartBln) {
@@ -203,6 +232,7 @@ function PipelineActionControls({
     //check type of pipeline to determine if pre-flight wizard is required
     // is pipeline at the beginning or stopped midway or end of prior?
     const pipelineType = typeof pipeline.type !== "undefined" && pipeline.type[0] !== undefined ? pipeline.type[0] : ""; //for now type is just the first entry
+    const pipelineTags = typeof pipeline.tags !== "undefined" && pipeline.tags !== undefined ? pipeline.tags : "";
 
     let pipelineOrientation = "start";
     //what step are we currently on in the pipeline: first, last or middle?
@@ -216,7 +246,9 @@ function PipelineActionControls({
       }
     }
 
-    if (pipelineType === "sfdc") {
+    if (pipelineTags.some(el=> el.value === "freetrial")) {
+      launchFreeTrialPipelineStartWizard(pipelineId,"",handleCloseFreeTrialDeploy)
+    } else if (pipelineType === "sfdc") {
       launchPipelineStartWizard(pipelineOrientation, pipelineType, pipelineId);
     } else {
       if (pipelineOrientation === "middle") {
@@ -365,6 +397,16 @@ function PipelineActionControls({
                            handleClose={handlePipelineStartWizardClose}
                            handlePipelineWizardRequest={handlePipelineWizardRequest}
                            refreshPipelineActivityData={fetchActivityLogs}/>}
+
+      {freetrialWizardModal.show && 
+      <FreeTrialPipelineWizard 
+        pipelineId={freetrialWizardModal.pipelineId}
+        templateId={freetrialWizardModal.templateId}
+        pipelineOrientation={freetrialWizardModal.pipelineOrientation}
+        autoRun={true}
+        handleClose={handleCloseFreeTrialDeploy}
+      />
+      }
 
       {error && <ErrorDialog error={error} setError={setErrors} align="top"/>}
 

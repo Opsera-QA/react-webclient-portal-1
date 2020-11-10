@@ -7,11 +7,11 @@ import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalActivityLogs from "../../common/modal/modalActivityLogs";
-
+import PipelineActions from "../pipeline-actions";
 import "../workflows.css";
 import WorkflowCatalogItem from "./WorkflowCatalogItem";
 import { getLoadingErrorDialog } from "../../common/toasts/toasts";
-import PipelineStartWizard from "../pipelines/pipeline_details/PipelineStartWizard";
+import FreeTrialPipelineWizard from "../wizards/deploy/freetrialPipelineWizard";
 
 
 function WorkflowCatalog() {
@@ -19,10 +19,14 @@ function WorkflowCatalog() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [pipelineId, setPipelineId] = useState("");
+  const [templateId, setTemplateId] = useState("");
+  const [showFreeTrialModal, setShowFreeTrialModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
   const [toast, setToast] = useState({});
   const [showToast, setShowToast] = useState(false);
 
+  // pipeline id : 5fa0617f79630d55f08bc6dd
 
   const callbackFunction = (item) => {
     setModalMessage(item);
@@ -31,6 +35,10 @@ function WorkflowCatalog() {
 
   useEffect(() => {
     fetchData();
+    setShowFreeTrialModal(false); // for testing its true - edit this to false while pushing
+    setPipelineId(""); // for testing its set a value - set this to empty while pushing
+    setTemplateId("");
+    setShowModal(false);
   }, []);
 
   async function fetchData() {
@@ -52,6 +60,25 @@ function WorkflowCatalog() {
     }
   }
 
+  const openFreeTrialWizard = (pipelineId, templateId, templateType) => {
+    if(!pipelineId){
+      setTemplateId("");
+      setShowFreeTrialModal(false);
+      return;
+    }
+    setPipelineId(pipelineId);
+    setTemplateId(templateId);
+    setShowFreeTrialModal(true);
+  }
+
+  const handleClose = async() => {
+    // TODO: Delete the pipeline here : Needs to be tested
+    const { getAccessToken } = contextType;
+    setShowFreeTrialModal(false);
+    await PipelineActions.delete(pipelineId, getAccessToken);
+    setPipelineId("");
+    setTemplateId("");
+  }
 
   if (loading) {
     return (<LoadingDialog size="sm"/>);
@@ -68,7 +95,7 @@ function WorkflowCatalog() {
           <Row>
             {data.map((item, idx) => (
               <Col xl={6} md={12} key={idx} className="p-2">
-                <WorkflowCatalogItem item={item} parentCallback={callbackFunction}/>
+                <WorkflowCatalogItem item={item} parentCallback={callbackFunction} openFreeTrialWizard={openFreeTrialWizard}/>
               </Col>))}
           </Row>
           :
@@ -77,7 +104,17 @@ function WorkflowCatalog() {
 
       <ModalActivityLogs header="Template Details" size="lg" jsonData={modalMessage} show={showModal}
                          setParentVisibility={setShowModal}/>
-
+      
+      {showFreeTrialModal &&
+        <FreeTrialPipelineWizard  
+          pipelineId={pipelineId}
+          templateId={templateId}
+          pipelineOrientation={""}
+          autoRun={false}
+          handleClose={handleClose} 
+        />
+      }
+      
     </>
   );
 }

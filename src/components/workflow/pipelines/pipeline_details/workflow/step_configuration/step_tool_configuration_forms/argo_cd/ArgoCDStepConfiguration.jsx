@@ -277,6 +277,8 @@ function ArgoCDStepConfiguration({ stepTool, plan, stepId, parentCallback, getTo
       }
       newDataObject.setData("gitRepository", repoName);
       newDataObject.setData("gitRepositoryID", value.id);
+      newDataObject.setData("gitUrl", value.httpUrl);
+      newDataObject.setData("sshUrl", value.sshUrl);
       setGitYAMLStepConfigurationDataDto({ ...newDataObject });
       await searchBranches(
         gitYAMLStepConfigurationDto.getData("type"),

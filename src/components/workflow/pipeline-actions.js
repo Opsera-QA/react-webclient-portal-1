@@ -160,6 +160,15 @@ pipelineActions.deny = async (templateId, postBody, getAccessToken) => {
   return response;
 };
 
+pipelineActions.createFreeTrialPipeline = async (postBody, getAccessToken) => {
+  console.log("inside pipeline acitons")
+  const accessToken = await getAccessToken();
+  const apiUrl = `/pipelines/freetrial/postcommit`;
+  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
+    .then((result) =>  {return result;})
+    .catch(error => {throw { error };});
+  return response;
+};
 
 pipelineActions.getToolsList = async (service, getAccessToken) => {
   const accessToken = await getAccessToken();

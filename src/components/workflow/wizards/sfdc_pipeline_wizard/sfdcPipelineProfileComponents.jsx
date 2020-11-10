@@ -11,6 +11,7 @@ import {
   faCode,
   faSquare,
   faSearch,
+  faStepForward,
 } from "@fortawesome/free-solid-svg-icons";
 import "../../workflows.css";
 import DropdownList from "react-widgets/lib/DropdownList";
@@ -376,7 +377,7 @@ const SfdcPipelineProfileComponents = ({
             {save ? (
               <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>
             ) : (
-              <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1"/>
+              <FontAwesomeIcon icon={faStepForward} fixedWidth className="mr-1"/>
             )}
             Next
           </Button>
