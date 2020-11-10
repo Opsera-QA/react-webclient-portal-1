@@ -27,7 +27,7 @@ import { faHome } from "@fortawesome/free-solid-svg-icons";import {
 import CustomTabContainer from "../common/tabs/CustomTabContainer";
 import CustomTab from "../common/tabs/CustomTab";
 import MicrosoftTeamsApiConnector from "./microsoft_teams/MicrosoftTeamsApiConnector";
-import SlackApiConnector from "./collaboration/SlackApiConnector";
+import SlackToolConfiguration from "../inventory/tools/tool_details/tool_jobs/slack/SlackToolConfiguration";
 
 function ApiConnector({}) {
   const [activeTab, setTabSelection] = useState("home");
@@ -121,7 +121,7 @@ function ApiConnectorTabView({ activeTab }) {
       case "openstack":
         return <OpenStack />;
       case "slack":
-        return <SlackApiConnector />;
+        return <SlackToolConfiguration />;
       case "tableau":
         return <Tableau />;
       case "teams":

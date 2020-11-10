@@ -1,4 +1,4 @@
-import {axiosApiService} from "../../../api/apiService";
+import {axiosApiService} from "../../../../../../api/apiService";
 
 const slackConnectorActions = {};
 
