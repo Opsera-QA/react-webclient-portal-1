@@ -17,6 +17,7 @@ import SaveButton from "../../../common/buttons/SaveButton";
 import pipelineHelpers from "../../../workflow/pipelineHelpers";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import DetailPanelContainer from "../../../common/panels/detail_panel_container/DetailPanelContainer";
+import BooleanToggleInput from "../../../common/input/dto_input/BooleanToggleInput";
 
 function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -95,6 +96,12 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
             </Col>
             <Col lg={6}>
               <DtoMultiselectInput fieldName={"roles"} dataObject={templateDataDto} setDataObject={setTemplateDataDto} selectOptions={roleOptions} setSelectOptions={setRoleOptions} />
+            </Col>
+            <Col lg={6}>
+              <BooleanToggleInput fieldName={"readOnly"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
+            </Col>
+            <Col lg={6}>
+              <BooleanToggleInput fieldName={"singleUse"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
             </Col>
             <Col lg={6}>
               <DtoTagManagerInput type={"template"} fieldName={"tags"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>

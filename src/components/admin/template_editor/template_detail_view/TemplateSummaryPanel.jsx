@@ -17,6 +17,7 @@ import ActionBarDeleteButton2 from "../../../common/actions/buttons/ActionBarDel
 import templateActions from "../template-actions";
 import {AuthContext} from "../../../../contexts/AuthContext";
 import ActionBarShowJsonButton from "../../../common/actions/buttons/ActionBarShowJsonButton";
+import BooleanField from "../../../common/form_fields/dto_form_fields/BooleanField";
 
 function TemplateSummaryPanel({templateData, opseraAdmin}) {
   const { getAccessToken } = useContext(AuthContext)
@@ -61,6 +62,12 @@ function TemplateSummaryPanel({templateData, opseraAdmin}) {
         </Col>
         <Col lg={6}>
           <DtoDateField dataObject={templateData} fieldName={"createdAt"}/>
+        </Col>
+        <Col lg={6}>
+          <BooleanField dataObject={templateData} fieldName={"readOnly"}/>
+        </Col>
+        <Col lg={6}>
+          <BooleanField dataObject={templateData} fieldName={"singleUse"}/>
         </Col>
         <Col lg={6}>
           <DtoToggleField dataObject={templateData} fieldName={"active"}/>
