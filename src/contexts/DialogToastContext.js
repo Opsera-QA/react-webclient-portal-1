@@ -139,6 +139,12 @@ const ToastContextProvider = (props) => {
     refreshTimer();
   };
 
+  const showDomainAlreadyRegisteredErrorDialog = () => {
+    setToast(getErrorDialog( `WARNING! The domain given has already been registered to an Opsera account`));
+    setShowToast(true);
+    refreshTimer();
+  };
+
   const showIncompleteCreateSuccessResultDialog = () => {
     setToast(getInformationDialog( `WARNING! An incomplete configuration is being saved.  This step must be fully configured in order to use this feature.`));
     setShowToast(true);
@@ -178,6 +184,7 @@ const ToastContextProvider = (props) => {
           showFormValidationErrorDialog: showFormValidationErrorDialog,
           showMissingRequiredFieldsErrorDialog: showMissingRequiredFieldsErrorDialog,
           showEmailAlreadyExistsErrorDialog: showEmailAlreadyExistsErrorDialog,
+          showDomainAlreadyRegisteredErrorDialog: showDomainAlreadyRegisteredErrorDialog,
           showDeleteFailureResultDialog: showDeleteFailureResultDialog,
           showUpdateFailureResultDialog: showUpdateFailureResultDialog,
           showCreateFailureResultDialog: showCreateFailureResultDialog,

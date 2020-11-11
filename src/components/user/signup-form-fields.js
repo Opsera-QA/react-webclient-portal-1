@@ -69,6 +69,7 @@ const defaultSignupFormFields = {
     isDomain: true,
     isRequired: true,
     maxLength: 10,
+    lowercase: true
   },
     {
     label: "Title",
