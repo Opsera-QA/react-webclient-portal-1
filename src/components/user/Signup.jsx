@@ -41,22 +41,27 @@ function Signup() {
   };
 
   const createAccount = async () => {
-      // console.log("persistData: ", JSON.stringify(registrationDataDto.getPersistData()));
+    // console.log("persistData: ", JSON.stringify(registrationDataDto.getPersistData()));
+    const isDomainAvailable = await userActions.isDomainAvailable(registrationDataDto.getData("domain"));
 
-      const isEmailAvailable = await userActions.isEmailAvailable(registrationDataDto.getData("email"));
+    if (!isDomainAvailable) {
+      toastContext.showDomainAlreadyRegisteredErrorDialog();
+      return;
+    }
 
-      if (!isEmailAvailable) {
-        toastContext.showEmailAlreadyExistsErrorDialog();
-        return;
-      }
+    const isEmailAvailable = await userActions.isEmailAvailable(registrationDataDto.getData("email"));
+
+    if (!isEmailAvailable) {
+      toastContext.showEmailAlreadyExistsErrorDialog();
+      return;
+    }
 
     if (registrationDataDto.isModelValid2()) {
       try {
         await userActions.createOpseraAccount(registrationDataDto);
         //toastContext.showCreateSuccessResultDialog("Opsera Account")
         loadRegistrationResponse();
-      }
-      catch (error) {
+      } catch (error) {
         toastContext.showCreateFailureResultDialog("Opsera Account", error);
       }
     }
@@ -115,7 +120,7 @@ function Signup() {
             </Row>
             <Row>
               <div className="ml-auto m-3 px-3">
-                <RegisterButton createRecord={createAccount} recordDto={registrationDataDto}/>
+                <RegisterButton createAccount={createAccount} recordDto={registrationDataDto}/>
               </div>
             </Row>
           </Card.Body>

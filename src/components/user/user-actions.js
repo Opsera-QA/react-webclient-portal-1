@@ -1,5 +1,6 @@
 import {ApiService, axiosApiService} from "../../api/apiService";
 import toolsActions from "../inventory/tools/tools-actions";
+import baseActions from "../../utils/actionsBase";
 
 // TODO: Rename with whatever name makes sense
 const userActions = {};
@@ -33,9 +34,18 @@ userActions.isEmailAvailable = async (emailAddress) => {
 
 //Check if the domain is already registered in the system
 userActions.isDomainAvailable = async (domain) => {
-  const apiCall = new ApiService("/users/check-domain", {}, null, { domain: domain });
+  console.log("checking if domain is registered to an account: " + domain);
+
+  // TODO: Are there more opsera-specific subdomains?
+  if (domain === "portal" || domain === "test" || domain === "dev" || domain === "freetrial") {
+    return false;
+  }
+
+  const apiCall = new ApiService(`/users/check-domain/${domain}`, {}, null);
+
+  console.log(`Api call domain: /users/check-domain/${domain}`)
   return await apiCall
-    .post()
+    .get()
     .then(function (response) {
       if (response.data) {
         return false;

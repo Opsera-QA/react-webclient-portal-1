@@ -31,6 +31,15 @@ function FreeTrialSignup() {
   };
 
   const createAccount = async () => {
+    const isDomainAvailable = await userActions.isDomainAvailable(registrationDataDto.getData("domain"));
+
+    console.log("isDomainAvailable: " + JSON.stringify(isDomainAvailable))
+
+    if (!isDomainAvailable) {
+      toastContext.showDomainAlreadyRegisteredErrorDialog();
+      return;
+    }
+
     const emailIsAvailable = await userActions.isEmailAvailable(registrationDataDto.getData("email"));
 
     if (!emailIsAvailable) {
@@ -105,7 +114,7 @@ function FreeTrialSignup() {
                   />
                 </div>
                 <div className="px-2">
-                  <RegisterButton createRecord={createAccount} recordDto={registrationDataDto} />
+                  <RegisterButton createAccount={createAccount} recordDto={registrationDataDto} />
                 </div>
               </div>
             </Card.Body>

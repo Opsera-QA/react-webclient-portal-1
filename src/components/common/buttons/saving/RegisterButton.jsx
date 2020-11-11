@@ -1,19 +1,18 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {DataState} from "../../../../core/data_model/model";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSave, faSpinner} from "@fortawesome/free-solid-svg-icons";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import {persistNewRecord} from "./saving-helpers";
 
-function RegisterButton({recordDto, createRecord, disable, lenient}) {
+function RegisterButton({recordDto, createAccount, disable, lenient}) {
   let toastContext = useContext(DialogToastContext);
   const [isSaving, setIsSaving] = useState(false);
 
-  const persistRecord = async () => {
+  const createOpseraAccount = async () => {
     setIsSaving(true);
-    await persistNewRecord(recordDto, toastContext, false, createRecord, lenient);
+    await persistNewRecord(recordDto, toastContext, false, createAccount, lenient);
     setIsSaving(false);
   }
 
@@ -27,7 +26,7 @@ function RegisterButton({recordDto, createRecord, disable, lenient}) {
 
   return (
     <div className="d-flex mx-1 px-1">
-      <Button size="sm" variant="success" id="login-button" className="register-button" disabled={isSaving || disable || !recordDto.isModelValid2()} onClick={() => persistRecord()}>
+      <Button size="sm" variant="success" id="login-button" className="register-button" disabled={isSaving || disable || !recordDto.isModelValid2()} onClick={() => createOpseraAccount()}>
         {getLabel("Save")}
       </Button>
     </div>
@@ -36,7 +35,7 @@ function RegisterButton({recordDto, createRecord, disable, lenient}) {
 
 RegisterButton.propTypes = {
   recordDto: PropTypes.object,
-  createRecord: PropTypes.func,
+  createAccount: PropTypes.func,
   disable: PropTypes.bool,
   showSuccessToasts: PropTypes.bool,
   lenient: PropTypes.bool
