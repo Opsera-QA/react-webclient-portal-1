@@ -7,8 +7,9 @@ import { format } from "date-fns";
 import React, { useContext, useState } from "react";
 import { axiosApiService } from "../../../api/apiService";
 import { AuthContext } from "../../../contexts/AuthContext";
+import TooltipWrapper from "components/common/tooltip/tooltipWrapper";
 
-const WorkflowCatalogItem = ({ item, parentCallback, openFreeTrialWizard }) => {
+const WorkflowCatalogItem = ({ item, parentCallback, openFreeTrialWizard, accessRoleData }) => {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState();
   const [loading, setLoading] = useState(false);
@@ -19,10 +20,9 @@ const WorkflowCatalogItem = ({ item, parentCallback, openFreeTrialWizard }) => {
     parentCallback(param);
   };
 
-  const handleAddClick = param => e => {
-    console.log("Adding: ", param);
+  const handleAddClick = param => async e => {
     e.preventDefault();
-    postData(param._id);
+    await postData(param._id);
   };
 
   async function postData(templateId) {
@@ -38,11 +38,11 @@ const WorkflowCatalogItem = ({ item, parentCallback, openFreeTrialWizard }) => {
 
       if (newPipelineId) {
         // check if its a free trial and then proceed
-      
-        if(!item.tags.some(el=> el.value === "freetrial") ) {
+
+        if (!item.tags.some(el => el.value === "freetrial")) {
           history.push(`/workflow/details/${newPipelineId}/summary`);
         }
-        openFreeTrialWizard(newPipelineId,templateId,"freetrial")
+        openFreeTrialWizard(newPipelineId, templateId, "freetrial");
       }
       setLoading(false);
     } catch (err) {
@@ -61,7 +61,7 @@ const WorkflowCatalogItem = ({ item, parentCallback, openFreeTrialWizard }) => {
               {item.name}
             </div>
             <div className="ml-auto mr-1 text-muted small upper-case-first d-none d-md-block">
-              <FontAwesomeIcon icon={faHexagon}  size="lg"/>
+              <FontAwesomeIcon icon={faHexagon} size="lg"/>
             </div>
           </div>
         </Card.Title>
@@ -73,10 +73,15 @@ const WorkflowCatalogItem = ({ item, parentCallback, openFreeTrialWizard }) => {
           </Row>
           <Row>
             <Col>
-              <Button variant="primary" size="sm" className="mr-2 mt-2" onClick={handleAddClick(item)}>
-                <FontAwesomeIcon icon={faPlus} className="mr-1"/> Add</Button>
+              <TooltipWrapper innerText={"Create a new pipeline from this template"}>
+                <Button variant="success" size="sm" className="mr-2 mt-2" onClick={handleAddClick(item)}>
+                  <FontAwesomeIcon icon={faPlus} className="mr-1"/> Create Pipeline</Button>
+              </TooltipWrapper>
+
+              {accessRoleData.OpseraAdministrator &&
               <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" onClick={handleDetailsClick(item)}>
                 <FontAwesomeIcon icon={faSearch} className="mr-1"/>Details</Button>
+              }
             </Col>
             <Col>
               <div className="text-right">
@@ -100,6 +105,7 @@ WorkflowCatalogItem.propTypes = {
   item: PropTypes.object,
   parentCallback: PropTypes.func,
   openFreeTrialWizard: PropTypes.func,
+  accessRoleData: PropTypes.object,
 };
 
 export default WorkflowCatalogItem;

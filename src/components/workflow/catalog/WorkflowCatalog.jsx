@@ -16,6 +16,7 @@ import FreeTrialPipelineWizard from "../wizards/deploy/freetrialPipelineWizard";
 
 function WorkflowCatalog() {
   const contextType = useContext(AuthContext);
+  const { setAccessRoles, getAccessToken, getUserRecord } = contextType;
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -25,7 +26,7 @@ function WorkflowCatalog() {
   const [modalMessage, setModalMessage] = useState({});
   const [toast, setToast] = useState({});
   const [showToast, setShowToast] = useState(false);
-
+  const [accessRoleData, setAccessRoleData] = useState(null);
   // pipeline id : 5fa0617f79630d55f08bc6dd
 
   const callbackFunction = (item) => {
@@ -43,9 +44,11 @@ function WorkflowCatalog() {
 
   async function fetchData() {
     setLoading(true);
-    const { getAccessToken } = contextType;
-    const accessToken = await getAccessToken();
+    const user = await getUserRecord();
+    const userRoleAccess = await setAccessRoles(user);
+    setAccessRoleData(userRoleAccess);
 
+    const accessToken = await getAccessToken();
     const apiUrl = "/pipelines/workflows";
     try {
       const result = await axiosApiService(accessToken).get(apiUrl);
@@ -73,7 +76,6 @@ function WorkflowCatalog() {
 
   const handleClose = async() => {
     // TODO: Delete the pipeline here : Needs to be tested
-    const { getAccessToken } = contextType;
     setShowFreeTrialModal(false);
     await PipelineActions.delete(pipelineId, getAccessToken);
     setPipelineId("");
@@ -95,7 +97,12 @@ function WorkflowCatalog() {
           <Row>
             {data.map((item, idx) => (
               <Col xl={6} md={12} key={idx} className="p-2">
-                <WorkflowCatalogItem item={item} parentCallback={callbackFunction} openFreeTrialWizard={openFreeTrialWizard}/>
+                <WorkflowCatalogItem
+                  item={item}
+                  parentCallback={callbackFunction}
+                  openFreeTrialWizard={openFreeTrialWizard}
+                  accessRoleData={accessRoleData}
+                />
               </Col>))}
           </Row>
           :
