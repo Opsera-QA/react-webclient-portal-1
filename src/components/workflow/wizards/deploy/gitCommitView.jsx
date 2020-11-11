@@ -45,17 +45,16 @@ const GitCommitView = ({ pipelineId, templateId, autoRun, handleClose, setView }
         setLoading(false);
         return;
       }
-      if(!autoRun) {
-        history.push(`/workflow/details/${pipelineId}/summary`);
-        setSave(false);
-        setLoading(false);
-        return;
-      }
       // start run pipeline and close modal
       await PipelineActions.run(pipelineId, {}, getAccessToken);
       toastContext.showInformationDialog("A request to start this pipeline has been submitted.  It will begin shortly.", 20);
       setSave(false);
       setLoading(false);
+
+      if(!autoRun) {
+        history.push(`/workflow/details/${pipelineId}/summary`);
+        return;
+      }
       handleClose();
     } catch (err) {
       console.log(err);
