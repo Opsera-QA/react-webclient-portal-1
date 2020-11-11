@@ -1,7 +1,14 @@
 import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import { faTimesCircle, faCheckCircle, faSearchPlus, faStopCircle } from "@fortawesome/pro-light-svg-icons";
+import {
+  faTimesCircle,
+  faCheckCircle,
+  faSearchPlus,
+  faStopCircle,
+  faCircle,
+  faPlayCircle, faPauseCircle,
+} from "@fortawesome/pro-light-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
 import ModalActivityLogs from "components/common/modal/modalActivityLogs";
@@ -80,7 +87,7 @@ function PipelineActivityLogTable({ data, isLoading, paginationOptions, selectRu
           case "unknown":
             return (<>
               <div className="d-flex flex-nowrap">
-                <div><FontAwesomeIcon icon={faCheckCircle} className="cell-icon yellow vertical-align-item" fixedWidth/></div>
+                <div><FontAwesomeIcon icon={faCircle} className="cell-icon yellow vertical-align-item" fixedWidth/></div>
                 <div className="ml-1">{props.value}</div>
               </div>
             </>);
@@ -89,6 +96,23 @@ function PipelineActivityLogTable({ data, isLoading, paginationOptions, selectRu
             return (<>
               <div className="d-flex flex-nowrap">
                 <div><FontAwesomeIcon icon={faStopCircle} className="cell-icon red vertical-align-item" fixedWidth/></div>
+                <div className="ml-1">{props.value}</div>
+              </div>
+            </>);
+
+          case "running":
+          case "processing event":
+            return (<>
+              <div className="d-flex flex-nowrap">
+                <div><FontAwesomeIcon icon={faPlayCircle} className="cell-icon green vertical-align-item" fixedWidth/></div>
+                <div className="ml-1">{props.value}</div>
+              </div>
+            </>);
+
+          case "queued":
+            return (<>
+              <div className="d-flex flex-nowrap">
+                <div><FontAwesomeIcon icon={faPauseCircle} className="cell-icon green vertical-align-item" fixedWidth/></div>
                 <div className="ml-1">{props.value}</div>
               </div>
             </>);
