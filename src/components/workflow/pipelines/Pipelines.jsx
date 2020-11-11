@@ -68,12 +68,12 @@ function Pipelines() {
         <>
           <div className="alternate-tabs">
             <ul className="nav nav-tabs">
-              {getTab(handleTabClick, "catalog", faHexagon, "Catalog", "Catalog Templates")}
+              {getTab(handleTabClick, "catalog", faHexagon, "Template Catalog", "Catalog Templates")}
               {getTab(handleTabClick, "all", faDiceD20, "All Pipelines", "All Pipelines")}
               {(process.env.REACT_APP_STACK !== "free-trial") && <>
                 {getTab(handleTabClick, "owner", faUser, "My Pipelines", "My Pipelines")}
                 {getTab(handleTabClick, "sdlc", faBracketsCurly, "Software Development", "Software Development Pipelines")}
-                {getTab(handleTabClick, "ai-ml", faMicrochip, "Machine Learning (AI)", "Machine Learning (AI) Pipelines")}
+                {getTab(handleTabClick, "ai-ml", faMicrochip, "Machine Learning", "Machine Learning (AI) Pipelines")}
                 {getTab(handleTabClick, "sfdc", faSalesforce, "SalesForce", "SalesForce Pipelines")}
               </>}
             </ul>
