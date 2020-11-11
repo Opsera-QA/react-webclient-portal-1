@@ -4,19 +4,19 @@ import { Row, Col } from "react-bootstrap";
 import { AuthContext } from "../../../contexts/AuthContext"; //New AuthContext State
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
-import ErrorDialog from "../../common/status_notifications/error";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalActivityLogs from "../../common/modal/modalActivityLogs";
 import PipelineActions from "../pipeline-actions";
 import "../workflows.css";
 import WorkflowCatalogItem from "./WorkflowCatalogItem";
-import { getLoadingErrorDialog } from "../../common/toasts/toasts";
 import FreeTrialPipelineWizard from "../wizards/deploy/freetrialPipelineWizard";
+import { DialogToastContext } from "../../../contexts/DialogToastContext";
 
 
 function WorkflowCatalog() {
   const contextType = useContext(AuthContext);
   const { setAccessRoles, getAccessToken, getUserRecord } = contextType;
+  const toastContext = useContext(DialogToastContext);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -24,10 +24,7 @@ function WorkflowCatalog() {
   const [templateId, setTemplateId] = useState("");
   const [showFreeTrialModal, setShowFreeTrialModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
-  const [toast, setToast] = useState({});
-  const [showToast, setShowToast] = useState(false);
   const [accessRoleData, setAccessRoleData] = useState(null);
-  // pipeline id : 5fa0617f79630d55f08bc6dd
 
   const callbackFunction = (item) => {
     setModalMessage(item);
@@ -43,6 +40,10 @@ function WorkflowCatalog() {
     setShowModal(false);
   }, []);
 
+  //TODO: need to identify new "isDeployed" field and disable action button for that item...
+
+
+
   async function fetchData() {
     setLoading(true);
     const user = await getUserRecord();
@@ -51,13 +52,12 @@ function WorkflowCatalog() {
 
     const accessToken = await getAccessToken();
     const apiUrl = "/pipelines/workflows";
+
     try {
       const result = await axiosApiService(accessToken).get(apiUrl);
       setData(result.data ? result.data : []);
     } catch (error) {
-      let toast = getLoadingErrorDialog(error.message, setShowToast);
-      setToast(toast);
-      setShowToast(true);
+      toastContext.showErrorDialog(error);
       console.error(error.message);
     } finally {
       setLoading(false);
@@ -93,7 +93,7 @@ function WorkflowCatalog() {
           <div>To get started with Opsera Pipelines, choose a pipeline template below that best matches your needs and click
             Create Pipeline in order to build the workflow for your new pipeline.  </div>
         </div>
-        {showToast && toast}
+
         {data !== undefined && data.length > 0 ?
           <Row>
             {data.map((item, idx) => (

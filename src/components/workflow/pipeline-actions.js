@@ -6,12 +6,10 @@ pipelineActions.getPipelines = async (currentPage, pageSize, sortOption, type, g
   const accessToken = await getAccessToken();
   let apiUrl = `/pipelines?page=${currentPage}&size=${pageSize}&sort=${sortOption.name}&order=${sortOption.order}`;
 
-  console.log("Type: " + JSON.stringify(type))
   if (type != null && type !== "all") {
     apiUrl += `&type=${type}`;
   }
 
-  // console.log("Api url: " + JSON.stringify(apiUrl))
   const response = await axiosApiService(accessToken).get(apiUrl)
     .then((result) =>  {return result;})
     // TODO: Always throw error for easier catching on page
