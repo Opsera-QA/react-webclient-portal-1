@@ -1,24 +1,22 @@
 import PropTypes from "prop-types";
-import {useHistory} from "react-router-dom";
-import {Button, Card, Col, OverlayTrigger, Row, Tooltip} from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import { Button, Card, Col, Row } from "react-bootstrap";
 import PipelineHelpers from "../pipelineHelpers";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {
-  faClock, faFlag, faPause,
-  faSearch,
-  faSpinner, faStop,
-  faTimesCircle
-} from "@fortawesome/free-solid-svg-icons";
-import {format} from "date-fns";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { format } from "date-fns";
 import React from "react";
 import PipelineActionBar from "./PipelineActionBar";
 import PipelineStatus from "./PipelineStatus";
 import TooltipWrapper from "../../common/tooltip/tooltipWrapper";
-import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
-import {faBracketsCurly, faMicrochip} from "@fortawesome/pro-regular-svg-icons";
-import {faInfinity} from "@fortawesome/pro-light-svg-icons";
+import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
+import {
+  faDiceD20, faBracketsCurly, faMicrochip, faClock, faFlag, faPause,
+  faSearch,
+  faSpinner, faStop,
+  faTimesCircle,
+} from "@fortawesome/pro-light-svg-icons";
 
-const PipelineItem = ({item}) => {
+const PipelineItem = ({ item }) => {
   let history = useHistory();
 
   const handleDetailsClick = param => e => {
@@ -36,51 +34,51 @@ const PipelineItem = ({item}) => {
         </TooltipWrapper>
       );
     }
-  }
+  };
 
   const getPipelineStatusField = () => {
     let pipelineStatus = PipelineHelpers.getPipelineStatus(item);
 
     switch (pipelineStatus) {
-      case "failed":
-        return (
-          <div className="red">
-            <PipelineStatus className="red"
-                            innerText={"An error has occurred in this pipeline.  See activity logs for details."}
-                            icon={faTimesCircle} statusText={"Failed"}/>
-          </div>
-        );
-      case "running":
-        return (
-          <div className="green">
-            <PipelineStatus innerText={"A pipeline operation is currently in progress."} icon={faSpinner}
-                            statusText={"Running"}/>
-          </div>
-        );
-      case "paused":
-        return (
-          <div className="yellow">
-            <PipelineStatus innerText={"The pipeline operation is currently paused."} icon={faPause}
-                            statusText={"Paused"}/>
-          </div>
-        );
-      default:
-        return (
-          <PipelineStatus innerText={"This pipeline is not currently running."} icon={faStop}
-                          statusText={"Stopped"}/>
-        );
+    case "failed":
+      return (
+        <div className="red">
+          <PipelineStatus className="red"
+                          innerText={"An error has occurred in this pipeline.  See activity logs for details."}
+                          icon={faTimesCircle} statusText={"Failed"}/>
+        </div>
+      );
+    case "running":
+      return (
+        <div className="green">
+          <PipelineStatus innerText={"A pipeline operation is currently in progress."} icon={faSpinner}
+                          statusText={"Running"}/>
+        </div>
+      );
+    case "paused":
+      return (
+        <div className="yellow">
+          <PipelineStatus innerText={"The pipeline operation is currently paused."} icon={faPause}
+                          statusText={"Paused"}/>
+        </div>
+      );
+    default:
+      return (
+        <PipelineStatus innerText={"This pipeline is not currently running."} icon={faStop}
+                        statusText={"Stopped"}/>
+      );
     }
-  }
+  };
 
   const getFormattedDescription = () => {
     let description = item.description;
 
     if (description && description.length > 275) {
-      return description.slice(0,275).split(' ').slice(0, -1).join(' ') + "...";
+      return description.slice(0, 275).split(" ").slice(0, -1).join(" ") + "...";
     }
 
     return description;
-  }
+  };
 
   // TODO: Deal with multiple categories when we get there
   const getFirstCategory = () => {
@@ -89,33 +87,33 @@ const PipelineItem = ({item}) => {
     case "sfdc":
       return (
         <TooltipWrapper innerText={`SalesForce`}>
-          <FontAwesomeIcon icon={faSalesforce} className="ml-2 pipeline-blue-text"/>
+          <FontAwesomeIcon icon={faSalesforce} className="ml-1 pipeline-blue-text" size="lg"/>
         </TooltipWrapper>
       );
     case "ai-ml":
       return (
         <TooltipWrapper innerText={"Machine Learning (AI)"}>
-          <FontAwesomeIcon icon={faMicrochip} className="ml-2 pipeline-blue-text"/>
+          <FontAwesomeIcon icon={faMicrochip} className="ml-1 pipeline-blue-text" size="lg"/>
         </TooltipWrapper>
       );
     case "sdlc":
       return (
         <TooltipWrapper innerText={"Software Development"}>
-          <FontAwesomeIcon icon={faBracketsCurly} className="ml-2 pipeline-blue-text"/>
+          <FontAwesomeIcon icon={faBracketsCurly} className="ml-1 pipeline-blue-text" size="lg"/>
         </TooltipWrapper>
       );
     default:
       return (
         <TooltipWrapper innerText={"No Pipeline Type Assigned"}>
-          <FontAwesomeIcon icon={faInfinity} className="ml-2 pipeline-blue-text"/>
+          <FontAwesomeIcon icon={faDiceD20} className="ml-1 pipeline-blue-text" size="lg"/>
         </TooltipWrapper>
       );
     }
-  }
+  };
 
   return (
     <>
-      <Card style={{height: "100%"}}>
+      <Card style={{ height: "100%" }}>
         <Card.Title className="pb-0">
           <div className="d-flex pipeline-card-title p-2">
             <div>
@@ -141,14 +139,16 @@ const PipelineItem = ({item}) => {
           </Row>
           <Row>
             <Col className="mt-auto">
-              <Button variant="primary" size="sm" className="pl-2 mb-1 btn-block w-50" onClick={handleDetailsClick(item._id)}>
+              <Button variant="primary" size="sm" className="pl-2 mb-1 btn-block w-50"
+                      onClick={handleDetailsClick(item._id)}>
                 <FontAwesomeIcon icon={faSearch} className="mr-1"/>View</Button>
             </Col>
             <Col>
               <div className="text-right">
                 {item.workflow.schedule !== undefined && item.workflow.schedule.start_date !== null &&
                 <div className="small">
-                  <span className="text-muted mr-2 pb-1"><FontAwesomeIcon icon={faClock} size="sm" fixedWidth className="mr-1"/> Scheduled: </span>
+                  <span className="text-muted mr-2 pb-1"><FontAwesomeIcon icon={faClock} size="sm" fixedWidth
+                                                                          className="mr-1"/> Scheduled: </span>
                   {format(new Date(item.workflow.schedule.start_date), "yyyy-MM-dd', 'hh:mm a")}</div>
                 }
                 <div><small><span className="text-muted mr-2 pb-1">Updated:</span><span
@@ -171,7 +171,7 @@ const PipelineItem = ({item}) => {
 };
 
 PipelineItem.propTypes = {
-  item: PropTypes.object
+  item: PropTypes.object,
 };
 
 export default PipelineItem;

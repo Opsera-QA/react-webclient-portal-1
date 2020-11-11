@@ -2,8 +2,7 @@ import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import { Button, Card, Col, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faSearch } from "@fortawesome/free-solid-svg-icons";
-import { faHexagon } from "@fortawesome/pro-regular-svg-icons";
+import { faPlus, faSearch, faHexagon } from "@fortawesome/pro-light-svg-icons";
 import { format } from "date-fns";
 import React, { useContext, useState } from "react";
 import { axiosApiService } from "../../../api/apiService";
@@ -62,7 +61,7 @@ const WorkflowCatalogItem = ({ item, parentCallback, openFreeTrialWizard }) => {
               {item.name}
             </div>
             <div className="ml-auto mr-1 text-muted small upper-case-first d-none d-md-block">
-              <FontAwesomeIcon icon={faHexagon}/>
+              <FontAwesomeIcon icon={faHexagon}  size="lg"/>
             </div>
           </div>
         </Card.Title>

@@ -69,7 +69,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
   if (data && data.count === 0) {
     return (
       <div className="px-2 max-content-width" style={{ minWidth: "505px" }}>
-        <div className="my-5"><InfoDialog message="No pipelines found"/></div>
+        <div className="my-5"><InfoDialog message="No pipelines are available for this view at this time."/></div>
       </div>
     );
   }

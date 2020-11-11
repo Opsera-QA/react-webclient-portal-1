@@ -16,6 +16,8 @@ function FreeTrialLanding() {
   useEffect(() => {
     if (id && id.length > 0) {
       setTabSelection(id)
+    } else {
+      setTabSelection("welcome")
     }
   }, [id]);
 
@@ -27,7 +29,7 @@ function FreeTrialLanding() {
   return (
     <>
       <div className="max-content-width">
-        <Row>
+        {/*<Row>
           <Col>
             <div className="alternate-tabs">
               <ul className="nav nav-tabs">
@@ -46,7 +48,7 @@ function FreeTrialLanding() {
               </ul>
             </div>
           </Col>
-        </Row>
+        </Row>*/}
         <Row>
           <Col>
             <LandingView activeTab={activeTab} handleTabClick={handleTabClick}/>

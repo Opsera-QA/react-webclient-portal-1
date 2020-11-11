@@ -12,7 +12,7 @@ import PipelineSummaryPanel from "./PipelineSummaryPanel";
 import PipelineHelpers from "../../pipelineHelpers";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDraftingCompass, faInfinity, faMicrochip, faArrowLeft, faBracketsCurly } from "@fortawesome/pro-light-svg-icons";
+import { faDraftingCompass, faDiceD20, faMicrochip, faArrowLeft, faBracketsCurly } from "@fortawesome/pro-light-svg-icons";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 
 
@@ -229,7 +229,7 @@ function PipelineDetailView() {
     case "ai-ml":
       return faMicrochip;
     default:
-      return faInfinity;
+      return faDiceD20;
     }
   };
 
