@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { OverlayTrigger, Popover, Form } from "react-bootstrap";
+import { OverlayTrigger, Popover, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
@@ -11,10 +11,11 @@ import pipelineHelpers from "components/workflow/pipelineHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
 import DtoTextInput from "components/common/input/dto_input/dto-text-input";
 import { DialogToastContext, showServiceUnavailableDialog } from "contexts/DialogToastContext";
-import SaveButton from "components/common/buttons/SaveButton";
+import SaveButton2 from "../../../../../../../common/buttons/saving/SaveButton2";
 import GitActionsHelper from "../../helpers/git-actions-helper.js";
 import JSONInput from "react-json-editor-ajrm";
 import locale    from "react-json-editor-ajrm/locale/en";
+import CloseButton from "../../../../../../../common/buttons/CloseButton";
 
 
 const SCM_TOOL_LIST = [
@@ -32,7 +33,7 @@ const SCM_TOOL_LIST = [
   // },
 ];
 
-function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList }) {
+function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, closeEditorPanel }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -211,14 +212,14 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
       let newDataObject = terraformStepConfigurationDto;
       let repoName = value.name
       if (terraformStepConfigurationDto.getData("type") === "gitlab") {
-        let re = /(?<=com:)([^\/]+)/
-        let matches = re.exec(value.sshUrl)
+        let re = /\.com:([^\/]+)/;
+        let matches = re.exec(value.sshUrl);
         if (matches.length === 0) {
           let errorMessage = "Error fetching gitlab workspace";
           toastContext.showErrorDialog(errorMessage);
           return;
         }
-        repoName = matches[0] + "/" + value.name;
+        repoName = matches[1] + "/" + value.name;
       }
       newDataObject.setData("gitRepository", repoName);
       newDataObject.setData("gitRepositoryID", value.value);
@@ -254,121 +255,134 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
 
   return (
     <>
-    { terraformStepConfigurationDto && 
-    <>
-      <DtoSelectInput
-        setDataObject={setTerraformStepConfigurationDataDto}
-        setDataFunction={handleDTOChange}
-        textField={"name"}
-        valueField={"value"}
-        dataObject={terraformStepConfigurationDto}
-        filter={"contains"}
-        selectOptions={SCM_TOOL_LIST ? SCM_TOOL_LIST : []}
-        fieldName={"type"}
-      />
+      {terraformStepConfigurationDto && (
+        <>
+          <DtoSelectInput
+            setDataObject={setTerraformStepConfigurationDataDto}
+            setDataFunction={handleDTOChange}
+            textField={"name"}
+            valueField={"value"}
+            dataObject={terraformStepConfigurationDto}
+            filter={"contains"}
+            selectOptions={SCM_TOOL_LIST ? SCM_TOOL_LIST : []}
+            fieldName={"type"}
+          />
 
-      <OverlayTrigger
-        trigger="click"
-        rootClose
-        placement="left"
-        overlay={pipelineHelpers.getRegistryPopover(
-          SCMList[SCMList.findIndex((x) => x.id === terraformStepConfigurationDto.getData("gitToolId"))]
-        )}
-      >
-        <FontAwesomeIcon
-          icon={faEllipsisH}
-          className="fa-pull-right pointer pr-1"
-          onClick={() => document.body.click()}
-        />
-      </OverlayTrigger>
-      <DtoSelectInput
-        setDataFunction={handleDTOChange}
-        setDataObject={setTerraformStepConfigurationDataDto}
-        textField={"name"}
-        valueField={"id"}
-        dataObject={terraformStepConfigurationDto}
-        filter={"contains"}
-        selectOptions={SCMList ? SCMList : []}
-        fieldName={"gitToolId"}
-        busy={isGitSearching}
-        disabled={terraformStepConfigurationDto.getData("type").length === 0 || isGitSearching}
-      />
+          <OverlayTrigger
+            trigger="click"
+            rootClose
+            placement="left"
+            overlay={pipelineHelpers.getRegistryPopover(
+              SCMList[SCMList.findIndex((x) => x.id === terraformStepConfigurationDto.getData("gitToolId"))]
+            )}
+          >
+            <FontAwesomeIcon
+              icon={faEllipsisH}
+              className="fa-pull-right pointer pr-1"
+              onClick={() => document.body.click()}
+            />
+          </OverlayTrigger>
+          <DtoSelectInput
+            setDataFunction={handleDTOChange}
+            setDataObject={setTerraformStepConfigurationDataDto}
+            textField={"name"}
+            valueField={"id"}
+            dataObject={terraformStepConfigurationDto}
+            filter={"contains"}
+            selectOptions={SCMList ? SCMList : []}
+            fieldName={"gitToolId"}
+            busy={isGitSearching}
+            disabled={terraformStepConfigurationDto.getData("type").length === 0 || isGitSearching}
+          />
 
-      <DtoSelectInput
-        setDataFunction={handleDTOChange}
-        setDataObject={setTerraformStepConfigurationDataDto}
-        textField={"name"}
-        valueField={"name"}
-        dataObject={terraformStepConfigurationDto}
-        filter={"contains"}
-        selectOptions={repoList ? repoList : []}
-        fieldName={"gitRepository"}
-        busy={isRepoSearching}
-        disabled={terraformStepConfigurationDto.getData("gitToolId").length === 0 || isRepoSearching}
-      />
+          <DtoSelectInput
+            setDataFunction={handleDTOChange}
+            setDataObject={setTerraformStepConfigurationDataDto}
+            textField={"name"}
+            valueField={"name"}
+            dataObject={terraformStepConfigurationDto}
+            filter={"contains"}
+            selectOptions={repoList ? repoList : []}
+            fieldName={"gitRepository"}
+            busy={isRepoSearching}
+            disabled={terraformStepConfigurationDto.getData("gitToolId").length === 0 || isRepoSearching}
+          />
 
-      <DtoSelectInput
-        setDataObject={setTerraformStepConfigurationDataDto}
-        textField={"name"}
-        valueField={"value"}
-        dataObject={terraformStepConfigurationDto}
-        filter={"contains"}
-        selectOptions={branchList ? branchList : []}
-        fieldName={"defaultBranch"}
-        busy={isBranchSearching}
-        disabled={terraformStepConfigurationDto.getData("gitRepository").length === 0 || isBranchSearching}
-      />
-      <DtoTextInput
-        setDataObject={setTerraformStepConfigurationDataDto}
-        dataObject={terraformStepConfigurationDto}
-        fieldName={"gitFilePath"}
-        disabled={terraformStepConfigurationDto && terraformStepConfigurationDto.getData("defaultBranch").length === 0}
-      />
-            <OverlayTrigger
-        trigger="click"
-        rootClose
-        placement="left"
-        overlay={
-          <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
-            <Popover.Title as="h3">Runtime Arguments</Popover.Title>
+          <DtoSelectInput
+            setDataObject={setTerraformStepConfigurationDataDto}
+            textField={"name"}
+            valueField={"value"}
+            dataObject={terraformStepConfigurationDto}
+            filter={"contains"}
+            selectOptions={branchList ? branchList : []}
+            fieldName={"defaultBranch"}
+            busy={isBranchSearching}
+            disabled={terraformStepConfigurationDto.getData("gitRepository").length === 0 || isBranchSearching}
+          />
+          <DtoTextInput
+            setDataObject={setTerraformStepConfigurationDataDto}
+            dataObject={terraformStepConfigurationDto}
+            fieldName={"gitFilePath"}
+            disabled={
+              terraformStepConfigurationDto && terraformStepConfigurationDto.getData("defaultBranch").length === 0
+            }
+          />
+          <OverlayTrigger
+            trigger="click"
+            rootClose
+            placement="left"
+            overlay={
+              <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
+                <Popover.Title as="h3">Runtime Arguments</Popover.Title>
 
-            <Popover.Content>
-              <div className="text-muted mb-2">
-              Enter Runtime arguments as a key value pair JSON. You can add any number of runtime arguments to the JSON Object. 
-              Sample: {" { Key1: Value1, Key2: value2 }" }
-              </div>
-            </Popover.Content>
-          </Popover>
-        }
-      >
-        <FontAwesomeIcon
-          icon={faEllipsisH}
-          className="fa-pull-right pointer pr-1"
-          onClick={() => document.body.click()}
-        />
-      </OverlayTrigger>
-      <div className="form-group m-2" >
-      <label >Runtime Arguments (Optional)</label>
-      <div style={{ border: "1px solid #ced4da", borderRadius: ".25rem" }}>
-        <JSONInput
-          placeholder={Object.keys(terraformStepConfigurationDto.getData("keyValueMap")).length > 0 ? terraformStepConfigurationDto.getData("keyValueMap") : undefined}
-          value={terraformStepConfigurationDto.getData("keyValueMap")}
-          onChange={e => handleJsonInputUpdate(e) }
-          theme="light_mitsuketa_tribute"
-          locale={locale}
-          height="175px"
-        />
-      </div>
-      </div>
-      <small className="form-text text-muted form-group m-2 text-left">Enter runtime arguments as a JSON Object</small>
-      <SaveButton
-        recordDto={terraformStepConfigurationDto}
-        setRecordDto={setTerraformStepConfigurationDataDto}
-        createRecord={callbackFunction}
-        updateRecord={callbackFunction}
-      />
-      </>
-      }
+                <Popover.Content>
+                  <div className="text-muted mb-2">
+                    Enter Runtime arguments as a key value pair JSON. You can add any number of runtime arguments to the
+                    JSON Object. Sample: {" { Key1: Value1, Key2: value2 }"}
+                  </div>
+                </Popover.Content>
+              </Popover>
+            }
+          >
+            <FontAwesomeIcon
+              icon={faEllipsisH}
+              className="fa-pull-right pointer pr-1"
+              onClick={() => document.body.click()}
+            />
+          </OverlayTrigger>
+          <div className="form-group m-2">
+            <label>Runtime Arguments (Optional)</label>
+            <div style={{ border: "1px solid #ced4da", borderRadius: ".25rem" }}>
+              <JSONInput
+                placeholder={
+                  Object.keys(terraformStepConfigurationDto.getData("keyValueMap")).length > 0
+                    ? terraformStepConfigurationDto.getData("keyValueMap")
+                    : undefined
+                }
+                value={terraformStepConfigurationDto.getData("keyValueMap")}
+                onChange={(e) => handleJsonInputUpdate(e)}
+                theme="light_mitsuketa_tribute"
+                locale={locale}
+                height="175px"
+              />
+            </div>
+          </div>
+          <small className="form-text text-muted form-group m-2 text-left">
+            Enter runtime arguments as a JSON Object
+          </small>
+
+          <Row className="mx-1 py-2">
+            <SaveButton2
+              lenient={true}
+              recordDto={terraformStepConfigurationDto}
+              setRecordDto={setTerraformStepConfigurationDataDto}
+              createRecord={callbackFunction}
+              updateRecord={callbackFunction}
+            />
+            <CloseButton isLoading={isLoading} closeEditorCallback={closeEditorPanel} />
+          </Row>
+        </>
+      )}
       <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
     </>
   );
@@ -381,6 +395,7 @@ TerraformStepConfiguration.propTypes = {
   parentCallback: PropTypes.func,
   callbackSaveToVault: PropTypes.func,
   getToolsList: PropTypes.func,
+  closeEditorPanel: PropTypes.func
 };
 
 export default TerraformStepConfiguration;

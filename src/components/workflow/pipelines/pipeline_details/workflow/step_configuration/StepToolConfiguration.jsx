@@ -422,6 +422,7 @@ function StepToolConfiguration({
             getToolsList={getToolsList}
             setToast={setToast}
             setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
           />
         );
       case "anchore-scan":
@@ -507,6 +508,7 @@ function StepToolConfiguration({
             getToolsList={getToolsList}
             setToast={setToast}
             setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
           />
         );
       case "elastic-beanstalk":
