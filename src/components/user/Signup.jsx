@@ -8,9 +8,10 @@ import Model from "../../core/data_model/model";
 import DtoTextInput from "../common/input/dto_input/dto-text-input";
 import DtoSelectInput from "../common/input/dto_input/dto-select-input";
 import LoadingDialog from "../common/status_notifications/loading";
-import SaveButton from "../common/buttons/SaveButton";
 import {DialogToastContext} from "../../contexts/DialogToastContext";
 import userActions from "./user-actions";
+import RegisterButton from "../common/buttons/saving/RegisterButton";
+import PasswordInput from "../common/input/dto_input/PasswordInput";
 
 function Signup() {
   const history = useHistory();
@@ -82,10 +83,10 @@ function Signup() {
                 <DtoTextInput fieldName={"email"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
               </Col>
               <Col md={6}>
-                <DtoTextInput type="password" fieldName={"password"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+                <PasswordInput fieldName={"password"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
               </Col>
               <Col md={6}>
-                <DtoTextInput type="password" fieldName={"confirmPassword"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+                <PasswordInput fieldName={"confirmPassword"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
               </Col>
               <Col md={6}>
                 <DtoTextInput fieldName={"organizationName"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
@@ -114,7 +115,7 @@ function Signup() {
             </Row>
             <Row>
               <div className="ml-auto m-3 px-3">
-                <SaveButton createRecord={createAccount} loginButton={true} type={"Opsera Account"} showToasts={false} updateRecord={createAccount} modal={false} recordDto={registrationDataDto} altButtonText={"Register Account"}/>
+                <RegisterButton createRecord={createAccount} recordDto={registrationDataDto}/>
               </div>
             </Row>
           </Card.Body>

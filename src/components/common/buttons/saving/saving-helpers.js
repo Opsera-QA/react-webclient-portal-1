@@ -27,7 +27,7 @@ export async function persistNewRecordAndAddAnother(recordDto, toastContext, sho
   }
 }
 
-async function persistNewRecord(recordDto, toastContext, showSuccessToasts, createRecord, lenient) {
+export async function persistNewRecord(recordDto, toastContext, showSuccessToasts, createRecord, lenient) {
   try {
     let isModelValid = recordDto.isModelValid2();
     if (!isModelValid && !lenient) {
