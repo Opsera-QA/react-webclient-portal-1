@@ -4,15 +4,36 @@ import { Button, Card, Col, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faSearch, faHexagon, faSpinner } from "@fortawesome/pro-light-svg-icons";
 import { format } from "date-fns";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { axiosApiService } from "../../../api/apiService";
 import { AuthContext } from "../../../contexts/AuthContext";
 import TooltipWrapper from "components/common/tooltip/tooltipWrapper";
 
-const WorkflowCatalogItem = ({ item, parentCallback, openFreeTrialWizard, accessRoleData }) => {
+const WorkflowCatalogItem = ({ item, parentCallback, openFreeTrialWizard, accessRoleData, activeTemplates }) => {
   const contextType = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
+  const [disabled, setDisabled] = useState(false);
   let history = useHistory();
+
+
+  useEffect(() => {
+    setDisabled(false)
+
+    if (item.readOnly) {
+      setDisabled(true);
+      return;
+    }
+
+    if (item.singleUse === true) {
+      if (activeTemplates.includes(item._id.toString())) {
+        setDisabled(true);
+        return;
+      }
+    }
+
+
+  }, [JSON.stringify(item)]);
+
 
   const handleDetailsClick = param => e => {
     e.preventDefault();
@@ -69,12 +90,21 @@ const WorkflowCatalogItem = ({ item, parentCallback, openFreeTrialWizard, access
           </Row>
           <Row>
 
-            {item.readOnly && <Col><div className="info-text">Not available for use</div></Col>}
+            {disabled &&
+            <Col>
+              { item.readOnly &&
+              <div className="info-text">Not available for use at this time.</div>
+              }
+              { item.singleUse &&
+              <div className="info-text">Already in use as a pipeline.</div>
+              }
+            </Col>}
 
-            {!item.readOnly &&
+            {!disabled &&
             <Col>
               <TooltipWrapper innerText={"Create a new pipeline from this template"}>
-                <Button variant="success" size="sm" className="mr-2 mt-2" onClick={handleAddClick(item)}>
+                <Button variant="success" size="sm" className="mr-2 mt-2"
+                        onClick={handleAddClick(item)}>
                   {loading ?
                     <><FontAwesomeIcon icon={faSpinner} spin fixedWidth/> Working</> :
                     <><FontAwesomeIcon icon={faPlus} fixedWidth/> Create Pipeline</>
@@ -114,6 +144,7 @@ WorkflowCatalogItem.propTypes = {
   parentCallback: PropTypes.func,
   openFreeTrialWizard: PropTypes.func,
   accessRoleData: PropTypes.object,
+  activeTemplates: PropTypes.array,
 };
 
 export default WorkflowCatalogItem;

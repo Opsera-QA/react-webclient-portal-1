@@ -131,8 +131,8 @@ const PipelineItem = ({ item }) => {
             <Col className="pb-1">
               <div className="text-muted">{getFormattedDescription()}</div>
             </Col>
-            <Col className="">
-              <div className="text-right">
+            <Col xs={2} className="">
+              <div className="text-right small">
                 {getPipelineStatusField()}
               </div>
             </Col>

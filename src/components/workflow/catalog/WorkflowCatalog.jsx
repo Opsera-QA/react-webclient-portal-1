@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Row, Col } from "react-bootstrap";
 import { AuthContext } from "../../../contexts/AuthContext"; //New AuthContext State
-import { axiosApiService } from "../../../api/apiService";
+import { axiosApiServiceMultiGet } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalActivityLogs from "../../common/modal/modalActivityLogs";
@@ -18,6 +18,7 @@ function WorkflowCatalog() {
   const { setAccessRoles, getAccessToken, getUserRecord } = contextType;
   const toastContext = useContext(DialogToastContext);
   const [data, setData] = useState([]);
+  const [inUseIds, setInUseIds] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [pipelineId, setPipelineId] = useState("");
@@ -32,16 +33,15 @@ function WorkflowCatalog() {
   };
 
   useEffect(() => {
-    fetchData().catch(error => {throw error;});
+    fetchData().catch(error => {
+      throw error;
+    });
 
     setShowFreeTrialModal(false); // for testing its true - edit this to false while pushing
     setPipelineId(""); // for testing its set a value - set this to empty while pushing
     setTemplateId("");
     setShowModal(false);
   }, []);
-
-  //TODO: need to identify new "isDeployed" field and disable action button for that item...
-
 
 
   async function fetchData() {
@@ -51,11 +51,17 @@ function WorkflowCatalog() {
     setAccessRoleData(userRoleAccess);
 
     const accessToken = await getAccessToken();
-    const apiUrl = "/pipelines/workflows";
+    const apiUrls = ["/pipelines/workflows", "/pipelines/workflows/inuse-templates"];
 
     try {
-      const result = await axiosApiService(accessToken).get(apiUrl);
-      setData(result.data ? result.data : []);
+      const result = await axiosApiServiceMultiGet(accessToken, apiUrls);
+
+      console.log(result[1].data)
+
+      setData(result[0].data ? result[0].data : []);
+
+      setInUseIds(result[1].data ? result[1].data : []);
+
     } catch (error) {
       toastContext.showErrorDialog(error);
       console.error(error.message);
@@ -65,7 +71,7 @@ function WorkflowCatalog() {
   }
 
   const openFreeTrialWizard = (pipelineId, templateId, templateType) => {
-    if(!pipelineId){
+    if (!pipelineId) {
       setTemplateId("");
       setShowFreeTrialModal(false);
       return;
@@ -73,25 +79,26 @@ function WorkflowCatalog() {
     setPipelineId(pipelineId);
     setTemplateId(templateId);
     setShowFreeTrialModal(true);
-  }
+  };
 
-  const handleClose = async() => {
+  const handleClose = async () => {
     setShowFreeTrialModal(false);
     await PipelineActions.delete(pipelineId, getAccessToken);
     setPipelineId("");
     setTemplateId("");
-  }
+  };
 
   if (loading) {
-    return (<LoadingDialog size="sm"/>);
+    return (<LoadingDialog size="md" message="Loading pipeline template catalog"/>);
   }
 
   return (
     <>
       <div className="px-2 max-content-width" style={{ minWidth: "505px" }}>
         <div className="my-2 p-1">
-          <div>To get started with Opsera Pipelines, choose a pipeline template below that best matches your needs and click
-            Create Pipeline in order to build the workflow for your new pipeline.  </div>
+          <div>To get started with Opsera Pipelines, choose a pipeline template below that best matches your needs and
+            click the &quot;Create Pipeline&quot; button in order to build the workflow for your new pipeline.
+          </div>
         </div>
 
         {data !== undefined && data.length > 0 ?
@@ -103,6 +110,7 @@ function WorkflowCatalog() {
                   parentCallback={callbackFunction}
                   openFreeTrialWizard={openFreeTrialWizard}
                   accessRoleData={accessRoleData}
+                  activeTemplates={inUseIds}
                 />
               </Col>))}
           </Row>
@@ -112,17 +120,17 @@ function WorkflowCatalog() {
 
       <ModalActivityLogs header="Template Details" size="lg" jsonData={modalMessage} show={showModal}
                          setParentVisibility={setShowModal}/>
-      
+
       {showFreeTrialModal &&
-        <FreeTrialPipelineWizard  
-          pipelineId={pipelineId}
-          templateId={templateId}
-          pipelineOrientation={""}
-          autoRun={false}
-          handleClose={handleClose} 
-        />
+      <FreeTrialPipelineWizard
+        pipelineId={pipelineId}
+        templateId={templateId}
+        pipelineOrientation={""}
+        autoRun={false}
+        handleClose={handleClose}
+      />
       }
-      
+
     </>
   );
 }
