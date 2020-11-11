@@ -50,7 +50,7 @@ const WorkflowCatalogItem = ({ item, parentCallback, openFreeTrialWizard, access
 
   return (
     <>
-      <Card style={{ height: "100%" }}>
+      <Card style={{ height: "100%", opacity: item.readOnly ? ".5" : "1" }}>
         <Card.Title className="pb-0">
           <div className="d-flex catalog-card-title p-2">
             <div>
@@ -68,6 +68,10 @@ const WorkflowCatalogItem = ({ item, parentCallback, openFreeTrialWizard, access
             </Col>
           </Row>
           <Row>
+
+            {item.readOnly && <Col><div className="info-text">Not available for use</div></Col>}
+
+            {!item.readOnly &&
             <Col>
               <TooltipWrapper innerText={"Create a new pipeline from this template"}>
                 <Button variant="success" size="sm" className="mr-2 mt-2" onClick={handleAddClick(item)}>
@@ -84,6 +88,9 @@ const WorkflowCatalogItem = ({ item, parentCallback, openFreeTrialWizard, access
                 <FontAwesomeIcon icon={faSearch} className="mr-1"/>Details</Button>
               }
             </Col>
+            }
+
+
             <Col>
               <div className="text-right">
                 <div><small><span className="text-muted mr-2 pb-1">Updated:</span><span
