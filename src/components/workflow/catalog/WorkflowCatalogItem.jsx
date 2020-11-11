@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import { Button, Card, Col, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faSearch, faHexagon } from "@fortawesome/pro-light-svg-icons";
+import { faPlus, faSearch, faHexagon, faSpinner } from "@fortawesome/pro-light-svg-icons";
 import { format } from "date-fns";
 import React, { useContext, useState } from "react";
 import { axiosApiService } from "../../../api/apiService";
@@ -11,7 +11,6 @@ import TooltipWrapper from "components/common/tooltip/tooltipWrapper";
 
 const WorkflowCatalogItem = ({ item, parentCallback, openFreeTrialWizard, accessRoleData }) => {
   const contextType = useContext(AuthContext);
-  const [error, setErrors] = useState();
   const [loading, setLoading] = useState(false);
   let history = useHistory();
 
@@ -33,22 +32,19 @@ const WorkflowCatalogItem = ({ item, parentCallback, openFreeTrialWizard, access
     const params = {};
     try {
       const result = await axiosApiService(accessToken).post(apiUrl, params);
-
       let newPipelineId = result.data !== undefined ? result.data._id : false;
-
       if (newPipelineId) {
         // check if its a free trial and then proceed
-
         if (!item.tags.some(el => el.value === "freetrial")) {
           history.push(`/workflow/details/${newPipelineId}/summary`);
         }
         openFreeTrialWizard(newPipelineId, templateId, "freetrial");
       }
-      setLoading(false);
     } catch (err) {
-      console.log(err.message);
+      console.error(err);
       setLoading(false);
-      setErrors(err.message);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -75,7 +71,12 @@ const WorkflowCatalogItem = ({ item, parentCallback, openFreeTrialWizard, access
             <Col>
               <TooltipWrapper innerText={"Create a new pipeline from this template"}>
                 <Button variant="success" size="sm" className="mr-2 mt-2" onClick={handleAddClick(item)}>
-                  <FontAwesomeIcon icon={faPlus} className="mr-1"/> Create Pipeline</Button>
+                  {loading ?
+                    <><FontAwesomeIcon icon={faSpinner} spin fixedWidth/> Working</> :
+                    <><FontAwesomeIcon icon={faPlus} fixedWidth/> Create Pipeline</>
+                  }
+                </Button>
+
               </TooltipWrapper>
 
               {accessRoleData.OpseraAdministrator &&

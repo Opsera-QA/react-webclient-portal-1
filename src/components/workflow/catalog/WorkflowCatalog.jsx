@@ -35,7 +35,8 @@ function WorkflowCatalog() {
   };
 
   useEffect(() => {
-    fetchData();
+    fetchData().catch(error => {throw error;});
+
     setShowFreeTrialModal(false); // for testing its true - edit this to false while pushing
     setPipelineId(""); // for testing its set a value - set this to empty while pushing
     setTemplateId("");
@@ -75,7 +76,6 @@ function WorkflowCatalog() {
   }
 
   const handleClose = async() => {
-    // TODO: Delete the pipeline here : Needs to be tested
     setShowFreeTrialModal(false);
     await PipelineActions.delete(pipelineId, getAccessToken);
     setPipelineId("");
@@ -90,7 +90,8 @@ function WorkflowCatalog() {
     <>
       <div className="px-2 max-content-width" style={{ minWidth: "505px" }}>
         <div className="my-2 p-1">
-          <div>Choose a pipeline template below to add to your pipelines library.</div>
+          <div>To get started with Opsera Pipelines, choose a pipeline template below that best matches your needs and click
+            Create Pipeline in order to build the workflow for your new pipeline.  </div>
         </div>
         {showToast && toast}
         {data !== undefined && data.length > 0 ?
