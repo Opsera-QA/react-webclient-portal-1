@@ -11,7 +11,7 @@ import DtoTagField from "../../../common/form_fields/dto_form_fields/dto-tag-fie
 import LoadingDialog from "../../../common/status_notifications/loading";
 import SummaryPanelContainer from "../../../common/panels/detail_view/SummaryPanelContainer";
 import SummaryActionBarContainer from "../../../common/actions/SummaryActionBarContainer";
-import ActionBarStatus from "../../../common/actions/buttons/ActionBarStatus";
+//import ActionBarStatus from "../../../common/actions/buttons/ActionBarStatus";
 import ActionBarBackButton from "../../../common/actions/buttons/ActionBarBackButton";
 import ActionBarDeleteButton2 from "../../../common/actions/buttons/ActionBarDeleteButton2";
 import templateActions from "../template-actions";
@@ -39,7 +39,7 @@ function TemplateSummaryPanel({templateData, opseraAdmin}) {
         <div>
           <ActionBarShowJsonButton dataObject={templateData} />
           {opseraAdmin && <span className={"mr-2"}><ActionBarDeleteButton2 relocationPath={"/admin/templates"} dataObject={templateData} handleDelete={deletePipeline}/></span>}
-          <ActionBarStatus status={templateData.getData("status")}/>
+          {/*<ActionBarStatus status={templateData.getData("status")}/>*/}
         </div>
       </SummaryActionBarContainer>
     );

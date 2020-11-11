@@ -80,12 +80,10 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
             <Col lg={6}>
               <DtoToggleInput fieldName={"active"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
             </Col>
-            <Col lg={6}>
+            <Col lg={12}>
               <DtoTextInput fieldName={"description"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
             </Col>
-            <Col lg={6}>
-              <DtoSelectInput valueField={"id"} fieldName={"account"} dataObject={templateDataDto} setDataObject={setTemplateDataDto} selectOptions={ldapOrganizationAccountList}/>
-            </Col>
+
             <Col lg={6}>
               <DtoMultiselectInput textField={"name"}
                               valueField={"id"}
@@ -95,7 +93,14 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
                               selectOptions={pipelineHelpers.PIPELINE_TYPES}/>
             </Col>
             <Col lg={6}>
+              <DtoTagManagerInput type={"template"} fieldName={"tags"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
+            </Col>
+
+            <Col lg={6}>
               <DtoMultiselectInput fieldName={"roles"} dataObject={templateDataDto} setDataObject={setTemplateDataDto} selectOptions={roleOptions} setSelectOptions={setRoleOptions} />
+            </Col>
+            <Col lg={6}>
+              <DtoSelectInput valueField={"id"} fieldName={"account"} dataObject={templateDataDto} setDataObject={setTemplateDataDto} selectOptions={ldapOrganizationAccountList}/>
             </Col>
             <Col lg={6}>
               <BooleanToggleInput fieldName={"readOnly"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
@@ -103,9 +108,7 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
             <Col lg={6}>
               <BooleanToggleInput fieldName={"singleUse"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
             </Col>
-            <Col lg={6}>
-              <DtoTagManagerInput type={"template"} fieldName={"tags"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
-            </Col>
+
             <Col lg={12}>
               <DtoJsonInput fieldName={"plan"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
             </Col>

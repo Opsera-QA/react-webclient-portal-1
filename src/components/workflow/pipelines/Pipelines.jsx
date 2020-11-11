@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "../workflows.css";
-import LoadingDialog from "components/common/status_notifications/loading";
+//import LoadingDialog from "components/common/status_notifications/loading";
 import PipelinesView from "./PipelinesView";
 import WorkflowCatalog from "../catalog/WorkflowCatalog";
 import cookieHelpers from "../../../core/cookies/cookie-helpers";
