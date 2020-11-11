@@ -7,7 +7,8 @@ import Model from "../../core/data_model/model";
 import LoadingDialog from "../common/status_notifications/loading";
 import {DialogToastContext} from "../../contexts/DialogToastContext";
 import userActions from "../user/user-actions";
-import SaveButton from "../common/buttons/SaveButton";
+import RegisterButton from "../common/buttons/saving/RegisterButton";
+import PasswordInput from "../common/input/dto_input/PasswordInput";
 
 function FreeTrialSignup() {
   const [isLoading, setIsLoading] = useState(false);
@@ -92,21 +93,19 @@ function FreeTrialSignup() {
                     setDataObject={setRegistrationDataDto}
                     dataObject={registrationDataDto}
                   />
-                  <DtoTextInput
+                  <PasswordInput
                     fieldName={"password"}
                     setDataObject={setRegistrationDataDto}
-                    type={"password"}
                     dataObject={registrationDataDto}
                   />
-                  <DtoTextInput
+                  <PasswordInput
                     fieldName={"confirmPassword"}
                     setDataObject={setRegistrationDataDto}
-                    type={"password"}
                     dataObject={registrationDataDto}
                   />
                 </div>
                 <div className="px-2">
-                  <SaveButton createRecord={createAccount} loginButton={true} showToasts={false} modal={false} altButtonText={"Register Account"} recordDto={registrationDataDto} />
+                  <RegisterButton createRecord={createAccount} recordDto={registrationDataDto} />
                 </div>
               </div>
             </Card.Body>

@@ -31,6 +31,24 @@ userActions.isEmailAvailable = async (emailAddress) => {
     });
 };
 
+//Check if the domain is already registered in the system
+userActions.isDomainAvailable = async (domain) => {
+  const apiCall = new ApiService("/users/check-domain", {}, null, { domain: domain });
+  return await apiCall
+    .post()
+    .then(function (response) {
+      if (response.data) {
+        return false;
+      } else {
+        return true;
+      }
+    })
+    .catch(function (error) {
+      return true;
+    });
+};
+
+
 // TODO: Update as needed, create multi level input items to prevent having to deconstruct them
 userActions.createFreeTrialAccount = async (registrationDataDto) => {
   let finalObject = registrationDataDto.getPersistData();
