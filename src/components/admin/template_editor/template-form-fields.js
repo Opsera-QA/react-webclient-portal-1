@@ -47,6 +47,14 @@ const templateEditorMetadata = {
     label: "Status",
     id: "active",
   },
+    {
+      label: "Read Only",
+      id: "readOnly",
+    },
+    {
+      label: "Single Use",
+      id: "singleUse",
+    },
   {
     label: "Plan",
     id: "plan",

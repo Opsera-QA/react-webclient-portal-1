@@ -68,6 +68,7 @@ const defaultSignupFormFields = {
     inputMaskRegex: /^[A-Za-z0-9][A-Za-z0-9-]*$/,
     isDomain: true,
     isRequired: true,
+    lowercase: true,
     maxLength: 10,
   },
     {
