@@ -8,6 +8,11 @@ const slackStepNotificationMetadata = {
       id: "type",
     },
     {
+      label: "Slack Tool",
+      id: "toolId",
+      isRequired: true
+    },
+    {
       label: "Notification Level",
       id: "event",
       isRequired: true
@@ -28,6 +33,7 @@ const slackStepNotificationMetadata = {
   newObjectFields: {
     type: "slack",
     channel: "",
+    toolId: "",
     event: "finished",
     enabled: false,
   }

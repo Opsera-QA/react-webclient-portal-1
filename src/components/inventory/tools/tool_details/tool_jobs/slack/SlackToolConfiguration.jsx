@@ -90,6 +90,7 @@ function SlackToolConfiguration() {
         <div className="h5">Slack Configured!</div>
         <div>Your Slack token is active and ready for use in the pipelines.</div>
         <div>If you would like to replace it, add to Slack with a different account.</div>
+        <div className="py-2">Note: This Slack connection is account wide, so each Slack tool shares the connection information.</div>
         <div className="pt-2">{getSlackButton()}</div>
       </div>
     );
@@ -98,6 +99,7 @@ function SlackToolConfiguration() {
   return (
     <div className="p-3">
       <div>You have not connected to Slack with your account.</div>
+      <div className="py-2">Note: This Slack connection is account wide, so each Slack tool shares the connection information.</div>
       <div className="pt-2">{getSlackButton()}</div>
     </div>
   );
