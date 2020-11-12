@@ -58,7 +58,7 @@
     font-size: 15px;
     line-height: 1.54;
     color: #241F3D;
-    min-height: 100px;
+    min-height: 120px !important;
 }
 
 .pipeline-blue-text {

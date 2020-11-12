@@ -133,10 +133,10 @@ const PipelineItem = ({ item }) => {
           </div>
 
         </Card.Title>
-        <Card.Body className="pt-0 pb-2">
-          <Row className="pipeline-card-text">
+        <Card.Body className="pt-0 pb-2 pipeline-card-text">
+          <Row className="mb-2">
             <Col className="pb-1">
-              <div className="text-muted">{getFormattedDescription()}</div>
+              <div className="text-muted">Owner: {item.owner_name}</div>
             </Col>
             <Col xs={2} className="">
               <div className="text-right small">
@@ -144,6 +144,13 @@ const PipelineItem = ({ item }) => {
               </div>
             </Col>
           </Row>
+
+          <Row>
+            <Col className="pb-1">
+              <div className="text-muted">{getFormattedDescription()}</div>
+            </Col>
+          </Row>
+
           <Row>
             <Col className="mt-auto">
               <Button variant="primary" size="sm" className="pl-2 mb-1 btn-block w-50"
