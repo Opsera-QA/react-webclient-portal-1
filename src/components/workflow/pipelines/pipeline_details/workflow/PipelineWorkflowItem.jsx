@@ -25,8 +25,8 @@ import ModalActivityLogs from "components/common/modal/modalActivityLogs";
 import StepToolActivityView from "./step_configuration/StepToolActivityView";
 import "../../../workflows.css";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import { AuthContext } from "../../../../../contexts/AuthContext";
-
+import { AuthContext } from "contexts/AuthContext";
+import WorkflowAuthorizedActions from "./workflow-authorized-actions";
 
 const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineId, editWorkflow, parentCallbackEditItem, deleteStep, parentHandleViewSourceActivityLog, customerAccessRules, parentWorkflowStatus, refreshCount }) => {
   const toastContext = useContext(DialogToastContext);
@@ -43,24 +43,8 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
   const [isLoading, setIsLoading] = useState(false);
 
   const authorizedAction = (action, owner) => {
-    if (customerAccessRules.Administrator) {
-      return true; //all actions are authorized to administrrator
-    } else if (owner && customerAccessRules.UserId === owner) {
-      return true; //owner can do all actions
-    } else if (customerAccessRules.PowerUser) {
-      return false;
-    } else if (customerAccessRules.User) {
-      return false;
-    } else {
-      return false;
-    }
+    return WorkflowAuthorizedActions.workflowItems(customerAccessRules, action, owner);
   };
-  /*
-
-    useEffect(() => {
-      loadFormData(item, lastStep, index, plan);
-    }, [item, lastStep, JSON.stringify(pipeline.workflow), refreshCount]);
-  */
 
   useEffect(() => {
     loadFormData(item, lastStep, index, plan).catch(error => {
@@ -144,7 +128,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
       setInfoModal({
         show: true,
         header: "Permission Denied",
-        message: "Editing step details requires administrator or owner access to this Pipeline.",
+        message: "Editing step details allows users to change the behavior of a pipeline step.  This action requires administrator or owner access to this Pipeline.",
         button: "OK",
       });
       return;
@@ -344,6 +328,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
           <>
             {!editWorkflow &&
             <>
+              {authorizedAction("view_step_configuration", pipeline.owner) &&
               <OverlayTrigger
                 placement="top"
                 delay={{ show: 250, hide: 400 }}
@@ -355,6 +340,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
                                    handleViewClick(item, "Step Settings");
                                  }}/>
               </OverlayTrigger>
+              }
 
               {itemState !== "running" ? //if THIS step is running
                 <>

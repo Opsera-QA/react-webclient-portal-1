@@ -31,7 +31,7 @@ const templateEditorMetadata = {
     {
       label: "Roles",
       id: "roles",
-      value: ["everyone"],
+      value: ["opsera", "everyone"],
       formText: "Defines who can see this template.  This works in concert with Account.  If Everyone is selected here, all customers see it.  To restrict this template to one customer account, remove everyone here and select that account in the Account field."
     },
     { //this should be a dropdown that lists Org Accounts (showing domain in UI) but saving orgAccount name in fields

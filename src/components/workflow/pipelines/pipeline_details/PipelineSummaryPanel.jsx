@@ -1,8 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../../../contexts/AuthContext";
-import { useHistory, Link } from "react-router-dom";
-import { Row, Col, Button, OverlayTrigger, Tooltip, Form } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import { Row, Col, Button, Form } from "react-bootstrap";
 import PipelineActions from "../../pipeline-actions";
 import { format } from "date-fns";
 import Modal from "../../../common/modal/modal";
@@ -20,12 +20,12 @@ import SchedulerWidget from "../../../common/schedulerWidget";
 import PipelineHelpers from "../../pipelineHelpers";
 import DropdownList from "react-widgets/lib/DropdownList";
 import pipelineHelpers from "../../pipelineHelpers";
-//import { getCreateSuccessResultDialog, getUpdateSuccessResultDialog } from "../../../common/toasts/toasts";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import PipelineActionControls from "./PipelineActionControls";
 import EditTagModal from "../../EditTagModal";
 import PipelineSummaryActionBar from "../../../common/actions/pipeline/PipelineSummaryActionBar";
 import InfoDialog from "../../../common/status_notifications/info";
+import WorkflowAuthorizedActions from "./workflow/workflow-authorized-actions";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -67,34 +67,9 @@ function PipelineSummaryPanel({
 
 
   const authorizedAction = (action, owner) => {
-    if (customerAccessRules.Administrator) {
-      return true; //all actions are authorized to administrator
-
-    } else if (owner && customerAccessRules.UserId === owner) {
-      return true; //owner can do all actions
-
-    } else if (customerAccessRules.PowerUser) {
-      switch (action) {
-      case "edit_pipeline_attribute":
-        return true;
-      default:
-        return false; //all other options are disabled
-      }
-
-    } else if (customerAccessRules.User) {
-      return false; //all other options are disabled
-    } else {
-      return false;
-    }
+    return WorkflowAuthorizedActions.workflowItems(customerAccessRules, action, owner);
   };
 
-  const canTransferPipeline = (owner) => {
-    if (customerAccessRules.OpseraAdministrator) {
-      return true; //all actions are authorized to opsera administrator
-    }
-
-    return owner === customerAccessRules.UserId;
-  };
 
   useEffect(() => {
     const controller = new AbortController();
@@ -347,10 +322,10 @@ function PipelineSummaryPanel({
           <PipelineSummaryActionBar
             pipeline={pipeline}
             handleDeleteClick={authorizedAction("delete_pipeline_btn", pipeline.owner) ? handleDeleteClick : undefined}
-            handleDuplicateClick={handleCopyPipeline}
-            handleViewClick={handleViewClick}
+            handleDuplicateClick={authorizedAction("duplicate_pipeline_btn", pipeline.owner) ? handleCopyPipeline : undefined}
+            handleViewClick={authorizedAction("view_template_pipeline_btn", pipeline.owner) ? handleViewClick : undefined}
             handlePublishClick={authorizedAction("publish_pipeline_btn", pipeline.owner) ? handlePublishPipelineClick : undefined}
-            canTransferPipeline={canTransferPipeline(pipeline.owner)}
+            canTransferPipeline={authorizedAction("transfer_pipeline_btn", pipeline.owner)}
             loadPipeline={fetchPlan}
           />
         </div>
@@ -490,7 +465,7 @@ function PipelineSummaryPanel({
                     className="ml-2">Frequency: {pipeline.workflow.schedule ? pipeline.workflow.schedule.frequency : "undefined"}</span>
                 </> : null}
 
-              {/*TODO: Remove FF after schedler is fixed*/}SO?? {JSON.stringify(featureFlagHideItemInProd())}
+              {/*TODO: Remove FF after schedler is fixed*/}
               {authorizedAction("edit_pipeline_attribute", pipeline.owner) && !featureFlagHideItemInProd() && parentWorkflowStatus !== "running" ?
                 getEditIcon("schedule", true) : null}
             </Col>
