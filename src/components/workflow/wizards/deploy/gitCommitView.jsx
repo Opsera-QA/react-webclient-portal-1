@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheck,
   faSpinner,
+  faPlay,
   faTimes,
   faStepBackward,
   faStepForward
@@ -51,10 +52,10 @@ const GitCommitView = ({ pipelineId, templateId, autoRun, handleClose, setView }
       setSave(false);
       setLoading(false);
 
-      if(!autoRun) {
-        history.push(`/workflow/details/${pipelineId}/summary`);
-        return;
-      }
+      // if(!autoRun) {
+      //   history.push(`/workflow/details/${pipelineId}/summary`);
+      //   return;
+      // }
       handleClose();
     } catch (err) {
       console.log(err);
@@ -116,9 +117,9 @@ const GitCommitView = ({ pipelineId, templateId, autoRun, handleClose, setView }
             {save ? (
               <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth />
             ) : (
-              <FontAwesomeIcon icon={faStepForward} fixedWidth className="mr-1" />
+              <FontAwesomeIcon icon={faPlay} fixedWidth className="mr-1" />
             )}
-            Create
+            Start Pipeline
           </Button>
         </div>
       </div>
