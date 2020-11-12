@@ -6,6 +6,7 @@ import AuthContextProvider from "./contexts/AuthContext";
 import LoadingDialog from "./components/common/status_notifications/loading";
 import Home from "./Home";
 import Login from "./components/login/Login";
+import Logout from "./components/login/Logout";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import Dashboard from "./components/dashboard/DashboardHome";
@@ -207,6 +208,7 @@ const AppWithRouterAccess = () => {
                   <Route path='/login' render={(authClient) => <Login redirectFromLogin={redirectFromLogin}
                                                                       authClient={authClient}/>}/>
                   <Route path='/implicit/callback' component={LoginCallback}/>
+                  <Route path="/logout" exact component={Logout}/>
 
                   <Route path="/signup" exact component={Signup}/>
                   <Route path="/about" exact component={About}/>
