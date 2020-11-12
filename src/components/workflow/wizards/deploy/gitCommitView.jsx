@@ -65,14 +65,28 @@ const GitCommitView = ({ pipelineId, templateId, autoRun, handleClose, setView }
     }
   }
 
+  const handleMessageEntry = (e) => {
+    let value = e.target.value;
+
+    let format = /^[A-Za-z0-9 .,!?][A-Za-z0-9- .,!?]*$/;
+    let meetsRegex = format.test(value);
+
+    if (value !== '' && !meetsRegex) {
+      return;
+    }
+
+    if (value.length > 500) {
+      return;
+    }
+
+    setMessage(e.target.value);
+  }
+
   return (
     <div className="ml-5">
       <div className="flex-container">
         <div className="flex-container-top"></div>
         <div className="flex-container-content">
-
-
-
 
           {loading ? (
             <LoadingDialog size="sm" />
@@ -81,8 +95,8 @@ const GitCommitView = ({ pipelineId, templateId, autoRun, handleClose, setView }
 
 
               <h6>What's next you ask?</h6>
-              <div>As part of this demo, we want you to see how it's running real code, pushing it through our piplines.  As such, we want you to feel confident in that
-              experience and so we'd like you to put a custom text message below.  Put a message that we can then show you is included in your application once it has
+              <div>As part of this demo, we want you to see how it is running real code, pushing it through our piplines.  As such, we want you to feel confident in that
+              experience and so we would like you to put a custom text message below.  Put a message that we can then show you is included in your application once it has
               been built.  We just thought this was a nice touch.</div>
 
               <div className="mt-2 mb-4">As always, if you have any questions or are interested in a more custom tailored experience, please contact us at Opsera.io!</div>
@@ -96,7 +110,7 @@ const GitCommitView = ({ pipelineId, templateId, autoRun, handleClose, setView }
                   rows={4} 
                   value={message || ""}
                   className={"mb-1"}
-                  onChange={(e) => setMessage(e.target.value)}
+                  onChange={(e) => handleMessageEntry(e)}
                 />
               </Form.Group>
               <small className="form-text text-muted mt-2 text-center">

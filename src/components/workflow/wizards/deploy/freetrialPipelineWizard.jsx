@@ -40,7 +40,7 @@ const FreeTrialPipelineWizard = ({
       <Modal size="lg" show={true} onHide={handleClose} 
         className="tool-details-modal" id="dataManagerModal" backdrop="static">       
         <Modal.Header closeButton>
-          <Modal.Title>Pipeline Build Wizard</Modal.Title>
+          <Modal.Title>Pipeline Run Wizard</Modal.Title>
         </Modal.Header>
         <Modal.Body>
 

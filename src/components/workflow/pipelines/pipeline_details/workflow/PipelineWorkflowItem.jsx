@@ -50,7 +50,11 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
     loadFormData(item, lastStep, index, plan).catch(error => {
       throw error;
     });
-  }, [JSON.stringify(item)]);
+  }, [JSON.stringify(item), lastStep, JSON.stringify(pipeline.workflow)]);
+
+  /*useEffect(() => {
+    loadFormData(item, lastStep, index, plan);
+  }, [item, lastStep, JSON.stringify(pipeline.workflow), refreshCount]);*/
 
 
   const loadFormData = async (item, lastStep1, index, plan) => {
@@ -58,7 +62,6 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
     //setToolProperties({});
     //setCurrentStatus({});
     //setItemState("");
-    console.log("Running loadFormData!!!");
     if (item !== undefined) {
       if (item.tool === undefined || item.tool.configuration === undefined) {
         setItemState("warning");
