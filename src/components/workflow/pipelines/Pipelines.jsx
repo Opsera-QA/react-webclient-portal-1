@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "../workflows.css";
-//import LoadingDialog from "components/common/status_notifications/loading";
 import PipelinesView from "./PipelinesView";
 import WorkflowCatalog from "../catalog/WorkflowCatalog";
 import cookieHelpers from "../../../core/cookies/cookie-helpers";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBracketsCurly, faHexagon, faUser } from "@fortawesome/pro-regular-svg-icons";
-import { faDiceD20, faMicrochip } from "@fortawesome/pro-light-svg-icons";
+import { faDiceD20, faMicrochip, faBracketsCurly, faHexagon, faUser  } from "@fortawesome/pro-light-svg-icons";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
-//import { faInfinity } from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "../../common/tooltip/tooltipWrapper";
 
 function Pipelines() {
@@ -23,6 +20,7 @@ function Pipelines() {
   }, []);
 
   const initializeComponent = async () => {
+
     if (tab != null) {
       setActiveTab(tab);
     } else {
@@ -69,9 +67,9 @@ function Pipelines() {
           <div className="alternate-tabs">
             <ul className="nav nav-tabs">
               {getTab(handleTabClick, "catalog", faHexagon, "Template Catalog", "Catalog Templates")}
-              {getTab(handleTabClick, "owner", faUser, "My Pipelines", "My Pipelines")}
+              {getTab(handleTabClick, "all", faDiceD20, "All Pipelines", "All Pipelines")}
               {(process.env.REACT_APP_STACK !== "free-trial") && <>
-                {getTab(handleTabClick, "all", faDiceD20, "All Pipelines", "All Pipelines")}
+                {getTab(handleTabClick, "owner", faUser, "My Pipelines", "My Pipelines")}
                 {getTab(handleTabClick, "sdlc", faBracketsCurly, "Software Development", "Software Development Pipelines")}
                 {getTab(handleTabClick, "ai-ml", faMicrochip, "Machine Learning", "Machine Learning (AI) Pipelines")}
                 {getTab(handleTabClick, "sfdc", faSalesforce, "SalesForce", "SalesForce Pipelines")}

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 
 function DtoTextInput({fieldName, dataObject, setDataObject, disabled, type}) {

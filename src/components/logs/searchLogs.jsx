@@ -5,22 +5,19 @@ import { ApiService } from "api/apiService";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import ErrorDialog from "components/common/status_notifications/error";
-import { Form, Button, Table, Overlay, Popover, Row, Col } from "react-bootstrap";
+import { Form, Button, Overlay, Popover, Row, Col } from "react-bootstrap";
 import { format, addDays } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendar } from "@fortawesome/free-solid-svg-icons";
+import { faCalendar } from "@fortawesome/pro-light-svg-icons";
 import "./logs.css";
-import Moment from "moment";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { DateRangePicker } from "react-date-range";
 import DropdownList from "react-widgets/lib/DropdownList";
-import Multiselect from "react-widgets/lib/Multiselect";
 import LogSearchResult from "./LogSearchResult";
 import BlueprintSearchResult from "./BlueprintSearchResult";
 import CommitSearchResult from "./CommitSearchResult";
 import Pagination from "components/common/pagination";
-import { set } from "date-fns/esm";
 
 function SearchLogs(props) {
   //const FILTER = [{ value: "pipeline", label: "Pipeline" }, { value: "metricbeat", label: "MetricBeat" }, { value: "twistlock", label: "TwistLock" }, { value: "blueprint", label: "Build Blueprint" }];

@@ -3,13 +3,8 @@ import { AuthContext } from "../../contexts/AuthContext"; //New AuthContext Stat
 import { axiosApiService } from "../../api/apiService";
 import ErrorDialog from "../common/status_notifications/error";
 import LoadingDialog from "../common/status_notifications/loading";
-import { Alert } from "react-bootstrap";
 import SearchLogs from "./searchLogs";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle, faQuestion } from "@fortawesome/free-solid-svg-icons";
-import { faCog } from "@fortawesome/free-solid-svg-icons";
 import "./logs.css";
-import LoadingView from "../common/status_notifications/loading";
 
 function Logs() {
   const contextType = useContext(AuthContext);
@@ -101,8 +96,8 @@ function Logs() {
       <div className="max-content-width">
         <h4>Logs</h4>
         <p>
-          OpsERA provides users with access to a vast repository of logging with industry leading search and filtering
-          capability. Access all available logging, reports and configurations around the OpsERA Analytics Platform or
+          Opsera provides users with access to a vast repository of logging with industry leading search and filtering
+          capability. Access all available logging, reports and configurations around the Opsera Analytics Platform or
           search your currently configured logs repositories below.{" "}
         </p>
       </div>
