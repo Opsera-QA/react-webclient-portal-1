@@ -13,7 +13,7 @@ import {
   faDiceD20, faBracketsCurly, faMicrochip, faClock, faFlag, faPause,
   faSearch,
   faSpinner, faStop,
-  faTimesCircle,
+  faTimesCircle, faCheckCircle,
 } from "@fortawesome/pro-light-svg-icons";
 
 const PipelineItem = ({ item }) => {
@@ -60,6 +60,13 @@ const PipelineItem = ({ item }) => {
         <div className="yellow">
           <PipelineStatus innerText={"The pipeline operation is currently paused."} icon={faPause}
                           statusText={"Paused"}/>
+        </div>
+      );
+    case "success":
+      return (
+        <div className="green">
+          <PipelineStatus innerText={"The most recent run of this pipeline was successful."} icon={faCheckCircle}
+                          statusText={"Successful"}/>
         </div>
       );
     default:
