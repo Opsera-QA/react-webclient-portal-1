@@ -20,8 +20,8 @@ import LoadingDialog from "../common/status_notifications/loading";
 
 function Application(props) {
   const { data, saving, gotoInventory, token, user, reset, setAppDetails, appid, setState, isEKS } = useContext(NewAppContext);
-  const { featureFlagItemInProd } = useContext(AuthContext);
-  const envIsProd = featureFlagItemInProd();
+  const { featureFlagHideItemInProd } = useContext(AuthContext);
+  const envIsProd = featureFlagHideItemInProd();
   const [dropdownData, setDropdownData] = useState([]);
   const [showEditTools, toggleEditTools] = useState(false);
   const [applicationDetails, setApplicationDetails] = useState({ data: {}, tools: [] });

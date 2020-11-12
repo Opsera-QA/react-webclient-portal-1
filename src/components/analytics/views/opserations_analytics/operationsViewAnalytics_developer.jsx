@@ -12,11 +12,11 @@ import OutNetworkTrafficByTimeLineChart from "../../charts/OutNetworkTrafficByTi
 
 function OperationsViewAnalytics_developer({ persona, date }) {
   const contextType = useContext(AuthContext);
-  const { featureFlagItemInProd } = useContext(AuthContext);
+  const { featureFlagHideItemInProd } = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
   const [countBlockData, setCountBlockData] = useState([]);
-  const envIsProd = featureFlagItemInProd();
+  const envIsProd = featureFlagHideItemInProd();
 
   useEffect(() => {
     const controller = new AbortController();

@@ -49,7 +49,7 @@ function PipelineSummaryPanel({
 }) {
   const contextType = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const { featureFlagItemInProd, getAccessToken } = contextType;
+  const { featureFlagHideItemInProd, getAccessToken } = contextType;
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -490,8 +490,8 @@ function PipelineSummaryPanel({
                     className="ml-2">Frequency: {pipeline.workflow.schedule ? pipeline.workflow.schedule.frequency : "undefined"}</span>
                 </> : null}
 
-              {/*TODO: Remove FF after schedler is fixed*/}
-              {authorizedAction("edit_pipeline_attribute", pipeline.owner) && featureFlagItemInProd && parentWorkflowStatus !== "running" ?
+              {/*TODO: Remove FF after schedler is fixed*/}SO?? {JSON.stringify(featureFlagHideItemInProd())}
+              {authorizedAction("edit_pipeline_attribute", pipeline.owner) && !featureFlagHideItemInProd() && parentWorkflowStatus !== "running" ?
                 getEditIcon("schedule", true) : null}
             </Col>
           }

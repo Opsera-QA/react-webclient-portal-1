@@ -12,8 +12,8 @@ import {DialogToastContext} from "../../contexts/DialogToastContext";
 
 function AccountSettings() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const { getUserRecord, setAccessRoles, featureFlagItemInProd } = useContext(AuthContext);
-  const envIsProd = featureFlagItemInProd();
+  const { getUserRecord, setAccessRoles, featureFlagHideItemInProd } = useContext(AuthContext);
+  const envIsProd = featureFlagHideItemInProd();
   const toastContext = useContext(DialogToastContext);
   const [userDetailsLink, setUsersDetailLink] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);

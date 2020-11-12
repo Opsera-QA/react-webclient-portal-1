@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 function PipelineWelcomeView ({ setActiveTab }) {
   return (
     <div className="pb-3">
-      <div className="h5 mb-3 mt-4">Welcome to OpsERA Pipelines!</div>
+      <div className="h5 mb-3 mt-4">Welcome to Opsera's Declarative Pipelines!</div>
 
       <div className="row mx-n2 mt-1 pl-2">
         <div className="col-md-1 px-2 landing-content-module">

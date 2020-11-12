@@ -22,7 +22,7 @@ import {faBuilding} from "@fortawesome/pro-solid-svg-icons";
 
 function AdminTools(props) {
   const [accessRoleData, setAccessRoleData] = useState({});
-  const { getUserRecord, setAccessRoles, featureFlagItemInProd } = useContext(AuthContext);
+  const { getUserRecord, setAccessRoles, featureFlagHideItemInProd } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
@@ -97,7 +97,7 @@ function AdminTools(props) {
                 <Link to="/admin/delete"><FontAwesomeIcon icon={faTimes} fixedWidth/> Delete Tools</Link>
               </Col>
               <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to={!featureFlagItemInProd() ? "/admin/kpis" : "#"}><FontAwesomeIcon icon={faFileInvoice} fixedWidth/> KPI Management</Link>
+                <Link to={!featureFlagHideItemInProd() ? "/admin/kpis" : "#"}><FontAwesomeIcon icon={faFileInvoice} fixedWidth/> KPI Management</Link>
               </Col>              
               <Col xs={12} md={6} lg={4} className="p-2">
                 <Link to="/admin/templates"><FontAwesomeIcon icon={faStream} fixedWidth/> Pipeline Templates Editor</Link>

@@ -72,7 +72,7 @@ const AuthContextProvider = (props) => {
       }
     };
 
-    const featureFlagItemInProd = () => {
+    const featureFlagHideItemInProd = () => {
       if (process.env.REACT_APP_ENVIRONMENT === "production") {
         return true;
       } else {
@@ -132,7 +132,7 @@ const AuthContextProvider = (props) => {
         renewUserToken: renewUserToken,
         getAccessToken: getAccessToken,
         getIsPreviewRole: getIsPreviewRole,
-        featureFlagItemInProd: featureFlagItemInProd,
+        featureFlagHideItemInProd: featureFlagHideItemInProd,
         getUserRecord: getUserRecord,
         setAccessRoles: setAccessRoles,
         getIsAuthenticated: getIsAuthenticated,
