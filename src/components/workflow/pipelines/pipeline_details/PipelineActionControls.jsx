@@ -7,8 +7,6 @@ import ApprovalModal from "../../approvalModal";
 import PipelineStartWizard from "./PipelineStartWizard";
 import PipelineHelpers from "../../pipelineHelpers";
 import PipelineActions from "../../pipeline-actions";
-/*import socketIOClient from "socket.io-client";
-import isEqual from "lodash.isequal";*/
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlay,
@@ -23,6 +21,7 @@ import "../../workflows.css";
 import ErrorDialog from "../../../common/status_notifications/error";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import FreeTrialPipelineWizard from "components/workflow/wizards/deploy/freetrialPipelineWizard";
+import WorkflowAuthorizedActions from "./workflow/workflow-authorized-actions";
 
 function PipelineActionControls({
   pipeline,
@@ -58,47 +57,10 @@ function PipelineActionControls({
   });
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
   const [error, setErrors] = useState();
-  /*const endPointUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
-  let tmpDataObject = {};
-  let staleRefreshCount = 0;
-  let socket;*/
+
 
   const authorizedAction = (action, owner) => {
-    if (customerAccessRules.Administrator) {
-      return true; //all actions are authorized to administrrator
-
-    } else if (owner && customerAccessRules.UserId === owner) {
-      return true; //owner can do all actions
-
-    } else if (customerAccessRules.PowerUser) {
-      switch (action) {
-      case "stop_pipeline_btn":
-        return true;
-      case "approve_step_btn":
-        return true;
-      case "start_pipeline_btn":
-        return true;
-      case "reset_pipeline_btn":
-        return true;
-      default:
-        return false; //all other options are disabled
-      }
-
-    } else if (customerAccessRules.User) {
-      switch (action) {
-      case "stop_pipeline_btn":
-        return true;
-      case "start_pipeline_btn":
-        return true;
-      case "reset_pipeline_btn":
-        return true;
-      default:
-        return false; //all other options are disabled
-      }
-
-    } else {
-      return false;
-    }
+    return WorkflowAuthorizedActions.pipelineActionControls(customerAccessRules, action, owner);
   };
 
 
@@ -108,27 +70,6 @@ function PipelineActionControls({
     //setParentWorkflowStatus(workflowStatus);
   }, [workflowStatus, JSON.stringify(pipeline.workflow)]);
 
-  /*useEffect(() => {
-    if (startPipeline) {
-      console.log("Effect: Setting Start Pipeline True");
-      setWorkflowStatus("running");
-    } else {
-      setWorkflowStatus("stopped");
-    }
-
-  }, [startPipeline]);*/
-
-  /*useEffect(() => {
-    console.log("Pipeline workflow update detected, determining status!!!");
-    loadData(pipeline);
-  }, [JSON.stringify(pipeline.workflow)]);*/
-
-  /*
-    const analyzeWorkflowStatus = (workflowStatus) => {
-      if (workflowStatus === "paused" || workflowStatus === "stopped") {
-        fetchActivityLogs();
-      }
-    };*/
 
   const loadData = (pipeline) => {
     if (pipeline.workflow === undefined) {
@@ -198,9 +139,6 @@ function PipelineActionControls({
   };
 
   const launchFreeTrialPipelineStartWizard = (pipelineId, pipelineOrientation, handleCloseFreeTrialDeploy) => {
-    console.log("launching deploy freetrial wizard");
-    console.log("pipelineOrientation ", pipelineOrientation);
-    console.log("pipelineId ", pipelineId);
     setFreetrialWizardModal({
       show: true,
       pipelineId: pipelineId,
@@ -210,14 +148,15 @@ function PipelineActionControls({
   };
 
   const handleCloseFreeTrialDeploy = () => {
-    console.log("closing freetrial deploy deploy wizard");
     setFreetrialWizardModal({
       show: false,
       pipelineId: "",
       pipelineOrientation: "",
-      handleCloseFreeTrialDeploy: ""
+      handleCloseFreeTrialDeploy: "",
     });
-  }
+
+    delayRefresh();
+  };
 
   const handlePipelineWizardRequest = async (pipelineId, restartBln) => {
     setWizardModal({ ...wizardModal, show: false });
@@ -246,8 +185,8 @@ function PipelineActionControls({
       }
     }
 
-    if (pipelineTags.some(el=> el.value === "freetrial")) {
-      launchFreeTrialPipelineStartWizard(pipelineId,"",handleCloseFreeTrialDeploy)
+    if (pipelineTags.some(el => el.value === "freetrial")) {
+      launchFreeTrialPipelineStartWizard(pipelineId, "", handleCloseFreeTrialDeploy);
     } else if (pipelineType === "sfdc") {
       launchPipelineStartWizard(pipelineOrientation, pipelineType, pipelineId);
     } else {
@@ -398,8 +337,8 @@ function PipelineActionControls({
                            handlePipelineWizardRequest={handlePipelineWizardRequest}
                            refreshPipelineActivityData={fetchActivityLogs}/>}
 
-      {freetrialWizardModal.show && 
-      <FreeTrialPipelineWizard 
+      {freetrialWizardModal.show &&
+      <FreeTrialPipelineWizard
         pipelineId={freetrialWizardModal.pipelineId}
         templateId={freetrialWizardModal.templateId}
         pipelineOrientation={freetrialWizardModal.pipelineOrientation}
@@ -504,7 +443,7 @@ function PipelineActionControls({
       <ApprovalModal pipelineId={pipeline._id} visible={showApprovalModal} setVisible={setShowApprovalModal}
                      refreshActivity={handleApprovalActivity}/>}
 
-                     {infoModal.show && <Modal header={infoModal.header} message={infoModal.message} button={infoModal.button}
+      {infoModal.show && <Modal header={infoModal.header} message={infoModal.message} button={infoModal.button}
                                 handleCancelModal={() => setInfoModal({ ...infoModal, show: false })}/>}
     </>);
 }

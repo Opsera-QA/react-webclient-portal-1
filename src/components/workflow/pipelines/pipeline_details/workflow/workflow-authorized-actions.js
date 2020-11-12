@@ -72,4 +72,43 @@ workflowAuthorizedActions.pipelineSummaryPanel = (customerAccessRules, action, o
   return false;
 };
 
+workflowAuthorizedActions.pipelineActionControls = (customerAccessRules, action, owner) => {
+  if (customerAccessRules.Administrator) {
+    return true; //all actions are authorized to administrrator
+  }
+
+  if (owner && customerAccessRules.UserId === owner) {
+    return true; //owner can do all actions
+  }
+
+  if (customerAccessRules.PowerUser) {
+    switch (action) {
+    case "stop_pipeline_btn":
+      return true;
+    case "approve_step_btn":
+      return true;
+    case "start_pipeline_btn":
+      return true;
+    case "reset_pipeline_btn":
+      return true;
+    default:
+      return false; //all other options are disabled
+    }
+  }
+
+  if (customerAccessRules.User) {
+    switch (action) {
+    case "stop_pipeline_btn":
+      return true;
+    case "start_pipeline_btn":
+      return true;
+    case "reset_pipeline_btn":
+      return true;
+    default:
+      return false; //all other options are disabled
+    }
+  }
+  return false;
+};
+
 export default workflowAuthorizedActions;

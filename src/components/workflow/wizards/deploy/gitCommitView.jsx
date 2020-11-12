@@ -70,15 +70,27 @@ const GitCommitView = ({ pipelineId, templateId, autoRun, handleClose, setView }
       <div className="flex-container">
         <div className="flex-container-top"></div>
         <div className="flex-container-content">
-          <div className="h5">Freetrial Pipeline Build : Configure custom message</div>
-          <div className="text-muted mb-4">Please confirm that you want to proceed with this operation.</div>
+
+
+
+
           {loading ? (
             <LoadingDialog size="sm" />
           ) : (
-            <div className="px-2">
-              {/* information about the free trial and explaining about the pipeline config needs to be added here */}
+            <div className="px-2 mt-3">
+
+
+              <h6>What's next you ask?</h6>
+              <div>As part of this demo, we want you to see how it's running real code, pushing it through our piplines.  As such, we want you to feel confident in that
+              experience and so we'd like you to put a custom text message below.  Put a message that we can then show you is included in your application once it has
+              been built.  We just thought this was a nice touch.</div>
+
+              <div className="mt-2 mb-4">As always, if you have any questions or are interested in a more custom tailored experience, please contact us at Opsera.io!</div>
+
+
+
               <Form.Group controlId="git-message">
-                <Form.Label>Enter Message Here*</Form.Label>
+                <Form.Label>Enter Your New Application Message Here*</Form.Label>
                 <Form.Control 
                   as="textarea" 
                   rows={4} 

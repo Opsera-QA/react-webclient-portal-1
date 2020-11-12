@@ -1,36 +1,30 @@
-import React, { useContext, useState, useEffect, useMemo } from "react";
+import React, {  useState } from "react";
 import PropTypes from "prop-types";
-import { Button, Form, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCheck,
-  faSpinner,
-  faTimes,
-  faStepBackward,
-  faCog,
-} from "@fortawesome/free-solid-svg-icons";
 import "../../workflows.css";
-import { AuthContext } from "contexts/AuthContext";
-import { DialogToastContext } from "contexts/DialogToastContext";
-import LoadingDialog from "components/common/status_notifications/loading";
+import { faPlay, faSpinner } from "@fortawesome/pro-light-svg-icons";
 
 
 const WelcomeView = ({ pipelineId, handleClose, setView }) => {
-  const { getAccessToken } = useContext(AuthContext);
   const [save, setSave] = useState(false);
-  const toastContext = useContext(DialogToastContext);
-  const [loading, setLoading] = useState(false);
 
   return (
     <div className="ml-5">
       <div className="flex-container">
         <div className="flex-container-top"></div>
         <div className="flex-container-content">
-          <div className="h5">Freetrial Pipeline Build</div>
-          <div className="text-muted mb-4">Please confirm that you want to proceed with this operation.</div>
-          <div className="px-2"></div>
-            Welcome Screen
-            {/* information about the free trial and explaining about the pipeline config needs to be added here */}
+          <div className="h5">Opsera Free Trial Pipeline</div>
+          {/*<div className="text-muted mb-4">Welcome to the Opsera Free Trial demonstration of our declarative pipeline operations.  </div>*/}
+          <div className="px-2 mt-4"></div>
+          <h6>Hello!</h6>
+          <div>You are about to run an Opsera pipeline demo which has been custom designed for this Free Trial.  You will have the ability to explore
+            our application and see how the pipelines are used and run.  This free trial does not allow you to change the settings of your pipeline.  However,
+            before you start it, we do allow you to provide a custom message in the following screen which will be committed to a temporary Git repository we are hosting
+             on your behalf.  Once that is done and the pipeline runs, you can watch it complete each of the steps in the workflow to see an example
+            of how a standard SDLC pipeline could work for you in your organization.</div>
+
+          <div className="mt-2">If you have any questions or are interested in a more custom tailored experience, please contact us at Opsera.io!</div>
         
         </div>
         <div className="flex-container-bottom pr-2 mt-3 mb-2 text-right">
@@ -46,9 +40,9 @@ const WelcomeView = ({ pipelineId, handleClose, setView }) => {
             {save ? (
               <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth />
             ) : (
-              <FontAwesomeIcon icon={faCog} fixedWidth className="mr-1" />
+              <FontAwesomeIcon icon={faPlay} fixedWidth className="mr-1" />
             )}
-            Configure
+            Get Started!
           </Button>
         </div>
       </div>

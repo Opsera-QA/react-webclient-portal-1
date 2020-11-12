@@ -35,11 +35,6 @@ const FreeTrialPipelineWizard = ({
     return (<LoadingDialog size={"sm"}/>);
   }
 
-  // console.log(pipelineOrientation);
-
-  // TODO: Add whatever early return method should be returned when a failure occurs,
-  //  I've been doing different things depending on what the error is (loading, persisting, etc.)
-
   return (
     <>
       <Modal size="lg" show={true} onHide={handleClose} 
@@ -49,8 +44,6 @@ const FreeTrialPipelineWizard = ({
         </Modal.Header>
         <Modal.Body>
 
-          {/* TODO: Check for pipelineOrientation and the display appropriate message*/}
-          {/* pipelineOrientation : start, middle  */}
           {view === 1 && (
             <>
               {/* Wire up step component */}
