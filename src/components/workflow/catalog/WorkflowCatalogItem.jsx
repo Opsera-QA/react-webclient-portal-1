@@ -56,10 +56,10 @@ const WorkflowCatalogItem = ({ item, parentCallback, openFreeTrialWizard, access
       let newPipelineId = result.data !== undefined ? result.data._id : false;
       if (newPipelineId) {
         // check if its a free trial and then proceed
-        if (!item.tags.some(el => el.value === "freetrial")) {
+        // if (!item.tags.some(el => el.value === "freetrial")) {
           history.push(`/workflow/details/${newPipelineId}/summary`);
-        }
-        openFreeTrialWizard(newPipelineId, templateId, "freetrial");
+        // }
+        // openFreeTrialWizard(newPipelineId, templateId, "freetrial");
       }
     } catch (err) {
       console.error(err);
