@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import {Button, Form} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSave, faSpinner} from "@fortawesome/pro-light-svg-icons";
+import {faClipboardList, faSave, faSpinner} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import jiraStepNotificationMetadata from "./jira/jiraStepNotificationMetadata";
 import Model from "../../../../../../../core/data_model/model";
@@ -24,8 +24,8 @@ import JiraStepNotificationParentTicketInput from "./jira/JiraStepNotificationPa
 import slackStepNotificationMetadata from "./slack/slackStepNotificationMetadata";
 import DtoTextInput from "../../../../../../common/input/dto_input/dto-text-input";
 import emailStepNotificationMetadata from "./email/emailStepNotificationMetadata";
-import {faLink} from "@fortawesome/pro-solid-svg-icons";
 import jiraStepApprovalMetadata from "./jira/jiraStepApprovalMetadata";
+import SlackStepNotificationToolInput from "./slack/SlackStepNotificationToolInput";
 
 function StepNotificationConfiguration({ data, stepId, parentCallback, handleCloseClick }) {
   const toastContext = useContext(DialogToastContext);
@@ -148,9 +148,10 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
         <NotificationsToggle dataObject={slackDto} setDataObject={setSlackDto} fieldName={"enabled"} />
         <small className="form-text text-muted px-2">
           Please Note: You must use the Add to Slack button on the
-          <Link to="/tools"><FontAwesomeIcon icon={faLink} className="ml-1"/>API Tools</Link> page in order to use this feature.
+          <Link to="/inventory/tools"><FontAwesomeIcon icon={faClipboardList} className="mx-1"/>Tool Registry</Link> page in order to use this feature.
         </small>
         <NotificationLevelInput dataObject={slackDto} setDataObject={setSlackDto} fieldName={"event"} />
+        <SlackStepNotificationToolInput setDataObject={setSlackDto} dataObject={slackDto} />
         <DtoTextInput dataObject={slackDto} setDataObject={setSlackDto} fieldName={"channel"} />
       </div>
     );
