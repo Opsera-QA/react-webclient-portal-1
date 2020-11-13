@@ -120,9 +120,9 @@ function ReliabilityRatingLineChart({ persona, date }) {
                   border: "1px solid #ccc",
                 }}>
                   <strong style={{ color }}>
-              Date: </strong> {new Date(point.data.x).toLocaleString()}<br></br>
+                  Timestamp: </strong> {point.data.x}<br></br>
                   <strong style={{ color }}>  Rating: </strong> {point.data.y === 1 && <>A</>} {point.data.y === 2 && <>B</>} {point.data.y === 3 && <>C</>}  {point.data.y === 4 && <>D</>}  {point.data.y === 5 && <>E</>} <br></br>
-                  <strong style={{ color }}>  Project Key: </strong> {point.data.buildNumber}
+                  <strong style={{ color }}>  Project Key: </strong> {point.data.key}
                 </div>
               )}
               theme={{

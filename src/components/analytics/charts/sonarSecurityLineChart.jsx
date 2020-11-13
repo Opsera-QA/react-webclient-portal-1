@@ -137,9 +137,7 @@ function SonarSecurityLineChart({ persona, sonarMeasure, date }) {
                   border: "1px solid #ccc",
                 }}>
                   <div>
-                    <strong> Revision: </strong>  {node.point.data.info._source.revision} <br />
-                    {/* <strong> Quality Gate: </strong>  {node.point.data.info._source.qualityGate.name} <br />
-                    <strong> Quality Gate: </strong> {node.point.data.info._source.qualityGate.status} <br /> */}
+                    <strong> Quality Gate: </strong> {node.point.data.info._source.qualityGate.status} <br />
                     <strong> Qualifier: </strong>  {node.point.data.info._source.sonarqube_measures.component.qualifier} <br />
                     <strong> Date: </strong> {node.point.data.xFormatted} <br></br>
                     <strong>  {node.point.serieId}: {node.point.data.yFormatted}  </strong>
