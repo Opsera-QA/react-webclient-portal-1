@@ -61,7 +61,7 @@ function SonarLinesToCoverBarChart({ data, persona }) {
             tooltip={({ indexValue, value, id, color, data }) => (
               <div>
                 <strong style={{ color }}>
-              Build Number: </strong> {indexValue}<br></br>
+              Timestamp: </strong> {indexValue}<br></br>
                 <strong style={{ color }}>  {id}: </strong> {value} <br></br>
                 <strong style={{ color }}> Project Key: </strong> {data.key}
               </div>

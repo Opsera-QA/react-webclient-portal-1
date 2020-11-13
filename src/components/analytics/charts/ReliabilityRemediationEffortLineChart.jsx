@@ -120,9 +120,9 @@ function ReliabilityRemediationEffortLineChart({ persona, date }) {
                   border: "1px solid #ccc",
                 }}>
                   <strong style={{ color }}>
-              Date: </strong> {new Date(point.data.x).toLocaleString()}<br></br>
+                  Timestamp: </strong> {point.data.x}<br></br>
                   <strong style={{ color }}>  Time: </strong> {point.data.y} mins<br></br>
-                  <strong style={{ color }}>  Project Key: </strong> {point.data.buildNumber}
+                  <strong style={{ color }}>  Project Key: </strong> {point.data.key}
                 </div>
               )}
               theme={{

@@ -119,9 +119,9 @@ function NewBugsCountLineChart({ persona, date }) {
                   border: "1px solid #ccc",
                 }}>
                   <strong style={{ color }}>
-            Build Number: </strong> {point.data.x}<br></br>
-                  <strong style={{ color }}>  Bugs: </strong> {point.data.y}<br></br>
-                  <strong style={{ color }}>  Project Key: </strong> {point.data.buildNumber}
+            Timestamp: </strong> {point.data.x}<br></br>
+                  <strong style={{ color }}>  New Bugs: </strong> {point.data.y}<br></br>
+                  <strong style={{ color }}>  Project Key: </strong> {point.data.key}
                 </div>
               )}
               theme={{
