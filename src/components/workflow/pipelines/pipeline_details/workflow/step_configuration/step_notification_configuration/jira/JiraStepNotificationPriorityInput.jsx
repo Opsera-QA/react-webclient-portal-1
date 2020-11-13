@@ -64,7 +64,7 @@ function JiraStepNotificationPriorityInput({visible, jiraToolId, dataObject, set
       setDataObject={setDataObject}
       selectOptions={priorities}
       busy={isLoading}
-      valueField="id"
+      valueField="name"
       textField="name"
       placeholderText={getPlaceholderText()}
       disabled={disabled || isLoading || jiraToolId == null || priorities.length === 0}
