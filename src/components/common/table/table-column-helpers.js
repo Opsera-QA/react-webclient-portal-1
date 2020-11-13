@@ -42,7 +42,7 @@ export const getTableBooleanIconColumn = (field) => {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
     Cell: (props) => {
-      return props.value ?  <FontAwesomeIcon icon={faCheckCircle} className="green ml-1" /> :  <FontAwesomeIcon icon={faTimesCircle} className="red ml-1" />;
+      return props.value ?  <div className="text-center"><FontAwesomeIcon icon={faCheckCircle} className="green mx-auto" /></div> :  <div className="text-center"><FontAwesomeIcon icon={faTimesCircle} className="red mx-auto" /></div>;
     },
     class: "no-wrap-inline"
   };

@@ -46,7 +46,7 @@ const templateEditorMetadata = {
       // value: [],
     },
     {
-      label: "Status",
+      label: "State",
       id: "active",
     },
     {
