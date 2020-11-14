@@ -43,7 +43,6 @@ const registrationMetadata = {
       label: "Confirm Password",
       id: "confirmPassword",
       isRequired: true,
-      isOpseraPassword: true,
       matchField: "password"
     },
     {
