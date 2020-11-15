@@ -60,15 +60,14 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
   const loadFormData = async (item, lastStep1, index, plan) => {
     //setStepConfigured(false);
     //setToolProperties({});
-    //setCurrentStatus({});
-    //setItemState("");
+    setCurrentStatus({});
+    setItemState("");
     if (item !== undefined) {
       if (item.tool === undefined || item.tool.configuration === undefined) {
         setItemState("warning");
       }
 
       if (lastStep !== undefined) {
-
         if (lastStep.success !== undefined && Object.keys(lastStep.success).length > 0) {
           let stepArrayIndex = plan.findIndex((x) => {
             if (x._id && x._id.toString() === lastStep.success.step_id) {
@@ -78,9 +77,6 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
           if (index === stepArrayIndex) {  //current step is successful, so it's completed
             setCurrentStatus(lastStep.success);
             setItemState("completed");
-
-          } else if (index === stepArrayIndex + 1) { //this is the next step in the plan
-            setItemState("pending");
           }
         }
 
@@ -94,8 +90,6 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
               setItemState("running");
             }
 
-          } else if (index === stepArrayIndex + 1) { //this is the next step in the plan
-            setItemState("pending");
           }
         }
 
@@ -104,9 +98,6 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
           if (index === stepArrayIndex) {  //current step is successful, so it's completed
             setCurrentStatus(lastStep.failed);
             setItemState("failed");
-
-          } else if (index === stepArrayIndex + 1) { //this is the next step in the plan
-            setItemState("pending");
           }
         }
       }
