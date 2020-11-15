@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDraftingCompass, faDiceD20, faMicrochip, faArrowLeft, faBracketsCurly } from "@fortawesome/pro-light-svg-icons";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 
+const refreshInterval = 8000;
 
 function PipelineDetailView() {
   const { tab, id } = useParams();
@@ -138,7 +139,7 @@ function PipelineDetailView() {
       return;
     }
 
-    console.log(`Scheduling status check followup for Pipeline: ${pipeline._id}, counter: ${staleRefreshCount} `);
+    console.log(`Scheduling status check followup for Pipeline: ${pipeline._id}, counter: ${staleRefreshCount}, interval: ${refreshInterval} `);
     const refreshTimer = setTimeout(async function() {
       console.log("running pipeline refresh interval. Step status: ");
       staleRefreshCount++;
@@ -147,7 +148,7 @@ function PipelineDetailView() {
         console.log("divisible by 3 refresh: getting activity logs");
         await getSilentActivityLogs();
       }
-    }, 15000);
+    }, refreshInterval);
     setRefreshTimer(refreshTimer);
   };
 

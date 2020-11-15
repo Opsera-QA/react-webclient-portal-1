@@ -23,6 +23,9 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import FreeTrialPipelineWizard from "components/workflow/wizards/deploy/freetrialPipelineWizard";
 import WorkflowAuthorizedActions from "./workflow/workflow-authorized-actions";
 
+
+const delayCheckInterval = 12000;
+
 function PipelineActionControls({
   pipeline,
   customerAccessRules,
@@ -240,7 +243,7 @@ function PipelineActionControls({
     setTimeout(async function() {
       await fetchData();
       setStartPipeline(false);
-    }, 30000);
+    }, delayCheckInterval);
   }
 
   /*const stopSocket = () => {
@@ -255,7 +258,7 @@ function PipelineActionControls({
   const delayRefresh = () => {
     setTimeout(async function() {
       await fetchData();
-    }, 30000);
+    }, delayCheckInterval);
   };
 
 
