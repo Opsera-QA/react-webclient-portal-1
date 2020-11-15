@@ -10,7 +10,6 @@ import CypressToolConfiguration from "../forms/cypress";
 import ArgoToolConfiguration from "./tool_jobs/argo/ArgoToolConfiguration";
 import AnchoreToolConfiguration from "../forms/anchore";
 import AnchoreIntegratorToolConfiguration from "../forms/anchore-integrator";
-import SonarToolConfiguration from "../forms/sonar";
 import AWSToolConfiguration from "../forms/aws";
 import SFDCToolConfiguration from "../forms/sfdc";
 import PipelineActions from "../../../workflow/pipeline-actions";
@@ -23,6 +22,7 @@ import JiraToolConfiguration from "./tool_jobs/jira/JiraToolConfiguration";
 import TeamsToolConfiguration from "./tool_jobs/teams/TeamsToolConfiguration";
 import OctopusToolConfiguration from "./tool_jobs/octopus/OctopusToolConfiguration";
 import SlackToolConfiguration from "./tool_jobs/slack/SlackToolConfiguration";
+import SonarToolConfiguration from "./tool_jobs/sonar/SonarToolConfiguration";
 
 
 function ToolConfigurationPanel({ toolData }) {

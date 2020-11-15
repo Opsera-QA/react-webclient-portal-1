@@ -1,5 +1,11 @@
 import {axiosApiService} from "../../../api/apiService";
+import baseActions from "../../../utils/actionsBase";
 const toolsActions = {};
+
+toolsActions.checkToolConnectivity = async (toolId, toolName, getAccessToken) => {
+  const apiUrl = `/tools/${toolId}/check-connectivity?name=${toolName}`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
 
 toolsActions.deleteTool = async (userId, getAccessToken) => {
   const accessToken = await getAccessToken();
@@ -37,7 +43,7 @@ toolsActions.createTool = async (toolDataDto, getAccessToken) => {
 
 toolsActions.getUsers = async (getAccessToken) => {
   const accessToken = await getAccessToken();
-  const apiUrl = "/users/get-users?page=1&size=10000`;";
+  const apiUrl = "/users/get-users?page=1&size=10000";
   const response = await axiosApiService(accessToken).get(apiUrl)
     .then((result) =>  {return result;})
     .catch(error => {throw error;});

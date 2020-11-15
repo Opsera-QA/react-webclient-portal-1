@@ -9,6 +9,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import Model from "core/data_model/model";
 import Col from "react-bootstrap/Col";
 import DtoTextInput from "components/common/input/dto_input/dto-text-input";
+import TestToolConnectionButton from "../../../../../common/buttons/connection/TestToolConnectionButton";
 
 
 
@@ -84,8 +85,13 @@ function ArgoToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVault 
         </Col>
       </Row>
       <Row>
-        <div className="ml-auto mt-3 px-3">
-          <SaveButton recordDto={configurationData} createRecord={callbackFunction} updateRecord={callbackFunction} />
+        <div className="ml-auto mt-3 px-3 d-flex">
+          <div className="mt-1">
+            <TestToolConnectionButton recordData={toolData} toolName={"Argocd"} />
+          </div>
+          <div>
+            <SaveButton recordDto={configurationData} createRecord={callbackFunction} updateRecord={callbackFunction} />
+          </div>
         </div>
       </Row>
       <small className="form-text text-muted mt-2 text-right">* Required Fields</small>

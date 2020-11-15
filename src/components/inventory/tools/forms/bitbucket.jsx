@@ -5,6 +5,7 @@ import {Form, Button, Row} from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import {getFormValidationErrorDialog} from "../../../common/toasts/toasts";
+import TestToolConnectionButton from "../../../common/buttons/connection/TestToolConnectionButton";
 
 
 //This must match the form below and the data object expected.  Each tools' data object is different
@@ -167,7 +168,10 @@ function BitbucketToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToV
 
       {/*TODO: Replace with SaveButton once converted to using data model*/}
       <Row>
-        <div className="ml-auto mt-3 px-3">
+        <div className="ml-auto mt-3 px-3 d-flex">
+          <div>
+            <TestToolConnectionButton recordData={toolData} toolName={"Bitbucket"}/>
+          </div>
           <div className="d-flex">
             {isSaving &&
             <div className="text-center mr-3 mt-1"><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>Saving is in progress</div>}
