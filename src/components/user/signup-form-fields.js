@@ -39,7 +39,6 @@ const defaultSignupFormFields = {
     id: "confirmPassword",
     type: "password",
     isRequired: true,
-    isOpseraPassword: true,
     matchField: "password"
   },
     {
