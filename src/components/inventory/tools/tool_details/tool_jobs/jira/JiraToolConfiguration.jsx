@@ -10,6 +10,7 @@ import jiraConnectionMetadata from "./jira-connection-metadata";
 import DetailPanelContainer from "../../../../../common/panels/detail_panel_container/DetailPanelContainer";
 import Col from "react-bootstrap/Col";
 import {getFormValidationErrorDialog} from "components/common/toasts/toasts";
+import TestToolConnectionButton from "../../../../../common/buttons/connection/TestToolConnectionButton";
 
 
 function JiraToolConfiguration({ toolData, fnSaveChanges, fnSaveToVault }) {
@@ -91,8 +92,13 @@ function JiraToolConfiguration({ toolData, fnSaveChanges, fnSaveToVault }) {
             <Col sm={12}><DtoTextInput type={"password"} dataObject={jiraConfigurationDto} setDataObject={setJiraConfigurationDto} fieldName={"vaultSecretKey"} /></Col>
           </Row>
           <Row>
-            <div className="ml-auto px-2">
-              <SaveButton setRecordDto={setJiraConfigurationDto} modal={false} recordDto={jiraConfigurationDto} createRecord={saveJiraConfig} updateRecord={saveJiraConfig} />
+            <div className="ml-auto px-2 d-flex">
+              <div className="py-1">
+                {/*<TestToolConnectionButton recordData={toolData} toolName={"Jira"}/>*/}
+              </div>
+              <div>
+                <SaveButton setRecordDto={setJiraConfigurationDto} modal={false} recordDto={jiraConfigurationDto} createRecord={saveJiraConfig} updateRecord={saveJiraConfig} />
+              </div>
             </div>
           </Row>
         </div>

@@ -8,6 +8,7 @@ import nexusConnectionMetadata from "./nexus-connection-metadata";
 import LoadingDialog from "components/common/status_notifications/loading";
 import DtoTextInput from "components/common/input/dto_input/dto-text-input";
 import Col from "react-bootstrap/Col";
+import TestToolConnectionButton from "../../../../../common/buttons/connection/TestToolConnectionButton";
 
 function NexusToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVault }) {
   const [configurationData, setConfigurationData] = useState(undefined);
@@ -82,7 +83,10 @@ function NexusToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVault
         </Col>
       </Row>
       <Row>
-        <div className="ml-auto mt-3 px-3">
+        <div className="ml-auto mt-3 px-3 d-flex">
+          <div className="mt-1">
+            <TestToolConnectionButton recordData={toolData} toolName={"Nexus"}/>
+          </div>
           <SaveButton recordDto={configurationData} createRecord={callbackFunction} updateRecord={callbackFunction} />
         </div>
       </Row>

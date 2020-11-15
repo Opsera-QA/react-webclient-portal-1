@@ -9,6 +9,7 @@ import LoadingDialog from "../../../../../common/status_notifications/loading";
 import DtoTextInput from "../../../../../common/input/dto_input/dto-text-input";
 import DtoToggleInput from "../../../../../common/input/dto_input/dto-toggle-input";
 import Col from "react-bootstrap/Col";
+import TestToolConnectionButton from "../../../../../common/buttons/connection/TestToolConnectionButton";
 
 function JenkinsToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVault }) {
   const [configurationData, setConfigurationData] = useState(undefined);
@@ -140,8 +141,13 @@ function JenkinsToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVau
         
       </Row>
       <Row>
-        <div className="ml-auto mt-3 px-3">
-        <SaveButton recordDto={configurationData} createRecord={callbackFunction} updateRecord={callbackFunction} />
+        <div className="ml-auto mt-3 px-3 d-flex">
+          <div className="mt-1">
+            <TestToolConnectionButton recordData={toolData} toolName={"Jenkins"} />
+          </div>
+          <div>
+            <SaveButton recordDto={configurationData} createRecord={callbackFunction} updateRecord={callbackFunction} />
+          </div>
         </div>
       </Row>
       <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
