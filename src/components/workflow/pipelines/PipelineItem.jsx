@@ -134,9 +134,9 @@ const PipelineItem = ({ item }) => {
 
         </Card.Title>
         <Card.Body className="pt-0 pb-2 pipeline-card-text">
-          <Row className="mb-2">
+          <Row className="mb-1">
             <Col className="pb-1">
-              <div className="text-muted">Owner: {item.owner_name}</div>
+              <span className="text-muted mr-1">Owner:</span> {item.owner_name}
             </Col>
             <Col xs={2} className="">
               <div className="text-right small">
@@ -144,10 +144,15 @@ const PipelineItem = ({ item }) => {
               </div>
             </Col>
           </Row>
-
-          <Row>
+          <Row className="mb-2">
             <Col className="pb-1">
               <div className="text-muted">{getFormattedDescription()}</div>
+            </Col>
+          </Row>
+
+          <Row className="mb-2">
+            <Col className="pb-1 small">
+              <span className="text-muted mr-1">Run Count:</span> {item.workflow.run_count}
             </Col>
           </Row>
 
@@ -159,17 +164,23 @@ const PipelineItem = ({ item }) => {
             </Col>
             <Col>
               <div className="text-right">
-                {item.workflow.schedule !== undefined && item.workflow.schedule.start_date !== null &&
+                {item.workflow.schedule?.start_date &&
                 <div className="small">
-                  <span className="text-muted mr-2 pb-1"><FontAwesomeIcon icon={faClock} size="sm" fixedWidth
-                                                                          className="mr-1"/> Scheduled: </span>
+                  <span className="text-muted mr-2 pb-1">
+                    <FontAwesomeIcon icon={faClock} size="sm" fixedWidth className="mr-1"/> Scheduled: </span>
                   {format(new Date(item.workflow.schedule.start_date), "yyyy-MM-dd', 'hh:mm a")}</div>
                 }
-                <div><small><span className="text-muted mr-2 pb-1">Updated:</span><span
-                  className="">{item.updatedAt && format(new Date(item.updatedAt), "yyyy-MM-dd', 'hh:mm a")}</span></small>
-                </div>
-                <div><small><span className="text-muted mr-2 pb-1">Created:</span><span
-                  className="">{item.updatedAt && format(new Date(item.createdAt), "yyyy-MM-dd', 'hh:mm a")}</span></small>
+                {item.workflow.last_run?.completed ?
+                  <div className="small"><span className="text-muted mr-2 pb-1">Last Run:</span><span
+                    className="">{format(new Date(item.workflow.last_run.completed), "yyyy-MM-dd', 'hh:mm a")}</span>
+                  </div>
+                  :
+                  <div className="small"><span className="text-muted mr-2 pb-1">Updated:</span><span
+                    className="">{item.updatedAt && format(new Date(item.updatedAt), "yyyy-MM-dd', 'hh:mm a")}</span>
+                  </div>
+                }
+                <div className="small"><span className="text-muted mr-2 pb-1">Created:</span><span
+                  className="">{item.updatedAt && format(new Date(item.createdAt), "yyyy-MM-dd', 'hh:mm a")}</span>
                 </div>
               </div>
             </Col>
