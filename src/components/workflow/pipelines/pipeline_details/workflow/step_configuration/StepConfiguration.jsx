@@ -83,7 +83,7 @@ function StepConfiguration({ data, stepId, parentCallback, handleCloseClick }) {
   const fetchToolDetails = async () => {
     try {
       setIsToolListSearching(true);
-      const params = { status: "active" };
+      const params = { status: "active", usage: "pipeline" };
       const accessToken = await getAccessToken();
       const toolResponse = await axiosApiService(accessToken).get("/registry/tools", { params });
       setToolList(toolResponse.data);

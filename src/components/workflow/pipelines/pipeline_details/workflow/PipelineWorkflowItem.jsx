@@ -33,7 +33,6 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
   const { getAccessToken } = useContext(AuthContext);
   const [currentStatus, setCurrentStatus] = useState({});
   const [itemState, setItemState] = useState("");
-  const [stepConfigured, setStepConfigured] = useState(true);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [modalDeleteIndex, setModalDeleteIndex] = useState(false);
   const [toolProperties, setToolProperties] = useState({});
@@ -41,6 +40,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
   const [activityLogModal, setActivityLogModal] = useState({ show: false, header: "", message: "", button: "OK" });
   const [showToolActivity, setShowToolActivity] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isToolSet, setIsToolSet] = useState(false);
 
   const authorizedAction = (action, owner) => {
     return WorkflowAuthorizedActions.workflowItems(customerAccessRules, action, owner);
@@ -52,19 +52,18 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
     });
   }, [JSON.stringify(item), lastStep, JSON.stringify(pipeline.workflow)]);
 
-  /*useEffect(() => {
-    loadFormData(item, lastStep, index, plan);
-  }, [item, lastStep, JSON.stringify(pipeline.workflow), refreshCount]);*/
-
 
   const loadFormData = async (item, lastStep1, index, plan) => {
-    //setStepConfigured(false);
-    //setToolProperties({});
     setCurrentStatus({});
     setItemState("");
+    setIsToolSet(false);
     if (item !== undefined) {
       if (item.tool === undefined || item.tool.configuration === undefined) {
         setItemState("warning");
+      }
+
+      if (item.tool?.tool_identifier) {
+        setIsToolSet(true);
       }
 
       if (lastStep !== undefined) {
@@ -107,9 +106,6 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
         await getToolDetails(item.tool.tool_identifier);
       }
 
-      if (item && item.type && item.type[0] && item.type[0].length > 0) {
-        setStepConfigured(true);
-      }
     }
   };
 
@@ -171,7 +167,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
 
             {isLoading && <FontAwesomeIcon icon={faSpinner} spin className="mr-2 green"/>}
 
-            {stepConfigured === true && editWorkflow === false && !isLoading &&
+            {isToolSet && !editWorkflow && !isLoading &&
             <>
               {itemState === "failed" &&
               <OverlayTrigger
@@ -222,7 +218,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
               <OverlayTrigger
                 placement="top"
                 delay={{ show: 250, hide: 400 }}
-                overlay={renderTooltip({ message: "Step warning alert due to missing data" })}>
+                overlay={renderTooltip({ message: "Warning: Configuration settings are missing!" })}>
                 <FontAwesomeIcon icon={faExclamationTriangle} className="mr-2 yellow"
                                  style={{ cursor: "pointer" }}
                                  onClick={() => {
@@ -274,10 +270,11 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
             </>
             }
 
-            {editWorkflow &&
+            {(editWorkflow || !isToolSet) &&
             <>
               <div className="no-wrap">
 
+                {editWorkflow &&
                 <OverlayTrigger
                   placement="top"
                   delay={{ show: 250, hide: 400 }}
@@ -288,6 +285,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
                                      handleDeleteStepClick(index);
                                    }}/>
                 </OverlayTrigger>
+                }
 
                 <OverlayTrigger
                   placement="top"
@@ -295,7 +293,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
                   overlay={renderTooltip({ message: "Step Setup" })}>
                   <FontAwesomeIcon icon={faPen}
                                    style={{ cursor: "pointer" }}
-                                   className="text-muted mr-2" fixedWidth
+                                   className="text-muted mr-1" fixedWidth
                                    onClick={() => {
                                      handleEditClick("step", item.tool, item._id);
                                    }}/>
@@ -318,7 +316,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
                            className="mr-1"/>ID: {item._id}</div>
 
         <div className="p-1 text-right">
-          {stepConfigured === true &&
+          {isToolSet &&
           <>
             {!editWorkflow &&
             <>

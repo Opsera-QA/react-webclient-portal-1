@@ -5,7 +5,8 @@ import DtoSelectInput from "../../../common/input/dto_input/dto-select-input";
 const usageTypes = [
   {text: "No Usage Type", value: ""},
   {text: "Pipeline", value: "pipeline"},
-  {text: "Account", value: "account"}
+  {text: "Account", value: "account"},
+  {text: "Repository", value: "repository"},
 ];
 
 // TODO: If this is used elsewhere, move to common dto inputs
