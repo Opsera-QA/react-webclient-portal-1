@@ -121,6 +121,21 @@ function ToolTabOptions({ activeTab, tool_identifier, handleTabClick }) {
                    tabText={"Settings"}/>
       </CustomTabContainer>
     );
+    case "octopus":
+      return (
+        <CustomTabContainer>
+          <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab}
+                     tabText={"Attributes"}/>
+          <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick}
+                     activeTab={activeTab} tabText={"Connection"}/>
+          <CustomTab icon={faBrowser} tabName={"applications"} handleTabClick={handleTabClick} activeTab={activeTab}
+                     tabText={"Applications"}/>
+          <CustomTab icon={faTable} tabName={"logs"} handleTabClick={handleTabClick} activeTab={activeTab}
+            tabText={"Logs"}/>
+          <CustomTab icon={faCogs} tabName={"settings"} handleTabClick={handleTabClick} activeTab={activeTab}
+                     tabText={"Settings"}/>
+        </CustomTabContainer>
+      );
 
   default:
     return (

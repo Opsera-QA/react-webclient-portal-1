@@ -9,8 +9,11 @@ import { format } from "date-fns";
 import ReactJson from "react-json-view";
 import "components/inventory/tools/tools.css";
 import {DropdownList} from "react-widgets";
+import { AuthContext } from "contexts/AuthContext";
+
 
 function ToolLogsPanel(props) {
+  const { getAccessToken } = useContext(AuthContext);
   const { toolData, accessToken } = props;
   const [logCount, setLogCount] = useState(0);
   const [logData, setLogData] = useState([]);
@@ -99,6 +102,7 @@ function ToolLogsPanel(props) {
   const getToolLog = async () => {
     isLoading(true)
     try {
+      const accessToken = await getAccessToken();
       const apiUrl = `/registry/log/${toolData.getData("_id")}?page=${currentPage}&size=${pageSize}`;
       const tool_logs = await axiosApiService(accessToken).get(apiUrl, {});
       setLogCount(tool_logs.data.count);
