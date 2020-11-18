@@ -15,7 +15,7 @@ function CreateModal({ children, objectType, showModal, handleCancelModal, loadD
 
   return (
     <>
-      <Modal size="lg" show={showModal} onHide={handleClose} backdrop="static">
+      <Modal size="lg" show={showModal} onHide={handleClose} backdrop="static" centered>
         <Modal.Header closeButton>
           <Modal.Title>Create New {objectType}</Modal.Title>
         </Modal.Header>

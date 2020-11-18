@@ -72,4 +72,32 @@ OctopusStepActions.getTenants = async (id,spaceId, projectId,environmentId, getA
   return res;
 };
 
+OctopusStepActions.getAccounts = async (id,spaceId, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/tools/octopus/accounts/${id}/octopus/${spaceId}`;
+  const res = await axiosApiService(accessToken)
+    .get(apiUrl)
+    .then((result) => {
+      return result;
+    })
+    .catch((error) => {
+      throw error;
+    });
+  return res;
+};
+
+OctopusStepActions.getClusters = async (id,awsToolConfigId, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/tools/octopus/clusters/${id}/octopus/${awsToolConfigId}`;
+  const res = await axiosApiService(accessToken)
+    .get(apiUrl)
+    .then((result) => {
+      return result;
+    })
+    .catch((error) => {
+      throw error;
+    });
+  return res;
+};
+
 export default OctopusStepActions;
