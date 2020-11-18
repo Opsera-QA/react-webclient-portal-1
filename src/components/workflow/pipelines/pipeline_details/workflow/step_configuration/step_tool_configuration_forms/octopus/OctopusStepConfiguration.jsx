@@ -31,8 +31,9 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
   const [releases, setReleases] = useState([]);
   const [environmentsSearching, setIsEnvironmentsSearching] = useState(false);
   const [environments, setEnvironments] = useState([]);
-  const [tenantsSearching, setIsTenantsSearching] = useState(false);
-  const [tenants, setTenants] = useState([]);
+  /* DISABLING TENANTS UNTIL MICROSERVICE SUPPORT BECOMES FULLY AVAILABLE */
+  // const [tenantsSearching, setIsTenantsSearching] = useState(false);
+  // const [tenants, setTenants] = useState([]);
 
   useEffect(() => {
     loadFormData(stepTool);
@@ -51,9 +52,10 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
           await searchEnvironments(configuration.octopusToolId,configuration.spaceId);
           if (configuration.projectId.length > 0) {
             await searchReleases(configuration.octopusToolId,configuration.spaceId, configuration.projectId);
-            if (configuration.environmentId.length > 0) {
-              await searchTenants(configuration.octopusToolId,configuration.spaceId,configuration.projectId,configuration.environmentId);
-            }
+            /* DISABLING TENANTS UNTIL MICROSERVICE SUPPORT BECOMES FULLY AVAILABLE */
+            // if (configuration.environmentId.length > 0) {
+            //   await searchTenants(configuration.octopusToolId,configuration.spaceId,configuration.projectId,configuration.environmentId);
+            // }
           }
         }
       }
@@ -193,25 +195,26 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
     }
   };
 
-  const searchTenants = async (id, spaceID, projectID, environmentId) => {
-    setIsTenantsSearching(true);
-    try {
-      const res = await OctopusStepActions.getTenants(id,spaceID,projectID,environmentId, getAccessToken);
-      if (res.data) {
-        let arrOfObj = res.data.data ? res.data.data : [];
-        setTenants(arrOfObj);
-        if (arrOfObj.length === 0) {
-          await nullDataCatch(setTenants, "Tenants")
-        }
-      } else {
-        await credentialCatch(setTenants, "Tenants")
-      }
-    } catch (error) {
-      await errorCatch(setTenants, error)
-    } finally {
-      setIsTenantsSearching(false);
-    }
-  };
+  /* DISABLING TENANTS UNTIL MICROSERVICE SUPPORT BECOMES FULLY AVAILABLE */
+  // const searchTenants = async (id, spaceID, projectID, environmentId) => {
+  //   setIsTenantsSearching(true);
+  //   try {
+  //     const res = await OctopusStepActions.getTenants(id,spaceID,projectID,environmentId, getAccessToken);
+  //     if (res.data) {
+  //       let arrOfObj = res.data.data ? res.data.data : [];
+  //       setTenants(arrOfObj);
+  //       if (arrOfObj.length === 0) {
+  //         await nullDataCatch(setTenants, "Tenants")
+  //       }
+  //     } else {
+  //       await credentialCatch(setTenants, "Tenants")
+  //     }
+  //   } catch (error) {
+  //     await errorCatch(setTenants, error)
+  //   } finally {
+  //     setIsTenantsSearching(false);
+  //   }
+  // };
 
   const handleDTOChange = async (fieldName, value) => {
     if (fieldName === "octopusToolId") {
@@ -252,16 +255,18 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
       newDataObject.setData("environmentName", value.name);
       newDataObject.setData("environmentId", value.id);
       setOctopusStepConfigurationDataDto({ ...newDataObject });
-      await searchTenants(octopusStepConfigurationDto.getData("octopusToolId"),octopusStepConfigurationDto.getData("spaceId"),octopusStepConfigurationDto.getData("projectId"),value.id);
+      /* DISABLING TENANTS UNTIL MICROSERVICE SUPPORT BECOMES FULLY AVAILABLE */
+      // await searchTenants(octopusStepConfigurationDto.getData("octopusToolId"),octopusStepConfigurationDto.getData("spaceId"),octopusStepConfigurationDto.getData("projectId"),value.id);
       return;
     }
-    if (fieldName === "tenantName") {
-      let newDataObject = octopusStepConfigurationDto;
-      newDataObject.setData("tenantName", value.name);
-      newDataObject.setData("tenantId", value.id);
-      setOctopusStepConfigurationDataDto({ ...newDataObject });
-      return;
-    }
+    /* DISABLING TENANTS UNTIL MICROSERVICE SUPPORT BECOMES FULLY AVAILABLE */
+    // if (fieldName === "tenantName") {
+    //   let newDataObject = octopusStepConfigurationDto;
+    //   newDataObject.setData("tenantName", value.name);
+    //   newDataObject.setData("tenantId", value.id);
+    //   setOctopusStepConfigurationDataDto({ ...newDataObject });
+    //   return;
+    // }
   };
 
   if (isLoading || octopusStepConfigurationDto === undefined) {
@@ -346,7 +351,8 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
             busy={environmentsSearching}
             disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("releaseVersion").length === 0}
           />
-          <DtoSelectInput
+          {/* DISABLING TENANTS UNTIL MICROSERVICE SUPPORT BECOMES FULLY AVAILABLE */}
+          {/* <DtoSelectInput
             setDataFunction={handleDTOChange}
             setDataObject={setOctopusStepConfigurationDataDto}
             textField={"name"}
@@ -359,7 +365,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
             disabled={
               octopusStepConfigurationDto && octopusStepConfigurationDto.getData("environmentName").length === 0
             }
-          />
+          /> */}
           <Row className="mx-1 py-2">
             <SaveButton2
               recordDto={octopusStepConfigurationDto}
