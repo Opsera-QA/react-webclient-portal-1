@@ -81,7 +81,7 @@ function ToolConfigurationPanel({ toolData }) {
       case "octopus":
         return <OctopusToolConfiguration toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
       case "slack":
-        return <SlackToolConfiguration />;
+        return <SlackToolConfiguration toolData={toolData.data}/>;
       default:
         return <div className="text-center p-5 text-muted mt-5">Configuration is not currently available for this tool.</div>
     }

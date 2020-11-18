@@ -5,8 +5,10 @@ import apiConnectorActions from "../../../../../api_connector/api-connector-acti
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import slackConnectorActions from "./slack-actions";
 import ErrorDialog from "../../../../../common/status_notifications/error";
+import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
 
-function SlackToolConfiguration() {
+function SlackToolConfiguration({ toolData }) {
   const {getAccessToken} = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [token, setToken] = useState(undefined);
@@ -14,7 +16,10 @@ function SlackToolConfiguration() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    loadData();
+
+    if (toolData != null) {
+      loadData();
+    }
   }, []);
 
 
@@ -32,7 +37,13 @@ function SlackToolConfiguration() {
     }
   }
 
+  // TODO: Pull token from toolData's configuration once this is wired up, instead of doing the API call.
   const getSlackToken = async () => {
+    // let toolConfiguration = toolData["configuration"];
+    // if (toolConfiguration != null && toolConfiguration["slackToken"] != null) {
+    //   setToken(toolConfiguration["slackToken"]);
+    // }
+
     try {
       let response = await apiConnectorActions.getConnectorSettings("slack", getAccessToken);
       if (response.data != null && response.data["slackToken"] !== undefined) {
@@ -48,7 +59,7 @@ function SlackToolConfiguration() {
   };
 
   const getSlackUrl = async () => {
-    let slackResponse = await slackConnectorActions.getSlackUrl(getAccessToken);
+    let slackResponse = await slackConnectorActions.getSlackUrl(toolData["_id"], getAccessToken);
 
     if (slackResponse.data != null && slackResponse.data.status === 200) {
       setSlackUrl(slackResponse.data.message);
@@ -84,13 +95,22 @@ function SlackToolConfiguration() {
     return (<LoadingDialog size={"sm"} message={"Loading Slack Credentials"} />);
   }
 
+  if (toolData == null) {
+    return (
+      <div className="m-3">
+        <div className="h5">Slack Credentials</div>
+        <div>You can connect to Slack using credentials stored on a per-tool basis in the <Link to="/inventory/tools">Tool Registry</Link>.</div>
+        <div>To get started, create a Slack tool and connect to Slack using the Add to Slack button on the Slack tool's connection panel.</div>
+      </div>
+    );
+  }
+
   if (!isLoading && token != null) {
     return (
       <div className="m-3">
         <div className="h5">Slack Configured!</div>
-        <div>Your Slack token is active and ready for use in the pipelines.</div>
+        <div>Your Slack token is connected to this tool and ready for use in the pipelines.</div>
         <div>If you would like to replace it, add to Slack with a different account.</div>
-        <div className="py-2">Note: This Slack connection is account wide, so each Slack tool shares the connection information.</div>
         <div className="pt-2">{getSlackButton()}</div>
       </div>
     );
@@ -98,11 +118,15 @@ function SlackToolConfiguration() {
 
   return (
     <div className="p-3">
-      <div>You have not connected to Slack with your account.</div>
-      <div className="py-2">Note: This Slack connection is account wide, so each Slack tool shares the connection information.</div>
+      <div>You have not connected this tool to Slack.</div>
       <div className="pt-2">{getSlackButton()}</div>
     </div>
   );
 }
+
+
+SlackToolConfiguration.propTypes = {
+  toolData: PropTypes.object
+};
 
 export default SlackToolConfiguration;
