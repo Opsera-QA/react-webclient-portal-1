@@ -171,7 +171,7 @@ function GitlabToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVaul
       <Row>
         <div className="ml-auto mt-3 px-3 d-flex">
           <div>
-            <TestToolConnectionButton recordData={toolData} toolName={"Gitlab"}/>
+            {/*<TestToolConnectionButton recordData={toolData} toolName={"Gitlab"}/>*/}
           </div>
           <div className="d-flex">
             {isSaving &&
