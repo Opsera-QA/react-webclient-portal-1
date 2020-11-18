@@ -200,9 +200,9 @@ function OPBlueprint(props) {
           let formattedArray = [];
           for (let item in res.data.response) {
             if (res.data.response[item].workflow.run_count && res.data.response[item].workflow.run_count > 0) {
-              let pipelineName = res.data.response[item].name;
-              runCountFetch[res.data.response[item].name] = res.data.response[item].workflow.run_count;
-              idFetch[res.data.response[item].name] = res.data.response[item]._id;
+              let pipelineName = `${res.data.response[item].name} (${res.data.response[item]._id})`;
+              runCountFetch[`${res.data.response[item].name} (${res.data.response[item]._id})`] = res.data.response[item].workflow.run_count;
+              idFetch[`${res.data.response[item].name} (${res.data.response[item]._id})`] = res.data.response[item]._id;
               formattedArray.push({ value: pipelineName, label: pipelineName });
             }
             let filterDataApiResponse = [
