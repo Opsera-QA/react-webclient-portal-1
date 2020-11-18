@@ -164,7 +164,7 @@ function GithubToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVaul
       <Row>
         <div className="ml-auto mt-3 px-3 d-flex">
           <div>
-            <TestToolConnectionButton recordData={toolData} toolName={"Github"}/>
+            {/*<TestToolConnectionButton recordData={toolData} toolName={"Github"}/>*/}
           </div>
           <div className="d-flex">
             {isSaving &&

@@ -170,7 +170,7 @@ function BitbucketToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToV
       <Row>
         <div className="ml-auto mt-3 px-3 d-flex">
           <div>
-            <TestToolConnectionButton recordData={toolData} toolName={"Bitbucket"}/>
+            {/*<TestToolConnectionButton recordData={toolData} toolName={"Bitbucket"}/>*/}
           </div>
           <div className="d-flex">
             {isSaving &&
