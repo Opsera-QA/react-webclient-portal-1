@@ -25,7 +25,6 @@ function OctopusToolConfiguration({ toolData, fnSaveChanges, fnSaveToVault }) {
 
   const loadData = async () => {
     try {
-      console.log("tool data config: " + JSON.stringify(toolData));
       if (toolData["configuration"] != null) {
         setOctopusConfigurationDto(new Model(toolData["configuration"], octopusConnectionMetadata, false))
       } else {

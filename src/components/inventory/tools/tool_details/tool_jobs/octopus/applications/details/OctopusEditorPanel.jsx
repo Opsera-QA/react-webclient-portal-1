@@ -408,14 +408,14 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
               />
             </Col>
             <Col lg={12}>
-              <DtoSelectInput
+              <DtoMultiselectInput
                 setDataObject={setOctopusApplicationDataDto}
                 textField={"name"}
                 valueField={"id"}
                 dataObject={octopusApplicationDataDto}
                 filter={"contains"}
                 selectOptions={environments ? environments : []}
-                fieldName={"environmentId"}
+                fieldName={"environmentIds"}
                 busy={environmentsSearching}
                 disabled={
                   (octopusApplicationDataDto && environments.length === 0) ||

@@ -7,18 +7,28 @@ import { Dropdown } from "react-bootstrap";
 import { getTableBooleanIconColumn, getTableTextColumn } from "../../../../../../common/table/table-column-helpers";
 import octopusApplicationsMetadata from "../octopus-environment-metadata";
 import ExistingOctopusApplicationModal from "./OctopusApplicationModal";
+import { format } from "date-fns";
 
 function OctopusApplicationsTable({ toolData, loadData, selectedRow, isLoading }) {
   const [type, setType] = useState(false);
   let fields = octopusApplicationsMetadata.fields;
+  const [showCreateOctopusModal, setShowCreateOctopusModal] = useState(false);
+  const initialState = {
+    pageIndex: 0,
+    sortBy: [
+      {
+        id: "updatedAt",
+        desc: true
+      }
+    ]
+  };
+
   let data = [];
-  if (toolData.getData("actions")) {
+  if (toolData.getData("actions") && toolData.getData("actions").length > 0) {
     toolData.getData("actions").forEach(function (item) {
-      data.push(item.configuration);
+      data.push({...item.configuration, updatedAt: format(new Date(item.updatedAt), "yyyy-MM-dd', 'hh:mm a")});
     });
   }
-
-  const [showCreateOctopusModal, setShowCreateOctopusModal] = useState(false);
 
   const createOctopusApplication = (type) => {
     if (type === "environment") {
@@ -55,6 +65,10 @@ function OctopusApplicationsTable({ toolData, loadData, selectedRow, isLoading }
           return field.id === "type";
         })
       ),
+      {
+        Header: "Created On",
+        accessor: "updatedAt"
+      },
       getTableBooleanIconColumn(
         fields.find((field) => {
           return field.id === "active";
@@ -81,7 +95,7 @@ function OctopusApplicationsTable({ toolData, loadData, selectedRow, isLoading }
           <br />
         </div>
       )}
-      <CustomTable columns={columns} data={data} onRowSelect={selectedRow} isLoading={isLoading}></CustomTable>
+      <CustomTable columns={columns} data={data} onRowSelect={selectedRow} isLoading={isLoading} initialState={initialState}></CustomTable>
       {type && (
         <ExistingOctopusApplicationModal
           type={type}

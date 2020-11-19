@@ -22,8 +22,8 @@ const OctopusTargetMetadata = {
       isRequired: true
     },
     {
-      label: "Environment Name",
-      id: "environmentId",
+      label: "Environments",
+      id: "environmentIds",
       isRequired: true
     },
     {
@@ -52,7 +52,7 @@ const OctopusTargetMetadata = {
     awsToolConfigId : "",
     toolId : "",
     clusterName: "",
-    environmentId: "",
+    environmentIds: "",
     name: "",
     spaceId: "",
     spaceName: "",
