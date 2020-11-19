@@ -7,7 +7,7 @@ const jiraStepApprovalMetadata = {
       id: "type",
     },
     {
-      label: "Jira Tool ID",
+      label: "Jira Tool",
       id: "jiraToolId",
       isRequired: true
     },

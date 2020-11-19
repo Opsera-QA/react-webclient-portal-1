@@ -11,6 +11,7 @@ import DetailPanelContainer from "../../../../../common/panels/detail_panel_cont
 import Col from "react-bootstrap/Col";
 import {getFormValidationErrorDialog} from "components/common/toasts/toasts";
 import TestToolConnectionButton from "../../../../../common/buttons/connection/TestToolConnectionButton";
+import InstallJiraAppButton from "./InstallJiraAppButton";
 
 
 function JiraToolConfiguration({ toolData, fnSaveChanges, fnSaveToVault }) {
@@ -93,6 +94,9 @@ function JiraToolConfiguration({ toolData, fnSaveChanges, fnSaveToVault }) {
           </Row>
           <Row>
             <div className="ml-auto px-2 d-flex">
+              <div className="py-1">
+                <InstallJiraAppButton toolData={toolData} disable={jiraConfigurationDto.isNew()} />
+              </div>
               <div className="py-1">
                 {/*<TestToolConnectionButton recordData={toolData} toolName={"Jira"}/>*/}
               </div>

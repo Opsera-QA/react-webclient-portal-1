@@ -98,4 +98,9 @@ toolsActions.updateToolConfiguration = async (toolData, getAccessToken) => {
   return response;
 }
 
+toolsActions.installJiraApp = async (toolId, getAccessToken) => {
+  const apiUrl = `/connectors/jira/${toolId}/app/install`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
 export default toolsActions;

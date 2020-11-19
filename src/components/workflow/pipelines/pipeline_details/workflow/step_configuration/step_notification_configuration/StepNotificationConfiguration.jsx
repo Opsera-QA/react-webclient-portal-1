@@ -165,6 +165,10 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
     return (
       <div className="my-4">
         <NotificationsToggle dataObject={teamsDto} setDataObject={setTeamsDto} fieldName={"enabled"} />
+        <small className="form-text text-muted px-2">
+          Please Note: You must connect to Microsoft Teams on the
+          <Link to="/inventory/tools"><FontAwesomeIcon icon={faClipboardList} className="mx-1"/>Tool Registry</Link> page in order to use this feature.
+        </small>
         <TeamsStepNotificationToolInput setDataObject={setTeamsDto} dataObject={teamsDto} />
       </div>
     );
@@ -179,6 +183,10 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
       return (
         <div className="my-4">
           <NotificationsToggle dataObject={jiraDto} setDataObject={setJiraDto} />
+          <small className="form-text text-muted px-2">
+            Please Note: You must connect to Jira on the
+            <Link to="/inventory/tools"><FontAwesomeIcon icon={faClipboardList} className="mx-1"/>Tool Registry</Link> page in order to use this feature.
+          </small>
           <JiraStepNotificationToolInput setDataObject={setJiraDto} dataObject={jiraDto} />
           <JiraStepNotificationPriorityInput jiraToolId={jiraDto.getData("jiraToolId")} setDataObject={setJiraDto} dataObject={jiraDto} />
           <JiraStepNotificationProjectInput jiraToolId={jiraDto.getData("jiraToolId")} setDataObject={setJiraDto} dataObject={jiraDto} />
@@ -195,6 +203,10 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
     return (
       <div className="my-4">
         <NotificationsToggle dataObject={jiraDto} setDataObject={setJiraDto} />
+        <small className="form-text text-muted px-2">
+          Please Note: You must connect to Jira on the
+          <Link to="/inventory/tools"><FontAwesomeIcon icon={faClipboardList} className="mx-1"/>Tool Registry</Link> page in order to use this feature.
+        </small>
         {/*<NotificationLevelInput disabled={true} dataObject={jiraDto} setDataObject={setJiraDto} fieldName={"jiraNotificationLevel"} />*/}
         <JiraStepNotificationToolInput setDataObject={setJiraDto} dataObject={jiraDto} />
         <JiraStepNotificationPriorityInput jiraToolId={jiraDto.getData("jiraToolId")} setDataObject={setJiraDto} dataObject={jiraDto} />
