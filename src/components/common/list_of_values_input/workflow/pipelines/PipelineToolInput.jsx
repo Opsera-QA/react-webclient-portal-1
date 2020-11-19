@@ -5,8 +5,9 @@ import pipelineActions from "../../../../workflow/pipeline-actions";
 import {AuthContext} from "../../../../../contexts/AuthContext";
 import DtoSelectInput from "../../../input/dto_input/dto-select-input";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamationCircle} from "@fortawesome/free-solid-svg-icons";
+import {faExclamationCircle, faTools} from "@fortawesome/free-solid-svg-icons";
 import {Link} from "react-router-dom";
+import {Form} from "react-bootstrap";
 
 function PipelineToolInput({ toolType, toolFriendlyName, placeholderText, visible, fieldName, dataObject, setDataObject, disabled}) {
   const toastContext = useContext(DialogToastContext);
@@ -36,6 +37,18 @@ function PipelineToolInput({ toolType, toolFriendlyName, placeholderText, visibl
     setTools(response);
   };
 
+  const getInfoText = () => {
+    if (dataObject.getData(fieldName) !== "") {
+      return (
+        <Link to={`/inventory/tools/details/${dataObject.getData(fieldName)}`}>
+          <span><FontAwesomeIcon icon={faTools} className="pr-1" />View Or Edit this Tool's Registry settings</span>
+        </Link>
+      );
+    }
+
+    return <span>Select a tool to get started.</span>
+  };
+
   if (!visible) {
     return <></>;
   }
@@ -53,17 +66,22 @@ function PipelineToolInput({ toolType, toolFriendlyName, placeholderText, visibl
   }
 
   return (
-    <DtoSelectInput
-      fieldName={fieldName}
-      dataObject={dataObject}
-      setDataObject={setDataObject}
-      selectOptions={tools}
-      busy={isLoading}
-      valueField="id"
-      textField="name"
-      placeholderText={placeholderText}
-      disabled={disabled || isLoading}
-   />
+    <div>
+      <DtoSelectInput
+        fieldName={fieldName}
+        dataObject={dataObject}
+        setDataObject={setDataObject}
+        selectOptions={tools}
+        busy={isLoading}
+        valueField="id"
+        textField="name"
+        placeholderText={placeholderText}
+        disabled={disabled || isLoading}
+      />
+      <small className="text-muted ml-3">
+        {getInfoText()}
+      </small>
+    </div>
   );
 }
 

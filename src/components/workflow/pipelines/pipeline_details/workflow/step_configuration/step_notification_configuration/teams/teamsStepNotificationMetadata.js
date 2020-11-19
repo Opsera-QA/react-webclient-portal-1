@@ -7,7 +7,7 @@ const teamsStepNotificationMetadata = {
       id: "type",
     },
     {
-      label: "Teams Tool ID",
+      label: "Teams Tool",
       id: "toolId",
       isRequired: "true"
     },
