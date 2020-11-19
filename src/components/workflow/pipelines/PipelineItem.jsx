@@ -89,7 +89,15 @@ const PipelineItem = ({ item }) => {
 
   // TODO: Deal with multiple categories when we get there
   const getFirstCategory = () => {
-    const type = item.type;
+    const { type } = item;
+    if (!type) {
+      return (
+        <TooltipWrapper innerText={"No Pipeline Type Assigned"}>
+          <FontAwesomeIcon icon={faDiceD20} className="ml-1 pipeline-blue-text" size="lg"/>
+        </TooltipWrapper>
+      );
+    }
+
     switch (type[0]) {
     case "sfdc":
       return (
