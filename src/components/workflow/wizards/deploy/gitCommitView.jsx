@@ -26,7 +26,6 @@ const GitCommitView = ({ pipelineId, templateId, autoRun, handleClose, setView }
   const [message, setMessage] = useState("");
 
   const handleCommit = async() => {
-    console.log("commit triggers here");
     setSave(true);
     setLoading(true);
     // TODO: make an api call to trigger the pipeline creation here
@@ -59,7 +58,7 @@ const GitCommitView = ({ pipelineId, templateId, autoRun, handleClose, setView }
       handleClose();
     } catch (err) {
       console.log(err);
-      toastContext.showErrorDialog(err.message);
+      toastContext.showErrorDialog(err.error.message);
       setSave(false);
       setLoading(false);
     }
