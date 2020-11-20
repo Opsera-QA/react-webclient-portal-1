@@ -137,7 +137,7 @@ const SFDCUnitTestView = ({
         <div className="flex-container-top"></div>
         <div className="flex-container-content">
           <div className="h5">SalesForce Test Classes</div>
-          <div className="text-muted">Only Apex Class with names having Test as suffix can be part of selection for Selective Unit Testing.</div>
+          <div className="text-muted">Apex Classes with @isTest annotation will be part of selection for Selective Unit Testing.</div>
 
           {error && <ErrorDialog error={error} align={"top"} setError={setError} />}
 
