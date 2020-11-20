@@ -5,10 +5,12 @@ import {
   Form,
   OverlayTrigger,
   Popover,
+  Tooltip,
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faExclamationCircle,
+  faExclamationTriangle,
   faTimes,
   faSave,
   faSpinner,
@@ -16,14 +18,15 @@ import {
   faTools,
 } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
-import { AuthContext } from "../../../../../../../contexts/AuthContext";
-import { axiosApiService } from "../../../../../../../api/apiService";
+import { AuthContext } from "../../../../../../../../contexts/AuthContext";
+import { axiosApiService } from "../../../../../../../../api/apiService";
 import { Link } from "react-router-dom";
+import ErrorDialog from "../../../../../../../common/status_notifications/error";
 import {
   getErrorDialog,
   getMissingRequiredFieldsErrorDialog,
   getServiceUnavailableDialog
-} from "../../../../../../common/toasts/toasts";
+} from "../../../../../../../common/toasts/toasts";
 
 import pipelineActions from "components/workflow/pipeline-actions";
 import { DialogToastContext, showServiceUnavailableDialog } from "contexts/DialogToastContext";
@@ -31,7 +34,7 @@ import { DialogToastContext, showServiceUnavailableDialog } from "contexts/Dialo
 const JOB_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
   { value: "job", label: "Custom Job" },
-  { value: "opsera-job", label: "Opsera Managed Jobs" }
+  { value: "opsera-job", label: "Opsera Managed Jobs" },
 ];
 
 //This must match the form below and the data object expected.  Each tools' data object is different
@@ -45,7 +48,7 @@ const INITIAL_DATA = {
   jobName: "",
   toolJobId: "",
   toolJobType: "",
- 
+
   accountUsername: "",
   projectId: "",
   defaultBranch: "",
@@ -61,12 +64,13 @@ const INITIAL_DATA = {
   gitUserName: "",
   repository: "",
   branch: "",
+  jsonPath: "",
   workspace: "",
 };
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
-function JUnitStepConfiguration({
+function CypressStepConfiguration({
   stepTool,
   pipelineId,
   plan,
@@ -90,7 +94,7 @@ function JUnitStepConfiguration({
   const [branchList, setBranchList] = useState([]);
   const [isBranchSearching, setIsBranchSearching] = useState(false);
   const [listOfSteps, setListOfSteps] = useState([]);
-  
+
   const [workspacesList, setWorkspacesList] = useState([]);
   const [isWorkspacesSearching, setIsWorkspacesSearching] = useState(false);
 
@@ -109,7 +113,7 @@ function JUnitStepConfiguration({
   const formatStepOptions = (plan, stepId) => {
     let STEP_OPTIONS = plan.slice(
       0,
-      plan.findIndex((element) => element._id === stepId)
+      plan.findIndex((element) => element._id === stepId),
     );
     STEP_OPTIONS.unshift({ _id: "", name: "Select One", isDisabled: "yes" });
     return STEP_OPTIONS;
@@ -135,14 +139,13 @@ function JUnitStepConfiguration({
     };
   }, [stepTool]);
 
-  useEffect( () => {
+
+  useEffect(() => {
     setShowToast(false);
 
     async function fetchJenkinsDetails(service) {
       setisJenkinsSearching(true);
-      // Set results state
       let results = await pipelineActions.getToolsList(service, getAccessToken);
-      // Set results state
       if (typeof(results) != "object") {
         setJenkinsList([{ value: "", name: "Select One", isDisabled: "yes" }]);
         let errorMessage =
@@ -152,7 +155,7 @@ function JUnitStepConfiguration({
         return;
       }
       const filteredList = results.filter(
-        (el) => el.configuration !== undefined
+        (el) => el.configuration !== undefined,
       ); //filter out items that do not have any configuration data!
       if (filteredList) {
         setJenkinsList(filteredList);
@@ -181,10 +184,10 @@ function JUnitStepConfiguration({
         setIsWorkspacesSearching(false);
         return;
       }
-       //console.log(results);
+        //console.log(results);
         setWorkspacesList(results);
         setIsWorkspacesSearching(false);
-    }
+      }
 
     if (
       formData.service === "bitbucket" &&
@@ -271,36 +274,35 @@ function JUnitStepConfiguration({
     }
   }, [formData.repoId]);
 
+
   useEffect(() => {
     if (formData.toolConfigId) {
-      // console.log(jenkinsList[jenkinsList.findIndex(x => x.id === formData.toolConfigId)].accounts);
       setAccountsList(
         jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ] ? 
-        jenkinsList[
+          ] ? jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ].accounts : []
+          ].accounts : [],
       );
     }
   }, [jenkinsList, formData.toolConfigId]);
+
 
   useEffect(() => {
     if (formData.toolConfigId) {
       setJobsList(
         jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ] ? 
-        jenkinsList[
+          ] ? jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ].jobs : []
+          ].jobs : [],
       );
     }
   }, [jenkinsList, formData.toolConfigId]);
 
   
   useEffect(() => {
-    if (jobsList && jobsList.length > 0 && formData.toolJobId && formData.toolJobId.length > 0  && !jobsList[jobsList.findIndex((x) => x._id === formData.toolJobId)]) {
+    if (jobsList && jobsList.length > 0 && formData.toolJobId && formData.toolJobId.length > 0 && !jobsList[jobsList.findIndex((x) => x._id === formData.toolJobId)]) {
      let toast = getErrorDialog(
         "Preselected job is no longer available.  It may have been deleted.  Please select another job from the list or recreate the job in Tool Reigstry.",
         setShowToast,
@@ -313,15 +315,17 @@ function JUnitStepConfiguration({
     setShowToast(false);
   }, [jobsList, formData.toolJobId]);
 
+
   useEffect(() => {
     if (formData.toolJobType && formData.toolJobType.includes("SFDC")) {
       setFormData({ ...formData, buildType: "ant" });
     }
   }, [formData.toolJobType]);
 
+
   useEffect(() => {
     if (jobType === "job") {
-      setFormData({ ...formData, jobType : "UNIT TESTING" });
+      setFormData({ ...formData, jobType: "CYPRESS UNIT TESTING" });
     }
   }, [jobType]);
 
@@ -397,6 +401,7 @@ function JUnitStepConfiguration({
       buildType,
       dockerName,
       dockerTagName,
+      jsonPath
     } = formData;
 
     if(jobType === "job") {
@@ -404,7 +409,7 @@ function JUnitStepConfiguration({
         let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
         setToast(toast);
         setShowToast(true);
-        return false;
+      return false;
       } else {
         return true;
       }
@@ -415,7 +420,6 @@ function JUnitStepConfiguration({
       jenkinsUrl.length === 0 ||
       jUserId.length === 0 ||
       jAuthToken.length === 0 ||
-      // jobName.length === 0 ||
       (buildType === "docker"
         ? dockerName.length === 0 || dockerTagName.length === 0
         : false)
@@ -448,8 +452,8 @@ function JUnitStepConfiguration({
         service: "",
         gitCredential: "",
         gitUserName: "",
-        repository: "",
         workspace:"",
+        repository: "",
         branch: "",
         toolJobId: "",
         toolJobType: "",
@@ -466,20 +470,20 @@ function JUnitStepConfiguration({
   };
 
   const handleJobChange = (selectedOption) => {
-    console.log(selectedOption)
-    if (selectedOption.type[0] === "UNIT TESTING" ) {      
-        setFormData({
-          ...formData,
-          toolJobId: selectedOption._id,
-          toolJobType: selectedOption.type,
-          jobType: selectedOption.type[0],
-          ...selectedOption.configuration,
-          buildToolVersion: "6.3",
-          projectKey:"",
-          buildArgs: {},
-        });
+    console.log(selectedOption);
+    if (selectedOption.type[0] === "CYPRESS UNIT TESTING") {
+      setFormData({
+        ...formData,
+        toolJobId: selectedOption._id,
+        toolJobType: selectedOption.type,
+        jobType: selectedOption.type[0],
+        ...selectedOption.configuration,
+        buildToolVersion: "6.3",
+        projectKey: "",
+        buildArgs: {},
+      });
     } else {
-      let errorMessage= "Selected Job is not a Unit test Job!  Please ensure the selected job has JUnit configurations.";
+      let errorMessage = "Selected Job is not a Unit test Job!  Please ensure the selected job has Cypress configurations.";
       let toast = getErrorDialog(errorMessage, setShowToast, "detailPanelTop");
       setToast(toast);
       setShowToast(true);
@@ -497,10 +501,10 @@ function JUnitStepConfiguration({
       gitUrl: "",
       sshUrl: "",
       repository: "",
-      workspace:"",
       branch: "",
       projectId: "",
       defaultBranch: "",
+      workspace: "",
     });
   };
 
@@ -545,15 +549,15 @@ function JUnitStepConfiguration({
   const handleJobTypeChange = (selectedOption) => {
     setShowToast(false);
     setJobType(selectedOption.value);
-      setFormData({
-        ...formData,
-        jobName: "",
-        buildType: "", 
-        jobDescription: "",
-        jobType: "",
-        toolJobId: "",
-        toolJobType: "",
-      });
+    setFormData({
+      ...formData,
+      jobName: "",
+      buildType: "",
+      jobDescription: "",
+      jobType: "",
+      toolJobId: "",
+      toolJobType: "",
+    });
   };
 
   const RegistryPopover = (data) => {
@@ -578,7 +582,7 @@ function JUnitStepConfiguration({
             </div>
             {data.configuration && (
               <>
-                {Object.entries(data.configuration).map(function (a) {
+                {Object.entries(data.configuration).map(function(a) {
                   return (
                     <div key={a}>
                       {a[1].length > 0 && (
@@ -630,7 +634,7 @@ function JUnitStepConfiguration({
               overlay={RegistryPopover(
                 jenkinsList[
                   jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-                ]
+                  ],
               )}
             >
               <FontAwesomeIcon
@@ -659,9 +663,9 @@ function JUnitStepConfiguration({
                     value={
                       jenkinsList[
                         jenkinsList.findIndex(
-                          (x) => x.id === formData.toolConfigId
+                          (x) => x.id === formData.toolConfigId,
                         )
-                      ]
+                        ]
                     }
                     valueField="id"
                     textField="name"
@@ -688,24 +692,16 @@ function JUnitStepConfiguration({
               )}
             </>
           )}
-          {formData.toolConfigId && formData.toolConfigId.length > 0 && (
+          {formData.toolConfigId.length > 0 && (
             <Form.Label className="mt-2 pl-1">
               <Link to={"/inventory/tools/details/" + formData.toolConfigId}>
-                <FontAwesomeIcon icon={faTools} className="pr-1" /> View/edit
-                this tool's Registry settings
+                <FontAwesomeIcon icon={faTools} className="pr-1"/> View/edit
+                this tool&#39;s Registry settings
               </Link>
             </Form.Label>
           )}
         </Form.Group>
 
-        {/*{(!formData.toolConfigId && formData.jenkinsUrl) &&
-      <div className="form-text text-muted mb-3">
-        <FontAwesomeIcon icon={faExclamationTriangle} className="mr-1 yellow" fixedWidth/>
-        Unregistered Tool settings in use. The settings below can be used in this step, but cannot be updated. You
-        must register
-        a new Jenkins server in the
-        <Link to="/inventory/tools"> Tool Registry</Link> and add its configuration details. </div>}
-*/}
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Job Type*</Form.Label>
           {jobType !== undefined ? (
@@ -739,7 +735,8 @@ function JUnitStepConfiguration({
           </Form.Group>
         ) : 
         <>
-           {jobType === "opsera-job" && (
+        
+        {jobType === "opsera-job" && (
           <>
             {formData.jenkinsUrl && jenkinsList.length > 0 && (
               <Form.Group controlId="formBasicEmail">
@@ -752,7 +749,7 @@ function JUnitStepConfiguration({
                     overlay={RegistryPopover(
                       jobsList[
                         jobsList.findIndex((x) => x._id === formData.toolJobId)
-                      ]
+                        ],
                     )}
                   >
                     <FontAwesomeIcon
@@ -788,7 +785,7 @@ function JUnitStepConfiguration({
                       jobsList && jobsList.length > 0 &&
                       jobsList[
                         jobsList.findIndex((x) => x._id === formData.toolJobId)
-                      ]
+                        ]
                     }
                     filter="contains"
                     onChange={handleJobChange}
@@ -798,6 +795,7 @@ function JUnitStepConfiguration({
             )}
           </>
         )}
+
 
         {formData.jenkinsUrl && jenkinsList.length > 0 && (
           <Form.Group controlId="formBasicEmail">
@@ -810,9 +808,9 @@ function JUnitStepConfiguration({
                 overlay={RegistryPopover(
                   accountsList[
                     accountsList.findIndex(
-                      (x) => x.gitCredential === formData.gitCredential
+                      (x) => x.gitCredential === formData.gitCredential,
                     )
-                  ]
+                    ],
                 )}
               >
                 <FontAwesomeIcon
@@ -844,9 +842,9 @@ function JUnitStepConfiguration({
                   accountsList && accountsList.length > 0 &&
                   accountsList[
                     accountsList.findIndex(
-                      (x) => x.gitCredential === formData.gitCredential
+                      (x) => x.toolId === formData.gitToolId,
                     )
-                  ]
+                    ]
                 }
                 filter="contains"
                 onChange={handleAccountChange}
@@ -855,6 +853,7 @@ function JUnitStepConfiguration({
           </Form.Group>
         )}
 
+        
         {formData.service && formData.service === "bitbucket" && formData.gitToolId && (
           <Form.Group controlId="account" className="mt-2">
             <Form.Label>Workspace*</Form.Label>
@@ -904,7 +903,7 @@ function JUnitStepConfiguration({
         (formData.service === "bitbucket"? 
           formData.workspace 
           && formData.workspace.length > 0 : true ) && (
-          <Form.Group controlId="account" className="mt-2">
+          <Form.Group controlId="repo" className="mt-2">
             <Form.Label>Repository*</Form.Label>
             {isRepoSearching ? (
               <div className="form-text text-muted mt-2 p-2">
@@ -968,7 +967,7 @@ function JUnitStepConfiguration({
                     value={
                       branchList[
                         branchList.findIndex((x) => x.value === formData.branch)
-                      ]
+                        ]
                     }
                     valueField="value"
                     textField="name"
@@ -989,6 +988,24 @@ function JUnitStepConfiguration({
           </Form.Group>
         )}
 
+        {formData.jobType === "CYPRESS UNIT TESTING" && (
+          <>
+            <Form.Group controlId="branchField">
+              <Form.Label>JSON Path</Form.Label>
+              <Form.Control
+                maxLength="250"
+                type="text"
+                placeholder=""
+                value={formData.jsonPath || ""}
+                onChange={(e) =>
+                  setFormData({ ...formData, jsonPath: e.target.value })
+                }
+              />
+            </Form.Group> 
+            </>
+          )
+          }
+
         <Form.Group controlId="threshold">
           <Form.Label>Success Threshold</Form.Label>
           <Form.Control
@@ -1001,7 +1018,7 @@ function JUnitStepConfiguration({
         </Form.Group>
         </>
         }
-
+        
         {jobType === "opsera-job" ? (
           <Button
             variant="primary"
@@ -1023,7 +1040,7 @@ function JUnitStepConfiguration({
               </>
             ) : (
               <>
-                <FontAwesomeIcon icon={faSave} className="mr-1" />
+                <FontAwesomeIcon icon={faSave} className="mr-1"/>
                 Create Job and Save
               </>
             )}
@@ -1049,7 +1066,7 @@ function JUnitStepConfiguration({
               </>
             ) : (
               <>
-                <FontAwesomeIcon icon={faSave} className="mr-1" /> Save
+                <FontAwesomeIcon icon={faSave} className="mr-1"/> Save
               </>
             )}
           </Button>
@@ -1063,7 +1080,7 @@ function JUnitStepConfiguration({
   );
 }
 
-JUnitStepConfiguration.propTypes = {
+CypressStepConfiguration.propTypes = {
   stepTool: PropTypes.string,
   pipelineId: PropTypes.string,
   plan: PropTypes.object,
@@ -1075,4 +1092,4 @@ JUnitStepConfiguration.propTypes = {
   setShowToast: PropTypes.func
 }
 
-export default JUnitStepConfiguration;
+export default CypressStepConfiguration;

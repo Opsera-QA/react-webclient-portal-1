@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 import JSONInput from "react-json-editor-ajrm";
 import locale    from "react-json-editor-ajrm/locale/en";
-import {getErrorDialog, getMissingRequiredFieldsErrorDialog} from "../../../../../../common/toasts/toasts";
+import {getErrorDialog, getMissingRequiredFieldsErrorDialog} from "../../../../../../../common/toasts/toasts";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {

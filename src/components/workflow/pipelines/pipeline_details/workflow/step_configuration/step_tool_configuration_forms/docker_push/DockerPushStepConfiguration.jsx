@@ -5,10 +5,12 @@ import {
   Form,
   OverlayTrigger,
   Popover,
+  Tooltip,
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faExclamationCircle,
+  faExclamationTriangle,
   faTimes,
   faSave,
   faSpinner,
@@ -16,15 +18,16 @@ import {
   faTools,
 } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
-import { AuthContext } from "../../../../../../../contexts/AuthContext";
-import { axiosApiService } from "../../../../../../../api/apiService";
+import { AuthContext } from "../../../../../../../../contexts/AuthContext";
+import { axiosApiService } from "../../../../../../../../api/apiService";
 import { Link } from "react-router-dom";
-import ErrorDialog from "../../../../../../common/status_notifications/error";
+import ErrorDialog from "../../../../../../../common/status_notifications/error";
+import JUnitStepConfiguration from "../junit/JUnitStepConfiguration";
 import {
   getErrorDialog,
   getMissingRequiredFieldsErrorDialog,
   getServiceUnavailableDialog
-} from "../../../../../../common/toasts/toasts";
+} from "../../../../../../../common/toasts/toasts";
 
 import pipelineActions from "components/workflow/pipeline-actions";
 import { DialogToastContext, showServiceUnavailableDialog } from "contexts/DialogToastContext";
@@ -46,13 +49,16 @@ const INITIAL_DATA = {
   jobName: "",
   toolJobId: "",
   toolJobType: "",
+  projectKey: "",
  
   accountUsername: "",
   projectId: "",
   defaultBranch: "",
   dockerName: "",
   dockerTagName: "",
-  buildType: "gradle", //hardcoded now but needs to get it from a dropdown
+  buildStepId: "", //this will have docker name and tag
+
+  buildType: "", //hardcoded now but needs to get it from a dropdown
   gitToolId: "",
   repoId: "",
   gitUrl: "",
@@ -67,7 +73,7 @@ const INITIAL_DATA = {
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
-function SeleniumStepConfiguration({
+function DockerPushStepConfiguration({
   stepTool,
   pipelineId,
   plan,
@@ -92,14 +98,17 @@ function SeleniumStepConfiguration({
   const [isBranchSearching, setIsBranchSearching] = useState(false);
   const [listOfSteps, setListOfSteps] = useState([]);
   
-  const [workspacesList, setWorkspacesList] = useState([]);
-  const [isWorkspacesSearching, setIsWorkspacesSearching] = useState(false);
-
+  const [awsList, setAwsList] = useState([]);
+  const [isAwsSearching, setIsAwsSearching] = useState(false);
   const [accountsList, setAccountsList] = useState([]);
   const [jobsList, setJobsList] = useState([]);
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
   const [jobType, setJobType] = useState("");
+  
+  const [workspacesList, setWorkspacesList] = useState([]);
+  const [isWorkspacesSearching, setIsWorkspacesSearching] = useState(false);
+
 
   useEffect(() => {
     if (plan && stepId) {
@@ -137,6 +146,12 @@ function SeleniumStepConfiguration({
   }, [stepTool]);
 
   useEffect(() => {
+    if (jobType === "job") {
+      setFormData({ ...formData, jobType : "DOCKER PUSH" });
+    }
+  }, [jobType]);
+
+  useEffect(() => {
     setShowToast(false);
 
     async function fetchJenkinsDetails(service) {
@@ -165,6 +180,35 @@ function SeleniumStepConfiguration({
     fetchJenkinsDetails("jenkins");
   }, []);
 
+  // search aws
+  useEffect(() => {
+    setShowToast(false);
+
+    async function fetchAWSDetails(service) {
+      setIsAwsSearching(true);
+      // Set results state
+      let results = await pipelineActions.getToolsList(service, getAccessToken);
+      //console.log(results);
+      if (typeof(results) != "object") {
+        setAwsList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+        let errorMessage =
+          "AWS information is missing or unavailable!";
+        toastContext.showErrorDialog(errorMessage);
+        setIsAwsSearching(false);
+        return;
+      }
+      const filteredList = results.filter(
+        (el) => el.configuration !== undefined
+      ); //filter out items that do not have any configuration data!
+      if (filteredList) {
+        setAwsList(filteredList);
+        setIsAwsSearching(false);
+      }
+    }
+
+    // Fire off our API call
+    fetchAWSDetails("aws_account");
+  }, []);
 
   // fetch repos
   useEffect(() => {
@@ -185,7 +229,7 @@ function SeleniumStepConfiguration({
         //console.log(results);
         setWorkspacesList(results);
         setIsWorkspacesSearching(false);
-    }
+      }
 
     if (
       formData.service === "bitbucket" &&
@@ -299,11 +343,10 @@ function SeleniumStepConfiguration({
     }
   }, [jenkinsList, formData.toolConfigId]);
 
-  
   useEffect(() => {
-    if (jobsList && jobsList.length > 0 && formData.toolJobId && formData.toolJobId.length > 0  && !jobsList[jobsList.findIndex((x) => x._id === formData.toolJobId)]) {
+    if (jobsList && jobsList.length > 0 && formData.toolJobId && formData.toolJobId.length > 0 && !jobsList[jobsList.findIndex((x) => x._id === formData.toolJobId)]) {
      let toast = getErrorDialog(
-        "Preselected job is no longer available.  It may have been deleted.  Please select another job from the list or recreate the job in Tool Reigstry.",
+        "Preselected job is no longer available.  It may have been deleted.  Please select another job from the list or recreate the job in the Registry.",
         setShowToast,
         "detailPanelTop"
       );
@@ -319,14 +362,8 @@ function SeleniumStepConfiguration({
       setFormData({ ...formData, buildType: "ant" });
     }
   }, [formData.toolJobType]);
-  
-  useEffect(() => {
-    if (jobType === "job") {
-      setFormData({ ...formData, jobType : "FUNCTIONAL TESTING" });
-    }
-  }, [jobType]);
 
-  // console.log(formData);
+  console.log(formData);
   // console.log(jobsList);
 
   const loadFormData = async (step) => {
@@ -376,6 +413,10 @@ function SeleniumStepConfiguration({
     }
   };
 
+  const handleBuildStepChange = (selectedOption) => {
+    setFormData({ ...formData, buildStepId: selectedOption._id });
+  };
+
   const callbackFunction = async () => {
     console.log("saving data");
     if (validateRequiredFields()) {
@@ -412,26 +453,26 @@ function SeleniumStepConfiguration({
         let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
         setToast(toast);
         setShowToast(true);
-      return false
+        return false;
       } else {
-        return true
+        return true;
       }
     }
     else  {
-      if (
+    if (
       toolConfigId.length === 0 ||
       jenkinsUrl.length === 0 ||
       jUserId.length === 0 ||
-      jAuthToken.length === 0 ||
+      jAuthToken.length === 0
       // jobName.length === 0 ||
-      (buildType === "docker"
-        ? dockerName.length === 0 || dockerTagName.length === 0
-        : false)
+      // (buildType === "docker"
+      //   ? dockerName.length === 0 || dockerTagName.length === 0
+      //   : false)
     ) {
-        let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
-        setToast(toast);
-        setShowToast(true);
-        return false;
+      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
+      setToast(toast);
+      setShowToast(true);
+      return false;
     } else {
       return true;
     }
@@ -473,9 +514,33 @@ function SeleniumStepConfiguration({
     setLoading(false);
   };
 
+  const handleAWSChange = (selectedOption) => {
+    setLoading(true);
+    //console.log(selectedOption);
+    if (selectedOption.id && selectedOption.configuration) {
+      setFormData({
+        ...formData,
+        awsToolConfigId: selectedOption.id ? selectedOption.id : "",
+        awsAccountId: selectedOption.configuration
+          ? selectedOption.configuration.awsAccountId
+          : "",
+        accessKey: selectedOption.configuration
+          ? selectedOption.configuration.accessKey
+          : "",
+        secretKey: selectedOption.configuration
+          ? selectedOption.configuration.secretKey
+          : "",
+        regions: selectedOption.configuration
+          ? selectedOption.configuration.regions
+          : "",
+      });
+    }
+    setLoading(false);
+  };
+
   const handleJobChange = (selectedOption) => {
     console.log(selectedOption)
-    if (selectedOption.type[0] === "FUNCTIONAL TESTING" ) {      
+    if (selectedOption.type[0] === "DOCKER PUSH" ) {      
         setFormData({
           ...formData,
           toolJobId: selectedOption._id,
@@ -487,67 +552,11 @@ function SeleniumStepConfiguration({
           buildArgs: {},
         });
     } else {
-      let errorMessage = "Selected Job is not a Functional test Job!  Please ensure the selected job has Selenium configurations.";
+      let errorMessage = "Selected Job is not a Docker push Job!  Please ensure the selected job has Docker configurations.";
       let toast = getErrorDialog(errorMessage, setShowToast, "detailPanelTop");
       setToast(toast);
       setShowToast(true);
     }
-  };
-
-  const handleAccountChange = (selectedOption) => {
-    setFormData({
-      ...formData,
-      gitToolId: selectedOption.toolId,
-      gitCredential: selectedOption.gitCredential,
-      gitUserName: selectedOption.gitUserName,
-      service: selectedOption.service,
-      repoId: "",
-      gitUrl: "",
-      sshUrl: "",
-      repository: "",
-      workspace:"",
-      branch: "",
-      projectId: "",
-      defaultBranch: "",
-    });
-  };
-
-  const handleWorkspacesChange = (selectedOption) => {
-    setFormData({
-      ...formData,
-      workspace: selectedOption,
-      repository: "",
-      repoId: "",
-      projectId: "",
-      gitUrl: "",
-      sshUrl: "",
-      branch: "",
-      defaultBranch: "",
-      gitBranch: "",
-    });
-  };
-
-  const handleRepoChange = (selectedOption) => {
-    setFormData({
-      ...formData,
-      repository: selectedOption.name,
-      repoId: selectedOption.id,
-      projectId: selectedOption.id,
-      gitUrl: selectedOption.httpUrl,
-      sshUrl: selectedOption.sshUrl,
-      branch: "",
-      defaultBranch: "",
-      gitBranch: "",
-    });
-  };
-
-  const handleBranchChange = (selectedOption) => {
-    setFormData({
-      ...formData,
-      branch: selectedOption.value,
-      defaultBranch: selectedOption.value,
-      gitBranch: selectedOption.value,
-    });
   };
 
   const handleJobTypeChange = (selectedOption) => {
@@ -555,6 +564,7 @@ function SeleniumStepConfiguration({
     setJobType(selectedOption.value);
       setFormData({
         ...formData,
+        awsToolConfigId: "",
         jobName: "",
         buildType: "", 
         jobDescription: "",
@@ -747,7 +757,6 @@ function SeleniumStepConfiguration({
           </Form.Group>
         ) : 
         <>
-
         {jobType === "opsera-job" && (
           <>
             {formData.jenkinsUrl && jenkinsList.length > 0 && (
@@ -808,19 +817,17 @@ function SeleniumStepConfiguration({
           </>
         )}
 
-        {formData.jenkinsUrl && jenkinsList.length > 0 && (
-          <Form.Group controlId="formBasicEmail">
+        {(formData.jobType === "DOCKER PUSH" ) && (
+          <Form.Group controlId="awsList">
             <Form.Label className="w-100">
-              Account*
+              AWS Credentials*
               <OverlayTrigger
                 trigger="click"
                 rootClose
                 placement="left"
                 overlay={RegistryPopover(
-                  accountsList[
-                    accountsList.findIndex(
-                      (x) => x.gitCredential === formData.gitCredential
-                    )
+                  awsList[
+                    awsList.findIndex((x) => x.id === formData.awsToolConfigId)
                   ]
                 )}
               >
@@ -831,43 +838,7 @@ function SeleniumStepConfiguration({
                 />
               </OverlayTrigger>
             </Form.Label>
-            {accountsList.length < 1 && (
-              <div className="form-text text-muted p-2">
-                <FontAwesomeIcon
-                  icon={faExclamationCircle}
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
-                No Credentials have been created for{" "}
-                <span>{formData.jenkinsUrl}</span>. Please go to
-                <Link to="/inventory/tools"> Tool Registry</Link> and add
-                credentials for this Jenkins in order to proceed.
-              </div>
-            )}
-            {accountsList !== undefined && accountsList.length > 0 ? (
-              <DropdownList
-                data={accountsList}
-                valueField="gitCredential"
-                textField="gitCredential"
-                defaultValue={
-                  accountsList && accountsList.length > 0 &&
-                  accountsList[
-                    accountsList.findIndex(
-                      (x) => x.gitCredential === formData.gitCredential
-                    )
-                  ]
-                }
-                filter="contains"
-                onChange={handleAccountChange}
-              />
-            ) : null}
-          </Form.Group>
-        )}
-
-        {formData.service && formData.service === "bitbucket" && formData.gitToolId && (
-          <Form.Group controlId="account" className="mt-2">
-            <Form.Label>Workspace*</Form.Label>
-            {isWorkspacesSearching ? (
+            {isAwsSearching ? (
               <div className="form-text text-muted mt-2 p-2">
                 <FontAwesomeIcon
                   icon={faSpinner}
@@ -875,140 +846,83 @@ function SeleniumStepConfiguration({
                   className="text-muted mr-1"
                   fixedWidth
                 />
-                Loading workspaces from registry
+                Loading AWS accounts from Tool Registry
               </div>
             ) : (
               <>
-                {workspacesList ? (
-                  <DropdownList
-                    data={workspacesList}
-                    value={
-                      workspacesList[
-                        workspacesList.findIndex(
-                          (x) => x === formData.workspace,
-                        )
+                {renderForm && awsList && awsList.length > 0 ? (
+                  <>
+                    <DropdownList
+                      data={awsList}
+                      value={
+                        awsList[
+                          awsList.findIndex(
+                            (x) => x.id === formData.awsToolConfigId
+                          )
                         ]
-                    }
-                    valueField="value"
-                    textField="name"
-                    filter="contains"
-                    onChange={handleWorkspacesChange}
-                  />
+                      }
+                      valueField="id"
+                      textField="name"
+                      filter="contains"
+                      onChange={handleAWSChange}
+                    />
+                  </>
                 ) : (
-                  <FontAwesomeIcon
-                    icon={faSpinner}
-                    spin
-                    className="text-muted mr-1"
-                    fixedWidth
-                  />
+                  <>
+                    <div className="form-text text-muted p-2">
+                      <FontAwesomeIcon
+                        icon={faExclamationCircle}
+                        className="text-muted mr-1"
+                        fixedWidth
+                      />
+                      No accounts have been registered for AWS. Please go
+                      to
+                      <Link to="/inventory/tools">Tool Registry</Link> and add a
+                      AWS Account entry in order to proceed.
+                    </div>
+                  </>
                 )}
               </>
             )}
-            {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
           </Form.Group>
         )}
 
-        {formData.service && 
-        formData.gitToolId && 
-        (formData.service === "bitbucket"? 
-          formData.workspace 
-          && formData.workspace.length > 0 : true ) && (
-          <Form.Group controlId="account" className="mt-2">
-            <Form.Label>Repository*</Form.Label>
-            {isRepoSearching ? (
-              <div className="form-text text-muted mt-2 p-2">
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
-                Loading repositories from registry
-              </div>
-            ) : (
-              <>
-                {repoList ? (
-                  <DropdownList
-                    data={repoList}
-                    value={
-                      repoList[
-                        repoList.findIndex(
-                          (x) => x.name === formData.repository,
-                        )
-                        ]
-                    }
-                    valueField="value"
-                    textField="name"
-                    filter="contains"
-                    onChange={handleRepoChange}
-                  />
-                ) : (
-                  <FontAwesomeIcon
-                    icon={faSpinner}
-                    spin
-                    className="text-muted mr-1"
-                    fixedWidth
-                  />
-                )}
-              </>
-            )}
-            {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
-          </Form.Group>
-        )}
-
-        {formData.service && formData.gitToolId && formData.repoId && (
-          <Form.Group controlId="account" className="mt-2">
-            <Form.Label>Branch*</Form.Label>
-            {isBranchSearching ? (
-              <div className="form-text text-muted mt-2 p-2">
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
-                Loading branches from selected repository
-              </div>
-            ) : (
-              <>
-                {branchList ? (
-                  <DropdownList
-                    data={branchList}
-                    value={
-                      branchList[
-                        branchList.findIndex((x) => x.value === formData.branch)
-                      ]
-                    }
-                    valueField="value"
-                    textField="name"
-                    filter="contains"
-                    onChange={handleBranchChange}
-                  />
-                ) : (
-                  <FontAwesomeIcon
-                    icon={faSpinner}
-                    spin
-                    className="text-muted mr-1"
-                    fixedWidth
-                  />
-                )}
-              </>
-            )}
-            {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
-          </Form.Group>
-        )}
-
-        <Form.Group controlId="threshold">
-          <Form.Label>Success Threshold</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder=""
-            value={thresholdVal || ""}
-            onChange={(e) => setThresholdValue(e.target.value)}
-            disabled={true}
-          />
+        <Form.Group controlId="s3Step">
+          <Form.Label>Build Step Info*</Form.Label>
+          {listOfSteps ? (
+            <DropdownList
+              data={listOfSteps}
+              value={
+                formData.buildStepId
+                  ? listOfSteps[
+                      listOfSteps.findIndex(
+                        (x) => x._id === formData.buildStepId
+                      )
+                    ]
+                  : listOfSteps[0]
+              }
+              valueField="_id"
+              textField="name"
+              defaultValue={
+                formData.buildStepId
+                  ? listOfSteps[
+                      listOfSteps.findIndex(
+                        (x) => x._id === formData.buildStepId
+                      )
+                    ]
+                  : listOfSteps[0]
+              }
+              onChange={handleBuildStepChange}
+            />
+          ) : (
+            <FontAwesomeIcon
+              icon={faSpinner}
+              spin
+              className="text-muted ml-2"
+              fixedWidth
+            />
+          )}
         </Form.Group>
-
         </>
         }
 
@@ -1073,7 +987,7 @@ function SeleniumStepConfiguration({
   );
 }
 
-SeleniumStepConfiguration.propTypes = {
+DockerPushStepConfiguration.propTypes = {
   stepTool: PropTypes.string,
   pipelineId: PropTypes.string,
   plan: PropTypes.object,
@@ -1085,4 +999,4 @@ SeleniumStepConfiguration.propTypes = {
   setShowToast: PropTypes.func
 }
 
-export default SeleniumStepConfiguration;
+export default DockerPushStepConfiguration;

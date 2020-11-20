@@ -1,60 +1,58 @@
-//PP-95 Deploy Step form for AWS Elastic Beanstalk
-//https://opsera.atlassian.net/wiki/spaces/OPSERA/pages/283935120/Code-Deployer
-
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Form, Button, OverlayTrigger, Popover } from "react-bootstrap";
+import {
+  Button,
+  Form,
+  OverlayTrigger,
+  Popover,
+  Tooltip,
+} from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave, 
-  faSpinner,
+import {
   faExclamationCircle,
   faExclamationTriangle,
   faTimes,
+  faSave,
+  faSpinner,
   faEllipsisH,
-  faTools } from "@fortawesome/free-solid-svg-icons";
+  faTools,
+} from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
-import { AuthContext } from "../../../../../../../contexts/AuthContext";
-import { axiosApiService } from "../../../../../../../api/apiService";
+import { AuthContext } from "../../../../../../../../contexts/AuthContext";
+import { axiosApiService } from "../../../../../../../../api/apiService";
 import { Link } from "react-router-dom";
-import {getErrorDialog, getMissingRequiredFieldsErrorDialog} from "../../../../../../common/toasts/toasts";
+import ErrorDialog from "../../../../../../../common/status_notifications/error";
+import JUnitStepConfiguration from "../junit/JUnitStepConfiguration";
+import {getErrorDialog, getMissingRequiredFieldsErrorDialog} from "../../../../../../../common/toasts/toasts";
 
-const PLATFORM_OPTIONS = [
-  { value: "", label: "Select One", isDisabled: "yes" },
-  { value: ".NET on Windows Server", label: ".NET on Windows Server" },
-  { value: "Go", label: "Go" },
-  { value: "Java SE", label: "Java SE" },
-  { value: "Multicontainer Docker", label: "Multiple Container Docker" },
-  { value: "Node.js", label: "Node.js" },
-  { value: "PHP", label: "PHP" },
-  { value: "Preconfigured Docker", label: "Pre-configured Docker" },
-  { value: "Python", label: "Python" },
-  { value: "Ruby", label: "Ruby" },
-  { value: "Single Container Docker", label: "Single Container Docker" },
-  { value: "Tomcat", label: "Tomcat" }
-];
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
+  jobType: "SEND S3", 
   awsToolConfigId: "",
-  accessKey: "",
-  secretKey: "",
+  buildStepId: "",
   bucketName: "",
-  regions: "",
-  applicationName: "",
-  applicationVersionLabel: "",
-  s3StepId: "",
-  description: "",
-  port: "",
-  ec2KeyName: "",
-  platform: ""
+  bucketAccess: "private",
 };
-
+const BUCKET_ACCESS = [
+  {name: "Public", value: "public"},
+  {name: "Private", value: "private"}
+];
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
-function ElasticBeanstalkDeployStepConfiguration({ stepTool, pipelineId, plan, stepId, parentCallback, callbackSaveToVault, setToast, setShowToast }) {
+function S3StepConfiguration({
+  stepTool,
+  pipelineId,
+  plan,
+  stepId,
+  parentCallback,
+  callbackSaveToVault,
+  createJob,
+  setToast,
+  setShowToast
+}) {
   const contextType = useContext(AuthContext);
-
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [renderForm, setRenderForm] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -62,39 +60,44 @@ function ElasticBeanstalkDeployStepConfiguration({ stepTool, pipelineId, plan, s
   
   const [awsList, setAwsList] = useState([]);
   const [isAwsSearching, setIsAwsSearching] = useState(false);
- 
-  useEffect(()=> {
-    if( plan && stepId ) {
+  const [thresholdVal, setThresholdValue] = useState("");
+  const [thresholdType, setThresholdType] = useState("");
+
+  useEffect(() => {
+    if (plan && stepId) {
       setListOfSteps(formatStepOptions(plan, stepId));
     }
   }, [plan, stepId]);
 
   const formatStepOptions = (plan, stepId) => {
-    let STEP_OPTIONS = plan.slice(0, plan.findIndex( (element) => element._id === stepId));
-    STEP_OPTIONS.unshift({ _id: "", name : "Select One",  isDisabled: "yes" });
+    let STEP_OPTIONS = plan.slice(
+      0,
+      plan.findIndex((element) => element._id === stepId)
+    );
+    STEP_OPTIONS.unshift({ _id: "", name: "Select One", isDisabled: "yes" });
     return STEP_OPTIONS;
   };
-  useEffect(() => {    
+
+  useEffect(() => {
     const controller = new AbortController();
     const runEffect = async () => {
       try {
-        await loadFormData(stepTool);        
+        await loadFormData(stepTool);
         setRenderForm(true);
       } catch (err) {
         if (err.name === "AbortError") {
           console.log("Request was canceled via controller.abort");
           return;
-        }        
+        }
       }
     };
     runEffect();
     return () => {
-      setRenderForm(false);     
-      controller.abort();      
+      setRenderForm(false);
+      controller.abort();
     };
   }, [stepTool]);
 
-  
   // search aws
   useEffect(() => {
     setShowToast(false);
@@ -117,53 +120,37 @@ function ElasticBeanstalkDeployStepConfiguration({ stepTool, pipelineId, plan, s
     fetchAWSDetails("aws_account");
   }, []);
 
+  console.log(formData);
 
   const loadFormData = async (step) => {
-    let { configuration } = step;
-    if (typeof(configuration) !== "undefined") {
-      setFormData(configuration);
+    let { configuration, threshold } = step;
+    if (typeof configuration !== "undefined") {
+      if (typeof configuration !== "undefined") {
+        setFormData(configuration);
+      }
+      if (typeof threshold !== "undefined") {
+        setThresholdType(threshold.type);
+        setThresholdValue(threshold.value);
+      }
     } else {
       setFormData(INITIAL_DATA);
     }
   };
-  
+
   const callbackFunction = async () => {
+    console.log("saving data");
     if (validateRequiredFields()) {
       setLoading(true);
-      let newConfiguration = formData;
-      if (typeof(newConfiguration.secretKey) === "string") {
-        newConfiguration.secretKey = await saveToVault(pipelineId, stepId, "secretKey", "Vault Secured Key", newConfiguration.secretKey);
-      }
-
 
       const item = {
-        configuration: formData
+        configuration: formData,
+        threshold: {
+          type: thresholdType,
+          value: thresholdVal,
+        },
       };
-      console.log("item: ", item);
       setLoading(false);
       parentCallback(item);
-    }
-  };
-
-  const saveToVault = async (pipelineId, stepId, key, name, value) => {
-    const keyName = `${pipelineId}-${stepId}-${key}`;
-    const body = {
-      "key": keyName,
-      "value": value
-    };
-    const response = await callbackSaveToVault(body);    
-    if (response.status === 200 ) {
-      return { name: name, vaultKey: keyName };
-    } else {
-      setFormData(formData => {
-        return { ...formData, secretKey: {} };
-      });
-      setLoading(false);
-      let errorMessage = "ERROR: Something has gone wrong saving secure data to your vault.  Please try again or report the issue to OpsERA.";
-      let toast = getErrorDialog(errorMessage, setShowToast, "detailPanelTop");
-      setToast(toast);
-      setShowToast(true);
-      return "";
     }
   };
 
@@ -189,7 +176,7 @@ function ElasticBeanstalkDeployStepConfiguration({ stepTool, pipelineId, plan, s
         //console.log(respObj);
         return respObj;
       } else {
-        let errorMessage ="Jenkins information is missing or unavailable!  Please ensure the required Jenkins creds are registered and up to date in Tool Registry.";
+        let errorMessage = "Tool information is missing or unavailable!  Please ensure the required creds are registered and up to date in Tool Registry."
         let toast = getErrorDialog(errorMessage, setShowToast, "detailPanelTop");
         setToast(toast);
         setShowToast(true);
@@ -200,16 +187,28 @@ function ElasticBeanstalkDeployStepConfiguration({ stepTool, pipelineId, plan, s
       setShowToast(true);
     }
   };
+  
+  const handleBuildStepChange = (selectedOption) => {
+    setFormData({ ...formData, buildStepId: selectedOption._id });
+  };
+
+  const handleBucketAccessChange = (selectedOption) => {
+    setFormData({...formData, bucketAccess: selectedOption.value})
+  }
+
+  console.log(formData)
 
   const validateRequiredFields = () => {
-    let { accessKey, secretKey, regions, bucketName, port, ec2KeyName } = formData;
+    let {
+      awsToolConfigId,
+      buildStepId,
+      bucketName,
+    } = formData;
     if (
-      accessKey.length === 0 || 
-      secretKey.length === 0 || 
-      regions.length === 0 || 
-      port.length === 0 || 
-      ec2KeyName.length === 0 || 
-      bucketName.length === 0) {
+      awsToolConfigId.length === 0 ||
+      buildStepId.length === 0 ||
+      bucketName.length === 0 
+    ) {
       let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
       setToast(toast);
       setShowToast(true);
@@ -218,7 +217,7 @@ function ElasticBeanstalkDeployStepConfiguration({ stepTool, pipelineId, plan, s
       return true;
     }
   };
-  
+
   const handleAWSChange = (selectedOption) => {
     setLoading(true);
     //console.log(selectedOption);
@@ -243,15 +242,6 @@ function ElasticBeanstalkDeployStepConfiguration({ stepTool, pipelineId, plan, s
     setLoading(false);
   };
 
-  const handlePlatformChange = (selectedOption) => {
-    setFormData({ ...formData, platform: selectedOption.value });    
-  };
-  
-  const handleS3StepChange = (selectedOption) => {
-    setFormData({ ...formData, s3StepId: selectedOption._id });    
-  };
-
-  
   const RegistryPopover = (data) => {
     if (data) {
       return (
@@ -312,10 +302,13 @@ function ElasticBeanstalkDeployStepConfiguration({ stepTool, pipelineId, plan, s
       );
     }
   };
-  
+
   return (
-    <Form>
-<Form.Group controlId="jenkinsList">
+    <>
+      <Form>
+        {(formData.jobType === "SEND S3" ) && (
+          <>
+          <Form.Group controlId="awsList">
             <Form.Label className="w-100">
               AWS Credentials*
               <OverlayTrigger
@@ -372,7 +365,7 @@ function ElasticBeanstalkDeployStepConfiguration({ stepTool, pipelineId, plan, s
                         className="text-muted mr-1"
                         fixedWidth
                       />
-                      No accounts have been registered for Code Scan. Please go
+                      No accounts have been registered for AWS. Please go
                       to
                       <Link to="/inventory/tools">Tool Registry</Link> and add a
                       AWS Account entry in order to proceed.
@@ -381,94 +374,130 @@ function ElasticBeanstalkDeployStepConfiguration({ stepTool, pipelineId, plan, s
                 )}
               </>
             )}
+            </Form.Group>
+            <Form.Group controlId="branchField">
+              <Form.Label>Bucket Name*</Form.Label>
+                <Form.Control
+                  maxLength="150"
+                  disabled={false}
+                  type="text"
+                  placeholder=""
+                  value={formData.bucketName || ""}
+                  onChange={(e) =>
+                    setFormData({ ...formData, bucketName: e.target.value })
+                  }
+                />
+          </Form.Group>
+          <Form.Group controlId="s3bucketStep">
+            <Form.Label>Bucket Access*</Form.Label>
+            {BUCKET_ACCESS ? (
+              <DropdownList
+                data={BUCKET_ACCESS}
+                value={
+                  formData.bucketAccess ? formData.bucketAccess : "private"
+                }
+                valueField="value"
+                textField="name"
+                onChange={handleBucketAccessChange}
+              />
+            ) : (
+              <FontAwesomeIcon
+                icon={faSpinner}
+                spin
+                className="text-muted ml-2"
+                fixedWidth
+              />
+            )}
           </Form.Group>
 
-      <Form.Group controlId="bucketName">
-        <Form.Label>S3 Bucket Name*</Form.Label>
-        <Form.Control maxLength="150" type="text" placeholder="" value={formData.bucketName || ""} onChange={e => setFormData({ ...formData, bucketName: e.target.value })} />
-      </Form.Group>
+            <Form.Group controlId="s3Step">
+            <Form.Label>Build Step Info*</Form.Label>
+            {listOfSteps ? (
+              <DropdownList
+                data={listOfSteps}
+                value={
+                  formData.buildStepId
+                    ? listOfSteps[
+                        listOfSteps.findIndex(
+                          (x) => x._id === formData.buildStepId
+                        )
+                      ]
+                    : listOfSteps[0]
+                }
+                valueField="_id"
+                textField="name"
+                defaultValue={
+                  formData.buildStepId
+                    ? listOfSteps[
+                        listOfSteps.findIndex(
+                          (x) => x._id === formData.buildStepId
+                        )
+                      ]
+                    : listOfSteps[0]
+                }
+                onChange={handleBuildStepChange}
+              />
+            ) : (
+              <FontAwesomeIcon
+                icon={faSpinner}
+                spin
+                className="text-muted ml-2"
+                fixedWidth
+              />
+            )}
+          </Form.Group>
+          
+          <Form.Group controlId="projectKey">
+            <Form.Label>S3 Url</Form.Label>
+            <Form.Control maxLength="150" type="text" placeholder="" disabled value={formData.s3Url || ""} onChange={e => setFormData({ ...formData, s3Url: e.target.value })} />
+          </Form.Group>
+          </>
+        )}
 
-      <Form.Group controlId="ec2KeyName">
-        <Form.Label>EC2 Key Name*</Form.Label>
-        <Form.Control maxLength="50" type="text" placeholder="" value={formData.ec2KeyName || ""} onChange={e => setFormData({ ...formData, ec2KeyName: e.target.value })} />
-        <Form.Text className="text-muted">Key-pair file name used to access the EC2 instance.</Form.Text>
-      </Form.Group>
+        {/* no create job for s3 */}
+          <Button
+            variant="primary"
+            type="button"
+            className="mt-3"
+            onClick={() => {
+              callbackFunction();
+            }}
+          >
+            {loading ? (
+              <>
+                <FontAwesomeIcon
+                  icon={faSpinner}
+                  spin
+                  className="mr-1"
+                  fixedWidth
+                />{" "}
+                Saving
+              </>
+            ) : (
+              <>
+                <FontAwesomeIcon icon={faSave} className="mr-1" /> Save
+              </>
+            )}
+          </Button>
 
-      <Form.Group controlId="port">
-        <Form.Label>Application Port*</Form.Label>
-        <Form.Control maxLength="10" type="text" placeholder="" value={formData.port || ""} onChange={e => setFormData({ ...formData, port: e.target.value })} />
-        <Form.Text className="text-muted">Port that the application needs in order to run.</Form.Text>
-      </Form.Group>
-
-      <Form.Group controlId="platform">
-        <Form.Label>Platform*</Form.Label>
-        {renderForm ?
-          <DropdownList
-            data={PLATFORM_OPTIONS}
-            valueField='id'
-            textField='label'
-            defaultValue={formData.platform ? PLATFORM_OPTIONS[PLATFORM_OPTIONS.findIndex(x => x.value === formData.platform)] : PLATFORM_OPTIONS[0]}
-            onChange={handlePlatformChange}             
-          /> : null }
-      </Form.Group>
-
-
-      <Form.Group controlId="applicationName">
-        <Form.Label>Application Name</Form.Label>
-        <Form.Control maxLength="250" type="text" placeholder="" value={formData.applicationName || ""} onChange={e => setFormData({ ...formData, applicationName: e.target.value })} />
-      </Form.Group>
-
-      <Form.Group controlId="description">
-        <Form.Label>Description</Form.Label>
-        <Form.Control maxLength="250" type="text" placeholder="" value={formData.description || ""} onChange={e => setFormData({ ...formData, description: e.target.value })} />
-      </Form.Group>
-
-      <Form.Group controlId="applicationVersionLabel">
-        <Form.Label>Application Version</Form.Label>
-        <Form.Control maxLength="50" type="text" placeholder="" value={formData.applicationVersionLabel || ""} onChange={e => setFormData({ ...formData, applicationVersionLabel: e.target.value })} />
-      </Form.Group>
-
-      
-      <Form.Group controlId="s3Step">
-        <Form.Label>S3 Step Info :</Form.Label>
-        {renderForm && listOfSteps ?
-          <DropdownList
-            data={listOfSteps} 
-            value={formData.s3StepId ? listOfSteps[listOfSteps.findIndex(x => x._id === formData.s3StepId)] : listOfSteps[0]}
-            valueField='_id'
-            textField='name'
-            defaultValue={formData.s3StepId ? listOfSteps[listOfSteps.findIndex(x => x._id === formData.s3StepId)] : listOfSteps[0]}
-            onChange={handleS3StepChange}             
-          /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted ml-2" fixedWidth/> }
-      </Form.Group>
-
-      {/* Leave the threshold form group as is for now, just read only for all forms */}
-      {/* <Form.Group controlId="threshold">
-        <Form.Label>Step Success Threshold</Form.Label>
-        <Form.Control type="text" placeholder="" value={thresholdVal || ""} onChange={e => setThresholdValue(e.target.value)} disabled={true} />
-      </Form.Group> */}
-      
-      <Button variant="primary" type="button" 
-        onClick={() => { callbackFunction(); }}> 
-        {loading ? 
-          <><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> Saving</> :
-          <><FontAwesomeIcon icon={faSave} disabled={!listOfSteps || !renderForm} className="mr-1"/> Save</> }
-      </Button>
-      
-      <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
-    </Form>
+        <small className="form-text text-muted mt-2 text-right">
+          * Required Fields
+        </small>
+      </Form>
+    </>
   );
 }
 
-ElasticBeanstalkDeployStepConfiguration.propTypes = {
-  stepTool: PropTypes.object,
-  plan: PropTypes.array,
+S3StepConfiguration.propTypes = {
+  stepTool: PropTypes.string,
   pipelineId: PropTypes.string,
+  plan: PropTypes.object,
   stepId: PropTypes.string,
   parentCallback: PropTypes.func,
   callbackSaveToVault: PropTypes.func,
+  createJob: PropTypes.func,
   setToast: PropTypes.func,
   setShowToast: PropTypes.func
-};
+}
 
-export default ElasticBeanstalkDeployStepConfiguration;
+export default S3StepConfiguration;

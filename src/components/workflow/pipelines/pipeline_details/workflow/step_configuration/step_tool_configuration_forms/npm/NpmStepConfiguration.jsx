@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import { Form, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
-import JUnitStepConfiguration from "./JUnitStepConfiguration";
-import {getMissingRequiredFieldsErrorDialog} from "../../../../../../common/toasts/toasts";
+import {getMissingRequiredFieldsErrorDialog} from "../../../../../../../common/toasts/toasts";
 
 
 //This must match the form below and the data object expected.  Each tools' data object is different

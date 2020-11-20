@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Form, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
-import {getMissingRequiredFieldsErrorDialog} from "../../../../../../common/toasts/toasts";
+import {getMissingRequiredFieldsErrorDialog} from "../../../../../../../common/toasts/toasts";
 
 
 //This must match the form below and the data object expected.  Each tools' data object is different
@@ -11,10 +11,9 @@ const INITIAL_DATA = {
   buildScript: ""
 };
 
-
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
-function AwsDeployStepConfiguration( { data, parentCallback, setToast, setShowToast }) {
+function GcpDeployStepConfiguration( { data, parentCallback, setToast, setShowToast }) {
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
   const [formData, setFormData] = useState(INITIAL_DATA);
@@ -85,11 +84,11 @@ function AwsDeployStepConfiguration( { data, parentCallback, setToast, setShowTo
   );
 }
 
-AwsDeployStepConfiguration.propTypes = {
+GcpDeployStepConfiguration.propTypes = {
   data: PropTypes.object,
   parentCallback: PropTypes.func,
   setToast: PropTypes.func,
   setShowToast: PropTypes.func
 };
 
-export default AwsDeployStepConfiguration;
+export default GcpDeployStepConfiguration;
