@@ -195,8 +195,8 @@ const AppWithRouterAccess = () => {
           <div style={{ height: "55px" }}><ErrorDialog align="top" error={error}/></div>
         }
         <AuthContextProvider userData={data} refreshToken={refreshToken} authClient={authClient}>
-          <Navbar hideAuthComponents={hideSideBar} userData={data}/>
           <ToastContextProvider>
+            <Navbar hideAuthComponents={hideSideBar} userData={data}/>
             <div className="container-fluid" style={{ margin: "0" }}>
               <div className="d-flex flex-row">
                 <Sidebar userData={data} hideSideBar={hideSideBar}/>

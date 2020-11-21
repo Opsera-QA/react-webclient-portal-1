@@ -1,213 +1,285 @@
-import React, {createContext, useState} from "react";
-import SuccessDialog from "../components/common/status_notifications/SuccessDialog";
-import ErrorDialog from "../components/common/status_notifications/error";
-import WarningDialog from "../components/common/status_notifications/WarningDialog";
-import InformationDialog from "../components/common/status_notifications/info";
+import React, {createContext, useCallback, useState} from "react";
+import PropTypes from "prop-types";
+import {generateUUID} from "../components/common/helpers/string-helpers";
+import PersistentInformationMessage from "../components/common/status_notifications/banners/PersistentInformationMessage";
+import BannerMessageContainer from "../components/common/status_notifications/banners/BannerMessageContainer";
+import ErrorBanner from "../components/common/status_notifications/banners/ErrorBanner";
+import SuccessToast from "../components/common/status_notifications/toasts/SuccessToast";
+import Toaster from "../components/common/status_notifications/toasts/Toaster";
+import ErrorToast from "../components/common/status_notifications/toasts/ErrorToast";
+import InformationToast from "../components/common/status_notifications/toasts/InformationToast";
+import WarningToast from "../components/common/status_notifications/toasts/WarningToast";
+import SuccessBanner from "../components/common/status_notifications/banners/SuccessBanner";
+import InformationBanner from "../components/common/status_notifications/banners/InformationBanner";
+import WarningBanner from "../components/common/status_notifications/banners/WarningBanner";
 
-const ToastContextProvider = (props) => {
-  const [showToast, setShowToast] = useState(false);
-  const [toast, setToast] = useState(undefined);
-  const [modalToast, setModalToast] = useState(undefined);
-  let autoCloseTimer;
+function ToastContextProvider ({ children }) {
+  const [toasts, setToasts] = useState([]);
+  // TODO: Wire up way to arrow through banners
+  const [bannerMessages, setBannerMessages] = useState([]);
+  const [inlineBanner, setInlineBanner] = useState(undefined);
 
-  const resetToast = () => {
-    setShowToast(false);
-    setToast(undefined);
-    setModalToast(undefined);
-  }
-
-  const refreshTimer = (autoCloseLength) => {
-    if (autoCloseTimer != null) {
-      console.log("Cleared out auto close timer");
-      clearTimeout(autoCloseTimer);
-      autoCloseTimer = null;
-    }
-
-    if (autoCloseLength) {
-      console.log("setting toast auto close timer to " + autoCloseLength + " seconds.");
-      autoHideDialog(autoCloseLength * 1000);
-    }
+  const removeBanners = () => {
+    setBannerMessages([]);
   };
 
-  function autoHideDialog(autoCloseLength = 20000) {
-    autoCloseTimer = setTimeout(function () { resetToast(); }, autoCloseLength);
+  const addBannerMessage = useCallback((bannerMessage, id) => {
+      let newBannerMessage = {id: id, bannerMessage: bannerMessage};
+      setBannerMessages(bannerMessages => [...bannerMessages, newBannerMessage]);
+    }, [setBannerMessages]
+  );
+
+  const removeBannerMessage = useCallback((id) => {
+      setBannerMessages(bannerMessages => bannerMessages.filter((item) => { return item.id !== id; }));
+    }, [setBannerMessages]
+  );
+
+  const addToast = useCallback((toast, id) => {
+      let newToast = {id: id, toast: toast};
+      setToasts(toasts => [...toasts, newToast]);
+    }, [setToasts]
+  );
+
+  const removeToast = useCallback((id) => {
+      setToasts(toasts => toasts.filter((item) => { return item.id !== id; }));
+    }, [setToasts]
+  );
+
+  const showErrorBanner = (error, errorMessage) => {
+    let id = generateUUID();
+    let errorBanner = getErrorBanner(error, id, errorMessage);
+    addBannerMessage(errorBanner, id);
   }
 
-  const showErrorDialog = (error, errorMessage) => {
-    setToast(getErrorDialog(error, errorMessage));
-    setShowToast(true);
-    refreshTimer();
+  const showErrorToast = (error, autoCloseLengthInSeconds) => {
+    let id = generateUUID();
+    let errorToast = getErrorToast(error, id, null, autoCloseLengthInSeconds);
+    addToast(errorToast, id);
   }
 
-  const showWarningDialog = (warningMessage, autoCloseLengthInSeconds) => {
-    setToast(getWarningDialog(warningMessage));
-    setShowToast(true);
-    refreshTimer(autoCloseLengthInSeconds);
+  const showWarningBanner = (warningMessage) => {
+    let id = generateUUID();
+    let warningDialog = getWarningBanner(warningMessage, id);
+    addBannerMessage(warningDialog, id);
   }
 
-  const showSuccessDialog = (successMessage, autoCloseLengthInSeconds = 20) => {
-    setToast(getSuccessDialog(successMessage));
-    setShowToast(true);
-    refreshTimer(autoCloseLengthInSeconds);
+  const showWarningToast = (warningMessage, autoCloseLengthInSeconds) => {
+    let id = generateUUID();
+    let warningToast = getWarningToast(warningMessage, id, autoCloseLengthInSeconds);
+    addToast(warningToast, id);
   }
 
-  const showInformationDialog = (informationMessage, autoCloseLengthInSeconds) => {
-    setToast(getInformationDialog(informationMessage));
-    setShowToast(true);
-    refreshTimer(autoCloseLengthInSeconds);
+  const showSuccessToast = (successMessage, autoCloseLengthInSeconds = 20) => {
+    let id = generateUUID();
+    let successToast = getSuccessToast(successMessage, id, autoCloseLengthInSeconds);
+    addToast(successToast, id);
   }
 
-  const showFormValidationErrorDialog = (modal = false, errorMessage = "") => {
-    if (modal) {
-      setModalToast(getErrorDialog(`WARNING! There are errors in your form. ${errorMessage} Please review the details and ensure any required fields or special rules are met and try again.`));
-    }
-    else {
-      setToast(getErrorDialog(`WARNING! There are errors in your form. ${errorMessage} Please review the details and ensure any required fields or special rules are met and try again.`));
-      setShowToast(true);
-    }
-    refreshTimer();
+  const showSuccessBanner = (successMessage)=> {
+    let id = generateUUID();
+    let successBanner = getSuccessBanner(successMessage, id);
+    addBannerMessage(successBanner, id);
+  }
+
+  const showInformationBanner = (informationMessage) => {
+    let id = generateUUID();
+    let informationBanner = getInformationBanner(informationMessage, id);
+    addBannerMessage(informationBanner, id);
+  }
+
+  const showInformationToast = (informationMessage, autoCloseLengthInSeconds) => {
+    let id = generateUUID();
+    let informationToast = getInformationToast(informationMessage, id, autoCloseLengthInSeconds)
+    addToast(informationToast, id);
+  }
+
+  const showInlineFormValidationErrorDialog = (errorMessage = "") => {
+    let errorBanner = getErrorBanner(`WARNING! There are errors in your form. ${errorMessage} Please review the details and ensure any required fields or special rules are met and try again.`);
+    setInlineBanner(errorBanner);
+  };
+
+  const showFormValidationErrorDialog = (errorMessage = "") => {
+    let id = generateUUID();
+    let errorToast = getErrorToast(`WARNING! There are errors in your form. ${errorMessage} Please review the details and ensure any required fields or special rules are met and try again.`, id);
+    addToast(errorToast, id);
   };
 
   const showLoadingErrorDialog = (error) => {
-    setToast(getErrorDialog(error,`WARNING! An error has occurred loading:`));
-    setShowToast(true);
-    refreshTimer();
+    let id = generateUUID();
+    let errorBanner = getErrorBanner(error, id,`WARNING! An error has occurred loading:`, id);
+    addBannerMessage(errorBanner, id);
   }
 
   const showServiceUnavailableDialog = (error) => {
-    setToast(getErrorDialog(error,`Service Unavailable. Please try again or report this issue:`));
-    setShowToast(true);
-    refreshTimer();
+    let id = generateUUID();
+    let errorBanner = getErrorBanner(error, id, `Service Unavailable. Please try again or report this issue:`);
+    addBannerMessage(errorBanner, id);
   }
 
   const showUpdateSuccessResultDialog = (type, autoCloseLengthInSeconds = 20) => {
-    setToast(getSuccessDialog(`${type} updated successfully!`));
-    setShowToast(true);
-    autoHideDialog();
-    refreshTimer(autoCloseLengthInSeconds);
+    let id = generateUUID();
+    let successToast = getSuccessToast(`${type} updated successfully!`, id, autoCloseLengthInSeconds);
+    addToast(successToast, id);
   }
 
-  const showDeleteSuccessResultDialog = (type) => {
-    setToast(getSuccessDialog(`${type} deleted successfully!`));
-    setShowToast(true);
-    refreshTimer();
+  const showDeleteSuccessResultDialog = (type, autoCloseLengthInSeconds = 20) => {
+    let id = generateUUID();
+    let successToast = getSuccessToast(`${type} deleted successfully!`, id, autoCloseLengthInSeconds);
+    addToast(successToast, id);
   }
 
-  const showCreateSuccessResultDialog = (type,  modal = false, autoCloseLengthInSeconds = 20) => {
-    if (modal) {
-      setModalToast(getSuccessDialog(`${type} created successfully!`));
-    }
-    else {
-      setToast(getSuccessDialog(`${type} created successfully!`));
-      setShowToast(true);
-    }
-    refreshTimer(autoCloseLengthInSeconds);
+  const showInlineCreateSuccessResultDialog = (type, autoCloseLengthInSeconds = 20) => {
+    let id = generateUUID();
+    let successBanner = getSuccessBanner(`${type} created successfully!`, id);
+    setInlineBanner(successBanner);
   }
 
-  const showCreateFailureResultDialog = (type, error, modal = true) => {
-    console.log("in showCreateFailureResultDialog: " + modal)
-    if (modal) {
-      setModalToast(getErrorDialog(error, `WARNING! An error has occurred creating this ${type}:`));
-    }
-    else {
-      setToast(getErrorDialog(error, `WARNING! An error has occurred creating this ${type}:`));
-      setShowToast(true);
-    }
-    refreshTimer();
+  const showCreateSuccessResultDialog = (type, autoCloseLengthInSeconds = 20) => {
+    let id = generateUUID();
+    let successToast = getSuccessToast(`${type} created successfully!`, id, autoCloseLengthInSeconds);
+    addToast(successToast, id);
+  }
+
+  const showCreateFailureResultDialog = (type, error) => {
+    let id = generateUUID();
+    let errorToast = getErrorToast(error, id, `WARNING! An error has occurred creating this ${type}:`);
+    addToast(errorToast, id);
+  }
+
+  // TODO: Implement
+  const showInlineCreateFailureResultDialog = (type, error) => {
+    // addBannerMessage(getErrorDialog(error, `WARNING! An error has occurred creating this ${type}:`, id), id);
   }
 
   const showUpdateFailureResultDialog = (type, error) => {
-    setToast(getErrorDialog(error, `WARNING! An error has occurred updating this ${type}:`));
-    setShowToast(true);
-    refreshTimer();
+    let id = generateUUID();
+    let errorToast = getErrorToast(error, id, `WARNING! An error has occurred updating this ${type}:`);
+    addToast(errorToast, id);
   }
 
-  const showDeleteFailureResultDialog = (type, error, modal = false) => {
-    if (modal) {
-      setToast(getErrorDialog(error,`WARNING! An error has occurred deleting this ${type}:`));
-    }
-    else {
-      setToast(getErrorDialog(error,`WARNING! An error has occurred deleting this ${type}:`));
-      setShowToast(true);
-    }
-    refreshTimer();
+  const showDeleteFailureResultDialog = (type, error) => {
+    let id = generateUUID();
+    let errorToast = getErrorToast(error, id,`WARNING! An error has occurred deleting this ${type}:`);
+    addToast(errorToast, id);
+  }
+
+  const showInlineDeleteFailureResultDialog = (type, error) => {
+    let id = generateUUID();
+    setInlineBanner(getErrorBanner(error, id, `WARNING! An error has occurred deleting this ${type}:`), id);
   }
 
   const showEmailAlreadyExistsErrorDialog = () => {
-    setToast(getErrorDialog( `WARNING! The email address given has already been registered to an Opsera account`));
-    setShowToast(true);
-    refreshTimer();
+    let id = generateUUID();
+    let errorBanner = getErrorBanner( `WARNING! The email address given has already been registered to an Opsera account`, id);
+    addBannerMessage(errorBanner, id);
   };
 
   const showDomainAlreadyRegisteredErrorDialog = () => {
-    setToast(getErrorDialog( `WARNING! The domain given has already been registered to an Opsera account`));
-    setShowToast(true);
-    refreshTimer();
+    let id = generateUUID();
+    let errorBanner = getErrorBanner( `WARNING! The domain given has already been registered to an Opsera account`, id);
+    addBannerMessage(errorBanner, id);
   };
 
   const showIncompleteCreateSuccessResultDialog = () => {
-    setToast(getInformationDialog( `WARNING! An incomplete configuration is being saved.  This step must be fully configured in order to use this feature.`));
-    setShowToast(true);
-    refreshTimer();
+    let id = generateUUID();
+    let informationDialog = getInformationBanner( `WARNING! An incomplete configuration is being saved.  This step must be fully configured in order to use this feature.`, id);
+    addToast(informationDialog, id);
   }
 
   const showMissingRequiredFieldsErrorDialog = () => {
-    setToast(getErrorDialog(`Required Fields Missing!`));
-    setShowToast(true);
-    refreshTimer();
+    let id = generateUUID();
+    let errorToast = getErrorToast(`Required Fields Missing!`, id);
+    addToast(errorToast, id);
   };
 
-  const getSuccessDialog = (message, alignment = "dialogToast") => {
-    return <SuccessDialog successMessage={message} setSuccessMessage={resetToast} alignment={alignment} />
+  const getSuccessBanner = (message, id) => {
+    return <SuccessBanner successMessage={message} removeBanner={removeBannerMessage} id={id} />
   };
 
-  const getErrorDialog = (error, prependMessage = "", alignment = "dialogToast") => {
-    return <ErrorDialog error={error} prependMessage={prependMessage} align={alignment} setError={resetToast}/>
+  const getSuccessToast = (message, id, autoCloseLengthInSeconds = 20) => {
+    return <SuccessToast successMessage={message} id={id} removeToast={removeToast} autoCloseLength={autoCloseLengthInSeconds}/>
   };
 
-  const getWarningDialog = (message,  alignment = "dialogToast") => {
-    return <WarningDialog warningMessage={message} alignment={alignment} setWarningMessage={resetToast}/>
+  const getErrorBanner = (error, id, prependMessage = "") => {
+    return <ErrorBanner error={error} prependMessage={prependMessage} id={id} removeBanner={removeBannerMessage} />
   };
 
-  const getInformationDialog = (message, alignment = "dialogToast") => {
-    return <InformationDialog message={message} alignment={alignment} setInformationMessage={resetToast}/>
+  const getErrorToast = (error, id, prependMessage = "", autoCloseLengthInSeconds) => {
+    return <ErrorToast error={error} prependMessage={prependMessage} id={id} removeToast={removeToast} autoCloseLength={autoCloseLengthInSeconds} />
+  };
+
+  const getWarningBanner = (message, id) => {
+    return <WarningBanner warningMessage={message} removeBanner={removeBannerMessage} id={id}/>
+  };
+
+  const getWarningToast = (message, id, autoCloseLengthInSeconds) => {
+    return <WarningToast warningMessage={message} id={id} removeToast={removeToast} autoCloseLength={autoCloseLengthInSeconds}/>
+  };
+
+  const getInformationBanner = (message, id) => {
+    return <InformationBanner informationMessage={message} removeBanner={removeBannerMessage} id={id}/>
+  };
+
+  const getInformationToast = (message, id, autoCloseLengthInSeconds) => {
+    return <InformationToast informationMessage={message} id={id} removeToast={removeToast} autoCloseLength={autoCloseLengthInSeconds}/>
   };
 
   const getModalToast = () => {
-    return <>{modalToast != null ? modalToast : null}</>;
+    return <>{inlineBanner != null ? inlineBanner : null}</>;
   }
 
+  const getInlineBanner = () => {
+    return <>{inlineBanner != null ? inlineBanner : null}</>;
+  }
 
-    return (
+  return (
       <DialogToastContext.Provider
         value={{
-          showFormValidationErrorDialog: showFormValidationErrorDialog,
-          showMissingRequiredFieldsErrorDialog: showMissingRequiredFieldsErrorDialog,
-          showEmailAlreadyExistsErrorDialog: showEmailAlreadyExistsErrorDialog,
-          showDomainAlreadyRegisteredErrorDialog: showDomainAlreadyRegisteredErrorDialog,
+          // TODO: Rename to Toast instead of dialog for clarity
           showDeleteFailureResultDialog: showDeleteFailureResultDialog,
           showUpdateFailureResultDialog: showUpdateFailureResultDialog,
           showCreateFailureResultDialog: showCreateFailureResultDialog,
           showDeleteSuccessResultDialog: showDeleteSuccessResultDialog,
           showUpdateSuccessResultDialog: showUpdateSuccessResultDialog,
           showCreateSuccessResultDialog: showCreateSuccessResultDialog,
+          showFormValidationErrorDialog: showFormValidationErrorDialog,
+          showMissingRequiredFieldsErrorDialog: showMissingRequiredFieldsErrorDialog,
+          showSuccessDialog: showSuccessToast,
+          showSuccessToast: showSuccessToast,
+          showWarningToast: showWarningToast,
+          showInformationToast: showInformationToast,
+          showErrorToast: showErrorToast,
+          // TODO: Rename to Banner instead of dialog for clarity
+          showEmailAlreadyExistsErrorDialog: showEmailAlreadyExistsErrorDialog,
+          showDomainAlreadyRegisteredErrorDialog: showDomainAlreadyRegisteredErrorDialog,
           showServiceUnavailableDialog: showServiceUnavailableDialog,
           showLoadingErrorDialog: showLoadingErrorDialog,
-          showInformationDialog: showInformationDialog,
-          showWarningDialog: showWarningDialog,
-          showErrorDialog: showErrorDialog,
-          showSuccessDialog: showSuccessDialog,
+          showIncompleteCreateSuccessResultDialog: showIncompleteCreateSuccessResultDialog,
+          showSuccessBanner: showSuccessBanner,
+          showInformationBanner: showInformationBanner,
+          showWarningBanner: showWarningBanner,
+          showErrorBanner: showErrorBanner,
+
+          // TODO: Remove when everything is using the banner ones.
+          showInformationDialog: showInformationBanner,
+          showWarningDialog: showWarningBanner,
+          showErrorDialog: showErrorBanner,
           getModalToast: getModalToast,
-          showIncompleteCreateSuccessResultDialog: showIncompleteCreateSuccessResultDialog
+
+          getInlineBanner: getInlineBanner
         }}>
-        {showToast && toast}
-        {props.children}
+        <PersistentInformationMessage />
+        <BannerMessageContainer bannerMessages={bannerMessages} />
+        {children}
+        <Toaster toasts={toasts} />
       </DialogToastContext.Provider>
     );
   }
 ;
 
-ToastContextProvider.propTypes = {};
+ToastContextProvider.propTypes = {
+  children: PropTypes.any
+};
 
-export const DialogToastContext = createContext();
+export const DialogToastContext = createContext(ToastContextProvider);
 export default ToastContextProvider;
