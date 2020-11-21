@@ -14,6 +14,11 @@ import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import DataNotFoundContainer from "../../../../common/panels/detail_view_container/DataNotFoundContainer";
 import DataNotFoundDialog from "../../../../common/status_notifications/data_not_found/DataNotFoundDialog";
 import {faWrench} from "@fortawesome/free-solid-svg-icons";
+import DetailScreenContainer from "../../../../common/panels/detail_view_container/DetailScreenContainer";
+import ToolDetailPanel from "../../../../inventory/tools/tool_details/ToolDetailPanel";
+import ActionBarContainer from "../../../../common/actions/ActionBarContainer";
+import ActionBarBackButton from "../../../../common/actions/buttons/ActionBarBackButton";
+import ActionBarToggleButton from "../../../../common/actions/buttons/ActionBarToggleButton";
 
 function ToolIdentifierDetailView() {
   const {toolIdentifierId} = useParams();
@@ -62,6 +67,33 @@ function ToolIdentifierDetailView() {
     }
   };
 
+  const handleActiveToggle = async () => {
+    try {
+      let newToolIdentifierData = {...toolIdentifierData};
+      newToolIdentifierData.setData("active", !newToolIdentifierData.getData("active"));
+      let response = await toolTypeActions.updateToolIdentifier({...newToolIdentifierData}, getAccessToken);
+      let updatedDto = new Model(response.data, toolIdentifierData.metaData, false);
+      setToolIdentifierData(updatedDto);
+      toastContext.showUpdateSuccessResultDialog(newToolIdentifierData.getType());
+    } catch (error) {
+      toastContext.showUpdateFailureResultDialog(error);
+      console.error(error);
+    }
+  }
+
+  const getActionBar = () => {
+    return (
+      <ActionBarContainer>
+        <div>
+          <ActionBarBackButton path={"/admin/tools"} />
+        </div>
+        <div>
+          <ActionBarToggleButton status={toolIdentifierData?.getData("active")} handleActiveToggle={handleActiveToggle} />
+        </div>
+      </ActionBarContainer>
+    );
+  };
+
   if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   }
@@ -70,24 +102,21 @@ function ToolIdentifierDetailView() {
     return (<AccessDeniedDialog roleData={accessRoleData} />);
   }
 
-  if (!isLoading && toolIdentifierData == null) {
-    return (
-      <DataNotFoundContainer type={"Tool Identifier"} breadcrumbDestination={"toolIdentifierDetailView"}>
-        <DataNotFoundDialog type={"Tool Identifier"} managementViewIcon={faWrench} managementViewTitle={"Tool Management"} managementViewLink={"/admin/tools"} />
-      </DataNotFoundContainer>
-    )
-  }
-
   return (
-    <DetailViewContainer
+    <DetailScreenContainer
       breadcrumbDestination={"toolIdentifierDetailView"}
       title={toolIdentifierData != null ? `Tool Identifier Details [${toolIdentifierData.getData("name")}]` : undefined}
+      managementViewLink={"/admin/tools"}
+      managementTitle={"Tool Management"}
+      managementViewIcon={faWrench}
+      type={"Tool Identifier"}
       titleIcon={faTools}
+      dataObject={toolIdentifierData}
       isLoading={isLoading}
-      summaryPanel={<ToolIdentifierSummaryPanel toolIdentifierData={toolIdentifierData} setToolIdentifierData={setToolIdentifierData}/>}
+      actionBar={getActionBar()}
       detailPanel={<ToolIdentifierDetailPanel toolIdentifierData={toolIdentifierData} setToolIdentifierData={setToolIdentifierData}/>}
     />
-    );
+  );
 }
 
 export default ToolIdentifierDetailView;
