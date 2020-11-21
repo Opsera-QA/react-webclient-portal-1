@@ -18,19 +18,16 @@ import {
   faTools,
 } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
-import { AuthContext } from "../../../../../../../contexts/AuthContext";
-import { axiosApiService } from "../../../../../../../api/apiService";
+import { AuthContext } from "../../../../../../../../contexts/AuthContext";
+import { axiosApiService } from "../../../../../../../../api/apiService";
 import { Link } from "react-router-dom";
-import ErrorDialog from "../../../../../../common/status_notifications/error";
-import JUnitStepConfiguration from "./JUnitStepConfiguration";
+import ErrorDialog from "../../../../../../../common/status_notifications/error";
+import JUnitStepConfiguration from "../junit/JUnitStepConfiguration";
 import {
   getErrorDialog,
   getMissingRequiredFieldsErrorDialog,
   getServiceUnavailableDialog
-} from "../../../../../../common/toasts/toasts";
-
-import pipelineActions from "components/workflow/pipeline-actions";
-import { DialogToastContext, showServiceUnavailableDialog } from "contexts/DialogToastContext";
+} from "../../../../../../../common/toasts/toasts";
 
 const JOB_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
@@ -49,13 +46,14 @@ const INITIAL_DATA = {
   jobName: "",
   toolJobId: "",
   toolJobType: "",
+
+  commands: "",
  
   accountUsername: "",
   projectId: "",
   defaultBranch: "",
-  dockerName: "",
-  dockerTagName: "",
-  buildType: "gradle", //hardcoded now but needs to get it from a dropdown
+
+  buildType: "", //hardcoded now but needs to get it from a dropdown
   gitToolId: "",
   repoId: "",
   gitUrl: "",
@@ -65,12 +63,11 @@ const INITIAL_DATA = {
   gitUserName: "",
   repository: "",
   branch: "",
-  workspace: "",
 };
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
-function TwistlockStepConfiguration ({
+function CommandLineStepConfiguration({
   stepTool,
   pipelineId,
   plan,
@@ -82,8 +79,6 @@ function TwistlockStepConfiguration ({
   setShowToast
 }) {
   const contextType = useContext(AuthContext);
-  const { getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [renderForm, setRenderForm] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -93,31 +88,11 @@ function TwistlockStepConfiguration ({
   const [isRepoSearching, setIsRepoSearching] = useState(false);
   const [branchList, setBranchList] = useState([]);
   const [isBranchSearching, setIsBranchSearching] = useState(false);
-  const [listOfSteps, setListOfSteps] = useState([]);
-  
-  const [workspacesList, setWorkspacesList] = useState([]);
-  const [isWorkspacesSearching, setIsWorkspacesSearching] = useState(false);
-
   const [accountsList, setAccountsList] = useState([]);
   const [jobsList, setJobsList] = useState([]);
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
   const [jobType, setJobType] = useState("");
-
-  useEffect(() => {
-    if (plan && stepId) {
-      setListOfSteps(formatStepOptions(plan, stepId));
-    }
-  }, [plan, stepId]);
-
-  const formatStepOptions = (plan, stepId) => {
-    let STEP_OPTIONS = plan.slice(
-      0,
-      plan.findIndex((element) => element._id === stepId)
-    );
-    STEP_OPTIONS.unshift({ _id: "", name: "Select One", isDisabled: "yes" });
-    return STEP_OPTIONS;
-  };
 
   useEffect(() => {
     const controller = new AbortController();
@@ -140,21 +115,19 @@ function TwistlockStepConfiguration ({
   }, [stepTool]);
 
   useEffect(() => {
+    if (jobType === "job") {
+      setFormData({ ...formData, jobType : "SHELL SCRIPT" });
+    }
+  }, [jobType]);
+
+  useEffect(() => {
     setShowToast(false);
 
     async function fetchJenkinsDetails(service) {
       setisJenkinsSearching(true);
       // Set results state
-      let results = await pipelineActions.getToolsList(service, getAccessToken);
+      let results = await searchToolsList(service);
       //console.log(results);
-      if (typeof(results) != "object") {
-        setJenkinsList([{ value: "", name: "Select One", isDisabled: "yes" }]);
-        let errorMessage =
-          "Jenkins information is missing or unavailable!";
-        toastContext.showErrorDialog(errorMessage);
-        setisJenkinsSearching(false);
-        return;
-      }
       const filteredList = results.filter(
         (el) => el.configuration !== undefined
       ); //filter out items that do not have any configuration data!
@@ -168,60 +141,20 @@ function TwistlockStepConfiguration ({
     fetchJenkinsDetails("jenkins");
   }, []);
 
-
   // fetch repos
   useEffect(() => {
     setShowToast(false);
 
+    // setFormData({ ...formData, branch : "" });
     async function fetchRepos(service, gitToolId) {
-      setIsWorkspacesSearching(true);
-      // Set results state
-      let results = await pipelineActions.searchWorkSpaces(service, gitToolId, getAccessToken);
-      if (typeof(results) != "object") {
-        setWorkspacesList([{ value: "", name: "Select One", isDisabled: "yes" }]);
-        let errorMessage =
-          "Workspace information is missing or unavailable!";
-        toastContext.showErrorDialog(errorMessage);
-        setIsWorkspacesSearching(false);
-        return;
-      }
-        //console.log(results);
-        setWorkspacesList(results);
-        setIsWorkspacesSearching(false);
-    }
-
-    if (
-      formData.service === "bitbucket" &&
-      formData.gitToolId &&
-      formData.gitToolId.length > 0
-    ) {
-      // Fire off our API call
-      fetchRepos(formData.service, formData.gitToolId);
-    } else {
-      setIsWorkspacesSearching(true);
-      setWorkspacesList([{ value: "", name: "Select One", isDisabled: "yes" }]);
-    }
-  }, [formData.service, formData.gitToolId, formData.gitCredential]);
-
-  // fetch repos
-  useEffect(() => {
-    setShowToast(false);
-
-    async function fetchRepos(service, gitToolId, workspaces) {
       setIsRepoSearching(true);
       // Set results state
-      let results = await pipelineActions.searchRepositories(service, gitToolId, workspaces, getAccessToken);
-      if (typeof(results) != "object") {
-        setRepoList([{ value: "", name: "Select One", isDisabled: "yes" }]);
-        let errorMessage =
-          "Repository information is missing or unavailable!";
-        toastContext.showErrorDialog(errorMessage);
-        setIsRepoSearching(false);
-        return;
-      }
+      let results = await searchRepositories(service, gitToolId);
+      if (results) {
         //console.log(results);
         setRepoList(results);
         setIsRepoSearching(false);
+      }
     }
 
     if (
@@ -231,32 +164,27 @@ function TwistlockStepConfiguration ({
       formData.gitToolId.length > 0
     ) {
       // Fire off our API call
-      fetchRepos(formData.service, formData.gitToolId, formData.workspace);
+      fetchRepos(formData.service, formData.gitToolId);
     } else {
       setIsRepoSearching(true);
       setRepoList([{ value: "", name: "Select One", isDisabled: "yes" }]);
     }
-  }, [formData.service, formData.gitToolId, formData.gitCredential, formData.workspace]);
-
+  }, [formData.service, formData.gitToolId, formData.gitCredential]);
 
   // fetch branches
   useEffect(() => {
     setShowToast(false);
 
-    async function fetchBranches(service, gitToolId, repoId, workspaces) {
+    // setFormData({ ...formData, branch : "" });
+    async function fetchBranches(service, gitToolId, repoId) {
       setIsBranchSearching(true);
       // Set results state
-      let results = await pipelineActions.searchBranches(service, gitToolId, repoId, workspaces, getAccessToken);
-      if (typeof(results) != "object") {
-        setBranchList([{ value: "", name: "Select One", isDisabled: "yes" }]);
-        let errorMessage =
-          "Branch information is missing or unavailable!";
-        toastContext.showErrorDialog(errorMessage);
-        setIsBranchSearching(false);
-        return;
-      }
+      let results = await searchBranches(service, gitToolId, repoId);
+      if (results) {
+        //console.log(results);
         setBranchList(results);
         setIsBranchSearching(false);
+      }
     }
 
     if (
@@ -268,7 +196,7 @@ function TwistlockStepConfiguration ({
       formData.repoId.length > 0
     ) {
       // Fire off our API call
-      fetchBranches(formData.service, formData.gitToolId, formData.repoId, formData.workspace);
+      fetchBranches(formData.service, formData.gitToolId, formData.repoId);
     } else {
       setIsRepoSearching(true);
       setBranchList([{ value: "", name: "Select One", isDisabled: "yes" }]);
@@ -281,24 +209,30 @@ function TwistlockStepConfiguration ({
       setAccountsList(
         jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ].accounts
+        ] ? 
+        jenkinsList[
+          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+        ].accounts : []
       );
     }
-  }, [jenkinsList]);
+  }, [jenkinsList, formData.toolConfigId]);
 
   useEffect(() => {
     if (formData.toolConfigId) {
       setJobsList(
         jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ].jobs
+        ] ? 
+        jenkinsList[
+          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+        ].jobs : []
       );
     }
-  }, [jenkinsList]);
-  
+  }, [jenkinsList, formData.toolConfigId]);
+
   
   useEffect(() => {
-    if (jobsList && jobsList.length > 0 && formData.toolJobId && formData.toolJobId.length > 0  && !jobsList[jobsList.findIndex((x) => x._id === formData.toolJobId)]) {
+    if (jobsList && jobsList.length > 0 && formData.toolJobId && formData.toolJobId.length > 0 &&  !jobsList[jobsList.findIndex((x) => x._id === formData.toolJobId)]) {
      let toast = getErrorDialog(
         "Preselected job is no longer available.  It may have been deleted.  Please select another job from the list or recreate the job in Tool Reigstry.",
         setShowToast,
@@ -311,12 +245,14 @@ function TwistlockStepConfiguration ({
     setShowToast(false);
   }, [jobsList, formData.toolJobId]);
 
-
   useEffect(() => {
     if (formData.toolJobType && formData.toolJobType.includes("SFDC")) {
       setFormData({ ...formData, buildType: "ant" });
     }
   }, [formData.toolJobType]);
+
+  console.log(formData);
+  // console.log(jobsList);
 
   const loadFormData = async (step) => {
     let { configuration, threshold, job_type } = step;
@@ -337,6 +273,7 @@ function TwistlockStepConfiguration ({
   };
 
   const handleCreateAndSave = async (pipelineId, stepId, toolId) => {
+    console.log("saving and creating job for toolID: ", toolId);
     if (validateRequiredFields() && toolId) {
       setLoading(true);
 
@@ -348,6 +285,7 @@ function TwistlockStepConfiguration ({
           stepId: formData.stepIdXML && formData.stepIdXML,
         },
       };
+      console.log("createJobPostBody: ", createJobPostBody);
 
       const toolConfiguration = {
         configuration: formData,
@@ -357,12 +295,14 @@ function TwistlockStepConfiguration ({
         },
         job_type: jobType,
       };
+      console.log("item: ", toolConfiguration);
 
       await createJob(toolId, toolConfiguration, stepId, createJobPostBody);
     }
   };
 
   const callbackFunction = async () => {
+    console.log("saving data");
     if (validateRequiredFields()) {
       setLoading(true);
 
@@ -374,8 +314,43 @@ function TwistlockStepConfiguration ({
         },
         job_type: jobType,
       };
+      console.log("item: ", item);
       setLoading(false);
       parentCallback(item);
+    }
+  };
+
+  //TODO: Refactor this into actions.jsx
+  const searchToolsList = async (service) => {
+    const { getAccessToken } = contextType;
+    const accessToken = await getAccessToken();
+    const apiUrl = "/registry/properties/" + service; // this is to get all the service accounts from tool registry
+    try {
+      const res = await axiosApiService(accessToken).get(apiUrl);
+      if (res.data) {
+        let respObj = [];
+        let arrOfObj = res.data;
+        arrOfObj.map((item) => {
+          respObj.push({
+            name: item.name,
+            id: item._id,
+            configuration: item.configuration,
+            accounts: item.accounts,
+            jobs: item.jobs,
+          });
+        });
+        //console.log(respObj);
+        return respObj;
+      } else {
+        let errorMessage = "Jenkins information is missing or unavailable!  Please ensure the required Jenkins creds are registered and up to date in Tool Registry.";
+        let toast = getErrorDialog(errorMessage, setShowToast, "detailPanelTop");
+        setToast(toast);
+        setShowToast(true);
+      }
+    } catch (error) {
+      let toast = getErrorDialog(error, setShowToast, "detailPanelTop");
+      setToast(toast);
+      setShowToast(true);
     }
   };
 
@@ -387,18 +362,17 @@ function TwistlockStepConfiguration ({
       jAuthToken,
       jobName,
       buildType,
-      dockerName,
-      dockerTagName,
+      commands
     } = formData;
-    
+
     if(jobType === "job") {
       if(jobName.length === 0) {
         let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
         setToast(toast);
         setShowToast(true);
-      return false
+        return false;
       } else {
-        return true
+        return true;
       }
     }
     else  {
@@ -407,10 +381,7 @@ function TwistlockStepConfiguration ({
       jenkinsUrl.length === 0 ||
       jUserId.length === 0 ||
       jAuthToken.length === 0 ||
-      // jobName.length === 0 ||
-      (buildType === "docker"
-        ? dockerName.length === 0 || dockerTagName.length === 0
-        : false)
+      commands.length === 0
     ) {
       let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
       setToast(toast);
@@ -421,7 +392,6 @@ function TwistlockStepConfiguration ({
     }
   }
   };
-
   //todo: can this use the initial value const above to reset everything?  Right now this means we have ot maintain the values in two places.
   const handleJenkinsChange = (selectedOption) => {
     setLoading(true);
@@ -441,7 +411,6 @@ function TwistlockStepConfiguration ({
         gitCredential: "",
         gitUserName: "",
         repository: "",
-        workspace:"",
         branch: "",
         toolJobId: "",
         toolJobType: "",
@@ -459,8 +428,7 @@ function TwistlockStepConfiguration ({
 
   const handleJobChange = (selectedOption) => {
     console.log(selectedOption)
-    // no security gate stuff in job creation
-    // if (selectedOption.type[0] === "" ) {      
+    if (selectedOption.type[0] === "SHELL SCRIPT" ) {      
         setFormData({
           ...formData,
           toolJobId: selectedOption._id,
@@ -471,10 +439,12 @@ function TwistlockStepConfiguration ({
           projectKey:"",
           buildArgs: {},
         });
-    // } else {
-    //   setErrors("Selected Job is not a Security gate Job!  Please ensure the selected job has twistlock configurations.");
-    //   console.log("not a unit test job")
-    // }
+    } else {
+      let errorMessage = "Selected Job is not a Command line Job!  Please ensure the selected job has Command line job.";
+      let toast = getErrorDialog(errorMessage, setShowToast, "detailPanelTop");
+      setToast(toast);
+      setShowToast(true);
+    }
   };
 
   const handleAccountChange = (selectedOption) => {
@@ -488,25 +458,9 @@ function TwistlockStepConfiguration ({
       gitUrl: "",
       sshUrl: "",
       repository: "",
-      workspace:"",
       branch: "",
       projectId: "",
       defaultBranch: "",
-    });
-  };
-
-  const handleWorkspacesChange = (selectedOption) => {
-    setFormData({
-      ...formData,
-      workspace: selectedOption,
-      repository: "",
-      repoId: "",
-      projectId: "",
-      gitUrl: "",
-      sshUrl: "",
-      branch: "",
-      defaultBranch: "",
-      gitBranch: "",
     });
   };
 
@@ -538,6 +492,7 @@ function TwistlockStepConfiguration ({
     setJobType(selectedOption.value);
       setFormData({
         ...formData,
+        awsToolConfigId: "",
         jobName: "",
         buildType: "", 
         jobDescription: "",
@@ -545,6 +500,91 @@ function TwistlockStepConfiguration ({
         toolJobId: "",
         toolJobType: "",
       });
+  };
+
+  //todo: the api needs to be moved to actions.jsx
+  const searchRepositories = async (service, gitAccountId) => {
+    const { getAccessToken } = contextType;
+    const accessToken = await getAccessToken();
+    const apiUrl = "/tools/properties";
+    const postBody = {
+      tool: service,
+      metric: "getRepositories",
+      gitAccountId: gitAccountId,
+    };
+    //console.log(postBody);
+    try {
+      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
+      if (res.data && res.data.data) {
+        let arrOfObj = res.data.data;
+        if( typeof arrOfObj !== "object" ) {
+          let toast = getErrorDialog(
+            "Error fetching repositories: "+ arrOfObj,
+            setShowToast,
+            "detailPanelTop"
+          );
+          setToast(toast);
+          setShowToast(true);
+          setBranchList([]);
+          return [];
+        }
+        return arrOfObj;
+      } else {
+        let toast = getServiceUnavailableDialog(setShowToast, "detailPanelTop");
+        setToast(toast);
+        setShowToast(true);
+      }
+    } catch (error) {
+      let toast = getErrorDialog(error, setShowToast, "detailPanelTop");
+      setToast(toast);
+      setShowToast(true);
+    }
+  };
+
+  //todo: the api needs to be moved to actions.jsx
+  const searchBranches = async (service, gitAccountId, repoId) => {
+    const { getAccessToken } = contextType;
+    const accessToken = await getAccessToken();
+    const apiUrl = "/tools/properties";
+    const postBody = {
+      tool: service,
+      metric: "getBranches",
+      gitAccountId: gitAccountId,
+      repoId: repoId,
+    };
+    try {
+      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
+      if (res.data && res.data.data) {
+        let arrOfObj = res.data.data;
+        if( typeof arrOfObj !== "object" ) {
+          let toast = getErrorDialog(
+            "Error fetching branches: "+ arrOfObj,
+            setShowToast,
+            "detailPanelTop"
+          );
+          setToast(toast);
+          setShowToast(true);
+          return [];
+        }
+        if (arrOfObj) {
+          var result = arrOfObj.map(function (el) {
+            var o = Object.assign({});
+            o.value = el;
+            o.name = el;
+            return o;
+          });
+          return result;
+        }
+      } else {
+        let toast = getServiceUnavailableDialog(setShowToast, "detailPanelTop");
+        setToast(toast);
+        setShowToast(true);
+      }
+    } catch (error) {
+      let toast = getErrorDialog(error, setShowToast, "detailPanelTop");
+      setToast(toast);
+      setShowToast(true);
+    }
   };
 
   const RegistryPopover = (data) => {
@@ -643,7 +683,7 @@ function TwistlockStepConfiguration ({
             </div>
           ) : (
             <>
-              {renderForm && jenkinsList && jenkinsList.length > 0 ? (
+              {jenkinsList && jenkinsList.length > 0 ? (
                 <>
                   <DropdownList
                     data={jenkinsList}
@@ -679,7 +719,7 @@ function TwistlockStepConfiguration ({
               )}
             </>
           )}
-          {formData.toolConfigId.length > 0 && (
+          {formData.toolConfigId && formData.toolConfigId.length > 0 && (
             <Form.Label className="mt-2 pl-1">
               <Link to={"/inventory/tools/details/" + formData.toolConfigId}>
                 <FontAwesomeIcon icon={faTools} className="pr-1" /> View/edit
@@ -847,55 +887,7 @@ function TwistlockStepConfiguration ({
           </Form.Group>
         )}
 
-        {formData.service && formData.service === "bitbucket" && formData.gitToolId && (
-          <Form.Group controlId="account" className="mt-2">
-            <Form.Label>Workspace*</Form.Label>
-            {isWorkspacesSearching ? (
-              <div className="form-text text-muted mt-2 p-2">
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
-                Loading workspaces from registry
-              </div>
-            ) : (
-              <>
-                {workspacesList ? (
-                  <DropdownList
-                    data={workspacesList}
-                    value={
-                      workspacesList[
-                        workspacesList.findIndex(
-                          (x) => x === formData.workspace,
-                        )
-                        ]
-                    }
-                    valueField="value"
-                    textField="name"
-                    filter="contains"
-                    onChange={handleWorkspacesChange}
-                  />
-                ) : (
-                  <FontAwesomeIcon
-                    icon={faSpinner}
-                    spin
-                    className="text-muted mr-1"
-                    fixedWidth
-                  />
-                )}
-              </>
-            )}
-            {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
-          </Form.Group>
-        )}
-
-        {formData.service && 
-        formData.gitToolId && 
-        (formData.service === "bitbucket"? 
-          formData.workspace 
-          && formData.workspace.length > 0 : true ) && (
+        {formData.service && formData.gitToolId && (
           <Form.Group controlId="account" className="mt-2">
             <Form.Label>Repository*</Form.Label>
             {isRepoSearching ? (
@@ -916,9 +908,9 @@ function TwistlockStepConfiguration ({
                     value={
                       repoList[
                         repoList.findIndex(
-                          (x) => x.name === formData.repository,
+                          (x) => x.name === formData.repository
                         )
-                        ]
+                      ]
                     }
                     valueField="value"
                     textField="name"
@@ -981,18 +973,34 @@ function TwistlockStepConfiguration ({
           </Form.Group>
         )}
 
-        <Form.Group controlId="threshold">
-          <Form.Label>Success Threshold</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder=""
-            value={thresholdVal || ""}
-            onChange={(e) => setThresholdValue(e.target.value)}
-            disabled={true}
-          />
-        </Form.Group>
+        {formData.jobType === "SHELL SCRIPT" ? (
+         <>
+          <Form.Group controlId="repoField">
+            <Form.Label>Enter build script content*</Form.Label>
+            <Form.Control
+              as="textarea"
+              type="text"
+              placeholder=""
+              value={formData.commands || ""}
+              onChange={(e) =>
+                setFormData({ ...formData, commands: e.target.value })
+              }
+            />
+          </Form.Group>
+
+          <small className="form-text text-muted mt-2 text-left pb-2">
+            A platform-specific script, which will be executed as .cmd file on
+            Windows or as a shellscript in Unix-like environments
+          </small>
+
+         </>
+        ) : (
+          <></>
+        )}
         </>
+        
         }
+
 
         {jobType === "opsera-job" ? (
           <Button
@@ -1055,7 +1063,7 @@ function TwistlockStepConfiguration ({
   );
 }
 
-TwistlockStepConfiguration.propTypes = {
+CommandLineStepConfiguration.propTypes = {
   stepTool: PropTypes.string,
   pipelineId: PropTypes.string,
   plan: PropTypes.object,
@@ -1067,4 +1075,4 @@ TwistlockStepConfiguration.propTypes = {
   setShowToast: PropTypes.func
 }
 
-export default TwistlockStepConfiguration;
+export default CommandLineStepConfiguration;

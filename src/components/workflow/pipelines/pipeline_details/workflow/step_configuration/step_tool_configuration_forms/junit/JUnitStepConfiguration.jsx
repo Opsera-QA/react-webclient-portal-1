@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import {
   Button,
   Form,
@@ -15,11 +16,14 @@ import {
   faTools,
 } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
-import { AuthContext } from "../../../../../../../contexts/AuthContext";
-import { axiosApiService } from "../../../../../../../api/apiService";
+import { AuthContext } from "../../../../../../../../contexts/AuthContext";
+import { axiosApiService } from "../../../../../../../../api/apiService";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
-import {getErrorDialog, getServiceUnavailableDialog} from "../../../../../../common/toasts/toasts";
+import {
+  getErrorDialog,
+  getMissingRequiredFieldsErrorDialog,
+  getServiceUnavailableDialog
+} from "../../../../../../../common/toasts/toasts";
 
 import pipelineActions from "components/workflow/pipeline-actions";
 import { DialogToastContext, showServiceUnavailableDialog } from "contexts/DialogToastContext";
@@ -62,7 +66,7 @@ const INITIAL_DATA = {
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
-function XUnitStepConfiguration({
+function JUnitStepConfiguration({
   stepTool,
   pipelineId,
   plan,
@@ -77,7 +81,6 @@ function XUnitStepConfiguration({
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [formData, setFormData] = useState(INITIAL_DATA);
-  const [formMessage, setFormMessage] = useState("");
   const [renderForm, setRenderForm] = useState(false);
   const [loading, setLoading] = useState(false);
   const [jenkinsList, setJenkinsList] = useState([]);
@@ -132,13 +135,14 @@ function XUnitStepConfiguration({
     };
   }, [stepTool]);
 
-  useEffect(() => {
+  useEffect( () => {
     setShowToast(false);
+
     async function fetchJenkinsDetails(service) {
       setisJenkinsSearching(true);
       // Set results state
       let results = await pipelineActions.getToolsList(service, getAccessToken);
-      //console.log(results);
+      // Set results state
       if (typeof(results) != "object") {
         setJenkinsList([{ value: "", name: "Select One", isDisabled: "yes" }]);
         let errorMessage =
@@ -177,7 +181,7 @@ function XUnitStepConfiguration({
         setIsWorkspacesSearching(false);
         return;
       }
-        //console.log(results);
+       //console.log(results);
         setWorkspacesList(results);
         setIsWorkspacesSearching(false);
     }
@@ -273,24 +277,30 @@ function XUnitStepConfiguration({
       setAccountsList(
         jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ].accounts
+        ] ? 
+        jenkinsList[
+          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+        ].accounts : []
       );
     }
-  }, [jenkinsList]);
+  }, [jenkinsList, formData.toolConfigId]);
 
   useEffect(() => {
     if (formData.toolConfigId) {
       setJobsList(
         jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ].jobs
+        ] ? 
+        jenkinsList[
+          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+        ].jobs : []
       );
     }
-  }, [jenkinsList]);
+  }, [jenkinsList, formData.toolConfigId]);
 
   
   useEffect(() => {
-    if (jobsList && jobsList.length > 0 && formData.toolJobId && formData.toolJobId.length > 0 && !jobsList[jobsList.findIndex((x) => x._id === formData.toolJobId)]) {
+    if (jobsList && jobsList.length > 0 && formData.toolJobId && formData.toolJobId.length > 0  && !jobsList[jobsList.findIndex((x) => x._id === formData.toolJobId)]) {
      let toast = getErrorDialog(
         "Preselected job is no longer available.  It may have been deleted.  Please select another job from the list or recreate the job in Tool Reigstry.",
         setShowToast,
@@ -311,9 +321,10 @@ function XUnitStepConfiguration({
 
   useEffect(() => {
     if (jobType === "job") {
-      setFormData({ ...formData, jobType : "UNIT TEST" });
+      setFormData({ ...formData, jobType : "UNIT TESTING" });
     }
   }, [jobType]);
+
 
   const loadFormData = async (step) => {
     let { configuration, threshold, job_type } = step;
@@ -387,30 +398,33 @@ function XUnitStepConfiguration({
       dockerName,
       dockerTagName,
     } = formData;
-    
+
     if(jobType === "job") {
       if(jobName.length === 0) {
-      setFormMessage("Required Fields Missing!");
-      return false
+        let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
+        setToast(toast);
+        setShowToast(true);
+        return false;
       } else {
-        setFormMessage("");
-        return true
+        return true;
       }
     }
     else  {
-      if (
+    if (
       toolConfigId.length === 0 ||
       jenkinsUrl.length === 0 ||
       jUserId.length === 0 ||
       jAuthToken.length === 0 ||
+      // jobName.length === 0 ||
       (buildType === "docker"
         ? dockerName.length === 0 || dockerTagName.length === 0
         : false)
     ) {
-      setFormMessage("Required Fields Missing!");
+      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
+      setToast(toast);
+      setShowToast(true);
       return false;
     } else {
-      setFormMessage("");
       return true;
     }
   }
@@ -453,7 +467,7 @@ function XUnitStepConfiguration({
 
   const handleJobChange = (selectedOption) => {
     console.log(selectedOption)
-    if (selectedOption.type[0] === "UNIT TEST" ) {      
+    if (selectedOption.type[0] === "UNIT TESTING" ) {      
         setFormData({
           ...formData,
           toolJobId: selectedOption._id,
@@ -465,7 +479,8 @@ function XUnitStepConfiguration({
           buildArgs: {},
         });
     } else {
-      let toast = getErrorDialog("Selected Job is not a Unit test Job!  Please ensure the selected job has xUnit configurations.", setShowToast, "detailPanelTop");
+      let errorMessage= "Selected Job is not a Unit test Job!  Please ensure the selected job has JUnit configurations.";
+      let toast = getErrorDialog(errorMessage, setShowToast, "detailPanelTop");
       setToast(toast);
       setShowToast(true);
     }
@@ -708,10 +723,6 @@ function XUnitStepConfiguration({
           ) : null}
         </Form.Group>
 
-        {formMessage.length > 0 ? (
-          <p className="info-text">{formMessage}</p>
-        ) : null}
-
         {jobType === "job" ? (
           <Form.Group controlId="branchField">
             <Form.Label>Job Name*</Form.Label>
@@ -728,8 +739,7 @@ function XUnitStepConfiguration({
           </Form.Group>
         ) : 
         <>
-        
-        {jobType === "opsera-job" && (
+           {jobType === "opsera-job" && (
           <>
             {formData.jenkinsUrl && jenkinsList.length > 0 && (
               <Form.Group controlId="formBasicEmail">
@@ -775,6 +785,7 @@ function XUnitStepConfiguration({
                     valueField="id"
                     textField="name"
                     value={
+                      jobsList && jobsList.length > 0 &&
                       jobsList[
                         jobsList.findIndex((x) => x._id === formData.toolJobId)
                       ]
@@ -844,7 +855,6 @@ function XUnitStepConfiguration({
           </Form.Group>
         )}
 
-        
         {formData.service && formData.service === "bitbucket" && formData.gitToolId && (
           <Form.Group controlId="account" className="mt-2">
             <Form.Label>Workspace*</Form.Label>
@@ -1053,7 +1063,7 @@ function XUnitStepConfiguration({
   );
 }
 
-XUnitStepConfiguration.propTypes = {
+JUnitStepConfiguration.propTypes = {
   stepTool: PropTypes.string,
   pipelineId: PropTypes.string,
   plan: PropTypes.object,
@@ -1065,4 +1075,4 @@ XUnitStepConfiguration.propTypes = {
   setShowToast: PropTypes.func
 }
 
-export default XUnitStepConfiguration;
+export default JUnitStepConfiguration;

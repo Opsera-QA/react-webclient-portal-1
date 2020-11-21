@@ -12,7 +12,7 @@ import DropdownList from "react-widgets/lib/DropdownList";
 import { AuthContext } from "../../../../../../../contexts/AuthContext";
 import { axiosApiService } from "../../../../../../../api/apiService";
 import ErrorDialog from "../../../../../../common/status_notifications/error";
-import JUnitStepConfiguration from "./JUnitStepConfiguration";
+import JUnitStepConfiguration from "./junit/JUnitStepConfiguration";
 import { Link } from "react-router-dom";
 import {
   getErrorDialog,

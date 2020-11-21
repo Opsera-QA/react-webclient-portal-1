@@ -15,7 +15,7 @@ import ErrorDialog from "components/common/status_notifications/error";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import DtoBottomPagination from "components/common/pagination/DtoBottomPagination"
 import filterMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/filter-metadata";
-import Model from "../../../../../../../../core/data_model/model";
+import Model from "../../../../../../../../../core/data_model/model";
 
 const SFDCUnitTestView = ({
   pipelineId,

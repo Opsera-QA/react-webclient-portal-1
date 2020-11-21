@@ -5,12 +5,10 @@ import {
   Form,
   OverlayTrigger,
   Popover,
-  Tooltip,
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faExclamationCircle,
-  faExclamationTriangle,
   faTimes,
   faSave,
   faSpinner,
@@ -18,15 +16,16 @@ import {
   faTools,
 } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
-import { AuthContext } from "../../../../../../../contexts/AuthContext";
-import { axiosApiService } from "../../../../../../../api/apiService";
+import { AuthContext } from "../../../../../../../../contexts/AuthContext";
+import { axiosApiService } from "../../../../../../../../api/apiService";
 import { Link } from "react-router-dom";
-import ErrorDialog from "../../../../../../common/status_notifications/error";
+import ErrorDialog from "../../../../../../../common/status_notifications/error";
 import {
   getErrorDialog,
   getMissingRequiredFieldsErrorDialog,
   getServiceUnavailableDialog
-} from "../../../../../../common/toasts/toasts";
+} from "../../../../../../../common/toasts/toasts";
+
 import pipelineActions from "components/workflow/pipeline-actions";
 import { DialogToastContext, showServiceUnavailableDialog } from "contexts/DialogToastContext";
 
@@ -63,14 +62,12 @@ const INITIAL_DATA = {
   gitUserName: "",
   repository: "",
   branch: "",
-  jmeterExportFileName: "",
-  jmeterFileName: "",
   workspace: "",
 };
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
-function JmeterStepConfiguration({
+function SeleniumStepConfiguration({
   stepTool,
   pipelineId,
   plan,
@@ -325,11 +322,11 @@ function JmeterStepConfiguration({
   
   useEffect(() => {
     if (jobType === "job") {
-      setFormData({ ...formData, jobType : "PERFORMANCE TESTING" });
+      setFormData({ ...formData, jobType : "FUNCTIONAL TESTING" });
     }
   }, [jobType]);
 
-  console.log(formData);
+  // console.log(formData);
   // console.log(jobsList);
 
   const loadFormData = async (step) => {
@@ -351,6 +348,7 @@ function JmeterStepConfiguration({
   };
 
   const handleCreateAndSave = async (pipelineId, stepId, toolId) => {
+    console.log("saving and creating job for toolID: ", toolId);
     if (validateRequiredFields() && toolId) {
       setLoading(true);
 
@@ -362,6 +360,7 @@ function JmeterStepConfiguration({
           stepId: formData.stepIdXML && formData.stepIdXML,
         },
       };
+      console.log("createJobPostBody: ", createJobPostBody);
 
       const toolConfiguration = {
         configuration: formData,
@@ -371,6 +370,7 @@ function JmeterStepConfiguration({
         },
         job_type: jobType,
       };
+      console.log("item: ", toolConfiguration);
 
       await createJob(toolId, toolConfiguration, stepId, createJobPostBody);
     }
@@ -405,8 +405,6 @@ function JmeterStepConfiguration({
       buildType,
       dockerName,
       dockerTagName,
-      jmeterExportFileName,
-      jmeterFileName,
     } = formData;
 
     if(jobType === "job") {
@@ -420,18 +418,20 @@ function JmeterStepConfiguration({
       }
     }
     else  {
-    if (
+      if (
       toolConfigId.length === 0 ||
       jenkinsUrl.length === 0 ||
       jUserId.length === 0 ||
       jAuthToken.length === 0 ||
-      jmeterExportFileName.length  === 0 ||
-      jmeterFileName.length  === 0      
+      // jobName.length === 0 ||
+      (buildType === "docker"
+        ? dockerName.length === 0 || dockerTagName.length === 0
+        : false)
     ) {
-      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
-      setToast(toast);
-      setShowToast(true);
-      return false;
+        let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
+        setToast(toast);
+        setShowToast(true);
+        return false;
     } else {
       return true;
     }
@@ -475,7 +475,7 @@ function JmeterStepConfiguration({
 
   const handleJobChange = (selectedOption) => {
     console.log(selectedOption)
-    if (selectedOption.type[0] === "PERFORMANCE TESTING" ) {      
+    if (selectedOption.type[0] === "FUNCTIONAL TESTING" ) {      
         setFormData({
           ...formData,
           toolJobId: selectedOption._id,
@@ -487,7 +487,7 @@ function JmeterStepConfiguration({
           buildArgs: {},
         });
     } else {
-      let errorMessage = "Selected Job is not a Performance test Job!  Please ensure the selected job has Jmeter configurations.";
+      let errorMessage = "Selected Job is not a Functional test Job!  Please ensure the selected job has Selenium configurations.";
       let toast = getErrorDialog(errorMessage, setShowToast, "detailPanelTop");
       setToast(toast);
       setShowToast(true);
@@ -747,7 +747,7 @@ function JmeterStepConfiguration({
           </Form.Group>
         ) : 
         <>
-        
+
         {jobType === "opsera-job" && (
           <>
             {formData.jenkinsUrl && jenkinsList.length > 0 && (
@@ -998,30 +998,6 @@ function JmeterStepConfiguration({
           </Form.Group>
         )}
 
-         <Form.Group controlId="jmeterExportFileName">
-            <Form.Label>JMeter Export File Name *</Form.Label>
-            <Form.Control
-              maxLength="50"
-              type="text"
-              placeholder=""
-              value={formData.jmeterExportFileName || ""}
-              className={"mb-1"}
-              onChange={(e) => setFormData({ ...formData, jmeterExportFileName: e.target.value})}
-            />
-          </Form.Group>
-
-          <Form.Group controlId="jmeterFileName">
-          <Form.Label>JMeter File Name *</Form.Label>
-          <Form.Control
-            maxLength="50"
-            type="text"
-            placeholder=""
-            value={formData.jmeterFileName || ""}
-            className={"mb-1"}
-            onChange={(e) => setFormData({ ...formData, jmeterFileName: e.target.value})}
-          />
-        </Form.Group>
-
         <Form.Group controlId="threshold">
           <Form.Label>Success Threshold</Form.Label>
           <Form.Control
@@ -1097,7 +1073,7 @@ function JmeterStepConfiguration({
   );
 }
 
-JmeterStepConfiguration.propTypes = {
+SeleniumStepConfiguration.propTypes = {
   stepTool: PropTypes.string,
   pipelineId: PropTypes.string,
   plan: PropTypes.object,
@@ -1109,4 +1085,4 @@ JmeterStepConfiguration.propTypes = {
   setShowToast: PropTypes.func
 }
 
-export default JmeterStepConfiguration;
+export default SeleniumStepConfiguration;

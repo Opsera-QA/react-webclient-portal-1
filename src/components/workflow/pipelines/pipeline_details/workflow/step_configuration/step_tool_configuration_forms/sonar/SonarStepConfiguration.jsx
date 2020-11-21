@@ -18,15 +18,15 @@ import {
   faTools,
 } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
-import { AuthContext } from "../../../../../../../contexts/AuthContext";
-import { axiosApiService } from "../../../../../../../api/apiService";
+import { AuthContext } from "../../../../../../../../contexts/AuthContext";
+import { axiosApiService } from "../../../../../../../../api/apiService";
 import { Link } from "react-router-dom";
-import ErrorDialog from "../../../../../../common/status_notifications/error";
+import ErrorDialog from "../../../../../../../common/status_notifications/error";
 import {
   getErrorDialog,
   getMissingRequiredFieldsErrorDialog,
   getServiceUnavailableDialog
-} from "../../../../../../common/toasts/toasts";
+} from "../../../../../../../common/toasts/toasts";
 
 import pipelineActions from "components/workflow/pipeline-actions";
 import { DialogToastContext, showServiceUnavailableDialog } from "contexts/DialogToastContext";
@@ -48,6 +48,7 @@ const INITIAL_DATA = {
   jobName: "",
   toolJobId: "",
   toolJobType: "",
+  projectKey: "",
 
   accountUsername: "",
   projectId: "",
@@ -64,13 +65,13 @@ const INITIAL_DATA = {
   gitUserName: "",
   repository: "",
   branch: "",
-  jsonPath: "",
+  sonarSourcePath: "",
   workspace: "",
 };
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
-function CypressStepConfiguration({
+function SonarStepConfiguration({
   stepTool,
   pipelineId,
   plan,
@@ -84,6 +85,7 @@ function CypressStepConfiguration({
   const contextType = useContext(AuthContext);
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
+  const [error, setErrors] = useState(false);
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [renderForm, setRenderForm] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -98,6 +100,8 @@ function CypressStepConfiguration({
   const [workspacesList, setWorkspacesList] = useState([]);
   const [isWorkspacesSearching, setIsWorkspacesSearching] = useState(false);
 
+  const [sonarList, setSonarList] = useState([]);
+  const [isSonarSearching, setIsSonarSearching] = useState(false);
   const [accountsList, setAccountsList] = useState([]);
   const [jobsList, setJobsList] = useState([]);
   const [thresholdVal, setThresholdValue] = useState("");
@@ -139,13 +143,13 @@ function CypressStepConfiguration({
     };
   }, [stepTool]);
 
-
   useEffect(() => {
     setShowToast(false);
 
     async function fetchJenkinsDetails(service) {
       setisJenkinsSearching(true);
       let results = await pipelineActions.getToolsList(service, getAccessToken);
+      //console.log(results);
       if (typeof(results) != "object") {
         setJenkinsList([{ value: "", name: "Select One", isDisabled: "yes" }]);
         let errorMessage =
@@ -155,7 +159,7 @@ function CypressStepConfiguration({
         return;
       }
       const filteredList = results.filter(
-        (el) => el.configuration !== undefined,
+        (el) => el.configuration !== undefined
       ); //filter out items that do not have any configuration data!
       if (filteredList) {
         setJenkinsList(filteredList);
@@ -167,6 +171,35 @@ function CypressStepConfiguration({
     fetchJenkinsDetails("jenkins");
   }, []);
 
+  // search sonar
+  useEffect(() => {
+    setShowToast(false);
+
+    async function fetchSonarDetails(service) {
+      setIsSonarSearching(true);
+      // Set results state
+      let results = await pipelineActions.getToolsList(service, getAccessToken);
+      //console.log(results);
+      if (typeof(results) != "object") {
+        setSonarList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+        let errorMessage =
+          "Sonar information is missing or unavailable!";
+        toastContext.showErrorDialog(errorMessage);
+        setIsSonarSearching(false);
+        return;
+      }
+      const filteredList = results.filter(
+        (el) => el.configuration !== undefined,
+      ); //filter out items that do not have any configuration data!
+      if (filteredList) {
+        setSonarList(filteredList);
+        setIsSonarSearching(false);
+      }
+    }
+
+    // Fire off our API call
+    fetchSonarDetails("sonar");
+  }, []);
 
   // fetch repos
   useEffect(() => {
@@ -187,7 +220,7 @@ function CypressStepConfiguration({
         //console.log(results);
         setWorkspacesList(results);
         setIsWorkspacesSearching(false);
-      }
+    }
 
     if (
       formData.service === "bitbucket" &&
@@ -274,35 +307,36 @@ function CypressStepConfiguration({
     }
   }, [formData.repoId]);
 
-
   useEffect(() => {
     if (formData.toolConfigId) {
+      // console.log(jenkinsList[jenkinsList.findIndex(x => x.id === formData.toolConfigId)].accounts);
       setAccountsList(
         jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-          ] ? jenkinsList[
-          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-          ].accounts : [],
+          ] ?
+          jenkinsList[
+            jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+            ].accounts : [],
       );
     }
   }, [jenkinsList, formData.toolConfigId]);
-
 
   useEffect(() => {
     if (formData.toolConfigId) {
       setJobsList(
         jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-          ] ? jenkinsList[
-          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-          ].jobs : [],
+          ] ?
+          jenkinsList[
+            jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+            ].jobs : [],
       );
     }
   }, [jenkinsList, formData.toolConfigId]);
 
   
   useEffect(() => {
-    if (jobsList && jobsList.length > 0 && formData.toolJobId && formData.toolJobId.length > 0 && !jobsList[jobsList.findIndex((x) => x._id === formData.toolJobId)]) {
+    if (jobsList && jobsList.length > 0 && formData.toolJobId && formData.toolJobId.length > 0  && !jobsList[jobsList.findIndex((x) => x._id === formData.toolJobId)]) {
      let toast = getErrorDialog(
         "Preselected job is no longer available.  It may have been deleted.  Please select another job from the list or recreate the job in Tool Reigstry.",
         setShowToast,
@@ -315,17 +349,15 @@ function CypressStepConfiguration({
     setShowToast(false);
   }, [jobsList, formData.toolJobId]);
 
-
   useEffect(() => {
     if (formData.toolJobType && formData.toolJobType.includes("SFDC")) {
       setFormData({ ...formData, buildType: "ant" });
     }
   }, [formData.toolJobType]);
 
-
   useEffect(() => {
     if (jobType === "job") {
-      setFormData({ ...formData, jobType: "CYPRESS UNIT TESTING" });
+      setFormData({ ...formData, jobType: "CODE SCAN" });
     }
   }, [jobType]);
 
@@ -401,42 +433,48 @@ function CypressStepConfiguration({
       buildType,
       dockerName,
       dockerTagName,
-      jsonPath
     } = formData;
 
-    if(jobType === "job") {
-      if(jobName.length === 0) {
+    if (jobType === "job") {
+      if (jobName.length === 0) {
         let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
         setToast(toast);
         setShowToast(true);
-      return false;
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      if (
+        toolConfigId.length === 0 ||
+        jenkinsUrl.length === 0 ||
+        jUserId.length === 0 ||
+        jAuthToken.length === 0 ||
+        // jobName.length === 0 ||
+        (buildType === "docker"
+          ? dockerName.length === 0 || dockerTagName.length === 0
+          : false)
+      ) {
+        let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
+        setToast(toast);
+        setShowToast(true);
+        return false;
       } else {
         return true;
       }
     }
-    else  {
-    if (
-      toolConfigId.length === 0 ||
-      jenkinsUrl.length === 0 ||
-      jUserId.length === 0 ||
-      jAuthToken.length === 0 ||
-      (buildType === "docker"
-        ? dockerName.length === 0 || dockerTagName.length === 0
-        : false)
-    ) {
-      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
-      setToast(toast);
-      setShowToast(true);
-      return false;
-    } else {
-      return true;
-    }
-  }
   };
 
   //todo: can this use the initial value const above to reset everything?  Right now this means we have ot maintain the values in two places.
   const handleJenkinsChange = (selectedOption) => {
-    setLoading(true);
+    if (!selectedOption.configuration) {
+      let errorMessage = "Connection information missing for this tool!  This Jenkins tool does not have connection details defined in its Tool Registry record.  Please go into Tool Registry and add connection information in order for Opsera to work with this tool.";
+      let toast = getErrorDialog(errorMessage, setShowToast, "detailPanelTop");
+      setToast(toast);
+      setShowToast(true);
+      return;
+    }
+
     if (selectedOption.id && selectedOption.configuration) {
       setFormData({
         ...formData,
@@ -452,8 +490,8 @@ function CypressStepConfiguration({
         service: "",
         gitCredential: "",
         gitUserName: "",
-        workspace:"",
         repository: "",
+        workspace:"",
         branch: "",
         toolJobId: "",
         toolJobType: "",
@@ -466,12 +504,24 @@ function CypressStepConfiguration({
       setAccountsList(selectedOption.accounts);
       setJobsList(selectedOption.jobs);
     }
-    setLoading(false);
+  };
+
+  const handleSonarChange = (selectedOption) => {
+    if (selectedOption.id && selectedOption.configuration) {
+      setFormData({
+        ...formData,
+        sonarToolConfigId: selectedOption.id,
+        sonarUrl: selectedOption.configuration ? selectedOption.configuration.sonarUrl : "",
+        sonarPort: selectedOption.configuration ? selectedOption.configuration.sonarPort : "",
+        sonarUserId: selectedOption.configuration ? selectedOption.configuration.sonarUserId : "",
+        // sonarAuthToken: selectedOption.configuration ? selectedOption.configuration.sonarAuthToken : ""
+      });
+    }
   };
 
   const handleJobChange = (selectedOption) => {
     console.log(selectedOption);
-    if (selectedOption.type[0] === "CYPRESS UNIT TESTING") {
+    if (selectedOption.type[0] === "CODE SCAN") {
       setFormData({
         ...formData,
         toolJobId: selectedOption._id,
@@ -483,7 +533,7 @@ function CypressStepConfiguration({
         buildArgs: {},
       });
     } else {
-      let errorMessage = "Selected Job is not a Unit test Job!  Please ensure the selected job has Cypress configurations.";
+      let errorMessage= "Selected Job is not a Sonar Job!  Please ensure the selected job has sonar code configurations.";
       let toast = getErrorDialog(errorMessage, setShowToast, "detailPanelTop");
       setToast(toast);
       setShowToast(true);
@@ -501,10 +551,10 @@ function CypressStepConfiguration({
       gitUrl: "",
       sshUrl: "",
       repository: "",
+      workspace:"",
       branch: "",
       projectId: "",
       defaultBranch: "",
-      workspace: "",
     });
   };
 
@@ -551,6 +601,7 @@ function CypressStepConfiguration({
     setJobType(selectedOption.value);
     setFormData({
       ...formData,
+      sonarToolConfigId: "",
       jobName: "",
       buildType: "",
       jobDescription: "",
@@ -623,6 +674,8 @@ function CypressStepConfiguration({
 
   return (
     <>
+      {error && <ErrorDialog error={error} align={"top"} setError={setErrors}/>}
+
       <Form>
         <Form.Group controlId="jenkinsList">
           <Form.Label className="w-100">
@@ -692,16 +745,24 @@ function CypressStepConfiguration({
               )}
             </>
           )}
-          {formData.toolConfigId.length > 0 && (
+          {formData.toolConfigId && formData.toolConfigId.length > 0 && (
             <Form.Label className="mt-2 pl-1">
               <Link to={"/inventory/tools/details/" + formData.toolConfigId}>
                 <FontAwesomeIcon icon={faTools} className="pr-1"/> View/edit
-                this tool&#39;s Registry settings
+                this tool's Registry settings
               </Link>
             </Form.Label>
           )}
         </Form.Group>
 
+        {/*{(!formData.toolConfigId && formData.jenkinsUrl) &&
+      <div className="form-text text-muted mb-3">
+        <FontAwesomeIcon icon={faExclamationTriangle} className="mr-1 yellow" fixedWidth/>
+        Unregistered Tool settings in use. The settings below can be used in this step, but cannot be updated. You
+        must register
+        a new Jenkins server in the
+        <Link to="/inventory/tools"> Tool Registry</Link> and add its configuration details. </div>}
+*/}
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Job Type*</Form.Label>
           {jobType !== undefined ? (
@@ -720,35 +781,92 @@ function CypressStepConfiguration({
         </Form.Group>
 
         {jobType === "job" ? (
-          <Form.Group controlId="branchField">
-            <Form.Label>Job Name*</Form.Label>
-            <Form.Control
-              maxLength="150"
-              disabled={false}
-              type="text"
-              placeholder=""
-              value={formData.jobName || ""}
-              onChange={(e) =>
-                setFormData({ ...formData, jobName: e.target.value })
-              }
-            />
-          </Form.Group>
-        ) : 
-        <>
-        
-        {jobType === "opsera-job" && (
+            <Form.Group controlId="branchField">
+              <Form.Label>Job Name*</Form.Label>
+              <Form.Control
+                maxLength="150"
+                disabled={false}
+                type="text"
+                placeholder=""
+                value={formData.jobName || ""}
+                onChange={(e) =>
+                  setFormData({ ...formData, jobName: e.target.value })
+                }
+              />
+            </Form.Group>
+          ) :
           <>
-            {formData.jenkinsUrl && jenkinsList.length > 0 && (
-              <Form.Group controlId="formBasicEmail">
+            {jobType === "opsera-job" && (
+              <>
+                {formData.jenkinsUrl && jenkinsList.length > 0 && (
+                  <Form.Group controlId="formBasicEmail">
+                    <Form.Label className="w-100">
+                      Job*
+                      <OverlayTrigger
+                        trigger="click"
+                        rootClose
+                        placement="left"
+                        overlay={RegistryPopover(
+                          jobsList[
+                            jobsList.findIndex((x) => x._id === formData.toolJobId)
+                            ],
+                        )}
+                      >
+                        <FontAwesomeIcon
+                          icon={faEllipsisH}
+                          className="fa-pull-right pointer pr-1"
+                          onClick={() => document.body.click()}
+                        />
+                      </OverlayTrigger>
+                    </Form.Label>
+                    {jobsList.length < 1 && (
+                      <div className="form-text text-muted p-2">
+                        <FontAwesomeIcon
+                          icon={faExclamationCircle}
+                          className="text-muted mr-1"
+                          fixedWidth
+                        />
+                        No jobs have been created for{" "}
+                        <span>{formData.jenkinsUrl}</span>. Please go to
+                        <Link to={"/inventory/tools/details/" + formData.toolConfigId}>
+                          {" "}
+                          Tool Registry
+                        </Link>{" "}
+                        and add credentials and register a job for this Jenkins in
+                        order to proceed.{" "}
+                      </div>
+                    )}
+                    {jobsList !== undefined && jobsList.length > 0 ? (
+                      <DropdownList
+                        data={jobsList}
+                        valueField="id"
+                        textField="name"
+                        value={
+                          jobsList && jobsList.length > 0 &&
+                          jobsList[
+                            jobsList.findIndex((x) => x._id === formData.toolJobId)
+                            ]
+                        }
+                        filter="contains"
+                        onChange={handleJobChange}
+                      />
+                    ) : null}
+                  </Form.Group>
+                )}
+              </>
+            )}
+
+            {(formData.jobType === "CODE SCAN") && (
+              <Form.Group controlId="jenkinsList">
                 <Form.Label className="w-100">
-                  Job*
+                  Sonar Credentials*
                   <OverlayTrigger
                     trigger="click"
                     rootClose
                     placement="left"
                     overlay={RegistryPopover(
-                      jobsList[
-                        jobsList.findIndex((x) => x._id === formData.toolJobId)
+                      sonarList[
+                        sonarList.findIndex((x) => x.id === formData.sonarToolConfigId)
                         ],
                     )}
                   >
@@ -759,266 +877,274 @@ function CypressStepConfiguration({
                     />
                   </OverlayTrigger>
                 </Form.Label>
-                {jobsList.length < 1 && (
+                {isSonarSearching ? (
+                  <div className="form-text text-muted mt-2 p-2">
+                    <FontAwesomeIcon
+                      icon={faSpinner}
+                      spin
+                      className="text-muted mr-1"
+                      fixedWidth
+                    />
+                    Loading Sonar accounts from Tool Registry
+                  </div>
+                ) : (
+                  <>
+                    {renderForm && sonarList && sonarList.length > 0 ? (
+                      <>
+                        <DropdownList
+                          data={sonarList}
+                          value={
+                            sonarList[
+                              sonarList.findIndex(
+                                (x) => x.id === formData.sonarToolConfigId,
+                              )
+                              ]
+                          }
+                          valueField="id"
+                          textField="name"
+                          filter="contains"
+                          onChange={handleSonarChange}
+                        />
+                        <br></br>
+                        <Form.Group controlId="projectKey">
+                          <Form.Label>Project Key*</Form.Label>
+                          <Form.Control maxLength="150" type="text" placeholder="" value={formData.projectKey || ""}
+                                        onChange={e => setFormData({ ...formData, projectKey: e.target.value })}/>
+                        </Form.Group>
+                      </>
+                    ) : (
+                      <>
+                        <div className="form-text text-muted p-2">
+                          <FontAwesomeIcon
+                            icon={faExclamationCircle}
+                            className="text-muted mr-1"
+                            fixedWidth
+                          />
+                          No accounts have been registered for Code Scan. Please go
+                          to
+                          <Link to="/inventory/tools">Tool Registry</Link> and add a
+                          Code Scan Account entry in order to proceed.
+                        </div>
+                      </>
+                    )}
+                  </>
+                )}
+              </Form.Group>
+            )}
+
+            {formData.jenkinsUrl && jenkinsList.length > 0 && (
+              <Form.Group controlId="formBasicEmail">
+                <Form.Label className="w-100">
+                  Account*
+                  <OverlayTrigger
+                    trigger="click"
+                    rootClose
+                    placement="left"
+                    overlay={RegistryPopover(
+                      accountsList[
+                        accountsList.findIndex(
+                          (x) => x.gitCredential === formData.gitCredential,
+                        )
+                        ],
+                    )}
+                  >
+                    <FontAwesomeIcon
+                      icon={faEllipsisH}
+                      className="fa-pull-right pointer pr-1"
+                      onClick={() => document.body.click()}
+                    />
+                  </OverlayTrigger>
+                </Form.Label>
+                {accountsList.length < 1 && (
                   <div className="form-text text-muted p-2">
                     <FontAwesomeIcon
                       icon={faExclamationCircle}
                       className="text-muted mr-1"
                       fixedWidth
                     />
-                    No jobs have been created for{" "}
+                    No Credentials have been created for{" "}
                     <span>{formData.jenkinsUrl}</span>. Please go to
-                    <Link to={"/inventory/tools/details/" + formData.toolConfigId}>
-                      {" "}
-                      Tool Registry
-                    </Link>{" "}
-                    and add credentials and register a job for this Jenkins in
-                    order to proceed.{" "}
+                    <Link to="/inventory/tools"> Tool Registry</Link> and add
+                    credentials for this Jenkins in order to proceed.
                   </div>
                 )}
-                {jobsList !== undefined && jobsList.length > 0 ? (
+                {accountsList !== undefined && accountsList.length > 0 ? (
                   <DropdownList
-                    data={jobsList}
-                    valueField="id"
-                    textField="name"
-                    value={
-                      jobsList && jobsList.length > 0 &&
-                      jobsList[
-                        jobsList.findIndex((x) => x._id === formData.toolJobId)
+                    data={accountsList}
+                    valueField="gitCredential"
+                    textField="gitCredential"
+                    defaultValue={
+                      accountsList && accountsList.length > 0 &&
+                      accountsList[
+                        accountsList.findIndex(
+                          (x) => x.gitCredential === formData.gitCredential,
+                        )
                         ]
                     }
                     filter="contains"
-                    onChange={handleJobChange}
+                    onChange={handleAccountChange}
                   />
                 ) : null}
               </Form.Group>
             )}
-          </>
-        )}
 
-
-        {formData.jenkinsUrl && jenkinsList.length > 0 && (
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label className="w-100">
-              Account*
-              <OverlayTrigger
-                trigger="click"
-                rootClose
-                placement="left"
-                overlay={RegistryPopover(
-                  accountsList[
-                    accountsList.findIndex(
-                      (x) => x.gitCredential === formData.gitCredential,
-                    )
-                    ],
-                )}
-              >
-                <FontAwesomeIcon
-                  icon={faEllipsisH}
-                  className="fa-pull-right pointer pr-1"
-                  onClick={() => document.body.click()}
-                />
-              </OverlayTrigger>
-            </Form.Label>
-            {accountsList.length < 1 && (
-              <div className="form-text text-muted p-2">
-                <FontAwesomeIcon
-                  icon={faExclamationCircle}
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
-                No Credentials have been created for{" "}
-                <span>{formData.jenkinsUrl}</span>. Please go to
-                <Link to="/inventory/tools"> Tool Registry</Link> and add
-                credentials for this Jenkins in order to proceed.
-              </div>
-            )}
-            {accountsList !== undefined && accountsList.length > 0 ? (
-              <DropdownList
-                data={accountsList}
-                valueField="gitCredential"
-                textField="gitCredential"
-                defaultValue={
-                  accountsList && accountsList.length > 0 &&
-                  accountsList[
-                    accountsList.findIndex(
-                      (x) => x.toolId === formData.gitToolId,
-                    )
-                    ]
-                }
-                filter="contains"
-                onChange={handleAccountChange}
-              />
-            ) : null}
-          </Form.Group>
-        )}
-
-        
-        {formData.service && formData.service === "bitbucket" && formData.gitToolId && (
-          <Form.Group controlId="account" className="mt-2">
-            <Form.Label>Workspace*</Form.Label>
-            {isWorkspacesSearching ? (
-              <div className="form-text text-muted mt-2 p-2">
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
-                Loading workspaces from registry
-              </div>
-            ) : (
-              <>
-                {workspacesList ? (
-                  <DropdownList
-                    data={workspacesList}
-                    value={
-                      workspacesList[
-                        workspacesList.findIndex(
-                          (x) => x === formData.workspace,
-                        )
-                        ]
-                    }
-                    valueField="value"
-                    textField="name"
-                    filter="contains"
-                    onChange={handleWorkspacesChange}
-                  />
+            {formData.service && formData.service === "bitbucket" && formData.gitToolId && (
+              <Form.Group controlId="account" className="mt-2">
+                <Form.Label>Workspace*</Form.Label>
+                {isWorkspacesSearching ? (
+                  <div className="form-text text-muted mt-2 p-2">
+                    <FontAwesomeIcon
+                      icon={faSpinner}
+                      spin
+                      className="text-muted mr-1"
+                      fixedWidth
+                    />
+                    Loading workspaces from registry
+                  </div>
                 ) : (
-                  <FontAwesomeIcon
-                    icon={faSpinner}
-                    spin
-                    className="text-muted mr-1"
-                    fixedWidth
-                  />
+                  <>
+                    {workspacesList ? (
+                      <DropdownList
+                        data={workspacesList}
+                        value={
+                          workspacesList[
+                            workspacesList.findIndex(
+                              (x) => x === formData.workspace,
+                            )
+                            ]
+                        }
+                        valueField="value"
+                        textField="name"
+                        filter="contains"
+                        onChange={handleWorkspacesChange}
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={faSpinner}
+                        spin
+                        className="text-muted mr-1"
+                        fixedWidth
+                      />
+                    )}
+                  </>
                 )}
-              </>
+                {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
+              </Form.Group>
             )}
-            {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
-          </Form.Group>
-        )}
 
-        {formData.service && 
-        formData.gitToolId && 
-        (formData.service === "bitbucket"? 
-          formData.workspace 
-          && formData.workspace.length > 0 : true ) && (
-          <Form.Group controlId="repo" className="mt-2">
-            <Form.Label>Repository*</Form.Label>
-            {isRepoSearching ? (
-              <div className="form-text text-muted mt-2 p-2">
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
-                Loading repositories from registry
-              </div>
-            ) : (
-              <>
-                {repoList ? (
-                  <DropdownList
-                    data={repoList}
-                    value={
-                      repoList[
-                        repoList.findIndex(
-                          (x) => x.name === formData.repository,
-                        )
-                        ]
-                    }
-                    valueField="value"
-                    textField="name"
-                    filter="contains"
-                    onChange={handleRepoChange}
-                  />
+            {formData.service && 
+            formData.gitToolId && 
+            (formData.service === "bitbucket"? 
+              formData.workspace 
+              && formData.workspace.length > 0 : true ) && (
+              <Form.Group controlId="account" className="mt-2">
+                <Form.Label>Repository*</Form.Label>
+                {isRepoSearching ? (
+                  <div className="form-text text-muted mt-2 p-2">
+                    <FontAwesomeIcon
+                      icon={faSpinner}
+                      spin
+                      className="text-muted mr-1"
+                      fixedWidth
+                    />
+                    Loading repositories from registry
+                  </div>
                 ) : (
-                  <FontAwesomeIcon
-                    icon={faSpinner}
-                    spin
-                    className="text-muted mr-1"
-                    fixedWidth
-                  />
+                  <>
+                    {repoList ? (
+                      <DropdownList
+                        data={repoList}
+                        value={
+                          repoList[
+                            repoList.findIndex(
+                              (x) => x.name === formData.repository,
+                            )
+                            ]
+                        }
+                        valueField="value"
+                        textField="name"
+                        filter="contains"
+                        onChange={handleRepoChange}
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={faSpinner}
+                        spin
+                        className="text-muted mr-1"
+                        fixedWidth
+                      />
+                    )}
+                  </>
                 )}
-              </>
+                {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
+              </Form.Group>
             )}
-            {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
-          </Form.Group>
-        )}
 
-        {formData.service && formData.gitToolId && formData.repoId && (
-          <Form.Group controlId="account" className="mt-2">
-            <Form.Label>Branch*</Form.Label>
-            {isBranchSearching ? (
-              <div className="form-text text-muted mt-2 p-2">
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
-                Loading branches from selected repository
-              </div>
-            ) : (
-              <>
-                {branchList ? (
-                  <DropdownList
-                    data={branchList}
-                    value={
-                      branchList[
-                        branchList.findIndex((x) => x.value === formData.branch)
-                        ]
-                    }
-                    valueField="value"
-                    textField="name"
-                    filter="contains"
-                    onChange={handleBranchChange}
-                  />
+            {formData.service && formData.gitToolId && formData.repoId && (
+              <Form.Group controlId="account" className="mt-2">
+                <Form.Label>Branch*</Form.Label>
+                {isBranchSearching ? (
+                  <div className="form-text text-muted mt-2 p-2">
+                    <FontAwesomeIcon
+                      icon={faSpinner}
+                      spin
+                      className="text-muted mr-1"
+                      fixedWidth
+                    />
+                    Loading branches from selected repository
+                  </div>
                 ) : (
-                  <FontAwesomeIcon
-                    icon={faSpinner}
-                    spin
-                    className="text-muted mr-1"
-                    fixedWidth
-                  />
+                  <>
+                    {branchList ? (
+                      <DropdownList
+                        data={branchList}
+                        value={
+                          branchList[
+                            branchList.findIndex((x) => x.value === formData.branch)
+                            ]
+                        }
+                        valueField="value"
+                        textField="name"
+                        filter="contains"
+                        onChange={handleBranchChange}
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={faSpinner}
+                        spin
+                        className="text-muted mr-1"
+                        fixedWidth
+                      />
+                    )}
+                  </>
                 )}
-              </>
+                {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
+              </Form.Group>
             )}
-            {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
-          </Form.Group>
-        )}
-
-        {formData.jobType === "CYPRESS UNIT TESTING" && (
-          <>
-            <Form.Group controlId="branchField">
-              <Form.Label>JSON Path</Form.Label>
+            <Form.Group controlId="path">
+              <Form.Label>Sonar Source Path</Form.Label>
               <Form.Control
-                maxLength="250"
+                maxLength="50"
                 type="text"
                 placeholder=""
-                value={formData.jsonPath || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, jsonPath: e.target.value })
-                }
+                value={formData.sonarSourcePath || ""}
+                onChange={(e) => setFormData({ ...formData, sonarSourcePath: e.target.value })}
               />
-            </Form.Group> 
-            </>
-          )
-          }
+            </Form.Group>
 
-        <Form.Group controlId="threshold">
-          <Form.Label>Success Threshold</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder=""
-            value={thresholdVal || ""}
-            onChange={(e) => setThresholdValue(e.target.value)}
-            disabled={true}
-          />
-        </Form.Group>
-        </>
+            <Form.Group controlId="threshold">
+              <Form.Label>Success Threshold</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder=""
+                value={thresholdVal || ""}
+                onChange={(e) => setThresholdValue(e.target.value)}
+                disabled={true}
+              />
+            </Form.Group>
+          </>
         }
-        
+
         {jobType === "opsera-job" ? (
           <Button
             variant="primary"
@@ -1080,7 +1206,7 @@ function CypressStepConfiguration({
   );
 }
 
-CypressStepConfiguration.propTypes = {
+SonarStepConfiguration.propTypes = {
   stepTool: PropTypes.string,
   pipelineId: PropTypes.string,
   plan: PropTypes.object,
@@ -1092,4 +1218,4 @@ CypressStepConfiguration.propTypes = {
   setShowToast: PropTypes.func
 }
 
-export default CypressStepConfiguration;
+export default SonarStepConfiguration;

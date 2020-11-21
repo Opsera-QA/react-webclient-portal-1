@@ -1,16 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import {
   Button,
   Form,
   OverlayTrigger,
   Popover,
-  Tooltip,
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faExclamationCircle,
-  faExclamationTriangle,
   faTimes,
   faSave,
   faSpinner,
@@ -18,16 +15,11 @@ import {
   faTools,
 } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
-import { AuthContext } from "../../../../../../../contexts/AuthContext";
-import { axiosApiService } from "../../../../../../../api/apiService";
+import { AuthContext } from "../../../../../../../../contexts/AuthContext";
+import { axiosApiService } from "../../../../../../../../api/apiService";
 import { Link } from "react-router-dom";
-import ErrorDialog from "../../../../../../common/status_notifications/error";
-import JUnitStepConfiguration from "./JUnitStepConfiguration";
-import {
-  getErrorDialog,
-  getMissingRequiredFieldsErrorDialog,
-  getServiceUnavailableDialog
-} from "../../../../../../common/toasts/toasts";
+import PropTypes from "prop-types";
+import {getErrorDialog, getServiceUnavailableDialog} from "../../../../../../../common/toasts/toasts";
 
 import pipelineActions from "components/workflow/pipeline-actions";
 import { DialogToastContext, showServiceUnavailableDialog } from "contexts/DialogToastContext";
@@ -49,16 +41,13 @@ const INITIAL_DATA = {
   jobName: "",
   toolJobId: "",
   toolJobType: "",
-  projectKey: "",
  
   accountUsername: "",
   projectId: "",
   defaultBranch: "",
   dockerName: "",
   dockerTagName: "",
-  buildStepId: "", //this will have docker name and tag
-
-  buildType: "", //hardcoded now but needs to get it from a dropdown
+  buildType: "gradle", //hardcoded now but needs to get it from a dropdown
   gitToolId: "",
   repoId: "",
   gitUrl: "",
@@ -73,7 +62,7 @@ const INITIAL_DATA = {
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
-function DockerPushStepConfiguration({
+function XUnitStepConfiguration({
   stepTool,
   pipelineId,
   plan,
@@ -88,6 +77,7 @@ function DockerPushStepConfiguration({
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [formData, setFormData] = useState(INITIAL_DATA);
+  const [formMessage, setFormMessage] = useState("");
   const [renderForm, setRenderForm] = useState(false);
   const [loading, setLoading] = useState(false);
   const [jenkinsList, setJenkinsList] = useState([]);
@@ -98,17 +88,14 @@ function DockerPushStepConfiguration({
   const [isBranchSearching, setIsBranchSearching] = useState(false);
   const [listOfSteps, setListOfSteps] = useState([]);
   
-  const [awsList, setAwsList] = useState([]);
-  const [isAwsSearching, setIsAwsSearching] = useState(false);
+  const [workspacesList, setWorkspacesList] = useState([]);
+  const [isWorkspacesSearching, setIsWorkspacesSearching] = useState(false);
+
   const [accountsList, setAccountsList] = useState([]);
   const [jobsList, setJobsList] = useState([]);
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
   const [jobType, setJobType] = useState("");
-  
-  const [workspacesList, setWorkspacesList] = useState([]);
-  const [isWorkspacesSearching, setIsWorkspacesSearching] = useState(false);
-
 
   useEffect(() => {
     if (plan && stepId) {
@@ -146,14 +133,7 @@ function DockerPushStepConfiguration({
   }, [stepTool]);
 
   useEffect(() => {
-    if (jobType === "job") {
-      setFormData({ ...formData, jobType : "DOCKER PUSH" });
-    }
-  }, [jobType]);
-
-  useEffect(() => {
     setShowToast(false);
-
     async function fetchJenkinsDetails(service) {
       setisJenkinsSearching(true);
       // Set results state
@@ -180,35 +160,6 @@ function DockerPushStepConfiguration({
     fetchJenkinsDetails("jenkins");
   }, []);
 
-  // search aws
-  useEffect(() => {
-    setShowToast(false);
-
-    async function fetchAWSDetails(service) {
-      setIsAwsSearching(true);
-      // Set results state
-      let results = await pipelineActions.getToolsList(service, getAccessToken);
-      //console.log(results);
-      if (typeof(results) != "object") {
-        setAwsList([{ value: "", name: "Select One", isDisabled: "yes" }]);
-        let errorMessage =
-          "AWS information is missing or unavailable!";
-        toastContext.showErrorDialog(errorMessage);
-        setIsAwsSearching(false);
-        return;
-      }
-      const filteredList = results.filter(
-        (el) => el.configuration !== undefined
-      ); //filter out items that do not have any configuration data!
-      if (filteredList) {
-        setAwsList(filteredList);
-        setIsAwsSearching(false);
-      }
-    }
-
-    // Fire off our API call
-    fetchAWSDetails("aws_account");
-  }, []);
 
   // fetch repos
   useEffect(() => {
@@ -229,7 +180,7 @@ function DockerPushStepConfiguration({
         //console.log(results);
         setWorkspacesList(results);
         setIsWorkspacesSearching(false);
-      }
+    }
 
     if (
       formData.service === "bitbucket" &&
@@ -322,31 +273,26 @@ function DockerPushStepConfiguration({
       setAccountsList(
         jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ] ? 
-        jenkinsList[
-          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ].accounts : []
+        ].accounts
       );
     }
-  }, [jenkinsList, formData.toolConfigId]);
+  }, [jenkinsList]);
 
   useEffect(() => {
     if (formData.toolConfigId) {
       setJobsList(
         jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ] ? 
-        jenkinsList[
-          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-        ].jobs : []
+        ].jobs
       );
     }
-  }, [jenkinsList, formData.toolConfigId]);
+  }, [jenkinsList]);
 
+  
   useEffect(() => {
     if (jobsList && jobsList.length > 0 && formData.toolJobId && formData.toolJobId.length > 0 && !jobsList[jobsList.findIndex((x) => x._id === formData.toolJobId)]) {
      let toast = getErrorDialog(
-        "Preselected job is no longer available.  It may have been deleted.  Please select another job from the list or recreate the job in the Registry.",
+        "Preselected job is no longer available.  It may have been deleted.  Please select another job from the list or recreate the job in Tool Reigstry.",
         setShowToast,
         "detailPanelTop"
       );
@@ -363,8 +309,11 @@ function DockerPushStepConfiguration({
     }
   }, [formData.toolJobType]);
 
-  console.log(formData);
-  // console.log(jobsList);
+  useEffect(() => {
+    if (jobType === "job") {
+      setFormData({ ...formData, jobType : "UNIT TEST" });
+    }
+  }, [jobType]);
 
   const loadFormData = async (step) => {
     let { configuration, threshold, job_type } = step;
@@ -385,7 +334,6 @@ function DockerPushStepConfiguration({
   };
 
   const handleCreateAndSave = async (pipelineId, stepId, toolId) => {
-    console.log("saving and creating job for toolID: ", toolId);
     if (validateRequiredFields() && toolId) {
       setLoading(true);
 
@@ -397,7 +345,6 @@ function DockerPushStepConfiguration({
           stepId: formData.stepIdXML && formData.stepIdXML,
         },
       };
-      console.log("createJobPostBody: ", createJobPostBody);
 
       const toolConfiguration = {
         configuration: formData,
@@ -407,18 +354,12 @@ function DockerPushStepConfiguration({
         },
         job_type: jobType,
       };
-      console.log("item: ", toolConfiguration);
 
       await createJob(toolId, toolConfiguration, stepId, createJobPostBody);
     }
   };
 
-  const handleBuildStepChange = (selectedOption) => {
-    setFormData({ ...formData, buildStepId: selectedOption._id });
-  };
-
   const callbackFunction = async () => {
-    console.log("saving data");
     if (validateRequiredFields()) {
       setLoading(true);
 
@@ -430,7 +371,6 @@ function DockerPushStepConfiguration({
         },
         job_type: jobType,
       };
-      console.log("item: ", item);
       setLoading(false);
       parentCallback(item);
     }
@@ -447,33 +387,30 @@ function DockerPushStepConfiguration({
       dockerName,
       dockerTagName,
     } = formData;
-
+    
     if(jobType === "job") {
       if(jobName.length === 0) {
-        let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
-        setToast(toast);
-        setShowToast(true);
-        return false;
+      setFormMessage("Required Fields Missing!");
+      return false
       } else {
-        return true;
+        setFormMessage("");
+        return true
       }
     }
     else  {
-    if (
+      if (
       toolConfigId.length === 0 ||
       jenkinsUrl.length === 0 ||
       jUserId.length === 0 ||
-      jAuthToken.length === 0
-      // jobName.length === 0 ||
-      // (buildType === "docker"
-      //   ? dockerName.length === 0 || dockerTagName.length === 0
-      //   : false)
+      jAuthToken.length === 0 ||
+      (buildType === "docker"
+        ? dockerName.length === 0 || dockerTagName.length === 0
+        : false)
     ) {
-      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
-      setToast(toast);
-      setShowToast(true);
+      setFormMessage("Required Fields Missing!");
       return false;
     } else {
+      setFormMessage("");
       return true;
     }
   }
@@ -514,33 +451,9 @@ function DockerPushStepConfiguration({
     setLoading(false);
   };
 
-  const handleAWSChange = (selectedOption) => {
-    setLoading(true);
-    //console.log(selectedOption);
-    if (selectedOption.id && selectedOption.configuration) {
-      setFormData({
-        ...formData,
-        awsToolConfigId: selectedOption.id ? selectedOption.id : "",
-        awsAccountId: selectedOption.configuration
-          ? selectedOption.configuration.awsAccountId
-          : "",
-        accessKey: selectedOption.configuration
-          ? selectedOption.configuration.accessKey
-          : "",
-        secretKey: selectedOption.configuration
-          ? selectedOption.configuration.secretKey
-          : "",
-        regions: selectedOption.configuration
-          ? selectedOption.configuration.regions
-          : "",
-      });
-    }
-    setLoading(false);
-  };
-
   const handleJobChange = (selectedOption) => {
     console.log(selectedOption)
-    if (selectedOption.type[0] === "DOCKER PUSH" ) {      
+    if (selectedOption.type[0] === "UNIT TEST" ) {      
         setFormData({
           ...formData,
           toolJobId: selectedOption._id,
@@ -552,11 +465,66 @@ function DockerPushStepConfiguration({
           buildArgs: {},
         });
     } else {
-      let errorMessage = "Selected Job is not a Docker push Job!  Please ensure the selected job has Docker configurations.";
-      let toast = getErrorDialog(errorMessage, setShowToast, "detailPanelTop");
+      let toast = getErrorDialog("Selected Job is not a Unit test Job!  Please ensure the selected job has xUnit configurations.", setShowToast, "detailPanelTop");
       setToast(toast);
       setShowToast(true);
     }
+  };
+
+  const handleAccountChange = (selectedOption) => {
+    setFormData({
+      ...formData,
+      gitToolId: selectedOption.toolId,
+      gitCredential: selectedOption.gitCredential,
+      gitUserName: selectedOption.gitUserName,
+      service: selectedOption.service,
+      repoId: "",
+      gitUrl: "",
+      sshUrl: "",
+      repository: "",
+      workspace:"",
+      branch: "",
+      projectId: "",
+      defaultBranch: "",
+    });
+  };
+
+  const handleWorkspacesChange = (selectedOption) => {
+    setFormData({
+      ...formData,
+      workspace: selectedOption,
+      repository: "",
+      repoId: "",
+      projectId: "",
+      gitUrl: "",
+      sshUrl: "",
+      branch: "",
+      defaultBranch: "",
+      gitBranch: "",
+    });
+  };
+
+  const handleRepoChange = (selectedOption) => {
+    setFormData({
+      ...formData,
+      repository: selectedOption.name,
+      repoId: selectedOption.id,
+      projectId: selectedOption.id,
+      gitUrl: selectedOption.httpUrl,
+      sshUrl: selectedOption.sshUrl,
+      branch: "",
+      defaultBranch: "",
+      gitBranch: "",
+    });
+  };
+
+  const handleBranchChange = (selectedOption) => {
+    setFormData({
+      ...formData,
+      branch: selectedOption.value,
+      defaultBranch: selectedOption.value,
+      gitBranch: selectedOption.value,
+    });
   };
 
   const handleJobTypeChange = (selectedOption) => {
@@ -564,7 +532,6 @@ function DockerPushStepConfiguration({
     setJobType(selectedOption.value);
       setFormData({
         ...formData,
-        awsToolConfigId: "",
         jobName: "",
         buildType: "", 
         jobDescription: "",
@@ -741,6 +708,10 @@ function DockerPushStepConfiguration({
           ) : null}
         </Form.Group>
 
+        {formMessage.length > 0 ? (
+          <p className="info-text">{formMessage}</p>
+        ) : null}
+
         {jobType === "job" ? (
           <Form.Group controlId="branchField">
             <Form.Label>Job Name*</Form.Label>
@@ -757,6 +728,7 @@ function DockerPushStepConfiguration({
           </Form.Group>
         ) : 
         <>
+        
         {jobType === "opsera-job" && (
           <>
             {formData.jenkinsUrl && jenkinsList.length > 0 && (
@@ -803,7 +775,6 @@ function DockerPushStepConfiguration({
                     valueField="id"
                     textField="name"
                     value={
-                      jobsList && jobsList.length > 0 &&
                       jobsList[
                         jobsList.findIndex((x) => x._id === formData.toolJobId)
                       ]
@@ -817,17 +788,19 @@ function DockerPushStepConfiguration({
           </>
         )}
 
-        {(formData.jobType === "DOCKER PUSH" ) && (
-          <Form.Group controlId="awsList">
+        {formData.jenkinsUrl && jenkinsList.length > 0 && (
+          <Form.Group controlId="formBasicEmail">
             <Form.Label className="w-100">
-              AWS Credentials*
+              Account*
               <OverlayTrigger
                 trigger="click"
                 rootClose
                 placement="left"
                 overlay={RegistryPopover(
-                  awsList[
-                    awsList.findIndex((x) => x.id === formData.awsToolConfigId)
+                  accountsList[
+                    accountsList.findIndex(
+                      (x) => x.gitCredential === formData.gitCredential
+                    )
                   ]
                 )}
               >
@@ -838,7 +811,44 @@ function DockerPushStepConfiguration({
                 />
               </OverlayTrigger>
             </Form.Label>
-            {isAwsSearching ? (
+            {accountsList.length < 1 && (
+              <div className="form-text text-muted p-2">
+                <FontAwesomeIcon
+                  icon={faExclamationCircle}
+                  className="text-muted mr-1"
+                  fixedWidth
+                />
+                No Credentials have been created for{" "}
+                <span>{formData.jenkinsUrl}</span>. Please go to
+                <Link to="/inventory/tools"> Tool Registry</Link> and add
+                credentials for this Jenkins in order to proceed.
+              </div>
+            )}
+            {accountsList !== undefined && accountsList.length > 0 ? (
+              <DropdownList
+                data={accountsList}
+                valueField="gitCredential"
+                textField="gitCredential"
+                defaultValue={
+                  accountsList && accountsList.length > 0 &&
+                  accountsList[
+                    accountsList.findIndex(
+                      (x) => x.gitCredential === formData.gitCredential
+                    )
+                  ]
+                }
+                filter="contains"
+                onChange={handleAccountChange}
+              />
+            ) : null}
+          </Form.Group>
+        )}
+
+        
+        {formData.service && formData.service === "bitbucket" && formData.gitToolId && (
+          <Form.Group controlId="account" className="mt-2">
+            <Form.Label>Workspace*</Form.Label>
+            {isWorkspacesSearching ? (
               <div className="form-text text-muted mt-2 p-2">
                 <FontAwesomeIcon
                   icon={faSpinner}
@@ -846,82 +856,138 @@ function DockerPushStepConfiguration({
                   className="text-muted mr-1"
                   fixedWidth
                 />
-                Loading AWS accounts from Tool Registry
+                Loading workspaces from registry
               </div>
             ) : (
               <>
-                {renderForm && awsList && awsList.length > 0 ? (
-                  <>
-                    <DropdownList
-                      data={awsList}
-                      value={
-                        awsList[
-                          awsList.findIndex(
-                            (x) => x.id === formData.awsToolConfigId
-                          )
+                {workspacesList ? (
+                  <DropdownList
+                    data={workspacesList}
+                    value={
+                      workspacesList[
+                        workspacesList.findIndex(
+                          (x) => x === formData.workspace,
+                        )
                         ]
-                      }
-                      valueField="id"
-                      textField="name"
-                      filter="contains"
-                      onChange={handleAWSChange}
-                    />
-                  </>
+                    }
+                    valueField="value"
+                    textField="name"
+                    filter="contains"
+                    onChange={handleWorkspacesChange}
+                  />
                 ) : (
-                  <>
-                    <div className="form-text text-muted p-2">
-                      <FontAwesomeIcon
-                        icon={faExclamationCircle}
-                        className="text-muted mr-1"
-                        fixedWidth
-                      />
-                      No accounts have been registered for AWS. Please go
-                      to
-                      <Link to="/inventory/tools">Tool Registry</Link> and add a
-                      AWS Account entry in order to proceed.
-                    </div>
-                  </>
+                  <FontAwesomeIcon
+                    icon={faSpinner}
+                    spin
+                    className="text-muted mr-1"
+                    fixedWidth
+                  />
                 )}
               </>
             )}
+            {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
           </Form.Group>
         )}
 
-        <Form.Group controlId="s3Step">
-          <Form.Label>Build Step Info*</Form.Label>
-          {listOfSteps ? (
-            <DropdownList
-              data={listOfSteps}
-              value={
-                formData.buildStepId
-                  ? listOfSteps[
-                      listOfSteps.findIndex(
-                        (x) => x._id === formData.buildStepId
-                      )
-                    ]
-                  : listOfSteps[0]
-              }
-              valueField="_id"
-              textField="name"
-              defaultValue={
-                formData.buildStepId
-                  ? listOfSteps[
-                      listOfSteps.findIndex(
-                        (x) => x._id === formData.buildStepId
-                      )
-                    ]
-                  : listOfSteps[0]
-              }
-              onChange={handleBuildStepChange}
-            />
-          ) : (
-            <FontAwesomeIcon
-              icon={faSpinner}
-              spin
-              className="text-muted ml-2"
-              fixedWidth
-            />
-          )}
+        {formData.service && 
+        formData.gitToolId && 
+        (formData.service === "bitbucket"? 
+          formData.workspace 
+          && formData.workspace.length > 0 : true ) && (
+          <Form.Group controlId="account" className="mt-2">
+            <Form.Label>Repository*</Form.Label>
+            {isRepoSearching ? (
+              <div className="form-text text-muted mt-2 p-2">
+                <FontAwesomeIcon
+                  icon={faSpinner}
+                  spin
+                  className="text-muted mr-1"
+                  fixedWidth
+                />
+                Loading repositories from registry
+              </div>
+            ) : (
+              <>
+                {repoList ? (
+                  <DropdownList
+                    data={repoList}
+                    value={
+                      repoList[
+                        repoList.findIndex(
+                          (x) => x.name === formData.repository,
+                        )
+                        ]
+                    }
+                    valueField="value"
+                    textField="name"
+                    filter="contains"
+                    onChange={handleRepoChange}
+                  />
+                ) : (
+                  <FontAwesomeIcon
+                    icon={faSpinner}
+                    spin
+                    className="text-muted mr-1"
+                    fixedWidth
+                  />
+                )}
+              </>
+            )}
+            {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
+          </Form.Group>
+        )}
+
+        {formData.service && formData.gitToolId && formData.repoId && (
+          <Form.Group controlId="account" className="mt-2">
+            <Form.Label>Branch*</Form.Label>
+            {isBranchSearching ? (
+              <div className="form-text text-muted mt-2 p-2">
+                <FontAwesomeIcon
+                  icon={faSpinner}
+                  spin
+                  className="text-muted mr-1"
+                  fixedWidth
+                />
+                Loading branches from selected repository
+              </div>
+            ) : (
+              <>
+                {branchList ? (
+                  <DropdownList
+                    data={branchList}
+                    value={
+                      branchList[
+                        branchList.findIndex((x) => x.value === formData.branch)
+                      ]
+                    }
+                    valueField="value"
+                    textField="name"
+                    filter="contains"
+                    onChange={handleBranchChange}
+                  />
+                ) : (
+                  <FontAwesomeIcon
+                    icon={faSpinner}
+                    spin
+                    className="text-muted mr-1"
+                    fixedWidth
+                  />
+                )}
+              </>
+            )}
+            {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
+          </Form.Group>
+        )}
+
+        <Form.Group controlId="threshold">
+          <Form.Label>Success Threshold</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder=""
+            value={thresholdVal || ""}
+            onChange={(e) => setThresholdValue(e.target.value)}
+            disabled={true}
+          />
         </Form.Group>
         </>
         }
@@ -987,7 +1053,7 @@ function DockerPushStepConfiguration({
   );
 }
 
-DockerPushStepConfiguration.propTypes = {
+XUnitStepConfiguration.propTypes = {
   stepTool: PropTypes.string,
   pipelineId: PropTypes.string,
   plan: PropTypes.object,
@@ -999,4 +1065,4 @@ DockerPushStepConfiguration.propTypes = {
   setShowToast: PropTypes.func
 }
 
-export default DockerPushStepConfiguration;
+export default XUnitStepConfiguration;
