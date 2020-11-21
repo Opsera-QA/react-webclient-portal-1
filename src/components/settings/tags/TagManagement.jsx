@@ -17,7 +17,6 @@ function TagManagement() {
   const [tagList, setTagList] = useState(undefined);
   const toastContext = useContext(DialogToastContext);
   const [tagFilterDto, setTagFilterDto] = useState(new Model({...tagFilterMetadata.newObjectFields}, tagFilterMetadata, false));
-  const [activeFilterDto, setActiveFilterDto] = useState(undefined);
 
   useEffect(() => {
     loadData();
@@ -41,8 +40,8 @@ function TagManagement() {
     setTagList(response.data.data);
     let newFilterDto = filterDto;
     newFilterDto.setData("totalCount", response.data.count);
+    newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
     setTagFilterDto({...newFilterDto});
-    setActiveFilterDto(newFilterDto.clone());
   };
 
   const getRoles = async (filterDto = tagFilterDto) => {
@@ -67,7 +66,7 @@ function TagManagement() {
     <TableScreenContainer
       breadcrumbDestination={"tagManagement"}
       title={"Tag Management"}
-      tableComponent={<TagsTable loadData={loadData} isLoading={isLoading} data={tagList} activeTagFilterDto={activeFilterDto} tagFilterDto={tagFilterDto} setTagFilterDto={setTagFilterDto}/>}
+      tableComponent={<TagsTable loadData={loadData} isLoading={isLoading} data={tagList} tagFilterDto={tagFilterDto} setTagFilterDto={setTagFilterDto}/>}
     />
   );
 

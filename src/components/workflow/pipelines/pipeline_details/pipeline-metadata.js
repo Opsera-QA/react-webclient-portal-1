@@ -15,6 +15,10 @@ const pipelineMetadata = {
       id: "account",
     },
     {
+      label: "Type",
+      id: "type",
+    },
+    {
       label: "Description",
       id: "description",
     },
@@ -87,6 +91,14 @@ const pipelineMetadata = {
     {
       label: "Created",
       id: "createdAt",
+    },
+    {
+      label: "Updated",
+      id: "updatedAt",
+    },
+    {
+      label: "Status",
+      id: "workflow",
     }
   ]
 };

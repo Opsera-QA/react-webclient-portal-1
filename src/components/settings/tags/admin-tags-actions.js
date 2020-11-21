@@ -1,4 +1,5 @@
 import { axiosApiService } from "../../../api/apiService";
+import baseActions from "../../../utils/actionsBase";
 
 const adminTagsActions = {};
 
@@ -64,26 +65,23 @@ adminTagsActions.getAllTags = async (getAccessToken) => {
 };
 
 adminTagsActions.getTags = async (tagFilterDto, getAccessToken) => {
-  const accessToken = await getAccessToken();
+  let sortOption = tagFilterDto.getData("sortOption");
+  let type = tagFilterDto.getData("type");
+  let status = tagFilterDto.getData("status");
+
   const apiUrl = "/tags";
   const urlParams = {
     params: {
-      sort: tagFilterDto.getData("sortOption"),
+      sort: sortOption ? sortOption.value : undefined,
       size: tagFilterDto.getData("pageSize"),
       page: tagFilterDto.getData("currentPage"),
-      type: tagFilterDto.getData("type"),
-      status: tagFilterDto.getData("status"),
+      type: type ? type.value : undefined,
+      status: status ? status.value : undefined,
       search: tagFilterDto.getData("search")
     },
   };
-  const response = await axiosApiService(accessToken).get(apiUrl, urlParams)
-    .then((result) => {
-      return result;
-    })
-    .catch(error => {
-      throw { error };
-    });
-  return response;
+
+  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
 adminTagsActions.getVisibleTags = async (getAccessToken) => {

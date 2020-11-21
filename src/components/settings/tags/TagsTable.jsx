@@ -15,7 +15,7 @@ import TagTypeFilter from "../../common/filters/tags/TagTypeFilter";
 import SearchFilter from "../../common/filters/search/StatusFilter";
 import {getField} from "../../common/metadata/metadata-helpers";
 
-function TagsTable({ data, loadData, isLoading, tagFilterDto, activeTagFilterDto, setTagFilterDto }) {
+function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto }) {
   const history = useHistory();
   let fields = tagEditorMetadata.fields;
   const [showTagModal, setShowTagModal] = useState(false);
@@ -54,7 +54,6 @@ function TagsTable({ data, loadData, isLoading, tagFilterDto, activeTagFilterDto
         filterDto={tagFilterDto}
         setFilterDto={setTagFilterDto}
         filters={["status", "type", "search"]}
-        activeFilterDto={activeTagFilterDto}
       >
         <StatusFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} />
         <TagTypeFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} />

@@ -60,24 +60,22 @@ toolsActions.getTools = async (getAccessToken) => {
 };
 
 toolsActions.getToolRegistryList = async (toolFilterDto, getAccessToken) => {
+  let sortOption = toolFilterDto.getData("sortOption");
+
   let urlParams = {
     params: {
-      sort: toolFilterDto.getData("sortOption"),
-      status: toolFilterDto.getData("status"),
-      tool: toolFilterDto.getData("toolIdentifier"),
+      sort: sortOption ? sortOption.value : undefined,
       page: toolFilterDto.getData("currentPage"),
       size: toolFilterDto.getData("pageSize"),
-      tag: toolFilterDto.getData("tag"),
-      search: toolFilterDto.getData("search")
+      tag: toolFilterDto.getFilterValue("tag"),
+      status: toolFilterDto.getFilterValue("status"),
+      tool: toolFilterDto.getFilterValue("toolIdentifier"),
+      search: toolFilterDto.getFilterValue("search")
     }
   }
 
-  const accessToken = await getAccessToken();
   const apiUrl = `/registry`;
-  const response = await axiosApiService(accessToken).get(apiUrl, urlParams)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
 toolsActions.getToolTypes = async (getAccessToken) => {

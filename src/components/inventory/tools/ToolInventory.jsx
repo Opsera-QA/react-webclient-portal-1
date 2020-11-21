@@ -7,14 +7,12 @@ import toolFilterMetadata from "./tool-filter-metadata";
 import {DialogToastContext} from "../../../contexts/DialogToastContext";
 import toolsActions from "./tools-actions";
 
-// TODO: Rename ToolManagement?, implement DialogToastContext
 function ToolInventory () {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setLoading] = useState(false);
   const [toolRegistryList, setToolRegistryList] = useState([]);
   const [toolFilterDto, setToolFilterDto] = useState(new Model({...toolFilterMetadata.newObjectFields}, toolFilterMetadata, false));
-  const [activeToolFilterDto, setActiveToolFilterDto] = useState(undefined);
 
   useEffect(() => {    
     loadData();
@@ -38,8 +36,8 @@ function ToolInventory () {
       setToolRegistryList(response.data.data);
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", response.data.count);
+      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters())
       setToolFilterDto({...newFilterDto});
-      setActiveToolFilterDto(newFilterDto.clone());
   };
 
   return (
@@ -49,7 +47,6 @@ function ToolInventory () {
       data={toolRegistryList}
       toolFilterDto={toolFilterDto}
       setToolFilterDto={setToolFilterDto}
-      activeToolFilterDto={activeToolFilterDto}
     />
   );
 }

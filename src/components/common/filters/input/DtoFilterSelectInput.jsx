@@ -28,7 +28,7 @@ function DtoFilterSelectInput({ fieldName, dataObject, setDataObject, groupBy, s
               value={dataObject.getData(fieldName)}
               busy={busy}
               placeholder={placeholderText}
-              onChange={data => validateAndSetData(fieldName, data[valueField])}
+              onChange={data => validateAndSetData(fieldName, data)}
             />
           </div>
   );

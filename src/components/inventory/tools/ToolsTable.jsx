@@ -19,7 +19,7 @@ import TagFilter from "../../common/filters/tags/TagFilter";
 import TagTypeFilter from "../../common/filters/tags/TagTypeFilter";
 import SearchFilter from "../../common/filters/search/StatusFilter";
 
-function ToolsTable({ data, toolFilterDto, activeToolFilterDto, setToolFilterDto, loadData, isLoading }) {
+function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading }) {
   const [showCreateToolModal, setShowCreateToolModal] = useState(false);
   let history = useHistory();
   const fields = toolMetadata.fields;
@@ -60,7 +60,6 @@ function ToolsTable({ data, toolFilterDto, activeToolFilterDto, setToolFilterDto
       <FilterBar loadData={loadData}
                  filterDto={toolFilterDto}
                  setFilterDto={setToolFilterDto}
-                 activeFilterDto={activeToolFilterDto}
                  filters={["status", "toolIdentifier", "tag", "search"]}
                  addRecordFunction={createNewTool}
       >

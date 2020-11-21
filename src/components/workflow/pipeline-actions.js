@@ -1,29 +1,30 @@
 import {axiosApiService} from "../../api/apiService";
+import baseActions from "../../utils/actionsBase";
 
 const pipelineActions = {};
 
-pipelineActions.getPipelines = async (currentPage, pageSize, sortOption, type, getAccessToken) => {
-  const accessToken = await getAccessToken();
-  let apiUrl = `/pipelines?page=${currentPage}&size=${pageSize}&sort=${sortOption.name}&order=${sortOption.order}`;
+pipelineActions.getPipelines = async (pipelineFilterDto, type, getAccessToken) => {
+  let sortOption = pipelineFilterDto.getData("sortOption");
 
-  if (type != null && type !== "all") {
-    apiUrl += `&type=${type}`;
-  }
+  const urlParams = {
+    params: {
+      sort: sortOption ? sortOption.value : null,
+      order: sortOption ? sortOption.order : null,
+      size: pipelineFilterDto.getData("pageSize"),
+      page: pipelineFilterDto.getData("currentPage"),
+      type: type !== 'all' && type !== null ? type : undefined,
+      // status: pipelineFilterDto.getData("status"),
+      // search: pipelineFilterDto.getData("search"),
+      // owner: pipelineFilterDto.getData("owner"),
+    },
+  };
 
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) =>  {return result;})
-    // TODO: Always throw error for easier catching on page
-    .catch(error => {throw error;});
-  return response;
+  let apiUrl = `/pipelines`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
 pipelineActions.delete = async (pipelineId, getAccessToken) => {
   const accessToken = await getAccessToken();
-  const apiUrl = `/pipelines/${pipelineId}/delete`;  
-  const response = await axiosApiService(accessToken).delete(apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
 };
 
 pipelineActions.run = async (pipelineId, postBody, getAccessToken) => {

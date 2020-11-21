@@ -76,7 +76,7 @@ function Pipelines() {
               </>}
             </ul>
           </div>
-          <div className="content-block-collapse px-3 pt-2">
+          <div className="content-block-collapse pt-2">
             {activeTab && <PipelinesTabView activeTab={activeTab} setActiveTab={setActiveTab}/>}
           </div>
         </>

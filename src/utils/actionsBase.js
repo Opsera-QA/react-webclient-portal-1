@@ -2,9 +2,9 @@ import {axiosApiService} from "../api/apiService";
 
 const baseActions = {};
 
-baseActions.apiGetCall = async (getAccessToken, apiUrl) => {
+baseActions.apiGetCall = async (getAccessToken, apiUrl, urlParams) => {
   const accessToken = await getAccessToken();
-  return axiosApiService(accessToken).get(apiUrl)
+  return axiosApiService(accessToken).get(apiUrl, urlParams)
     .then((result) =>  {return result;})
     .catch(error => {throw { error };});
 };
