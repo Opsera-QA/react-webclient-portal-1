@@ -123,7 +123,7 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
           ))}
           {paginationDto && paginationDto.getData("totalCount") != null &&
           <tr key={"topPaginator"}>
-            <td className="top-pagination pt-1" colSpan="12">
+            <td className="top-pagination pt-1 px-3" colSpan="12">
               <DtoTopPagination paginationDto={paginationDto}
                                 setPaginationDto={setPaginationDto}
                                 isLoading={isLoading}

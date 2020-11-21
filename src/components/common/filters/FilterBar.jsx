@@ -11,7 +11,7 @@ import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import ActiveFilterDisplayer from "./ActiveFilterDisplayer";
 import {faSync} from "@fortawesome/pro-solid-svg-icons/faSync";
 
-function FilterBar({ filterDto, setFilterDto, filters, children, loadData, addRecordFunction, activeFilterDto}) {
+function FilterBar({ filterDto, setFilterDto, filters, children, loadData, addRecordFunction}) {
   const resetFilters = async () => {
     let newFilterDto = new Model({...filterDto.getNewObjectFields()}, filterDto.getMetaData(), false);
     let pageSize = filterDto.getData("pageSize");
@@ -32,7 +32,7 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, addRe
   };
 
   const loadFilters = async () => {
-    loadData();
+    loadData(filterDto);
     document.body.click();
   };
 
@@ -115,7 +115,7 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, addRe
   return (
     <div className="d-flex justify-content-between filter-bar">
       <div className="d-flex">
-        <ActiveFilterDisplayer filterDto={activeFilterDto} setFilterDto={setFilterDto} loadData={loadData} filters={filters} />
+        <ActiveFilterDisplayer filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} filters={filters} />
       </div>
       <div className="d-flex">
         <div>{getNewRecordButton()}</div>

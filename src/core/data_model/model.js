@@ -146,6 +146,15 @@ export class Model {
     return this.metaData;
   };
 
+  getActiveFilters = () => {
+    return this.metaData.getActiveFilters(this);
+  };
+
+  getFilterValue = (fieldName) => {
+    let filter = this.getData(fieldName);
+    return filter != null && filter["value"] != null ? filter["value"] : filter;
+  };
+
   getMaxLength = (field) => {
     return this.metaData[field].maxLength;
   };

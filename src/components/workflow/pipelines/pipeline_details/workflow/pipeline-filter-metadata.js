@@ -1,14 +1,14 @@
-const toolFilterMetadata = {
+const pipelineFilterMetadata = {
   idProperty: "_id",
-  type: "Tool",
+  type: "Pipeline",
   fields: [
     {
       label: "Status",
       id: "status",
     },
     {
-      label: "Tool Identifier",
-      id: "toolIdentifier",
+      label: "Tag",
+      id: "tag",
     },
     {
       label: "Page Size",
@@ -23,8 +23,8 @@ const toolFilterMetadata = {
       id: "sortOption",
     },
     {
-      label: "Tag",
-      id: "tag",
+      label: "Pipeline Owner",
+      id: "owner"
     },
     {
       label: "Search",
@@ -34,12 +34,16 @@ const toolFilterMetadata = {
       label: "Active Filters",
       id: "activeFilters",
     },
+    {
+      label: "View Type",
+      id: "viewType",
+    },
   ],
   getActiveFilters(filterDto) {
     let activeFilters = [];
 
     if (filterDto.getData("status") != null) {
-      activeFilters.push({filterId: "status", ...filterDto.getData("status")});
+      activeFilters.push({filterId:"status", ...filterDto.getData("status")});
     }
 
     if (filterDto.getData("toolIdentifier") != null) {
@@ -51,25 +55,27 @@ const toolFilterMetadata = {
     }
 
     if (filterDto.getData("search") != null && filterDto.getData("search") !== "") {
-      activeFilters.push({filterId: "search", text: `Keywords: ${filterDto.getData("search")}`});
+      activeFilters.push({filterId: "search", ...filterDto.getData("search")});
     }
 
     return activeFilters;
   },
   newObjectFields: {
-    pageSize: 50,
+    pageSize: 25,
     currentPage: 1,
-    sortOption: {text: "Sort: Name", value: "name"},
+    sortOption: { value: "name", text: "Pipeline Name (a-z)", order: 1 },
     search: "",
+    viewType: "cards",
     activeFilters: []
   },
-  // TODO: If these are the same options everywhere, move to PageSort
   sortOptions: [
-    {text: "Oldest", option: "oldest"},
-    {text: "Newest", option: "newest"},
-    {text: "Name", option: "name"},
-    {text: "Last Updated", option: "lastupdated"}
+    { option: "createdAt", text: "Newest Pipelines", order: -1 },
+    { option: "createdAt", text: "Oldest Pipelines", order: 1 },
+    { option: "name", text: "Pipeline Name (a-z)", order: 1 },
+    { option: "name", text: "Pipeline Name (z-a)", order: -1 },
+    { option: "updatedAt", text: "Updated (latest)", order: -1 },
+    { option: "updatedAt", text: "Updated (earliest)", order: 1 },
   ]
 };
 
-export default toolFilterMetadata;
+export default pipelineFilterMetadata;

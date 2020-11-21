@@ -26,19 +26,39 @@ const tagFilterMetadata = {
       label: "Search",
       id: "search",
     },
+    {
+      label: "Active Filters",
+      id: "activeFilters",
+    },
   ],
+  getActiveFilters(filterDto) {
+    let activeFilters = [];
+
+    if (filterDto.getData("status") != null) {
+      activeFilters.push({filterId: "status", ...filterDto.getData("status")});
+    }
+
+    if (filterDto.getData("type") != null) {
+      activeFilters.push({filterId: "type", ...filterDto.getData("type")});
+    }
+
+    if (filterDto.getData("search") != null && filterDto.getData("search") !== "") {
+      activeFilters.push({filterId: "search", text: `Keywords: ${filterDto.getData("search")}`});
+    }
+
+    return activeFilters;
+  },
   newObjectFields: {
     pageSize: 50,
     currentPage: 1,
-    sortOption: "type",
-    search: ""
+    sortOption: {text: "Sort: Type", value: "type"},
+    search: "",
+    activeFilters: []
   },
-  // TODO: If these are the same options everywhere, move to PageSort
   sortOptions: [
     {text: "Oldest", option: "oldest"},
     {text: "Newest", option: "newest"},
     {text: "Value", option: "value"},
-    {text: "Key", option: "key"},
     {text: "Type", option: "type"},
     {text: "Last Updated", option: "lastupdated"}
   ]

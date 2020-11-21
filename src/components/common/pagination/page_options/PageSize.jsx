@@ -9,7 +9,7 @@ function PageSize({ paginationDto, setPaginationDto, loadData, isLoading, pageSi
     paginationDto.setData("currentPage", 1);
     paginationDto.setData("pageSize", pageSize);
     setPaginationDto({...paginationDto});
-    loadData();
+    loadData(paginationDto);
   };
 
   return (

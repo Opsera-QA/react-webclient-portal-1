@@ -102,7 +102,7 @@ function WorkflowCatalog() {
         </div>
 
         {data !== undefined && data.length > 0 ?
-          <Row>
+          <Row className="px-2">
             {data.map((item, idx) => (
               <Col xl={6} md={12} key={idx} className="p-2">
                 <WorkflowCatalogItem
