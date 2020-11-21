@@ -1,56 +1,43 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import ToolTypeEditorPanel from "./ToolTypeEditorPanel";
 import CustomTabContainer from "../../../../common/tabs/CustomTabContainer";
 import CustomTab from "../../../../common/tabs/CustomTab";
 import {faCogs} from "@fortawesome/pro-solid-svg-icons/faCogs";
+import ToolTypeSummaryPanel from "./ToolTypeSummaryPanel";
+import {faList} from "@fortawesome/pro-solid-svg-icons";
+import DetailTabPanelContainer from "../../../../common/panels/detail_view/DetailTabPanelContainer";
 
 function ToolTypeDetailPanel({ toolTypeData, setToolTypeData }) {
   const [activeTab, setTabSelection] = useState("settings");
 
   const handleTabClick = (activeTab) => e => {
-    console.log(activeTab);
     e.preventDefault();
     setTabSelection(activeTab);
   };
 
-  return (
-    <>
-      <div className="pb-3 px-3">
-        <Row>
-          <Col>
-            <CustomTabContainer>
-              <CustomTab icon={faCogs} tabName={"settings"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Settings"} />
-            </CustomTabContainer>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <div className="shaded-panel detail-view-detail-panel">
-              {toolTypeData && <ToolTypeDetailsView activeTab={activeTab} setToolTypeData={setToolTypeData} toolTypeData={toolTypeData} /> }
-            </div>
-          </Col>
-        </Row>
-      </div>
-    </>
-  );
-}
-
-function ToolTypeDetailsView({ activeTab, setToolTypeData, toolTypeData }) {
-  useEffect(() => {
-    // console.log("CHANGE HAPPENED");
-  }, [activeTab]);
-  if (activeTab) {
+  const getCurrentView = () => {
     switch (activeTab) {
-    case "settings":
-      return <ToolTypeEditorPanel setToolTypeData={setToolTypeData} toolTypeData={toolTypeData} />;
-    default:
-      return null;
+      case "summary":
+        return <ToolTypeSummaryPanel toolTypeData={toolTypeData} setToolTypeData={setToolTypeData}/>;
+      case "settings":
+        return <ToolTypeEditorPanel setToolTypeData={setToolTypeData} toolTypeData={toolTypeData} />;
+      default:
+        return null;
     }
-  }
+  };
+
+  const getTabContainer = () => {
+    return (
+      <CustomTabContainer>
+        <CustomTab icon={faList} tabName={"summary"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Summary"} />
+        <CustomTab icon={faCogs} tabName={"settings"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Settings"} />
+      </CustomTabContainer>
+    )
+  };
+
+  return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
 }
 
 ToolTypeDetailPanel.propTypes = {

@@ -37,9 +37,7 @@ function ToolTypeSummaryPanel({toolTypeData, setToolTypeData}) {
   }
 
   return (
-    <SummaryPanelContainer
-      summaryActionBar={<SummaryActionBar backButtonPath={"/admin/tools/types"} handleActiveToggle={handleActiveToggle}
-                                          status={toolTypeData.getData("active")}/>}>
+    <SummaryPanelContainer>
           <Row>
             <Col lg={6}>
               <DtoTextField dataObject={toolTypeData} fieldName={"name"}/>

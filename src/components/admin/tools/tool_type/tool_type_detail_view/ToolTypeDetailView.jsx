@@ -3,17 +3,17 @@ import { Link, useParams } from "react-router-dom";
 import LoadingDialog from "../../../../common/status_notifications/loading";
 import AccessDeniedDialog from "../../../../common/status_notifications/accessDeniedInfo";
 import {AuthContext} from "../../../../../contexts/AuthContext";
-import ToolTypeSummaryPanel from "./ToolTypeSummaryPanel";
 import toolTypeActions from "../../tool-management-actions";
 import Model from "../../../../../core/data_model/model";
 import toolTypeMetadata from "../tool-type-metadata";
 import ToolTypeDetailPanel from "./ToolTypeDetailPanel";
 import {faToolbox} from "@fortawesome/pro-solid-svg-icons";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
-import DetailViewContainer from "../../../../common/panels/detail_view_container/DetailViewContainer";
-import DataNotFoundContainer from "../../../../common/panels/detail_view_container/DataNotFoundContainer";
-import DataNotFoundDialog from "../../../../common/status_notifications/data_not_found/DataNotFoundDialog";
 import {faWrench} from "@fortawesome/free-solid-svg-icons";
+import DetailScreenContainer from "../../../../common/panels/detail_view_container/DetailScreenContainer";
+import ActionBarContainer from "../../../../common/actions/ActionBarContainer";
+import ActionBarBackButton from "../../../../common/actions/buttons/ActionBarBackButton";
+import ActionBarToggleButton from "../../../../common/actions/buttons/ActionBarToggleButton";
 
 function ToolTypeDetailView() {
   const {toolTypeId} = useParams();
@@ -62,31 +62,50 @@ function ToolTypeDetailView() {
     }
   };
 
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm"/>);
-  }
+  const handleActiveToggle = async () => {
+    try {
+      let newToolTypeData = {...toolTypeData};
+      newToolTypeData.setData("active", !newToolTypeData.getData("active"));
+      let response = await toolTypeActions.updateToolType({...newToolTypeData}, getAccessToken);
+      let updatedDto = new Model(response.data, toolTypeData.metaData, false);
+      setToolTypeData(updatedDto);
+      toastContext.showUpdateSuccessResultDialog("Tool Type");
+    } catch (error) {
+      toastContext.showUpdateFailureResultDialog("Tool Type", error);
+    }
+  };
+
+  const getActionBar = () => {
+    return (
+      <ActionBarContainer>
+        <div>
+          <ActionBarBackButton path={"/admin/tools"} />
+        </div>
+        <div>
+          <ActionBarToggleButton status={toolTypeData?.getData("active")} handleActiveToggle={handleActiveToggle} />
+        </div>
+      </ActionBarContainer>
+    );
+  };
 
   if (accessRoleData.OpseraAdministrator === false) {
     return (<AccessDeniedDialog roleData={accessRoleData}/>);
   }
 
-  if (!isLoading && toolTypeData == null) {
-    return (
-      <DataNotFoundContainer type={"Tool Type"} breadcrumbDestination={"toolTypeDetailView"}>
-        <DataNotFoundDialog type={"Tool Type"} managementViewIcon={faWrench} managementViewTitle={"Tool Management"} managementViewLink={"/admin/tools"} />
-      </DataNotFoundContainer>
-    )
-  }
-
   return (
-    <DetailViewContainer
+    <DetailScreenContainer
       breadcrumbDestination={"toolTypeDetailView"}
       title={toolTypeData != null ? `Tool Type Details [${toolTypeData.getData("name")}]` : undefined}
+      managementViewLink={"/admin/tools"}
+      managementTitle={"Tool Management"}
+      managementViewIcon={faWrench}
+      type={"Tool Type"}
       titleIcon={faToolbox}
+      dataObject={toolTypeData}
       isLoading={isLoading}
-      summaryPanel={<ToolTypeSummaryPanel toolTypeData={toolTypeData} setToolTypeData={setToolTypeData}/>}
+      actionBar={getActionBar()}
       detailPanel={<ToolTypeDetailPanel toolTypeData={toolTypeData} setToolTypeData={setToolTypeData}/>}
-    />
+      />
   );
 }
 
