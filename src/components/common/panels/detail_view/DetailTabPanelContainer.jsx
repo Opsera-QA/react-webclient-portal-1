@@ -1,0 +1,23 @@
+import React from "react";
+import PropTypes from "prop-types";
+
+function DetailTabPanelContainer({ tabContainer, detailView }) {
+  return (
+    <div className="px-3 pb-3">
+      <div>
+          {tabContainer}
+      </div>
+      <div className="shaded-panel detail-screen-body">
+        {detailView}
+      </div>
+    </div>
+  );
+}
+
+
+DetailTabPanelContainer.propTypes = {
+  tabContainer: PropTypes.object,
+  detailView: PropTypes.object,
+};
+
+export default DetailTabPanelContainer;

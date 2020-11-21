@@ -10,9 +10,12 @@ import TemplateSummaryPanel from "./TemplateSummaryPanel";
 import TemplateDetailPanel from "./TemplateDetailPanel";
 import {faStream} from "@fortawesome/free-solid-svg-icons";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
-import DetailViewContainer from "../../../common/panels/detail_view_container/DetailViewContainer";
-import DataNotFoundContainer from "../../../common/panels/detail_view_container/DataNotFoundContainer";
-import DataNotFoundDialog from "../../../common/status_notifications/data_not_found/DataNotFoundDialog";
+import DetailScreenContainer from "../../../common/panels/detail_view_container/DetailScreenContainer";
+import SummaryActionBarContainer from "../../../common/actions/SummaryActionBarContainer";
+import ActionBarBackButton from "../../../common/actions/buttons/ActionBarBackButton";
+import ActionBarShowJsonButton from "../../../common/actions/buttons/ActionBarShowJsonButton";
+import ActionBarDeleteButton2 from "../../../common/actions/buttons/ActionBarDeleteButton2";
+import ActionBarContainer from "../../../common/actions/ActionBarContainer";
 
 function TemplateDetailView() {
   const {templateId} = useParams();
@@ -32,7 +35,7 @@ function TemplateDetailView() {
       await getRoles();
     }
     catch (error) {
-      if (!error.error.message.includes(404)) {
+      if (!error?.error?.message?.includes(404)) {
         toastContext.showLoadingErrorDialog(error);
       }
     }
@@ -61,6 +64,29 @@ function TemplateDetailView() {
     }
   };
 
+  const getActionBar = () => {
+    if (templateData == null) {
+      return <></>;
+    }
+
+    return (
+      <ActionBarContainer>
+        <div>
+          <ActionBarBackButton path={"/admin/templates"} />
+        </div>
+        <div>
+          <ActionBarShowJsonButton dataObject={templateData} />
+          {accessRoleData.OpseraAdministrator === true
+            && <span className={"mr-2"}><ActionBarDeleteButton2 relocationPath={"/admin/templates"} dataObject={templateData} handleDelete={deletePipeline}/></span>}
+          {/*<ActionBarStatus status={templateData.getData("status")}/>*/}
+        </div>
+      </ActionBarContainer>
+    );
+  };
+
+  const deletePipeline = () => {
+    return templateActions.deleteTemplate(templateData, getAccessToken);
+  };
   if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   }
@@ -69,22 +95,18 @@ function TemplateDetailView() {
     return (<AccessDeniedDialog roleData={accessRoleData} />);
   }
 
-  if (!isLoading && templateData == null) {
-    return (
-      <DataNotFoundContainer type={"Pipeline Template"} breadcrumbDestination={"templateDetailView"}>
-        <DataNotFoundDialog type={"Pipeline Template"} managementViewIcon={faStream} managementViewTitle={"Pipeline Template Management"} managementViewLink={"/admin/templates"} />
-      </DataNotFoundContainer>
-    )
-  }
-
   return (
-    <DetailViewContainer
+    <DetailScreenContainer
       breadcrumbDestination={"templateDetailView"}
       title={templateData != null ? `Template Details [${templateData.getData("name")}]` : undefined}
+      managementViewLink={"/admin/templates"}
+      type={"Pipeline Template"}
+      managementTitle={"Template Management"}
       titleIcon={faStream}
+      dataObject={templateData}
       isLoading={isLoading}
-      summaryPanel={<TemplateSummaryPanel templateData={templateData} opseraAdmin={accessRoleData.OpseraAdministrator === true}/>}
-      detailPanel={<TemplateDetailPanel setTemplateData={setTemplateData} templateData={templateData}/>}
+      actionBar={getActionBar()}
+      detailPanel={<TemplateDetailPanel setTemplateData={setTemplateData} templateData={templateData} />}
     />
   );
 }

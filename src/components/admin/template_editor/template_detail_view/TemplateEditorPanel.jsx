@@ -59,14 +59,6 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
     return await templateActions.updateTemplate(templateDataDto, getAccessToken);
   };
 
-  // TODO: Remove and use multi-select once implemented for types.
-  const updateSelectArray = async (fieldName, value) => {
-    let newDataObject = templateDataDto;
-    console.log(value.id)
-    newDataObject.setData(fieldName, [value.id]);
-    setTemplateDataDto({...newDataObject});
-  }
-
   if (isLoading) {
     return (<LoadingDialog size="sm"/>);
   }

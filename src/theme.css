@@ -977,10 +977,6 @@ a.nav-link {
 /* End Breadcrumb trail styling */
 
 /* Action Bar styling */
-.action-bar {
-  /*font-size: 20px;*/
-}
-
 .action-bar-icon:hover {
   color: #0f3e84;
 }
@@ -990,6 +986,12 @@ a.nav-link {
 /* Detail View Styling */
 .detail-view-body {
   min-height: 60vh;
+}
+
+.detail-screen-body {
+    min-height: 60vh;
+    max-height: 60vh;
+    overflow-y: auto;
 }
 
 .detail-view-body .detail-view-summary {
@@ -1002,6 +1004,10 @@ a.nav-link {
 
 .shaded-panel {
     border-radius: 5px;
+    background-color: rgba(203, 205, 205, 0.1);
+}
+
+.shaded-container {
     background-color: rgba(203, 205, 205, 0.1);
 }
 
