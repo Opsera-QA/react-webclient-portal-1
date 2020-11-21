@@ -9,44 +9,17 @@ import DtoJsonField from "../../../common/form_fields/dto_form_fields/dto-json-f
 import DtoItemField from "../../../common/form_fields/dto_form_fields/dto-item-field";
 import DtoTagField from "../../../common/form_fields/dto_form_fields/dto-tag-field";
 import LoadingDialog from "../../../common/status_notifications/loading";
-import SummaryPanelContainer from "../../../common/panels/detail_view/SummaryPanelContainer";
-import SummaryActionBarContainer from "../../../common/actions/SummaryActionBarContainer";
-//import ActionBarStatus from "../../../common/actions/buttons/ActionBarStatus";
-import ActionBarBackButton from "../../../common/actions/buttons/ActionBarBackButton";
-import ActionBarDeleteButton2 from "../../../common/actions/buttons/ActionBarDeleteButton2";
-import templateActions from "../template-actions";
-import {AuthContext} from "../../../../contexts/AuthContext";
-import ActionBarShowJsonButton from "../../../common/actions/buttons/ActionBarShowJsonButton";
 import BooleanField from "../../../common/form_fields/dto_form_fields/BooleanField";
+import DetailPanelContainer from "../../../common/panels/detail_panel_container/DetailPanelContainer";
 
-function TemplateSummaryPanel({templateData, opseraAdmin}) {
-  const { getAccessToken } = useContext(AuthContext)
+function TemplateSummaryPanel({templateData}) {
 
   if (templateData == null) {
     return (<LoadingDialog size="sm"/>);
   }
 
-  const deletePipeline = () => {
-    return templateActions.deleteTemplate(templateData, getAccessToken);
-  };
-
-  const getSummaryActionBar = () => {
-    return (
-      <SummaryActionBarContainer>
-        <div>
-          <ActionBarBackButton path={"/admin/templates"} />
-        </div>
-        <div>
-          <ActionBarShowJsonButton dataObject={templateData} />
-          {opseraAdmin && <span className={"mr-2"}><ActionBarDeleteButton2 relocationPath={"/admin/templates"} dataObject={templateData} handleDelete={deletePipeline}/></span>}
-          {/*<ActionBarStatus status={templateData.getData("status")}/>*/}
-        </div>
-      </SummaryActionBarContainer>
-    );
-  };
-
   return (
-    <SummaryPanelContainer summaryActionBar={getSummaryActionBar()}>
+    <DetailPanelContainer showRequiredFieldsMessage={false}>
       <Row>
         <Col lg={6}>
           <DtoTextField dataObject={templateData} fieldName={"name"}/>
@@ -89,13 +62,12 @@ function TemplateSummaryPanel({templateData, opseraAdmin}) {
           <DtoJsonField dataObject={templateData} fieldName={"plan"}/>
         </Col>
       </Row>
-    </SummaryPanelContainer>
+    </DetailPanelContainer>
   );
 }
 
 TemplateSummaryPanel.propTypes = {
   templateData: PropTypes.object,
-  opseraAdmin: PropTypes.bool,
 };
 
 
