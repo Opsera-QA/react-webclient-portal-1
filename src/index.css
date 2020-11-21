@@ -565,6 +565,12 @@ a:hover, .active {
     padding: 5px;
 }
 
+.warning-text {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+    color: #f9c116;
+    padding: 5px;
+}
+
 .success-block {
     background-color: green;
     color: #fff;
@@ -592,25 +598,29 @@ a:hover, .active {
 .top-dialog-detail-panel-block {
     padding: 1em;
     width: 100%;
-    /*width: 96%;
-    margin: 1em 2em;
-    border-radius: 5px;*/
     z-index: 1200;
 }
 
 .top-dialog-block {
     top: 0;
-    position: fixed;
     left: 0;
-    padding: 1em;
+    position: fixed;
+    padding: .25em;
+    z-index: 1200;
+}
+
+.top-dialog-block-static {
+    top: 0;
+    left: 0;
+    padding: .25em;
     z-index: 1200;
 }
 
 .top-error-block {
     top: 0;
-    position: fixed;
     left: 0;
-    padding: 1em;
+    position: fixed;
+    padding: .25em;
 }
 
 .step-configuration-dialog-block {
