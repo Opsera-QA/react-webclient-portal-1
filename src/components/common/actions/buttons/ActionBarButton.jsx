@@ -18,8 +18,8 @@ function ActionBarButton({action, iconClasses, popoverText, text, icon}) {
       placement="top"
       delay={{ show: 250, hide: 400 }}
       overlay={renderTooltip(popoverText)}>
-      <span className="action-bar-icon pointer">
-        <FontAwesomeIcon icon={icon} onClick={() => {action();}} className={iconClasses}/>
+      <span className="action-bar-icon pointer" onClick={() => {action();}}>
+        <FontAwesomeIcon icon={icon} className={iconClasses}/>
         <span>{text}</span></span>
     </OverlayTrigger>
   );
