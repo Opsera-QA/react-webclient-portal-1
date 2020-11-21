@@ -7,10 +7,12 @@ import inventoryActions from "../../inventory-actions";
 import toolMetadata from "../tool-metadata";
 import ToolDetailPanel from "./ToolDetailPanel";
 import {faTools} from "@fortawesome/pro-solid-svg-icons";
-import DetailViewContainer from "../../../common/panels/detail_view_container/DetailViewContainer";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
-import DataNotFoundContainer from "../../../common/panels/detail_view_container/DataNotFoundContainer";
-import DataNotFoundDialog from "../../../common/status_notifications/data_not_found/DataNotFoundDialog";
+import DetailScreenContainer from "../../../common/panels/detail_view_container/DetailScreenContainer";
+import {axiosApiService} from "../../../../api/apiService";
+import ActionBarContainer from "../../../common/actions/ActionBarContainer";
+import ActionBarToggleButton from "../../../common/actions/buttons/ActionBarToggleButton";
+import ActionBarBackButton from "../../../common/actions/buttons/ActionBarBackButton";
 
 function ToolDetailView() {
   const { id } = useParams();
@@ -33,32 +35,58 @@ function ToolDetailView() {
         setToolData(new Model(response.data[0], toolMetadata, false));
       }
     } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-      console.error(error);
+      if (!error?.error?.message?.includes(404)) {
+        toastContext.showLoadingErrorDialog(error);
+      }
     }
     finally {
       setIsLoading(false);
     }
   };
 
-  if (!isLoading && toolData == null) {
-    return (
-      <DataNotFoundContainer type={"Tool"} breadcrumbDestination={"toolDetailView"}>
-        <DataNotFoundDialog type={"Tool"} managementViewIcon={faTools} managementViewTitle={"Tool Registry"} managementViewLink={"/inventory/tools"} />
-      </DataNotFoundContainer>
-    )
-  }
+  const toggleToolType = async () => {
+    if(toolData.isModelValid()) {
+      try {
+        const accessToken = await getAccessToken();
+        let newToolData = toolData.getPersistData();
+        newToolData["active"] = !newToolData["active"];
+        let response = await axiosApiService(accessToken).post(`/registry/${newToolData._id}/update`, newToolData);
+        let updatedDto = new Model(response.data, toolData.metaData, false);
+        setToolData(updatedDto);
+      }
+      catch (err) {
+        console.log(err.message);
+      }
+    }
+  };
 
+  const getActionBar = () => {
     return (
-      <DetailViewContainer
-        breadcrumbDestination={"toolDetailView"}
-        title={toolData != null ? `Tool Details [${toolData["name"]}]` : undefined}
-        titleIcon={faTools}
-        isLoading={isLoading}
-        summaryPanel={<ToolSummaryPanel toolData={toolData} setToolData={setToolData}/>}
-        detailPanel={<ToolDetailPanel toolData={toolData} isLoading={isLoading} setToolData={setToolData} loadData={getTool}/>}
-      />
+      <ActionBarContainer>
+        <div>
+          <ActionBarBackButton path={"/inventory/tools"} />
+        </div>
+        <div>
+          <ActionBarToggleButton status={toolData?.getData("active")} handleActiveToggle={toggleToolType} />
+        </div>
+      </ActionBarContainer>
     );
+  };
+
+  return (
+    <DetailScreenContainer
+      breadcrumbDestination={"toolDetailView"}
+      title={toolData != null ? `Tool Details [${toolData["name"]}]` : undefined}
+      managementViewLink={"/inventory/tools"}
+      managementTitle={"Tool Registry"}
+      type={"Tool"}
+      titleIcon={faTools}
+      dataObject={toolData}
+      isLoading={isLoading}
+      actionBar={getActionBar()}
+      detailPanel={<ToolDetailPanel toolData={toolData} isLoading={isLoading} setToolData={setToolData} loadData={getTool}/>}
+    />
+  )
 }
 
 export default ToolDetailView;

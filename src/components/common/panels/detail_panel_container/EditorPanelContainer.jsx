@@ -3,8 +3,16 @@ import PropTypes from "prop-types";
 import LoadingDialog from "../../status_notifications/loading";
 import Form from "react-bootstrap/Form";
 
-// TODO: Remove show required fields message when all editor panels use EditorPanelContainer
-function DetailPanelContainer({ children, isLoading, showRequiredFieldsMessage }) {
+function EditorPanelContainer({ children, isLoading, showRequiredFieldsMessage }) {
+  const getRequiredFieldsMessage = () => {
+    if (showRequiredFieldsMessage) {
+      return (
+        <div>
+          <small className="form-text text-muted text-right mr-2 mt-3"><span className="danger-red">*</span> Required Fields</small>
+        </div>
+      );
+    }
+  }
 
   if (isLoading) {
     return (<LoadingDialog size="sm"/>);
@@ -14,21 +22,21 @@ function DetailPanelContainer({ children, isLoading, showRequiredFieldsMessage }
     <Form className="scroll-y full-height">
       <div className="p-3">
         <div>{children}</div>
-        {showRequiredFieldsMessage && <div><small className="form-text text-muted text-right mr-2 mt-3"><span className="danger-red">*</span> Required Fields</small></div>}
+        {getRequiredFieldsMessage()}
       </div>
     </Form>
   );
 }
 
 
-DetailPanelContainer.propTypes = {
+EditorPanelContainer.propTypes = {
   children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   isLoading: PropTypes.bool,
   showRequiredFieldsMessage: PropTypes.bool
 };
 
-DetailPanelContainer.defaultProps = {
+EditorPanelContainer.defaultProps = {
   showRequiredFieldsMessage: true
 }
 
-export default DetailPanelContainer;
+export default EditorPanelContainer;
