@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import PropTypes from "prop-types";
 import ToolJobsPanel from "./ToolJobsPanel";
 import ToolLogsPanel from "./ToolLogsPanel";
@@ -21,76 +19,56 @@ import {
   faBrowser,
 } from "@fortawesome/pro-solid-svg-icons";
 import ToolApplicationsPanel from "./ToolAppliationsPanel";
+import DetailTabPanelContainer from "../../../common/panels/detail_view/DetailTabPanelContainer";
+import ToolSummaryPanel from "./ToolSummaryPanel";
 
 function ToolDetailPanel({ toolData, setToolData, loadData, isLoading }) {
-  const [activeTab, setActiveTab] = useState("attributes");
+  const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (activeTab) => e => {
     e.preventDefault();
-    if (activeTab) {
-      setActiveTab(activeTab);
+    setActiveTab(activeTab);
+  };
+
+  const getTabContainer = () => {
+    return (<ToolTabOptions activeTab={activeTab} handleTabClick={handleTabClick} tool_identifier={toolData["tool_identifier"]}/>);
+  };
+
+  const getCurrentView = () => {
+    switch (activeTab) {
+      case "summary":
+        return <ToolSummaryPanel toolData={toolData} setToolData={setToolData}/>;
+      case "attributes":
+        return <ToolAttributesPanel toolData={toolData}/>;
+      case "configuration":
+        return <ToolConfigurationPanel toolData={toolData} loadData={loadData}/>;
+      case "jobs":
+        return <ToolJobsPanel toolData={toolData} loadData={loadData} isLoading={isLoading}/>;
+      case "applications":
+        return <ToolApplicationsPanel toolData={toolData} loadData={loadData} isLoading={isLoading}/>;
+      case "accounts":
+        return <ToolAccountsPanel isLoading={isLoading} toolData={toolData} loadData={loadData}/>;
+      case "logs":
+        return <ToolLogsPanel toolData={toolData}/>;
+      case "settings":
+        return <ToolEditorPanel toolData={toolData} setToolData={setToolData} loadData={loadData}/>;
+      default:
+        return null;
     }
   };
-  console.log(toolData["tool_identifier"]);
-  return (
-    <>
-      <div className="pb-3 px-3">
-        <Row>
-          <Col>
-            <ToolTabOptions activeTab={activeTab} handleTabClick={handleTabClick}
-                            tool_identifier={toolData["tool_identifier"]}/>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <div className="content-block-collapse">
-              {toolData &&
-              <ToolDetailsView toolData={toolData} setToolData={setToolData} loadData={loadData} activeTab={activeTab}
-                               isLoading={isLoading}/>}
-            </div>
-          </Col>
-        </Row>
-      </div>
-    </>
-  );
+
+  return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
 }
 
-function ToolDetailsView({ activeTab, toolData, setToolData, loadData, isLoading }) {
-  useEffect(() => {
-    // console.log("CHANGE HAPPENED");
-  }, [activeTab]);
-  if (activeTab) {
-    switch (activeTab) {
-    case "attributes":
-      return <ToolAttributesPanel toolData={toolData}/>;
-    case "configuration":
-      return <ToolConfigurationPanel toolData={toolData} loadData={loadData}/>;
-    case "jobs":
-      return <ToolJobsPanel toolData={toolData} loadData={loadData} isLoading={isLoading}/>;
-    case "applications":
-      return <ToolApplicationsPanel toolData={toolData} loadData={loadData} isLoading={isLoading}/>;
-    case "accounts":
-      return <ToolAccountsPanel isLoading={isLoading} toolData={toolData} loadData={loadData}/>;
-    case "logs":
-      return <ToolLogsPanel toolData={toolData}/>;
-    case "settings":
-      return <ToolEditorPanel toolData={toolData} setToolData={setToolData} loadData={loadData}/>;
-    default:
-      return null;
-    }
-  }
-}
-
-
+// TODO: Rework this
 function ToolTabOptions({ activeTab, tool_identifier, handleTabClick }) {
-  useEffect(() => {
-    // console.log("CHANGE HAPPENED");
-  }, [tool_identifier]);
+  useEffect(() => {}, [tool_identifier]);
 
   switch (tool_identifier) {
   case "jenkins":
     return (
       <CustomTabContainer>
+        <CustomTab icon={faList} tabName={"summary"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Summary"} />
         <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab}
                    tabText={"Attributes"}/>
         <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick}
@@ -109,6 +87,7 @@ function ToolTabOptions({ activeTab, tool_identifier, handleTabClick }) {
   case "argo":
     return (
       <CustomTabContainer>
+        <CustomTab icon={faList} tabName={"summary"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Summary"} />
         <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab}
                    tabText={"Attributes"}/>
         <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick}
@@ -124,6 +103,7 @@ function ToolTabOptions({ activeTab, tool_identifier, handleTabClick }) {
     case "octopus":
       return (
         <CustomTabContainer>
+          <CustomTab icon={faList} tabName={"summary"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Summary"} />
           <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab}
                      tabText={"Attributes"}/>
           <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick}
@@ -140,6 +120,7 @@ function ToolTabOptions({ activeTab, tool_identifier, handleTabClick }) {
   default:
     return (
       <CustomTabContainer>
+        <CustomTab icon={faList} tabName={"summary"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Summary"} />
         <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab}
                    tabText={"Attributes"}/>
         <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick}

@@ -86,7 +86,6 @@ DetailScreenContainer.propTypes = {
   managementViewLink: PropTypes.string,
   managementTitle: PropTypes.string,
   titleIcon: PropTypes.object,
-  summaryPanel: PropTypes.object,
   detailPanel: PropTypes.object,
   dataObject: PropTypes.object,
   actionBar: PropTypes.object,

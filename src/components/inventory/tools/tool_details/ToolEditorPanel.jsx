@@ -12,6 +12,7 @@ import SaveButton from "../../../common/buttons/SaveButton";
 import LoadingDialog from "../../../common/status_notifications/loading";
 import DtoTagManagerInput from "../../../common/input/dto_input/dto-tag-manager-input";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
+import EditorPanelContainer from "../../../common/panels/detail_panel_container/EditorPanelContainer";
 
 function ToolEditorPanel({ toolData, setToolData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -60,7 +61,7 @@ function ToolEditorPanel({ toolData, setToolData, handleClose }) {
     return (<LoadingDialog size="sm"/>);
   }
     return (
-        <div className="scroll-y full-height p-2">
+        <EditorPanelContainer>
           <Row>
             <Col lg={6}>
               <DtoTextInput setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"name"}/>
@@ -103,7 +104,7 @@ function ToolEditorPanel({ toolData, setToolData, handleClose }) {
               <SaveButton recordDto={toolDataDto} showCreateAnother={true} showViewDetails={true} handleClose={handleClose} createRecord={createTool} updateRecord={updateTool} setData={setToolData} setRecordDto={setToolDataDto} />
             </div>
           </Row>
-        </div>
+        </EditorPanelContainer>
     );
 }
 

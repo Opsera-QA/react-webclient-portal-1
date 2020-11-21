@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import ActionBarButton from "./ActionBarButton";
 import {faToggleOff, faToggleOn} from "@fortawesome/pro-light-svg-icons";
 
-// TODO: Deal with toasts relating to toggling here
 function ActionBarToggleButton({handleActiveToggle, status}) {
 
   const toggleStatus = () => {
@@ -23,7 +22,9 @@ function ActionBarToggleButton({handleActiveToggle, status}) {
 
 ActionBarToggleButton.propTypes = {
   handleActiveToggle: PropTypes.func,
-  status: PropTypes.string
+  status: PropTypes.oneOfType(
+    [PropTypes.string, PropTypes.bool]
+  )
 };
 
 export default ActionBarToggleButton;
