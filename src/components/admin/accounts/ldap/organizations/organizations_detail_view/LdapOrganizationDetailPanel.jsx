@@ -1,17 +1,16 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import LdapOrganizationEditorPanel from "./LdapOrganizationEditorPanel";
 import LdapOrganizationAccountsTable from "../../organization_accounts/LdapOrganizationAccountsTable";
 import CustomTabContainer from "../../../../../common/tabs/CustomTabContainer";
 import CustomTab from "../../../../../common/tabs/CustomTab";
-import {faCogs, faUsers} from "@fortawesome/pro-solid-svg-icons";
-import DetailPanelContainer from "../../../../../common/panels/detail_panel_container/DetailPanelContainer";
+import {faCogs, faList, faUsers} from "@fortawesome/pro-solid-svg-icons";
+import DetailTabPanelContainer from "../../../../../common/panels/detail_view/DetailTabPanelContainer";
+import LdapOrganizationSummaryPanel from "./LdapOrganizationSummaryPanel";
 
 function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationData, setLdapOrganizationData, loadData, authorizedActions, authorizedOrganizationAccountActions}) {
-  const [activeTab, setActiveTab] = useState("accounts");
+  const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
@@ -20,46 +19,10 @@ function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationDat
     }
   };
 
-  return (
-    <>
-      <div className="pb-3 px-3 h-50">
-        <Row>
-          <Col>
-            <CustomTabContainer>
-              <CustomTab icon={faUsers} tabName={"accounts"} handleTabClick={handleTabClick} activeTab={activeTab}
-                         tabText={"Accounts"}/>
-              <CustomTab icon={faCogs} tabName={"settings"} handleTabClick={handleTabClick} activeTab={activeTab}
-                         tabText={"Settings"}/>
-            </CustomTabContainer>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <div className="shaded-panel detail-view-detail-panel">
-              {ldapOrganizationData &&
-              <LdapOrganizationDetailsView
-                organizationAccounts={organizationAccounts}
-                loadData={loadData}
-                activeTab={activeTab}
-                setLdapOrganizationData={setLdapOrganizationData}
-                ldapOrganizationData={ldapOrganizationData}
-                authorizedActions={authorizedActions}
-                authorizedOrganizationAccountActions={authorizedOrganizationAccountActions}
-              />}
-            </div>
-          </Col>
-        </Row>
-      </div>
-    </>
-  );
-}
-
-function LdapOrganizationDetailsView({activeTab, loadData, setLdapOrganizationData, ldapOrganizationData, organizationAccounts, authorizedActions, authorizedOrganizationAccountActions}) {
-  useEffect(() => {
-    // console.log("CHANGE HAPPENED");
-  }, [activeTab]);
-  if (activeTab) {
+  const getCurrentView = () => {
     switch (activeTab) {
+      case "summary":
+        return <LdapOrganizationSummaryPanel ldapOrganizationData={ldapOrganizationData} />;
       case "accounts":
         return <div className="p-3"><LdapOrganizationAccountsTable ldapOrganizationAccounts={organizationAccounts} authorizedActions={authorizedOrganizationAccountActions} ldapOrganizationData={ldapOrganizationData} loadData={loadData} /></div>
       case "settings":
@@ -67,7 +30,20 @@ function LdapOrganizationDetailsView({activeTab, loadData, setLdapOrganizationDa
       default:
         return null;
     }
-  }
+  };
+
+
+  const getTabContainer = () => {
+    return (
+      <CustomTabContainer>
+        <CustomTab icon={faList} tabName={"summary"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Summary"} />
+        <CustomTab icon={faUsers} tabName={"accounts"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Accounts"}/>
+        <CustomTab icon={faCogs} tabName={"settings"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Settings"} />
+      </CustomTabContainer>
+    )
+  };
+
+  return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
 }
 
 LdapOrganizationDetailPanel.propTypes = {

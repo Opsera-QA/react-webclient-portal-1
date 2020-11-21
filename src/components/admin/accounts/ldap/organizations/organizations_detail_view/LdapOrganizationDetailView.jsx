@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../../../../../contexts/AuthContext";
 import { useParams } from "react-router-dom";
 import LoadingDialog from "../../../../../common/status_notifications/loading";
-import LdapOrganizationSummaryPanel from "./LdapOrganizationSummaryPanel";
 
 import "../../../accounts.css";
 import AccessDeniedDialog from "../../../../../common/status_notifications/accessDeniedInfo";
@@ -10,11 +9,11 @@ import Model from "../../../../../../core/data_model/model";
 import {ldapOrganizationMetaData} from "../ldap-organizations-form-fields";
 import accountsActions from "../../../accounts-actions";
 import LdapOrganizationDetailPanel from "./LdapOrganizationDetailPanel";
-import {faFileInvoice, faSitemap} from "@fortawesome/free-solid-svg-icons";
+import {faSitemap} from "@fortawesome/free-solid-svg-icons";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
-import DetailViewContainer from "../../../../../common/panels/detail_view_container/DetailViewContainer";
-import DataNotFoundContainer from "../../../../../common/panels/detail_view_container/DataNotFoundContainer";
-import DataNotFoundDialog from "../../../../../common/status_notifications/data_not_found/DataNotFoundDialog";
+import DetailScreenContainer from "../../../../../common/panels/detail_view_container/DetailScreenContainer";
+import ActionBarContainer from "../../../../../common/actions/ActionBarContainer";
+import ActionBarBackButton from "../../../../../common/actions/buttons/ActionBarBackButton";
 
 function LdapOrganizationDetailView() {
   const { organizationName } = useParams();
@@ -72,6 +71,19 @@ function LdapOrganizationDetailView() {
     }
   };
 
+  const getActionBar = () => {
+    return (
+      <ActionBarContainer>
+        <div>
+          <ActionBarBackButton path={"/admin/organizations"} />
+        </div>
+        <div>
+          {/*<ActionBarToggleButton status={ldapOrganizationData?.getData("active")} handleActiveToggle={handleActiveToggle} />*/}
+        </div>
+      </ActionBarContainer>
+    );
+  };
+
   if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   }
@@ -80,30 +92,29 @@ function LdapOrganizationDetailView() {
     return <AccessDeniedDialog roleData={accessRoleData}/>;
   }
 
-  if (!isLoading && ldapOrganizationData == null) {
-    return (
-      <DataNotFoundContainer type={"Organization"} breadcrumbDestination={"ldapOrganizationDetailView"}>
-        <DataNotFoundDialog type={"Organization"} managementViewIcon={faSitemap} managementViewTitle={"Organization Management"} managementViewLink={"/admin/organizations"} />
-      </DataNotFoundContainer>
-    )
-  }
-
-    return (
-      <DetailViewContainer
-        breadcrumbDestination={"ldapOrganizationDetailView"}
-        title={ldapOrganizationData != null ? `Organization Details [${ldapOrganizationData["name"]}]` : undefined}
-        titleIcon={faSitemap}
-        isLoading={isLoading}
-        summaryPanel={<LdapOrganizationSummaryPanel ldapOrganizationData={ldapOrganizationData}/>}
-        detailPanel={  <LdapOrganizationDetailPanel organizationAccounts={organizationAccounts}
-                                                    ldapOrganizationData={ldapOrganizationData}
-                                                    setLdapOrganizationData={setLdapOrganizationData}
-                                                    authorizedOrganizationAccountActions={authorizedOrganizationAccountActions}
-                                                    loadData={loadData}
-                                                    authorizedActions={authorizedActions}
-        />}
-      />
-    );
+  return (
+    <DetailScreenContainer
+      breadcrumbDestination={"ldapOrganizationDetailView"}
+      title={ldapOrganizationData != null ? `Organization Details [${ldapOrganizationData["name"]}]` : undefined}
+      managementViewLink={"/admin/organizations"}
+      managementTitle={"Organization Management"}
+      managementViewIcon={faSitemap}
+      type={"Organization"}
+      titleIcon={faSitemap}
+      dataObject={ldapOrganizationData}
+      isLoading={isLoading}
+      actionBar={getActionBar()}
+      detailPanel={
+        <LdapOrganizationDetailPanel
+          organizationAccounts={organizationAccounts}
+          ldapOrganizationData={ldapOrganizationData}
+          setLdapOrganizationData={setLdapOrganizationData}
+          authorizedOrganizationAccountActions={authorizedOrganizationAccountActions}
+          loadData={loadData}
+          authorizedActions={authorizedActions}
+      />}
+    />
+  );
 }
 
 export default LdapOrganizationDetailView;
