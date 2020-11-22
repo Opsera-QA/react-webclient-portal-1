@@ -1,8 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
-import { Link } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEdit,
   faHeartbeat,
@@ -12,15 +10,17 @@ import {
   faChartBar,
   faWrench,
   faStream,
-  faFileInvoice, faSitemap, faUserPlus
-} from "@fortawesome/free-solid-svg-icons";
+  faFileInvoice,
+  faSitemap,
+  faUserPlus,
+  faBuilding
+} from "@fortawesome/pro-light-svg-icons";
 import AccessDeniedDialog from "../common/status_notifications/accessDeniedInfo";
 import LoadingDialog from "../common/status_notifications/loading";
 import {DialogToastContext} from "../../contexts/DialogToastContext";
-import {faBuilding} from "@fortawesome/pro-solid-svg-icons";
+import PageLink from "../common/links/PageLink";
 
-
-function AdminTools(props) {
+function AdminTools({}) {
   const [accessRoleData, setAccessRoleData] = useState({});
   const { getUserRecord, setAccessRoles, featureFlagHideItemInProd } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -54,68 +54,31 @@ function AdminTools(props) {
     return (<AccessDeniedDialog roleData={accessRoleData} />);
   }
 
-    return (
-      <>
-        <div className="max-content-width mt-1">
-          <h4>Administration Tools</h4>
-          <div>Listed below are administration tools for the platform.</div>
-          <div className="p-3">
-            <Row className="mt-3 admin-tools">
-              <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/system-status"><FontAwesomeIcon icon={faHeartbeat} fixedWidth/> System Status</Link>
-              </Col>
-
-              {/* <Col xs={12} md={6} lg={4} className="p-2">
-               <Link to="/admin/health"><FontAwesomeIcon icon={faHeartbeat} fixedWidth /> System Health Check</Link>
-               </Col> */}
-
-              <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/reports"><FontAwesomeIcon icon={faLink} fixedWidth/> Reports</Link>
-              </Col>
-              <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/analytics/reports-registration"><FontAwesomeIcon icon={faChartBar}
-                                                                                  fixedWidth/> Reports
-                  Registration</Link>
-              </Col>
-
-              <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/manage_systems"><FontAwesomeIcon icon={faEdit} fixedWidth/> System Management</Link>
-              </Col>
-              <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/registered-users"><FontAwesomeIcon icon={faUserCircle} fixedWidth/> Registered
-                  Users</Link>
-              </Col>
-              <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/demo/api"><FontAwesomeIcon icon={faLink} fixedWidth/> API & Token Data</Link>
-              </Col>
-
-              <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/tools"><FontAwesomeIcon icon={faWrench} fixedWidth/> Tool
-                  Configurations</Link>
-              </Col>
-              <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/delete"><FontAwesomeIcon icon={faTimes} fixedWidth/> Delete Tools</Link>
-              </Col>
-              <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to={!featureFlagHideItemInProd() ? "/admin/kpis" : "#"}><FontAwesomeIcon icon={faFileInvoice} fixedWidth/> KPI Management</Link>
-              </Col>              
-              <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/templates"><FontAwesomeIcon icon={faStream} fixedWidth/> Pipeline Templates Editor</Link>
-              </Col>
-              <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/organizations"><FontAwesomeIcon icon={faSitemap} fixedWidth /> Organizations (LDAP)</Link>
-              </Col>
-              <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/admin/departments"><FontAwesomeIcon icon={faBuilding} fixedWidth /> Departments (LDAP)</Link>
-              </Col>
-              <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/accounts/create"><FontAwesomeIcon icon={faUserPlus} fixedWidth /> Customer Onboarding</Link>
-              </Col>
-            </Row>
-          </div>
-        </div>
-      </>
-    );
+  return (
+    <div className="max-content-width mt-1">
+      <h4>Administration Tools</h4>
+      <div>Listed below are administration tools for the platform.</div>
+      <div className="p-3">
+        <Row className="mt-3 admin-tools">
+          <PageLink link={"/admin/system-status"} icon={faHeartbeat} linkText={"System Status"}/>
+          {/*<PageLink link={"/admin/health"} icon={faHeartbeat} linkText={"System Health Check"}/>*/}
+          <PageLink link={"/admin/reports"} icon={faLink} linkText={"Reports"}/>
+          <PageLink link={"/admin/reports-registration"} icon={faChartBar} linkText={"Reports Registration"}/>
+          <PageLink link={"/admin/manage_systems"} icon={faEdit} linkText={"System Management"}/>
+          <PageLink link={"/admin/registered-users"} icon={faUserCircle} linkText={"Registered Users"}/>
+          <PageLink link={"/demo/api"} icon={faLink} linkText={"API & Token Data"}/>
+          <PageLink link={"/admin/tools"} icon={faWrench} linkText={"Tool Configurations"}/>
+          <PageLink link={"/admin/delete"} icon={faTimes} linkText={"Delete Tools"}/>
+          <PageLink link={!featureFlagHideItemInProd() ? "/admin/kpis" : "#"} icon={faFileInvoice}
+                    linkText={"KPI Management"}/>
+          <PageLink link={"/admin/templates"} icon={faStream} linkText={"Pipeline Templates Editor"}/>
+          <PageLink link={"/admin/organizations"} icon={faSitemap} linkText={"Organizations (LDAP)"}/>
+          <PageLink link={"/admin/departments"} icon={faBuilding} linkText={"Departments (LDAP)"}/>
+          <PageLink link={"/accounts/create"} icon={faUserPlus} linkText={"Customer Onboarding"}/>
+        </Row>
+      </div>
+    </div>
+  );
 }
 
 AdminTools.propTypes = {};

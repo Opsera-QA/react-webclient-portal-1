@@ -1,14 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import LoadingDialog from "../common/status_notifications/loading";
-import { Link } from "react-router-dom";
-import { Row, Col } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faUserFriends, faUser, faTags, faUsers, faHeartbeat} from "@fortawesome/free-solid-svg-icons";
+import { Row } from "react-bootstrap";
+import {faUserFriends, faUser, faTags, faUsers, faHeartbeat} from "@fortawesome/pro-light-svg-icons";
 import BreadcrumbTrail from "../common/navigation/breadcrumbTrail";
 import AccessDeniedDialog from "../common/status_notifications/accessDeniedInfo";
 import accountsActions from "../admin/accounts/accounts-actions";
 import {DialogToastContext} from "../../contexts/DialogToastContext";
+import PageLink from "../common/links/PageLink";
 
 function AccountSettings() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -59,29 +58,15 @@ function AccountSettings() {
       <div className="max-content-width ml-2 mt-1">
         <h5>Account Settings</h5>
         <div>Manage groups and users from this dashboard.</div>
-
         <Row className="ml-3 mt-3 admin-tools">
-          {userDetailsLink && <Col xs={12} md={6} lg={4} className="p-2">
-            <Link to={userDetailsLink}><FontAwesomeIcon icon={faUser} fixedWidth className="mr-2"/>My User Record</Link>
-          </Col>}
+          {userDetailsLink && <PageLink link={userDetailsLink} icon={faUser} linkText={"My User Record"}/>}
           {(accessRoleData.PowerUser || accessRoleData.Administrator || accessRoleData.OpseraAdministrator) &&
             <>
-              <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/settings/groups"><FontAwesomeIcon icon={faUserFriends} fixedWidth className="mr-2"/>Groups</Link>
-              </Col>
-              <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to="/settings/users"><FontAwesomeIcon icon={faUser} fixedWidth className="mr-2"/>Users</Link>
-              </Col>
-              <Col xs={12} md={6} lg={4} className="p-2">
-                <Link to={"/settings/tags"}><FontAwesomeIcon icon={faTags} fixedWidth className="mr-2"/>Tags</Link>
-              </Col>
-              {!envIsProd ?
-            <Col xs={12} md={6} lg={4} className="p-2">
-              <Link to="/settings/customer-system-status"><FontAwesomeIcon icon={faHeartbeat} fixedWidth/> Customer Status</Link>
-            </Col> : null}
-              {/*<Col xs={12} md={6} lg={4} className="p-2">*/}
-              {/*  <Link to="/admin/organization-accounts"><FontAwesomeIcon icon={faUsers} fixedWidth /> Organization Accounts (LDAP)</Link>*/}
-              {/*</Col>*/}
+              <PageLink link={"/settings/groups"} icon={faUserFriends} linkText={"Groups"}/>
+              <PageLink link={"/settings/users"} icon={faUser} linkText={"Users"}/>
+              <PageLink link={"/settings/tags"} icon={faTags} linkText={"Tags"}/>
+              {!envIsProd && <PageLink link={"/settings/customer-system-status"} icon={faHeartbeat} linkText={"Customer Status"}/>}
+              {/*<PageLink link={"/admin/organization-accounts"} icon={faUsers} linkText={"Organization Accounts"}/>*/}
             </>
           }
         </Row>
