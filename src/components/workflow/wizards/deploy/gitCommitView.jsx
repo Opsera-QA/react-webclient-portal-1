@@ -47,7 +47,7 @@ const GitCommitView = ({ pipelineId, templateId, autoRun, handleClose, setView }
       }
       // start run pipeline and close modal
       await PipelineActions.run(pipelineId, {}, getAccessToken);
-      toastContext.showInformationDialog("A request to start this pipeline has been submitted.  It will begin shortly.", 20);
+      toastContext.showInformationToast("A request to start this pipeline has been submitted.  It will begin shortly.", 20);
       setSave(false);
       setLoading(false);
 

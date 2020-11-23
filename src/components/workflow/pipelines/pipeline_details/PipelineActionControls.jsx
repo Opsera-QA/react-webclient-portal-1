@@ -230,7 +230,7 @@ function PipelineActionControls({
 
   async function runPipeline(pipelineId) {
     setStartPipeline(true);
-    toastContext.showInformationDialog("A request to start this pipeline has been submitted.  It will begin shortly.", 20);
+    toastContext.showInformationToast("A request to start this pipeline has been submitted.  It will begin shortly.", 20);
 
     await PipelineActions.run(pipelineId, {}, getAccessToken)
       .catch(err => {
