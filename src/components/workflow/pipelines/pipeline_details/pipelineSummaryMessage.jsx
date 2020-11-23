@@ -11,7 +11,7 @@ function PipelineSummaryMessages({ type, lastRun, tags, runCount, getUserRecord 
     const languageTypes = ["java", "python", "java-ebs"]; //matches pipeline:tag values
     let tagLanguage = _getSupportedLanguageType(tags, languageTypes);
 
-    if (tags.some(e => e.type === "pipeline" && e.value === "free-trial")) {
+    if (tags.some(e => e.type === "pipeline" && e.value === "freetrial")) {
       if (type === "free-trial-container-url-msg" &&
         status.toLowerCase() === "success" &&
         runCount === run_count) {
