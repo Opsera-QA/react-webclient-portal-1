@@ -6,7 +6,7 @@ const pipelineMetadata = {
       id: "_id",
     },
     {
-      label: "Tool Name",
+      label: "Name",
       id: "name",
       isRequired: true
     },

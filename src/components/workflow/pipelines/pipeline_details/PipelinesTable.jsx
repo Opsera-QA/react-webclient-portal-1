@@ -19,9 +19,9 @@ function PipelinesTable({ data, isLoading }) {
 
   const columns = useMemo(
     () => [
+      getTableTextColumn(fields.find(field => { return field.id === "_id"})),
       getTableTextColumn(fields.find(field => { return field.id === "name"})),
       getTableTextColumn(fields.find(field => { return field.id === "owner_name"})),
-      getTableTextColumn(fields.find(field => { return field.id === "type"})),
       getTablePipelineStatusColumn(fields.find(field => { return field.id === "workflow"})),
       getTableDateColumn(fields.find(field => { return field.id === "createdAt"})),
       getTableDateColumn(fields.find(field => { return field.id === "updatedAt"})),
