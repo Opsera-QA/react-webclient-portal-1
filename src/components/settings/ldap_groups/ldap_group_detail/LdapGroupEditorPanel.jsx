@@ -11,6 +11,7 @@ import LoadingDialog from "../../../common/status_notifications/loading";
 import SaveButton from "../../../common/buttons/SaveButton";
 import WarningDialog from "../../../common/status_notifications/WarningDialog";
 import DetailPanelContainer from "../../../common/panels/detail_panel_container/DetailPanelContainer";
+import EditorPanelContainer from "../../../common/panels/detail_panel_container/EditorPanelContainer";
 
 function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, ldapOrganizationData, setLdapGroupData, handleClose, authorizedActions}) {
   const {getAccessToken} = useContext(AuthContext);
@@ -45,7 +46,7 @@ function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, ldapOrganization
   }
 
     return (
-      <DetailPanelContainer>
+      <EditorPanelContainer>
             <Row>
               <Col lg={12}>
                 <DtoTextInput disabled={!ldapGroupDataDto.isNew()} fieldName={"name"} dataObject={ldapGroupDataDto}
@@ -73,7 +74,7 @@ function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, ldapOrganization
                 <SaveButton recordDto={ldapGroupDataDto} setData={setLdapGroupData} setRecordDto={setLdapGroupDataDto} handleClose={handleClose} createRecord={createGroup} updateRecord={updateGroup} />
               </div>
             </Row>
-      </DetailPanelContainer>
+      </EditorPanelContainer>
     );
 }
 

@@ -3,19 +3,17 @@ import {AuthContext} from "../../../../contexts/AuthContext";
 import {useParams} from "react-router-dom";
 import LoadingDialog from "../../../common/status_notifications/loading";
 import "../../../admin/accounts/accounts.css";
-import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
-import LdapGroupSummaryPanel from "./LdapGroupSummaryPanel";
 import LdapGroupDetailPanel from "./LdapGroupDetailPanel";
 import accountsActions from "../../../admin/accounts/accounts-actions";
 import AccessDeniedDialog from "../../../common/status_notifications/accessDeniedInfo";
 import {ldapGroupMetaData} from "../ldap-groups-metadata";
 import Model from "../../../../core/data_model/model";
-import {faUser, faUserFriends} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faUserFriends} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
-import DetailViewContainer from "../../../common/panels/detail_view_container/DetailViewContainer";
-import LdapUserSummaryPanel from "../../ldap_users/users_detail_view/LdapUserSummaryPanel";
-import LdapUserDetailPanel from "../../ldap_users/users_detail_view/LdapUserDetailPanel";
+import DetailScreenContainer from "../../../common/panels/detail_view_container/DetailScreenContainer";
+import ActionBarContainer from "../../../common/actions/ActionBarContainer";
+import ActionBarBackButton from "../../../common/actions/buttons/ActionBarBackButton";
+import ActionBarDeleteButton2 from "../../../common/actions/buttons/ActionBarDeleteButton2";
 
 // TODO: Can we get an API Call to get role group names associated with an organization?
 const roleGroups = ["Administrators", "PowerUsers", "Users"];
@@ -113,17 +111,50 @@ function LdapGroupDetailView() {
     return (<AccessDeniedDialog roleData={accessRoleData} />);
   }
 
-    return (
-      <DetailViewContainer
-        breadcrumbDestination={"ldapGroupDetailView"}
-        title={ldapGroupData != null ? `Group Details [${ldapGroupData && ldapGroupData.name}]` : undefined}
-        titleIcon={faUserFriends}
-        isLoading={isLoading}
-        summaryPanel={<LdapGroupSummaryPanel ldapGroupData={ldapGroupData} domain={orgDomain} canDelete={canDelete}/>}
-        detailPanel={<LdapGroupDetailPanel orgDomain={orgDomain} ldapGroupData={ldapGroupData} ldapOrganizationData={ldapOrganizationData}
-                                           currentUserEmail={currentUserEmail} setLdapGroupData={setLdapGroupData} loadData={getRoles} authorizedActions={authorizedActions}/>}
-      />
-    );
+  const getActionBar = () => {
+    if (ldapGroupData != null) {
+      return (
+        <ActionBarContainer>
+          <div>
+            <ActionBarBackButton path={`/settings/${orgDomain}/groups`} />
+          </div>
+          <div>
+            {canDelete && <ActionBarDeleteButton2 relocationPath={`/settings/${orgDomain}/groups`} dataObject={ldapGroupData} handleDelete={deleteGroup}/>}
+          </div>
+        </ActionBarContainer>
+      );
+    }
+  };
+
+  const deleteGroup = () => {
+    return accountsActions.deleteGroup(orgDomain, ldapGroupData, getAccessToken);
+  };
+
+  return (
+    <DetailScreenContainer
+      breadcrumbDestination={"ldapGroupDetailView"}
+      title={ldapGroupData != null ? `Group Details [${ldapGroupData && ldapGroupData.name}]` : undefined}
+      managementViewLink={`/settings/${orgDomain}/groups`}
+      managementTitle={"Groups"}
+      managementViewIcon={faUserFriends}
+      type={"Group"}
+      titleIcon={faUserFriends}
+      dataObject={ldapGroupData}
+      isLoading={isLoading}
+      actionBar={getActionBar()}
+      detailPanel={
+        <LdapGroupDetailPanel
+          orgDomain={orgDomain}
+          ldapGroupData={ldapGroupData}
+          ldapOrganizationData={ldapOrganizationData}
+          currentUserEmail={currentUserEmail}
+          setLdapGroupData={setLdapGroupData}
+          loadData={getRoles}
+          authorizedActions={authorizedActions}
+        />
+      }
+    />
+  );
 }
 
 export default LdapGroupDetailView;

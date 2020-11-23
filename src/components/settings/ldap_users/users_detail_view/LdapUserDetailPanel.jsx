@@ -1,55 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import LdapUserEditorPanel from "./LdapUserEditorPanel";
-import {faCogs} from "@fortawesome/pro-solid-svg-icons/faCogs";
-import CustomTab from "../../../common/tabs/CustomTab";
 import CustomTabContainer from "../../../common/tabs/CustomTabContainer";
+import SummaryTab from "../../../common/tabs/detail_view/SummaryTab";
+import LdapUserSummaryPanel from "./LdapUserSummaryPanel";
+import DetailTabPanelContainer from "../../../common/panels/detail_view/DetailTabPanelContainer";
+import SettingsTab from "../../../common/tabs/detail_view/SettingsTab";
 
 function LdapUserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, authorizedActions }) {
-  const [activeTab, setActiveTab] = useState("settings");
+  const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (activeTab) => e => {
     e.preventDefault();
     setActiveTab(activeTab);
   };
 
-  return (
-    <>
-      <div className="pb-3 px-3">
-        <Row>
-          <Col>
-            <CustomTabContainer>
-              <CustomTab icon={faCogs} tabName={"settings"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Settings"} />
-            </CustomTabContainer>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <div className="shaded-panel detail-view-detail-panel">
-              {ldapUserData && <LdapDetailsView activeTab={activeTab} authorizedActions={authorizedActions} setLdapUserData={setLdapUserData} ldapUserData={ldapUserData} orgDomain={orgDomain} /> }
-            </div>
-          </Col>
-        </Row>
-      </div>
-    </>
-  );
-}
+  const getTabContainer = () => {
+    return (
+      <CustomTabContainer>
+        <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
+      </CustomTabContainer>
+    );
+  };
 
-function LdapDetailsView({ activeTab, setLdapUserData, ldapUserData, authorizedActions, orgDomain }) {
-  useEffect(() => {
-    // console.log("CHANGE HAPPENED");
-  }, [activeTab]);
-  if (activeTab) {
+  const getCurrentView = () => {
     switch (activeTab) {
-    case "settings":
-      return <LdapUserEditorPanel setLdapUserData={setLdapUserData} authorizedActions={authorizedActions} ldapUserData={ldapUserData} orgDomain={orgDomain} />;
-    default:
-      return null;
+      case "summary":
+        return <LdapUserSummaryPanel ldapUserData={ldapUserData} />;
+      case "settings":
+        return <LdapUserEditorPanel setLdapUserData={setLdapUserData} authorizedActions={authorizedActions} ldapUserData={ldapUserData} orgDomain={orgDomain} />;
+      default:
+        return null;
     }
-  }
+  };
+
+  return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
 }
 
 LdapUserDetailPanel.propTypes = {
