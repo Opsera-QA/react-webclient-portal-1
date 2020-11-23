@@ -51,7 +51,7 @@ function TempTagManagerInput({ label, type, data, setData, disabled, filter, pla
   };
 
   const loadTagOptions = (tags) => {
-    let currentOptions = tagOptions;
+    let currentOptions = [...defaultTags];
     tags.map((tag, index) => {
       if (tag["type"] != null && tag["type"] !== "" && tag["value"] != null && tag["value"] !== "")
       {
