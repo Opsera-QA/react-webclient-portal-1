@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 
@@ -11,14 +11,14 @@ import DtoPropertiesField from "../../../../common/form_fields/dto_form_fields/d
 import LoadingDialog from "../../../../common/status_notifications/loading";
 import SummaryPanelContainer from "../../../../common/panels/detail_view/SummaryPanelContainer";
 
-function ToolIdentifierSummaryPanel({toolIdentifierData}) {
+function ToolIdentifierSummaryPanel({ toolIdentifierData, setActiveTab }) {
 
   if (toolIdentifierData == null) {
     return (<LoadingDialog size="sm"/>);
   }
 
   return (
-    <SummaryPanelContainer>
+    <SummaryPanelContainer setActiveTab={setActiveTab}>
       <Row>
         <Col lg={6}>
           <DtoTextField dataObject={toolIdentifierData} fieldName={"name"}/>
@@ -57,6 +57,7 @@ function ToolIdentifierSummaryPanel({toolIdentifierData}) {
 
 ToolIdentifierSummaryPanel.propTypes = {
   toolIdentifierData: PropTypes.object,
+  setActiveTab: PropTypes.func
 };
 
 export default ToolIdentifierSummaryPanel;

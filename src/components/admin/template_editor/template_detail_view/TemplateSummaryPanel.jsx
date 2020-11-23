@@ -10,16 +10,16 @@ import DtoItemField from "../../../common/form_fields/dto_form_fields/dto-item-f
 import DtoTagField from "../../../common/form_fields/dto_form_fields/dto-tag-field";
 import LoadingDialog from "../../../common/status_notifications/loading";
 import BooleanField from "../../../common/form_fields/dto_form_fields/BooleanField";
-import DetailPanelContainer from "../../../common/panels/detail_panel_container/DetailPanelContainer";
+import SummaryPanelContainer from "../../../common/panels/detail_view/SummaryPanelContainer";
 
-function TemplateSummaryPanel({templateData}) {
+function TemplateSummaryPanel({ templateData, setActiveTab }) {
 
   if (templateData == null) {
     return (<LoadingDialog size="sm"/>);
   }
 
   return (
-    <DetailPanelContainer showRequiredFieldsMessage={false}>
+    <SummaryPanelContainer setActiveTab={setActiveTab}>
       <Row>
         <Col lg={6}>
           <DtoTextField dataObject={templateData} fieldName={"name"}/>
@@ -62,12 +62,13 @@ function TemplateSummaryPanel({templateData}) {
           <DtoJsonField dataObject={templateData} fieldName={"plan"}/>
         </Col>
       </Row>
-    </DetailPanelContainer>
+    </SummaryPanelContainer>
   );
 }
 
 TemplateSummaryPanel.propTypes = {
   templateData: PropTypes.object,
+  setActiveTab: PropTypes.func
 };
 
 

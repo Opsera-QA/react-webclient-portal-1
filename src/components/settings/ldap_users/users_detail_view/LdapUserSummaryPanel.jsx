@@ -5,14 +5,14 @@ import "components/inventory/tools/tools.css";
 import DtoTextField from "../../../common/form_fields/dto_form_fields/dto-text-field";
 import SummaryPanelContainer from "../../../common/panels/detail_view/SummaryPanelContainer";
 
-function LdapUserSummaryPanel({ ldapUserData } ) {
+function LdapUserSummaryPanel({ ldapUserData, setActiveTab } ) {
 
   if (ldapUserData == null) {
     return <></>;
   }
 
   return (
-    <SummaryPanelContainer>
+    <SummaryPanelContainer setActiveTab={setActiveTab}>
       <Row>
         <Col lg={6}>
           <DtoTextField dataObject={ldapUserData} fieldName={"firstName"}/>
@@ -45,6 +45,7 @@ function LdapUserSummaryPanel({ ldapUserData } ) {
 
 LdapUserSummaryPanel.propTypes = {
   ldapUserData: PropTypes.object,
+  setActiveTab: PropTypes.func
 };
 
 

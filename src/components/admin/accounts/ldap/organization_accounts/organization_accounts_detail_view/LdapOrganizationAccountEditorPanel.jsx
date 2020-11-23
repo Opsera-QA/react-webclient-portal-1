@@ -7,13 +7,12 @@ import accountsActions from "../../../accounts-actions";
 import {AuthContext} from "../../../../../../contexts/AuthContext";
 import {capitalizeFirstLetter} from "../../../../../common/helpers/string-helpers";
 import DtoTextInput from "../../../../../common/input/dto_input/dto-text-input";
-import Model from "../../../../../../core/data_model/model";
 import DtoToggleInput from "../../../../../common/input/dto_input/dto-toggle-input";
 import SaveButton from "../../../../../common/buttons/SaveButton";
 import LoadingDialog from "../../../../../common/status_notifications/loading";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import WarningDialog from "../../../../../common/status_notifications/WarningDialog";
-import DetailPanelContainer from "../../../../../common/panels/detail_panel_container/DetailPanelContainer";
+import EditorPanelContainer from "../../../../../common/panels/detail_panel_container/EditorPanelContainer";
 
 function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOrganization, setLdapOrganizationAccountData, authorizedActions, handleClose}) {
   const {getAccessToken} = useContext(AuthContext);
@@ -112,7 +111,7 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
   }
 
     return (
-      <DetailPanelContainer>
+      <EditorPanelContainer>
           <Row>
             <Col>
               <div className="custom-select-input m-2">
@@ -202,7 +201,7 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
               />
             </div>
           </Row>
-      </DetailPanelContainer>
+      </EditorPanelContainer>
     );
 }
 

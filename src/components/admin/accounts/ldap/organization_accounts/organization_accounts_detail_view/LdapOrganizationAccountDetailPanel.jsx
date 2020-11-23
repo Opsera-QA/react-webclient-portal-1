@@ -90,7 +90,7 @@ function LdapOrganizationAccountDetailPanel(
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <LdapOrganizationAccountSummaryPanel ldapOrganizationAccountData={ldapOrganizationAccountData}/>;
+        return <LdapOrganizationAccountSummaryPanel ldapOrganizationAccountData={ldapOrganizationAccountData} setActiveTab={setActiveTab}/>;
       case "users":
         return <div className="p-3"><LdapUsersTable orgDomain={ldapOrganizationAccountData["orgDomain"]} userData={ldapOrganizationAccountData.getData("users")} /></div>
       case "groups":

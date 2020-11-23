@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Row from "react-bootstrap/Row";
 import adminTagsActions from "../admin-tags-actions";
-import LoadingDialog from "../../../common/status_notifications/loading";
 import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
 import DtoToggleInput from "../../../common/input/dto_input/dto-toggle-input";
 import DtoMultipleInput from "../../../common/input/dto_input/dto-multiple-input";
@@ -11,7 +10,6 @@ import SaveButton from "../../../common/buttons/SaveButton";
 import Col from "react-bootstrap/Col";
 import DtoSelectInput from "../../../common/input/dto_input/dto-select-input";
 import {defaultTags} from "../tags-form-fields";
-import DetailPanelContainer from "../../../common/panels/detail_panel_container/DetailPanelContainer";
 import EditorPanelContainer from "../../../common/panels/detail_panel_container/EditorPanelContainer";
 
 function TagEditorPanel({ tagData, setTagData, handleClose }) {

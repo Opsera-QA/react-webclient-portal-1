@@ -7,14 +7,13 @@ import DtoTextField from "../../../../common/form_fields/dto_form_fields/dto-tex
 import DtoDateField from "../../../../common/form_fields/dto_form_fields/dto-date-field";
 import DtoToggleField from "../../../../common/form_fields/dto_form_fields/dto-toggle-field";
 import DtoItemField from "../../../../common/form_fields/dto_form_fields/dto-item-field";
-import SummaryActionBar from "../../../../common/actions/SummaryActionBar";
 import Model from "../../../../../core/data_model/model";
 import {AuthContext} from "../../../../../contexts/AuthContext";
 import toolTypeActions from "../../tool-management-actions";
 import LoadingDialog from "../../../../common/status_notifications/loading";
 import SummaryPanelContainer from "../../../../common/panels/detail_view/SummaryPanelContainer";
 
-function ToolTypeSummaryPanel({toolTypeData, setToolTypeData}) {
+function ToolTypeSummaryPanel({ toolTypeData, setToolTypeData, setActiveTab }) {
   const { getAccessToken } = useContext(AuthContext);
 
   const handleActiveToggle = async () => {
@@ -37,7 +36,7 @@ function ToolTypeSummaryPanel({toolTypeData, setToolTypeData}) {
   }
 
   return (
-    <SummaryPanelContainer>
+    <SummaryPanelContainer setActiveTab={setActiveTab}>
           <Row>
             <Col lg={6}>
               <DtoTextField dataObject={toolTypeData} fieldName={"name"}/>
@@ -67,7 +66,8 @@ function ToolTypeSummaryPanel({toolTypeData, setToolTypeData}) {
 
 ToolTypeSummaryPanel.propTypes = {
   toolTypeData: PropTypes.object,
-  setToolTypeData: PropTypes.func
+  setToolTypeData: PropTypes.func,
+  setActiveTab: PropTypes.func
 };
 
 

@@ -5,11 +5,11 @@ import "components/inventory/tools/tools.css";
 import DtoTextField from "../../../common/form_fields/dto_form_fields/dto-text-field";
 import DtoDateField from "../../../common/form_fields/dto_form_fields/dto-date-field";
 import DtoTagField from "../../../common/form_fields/dto_form_fields/dto-tag-field";
-import DetailPanelContainer from "../../../common/panels/detail_panel_container/DetailPanelContainer";
+import SummaryPanelContainer from "../../../common/panels/detail_view/SummaryPanelContainer";
 
-function ToolSummaryPanel({ toolData }) {
+function ToolSummaryPanel({ toolData, setActiveTab }) {
   return (
-    <DetailPanelContainer showRequiredFieldsMessage={false}>
+    <SummaryPanelContainer setActiveTab={setActiveTab}>
       <Row>
         <Col lg={6}>
           <DtoTextField dataObject={toolData} fieldName={"name"} />
@@ -36,12 +36,13 @@ function ToolSummaryPanel({ toolData }) {
           <DtoTagField dataObject={toolData} fieldName={"tags"} />
         </Col>
       </Row>
-    </DetailPanelContainer>
+    </SummaryPanelContainer>
   );
 }
 
 ToolSummaryPanel.propTypes = {
-  toolData: PropTypes.object
+  toolData: PropTypes.object,
+  setActiveTab: PropTypes.func
 }
 
 export default ToolSummaryPanel;

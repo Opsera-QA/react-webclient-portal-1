@@ -10,7 +10,6 @@ import DtoToggleInput from "../../../common/input/dto_input/dto-toggle-input";
 import LoadingDialog from "../../../common/status_notifications/loading";
 import SaveButton from "../../../common/buttons/SaveButton";
 import WarningDialog from "../../../common/status_notifications/WarningDialog";
-import DetailPanelContainer from "../../../common/panels/detail_panel_container/DetailPanelContainer";
 import EditorPanelContainer from "../../../common/panels/detail_panel_container/EditorPanelContainer";
 
 function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, ldapOrganizationData, setLdapGroupData, handleClose, authorizedActions}) {

@@ -6,12 +6,10 @@ import AccessDeniedDialog from "../../../common/status_notifications/accessDenie
 import Model from "../../../../core/data_model/model";
 import templateEditorMetadata from "../template-form-fields";
 import templateActions from "../template-actions";
-import TemplateSummaryPanel from "./TemplateSummaryPanel";
 import TemplateDetailPanel from "./TemplateDetailPanel";
 import {faStream} from "@fortawesome/free-solid-svg-icons";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import DetailScreenContainer from "../../../common/panels/detail_view_container/DetailScreenContainer";
-import SummaryActionBarContainer from "../../../common/actions/SummaryActionBarContainer";
 import ActionBarBackButton from "../../../common/actions/buttons/ActionBarBackButton";
 import ActionBarShowJsonButton from "../../../common/actions/buttons/ActionBarShowJsonButton";
 import ActionBarDeleteButton2 from "../../../common/actions/buttons/ActionBarDeleteButton2";
@@ -87,6 +85,7 @@ function TemplateDetailView() {
   const deletePipeline = () => {
     return templateActions.deleteTemplate(templateData, getAccessToken);
   };
+
   if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   }

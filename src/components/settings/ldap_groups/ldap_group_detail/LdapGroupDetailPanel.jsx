@@ -45,7 +45,7 @@ function LdapGroupDetailPanel(
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <LdapGroupSummaryPanel ldapGroupData={ldapGroupData} domain={orgDomain} />;
+        return <LdapGroupSummaryPanel ldapGroupData={ldapGroupData} domain={orgDomain} setActiveTab={setActiveTab} />;
       case "membership":
         return (<div className="px-3 pt-2 pb-3"><LdapUsersTable orgDomain={orgDomain} userData={ldapGroupData.members} /></div>);
       case "manage":

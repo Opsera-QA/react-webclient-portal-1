@@ -11,7 +11,7 @@ import LoadingDialog from "../../../../../common/status_notifications/loading";
 import SaveButton from "../../../../../common/buttons/SaveButton";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import WarningDialog from "../../../../../common/status_notifications/WarningDialog";
-import DetailPanelContainer from "../../../../../common/panels/detail_panel_container/DetailPanelContainer";
+import EditorPanelContainer from "../../../../../common/panels/detail_panel_container/EditorPanelContainer";
 
 function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganizationData, authorizedActions, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -78,7 +78,7 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganization
   }
 
     return (
-      <DetailPanelContainer>
+      <EditorPanelContainer>
           <Row>
             <Col lg={12}>
               <div className="p-2">
@@ -127,7 +127,7 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganization
               <SaveButton recordDto={ldapOrganizationDataDto} setRecordDto={setLdapOrganizationDataDto} setData={setLdapOrganizationData} createRecord={createOrganization} updateRecord={updateLdapOrganization} handleClose={handleClose}/>
             </div>
           </Row>
-      </DetailPanelContainer>
+      </EditorPanelContainer>
     );
 }
 

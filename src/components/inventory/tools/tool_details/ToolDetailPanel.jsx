@@ -17,10 +17,12 @@ import {
   faUsers,
   faCogs,
   faBrowser,
-} from "@fortawesome/pro-solid-svg-icons";
+} from "@fortawesome/pro-light-svg-icons";
 import ToolApplicationsPanel from "./ToolAppliationsPanel";
 import DetailTabPanelContainer from "../../../common/panels/detail_view/DetailTabPanelContainer";
 import ToolSummaryPanel from "./ToolSummaryPanel";
+import SummaryTab from "../../../common/tabs/detail_view/SummaryTab";
+import SettingsTab from "../../../common/tabs/detail_view/SettingsTab";
 
 function ToolDetailPanel({ toolData, setToolData, loadData, isLoading }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -37,7 +39,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading }) {
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <ToolSummaryPanel toolData={toolData} setToolData={setToolData}/>;
+        return <ToolSummaryPanel toolData={toolData} setToolData={setToolData} setActiveTab={setActiveTab} />;
       case "attributes":
         return <ToolAttributesPanel toolData={toolData}/>;
       case "configuration":
@@ -68,7 +70,7 @@ function ToolTabOptions({ activeTab, tool_identifier, handleTabClick }) {
   case "jenkins":
     return (
       <CustomTabContainer>
-        <CustomTab icon={faList} tabName={"summary"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Summary"} />
+        <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
         <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab}
                    tabText={"Attributes"}/>
         <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick}
@@ -79,15 +81,14 @@ function ToolTabOptions({ activeTab, tool_identifier, handleTabClick }) {
                    tabText={"Accounts"}/>
         <CustomTab icon={faTable} tabName={"logs"} handleTabClick={handleTabClick} activeTab={activeTab}
                    tabText={"Logs"}/>
-        <CustomTab icon={faCogs} tabName={"settings"} handleTabClick={handleTabClick} activeTab={activeTab}
-                   tabText={"Settings"}/>
+        <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
       </CustomTabContainer>
     );
 
   case "argo":
     return (
       <CustomTabContainer>
-        <CustomTab icon={faList} tabName={"summary"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Summary"} />
+        <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
         <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab}
                    tabText={"Attributes"}/>
         <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick}
@@ -96,14 +97,13 @@ function ToolTabOptions({ activeTab, tool_identifier, handleTabClick }) {
                    tabText={"Applications"}/>
         <CustomTab icon={faTable} tabName={"logs"} handleTabClick={handleTabClick} activeTab={activeTab}
                    tabText={"Logs"}/>
-        <CustomTab icon={faCogs} tabName={"settings"} handleTabClick={handleTabClick} activeTab={activeTab}
-                   tabText={"Settings"}/>
+        <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
       </CustomTabContainer>
     );
     case "octopus":
       return (
         <CustomTabContainer>
-          <CustomTab icon={faList} tabName={"summary"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Summary"} />
+          <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
           <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab}
                      tabText={"Attributes"}/>
           <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick}
@@ -112,21 +112,19 @@ function ToolTabOptions({ activeTab, tool_identifier, handleTabClick }) {
                      tabText={"Applications"}/>
           <CustomTab icon={faTable} tabName={"logs"} handleTabClick={handleTabClick} activeTab={activeTab}
             tabText={"Logs"}/>
-          <CustomTab icon={faCogs} tabName={"settings"} handleTabClick={handleTabClick} activeTab={activeTab}
-                     tabText={"Settings"}/>
+          <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
         </CustomTabContainer>
       );
 
   default:
     return (
       <CustomTabContainer>
-        <CustomTab icon={faList} tabName={"summary"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Summary"} />
+        <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
         <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab}
                    tabText={"Attributes"}/>
         <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick}
                    activeTab={activeTab} tabText={"Connection"}/>
-        <CustomTab icon={faCogs} tabName={"settings"} handleTabClick={handleTabClick} activeTab={activeTab}
-                   tabText={"Settings"}/>
+        <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
       </CustomTabContainer>
     );
   }

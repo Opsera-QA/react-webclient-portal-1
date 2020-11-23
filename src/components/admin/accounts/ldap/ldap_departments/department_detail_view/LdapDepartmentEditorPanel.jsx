@@ -7,11 +7,11 @@ import LoadingDialog from "../../../../../common/status_notifications/loading";
 import WarningDialog from "../../../../../common/status_notifications/WarningDialog";
 import DtoTextInput from "../../../../../common/input/dto_input/dto-text-input";
 import SaveButton from "../../../../../common/buttons/SaveButton";
-import DetailPanelContainer from "../../../../../common/panels/detail_panel_container/DetailPanelContainer";
 import departmentActions from "../department-functions";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import {getUsersByDomain} from "../../../../../settings/ldap_users/user-functions";
 import DtoSelectInput from "../../../../../common/input/dto_input/dto-select-input";
+import EditorPanelContainer from "../../../../../common/panels/detail_panel_container/EditorPanelContainer";
 
 function LdapDepartmentEditorPanel({ ldapDepartmentData, reloadData, setLdapDepartmentData, orgDomain, authorizedActions, handleClose }) {
   const toastContext = useContext(DialogToastContext);
@@ -112,7 +112,7 @@ function LdapDepartmentEditorPanel({ ldapDepartmentData, reloadData, setLdapDepa
   }
 
     return (
-      <DetailPanelContainer>
+      <EditorPanelContainer>
           <Row>
             <Col lg={12}>
               <DtoTextInput disabled={!ldapDepartmentDataDto.isNew()} setDataObject={setLdapDepartmentDataDto} dataObject={ldapDepartmentDataDto} fieldName={"name"} />
@@ -136,7 +136,7 @@ function LdapDepartmentEditorPanel({ ldapDepartmentData, reloadData, setLdapDepa
               <SaveButton recordDto={ldapDepartmentDataDto} setData={setLdapDepartmentData} setRecordDto={setLdapDepartmentDataDto} handleClose={handleClose} createRecord={createLdapDepartment} updateRecord={updateLdapDepartment} />
             </div>
           </Row>
-      </DetailPanelContainer>
+      </EditorPanelContainer>
     );
 }
 
@@ -146,6 +146,7 @@ LdapDepartmentEditorPanel.propTypes = {
   ldapDepartmentData: PropTypes.object,
   setLdapDepartmentData: PropTypes.func,
   handleClose: PropTypes.func,
+  reloadData: PropTypes.func,
   authorizedActions: PropTypes.array
 };
 

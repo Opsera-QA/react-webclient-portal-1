@@ -5,16 +5,16 @@ import DtoTextField from "../../../../../common/form_fields/dto_form_fields/dto-
 import DtoToggleField from "../../../../../common/form_fields/dto_form_fields/dto-toggle-field";
 import DtoItemField from "../../../../../common/form_fields/dto_form_fields/dto-item-field";
 import LoadingDialog from "../../../../../common/status_notifications/loading";
-import DetailPanelContainer from "../../../../../common/panels/detail_panel_container/DetailPanelContainer";
+import SummaryPanelContainer from "../../../../../common/panels/detail_view/SummaryPanelContainer";
 
-function LdapOrganizationAccountSummaryPanel({ldapOrganizationAccountData}) {
+function LdapOrganizationAccountSummaryPanel({ ldapOrganizationAccountData, setActiveTab }) {
 
   if (ldapOrganizationAccountData == null) {
     return (<LoadingDialog size="sm"/>);
   }
 
   return (
-    <DetailPanelContainer showRequiredFieldsMessage={false}>
+    <SummaryPanelContainer setActiveTab={setActiveTab}>
       <Row>
         <Col lg={6}>
           <DtoTextField dataObject={ldapOrganizationAccountData} fieldName={"orgOwner"}/>
@@ -61,12 +61,13 @@ function LdapOrganizationAccountSummaryPanel({ldapOrganizationAccountData}) {
           <DtoToggleField fieldName={"oAuthEnabled"} dataObject={ldapOrganizationAccountData}/>
         </Col>
       </Row>
-    </DetailPanelContainer>
+    </SummaryPanelContainer>
   );
 }
 
 LdapOrganizationAccountSummaryPanel.propTypes = {
   ldapOrganizationAccountData: PropTypes.object,
+  setActiveTab: PropTypes.func
 };
 
 export default LdapOrganizationAccountSummaryPanel;

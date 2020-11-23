@@ -3,24 +3,23 @@ import PropTypes from "prop-types";
 
 import ToolTypeEditorPanel from "./ToolTypeEditorPanel";
 import CustomTabContainer from "../../../../common/tabs/CustomTabContainer";
-import CustomTab from "../../../../common/tabs/CustomTab";
-import {faCogs} from "@fortawesome/pro-solid-svg-icons/faCogs";
 import ToolTypeSummaryPanel from "./ToolTypeSummaryPanel";
-import {faList} from "@fortawesome/pro-solid-svg-icons";
 import DetailTabPanelContainer from "../../../../common/panels/detail_view/DetailTabPanelContainer";
+import SummaryTab from "../../../../common/tabs/detail_view/SummaryTab";
+import SettingsTab from "../../../../common/tabs/detail_view/SettingsTab";
 
 function ToolTypeDetailPanel({ toolTypeData, setToolTypeData }) {
-  const [activeTab, setTabSelection] = useState("settings");
+  const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (activeTab) => e => {
     e.preventDefault();
-    setTabSelection(activeTab);
+    setActiveTab(activeTab);
   };
 
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <ToolTypeSummaryPanel toolTypeData={toolTypeData} setToolTypeData={setToolTypeData}/>;
+        return <ToolTypeSummaryPanel toolTypeData={toolTypeData} setToolTypeData={setToolTypeData} setActiveTab={setActiveTab}/>;
       case "settings":
         return <ToolTypeEditorPanel setToolTypeData={setToolTypeData} toolTypeData={toolTypeData} />;
       default:
@@ -31,8 +30,8 @@ function ToolTypeDetailPanel({ toolTypeData, setToolTypeData }) {
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
-        <CustomTab icon={faList} tabName={"summary"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Summary"} />
-        <CustomTab icon={faCogs} tabName={"settings"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Settings"} />
+        <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
       </CustomTabContainer>
     )
   };
