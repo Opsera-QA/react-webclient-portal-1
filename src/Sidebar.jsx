@@ -437,7 +437,7 @@ function FreeTrialNav({ accessRole }) {
                 className="menu-text">Insights</span>
               </NavLink>
             </div>
-            <div className="text-right pointer flex-grow-1 pr-2 pt-2"
+            <div className="text-center pointer flex-grow-1 pr-2 pt-2"
                  onClick={() => setInsights(insights => !insights)}>
               {insights ?
               <FontAwesomeIcon size="sm" icon={faCaretSquareUp} fixedWidth/> :
