@@ -26,6 +26,7 @@ import EditTagModal from "../../EditTagModal";
 import PipelineSummaryActionBar from "../../../common/actions/pipeline/PipelineSummaryActionBar";
 import InfoDialog from "../../../common/status_notifications/info";
 import WorkflowAuthorizedActions from "./workflow/workflow-authorized-actions";
+import PipelineSummaryMessages from "./pipelineSummaryMessage";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -49,7 +50,7 @@ function PipelineSummaryPanel({
 }) {
   const contextType = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const { featureFlagHideItemInProd, getAccessToken } = contextType;
+  const { featureFlagHideItemInProd, getUserRecord } = contextType;
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -486,7 +487,7 @@ function PipelineSummaryPanel({
             :
             <>
               <Col sm={12} className="py-2">
-                <span className="text-muted mr-1">Description:</span>{pipeline.description}
+                <span className="text-muted mr-1">Notes:</span>{pipeline.description}
                 {authorizedAction("edit_pipeline_attribute", pipeline.owner)
                 && parentWorkflowStatus !== "running"
                   ? getEditIcon("description")
@@ -502,6 +503,23 @@ function PipelineSummaryPanel({
             </Button>
           </Col>
           }
+
+          {pipeline.workflow?.last_run?.completed &&
+          <Col sm={12} className="py-2">
+            <span className="text-muted mr-1">Summary:</span> Last run completed on {
+            format(new Date(pipeline.workflow.last_run.completed), "yyyy-MM-dd', 'hh:mm a")} with a status of {pipeline.workflow.last_run.status}.
+
+            {(process.env.REACT_APP_STACK === "free-trial") &&
+              <PipelineSummaryMessages
+                type="free-trial-container-url-msg"
+                lastRun={pipeline.workflow.last_run}
+                tags={pipeline.tags}
+                runCount={pipeline.workflow.run_count}
+                getUserRecord={getUserRecord} />
+            }
+          </Col>
+          }
+
         </Row>
       </div>
 
