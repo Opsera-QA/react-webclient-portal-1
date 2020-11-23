@@ -60,7 +60,7 @@ function ErrorToast({ error, prependMessage, removeToast, autoCloseLength, id })
 
   return (
     <div className="error-toast d-flex p-2" role="alert" aria-live="assertive" aria-atomic="true">
-      <div className="text-white">
+      <div className="error-toast-text">
         <span>{prependMessage} {messageBody} {getCustomMessage()}</span>
       </div>
       <div className="ml-auto my-auto">

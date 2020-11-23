@@ -13,7 +13,7 @@
 }
 
 .invalid-feedback {
-    display: block;
+  display: block;
 }
 
 /*  Buttons  */
@@ -42,6 +42,7 @@
   background-color: #4D4283;
   border-color: #6153A5;
 }
+
 .btn.btn-primary.focus,
 .btn.btn-primary:focus {
   color: #fff;
@@ -50,6 +51,7 @@
   outline: none;
   box-shadow: none;
 }
+
 .btn.btn-primary:hover {
   color: #fff;
   background-color: #383060;
@@ -57,6 +59,7 @@
   outline: none;
   box-shadow: none;
 }
+
 .btn.btn-primary.active,
 .btn.btn-primary:active {
   color: #fff;
@@ -64,6 +67,7 @@
   border-color: #6153A5;
   outline: none;
 }
+
 .btn.btn-primary.active.focus,
 .btn.btn-primary.active:focus,
 .btn.btn-primary.active:hover,
@@ -76,6 +80,7 @@
   outline: none;
   box-shadow: none;
 }
+
 .btn-primary.disabled,
 .btn-primary:disabled {
   color: #fff;
@@ -91,6 +96,7 @@
   background-color: #00AA84;
   border-color: #3da060;
 }
+
 .btn.btn-success.focus,
 .btn.btn-success:focus {
   color: #fff;
@@ -99,6 +105,7 @@
   outline: none;
   box-shadow: none;
 }
+
 .btn.btn-success:hover {
   color: #fff;
   background-color: #008388;
@@ -106,6 +113,7 @@
   outline: none;
   box-shadow: none;
 }
+
 .btn.btn-success.active,
 .btn.btn-success:active {
   color: #fff;
@@ -113,6 +121,7 @@
   border-color: #69736d;
   outline: none;
 }
+
 .btn.btn-success.active.focus,
 .btn.btn-success.active:focus,
 .btn.btn-success.active:hover,
@@ -125,6 +134,7 @@
   outline: none;
   box-shadow: none;
 }
+
 .btn-success.disabled,
 .btn-success:disabled {
   color: #fff;
@@ -172,6 +182,7 @@
   background-color: #F0B324;
   border-color: #F6D179;
 }
+
 .btn.btn-warning.focus,
 .btn.btn-warning:focus {
   color: #fff;
@@ -180,6 +191,7 @@
   outline: none;
   box-shadow: none;
 }
+
 .btn.btn-warning:hover {
   color: #fff;
   background-color: #CF940C;
@@ -187,6 +199,7 @@
   outline: none;
   box-shadow: none;
 }
+
 .btn.btn-warning.active,
 .btn.btn-warning:active {
   color: #fff;
@@ -194,6 +207,7 @@
   border-color: #F0B324;
   outline: none;
 }
+
 .btn.btn-warning.active.focus,
 .btn.btn-warning.active:focus,
 .btn.btn-warning.active:hover,
@@ -206,6 +220,7 @@
   outline: none;
   box-shadow: none;
 }
+
 .btn-warning.disabled,
 .btn-warning:disabled {
   color: #7A756C;
@@ -282,9 +297,7 @@
 }
 
 
-
-
-/* 
+/*
   Card Customizations
 */
 .accordion .card-header {
@@ -331,8 +344,6 @@ button.bg-primary:focus {
 .border-primary {
   border-color: #1578dc !important;
 }
-
-
 
 
 /* active*/
@@ -435,7 +446,7 @@ a.text-primary:hover, a.text-primary:focus {
 
 .custom-table th {
   background-color: #46415C; /*#2588ec;*/
-  border-bottom: 1px solid #7368AA;  /*#3598fc;*/
+  border-bottom: 1px solid #7368AA; /*#3598fc;*/
   color: #fff;
   line-height: 2.4em;
   vertical-align: middle;
@@ -482,9 +493,10 @@ a.text-primary:hover, a.text-primary:focus {
 }
 
 .custom-table .top-pagination {
-    background-color: #E7E5ED;
-    height: 2em;
+  background-color: #E7E5ED;
+  height: 2em;
 }
+
 /* End Table Styling */
 
 /* End custom table styling */
@@ -554,7 +566,7 @@ a.nav-link {
 .default-custom-tabs .nav-tabs .nav-item.show .nav-link, .default-custom-tabs .nav-tabs .nav-link.active {
   background: #46415C;
   color: #fff;
- /* border-color: #1578dc;*/
+  /* border-color: #1578dc;*/
   text-decoration: none;
 }
 
@@ -630,7 +642,7 @@ a.nav-link {
 
 /* Alternate Tab Styling */
 .alternate-tabs .nav-tabs .nav-item {
-  margin-right:2px;
+  margin-right: 2px;
 }
 
 .alternate-tabs .nav-tabs > li a.active, .alternate-tabs .nav-tabs > li a.active:focus {
@@ -758,19 +770,20 @@ a.nav-link {
   margin-top: .2em;
   min-height: 2em;
 }
+
 /* End Sign Up Form Styling */
 
 /* Select input styling. TODO: Determine why this doesn't automatically adjust with adjacent inputs */
 .custom-multiselect-input .rw-multiselect-tag {
-    margin-top: .25em;
-    vertical-align: middle;
-    height: calc(1.5em + .25rem + 5px);
-    margin-bottom: .25em;
+  margin-top: .25em;
+  vertical-align: middle;
+  height: calc(1.5em + .25rem + 5px);
+  margin-bottom: .25em;
 }
 
 .custom-select-input .rw-widget-input {
-    /* this is based on form input's height, with a couple extra pixels added */
-    height: calc(1.5em + .75rem + 5px);
+  /* this is based on form input's height, with a couple extra pixels added */
+  height: calc(1.5em + .75rem + 5px);
 }
 
 /* End Select input styling */
@@ -782,8 +795,8 @@ a.nav-link {
 }
 
 .content-block-shaded {
-    border-radius: 5px;
-    background-color: rgba(203, 205, 205, 0.1);
+  border-radius: 5px;
+  background-color: rgba(203, 205, 205, 0.1);
 }
 
 .content-block-collapse {
@@ -793,9 +806,9 @@ a.nav-link {
 }
 
 .content-block-loading {
-    border-radius: 5px;
-    background-color: rgba(203, 205, 205, 0.1);
-    min-height: 75vh;
+  border-radius: 5px;
+  background-color: rgba(203, 205, 205, 0.1);
+  min-height: 75vh;
 }
 
 .content-block-no-height {
@@ -989,9 +1002,9 @@ a.nav-link {
 }
 
 .detail-screen-body {
-    min-height: 60vh;
-    max-height: 60vh;
-    overflow-y: auto;
+  min-height: 60vh;
+  max-height: 60vh;
+  overflow-y: auto;
 }
 
 .detail-view-body .detail-view-summary {
@@ -1003,150 +1016,154 @@ a.nav-link {
 }
 
 .shaded-panel {
-    border-radius: 5px;
-    background-color: rgba(203, 205, 205, 0.1);
+  border-radius: 5px;
+  background-color: rgba(203, 205, 205, 0.1);
 }
 
 .shaded-container {
-    background-color: rgba(203, 205, 205, 0.1);
+  background-color: rgba(203, 205, 205, 0.1);
 }
 
 /* End Detail View Styling */
 
 /* Status Card Styling */
 .statusCard {
-    min-height: 50px;
+  min-height: 50px;
 }
 
 .status-legend {
-    background-color: rgba(203, 205, 205, 0.1);
-    border-radius: 5px 5px 0 0;
+  background-color: rgba(203, 205, 205, 0.1);
+  border-radius: 5px 5px 0 0;
 }
 
 .status-table {
-    background-color: rgba(203, 205, 205, 0.1);
-    border-radius: 5px 5px 5px 5px;
+  background-color: rgba(203, 205, 205, 0.1);
+  border-radius: 5px 5px 5px 5px;
 }
+
 /* End Status Card Styling */
 /* Filter bar styling */
 .filter-bar {
-    height: 30px;
+  height: 30px;
 }
 
 .filter-title {
-    background-color: #4D4283;
-    border-bottom: 1px solid #46415C;
-    color: #fff;
-    vertical-align: middle;
-    white-space: nowrap;
+  background-color: #4D4283;
+  border-bottom: 1px solid #46415C;
+  color: #fff;
+  vertical-align: middle;
+  white-space: nowrap;
 }
 
 .filter-body {
-    min-width: 250px;
+  min-width: 250px;
 }
 
 .filter-bar label {
-    display: inline-flex;
-    margin-right: 1em;
-    height: 30px;
+  display: inline-flex;
+  margin-right: 1em;
+  height: 30px;
 }
 
 .filter-bar .custom-filter-input .rw-dropdown-list {
-    display: inline-flex;
-    min-width: 300px;
-    max-width: 1200px;
-    height: 20px;
+  display: inline-flex;
+  min-width: 300px;
+  max-width: 1200px;
+  height: 20px;
 }
 
 .filter-bar .custom-filter-input .form-control {
-    height: 1.9em;
+  height: 1.9em;
 }
 
 .filter-bar .custom-filter-input .rw-widget-input {
-    max-height: 30px;
-    /*max-width: 150px;*/
+  max-height: 30px;
+  /*max-width: 150px;*/
 }
+
 /* End filter bar styling */
 
 /*Popover Styling*/
 
 .popover-title {
-    background-color: #4D4283;
-    border-bottom: 1px solid #46415C;
-    color: #fff;
-    vertical-align: middle;
-    white-space: nowrap;
+  background-color: #4D4283;
+  border-bottom: 1px solid #46415C;
+  color: #fff;
+  vertical-align: middle;
+  white-space: nowrap;
 }
 
 
 .pipeline-owner-popover {
-    min-width: 500px;
+  min-width: 500px;
 }
 
 .success-toast {
-    background-color: #50D050;
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
-    border: 2px solid green;
-    border-left: 8px solid green;
-    padding: 2px;
-    z-index: 3000;
-    width: 500px;
-    border-radius: 5px;
+  background-color: #FFF;
+  color: #000000;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  border: 2px solid green;
+  border-left: 8px solid green;
+  padding: 2px;
+  z-index: 3000;
+  width: 500px;
+  border-radius: 5px;
 }
 
 .error-toast {
-    background-color: #ff7b7b;
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
-    border: 2px solid #dc3545;
-    border-left: 8px solid #dc3545;
-    font-size: 15px;
-    padding: 1px;
-    width: 500px;
-    z-index: 3000;
-    border-radius: 5px;
+  background-color: #FFF;
+  color: #000000;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  border: 2px solid #dc3545;
+  border-left: 8px solid #dc3545;
+  font-size: 15px;
+  padding: 1px;
+  width: 500px;
+  z-index: 3000;
+  border-radius: 5px;
 }
 
 .information-toast {
-    background-color: #80E0f9;
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
-    border: 2px solid #1989F9;
-    border-left: 8px solid #1989F9;
-    padding: 1px;
-    width: 500px;
-    z-index: 3000;
-    border-radius: 5px;
+  background-color: #80E0f9;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  border: 2px solid #1989F9;
+  border-left: 8px solid #1989F9;
+  padding: 1px;
+  width: 500px;
+  z-index: 3000;
+  border-radius: 5px;
 }
 
 .information-toast-close-button {
-    color: #1989F9;
+  color: #1989F9;
 }
 
 .warning-toast {
-    background-color: #ffeaaa;
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
-    border: 2px solid #f9c116;
-    border-left: 8px solid #f9c116;
-    padding: 1px;
-    width: 500px;
-    z-index: 3000;
-    border-radius: 5px;
+  background-color: #ffeaaa;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  border: 2px solid #f9c116;
+  border-left: 8px solid #f9c116;
+  padding: 1px;
+  width: 500px;
+  z-index: 3000;
+  border-radius: 5px;
 }
 
 .warning-toast-close-button {
-    color: #f9c116;
+  color: #f9c116;
 }
 
 .toast-wrapper {
-    z-index: 3000;
-    position: fixed;
-    bottom: 2em;
-    left: 1em;
-    width: 500px;
-    min-height: 200px;
+  z-index: 3000;
+  position: fixed;
+  bottom: 2em;
+  left: 1em;
+  width: 500px;
+  min-height: 200px;
 }
 
 .toast-container {
-    position: fixed;
-    bottom: 2em;
-    opacity: 1;
+  position: fixed;
+  bottom: 2em;
+  opacity: 1;
 }

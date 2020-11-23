@@ -35,7 +35,7 @@ function SuccessToast({ successMessage, removeToast, autoCloseLength, id }) {
 
   return (
     <div className="success-toast d-flex p-2" role="alert" aria-live="assertive" aria-atomic="true">
-      <div className="text-white">
+      <div className="success-toast-text">
         {messageBody}
       </div>
       <div className="ml-auto my-auto">

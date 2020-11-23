@@ -565,6 +565,14 @@ a:hover, .active {
     padding: 5px;
 }
 
+.success-toast-text {
+    opacity: .8;
+}
+
+.error-toast-text {
+    opacity: .8;
+}
+
 .warning-text {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
     color: #f9c116;
@@ -590,8 +598,8 @@ a:hover, .active {
 }
 
 .warning-block {
-    background-color: #f9c116;
-    color: #000;
+    background-color: #CF940C;
+    color: #FFF;
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
@@ -605,7 +613,7 @@ a:hover, .active {
     top: 0;
     left: 0;
     position: fixed;
-    padding: .25em;
+    padding: .75em;
     z-index: 1200;
 }
 
