@@ -13,6 +13,8 @@ import DtoTextInput from "components/common/input/dto_input/dto-text-input";
 import { DialogToastContext, showServiceUnavailableDialog } from "contexts/DialogToastContext";
 import SaveButton2 from "../../../../../../../common/buttons/saving/SaveButton2";
 import CloseButton from "../../../../../../../common/buttons/CloseButton"
+import JSONInput from "react-json-editor-ajrm";
+import locale    from "react-json-editor-ajrm/locale/en";
 
 const PLATFORM_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
@@ -39,6 +41,8 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
   const [thresholdType, setThresholdType] = useState("");
   const [awsList, setAwsList] = useState([]);
   const [isAwsSearching, setIsAwsSearching] = useState(false);
+  const [jsonEditorInvalid, setJsonEditorInvalid] = useState(false);
+  const [jsonEditor, setJsonEditor] = useState({});
 
   useEffect(() => {
     loadFormData(stepTool);
@@ -139,6 +143,36 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
       setEBSStepConfigurationDataDto({ ...newDataObject });
     }
   };
+
+  const handlePathUpdate = (e) => {
+    if (e.error) {
+      setJsonEditorInvalid(e.error)
+      return;
+    }
+    if (e.jsObject && Object.keys(e.jsObject).length > 0) {
+      setJsonEditor(e.jsObject);
+      let newDataObject = ebsStepConfigurationDto;
+      newDataObject.setData("dockerVolumePath", e.jsObject);
+      setEBSStepConfigurationDataDto({ ...newDataObject });
+      return
+    }
+  };
+
+  const handleEnvUpdate = (e) => {
+    if (e.error) {
+      setJsonEditorInvalid(e.error)
+      return;
+    }
+    if (e.jsObject && Object.keys(e.jsObject).length > 0) {
+      setJsonEditor(e.jsObject);
+      let newDataObject = ebsStepConfigurationDto;
+      newDataObject.setData("environments", e.jsObject);
+      setEBSStepConfigurationDataDto({ ...newDataObject });
+      return
+    }
+  };
+
+  
 
   if (isLoading || ebsStepConfigurationDto === undefined) {
     return <LoadingDialog size="sm" />;
@@ -297,6 +331,95 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
               listOfSteps.length === 0 || ebsStepConfigurationDto.getData("applicationVersionLabel").length === 0
             }
           />
+                    <OverlayTrigger
+            trigger="click"
+            rootClose
+            placement="left"
+            overlay={
+              <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
+                <Popover.Title as="h3">Docker Volume Path</Popover.Title>
+
+                <Popover.Content>
+                  <div className="text-muted mb-2">
+                    Enter Docker Volume Path as a key value pair JSON. You can add any number of paths to the
+                    JSON Object. Sample: {" { Source1: Target1, Source2: Target2 }"}
+                  </div>
+                </Popover.Content>
+              </Popover>
+            }
+          >
+            <FontAwesomeIcon
+              icon={faEllipsisH}
+              className="fa-pull-right pointer pr-1"
+              onClick={() => document.body.click()}
+            />
+          </OverlayTrigger>
+          <div className="form-group m-2 mt-2">
+            <label>Docker Volume Path</label>
+            <div style={{ border: "1px solid #ced4da", borderRadius: ".25rem" }}>
+              <JSONInput
+                placeholder={
+                  Object.keys(ebsStepConfigurationDto.getData("dockerVolumePath")).length > 0
+                    ? ebsStepConfigurationDto.getData("dockerVolumePath")
+                    : undefined
+                }
+                value={ebsStepConfigurationDto.getData("dockerVolumePath")}
+                onChange={(e) => handlePathUpdate(e)}
+                theme="light_mitsuketa_tribute"
+                locale={locale}
+                height="175px"
+              />
+            </div>
+          </div>
+          <small className="form-text text-muted form-group m-2 text-left">
+            Enter Source, Target path as a JSON Object
+          </small>
+
+          <OverlayTrigger
+            trigger="click"
+            rootClose
+            placement="left"
+            overlay={
+              <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
+                <Popover.Title as="h3">Environments</Popover.Title>
+
+                <Popover.Content>
+                  <div className="text-muted mb-2">
+                    Enter environments as a key value pair JSON. You can add any number of environments to the
+                    JSON Object. Sample: {" { envName1: env1, envName2: env2 }"}
+                  </div>
+                </Popover.Content>
+              </Popover>
+            }
+          >
+            <FontAwesomeIcon
+              icon={faEllipsisH}
+              className="fa-pull-right pointer pr-1"
+              onClick={() => document.body.click()}
+            />
+          </OverlayTrigger>
+          <div className="form-group m-2 mt-2">
+            <label>Environments</label>
+            <div style={{ border: "1px solid #ced4da", borderRadius: ".25rem" }}>
+              <JSONInput
+                placeholder={
+                  Object.keys(ebsStepConfigurationDto.getData("environments")).length > 0
+                    ? ebsStepConfigurationDto.getData("environments")
+                    : undefined
+                }
+                value={ebsStepConfigurationDto.getData("environments")}
+                onChange={(e) => handleEnvUpdate(e)}
+                theme="light_mitsuketa_tribute"
+                locale={locale}
+                height="175px"
+              />
+            </div>
+          </div>
+          <small className="form-text text-muted form-group m-2 text-left">
+            Enter environments as a JSON Object
+          </small>
+
+
           <Row className="mx-1 py-2">
             <SaveButton2
               recordDto={ebsStepConfigurationDto}
