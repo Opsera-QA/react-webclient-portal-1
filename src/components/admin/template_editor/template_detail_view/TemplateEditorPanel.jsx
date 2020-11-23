@@ -18,6 +18,7 @@ import pipelineHelpers from "../../../workflow/pipelineHelpers";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import DetailPanelContainer from "../../../common/panels/detail_panel_container/DetailPanelContainer";
 import BooleanToggleInput from "../../../common/input/dto_input/BooleanToggleInput";
+import EditorPanelContainer from "../../../common/panels/detail_panel_container/EditorPanelContainer";
 
 function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -64,7 +65,7 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
   }
 
     return (
-      <DetailPanelContainer>
+      <EditorPanelContainer>
           <Row>
             <Col lg={6}>
               <DtoTextInput fieldName={"name"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
@@ -110,7 +111,7 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
               <SaveButton updateRecord={updateTemplate} setData={setTemplateData} setRecordDto={setTemplateDataDto} handleClose={handleClose} createRecord={createTemplate} recordDto={templateDataDto} />
             </div>
           </Row>
-      </DetailPanelContainer>
+      </EditorPanelContainer>
     );
 }
 

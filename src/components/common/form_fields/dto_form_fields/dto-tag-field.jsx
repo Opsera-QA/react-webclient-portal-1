@@ -12,7 +12,7 @@ function DtoTagField({dataObject, fieldName}) {
         <div className="custom-text-field my-2 d-flex">
           <label><span className="text-muted mr-2">{field.label}:</span></label>
           <div className="custom-item-input">
-            {dataObject.getData(fieldName).map((tag, i) => {
+            {dataObject.getData(fieldName) != null && dataObject.getData(fieldName).map((tag, i) => {
               // TODO: Remove if after all old tags are moved
                 if (typeof tag !== "string") {
                   return (

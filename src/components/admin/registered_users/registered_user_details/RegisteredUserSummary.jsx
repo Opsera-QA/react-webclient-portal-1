@@ -6,7 +6,8 @@ import DtoTextField from "../../../common/form_fields/dto_form_fields/dto-text-f
 import DtoDateField from "../../../common/form_fields/dto_form_fields/dto-date-field";
 import SummaryPanelContainer from "../../../common/panels/detail_view/SummaryPanelContainer";
 
-function RegisteredUserSummary({userData}) {
+function RegisteredUserSummary({ userData, setActiveTab }) {
+  // TODO: When User Settings panel is set up, pass setActiveTab to Summary Panel Container
   return (
     <SummaryPanelContainer>
       <Row>
@@ -46,7 +47,8 @@ function RegisteredUserSummary({userData}) {
 }
 
 RegisteredUserSummary.propTypes = {
-  userData: PropTypes.object
+  userData: PropTypes.object,
+  setActiveTab: PropTypes.func
 };
 
 export default RegisteredUserSummary;

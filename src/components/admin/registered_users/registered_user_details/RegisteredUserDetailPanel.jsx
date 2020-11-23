@@ -11,7 +11,7 @@ import SummaryTab from "../../../common/tabs/detail_view/SummaryTab";
 import DetailTabPanelContainer from "../../../common/panels/detail_view/DetailTabPanelContainer";
 
 function RegisteredUserDetailPanel({ userData, setUserData, analyticsProfileData, setAnalyticsProfileData }) {
-  const [activeTab, setActiveTab] = useState("analyticsSettings");
+  const [activeTab, setActiveTab] = useState("summary");
   const [isDeployingElk, setIsDeployingElk] = useState(false);
 
   const handleTabClick = (tabSelection) => e => {
@@ -34,7 +34,7 @@ function RegisteredUserDetailPanel({ userData, setUserData, analyticsProfileData
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <RegisteredUserSummary userData={userData}/>;
+        return <RegisteredUserSummary userData={userData} setActiveTab={setActiveTab} />;
       case "tools":
         return <RegisteredUserToolsPanel userData={userData} setIsDeployingElk={setIsDeployingElk} isDeployingElk={isDeployingElk} />
       case "customerDB":

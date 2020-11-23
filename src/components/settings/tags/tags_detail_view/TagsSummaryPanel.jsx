@@ -9,7 +9,7 @@ import DtoDateField from "../../../common/form_fields/dto_form_fields/dto-date-f
 import LoadingDialog from "../../../common/status_notifications/loading";
 import SummaryPanelContainer from "../../../common/panels/detail_view/SummaryPanelContainer";
 
-function TagsSummaryPanel({ tagData }) {
+function TagsSummaryPanel({ tagData, setActiveTab }) {
   const parseNameValueArray = (nameValueArray) => {
     let parsedValues = [];
 
@@ -29,7 +29,7 @@ function TagsSummaryPanel({ tagData }) {
   }
 
   return (
-    <SummaryPanelContainer>
+    <SummaryPanelContainer setActiveTab={setActiveTab}>
       <Row>
         <Col lg={6}>
           <DtoTextField dataObject={tagData} fieldName={"_id"}/>
@@ -65,6 +65,7 @@ function TagsSummaryPanel({ tagData }) {
 
 TagsSummaryPanel.propTypes = {
   tagData: PropTypes.object,
+  setActiveTab: PropTypes.func
 };
 
 

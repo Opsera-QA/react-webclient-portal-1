@@ -74,7 +74,7 @@ function RegisteredUserDetailView() {
       return (
         <ActionBarContainer>
           <div>
-            <ActionBarBackButton path={"/admin/departments"} />
+            <ActionBarBackButton path={"/admin/registered-users"} />
           </div>
           <div>
             <ActionBarShowDetailsButton details={userData["data"]} type={"User"} />
@@ -84,11 +84,11 @@ function RegisteredUserDetailView() {
     }
   };
 
-  if (!accessRoleData || isLoading) {
+  if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   }
 
-  if (!accessRoleData.OpseraAdministrator) {
+  if (!accessRoleData.OpseraAdministrator && !isLoading) {
     return (<AccessDeniedDialog roleData={accessRoleData}/>);
   }
 

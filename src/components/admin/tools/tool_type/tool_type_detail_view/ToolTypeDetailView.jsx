@@ -1,15 +1,13 @@
 import React, { useState, useEffect, useContext, useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
-import LoadingDialog from "../../../../common/status_notifications/loading";
 import AccessDeniedDialog from "../../../../common/status_notifications/accessDeniedInfo";
 import {AuthContext} from "../../../../../contexts/AuthContext";
 import toolTypeActions from "../../tool-management-actions";
 import Model from "../../../../../core/data_model/model";
 import toolTypeMetadata from "../tool-type-metadata";
 import ToolTypeDetailPanel from "./ToolTypeDetailPanel";
-import {faToolbox} from "@fortawesome/pro-solid-svg-icons";
+import {faToolbox, faWrench} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
-import {faWrench} from "@fortawesome/free-solid-svg-icons";
 import DetailScreenContainer from "../../../../common/panels/detail_view_container/DetailScreenContainer";
 import ActionBarContainer from "../../../../common/actions/ActionBarContainer";
 import ActionBarBackButton from "../../../../common/actions/buttons/ActionBarBackButton";

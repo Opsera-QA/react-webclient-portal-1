@@ -3,16 +3,16 @@ import {Row, Col} from "react-bootstrap";
 import PropTypes from "prop-types";
 import DtoTextField from "../../../../../common/form_fields/dto_form_fields/dto-text-field";
 import LoadingDialog from "../../../../../common/status_notifications/loading";
-import DetailPanelContainer from "../../../../../common/panels/detail_panel_container/DetailPanelContainer";
+import SummaryPanelContainer from "../../../../../common/panels/detail_view/SummaryPanelContainer";
 
-function LdapOrganizationSummaryPanel({ldapOrganizationData}) {
+function LdapOrganizationSummaryPanel({ ldapOrganizationData, setActiveTab }) {
 
   if (ldapOrganizationData == null) {
     return (<LoadingDialog size="sm"/>);
   }
 
   return (
-    <DetailPanelContainer showRequiredFieldsMessage={false}>
+    <SummaryPanelContainer setActiveTab={setActiveTab}>
       <Row>
         <Col lg={6}>
           <DtoTextField dataObject={ldapOrganizationData} fieldName={"orgName"}/>
@@ -39,12 +39,13 @@ function LdapOrganizationSummaryPanel({ldapOrganizationData}) {
           <DtoTextField dataObject={ldapOrganizationData} fieldName={"orgOwnerEmail"}/>
         </Col>
       </Row>
-    </DetailPanelContainer>
+    </SummaryPanelContainer>
   );
 }
 
 LdapOrganizationSummaryPanel.propTypes = {
-  ldapOrganizationData: PropTypes.object
+  ldapOrganizationData: PropTypes.object,
+  setActiveTab: PropTypes.func
 };
 
 export default LdapOrganizationSummaryPanel;

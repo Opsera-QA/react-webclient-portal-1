@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Button, Col, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import DtoTextInput from "../../../../common/input/dto_input/dto-text-input";
@@ -11,8 +11,8 @@ import SaveButton from "../../../../common/buttons/SaveButton";
 import LoadingDialog from "../../../../common/status_notifications/loading";
 import DtoTagManagerInput from "../../../../common/input/dto_input/dto-tag-manager-input";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
-import DetailPanelContainer from "../../../../common/panels/detail_panel_container/DetailPanelContainer";
 import ToolUsageTypeInput from "../ToolUsageTypeInput";
+import EditorPanelContainer from "../../../../common/panels/detail_panel_container/EditorPanelContainer";
 
 function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData, handleClose} ) {
   const {getAccessToken} = useContext(AuthContext);
@@ -56,7 +56,7 @@ function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData, 
     return (<LoadingDialog size="sm"/>);
   }
     return (
-      <DetailPanelContainer>
+      <EditorPanelContainer>
           <Row>
             <Col lg={6}>
               <DtoTextInput fieldName={"name"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto}/>
@@ -95,7 +95,7 @@ function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData, 
               />
             </div>
           </Row>
-      </DetailPanelContainer>
+      </EditorPanelContainer>
     );
 }
 

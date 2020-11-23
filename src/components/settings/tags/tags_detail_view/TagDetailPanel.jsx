@@ -9,11 +9,11 @@ import TagsSummaryPanel from "./TagsSummaryPanel";
 import SettingsTab from "../../../common/tabs/detail_view/SettingsTab";
 
 function TagDetailPanel({ tagData, setTagData }) {
-  const [activeTab, setTabSelection] = useState("summary");
+  const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (activeTab) => e => {
     e.preventDefault();
-    setTabSelection(activeTab);
+    setActiveTab(activeTab);
   };
 
   const getTabContainer = () => {
@@ -28,7 +28,7 @@ function TagDetailPanel({ tagData, setTagData }) {
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <TagsSummaryPanel tagData={tagData} setTagData={setTagData} />;
+        return <TagsSummaryPanel tagData={tagData} setTagData={setTagData} setActiveTab={setActiveTab} />;
       case "settings":
       return <TagEditorPanel setTagData={setTagData} tagData={tagData} />;
       default:

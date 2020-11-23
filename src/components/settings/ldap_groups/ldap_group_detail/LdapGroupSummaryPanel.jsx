@@ -6,14 +6,14 @@ import DtoToggleField from "../../../common/form_fields/dto_form_fields/dto-togg
 import TextField from "../../../common/form_fields/text-field";
 import SummaryPanelContainer from "../../../common/panels/detail_view/SummaryPanelContainer";
 
-function LdapGroupSummaryPanel({ldapGroupData, domain}) {
+function LdapGroupSummaryPanel({ ldapGroupData, domain, setActiveTab }) {
 
   if (ldapGroupData == null) {
     return <></>;
   }
 
   return (
-    <SummaryPanelContainer>
+    <SummaryPanelContainer setActiveTab={setActiveTab}>
       <Row>
         <Col lg={6}>
           <DtoTextField dataObject={ldapGroupData} fieldName={"name"}/>
@@ -42,6 +42,7 @@ function LdapGroupSummaryPanel({ldapGroupData, domain}) {
 LdapGroupSummaryPanel.propTypes = {
   ldapGroupData: PropTypes.object,
   domain: PropTypes.string,
+  setActiveTab: PropTypes.func
 };
 
 

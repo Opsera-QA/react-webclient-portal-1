@@ -32,7 +32,7 @@ function LdapDepartmentDetailPanel({ ldapDepartmentData, loadData, setLdapDepart
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <LdapDepartmentSummaryPanel ldapDepartmentData={ldapDepartmentData} orgDomain={orgDomain} />;
+        return <LdapDepartmentSummaryPanel ldapDepartmentData={ldapDepartmentData} setActiveTab={setActiveTab} />;
       case "membership":
         return (
           <LdapDepartmentMembershipPanel

@@ -5,9 +5,11 @@ import LdapOrganizationEditorPanel from "./LdapOrganizationEditorPanel";
 import LdapOrganizationAccountsTable from "../../organization_accounts/LdapOrganizationAccountsTable";
 import CustomTabContainer from "../../../../../common/tabs/CustomTabContainer";
 import CustomTab from "../../../../../common/tabs/CustomTab";
-import {faCogs, faList, faUsers} from "@fortawesome/pro-solid-svg-icons";
+import {faUsers} from "@fortawesome/pro-light-svg-icons";
 import DetailTabPanelContainer from "../../../../../common/panels/detail_view/DetailTabPanelContainer";
 import LdapOrganizationSummaryPanel from "./LdapOrganizationSummaryPanel";
+import SummaryTab from "../../../../../common/tabs/detail_view/SummaryTab";
+import SettingsTab from "../../../../../common/tabs/detail_view/SettingsTab";
 
 function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationData, setLdapOrganizationData, loadData, authorizedActions, authorizedOrganizationAccountActions}) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -22,7 +24,7 @@ function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationDat
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <LdapOrganizationSummaryPanel ldapOrganizationData={ldapOrganizationData} />;
+        return <LdapOrganizationSummaryPanel ldapOrganizationData={ldapOrganizationData} setActiveTab={setActiveTab} />;
       case "accounts":
         return <div className="p-3"><LdapOrganizationAccountsTable ldapOrganizationAccounts={organizationAccounts} authorizedActions={authorizedOrganizationAccountActions} ldapOrganizationData={ldapOrganizationData} loadData={loadData} /></div>
       case "settings":
@@ -32,13 +34,12 @@ function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationDat
     }
   };
 
-
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
-        <CustomTab icon={faList} tabName={"summary"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Summary"} />
+        <SummaryTab activeTab={activeTab} handleTabClick={handleTabClick} />
         <CustomTab icon={faUsers} tabName={"accounts"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Accounts"}/>
-        <CustomTab icon={faCogs} tabName={"settings"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Settings"} />
+        <SettingsTab activeTab={activeTab} handleTabClick={handleTabClick} />
       </CustomTabContainer>
     )
   };

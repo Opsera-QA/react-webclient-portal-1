@@ -7,8 +7,6 @@ import Model from "../../../../core/data_model/model";
 import tagEditorMetadata from "../tags-form-fields";
 import {faTags} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
-import DataNotFoundContainer from "../../../common/panels/detail_view_container/DataNotFoundContainer";
-import DataNotFoundDialog from "../../../common/status_notifications/data_not_found/DataNotFoundDialog";
 import DetailScreenContainer from "../../../common/panels/detail_view_container/DetailScreenContainer";
 import ActionBarContainer from "../../../common/actions/ActionBarContainer";
 import ActionBarBackButton from "../../../common/actions/buttons/ActionBarBackButton";
