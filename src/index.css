@@ -626,7 +626,7 @@ a:hover, .active {
 .top-dialog-block-static {
   top: 0;
   left: 0;
-  padding: .25em;
+  padding: .75em;
   z-index: 1200;
 }
 
@@ -634,7 +634,7 @@ a:hover, .active {
   top: 0;
   left: 0;
   position: fixed;
-  padding: .25em;
+  padding: .75em;
 }
 
 .step-configuration-dialog-block {
