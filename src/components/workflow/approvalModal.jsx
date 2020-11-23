@@ -57,7 +57,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
 
       let customStepMessage = "";
 
-      if (step.tool.configuration.message.length > 0) {
+      if (step.tool?.configuration?.message) {
         customStepMessage += step.tool.configuration.message + " Approval Contact: " + step.tool.configuration.contact;
       }
 
