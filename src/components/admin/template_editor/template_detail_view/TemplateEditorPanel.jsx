@@ -67,7 +67,7 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
       <DetailPanelContainer>
           <Row>
             <Col lg={6}>
-              <DtoTextInput disabled={!templateDataDto.isNew()} fieldName={"name"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
+              <DtoTextInput fieldName={"name"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
             </Col>
             <Col lg={6}>
               <DtoToggleInput fieldName={"active"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
