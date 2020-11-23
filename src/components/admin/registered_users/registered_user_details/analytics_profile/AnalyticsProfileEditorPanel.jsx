@@ -13,6 +13,7 @@ import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import Model from "../../../../../core/data_model/model";
 import toolsActions from "../../../../inventory/tools/tools-actions";
 import DetailPanelContainer from "../../../../common/panels/detail_panel_container/DetailPanelContainer";
+import EditorPanelContainer from "../../../../common/panels/detail_panel_container/EditorPanelContainer";
 
 function AnalyticsProfileEditorPanel({ analyticsProfileData, setAnalyticsProfileData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -74,7 +75,7 @@ function AnalyticsProfileEditorPanel({ analyticsProfileData, setAnalyticsProfile
   }
 
   return (
-    <DetailPanelContainer>
+    <EditorPanelContainer>
       <Row>
         <Col>
           <DtoMultiselectInput
@@ -124,7 +125,7 @@ function AnalyticsProfileEditorPanel({ analyticsProfileData, setAnalyticsProfile
           <SaveButton updateRecord={updateProfile} createRecord={updateProfile} recordDto={analyticsProfileData}/>
         </div>
       </Row>
-    </DetailPanelContainer>
+    </EditorPanelContainer>
   );
 }
 
