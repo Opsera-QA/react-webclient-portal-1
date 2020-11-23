@@ -65,7 +65,7 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
     return (
       <Navbar className="nav-bar">
         <Navbar.Brand href="/">
-          <img alt="OpsERA"
+          <img alt="Opsera Inc."
                src="/img/logos/opsera_logo_transparent_229x40.png"
                width="229"
                height="40"
