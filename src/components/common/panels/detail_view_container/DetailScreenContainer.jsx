@@ -44,7 +44,11 @@ function DetailScreenContainer(
     );
   };
 
-
+  const getActionBar = () => {
+    if (dataObject != null) {
+      return actionBar;
+    }
+  };
 
   if (!isLoading && dataObject == null) {
     return (
@@ -67,7 +71,7 @@ function DetailScreenContainer(
           <h5>{getTitleBar()}</h5>
         </div>
         <div>
-          {actionBar}
+          {getActionBar()}
         </div>
         <div className="detail-view-body">
           {getDetailBody()}
