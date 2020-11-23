@@ -1,62 +1,47 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import TagEditorPanel from "./TagEditorPanel";
-import {faCogs} from "@fortawesome/pro-solid-svg-icons/faCogs";
-import CustomTab from "../../../common/tabs/CustomTab";
 import CustomTabContainer from "../../../common/tabs/CustomTabContainer";
+import SummaryTab from "../../../common/tabs/detail_view/SummaryTab";
+import DetailTabPanelContainer from "../../../common/panels/detail_view/DetailTabPanelContainer";
+import TagsSummaryPanel from "./TagsSummaryPanel";
+import SettingsTab from "../../../common/tabs/detail_view/SettingsTab";
 
 function TagDetailPanel({ tagData, setTagData }) {
-  const [activeTab, setTabSelection] = useState("settings");
+  const [activeTab, setTabSelection] = useState("summary");
 
   const handleTabClick = (activeTab) => e => {
     e.preventDefault();
     setTabSelection(activeTab);
   };
 
-  return (
-    <>
-      <div className="pb-3 px-3">
-        <Row>
-          <Col>
-            <CustomTabContainer>
-              <CustomTab icon={faCogs} tabName={"settings"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Settings"} />
-            </CustomTabContainer>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <div className="content-block-collapse">
-              {tagData && <TagDetailsView activeTab={activeTab} setTagData={setTagData} tagData={tagData} /> }
-            </div>
-          </Col>
-        </Row>
-      </div>
-    </>
-  );
-}
+  const getTabContainer = () => {
+    return (
+      <CustomTabContainer>
+        <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
+      </CustomTabContainer>
+    );
+  };
 
-function TagDetailsView({ activeTab, setTagData, tagData }) {
-  useEffect(() => {
-    // console.log("CHANGE HAPPENED");
-  }, [activeTab, tagData]);
-
-  if (activeTab) {
+  const getCurrentView = () => {
     switch (activeTab) {
-    case "settings":
+      case "summary":
+        return <TagsSummaryPanel tagData={tagData} setTagData={setTagData} />;
+      case "settings":
       return <TagEditorPanel setTagData={setTagData} tagData={tagData} />;
-    default:
-      return null;
+      default:
+        return null;
     }
-  }
+  };
+
+  return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
 }
 
 TagDetailPanel.propTypes = {
   tagData: PropTypes.object,
   setTagData: PropTypes.func,
-  canDelete: PropTypes.bool
 };
 
 export default TagDetailPanel;

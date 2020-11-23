@@ -12,6 +12,7 @@ import Col from "react-bootstrap/Col";
 import DtoSelectInput from "../../../common/input/dto_input/dto-select-input";
 import {defaultTags} from "../tags-form-fields";
 import DetailPanelContainer from "../../../common/panels/detail_panel_container/DetailPanelContainer";
+import EditorPanelContainer from "../../../common/panels/detail_panel_container/EditorPanelContainer";
 
 function TagEditorPanel({ tagData, setTagData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -37,7 +38,7 @@ function TagEditorPanel({ tagData, setTagData, handleClose }) {
   };
 
     return (
-      <DetailPanelContainer isLoading={isLoading}>
+      <EditorPanelContainer isLoading={isLoading}>
         <div className="mx-2">
           <Row>
             <Col>
@@ -66,7 +67,7 @@ function TagEditorPanel({ tagData, setTagData, handleClose }) {
             </div>
           </Row>
         </div>
-      </DetailPanelContainer>
+      </EditorPanelContainer>
     );
 }
 

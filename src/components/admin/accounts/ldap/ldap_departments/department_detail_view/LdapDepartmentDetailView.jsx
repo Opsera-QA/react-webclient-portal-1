@@ -5,14 +5,16 @@ import {DialogToastContext} from "../../../../../../contexts/DialogToastContext"
 import accountsActions from "../../../accounts-actions";
 import LoadingDialog from "../../../../../common/status_notifications/loading";
 import AccessDeniedDialog from "../../../../../common/status_notifications/accessDeniedInfo";
-import LdapDepartmentSummaryPanel from "./LdapDepartmentSummaryPanel";
 import LdapDepartmentDetailPanel from "./LdapDepartmentDetailPanel";
-import DetailViewContainer from "../../../../../common/panels/detail_view_container/DetailViewContainer";
 import departmentActions from "../department-functions";
 import ldapDepartmentMetaData from "../ldap-department-metadata";
 import Model from "../../../../../../core/data_model/model";
 import {faBuilding} from "@fortawesome/pro-light-svg-icons/faBuilding";
 import {ldapGroupMetaData} from "../../../../../settings/ldap_groups/ldap-groups-metadata";
+import DetailScreenContainer from "../../../../../common/panels/detail_view_container/DetailScreenContainer";
+import ActionBarContainer from "../../../../../common/actions/ActionBarContainer";
+import ActionBarBackButton from "../../../../../common/actions/buttons/ActionBarBackButton";
+import ActionBarDestructiveDeleteButton from "../../../../../common/actions/buttons/ActionBarDestructiveDeleteButton";
 
 function LdapDepartmentDetailView() {
   const {departmentName, orgDomain} = useParams();
@@ -74,6 +76,30 @@ function LdapDepartmentDetailView() {
     }
   };
 
+  const deleteDepartment = () => {
+    return departmentActions.deleteDepartment(orgDomain, ldapDepartmentData, getAccessToken);
+  };
+
+  const getActionBar = () => {
+    if (ldapDepartmentData != null) {
+      return (
+        <ActionBarContainer>
+          <div>
+            <ActionBarBackButton path={"/admin/departments"} />
+          </div>
+          <div>
+            <ActionBarDestructiveDeleteButton
+              relocationPath={"/admin/departments"}
+              dataObject={ldapDepartmentData}
+              handleDelete={deleteDepartment}
+              deleteTopic={`Department [${ldapDepartmentData.getData("name")}]`}
+            />
+          </div>
+        </ActionBarContainer>
+      );
+    }
+  };
+
   if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   }
@@ -83,12 +109,17 @@ function LdapDepartmentDetailView() {
   }
 
   return (
-    <DetailViewContainer
+    <DetailScreenContainer
       breadcrumbDestination={"ldapDepartmentDetailView"}
       title={ldapDepartmentData != null ? `Department Details [${ldapDepartmentData["name"]}]` : undefined}
+      managementViewLink={"/admin/departments"}
+      managementTitle={"Department Management"}
+      managementViewIcon={faBuilding}
+      type={"Department"}
       titleIcon={faBuilding}
+      dataObject={ldapDepartmentData}
       isLoading={isLoading}
-      summaryPanel={<LdapDepartmentSummaryPanel ldapDepartmentData={ldapDepartmentData} orgDomain={orgDomain} />}
+      actionBar={getActionBar()}
       detailPanel={
         <LdapDepartmentDetailPanel
           ldapDepartmentGroupData={ldapDepartmentGroupData}
