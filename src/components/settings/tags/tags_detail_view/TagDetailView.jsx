@@ -1,16 +1,18 @@
 import React, { useState, useEffect, useContext } from "react";
-import TagsSummaryPanel from "./TagsSummaryPanel";
 import TagDetailPanel from "./TagDetailPanel";
 import { useParams } from "react-router-dom";
 import adminTagsActions from "../admin-tags-actions";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import Model from "../../../../core/data_model/model";
 import tagEditorMetadata from "../tags-form-fields";
-import {faTags} from "@fortawesome/free-solid-svg-icons";
-import DetailViewContainer from "../../../common/panels/detail_view_container/DetailViewContainer";
+import {faTags} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import DataNotFoundContainer from "../../../common/panels/detail_view_container/DataNotFoundContainer";
 import DataNotFoundDialog from "../../../common/status_notifications/data_not_found/DataNotFoundDialog";
+import DetailScreenContainer from "../../../common/panels/detail_view_container/DetailScreenContainer";
+import ActionBarContainer from "../../../common/actions/ActionBarContainer";
+import ActionBarBackButton from "../../../common/actions/buttons/ActionBarBackButton";
+import ActionBarToggleButton from "../../../common/actions/buttons/ActionBarToggleButton";
 
 function TagDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -31,7 +33,7 @@ function TagDetailView() {
       await getTag(id);
     }
     catch (error) {
-      if (!error.error.message.includes(404)) {
+      if (!error?.error?.message?.includes(404)) {
         toastContext.showLoadingErrorDialog(error);
         console.error(error);
       }
@@ -57,22 +59,47 @@ function TagDetailView() {
     }
   };
 
-  if (!isLoading && tagData == null) {
-    return (
-      <DataNotFoundContainer type={"Tag"} breadcrumbDestination={"tagDetailView"}>
-        <DataNotFoundDialog type={"Tag"} managementViewIcon={faTags} managementViewTitle={"Tag Management"} managementViewLink={"/settings/tags"} />
-      </DataNotFoundContainer>
-    )
-  }
+  const getActionBar = () => {
+    if (tagData != null) {
+      return (
+        <ActionBarContainer>
+          <div>
+            <ActionBarBackButton path={"/settings/tags"} />
+          </div>
+          <div>
+            <ActionBarToggleButton handleActiveToggle={handleActiveToggle} status={tagData.getData("active")} />
+          </div>
+        </ActionBarContainer>
+      );
+    }
+  };
 
+  const handleActiveToggle = async () => {
+    try {
+      let newTagData = {...tagData};
+      newTagData.setData("active", !newTagData.getData("active"));
+      let response = await adminTagsActions.update({...newTagData}, getAccessToken);
+      let updatedDto = new Model(response.data, tagData.metaData, false);
+      setTagData(updatedDto);
+      toastContext.showUpdateSuccessResultDialog(newTagData.getType());
+    } catch (error) {
+      toastContext.showLoadingErrorDialog(error.message);
+      console.error(error.message);
+    }
+  };
 
   return (
-    <DetailViewContainer
+    <DetailScreenContainer
       breadcrumbDestination={"tagDetailView"}
       title={tagData != null ? `Tag Details [${tagData["type"]}]` : undefined}
+      managementViewLink={"/settings/tags"}
+      managementTitle={"Tag"}
+      managementViewIcon={faTags}
+      type={"Tag"}
       titleIcon={faTags}
+      dataObject={tagData}
       isLoading={isLoading}
-      summaryPanel={<TagsSummaryPanel tagData={tagData} setTagData={setTagData} />}
+      actionBar={getActionBar()}
       detailPanel={<TagDetailPanel setTagData={setTagData} tagData={tagData} />}
     />
   );
