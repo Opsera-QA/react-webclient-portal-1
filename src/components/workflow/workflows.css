@@ -10,9 +10,8 @@
   border-radius: .25rem;
 
   background-size: 40px 40px;
-  background-image:
-    linear-gradient(to right, #dddddd 1px, transparent 1px),
-    linear-gradient(to bottom, #dddddd 1px, transparent 1px);
+  background-image: linear-gradient(to right, #dddddd 1px, transparent 1px),
+  linear-gradient(to bottom, #dddddd 1px, transparent 1px);
 
   min-height: 70vh;
 }
@@ -29,60 +28,57 @@
   min-height: 102px
 }
 
-.workflow-module-container {  
+.workflow-module-container {
   background-color: #fff;
   color: #334152;
   border-style: solid;
   border-color: #6c757d;
-  border-width: 2px;  
+  border-width: 2px;
 }
 
 .catalog-card-title {
-    color: #6c757d;
-    background-color: rgba(0,0,0,.03);
-    border-bottom: 2px solid #6c757d;
+  color: #6c757d;
+  background-color: rgba(0, 0, 0, .03);
+  border-bottom: 2px solid #6c757d;
 }
 
 .catalog-card-text {
-    line-height: 1.54;
-    color: #6c757d;
-    min-height: 100px;
+  line-height: 1.54;
+  color: #6c757d;
+  min-height: 100px;
 }
 
 .pipeline-card-title {
-    background-color: #E7E5ED;
-    color: #1E1D1B;
+  background-color: #E7E5ED;
+  color: #1E1D1B;
 }
 
 .pipeline-card-text {
-    font-size: 15px;
-    line-height: 1.54;
-    color: #241F3D;
-    min-height: 120px !important;
+  min-height: 120px !important;
 }
 
 .pipeline-blue-text {
-    color: #241F3D;
+  color: #241F3D;
 }
 
 .pipeline-blue-text:hover {
-    color: #46415C;
+  color: #46415C;
 }
 
 .stop-rectangle {
-    width: 30px;
-    height: 30px;
-    border-radius: 3px;
-    border: solid 3px #241F3D;
+  width: 30px;
+  height: 30px;
+  border-radius: 3px;
+  border: solid 3px #241F3D;
 }
 
 .blue-underline {
-    background-color: #241F3D;
+  background-color: #241F3D;
 }
 
 .workflow-editor-panel {
-  border-top: 1px solid rgba(0,0,0,.125);
-  border-left: 1px solid rgba(0,0,0,.125);
+  border-top: 1px solid rgba(0, 0, 0, .125);
+  border-left: 1px solid rgba(0, 0, 0, .125);
   border-top-left-radius: .25rem;
   min-height: 85vh;
 }
@@ -115,7 +111,7 @@
 
 .workflow-action-icons {
   font-size: 1.1em;
-  
+
 }
 
 .workflow-module-text-flex-basis {
@@ -128,8 +124,8 @@
   right: 5px;
   width: 740px;
   height: 440px;
-  z-index: 10;  
-  padding-top:5px !important;  
+  z-index: 10;
+  padding-top: 5px !important;
 }
 
 .workflow-tool-activity-window {
@@ -139,7 +135,7 @@
   display: flex;
   flex-direction: column-reverse;
   overscroll-behavior: contain;
-  margin-top:5px;
+  margin-top: 5px;
 }
 
 .pipeline-activity-filter {
@@ -147,11 +143,11 @@
 }
 
 .tag-modal div.modal-dialog div.modal-content {
-    overflow: visible !important;
+  overflow: visible !important;
 }
 
 .pipeline-tag-modal-body .rw-state-focus .rw-popup-container {
-    z-index: 1200;
+  z-index: 1200;
 }
 
 .settings-sidebar {
@@ -162,21 +158,21 @@
   right: 0;
   background-color: #33415278;; /* Black*/
   overflow-x: hidden; /* Disable horizontal scroll */
-  overflow-y:auto;
+  overflow-y: auto;
   padding-top: 65px;
   /*transition: 0.5s;*/ /* 0.5 second transition effect to slide in the sidenav */
-  z-index:100;
+  z-index: 100;
 }
 
 .step-setting-editor {
   background-color: #fff;
-height:100%;
+  height: 100%;
   width: 600px;
 }
 
 .step-settings-container {
-  min-height:75vh;
-  overflow:auto;
+  min-height: 75vh;
+  overflow: auto;
 }
 
 .scroller {

@@ -142,36 +142,53 @@ const PipelineItem = ({ item }) => {
 
         </Card.Title>
         <Card.Body className="pt-0 pb-2 pipeline-card-text">
-          <Row className="mb-1">
-            <Col className="pb-1">
-              <span className="text-muted mr-1">Owner:</span> {item.owner_name}
-            </Col>
-            <Col xs={2} className="">
-              <div className="text-right small">
-                {getPipelineStatusField()}
-              </div>
+          <Row>
+            <Col className="py-1"><span className="text-muted mr-1">ID:</span> {item._id}</Col>
+            <Col className="py-1 small">
+              {getPipelineStatusField()}
             </Col>
           </Row>
-          <Row className="mb-2">
-            <Col className="pb-1">
-              <div className="text-muted">{getFormattedDescription()}</div>
-            </Col>
-          </Row>
-
-          <Row className="mb-2">
-            <Col className="pb-1 small">
+          <Row>
+            <Col className="py-1"><span className="text-muted mr-1">Owner:</span> {item.owner_name}</Col>
+            <Col className="py-1">
               <span className="text-muted mr-1">Run Count:</span> {item.workflow.run_count}
+            </Col>
+          </Row>
+          <Row>
+            <Col className="py-1">
+              <span className="text-muted mr-2 pb-1">Created:</span><span
+              className="">{item.updatedAt && format(new Date(item.createdAt), "yyyy-MM-dd'")}</span>
+            </Col>
+            <Col className="py-1">
+              {item.workflow.last_run?.completed ?
+                <><span className="text-muted mr-2 pb-1">Last Run:</span><span
+                  className="">{format(new Date(item.workflow.last_run.completed), "yyyy-MM-dd'")}</span>
+                </>
+                :
+                <><span className="text-muted mr-2 pb-1">Updated:</span><span
+                  className="">{item.updatedAt && format(new Date(item.updatedAt), "yyyy-MM-dd'")}</span>
+                </>
+              }
+            </Col>
+          </Row>
+          <Row>
+            <Col className="pt-2 text-muted">
+              {getFormattedDescription()}
             </Col>
           </Row>
 
           <Row>
-            <Col className="mt-auto">
-              <Button variant="primary" size="sm" className="pl-2 mb-1 btn-block w-50"
+            <Col className="pt-3"></Col>
+            <Col className="text-right p-2">
+              <Button variant="primary" size="sm" className="w-50"
                       onClick={handleDetailsClick(item._id)}>
                 <FontAwesomeIcon icon={faSearch} className="mr-1"/>View</Button>
             </Col>
-            <Col>
-              <div className="text-right">
+          </Row>
+
+          {/*
+
+          <div className="text-right">
                 {item.workflow.schedule?.start_date &&
                 <div className="small">
                   <span className="text-muted mr-2 pb-1">
@@ -191,8 +208,7 @@ const PipelineItem = ({ item }) => {
                   className="">{item.updatedAt && format(new Date(item.createdAt), "yyyy-MM-dd', 'hh:mm a")}</span>
                 </div>
               </div>
-            </Col>
-          </Row>
+          */}
         </Card.Body>
         <Card.Footer>
           {/*TODO: Note, if you want the action icons to show up, pass in functions related and wire them up*/}
