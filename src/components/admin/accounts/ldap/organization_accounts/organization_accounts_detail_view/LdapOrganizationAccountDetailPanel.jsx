@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 
-import Col from "react-bootstrap/Col";
 import PropTypes from "prop-types";
 import LdapOrganizationAccountEditorPanel from "./LdapOrganizationAccountEditorPanel";
 import Model from "../../../../../../core/data_model/model";
@@ -11,12 +10,12 @@ import LdapIdpAccountEditorPanel from "../../idp_accounts/LdapIdpAccountEditorPa
 import LdapIdpAccountSummaryPanel from "../../idp_accounts/LdapIdpAccountSummaryPanel";
 import CustomTabContainer from "../../../../../common/tabs/CustomTabContainer";
 import CustomTab from "../../../../../common/tabs/CustomTab";
-import {faCogs, faUsers} from "@fortawesome/pro-solid-svg-icons";
-import Row from "react-bootstrap/Row";
-import {faUsersClass} from "@fortawesome/pro-solid-svg-icons/faUsersClass";
-import {faBuilding} from "@fortawesome/pro-solid-svg-icons/faBuilding";
-import {faCubes} from "@fortawesome/pro-solid-svg-icons/faCubes";
+import {faUsers, faUsersClass, faBuilding, faCubes} from "@fortawesome/pro-light-svg-icons";
 import LdapDepartmentsTable from "../../ldap_departments/LdapDepartmentsTable";
+import LdapOrganizationAccountSummaryPanel from "./LdapOrganizationAccountSummaryPanel";
+import DetailTabPanelContainer from "../../../../../common/panels/detail_view/DetailTabPanelContainer";
+import SettingsTab from "../../../../../common/tabs/detail_view/SettingsTab";
+import SummaryTab from "../../../../../common/tabs/detail_view/SummaryTab";
 
 const INITIAL_IDP_ACCOUNT_DATA = {
   name: "",
@@ -43,7 +42,7 @@ function LdapOrganizationAccountDetailPanel(
   }) {
   const [showIdpEditPanel, setShowIdpEditPanel] = useState(false);
   const [ldapIdpAccountData, setLdapIdpAccountData] = useState({});
-  const [activeTab, setActiveTab] = useState("users");
+  const [activeTab, setActiveTab] = useState("summary");
 
   useEffect(() => {
     loadIdpAccount();
@@ -66,94 +65,38 @@ function LdapOrganizationAccountDetailPanel(
     }
   };
 
-  return (
-    <>
-      <div className="pb-3 px-3 h-50">
-        <Row>
-          <Col>
-            <CustomTabContainer>
-              <CustomTab icon={faUsers} tabName={"users"} handleTabClick={handleTabClick} activeTab={activeTab}
-                         tabText={"Users"}/>
-              <CustomTab icon={faUsersClass} tabName={"groups"} handleTabClick={handleTabClick} activeTab={activeTab}
-                         tabText={"Groups"}/>
-              <CustomTab icon={faBuilding} tabName={"departments"} handleTabClick={handleTabClick} activeTab={activeTab}
-                         tabText={"Departments"}/>
-              <CustomTab icon={faCubes} tabName={"idpAccounts"} handleTabClick={handleTabClick} activeTab={activeTab}
-                         tabText={"IDP Account"}/>
-              <CustomTab icon={faCogs} tabName={"settings"} handleTabClick={handleTabClick} activeTab={activeTab}
-                         tabText={"Settings"}/>
-            </CustomTabContainer>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <div className="shaded-panel detail-view-detail-panel">
-              {ldapOrganizationAccountData &&
-                <LdapOrganizationAccountTabView
-                  showIdpEditPanel={showIdpEditPanel}
-                  ldapIdpAccountData={ldapIdpAccountData}
-                  setLdapIdpAccountData={setLdapIdpAccountData}
-                  setShowIdpEditPanel={setShowIdpEditPanel}
-                  ldapOrganizationAccountData={ldapOrganizationAccountData}
-                  loadData={loadData}
-                  activeTab={activeTab}
-                  setLdapOrganizationAccountData={setLdapOrganizationAccountData}
-                  authorizedActions={authorizedActions}
-                  authorizedIdpActions={authorizedIdpActions}
-                  authorizedDepartmentActions={authorizedDepartmentActions}
-                  organizationDomain={organizationDomain}
-                  ldapDepartmentData={ldapDepartmentData}
-                />
-              }
-            </div>
-          </Col>
-        </Row>
-      </div>
-    </>
-  );
-}
+  const getIdpAccountPanel = () => {
+    if (showIdpEditPanel || ldapIdpAccountData.isNew()) {
+      return (
+        <LdapIdpAccountEditorPanel
+          setLdapIdpAccountData={setLdapIdpAccountData}
+          setShowIdpEditPanel={setShowIdpEditPanel}
+          ldapOrganizationAccountData={ldapOrganizationAccountData}
+          ldapIdpAccountData={ldapIdpAccountData}
+          authorizedActions={authorizedIdpActions}
+        />
+      );
+    }
 
-function LdapOrganizationAccountTabView(
-  {
-    activeTab,
-    authorizedActions,
-    authorizedIdpActions,
-    authorizedDepartmentActions,
-    ldapIdpAccountData,
-    setLdapIdpAccountData,
-    setLdapOrganizationAccountData,
-    ldapOrganizationAccountData,
-    showIdpEditPanel,
-    setShowIdpEditPanel,
-    loadData,
-    ldapDepartmentData,
-    organizationDomain
-  }
-  ) {
-  useEffect(() => {
-    // console.log("CHANGE HAPPENED");
-  }, [activeTab, ldapOrganizationAccountData]);
-  if (activeTab) {
+    return (
+      <LdapIdpAccountSummaryPanel
+        ldapIdpAccountData={ldapIdpAccountData}
+        setShowIdpEditPanel={setShowIdpEditPanel}
+        authorizedActions={authorizedIdpActions}
+      />
+    );
+  };
+
+  const getCurrentView = () => {
     switch (activeTab) {
+      case "summary":
+        return <LdapOrganizationAccountSummaryPanel ldapOrganizationAccountData={ldapOrganizationAccountData}/>;
       case "users":
         return <div className="p-3"><LdapUsersTable orgDomain={ldapOrganizationAccountData["orgDomain"]} userData={ldapOrganizationAccountData.getData("users")} /></div>
       case "groups":
         return <div className="p-3"><LdapGroupsTable orgDomain={ldapOrganizationAccountData["orgDomain"]} groupData={ldapOrganizationAccountData.getData("groups")} /></div>
       case "idpAccounts":
-        return(<>
-            {showIdpEditPanel || ldapIdpAccountData.isNew()
-              ? <LdapIdpAccountEditorPanel setLdapIdpAccountData={setLdapIdpAccountData}
-                                           setShowIdpEditPanel={setShowIdpEditPanel}
-                                           ldapOrganizationAccountData={ldapOrganizationAccountData}
-                                           ldapIdpAccountData={ldapIdpAccountData}
-                                           authorizedActions={authorizedIdpActions}
-              />
-              : <LdapIdpAccountSummaryPanel ldapIdpAccountData={ldapIdpAccountData}
-                                            setShowIdpEditPanel={setShowIdpEditPanel}
-                                            authorizedActions={authorizedIdpActions}
-              />
-            }</>
-        );
+        return(getIdpAccountPanel());
       case "departments":
         return (
           <div className="p-3">
@@ -166,11 +109,35 @@ function LdapOrganizationAccountTabView(
           </div>
         );
       case "settings":
-        return <LdapOrganizationAccountEditorPanel ldapOrganizationAccountData={ldapOrganizationAccountData} setLdapOrganizationAccountData={setLdapOrganizationAccountData} loadData={loadData} authorizedActions={authorizedActions} />;
+        return <LdapOrganizationAccountEditorPanel
+          ldapOrganizationAccountData={ldapOrganizationAccountData}
+          setLdapOrganizationAccountData={setLdapOrganizationAccountData}
+          loadData={loadData}
+          authorizedActions={authorizedActions}
+        />;
       default:
         return null;
     }
-  }
+  };
+
+  const getTabContainer = () => {
+    return (
+      <CustomTabContainer>
+        <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        <CustomTab icon={faUsers} tabName={"users"} handleTabClick={handleTabClick} activeTab={activeTab}
+                   tabText={"Users"}/>
+        <CustomTab icon={faUsersClass} tabName={"groups"} handleTabClick={handleTabClick} activeTab={activeTab}
+                   tabText={"Groups"}/>
+        <CustomTab icon={faBuilding} tabName={"departments"} handleTabClick={handleTabClick} activeTab={activeTab}
+                   tabText={"Departments"}/>
+        <CustomTab icon={faCubes} tabName={"idpAccounts"} handleTabClick={handleTabClick} activeTab={activeTab}
+                   tabText={"IDP Account"}/>
+        <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
+      </CustomTabContainer>
+    )
+  };
+
+  return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
 }
 
 LdapOrganizationAccountDetailPanel.propTypes = {

@@ -4,7 +4,6 @@ import ActionBarButton from "./ActionBarButton";
 import {faSearchPlus} from "@fortawesome/pro-light-svg-icons";
 import ObjectJsonModal from "../../modal/ObjectJsonModal";
 
-// TODO: Use this instead of show details button
 function ActionBarShowJsonButton({dataObject}) {
   const [showInfoModal, setShowInfoModal] = useState(false);
 

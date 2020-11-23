@@ -1,18 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "../../../../contexts/AuthContext";
-import LdapUserSummaryPanel from "./LdapUserSummaryPanel";
 import LdapUserDetailPanel from "./LdapUserDetailPanel";
 import accountsActions from "../../../admin/accounts/accounts-actions";
 import LoadingDialog from "../../../common/status_notifications/loading";
 import Model from "../../../../core/data_model/model";
 import {ldapUsersMetaData} from "../ldap-users-metadata";
-import {faUser} from "@fortawesome/free-solid-svg-icons";
+import {faUser} from "@fortawesome/pro-light-svg-icons";
 import AccessDeniedDialog from "../../../common/status_notifications/accessDeniedInfo";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
-import DetailViewContainer from "../../../common/panels/detail_view_container/DetailViewContainer";
-import DataNotFoundContainer from "../../../common/panels/detail_view_container/DataNotFoundContainer";
-import DataNotFoundDialog from "../../../common/status_notifications/data_not_found/DataNotFoundDialog";
+import DetailScreenContainer from "../../../common/panels/detail_view_container/DetailScreenContainer";
+import ActionBarContainer from "../../../common/actions/ActionBarContainer";
+import ActionBarBackButton from "../../../common/actions/buttons/ActionBarBackButton";
 
 function LdapUserDetailView() {
   const {userEmail, orgDomain} = useParams();
@@ -67,6 +66,20 @@ function LdapUserDetailView() {
     }
   };
 
+  const getActionBar = () => {
+    if (ldapUserData != null) {
+      return (
+        <ActionBarContainer>
+          <div>
+            <ActionBarBackButton path={"/settings/users"} />
+          </div>
+          <div>
+          </div>
+        </ActionBarContainer>
+      );
+    }
+  };
+
   if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   }
@@ -75,24 +88,26 @@ function LdapUserDetailView() {
     return (<AccessDeniedDialog roleData={accessRoleData}/>);
   }
 
-  if (!isLoading && ldapUserData == null) {
-    return (
-      <DataNotFoundContainer
-        type={"User"}
-        breadcrumbDestination={(accessRoleData.PowerUser || accessRoleData.Administrator || accessRoleData.OpseraAdministrator) ? "ldapUserDetailView" : "ldapUserDetailViewLimited"}>
-        <DataNotFoundDialog type={"User"} managementViewIcon={faUser} managementViewTitle={"User Management"} managementViewLink={"/settings/users"} />
-      </DataNotFoundContainer>
-    )
-  }
-
   return (
-    <DetailViewContainer
+    <DetailScreenContainer
       breadcrumbDestination={(accessRoleData.PowerUser || accessRoleData.Administrator || accessRoleData.OpseraAdministrator) ? "ldapUserDetailView" : "ldapUserDetailViewLimited"}
       title={ldapUserData != null ? `User Details [${ldapUserData["name"]}]` : undefined}
+      managementViewLink={"/settings/users"}
+      managementTitle={"User Management"}
+      managementViewIcon={faUser}
+      type={"User"}
       titleIcon={faUser}
+      dataObject={ldapUserData}
       isLoading={isLoading}
-      summaryPanel={<LdapUserSummaryPanel ldapUserData={ldapUserData} orgDomain={orgDomain}/>}
-      detailPanel={<LdapUserDetailPanel setLdapUserData={setLdapUserData} orgDomain={orgDomain} ldapUserData={ldapUserData} authorizedActions={authorizedActions}/>}
+      actionBar={getActionBar()}
+      detailPanel={
+        <LdapUserDetailPanel
+          setLdapUserData={setLdapUserData}
+          orgDomain={orgDomain}
+          ldapUserData={ldapUserData}
+          authorizedActions={authorizedActions}
+        />
+      }
     />
   );
 }

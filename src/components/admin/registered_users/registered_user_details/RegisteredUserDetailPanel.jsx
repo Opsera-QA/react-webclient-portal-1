@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import AnalyticsProfileEditorPanel from "./analytics_profile/AnalyticsProfileEditorPanel";
 import CustomTabContainer from "../../../common/tabs/CustomTabContainer";
 import CustomTab from "../../../common/tabs/CustomTab";
-import {faClipboardList, faDatabase, faCogs} from "@fortawesome/pro-solid-svg-icons";
+import {faClipboardList, faDatabase, faCogs} from "@fortawesome/pro-light-svg-icons";
 import CustomerDatabaseEditorPanel from "./customer_database/CustomerDatabaseEditorPanel";
 import RegisteredUserToolsPanel from "./tools/RegisteredUserToolsPanel";
+import RegisteredUserSummary from "./RegisteredUserSummary";
+import SummaryTab from "../../../common/tabs/detail_view/SummaryTab";
+import DetailTabPanelContainer from "../../../common/panels/detail_view/DetailTabPanelContainer";
 
 function RegisteredUserDetailPanel({ userData, setUserData, analyticsProfileData, setAnalyticsProfileData }) {
   const [activeTab, setActiveTab] = useState("analyticsSettings");
@@ -18,45 +19,22 @@ function RegisteredUserDetailPanel({ userData, setUserData, analyticsProfileData
     setActiveTab(tabSelection);
   };
 
-  return (
-    <>
-      <div className="pb-3 px-3">
-        <Row>
-          <Col>
-            <CustomTabContainer>
-              <CustomTab icon={faDatabase} tabName={"customerDB"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Customer DB"} />
-              <CustomTab icon={faCogs} tabName={"analyticsSettings"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Analytics Profile"} />
-              {/*<CustomTab icon={faCogs} tabName={"settings"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Settings"} />*/}
-              <CustomTab icon={faClipboardList} tabName={"tools"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Tools"} />
-            </CustomTabContainer>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <div className="shaded-panel detail-view-detail-panel">
-              {userData && <RegisteredUserTabView
-                activeTab={activeTab}
-                analyticsProfileData={analyticsProfileData}
-                setAnalyticsProfileData={setAnalyticsProfileData}
-                userData={userData}
-                setUserData={setUserData}
-                isDeployingElk={isDeployingElk}
-                setIsDeployingElk={setIsDeployingElk}/>}
-            </div>
-          </Col>
-        </Row>
-      </div>
-    </>
-  );
-}
+  const getTabContainer = () => {
+    return (
+      <CustomTabContainer>
+        <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        <CustomTab icon={faDatabase} tabName={"customerDB"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Customer DB"} />
+        <CustomTab icon={faCogs} tabName={"analyticsSettings"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Analytics Profile"} />
+        <CustomTab icon={faClipboardList} tabName={"tools"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Tools"} />
+        {/*<SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />*/}
+      </CustomTabContainer>
+    );
+  };
 
-function RegisteredUserTabView({ activeTab, userData, setUserData, isDeployingElk, setIsDeployingElk, analyticsProfileData, setAnalyticsProfileData }) {
-  useEffect(() => {
-    // console.log("CHANGE HAPPENED");
-  }, [activeTab, analyticsProfileData, userData]);
-
-  if (activeTab) {
+  const getCurrentView = () => {
     switch (activeTab) {
+      case "summary":
+        return <RegisteredUserSummary userData={userData}/>;
       case "tools":
         return <RegisteredUserToolsPanel userData={userData} setIsDeployingElk={setIsDeployingElk} isDeployingElk={isDeployingElk} />
       case "customerDB":
@@ -64,11 +42,13 @@ function RegisteredUserTabView({ activeTab, userData, setUserData, isDeployingEl
       case "analyticsSettings":
         return <AnalyticsProfileEditorPanel setAnalyticsProfileData={setAnalyticsProfileData} analyticsProfileData={analyticsProfileData} />;
       case "settings":
-        // return <AnalyticsProfileEditorPanel setAnalyticsProfileData={setAnalyticsProfileData} analyticsProfileData={analyticsProfileData} />;
+      // return <AnalyticsProfileEditorPanel setAnalyticsProfileData={setAnalyticsProfileData} analyticsProfileData={analyticsProfileData} />;
       default:
         return null;
     }
-  }
+  };
+
+  return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
 }
 
 RegisteredUserDetailPanel.propTypes = {

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import RegisteredUserSummary from "./RegisteredUserSummary";
 import RegisteredUserDetailPanel from "./RegisteredUserDetailPanel";
 import { useParams } from "react-router-dom";
 import RegisteredUserActions from "../registered-user-actions";
@@ -10,10 +9,11 @@ import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import analyticsProfileMetadata from "./analytics_profile/analytics-profile-form-fields";
 import Model from "../../../../core/data_model/model";
 import registeredUsersMetadata from "../registered-users-form-fields";
-import DataNotFoundContainer from "../../../common/panels/detail_view_container/DataNotFoundContainer";
-import DataNotFoundDialog from "../../../common/status_notifications/data_not_found/DataNotFoundDialog";
-import {faUserCircle} from "@fortawesome/free-solid-svg-icons";
-import DetailViewContainer from "../../../common/panels/detail_view_container/DetailViewContainer";
+import {faUserCircle} from "@fortawesome/pro-light-svg-icons";
+import DetailScreenContainer from "../../../common/panels/detail_view_container/DetailScreenContainer";
+import ActionBarContainer from "../../../common/actions/ActionBarContainer";
+import ActionBarBackButton from "../../../common/actions/buttons/ActionBarBackButton";
+import ActionBarShowDetailsButton from "../../../common/actions/buttons/ActionBarShowDetailsButton";
 
 function RegisteredUserDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -69,6 +69,21 @@ function RegisteredUserDetailView() {
     }
   };
 
+  const getActionBar = () => {
+    if (userData != null) {
+      return (
+        <ActionBarContainer>
+          <div>
+            <ActionBarBackButton path={"/admin/departments"} />
+          </div>
+          <div>
+            <ActionBarShowDetailsButton details={userData["data"]} type={"User"} />
+          </div>
+        </ActionBarContainer>
+      );
+    }
+  };
+
   if (!accessRoleData || isLoading) {
     return (<LoadingDialog size="sm"/>);
   }
@@ -77,22 +92,26 @@ function RegisteredUserDetailView() {
     return (<AccessDeniedDialog roleData={accessRoleData}/>);
   }
 
-  if (!isLoading && userData == null) {
-    return (
-      <DataNotFoundContainer type={"Registered User"} breadcrumbDestination={"registeredUsersDetailView"}>
-        <DataNotFoundDialog type={"Registered User"} managementViewIcon={faUserCircle} managementViewTitle={"Registered Users"} managementViewLink={"/admin/registered-users"} />
-      </DataNotFoundContainer>
-    )
-  }
-
   return (
-    <DetailViewContainer
+    <DetailScreenContainer
       breadcrumbDestination={"registeredUsersDetailView"}
       title={userData != null ? `Registered User Details [${userData.getData("email")}]` : undefined}
+      managementViewLink={"/admin/registered-users"}
+      managementTitle={"Registered Users"}
+      managementViewIcon={faUserCircle}
+      type={"Registered User"}
       titleIcon={faUserCircle}
+      dataObject={userData}
       isLoading={isLoading}
-      summaryPanel={<RegisteredUserSummary userData={userData}/>}
-      detailPanel={<RegisteredUserDetailPanel setAnalyticsProfileData={setAnalyticsProfileData} analyticsProfileData={analyticsProfileData} userData={userData} setUserData={setUserData} />}
+      actionBar={getActionBar()}
+      detailPanel={
+        <RegisteredUserDetailPanel
+          setAnalyticsProfileData={setAnalyticsProfileData}
+          analyticsProfileData={analyticsProfileData}
+          userData={userData}
+          setUserData={setUserData}
+        />
+      }
     />
   );
 }
