@@ -118,9 +118,9 @@ const funcOpseraAdminNav = () => {
             <FontAwesomeIcon size="lg" icon={faLayerGroup} fixedWidth/> <span
             className="menu-text">Blueprints</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/tools">
+          {/*<NavLink className="nav-link" activeClassName="chosen" to="/tools">
             <FontAwesomeIcon size="lg" icon={faLink} fixedWidth/> <span
-            className="menu-text">API Tools</span></NavLink>
+            className="menu-text">API Tools</span></NavLink>*/}
           <NavLink className="nav-link" activeClassName="chosen" to="/update">
             <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span
             className="menu-text">Updates</span></NavLink>
@@ -171,9 +171,9 @@ const funcSassNav = () => {
             <FontAwesomeIcon size="lg" icon={faLayerGroup} fixedWidth/> <span
             className="menu-text">Blueprints</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/tools">
+          {/*<NavLink className="nav-link" activeClassName="chosen" to="/tools">
             <FontAwesomeIcon size="lg" icon={faLink} fixedWidth/> <span
-            className="menu-text">API Tools</span></NavLink>
+            className="menu-text">API Tools</span></NavLink>*/}
           <NavLink className="nav-link" activeClassName="chosen" to="/update">
             <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span
             className="menu-text">Updates</span></NavLink>
@@ -220,9 +220,9 @@ const funcAccountPowerUserNav = () => {
             <FontAwesomeIcon size="lg" icon={faLayerGroup} fixedWidth/> <span
             className="menu-text">Blueprints</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/tools">
+          {/*<NavLink className="nav-link" activeClassName="chosen" to="/tools">
             <FontAwesomeIcon size="lg" icon={faLink} fixedWidth/> <span
-            className="menu-text">API Tools</span></NavLink>
+            className="menu-text">API Tools</span></NavLink>*/}
           <NavLink className="nav-link" activeClassName="chosen" to="/update">
             <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span
             className="menu-text">Updates</span></NavLink>
@@ -269,9 +269,9 @@ const funcAccountAdminNav = () => {
             <FontAwesomeIcon size="lg" icon={faLayerGroup} fixedWidth/> <span
             className="menu-text">Blueprints</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/tools">
+          {/*<NavLink className="nav-link" activeClassName="chosen" to="/tools">
             <FontAwesomeIcon size="lg" icon={faLink} fixedWidth/> <span
-            className="menu-text">API Tools</span></NavLink>
+            className="menu-text">API Tools</span></NavLink>*/}
           <NavLink className="nav-link" activeClassName="chosen" to="/update">
             <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span
             className="menu-text">Updates</span></NavLink>
