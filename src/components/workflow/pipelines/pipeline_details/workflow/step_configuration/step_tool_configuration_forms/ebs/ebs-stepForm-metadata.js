@@ -14,6 +14,16 @@ const ebsStepFormMetadata = {
       isRequired: true
     },
     {
+      label: "Docker Volume Path",
+      id: "dockerVolumePath",
+      isRequired: true
+    },
+    {
+      label: "Environments",
+      id: "environments",
+      isRequired: true
+    },
+    {
       label: "Secret Key",
       id: "secretKey",
       isRequired: true
@@ -77,7 +87,9 @@ const ebsStepFormMetadata = {
       description: "",
       port: "",
       ec2KeyName: "",
-      platform: ""
+      platform: "",
+      dockerVolumePath: "",
+      environments : ""
     }
 };
 
