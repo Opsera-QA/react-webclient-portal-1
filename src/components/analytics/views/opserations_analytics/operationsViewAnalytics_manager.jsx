@@ -12,11 +12,9 @@ import OutNetworkTrafficByTimeLineChart from "../../charts/OutNetworkTrafficByTi
 
 function OperationsViewAnalytics_manager({ persona, date }) {
   const contextType = useContext(AuthContext);
-  const { featureFlagHideItemInProd } = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
   const [countBlockData, setCountBlockData] = useState([]);
-  const envIsProd = featureFlagHideItemInProd();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -81,75 +79,73 @@ function OperationsViewAnalytics_manager({ persona, date }) {
 
     let summaryCountsData = [];
 
-    if (!envIsProd) {
-      if (
-        TotalClusterUsage &&
-        TotalClusterUsage.status === 200 &&
-        TotalClusterUsage.data !== undefined &&
-        TotalClusterUsage.data[0].count !== null
-      ) {
-        summaryCountsData.push({
-          name: "Total Clusters",
-          value: TotalClusterUsage.data[0].count,
-          footer: "",
-        });
-      }
+    if (
+      TotalClusterUsage &&
+      TotalClusterUsage.status === 200 &&
+      TotalClusterUsage.data !== undefined &&
+      TotalClusterUsage.data[0].count !== null
+    ) {
+      summaryCountsData.push({
+        name: "Total Clusters",
+        value: TotalClusterUsage.data[0].count,
+        footer: "",
+      });
+    }
 
-      if (
-        TotalNodesUsage &&
-        TotalNodesUsage.status === 200 &&
-        TotalNodesUsage.data !== undefined &&
-        TotalNodesUsage.data[0].count !== null
-      ) {
-        summaryCountsData.push({
-          name: "Total Nodes",
-          value: TotalNodesUsage.data[0].count,
-          footer: "",
-        });
-      }
+    if (
+      TotalNodesUsage &&
+      TotalNodesUsage.status === 200 &&
+      TotalNodesUsage.data !== undefined &&
+      TotalNodesUsage.data[0].count !== null
+    ) {
+      summaryCountsData.push({
+        name: "Total Nodes",
+        value: TotalNodesUsage.data[0].count,
+        footer: "",
+      });
+    }
 
-      if (
-        TotalPodsUsage &&
-        TotalPodsUsage.status === 200 &&
-        TotalPodsUsage.data !== undefined &&
-        TotalPodsUsage.data[0].count !== null
-      ) {
-        summaryCountsData.push({
-          name: "Total Pods",
-          value: TotalPodsUsage.data[0].count,
-          footer: "",
-        });
-      }
+    if (
+      TotalPodsUsage &&
+      TotalPodsUsage.status === 200 &&
+      TotalPodsUsage.data !== undefined &&
+      TotalPodsUsage.data[0].count !== null
+    ) {
+      summaryCountsData.push({
+        name: "Total Pods",
+        value: TotalPodsUsage.data[0].count,
+        footer: "",
+      });
+    }
 
-      if (
-        maxCpuMemoryUsage &&
-        maxCpuMemoryUsage.status === 200 &&
-        maxCpuMemoryUsage.data !== undefined &&
-        Object.keys(maxCpuMemoryUsage.data[0]).length > 0 &&
-        maxCpuMemoryUsage.data[0].count.length > 0
-      ) {
-        maxCpuMemoryUsage.data[0].count.forEach((thisElement) => {
-          if (thisElement) {
-            if (thisElement.type === "CPU") {
-              summaryCountsData.push({
-                name: "Max CPU Usage",
-                value: thisElement.cpuUsage + "%",
-                footer: "",
-                status: thisElement.cpuUsage > 75 ? "danger" : "",
-                info: thisElement.podName,
-              });
-            } else {
-              summaryCountsData.push({
-                name: "Max Memory Usage",
-                value: thisElement.memoryUsage + "%",
-                footer: "",
-                status: thisElement.memoryUsage > 75 ? "danger" : "",
-                info: thisElement.podName,
-              });
-            }
+    if (
+      maxCpuMemoryUsage &&
+      maxCpuMemoryUsage.status === 200 &&
+      maxCpuMemoryUsage.data !== undefined &&
+      Object.keys(maxCpuMemoryUsage.data[0]).length > 0 &&
+      maxCpuMemoryUsage.data[0].count.length > 0
+    ) {
+      maxCpuMemoryUsage.data[0].count.forEach((thisElement) => {
+        if (thisElement) {
+          if (thisElement.type === "CPU") {
+            summaryCountsData.push({
+              name: "Max CPU Usage",
+              value: thisElement.cpuUsage + "%",
+              footer: "",
+              status: thisElement.cpuUsage > 75 ? "danger" : "",
+              info: thisElement.podName,
+            });
+          } else {
+            summaryCountsData.push({
+              name: "Max Memory Usage",
+              value: thisElement.memoryUsage + "%",
+              footer: "",
+              status: thisElement.memoryUsage > 75 ? "danger" : "",
+              info: thisElement.podName,
+            });
           }
-        });
-      }
+        }
+      });
     }
 
     return summaryCountsData;
@@ -162,34 +158,29 @@ function OperationsViewAnalytics_manager({ persona, date }) {
       <>
         <SummaryCountBlocksView data={countBlockData} />
 
-        {!envIsProd && (
-          <div className="d-flex">
-            <div className="align-self-stretch p-2 w-100">
-              <CpuUsageByTimeLineChart persona={persona} date={{ start: "now-30d", end: "now" }} />
-            </div>
+        <div className="d-flex">
+          <div className="align-self-stretch p-2 w-100">
+            <CpuUsageByTimeLineChart persona={persona} date={{ start: "now-30d", end: "now" }} />
           </div>
-        )}
-        {!envIsProd && (
-          <div className="d-flex">
-            <div className="align-self-stretch p-2 w-100">
-              <MemoryUsageByTimeLineChart persona={persona} date={{ start: "now-30d", end: "now" }} />
-            </div>
+        </div>
+
+        <div className="d-flex">
+          <div className="align-self-stretch p-2 w-100">
+            <MemoryUsageByTimeLineChart persona={persona} date={{ start: "now-30d", end: "now" }} />
           </div>
-        )}
-        {!envIsProd && (
-          <div className="d-flex">
-            <div className="align-self-stretch p-2 w-100">
-              <InNetworkTrafficByTimeLineChart persona={persona} date={{ start: "now-30d", end: "now" }} />
-            </div>
+        </div>
+
+        <div className="d-flex">
+          <div className="align-self-stretch p-2 w-100">
+            <InNetworkTrafficByTimeLineChart persona={persona} date={{ start: "now-30d", end: "now" }} />
           </div>
-        )}
-        {!envIsProd && (
-          <div className="d-flex">
-            <div className="align-self-stretch p-2 w-100">
-              <OutNetworkTrafficByTimeLineChart persona={persona} date={{ start: "now-30d", end: "now" }} />
-            </div>
+        </div>
+
+        <div className="d-flex">
+          <div className="align-self-stretch p-2 w-100">
+            <OutNetworkTrafficByTimeLineChart persona={persona} date={{ start: "now-30d", end: "now" }} />
           </div>
-        )}
+        </div>
       </>
     );
 }
