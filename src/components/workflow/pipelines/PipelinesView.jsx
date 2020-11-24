@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 import { AuthContext } from "../../../contexts/AuthContext";
 import "../workflows.css";
 import PipelineItem from "./PipelineItem";
@@ -9,7 +9,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import PipelineWelcomeView from "./PipelineWelcomeView";
 import cookieHelpers from "../../../core/cookies/cookie-helpers";
-import {DialogToastContext} from "../../../contexts/DialogToastContext";
+import { DialogToastContext } from "../../../contexts/DialogToastContext";
 import DtoTopPagination from "../../common/pagination/DtoTopPagination";
 import Model from "../../../core/data_model/model";
 import pipelineFilterMetadata from "./pipeline_details/workflow/pipeline-filter-metadata";
@@ -20,11 +20,8 @@ import TagFilter from "../../common/filters/tags/TagFilter";
 import PipelineOwnerFilter from "../../common/filters/pipelines/PipelineOwnerFilter";
 import PipelinesTable from "./pipeline_details/PipelinesTable";
 import InformationDialog from "components/common/status_notifications/info";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faFilter} from "@fortawesome/pro-solid-svg-icons";
-import Button from "react-bootstrap/Button";
-import {faList} from "@fortawesome/pro-light-svg-icons/faList";
-import {faClone} from "@fortawesome/pro-light-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faThLarge, faList } from "@fortawesome/pro-light-svg-icons";
 
 function PipelinesView({ currentTab, setActiveTab }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -39,7 +36,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
   }, [currentTab]);
 
   const getCookie = async () => {
-    let newPipelineFilterDto = new Model({...pipelineFilterMetadata.newObjectFields}, pipelineFilterMetadata, false);
+    let newPipelineFilterDto = new Model({ ...pipelineFilterMetadata.newObjectFields }, pipelineFilterMetadata, false);
     try {
       let storedSortOption = cookieHelpers.getCookie("pipelines-v2", "sortOption");
       let storedPageSize = cookieHelpers.getCookie("pipelines-v2", "pageSize");
@@ -56,15 +53,13 @@ function PipelinesView({ currentTab, setActiveTab }) {
       if (storedViewType != null) {
         newPipelineFilterDto.setData("viewType", JSON.parse(storedViewType));
       }
-    }
-    catch (error) {
+    } catch (error) {
       cookieHelpers.setCookie("pipelines-v2", "sortOption", JSON.stringify(newPipelineFilterDto.getData("sortOption")));
       cookieHelpers.setCookie("pipelines-v2", "pageSize", JSON.stringify(newPipelineFilterDto.getData("pageSize")));
       cookieHelpers.setCookie("pipelines-v2", "viewType", JSON.stringify(newPipelineFilterDto.getData("viewType")));
       console.error("Error loading cookie. Setting to default");
       console.error(error);
-    }
-    finally {
+    } finally {
       await loadData(newPipelineFilterDto);
     }
   };
@@ -87,40 +82,28 @@ function PipelinesView({ currentTab, setActiveTab }) {
 
       let newFilterDto = newPipelineFilterDto;
       newFilterDto.setData("totalCount", response.data.count);
-      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters())
-      setPipelineFilterDto({...newFilterDto});
+      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
+      setPipelineFilterDto({ ...newFilterDto });
     } catch (error) {
       console.error(error);
       toastContext.showLoadingErrorDialog(error);
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   const getFilterBar = () => {
-    return(
+    return (
       <FilterBar
         loadData={loadData}
         filterDto={pipelineFilterDto}
         setFilterDto={setPipelineFilterDto}
         filters={["status", "type", "search"]}
       >
-        <TagFilter filterDto={pipelineFilterDto} setFilterDto={setPipelineFilterDto} />
-        <PipelineOwnerFilter filterDto={pipelineFilterDto} setFilterDto={setPipelineFilterDto} />
-        <SearchFilter filterDto={pipelineFilterDto} setFilterDto={setPipelineFilterDto} />
+        <TagFilter filterDto={pipelineFilterDto} setFilterDto={setPipelineFilterDto}/>
+        <PipelineOwnerFilter filterDto={pipelineFilterDto} setFilterDto={setPipelineFilterDto}/>
+        <SearchFilter filterDto={pipelineFilterDto} setFilterDto={setPipelineFilterDto}/>
       </FilterBar>
-    );
-  };
-
-  const getToggleIcon = () => {
-    if (pipelineFilterDto.getData("viewType") === "list") {
-      return (
-        <FontAwesomeIcon icon={faList} fixedWidth/>
-      );
-    }
-
-    return (
-      <FontAwesomeIcon icon={faClone} fixedWidth/>
     );
   };
 
@@ -128,21 +111,32 @@ function PipelinesView({ currentTab, setActiveTab }) {
     let newPipelineFilterDto = pipelineFilterDto;
     if (pipelineFilterDto.getData("viewType") === "list") {
       newPipelineFilterDto.setData("viewType", "card");
-    }
-    else {
+    } else {
       newPipelineFilterDto.setData("viewType", "list");
     }
 
-
     saveCookies(newPipelineFilterDto);
-    setPipelineFilterDto({...newPipelineFilterDto});
+    setPipelineFilterDto({ ...newPipelineFilterDto });
   };
 
   const getViewToggle = () => {
+    const view = pipelineFilterDto.getData("viewType");
     return (
-      <Button type="primary" size="sm" onClick={() => switchView()}>
-        {getToggleIcon()}
-      </Button>
+      <>
+        <Button
+          variant={view === "list" ? "primary" : "outline-secondary"}
+          className="mr-1"
+          size="sm"
+          onClick={() => switchView()}>
+          <FontAwesomeIcon icon={faList} fixedWidth/>
+        </Button>
+        <Button
+          variant={view !== "list" ? "primary" : "outline-secondary"}
+          size="sm"
+          onClick={() => switchView()}>
+          <FontAwesomeIcon icon={faThLarge} fixedWidth/>
+        </Button>
+      </>
     );
   };
 
@@ -169,7 +163,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
   const showList = () => {
     return (
       <Col sm={12} className="p-2">
-        <PipelinesTable isLoading={loading} data={data.response} />
+        <PipelinesTable isLoading={loading} data={data.response}/>
       </Col>
     );
   };
@@ -192,9 +186,9 @@ function PipelinesView({ currentTab, setActiveTab }) {
 
   if (data && data.response && data.count >= 0) {
     return (
-      <div className="max-content-width" style={{minWidth: "505px"}}>
+      <div className="max-content-width" style={{ minWidth: "505px" }}>
         <div className="mb-4">
-          <div className="px-2 mb-1 d-flex justify-content-between">
+          <div className="px-2 mb-1 d-flex justify-content-end">
             <div>
               {getViewToggle()}
             </div>
@@ -231,7 +225,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
   return (
     <div className="px-2 max-content-width" style={{ minWidth: "505px" }}>
       <div className="my-5">
-        <InformationDialog  message="Could not load pipelines."/>
+        <InformationDialog message="Could not load pipelines."/>
       </div>
     </div>
   );
