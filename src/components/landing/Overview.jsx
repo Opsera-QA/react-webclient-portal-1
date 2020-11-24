@@ -122,7 +122,7 @@ function OverviewLanding() {
                 <div className="row mx-n2 mt-3">
                   <div className="col-md px-2 landing-content-module">
                     <img
-                      alt="OpsERA"
+                      alt="Toolchain Automation"
                       src="/img/platform.png"
                       width="195"
                       height="225"
@@ -134,7 +134,7 @@ function OverviewLanding() {
                   </div>
                   <div className="col-md px-2 landing-content-module">
                     <img
-                      alt="OpsERA"
+                      alt="Declarative Pipelines"
                       src="/img/pipeline.png"
                       width="195"
                       height="225"
@@ -146,7 +146,7 @@ function OverviewLanding() {
                   </div>
                   <div className="col-md px-2 landing-content-module">
                     <img
-                      alt="OpsERA"
+                      alt="Insights"
                       src="/img/analytics.png"
                       width="195"
                       height="225"
@@ -159,7 +159,7 @@ function OverviewLanding() {
                 </div>
                 <div className="row mx-n2 mt-4">
                   <div className="col-md px-2 landing-content-module">
-                    <div className="h5">Platform</div>
+                    <div className="h5">Toolchain Automation</div>
                     <div className="text-muted pr-2">
                       Get started in your DevOps journey with new tools or experiment with many of our tool offerings to
                       figure out your next steps.
@@ -167,7 +167,7 @@ function OverviewLanding() {
                   </div>
                   <div className="col-md px-2 landing-content-module">
                     <div className="h5">
-                      Pipeline
+                      Declarative Pipelines
                       {statsData.pendingPipelines && statsData.pendingPipelines.length > 0 && (
                         <Badge variant="danger" className="ml-1">
                           New
@@ -199,7 +199,7 @@ function OverviewLanding() {
                     )}
                   </div>
                   <div className="col-md px-2 landing-content-module">
-                    <div className="h5">Analytics</div>
+                    <div className="h5">Insights</div>
                     <div className="text-muted pr-2">Get real time observability across your various pipelines.</div>
                   </div>
                 </div>

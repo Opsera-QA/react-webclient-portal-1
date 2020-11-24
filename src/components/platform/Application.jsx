@@ -198,8 +198,8 @@ function Application(props) {
 
   return(
     <>
-      <div>
-        <h4>Platforms</h4>
+      <div className="mt-3">
+        <h5>Toolchain Automation of Platforms</h5>
 
         <div className="default-custom-tabs">
           <ul className="nav nav-tabs mt-3">
