@@ -23,8 +23,7 @@ import SpinnakerStepConfiguration from "./step_tool_configuration_forms/spinnake
 import ApprovalStepConfiguration from "./step_tool_configuration_forms/approval/ApprovalStepConfiguration";
 import CypressStepConfiguration from "./step_tool_configuration_forms/cypress/CypressStepConfiguration";
 import DockerPushStepConfiguration from "./step_tool_configuration_forms/docker_push/DockerPushStepConfiguration";
-import AnchoreStepConfiguration from "./step_tool_configuration_forms/AnchoreStepConfiguration";
-import AnchoreStepConfiguration2 from "./step_tool_configuration_forms/anchore/AnchoreStepConfiguration";
+import AnchoreScanStepConfiguration from "./step_tool_configuration_forms/anchore_scan/AnchoreScanStepConfiguration";
 import SFDCStepConfiguration from "./step_tool_configuration_forms/sfdc/SFDCStepConfiguration";
 import NexusStepConfiguration from "./step_tool_configuration_forms/nexus/NexusStepConfiguration";
 import ArgoCDStepConfiguration from "./step_tool_configuration_forms/argo_cd/ArgoCDStepConfiguration";
@@ -34,6 +33,8 @@ import EBSStepConfiguration from "./step_tool_configuration_forms/ebs/EBSStepCon
 import {getErrorDialog} from "../../../../../common/toasts/toasts";
 import pipelineActions from "../../../../pipeline-actions";
 import ToastContext from "react-bootstrap/cjs/ToastContext";
+import AnchoreIntegratorStepConfiguration
+  from "./step_tool_configuration_forms/anchore_integrator/AnchoreIntegratorStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -427,7 +428,7 @@ function StepToolConfiguration({
         );
       case "anchore-scan":
         return (
-          <AnchoreStepConfiguration
+          <AnchoreScanStepConfiguration
             pipelineId={pipeline._id}
             plan={pipeline.workflow.plan}
             stepId={stepId}
@@ -440,7 +441,7 @@ function StepToolConfiguration({
         );
       case "anchore-integrator":
         return (
-          <AnchoreStepConfiguration2
+          <AnchoreIntegratorStepConfiguration
             pipelineId={pipeline._id}
             plan={pipeline.workflow.plan}
             stepId={stepId}

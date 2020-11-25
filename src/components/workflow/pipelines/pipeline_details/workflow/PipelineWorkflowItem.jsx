@@ -27,6 +27,7 @@ import "../../../workflows.css";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { AuthContext } from "contexts/AuthContext";
 import WorkflowAuthorizedActions from "./workflow-authorized-actions";
+import PipelineStepConfigurationSummaryModal from "./step_configuration/PipelineStepConfigurationSummaryModal";
 
 const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineId, editWorkflow, parentCallbackEditItem, deleteStep, parentHandleViewSourceActivityLog, customerAccessRules, parentWorkflowStatus, refreshCount }) => {
   const toastContext = useContext(DialogToastContext);
@@ -41,6 +42,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
   const [showToolActivity, setShowToolActivity] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isToolSet, setIsToolSet] = useState(false);
+  const [showSummaryModal, setShowSummaryModal] = useState(false);
 
   const authorizedAction = (action, owner) => {
     return WorkflowAuthorizedActions.workflowItems(customerAccessRules, action, owner);
@@ -112,6 +114,10 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
   const handleViewClick = (data, header) => {
     setActivityLogModal({ show: true, header: header, message: data, button: "OK" });
   };
+
+  const handleSummaryViewClick = () => {
+    setShowSummaryModal(true);
+  }
 
   const handleEditClick = async (type, tool, itemId) => {
     if (!authorizedAction("edit_step_details", pipeline.owner)) {
@@ -329,7 +335,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
                                  className="text-muted mx-1" fixedWidth
                                  style={{ cursor: "pointer" }}
                                  onClick={() => {
-                                   handleViewClick(item, "Step Settings");
+                                   handleSummaryViewClick();
                                  }}/>
               </OverlayTrigger>
               }
@@ -430,6 +436,12 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
                                  handleCancelModal={() => setShowDeleteModal(false)}
                                  handleConfirmModal={() => handleDeleteStepClickConfirm(modalDeleteIndex)}/>}
 
+
+      <PipelineStepConfigurationSummaryModal
+        pipelineData={item}
+        setShowModal={setShowSummaryModal}
+        showModal={showSummaryModal}
+      />
 
       {showToolActivity && <StepToolActivityView pipelineId={pipelineId}
                                                  stepId={item._id}
