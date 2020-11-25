@@ -4,15 +4,15 @@ import { Form, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faSpinner, faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
-import { AuthContext } from "../../../../../../../contexts/AuthContext";
-import { axiosApiService } from "../../../../../../../api/apiService";
+import { AuthContext } from "../../../../../../../../contexts/AuthContext";
+import { axiosApiService } from "../../../../../../../../api/apiService";
 import { Link } from "react-router-dom";
-import ErrorDialog from "../../../../../../common/status_notifications/error";
+import ErrorDialog from "../../../../../../../common/status_notifications/error";
 import {
   getErrorDialog,
   getMissingRequiredFieldsErrorDialog,
   getServiceUnavailableDialog,
-} from "../../../../../../common/toasts/toasts";
+} from "../../../../../../../common/toasts/toasts";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
@@ -23,7 +23,8 @@ const INITIAL_DATA = {
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
 // ONLY allow changing of the configuration and threshold properties of "tool"!
-function ArgoCDStepConfiguration({
+// TODO: Delete after confirming we don't need this
+function ArgoCDStepConfigurationDeprecated({
   stepTool,
   pipelineId,
   plan,
@@ -340,7 +341,7 @@ function ArgoCDStepConfiguration({
   );
 }
 
-ArgoCDStepConfiguration.propTypes = {
+ArgoCDStepConfigurationDeprecated.propTypes = {
   data: PropTypes.object,
   pipelineId: PropTypes.string,
   stepId: PropTypes.string,
@@ -350,4 +351,4 @@ ArgoCDStepConfiguration.propTypes = {
   setShowToast: PropTypes.func,
 };
 
-export default ArgoCDStepConfiguration;
+export default ArgoCDStepConfigurationDeprecated;

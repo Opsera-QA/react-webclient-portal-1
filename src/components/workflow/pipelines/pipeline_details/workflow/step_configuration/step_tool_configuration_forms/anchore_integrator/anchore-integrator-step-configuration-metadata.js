@@ -1,4 +1,4 @@
-const anchoreStepFormMetadata = {
+const anchoreIntegratorStepConfigurationMetadata = {
   type: "Anchore Tool Configuration",
   fields: [
     {
@@ -30,4 +30,4 @@ const anchoreStepFormMetadata = {
   }
 };
 
-export default anchoreStepFormMetadata;
+export default anchoreIntegratorStepConfigurationMetadata;
