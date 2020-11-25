@@ -13,6 +13,7 @@ import {axiosApiService} from "../../../../api/apiService";
 import ActionBarContainer from "../../../common/actions/ActionBarContainer";
 import ActionBarToggleButton from "../../../common/actions/buttons/ActionBarToggleButton";
 import ActionBarBackButton from "../../../common/actions/buttons/ActionBarBackButton";
+import ActionBarDeleteToolButton from "../../../common/actions/buttons/tool/ActionBarDeleteToolButton";
 
 function ToolDetailView() {
   const { id } = useParams();
@@ -44,22 +45,6 @@ function ToolDetailView() {
     }
   };
 
-  const toggleToolType = async () => {
-    if(toolData.isModelValid()) {
-      try {
-        const accessToken = await getAccessToken();
-        let newToolData = toolData.getPersistData();
-        newToolData["active"] = !newToolData["active"];
-        let response = await axiosApiService(accessToken).post(`/registry/${newToolData._id}/update`, newToolData);
-        let updatedDto = new Model(response.data, toolData.metaData, false);
-        setToolData(updatedDto);
-      }
-      catch (err) {
-        console.log(err.message);
-      }
-    }
-  };
-
   const getActionBar = () => {
     return (
       <ActionBarContainer>
@@ -67,7 +52,7 @@ function ToolDetailView() {
           <ActionBarBackButton path={"/inventory/tools"} />
         </div>
         <div>
-          <ActionBarToggleButton status={toolData?.getData("active")} handleActiveToggle={toggleToolType} />
+          <ActionBarDeleteToolButton status={toolData?.getData("active")} toolDataObject={toolData} />
         </div>
       </ActionBarContainer>
     );
@@ -83,6 +68,7 @@ function ToolDetailView() {
       titleIcon={faTools}
       dataObject={toolData}
       isLoading={isLoading}
+      activeField={"active"}
       actionBar={getActionBar()}
       detailPanel={<ToolDetailPanel toolData={toolData} isLoading={isLoading} setToolData={setToolData} loadData={getTool}/>}
     />

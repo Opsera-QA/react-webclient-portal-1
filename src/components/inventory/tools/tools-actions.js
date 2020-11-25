@@ -7,13 +7,9 @@ toolsActions.checkToolConnectivity = async (toolId, toolName, getAccessToken) =>
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
-toolsActions.deleteTool = async (userId, getAccessToken) => {
-  const accessToken = await getAccessToken();
-  const apiUrl = `/users/${userId}`;
-  const response = await axiosApiService(accessToken).delete(apiUrl, {})
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+toolsActions.deleteTool = async (dataObject, getAccessToken) => {
+  const apiUrl = `/registry/${dataObject.getData("_id")}`;
+  return baseActions.apiDeleteCall(getAccessToken, apiUrl);
 };
 
 toolsActions.updateTool = async (toolDataDto, getAccessToken) => {

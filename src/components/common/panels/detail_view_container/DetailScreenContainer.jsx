@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import {faSpinner} from "@fortawesome/pro-solid-svg-icons";
 import DataNotFoundContainer from "./DataNotFoundContainer";
 import DataNotFoundDialog from "../../status_notifications/data_not_found/DataNotFoundDialog";
+import DetailScreenTitleBar from "./DetailScreenTitleBar";
 
 function DetailScreenContainer(
   {
@@ -18,16 +19,12 @@ function DetailScreenContainer(
     title,
     titleIcon,
     detailPanel,
-    isLoading
+    isLoading,
+    activeField
   }) {
 
   const getTitleBar = () => {
-    if (isLoading) {
-      return (<span><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Data</span>);
-    }
-    else {
-      return (<span><FontAwesomeIcon icon={titleIcon} fixedWidth className="mr-1"/>{title}</span>);
-    }
+    return (<DetailScreenTitleBar isLoading={isLoading} titleIcon={titleIcon} title={title} inactive={activeField ? dataObject?.getData(activeField) === false : false} /> );
   };
 
   const getDetailBody = () => {
@@ -84,6 +81,7 @@ function DetailScreenContainer(
 
 
 DetailScreenContainer.propTypes = {
+  activeField: PropTypes.string,
   breadcrumbDestination: PropTypes.string,
   title: PropTypes.string,
   type: PropTypes.string,
