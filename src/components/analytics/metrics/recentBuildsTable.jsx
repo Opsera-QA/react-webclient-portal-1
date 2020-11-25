@@ -124,7 +124,7 @@ function RecentBuildsTable({ date }) {
       <>
         {typeof data.data !== "object" ||
         data.data === undefined ||
-        Object.keys(data.data).length === 1 ||
+        Object.keys(data).length === 1 ||
         data.status !== 200 ? (
           <>
             <div className="chart mb-3" style={{ height: "300px" }}>

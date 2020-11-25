@@ -112,15 +112,15 @@ function SonarSecurityLineChart({ persona, sonarMeasure, date }) {
               onClick={() => setShowModal(true)}
 
               margin={{ top: 40, right: 110, bottom: 70, left: 40 }}
-              yScale={{ type: "linear", min: "auto", max: "auto", stacked: true, reverse: false }}
-
               xScale={{
                 type: "time",
-                format: "%Y-%m-%dT%H:%M:%S.%LZ",
-                precision: "day",
+                format: "%Y-%m-%d",
               }}
-
-              xFormat="time:%Y-%m-%dT%H:%M:%S.%LZ"
+              xFormat="time:%Y-%m-%d"
+              yScale={{
+                type: "linear",
+                stacked: false,
+              }}
               axisBottom={config.axisBottom}
               pointSize={10}
 

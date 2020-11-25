@@ -1,13 +1,8 @@
 export default {
   axisBottom: {
     format: "%b %d",
-    // legendOffset: -12,
-    orient: "bottom",
-    tickSize: 5,
-    tickPadding: 5,
     tickRotation: -65,
     legendOffset: 40,
-    legendPosition: "middle"
   },
   axisLeft: {
     "orient": "left",
@@ -21,13 +16,13 @@ export default {
     {
       "anchor": "bottom-right",
       "direction": "column",
-      "justify": true,
-      "translateX": 100,
+      "justify": false,
+      "translateX": 110,
       "translateY": 50,
-      "itemsSpacing": 4,
-      "itemWidth": 110,
-      "itemDirection": "bottom-to-top",
-      "itemHeight": 25,
+      "itemsSpacing": 0,
+      "itemWidth": 100,
+      "itemDirection": "left-to-right",
+      "itemHeight": 20,
       "itemOpacity": 0.75,
       "symbolSize": 10,
       "symbolShape": "circle",
