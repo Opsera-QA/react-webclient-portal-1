@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Button, Form, OverlayTrigger, Popover } from "react-bootstrap";
+import { Button, Form, OverlayTrigger, Popover, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faExclamationCircle,
@@ -23,6 +23,9 @@ import {
 import SFDCConfiguration from "./jenkins_step_config_sub_forms/SFDCConfiguration";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import pipelineActions from "components/workflow/pipeline-actions";
+import JSONInput from "react-json-editor-ajrm";
+import locale    from "react-json-editor-ajrm/locale/en";
+import CloseButton from "../../../../../../../common/buttons/CloseButton";
 
 const JOB_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
@@ -83,6 +86,7 @@ function JenkinsStepConfiguration({
   createJob,
   setToast,
   setShowToast,
+  closeEditorPanel
 }) {
   const contextType = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -612,8 +616,20 @@ function JenkinsStepConfiguration({
           stepIdXML: "",
           sfdcDestToolId: "",
           isOrgToOrg: false,
+          buildArgs: {}
         });
         break;
+    }
+  };
+  
+  const handleJsonInputUpdate = (e) => {
+    if (e.error) {
+      console.log(e.error);
+      return;
+    }
+    if (e.jsObject && Object.keys(e.jsObject).length > 0) {
+      setFormData({ ...formData, buildArgs: e.jsObject })
+      return
     }
   };
 
@@ -1177,54 +1193,108 @@ function JenkinsStepConfiguration({
                       onChange={(e) => setFormData({ ...formData, dockerPath: e.target.value })}
                     />
                   </Form.Group>
+
+                  {/* docker params optional */}                  
+                  <OverlayTrigger
+                    trigger="click"
+                    rootClose
+                    placement="left"
+                    overlay={
+                      <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
+                        <Popover.Title as="h3">Build Arguments</Popover.Title>
+
+                        <Popover.Content>
+                          <div className="text-muted mb-2">
+                            Enter Runtime Build arguments as a key value pair JSON. You can add any number of runtime arguments to the
+                            JSON Object. Sample: {" { Key1: Value1, Key2: value2 }"}
+                          </div>
+                        </Popover.Content>
+                      </Popover>
+                    }
+                  >
+                    <FontAwesomeIcon
+                      icon={faEllipsisH}
+                      className="fa-pull-right pointer pr-1"
+                      onClick={() => document.body.click()}
+                    />
+                  </OverlayTrigger>
+                  <div className="form-group m-2">
+                    <label>Build Arguments (Optional)</label>
+                    <div style={{ border: "1px solid #ced4da", borderRadius: ".25rem" }}>
+                      <JSONInput
+                        placeholder={
+                            formData.buildArgs && Object.keys(formData.buildArgs).length > 0
+                            ? formData.buildArgs
+                            : undefined
+                        }
+                        value={formData.buildArgs ? formData.buildArgs : {}}
+                        onChange={(e) => handleJsonInputUpdate(e)}
+                        theme="light_mitsuketa_tribute"
+                        locale={locale}
+                        height="175px"
+                      />
+                    </div>
+                  </div>
+                  <small className="form-text text-muted form-group m-2 text-left">
+                    Enter runtime build arguments as a JSON Object
+                  </small>
+                 
                   </>
                 )}
-                
               </>
             )}
-
           </>
         )}
 
         {jobType === "opsera-job" ? (
-          <Button
-            variant="primary"
-            type="button"
-            className="mt-3"
-            onClick={() => {
-              handleCreateAndSave(pipelineId, stepId, formData.toolConfigId);
-            }}
-          >
-            {loading ? (
-              <>
-                <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth /> Working
-              </>
-            ) : (
-              <>
-                <FontAwesomeIcon icon={faSave} className="mr-1" />
-                Create Job and Save
-              </>
-            )}
-          </Button>
+          <Row className="mx-1 py-2">
+          <div className="d-flex mx-1 px-1">
+            <Button
+              variant="primary"
+              type="button"
+              size="sm" 
+              onClick={() => {
+                handleCreateAndSave(pipelineId, stepId, formData.toolConfigId);
+              }}
+            >
+              {loading ? (
+                <>
+                  <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth /> Working
+                </>
+              ) : (
+                <>
+                  <FontAwesomeIcon icon={faSave} className="mr-1" />
+                  Create Job and Save
+                </>
+              )}
+            </Button>
+          </div>
+          <CloseButton isLoading={loading} closeEditorCallback={closeEditorPanel} />
+          </Row>
         ) : (
-          <Button
-            variant="primary"
-            type="button"
-            className="mt-3"
-            onClick={() => {
-              callbackFunction();
-            }}
-          >
-            {loading ? (
-              <>
-                <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth /> Saving
-              </>
-            ) : (
-              <>
-                <FontAwesomeIcon icon={faSave} className="mr-1" /> Save
-              </>
-            )}
-          </Button>
+          <Row className="mx-1 py-2">
+          <div className="d-flex mx-1 px-1">
+            <Button
+              variant="primary"
+              type="button"
+              size="sm" 
+              onClick={() => {
+                callbackFunction();
+              }}
+            >
+              {loading ? (
+                <>
+                  <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth /> Saving
+                </>
+              ) : (
+                <>
+                  <FontAwesomeIcon icon={faSave} className="mr-1" /> Save
+                </>
+              )}
+            </Button>
+          </div>
+          <CloseButton isLoading={loading} closeEditorCallback={closeEditorPanel} />
+          </Row>
         )}
 
         <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
@@ -1243,6 +1313,7 @@ JenkinsStepConfiguration.propTypes = {
   createJob: PropTypes.func,
   setToast: PropTypes.func,
   setShowToast: PropTypes.func,
+  closeEditorPanel: PropTypes.func
 };
 
 export default JenkinsStepConfiguration;
