@@ -41,4 +41,9 @@ KpiActions.updateKpi = async (kpiDataDto, getAccessToken) => {
   return baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
 
+KpiActions.deleteKpi = async (kpiDataDto, getAccessToken) => {
+  const apiUrl = `/analytics/kpi/configurations/${kpiDataDto.getData("_id")}/`;
+  return baseActions.apiDeleteCall(getAccessToken, apiUrl);
+};
+
 export default KpiActions;
