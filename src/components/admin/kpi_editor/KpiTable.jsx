@@ -9,8 +9,11 @@ import {
 } from "../../common/table/table-column-helpers";
 import kpiMetaData from "./kpi_detail_view/kpi-form-fields";
 import NewKpiModal from "./NewKpiModal";
+import FilterBar from "../../common/filters/FilterBar";
+import StatusFilter from "../../common/filters/status/StatusFilter";
+import SearchFilter from "../../common/filters/search/StatusFilter";
 
-function KpiTable({ data, isLoading, loadData }) {
+function KpiTable({ data, kpiFilterDto, setKpiFilterDto, isLoading, loadData }) {
   let fields = kpiMetaData.fields;
   const history = useHistory();
   const [showKpiModal, setShowKpiModal] = useState(false);
@@ -24,6 +27,10 @@ function KpiTable({ data, isLoading, loadData }) {
     []
   );
 
+  const tableInitialState = {
+    pageIndex: 0,
+  };
+
   const onRowSelect = (rowData, type) => {
     history.push("/admin/kpis/" + rowData.original._id);
   };
@@ -36,18 +43,49 @@ function KpiTable({ data, isLoading, loadData }) {
     setShowKpiModal(true);
   };
 
+  const getFilterBar = () => {
+    return(
+      <FilterBar
+        addRecordFunction={createKpi}
+        loadData={loadData}
+        filterDto={kpiFilterDto}
+        setFilterDto={setKpiFilterDto}
+        filters={["status", "search"]}
+      >
+        <StatusFilter filterDto={kpiFilterDto} setFilterDto={setKpiFilterDto} />
+        <SearchFilter filterDto={kpiFilterDto} setFilterDto={setKpiFilterDto} />
+      </FilterBar>
+    );
+  };
+
   return (
-    <>
-      <CustomTable onRowSelect={onRowSelect} isLoading={isLoading} data={data} rowStyling={rowStyling} columns={columns} createNewRecord={createKpi} type={"KPI"} tableTitle={"KPIs"} />
+    <div className="mt-2">
+      <CustomTable
+        onRowSelect={onRowSelect}
+        isLoading={isLoading}
+        data={data}
+        rowStyling={rowStyling}
+        columns={columns}
+        createNewRecord={createKpi}
+        type={"KPI"}
+        tableTitle={"KPIs"}
+        loadData={loadData}
+        tableFilterBar={getFilterBar()}
+        initialState={tableInitialState}
+        paginationDto={kpiFilterDto}
+        setPaginationDto={setKpiFilterDto}
+      />
       <NewKpiModal showModal={showKpiModal} setShowModal={setShowKpiModal} loadData={loadData}/>
-    </>
+    </div>
   );
 }
 
 KpiTable.propTypes = {
   data: PropTypes.array,
   isLoading: PropTypes.bool,
-  loadData: PropTypes.func
+  loadData: PropTypes.func,
+  kpiFilterDto: PropTypes.object,
+  setKpiFilterDto: PropTypes.func
 };
 
 export default KpiTable;
