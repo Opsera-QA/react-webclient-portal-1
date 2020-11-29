@@ -121,7 +121,7 @@ const LoginForm = () => {
       setMessage("Congratulations, your account set up is in progress and it should be available shortly. Please check back in few minutes or contact us for assistance!");
     } catch (err) {
       console.log(err);
-      setErrorMessage(err.message);
+      setErrorMessage(err);
       setMessage(false);
     } finally {
       setLoading(false);
