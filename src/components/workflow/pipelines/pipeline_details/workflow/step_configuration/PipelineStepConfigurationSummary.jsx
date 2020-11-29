@@ -8,10 +8,19 @@ import Model from "../../../../../../core/data_model/model";
 import ReactJson from "react-json-view";
 import TextField from "../../../../../common/form_fields/text-field";
 import {Col, Row} from "react-bootstrap";
+import ChildPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/child/ChildPipelineStepConfigurationSummaryPanel";
+import childPipelineStepConfigurationMetadata
+  from "./step_tool_configuration_forms/child/child-pipeline-step-configuration-metadata";
 import AnchoreScanStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/anchore_scan/AnchoreScanStepConfigurationSummaryPanel";
 import anchoreScanStepConfigurationMetadata
   from "./step_tool_configuration_forms/anchore_scan/anchore-scan-step-configuration-metadata";
+import MockPipelineStepConfiguration from "./step_tool_configuration_forms/mock/MockPipelineStepConfiguration";
+import MockPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/mock/MockPipelineStepConfigurationSummaryPanel";
+import mockPipelineStepConfigurationMetadata
+  from "./step_tool_configuration_forms/mock/mock-pipeline-step-configuration-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -29,11 +38,25 @@ function PipelineStepConfigurationSummary({
             anchoreDataObject={getModelWrappedObject(anchoreIntegratorStepConfigurationMetadata)}
           />
         );
+      case "child-pipeline":
+        return (
+          <ChildPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            childPipelineDataObject={getModelWrappedObject(childPipelineStepConfigurationMetadata)}
+          />
+        );
       case "anchore-scan":
         return (
           <AnchoreScanStepConfigurationSummaryPanel
             pipelineData={pipelineData}
             anchoreDataObject={getModelWrappedObject(anchoreScanStepConfigurationMetadata)}
+          />
+        );
+      case "mock-step":
+        return (
+          <MockPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            mockPipelineDataObject={getModelWrappedObject(mockPipelineStepConfigurationMetadata)}
           />
         );
       case "jenkins":
@@ -68,10 +91,6 @@ function PipelineStepConfigurationSummary({
 
   return (
     <div>
-      <div className="pt-3 px-3 w-100">
-        <Row class="px-3">
-        </Row>
-      </div>
       {getStepConfigurationSummary()}
     </div>
   );

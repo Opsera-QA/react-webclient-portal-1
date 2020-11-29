@@ -16,6 +16,11 @@ function PipelineStepSummaryPanelContainer({ pipelineData, setActiveTab, childre
           <TextField value={pipelineData?.tool?.tool_identifier} label={"Pipeline Step Tool Identifier"}/>
         </Col>
       </Row>
+      {/*TODO: Wire up threshold*/}
+      {/*<Col lg={6}>*/}
+      {/*TODO: This is in pipelineData?.threshold and not actual data object*/}
+      {/*  <DtoJsonField dataObject={childPipelineDataObject} fieldName={"threshold"}/>*/}
+      {/*</Col>*/}
       {children}
       <Row>
         <Col>
@@ -29,7 +34,7 @@ function PipelineStepSummaryPanelContainer({ pipelineData, setActiveTab, childre
 
 PipelineStepSummaryPanelContainer.propTypes = {
   setActiveTab: PropTypes.func,
-  pipelineData: PropTypes.func,
+  pipelineData: PropTypes.object,
   children: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
 };
 

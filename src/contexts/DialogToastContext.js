@@ -183,7 +183,7 @@ function ToastContextProvider ({ children }) {
   const showIncompleteCreateSuccessResultDialog = () => {
     let id = generateUUID();
     let informationDialog = getInformationBanner( `WARNING! An incomplete configuration is being saved.  This step must be fully configured in order to use this feature.`, id);
-    addToast(informationDialog, id);
+    addBannerMessage(informationDialog, id);
   }
 
   const showMissingRequiredFieldsErrorDialog = () => {

@@ -11,6 +11,14 @@ const pipelineMetadata = {
       isRequired: true
     },
     {
+      label: "Run Count",
+      id: "run_count",
+    },
+    {
+      label: "Last Run",
+      id: "last_run",
+    },
+    {
       label: "Account",
       id: "account",
     },
