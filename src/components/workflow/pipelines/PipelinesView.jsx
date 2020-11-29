@@ -21,7 +21,7 @@ import PipelineOwnerFilter from "../../common/filters/pipelines/PipelineOwnerFil
 import PipelinesTable from "./pipeline_details/PipelinesTable";
 import InformationDialog from "components/common/status_notifications/info";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faThLarge, faList } from "@fortawesome/pro-light-svg-icons";
+import {faThLarge, faList, faPlus} from "@fortawesome/pro-light-svg-icons";
 
 function PipelinesView({ currentTab, setActiveTab }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -189,6 +189,15 @@ function PipelinesView({ currentTab, setActiveTab }) {
       <div className="max-content-width" style={{ minWidth: "505px" }}>
         <div className="mb-4">
           <div className="px-2 mb-1 d-flex justify-content-end">
+            <div>
+              <Button
+                variant={"primary"}
+                className="mr-1"
+                size="sm"
+                onClick={() => setActiveTab("catalog")}>
+                <span><FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1"/>Add New Pipeline</span>
+              </Button>
+            </div>
             <div>
               {getViewToggle()}
             </div>
