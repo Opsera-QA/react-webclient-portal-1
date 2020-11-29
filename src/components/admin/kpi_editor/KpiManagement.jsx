@@ -36,7 +36,7 @@ function KpiManagement() {
   };
 
   const getKpis = async (filterDto) => {
-    const response = await KpiActions.getKpis(filterDto, getAccessToken);
+    const response = await KpiActions.getKpis(kpiFilterDto, getAccessToken);
     setKpiList(response.data.data);
     let newFilterDto = filterDto;
     newFilterDto.setData("totalCount", response.data.count);

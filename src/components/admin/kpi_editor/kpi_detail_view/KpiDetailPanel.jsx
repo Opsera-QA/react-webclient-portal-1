@@ -1,67 +1,52 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import KpiEditorPanel from "./KpiEditorPanel";
 import CustomTabContainer from "../../../common/tabs/CustomTabContainer";
-import CustomTab from "../../../common/tabs/CustomTab";
-import {faCogs} from "@fortawesome/pro-solid-svg-icons/faCogs";
 import LoadingDialog from "../../../common/status_notifications/loading";
+import SummaryTab from "../../../common/tabs/detail_view/SummaryTab";
+import SettingsTab from "../../../common/tabs/detail_view/SettingsTab";
+import DetailTabPanelContainer from "../../../common/panels/detail_view/DetailTabPanelContainer";
+import KpiSummaryPanel from "./KpiSummaryPanel";
 
 function KpiDetailPanel({ kpiData, setKpiData }) {
-  const [activeTab, setTabSelection] = useState("settings");
+  const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (activeTab) => e => {
     e.preventDefault();
-    setTabSelection(activeTab);
+    setActiveTab(activeTab);
   };
 
   if (kpiData == null) {
     return <LoadingDialog size="sm" />
   }
 
-  return (
-    <>
-      <div className="pb-3 px-3">
-        <Row>
-          <Col>
-            <CustomTabContainer>
-              <CustomTab icon={faCogs} tabName={"settings"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Settings"} />
-            </CustomTabContainer>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <div className="content-block-collapse">
-              {kpiData && <TagDetailsView activeTab={activeTab} setKpiData={setKpiData} kpiData={kpiData} /> }
-            </div>
-          </Col>
-        </Row>
-      </div>
-    </>
-  );
-}
+  const getTabContainer = () => {
+    return (
+      <CustomTabContainer>
+        <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
+      </CustomTabContainer>
+    );
+  };
 
-function TagDetailsView({ activeTab, setKpiData, kpiData }) {
-  useEffect(() => {
-    // console.log("CHANGE HAPPENED");
-  }, [activeTab, kpiData]);
-
-  if (activeTab) {
+  const getCurrentView = () => {
     switch (activeTab) {
-    case "settings":
-      return <KpiEditorPanel setKpiData={setKpiData} kpiData={kpiData} />;
-    default:
-      return null;
+      case "summary":
+        return <KpiSummaryPanel kpiData={kpiData} setActiveTab={setActiveTab}/>;
+      case "settings":
+        return <KpiEditorPanel setKpiData={setKpiData} kpiData={kpiData} />;
+      default:
+        return null;
     }
-  }
+  };
+
+  return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
 }
 
 KpiDetailPanel.propTypes = {
   kpiData: PropTypes.object,
   setKpiData: PropTypes.func,
-  canDelete: PropTypes.bool
 };
 
 export default KpiDetailPanel;

@@ -1,16 +1,18 @@
 import React, { useState, useEffect, useContext, useMemo } from "react";
 import KpiSummaryPanel from "./KpiSummaryPanel";
 import KpiDetailPanel from "./KpiDetailPanel";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import KpiTagsActions from "../kpi-editor-actions";
 import { AuthContext } from "contexts/AuthContext";
 import Model from "../../../../core/data_model/model";
 import kpiMetaData from "./kpi-form-fields";
-import {faFileInvoice} from "@fortawesome/free-solid-svg-icons";
+import {faFileInvoice} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
-import DetailViewContainer from "../../../common/panels/detail_view_container/DetailViewContainer";
-import DataNotFoundContainer from "../../../common/panels/detail_view_container/DataNotFoundContainer";
-import DataNotFoundDialog from "../../../common/status_notifications/data_not_found/DataNotFoundDialog";
+import ActionBarContainer from "../../../common/actions/ActionBarContainer";
+import ActionBarBackButton from "../../../common/actions/buttons/ActionBarBackButton";
+import ActionBarDeleteButton2 from "../../../common/actions/buttons/ActionBarDeleteButton2";
+import DetailScreenContainer from "../../../common/panels/detail_view_container/DetailScreenContainer";
+import KpiActions from "../kpi-editor-actions";
 
 function KpiDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -53,21 +55,36 @@ function KpiDetailView() {
     }
   };
 
-  if (!isLoading && kpiData == null) {
+  const getActionBar = () => {
     return (
-      <DataNotFoundContainer type={"KPI"} breadcrumbDestination={"kpiDetailView"}>
-        <DataNotFoundDialog type={"KPI"} managementViewIcon={faFileInvoice} managementViewTitle={"KPI Management"} managementViewLink={"/admin/kpis"} />
-      </DataNotFoundContainer>
-    )
+      <ActionBarContainer>
+        <div>
+          <ActionBarBackButton path={"/admin/kpis"} />
+        </div>
+        <div>
+          <ActionBarDeleteButton2 dataObject={kpiData} relocationPath={"/admin/kpis"} handleDelete={handleDelete} />
+        </div>
+      </ActionBarContainer>
+    );
+  };
+
+  const handleDelete = async () => {
+    return await KpiActions.deleteKpi(kpiData, getAccessToken);
   }
 
   return (
-    <DetailViewContainer
+    <DetailScreenContainer
       breadcrumbDestination={"kpiDetailView"}
-      title={kpiData != null ? `KPI Details [${kpiData["name"]}]` : undefined}
+      title={kpiData != null ? `KPI Configuration Details [${kpiData.getData("name")}]` : undefined}
+      managementViewLink={"/admin/kpis"}
+      managementTitle={"KPI Management"}
+      managementViewIcon={faFileInvoice}
+      type={"KPI Configuration"}
       titleIcon={faFileInvoice}
+      activeField={"active"}
+      dataObject={kpiData}
       isLoading={isLoading}
-      summaryPanel={<KpiSummaryPanel kpiData={kpiData} setKpiData={setKpiData}/>}
+      actionBar={getActionBar()}
       detailPanel={<KpiDetailPanel setKpiData={setKpiData} kpiData={kpiData} />}
     />
   );
