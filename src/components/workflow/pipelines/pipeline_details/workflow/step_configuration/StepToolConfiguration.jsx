@@ -35,6 +35,8 @@ import pipelineActions from "../../../../pipeline-actions";
 import ToastContext from "react-bootstrap/cjs/ToastContext";
 import AnchoreIntegratorStepConfiguration
   from "./step_tool_configuration_forms/anchore_integrator/AnchoreIntegratorStepConfiguration";
+import ChildPipelineStepConfiguration from "./step_tool_configuration_forms/child/ChildPipelineStepConfiguration";
+import MockPipelineStepConfiguration from "./step_tool_configuration_forms/mock/MockPipelineStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -516,6 +518,36 @@ function StepToolConfiguration({
       case "elastic-beanstalk":
         return (
           <EBSStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            getToolsList={getToolsList}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case "child-pipeline":
+        return (
+          <ChildPipelineStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            getToolsList={getToolsList}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case "mock-step":
+        return (
+          <MockPipelineStepConfiguration
             pipelineId={pipeline._id}
             plan={pipeline.workflow.plan}
             stepId={stepId}
