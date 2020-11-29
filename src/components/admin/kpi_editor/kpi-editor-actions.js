@@ -1,47 +1,44 @@
-import { axiosApiService } from "api/apiService";
+import baseActions from "../../../utils/actionsBase";
 
 const KpiActions = {};
 
-KpiActions.getKpis = async (getAccessToken) => {
-  const accessToken = await getAccessToken();
+KpiActions.getKpis = async (kpiFilterDto, getAccessToken) => {
   const apiUrl = "/analytics/kpi/configurations";
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {throw { error };});
-  return response;
+  let sortOption = kpiFilterDto.getData("sortOption");
+  let status = kpiFilterDto.getData("status");
+
+  const urlParams = {
+    params: {
+      sort: sortOption ? sortOption.value : undefined,
+      size: kpiFilterDto.getData("pageSize"),
+      page: kpiFilterDto.getData("currentPage"),
+      status: status ? status.value : undefined,
+      search: kpiFilterDto.getData("search")
+    },
+  };
+
+  return baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
 KpiActions.get = async (kpiId, getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = `/analytics/kpi/configurations/${kpiId}`;
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
 KpiActions.createKpi = async (kpiDataDto, getAccessToken) => {
   let postData = {
     ...kpiDataDto.getPersistData()
   }
-  const accessToken = await getAccessToken();
   const apiUrl = "analytics/kpi/configurations/create";
-  const response = await axiosApiService(accessToken).post(apiUrl, postData)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
 
 KpiActions.updateKpi = async (kpiDataDto, getAccessToken) => {
   let postData = {
     ...kpiDataDto.getPersistData()
   }
-  const accessToken = await getAccessToken();
   const apiUrl = `/analytics/kpi/configurations/${kpiDataDto.getData("_id")}/update/`;
-  const response = await axiosApiService(accessToken).post(apiUrl, postData)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
 
 export default KpiActions;

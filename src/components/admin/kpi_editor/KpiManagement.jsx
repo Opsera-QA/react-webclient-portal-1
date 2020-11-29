@@ -6,6 +6,8 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
 import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
 import {DialogToastContext} from "../../../contexts/DialogToastContext";
+import Model from "../../../core/data_model/model";
+import kpiFilterMetadata from "./kpi-filter-metadata";
 
 function KpiManagement() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -13,6 +15,7 @@ function KpiManagement() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [kpiList, setKpiList] = useState([]);
+  const [kpiFilterDto, setKpiFilterDto] = useState(new Model({...kpiFilterMetadata.newObjectFields}, kpiFilterMetadata, false));
 
   useEffect(() => {
     loadData();
@@ -21,7 +24,7 @@ function KpiManagement() {
   const loadData = async () => {
     try {
       setIsLoading(true);
-      await getRoles();
+      await getRoles(kpiFilterDto);
     }
     catch (error) {
       console.log(error);
@@ -32,9 +35,13 @@ function KpiManagement() {
     }
   };
 
-  const getKpis = async () => {
-    const response = await KpiActions.getKpis(getAccessToken);
-    setKpiList(response.data);
+  const getKpis = async (filterDto) => {
+    const response = await KpiActions.getKpis(filterDto, getAccessToken);
+    setKpiList(response.data.data);
+    let newFilterDto = filterDto;
+    newFilterDto.setData("totalCount", response.data.count);
+    newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
+    setKpiFilterDto({...newFilterDto});
   };
 
   const getRoles = async () => {
@@ -42,7 +49,7 @@ function KpiManagement() {
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
-      await getKpis();
+      await getKpis(kpiFilterDto);
     }
   };
 
@@ -62,7 +69,7 @@ function KpiManagement() {
         corresponds to a data point in the analytics platform.
       </div>
       <div className="full-height">
-        {kpiList && <KpiTable loadData={loadData} data={kpiList} isLoading={isLoading}/>}
+        {<KpiTable loadData={loadData} data={kpiList} isLoading={isLoading} kpiFilterDto={kpiFilterDto} setKpiFilterDto={setKpiFilterDto}/>}
       </div>
     </div>
   );
