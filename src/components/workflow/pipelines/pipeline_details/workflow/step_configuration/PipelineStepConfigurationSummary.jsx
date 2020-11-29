@@ -8,6 +8,10 @@ import Model from "../../../../../../core/data_model/model";
 import ReactJson from "react-json-view";
 import TextField from "../../../../../common/form_fields/text-field";
 import {Col, Row} from "react-bootstrap";
+import AnchoreScanStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/anchore_scan/AnchoreScanStepConfigurationSummaryPanel";
+import anchoreScanStepConfigurationMetadata
+  from "./step_tool_configuration_forms/anchore_scan/anchore-scan-step-configuration-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -26,6 +30,12 @@ function PipelineStepConfigurationSummary({
           />
         );
       case "anchore-scan":
+        return (
+          <AnchoreScanStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            anchoreDataObject={getModelWrappedObject(anchoreScanStepConfigurationMetadata)}
+          />
+        );
       case "jenkins":
       case "junit":
       case "xunit":
