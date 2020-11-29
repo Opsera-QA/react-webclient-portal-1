@@ -245,7 +245,7 @@ function PipelineWorkflow({
                           handleEditWorkflowClick();
                         }}
                         disabled={(workflowStatus && workflowStatus !== "stopped")}>
-                  <FontAwesomeIcon icon={faPen} fixedWidth/> </Button>
+                  <FontAwesomeIcon icon={faPen} fixedWidth/> Edit Workflow</Button>
               </OverlayTrigger>
               }
             </>}
