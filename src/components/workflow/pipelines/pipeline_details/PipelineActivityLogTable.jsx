@@ -143,7 +143,7 @@ function PipelineActivityLogTable({ data, isLoading, paginationOptions, selectRu
         Cell: (props) => {
           return format(new Date(props.value), "yyyy-MM-dd', 'hh:mm a");
         },
-        class: "cell-center no-wrap-inline",
+        class: "no-wrap-inline",
       },
       {
         Header: "Info",
