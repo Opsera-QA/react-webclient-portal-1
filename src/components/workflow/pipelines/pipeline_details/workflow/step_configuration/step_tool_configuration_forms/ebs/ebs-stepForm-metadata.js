@@ -10,8 +10,7 @@ const ebsStepFormMetadata = {
     },
     {
       label: "Access Key",
-      id: "accessKey",
-      isRequired: true
+      id: "accessKey"
     },
     {
       label: "Docker Volume Path",
@@ -25,8 +24,7 @@ const ebsStepFormMetadata = {
     },
     {
       label: "Secret Key",
-      id: "secretKey",
-      isRequired: true
+      id: "secretKey"
     },
     {
       label: "S3 Bucket Name",
@@ -35,8 +33,7 @@ const ebsStepFormMetadata = {
     },
     {
       label: "Regions",
-      id: "regions",
-      isRequired: true
+      id: "regions"
     },
     {
       label: "Application Name",
@@ -49,8 +46,8 @@ const ebsStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "S3 Step",
-      id: "s3StepId",
+      label: "S3/ECR Step",
+      id: "s3ECRStepId",
       isRequired: true
     },
     {
@@ -72,6 +69,21 @@ const ebsStepFormMetadata = {
       label: "Platform",
       id: "platform",
       isRequired: true
+    },
+    {
+      label: "Bucket Access",
+      id: "bucketAccess",
+      isRequired: true
+    },
+    {
+      label: "Route 53 Host Zone ID",
+      id: "hostedZoneId",
+      isRequired: true
+    },
+    {
+      label: "Route 53 Domain Name",
+      id: "domainName",
+      isRequired: true
     }
   ],
   newModelBase:
@@ -83,13 +95,16 @@ const ebsStepFormMetadata = {
       regions: "",
       applicationName: "",
       applicationVersionLabel: "",
-      s3StepId: "",
+      s3ECRStepId: "",
       description: "",
       port: "",
       ec2KeyName: "",
       platform: "",
       dockerVolumePath: "",
-      environments : ""
+      environments : "",
+      bucketAccess : "",
+      hostedZoneId: "",
+      domainName : ""
     }
 };
 
