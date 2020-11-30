@@ -5,17 +5,16 @@ import {format} from "date-fns";
 
 function PipelineSummaryField({pipelineData}) {
   const constructPipelineSummaryText = () => {
-    let lastRunTime = pipelineData.getPersistData()?.workflow?.last_run?.completed;
+    let lastRun = pipelineData.getPersistData()?.workflow?.last_run;
 
-    if (lastRunTime != null) {
+    if (lastRun != null) {
       return (
-        <span>Last run completed on {format(new Date(pipelineData.getPersistData()?.workflow?.last_run?.completed), "yyyy-MM-dd', 'hh:mm a")}
-          with a status of {pipelineData.getPersistData()?.workflow?.last_run?.status}.
-        </span>
+        `Last run completed on ${format(new Date(lastRun.completed), "yyyy-MM-dd', 'hh:mm a")}
+          with a status of ${lastRun.status}.`
         );
     }
     else {
-      return <span>This pipeline has not yet been run.</span>
+      return `This pipeline has not yet been run.`
     }
   };
 

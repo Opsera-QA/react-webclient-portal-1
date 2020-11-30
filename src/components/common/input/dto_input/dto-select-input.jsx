@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import DropdownList from "react-widgets/lib/DropdownList";
 
+// TODO: Refactor into multiple components (selectInput, multiselectInput, multiselectWithCreate?)
 function DtoSelectInput({ fieldName, dataObject, setDataObject, groupBy, selectOptions, valueField, textField, filter, placeholderText, setDataFunction, allowCreate, setSelectOptions, valueFormatter, busy, disabled}) {
   const [errorMessage, setErrorMessage] = useState("");
   const [field] = useState(dataObject.getFieldById(fieldName));

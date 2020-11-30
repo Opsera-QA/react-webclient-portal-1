@@ -76,6 +76,8 @@ function StepToolConfiguration({
     plan[stepArrayIndex].tool.configuration = tool.configuration;
     plan[stepArrayIndex].tool.threshold = tool.threshold;
     plan[stepArrayIndex].tool.job_type = tool.job_type;
+    console.log("configuration: " + JSON.stringify(tool.configuration));
+    console.log("plan: " + JSON.stringify(plan));
     await parentCallback(plan);
     // setStepTool({});
   };

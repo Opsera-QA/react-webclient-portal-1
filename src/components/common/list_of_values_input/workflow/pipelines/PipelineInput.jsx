@@ -10,12 +10,14 @@ import Model from "../../../../../core/data_model/model";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Link} from "react-router-dom";
+import DropdownList from "react-widgets/lib/DropdownList";
 
 function PipelineInput({ currentPipelineId, visible, fieldName, dataObject, setDataObject, disabled}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [pipelines, setPipelines] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [field] = useState(dataObject.getFieldById(fieldName));
 
   useEffect(() => {
     loadData();
@@ -56,12 +58,19 @@ function PipelineInput({ currentPipelineId, visible, fieldName, dataObject, setD
     return pipelines;
   };
 
+  const validateAndSetData = (fieldName, value) => {
+    let newDataObject = dataObject;
+    newDataObject.setData(fieldName, value);
+    setDataObject({...newDataObject});
+  };
+
   const getSelectedPipelineSummary = () => {
     let foundPipeline = pipelines.find(pipeline => pipeline.id === dataObject.getData(fieldName));
 
     if (foundPipeline != null) {
       let pipelineDataObject = new Model({...foundPipeline.pipeline}, pipelineMetadata, false);
-      return (<PipelineSummaryCard pipelineData={pipelineDataObject} /> )
+      let runCount = foundPipeline.workflow?.lastRun?.runCount;
+      return (<PipelineSummaryCard pipelineData={pipelineDataObject} runCount={runCount != null ? `${runCount}` : `0`} /> )
     }
 
     return ('Could not get pipeline details. Pipeline may have been deleted');
@@ -94,20 +103,23 @@ function PipelineInput({ currentPipelineId, visible, fieldName, dataObject, setD
   }
 
   return (
-    <div>
-      <DtoSelectInput
-        fieldName={fieldName}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        selectOptions={pipelines}
+    <div className="m-2">
+      <label><span>{field.label}{field.isRequired ? <span className="danger-red">*</span> : null }</span></label>
+      <DropdownList
+        data={pipelines}
+        valueField={"id"}
+        textField={"name"}
+        value={dataObject.getData(fieldName)}
         busy={isLoading}
-        valueField="id"
-        textField="name"
-        disabled={disabled || isLoading}
+        placeholder={"Select A Pipeline"}
+        onChange={data => validateAndSetData(fieldName, data["id"])}
+        disabled={disabled}
       />
-      <small className="text-muted ml-3">
-        {getInfoText()}
-      </small>
+      <div className="mt-2">
+        <small className="text-muted">
+          {getInfoText()}
+        </small>
+      </div>
     </div>
   );
 }

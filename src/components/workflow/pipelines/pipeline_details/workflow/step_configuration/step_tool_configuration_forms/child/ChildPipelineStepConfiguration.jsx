@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import childPipelineStepConfigurationMetadata from "./child-pipeline-step-configuration-metadata";
-import EditorPanelContainer from "../../../../../../../common/panels/detail_panel_container/EditorPanelContainer";
 import PipelineInput from "../../../../../../../common/list_of_values_input/workflow/pipelines/PipelineInput";
-import SaveButton2 from "../../../../../../../common/buttons/saving/SaveButton2";
-import SaveButtonContainer from "../../../../../../../common/buttons/saving/containers/SaveButtonContainer";
 import BooleanToggleInput from "../../../../../../../common/input/dto_input/BooleanToggleInput";
 import thresholdMetadata from "../../../../../../../common/metadata/pipelines/thresholdMetadata";
+import PipelineStepEditorPanelContainer
+  from "../../../../../../../common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import LenientSaveButton from "../../../../../../../common/buttons/saving/LenientSaveButton";
 
 function ChildPipelineStepConfiguration({ stepTool, plan, stepId, pipelineId, parentCallback, closeEditorPanel }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -17,7 +17,6 @@ function ChildPipelineStepConfiguration({ stepTool, plan, stepId, pipelineId, pa
 
   useEffect(() => {
     loadData();
-    console.log("plan: " + JSON.stringify(plan))
   }, []);
 
   const loadData = async () => {
@@ -38,15 +37,14 @@ function ChildPipelineStepConfiguration({ stepTool, plan, stepId, pipelineId, pa
     if (typeof threshold !== "undefined") {
       setThresholdDto(new Model({...threshold}, thresholdMetadata, false));
     } else {
-      setThresholdDto(
-        new Model({...thresholdMetadata.newObjectFields}, thresholdMetadata, true)
+      setThresholdDto(new Model({...thresholdMetadata.newObjectFields}, thresholdMetadata, true)
       );
     }
   };
 
   const callbackFunction = async () => {
     const item = {
-      configuration: childPipelineStepConfigurationDto.getPersistData(),
+      configuration: {...childPipelineStepConfigurationDto.getPersistData()},
       threshold: {
         ...thresholdDto.getPersistData()
       },
@@ -59,15 +57,15 @@ function ChildPipelineStepConfiguration({ stepTool, plan, stepId, pipelineId, pa
   }
 
   return (
-    <EditorPanelContainer>
-      <span>
+    <PipelineStepEditorPanelContainer>
+      <div className="mx-2">
         Opsera supports orchestrating a &quot;child pipeline&quot; within a step.
         This allows users to include another pipeline as a step in this pipeline.
         As such the overall success or failure of that pipeline will impact this one.
         In order to use this feature,
         please ensure that the child pipeline is already configured and runs successfully,
         then add it to this step.
-      </span>
+      </div>
       <PipelineInput
         dataObject={childPipelineStepConfigurationDto}
         setDataObject={setChildPipelineStepConfigurationDataDto}
@@ -76,14 +74,14 @@ function ChildPipelineStepConfiguration({ stepTool, plan, stepId, pipelineId, pa
       />
       {/*TODO: Make threshold editor panel component*/}
       <div className="mt-3">
-        <BooleanToggleInput dataObject={thresholdDto} setDataObject={setThresholdDto} fieldName={"ensureSuccess"} />
-        <BooleanToggleInput dataObject={thresholdDto} setDataObject={setThresholdDto} fieldName={"completeFirst"} />
+        <div className="mx-2"><label>Threshold</label></div>
+        <BooleanToggleInput dataObject={thresholdDto} setDataObject={setThresholdDto} fieldName={"ensureSuccess"}/>
+        <BooleanToggleInput dataObject={thresholdDto} setDataObject={setThresholdDto} fieldName={"completeFirst"}/>
       </div>
-      <SaveButtonContainer>
-        {/*// TODO: Convert to LenientSaveButton when merged in*/}
-        <SaveButton2 updateRecord={callbackFunction} recordDto={childPipelineStepConfigurationDto} lenient={true}/>
-      </SaveButtonContainer>
-    </EditorPanelContainer>
+      <div className="mt-3">
+        <LenientSaveButton updateRecord={callbackFunction} recordDto={childPipelineStepConfigurationDto}/>
+      </div>
+    </PipelineStepEditorPanelContainer>
   );
 }
 
