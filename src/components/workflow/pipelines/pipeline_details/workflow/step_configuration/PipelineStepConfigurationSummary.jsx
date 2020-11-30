@@ -21,6 +21,10 @@ import MockPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/mock/MockPipelineStepConfigurationSummaryPanel";
 import mockPipelineStepConfigurationMetadata
   from "./step_tool_configuration_forms/mock/mock-pipeline-step-configuration-metadata";
+import approvalGatePipelineStepConfigurationMetadata
+  from "./step_tool_configuration_forms/approval/approval-gate-pipeline-step-configuration-metadata";
+import ApprovalGatePipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/approval/ApprovalGatePipelineStepConfigurationSummaryPanel";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -36,6 +40,13 @@ function PipelineStepConfigurationSummary({
           <AnchoreIntegratorStepConfigurationSummaryPanel
             pipelineData={pipelineData}
             anchoreDataObject={getModelWrappedObject(anchoreIntegratorStepConfigurationMetadata)}
+          />
+        );
+      case "approval":
+        return (
+          <ApprovalGatePipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            approvalGatePipelineDataObject={getModelWrappedObject(approvalGatePipelineStepConfigurationMetadata)}
           />
         );
       case "child-pipeline":
@@ -75,7 +86,6 @@ function PipelineStepConfigurationSummary({
       case "databricks-notebook":
       case "ssh-upload":
       case "spinnaker":
-      case "approval":
       case "cypress":
       case "docker-push":
       case "argo":
