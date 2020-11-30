@@ -10,7 +10,7 @@ import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
 import DtoTextInput from "components/common/input/dto_input/dto-text-input";
-import { DialogToastContext, showServiceUnavailableDialog } from "contexts/DialogToastContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
 import SaveButton2 from "../../../../../../../common/buttons/saving/SaveButton2";
 import CloseButton from "../../../../../../../common/buttons/CloseButton"
 import JSONInput from "react-json-editor-ajrm";
@@ -30,6 +30,12 @@ const PLATFORM_OPTIONS = [
   { value: "Single Container Docker", label: "Single Container Docker" },
   { value: "Tomcat", label: "Tomcat" }
 ];
+
+const ACCESS_OPTIONS = [
+  { value: "", label: "Select One", isDisabled: "yes" },
+  { value: "private", label: "Private" },
+  { value: "public", label: "Public" },
+]
 
 function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, callbackSaveToVault, pipelineId, closeEditorPanel }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -140,6 +146,11 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
     if (fieldName === "platform") {
       let newDataObject = ebsStepConfigurationDto;
       newDataObject.setData("platform", value.value);
+      setEBSStepConfigurationDataDto({ ...newDataObject });
+    }
+    if (fieldName === "bucketAccess") {
+      let newDataObject = ebsStepConfigurationDto;
+      newDataObject.setData("bucketAccess", value.value);
       setEBSStepConfigurationDataDto({ ...newDataObject });
     }
   };
@@ -325,7 +336,7 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
             dataObject={ebsStepConfigurationDto}
             filter={"contains"}
             selectOptions={listOfSteps ? listOfSteps : []}
-            fieldName={"s3StepId"}
+            fieldName={"s3ECRStepId"}
             busy={isAwsSearching}
             disabled={
               listOfSteps.length === 0 || ebsStepConfigurationDto.getData("applicationVersionLabel").length === 0
@@ -418,8 +429,29 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
           <small className="form-text text-muted form-group m-2 text-left">
             Enter environments as a JSON Object
           </small>
-
-
+          <DtoSelectInput
+            setDataFunction={handleDTOChange}
+            setDataObject={setEBSStepConfigurationDataDto}
+            valueField="id"
+            textField="label"
+            dataObject={ebsStepConfigurationDto}
+            filter={"contains"}
+            selectOptions={ACCESS_OPTIONS ? ACCESS_OPTIONS : []}
+            fieldName={"bucketAccess"}
+            disabled={ebsStepConfigurationDto && ebsStepConfigurationDto.getData("environments").length === 0}
+          />      
+          <DtoTextInput
+            setDataObject={setEBSStepConfigurationDataDto}
+            dataObject={ebsStepConfigurationDto}
+            fieldName={"hostedZoneId"}
+            disabled={ebsStepConfigurationDto && ebsStepConfigurationDto.getData("bucketAccess").length === 0}
+          />
+          <DtoTextInput
+            setDataObject={setEBSStepConfigurationDataDto}
+            dataObject={ebsStepConfigurationDto}
+            fieldName={"domainName"}
+            disabled={ebsStepConfigurationDto && ebsStepConfigurationDto.getData("hostedZoneId").length === 0}
+          />
           <Row className="mx-1 py-2">
             <SaveButton2
               recordDto={ebsStepConfigurationDto}
