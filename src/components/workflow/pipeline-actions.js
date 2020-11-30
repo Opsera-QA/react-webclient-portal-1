@@ -23,9 +23,16 @@ pipelineActions.getPipelines = async (pipelineFilterDto, type, getAccessToken) =
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
-pipelineActions.getAllPipelines = async ( getAccessToken) => {
+pipelineActions.getAllPipelines = async (getAccessToken) => {
+  const urlParams = {
+    params: {
+      sort: "name",
+      order: 1
+    },
+  }
+
   let apiUrl = `/pipelines`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
 pipelineActions.delete = async (pipelineId, getAccessToken) => {

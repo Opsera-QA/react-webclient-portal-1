@@ -6,27 +6,9 @@ const childPipelineStepConfigurationMetadata = {
       id: "pipelineId",
       isRequired: true
     },
-    {
-      label: "Threshold",
-      id: "threshold",
-      isRequired: true
-    },
-    {
-      label: "Ensure Success",
-      id: "ensureSuccess",
-      isRequired: true,
-    },
-    {
-      label: "Wait for Completion",
-      id: "completeFirst",
-      isRequired: true
-    }
   ],
   newModelBase: {
     pipelineId: "",
-    threshold: {},
-    ensureSuccess: true,
-    completeFirst: true,
   }
 };
 
