@@ -7,7 +7,7 @@ import {
   faSearchPlus,
   faStopCircle,
   faCircle,
-  faPlayCircle, faPauseCircle,
+  faPlayCircle, faPauseCircle, faOctagon,
 } from "@fortawesome/pro-light-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
@@ -113,6 +113,15 @@ function PipelineActivityLogTable({ data, isLoading, paginationOptions, selectRu
             return (<>
               <div className="d-flex flex-nowrap">
                 <div><FontAwesomeIcon icon={faPauseCircle} className="cell-icon green vertical-align-item" fixedWidth/></div>
+                <div className="ml-1">{props.value}</div>
+              </div>
+            </>);
+
+          case "stopped":
+          case "halted":
+            return (<>
+              <div className="d-flex flex-nowrap">
+                <div><FontAwesomeIcon icon={faOctagon} className="cell-icon red vertical-align-item" fixedWidth/></div>
                 <div className="ml-1">{props.value}</div>
               </div>
             </>);
