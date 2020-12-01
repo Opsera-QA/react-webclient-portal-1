@@ -25,6 +25,9 @@ import approvalGatePipelineStepConfigurationMetadata
   from "./step_tool_configuration_forms/approval/approval-gate-pipeline-step-configuration-metadata";
 import ApprovalGatePipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/approval/ApprovalGatePipelineStepConfigurationSummaryPanel";
+import SpinnakerPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/spinnaker/SpinnakerPipelineStepConfigurationSummaryPanel";
+import spinnakerStepFormMetadata from "./step_tool_configuration_forms/spinnaker/spinnaker-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -70,6 +73,13 @@ function PipelineStepConfigurationSummary({
             mockPipelineDataObject={getModelWrappedObject(mockPipelineStepConfigurationMetadata)}
           />
         );
+      case "spinnaker":
+        return (
+          <SpinnakerPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            spinnakerPipelineDataObject={getModelWrappedObject(spinnakerStepFormMetadata)}
+          />
+        );
       case "jenkins":
       case "junit":
       case "xunit":
@@ -85,7 +95,6 @@ function PipelineStepConfigurationSummary({
       case "s3":
       case "databricks-notebook":
       case "ssh-upload":
-      case "spinnaker":
       case "cypress":
       case "docker-push":
       case "argo":
