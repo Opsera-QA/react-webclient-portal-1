@@ -28,6 +28,9 @@ import ApprovalGatePipelineStepConfigurationSummaryPanel
 import SpinnakerPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/spinnaker/SpinnakerPipelineStepConfigurationSummaryPanel";
 import spinnakerStepFormMetadata from "./step_tool_configuration_forms/spinnaker/spinnaker-stepForm-metadata";
+import ArgoCDPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/argo_cd/ArgoCDPipelineStepConfigurationSummaryPanel";
+import ArgoCDStepFormMetadata from "./step_tool_configuration_forms/argo_cd/argocd-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -45,6 +48,13 @@ function PipelineStepConfigurationSummary({
             anchoreDataObject={getModelWrappedObject(anchoreIntegratorStepConfigurationMetadata)}
           />
         );
+      case "anchore-scan":
+        return (
+          <AnchoreScanStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            anchoreDataObject={getModelWrappedObject(anchoreScanStepConfigurationMetadata)}
+          />
+        );
       case "approval":
         return (
           <ApprovalGatePipelineStepConfigurationSummaryPanel
@@ -52,18 +62,18 @@ function PipelineStepConfigurationSummary({
             approvalGatePipelineDataObject={getModelWrappedObject(approvalGatePipelineStepConfigurationMetadata)}
           />
         );
+      case "argo":
+        return (
+          <ArgoCDPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            argoCdPipelineDataObject={getModelWrappedObject(ArgoCDStepFormMetadata)}
+          />
+        );
       case "child-pipeline":
         return (
           <ChildPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
             childPipelineDataObject={getModelWrappedObject(childPipelineStepConfigurationMetadata)}
-          />
-        );
-      case "anchore-scan":
-        return (
-          <AnchoreScanStepConfigurationSummaryPanel
-            pipelineData={pipelineData}
-            anchoreDataObject={getModelWrappedObject(anchoreScanStepConfigurationMetadata)}
           />
         );
       case "mock-step":
@@ -97,7 +107,6 @@ function PipelineStepConfigurationSummary({
       case "ssh-upload":
       case "cypress":
       case "docker-push":
-      case "argo":
       case "sfdc-configurator":
       case "nexus":
       case "octopus":
