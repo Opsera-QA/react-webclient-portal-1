@@ -14,13 +14,11 @@ const ebsStepFormMetadata = {
     },
     {
       label: "Docker Volume Path",
-      id: "dockerVolumePath",
-      isRequired: true
+      id: "dockerVolumePath"
     },
     {
       label: "Environments",
-      id: "environments",
-      isRequired: true
+      id: "environments"
     },
     {
       label: "Secret Key",

@@ -438,7 +438,7 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
             filter={"contains"}
             selectOptions={ACCESS_OPTIONS ? ACCESS_OPTIONS : []}
             fieldName={"bucketAccess"}
-            disabled={ebsStepConfigurationDto && ebsStepConfigurationDto.getData("environments").length === 0}
+            disabled={ebsStepConfigurationDto && ebsStepConfigurationDto.getData("s3ECRStepId").length === 0}
           />      
           <DtoTextInput
             setDataObject={setEBSStepConfigurationDataDto}
