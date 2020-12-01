@@ -69,7 +69,7 @@ function ToastContextProvider ({ children }) {
     addToast(warningToast, id);
   }
 
-  const showSuccessToast = (successMessage, autoCloseLengthInSeconds = 20) => {
+  const showSuccessToast = (successMessage, autoCloseLengthInSeconds = 10) => {
     let id = generateUUID();
     let successToast = getSuccessToast(successMessage, id, autoCloseLengthInSeconds);
     addToast(successToast, id);
@@ -116,25 +116,25 @@ function ToastContextProvider ({ children }) {
     addBannerMessage(errorBanner, id);
   }
 
-  const showUpdateSuccessResultDialog = (type, autoCloseLengthInSeconds = 20) => {
+  const showUpdateSuccessResultDialog = (type, autoCloseLengthInSeconds = 10) => {
     let id = generateUUID();
     let successToast = getSuccessToast(`${type} updated successfully!`, id, autoCloseLengthInSeconds);
     addToast(successToast, id);
   }
 
-  const showDeleteSuccessResultDialog = (type, autoCloseLengthInSeconds = 20) => {
+  const showDeleteSuccessResultDialog = (type, autoCloseLengthInSeconds = 10) => {
     let id = generateUUID();
     let successToast = getSuccessToast(`${type} deleted successfully!`, id, autoCloseLengthInSeconds);
     addToast(successToast, id);
   }
 
-  const showInlineCreateSuccessResultDialog = (type, autoCloseLengthInSeconds = 20) => {
+  const showInlineCreateSuccessResultDialog = (type, autoCloseLengthInSeconds = 10) => {
     let id = generateUUID();
     let successBanner = getSuccessBanner(`${type} created successfully!`, id);
     setInlineBanner(successBanner);
   }
 
-  const showCreateSuccessResultDialog = (type, autoCloseLengthInSeconds = 20) => {
+  const showCreateSuccessResultDialog = (type, autoCloseLengthInSeconds = 10) => {
     let id = generateUUID();
     let successToast = getSuccessToast(`${type} created successfully!`, id, autoCloseLengthInSeconds);
     addToast(successToast, id);
@@ -196,7 +196,7 @@ function ToastContextProvider ({ children }) {
     return <SuccessBanner successMessage={message} removeBanner={removeBannerMessage} id={id} />
   };
 
-  const getSuccessToast = (message, id, autoCloseLengthInSeconds = 20) => {
+  const getSuccessToast = (message, id, autoCloseLengthInSeconds = 10) => {
     return <SuccessToast successMessage={message} id={id} removeToast={removeToast} autoCloseLength={autoCloseLengthInSeconds}/>
   };
 
@@ -275,7 +275,6 @@ function ToastContextProvider ({ children }) {
       </DialogToastContext.Provider>
     );
   }
-;
 
 ToastContextProvider.propTypes = {
   children: PropTypes.any
