@@ -2,22 +2,22 @@ const spinnakerStepFormMetadata = {
   type: "Spinnaker Tool Configuration",
   fields: [
     {
-      label: "Select Spinnaker Tool",
+      label: "Spinnaker Tool",
       id: "spinnakerId",
       isRequired: true
     },
     {
-      label: "Spinnaker Tool URL",
+      label: "Spinnaker URL",
       id: "toolURL",
       isRequired: true
     },
     {
-      label: "Select Spinnaker Application",
+      label: "Spinnaker Application",
       id: "applicationName",
       isRequired: true
     },
     {
-      label: "Select Spinnaker Pipeline",
+      label: "Spinnaker Pipeline",
       id: "pipelineName",
       isRequired: true
     }
