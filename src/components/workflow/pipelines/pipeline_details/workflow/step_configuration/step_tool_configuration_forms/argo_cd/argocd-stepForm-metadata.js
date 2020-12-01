@@ -7,22 +7,22 @@ const ArgoCDStepFormMetadata = {
       isRequired: true,
     },
     {
-      label: "Select SCM Tool",
+      label: "SCM Tool",
       id: "gitToolId",
       isRequired: true,
     },
     {
-      label: "Select Repository",
+      label: "Repository",
       id: "gitRepository",
       isRequired: true,
     },
     {
-      label: "Select Branch",
+      label: "Branch",
       id: "defaultBranch",
       isRequired: true,
     },
     {
-      label: "Select Docker/ECR Step",
+      label: "Docker/ECR Step",
       id: "dockerStepID",
       isRequired: true,
     },
@@ -31,7 +31,7 @@ const ArgoCDStepFormMetadata = {
       id: "existingContent",
     },
     {
-      label: "Select Tool",
+      label: "Tool",
       id: "toolConfigId",
       isRequired: true,
     },
@@ -46,7 +46,7 @@ const ArgoCDStepFormMetadata = {
       isRequired: true,
     },
     {
-      label: "Select Application",
+      label: "Application",
       id: "applicationName",
       isRequired: true,
     },
