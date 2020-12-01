@@ -41,6 +41,9 @@ import TeamCityPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/team_city/TeamCityPipelineStepConfigurationSummaryPanel";
 import teamcityStepConfigurationMetadata
   from "./step_tool_configuration_forms/team_city/teamcity-step-configuration-metadata";
+import TerraformPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/terraform/TerraformPipelineStepConfigurationSummaryPanel";
+import TerraformStepFormMetadata from "./step_tool_configuration_forms/terraform/terraform-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -121,6 +124,13 @@ function PipelineStepConfigurationSummary({
             teamCityPipelineDataObject={getModelWrappedObject(teamcityStepConfigurationMetadata)}
           />
         );
+      case "terraform":
+        return (
+          <TerraformPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            terraformPipelineDataObject={getModelWrappedObject(TerraformStepFormMetadata)}
+          />
+        );
       case "jenkins":
       case "junit":
       case "xunit":
@@ -138,7 +148,6 @@ function PipelineStepConfigurationSummary({
       case "cypress":
       case "docker-push":
       case "sfdc-configurator":
-      case "terraform":
       case "elastic-beanstalk":
       default:
         return <ReactJson src={pipelineData?.tool} enableClipboard={false} displayDataTypes={false} collapsed={false}/>;
