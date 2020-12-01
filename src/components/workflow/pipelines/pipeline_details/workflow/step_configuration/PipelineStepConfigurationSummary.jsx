@@ -31,6 +31,9 @@ import spinnakerStepFormMetadata from "./step_tool_configuration_forms/spinnaker
 import ArgoCDPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/argo_cd/ArgoCDPipelineStepConfigurationSummaryPanel";
 import ArgoCDStepFormMetadata from "./step_tool_configuration_forms/argo_cd/argocd-stepForm-metadata";
+import OctopusPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/octopus/OctopusPipelineStepConfigurationSummaryPanel";
+import octopusStepFormMetadata from "./step_tool_configuration_forms/octopus/octopus-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -83,6 +86,13 @@ function PipelineStepConfigurationSummary({
             mockPipelineDataObject={getModelWrappedObject(mockPipelineStepConfigurationMetadata)}
           />
         );
+      case "octopus":
+        return (
+          <OctopusPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            octopusPipelineDataObject={getModelWrappedObject(octopusStepFormMetadata)}
+          />
+        );
       case "spinnaker":
         return (
           <SpinnakerPipelineStepConfigurationSummaryPanel
@@ -109,7 +119,6 @@ function PipelineStepConfigurationSummary({
       case "docker-push":
       case "sfdc-configurator":
       case "nexus":
-      case "octopus":
       case "terraform":
       case "elastic-beanstalk":
       default:
