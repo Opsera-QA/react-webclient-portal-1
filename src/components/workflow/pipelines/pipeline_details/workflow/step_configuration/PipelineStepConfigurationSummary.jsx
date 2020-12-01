@@ -34,6 +34,9 @@ import ArgoCDStepFormMetadata from "./step_tool_configuration_forms/argo_cd/argo
 import OctopusPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/octopus/OctopusPipelineStepConfigurationSummaryPanel";
 import octopusStepFormMetadata from "./step_tool_configuration_forms/octopus/octopus-stepForm-metadata";
+import NexusPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/nexus/NexusPipelineStepConfigurationSummaryPanel";
+import nexusStepFormMetadata from "./step_tool_configuration_forms/nexus/nexus-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -86,6 +89,13 @@ function PipelineStepConfigurationSummary({
             mockPipelineDataObject={getModelWrappedObject(mockPipelineStepConfigurationMetadata)}
           />
         );
+      case "nexus":
+        return (
+          <NexusPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            nexusPipelineDataObject={getModelWrappedObject(nexusStepFormMetadata)}
+          />
+        );
       case "octopus":
         return (
           <OctopusPipelineStepConfigurationSummaryPanel
@@ -118,7 +128,6 @@ function PipelineStepConfigurationSummary({
       case "cypress":
       case "docker-push":
       case "sfdc-configurator":
-      case "nexus":
       case "terraform":
       case "elastic-beanstalk":
       default:
