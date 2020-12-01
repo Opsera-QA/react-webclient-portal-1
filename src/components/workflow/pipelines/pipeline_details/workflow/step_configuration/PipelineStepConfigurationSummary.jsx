@@ -37,6 +37,10 @@ import octopusStepFormMetadata from "./step_tool_configuration_forms/octopus/oct
 import NexusPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/nexus/NexusPipelineStepConfigurationSummaryPanel";
 import nexusStepFormMetadata from "./step_tool_configuration_forms/nexus/nexus-stepForm-metadata";
+import TeamCityPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/team_city/TeamCityPipelineStepConfigurationSummaryPanel";
+import teamcityStepConfigurationMetadata
+  from "./step_tool_configuration_forms/team_city/teamcity-step-configuration-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -110,13 +114,19 @@ function PipelineStepConfigurationSummary({
             spinnakerPipelineDataObject={getModelWrappedObject(spinnakerStepFormMetadata)}
           />
         );
+      case "teamcity":
+        return (
+          <TeamCityPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            teamCityPipelineDataObject={getModelWrappedObject(teamcityStepConfigurationMetadata)}
+          />
+        );
       case "jenkins":
       case "junit":
       case "xunit":
       case "sonar":
       case "command-line":
       case "npm":
-      case "teamcity":
       case "jmeter":
       case "selenium":
       case "twistlock":
