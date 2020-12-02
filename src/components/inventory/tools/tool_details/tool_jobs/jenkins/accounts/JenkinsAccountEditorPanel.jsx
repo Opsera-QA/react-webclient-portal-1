@@ -9,7 +9,7 @@ import DropdownList from "react-widgets/lib/DropdownList";
 import {AuthContext} from "../../../../../../../contexts/AuthContext";
 import DtoTextInput from "../../../../../../common/input/dto_input/dto-text-input";
 import LoadingDialog from "../../../../../../common/status_notifications/loading";
-import SaveButton from "../../../../../../common/buttons/SaveButton";
+import SaveButton2 from "../../../../../../common/buttons/saving/SaveButton2";
 import {DialogToastContext} from "../../../../../../../contexts/DialogToastContext";
 
 function JenkinsAccountEditorPanel({ toolData, jenkinsAccountData }) {
@@ -128,7 +128,7 @@ function JenkinsAccountEditorPanel({ toolData, jenkinsAccountData }) {
         </Row>
         <Row>
           <div className="ml-auto mt-3 px-3">
-            <SaveButton recordDto={jenkinsAccountDataDto} altButtonText={"Add Jenkins Credentials"} type={"Jenkins Account Credentials"} createRecord={createJenkinsAccount} />
+            <SaveButton2 recordDto={jenkinsAccountDataDto} createRecord={createJenkinsAccount} updateRecord={createJenkinsAccount} />
           </div>
         </Row>
       </div>

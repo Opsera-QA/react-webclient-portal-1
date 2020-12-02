@@ -1,4 +1,5 @@
 const jenkinsCreateAccountMetadata = {
+  type: "Jenkins Account Credentials",
   fields: [
   {
     label: "Name of the credentials given",
