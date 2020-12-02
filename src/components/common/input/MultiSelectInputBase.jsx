@@ -3,12 +3,28 @@ import PropTypes from "prop-types";
 import { Multiselect } from 'react-widgets'
 
 function MultiSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, disabled, selectOptions, valueField, textField, placeholderText, setDataFunction, busy}) {
+  const [errorMessage, setErrorMessage] = useState("");
   const [field] = useState(dataObject.getFieldById(fieldName));
 
   const validateAndSetData = (fieldName, valueArray) => {
     let newDataObject = dataObject;
     let parsedValues = parseValues(valueArray);
+
+    if (parsedValues.length > field.maxItems) {
+      setErrorMessage("You have reached the maximum allowed number of values. Please remove one to add another.");
+      return;
+    }
+
     newDataObject.setData(fieldName, parsedValues);
+    let errors = newDataObject.isFieldValid(field.id);
+
+    if ( errors != null && errors !== true) {
+      setErrorMessage(errors[0]);
+    }
+    else {
+      setErrorMessage("");
+    }
+
     setDataObject({...newDataObject});
   };
 
@@ -27,6 +43,23 @@ function MultiSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, d
 
     return parsedValues;
   };
+
+  const getInfoText = () => {
+    if (errorMessage != null && errorMessage !== "") {
+      return (
+        <div className="invalid-feedback">
+          <div>{errorMessage}</div>
+        </div>
+      );
+    }
+
+    return (
+      <small className="text-muted form-text">
+        <div>{field.formText}</div>
+      </small>
+    )
+  }
+
 
   if (field == null) {
     return <></>
@@ -47,9 +80,7 @@ function MultiSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, d
         disabled={disabled}
         onChange={newValue => setDataFunction ? setDataFunction(field.id, newValue) : validateAndSetData(field.id, newValue)}
       />
-      <small className="form-text text-muted">
-        <div>{field.formText}</div>
-      </small>
+      {getInfoText()}
     </div>
   );
 }

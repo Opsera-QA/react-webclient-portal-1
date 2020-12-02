@@ -6,8 +6,6 @@ import anchoreIntegratorStepConfigurationMetadata
   from "./step_tool_configuration_forms/anchore_integrator/anchore-integrator-step-configuration-metadata";
 import Model from "../../../../../../core/data_model/model";
 import ReactJson from "react-json-view";
-import TextField from "../../../../../common/form_fields/text-field";
-import {Col, Row} from "react-bootstrap";
 import ChildPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/child/ChildPipelineStepConfigurationSummaryPanel";
 import childPipelineStepConfigurationMetadata
@@ -16,7 +14,6 @@ import AnchoreScanStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/anchore_scan/AnchoreScanStepConfigurationSummaryPanel";
 import anchoreScanStepConfigurationMetadata
   from "./step_tool_configuration_forms/anchore_scan/anchore-scan-step-configuration-metadata";
-import MockPipelineStepConfiguration from "./step_tool_configuration_forms/mock/MockPipelineStepConfiguration";
 import MockPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/mock/MockPipelineStepConfigurationSummaryPanel";
 import mockPipelineStepConfigurationMetadata
@@ -44,6 +41,10 @@ import teamcityStepConfigurationMetadata
 import TerraformPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/terraform/TerraformPipelineStepConfigurationSummaryPanel";
 import TerraformStepFormMetadata from "./step_tool_configuration_forms/terraform/terraform-stepForm-metadata";
+import ParallelProcessPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/parallel_processor/ParallelProcessPipelineStepConfigurationSummaryPanel";
+import parallelProcessorPipelineStepConfigurationMetadata
+  from "./step_tool_configuration_forms/parallel_processor/parallel-processor-pipeline-step-configuration-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -108,6 +109,13 @@ function PipelineStepConfigurationSummary({
           <OctopusPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
             octopusPipelineDataObject={getModelWrappedObject(octopusStepFormMetadata)}
+          />
+        );
+      case "parallel-processor":
+        return (
+          <ParallelProcessPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            parallelPipelineDataObject={getModelWrappedObject(parallelProcessorPipelineStepConfigurationMetadata)}
           />
         );
       case "spinnaker":
