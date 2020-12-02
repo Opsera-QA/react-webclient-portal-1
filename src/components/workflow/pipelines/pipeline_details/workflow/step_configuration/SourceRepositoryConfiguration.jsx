@@ -367,6 +367,11 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
       username: "",
       password: "",
       repository: "",
+      workspace: "",
+      repoId: "",
+      gitUrl: "",
+      sshUrl: "",
+      branch: "",
     });
   };
 
@@ -408,6 +413,8 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
         repo: formData.repoId,
         hook: hookUrl,
         branch: formData.branch,
+        workspace: formData.workspace,
+        repository: formData.repository
       },
     };
     const apiUrl = `/connectors/${formData.service}/${formData.accountId}/hook/create`;
