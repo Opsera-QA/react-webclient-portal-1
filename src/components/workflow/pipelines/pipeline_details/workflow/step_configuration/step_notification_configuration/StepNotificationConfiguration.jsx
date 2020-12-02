@@ -9,7 +9,7 @@ import jiraStepNotificationMetadata from "./jira/jiraStepNotificationMetadata";
 import Model from "../../../../../../../core/data_model/model";
 import JiraStepNotificationToolInput from "./jira/JiraStepNotificationToolInput";
 import JiraStepNotificationProjectInput from "./jira/JiraStepNotificationProjectInput";
-import JiraStepNotificationProjectUserInput from "./jira/JiraStepNotificationProjectUserInput";
+import JiraStepNotificationProjectUsersMultiSelectInput from "./jira/JiraStepNotificationProjectUsersMultiSelectInput";
 import JiraStepNotificationBoardInput from "./jira/JiraStepNotificationBoardInput";
 import JiraStepNotificationSprintInput from "./jira/JiraStepNotificationSprintInput";
 import JiraStepNotificationPriorityInput from "./jira/JiraStepNotificationPriorityInput";
@@ -143,6 +143,14 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
       return null;
     }
 
+    if (slackDto.getData("enabled") === false) {
+      return (
+        <div className="my-4">
+          <NotificationsToggle dataObject={slackDto} setDataObject={setSlackDto} fieldName={"enabled"} />
+        </div>
+      );
+    }
+
     return (
       <div className="my-4">
         <NotificationsToggle dataObject={slackDto} setDataObject={setSlackDto} fieldName={"enabled"} />
@@ -162,6 +170,14 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
       return null;
     }
 
+    if (teamsDto.getData("enabled") === false) {
+      return (
+        <div className="my-4">
+          <NotificationsToggle dataObject={teamsDto} setDataObject={setTeamsDto} fieldName={"enabled"} />
+        </div>
+      );
+    }
+
     return (
       <div className="my-4">
         <NotificationsToggle dataObject={teamsDto} setDataObject={setTeamsDto} fieldName={"enabled"} />
@@ -179,26 +195,35 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
       return null;
     }
 
-    if (step.tool.tool_identifier === "approval") {
+    if (jiraDto.getData("enabled") === false) {
       return (
         <div className="my-4">
-          <NotificationsToggle dataObject={jiraDto} setDataObject={setJiraDto} />
-          <small className="form-text text-muted px-2">
-            Please Note: You must connect to Jira on the
-            <Link to="/inventory/tools"><FontAwesomeIcon icon={faClipboardList} className="mx-1"/>Tool Registry</Link> page in order to use this feature.
-          </small>
-          <JiraStepNotificationToolInput setDataObject={setJiraDto} dataObject={jiraDto} />
-          <JiraStepNotificationPriorityInput jiraToolId={jiraDto.getData("jiraToolId")} setDataObject={setJiraDto} dataObject={jiraDto} />
-          <JiraStepNotificationProjectInput jiraToolId={jiraDto.getData("jiraToolId")} setDataObject={setJiraDto} dataObject={jiraDto} />
-          <JiraStepNotificationProjectUserInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} />
-          <JiraStepNotificationBoardInput jiraToolId={jiraDto.getData("jiraToolId")} setDataObject={setJiraDto} dataObject={jiraDto} />
-          <JiraStepNotificationSprintInput jiraToolId={jiraDto.getData("jiraToolId")} jiraBoard={jiraDto.getData("jiraBoard")} setDataObject={setJiraDto} dataObject={jiraDto} />
-          <JiraStepNotificationParentTicketInput jiraToolId={jiraDto.getData("jiraToolId")} jiraSprintId={jiraDto.getData("jiraSprint")} setDataObject={setJiraDto} dataObject={jiraDto} />
-          <JiraStepNotificationWorkflowStepInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} fieldName={"jiraApprovalStep"} />
-          <JiraStepNotificationWorkflowStepInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} fieldName={"jiraRejectionStep"} />
+          <NotificationsToggle dataObject={jiraDto} setDataObject={setJiraDto} fieldName={"enabled"} />
         </div>
       );
     }
+
+    // TODO: If unneeded, remove
+    // if (step.tool.tool_identifier === "approval") {
+    //   return (
+    //     <div className="my-4">
+    //       <NotificationsToggle dataObject={jiraDto} setDataObject={setJiraDto} />
+    //       <small className="form-text text-muted px-2">
+    //         Please Note: You must connect to Jira on the
+    //         <Link to="/inventory/tools"><FontAwesomeIcon icon={faClipboardList} className="mx-1"/>Tool Registry</Link> page in order to use this feature.
+    //       </small>
+    //       <JiraStepNotificationToolInput setDataObject={setJiraDto} dataObject={jiraDto} />
+    //       <JiraStepNotificationPriorityInput jiraToolId={jiraDto.getData("jiraToolId")} setDataObject={setJiraDto} dataObject={jiraDto} />
+    //       <JiraStepNotificationProjectInput jiraToolId={jiraDto.getData("jiraToolId")} setDataObject={setJiraDto} dataObject={jiraDto} />
+    //       <JiraStepNotificationProjectUsersMultiSelectInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} />
+    //       <JiraStepNotificationBoardInput jiraToolId={jiraDto.getData("jiraToolId")} setDataObject={setJiraDto} dataObject={jiraDto} />
+    //       <JiraStepNotificationSprintInput jiraToolId={jiraDto.getData("jiraToolId")} jiraBoard={jiraDto.getData("jiraBoard")} setDataObject={setJiraDto} dataObject={jiraDto} />
+    //       <JiraStepNotificationParentTicketInput jiraToolId={jiraDto.getData("jiraToolId")} jiraSprintId={jiraDto.getData("jiraSprint")} setDataObject={setJiraDto} dataObject={jiraDto} />
+    //       {/*<JiraStepNotificationWorkflowStepInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} fieldName={"jiraApprovalStep"} />*/}
+    //       {/*<JiraStepNotificationWorkflowStepInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} fieldName={"jiraRejectionStep"} />*/}
+    //     </div>
+    //   );
+    // }
 
     return (
       <div className="my-4">
@@ -211,12 +236,12 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
         <JiraStepNotificationToolInput setDataObject={setJiraDto} dataObject={jiraDto} />
         <JiraStepNotificationPriorityInput jiraToolId={jiraDto.getData("jiraToolId")} setDataObject={setJiraDto} dataObject={jiraDto} />
         <JiraStepNotificationProjectInput jiraToolId={jiraDto.getData("jiraToolId")} setDataObject={setJiraDto} dataObject={jiraDto} />
-        <JiraStepNotificationProjectUserInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} />
+        <JiraStepNotificationProjectUsersMultiSelectInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} />
         <JiraStepNotificationBoardInput jiraToolId={jiraDto.getData("jiraToolId")} setDataObject={setJiraDto} dataObject={jiraDto} />
         <JiraStepNotificationSprintInput jiraToolId={jiraDto.getData("jiraToolId")} jiraBoard={jiraDto.getData("jiraBoard")} setDataObject={setJiraDto} dataObject={jiraDto} />
         <JiraStepNotificationParentTicketInput jiraToolId={jiraDto.getData("jiraToolId")} jiraSprintId={jiraDto.getData("jiraSprint")} setDataObject={setJiraDto} dataObject={jiraDto} />
-        <JiraStepNotificationWorkflowStepInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} fieldName={"jiraOpenStep"} />
-        <JiraStepNotificationWorkflowStepInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} fieldName={"jiraClosureStep"} />
+        {/*<JiraStepNotificationWorkflowStepInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} fieldName={"jiraOpenStep"} />*/}
+        {/*<JiraStepNotificationWorkflowStepInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} fieldName={"jiraClosureStep"} />*/}
       </div>
     );
   };
@@ -224,6 +249,14 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
   const getEmailFormFields = () => {
     if (isLoading || emailDto == null) {
       return null;
+    }
+
+    if (emailDto.getData("enabled") === false) {
+      return (
+        <div className="my-4">
+          <NotificationsToggle disabled={true} dataObject={emailDto} setDataObject={setEmailDto} fieldName={"enabled"} />
+        </div>
+      );
     }
 
     return (
