@@ -4,7 +4,7 @@ const ebsStepFormMetadata = {
   idProperty: "_id",
   fields: [
     {
-      label: "AWS Tool Config ID",
+      label: "AWS Tool Configuration",
       id: "awsToolConfigId",
       isRequired: true
     },
@@ -98,8 +98,8 @@ const ebsStepFormMetadata = {
       port: "",
       ec2KeyName: "",
       platform: "",
-      dockerVolumePath: "",
-      environments : "",
+      dockerVolumePath: {},
+      environments : {},
       bucketAccess : "",
       hostedZoneId: "",
       domainName : ""
