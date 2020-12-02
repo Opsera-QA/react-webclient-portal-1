@@ -217,7 +217,7 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
             selectOptions={awsList ? awsList : []}
             fieldName={"awsToolConfigId"}
             busy={isAwsSearching}
-            disabled={awsList.length === 0 || isAwsSearching}
+            disabled={isAwsSearching}
           />
           <DtoTextInput
             setDataObject={setEBSStepConfigurationDataDto}
@@ -370,7 +370,7 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
             <div style={{ border: "1px solid #ced4da", borderRadius: ".25rem" }}>
               <JSONInput
                 placeholder={
-                  Object.keys(ebsStepConfigurationDto.getData("dockerVolumePath")).length > 0
+                  ebsStepConfigurationDto.getData("dockerVolumePath") && typeof ebsStepConfigurationDto.getData("dockerVolumePath") === "object" && Object.keys(ebsStepConfigurationDto.getData("dockerVolumePath")).length > 0
                     ? ebsStepConfigurationDto.getData("dockerVolumePath")
                     : undefined
                 }
@@ -414,7 +414,7 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
             <div style={{ border: "1px solid #ced4da", borderRadius: ".25rem" }}>
               <JSONInput
                 placeholder={
-                  Object.keys(ebsStepConfigurationDto.getData("environments")).length > 0
+                  ebsStepConfigurationDto.getData("environments") && typeof ebsStepConfigurationDto.getData("environments") === "object" && Object.keys(ebsStepConfigurationDto.getData("environments")).length > 0
                     ? ebsStepConfigurationDto.getData("environments")
                     : undefined
                 }
