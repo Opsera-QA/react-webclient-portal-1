@@ -774,10 +774,13 @@ a.nav-link {
 /* End Sign Up Form Styling */
 
 /* Select input styling. TODO: Determine why this doesn't automatically adjust with adjacent inputs */
+.custom-multiselect-input .rw-widget-picker {
+  display: inline-block;
+}
+
 .custom-multiselect-input .rw-multiselect-tag {
   margin-top: .25em;
   vertical-align: middle;
-  height: calc(1.5em + .25rem + 5px);
   margin-bottom: .25em;
 }
 

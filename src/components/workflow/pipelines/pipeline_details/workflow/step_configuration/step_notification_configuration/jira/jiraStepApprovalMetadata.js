@@ -32,7 +32,9 @@ const jiraStepApprovalMetadata = {
     {
       label: "Jira Assignee",
       id: "jiraAssignee",
-      isRequired: true
+      isRequired: true,
+      maxItems: 10,
+      formText: "You may select up to ten assignees."
     },
     {
       label: "Jira Board",
@@ -43,24 +45,24 @@ const jiraStepApprovalMetadata = {
       label: "Jira Parent Ticket",
       id: "jiraParentTicket",
     },
-    {
-      label: "Jira Open Step",
-      id: "jiraOpenStep",
-    },
-    {
-      label: "Jira Closure Step",
-      id: "jiraClosureStep",
-    },
-    {
-      label: "Jira Approval Step",
-      id: "jiraApprovalStep",
-      isRequired: true
-    },
-    {
-      label: "Jira Rejection Step",
-      id: "jiraRejectionStep",
-      isRequired: true
-    },
+    // {
+    //   label: "Jira Open Step",
+    //   id: "jiraOpenStep",
+    // },
+    // {
+    //   label: "Jira Closure Step",
+    //   id: "jiraClosureStep",
+    // },
+    // {
+    //   label: "Jira Approval Step",
+    //   id: "jiraApprovalStep",
+    //   isRequired: true
+    // },
+    // {
+    //   label: "Jira Rejection Step",
+    //   id: "jiraRejectionStep",
+    //   isRequired: true
+    // },
     {
       label: "Jira Notifications",
       id: "enabled",
@@ -76,10 +78,10 @@ const jiraStepApprovalMetadata = {
     jiraSprint: "",
     jiraParentTicket: "",
     jiraAssignee: "",
-    jiraRejectionStep: "",
-    jiraApprovalStep: "",
-    jiraOpenStep: "",
-    jiraClosureStep: "",
+    // jiraRejectionStep: "",
+    // jiraApprovalStep: "",
+    // jiraOpenStep: "",
+    // jiraClosureStep: "",
     enabled: false,
   }
 };
