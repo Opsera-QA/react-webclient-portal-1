@@ -9,6 +9,7 @@ import DtoToggleField from "../../../common/form_fields/dto_form_fields/dto-togg
 import DtoItemField from "../../../common/form_fields/dto_form_fields/dto-item-field";
 import LoadingDialog from "../../../common/status_notifications/loading";
 import SummaryPanelContainer from "../../../common/panels/detail_view/SummaryPanelContainer";
+import DtoJsonField from "../../../common/form_fields/dto_form_fields/dto-json-field";
 
 function KpiSummaryPanel({kpiData, setActiveTab}) {
   if (kpiData == null) {
@@ -22,19 +23,37 @@ function KpiSummaryPanel({kpiData, setActiveTab}) {
           <DtoTextField dataObject={kpiData} fieldName={"name"}/>
         </Col>
         <Col lg={6}>
+          <DtoToggleField dataObject={kpiData} fieldName={"active"}/>
+        </Col>
+        <Col lg={6}>
           <DtoTextField dataObject={kpiData} fieldName={"_id"}/>
         </Col>
         <Col lg={6}>
           <DtoDateField dataObject={kpiData} fieldName={"createdAt"}/>
         </Col>
         <Col lg={6}>
-          <DtoItemField dataObject={kpiData} fieldName={"tool_identifier"}/>
+          <DtoTextField dataObject={kpiData} fieldName={"thumbnailPath"}/>
         </Col>
         <Col lg={6}>
-          <DtoToggleField dataObject={kpiData} fieldName={"active"}/>
+          <DtoTextField dataObject={kpiData} fieldName={"type"}/>
         </Col>
-        <Col lg={6}>
+        <Col lg={12}>
           <DtoTextField dataObject={kpiData} fieldName={"description"}/>
+        </Col>
+        <Col lg={3}>
+          <DtoItemField dataObject={kpiData} fieldName={"identifier"}/>
+        </Col>
+        <Col lg={3}>
+          <DtoItemField dataObject={kpiData} fieldName={"tools"}/>
+        </Col>
+        <Col lg={3}>
+          <DtoItemField dataObject={kpiData} fieldName={"category"}/>
+        </Col>
+        <Col lg={3}>
+          <DtoItemField dataObject={kpiData} fieldName={"filters"}/>
+        </Col>
+        <Col lg={12}>
+          <DtoJsonField dataObject={kpiData} fieldName={"settings"}/>
         </Col>
       </Row>
     </SummaryPanelContainer>

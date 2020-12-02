@@ -2,6 +2,9 @@
 const kpiMetaData = {
   idProperty: "name",
   type: "KPI",
+  detailView: function(record) {
+    return `/admin/kpis/${record.getData("_id")}`;
+  },
   fields: [
     {
       label: "Name",
@@ -13,9 +16,36 @@ const kpiMetaData = {
       id: "description",
     },
     {
-      label: "Tool Identifier",
-      id: "tool_identifier",
-      isRequired: true
+      label: "Tools",
+      id: "identifier",
+    },
+    {
+      label: "Chart Type",
+      id: "type",
+    },
+    {
+      label: "React Component Name",
+      id: "componentName",
+    },
+    {
+      label: "Supported Tool Identifiers",
+      id: "tools",
+    },
+    {
+      label: "Supported Categories",
+      id: "category",
+    },
+    {
+      label: "Supported Filters",
+      id: "filters",
+    },
+    {
+      label: "Settings Template",
+      id: "settings",
+    },
+    {
+      label: "Thumbnail Path",
+      id: "thumbnailPath",
     },
     {
       label: "Status",
@@ -33,8 +63,13 @@ const kpiMetaData = {
   newObjectFields: {
     "name": "",
     "description": "",
-    "tool_identifier": [],
+    "identifier": [],
     "type": "",
+    "componentName": "",
+    "settings": {},
+    "category": [],
+    "filters": [],
+    "tools": [],
     "active": true,
     "persona": ["manager","developer", "executive"]
   }

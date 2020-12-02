@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -6,9 +6,8 @@ import {faSave, faSpinner} from "@fortawesome/free-solid-svg-icons";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import {persistNewRecordAndClose} from "./saving-helpers";
 
-function CreateAndCloseButton({recordDto, createRecord, disable, handleClose, showSuccessToasts, lenient}) {
+function CreateAndCloseButton({recordDto, createRecord, disable, handleClose, showSuccessToasts, lenient, isSaving, setIsSaving}) {
   let toastContext = useContext(DialogToastContext);
-  const [isSaving, setIsSaving] = useState(false);
 
   const persistRecord = async () => {
     setIsSaving(true);
@@ -24,6 +23,10 @@ function CreateAndCloseButton({recordDto, createRecord, disable, handleClose, sh
     return (<span><FontAwesomeIcon icon={faSave} fixedWidth className="mr-2"/>{`Create ${recordDto.getType()} And Close`}</span>);
   };
 
+  if (handleClose == null) {
+    return <></>;
+  }
+
   return (
     <div className="d-flex mx-1 px-2">
       <Button size="sm" variant="primary" disabled={isSaving || disable} onClick={() => persistRecord()}>
@@ -36,6 +39,8 @@ function CreateAndCloseButton({recordDto, createRecord, disable, handleClose, sh
 CreateAndCloseButton.propTypes = {
   recordDto: PropTypes.object,
   createRecord: PropTypes.func,
+  setIsSaving: PropTypes.func,
+  isSaving: PropTypes.bool,
   disable: PropTypes.bool,
   handleClose: PropTypes.func,
   showSuccessToasts: PropTypes.bool,
@@ -43,7 +48,6 @@ CreateAndCloseButton.propTypes = {
 };
 
 CreateAndCloseButton.defaultProps = {
-  disable: false,
   showSuccessToasts: true
 }
 

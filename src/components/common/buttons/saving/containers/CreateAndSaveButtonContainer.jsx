@@ -1,19 +1,37 @@
-import React  from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
+import SaveButtonContainer from "./SaveButtonContainer";
+import CreateAndCloseButton from "../CreateAndCloseButton";
+import CreateAndAddAnotherButton from "../CreateAndAddAnotherButton";
+import CreateAndViewDetailsButton from "../CreateAndViewDetailsButton";
+import StrictSaveButton from "../StrictSaveButton";
 
-function CreateAndSaveButtonContainer({ recordDto, saveButtonContainer, createButtonContainer }) {
+function CreateAndSaveButtonContainer({ recordDto, setRecordDto, updateRecord, createRecord, handleClose }) {
+  const [isSaving, setIsSaving] = useState(false);
 
   if (recordDto.isNew()){
-    return (createButtonContainer)
+    return (
+      <SaveButtonContainer>
+        <CreateAndViewDetailsButton recordDto={recordDto} createRecord={createRecord} isSaving={isSaving} setIsSaving={setIsSaving}/>
+        <CreateAndAddAnotherButton recordDto={recordDto} createRecord={createRecord} setRecordDto={setRecordDto} isSaving={isSaving} setIsSaving={setIsSaving} />
+        <CreateAndCloseButton recordDto={recordDto} createRecord={createRecord} handleClose={handleClose} isSaving={isSaving} setIsSaving={setIsSaving} />
+      </SaveButtonContainer>
+    )
   }
 
-  return (saveButtonContainer);
+  return (
+    <SaveButtonContainer>
+      <StrictSaveButton recordDto={recordDto} updateRecord={updateRecord} />
+    </SaveButtonContainer>
+  );
 }
 
 CreateAndSaveButtonContainer.propTypes = {
   recordDto: PropTypes.object,
-  createButtonContainer: PropTypes.any,
-  saveButtonContainer: PropTypes.any
+  updateRecord: PropTypes.func,
+  createRecord: PropTypes.func,
+  setRecordDto: PropTypes.func,
+  handleClose: PropTypes.func
 };
 
 export default CreateAndSaveButtonContainer;
