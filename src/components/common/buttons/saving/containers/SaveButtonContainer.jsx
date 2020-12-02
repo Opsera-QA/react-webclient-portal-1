@@ -1,11 +1,14 @@
 import React  from "react";
 import PropTypes from "prop-types";
+import Row from "react-bootstrap/Row";
 
 function SaveButtonContainer({ children }) {
   return (
-    <div className="ml-auto mt-3 px-3 d-flex">
-      {children}
-    </div>
+    <Row>
+      <div className="ml-auto mt-3 mr-2 d-flex">
+        {children}
+      </div>
+    </Row>
   );
 }
 

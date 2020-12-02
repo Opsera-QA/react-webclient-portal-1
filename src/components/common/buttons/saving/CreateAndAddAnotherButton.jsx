@@ -6,9 +6,8 @@ import {faSave, faSpinner} from "@fortawesome/free-solid-svg-icons";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import {persistNewRecordAndAddAnother} from "./saving-helpers";
 
-function CreateAndAddAnotherButton({recordDto, setRecordDto, createRecord, disable, showSuccessToasts, lenient}) {
+function CreateAndAddAnotherButton({recordDto, setRecordDto, createRecord, disable, showSuccessToasts, lenient, isSaving, setIsSaving}) {
   let toastContext = useContext(DialogToastContext);
-  const [isSaving, setIsSaving] = useState(false);
 
   const persistRecord = async () => {
     setIsSaving(true);
@@ -24,6 +23,10 @@ function CreateAndAddAnotherButton({recordDto, setRecordDto, createRecord, disab
     return (<span><FontAwesomeIcon icon={faSave} fixedWidth className="mr-2"/>{`Create ${recordDto.getType()} And Add Another`}</span>);
   };
 
+  if (setRecordDto == null) {
+    return <></>;
+  }
+
   return (
     <div className="d-flex mx-1 px-2">
       <Button size="sm" variant="primary" disabled={isSaving || disable} onClick={() => persistRecord()}>
@@ -36,6 +39,8 @@ function CreateAndAddAnotherButton({recordDto, setRecordDto, createRecord, disab
 CreateAndAddAnotherButton.propTypes = {
   recordDto: PropTypes.object,
   setRecordDto: PropTypes.func,
+  setIsSaving: PropTypes.func,
+  isSaving: PropTypes.bool,
   createRecord: PropTypes.func,
   disable: PropTypes.bool,
   showSuccessToasts: PropTypes.bool,

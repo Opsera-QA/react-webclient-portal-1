@@ -7,10 +7,9 @@ import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import {persistNewRecordAndViewDetails} from "./saving-helpers";
 import {useHistory} from "react-router-dom";
 
-function CreateAndViewDetailsButton({recordDto, createRecord, disable, showSuccessToasts, lenient}) {
+function CreateAndViewDetailsButton({recordDto, createRecord, disable, showSuccessToasts, lenient, isSaving, setIsSaving}) {
   let toastContext = useContext(DialogToastContext);
   const history = useHistory();
-  const [isSaving, setIsSaving] = useState(false);
 
   const persistRecord = async () => {
     setIsSaving(true);
@@ -23,8 +22,12 @@ function CreateAndViewDetailsButton({recordDto, createRecord, disable, showSucce
       return (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>Saving</span>);
     }
 
-    return (<span><FontAwesomeIcon icon={faSave} fixedWidth className="mr-2"/>{`Create ${recordDto.getType()} And Add Another`}</span>);
+    return (<span><FontAwesomeIcon icon={faSave} fixedWidth className="mr-2"/>{`Create ${recordDto.getType()} And View Details`}</span>);
   };
+
+  if (recordDto.getDetailViewLink() === null) {
+    return <></>;
+  }
 
   return (
     <div className="d-flex mx-1 px-2">
@@ -37,6 +40,8 @@ function CreateAndViewDetailsButton({recordDto, createRecord, disable, showSucce
 
 CreateAndViewDetailsButton.propTypes = {
   recordDto: PropTypes.object,
+  setIsSaving: PropTypes.func,
+  isSaving: PropTypes.bool,
   createRecord: PropTypes.func,
   disable: PropTypes.bool,
   showSuccessToasts: PropTypes.bool,
@@ -44,7 +49,6 @@ CreateAndViewDetailsButton.propTypes = {
 };
 
 CreateAndViewDetailsButton.defaultProps = {
-  disable: false,
   showSuccessToasts: true
 }
 

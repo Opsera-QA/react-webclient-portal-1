@@ -10,8 +10,8 @@ export const DataState = {
 export class Model {
 
   constructor(data, metaData, newModel) {
-    this.data = data;
     this.metaData = metaData;
+    this.data = {...this.getNewObjectFields, ...data};
     this.newModel = newModel;
     this.dataState = DataState.LOADED;
     this.changeMap = new Map();
@@ -132,7 +132,7 @@ export class Model {
   };
 
   getDetailViewLink = () => {
-    return this.metaData.detailView(this);
+    return this.metaData?.detailView != null ? this.metaData.detailView(this) : null;
   };
 
   getLabel = (fieldName) => {

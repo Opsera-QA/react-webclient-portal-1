@@ -7,16 +7,19 @@ import KpiActions from "../kpi-editor-actions";
 import Loading from "components/common/status_notifications/loading";
 import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
 import DtoToggleInput from "../../../common/input/dto_input/dto-toggle-input";
-import SaveButton from "../../../common/buttons/SaveButton";
-import {DialogToastContext} from "../../../../contexts/DialogToastContext";
-import DtoMultiselectInput from "../../../common/input/dto_input/dto-multiselect-input";
-import toolsActions from "../../../inventory/tools/tools-actions";
+import EditorPanelContainer from "../../../common/panels/detail_panel_container/EditorPanelContainer";
+import DtoJsonInput from "../../../common/input/dto_input/dto-json-input";
+import KpiChartTypeInput from "../../../common/list_of_values_input/admin/kpi_configurations/KpiChartTypeInput";
+import KpiToolsInput from "../../../common/list_of_values_input/admin/kpi_configurations/KpiToolsInput";
+import KpiFiltersInput from "../../../common/list_of_values_input/admin/kpi_configurations/KpiFiltersInput";
+import KpiCategoriesInput from "../../../common/list_of_values_input/admin/kpi_configurations/KpiCategoriesInput";
+import CreateAndSaveButtonContainer from "../../../common/buttons/saving/containers/CreateAndSaveButtonContainer";
+import DtoSelectInput from "../../../common/input/dto_input/dto-select-input";
+import KpiIdentifierInput from "../../../common/list_of_values_input/admin/kpi_configurations/KpiIdentifierInput";
 
 function KpiEditorPanel({ kpiData, setKpiData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
-  const [toolList, setToolList] = useState([]);
   const [kpiDataDto, setKpiDataDto] = useState(undefined);
 
   useEffect(() => {
@@ -24,17 +27,9 @@ function KpiEditorPanel({ kpiData, setKpiData, handleClose }) {
   }, []);
 
   const loadData = async () => {
-    try {
-      setIsLoading(true);
-      setKpiDataDto(kpiData);
-      await getToolList();
-    }
-    catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-    }
-    finally {
-      setIsLoading(false);
-    }
+    setIsLoading(true);
+    setKpiDataDto(kpiData);
+    setIsLoading(false);
   };
 
   const createKpi = async () => {
@@ -45,39 +40,42 @@ function KpiEditorPanel({ kpiData, setKpiData, handleClose }) {
    return await KpiActions.updateKpi(kpiDataDto, getAccessToken);
   };
 
-  const getToolList = async () => {
-    const response = await toolsActions.getTools(getAccessToken);
-    setToolList(response.data);
-  }
-
   if (isLoading || kpiDataDto == null) {
     return <Loading size="sm" />;
   }
 
   return (
-    <div className="scroll-y full-height p-2">
+    <EditorPanelContainer>
       <Row>
-        <Col lg={12}>
+        <Col lg={6}>
           <DtoTextInput dataObject={kpiDataDto} fieldName={"name"} setDataObject={setKpiDataDto}/>
         </Col>
-        <Col lg={12}>
+        <Col lg={6}>
           <DtoToggleInput setDataObject={setKpiDataDto} fieldName={"active"} dataObject={kpiData}/>
+        </Col>
+        <Col lg={6}>
+          <KpiIdentifierInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
+          <KpiChartTypeInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
+          <KpiToolsInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
+          <KpiFiltersInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
+          <KpiCategoriesInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
+          <DtoTextInput dataObject={kpiDataDto} fieldName={"thumbnailPath"} setDataObject={setKpiDataDto}/>
+        </Col>
+        <Col lg={6}>
+          <DtoJsonInput dataObject={kpiDataDto} fieldName={"settings"} setDataObject={setKpiDataDto}/>
         </Col>
         <Col lg={12}>
           <DtoTextInput dataObject={kpiDataDto} fieldName={"description"} setDataObject={setKpiDataDto}/>
         </Col>
-        <Col lg={12}>
-          <DtoMultiselectInput selectOptions={toolList} dataObject={kpiDataDto} fieldName={"tool_identifier"}
-                          setDataObject={setKpiDataDto} textField={"name"} valueField={"identifier"} />
-        </Col>
       </Row>
-      <Row>
-        <div className="ml-auto mt-3 pr-3">
-          <SaveButton updateRecord={updateKpi} setRecordDto={setKpiDataDto} setData={setKpiData}
-                      handleClose={handleClose} createRecord={createKpi} recordDto={kpiDataDto}/>
-        </div>
-      </Row>
-    </div>
+      <CreateAndSaveButtonContainer
+        updateRecord={updateKpi}
+        recordDto={kpiDataDto}
+        createRecord={createKpi}
+        setRecordDto={setKpiDataDto}
+        handleClose={handleClose}
+        />
+    </EditorPanelContainer>
   );
 }
 

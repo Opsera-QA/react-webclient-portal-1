@@ -70,6 +70,7 @@ function KpiTable({ data, kpiFilterDto, setKpiFilterDto, isLoading, loadData }) 
         type={"KPI"}
         tableTitle={"KPIs"}
         loadData={loadData}
+        initialState={tableInitialState}
         tableFilterBar={getFilterBar()}
         paginationDto={kpiFilterDto}
         setPaginationDto={setKpiFilterDto}

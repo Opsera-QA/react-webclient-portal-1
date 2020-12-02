@@ -208,6 +208,11 @@ pipelineActions.getToolsList = async (service, getAccessToken) => {
   return response;
 };
 
+pipelineActions.getToolIdentifierList = async (getAccessToken) => {
+  const params = { status: "active", usage: "pipeline"};
+  const apiUrl = `/registry/tools`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl, params);
+};
 
 pipelineActions.searchWorkSpaces = async (service, gitAccountId, getAccessToken) => {
   const accessToken = await getAccessToken();
