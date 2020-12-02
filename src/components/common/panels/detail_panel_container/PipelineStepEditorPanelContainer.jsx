@@ -2,9 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "../../status_notifications/loading";
 import Form from "react-bootstrap/Form";
+import PipelineStepConfigurationButtonContainer
+  from "../../buttons/saving/containers/PipelineStepConfigurationButtonContainer";
 
 // TODO: After final refactor of pipeline configurations, this component might be irrelevant
-function PipelineStepEditorPanelContainer({ children, isLoading, showRequiredFieldsMessage }) {
+function PipelineStepEditorPanelContainer({ children, isLoading, showRequiredFieldsMessage, persistRecord, recordDto, handleClose }) {
   const getRequiredFieldsMessage = () => {
     if (showRequiredFieldsMessage) {
       return (
@@ -23,6 +25,11 @@ function PipelineStepEditorPanelContainer({ children, isLoading, showRequiredFie
     <Form className="scroll-y full-height">
       <div>
         <div>{children}</div>
+        <PipelineStepConfigurationButtonContainer
+          persistRecord={persistRecord}
+          recordDto={recordDto}
+          handleClose={handleClose}
+        />
         {getRequiredFieldsMessage()}
       </div>
     </Form>
@@ -33,7 +40,10 @@ function PipelineStepEditorPanelContainer({ children, isLoading, showRequiredFie
 PipelineStepEditorPanelContainer.propTypes = {
   children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   isLoading: PropTypes.bool,
-  showRequiredFieldsMessage: PropTypes.bool
+  showRequiredFieldsMessage: PropTypes.bool,
+  persistRecord: PropTypes.func,
+  recordDto: PropTypes.object,
+  handleClose: PropTypes.func
 };
 
 PipelineStepEditorPanelContainer.defaultProps = {

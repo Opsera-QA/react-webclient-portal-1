@@ -75,6 +75,11 @@ export const fieldValidation = (value, data, field) => {
     errorMessages.push("Does not meet field requirements.");
   }
 
+  if (field.maxItems != null && value.length > field.maxItems)
+  {
+    errorMessages.push(`You have selected ${value.length} values, but the maximum allowed is ${field.maxItems}`);
+  }
+
   if (errorMessages.length === 0) {
     return undefined;
   }

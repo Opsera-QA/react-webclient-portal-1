@@ -37,6 +37,8 @@ import AnchoreIntegratorStepConfiguration
   from "./step_tool_configuration_forms/anchore_integrator/AnchoreIntegratorStepConfiguration";
 import ChildPipelineStepConfiguration from "./step_tool_configuration_forms/child/ChildPipelineStepConfiguration";
 import MockPipelineStepConfiguration from "./step_tool_configuration_forms/mock/MockPipelineStepConfiguration";
+import ParallelProcessPipelineStepConfiguration
+  from "./step_tool_configuration_forms/parallel_processor/ParallelProcessPipelineStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -170,6 +172,10 @@ function StepToolConfiguration({
     }
   };
 
+  // TODO: Alphabetize, simplify props when refactoring each panel.
+  //  just pass pipeline and pull id and plan inside instead of passing them individually,
+  //  remove deprecated toasts and use toast contexts, wire up latest buttons,
+  //  instead of passing in get tools list, use pipeline tool input etc..
   const getConfigurationTool = (toolName) => {
     switch (toolName) {
       case "jenkins":
@@ -536,29 +542,25 @@ function StepToolConfiguration({
         return (
           <ChildPipelineStepConfiguration
             pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
             stepTool={stepTool}
             parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            getToolsList={getToolsList}
-            setToast={setToast}
-            setShowToast={setShowToast}
             closeEditorPanel={closeEditorPanel}
           />
         );
       case "mock-step":
         return (
           <MockPipelineStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
             stepTool={stepTool}
             parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            getToolsList={getToolsList}
-            setToast={setToast}
-            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case "parallel-processor":
+        return (
+          <ParallelProcessPipelineStepConfiguration
+            pipelineId={pipeline._id}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
             closeEditorPanel={closeEditorPanel}
           />
         );
@@ -581,7 +583,6 @@ function StepToolConfiguration({
   );
 }
 
-//pipeline, editItem, parentCallback, reloadParentPipeline, closeEditorPanel
 StepToolConfiguration.propTypes = {
   pipeline: PropTypes.object,
   editItem: PropTypes.object,
