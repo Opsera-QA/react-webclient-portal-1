@@ -21,7 +21,7 @@ function SaveButton({recordDto, setRecordDto, setData, createRecord, updateRecor
       if(!recordDto.isModelValid2()) {
         let errors = recordDto.isModelValid();
         console.error(JSON.stringify(errors));
-        toastContext.showFormValidationErrorDialog(isNew && modal, errors && errors.length > 0 ? errors[0] : undefined);
+        toastContext.showFormValidationErrorDialog(errors && errors.length > 0 ? errors[0] : undefined);
         return;
       }
 
@@ -30,7 +30,7 @@ function SaveButton({recordDto, setRecordDto, setData, createRecord, updateRecor
       if (isNew) {
         if (showToasts)
         {
-          toastContext.showCreateSuccessResultDialog(getType(), createAnother);
+          toastContext.showCreateSuccessResultDialog(getType());
         }
 
         if (setData && createAnother) {
