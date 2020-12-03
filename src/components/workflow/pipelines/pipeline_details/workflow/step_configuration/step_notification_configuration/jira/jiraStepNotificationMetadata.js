@@ -32,7 +32,7 @@ const jiraStepNotificationMetadata = {
     },
     {
       label: "Jira Assignees",
-      id: "jiraAssignee",
+      id: "jiraAssignees",
       isRequired: true,
       maxItems: 10,
       formText: "You may select up to ten assignees."
@@ -46,16 +46,16 @@ const jiraStepNotificationMetadata = {
       label: "Jira Parent Ticket",
       id: "jiraParentTicket",
     },
-    // {
-    //   label: "Jira Open Step",
-    //   id: "jiraOpenStep",
-    //   isRequired: true
-    // },
-    // {
-    //   label: "Jira Closure Step",
-    //   id: "jiraClosureStep",
-    //   isRequired: true
-    // },
+    {
+      label: "Jira Open Step",
+      id: "jiraOpenStep",
+      isRequired: true
+    },
+    {
+      label: "Jira Closure Step",
+      id: "jiraClosureStep",
+      isRequired: true
+    },
     // {
     //   label: "Jira Approval Step",
     //   id: "jiraApprovalStep",
@@ -78,11 +78,11 @@ const jiraStepNotificationMetadata = {
     jiraPriority: "",
     jiraSprint: "",
     jiraParentTicket: "",
-    jiraAssignee: "",
+    jiraAssignees: [],
     // jiraRejectionStep: "",
     // jiraApprovalStep: "",
-    // jiraOpenStep: "",
-    // jiraClosureStep: "",
+    jiraOpenStep: "",
+    jiraClosureStep: "",
     enabled: false,
   }
 };

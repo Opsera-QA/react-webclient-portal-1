@@ -4,6 +4,7 @@ import {DialogToastContext} from "../../../../../../../../contexts/DialogToastCo
 import {AuthContext} from "../../../../../../../../contexts/AuthContext";
 import DtoSelectInput from "../../../../../../../common/input/dto_input/dto-select-input";
 import pipelineStepNotificationActions from "../pipeline-step-notification-actions";
+import SelectInputBase from "../../../../../../../common/input/SelectInputBase";
 
 function JiraStepNotificationSprintInput({visible, dataObject, setDataObject, disabled, jiraToolId, jiraBoard}) {
   const toastContext = useContext(DialogToastContext);
@@ -64,7 +65,7 @@ function JiraStepNotificationSprintInput({visible, dataObject, setDataObject, di
   }
 
   return (
-    <DtoSelectInput
+    <SelectInputBase
       fieldName={"jiraSprint"}
       dataObject={dataObject}
       setDataObject={setJiraSprint}

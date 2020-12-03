@@ -1,6 +1,9 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import { Multiselect } from 'react-widgets'
+import TooltipWrapper from "../tooltip/tooltipWrapper";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faTimes} from "@fortawesome/pro-light-svg-icons";
 
 function MultiSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, disabled, selectOptions, valueField, textField, placeholderText, setDataFunction, busy}) {
   const [errorMessage, setErrorMessage] = useState("");
@@ -26,6 +29,27 @@ function MultiSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, d
     }
 
     setDataObject({...newDataObject});
+  };
+
+  const clearValue = () => {
+    if (setDataFunction) {
+      setDataFunction(field.id, []);
+    }
+    else {
+      validateAndSetData(field.id, [])
+    }
+  };
+
+  const getClearDataIcon = () => {
+    if (dataObject.getData(field.id) !== "") {
+      return (
+        <TooltipWrapper innerText={"Clear this Value"}>
+          <span className="pointer danger-red" onClick={() => clearValue()}>
+            <FontAwesomeIcon icon={faTimes} className="mt-1 danger-red"/>
+          </span>
+        </TooltipWrapper>
+      );
+    }
   };
 
   const parseValues = (valueArray) => {
@@ -67,7 +91,10 @@ function MultiSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, d
 
   return (
     <div className="custom-multiselect-input m-2">
-      <label><span>{field.label}{field.isRequired ? <span className="danger-red">*</span> : null} </span></label>
+      <div className="d-flex justify-content-between w-100">
+        <label><span>{field.label}{field.isRequired ? <span className="danger-red">*</span> : null} </span></label>
+        {getClearDataIcon()}
+      </div>
       <Multiselect
         data={selectOptions}
         valueField={valueField}

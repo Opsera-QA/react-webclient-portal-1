@@ -8,11 +8,9 @@ function JiraStepNotificationToolInput({visible, dataObject, setDataObject, disa
     newDataObject.setData("jiraProject", "");
     newDataObject.setData("jiraSprint", "");
     newDataObject.setData("jiraParentTicket", "");
-    newDataObject.setData("jiraAssignee", "");
+    newDataObject.setData("jiraAssignees", []);
     newDataObject.setData("jiraBoard", "");
     newDataObject.setData("jiraPriority", "");
-    newDataObject.setData("jiraApprovalStep", "");
-    newDataObject.setData("jiraRejectionStep", "");
     newDataObject.setData("jiraOpenStep", "");
     newDataObject.setData("jiraClosureStep", "");
     setDataObject({...newDataObject});

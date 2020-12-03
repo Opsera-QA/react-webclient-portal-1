@@ -2,8 +2,8 @@ import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
 import {AuthContext} from "../../../../../../../../contexts/AuthContext";
-import DtoSelectInput from "../../../../../../../common/input/dto_input/dto-select-input";
 import pipelineStepNotificationActions from "../pipeline-step-notification-actions";
+import SelectInputBase from "../../../../../../../common/input/SelectInputBase";
 
 function JiraStepNotificationBoardInput({visible, jiraToolId, dataObject, setDataObject, disabled}) {
   const toastContext = useContext(DialogToastContext);
@@ -43,6 +43,7 @@ function JiraStepNotificationBoardInput({visible, jiraToolId, dataObject, setDat
   const setJiraBoard = (selectedOption) => {
     let newDataObject = {...selectedOption};
     newDataObject.setData("jiraSprint", "");
+    newDataObject.setData("jiraParentTicket", "");
     setDataObject({...newDataObject});
   };
 
@@ -65,7 +66,7 @@ function JiraStepNotificationBoardInput({visible, jiraToolId, dataObject, setDat
   }
 
   return (
-    <DtoSelectInput
+    <SelectInputBase
       fieldName={"jiraBoard"}
       dataObject={dataObject}
       setDataObject={setJiraBoard}
