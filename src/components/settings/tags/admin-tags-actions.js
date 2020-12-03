@@ -142,4 +142,8 @@ adminTagsActions.create = async (tagDataDto, getAccessToken) => {
 //   return response;
 // };
 
+adminTagsActions.configurationOptions = [
+  {id: "costCenter", label: "Cost Center"}
+];
+
 export default adminTagsActions;

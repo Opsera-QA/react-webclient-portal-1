@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 import DtoTextField from "../../../common/form_fields/dto_form_fields/dto-text-field";
 import DtoDateField from "../../../common/form_fields/dto_form_fields/dto-date-field";
-import DtoTagField from "../../../common/form_fields/dto_form_fields/dto-tag-field";
 import SummaryPanelContainer from "../../../common/panels/detail_view/SummaryPanelContainer";
 
 function ToolSummaryPanel({ toolData, setActiveTab }) {
@@ -31,9 +30,6 @@ function ToolSummaryPanel({ toolData, setActiveTab }) {
         </Col>
         <Col lg={6}>
           <DtoTextField dataObject={toolData} fieldName={"description"} />
-        </Col>
-        <Col lg={6}>
-          <DtoTagField dataObject={toolData} fieldName={"tags"} />
         </Col>
       </Row>
     </SummaryPanelContainer>

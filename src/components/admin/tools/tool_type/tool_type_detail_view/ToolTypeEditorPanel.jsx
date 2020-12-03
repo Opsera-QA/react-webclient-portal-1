@@ -41,8 +41,7 @@ function ToolTypeEditorPanel( { toolTypeData, setToolTypeData, handleClose }) {
       <EditorPanelContainer>
           <Row>
             <Col lg={6}>
-              <DtoTextInput disabled={!toolTypeDataDto.isNew()} fieldName={"name"} dataObject={toolTypeDataDto}
-                            setDataObject={setToolTypeDataDto}/>
+              <DtoTextInput fieldName={"name"} dataObject={toolTypeDataDto} setDataObject={setToolTypeDataDto}/>
             </Col>
             <Col lg={6}>
               <DtoToggleInput fieldName={"active"} dataObject={toolTypeDataDto} setDataObject={setToolTypeDataDto}/>

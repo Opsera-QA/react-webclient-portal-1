@@ -91,6 +91,10 @@ const toolMetadata = {
       id: "tags",
     },
     {
+      label: "Cost Center",
+      id: "costCenter",
+    },
+    {
       label: "Created",
       id: "createdAt",
     }

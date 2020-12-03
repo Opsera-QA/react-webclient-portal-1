@@ -29,8 +29,7 @@ const tagEditorMetadata = {
     },
     {
       label: "Configuration Properties",
-      id: "configuration",
-      // fields: ["name", "value"],
+      id: "configuration"
     },
     {
       label: "Status",

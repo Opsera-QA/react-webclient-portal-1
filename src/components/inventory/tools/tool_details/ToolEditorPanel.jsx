@@ -75,7 +75,7 @@ function ToolEditorPanel({ toolData, setToolData, handleClose }) {
               <DtoTextInput setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"description"}/>
             </Col>
             <Col lg={6}>
-              <DtoTextInput disabled={true} setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"compliance"} />
+              <DtoTextInput setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"costCenter"} />
             </Col>
             <Col lg={6}>
               <DtoTagManagerInput type={"tool"} setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"tags"} />
