@@ -113,7 +113,6 @@ function OpseraRecentPipelineStatus({ date }) {
       setLoading(false);
     }
   }
-
   if (loading) {
     return <LoadingDialog size="sm" />;
   } else if (error) {

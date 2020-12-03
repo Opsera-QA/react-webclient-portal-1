@@ -42,7 +42,7 @@ function SonarSecurityLineChart({ persona, sonarMeasure, date }) {
       data: [
         {
           request: "sonarMeasures-" + sonarMeasure,
-          metric: "line",
+          metric: "stacked",
         }
       ],
       startDate: date.start, 
@@ -121,9 +121,13 @@ function SonarSecurityLineChart({ persona, sonarMeasure, date }) {
                 type: "linear",
                 stacked: false,
               }}
-              axisBottom={config.axisBottom}
+              axisBottom={{
+                format: "%b %d",
+                tickValues: data.maxLength && data.maxLength > 10 ? 10 : 'every 1 days',
+                tickRotation: -25,
+                legendOffset: -12,
+              }}              
               pointSize={10}
-
               pointBorderWidth={8}
               pointLabel="y"
               pointLabelYOffset={-12}
