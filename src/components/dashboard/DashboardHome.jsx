@@ -177,6 +177,9 @@ function DashboardHome() {
 
   const handleTabClick = (param) => (e) => {
     e.preventDefault();
+    if (param === "operations_v2") {
+      handleDateChange(DATELABELS[5]);
+    }
     setSelection(param);
   };
 
