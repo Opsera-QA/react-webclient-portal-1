@@ -50,7 +50,7 @@ export default {
     legendOffset: 50,
   },
   axisLeft: {
-    format: (d) => (typeof d === "string" ? d.substring(0, 6) : ""),
+    format: (d) => (typeof d === "string" ? (d.includes("/") ? d.split("/").pop() : d.substring(0, 6)) : ""),
     tickSize: 8,
     tickPadding: 5,
     tickRotation: 0,
