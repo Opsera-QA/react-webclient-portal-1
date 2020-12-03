@@ -83,7 +83,7 @@ JiraStepNotificationProjectUsersMultiSelectInput.propTypes = {
 };
 
 JiraStepNotificationProjectUsersMultiSelectInput.defaultProps = {
-  fieldName: "jiraAssignee",
+  fieldName: "jiraAssignees",
   visible: true
 }
 

@@ -30,8 +30,8 @@ const jiraStepApprovalMetadata = {
       isRequired: true
     },
     {
-      label: "Jira Assignee",
-      id: "jiraAssignee",
+      label: "Jira Assignees",
+      id: "jiraAssignees",
       isRequired: true,
       maxItems: 10,
       formText: "You may select up to ten assignees."
@@ -77,7 +77,7 @@ const jiraStepApprovalMetadata = {
     jiraPriority: "",
     jiraSprint: "",
     jiraParentTicket: "",
-    jiraAssignee: "",
+    jiraAssignees: [],
     // jiraRejectionStep: "",
     // jiraApprovalStep: "",
     // jiraOpenStep: "",

@@ -3,13 +3,12 @@ import PropTypes from "prop-types";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import pipelineActions from "../../../../workflow/pipeline-actions";
 import {AuthContext} from "../../../../../contexts/AuthContext";
-import DtoSelectInput from "../../../input/dto_input/dto-select-input";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle, faTools} from "@fortawesome/free-solid-svg-icons";
 import {Link} from "react-router-dom";
-import {Form} from "react-bootstrap";
+import SelectInputBase from "../../../input/SelectInputBase";
 
-function PipelineToolInput({ toolType, toolFriendlyName, placeholderText, visible, fieldName, dataObject, setDataObject, disabled}) {
+function PipelineToolInput({ toolType, toolFriendlyName, placeholderText, visible, fieldName, dataObject, setDataObject, setDataFunction, disabled}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [tools, setTools] = useState([]);
@@ -67,10 +66,11 @@ function PipelineToolInput({ toolType, toolFriendlyName, placeholderText, visibl
 
   return (
     <div>
-      <DtoSelectInput
+      <SelectInputBase
         fieldName={fieldName}
         dataObject={dataObject}
         setDataObject={setDataObject}
+        setDataFunction={setDataFunction}
         selectOptions={tools}
         busy={isLoading}
         valueField="id"
@@ -92,6 +92,7 @@ PipelineToolInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
+  setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool
 };

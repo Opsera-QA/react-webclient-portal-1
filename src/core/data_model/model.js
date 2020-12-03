@@ -11,7 +11,7 @@ export class Model {
 
   constructor(data, metaData, newModel) {
     this.metaData = metaData;
-    this.data = {...this.getNewObjectFields, ...data};
+    this.data = {...this.getNewObjectFields(), ...data};
     this.newModel = newModel;
     this.dataState = DataState.LOADED;
     this.changeMap = new Map();

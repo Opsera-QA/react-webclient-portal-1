@@ -2,8 +2,8 @@ import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
 import {AuthContext} from "../../../../../../../../contexts/AuthContext";
-import DtoSelectInput from "../../../../../../../common/input/dto_input/dto-select-input";
 import pipelineStepNotificationActions from "../pipeline-step-notification-actions";
+import SelectInputBase from "../../../../../../../common/input/SelectInputBase";
 
 function JiraStepNotificationProjectInput({jiraToolId, visible, dataObject, setDataObject, disabled}) {
   const toastContext = useContext(DialogToastContext);
@@ -42,10 +42,7 @@ function JiraStepNotificationProjectInput({jiraToolId, visible, dataObject, setD
     let newDataObject = {...selectedOption};
     newDataObject.setData("jiraSprint", "");
     newDataObject.setData("jiraParentTicket", "");
-    newDataObject.setData("jiraAssignee", "");
-    newDataObject.setData("jiraBoard", "");
-    newDataObject.setData("jiraRejectionStep", "");
-    newDataObject.setData("jiraApprovalStep", "");
+    newDataObject.setData("jiraAssignees", []);
     newDataObject.setData("jiraOpenStep", "");
     newDataObject.setData("jiraClosureStep", "");
     setDataObject({...newDataObject});
@@ -70,7 +67,7 @@ function JiraStepNotificationProjectInput({jiraToolId, visible, dataObject, setD
   }
 
   return (
-    <DtoSelectInput
+    <SelectInputBase
       fieldName={"jiraProject"}
       dataObject={dataObject}
       setDataObject={setJiraProject}

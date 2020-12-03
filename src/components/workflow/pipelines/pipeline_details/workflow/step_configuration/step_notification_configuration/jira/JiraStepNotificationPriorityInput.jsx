@@ -2,8 +2,8 @@ import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
 import {AuthContext} from "../../../../../../../../contexts/AuthContext";
-import DtoSelectInput from "../../../../../../../common/input/dto_input/dto-select-input";
 import pipelineStepNotificationActions from "../pipeline-step-notification-actions";
+import SelectInputBase from "../../../../../../../common/input/SelectInputBase";
 
 function JiraStepNotificationPriorityInput({visible, jiraToolId, dataObject, setDataObject, disabled}) {
   const toastContext = useContext(DialogToastContext);
@@ -58,13 +58,13 @@ function JiraStepNotificationPriorityInput({visible, jiraToolId, dataObject, set
   }
 
   return (
-    <DtoSelectInput
+    <SelectInputBase
       fieldName={"jiraPriority"}
       dataObject={dataObject}
       setDataObject={setDataObject}
       selectOptions={priorities}
       busy={isLoading}
-      valueField="name"
+      valueField="id"
       textField="name"
       placeholderText={getPlaceholderText()}
       disabled={disabled || isLoading || jiraToolId == null || priorities.length === 0}

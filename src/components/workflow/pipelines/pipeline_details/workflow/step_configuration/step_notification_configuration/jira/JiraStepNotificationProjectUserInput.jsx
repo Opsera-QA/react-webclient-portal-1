@@ -2,8 +2,8 @@ import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
 import {AuthContext} from "../../../../../../../../contexts/AuthContext";
-import DtoSelectInput from "../../../../../../../common/input/dto_input/dto-select-input";
 import pipelineStepNotificationActions from "../pipeline-step-notification-actions";
+import SelectInputBase from "../../../../../../../common/input/SelectInputBase";
 
 function JiraStepNotificationProjectUserInput({jiraToolId, jiraProject, visible, dataObject, setDataObject, disabled}) {
   const toastContext = useContext(DialogToastContext);
@@ -58,7 +58,7 @@ function JiraStepNotificationProjectUserInput({jiraToolId, jiraProject, visible,
   }
 
   return (
-    <DtoSelectInput
+    <SelectInputBase
       fieldName={"jiraAssignee"}
       dataObject={dataObject}
       setDataObject={setDataObject}
