@@ -12,6 +12,19 @@ toolsActions.deleteTool = async (dataObject, getAccessToken) => {
   return baseActions.apiDeleteCall(getAccessToken, apiUrl);
 };
 
+toolsActions.deleteVaultRecordsForToolId = async (toolDataDto,getAccessToken) => {
+  const apiUrl = `/vault/delete`;
+  const accessToken = await getAccessToken();
+  let id = toolDataDto.getData("_id")
+  let postBody = {
+    id : id
+  }
+  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
+    .then((result) =>  {return result;})
+    .catch(error => {throw error;});
+  return response;
+}
+
 toolsActions.updateTool = async (toolDataDto, getAccessToken) => {
   const postBody = {
     ...toolDataDto.getPersistData()
