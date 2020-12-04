@@ -1171,3 +1171,31 @@ a.nav-link {
   bottom: 2em;
   opacity: 1;
 }
+
+/* Property Input Styling */
+.object-properties-input .property-header {
+    background-color: #46415C;
+    color: #fff;
+    height: 40px;
+    line-height: 2.4em;
+    border-bottom: 5px solid #7368AA;
+}
+
+.object-properties-input .delete-button {
+    margin-left: 2px;
+}
+
+.object-properties-input .properties-body {
+    height: 195px;
+    overflow-y: auto;
+    overflow-x: hidden
+}
+
+.object-properties-input .no-data-message {
+    padding: 12.5%;
+}
+
+.object-properties-input .rw-widget-input {
+    /* this is based on form input's height, with a couple extra pixels added */
+    height: calc(1.5em + .75rem + 2px);
+}
