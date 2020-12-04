@@ -1,3 +1,5 @@
+import regexHelpers from "../../../utils/regexHelpers";
+
 const toolMetadata = {
   idProperty: "_id",
   type: "Tool",
@@ -93,6 +95,7 @@ const toolMetadata = {
     {
       label: "Cost Center",
       id: "costCenter",
+      inputMaskRegex: regexHelpers.regexTypes["generalText"],
     },
     {
       label: "Created",
@@ -103,6 +106,7 @@ const toolMetadata = {
     name: "",
     description: "",
     tool_identifier: "",
+    costCenter: "",
     compliance: [],
     licensing: [],
     location: [],
