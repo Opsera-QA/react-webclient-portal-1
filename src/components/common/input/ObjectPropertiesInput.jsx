@@ -8,6 +8,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Combobox } from 'react-widgets'
 import adminTagsActions from "../../settings/tags/admin-tags-actions";
+import regexHelpers from "../../../utils/regexHelpers";
 
 function ObjectPropertiesInput({dataObject, setDataObject, fieldName, disabledFields}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -78,11 +79,20 @@ function ObjectPropertiesInput({dataObject, setDataObject, fieldName, disabledFi
     validateAndSetData(newPropertyList);
   };
 
-  const updateProperty = (row, innerField, value) => {
+  const updateProperty = (row, innerField, newValue) => {
     let newPropertyList = properties
     let index = newPropertyList.indexOf(row);
-    newPropertyList[index][innerField] = value;
-    validateAndSetData(newPropertyList);
+    let format = regexHelpers.regexTypes["generalText"];
+    let meetsRegex = format.test(newValue);
+
+    if (newValue !== '' && !meetsRegex) {
+      return;
+    }
+
+    if (newPropertyList[index][innerField] !== newValue) {
+      newPropertyList[index][innerField] = newValue;
+      validateAndSetData(newPropertyList);
+    }
   };
 
   const getDeletePropertyButton = (index) => {
