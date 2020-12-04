@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ConfigurationInput from "../../../input/ConfigurationInput";
+import ObjectPropertiesInput from "../../../input/ObjectPropertiesInput";
 
 function TagConfigurationInput({ fieldName, dataObject, setDataObject, disabled}) {
 
   return (
-    <ConfigurationInput
+    <ObjectPropertiesInput
       dataObject={dataObject}
       fieldName={fieldName}
       setDataObject={setDataObject}
