@@ -1,69 +1,168 @@
 import paths from "./paths";
+import {
+  faBuilding, faChartBar, faClipboardList, faCogs, faDraftingCompass, faEdit, faFileInvoice, faHeartbeat, faLink,
+  faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench
+} from "@fortawesome/pro-light-svg-icons";
+import {faTools} from "@fortawesome/pro-solid-svg-icons";
+import {faUsers} from "@fortawesome/free-solid-svg-icons";
+
+const breadcrumbs = {
+  // Inventory
+  toolRegistry: {name: "toolRegistry", path: paths.toolRegistry, label: "Tool Registry", icon: faClipboardList},
+  toolDetailView: {name: "toolDetailView", path: paths.toolDetailView, label: "Tool Details", icon: faTools},
+
+  // Administration
+  admin: {name: "admin", path: paths.admin, label: "Administration Tools", icon: faTools},
+
+  systemStatus: {name: "systemStatus", path: paths.systemStatus, label: "System Status", icon: faHeartbeat},
+  systemHealthCheck: {name: "systemHealthCheck", path: paths.systemHealthCheck, label: "System Health Check", icon: faHeartbeat},
+  deprecatedReports: {name: "deprecatedReports", path: paths.deprecatedReports, label: "Reports", icon: faLink},
+  reportsRegistration: {name: "reportsRegistration", path: paths.reportsRegistration, label: "Reports Registration", icon: faChartBar},
+  systemManagement: {name: "systemManagement", path: paths.systemManagement, label: "System Management", icon: faEdit},
+
+  templateManagement: {name: "templateManagement", path: paths.templateManagement, label: "Template Management", icon: faStream},
+  templateDetailView: {name: "templateDetailView", path: paths.templateDetailView, label: "Template Details", icon: faStream},
+  toolManagement: {name: "toolManagement", path: paths.toolManagement, label: "Tool Management", icon: faWrench},
+  deleteTools: {name: "deleteTools", path: paths.deleteTools, label: "Delete Tools", icon: faTimes},
+  toolTypeDetailView: {name: "toolTypeDetailView", path: paths.toolTypeDetailView, label: "Tool Type Details", icon: faWrench},
+  toolIdentifierDetailView: {name: "toolIdentifierDetailView", path: paths.toolIdentifierDetailView, label: "Tool Identifier Details", icon: faWrench},
+  kpiManagement: {name: "kpiManagement", path: paths.kpiManagement, label: "Kpi Management", icon: faFileInvoice},
+  kpiDetailView: {name: "kpiDetailView", path: paths.kpiManagement, label: "Kpi Details", icon: faFileInvoice},
+  registeredUsersManagement: {name: "registeredUsersManagement", path: paths.registeredUsersManagement, label: "Registered Users Management", icon: faUserCircle},
+  registeredUsersDetailView: {name: "registeredUsersDetailView", path: paths.registeredUsersManagement, label: "Registered User Details", icon: faUserCircle},
+  apiManagement: {name: "apiManagement", path: paths.apiManagement, label: "API Management", icon: faLink},
+
+  // Account settings
+  accountSettings: {name: "accountSettings", path: paths.accountSettings, label: "Account Settings", icon: faCogs},
+
+  // Customer System Status
+  customerSystemStatus: {name: "customerSystemStatus", path: paths.customerSystemStatus, label: "Customer System Status", icon: faHeartbeat},
+
+  // LDAP Users Administration
+  ldapUserManagement: {name: "ldapUserManagement", path: paths.ldapUserManagement, label: "Users", icon: faUser},
+  ldapUserDetailView: {name: "ldapUserDetailView", path: paths.ldapUserDetailView, label: "User Details", icon: faUser},
+  ldapUserDetailViewLimited: {name: "ldapUserDetailViewLimited", path: paths.ldapUserDetailView, label: "My User Details", icon: faUser},
+
+  // LDAP Groups Administration
+  ldapGroupManagement: {name: "ldapGroupManagement", path: paths.ldapGroupManagement, label: "Groups", icon: faUserFriends},
+  ldapGroupDetailView: {name: "ldapGroupDetailView", path: paths.ldapGroupDetailView, label: "Group Details", icon: faUserFriends},
+
+  // Tag Management
+  tagManagement: {name: "tagManagement", path: paths.tagManagement, label: "Tag Management", icon: faTags},
+  tagDetailView: {name: "tagDetailView", path: paths.tagDetailView, label: "Tag Details", icon: faTags},
+
+  // Ldap Organizations Administration
+  ldapOrganizationManagement: {name: "ldapOrganizationManagement", path: paths.ldapOrganizationManagement, label: "Organizations", icon: faSitemap},
+  ldapOrganizationDetailView: {name: "ldapOrganizationDetailView", path: paths.ldapOrganizationDetailView, label: "Organization Details", icon: faSitemap},
+
+  ldapDepartmentManagement: {name: "ldapDepartmentManagement", path: paths.ldapDepartmentManagement, label: "Departments", icon: faBuilding},
+  ldapDepartmentDetailView: {name: "ldapDepartmentDetailView", path: paths.ldapDepartmentDetailView, label: "Department Details", icon: faBuilding},
+
+  // Ldap Organization Account Administration
+  ldapOrganizationAccountManagement: {name: "ldapOrganizationAccountManagement", path: paths.ldapOrganizationAccountManagement, label: "Organization Accounts", icon: faSitemap},
+  ldapOrganizationAccountDetailView: {name: "ldapOrganizationAccountDetailView", path: paths.ldapOrganizationDetailView, label: "Organization Account Details", icon: faUsers},
+
+  customerOnboarding: {name: "customerOnboarding", path: paths.customerOnboarding, label: "Customer Onboarding", icon: faUserPlus},
+
+  //Pipelines
+  pipelines: {name: "pipelines", path: paths.pipelines, label: "Pipelines", icon: faDraftingCompass},
+  pipelineDetailView: {name: "pipelineDetailView", path: paths.pipelineDetailView, label: "Pipeline Details", icon: faDraftingCompass},
+
+  //Reports
+  reports: {name: "reports", path: paths.reports, label: "Reports", icon: faChartBar},
+  toolReports: {name: "toolReports", path: paths.toolReports, label: "Tool Reports", icon: faTools},
+  tagReports: {name: "tagReports", path: paths.tagReports, label: "Tag Reports", icon: faTags},
+  pipelineReports: {name: "pipelineReports", path: paths.pipelineReports, label: "Pipeline Reports", icon: faDraftingCompass}
+};
 
 const trails = {
   // Inventory
-  toolRegistry: {parent: undefined, destination: {name: "toolRegistry", path: paths.toolRegistry, label: "Tool Registry"}},
-  toolDetailView: {parent: "toolRegistry", destination: {name: "toolDetailView", path: paths.toolDetailView, label: "Tool Details"}},
+  toolRegistry: {parent: undefined, breadcrumb: breadcrumbs.toolRegistry},
+  toolDetailView: {parent: "toolRegistry", breadcrumb: breadcrumbs.toolDetailView},
 
   // Administration
-  admin: {parent: undefined, destination: {name: "admin", path: paths.admin, label: "Administration"}},
-  systemStatus: {parent: "admin", destination: {name: "systemStatus", path: paths.systemStatus, label: "System Status"}},
-  templateManagement: {parent: "admin", destination: {name: "templateManagement", path: paths.templateManagement, label: "Template Management"}},
-  templateDetailView: {parent: "templateManagement", destination: {name: "templateDetailView", path: paths.templateDetailView, label: "Template Details"}},
-  toolManagement: {parent: "admin", destination: {name: "toolManagement", path: paths.toolManagement, label: "Tool Management"}},
-  toolTypeDetailView: {parent: "toolManagement", destination: {name: "toolTypeDetailView", path: paths.toolTypeDetailView, label: "Tool Type Details"}},
-  toolIdentifierDetailView: {parent: "toolManagement", destination: {name: "toolIdentifierDetailView", path: paths.toolIdentifierDetailView, label: "Tool Identifier Details"}},
-  kpiManagement: {parent: "admin", destination: {name: "kpiManagement", path: paths.kpiManagement, label: "Kpi Management"}},
-  kpiDetailView: {parent: "kpiManagement", destination: {name: "kpiDetailView", path: paths.kpiManagement, label: "Kpi Details"}},
-  registeredUsersManagement: {parent: "admin", destination: {name: "registeredUsersManagement", path: paths.registeredUsersManagement, label: "Registered Users Management"}},
-  registeredUsersDetailView: {parent: "registeredUsersManagement", destination: {name: "registeredUsersDetailView", path: paths.registeredUsersManagement, label: "Registered User Details"}},
-  apiManagement: {parent: "admin", destination: {name: "apiManagement", path: paths.apiManagement, label: "API Management"}},
+  admin: {parent: undefined, breadcrumb: breadcrumbs.admin},
+  systemStatus: {parent: "admin", breadcrumb: breadcrumbs.systemStatus},
+
+
+  systemHealthCheck: {parent: "admin", breadcrumb: breadcrumbs.systemStatus},
+  deprecatedReports: {parent: "admin", breadcrumb: breadcrumbs.systemStatus},
+  reportsRegistration: {parent: "admin", breadcrumb: breadcrumbs.systemStatus},
+  systemManagement: {parent: "admin", breadcrumb: breadcrumbs.systemStatus},
+  // systemStatus: {parent: "admin", breadcrumb: breadcrumbs.systemStatus},
+
+
+  templateManagement: {parent: "admin", breadcrumb: breadcrumbs.templateManagement},
+  templateDetailView: {parent: "templateManagement", breadcrumb: breadcrumbs.templateDetailView},
+  toolManagement: {parent: "admin", breadcrumb: breadcrumbs.toolManagement},
+  toolTypeDetailView: {parent: "toolManagement", breadcrumb: breadcrumbs.toolTypeDetailView},
+  toolIdentifierDetailView: {parent: "toolManagement", breadcrumb: breadcrumbs.toolIdentifierDetailView},
+  kpiManagement: {parent: "admin", breadcrumb: breadcrumbs.kpiManagement},
+  kpiDetailView: {parent: "kpiManagement", breadcrumb: breadcrumbs.kpiDetailView},
+  registeredUsersManagement: {parent: "admin", breadcrumb: breadcrumbs.registeredUsersManagement},
+  registeredUsersDetailView: {parent: "registeredUsersManagement", breadcrumb: breadcrumbs.registeredUsersDetailView},
+  apiManagement: {parent: "admin", breadcrumb: breadcrumbs.apiManagement},
 
   // Account settings
-  accountSettings: {parent: undefined, destination: {name: "accountSettings", path: paths.accountSettings, label: "Account Settings"}},
+  accountSettings: {parent: undefined, breadcrumb: breadcrumbs.accountSettings},
 
   // Customer System Status
-  customerSystemStatus: {parent: "accountSettings", destination: {name: "customerSystemStatus", path: paths.customerSystemStatus, label: "Customer System Status"}},
+  customerSystemStatus: {parent: "accountSettings", breadcrumb: breadcrumbs.customerSystemStatus},
 
   // LDAP Users Administration
-  ldapUserManagement: {parent: "accountSettings", destination: {name: "ldapUserManagement", path: paths.ldapUserManagement, label: "Users"}},
-  ldapUserDetailView: {parent: "ldapUserManagement", destination: {name: "ldapUserDetailView", path: paths.ldapUserDetailView, label: "User Details"}},
-  ldapUserDetailViewLimited: {parent: "accountSettings", destination: {name: "ldapUserDetailViewLimited", path: paths.ldapUserDetailView, label: "User Details"}},
+  ldapUserManagement: {parent: "accountSettings", breadcrumb: breadcrumbs.ldapUserManagement},
+  ldapUserDetailView: {parent: "ldapUserManagement", breadcrumb: breadcrumbs.ldapUserDetailView},
+  ldapUserDetailViewLimited: {parent: "accountSettings", breadcrumb: breadcrumbs.ldapUserDetailViewLimited},
 
   // LDAP Groups Administration
-  ldapGroupManagement: {parent: "accountSettings", destination: {name: "ldapGroupManagement", path: paths.ldapGroupManagement, label: "Groups"}},
-  ldapGroupDetailView: {parent: "ldapGroupManagement", destination: {name: "ldapGroupDetailView", path: paths.ldapGroupDetailView, label: "Group Details"}},
+  ldapGroupManagement: {parent: "accountSettings", breadcrumb: breadcrumbs.ldapGroupManagement},
+  ldapGroupDetailView: {parent: "ldapGroupManagement", breadcrumb: breadcrumbs.ldapGroupDetailView},
 
   // Tag Management
-  tagManagement: {parent: "accountSettings", destination: {name: "tagManagement", path: paths.tagManagement, label: "Tag Management"}},
-  tagDetailView: {parent: "tagManagement", destination: {name: "tagDetailView", path: paths.tagDetailView, label: "Tag Details"}},
+  tagManagement: {parent: "accountSettings", breadcrumb: breadcrumbs.tagManagement},
+  tagDetailView: {parent: "tagManagement", breadcrumb: breadcrumbs.tagDetailView},
 
   // Ldap Organizations Administration
-  ldapOrganizationManagement: {parent: "admin", destination: {name: "ldapOrganizationManagement", path: paths.ldapOrganizationManagement, label: "Organizations"}},
-  ldapOrganizationDetailView: {parent: "ldapOrganizationManagement", destination: {name: "ldapOrganizationDetailView", path: paths.ldapOrganizationDetailView, label: "Organization Details"}},
+  ldapOrganizationManagement: {parent: "admin", breadcrumb: breadcrumbs.ldapOrganizationManagement},
+  ldapOrganizationDetailView: {parent: "ldapOrganizationManagement", breadcrumb: breadcrumbs.ldapOrganizationDetailView},
 
-  ldapDepartmentManagement: {parent: "admin", destination: {name: "ldapDepartmentManagement", path: paths.ldapDepartmentManagement, label: "Departments"}},
-  ldapDepartmentDetailView: {parent: "ldapDepartmentManagement", destination: {name: "ldapDepartmentDetailView", path: paths.ldapDepartmentDetailView, label: "Department Details"}},
+  ldapDepartmentManagement: {parent: "admin", breadcrumb: breadcrumbs.ldapDepartmentManagement},
+  ldapDepartmentDetailView: {parent: "ldapDepartmentManagement", breadcrumb: breadcrumbs.ldapDepartmentDetailView},
 
   // Ldap Organization Account Administration
-  ldapOrganizationAccountManagement: {parent: "admin", destination: {name: "ldapOrganizationAccountManagement", path: paths.ldapOrganizationAccountManagement, label: "Organization Accounts"}},
+  ldapOrganizationAccountManagement: {parent: "admin", breadcrumb: breadcrumbs.ldapOrganizationAccountManagement},
   // TODO: set parent to ldapOrganizationAccountManagement when organization accounts screen is put to use
-  ldapOrganizationAccountDetailView: {parent: "admin", destination: {name: "ldapOrganizationAccountDetailView", path: paths.ldapOrganizationDetailView, label: "Organization Account Details"}},
+  ldapOrganizationAccountDetailView: {parent: "admin", breadcrumb: breadcrumbs.ldapOrganizationAccountDetailView},
 
   //Pipelines
-  pipelines: {parent: undefined, destination: {name: "pipelines", path: paths.pipelines, label: "Pipelines"}},
-  pipelineDetailView: {parent: "pipelines", destination: {name: "pipelineDetailView", path: paths.pipelineDetailView, label: "Pipeline Details"}},
+  pipelines: {parent: undefined, breadcrumb: breadcrumbs.pipelines},
+  pipelineDetailView: {parent: "pipelines", breadcrumb: breadcrumbs.pipelineDetailView},
+
+  //Reports
+  reports: {parent: undefined, breadcrumb: breadcrumbs.reports},
+  toolReports: {parent: "reports", breadcrumb: breadcrumbs.toolReports},
+  tagReports: {parent: "reports", breadcrumb: breadcrumbs.tagReports},
+  pipelineReports: {parent: "reports", breadcrumb: breadcrumbs.pipelineReports},
 };
 
-export const getTrail = (destination) => {
-  let trail = trails[destination];
+export const getTrail = (breadcrumb) => {
+  let trail = trails[breadcrumb];
   let breadcrumbPath = [];
-  let endPath = trail.destination;
+  let endPath = trail.breadcrumb;
 
   while (trail.parent != null) {
-    trail = trails[trail.parent]
-    breadcrumbPath.unshift(trail.destination);
+    trail = trails[trail.parent];
+    breadcrumbPath.unshift(trail.breadcrumb);
   }
 
-  return {trail: breadcrumbPath, destination: endPath};
+  return {trail: breadcrumbPath, breadcrumb: endPath};
+};
+
+export const getBreadcrumb = (breadcrumb) => {
+  return breadcrumbs[breadcrumb];
+};
+
+export const getParentBreadcrumb = (breadcrumb) => {
+  let parentBreadcrumb = trails[breadcrumb]?.parent;
+  return parentBreadcrumb ? breadcrumbs[parentBreadcrumb] : null;
 };
