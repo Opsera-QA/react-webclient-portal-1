@@ -1,5 +1,6 @@
 import paths from "./paths";
 import {
+  faAnalytics,
   faBuilding, faChartBar, faClipboardList, faCogs, faDraftingCompass, faEdit, faFileInvoice, faHeartbeat, faLink,
   faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench
 } from "@fortawesome/pro-light-svg-icons";
@@ -69,7 +70,7 @@ const breadcrumbs = {
   pipelineDetailView: {name: "pipelineDetailView", path: paths.pipelineDetailView, label: "Pipeline Details", icon: faDraftingCompass},
 
   //Reports
-  reports: {name: "reports", path: paths.reports, label: "Reports", icon: faChartBar},
+  reports: {name: "reports", path: paths.reports, label: "Reports", icon: faAnalytics},
   toolReports: {name: "toolReports", path: paths.toolReports, label: "Tool Reports", icon: faTools},
   tagReports: {name: "tagReports", path: paths.tagReports, label: "Tag Reports", icon: faTags},
   pipelineReports: {name: "pipelineReports", path: paths.pipelineReports, label: "Pipeline Reports", icon: faDraftingCompass}
