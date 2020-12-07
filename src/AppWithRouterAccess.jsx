@@ -19,7 +19,6 @@ import Signup from "./components/user/Signup";
 import ApiConnector from "./components/api_connector/ApiConnector";
 import Pipeline from "./components/pipeline/index";
 import Platform from "./components/platform/Platform";
-import Reports from "./components/reports/Reports";
 import Analytics from "./components/analytics/Analytics";
 import Logs from "./components/logs/Logs";
 import Update from "./components/update/Update";
@@ -70,6 +69,11 @@ import ToastContextProvider from "./contexts/DialogToastContext";
 import LdapDepartmentManagement from "./components/admin/accounts/ldap/ldap_departments/LdapDepartmentManagement";
 import LdapDepartmentDetailView
   from "./components/admin/accounts/ldap/ldap_departments/department_detail_view/LdapDepartmentDetailView";
+import Reports from "./components/reports/Reports";
+import ToolReports from "./components/reports/tools/ToolReports";
+import PipelineReports from "./components/reports/pipelines/PipelineReports";
+import TagReports from "./components/reports/tags/TagReports";
+import Reports_Old from "./components/reports/Reports_Old";
 
 const OktaAuth = require("@okta/okta-auth-js");
 const config = require("./config");
@@ -226,8 +230,13 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/analytics" exact component={Analytics}/>
                   <SecureRoute path="/logs" exact component={Logs}/>
                   <SecureRoute path="/blueprint" exact component={OPBlueprintMain}/>
-                  <SecureRoute path="/reports" exact component={Reports}/>
                   <SecureRoute path="/update" component={Update}/>
+
+                  {/* Reports */}
+                  <SecureRoute path="/reports" exact component={Reports}/>
+                  <SecureRoute path="/reports/registry" exact component={ToolReports}/>
+                  <SecureRoute path="/reports/pipelines" exact component={PipelineReports}/>
+                  <SecureRoute path="/reports/tags" exact component={TagReports}/>
 
                   {/* Administration Pages */}
                   <SecureRoute path="/admin" exact component={AdminTools}/>
@@ -245,6 +254,7 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/admin/kpis/:id" exact component={KpiDetailView}/>
                   <SecureRoute path="/admin/templates" exact component={TemplateManagement}/>
                   <SecureRoute path="/admin/templates/details/:templateId" exact component={TemplateDetailView}/>
+                  <SecureRoute path="/admin/reports" exact component={Reports_Old}/>
 
                   {/* Ldap Account Pages */}
                   <SecureRoute path="/admin/organizations" exact component={LdapOrganizationsView}/>

@@ -4,11 +4,17 @@ const paths = {};
 paths.admin = "admin";
 
 paths.systemStatus = paths.admin + "/system-status";
+paths.systemHealthCheck = paths.admin + "/health";
+
+paths.deprecatedReports = paths.admin + "/reports";
+paths.reportsRegistration = paths.admin + "analytics/reports-registration";
+paths.systemManagement = paths.admin + "/manage-systems";
 
 paths.templateManagement = paths.admin+ "/templates";
 paths.templateDetailView = paths.templateManagement + "/details/";
 
 paths.toolManagement = paths.admin + "/tools";
+paths.deleteTools = paths.admin + "/delete/";
 paths.toolTypeDetailView = paths.toolManagement + "/types/details/";
 paths.toolIdentifierDetailView = paths.toolManagement + "/identifiers/details/";
 
@@ -20,6 +26,8 @@ paths.ldapDepartmentDetailView = paths.admin + "/departments";
 
 paths.ldapOrganizationAccountManagement = paths.admin + "/organization-accounts";
 paths.ldapOrganizationDetailView = paths.admin + "/organization-accounts";
+
+paths.customerOnboarding = "/accounts/create";
 
 paths.registeredUsersManagement = paths.admin + "/registered-users";
 
@@ -41,6 +49,12 @@ paths.ldapGroupDetailView = paths.ldapUserManagement;
 paths.tagManagement = paths.accountSettings + "/tags";
 paths.tagDetailView = paths.tagManagement + "/details/";
 paths.customerSystemStatus = paths.accountSettings + "/customer-system-status";
+
+//Reports
+paths.reports = "reports";
+paths.toolReports = paths.reports + "/registry";
+paths.tagReports = paths.reports + "/tags";
+paths.pipelineReports = paths.reports + "/pipelines";
 
 //Inventory (Tool Registry) paths
 paths.toolRegistry = "inventory/tools";

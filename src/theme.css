@@ -1010,6 +1010,11 @@ a.nav-link {
   overflow-y: auto;
 }
 
+.page-description {
+  background-color: #E7E5ED;
+  height: 2em;
+}
+
 .detail-view-body .detail-view-summary {
   min-height: 20vh;
 }

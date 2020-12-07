@@ -1,13 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
-import { AuthContext } from "../../contexts/AuthContext";
-import LoadingDialog from "../common/status_notifications/loading";
-import AccessDeniedDialog from "../common/status_notifications/accessDeniedInfo";
-import {DialogToastContext} from "../../contexts/DialogToastContext";
-import ScreenContainer from "../common/panels/general/ScreenContainer";
-import Row from "react-bootstrap/Row";
-import BreadcrumbPageLink from "../common/links/BreadcrumbPageLink";
+import {AuthContext} from "../../../contexts/AuthContext";
+import {DialogToastContext} from "../../../contexts/DialogToastContext";
+import LoadingDialog from "../../common/status_notifications/loading";
+import ScreenContainer from "../../common/panels/general/ScreenContainer";
+import AccessDeniedDialog from "../../common/status_notifications/accessDeniedInfo";
 
-function Reports() {
+function ToolReports() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const { getUserRecord, setAccessRoles } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -48,17 +46,13 @@ function Reports() {
 
   return (
     <ScreenContainer
-      breadcrumbDestination={"reports"}
-      pageDescription={"View reports from this dashboard."}
+      breadcrumbDestination={"toolReports"}
+      pageDescription={"You will be able to view Tool Reports here."}
     >
-      <Row className="ml-3">
-        <BreadcrumbPageLink breadcrumbDestination={"toolReports"}/>
-        <BreadcrumbPageLink breadcrumbDestination={"tagReports"}/>
-        <BreadcrumbPageLink breadcrumbDestination={"pipelineReports"}/>
-      </Row>
+      {/*{TODO: Add reports links here}*/}
     </ScreenContainer>
   );
 }
 
-export default Reports;
+export default ToolReports;
 

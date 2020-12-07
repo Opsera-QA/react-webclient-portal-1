@@ -2,12 +2,14 @@ import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import LoadingDialog from "../common/status_notifications/loading";
 import { Row } from "react-bootstrap";
-import {faUserFriends, faUser, faTags, faUsers, faHeartbeat} from "@fortawesome/pro-light-svg-icons";
+import {faUser} from "@fortawesome/pro-light-svg-icons";
 import BreadcrumbTrail from "../common/navigation/breadcrumbTrail";
 import AccessDeniedDialog from "../common/status_notifications/accessDeniedInfo";
 import accountsActions from "../admin/accounts/accounts-actions";
 import {DialogToastContext} from "../../contexts/DialogToastContext";
 import PageLink from "../common/links/PageLink";
+import BreadcrumbPageLink from "../common/links/BreadcrumbPageLink";
+import ScreenContainer from "../common/panels/general/ScreenContainer";
 
 function AccountSettings() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -53,25 +55,24 @@ function AccountSettings() {
   }
 
   return (
-    <>
-      <BreadcrumbTrail destination="accountSettings"/>
-      <div className="max-content-width ml-2 mt-1">
-        <h5>Account Settings</h5>
-        <div>Manage groups and users from this dashboard.</div>
-        <Row className="ml-3 mt-3 admin-tools">
-          {userDetailsLink && <PageLink link={userDetailsLink} icon={faUser} linkText={"My User Record"}/>}
-          {(accessRoleData.PowerUser || accessRoleData.Administrator || accessRoleData.OpseraAdministrator) &&
-            <>
-              <PageLink link={"/settings/groups"} icon={faUserFriends} linkText={"Groups"}/>
-              <PageLink link={"/settings/users"} icon={faUser} linkText={"Users"}/>
-              <PageLink link={"/settings/tags"} icon={faTags} linkText={"Tags"}/>
-              {!envIsProd && <PageLink link={"/settings/customer-system-status"} icon={faHeartbeat} linkText={"Customer Status"}/>}
-              {/*<PageLink link={"/admin/organization-accounts"} icon={faUsers} linkText={"Organization Accounts"}/>*/}
-            </>
-          }
-        </Row>
-      </div>
-    </>
+    <ScreenContainer
+      breadcrumbDestination={"accountSettings"}
+      pageDescription={"Manage account settings from this dashboard."}>
+      <Row className="ml-3">
+        {/*TODO: Make User Details Link Component*/}
+        {userDetailsLink && <PageLink link={userDetailsLink} icon={faUser} linkText={"My User Record"}/>}
+        {(accessRoleData.PowerUser || accessRoleData.Administrator || accessRoleData.OpseraAdministrator) &&
+        <>
+          <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"}/>
+          <BreadcrumbPageLink breadcrumbDestination={"reports"}/>
+          <BreadcrumbPageLink breadcrumbDestination={"ldapUserManagement"}/>
+          <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
+          {!envIsProd && <BreadcrumbPageLink breadcrumbDestination={"customerSystemStatus"}/>}
+          {/*<BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
+        </>
+        }
+      </Row>
+    </ScreenContainer>
   );
 }
 
