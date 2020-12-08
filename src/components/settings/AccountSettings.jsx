@@ -64,7 +64,6 @@ function AccountSettings() {
         {(accessRoleData.PowerUser || accessRoleData.Administrator || accessRoleData.OpseraAdministrator) &&
         <>
           <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"}/>
-          <BreadcrumbPageLink breadcrumbDestination={"reports"}/>
           <BreadcrumbPageLink breadcrumbDestination={"ldapUserManagement"}/>
           <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
           {!envIsProd && <BreadcrumbPageLink breadcrumbDestination={"customerSystemStatus"}/>}
