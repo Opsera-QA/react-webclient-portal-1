@@ -22,6 +22,14 @@ import SFDCUnitTestModal from "./SFDCUnitTestModal";
 
 const UNIT_TEST_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
+  { value: "NoTestRun", label: "No Test Run" },
+  { value: "RunLocalTests", label: "Run Local Tests" },
+  { value: "RunAllTestsInOrg", label: "Run All Tests In Org" },
+  { value: "RunSpecifiedTests", label: "Run Specified Tests" },
+];
+const PROD_UNIT_TEST_OPTIONS = [
+  { value: "", label: "Select One", isDisabled: "yes" },
+  { value: "NoTestRun", label: "No Test Run" },
   { value: "RunLocalTests", label: "Run Local Tests" },
   { value: "RunAllTestsInOrg", label: "Run All Tests In Org" },
   { value: "RunSpecifiedTests", label: "Run Specified Tests" },
@@ -256,7 +264,7 @@ function SFDCConfiguration({
 
             {formData.isOrgToOrg && (
               <Form.Group controlId="jenkinsList">
-                <Form.Label>Destination SalesForce Credentials*
+                <Form.Label className="w-100">Destination SalesForce Credentials*
                 <OverlayTrigger
                       trigger="click"
                       rootClose
@@ -351,7 +359,7 @@ function SFDCConfiguration({
                   onChange={handleUnitTestChange}
                 />
               </Form.Group>
-              
+
               {/* {formData.sfdcUnitTestType === "RunSpecifiedTests" && 
                 <div className="flex-container-bottom pr-2 mt-4 mb-2 text-right">
                   <Button
@@ -373,6 +381,27 @@ function SFDCConfiguration({
               } */}
               
              </>
+            }
+            {(formData.jobType === "SFDC VALIDATE PACKAGE XML" || formData.jobType === "SFDC DEPLOY") && formData.sfdcToolId.length > 0 && 
+            <>
+              <Form.Group controlId="unitTestSelectionValidateJob" className="mt-4 ml-1">
+                <Form.Label className="w-100">
+                    Unit Test Type
+                </Form.Label>
+                <DropdownList
+                  data={PROD_UNIT_TEST_OPTIONS}
+                  value={PROD_UNIT_TEST_OPTIONS[PROD_UNIT_TEST_OPTIONS.findIndex((x) => x.value === formData.sfdcUnitTestType)]}
+                  valueField="id"
+                  textField="label"
+                  filter="contains"
+                  placeholder="Please select type of unit test"
+                  onChange={handleUnitTestChange}
+                />
+                <Form.Text className="text-muted">
+                Note: TestLevel of NoTestRun cannot be used in production organizations
+                </Form.Text>
+              </Form.Group>
+              </>
             }
       </Form>
       

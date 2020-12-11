@@ -901,20 +901,6 @@ function JenkinsStepConfiguration({
                     <Form.Group controlId="formBasicEmail">
                       <Form.Label className="w-100">
                         Account*
-                        <OverlayTrigger
-                          trigger="click"
-                          rootClose
-                          placement="left"
-                          overlay={RegistryPopover(
-                            accountsList[accountsList.findIndex((x) => x.gitCredential === formData.gitCredential)]
-                          )}
-                        >
-                          <FontAwesomeIcon
-                            icon={faEllipsisH}
-                            className="fa-pull-right pointer pr-1"
-                            onClick={() => document.body.click()}
-                          />
-                        </OverlayTrigger>
                       </Form.Label>
                       {accountsList.length < 1 && (
                         <div className="form-text text-muted p-2">
