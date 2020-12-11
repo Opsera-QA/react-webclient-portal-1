@@ -52,7 +52,7 @@ function Sidebar({ userData, hideSideBar }) {
       setRenderOutput(renderFn);
     }
   };
-
+  
   const chooseRenderState = (accessRole) => {
     if (process.env.REACT_APP_STACK === "free-trial") {
       return (<FreeTrialNav accessRole={accessRole}/>);
@@ -101,6 +101,9 @@ function Sidebar({ userData, hideSideBar }) {
           <NavLink className="nav-link" activeClassName="chosen" to="/analytics">
             <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
             className="menu-text">Insights</span></NavLink>
+          {process.env.REACT_APP_ENVIRONMENT === "development" ? <NavLink className="nav-link" activeClassName="chosen" to="/insights">
+            <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
+            className="menu-text">Insights 2.0</span></NavLink> : null}
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
           <NavLink className="nav-link" activeClassName="chosen" to="/inventory/tools">

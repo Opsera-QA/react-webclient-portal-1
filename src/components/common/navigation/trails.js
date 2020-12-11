@@ -136,8 +136,11 @@ const trails = {
   ldapOrganizationAccountDetailView: {parent: "admin", breadcrumb: breadcrumbs.ldapOrganizationAccountDetailView},
 
   //Pipelines
-  pipelines: {parent: undefined, breadcrumb: breadcrumbs.pipelines},
-  pipelineDetailView: {parent: "pipelines", breadcrumb: breadcrumbs.pipelineDetailView},
+  pipelines: {parent: undefined, destination: {name: "pipelines", path: paths.pipelines, label: "Pipelines"}},
+  pipelineDetailView: {parent: "pipelines", destination: {name: "pipelineDetailView", path: paths.pipelineDetailView, label: "Pipeline Details"}},
+
+  //Insights
+  dashboardViewer: {parent: undefined, destination: {name: "dashboardViewer", path: paths.dashboardViewer, label: "Dashboard Details"}},
 
   //Reports
   reports: {parent: undefined, breadcrumb: breadcrumbs.reports},

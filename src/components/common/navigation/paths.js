@@ -10,7 +10,7 @@ paths.deprecatedReports = paths.admin + "/reports";
 paths.reportsRegistration = paths.admin + "analytics/reports-registration";
 paths.systemManagement = paths.admin + "/manage-systems";
 
-paths.templateManagement = paths.admin+ "/templates";
+paths.templateManagement = paths.admin + "/templates";
 paths.templateDetailView = paths.templateManagement + "/details/";
 
 paths.toolManagement = paths.admin + "/tools";
@@ -39,6 +39,9 @@ paths.kpiDetailView = paths.kpiManagement;
 // Pipelines Paths
 paths.pipelines = "workflow"
 paths.pipelineDetailView = paths.pipelines + "/details"
+
+// Insights Paths
+paths.dashboardViewer = "/insights/dashboards"
 
 // Settings Paths
 paths.accountSettings = "settings";
