@@ -20,6 +20,8 @@ import ApiConnector from "./components/api_connector/ApiConnector";
 import Pipeline from "./components/pipeline/index";
 import Platform from "./components/platform/Platform";
 import Analytics from "./components/analytics/Analytics";
+import Insights from "./components/insights/Insights";
+import DashboardViewer from "./components/insights/dashboard_details/DashboardViewer"
 import Logs from "./components/logs/Logs";
 import Update from "./components/update/Update";
 import AdminTools from "./components/admin/AdminTools";
@@ -228,6 +230,8 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/tools/:id?" component={ApiConnector}/>
                   <SecureRoute path="/platform" component={Platform}/>
                   <SecureRoute path="/analytics" exact component={Analytics}/>
+                  <SecureRoute path="/insights/dashboards" exact component={Insights}/>
+                  <SecureRoute path="/insights/dashboards/:id" exact component={DashboardViewer}/>
                   <SecureRoute path="/logs" exact component={Logs}/>
                   <SecureRoute path="/blueprint" exact component={OPBlueprintMain}/>
                   <SecureRoute path="/update" component={Update}/>

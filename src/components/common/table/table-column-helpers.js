@@ -4,6 +4,8 @@ import {faCheckCircle, faPause, faSpinner, faStop, faTimesCircle} from "@fortawe
 import React from "react";
 import PipelineHelpers from "../../workflow/pipelineHelpers";
 import PipelineStatus from "../../workflow/pipelines/PipelineStatus";
+import FavoritesIcon from "../../insights/FavoritesIcon";
+import dashboardsActions from "../../insights/dashboards-actions";
 
 const getTableHeader = (field) => {
   return field["label"];
@@ -83,6 +85,17 @@ export const getTablePipelineStatusColumn = (field) => {
       }
     },
     class: "text-left"
+  };
+};
+
+export const getTableFavoriteColumn = (field, getAccessToken) => {
+  return {
+    Header: getTableHeader(field),
+    accessor: getTableAccessor(field),
+    Cell: (props) => {
+      return <FavoritesIcon key={props.row.original._id} dashboard={props.row.original} dashboardsActions={dashboardsActions} getAccessToken={getAccessToken}/>
+    },
+    class: "no-wrap-inline"
   };
 };
 
