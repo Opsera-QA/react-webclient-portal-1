@@ -23,6 +23,11 @@ pipelineActions.getPipelines = async (pipelineFilterDto, type, getAccessToken) =
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
+pipelineActions.getPipelineSummaries = async (pipelineIds, getAccessToken) => {
+  let apiUrl = `/pipelines/summary`;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, pipelineIds);
+};
+
 pipelineActions.getAllPipelines = async (getAccessToken) => {
   const urlParams = {
     params: {
@@ -104,6 +109,16 @@ pipelineActions.get = async (pipelineId, getAccessToken) => {
     .then((result) =>  {return result;})
     .catch(error => {throw { error };});
   return response;
+};
+
+pipelineActions.getPipelineById = async (pipelineId, getAccessToken) => {
+  const apiUrl = `/pipelines/${pipelineId}`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
+pipelineActions.getPipelineById = async (pipelineId, getAccessToken) => {
+  const apiUrl = `/pipelines/${pipelineId}`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
 pipelineActions.saveToVault = async (postBody, getAccessToken) => {
