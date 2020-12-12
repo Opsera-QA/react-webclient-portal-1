@@ -248,7 +248,7 @@ function PipelineDetailView() {
           {pipeline ? <div className="title-text-5 mb-2">{pipeline.name}</div> :
             <div className="title-text-5 mb-2">Pipelines</div>}
 
-          {pipeline.owner !== customerAccessRules.UserId &&
+          {pipeline.owner !== customerAccessRules?.UserId &&
           <>
             <div className="mb-2 w-100 max-charting-width info-text">
               {customerAccessRules.Role === "administrator" && <>Administrator Access Role: Your account has full

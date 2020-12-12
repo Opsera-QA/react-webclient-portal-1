@@ -816,7 +816,7 @@ a.nav-link {
 
 .content-block-no-height {
   border-radius: 5px;
-  background-color: rgba(203, 205, 205, 0.1);
+  /*background-color: rgba(203, 205, 205, 0.1);*/
 }
 
 .content-block-top {
@@ -1148,7 +1148,7 @@ a.nav-link {
 }
 
 .warning-toast {
-  background-color: #ffeaaa;
+  background-color: #FFF;
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
   border: 2px solid #f9c116;
   border-left: 8px solid #f9c116;

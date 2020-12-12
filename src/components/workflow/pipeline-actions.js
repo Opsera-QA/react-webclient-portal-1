@@ -48,9 +48,27 @@ pipelineActions.run = async (pipelineId, postBody, getAccessToken) => {
   return response;
 };
 
-pipelineActions.cancel = async (pipelineId, getAccessToken) => {
+pipelineActions.resume = async (pipelineId, postBody, getAccessToken) => {
   const accessToken = await getAccessToken();
-  const apiUrl = `/pipelines/${pipelineId}/reset/`;   
+  const apiUrl = `/pipelines/${pipelineId}/resume`;
+  const response = await axiosApiService(accessToken).get(apiUrl)
+    .then((result) =>  {return result;})
+    .catch(error => {throw { error };});
+  return response;
+};
+
+pipelineActions.stop = async (pipelineId, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/pipelines/${pipelineId}/stop/`;
+  const response = await axiosApiService(accessToken).get(apiUrl)
+    .then((result) =>  {return result;})
+    .catch(error => {throw { error };});
+  return response;
+};
+
+pipelineActions.reset = async (pipelineId, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/pipelines/${pipelineId}/reset/`;
   const response = await axiosApiService(accessToken).get(apiUrl)
     .then((result) =>  {return result;})
     .catch(error => {throw { error };});

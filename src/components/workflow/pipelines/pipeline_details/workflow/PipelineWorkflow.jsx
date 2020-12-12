@@ -193,7 +193,7 @@ function PipelineWorkflow({
     <>
       <div>
         <div className="pb-1">
-          <Button variant="secondary"
+          {/*<Button variant="secondary"
                   className="mr-1"
                   size="sm"
                   disabled={zoomValue >= 3}
@@ -209,7 +209,18 @@ function PipelineWorkflow({
                   onClick={() => {
                     handleZoomClick(zoomValue, "out");
                   }}>
-            <FontAwesomeIcon icon={faSearchMinus} fixedWidth/></Button>
+            <FontAwesomeIcon icon={faSearchMinus} fixedWidth/></Button>*/}
+
+          {authorizedAction("view_pipeline_configuration", pipeline.owner) && <OverlayTrigger
+            placement="top"
+            delay={{ show: 250, hide: 400 }}
+            overlay={renderTooltip({ message: "View pipeline configuration" })}>
+            <Button variant="outline-secondary" className="mr-1" size="sm" onClick={() => {
+              handleViewPipelineClick(pipeline);
+            }}>
+              <FontAwesomeIcon icon={faFileAlt} fixedWidth/> View Configuration</Button>
+          </OverlayTrigger>
+          }
 
           {editWorkflow &&
           <Button
@@ -223,24 +234,13 @@ function PipelineWorkflow({
 
           {!editWorkflow &&
           <>
-            {authorizedAction("view_pipeline_configuration", pipeline.owner) && <OverlayTrigger
-              placement="top"
-              delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltip({ message: "View pipeline configuration" })}>
-              <Button variant="secondary" className="mr-1" size="sm" onClick={() => {
-                handleViewPipelineClick(pipeline);
-              }}>
-                <FontAwesomeIcon icon={faFileAlt} fixedWidth/></Button>
-            </OverlayTrigger>
-            }
-
             {authorizedAction("edit_workflow_structure", pipeline.owner) && <>
               {!editWorkflow &&
               <OverlayTrigger
                 placement="top"
                 delay={{ show: 250, hide: 400 }}
                 overlay={renderTooltip({ message: "Edit pipeline workflow: add or remove steps, edit step names and set tools for individual steps" })}>
-                <Button variant="warning" size="sm"
+                <Button variant="outline-secondary" size="sm"
                         onClick={() => {
                           handleEditWorkflowClick();
                         }}
@@ -296,7 +296,7 @@ function PipelineWorkflow({
                 </OverlayTrigger>
                 }
 
-                {workflowStatus !== "running" ?
+                {workflowStatus !== "running" && workflowStatus !== "paused" ?
                   <>
                     <OverlayTrigger
                       placement="top"
@@ -353,6 +353,25 @@ function PipelineWorkflow({
             End of Workflow
           </div>
         </div>
+
+
+        <Button variant="secondary"
+                className="mr-1"
+                size="sm"
+                disabled={zoomValue >= 3}
+                onClick={() => {
+                  handleZoomClick(zoomValue, "in");
+                }}>
+          <FontAwesomeIcon icon={faSearchPlus} fixedWidth/></Button>
+
+        <Button variant="secondary"
+                className="mr-1"
+                size="sm"
+                disabled={zoomValue <= 1}
+                onClick={() => {
+                  handleZoomClick(zoomValue, "out");
+                }}>
+          <FontAwesomeIcon icon={faSearchMinus} fixedWidth/></Button>
 
       </div>
 

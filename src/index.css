@@ -179,6 +179,13 @@ a:hover, .active {
   margin: auto;
 }
 
+
+
+.btn-group-sized .btn-default {
+  min-width: 100px;
+}
+
+
 /* Utility Classes */
 .italic {
   font-style: italic;
@@ -641,6 +648,33 @@ a:hover, .active {
   padding: 1em;
   border-radius: 5px;
   z-index: 1200;
+}
+
+.pipeline-summary-dialog-block {
+  background-color: #FFF;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  padding: 10px;
+  margin: 10px 0 5px 0;
+  z-index: 3000;
+  border-radius: 5px;
+  text-align: left;
+  border-width: 2px;
+  border-style: solid;
+  border-left-width: 8px;
+  border-left-style: solid;
+}
+
+.warning-theme {
+  border-color: #f9c116;
+}
+.info-theme {
+  border-color: #1989F9;
+}
+.success-theme {
+  border-color: green;
+}
+.error-theme {
+  border-color: #dc3545;
 }
 
 .code {

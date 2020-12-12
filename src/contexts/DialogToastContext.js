@@ -232,6 +232,12 @@ function ToastContextProvider ({ children }) {
     return <>{inlineBanner != null ? inlineBanner : null}</>;
   }
 
+  //TMP Solution to bypass array
+  //Currently used in PipelineActionControls around puased useeffect, so update there.
+  const clearToastsArray = () => {
+    setToasts([]);
+  }
+
   return (
       <DialogToastContext.Provider
         value={{
@@ -266,7 +272,9 @@ function ToastContextProvider ({ children }) {
           showErrorDialog: showErrorBanner,
           getModalToast: getModalToast,
 
-          getInlineBanner: getInlineBanner
+          getInlineBanner: getInlineBanner,
+
+          clearToastsArray: clearToastsArray //tmp solution till next version of toasts
         }}>
         <PersistentInformationMessage />
         <BannerMessageContainer bannerMessages={bannerMessages} />

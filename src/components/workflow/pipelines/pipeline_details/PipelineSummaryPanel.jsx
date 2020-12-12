@@ -359,7 +359,7 @@ function PipelineSummaryPanel({
           <Col sm={12} md={6} className="py-2"><span className="text-muted mr-1">ID:</span> {pipeline._id}</Col>
           <Col sm={12} md={6} className="py-2"><span
             className="text-muted mr-1">Pipeline Run Count:</span> {pipeline.workflow.run_count || "0"}</Col>
-          <Col sm={12} md={6} className="py-2">
+          {/*<Col sm={12} md={6} className="py-2">
             {editProject ?
               <>
                 <Row className="">
@@ -386,13 +386,18 @@ function PipelineSummaryPanel({
                   ? getEditIcon("project")
                   : null}
               </>}
-          </Col>
-          <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Owner:</span> {ownerName}</Col>
-          <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Organization:</span> <span
-            className="upper-case-first">{pipeline.organizationName}</span></Col>
+          </Col>*/}
+          <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">
+            Owner:</span> {ownerName}</Col>
           <Col xs={12} sm={6} className="py-2"><span
             className="text-muted mr-1">Created On:</span> {pipeline.createdAt && format(new Date(pipeline.createdAt), "yyyy-MM-dd', 'hh:mm a")}
           </Col>
+          <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">
+            Organization:</span> <span
+            className="upper-case-first">{pipeline.organizationName}</span></Col>
+
+          <Col lg className="py-1"><span className="text-muted mr-1">Org Account:</span> {pipeline.account}</Col>
+
           <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Tags:</span>
             {authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running" && getEditIcon("tags")}
 
@@ -471,7 +476,7 @@ function PipelineSummaryPanel({
                 getEditIcon("schedule", true) : null}
             </Col>
           }
-          <Col lg className="py-1"><span className="text-muted mr-1">Org Account:</span> {pipeline.account}</Col>
+
 
           {editDescription ?
             <>

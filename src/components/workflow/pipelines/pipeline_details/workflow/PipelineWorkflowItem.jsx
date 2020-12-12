@@ -369,7 +369,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
                   </OverlayTrigger>}
                 </>}
 
-              {parentWorkflowStatus !== "running" ? //if the overall pipeline is in a running state
+              {parentWorkflowStatus !== "running" && parentWorkflowStatus !== "paused" ? //if the overall pipeline is in a running/locked state
                 <>
                   <OverlayTrigger
                     placement="top"

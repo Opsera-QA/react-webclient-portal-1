@@ -51,7 +51,8 @@ function PipelineWorkflowView({
 
         <div className="py-1 text-right">
           {!editItem && <div className="float-right pt-1 mr-2">
-            <PipelineActionControls pipeline={pipeline} disabledActionState={false}
+            <PipelineActionControls pipeline={pipeline}
+                                    disabledActionState={false}
                                     customerAccessRules={customerAccessRules}
                                     fetchData={fetchPlan}
                                     setPipeline={setPipeline}
