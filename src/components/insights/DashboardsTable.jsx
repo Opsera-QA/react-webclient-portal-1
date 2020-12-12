@@ -8,7 +8,7 @@ import {
 import dashboardMetadata from "./dashboard-metadata";
 import {useHistory} from "react-router-dom";
 import {getField} from "../common/metadata/metadata-helpers";
-import SearchFilter from "../common/filters/search/StatusFilter";
+import SearchFilter from "../common/filters/search/SearchFilter";
 import FilterBar from "../common/filters/FilterBar";
 import StatusFilter from "../common/filters/status/StatusFilter";
 import DashboardTypeFilter from "../common/filters/dashboards/DashboardTypeFilter";

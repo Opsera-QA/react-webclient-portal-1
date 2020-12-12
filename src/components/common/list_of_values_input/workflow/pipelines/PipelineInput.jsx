@@ -4,7 +4,7 @@ import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import pipelineActions from "../../../../workflow/pipeline-actions";
 import {AuthContext} from "../../../../../contexts/AuthContext";
 import DtoSelectInput from "../../../input/dto_input/dto-select-input";
-import PipelineSummaryCard from "../../../../workflow/pipelines/pipeline_details/PipelineSummaryCard";
+import PipelineSummaryCard from "../../../../workflow/pipelines/pipeline_details/pipeline_activity/PipelineSummaryCard";
 import pipelineMetadata from "../../../../workflow/pipelines/pipeline_details/pipeline-metadata";
 import Model from "../../../../../core/data_model/model";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
@@ -69,8 +69,8 @@ function PipelineInput({ currentPipelineId, visible, fieldName, dataObject, setD
 
     if (foundPipeline != null) {
       let pipelineDataObject = new Model({...foundPipeline.pipeline}, pipelineMetadata, false);
-      let runCount = foundPipeline.workflow?.lastRun?.runCount;
-      return (<PipelineSummaryCard pipelineData={pipelineDataObject} runCount={runCount != null ? `${runCount}` : `0`} /> )
+      let run = foundPipeline.workflow?.lastRun?.run;
+      return (<PipelineSummaryCard pipelineData={pipelineDataObject} run={run != null ? `${run}` : `0`} /> )
     }
 
     return ('Could not get pipeline details. Pipeline may have been deleted');
@@ -85,7 +85,7 @@ function PipelineInput({ currentPipelineId, visible, fieldName, dataObject, setD
       );
     }
 
-    return <span>Select a pipeline to get started.</span>
+    return <small className="text-muted"><span>Select a pipeline to get started.</span></small>
   };
 
   if (visible === false) {
@@ -116,9 +116,7 @@ function PipelineInput({ currentPipelineId, visible, fieldName, dataObject, setD
         disabled={disabled}
       />
       <div className="mt-2">
-        <small className="text-muted">
-          {getInfoText()}
-        </small>
+        {getInfoText()}
       </div>
     </div>
   );

@@ -4,6 +4,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import React from "react";
+import TooltipWrapper from "../common/tooltip/tooltipWrapper";
+import {faBracketsCurly, faDiceD20, faMicrochip} from "@fortawesome/pro-light-svg-icons";
+import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
 
 const pipelineHelpers = {};
 

@@ -11,7 +11,7 @@ import kpiMetaData from "./kpi_detail_view/kpi-form-fields";
 import NewKpiModal from "./NewKpiModal";
 import FilterBar from "../../common/filters/FilterBar";
 import StatusFilter from "../../common/filters/status/StatusFilter";
-import SearchFilter from "../../common/filters/search/StatusFilter";
+import SearchFilter from "../../common/filters/search/SearchFilter";
 
 function KpiTable({ data, kpiFilterDto, setKpiFilterDto, isLoading, loadData }) {
   let fields = kpiMetaData.fields;

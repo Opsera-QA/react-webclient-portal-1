@@ -519,7 +519,7 @@ function PipelineSummaryPanel({
                 type="free-trial-container-url-msg"
                 lastRun={pipeline.workflow.last_run}
                 tags={pipeline.tags}
-                runCount={pipeline.workflow.run_count}
+                run={pipeline.workflow.run_count}
                 getUserRecord={getUserRecord} />
             }
           </Col>

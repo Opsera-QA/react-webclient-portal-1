@@ -1,4 +1,5 @@
-const pipelineMetadata = {
+// TODO: Refine when all necessary fields are known
+const pipelineSummaryMetadata = {
   idProperty: "_id",
   // detailView: function(record) {
   //   return `/inventory/tools/details/${record.getData("_id")}`;
@@ -16,10 +17,6 @@ const pipelineMetadata = {
     {
       label: "Run Count",
       id: "run_count",
-    },
-    {
-      label: "Run Count",
-      id: "workflow.run_count",
     },
     {
       label: "Last Run",
@@ -115,7 +112,11 @@ const pipelineMetadata = {
       label: "Status",
       id: "workflow",
     },
+    {
+      label: "Run Number",
+      id: "runNumber",
+    },
   ]
 };
 
-export default pipelineMetadata;
+export default pipelineSummaryMetadata;

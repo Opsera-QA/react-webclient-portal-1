@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
-import PipelineActivityLogTable from "./PipelineActivityLogTable";
+import PipelineActivityLogTable from "./pipeline_activity/PipelineActivityLogTable";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
 import InfoDialog from "components/common/status_notifications/info";
@@ -14,6 +14,9 @@ import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDraftingCompass, faDiceD20, faMicrochip, faArrowLeft, faBracketsCurly } from "@fortawesome/pro-light-svg-icons";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
+import Model from "../../../../core/data_model/model";
+import pipelineActivityActions from "./pipeline_activity/pipeline-activity-actions";
+import pipelineActivityFilterMetadata from "./pipeline_activity/pipeline-activity-filter-metadata";
 
 const refreshInterval = 8000;
 
@@ -27,14 +30,12 @@ function PipelineDetailView() {
   const [loading, setLoading] = useState(false);
   const [softLoading, setSoftLoading] = useState(false);
   const [logsIsLoading, setLogsIsLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(25);
   const [workflowStatus, setWorkflowStatus] = useState(false);
-  const [runCount, setRunCount] = useState(1);
   const [activeTab, setActiveTab] = useState("summary");
   const [editItem, setEditItem] = useState(false);
   const [ownerName, setOwnerName] = useState(undefined);
   const [refreshCount, setRefreshCount] = useState(0);
+  const [pipelineActivityFilterDto, setPipelineActivityFilterDto] = useState(new Model(pipelineActivityFilterMetadata.newObjectFields, pipelineActivityFilterMetadata, false));
   const history = useHistory();
 
   const [refreshTimer, setRefreshTimer] = useState(null);
@@ -66,10 +67,6 @@ function PipelineDetailView() {
   };
 
   useEffect(() => {
-    getActivityLogs();
-  }, [currentPage, pageSize]);
-
-  useEffect(() => {
     console.log("Effect  3: Pipeline update detected, determining status!!!");
   }, [JSON.stringify(pipeline.workflow), refreshCount]);
 
@@ -86,6 +83,7 @@ function PipelineDetailView() {
     }
 
     await fetchData();
+    await getActivityLogs();
     setLoading(false);
   };
 
@@ -152,12 +150,15 @@ function PipelineDetailView() {
     setRefreshTimer(refreshTimer);
   };
 
+  // TODO: combine this with the other one and just pass whether to show loading or not as bool
   const getSilentActivityLogs = async () => {
-    const accessToken = await getAccessToken();
-    const apiUrl = `/pipelines/${id}/activity?page=${currentPage}&size=${pageSize}`;
     try {
-      const activity = await axiosApiService(accessToken).get(apiUrl);
-      setActivityData(activity.data);
+      const response = await pipelineActivityActions.getPipelineActivityLogs(pipelineActivityFilterDto, id, getAccessToken);
+      setActivityData(response.data);
+      const newFilterDto = pipelineActivityFilterDto;
+      newFilterDto.setData("totalCount", response.data?.count);
+      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
+      setPipelineActivityFilterDto(() => newFilterDto);
     } catch (err) {
       setErrors(err.message);
       console.log(err.message);
@@ -174,43 +175,29 @@ function PipelineDetailView() {
     return status;
   };
 
-
-  const selectRunCountFilter = item => {
-    setRunCount(item);
-  };
-
-  async function getActivityLogs() {
+  const getActivityLogs = async (filterDto = pipelineActivityFilterDto) => {
     if (activeTab !== "summary" || logsIsLoading) {
       return;
     }
-    setLogsIsLoading(true);
-    const accessToken = await getAccessToken();
-    const apiUrl = `/pipelines/${id}/activity?page=${currentPage}&size=${pageSize}`;
+
     try {
-      const activity = await axiosApiService(accessToken).get(apiUrl);
-      setActivityData(activity.data);
-      setLogsIsLoading(false);
+      setLogsIsLoading(true);
+      const response = await pipelineActivityActions.getPipelineActivityLogs(pipelineActivityFilterDto, id, getAccessToken);
+      console.log("NEW DATA: " + JSON.stringify(response));
+      setActivityData(response.data);
+      const newFilterDto = filterDto;
+      newFilterDto.setData("totalCount", response.data?.count);
+      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
+      setPipelineActivityFilterDto(() => newFilterDto);
     } catch (err) {
       setLoading(false);
       setErrors(err.message);
       console.log(err.message);
+    }
+    finally {
       setLogsIsLoading(false);
     }
   }
-
-  const gotoPage = (pageNumber, pageSize) => {
-    setCurrentPage(pageNumber);
-    setPageSize(pageSize);
-  };
-
-  const getPaginationOptions = () => {
-    return {
-      pageSize: pageSize,
-      totalCount: activityData.count,
-      currentPage: currentPage,
-      gotoPageFn: gotoPage,
-    };
-  };
 
   const fetchPlan = async (param) => {
     // console.log("fetchPlan")
@@ -325,11 +312,12 @@ function PipelineDetailView() {
         {activeTab === "summary" &&
         <div className="max-content-width-1875">
           <PipelineActivityLogTable
+            pipeline={pipeline}
             isLoading={logsIsLoading}
-            currentRunCountFilter={runCount}
-            selectRunCountFilter={selectRunCountFilter}
+            loadData={getActivityLogs}
+            pipelineActivityFilterDto={pipelineActivityFilterDto}
+            setPipelineActivityFilterDto={setPipelineActivityFilterDto}
             data={activityData.pipelineData}
-            paginationOptions={getPaginationOptions()}
           /></div>}
       </>
     );
