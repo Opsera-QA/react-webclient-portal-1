@@ -5,7 +5,7 @@ import {AuthContext} from "../../../../../../../../contexts/AuthContext";
 import pipelineStepNotificationActions from "../pipeline-step-notification-actions";
 import SelectInputBase from "../../../../../../../common/input/SelectInputBase";
 
-function JiraStepNotificationProjectUserInput({jiraToolId, jiraProject, visible, dataObject, setDataObject, disabled}) {
+function JiraStepNotificationProjectUserInput({jiraToolId, jiraProject, fieldName, visible, dataObject, setDataObject, disabled}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [users, setUsers] = useState([]);
@@ -59,7 +59,7 @@ function JiraStepNotificationProjectUserInput({jiraToolId, jiraProject, visible,
 
   return (
     <SelectInputBase
-      fieldName={"jiraAssignee"}
+      fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
       selectOptions={users}
@@ -82,7 +82,8 @@ JiraStepNotificationProjectUserInput.propTypes = {
 };
 
 JiraStepNotificationProjectUserInput.defaultProps = {
-  visible: true
+  visible: true,
+  fieldName: "jiraPrimaryAssignee"
 }
 
 export default JiraStepNotificationProjectUserInput;
