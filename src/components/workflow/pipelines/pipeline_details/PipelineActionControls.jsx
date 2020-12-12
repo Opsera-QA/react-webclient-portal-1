@@ -53,13 +53,10 @@ function PipelineActionControls({
     pipelineOrientation: "",
   });
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
-  const [error, setErrors] = useState();
-
 
   const authorizedAction = (action, owner) => {
     return WorkflowAuthorizedActions.pipelineActionControls(customerAccessRules, action, owner);
   };
-
 
   useEffect(() => {
     loadData(pipeline);
@@ -67,8 +64,6 @@ function PipelineActionControls({
       toastContext.clearToastsArray();
       toastContext.showWarningToast("This pipeline is currently paused.  Please review the summary activity logs for more details.")
     }
-
-
   }, [workflowStatus, JSON.stringify(pipeline.workflow)]);
 
 
@@ -232,7 +227,6 @@ function PipelineActionControls({
     await PipelineActions.stop(pipelineId, getAccessToken)
       .catch(err => {
         console.log(err);
-        //setErrors(err.error);
         toastContext.showLoadingErrorDialog(err);
       });
     setStopPipeline(false);
@@ -244,7 +238,6 @@ function PipelineActionControls({
     await PipelineActions.reset(pipelineId, getAccessToken)
       .catch(err => {
         console.log(err);
-        //setErrors(err.error);
         toastContext.showLoadingErrorDialog(err.error);
       });
     setStopPipeline(false);
@@ -259,7 +252,6 @@ function PipelineActionControls({
       .catch(err => {
         setStartPipeline(false);
         console.log(err);
-        //setErrors(err.error);
         toastContext.showLoadingErrorDialog(err.error);
       });
 
@@ -385,8 +377,6 @@ function PipelineActionControls({
                                autoRun={true}
                                handleClose={handleCloseFreeTrialDeploy}/>}
 
-      {error && <ErrorDialog error={error} setError={setErrors} align="top"/>}
-
       <div className="text-right btn-group btn-group-sized">
         {workflowStatus === "running" &&
         <>
@@ -499,11 +489,16 @@ function PipelineActionControls({
       </div>
 
       {showApprovalModal &&
-      <ApprovalModal pipelineId={pipeline._id} visible={showApprovalModal} setVisible={setShowApprovalModal}
+      <ApprovalModal pipelineId={pipeline._id}
+                     visible={showApprovalModal}
+                     setVisible={setShowApprovalModal}
                      refreshActivity={handleApprovalActivity}/>}
 
-      {infoModal.show && <Modal header={infoModal.header} message={infoModal.message} button={infoModal.button}
-                                handleCancelModal={() => setInfoModal({ ...infoModal, show: false })}/>}
+      {infoModal.show &&
+      <Modal header={infoModal.header}
+             message={infoModal.message}
+             button={infoModal.button}
+             handleCancelModal={() => setInfoModal({ ...infoModal, show: false })}/>}
     </>);
 }
 

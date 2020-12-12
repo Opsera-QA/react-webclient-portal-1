@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
-import { Button, Modal, Form } from "react-bootstrap";
+import { Button, Modal, Form, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faSpinner, faTimes } from "@fortawesome/pro-light-svg-icons";
 import PipelineHelpers from "./pipelineHelpers";
@@ -126,34 +126,31 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
 
   return (
     <>
-      <Modal show={visible} onHide={() => handleClose()}>
+      <Modal size="lg" show={visible} onHide={() => handleClose()}>
         <Modal.Header closeButton>
-          <Modal.Title>Pipeline Runtime Approval</Modal.Title>
+          <Modal.Title>Pipeline Approval Gate</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="m-3">
 
-            {!priorToApprovalStep ?
-              <><div className="h6">Pipeline Approval Required Prior to Running</div></> :
-              <><div className="h6">Approval Required To Proceed Past: {priorToApprovalStep.name}</div></>
-            }
+            <div>Approval of this interaction is required in order for the pipeline to proceed. Please review the
+              details below
+              as well as the Pipline Activity Logs and confirm that this pipeline can complete its operations.
+            </div>
 
             {message &&
-            <div className="my-3 text-muted italic">{message}</div>}
+            <div className="m-3 p-3 text-muted italic" style={{backgroundColor: "#f2f4f8"}}>{message}</div>}
 
-            <div className="my-3">Please review the status of this pipeline and then log approval here in order for
-              it to proceed. Denying approval will stop the pipeline at this point and mark it as failed.
-            </div>
             <Form>
               <Form.Group controlId="repoField">
-                <Form.Label>Notes:</Form.Label>
+                <Form.Label>Approval Comments:</Form.Label>
                 <Form.Control as="textarea" type="text" placeholder="" value={formData.message || ""}
                               onChange={e => setFormData({ ...formData, message: e.target.value })}/>
               </Form.Group>
-              <small className="form-text text-muted mt-2 text-left">Optional message to include in approval
+              <small className="form-text text-muted text-left">Optional message to include in approval
                 log which will be visible in the Activity logs for this pipeline</small>
 
-              <div className="my-4 pt-1">
+              <div className="my-4 pt-1 text-right">
                 <Form.Check
                   type="switch"
                   id="approval-switch"
@@ -161,7 +158,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
                   checked={formData.approved ? true : false}
                   onChange={() => setFormData({ ...formData, approved: !formData.approved })}
                 />
-                <small className="form-text text-muted mt-2">Flip the Approved switch to approve this step</small>
+                <small className="form-text text-muted">Flip the switch to approve this step</small>
               </div>
             </Form>
 
@@ -170,26 +167,40 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
         </Modal.Body>
         <Modal.Footer>
 
-
+          <OverlayTrigger
+            placement="top"
+            delay={{ show: 250, hide: 400 }}
+            overlay={renderTooltip({ message: "Approve this pipeline using the switch above in order for it to proceed." })}>
           <Button variant="success" onClick={() => handleConfirm("approve")}
                   disabled={isLoading || !formData.approved || isSaving || !approvalStep}>
             {isSaving ?
               <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> :
               <FontAwesomeIcon icon={faCheck} fixedWidth/>}
-            Approve / Continue Pipeline
+            Approve
           </Button>
+          </OverlayTrigger>
 
+          <OverlayTrigger
+            placement="top"
+            delay={{ show: 250, hide: 400 }}
+            overlay={renderTooltip({ message: "Stop this pipeline from proceeding further" })}>
           <Button variant="danger" onClick={() => handleConfirm("deny")}
                   disabled={isLoading || formData.approved || isSavingDeny || !approvalStep}>
             {isSavingDeny ?
               <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> :
               <FontAwesomeIcon icon={faTimes} fixedWidth/>}
-            Deny / Stop Pipeline
+            Deny
           </Button>
+          </OverlayTrigger>
 
-          <Button variant="secondary" onClick={() => handleClose()}>
+          <OverlayTrigger
+            placement="top"
+            delay={{ show: 250, hide: 400 }}
+            overlay={renderTooltip({ message: "Close this window leaving the pipeline in a paused state" })}>
+            <Button variant="secondary" onClick={() => handleClose()}>
             Close
           </Button>
+          </OverlayTrigger>
 
         </Modal.Footer>
       </Modal>
@@ -197,6 +208,15 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
   );
 }
 
+
+function renderTooltip(props) {
+  const { message } = props;
+  return (
+    <Tooltip id="button-tooltip" {...props}>
+      {message}
+    </Tooltip>
+  );
+}
 
 StepApprovalModal.propTypes = {
   pipelineId: PropTypes.string,
