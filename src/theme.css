@@ -863,7 +863,7 @@ a.nav-link {
   background-color: #6E6690;
   color: #fff;
   line-height: 2.4em;
-  border-bottom: 3px solid #6E6690;
+  /*border-bottom: 3px solid #6E6690;*/
 }
 
 .content-card-1 .content-block-body {
