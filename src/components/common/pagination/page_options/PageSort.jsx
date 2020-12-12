@@ -13,6 +13,10 @@ function PageSort({ paginationDto, setPaginationDto, loadData}) {
     loadData(paginationDto);
   };
 
+  if (paginationDto.getMetaData()["sortOptions"] == null) {
+   return <></>;
+  }
+
   return (
     <div className="">
       {/*<label><span>{field.label}</span></label>*/}

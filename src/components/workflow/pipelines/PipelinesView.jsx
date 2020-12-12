@@ -15,7 +15,7 @@ import Model from "../../../core/data_model/model";
 import pipelineFilterMetadata from "./pipeline_details/workflow/pipeline-filter-metadata";
 import DtoBottomPagination from "../../common/pagination/DtoBottomPagination";
 import FilterBar from "../../common/filters/FilterBar";
-import SearchFilter from "../../common/filters/search/StatusFilter";
+import SearchFilter from "../../common/filters/search/SearchFilter";
 import TagFilter from "../../common/filters/tags/TagFilter";
 import PipelineOwnerFilter from "../../common/filters/pipelines/PipelineOwnerFilter";
 import PipelinesTable from "./pipeline_details/PipelinesTable";

@@ -9,15 +9,11 @@ import {
 import toolMetadata from "./tool-metadata";
 import {useHistory} from "react-router-dom";
 import NewToolModal from "./NewToolModal";
-import {Col, Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import FilterBar from "../../common/filters/FilterBar";
 import StatusFilter from "../../common/filters/status/StatusFilter";
 import ToolIdentifierFilter from "../../common/filters/tools/ToolIdentifierFilter";
 import TagFilter from "../../common/filters/tags/TagFilter";
-import TagTypeFilter from "../../common/filters/tags/TagTypeFilter";
-import SearchFilter from "../../common/filters/search/StatusFilter";
+import SearchFilter from "../../common/filters/search/SearchFilter";
 
 function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading }) {
   const [showCreateToolModal, setShowCreateToolModal] = useState(false);

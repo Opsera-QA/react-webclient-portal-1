@@ -12,7 +12,7 @@ import NewTagModal from "./NewTagModal";
 import FilterBar from "../../common/filters/FilterBar";
 import StatusFilter from "../../common/filters/status/StatusFilter";
 import TagTypeFilter from "../../common/filters/tags/TagTypeFilter";
-import SearchFilter from "../../common/filters/search/StatusFilter";
+import SearchFilter from "../../common/filters/search/SearchFilter";
 import {getField} from "../../common/metadata/metadata-helpers";
 
 function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto }) {

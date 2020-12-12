@@ -5,6 +5,7 @@ import "components/inventory/tools/tools.css";
 import LoadingDialog from "../../../../../../../common/status_notifications/loading";
 import PipelineStepSummaryPanelContainer from "../../PipelineStepSummaryPanelContainer";
 import DtoItemField from "../../../../../../../common/form_fields/dto_form_fields/dto-item-field";
+import PipelineSummariesField from "../../../../../../../common/form_fields/pipelines/PipelineSummariesField";
 
 function ParallelProcessPipelineStepConfigurationSummaryPanel({ parallelPipelineDataObject, pipelineData, setActiveTab }) {
 
@@ -15,8 +16,8 @@ function ParallelProcessPipelineStepConfigurationSummaryPanel({ parallelPipeline
   return (
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
-        <Col lg={6}>
-          <DtoItemField dataObject={parallelPipelineDataObject} fieldName={"pipelines"}/>
+        <Col lg={12}>
+          <PipelineSummariesField dataObject={parallelPipelineDataObject} fieldName={"pipelines"}/>
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>

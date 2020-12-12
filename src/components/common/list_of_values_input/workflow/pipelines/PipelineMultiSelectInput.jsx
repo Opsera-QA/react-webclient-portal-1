@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import pipelineActions from "../../../../workflow/pipeline-actions";
 import {AuthContext} from "../../../../../contexts/AuthContext";
-import PipelineSummaryCard from "../../../../workflow/pipelines/pipeline_details/PipelineSummaryCard";
+import PipelineSummaryCard from "../../../../workflow/pipelines/pipeline_details/pipeline_activity/PipelineSummaryCard";
 import pipelineMetadata from "../../../../workflow/pipelines/pipeline_details/pipeline-metadata";
 import Model from "../../../../../core/data_model/model";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
@@ -62,8 +62,8 @@ function PipelineMultiSelectInput({ currentPipelineId, visible, fieldName, dataO
 
     if (foundPipeline != null) {
       let pipelineDataObject = new Model({...foundPipeline.pipeline}, pipelineMetadata, false);
-      let runCount = foundPipeline.workflow?.lastRun?.runCount;
-      return (<PipelineSummaryCard pipelineData={pipelineDataObject} runCount={runCount != null ? `${runCount}` : `0`} /> )
+      let run = foundPipeline.workflow?.lastRun?.run;
+      return (<PipelineSummaryCard pipelineData={pipelineDataObject} run={run != null ? `${run}` : `0`} /> )
     }
 
     return ('Could not get pipeline details. Pipeline may have been deleted');

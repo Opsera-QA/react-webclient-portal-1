@@ -48,8 +48,32 @@ export class Model {
     })
   }
 
+  /**
+   * Retrieve nested item from object/array
+   * @param {String} fieldName dot separated
+   * @returns {*}
+   */
+  getNestedData = (fieldName) => {
+    let index;
+    const fieldNameArray = fieldName.split('.');
+    const length = fieldNameArray.length;
+    let nestedObject = {...this.data};
+
+    for (index = 0; index < length; index++) {
+      if(nestedObject == null) {
+        return null;
+      }
+
+    let nextFieldName = fieldNameArray[index];
+      nestedObject = nestedObject[nextFieldName];
+    }
+
+    return nestedObject !== undefined ? nestedObject : null;
+  };
+
+
   getData = (fieldName) => {
-    return this.data[fieldName];
+    return fieldName.includes('.') ? this.getNestedData(fieldName) : this.data[fieldName];
   }
 
   setData = (fieldName, newValue) => {
@@ -139,7 +163,7 @@ export class Model {
     let fields = this.metaData.fields;
     // TODO: Replace with metadata helper call once finished
     let field = fields.find(field => { return field.id === fieldName});
-    return field.label;
+    return field ? field.label : "No label found in metadata";
   };
 
   getMetaData = () => {
