@@ -445,9 +445,9 @@ a.text-primary:hover, a.text-primary:focus {
 }
 
 .custom-table th {
-  background-color: #46415C; /*#2588ec;*/
+  background-color: #fff; /*#2588ec;*/
   border-bottom: 1px solid #7368AA; /*#3598fc;*/
-  color: #fff;
+  color: #46415C;
   line-height: 2.4em;
   vertical-align: middle;
   white-space: nowrap;
@@ -829,7 +829,7 @@ a.nav-link {
 }
 
 .table-content-block {
-  border: 1px solid #7368AA;
+  border: 1px solid #E3E1EE;
 }
 
 .content-container {
@@ -860,10 +860,10 @@ a.nav-link {
 /*}*/
 
 .content-card-1 .content-block-header {
-  background-color: #46415C;
+  background-color: #6E6690;
   color: #fff;
   line-height: 2.4em;
-  border-bottom: 5px solid #7368AA;
+  border-bottom: 3px solid #6E6690;
 }
 
 .content-card-1 .content-block-body {
@@ -1034,11 +1034,11 @@ a.nav-link {
 
 .shaded-panel {
   border-radius: 5px;
-  background-color: rgba(203, 205, 205, 0.1);
+  background-color: #FCFCFC;
 }
 
 .shaded-container {
-  background-color: rgba(203, 205, 205, 0.1);
+  background-color: #FCFCFC;
 }
 
 /* End Detail View Styling */

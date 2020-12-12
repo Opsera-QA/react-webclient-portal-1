@@ -161,7 +161,7 @@ function FilterTable(
         <div className="px-2 d-flex content-block-header">
           <FilterTitleBar isLoading={isLoading} title={tableTitle} titleIcon={titleIcon} tableFilters={getTableFilters()}/>
         </div>
-        <Row className="d-flex mx-0 py-1 active-filter-bar">
+        <Row className="d-flex mx-0 active-filter-bar">
           <ActiveFilterDisplayer filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} filters={filters}/>
         </Row>
       </div>
