@@ -69,29 +69,31 @@ function NexusToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVault
   }
 
   return (
-    <Form>
+    <div>
       <Row>
-        {showToast && toast}
-        <Col sm={12}>
-          <DtoTextInput setDataObject={setConfigurationData} fieldName={"toolURL"} dataObject={configurationData} />
-        </Col>
-        <Col sm={12}>
-          <DtoTextInput setDataObject={setConfigurationData} fieldName={"userName"} dataObject={configurationData} />
-        </Col>
-        <Col sm={12}>
-          <DtoTextInput type={"password"} setDataObject={setConfigurationData} fieldName={"secretKey"} dataObject={configurationData} />
-        </Col>
+        <div className="ml-auto"><TestToolConnectionButton recordData={toolData} toolName={"Nexus"} disable={configurationData.isNew() || configurationData.isChanged()}/></div>
       </Row>
-      <Row>
-        <div className="ml-auto mt-3 px-3 d-flex">
-          <div className="mt-1">
-            <TestToolConnectionButton recordData={toolData} toolName={"Nexus"}/>
+      <Form>
+        <Row>
+          {showToast && toast}
+          <Col sm={12}>
+            <DtoTextInput setDataObject={setConfigurationData} fieldName={"toolURL"} dataObject={configurationData} />
+          </Col>
+          <Col sm={12}>
+            <DtoTextInput setDataObject={setConfigurationData} fieldName={"userName"} dataObject={configurationData} />
+          </Col>
+          <Col sm={12}>
+            <DtoTextInput type={"password"} setDataObject={setConfigurationData} fieldName={"secretKey"} dataObject={configurationData} />
+          </Col>
+        </Row>
+        <Row>
+          <div className="ml-auto mt-3 px-3 d-flex">
+            <SaveButton recordDto={configurationData} createRecord={callbackFunction} updateRecord={callbackFunction} />
           </div>
-          <SaveButton recordDto={configurationData} createRecord={callbackFunction} updateRecord={callbackFunction} />
-        </div>
-      </Row>
-      <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
-    </Form>
+        </Row>
+        <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
+      </Form>
+    </div>
   );
 }
 

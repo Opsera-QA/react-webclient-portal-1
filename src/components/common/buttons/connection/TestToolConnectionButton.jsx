@@ -7,6 +7,7 @@ import {faPlug} from "@fortawesome/pro-solid-svg-icons/faPlug";
 import {faExclamationTriangle} from "@fortawesome/pro-solid-svg-icons/faExclamationTriangle";
 import toolsActions from "../../../inventory/tools/tools-actions";
 import {AuthContext} from "../../../../contexts/AuthContext";
+import TooltipWrapper from "../../tooltip/tooltipWrapper";
 
 // TODO: Once all tool connection forms use the Dto components, remove recordData
 function TestToolConnectionButton({ recordDto, recordData, disable, toolName }) {
@@ -74,10 +75,12 @@ function TestToolConnectionButton({ recordDto, recordData, disable, toolName }) 
   };
 
   return (
-    <div className="d-flex px-2">
-      <Button size="sm" variant={getVariant()} disabled={isTesting || disable} onClick={() => testConnection()}>
-        {getLabel()}
-      </Button>
+    <div className="px-2">
+      <TooltipWrapper innerText={"This tool must be saved before testing connection."}>
+        <Button size="sm" variant={getVariant()} disabled={isTesting || disable} onClick={() => testConnection()}>
+          {getLabel()}
+        </Button>
+      </TooltipWrapper>
     </div>
   );
 }

@@ -56,30 +56,32 @@ function ArgoToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVault 
   }
 
   return (
-    <Form>
+    <div>
       <Row>
-        <Col sm={12}>
-          <DtoTextInput setDataObject={setConfigurationData} fieldName={"toolURL"} dataObject={configurationData} />
-        </Col>
-        <Col sm={12}>
-          <DtoTextInput setDataObject={setConfigurationData} fieldName={"userName"} dataObject={configurationData} />
-        </Col>
-        <Col sm={12}>
-          <DtoTextInput type={"password"} setDataObject={setConfigurationData} fieldName={"accountPassword"} dataObject={configurationData} />
-        </Col>
+        <div className="ml-auto"><TestToolConnectionButton recordData={toolData} toolName={"Argocd"} disable={configurationData.isNew() || configurationData.isChanged()}/></div>
       </Row>
-      <Row>
-        <div className="ml-auto mt-3 px-3 d-flex">
-          <div className="mt-1">
-            <TestToolConnectionButton recordData={toolData} toolName={"Argocd"} />
+      <Form>
+        <Row>
+          <Col sm={12}>
+            <DtoTextInput setDataObject={setConfigurationData} fieldName={"toolURL"} dataObject={configurationData} />
+          </Col>
+          <Col sm={12}>
+            <DtoTextInput setDataObject={setConfigurationData} fieldName={"userName"} dataObject={configurationData} />
+          </Col>
+          <Col sm={12}>
+            <DtoTextInput type={"password"} setDataObject={setConfigurationData} fieldName={"accountPassword"} dataObject={configurationData} />
+          </Col>
+        </Row>
+        <Row>
+          <div className="ml-auto mt-3 px-3 d-flex">
+            <div>
+              <SaveButton recordDto={configurationData} createRecord={callbackFunction} updateRecord={callbackFunction} />
+            </div>
           </div>
-          <div>
-            <SaveButton recordDto={configurationData} createRecord={callbackFunction} updateRecord={callbackFunction} />
-          </div>
-        </div>
-      </Row>
-      <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
-    </Form>
+        </Row>
+        <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
+      </Form>
+    </div>
   );
 }
 

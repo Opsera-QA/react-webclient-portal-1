@@ -102,51 +102,53 @@ function JenkinsToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVau
   }
 
   return (
-    <Form>
+    <div>
       <Row>
-      {showToast && toast}
-        <Col sm={12}>
-          <DtoTextInput setDataObject={setConfigurationData} fieldName={"jenkinsUrl"} dataObject={configurationData} />
-        </Col>
-        <Col sm={12}>
-          <DtoTextInput setDataObject={setConfigurationData} fieldName={"jenkinsPort"} dataObject={configurationData} />
-        </Col>
-        <Col sm={12}>
-          <DtoTextInput setDataObject={setConfigurationData} fieldName={"jUserId"} dataObject={configurationData} />
-        </Col>
-        <Col sm={12}>
-          <DtoToggleInput setData={toggleProxy} setDataObject={setConfigurationData} fieldName={"proxyEnable"} dataObject={configurationData} />
-        </Col>
-        {configurationData.getData("proxyEnable") ?
-        <>
-          <Col sm={12}>
-            <DtoTextInput disabled={!configurationData.getData("proxyEnable")} setDataObject={setConfigurationData} fieldName={"proxyUserName"} dataObject={configurationData} />
-          </Col>
-          <Col sm={12}>
-            <DtoTextInput type={"password"} disabled={!configurationData.getData("proxyEnable")} setDataObject={setConfigurationData} fieldName={"proxyPassword"} dataObject={configurationData} />
-          </Col>
-          <Col sm={12}>
-            <DtoTextInput type={"password"} disabled={!configurationData.getData("proxyEnable")} setDataObject={setConfigurationData} fieldName={"jPassword"} dataObject={configurationData} />
-          </Col>
-        </> : 
-        <Col sm={12}>
-          <DtoTextInput type={"password"} disabled={configurationData.getData("proxyEnable")} setDataObject={setConfigurationData} fieldName={"jAuthToken"} dataObject={configurationData} />
-        </Col>
-        }
-        
+        <div className="ml-auto"><TestToolConnectionButton recordData={toolData} toolName={"Jenkins"} disable={configurationData.isNew() || configurationData.isChanged()}/></div>
       </Row>
-      <Row>
-        <div className="ml-auto mt-3 px-3 d-flex">
-          <div className="mt-1">
-            <TestToolConnectionButton recordData={toolData} toolName={"Jenkins"} />
+      <Form>
+        <Row>
+        {showToast && toast}
+          <Col sm={12}>
+            <DtoTextInput setDataObject={setConfigurationData} fieldName={"jenkinsUrl"} dataObject={configurationData} />
+          </Col>
+          <Col sm={12}>
+            <DtoTextInput setDataObject={setConfigurationData} fieldName={"jenkinsPort"} dataObject={configurationData} />
+          </Col>
+          <Col sm={12}>
+            <DtoTextInput setDataObject={setConfigurationData} fieldName={"jUserId"} dataObject={configurationData} />
+          </Col>
+          <Col sm={12}>
+            <DtoToggleInput setData={toggleProxy} setDataObject={setConfigurationData} fieldName={"proxyEnable"} dataObject={configurationData} />
+          </Col>
+          {configurationData.getData("proxyEnable") ?
+          <>
+            <Col sm={12}>
+              <DtoTextInput disabled={!configurationData.getData("proxyEnable")} setDataObject={setConfigurationData} fieldName={"proxyUserName"} dataObject={configurationData} />
+            </Col>
+            <Col sm={12}>
+              <DtoTextInput type={"password"} disabled={!configurationData.getData("proxyEnable")} setDataObject={setConfigurationData} fieldName={"proxyPassword"} dataObject={configurationData} />
+            </Col>
+            <Col sm={12}>
+              <DtoTextInput type={"password"} disabled={!configurationData.getData("proxyEnable")} setDataObject={setConfigurationData} fieldName={"jPassword"} dataObject={configurationData} />
+            </Col>
+          </> :
+          <Col sm={12}>
+            <DtoTextInput type={"password"} disabled={configurationData.getData("proxyEnable")} setDataObject={setConfigurationData} fieldName={"jAuthToken"} dataObject={configurationData} />
+          </Col>
+          }
+
+        </Row>
+        <Row>
+          <div className="ml-auto mt-3 px-3 d-flex">
+            <div>
+              <SaveButton recordDto={configurationData} createRecord={callbackFunction} updateRecord={callbackFunction} />
+            </div>
           </div>
-          <div>
-            <SaveButton recordDto={configurationData} createRecord={callbackFunction} updateRecord={callbackFunction} />
-          </div>
-        </div>
-      </Row>
-      <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
-    </Form>
+        </Row>
+        <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
+      </Form>
+    </div>
   );
 }
 

@@ -23,11 +23,14 @@ function AnchoreIntegratorToolConfiguration({ toolData, toolId, fnSaveChanges, f
   const [isSaving, setIsSaving] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toast, setToast] = useState({});
+  // TODO: Remove when wiring up DTO fields
+  const [isNew, setIsNew] = useState(true);
 
   useEffect(() => {
     if (typeof(toolData) !== "undefined") {
       let { configuration } = toolData;
       if (typeof(configuration) !== "undefined") {
+        setIsNew(false);
         setFormData(configuration);
       }      
     } else {
@@ -88,39 +91,42 @@ function AnchoreIntegratorToolConfiguration({ toolData, toolId, fnSaveChanges, f
   // console.log(formData);
 
   return (
-    <Form>
-      {showToast && toast}
-
-      <Form.Group controlId="repoField">
-        <Form.Label>Anchore URL*</Form.Label>
-        <Form.Control maxLength="100" type="text" placeholder="" value={formData.toolURL || ""} onChange={e => setFormData({ ...formData, toolURL: e.target.value.trim() })} />
-      </Form.Group>
-      <Form.Group controlId="branchField">
-        <Form.Label>User Name*</Form.Label>
-        <Form.Control maxLength="50" type="text" placeholder="" value={formData.accountUsername || ""} onChange={e => setFormData({ ...formData, accountUsername: e.target.value.trim() })} />
-      </Form.Group>
-      <Form.Group controlId="branchField">
-        <Form.Label>Password*</Form.Label>
-        <Form.Control maxLength="50" type="password" placeholder="" value={formData.accountPassword || ""} onChange={e => setFormData({ ...formData, accountPassword: e.target.value.trim() })} />
-      </Form.Group>
-
-      {/*TODO: Replace with SaveButton once converted to using data model*/}
+    <div>
       <Row>
-        <div className="ml-auto mt-3 px-3 d-flex">
-          <div>
-            <TestToolConnectionButton recordData={toolData} toolName={"Anchore"}/>
-          </div>
-          <div className="d-flex">
-            {isSaving &&
-            <div className="text-center mr-3 mt-1"><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>Saving is in progress</div>}
-            <Button size="sm" variant="primary" disabled={isSaving} onClick={() => callbackFunction()}><FontAwesomeIcon
-              icon={faSave} fixedWidth className="mr-2"/>Save</Button>
-          </div>
-        </div>
+        <div className="ml-auto"><TestToolConnectionButton recordData={toolData} toolName={"Anchore"} disable={isNew}/></div>
       </Row>
-      
-      <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
-    </Form>
+      <Form>
+        {showToast && toast}
+
+
+        <Form.Group controlId="repoField">
+          <Form.Label>Anchore URL*</Form.Label>
+          <Form.Control maxLength="100" type="text" placeholder="" value={formData.toolURL || ""} onChange={e => setFormData({ ...formData, toolURL: e.target.value.trim() })} />
+        </Form.Group>
+        <Form.Group controlId="branchField">
+          <Form.Label>User Name*</Form.Label>
+          <Form.Control maxLength="50" type="text" placeholder="" value={formData.accountUsername || ""} onChange={e => setFormData({ ...formData, accountUsername: e.target.value.trim() })} />
+        </Form.Group>
+        <Form.Group controlId="branchField">
+          <Form.Label>Password*</Form.Label>
+          <Form.Control maxLength="50" type="password" placeholder="" value={formData.accountPassword || ""} onChange={e => setFormData({ ...formData, accountPassword: e.target.value.trim() })} />
+        </Form.Group>
+
+        {/*TODO: Replace with SaveButton once converted to using data model*/}
+        <Row>
+          <div className="ml-auto mt-3 px-3 d-flex">
+            <div className="d-flex">
+              {isSaving &&
+              <div className="text-center mr-3 mt-1"><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>Saving is in progress</div>}
+              <Button size="sm" variant="primary" disabled={isSaving} onClick={() => callbackFunction()}><FontAwesomeIcon
+                icon={faSave} fixedWidth className="mr-2"/>Save</Button>
+            </div>
+          </div>
+        </Row>
+
+        <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
+      </Form>
+    </div>
   );
 }
 
