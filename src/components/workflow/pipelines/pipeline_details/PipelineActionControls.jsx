@@ -61,7 +61,7 @@ function PipelineActionControls({
     loadData(pipeline);
     if (workflowStatus === "paused") {
       toastContext.clearToastsArray();
-      toastContext.showWarningToast("This pipeline is currently paused.  Please review the summary activity logs for more details.")
+      toastContext.showSystemWarningToast("This pipeline is currently paused.  Please review the summary activity logs for more details.")
     }
   }, [workflowStatus, JSON.stringify(pipeline.workflow)]);
 
