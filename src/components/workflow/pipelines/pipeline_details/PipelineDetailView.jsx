@@ -153,7 +153,7 @@ function PipelineDetailView() {
   // TODO: combine this with the other one and just pass whether to show loading or not as bool
   const getSilentActivityLogs = async () => {
     try {
-      const response = await pipelineActivityActions.getPipelineActivityLogs(pipelineActivityFilterDto, id, getAccessToken);
+      const response = await pipelineActivityActions.getPipelineActivityLogs(pipelineActivityFilterDto, pipeline?.workflow?.run_count || "0", id, getAccessToken);
       setActivityData(response.data);
       const newFilterDto = pipelineActivityFilterDto;
       newFilterDto.setData("totalCount", response.data?.count);
@@ -182,8 +182,7 @@ function PipelineDetailView() {
 
     try {
       setLogsIsLoading(true);
-      const response = await pipelineActivityActions.getPipelineActivityLogs(pipelineActivityFilterDto, id, getAccessToken);
-      console.log("NEW DATA: " + JSON.stringify(response));
+      const response = await pipelineActivityActions.getPipelineActivityLogs(pipelineActivityFilterDto, pipeline?.workflow?.run_count || "0", id, getAccessToken);
       setActivityData(response.data);
       const newFilterDto = filterDto;
       newFilterDto.setData("totalCount", response.data?.count);
