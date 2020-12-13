@@ -14,10 +14,10 @@ function AnalyticsProfileSettings() {
   return (
     <>
       <div className="content-container content-card-analytics">
-        <div className="pt-2 pl-2 content-block-header">
-          <h5>
+        <div className="pl-2 content-block-header title-text-header-1">
+
             <DetailScreenTitleBar titleIcon={faChartNetwork} title={"Activate Opsera Analytics"} />
-          </h5>
+
         </div>
         <div className="p-3 shaded-container">
           <Card.Text>

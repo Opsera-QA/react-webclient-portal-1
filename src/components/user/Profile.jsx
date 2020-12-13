@@ -136,8 +136,8 @@ function Profile() {
           stored in your identify provider so some changes may not be possible from this portal at this time.</p>
       </div>
       <div className="content-container content-card-1 max-content-width ml-2 mb-2">
-        <div className="pt-2 pl-2 content-block-header">
-          <h6><FontAwesomeIcon icon={faUser} fixedWidth className="mr-1"/>My Profile</h6>
+        <div className="pl-2 content-block-header title-text-header-1">
+          <FontAwesomeIcon icon={faUser} fixedWidth className="mr-1"/>My Profile
         </div>
         <div className="text-right p-1">
           <Button variant="primary" size="sm"

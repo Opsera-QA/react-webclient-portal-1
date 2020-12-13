@@ -10,8 +10,8 @@ function DataNotFoundContainer({ breadcrumbDestination, type, children }) {
     <div className="max-content-width mb-2 ml-2">
       <BreadcrumbTrail destination={breadcrumbDestination} />
       <div className="content-container content-card-1 ">
-        <div className="pt-2 pl-2 content-block-header">
-          <h5><span><FontAwesomeIcon icon={faExclamationTriangle} fixedWidth className="mr-1"/>{type} Not Found!</span></h5>
+        <div className="pl-2 content-block-header title-text-header-1">
+          <FontAwesomeIcon icon={faExclamationTriangle} fixedWidth className="mr-1"/>{type} Not Found!
         </div>
         <div className="detail-view-body">
           <div className="mt-2">

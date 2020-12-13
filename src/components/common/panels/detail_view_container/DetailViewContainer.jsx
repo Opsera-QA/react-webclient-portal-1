@@ -35,8 +35,8 @@ function DetailViewContainer({ breadcrumbDestination, title, titleIcon, summaryP
     <div className="max-content-width mb-2 ml-2">
       <BreadcrumbTrail destination={breadcrumbDestination} />
       <div className="content-container content-card-1 ">
-        <div className="pt-2 pl-2 content-block-header">
-          <h5>{getTitleBar()}</h5>
+        <div className="pl-2 content-block-header title-text-header-1">
+          {getTitleBar()}
         </div>
         <div className="detail-view-body">
           {getDetailBody()}

@@ -129,6 +129,10 @@ a:hover, .active {
   text-decoration: none;
 }
 
+.title-text-header-1 {
+  font-size: 1.15rem;
+}
+
 .title-text-5 {
   font-weight: 500;
   line-height: 1.4;

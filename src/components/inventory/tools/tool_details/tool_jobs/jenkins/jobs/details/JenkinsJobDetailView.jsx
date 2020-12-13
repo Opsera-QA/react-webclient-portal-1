@@ -21,8 +21,8 @@ function JenkinsJobDetailView() {
         <BreadcrumbTrail destination="ldapUserDetailView"/>
         {jenkinsJobData &&
         <div className="content-container content-card-1 max-content-width ml-2">
-          <div className="pt-2 pl-2 content-block-header"><h5>Jenkins Job Details
-            [{jenkinsJobData && jenkinsJobData["name"]}]</h5></div>
+          <div className="pl-2 content-block-header title-text-header-1">Jenkins Job Details
+            [{jenkinsJobData && jenkinsJobData["name"]}]</div>
           <div className="detail-view-body">
             <div>
               <JenkinsJobSummaryPanel jenkinsJobData={jenkinsJobData}/>

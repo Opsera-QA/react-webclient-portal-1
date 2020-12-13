@@ -246,8 +246,8 @@ function LdapCustomerOnboardEditorPanel({ldapUserData, newLdapUser, setLdapUserD
           <div>
             {/*// TODO: Make these boxes more unique*/}
             <div className="content-container content-card-1 max-content-width m-3">
-              <div className="pt-2 pl-2 content-block-header">
-                <h5 className="text-center">Organization</h5>
+              <div className="pl-2 content-block-header title-text-header-1">
+                Organization
               </div>
               <div className="p-3">
                 <Row>
@@ -325,8 +325,8 @@ function LdapCustomerOnboardEditorPanel({ldapUserData, newLdapUser, setLdapUserD
                 <div className="content-block-footer"/>
             </div>
             <div className="content-container content-card-1 max-content-width m-3">
-              <div className="pt-2 pl-2 content-block-header">
-                <h5 className="text-center">Organization Account</h5>
+              <div className="pl-2 content-block-header title-text-header-1">
+                Organization Account
               </div>
               <div className="p-3">
                 <Row>
@@ -435,8 +435,8 @@ function LdapCustomerOnboardEditorPanel({ldapUserData, newLdapUser, setLdapUserD
               <div className="content-block-footer"/>
             </div>
             <div className="content-container content-card-1 max-content-width m-3">
-              <div className="pt-2 pl-2 content-block-header">
-                <h5 className="text-center">User Accounts</h5>
+              <div className="pl-2 content-block-header title-text-header-1">
+                User Accounts
               </div>
               <div className="p-3">
                 <Row>
@@ -448,8 +448,8 @@ function LdapCustomerOnboardEditorPanel({ldapUserData, newLdapUser, setLdapUserD
               <div className="content-block-footer"/>
             </div>
             <div className="content-container content-card-1 max-content-width m-3">
-              <div className="pt-2 pl-2 content-block-header">
-                <h5 className="text-center">IDP Account</h5>
+              <div className="pl-2 content-block-header title-text-header-1">
+                IDP Account
               </div>
               <div className="p-3">
                 <Row>
