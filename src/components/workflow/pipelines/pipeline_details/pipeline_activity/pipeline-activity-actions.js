@@ -2,8 +2,20 @@ import baseActions from "../../../../../utils/actionsBase";
 
 const pipelineActivityActions = {};
 
-pipelineActivityActions.getPipelineActivityLogs = async (pipelineActivityFilterDto, id, getAccessToken) => {
+pipelineActivityActions.getPipelineActivityLogs = async (pipelineActivityFilterDto, runCount, id, getAccessToken) => {
   const run = pipelineActivityFilterDto.getData("run");
+  const latest = pipelineActivityFilterDto.getData("latest");
+
+  const runArray = [];
+
+  if (run > 0) {
+    runArray.push(run);
+  }
+
+  if (latest === true && !runArray.includes(runCount)) {
+    runArray.push(runCount);
+  }
+
   const search = pipelineActivityFilterDto.getData("search");
   const urlParams = {
     params: {
@@ -11,11 +23,10 @@ pipelineActivityActions.getPipelineActivityLogs = async (pipelineActivityFilterD
       size: pipelineActivityFilterDto.getData("pageSize"),
       page: pipelineActivityFilterDto.getData("currentPage"),
       hide_status: pipelineActivityFilterDto.getData("hide_status"),
-      run: run > 0 ? [run] : undefined,
+      run: runArray.length > 0 ? runArray : undefined,
       tool: pipelineActivityFilterDto.getData("tool_identifier"),
       search: search !== "" ? search : undefined,
       // step_id: pipelineActivityFilterDto.getData("step_id"),
-      latest: pipelineActivityFilterDto.getData("latest"),
     },
   };
 

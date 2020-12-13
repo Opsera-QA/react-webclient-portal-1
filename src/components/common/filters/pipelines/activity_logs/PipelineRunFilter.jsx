@@ -14,7 +14,8 @@ function PipelineRunFilter({ filterDto, setFilterDto, maximumRunCount}) {
   // }
 
   return (
-    <div className="run-filter">
+    <div className="run-filter d-flex">
+      <span className="mt-2 mr-2">Run:</span>
       <NumberPicker
         type="number"
         placeholder={"Pipeline Run"}
@@ -22,7 +23,7 @@ function PipelineRunFilter({ filterDto, setFilterDto, maximumRunCount}) {
         value={filterDto.getData("run")}
         className="max-content-width"
         onChange={(data) => validateAndSetData("run", data)}
-        min={1}
+        min={0}
         max={maximumRunCount}
         />
     </div>
@@ -32,7 +33,7 @@ function PipelineRunFilter({ filterDto, setFilterDto, maximumRunCount}) {
 PipelineRunFilter.propTypes = {
   filterDto: PropTypes.object,
   setFilterDto: PropTypes.func,
-  runCount: PropTypes.number
+  maximumRunCount: PropTypes.number
 };
 
 export default PipelineRunFilter;
