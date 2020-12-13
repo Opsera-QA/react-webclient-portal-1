@@ -113,7 +113,7 @@ const pipelineSummaryMetadata = {
       id: "workflow",
     },
     {
-      label: "Run Number",
+      label: "Run",
       id: "runNumber",
     },
   ]
