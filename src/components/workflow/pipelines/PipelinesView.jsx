@@ -27,15 +27,16 @@ function PipelinesView({ currentTab, setActiveTab }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [pipelineFilterDto, setPipelineFilterDto] = useState(undefined);
 
-  // Executed every time page number, page size, or sort option changes
+  // Executed every time currentTab changes
   useEffect(() => {
     getCookie();
   }, [currentTab]);
 
   const getCookie = async () => {
+    setLoading(true);
     let newPipelineFilterDto = new Model({ ...pipelineFilterMetadata.newObjectFields }, pipelineFilterMetadata, false);
     try {
       let storedSortOption = cookieHelpers.getCookie("pipelines-v2", "sortOption");
@@ -125,7 +126,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
       <>
         <Button
           variant={view === "list" ? "primary" : "outline-secondary"}
-          className="mr-1"
+          className="mr-2"
           size="sm"
           onClick={() => switchView()}>
           <FontAwesomeIcon icon={faList} fixedWidth/>
@@ -168,77 +169,99 @@ function PipelinesView({ currentTab, setActiveTab }) {
     );
   };
 
+  const getPipelinesBody = () => {
+    if (data && data.count === 0) {
+      const activeFilters = pipelineFilterDto.getActiveFilters();
+      if (activeFilters && activeFilters.length > 0) {
+        return (
+          <div className="px-2 max-content-width mx-auto" style={{ minWidth: "505px" }}>
+            <div className="my-5"><InfoDialog message="No pipelines meeting the filter requirements were found."/></div>
+          </div>
+        )
+      }
+
+      return (
+        <div className="px-2 max-content-width" style={{ minWidth: "505px" }}>
+          <div className="my-5"><InfoDialog message="No pipelines are available for this view at this time."/></div>
+        </div>
+      );
+    }
+
+    return (getView());
+  };
+
   if (loading) {
     return (<LoadingDialog size="md" message="Loading..."/>);
   }
 
   if (data && data.count === 0 && currentTab === "owner") {
+    const activeFilters = pipelineFilterDto.getActiveFilters();
+    if (activeFilters && activeFilters.length > 0) {
+      return (
+        <div className="px-2 max-content-width mx-auto" style={{ minWidth: "505px" }}>
+          <div className="my-5"><InfoDialog message="No pipelines meeting the filter requirements were found."/></div>
+        </div>
+      )
+    }
+
     return (<><PipelineWelcomeView setActiveTab={setActiveTab}/></>);
   }
 
-  if (data && data.count === 0) {
+  if (!data && !loading) {
     return (
-      <div className="px-2 max-content-width" style={{ minWidth: "505px" }}>
-        <div className="my-5"><InfoDialog message="No pipelines are available for this view at this time."/></div>
-      </div>
-    );
-  }
-
-  if (data && data.response && data.count >= 0) {
-    return (
-      <div className="max-content-width" style={{ minWidth: "505px" }}>
-        <div className="mb-4">
-          <div className="px-2 mb-1 d-flex justify-content-end">
-            <div>
-              <Button
-                variant={"primary"}
-                className="mr-1"
-                size="sm"
-                onClick={() => setActiveTab("catalog")}>
-                <span><FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1"/>Add New Pipeline</span>
-              </Button>
-            </div>
-            <div>
-              {getViewToggle()}
-            </div>
-            <div>
-              {/*{getFilterBar()}*/}
-            </div>
-          </div>
-          <div className="px-3">
-            <div className="pt-1">
-              <DtoTopPagination
-                loadData={loadData}
-                isLoading={loading}
-                paginationDto={pipelineFilterDto}
-                setPaginationDto={setPipelineFilterDto}
-              />
-            </div>
-            <Row>
-              {getView()}
-            </Row>
-            <div className="pb-2">
-              <DtoBottomPagination
-                loadData={loadData}
-                isLoading={loading}
-                paginationDto={pipelineFilterDto}
-                setPaginationDto={setPipelineFilterDto}
-              />
-            </div>
-          </div>
+      <div className="px-2 max-content-width" style={{minWidth: "505px"}}>
+        <div className="my-5">
+          <InformationDialog message="Could not load pipelines."/>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="px-2 max-content-width" style={{ minWidth: "505px" }}>
-      <div className="my-5">
-        <InformationDialog message="Could not load pipelines."/>
+    <div className="max-content-width" style={{minWidth: "505px"}}>
+      <div className="mb-4">
+        <div className="px-2 mb-1 d-flex justify-content-end">
+          <div>
+            <Button
+              variant={"primary"}
+              className="mr-2"
+              size="sm"
+              onClick={() => setActiveTab("catalog")}>
+              <span><FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1"/>Add New Pipeline</span>
+            </Button>
+          </div>
+          <div>
+            {getViewToggle()}
+          </div>
+        </div>
+        {/*TODO: Uncomment when node filters are merged in*/}
+        {/*<div className="mr-2">*/}
+        {/*  {getFilterBar()}*/}
+        {/*</div>*/}
+        <div className="px-3">
+          <div className="pt-1">
+            <DtoTopPagination
+              loadData={loadData}
+              isLoading={loading}
+              paginationDto={pipelineFilterDto}
+              setPaginationDto={setPipelineFilterDto}
+            />
+          </div>
+          <Row>
+            {getPipelinesBody()}
+          </Row>
+          <div className="pb-2">
+            <DtoBottomPagination
+              loadData={loadData}
+              isLoading={loading}
+              paginationDto={pipelineFilterDto}
+              setPaginationDto={setPipelineFilterDto}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
-
 }
 
 PipelinesView.propTypes = {

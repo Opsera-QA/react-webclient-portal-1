@@ -30,8 +30,6 @@ pipelineActivityActions.getPipelineActivityLogs = async (pipelineActivityFilterD
     },
   };
 
-  console.log("url params: " + JSON.stringify(urlParams))
-
   const apiUrl = `/pipelines/${id}/activity`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };

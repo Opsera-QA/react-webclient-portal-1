@@ -84,7 +84,6 @@ function PipelineActivityLogTable({ data, loadData, isLoading, pipeline, pipelin
   const getDropdownFilters = () => {
     return (
       <div>
-        {console.log("pipeline.run_count: " + JSON.stringify(pipeline))}
         <PipelineRunFilter filterDto={pipelineActivityFilterDto} setFilterDto={setPipelineActivityFilterDto} maximumRunCount={pipeline?.workflow?.run_count || "0"}/>
         <div className="my-2"><SearchFilter filterDto={pipelineActivityFilterDto} setFilterDto={setPipelineActivityFilterDto}/></div>
       </div>
