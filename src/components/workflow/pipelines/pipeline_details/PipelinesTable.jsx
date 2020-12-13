@@ -18,13 +18,6 @@ function PipelinesTable({ data, isLoading }) {
     history.push(`/workflow/details/${rowData.original._id}/summary`);
   };
 
-    // Please add Run Count (item.workflow.run_count) as a column (after status)
-
-  // Please try to use the “type” value to create a new column (make it the first column) that shows the icons that currently map to type in the card view.
-  // Please make the icons small, and just be the first column.
-  // I really don’t even need a header for that column if it’s possible to not render one,
-  // but this is just a nice to have feature in the list.  This last item is not a requirement if it’s a pain.
-
   const columns = useMemo(
     () => [
       getPipelineTypeColumn(fields.find(field => { return field.id === "type"})),
@@ -40,25 +33,18 @@ function PipelinesTable({ data, isLoading }) {
   );
 
   return (
-    <>
-      {console.log('data: ' + JSON.stringify(data[0]))}
     <CustomTable
       columns={columns}
       onRowSelect={onRowSelect}
       data={data}
       isLoading={isLoading}
     />
-    </>
   );
 }
 
 PipelinesTable.propTypes = {
   data: PropTypes.array,
-  paginationOptions: PropTypes.object,
   isLoading: PropTypes.bool,
-  selectRunCountFilter: PropTypes.func,
-  currentRunCountFilter: PropTypes.number,
-  maxRunCount: PropTypes.number,
 };
 
 export default PipelinesTable;

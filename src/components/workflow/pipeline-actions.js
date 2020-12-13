@@ -13,9 +13,9 @@ pipelineActions.getPipelines = async (pipelineFilterDto, type, getAccessToken) =
       size: pipelineFilterDto.getData("pageSize"),
       page: pipelineFilterDto.getData("currentPage"),
       type: type !== 'all' && type !== null ? type : undefined,
-      // status: pipelineFilterDto.getData("status"),
-      // search: pipelineFilterDto.getData("search"),
-      // owner: pipelineFilterDto.getData("owner"),
+      search: pipelineFilterDto.getFilterValue("search"),
+      owner: pipelineFilterDto.getFilterValue("owner"),
+      tag:pipelineFilterDto.getFilterValue("tag")
     },
   };
 

@@ -31,13 +31,14 @@ function PipelineOwnerFilter({ filterDto, setFilterDto }) {
   const getUsers = async () => {
     const user = await getUserRecord();
     const {ldap} = user;
-    const response = await getUsersByDomain(ldap.domain, getAccessToken);
-    let users = response.data;
+    let users = await getUsersByDomain(ldap.domain, getAccessToken);
     let userOptions = [];
 
-    users.map((user, index) => {
-      userOptions.push({text: `Pipeline Owner: ${user["firstName"]} ${user["lastName"]}`, value:`${user["_id"]}`});
-    });
+    if (users && users.length > 0) {
+      users.map((user, index) => {
+        userOptions.push({text: `Pipeline Owner: ${user["firstName"]} ${user["lastName"]}`, value:`${user["emailAddress"]}`});
+      });
+    }
 
     setUserOptions(userOptions);
   };
