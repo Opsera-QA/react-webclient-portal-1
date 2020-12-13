@@ -2,7 +2,7 @@ import paths from "./paths";
 import {
   faAnalytics,
   faBuilding, faChartBar, faClipboardList, faCogs, faDraftingCompass, faEdit, faFileInvoice, faHeartbeat, faLink,
-  faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench
+  faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork
 } from "@fortawesome/pro-light-svg-icons";
 import {faTools} from "@fortawesome/pro-solid-svg-icons";
 import {faUsers} from "@fortawesome/free-solid-svg-icons";
@@ -73,7 +73,10 @@ const breadcrumbs = {
   reports: {name: "reports", path: paths.reports, label: "Reports", icon: faAnalytics},
   toolReports: {name: "toolReports", path: paths.toolReports, label: "Tool Reports", icon: faTools},
   tagReports: {name: "tagReports", path: paths.tagReports, label: "Tag Reports", icon: faTags},
-  pipelineReports: {name: "pipelineReports", path: paths.pipelineReports, label: "Pipeline Reports", icon: faDraftingCompass}
+  pipelineReports: {name: "pipelineReports", path: paths.pipelineReports, label: "Pipeline Reports", icon: faDraftingCompass},
+
+  //Analytics
+  analyticsProfile: {name: "analyticsProfile", path: paths.analyticsProfile, label: "Analytics Profile", icon: faChartNetwork},
 };
 
 const trails = {
@@ -147,6 +150,10 @@ const trails = {
   toolReports: {parent: "reports", breadcrumb: breadcrumbs.toolReports},
   tagReports: {parent: "reports", breadcrumb: breadcrumbs.tagReports},
   pipelineReports: {parent: "reports", breadcrumb: breadcrumbs.pipelineReports},
+
+  // Analytics
+  analyticsProfile: {parent: "accountSettings", breadcrumb: breadcrumbs.analyticsProfile},
+
 };
 
 export const getTrail = (breadcrumb) => {

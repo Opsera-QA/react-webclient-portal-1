@@ -66,6 +66,7 @@ function AccountSettings() {
           <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"}/>
           <BreadcrumbPageLink breadcrumbDestination={"ldapUserManagement"}/>
           <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
+          <BreadcrumbPageLink breadcrumbDestination={"analyticsProfile"}/>
           {!envIsProd && <BreadcrumbPageLink breadcrumbDestination={"customerSystemStatus"}/>}
           {/*<BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
         </>

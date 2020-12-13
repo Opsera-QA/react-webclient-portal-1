@@ -852,6 +852,20 @@ a.nav-link {
 .content-card-1 {
 }
 
+.content-card-analytics {
+  border: 1px solid #8fa4ba;
+  border-radius: 5px;
+}
+
+.content-card-analytics .content-block-header {
+  background-color: #46415C;
+  color: #fff;
+  line-height: 2.4em;
+  border-bottom: 5px solid #7368AA;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
 /*TODO: Style differently*/
 /*.content-card-1 .flat-top-content-block {*/
 /*border: 1px solid #8fa4ba;*/
