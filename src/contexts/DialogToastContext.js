@@ -13,18 +13,41 @@ import SuccessBanner from "../components/common/status_notifications/banners/Suc
 import InformationBanner from "../components/common/status_notifications/banners/InformationBanner";
 import WarningBanner from "../components/common/status_notifications/banners/WarningBanner";
 
+const notificationTypes = {
+  FORM: "form",
+  SYSTEM: "system",
+  // TODO: Unknown is a stopgap until all locations where generic toasts are created have been updated
+  UNKNOWN: "unknown"
+}
+
 function ToastContextProvider ({ children }) {
   const [toasts, setToasts] = useState([]);
   // TODO: Wire up way to arrow through banners
   const [bannerMessages, setBannerMessages] = useState([]);
   const [inlineBanner, setInlineBanner] = useState(undefined);
 
-  const removeBanners = () => {
-    setBannerMessages([]);
-  };
+  const removeAllBanners = useCallback(() => {
+      setBannerMessages(bannerMessages => []);
+    }, [setBannerMessages]
+  );
 
-  const addBannerMessage = useCallback((bannerMessage, id) => {
-      let newBannerMessage = {id: id, bannerMessage: bannerMessage};
+  const removeFormBanners = useCallback(() => {
+      setBannerMessages(bannerMessages => [...bannerMessages.filter(banner => banner.type !== notificationTypes.FORM)]);
+    }, [setBannerMessages]
+  );
+
+  const removeAllToasts = useCallback(() => {
+      setToasts(toasts => []);
+    }, [setToasts]
+  );
+
+  const removeFormToasts = useCallback(() => {
+      setToasts(toasts => [...toasts.filter(toast => toast.type !== notificationTypes.FORM)]);
+    }, [setToasts]
+  );
+
+  const addBannerMessage = useCallback((bannerMessage, id, notificationType) => {
+      let newBannerMessage = {id: id, bannerMessage: bannerMessage, type: notificationType};
       setBannerMessages(bannerMessages => [...bannerMessages, newBannerMessage]);
     }, [setBannerMessages]
   );
@@ -34,8 +57,8 @@ function ToastContextProvider ({ children }) {
     }, [setBannerMessages]
   );
 
-  const addToast = useCallback((toast, id) => {
-      let newToast = {id: id, toast: toast};
+  const addToast = useCallback((toast, id, notificationType) => {
+      let newToast = {id: id, toast: toast, type: notificationType};
       setToasts(toasts => [...toasts, newToast]);
     }, [setToasts]
   );
@@ -45,151 +68,201 @@ function ToastContextProvider ({ children }) {
     }, [setToasts]
   );
 
-  const showErrorBanner = (error, errorMessage) => {
-    let id = generateUUID();
-    let errorBanner = getErrorBanner(error, id, errorMessage);
-    addBannerMessage(errorBanner, id);
+  const showSystemErrorBanner = (error, prependMessage = "") => {
+    showErrorBanner(error, prependMessage, notificationTypes.SYSTEM);
   }
 
-  const showErrorToast = (error, autoCloseLengthInSeconds) => {
-    let id = generateUUID();
-    let errorToast = getErrorToast(error, id, null, autoCloseLengthInSeconds);
-    addToast(errorToast, id);
+  const showFormErrorBanner = (error, prependMessage = "") => {
+    showErrorBanner(error, prependMessage, notificationTypes.FORM);
   }
 
-  const showWarningBanner = (warningMessage) => {
+  const showErrorBanner = (error, prependMessage, notificationType = notificationTypes.UNKNOWN) => {
+    let id = generateUUID();
+    let errorBanner = getErrorBanner(error, id, prependMessage);
+    addBannerMessage(errorBanner, id, notificationType);
+  }
+
+  const showSystemErrorToast = (error, prependMessage = "", autoCloseLengthInSeconds) => {
+    showErrorToast(error, prependMessage, autoCloseLengthInSeconds, notificationTypes.SYSTEM);
+  }
+
+  const showFormErrorToast = (error, prependMessage = "", autoCloseLengthInSeconds) => {
+    showErrorToast(error, prependMessage, autoCloseLengthInSeconds, notificationTypes.FORM);
+  }
+
+  const showErrorToast = (error, prependMessage, autoCloseLengthInSeconds, notificationType = notificationTypes.UNKNOWN) => {
+    let id = generateUUID();
+    let errorToast = getErrorToast(error, id, prependMessage, autoCloseLengthInSeconds);
+    addToast(errorToast, id, notificationType);
+  }
+
+  const showSystemWarningBanner = (warningMessage) => {
+    showWarningBanner(warningMessage, notificationTypes.SYSTEM);
+  }
+
+  const showFormWarningBanner = (warningMessage) => {
+    showWarningBanner(warningMessage, notificationTypes.FORM);
+  }
+
+  const showWarningBanner = (warningMessage, notificationType = notificationTypes.UNKNOWN) => {
     let id = generateUUID();
     let warningDialog = getWarningBanner(warningMessage, id);
-    addBannerMessage(warningDialog, id);
+    addBannerMessage(warningDialog, id, notificationType);
   }
 
-  const showWarningToast = (warningMessage, autoCloseLengthInSeconds) => {
+  const showSystemWarningToast = (warningMessage, autoCloseLengthInSeconds) => {
+    showWarningToast(warningMessage, autoCloseLengthInSeconds, notificationTypes.SYSTEM);
+  }
+
+  const showFormWarningToast = (warningMessage, autoCloseLengthInSeconds) => {
+    showWarningToast(warningMessage, autoCloseLengthInSeconds, notificationTypes.FORM);
+  }
+
+  const showWarningToast = (warningMessage, autoCloseLengthInSeconds, notificationType = notificationTypes.UNKNOWN) => {
     let id = generateUUID();
     let warningToast = getWarningToast(warningMessage, id, autoCloseLengthInSeconds);
-    addToast(warningToast, id);
+    addToast(warningToast, id, notificationType);
   }
 
-  const showSuccessToast = (successMessage, autoCloseLengthInSeconds = 10) => {
+  const showSystemSuccessToast = (successMessage, autoCloseLengthInSeconds) => {
+    showSuccessToast(successMessage, autoCloseLengthInSeconds, notificationTypes.SYSTEM);
+  }
+
+  const showFormSuccessToast = (successMessage, autoCloseLengthInSeconds) => {
+    removeFormToasts();
+    showSuccessToast(successMessage, autoCloseLengthInSeconds, notificationTypes.FORM);
+  }
+
+  const showSuccessToast = (successMessage, autoCloseLengthInSeconds = 10, notificationType = notificationTypes.UNKNOWN) => {
     let id = generateUUID();
     let successToast = getSuccessToast(successMessage, id, autoCloseLengthInSeconds);
-    addToast(successToast, id);
+    addToast(successToast, id, notificationType);
   }
 
-  const showSuccessBanner = (successMessage)=> {
+  const showSystemSuccessBanner = (successMessage) => {
+    showSuccessBanner(successMessage, notificationTypes.SYSTEM);
+  }
+
+  const showFormSuccessBanner = (successMessage) => {
+    removeFormBanners();
+    showSuccessBanner(successMessage, notificationTypes.FORM);
+  }
+
+  const showSuccessBanner = (successMessage, notificationType = notificationTypes.UNKNOWN)=> {
     let id = generateUUID();
     let successBanner = getSuccessBanner(successMessage, id);
-    addBannerMessage(successBanner, id);
+    addBannerMessage(successBanner, id, notificationType);
   }
 
-  const showInformationBanner = (informationMessage) => {
+  const showSystemInformationBanner = (informationMessage) => {
+    showInformationBanner(informationMessage, notificationTypes.SYSTEM);
+  }
+
+  const showFormInformationBanner = (informationMessage) => {
+    showInformationBanner(informationMessage, notificationTypes.FORM);
+  }
+
+  const showInformationBanner = (informationMessage, notificationType = notificationTypes.UNKNOWN) => {
     let id = generateUUID();
     let informationBanner = getInformationBanner(informationMessage, id);
-    addBannerMessage(informationBanner, id);
+    addBannerMessage(informationBanner, id, notificationType);
   }
 
-  const showInformationToast = (informationMessage, autoCloseLengthInSeconds) => {
+  const showSystemInformationToast = (informationMessage, autoCloseLengthInSeconds) => {
+    showInformationToast(informationMessage, autoCloseLengthInSeconds, notificationTypes.SYSTEM);
+  }
+
+  const showFormInformationToast = (informationMessage, autoCloseLengthInSeconds) => {
+    showInformationToast(informationMessage, autoCloseLengthInSeconds, notificationTypes.FORM);
+  }
+
+  const showInformationToast = (informationMessage, autoCloseLengthInSeconds, notificationType = notificationTypes.UNKNOWN) => {
     let id = generateUUID();
     let informationToast = getInformationToast(informationMessage, id, autoCloseLengthInSeconds)
-    addToast(informationToast, id);
+    addToast(informationToast, id, notificationType);
   }
-
-  const showInlineFormValidationErrorDialog = (errorMessage = "") => {
-    let errorBanner = getErrorBanner(`WARNING! There are errors in your form. ${errorMessage} Please review the details and ensure any required fields or special rules are met and try again.`);
-    setInlineBanner(errorBanner);
-  };
 
   const showFormValidationErrorDialog = (errorMessage = "") => {
     let id = generateUUID();
     let errorToast = getErrorToast(`WARNING! There are errors in your form. ${errorMessage} Please review the details and ensure any required fields or special rules are met and try again.`, id);
-    addToast(errorToast, id);
+    addToast(errorToast, id, notificationTypes.FORM);
   };
 
+  // TODO: Phase this out on many screens. Instead of showing loading error, find way to make it look better (like the data not found container) where relevant
   const showLoadingErrorDialog = (error) => {
     let id = generateUUID();
     let errorBanner = getErrorBanner(error, id,`WARNING! An error has occurred loading:`, id);
-    addBannerMessage(errorBanner, id);
+    addBannerMessage(errorBanner, id, notificationTypes.SYSTEM);
   }
 
   const showServiceUnavailableDialog = (error) => {
     let id = generateUUID();
     let errorBanner = getErrorBanner(error, id, `Service Unavailable. Please try again or report this issue:`);
-    addBannerMessage(errorBanner, id);
+    addBannerMessage(errorBanner, id, notificationTypes.SYSTEM);
   }
 
   const showUpdateSuccessResultDialog = (type, autoCloseLengthInSeconds = 10) => {
     let id = generateUUID();
     let successToast = getSuccessToast(`${type} updated successfully!`, id, autoCloseLengthInSeconds);
-    addToast(successToast, id);
+    removeFormToasts();
+    addToast(successToast, id, notificationTypes.FORM);
   }
 
   const showDeleteSuccessResultDialog = (type, autoCloseLengthInSeconds = 10) => {
     let id = generateUUID();
     let successToast = getSuccessToast(`${type} deleted successfully!`, id, autoCloseLengthInSeconds);
-    addToast(successToast, id);
-  }
-
-  const showInlineCreateSuccessResultDialog = (type, autoCloseLengthInSeconds = 10) => {
-    let id = generateUUID();
-    let successBanner = getSuccessBanner(`${type} created successfully!`, id);
-    setInlineBanner(successBanner);
+    removeFormToasts();
+    addToast(successToast, id, notificationTypes.FORM);
   }
 
   const showCreateSuccessResultDialog = (type, autoCloseLengthInSeconds = 10) => {
     let id = generateUUID();
     let successToast = getSuccessToast(`${type} created successfully!`, id, autoCloseLengthInSeconds);
-    addToast(successToast, id);
+    removeFormToasts();
+    addToast(successToast, id, notificationTypes.FORM);
   }
 
   const showCreateFailureResultDialog = (type, error) => {
     let id = generateUUID();
     let errorToast = getErrorToast(error, id, `WARNING! An error has occurred creating this ${type}:`);
-    addToast(errorToast, id);
-  }
-
-  // TODO: Implement
-  const showInlineCreateFailureResultDialog = (type, error) => {
-    // addBannerMessage(getErrorDialog(error, `WARNING! An error has occurred creating this ${type}:`, id), id);
+    addToast(errorToast, id, notificationTypes.FORM);
   }
 
   const showUpdateFailureResultDialog = (type, error) => {
     let id = generateUUID();
     let errorToast = getErrorToast(error, id, `WARNING! An error has occurred updating this ${type}:`);
-    addToast(errorToast, id);
+    addToast(errorToast, id, notificationTypes.FORM);
   }
 
   const showDeleteFailureResultDialog = (type, error) => {
     let id = generateUUID();
     let errorToast = getErrorToast(error, id,`WARNING! An error has occurred deleting this ${type}:`);
-    addToast(errorToast, id);
-  }
-
-  const showInlineDeleteFailureResultDialog = (type, error) => {
-    let id = generateUUID();
-    setInlineBanner(getErrorBanner(error, id, `WARNING! An error has occurred deleting this ${type}:`), id);
+    addToast(errorToast, id, notificationTypes.FORM);
   }
 
   const showEmailAlreadyExistsErrorDialog = () => {
     let id = generateUUID();
     let errorBanner = getErrorBanner( `WARNING! The email address given has already been registered to an Opsera account`, id);
-    addBannerMessage(errorBanner, id);
+    addBannerMessage(errorBanner, id, notificationTypes.FORM);
   };
 
   const showDomainAlreadyRegisteredErrorDialog = () => {
     let id = generateUUID();
     let errorBanner = getErrorBanner( `WARNING! The domain given has already been registered to an Opsera account`, id);
-    addBannerMessage(errorBanner, id);
+    addBannerMessage(errorBanner, id, notificationTypes.FORM);
   };
 
   const showIncompleteCreateSuccessResultDialog = () => {
     let id = generateUUID();
     let informationDialog = getInformationBanner( `WARNING! An incomplete configuration is being saved.  This step must be fully configured in order to use this feature.`, id);
-    addBannerMessage(informationDialog, id);
+    removeFormBanners();
+    addBannerMessage(informationDialog, id, notificationTypes.FORM);
   }
 
   const showMissingRequiredFieldsErrorDialog = () => {
     let id = generateUUID();
     let errorToast = getErrorToast(`Required Fields Missing!`, id);
-    addToast(errorToast, id);
+    addToast(errorToast, id, notificationTypes.FORM);
   };
 
   const getSuccessBanner = (message, id) => {
@@ -251,27 +324,57 @@ function ToastContextProvider ({ children }) {
           showFormValidationErrorDialog: showFormValidationErrorDialog,
           showMissingRequiredFieldsErrorDialog: showMissingRequiredFieldsErrorDialog,
           showSuccessDialog: showSuccessToast,
-          showSuccessToast: showSuccessToast,
-          showWarningToast: showWarningToast,
+
+          // TODO: Remove instances
           showInformationToast: showInformationToast,
-          showErrorToast: showErrorToast,
+
           // TODO: Rename to Banner instead of dialog for clarity
           showEmailAlreadyExistsErrorDialog: showEmailAlreadyExistsErrorDialog,
           showDomainAlreadyRegisteredErrorDialog: showDomainAlreadyRegisteredErrorDialog,
           showServiceUnavailableDialog: showServiceUnavailableDialog,
           showLoadingErrorDialog: showLoadingErrorDialog,
           showIncompleteCreateSuccessResultDialog: showIncompleteCreateSuccessResultDialog,
-          showSuccessBanner: showSuccessBanner,
-          showInformationBanner: showInformationBanner,
-          showWarningBanner: showWarningBanner,
-          showErrorBanner: showErrorBanner,
+
+          // Success Banners
+          showFormSuccessBanner: showFormSuccessBanner,
+          showSystemSuccessBanner: showSystemSuccessBanner,
+
+          // Success Toasts
+          showFormSuccessToast: showFormSuccessToast,
+          showSystemSuccessToast: showSystemSuccessToast,
+
+          // Information Banners
+          showSystemInformationBanner: showSystemInformationBanner,
+          showFormInformationBanner: showFormInformationBanner,
+
+          // Information Toasts
+          showSystemInformationToast: showSystemInformationToast,
+          showFormInformationToast: showFormInformationToast,
+
+          // Warning Banners
+          showSystemWarningBanner: showSystemWarningBanner,
+          showFormWarningBanner: showFormWarningBanner,
+
+          // Warning Toasts
+          showSystemWarningToast: showSystemWarningToast,
+          showFormWarningToast: showFormWarningToast,
+
+          // Error Banners
+          showSystemErrorBanner: showSystemErrorBanner,
+          showFormErrorBanner: showFormErrorBanner,
+
+          // Error Toasts
+          showSystemErrorToast: showSystemErrorToast,
+          showFormErrorToast: showFormErrorToast,
 
           // TODO: Remove when everything is using the banner ones.
-          showInformationDialog: showInformationBanner,
           showWarningDialog: showWarningBanner,
           showErrorDialog: showErrorBanner,
-          getModalToast: getModalToast,
 
+          removeAllBanners: removeAllBanners,
+          removeFormBanners: removeFormBanners,
+          removeAllToasts: removeAllToasts,
+          removeFormToasts: removeFormToasts,
           getInlineBanner: getInlineBanner,
 
           clearToastsArray: clearToastsArray //tmp solution till next version of toasts

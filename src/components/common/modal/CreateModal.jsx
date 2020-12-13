@@ -20,7 +20,6 @@ function CreateModal({ children, objectType, showModal, handleCancelModal, loadD
           <Modal.Title>Create New {objectType}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {toastContext.getModalToast()}
           <div className="content-block-shaded m-3 full-height">
             <div className="p-3">
               {children}
