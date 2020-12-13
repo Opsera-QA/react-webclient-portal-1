@@ -1022,8 +1022,8 @@ a.nav-link {
 }
 
 .modal-detail-view-body {
-  min-height: 50vh;
-  max-height: 50vh;
+  min-height: 65vh;
+  max-height: 80vh;
   overflow-y: auto;
 }
 

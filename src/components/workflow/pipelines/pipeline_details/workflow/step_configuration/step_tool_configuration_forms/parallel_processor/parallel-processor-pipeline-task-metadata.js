@@ -10,7 +10,7 @@ const parallelProcessorPipelineTaskMetadata = {
       id: "action",
     },
     {
-      label: "Message",
+      label: null,
       id: "api_response.apiResponse.message.message"
     },
     {
@@ -34,7 +34,7 @@ const parallelProcessorPipelineTaskMetadata = {
       id: "step_name"
     },
     {
-      label: "Parallel Pipelines",
+      label: null,
       id: "api_response.apiResponse.message.runResponse"
     }
   ],

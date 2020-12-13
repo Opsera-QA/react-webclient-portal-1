@@ -17,7 +17,6 @@ import {
   faFlag, faRedo,
 } from "@fortawesome/pro-light-svg-icons";
 import "../../workflows.css";
-import ErrorDialog from "components/common/status_notifications/error";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import FreeTrialPipelineWizard from "components/workflow/wizards/deploy/freetrialPipelineWizard";
 import WorkflowAuthorizedActions from "./workflow/workflow-authorized-actions";
@@ -468,7 +467,7 @@ function PipelineActionControls({
                   onClick={() => {
                     handleResetWorkflowClick(pipeline._id);
                   }}
-                  disabled={!authorizedAction("reset_pipeline_btn", pipeline.owner) || disabledActionState}>
+                  disabled={!authorizedAction("reset_pipeline_btn", pipeline.owner) || disabledActionState || startPipeline}>
             {resetPipeline ? <FontAwesomeIcon icon={faSpinner} fixedWidth spin className="mr-1"/> :
               <FontAwesomeIcon icon={faHistory} fixedWidth className="mr-1"/>}
             <span className="d-none d-md-inline">Reset</span></Button>
