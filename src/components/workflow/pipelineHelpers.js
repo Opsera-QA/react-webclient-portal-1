@@ -30,6 +30,15 @@ pipelineHelpers.getPriorStepFrom = (pipeline, step) => {
   }
 };
 
+pipelineHelpers.getNextStepFrom = (pipeline, step) => {
+  if (step) {
+    let stepArrayIndex = pipeline.workflow.plan.findIndex(x => x._id === step._id);
+    if (stepArrayIndex > 0) {
+      return pipeline.workflow.plan[stepArrayIndex + 1];
+    }
+  }
+};
+
 pipelineHelpers.getStepIndex = (pipeline, stepId) => {
   if (stepId) {
     let stepArrayIndex = pipeline.workflow.plan.findIndex(x => x._id === stepId);

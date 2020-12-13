@@ -163,7 +163,7 @@ function PipelineWorkflow({
     }
 
     handleSourceEditClick();
-  }
+  };
 
   const setZoomClass = (val) => {
     switch (val) {
@@ -354,25 +354,25 @@ function PipelineWorkflow({
           </div>
         </div>
 
+        <div className="fixed-bottom text-right mb-5 mr-3">
+          <Button variant="secondary"
+                  className="mr-1"
+                  size="sm"
+                  disabled={zoomValue >= 2}
+                  onClick={() => {
+                    handleZoomClick(zoomValue, "in");
+                  }}>
+            <FontAwesomeIcon icon={faSearchPlus} fixedWidth/></Button>
 
-        <Button variant="secondary"
-                className="mr-1"
-                size="sm"
-                disabled={zoomValue >= 3}
-                onClick={() => {
-                  handleZoomClick(zoomValue, "in");
-                }}>
-          <FontAwesomeIcon icon={faSearchPlus} fixedWidth/></Button>
-
-        <Button variant="secondary"
-                className="mr-1"
-                size="sm"
-                disabled={zoomValue <= 1}
-                onClick={() => {
-                  handleZoomClick(zoomValue, "out");
-                }}>
-          <FontAwesomeIcon icon={faSearchMinus} fixedWidth/></Button>
-
+          <Button variant="secondary"
+                  className="mr-1"
+                  size="sm"
+                  disabled={zoomValue <= 1}
+                  onClick={() => {
+                    handleZoomClick(zoomValue, "out");
+                  }}>
+            <FontAwesomeIcon icon={faSearchMinus} fixedWidth/></Button>
+        </div>
       </div>
 
       <ModalActivityLogs header={modalHeader} size="lg" jsonData={modalMessage} show={showModal}

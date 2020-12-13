@@ -3,11 +3,12 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { Button, Modal, Form, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faSpinner, faTimes } from "@fortawesome/pro-light-svg-icons";
+import { faArrowRight, faCheck, faIdBadge, faSpinner, faTimes, faToolbox } from "@fortawesome/pro-light-svg-icons";
 import PipelineHelpers from "./pipelineHelpers";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import PipelineActions from "./pipeline-actions";
 import CommonModal from "components/common/modal/modal";
+import LoadingDialog from "../common/status_notifications/loading";
 
 const INITIAL_FORM = {
   message: "",
@@ -25,6 +26,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
   const [message, setMessage] = useState("");
   const [approvalStep, setApprovalStep] = useState({});
   const [priorToApprovalStep, setPriorToApprovalStep] = useState({});
+  const [nextToApprovalStep, setNextToApprovalStep] = useState({});
   const [formData, setFormData] = useState(INITIAL_FORM);
 
   useEffect(() => {
@@ -50,13 +52,14 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
   const loadApprovalRequest = async (pipeline) => {
     const step = PipelineHelpers.getPendingApprovalStep(pipeline);
     const priorStep = PipelineHelpers.getPriorStepFrom(pipeline, step);
+    const nextStep = PipelineHelpers.getNextStepFrom(pipeline, step);
 
     if (step) {
       setApprovalStep(step);
       setPriorToApprovalStep(priorStep);
+      setNextToApprovalStep(nextStep);
 
       let customStepMessage = "";
-
       if (step.tool?.configuration?.message) {
         customStepMessage += step.tool.configuration.message + " Approval Contact: " + step.tool.configuration.contact;
       }
@@ -133,13 +136,47 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
         <Modal.Body>
           <div className="m-3">
 
-            <div>Approval of this interaction is required in order for the pipeline to proceed. Please review the
-              details below
-              as well as the Pipline Activity Logs and confirm that this pipeline can complete its operations.
+            <div>
+              Approval of this interaction is required in order for the pipeline to proceed. Please review the
+              details below as well as the Pipline Activity Logs and confirm that this pipeline can complete its
+              operations.
             </div>
 
+            {isLoading && <LoadingDialog/>}
+
+
+            <div className="d-flex m-3 justify-content-center">
+              <div className="p-1">
+                {priorToApprovalStep &&
+                <RenderWorkflowItem item={priorToApprovalStep}/>
+                }
+              </div>
+              <div className="p-1 my-auto">
+                {priorToApprovalStep &&
+                <FontAwesomeIcon icon={faArrowRight} size="2x" fixedWidth
+                                 className="p-1"/>}
+              </div>
+              <div className="p-1">
+                {approvalStep &&
+                <RenderWorkflowItem item={approvalStep} stateColorClass={"workflow-step-warning"}/>
+                }
+              </div>
+              <div className="p-1 my-auto">
+                {nextToApprovalStep &&
+                <FontAwesomeIcon icon={faArrowRight} size="2x" fixedWidth
+                                 className="p-1"/>}
+              </div>
+              <div className="p-1">
+                {nextToApprovalStep &&
+                <RenderWorkflowItem item={nextToApprovalStep}/>
+                }
+              </div>
+            </div>
+
+
             {message &&
-            <div className="m-3 p-3 text-muted italic" style={{backgroundColor: "#f2f4f8"}}>{message}</div>}
+            <div className="m-3 p-3 text-muted italic" style={{ backgroundColor: "#f2f4f8" }}>{message}</div>}
+
 
             <Form>
               <Form.Group controlId="repoField">
@@ -171,26 +208,26 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
             placement="top"
             delay={{ show: 250, hide: 400 }}
             overlay={renderTooltip({ message: "Approve this pipeline using the switch above in order for it to proceed." })}>
-          <Button variant="success" onClick={() => handleConfirm("approve")}
-                  disabled={isLoading || !formData.approved || isSaving || !approvalStep}>
-            {isSaving ?
-              <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> :
-              <FontAwesomeIcon icon={faCheck} fixedWidth/>}
-            Approve
-          </Button>
+            <Button variant="success" onClick={() => handleConfirm("approve")}
+                    disabled={isLoading || !formData.approved || isSaving || !approvalStep}>
+              {isSaving ?
+                <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> :
+                <FontAwesomeIcon icon={faCheck} fixedWidth/>}
+              Approve
+            </Button>
           </OverlayTrigger>
 
           <OverlayTrigger
             placement="top"
             delay={{ show: 250, hide: 400 }}
             overlay={renderTooltip({ message: "Stop this pipeline from proceeding further" })}>
-          <Button variant="danger" onClick={() => handleConfirm("deny")}
-                  disabled={isLoading || formData.approved || isSavingDeny || !approvalStep}>
-            {isSavingDeny ?
-              <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> :
-              <FontAwesomeIcon icon={faTimes} fixedWidth/>}
-            Deny
-          </Button>
+            <Button variant="danger" onClick={() => handleConfirm("deny")}
+                    disabled={isLoading || formData.approved || isSavingDeny || !approvalStep}>
+              {isSavingDeny ?
+                <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> :
+                <FontAwesomeIcon icon={faTimes} fixedWidth/>}
+              Deny
+            </Button>
           </OverlayTrigger>
 
           <OverlayTrigger
@@ -198,12 +235,33 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
             delay={{ show: 250, hide: 400 }}
             overlay={renderTooltip({ message: "Close this window leaving the pipeline in a paused state" })}>
             <Button variant="secondary" onClick={() => handleClose()}>
-            Close
-          </Button>
+              Close
+            </Button>
           </OverlayTrigger>
 
         </Modal.Footer>
       </Modal>
+    </>
+  );
+}
+
+
+function RenderWorkflowItem({ item, stateColorClass }) {
+
+  return (
+    <>
+      <div className={"p-1 workflow-module-container workflow-module-container-width mx-auto " + stateColorClass}>
+        <div className="workflow-module-container-height" style={{ width: "275px" }}>
+          <div className="text-muted mr-1">{item.name}</div>
+          <div className="p-1 text-muted small">
+            <FontAwesomeIcon icon={faToolbox} size="sm" fixedWidth
+                             className="mr-1"/> Tool: {item.tool?.toolProperties?.name || ""}
+          </div>
+          <div className="p-1 text-muted small">
+            <FontAwesomeIcon icon={faIdBadge} size="sm" fixedWidth
+                             className="mr-1"/>ID: {item._id}</div>
+        </div>
+      </div>
     </>
   );
 }
@@ -217,6 +275,11 @@ function renderTooltip(props) {
     </Tooltip>
   );
 }
+
+RenderWorkflowItem.propTypes = {
+  item: PropTypes.object,
+  stateColorClass: PropTypes.string
+};
 
 StepApprovalModal.propTypes = {
   pipelineId: PropTypes.string,

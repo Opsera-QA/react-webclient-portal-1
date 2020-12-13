@@ -109,11 +109,11 @@ function PipelineActionControls({
   };
 
   const handleApprovalClick = () => {
-    setApproval(true);
     setShowApprovalModal(true);
   };
 
   const handleApprovalActivity = async () => {
+    setApproval(true);
     setInfoModal({
       show: true,
       header: "Approval Status",
