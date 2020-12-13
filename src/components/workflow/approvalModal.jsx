@@ -247,7 +247,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
 
 
 function RenderWorkflowItem({ item, stateColorClass }) {
-
+  console.log(item)
   return (
     <>
       <div className={"p-1 workflow-module-container workflow-module-container-width mx-auto " + stateColorClass}>
@@ -255,7 +255,7 @@ function RenderWorkflowItem({ item, stateColorClass }) {
           <div className="text-muted mr-1">{item.name}</div>
           <div className="p-1 text-muted small">
             <FontAwesomeIcon icon={faToolbox} size="sm" fixedWidth
-                             className="mr-1"/> Tool: {item.tool?.toolProperties?.name || ""}
+                             className="mr-1"/> Tool: {item.tool?.tool_identifier || ""}
           </div>
           <div className="p-1 text-muted small">
             <FontAwesomeIcon icon={faIdBadge} size="sm" fixedWidth
