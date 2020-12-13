@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import PropTypes from "prop-types";
 import { Button, Card, Col, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthContext";
@@ -11,43 +12,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/pro-light-svg-icons";
 import OpseraPipelineByStatusBarChart from "../../analytics/charts/opseraPipelineByStatusBarChart";
 
-function DashboardDetailView() {
-  const { id } = useParams();
-  const { getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
-  const [dashboardData, setDashboardData] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(true);
-
-
-  useEffect(() => {
-    getDashboard();
-  }, []);
-
-  const getDashboard = async () => {
-    try {
-      setIsLoading(true);
-      const response = await dashboardsActions.get(id, getAccessToken);
-
-      if (response != null && response.data) {
-        setDashboardData(new Model(response.data, dashboardMetadata, false));
-      }
-    } catch (error) {
-      if (!error?.error?.message?.includes(404)) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    }
-    finally {
-      setIsLoading(false);
-    }
-  };
-
-  if (isLoading) {
-    return (<LoadingDialog size="md" message={"Loading dashboard..."}/>);
-  }
-
+function DashboardViewer(dashboardData) {
   return (
     <div>
-      <h4>{dashboardData.data.name}</h4>
       <div className="px-2 mb-1 d-flex justify-content-end">
         <div>
           <Button
@@ -56,31 +23,6 @@ function DashboardDetailView() {
             size="sm"
             onClick={() => console.log("NEW KPI")}>
             <span><FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1"/>Add New KPI</span>
-          </Button>
-        </div>
-        <div>
-          <Button
-            variant={"primary"}
-            className="mr-1"
-            size="sm"
-            onClick={() => console.log("EDIT DASHBOARD")}>
-            <span>Edit</span>
-          </Button>
-        </div>
-        <div>
-          {/* <Button
-                variant={"primary"}
-                className="mr-1"
-                size="sm"
-                onClick={() => console.log("CLONE DASHBOARD")}>
-                <span>Clone</span>
-              </Button> */}
-          <Button
-            variant={"danger"}
-            className="mr-1"
-            size="sm"
-            onClick={() => console.log("DELETE DASHBOARD")}>
-            <span>Delete</span>
           </Button>
         </div>
       </div>
@@ -107,4 +49,8 @@ function DashboardDetailView() {
   );
 }
 
-export default DashboardDetailView;
+DashboardViewer.propTypes = {
+  dashboardName: PropTypes.string
+};
+
+export default DashboardViewer;

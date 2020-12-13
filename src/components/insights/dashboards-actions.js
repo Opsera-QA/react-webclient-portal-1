@@ -53,7 +53,7 @@ dashboardsActions.updateFavorite = async(rowData, getAccessToken) => {
 }
 
 dashboardsActions.delete = async(dashboardDataDto, getAccessToken) => {
-    const apiUrl = `/analytics/dashboard/delete`
+    const apiUrl = `/analytics/dashboard/${dashboardDataDto.getData('_id')}`
     return baseActions.apiDeleteCall(getAccessToken, apiUrl);
 };
 

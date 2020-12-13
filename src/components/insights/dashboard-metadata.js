@@ -44,7 +44,7 @@ const dashboardMetadata = {
     name: "",
     description: "",
     visibility: "private",
-    active: "active"
+    active: true
   }
 };
 

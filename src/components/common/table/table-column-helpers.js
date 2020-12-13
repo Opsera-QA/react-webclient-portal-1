@@ -12,7 +12,7 @@ import {
 import React from "react";
 import PipelineHelpers from "../../workflow/pipelineHelpers";
 import PipelineStatus from "../../workflow/pipelines/PipelineStatus";
-import FavoritesIcon from "../../insights/FavoritesIcon";
+import DashboardFavoritesIcon from "../../common/icons/DashboardFavoritesIcon";
 import dashboardsActions from "../../insights/dashboards-actions";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import PipelineTypesField from "../form_fields/pipelines/PipelineTypesField";
@@ -153,7 +153,7 @@ export const getTableFavoriteColumn = (field, getAccessToken) => {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
     Cell: (props) => {
-      return <FavoritesIcon key={props.row.original._id} dashboard={props.row.original} dashboardsActions={dashboardsActions} getAccessToken={getAccessToken}/>
+      return <DashboardFavoritesIcon key={props.row.original._id} dashboard={props.row.original} dashboardsActions={dashboardsActions} getAccessToken={getAccessToken}/>
     },
     class: "no-wrap-inline"
   };
