@@ -74,7 +74,7 @@ function LdapDepartmentEditorPanel({ ldapDepartmentData, reloadData, setLdapDepa
     }
     catch (error) {
       if (newDepartmentResponse != null && newDepartmentResponse.data != null) {
-        toastContext.showInformationDialog("Department was successfully created, but owner could not be added to the department's group membership.");
+        toastContext.showSystemInformationBanner("Department was successfully created, but owner could not be added to the department's group membership.");
         return newDepartmentResponse;
       }
 
@@ -93,7 +93,7 @@ function LdapDepartmentEditorPanel({ ldapDepartmentData, reloadData, setLdapDepa
     }
     catch (error) {
       if (updatedDepartmentResponse != null && updatedDepartmentResponse.data != null) {
-        toastContext.showInformationDialog("Department was successfully updated, but owner could not be added to the department's group membership.");
+        toastContext.showSystemInformationBanner("Department was successfully updated, but owner could not be added to the department's group membership.");
         return updatedDepartmentResponse;
       }
 

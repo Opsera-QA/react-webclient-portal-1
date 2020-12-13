@@ -36,7 +36,7 @@ function WarningBanner({warningMessage, removeBanner, id}) {
 
 WarningBanner.propTypes = {
   warningMessage: PropTypes.string,
-  removeBanner: PropTypes.string,
+  removeBanner: PropTypes.func,
   id: PropTypes.string,
 };
 
