@@ -13,6 +13,7 @@ import LoadingDialog from "../../../common/status_notifications/loading";
 import DtoTagManagerInput from "../../../common/input/dto_input/dto-tag-manager-input";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import EditorPanelContainer from "../../../common/panels/detail_panel_container/EditorPanelContainer";
+import PersistButtonContainer from "../../../common/buttons/saving/containers/PersistButtonContainer";
 
 function ToolEditorPanel({ toolData, setToolData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -99,11 +100,7 @@ function ToolEditorPanel({ toolData, setToolData, handleClose }) {
               <DtoToggleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"active"}/>
             </Col>
           </Row>
-          <Row>
-            <div className="ml-auto mt-3 px-3">
-              <SaveButton recordDto={toolDataDto} showCreateAnother={true} showViewDetails={true} handleClose={handleClose} createRecord={createTool} updateRecord={updateTool} setData={setToolData} setRecordDto={setToolDataDto} />
-            </div>
-          </Row>
+          <PersistButtonContainer recordDto={toolDataDto} createRecord={createTool} updateRecord={updateTool} setRecordDto={setToolDataDto} />
         </EditorPanelContainer>
     );
 }
