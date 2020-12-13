@@ -26,6 +26,7 @@ import DtoTextInput from "../../../../../../common/input/dto_input/dto-text-inpu
 import emailStepNotificationMetadata from "./email/emailStepNotificationMetadata";
 import jiraStepApprovalMetadata from "./jira/jiraStepApprovalMetadata";
 import SlackStepNotificationToolInput from "./slack/SlackStepNotificationToolInput";
+import JiraStepNotificationProjectUserInput from "./jira/JiraStepNotificationProjectUserInput";
 
 function StepNotificationConfiguration({ data, stepId, parentCallback, handleCloseClick }) {
   const toastContext = useContext(DialogToastContext);
@@ -215,6 +216,7 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
           <JiraStepNotificationToolInput setDataObject={setJiraDto} dataObject={jiraDto} />
           <JiraStepNotificationPriorityInput jiraToolId={jiraDto.getData("jiraToolId")} setDataObject={setJiraDto} dataObject={jiraDto} />
           <JiraStepNotificationProjectInput jiraToolId={jiraDto.getData("jiraToolId")} setDataObject={setJiraDto} dataObject={jiraDto} />
+          <JiraStepNotificationProjectUserInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} />
           <JiraStepNotificationProjectUsersMultiSelectInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} />
           <JiraStepNotificationBoardInput jiraToolId={jiraDto.getData("jiraToolId")} setDataObject={setJiraDto} dataObject={jiraDto} />
           <JiraStepNotificationSprintInput jiraToolId={jiraDto.getData("jiraToolId")} jiraBoard={jiraDto.getData("jiraBoard")} setDataObject={setJiraDto} dataObject={jiraDto} />
@@ -236,6 +238,7 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
         <JiraStepNotificationToolInput setDataObject={setJiraDto} dataObject={jiraDto} />
         <JiraStepNotificationPriorityInput jiraToolId={jiraDto.getData("jiraToolId")} setDataObject={setJiraDto} dataObject={jiraDto} />
         <JiraStepNotificationProjectInput jiraToolId={jiraDto.getData("jiraToolId")} setDataObject={setJiraDto} dataObject={jiraDto} />
+        <JiraStepNotificationProjectUserInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} />
         <JiraStepNotificationProjectUsersMultiSelectInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} />
         <JiraStepNotificationBoardInput jiraToolId={jiraDto.getData("jiraToolId")} setDataObject={setJiraDto} dataObject={jiraDto} />
         <JiraStepNotificationSprintInput jiraToolId={jiraDto.getData("jiraToolId")} jiraBoard={jiraDto.getData("jiraBoard")} setDataObject={setJiraDto} dataObject={jiraDto} />

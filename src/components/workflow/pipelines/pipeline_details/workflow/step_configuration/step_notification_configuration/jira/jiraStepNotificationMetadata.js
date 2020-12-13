@@ -31,11 +31,15 @@ const jiraStepNotificationMetadata = {
       isRequired: true
     },
     {
-      label: "Jira Assignees",
-      id: "jiraAssignees",
+      label: "Jira Notification Assignee",
+      id: "jiraPrimaryAssignee",
       isRequired: true,
+    },
+    {
+      label: "Jira Notification Secondary Assignees",
+      id: "jiraSecondaryAssignees",
       maxItems: 10,
-      formText: "You may select up to ten assignees."
+      formText: "You may select up to ten secondary assignees."
     },
     {
       label: "Jira Board",
@@ -78,7 +82,8 @@ const jiraStepNotificationMetadata = {
     jiraPriority: "",
     jiraSprint: "",
     jiraParentTicket: "",
-    jiraAssignees: [],
+    jiraPrimaryAssignee: "",
+    jiraSecondaryAssignees: [],
     // jiraRejectionStep: "",
     // jiraApprovalStep: "",
     jiraOpenStep: "",
