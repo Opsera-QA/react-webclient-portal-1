@@ -37,7 +37,7 @@ function DashboardsTable({data, dashboardFilterDto, setDashboardFilterDto, loadD
   );
 
   const onRowSelect = (rowData) => {
-    history.push(`/insights/dashboards/${rowData.original._id}`);
+    history.push(`/insights/dashboards/${rowData.original._id}/viewer`);
   };
 
   const createNewDashboard = () => {

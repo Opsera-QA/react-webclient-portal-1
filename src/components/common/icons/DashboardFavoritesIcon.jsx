@@ -4,7 +4,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faStar} from "@fortawesome/pro-light-svg-icons";
 import {faStar as faStarSolid} from "@fortawesome/pro-solid-svg-icons";
 
-function FavoritesIcon({dashboard, dashboardsActions, getAccessToken}) {
+function DashboardFavoritesIcon({dashboard, dashboardsActions, getAccessToken}) {
   const [favorite, setFavorite] = useState(dashboard.isFavorite);
 
   const changeFavorite = (rowData) => {
@@ -28,10 +28,10 @@ function FavoritesIcon({dashboard, dashboardsActions, getAccessToken}) {
   );
 }
 
-FavoritesIcon.propTypes = {
+DashboardFavoritesIcon.propTypes = {
     dashboard: PropTypes.object,
     dashboardsActions: PropTypes.object,
     getAccessToken: PropTypes.func
   };
 
-export default FavoritesIcon;
+export default DashboardFavoritesIcon;

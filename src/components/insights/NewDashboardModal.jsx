@@ -16,7 +16,6 @@ function NewDashboardModal({ setShowModal, loadData, showModal } ) {
     loadData();
     setShowModal(false);
   };
-
   return (
     <>
       <CreateModal handleCancelModal={handleClose} objectType={"Dashboard"} showModal={showModal} loadData={loadData} >

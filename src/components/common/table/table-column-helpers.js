@@ -4,7 +4,7 @@ import {faCheckCircle, faPause, faSpinner, faStop, faTimesCircle} from "@fortawe
 import React from "react";
 import PipelineHelpers from "../../workflow/pipelineHelpers";
 import PipelineStatus from "../../workflow/pipelines/PipelineStatus";
-import FavoritesIcon from "../../insights/FavoritesIcon";
+import DashboardFavoritesIcon from "../../common/icons/DashboardFavoritesIcon";
 import dashboardsActions from "../../insights/dashboards-actions";
 
 const getTableHeader = (field) => {
@@ -93,7 +93,7 @@ export const getTableFavoriteColumn = (field, getAccessToken) => {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
     Cell: (props) => {
-      return <FavoritesIcon key={props.row.original._id} dashboard={props.row.original} dashboardsActions={dashboardsActions} getAccessToken={getAccessToken}/>
+      return <DashboardFavoritesIcon key={props.row.original._id} dashboard={props.row.original} dashboardsActions={dashboardsActions} getAccessToken={getAccessToken}/>
     },
     class: "no-wrap-inline"
   };
