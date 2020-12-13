@@ -33,6 +33,7 @@ import DropdownList from "react-widgets/lib/DropdownList";
 import SourceCodeView from "./views/SourceCode/SourceCodeView_developer";
 import LoadingView from "../common/status_notifications/loading";
 import OperationsView from "./views/opserations_analytics/operationsViewAnalytics_developer";
+import AnalyticsProfileSettings from "../settings/analytics/activateAnalyticsCard";
 
 const INDICES = [
   "jenkins",
@@ -280,9 +281,13 @@ function Analytics() {
             configured logs repositories below.
           </p>
         </div>
-        <div className="p-2 mt-1 max-content-width mb-1">
-          <ConfigurationsForm settings={profile} token={token}/>
-        </div>
+
+        {
+          !error && profile && !profile.enabledToolsOn &&
+          <div className="p-2 mt-1 max-content-width mb-1">
+            <AnalyticsProfileSettings />
+          </div>
+        }
 
         {profile.enabledToolsOn && !error &&
         <div className="p-2">

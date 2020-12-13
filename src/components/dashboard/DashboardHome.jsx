@@ -24,6 +24,7 @@ import { Alert, OverlayTrigger, Tooltip, Row, Col } from "react-bootstrap";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import ConfigurationsForm from "../analytics/configurationsForm";
 import LoadingView from "../common/status_notifications/loading";
+import AnalyticsProfileSettings from "../settings/analytics/activateAnalyticsCard";
 
 const INDICES = [
   "jenkins",
@@ -280,7 +281,7 @@ function DashboardHome() {
           </p>
         </div>
 
-        {!hasError && (
+        {!hasError && profile && profile.enabledToolsOn &&  (
           <>
             <Row>
               <Col sm={8}>
@@ -396,7 +397,7 @@ function DashboardHome() {
 
         {profile && !profile.enabledToolsOn && (
           <div className="mt-1 max-content-width mb-1">
-            <ConfigurationsForm settings={profile} token={token} />
+            <AnalyticsProfileSettings />
           </div>
         )}
       </div>

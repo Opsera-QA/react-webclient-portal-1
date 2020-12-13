@@ -52,6 +52,7 @@ paths.ldapGroupDetailView = paths.ldapUserManagement;
 paths.tagManagement = paths.accountSettings + "/tags";
 paths.tagDetailView = paths.tagManagement + "/details/";
 paths.customerSystemStatus = paths.accountSettings + "/customer-system-status";
+paths.analyticsProfile = paths.accountSettings + "/analytics-profile";
 
 //Reports
 paths.reports = "reports";

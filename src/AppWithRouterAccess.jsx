@@ -76,6 +76,7 @@ import ToolReports from "./components/reports/tools/ToolReports";
 import PipelineReports from "./components/reports/pipelines/PipelineReports";
 import TagReports from "./components/reports/tags/TagReports";
 import Reports_Old from "./components/reports/Reports_Old";
+import AnalyticsProfileSettings from "./components/settings/analytics/analyticsProfileSettings";
 
 const OktaAuth = require("@okta/okta-auth-js");
 const config = require("./config");
@@ -291,6 +292,7 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/settings/tags" exact component={TagEditor}/>
                   <SecureRoute path="/settings/tags/:id" exact component={TagDetailView}/>
                   <SecureRoute path="/settings/customer-system-status" exact component={CustomerSystemStatus}/>
+                  <SecureRoute path="/settings/analytics-profile" exact component={AnalyticsProfileSettings}/>
 
                   <SecureRoute path="/demo/api" component={ApiConnectionDemo}/>
                   <SecureRoute path="/demo/table" component={CommonTableDemo}/>
