@@ -12,8 +12,10 @@ KpiActions.getKpis = async (kpiFilterDto, getAccessToken) => {
       sort: sortOption ? sortOption.value : undefined,
       size: kpiFilterDto.getData("pageSize"),
       page: kpiFilterDto.getData("currentPage"),
+      tool: kpiFilterDto.getFilterValue("tool"),
+      category: kpiFilterDto.getFilterValue("category"),
       status: status ? status.value : undefined,
-      search: kpiFilterDto.getData("search")
+      search: kpiFilterDto.getFilterValue("search")
     },
   };
 

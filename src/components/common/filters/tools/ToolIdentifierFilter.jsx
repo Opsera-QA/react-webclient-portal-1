@@ -6,7 +6,7 @@ import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import {createFilterOptions} from "../filterHelpers";
 import DtoFilterSelectInput from "../input/DtoFilterSelectInput";
 
-function ToolIdentifierFilter({ filterDto, setFilterDto}) {
+function ToolIdentifierFilter({ filterDto, setFilterDto, fieldName, setDataFunction}) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [toolIdentifierFilterOptions, setToolIdentifierFilterOptions] = useState([]);
@@ -35,7 +35,17 @@ function ToolIdentifierFilter({ filterDto, setFilterDto}) {
   };
 
   return (
-    <div><DtoFilterSelectInput busy={isLoading} placeholderText={"Filter by Tool"} fieldName={"toolIdentifier"} setDataObject={setFilterDto} dataObject={filterDto} selectOptions={toolIdentifierFilterOptions} /></div>
+    <div>
+      <DtoFilterSelectInput
+        busy={isLoading}
+        setDataFunctionplaceholderText={"Filter by Tool"}
+        fieldName={fieldName}
+        setDataObject={setFilterDto}
+        dataObject={filterDto}
+        setDataFunction={setDataFunction}
+        selectOptions={toolIdentifierFilterOptions}
+      />
+    </div>
   );
 }
 
@@ -43,6 +53,12 @@ function ToolIdentifierFilter({ filterDto, setFilterDto}) {
 ToolIdentifierFilter.propTypes = {
   filterDto: PropTypes.object,
   setFilterDto: PropTypes.func,
+  fieldName: PropTypes.string,
+  setDataFunction: PropTypes.func,
+};
+
+ToolIdentifierFilter.defaultProps = {
+  fieldName: "toolIdentifier"
 };
 
 export default ToolIdentifierFilter;

@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import DropdownList from "react-widgets/lib/DropdownList";
 import WarningDialog from "../../status_notifications/WarningDialog";
 
-function DtoFilterSelectInput({ fieldName, dataObject, setDataObject, groupBy, selectOptions, valueField, textField, filter, placeholderText, busy}) {
+// TODO: Rewrite when time permits
+function DtoFilterSelectInput({ fieldName, dataObject, setDataObject, groupBy, selectOptions, setDataFunction, valueField, textField, filter, placeholderText, busy}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
 
   const validateAndSetData = (fieldName, value) => {
@@ -17,20 +18,20 @@ function DtoFilterSelectInput({ fieldName, dataObject, setDataObject, groupBy, s
   }
 
   return (
-          <div className="my-auto">
-            {/*<label><span>{field.label}</span></label>*/}
-            <DropdownList
-              data={selectOptions}
-              valueField={valueField}
-              textField={textField}
-              filter={filter}
-              groupBy={groupBy}
-              value={dataObject.getData(fieldName)}
-              busy={busy}
-              placeholder={placeholderText}
-              onChange={data => validateAndSetData(fieldName, data)}
-            />
-          </div>
+    <div className="my-auto">
+      {/*<label><span>{field.label}</span></label>*/}
+      <DropdownList
+        data={selectOptions}
+        valueField={valueField}
+        textField={textField}
+        filter={filter}
+        groupBy={groupBy}
+        value={dataObject.getData(fieldName)}
+        busy={busy}
+        placeholder={placeholderText}
+        onChange={(data) => setDataFunction ? setDataFunction(fieldName, data) : validateAndSetData(fieldName, data)}
+      />
+    </div>
   );
 }
 
