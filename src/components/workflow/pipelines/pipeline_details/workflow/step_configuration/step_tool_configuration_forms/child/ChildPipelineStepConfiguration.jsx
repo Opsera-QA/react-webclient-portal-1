@@ -8,8 +8,6 @@ import BooleanToggleInput from "../../../../../../../common/input/dto_input/Bool
 import thresholdMetadata from "../../../../../../../common/metadata/pipelines/thresholdMetadata";
 import PipelineStepEditorPanelContainer
   from "../../../../../../../common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
-import PipelineStepConfigurationButtonContainer
-  from "../../../../../../../common/buttons/saving/containers/PipelineStepConfigurationButtonContainer";
 
 function ChildPipelineStepConfiguration({ stepTool, pipelineId, parentCallback, closeEditorPanel }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -61,7 +59,7 @@ function ChildPipelineStepConfiguration({ stepTool, pipelineId, parentCallback, 
     <PipelineStepEditorPanelContainer
       handleClose={closeEditorPanel}
       recordDto={childPipelineStepConfigurationDto}
-      persistRecord={parentCallback}
+      persistRecord={callbackFunction}
       isLoading={isLoading}
     >
       <div className="mx-2">
@@ -84,11 +82,6 @@ function ChildPipelineStepConfiguration({ stepTool, pipelineId, parentCallback, 
         <BooleanToggleInput disabled={true} dataObject={thresholdDto} setDataObject={setThresholdDto} fieldName={"ensureSuccess"}/>
         <BooleanToggleInput disabled={true} dataObject={thresholdDto} setDataObject={setThresholdDto} fieldName={"completeFirst"}/>
       </div>
-      <PipelineStepConfigurationButtonContainer
-        handleClose={closeEditorPanel}
-        recordDto={childPipelineStepConfigurationDto}
-        persistRecord={callbackFunction}
-        />
     </PipelineStepEditorPanelContainer>
   );
 }

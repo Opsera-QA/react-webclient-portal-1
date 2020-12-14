@@ -4,15 +4,15 @@ import "components/inventory/tools/tools.css";
 import PipelineSummaryCardContainer from "../../../../../pipeline_activity/PipelineSummaryCardContainer";
 import TextFieldBase from "../../../../../../../../common/form_fields/TextFieldBase";
 import DateFieldBase from "../../../../../../../../common/form_fields/DateFieldBase";
-import PipelineStatusField from "../../../../../../../../common/form_fields/pipelines/status/PipelineStatusField";
 import PipelineLinkButton from "../../../../../../../../common/buttons/pipeline/PipelineLinkButton";
+import PipelineStateField from "../../../../../../../../common/form_fields/pipelines/state/PipelineStateField";
 
 function ParallelPipelineTaskSummaryCard({ pipelineData }) {
   return (
     <PipelineSummaryCardContainer pipelineData={pipelineData}>
       <div className="d-flex justify-content-between">
         <TextFieldBase dataObject={pipelineData} fieldName={"runNumber"}/>
-        <PipelineStatusField dataObject={pipelineData} fieldName={"status"}/>
+        <PipelineStateField dataObject={pipelineData} fieldName={"state"}/>
       </div>
       <div className="mb-2">
         <TextFieldBase dataObject={pipelineData} fieldName={"description"}/>

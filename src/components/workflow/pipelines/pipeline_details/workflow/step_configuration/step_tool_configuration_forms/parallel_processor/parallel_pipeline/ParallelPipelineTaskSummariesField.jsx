@@ -27,7 +27,8 @@ function ParallelPipelineTaskSummariesField({ fieldName, dataObject }) {
         let response = await pipelineActions.getPipelineSummaries(pipelineIds, getAccessToken);
 
         if (response?.data) {
-          initializePipelines(response.data);
+          let pipelineStateResponse = await pipelineActions.getPipelineStates(pipelineIds, getAccessToken);
+          initializePipelines(response.data, pipelineStateResponse?.data);
         }
       }
     }
@@ -39,7 +40,7 @@ function ParallelPipelineTaskSummariesField({ fieldName, dataObject }) {
     }
   };
 
-  const initializePipelines = (pipelines) => {
+  const initializePipelines = (pipelines, pipelineStates) => {
     let initializedPipelines = [];
 
     if (!Array.isArray(pipelines) || pipelines.length === 0) {
@@ -48,8 +49,12 @@ function ParallelPipelineTaskSummariesField({ fieldName, dataObject }) {
 
     pipelines.map((pipeline) => {
       let pipelineModel = new Model(pipeline, pipelineSummaryMetadata, false);
+
+      if (pipelineStates != null) {
+        let pipelineStateObject = pipelineStates.find((item) => {return item.pipelineId === pipelineModel.getData("_id")});
+        pipelineModel.setData("state", pipelineStateObject?.state);
+      }
       pipelineModel.setData("runNumber", getRunResponseValue(pipelineModel.getData("_id"), "runCount"));
-      pipelineModel.setData("status", getRunResponseValue(pipelineModel.getData("_id"), "status"));
       initializedPipelines.push({...pipelineModel});
     });
 

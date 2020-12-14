@@ -5,8 +5,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import TextFieldBase from "../../../../common/form_fields/TextFieldBase";
 import DateTimeField from "../../../../common/form_fields/DateTimeField";
-import PipelineStatusField from "../../../../common/form_fields/pipelines/status/PipelineStatusField";
 import SummaryPanelContainer from "../../../../common/panels/detail_view/SummaryPanelContainer";
+import PipelineStateField from "../../../../common/form_fields/pipelines/state/PipelineStateField";
 
 function PipelineTaskSummaryPanelBase({ pipelineTaskData }) {
   return (
@@ -28,7 +28,7 @@ function PipelineTaskSummaryPanelBase({ pipelineTaskData }) {
           <DateTimeField dataObject={pipelineTaskData} fieldName={"createdAt"}/>
         </Col>
         <Col md={6}>
-          <PipelineStatusField dataObject={pipelineTaskData} fieldName={"status"}/>
+          <PipelineStateField dataObject={pipelineTaskData} fieldName={"state"}/>
         </Col>
         <Col md={12}>
           <TextFieldBase dataObject={pipelineTaskData} fieldName={"message"}/>

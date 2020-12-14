@@ -6,13 +6,12 @@ import Col from "react-bootstrap/Col";
 import DateTimeField from "../../../../../../../common/form_fields/DateTimeField";
 import ParallelPipelineTaskSummariesField from "./parallel_pipeline/ParallelPipelineTaskSummariesField";
 import TextFieldBase from "../../../../../../../common/form_fields/TextFieldBase";
-import PipelineStatusField from "../../../../../../../common/form_fields/pipelines/status/PipelineStatusField";
 import SummaryPanelContainer from "../../../../../../../common/panels/detail_view/SummaryPanelContainer";
+import PipelineStateField from "../../../../../../../common/form_fields/pipelines/state/PipelineStateField";
 
 function ParallelProcessorPipelineTaskSummaryPanel({ pipelineTaskData }) {
   return (
     <SummaryPanelContainer>
-
       <Row>
         <Col md={12} className="px-1">
           <h6>Step Activity Log Summary:</h6>
@@ -33,15 +32,13 @@ function ParallelProcessorPipelineTaskSummaryPanel({ pipelineTaskData }) {
           <DateTimeField dataObject={pipelineTaskData} fieldName={"createdAt"}/>
         </Col>
         <Col md={6} className="p-1">
-          <PipelineStatusField dataObject={pipelineTaskData} fieldName={"status"}/>
+          <PipelineStateField dataObject={pipelineTaskData} fieldName={"state"}/>
         </Col>
-
         <Col md={12} className="px-1">
           <div className="m-3 p-3 text-muted italic" style={{ backgroundColor: "#f2f4f8" }}>
             <TextFieldBase dataObject={pipelineTaskData} fieldName={"api_response.apiResponse.message.message"}/>
           </div>
         </Col>
-
         <Col md={12} className="px-1 py-2">
           <h6>Pipelines Orchestrated by this Step:</h6>
           <ParallelPipelineTaskSummariesField dataObject={pipelineTaskData}/>

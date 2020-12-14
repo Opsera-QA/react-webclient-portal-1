@@ -234,10 +234,9 @@ function PipelinesView({ currentTab, setActiveTab }) {
             {getViewToggle()}
           </div>
         </div>
-        {/*TODO: Uncomment when node filters are merged in*/}
-        {/*<div className="mr-2">*/}
-        {/*  {getFilterBar()}*/}
-        {/*</div>*/}
+        <div className="mr-2">
+          {getFilterBar()}
+        </div>
         <div className="px-3">
           <div className="pt-1">
             <DtoTopPagination

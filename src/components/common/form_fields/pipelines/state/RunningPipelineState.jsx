@@ -1,10 +1,10 @@
 import React from "react";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
-import PipelineStatusBase from "./PipelineStatusBase";
+import PipelineStateBase from "./PipelineStateBase";
 
-function RunningPipelineStatus() {
+function RunningPipelineState() {
   return (
-    <PipelineStatusBase
+    <PipelineStateBase
       className="green"
       innerText={"A pipeline operation is currently in progress."}
       icon={faSpinner}
@@ -13,4 +13,4 @@ function RunningPipelineStatus() {
   );
 }
 
-export default RunningPipelineStatus;
+export default RunningPipelineState;

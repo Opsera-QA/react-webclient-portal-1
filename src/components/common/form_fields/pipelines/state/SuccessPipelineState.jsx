@@ -1,10 +1,10 @@
 import React from "react";
 import {faCheckCircle} from "@fortawesome/pro-light-svg-icons";
-import PipelineStatusBase from "./PipelineStatusBase";
+import PipelineStateBase from "./PipelineStateBase";
 
-function SuccessPipelineStatus() {
+function SuccessPipelineState() {
   return (
-    <PipelineStatusBase
+    <PipelineStateBase
       className="green"
       innerText={"The most recent run of this pipeline was successful."}
       icon={faCheckCircle}
@@ -13,4 +13,4 @@ function SuccessPipelineStatus() {
   );
 }
 
-export default SuccessPipelineStatus;
+export default SuccessPipelineState;
