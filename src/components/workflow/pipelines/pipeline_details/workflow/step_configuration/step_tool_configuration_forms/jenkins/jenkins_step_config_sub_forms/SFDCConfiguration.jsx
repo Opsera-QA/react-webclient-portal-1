@@ -22,7 +22,6 @@ import SFDCUnitTestModal from "./SFDCUnitTestModal";
 
 const UNIT_TEST_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
-  { value: "NoTestRun", label: "No Test Run" },
   { value: "RunLocalTests", label: "Run Local Tests" },
   { value: "RunAllTestsInOrg", label: "Run All Tests In Org" },
   { value: "RunSpecifiedTests", label: "Run Specified Tests" },
