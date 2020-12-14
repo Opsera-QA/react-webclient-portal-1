@@ -38,13 +38,18 @@ const dashboardMetadata = {
     {
       label: "Favorite",
       id: "isFavorite"
+    },
+    {
+      label: "Configuration",
+      id: "configuration"
     }
   ],
   newObjectFields: {
     name: "",
     description: "",
     visibility: "private",
-    active: true
+    active: true,
+    configuration: []
   }
 };
 
