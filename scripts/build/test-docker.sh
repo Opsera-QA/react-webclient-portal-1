@@ -1,6 +1,6 @@
 #!/bin/bash
 set -xe
-docker build -t opsera-reactapp:kube-test --build-arg DOCKER_ENV=kube-test  ../../
+docker build -t opsera-reactapp:kube-test --build-arg build_env=kube-test  ../../
 docker run --rm \
         440953937617.dkr.ecr.us-east-2.amazonaws.com/kubectl \
         aws ecr get-login-password \

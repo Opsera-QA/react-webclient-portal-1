@@ -1,6 +1,6 @@
 #!/bin/bash
 set -xe
-docker build -t opsera-reactapp:kube-prod --build-arg DOCKER_ENV=kube-prod  ../../
+docker build -t opsera-reactapp:kube-prod --build-arg build_env=kube-prod  ../../
 docker run --rm \
         440953937617.dkr.ecr.us-east-2.amazonaws.com/kubectl \
         aws ecr get-login-password \
