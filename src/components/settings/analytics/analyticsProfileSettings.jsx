@@ -131,7 +131,7 @@ function AnalyticsProfileSettings() {
     );
   }
 
-  if (analyticsProfileData && !analyticsProfileData.getData("active")) {
+  if ((analyticsProfileData && !analyticsProfileData.getData("enabledToolsOn")) || (analyticsProfileData && !analyticsProfileData.getData("active"))) {
     if (
       (analyticsProfileData.getData("ldapAccount") && analyticsProfileData.getData("ldapOwner")) ||
       process.env.REACT_APP_STACK === "free-trial" ||
