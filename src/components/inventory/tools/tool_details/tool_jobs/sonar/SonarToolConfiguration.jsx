@@ -23,12 +23,15 @@ function SonarToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVaul
   const [isSaving, setIsSaving] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toast, setToast] = useState({});
+  // TODO: Remove when wiring up DTO fields
+  const [isNew, setIsNew] = useState(true);
 
   useEffect(() => {
     if (typeof(toolData) !== "undefined") {
       let { configuration } = toolData;
       if (typeof(configuration) !== "undefined") {
         setFormData(configuration);
+        setIsNew(false);
       }      
     } else {
       setFormData(INITIAL_DATA);
@@ -86,44 +89,46 @@ function SonarToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVaul
   };
 
   return (
-    <Form>
-      {showToast && toast}
-
-          
-      <Form.Group controlId="sonarUrl">
-        <Form.Label>Sonar Url*</Form.Label>
-        <Form.Control maxLength="100" type="text" placeholder="" value={formData.sonarUrl || ""} onChange={e => setFormData({ ...formData, sonarUrl: e.target.value.trim() })} />
-      </Form.Group>
-      <Form.Group controlId="sonarPort">
-        <Form.Label>Sonar Port</Form.Label>
-        <Form.Control  maxLength="5" type="text" placeholder="" value={formData.sonarPort || ""} onChange={e => setFormData({ ...formData, sonarPort: e.target.value.trim() })} />
-      </Form.Group>
-      <Form.Group controlId="sonarUserId">
-        <Form.Label>Sonar UserId*</Form.Label>
-        <Form.Control  maxLength="50" type="text" placeholder="" value={formData.sonarUserId || ""} onChange={e => setFormData({ ...formData, sonarUserId: e.target.value.trim() })} />
-      </Form.Group>
-      <Form.Group controlId="sonarAuthToken">
-        <Form.Label>Sonar Auth Token*</Form.Label>
-        <Form.Control maxLength="500" type="password" placeholder="" value={formData.sonarAuthToken || ""} onChange={e => setFormData({ ...formData, sonarAuthToken: e.target.value.trim() })} />
-      </Form.Group>
-
-      {/*TODO: Replace with SaveButton once converted to using data model*/}
+    <div>
       <Row>
-        <div className="ml-auto mt-3 px-3 d-flex">
-          <div>
-            <TestToolConnectionButton recordData={toolData} toolName={"Sonarqube"}/>
-          </div>
-          <div className="d-flex">
-            {isSaving &&
-            <div className="text-center mr-3 mt-1"><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>Saving is in progress</div>}
-            <Button size="sm" variant="primary" disabled={isSaving} onClick={() => callbackFunction()}><FontAwesomeIcon
-              icon={faSave} fixedWidth className="mr-2"/>Save</Button>
-          </div>
-        </div>
+        <div className="ml-auto"><TestToolConnectionButton recordData={toolData} toolName={"Sonarqube"} disable={isNew}/></div>
       </Row>
-      
-      <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
-    </Form>
+      <Form>
+        {showToast && toast}
+
+
+        <Form.Group controlId="sonarUrl">
+          <Form.Label>Sonar Url*</Form.Label>
+          <Form.Control maxLength="100" type="text" placeholder="" value={formData.sonarUrl || ""} onChange={e => setFormData({ ...formData, sonarUrl: e.target.value.trim() })} />
+        </Form.Group>
+        <Form.Group controlId="sonarPort">
+          <Form.Label>Sonar Port</Form.Label>
+          <Form.Control  maxLength="5" type="text" placeholder="" value={formData.sonarPort || ""} onChange={e => setFormData({ ...formData, sonarPort: e.target.value.trim() })} />
+        </Form.Group>
+        <Form.Group controlId="sonarUserId">
+          <Form.Label>Sonar UserId*</Form.Label>
+          <Form.Control  maxLength="50" type="text" placeholder="" value={formData.sonarUserId || ""} onChange={e => setFormData({ ...formData, sonarUserId: e.target.value.trim() })} />
+        </Form.Group>
+        <Form.Group controlId="sonarAuthToken">
+          <Form.Label>Sonar Auth Token*</Form.Label>
+          <Form.Control maxLength="500" type="password" placeholder="" value={formData.sonarAuthToken || ""} onChange={e => setFormData({ ...formData, sonarAuthToken: e.target.value.trim() })} />
+        </Form.Group>
+
+        {/*TODO: Replace with SaveButton once converted to using data model*/}
+        <Row>
+          <div className="ml-auto mt-3 px-3 d-flex">
+            <div className="d-flex">
+              {isSaving &&
+              <div className="text-center mr-3 mt-1"><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>Saving is in progress</div>}
+              <Button size="sm" variant="primary" disabled={isSaving} onClick={() => callbackFunction()}><FontAwesomeIcon
+                icon={faSave} fixedWidth className="mr-2"/>Save</Button>
+            </div>
+          </div>
+        </Row>
+
+        <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
+      </Form>
+    </div>
   );
 }
 
