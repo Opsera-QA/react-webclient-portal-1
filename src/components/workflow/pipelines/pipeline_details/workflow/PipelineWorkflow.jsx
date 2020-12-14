@@ -354,7 +354,7 @@ function PipelineWorkflow({
           </div>
         </div>
 
-        <div className="fixed-bottom text-right mb-5 mr-3">
+        <div className="bottom-zoom-btns mb-1 mr-3">
           <Button variant="secondary"
                   className="mr-1"
                   size="sm"

@@ -9,7 +9,7 @@ function PipelineLink({pipelineId}) {
   return (
     <div>
       <NavLink href={`/workflow/details/${pipelineId}`} className="p-0">
-        <span><FontAwesomeIcon icon={faDraftingCompass} className="pr-1"/>View this Pipeline</span>
+        <span><FontAwesomeIcon icon={faDraftingCompass} className="pr-1"/>View Pipeline</span>
       </NavLink>
     </div>
   );

@@ -8,7 +8,7 @@ import Button from "react-bootstrap/Button";
 function PipelineLinkButton({pipelineId}) {
   return (
     <Button onClick={() => window.open(`/workflow/details/${pipelineId}`)} className="mb-2" size={"sm"}>
-      <span className="small my-auto"><FontAwesomeIcon icon={faDraftingCompass} className="pr-1" fixedWidth/>View this Pipeline</span>
+      <span className="small my-auto"><FontAwesomeIcon icon={faDraftingCompass} className="pr-1" fixedWidth/>View Pipeline</span>
     </Button>
   );
 }
