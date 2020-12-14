@@ -76,6 +76,7 @@ import ToolReports from "./components/reports/tools/ToolReports";
 import PipelineReports from "./components/reports/pipelines/PipelineReports";
 import TagReports from "./components/reports/tags/TagReports";
 import Reports_Old from "./components/reports/Reports_Old";
+import Marketplace from "components/insights/kpi_marketplace/Marketplace";
 import AnalyticsProfileSettings from "./components/settings/analytics/analyticsProfileSettings";
 
 const OktaAuth = require("@okta/okta-auth-js");
@@ -242,6 +243,9 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/reports/registry" exact component={ToolReports}/>
                   <SecureRoute path="/reports/pipelines" exact component={PipelineReports}/>
                   <SecureRoute path="/reports/tags" exact component={TagReports}/>
+
+                  {/* marketplace */}
+                  <SecureRoute path="/insights/marketplace" component={Marketplace}/>
 
                   {/* Administration Pages */}
                   <SecureRoute path="/admin" exact component={AdminTools}/>

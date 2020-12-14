@@ -11,8 +11,20 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/pro-light-svg-icons";
 import OpseraPipelineByStatusBarChart from "../../analytics/charts/opseraPipelineByStatusBarChart";
+import DashboardKPIModal from "./DashboardKPIModal";
 
-function DashboardViewer(dashboardData) {
+function DashboardViewer({dashboardData}) {
+
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    setShowModal(false);    
+  }, []);
+
+  const openModal = () => {
+    setShowModal(true);
+  }
+
   return (
     <div>
       <div className="px-2 mb-1 d-flex justify-content-end">
@@ -21,7 +33,7 @@ function DashboardViewer(dashboardData) {
             variant={"primary"}
             className="mr-1"
             size="sm"
-            onClick={() => console.log("NEW KPI")}>
+            onClick={() => { console.log("NEW KPI"); openModal() }}>
             <span><FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1"/>Add New KPI</span>
           </Button>
         </div>
@@ -45,11 +57,15 @@ function DashboardViewer(dashboardData) {
           </Col>
         </Row>
       </div>
+      
+      {/* modal for displaying KPI marketplace */}
+      <DashboardKPIModal setShowModal={setShowModal} showModal={showModal} dashboardData={dashboardData} />
     </div>
   );
 }
 
 DashboardViewer.propTypes = {
+  dashboardData: PropTypes.object,
   dashboardName: PropTypes.string
 };
 
