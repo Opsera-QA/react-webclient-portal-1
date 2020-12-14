@@ -113,7 +113,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
       return e.state === "paused";
     });
 
-    if (!pausedPipelines || pausedPipelines[0].length === 0) {
+    if (!pausedPipelines || !pausedPipelines[0] || pausedPipelines[0].length === 0) {
       return false;
     }
 
