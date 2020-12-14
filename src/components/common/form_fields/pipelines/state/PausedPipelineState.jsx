@@ -1,10 +1,10 @@
 import React from "react";
 import {faPause} from "@fortawesome/pro-light-svg-icons";
-import PipelineStatusBase from "./PipelineStatusBase";
+import PipelineStateBase from "./PipelineStateBase";
 
-function PausedPipelineStatus() {
+function PausedPipelineState() {
   return (
-    <PipelineStatusBase
+    <PipelineStateBase
       className="yellow"
       innerText={"The pipeline operation is currently paused."}
       icon={faPause}
@@ -13,4 +13,4 @@ function PausedPipelineStatus() {
   );
 }
 
-export default PausedPipelineStatus;
+export default PausedPipelineState;

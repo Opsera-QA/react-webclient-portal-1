@@ -30,6 +30,10 @@ const parallelProcessorPipelineTaskMetadata = {
       id: "status"
     },
     {
+      label: "State",
+      id: "state"
+    },
+    {
       label: "Task",
       id: "step_name"
     },

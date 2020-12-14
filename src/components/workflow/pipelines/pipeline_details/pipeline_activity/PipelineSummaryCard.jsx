@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
-import PipelineLink from "../PipelineLink";
 import DateFieldBase from "../../../../common/form_fields/DateFieldBase";
 import TextFieldBase from "../../../../common/form_fields/TextFieldBase";
 import PipelineSummaryCardContainer from "./PipelineSummaryCardContainer";
@@ -30,6 +29,5 @@ PipelineSummaryCard.propTypes = {
   pipelineData: PropTypes.object,
   isLoading: PropTypes.bool
 };
-
 
 export default PipelineSummaryCard;

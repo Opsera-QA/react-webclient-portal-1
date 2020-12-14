@@ -1,10 +1,10 @@
 import React from "react";
 import {faTimesCircle} from "@fortawesome/pro-light-svg-icons";
-import PipelineStatusBase from "./PipelineStatusBase";
+import PipelineStateBase from "./PipelineStateBase";
 
-function FailedPipelineStatus() {
+function FailedPipelineState() {
   return (
-    <PipelineStatusBase
+    <PipelineStateBase
       className="red"
       innerText={"An error has occurred in this pipeline.  See activity logs for details."}
       icon={faTimesCircle}
@@ -13,4 +13,4 @@ function FailedPipelineStatus() {
   );
 }
 
-export default FailedPipelineStatus;
+export default FailedPipelineState;

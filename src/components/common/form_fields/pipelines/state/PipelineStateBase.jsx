@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import React from "react";
 import TooltipWrapper from "../../../tooltip/tooltipWrapper";
 
-function PipelineStatusBase({ icon, innerText, statusText, className }) {
+function PipelineStateBase({ icon, innerText, statusText, className }) {
   return (
     <div className={className + " d-flex justify-content-end"}>
       <TooltipWrapper innerText={innerText}>
@@ -16,11 +16,11 @@ function PipelineStatusBase({ icon, innerText, statusText, className }) {
   );
 }
 
-PipelineStatusBase.propTypes = {
+PipelineStateBase.propTypes = {
   icon: PropTypes.object,
   innerText: PropTypes.string,
   statusText: PropTypes.string,
   className: PropTypes.string
 };
 
-export default PipelineStatusBase;
+export default PipelineStateBase;

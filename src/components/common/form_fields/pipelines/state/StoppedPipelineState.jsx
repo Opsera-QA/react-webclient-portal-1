@@ -1,10 +1,10 @@
 import React from "react";
 import {faStop} from "@fortawesome/pro-light-svg-icons";
-import PipelineStatusBase from "./PipelineStatusBase";
+import PipelineStateBase from "./PipelineStateBase";
 
-function StoppedPipelineStatus() {
+function StoppedPipelineState() {
   return (
-    <PipelineStatusBase
+    <PipelineStateBase
       innerText={"This pipeline is not currently running."}
       icon={faStop}
       statusText={"Stopped"}
@@ -12,4 +12,4 @@ function StoppedPipelineStatus() {
   );
 }
 
-export default StoppedPipelineStatus;
+export default StoppedPipelineState;

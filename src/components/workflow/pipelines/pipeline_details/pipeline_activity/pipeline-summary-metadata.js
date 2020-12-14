@@ -97,6 +97,10 @@ const pipelineSummaryMetadata = {
       id: "status",
     },
     {
+      label: "State",
+      id: "state",
+    },
+    {
       label: "Tags",
       id: "tags",
     },
