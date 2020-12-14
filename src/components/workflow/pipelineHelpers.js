@@ -4,9 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import React from "react";
-import TooltipWrapper from "../common/tooltip/tooltipWrapper";
-import {faBracketsCurly, faDiceD20, faMicrochip} from "@fortawesome/pro-light-svg-icons";
-import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
 
 const pipelineHelpers = {};
 
@@ -20,6 +17,31 @@ pipelineHelpers.getPendingApprovalStep = (pipeline) => {
   }
   return false;
 };
+
+
+pipelineHelpers.getChildPipelinesFromParent = (pipeline) => {
+  if (pipeline && pipeline.workflow && pipeline.workflow.plan) {
+    const { plan } = pipeline.workflow;
+    let childPipelines = [];
+
+    for (const item of plan) {
+      if (item.tool.tool_identifier === "parallel-processor" || item.tool.tool_identifier === "child-pipeline") {
+        const { configuration } = item.tool;
+        if (configuration.pipelineId) {
+          childPipelines.push(configuration.pipelineId);
+        }
+
+        if (configuration.pipelines) {
+          childPipelines = childPipelines.concat(configuration.pipelines);
+        }
+      }
+    }
+    console.log(childPipelines);
+    return childPipelines;
+  }
+  return false;
+};
+
 
 pipelineHelpers.getPriorStepFrom = (pipeline, step) => {
   if (step) {

@@ -116,7 +116,7 @@ function PipelineActionControls({
     setInfoModal({
       show: true,
       header: "Approval Status",
-      message: "Your approval action has been recorded in this pipeline's Activity Logs.  The pipeline will resume operations shortly in order to review and update the system accordingly.",
+      message: "Your approval action has been recorded in the Pipeline Activity Logs for the given step.  Pipeline operations will resume shortly.",
       button: "OK",
     });
     setWorkflowStatus("running");

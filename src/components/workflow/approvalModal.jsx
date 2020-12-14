@@ -24,49 +24,130 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
   const [isSaving, setIsSaving] = useState(false);
   const [isSavingDeny, setIsSavingDeny] = useState(false);
   const [message, setMessage] = useState("");
+  const [childPipelinemessage, setChildPipelineMessage] = useState("");
   const [approvalStep, setApprovalStep] = useState({});
+  const [approvalPipeline, setApprovalPipeline] = useState({});
   const [priorToApprovalStep, setPriorToApprovalStep] = useState({});
   const [nextToApprovalStep, setNextToApprovalStep] = useState({});
   const [formData, setFormData] = useState(INITIAL_FORM);
 
   useEffect(() => {
     setApprovalStep({});
+    setApprovalPipeline({});
     setFormData(INITIAL_FORM);
-    fetchPipelineData(pipelineId);
+    setChildPipelineMessage("");
+
+    loadFormData(pipelineId)
+      .then(res => {
+          setIsLoading(false);
+        },
+      )
+      .catch(err => {
+        toastContext.showLoadingErrorDialog(err);
+        setIsLoading(false);
+      });
   }, []);
 
 
-  const fetchPipelineData = async (pipelineId) => {
+  const loadFormData = async (pipelineId) => {
     setIsLoading(true);
-    const pipeline = await PipelineActions.get(pipelineId, getAccessToken)
+    const pipelineData = await PipelineActions.get(pipelineId, getAccessToken)
       .catch(err => {
         toastContext.showLoadingErrorDialog(err);
       });
+    const pipeline = pipelineData && pipelineData.data[0];
 
-    const pipelineData = pipeline && pipeline.data[0];
-    await loadApprovalRequest(pipelineData);
-
-    setIsLoading(false);
-  };
-
-  const loadApprovalRequest = async (pipeline) => {
-    const step = PipelineHelpers.getPendingApprovalStep(pipeline);
-    const priorStep = PipelineHelpers.getPriorStepFrom(pipeline, step);
-    const nextStep = PipelineHelpers.getNextStepFrom(pipeline, step);
-
-    if (step) {
-      setApprovalStep(step);
-      setPriorToApprovalStep(priorStep);
-      setNextToApprovalStep(nextStep);
-
-      let customStepMessage = "";
-      if (step.tool?.configuration?.message) {
-        customStepMessage += step.tool.configuration.message + " Approval Contact: " + step.tool.configuration.contact;
-      }
-
-      setMessage(customStepMessage);
+    if (!pipelineData) {
+      return;
     }
+
+    let approvalStep = PipelineHelpers.getPendingApprovalStep(pipeline);
+
+    if (approvalStep) {
+      setApprovalState(pipeline, approvalStep);
+      return;
+    }
+
+    if (!approvalStep) {
+      //see if there's a step in a child pipeline
+      const {childPipeline, childApprovalStep} = await checkChildPipelines(pipeline);
+      setApprovalState(childPipeline, childApprovalStep);
+      return;
+    }
+
+    setApprovalPipeline(false);
+    setApprovalStep(false);
   };
+
+
+  const setApprovalState = (pipeline, approvalStep) => {
+    if (!pipeline || !approvalStep) {
+      setApprovalPipeline(false);
+      setApprovalStep(false);
+      return;
+    }
+    const priorStep = PipelineHelpers.getPriorStepFrom(pipeline, approvalStep);
+    const nextStep = PipelineHelpers.getNextStepFrom(pipeline, approvalStep);
+    setApprovalPipeline(pipeline);
+    setApprovalStep(approvalStep);
+    setPriorToApprovalStep(priorStep);
+    setNextToApprovalStep(nextStep);
+    buildMessage(approvalStep);
+  }
+
+
+  const checkChildPipelines = async (parentPipeline) => {
+    const childPipelines = PipelineHelpers.getChildPipelinesFromParent(parentPipeline);
+    const childPipelineStatesData = await PipelineActions.getPipelineStates(childPipelines, getAccessToken)
+      .catch(err => {
+        toastContext.showLoadingErrorDialog(err);
+        setIsLoading(false);
+      });
+    const childPipelineStates = childPipelineStatesData && childPipelineStatesData.data;
+
+    if (!childPipelineStates) {
+      return false;
+    }
+
+    let pausedPipelines = childPipelineStates.filter(function(e) {
+      return e.state === "paused";
+    });
+
+    if (!pausedPipelines || pausedPipelines[0].length === 0) {
+      return false;
+    }
+
+    //lookup child pipeline and return that and approval to caller
+    const pausedChildPipelineData = await PipelineActions.get(pausedPipelines[0].pipelineId, getAccessToken)
+      .catch(err => {
+        toastContext.showLoadingErrorDialog(err);
+        setIsLoading(false);
+      });
+    const childPipeline = pausedChildPipelineData && pausedChildPipelineData.data[0];
+
+    if (!childPipeline) {
+      return false;
+    }
+
+    let childApprovalStep = PipelineHelpers.getPendingApprovalStep(childPipeline);
+
+    if (!childApprovalStep) {
+      return false;
+    }
+
+    setChildPipelineMessage(`Child Pipeline Approval Required: ${childPipeline.name}`);
+    return {childPipeline, childApprovalStep}
+  };
+
+
+  const buildMessage = (step) => {
+    let customStepMessage = "";
+    if (step.tool?.configuration?.message) {
+      customStepMessage += step.tool.configuration.message + " Approval Contact: " + step.tool.configuration.contact;
+    }
+    setMessage(customStepMessage);
+  };
+
 
   const submitApproval = async (pipelineId, stepId, formData) => {
     setIsSaving(true);
@@ -107,15 +188,19 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
     setVisible(false);
   };
 
+
   const handleConfirm = async (type) => {
-    if (approvalStep) {
+    if (approvalStep && approvalPipeline) {
       if (type === "approve") {
-        await submitApproval(pipelineId, approvalStep._id, formData);
+        await submitApproval(approvalPipeline._id, approvalStep._id, formData);
       }
       if (type === "deny") {
-        await submitDenial(pipelineId, approvalStep._id, formData);
+        await submitDenial(approvalPipeline._id, approvalStep._id, formData);
       }
+      return;
     }
+
+    toastContext.showLoadingErrorDialog("An error has occurred attempting to process confirmation request.");
   };
 
 
@@ -144,6 +229,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
 
             {isLoading && <LoadingDialog/>}
 
+            {childPipelinemessage && <div className="title-text-6 mt-3">{childPipelinemessage}</div>}
 
             <div className="d-flex m-3 justify-content-center">
               <div className="p-1">
@@ -247,7 +333,6 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
 
 
 function RenderWorkflowItem({ item, stateColorClass }) {
-  console.log(item)
   return (
     <>
       <div className={"p-1 workflow-module-container workflow-module-container-width mx-auto " + stateColorClass}>
@@ -278,7 +363,7 @@ function renderTooltip(props) {
 
 RenderWorkflowItem.propTypes = {
   item: PropTypes.object,
-  stateColorClass: PropTypes.string
+  stateColorClass: PropTypes.string,
 };
 
 StepApprovalModal.propTypes = {
