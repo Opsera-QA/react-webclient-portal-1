@@ -14,10 +14,12 @@ function KPIInfoView({data, dashboardData, setShowModal}) {
   const toastContext = useContext(DialogToastContext);
 
   const [isLoading, setIsLoading] = useState(false);
-
-  // const [disableBtn, setDisableBtn] = useState(true);
+  const [isDisabled, setIsDisabled] = useState(true);
   
   useEffect(() => {
+    if(dashboardData) {
+      setIsDisabled(false);
+    }
     setIsLoading(false);
   }, []);
 
@@ -26,7 +28,17 @@ function KPIInfoView({data, dashboardData, setShowModal}) {
       setIsLoading(true);
       let newDataObj = dashboardData;
       let newConfigObj = dashboardData.getData("configuration") ? dashboardData.getData("configuration") : [];
-      newConfigObj.push(data);
+      // create a custom obj and push to config
+      const configObj = {
+        kpi_identifier: data.identifier,
+        kpi_name: data.name,
+        kpi_category: data.category,
+        kpi_settings: data.settings,
+        filters: data.supported_filters,
+        tags: [],
+        active: data.active,
+      };
+      newConfigObj.push(configObj);
       newDataObj.setData("configuration", newConfigObj);
       let response = await dashboardsActions.update(newDataObj, getAccessToken);
       
@@ -61,7 +73,7 @@ function KPIInfoView({data, dashboardData, setShowModal}) {
                 <div className="px-2">
                   {/* TODO: placeholder image for now, needs to be changed when done */}
                   {/* <Image src="https://via.placeholder.com/800x500.png" className="kpi-image"/> */}
-                  <Image src="/img/KPIMarketplace/chart1.PNG" className="kpi-image"/>
+                  <Image src={data.thumbnailPath} className="kpi-image"/>
                 </div>
               </div>
 
@@ -80,8 +92,6 @@ function KPIInfoView({data, dashboardData, setShowModal}) {
 
                   <div className="text-muted py-2">Categories:</div>
                     <ul className="tags">
-                      <li><span className="tag">category</span></li> 
-                      <li><span className="tag">category</span></li> 
                       {data.category.map((category,idx)=>{
                         return ( <li key={idx}><span className="tag">{category}</span></li> )
                       })}
@@ -93,7 +103,7 @@ function KPIInfoView({data, dashboardData, setShowModal}) {
 
         <div className="flex-container-bottom pr-2 mt-4 mb-2 text-right">
          {/* TODO : add/remove from dashboard buttons goes here */}
-          <Button disabled={isLoading} onClick={()=> addKPIToDashboard()}>
+          <Button disabled={isLoading || isDisabled} onClick={()=> addKPIToDashboard()}>
             {isLoading && (
                 <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>
             )}
