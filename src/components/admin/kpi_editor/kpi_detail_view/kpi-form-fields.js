@@ -16,7 +16,7 @@ const kpiMetaData = {
       id: "description",
     },
     {
-      label: "Tools",
+      label: "Identifier",
       id: "identifier",
     },
     {
@@ -28,7 +28,7 @@ const kpiMetaData = {
       id: "componentName",
     },
     {
-      label: "Supported Tool Identifiers",
+      label: "Supported Tools",
       id: "tools",
     },
     {

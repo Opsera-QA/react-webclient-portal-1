@@ -15,6 +15,7 @@ import KpiFiltersInput from "../../../common/list_of_values_input/admin/kpi_conf
 import KpiCategoriesInput from "../../../common/list_of_values_input/admin/kpi_configurations/KpiCategoriesInput";
 import CreateAndSaveButtonContainer from "../../../common/buttons/saving/containers/CreateAndSaveButtonContainer";
 import WebsitePathInput from "../../../common/input/WebsitePathInput";
+import TextAreaInput from "../../../common/input/TextAreaInput";
 
 function KpiEditorPanel({ kpiData, setKpiData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -64,7 +65,7 @@ function KpiEditorPanel({ kpiData, setKpiData, handleClose }) {
           <DtoJsonInput dataObject={kpiDataDto} fieldName={"settings"} setDataObject={setKpiDataDto}/>
         </Col>
         <Col lg={12}>
-          <DtoTextInput dataObject={kpiDataDto} fieldName={"description"} setDataObject={setKpiDataDto}/>
+          <TextAreaInput dataObject={kpiDataDto} fieldName={"description"} setDataObject={setKpiDataDto}/>
         </Col>
       </Row>
       <CreateAndSaveButtonContainer
