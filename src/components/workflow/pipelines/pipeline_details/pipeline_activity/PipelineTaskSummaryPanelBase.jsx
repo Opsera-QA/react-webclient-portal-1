@@ -7,6 +7,8 @@ import TextFieldBase from "../../../../common/form_fields/TextFieldBase";
 import DateTimeField from "../../../../common/form_fields/DateTimeField";
 import SummaryPanelContainer from "../../../../common/panels/detail_view/SummaryPanelContainer";
 import PipelineStateField from "../../../../common/form_fields/pipelines/state/PipelineStateField";
+import PipelineTaskSummaryMessageField
+  from "../../../../common/form_fields/pipelines/activity/PipelineTaskSummaryMessageField";
 
 function PipelineTaskSummaryPanelBase({ pipelineTaskData }) {
   return (
@@ -31,7 +33,7 @@ function PipelineTaskSummaryPanelBase({ pipelineTaskData }) {
           <PipelineStateField dataObject={pipelineTaskData} fieldName={"state"}/>
         </Col>
         <Col md={12}>
-          <TextFieldBase dataObject={pipelineTaskData} fieldName={"message"}/>
+          <PipelineTaskSummaryMessageField fieldName={"message"} dataObject={pipelineTaskData} />
         </Col>
       </Row>
     </SummaryPanelContainer>

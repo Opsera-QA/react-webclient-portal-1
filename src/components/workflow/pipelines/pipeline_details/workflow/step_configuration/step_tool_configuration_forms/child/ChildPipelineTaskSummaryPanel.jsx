@@ -4,14 +4,14 @@ import "components/inventory/tools/tools.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import DateTimeField from "../../../../../../../common/form_fields/DateTimeField";
-import ParallelPipelineTaskSummariesField from "./parallel_pipeline/ParallelPipelineTaskSummariesField";
 import TextFieldBase from "../../../../../../../common/form_fields/TextFieldBase";
 import SummaryPanelContainer from "../../../../../../../common/panels/detail_view/SummaryPanelContainer";
 import PipelineStateField from "../../../../../../../common/form_fields/pipelines/state/PipelineStateField";
+import ChildPipelineTaskSummariesField from "./child-pipelines/ChildPipelineTaskSummariesField";
 import PipelineTaskSummaryMessageField
   from "../../../../../../../common/form_fields/pipelines/activity/PipelineTaskSummaryMessageField";
 
-function ParallelProcessorPipelineTaskSummaryPanel({ pipelineTaskData }) {
+function ChildPipelineTaskSummaryPanel({ pipelineTaskData }) {
   return (
     <SummaryPanelContainer>
       <Row>
@@ -40,19 +40,19 @@ function ParallelProcessorPipelineTaskSummaryPanel({ pipelineTaskData }) {
           <PipelineTaskSummaryMessageField fieldName={"api_response.apiResponse.message.message"} dataObject={pipelineTaskData} />
         </Col>
         <Col md={12} className="px-1 py-2">
-          <h6>Pipelines Orchestrated by this Step:</h6>
-          <ParallelPipelineTaskSummariesField dataObject={pipelineTaskData}/>
+          <h6>Child Pipeline Orchestrated by this Step:</h6>
+          <ChildPipelineTaskSummariesField dataObject={pipelineTaskData}/>
         </Col>
       </Row>
     </SummaryPanelContainer>
   );
 }
 
-ParallelProcessorPipelineTaskSummaryPanel.propTypes = {
+ChildPipelineTaskSummaryPanel.propTypes = {
   pipelineData: PropTypes.object,
   pipelineTaskData: PropTypes.object,
   runCount: PropTypes.string,
 };
 
 
-export default ParallelProcessorPipelineTaskSummaryPanel;
+export default ChildPipelineTaskSummaryPanel;
