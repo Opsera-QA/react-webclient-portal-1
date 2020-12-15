@@ -18,12 +18,13 @@ import {
   faMicrochip,
   faArrowLeft,
   faBracketsCurly,
-  faSpinner
+  faSpinner, faPen, faSearchPlus, faUserCircle,
 } from "@fortawesome/pro-light-svg-icons";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import Model from "../../../../core/data_model/model";
 import pipelineActivityActions from "./pipeline_activity/pipeline-activity-actions";
 import pipelineActivityFilterMetadata from "./pipeline_activity/pipeline-activity-filter-metadata";
+import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 
 const refreshInterval = 8000;
 
@@ -184,11 +185,10 @@ function PipelineDetailView() {
     } catch (err) {
       setErrors(err.message);
       console.log(err.message);
-    }
-    finally {
+    } finally {
       setLogsIsLoading(false);
     }
-  }
+  };
 
   const fetchPlan = async (param) => {
     // console.log("fetchPlan")
@@ -218,26 +218,36 @@ function PipelineDetailView() {
       return null;
     }
 
-    let permissionsMessage;
+    let permissionsMessage, permissionHeader;
 
     switch (customerAccessRules?.Role) {
-      case "administrator":
-        permissionsMessage = "Administrator Access Role: Your account has full access to this pipeline and its settings."
-        break;
-      case "power_user":
-        permissionsMessage = "Power User Role: Your account has elevated privileges to this pipeline which include changing settings and running the pipeline."
-        break;
-      case "user":
-        permissionsMessage = "Standard User Role: Your account has basic access to this pipeline which is limited to viewing and running pipeline operations only."
-        break;
-      case "readonly":
-        permissionsMessage = "Read Only Role: Your account does not have any privileges associated with this pipeline. You are being temporarily granted Viewer permissions and will not be able to perform any actions."
-        break;
+    case "administrator":
+      permissionHeader = "Administrator Access";
+      permissionsMessage = "Administrator Access Role: Your account has full access to this pipeline and its settings.";
+      break;
+    case "power_user":
+      permissionHeader = "Power User Access";
+      permissionsMessage = "Power User Role: Your account has elevated privileges to this pipeline which include changing settings and running the pipeline.";
+      break;
+    case "user":
+      permissionHeader = "Standard User Access";
+      permissionsMessage = "Standard User Role: Your account has basic access to this pipeline which is limited to viewing and running pipeline operations only.";
+      break;
+    case "readonly":
+      permissionHeader = "Read Only Access";
+      permissionsMessage = "Read Only Role: Your account does not have any privileges associated with this pipeline. You are being temporarily granted Viewer permissions and will not be able to perform any actions.";
+      break;
     }
 
     return (
-      <div className="mb-2 w-100 max-charting-width info-text">
-        {permissionsMessage}
+      <div className="ml-3 mt-1 text-block w-100 max-charting-width info-text">
+        <OverlayTrigger
+          placement="top"
+          delay={{ show: 250, hide: 400 }}
+          overlay={renderTooltip({ message: permissionsMessage })}>
+          <FontAwesomeIcon icon={faUserCircle} fixedWidth className="mr-1" style={{cursor: "help"}}/>
+        </OverlayTrigger>
+        {permissionHeader}
       </div>
     );
   };
@@ -257,7 +267,8 @@ function PipelineDetailView() {
           </li>
           <li className="nav-item">
             <a className={"nav-link " + (activeTab === "model" ? "active" : "")} href="#"
-               onClick={handleTabClick("model")}><FontAwesomeIcon icon={faDraftingCompass} className="mr-2"/>Workflow</a>
+               onClick={handleTabClick("model")}><FontAwesomeIcon icon={faDraftingCompass}
+                                                                  className="mr-2"/>Workflow</a>
           </li>
           {/*<li className="nav-item">*/}
           {/*  <a className={"nav-link " + (activeTab === "editor" ? "active" : "")} href="#"*/}
@@ -294,7 +305,7 @@ function PipelineDetailView() {
 
     return (
       <div>
-        <div className="max-content-width-1080 content-block-no-height pl-3 pb-2" style={{width: "80vw"}}>
+        <div className="max-content-width-1080 content-block-no-height pl-3 pb-2" style={{ width: "80vw" }}>
           <PipelineSummaryPanel
             pipeline={pipeline}
             setPipeline={setPipeline}
@@ -320,12 +331,13 @@ function PipelineDetailView() {
           />
         </div>
       </div>
-    )
+    );
   };
 
   const getPipelineTitle = () => {
     if (loading) {
-      return (<span><FontAwesomeIcon icon={faSpinner} className="mr-2" spin/>Loading Pipeline</span>)
+      //return (<span><FontAwesomeIcon icon={faSpinner} className="mr-2" spin/>Loading Pipeline</span>)
+      return (<div><FontAwesomeIcon icon={faSpinner} className="mr-2" spin/></div>);
     }
 
     return (
@@ -342,16 +354,30 @@ function PipelineDetailView() {
   }
 
   if (!loading && (data.length === 0 || data.pipeline == null)) {
-    return (<InfoDialog message="No Pipeline details found.  Please ensure you have access to view the requested pipeline."/>);
+    return (<InfoDialog
+      message="No Pipeline details found.  Please ensure you have access to view the requested pipeline."/>);
   }
 
   return (
     <div>
-      <div className="title-text-5 mb-2">{getPipelineTitle()}</div>
+      <div className="d-flex w-100">
+        <div className="title-text-5 mb-2">{getPipelineTitle()}</div>
+        <div className="flex-fill p-2"></div>
+        <div className="text-right">{getPermissionsMessage()}</div>
+      </div>
+
       {getNavigationTabs()}
-      {getPermissionsMessage()}
       {getCurrentView()}
     </div>
+  );
+}
+
+function renderTooltip(props) {
+  const { message } = props;
+  return (
+    <Tooltip id="button-tooltip" {...props}>
+      {message}
+    </Tooltip>
   );
 }
 

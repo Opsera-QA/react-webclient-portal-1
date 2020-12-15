@@ -14,7 +14,7 @@ import {
   faSpinner,
   faStopCircle,
   faHistory,
-  faFlag, faRedo,
+  faFlag, faRedo, faUserCircle, faInfoCircle,
 } from "@fortawesome/pro-light-svg-icons";
 import "../../workflows.css";
 import { DialogToastContext } from "contexts/DialogToastContext";
@@ -38,6 +38,8 @@ function PipelineActionControls({
   const [startPipeline, setStartPipeline] = useState(false);
   const [stopPipeline, setStopPipeline] = useState(false);
   const [approval, setApproval] = useState(false);
+  const [statusMessage, setStatusMessage] = useState(false);
+  const [statusMessageBody, setStatusMessageBody] = useState("");
   const [showApprovalModal, setShowApprovalModal] = useState(false);
   const [wizardModal, setWizardModal] = useState({
     show: false,
@@ -60,8 +62,11 @@ function PipelineActionControls({
   useEffect(() => {
     loadData(pipeline);
     if (workflowStatus === "paused") {
-      toastContext.clearToastsArray();
-      toastContext.showSystemWarningToast("This pipeline is currently paused.  Please review the summary activity logs for more details.", 30);
+      setStatusMessage("This pipeline is currently paused.");
+      setStatusMessageBody("A paused pipeline requires either approval or review of the logs in order to proceed.")
+    } else {
+      setStatusMessage(false);
+      setStatusMessageBody("")
     }
   }, [workflowStatus, JSON.stringify(pipeline.workflow)]);
 
@@ -363,6 +368,144 @@ function PipelineActionControls({
 
   return (
     <>
+      <div className="d-flex flex-fill">
+
+        {statusMessage &&
+        <div className="warning-theme warning-text text-left">
+          <OverlayTrigger
+            placement="top"
+            delay={{ show: 250, hide: 400 }}
+            overlay={renderTooltip({ message: statusMessageBody })}>
+            <FontAwesomeIcon icon={faInfoCircle} fixedWidth className="mr-1" style={{cursor: "help"}}/>
+          </OverlayTrigger>
+          {statusMessage}
+        </div>
+        }
+        <div className="flex-fill p-2"></div>
+        <div className="text-right btn-group btn-group-sized">
+          {workflowStatus === "running" &&
+          <>
+            <Button variant="dark"
+                    className="btn-default"
+                    size="sm"
+                    disabled>
+              <FontAwesomeIcon icon={faSpinner} spin className="mr-1"/> Running</Button>
+            <Button variant="danger"
+                    className="btn-default"
+                    size="sm"
+                    onClick={() => {
+                      handleStopWorkflowClick(pipeline._id);
+                    }}
+                    disabled={!authorizedAction("stop_pipeline_btn", pipeline.owner)}>
+              {stopPipeline ?
+                <FontAwesomeIcon icon={faSpinner} spin className="mr-1"/> :
+                <FontAwesomeIcon icon={faStopCircle} className="mr-1"/>}
+              Stop
+            </Button>
+          </>}
+
+          {workflowStatus === "paused" &&
+          //TODO: AND IF THERE IS AN APPROVAL STEP!!!
+          <>
+            <OverlayTrigger
+              placement="top"
+              delay={{ show: 250, hide: 400 }}
+              overlay={renderTooltip({ message: "Approve the current state of the pipeline in order for it to proceed." })}>
+              <Button variant="warning"
+                      className="btn-default"
+                      size="sm"
+                      onClick={() => {
+                        handleApprovalClick();
+                      }}
+                      disabled={!authorizedAction("approve_step_btn", pipeline.owner)}>
+                {approval ? <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> :
+                  <FontAwesomeIcon icon={faFlag} className="mr-1" fixedWidth/>}Approve</Button>
+            </OverlayTrigger>
+          </>}
+
+          {(workflowStatus === "stopped" || !workflowStatus) &&
+          <>
+            <OverlayTrigger
+              placement="top"
+              delay={{ show: 250, hide: 400 }}
+              overlay={renderTooltip({ message: "Start pipeline from the beginning" })}>
+              <Button variant="success"
+                      className="btn-default"
+                      size="sm"
+                      onClick={() => {
+                        handleRunPipelineClick(pipeline._id);
+                      }}
+                      disabled={!authorizedAction("start_pipeline_btn", pipeline.owner) || disabledActionState || startPipeline}>
+                {startPipeline ? <><FontAwesomeIcon icon={faSpinner} fixedWidth spin className="mr-1"/> Starting</> :
+                  <><FontAwesomeIcon icon={faPlay} fixedWidth className="mr-1"/> Start Pipeline</>}
+              </Button>
+            </OverlayTrigger>
+          </>}
+
+          {(workflowStatus === "paused" ||
+            (workflowStatus !== "running" &&
+              pipeline.workflow.last_run?.run_count && pipeline.workflow.run_count !== pipeline.workflow.last_run.run_count &&
+              pipeline.workflow.last_step?.step_id !== "")) &&
+          <OverlayTrigger
+            placement="top"
+            delay={{ show: 250, hide: 400 }}
+            overlay={renderTooltip({ message: "Attempts to resume the pipeline from where it left off" })}>
+            <Button variant="success"
+                    className="btn-default"
+                    size="sm"
+                    onClick={() => {
+                      handleResumeWorkflowClick(pipeline._id);
+                    }}
+                    disabled={!authorizedAction("start_pipeline_btn", pipeline.owner) || disabledActionState || startPipeline}>
+              {startPipeline ? <FontAwesomeIcon icon={faSpinner} fixedWidth spin className="mr-1"/> :
+                <FontAwesomeIcon icon={faRedo} fixedWidth className="mr-1"/>}
+              <span className="d-none d-md-inline">Resume</span></Button>
+          </OverlayTrigger>}
+
+          {workflowStatus !== "running" &&
+          <OverlayTrigger
+            placement="top"
+            delay={{ show: 250, hide: 400 }}
+            overlay={renderTooltip({ message: "Reset current pipeline run state." })}>
+            <Button variant="danger"
+                    className="btn-default"
+                    size="sm"
+                    onClick={() => {
+                      handleResetWorkflowClick(pipeline._id);
+                    }}
+                    disabled={!authorizedAction("reset_pipeline_btn", pipeline.owner) || disabledActionState || startPipeline}>
+              {resetPipeline ? <FontAwesomeIcon icon={faSpinner} fixedWidth spin className="mr-1"/> :
+                <FontAwesomeIcon icon={faHistory} fixedWidth className="mr-1"/>}
+              <span className="d-none d-md-inline">Reset</span></Button>
+          </OverlayTrigger>}
+
+          <OverlayTrigger
+            placement="top"
+            delay={{ show: 250, hide: 400 }}
+            overlay={renderTooltip({ message: "Refresh pipeline status" })}>
+            <Button variant="secondary"
+                    size="sm"
+                    onClick={() => {
+                      handleRefreshClick();
+                    }}>
+              <FontAwesomeIcon icon={faSync} fixedWidth/></Button>
+          </OverlayTrigger>
+
+        </div>
+      </div>
+
+      {showApprovalModal &&
+      <ApprovalModal pipelineId={pipeline._id}
+                     visible={showApprovalModal}
+                     setVisible={setShowApprovalModal}
+                     refreshActivity={handleApprovalActivity}/>}
+
+      {infoModal.show &&
+      <Modal header={infoModal.header}
+             message={infoModal.message}
+             button={infoModal.button}
+             handleCancelModal={() => setInfoModal({ ...infoModal, show: false })}/>}
+
 
       {wizardModal.show &&
       <PipelineStartWizard pipelineType={wizardModal.pipelineType}
@@ -379,129 +522,6 @@ function PipelineActionControls({
                                pipelineOrientation={freetrialWizardModal.pipelineOrientation}
                                autoRun={true}
                                handleClose={handleCloseFreeTrialDeploy}/>}
-
-      <div className="text-right btn-group btn-group-sized">
-        {workflowStatus === "running" &&
-        <>
-          <Button variant="dark"
-                  className="btn-default"
-                  size="sm"
-                  disabled>
-            <FontAwesomeIcon icon={faSpinner} spin className="mr-1"/> Running</Button>
-          <Button variant="danger"
-                  className="btn-default"
-                  size="sm"
-                  onClick={() => {
-                    handleStopWorkflowClick(pipeline._id);
-                  }}
-                  disabled={!authorizedAction("stop_pipeline_btn", pipeline.owner)}>
-            {stopPipeline ?
-              <FontAwesomeIcon icon={faSpinner} spin className="mr-1"/> :
-              <FontAwesomeIcon icon={faStopCircle} className="mr-1"/>}
-            Stop
-          </Button>
-        </>}
-
-        {workflowStatus === "paused" &&
-        //TODO: AND IF THERE IS AN APPROVAL STEP!!!
-        <>
-          <OverlayTrigger
-            placement="top"
-            delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip({ message: "Approve the current state of the pipeline in order for it to proceed." })}>
-            <Button variant="warning"
-                    className="btn-default"
-                    size="sm"
-                    onClick={() => {
-                      handleApprovalClick();
-                    }}
-                    disabled={!authorizedAction("approve_step_btn", pipeline.owner)}>
-              {approval ? <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> :
-                <FontAwesomeIcon icon={faFlag} className="mr-1" fixedWidth/>}Approve Pipeline</Button>
-          </OverlayTrigger>
-        </>}
-
-        {(workflowStatus === "stopped" || !workflowStatus) &&
-        <>
-          <OverlayTrigger
-            placement="top"
-            delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip({ message: "Start pipeline from the beginning" })}>
-            <Button variant="success"
-                    className="btn-default"
-                    size="sm"
-                    onClick={() => {
-                      handleRunPipelineClick(pipeline._id);
-                    }}
-                    disabled={!authorizedAction("start_pipeline_btn", pipeline.owner) || disabledActionState || startPipeline}>
-              {startPipeline ? <><FontAwesomeIcon icon={faSpinner} fixedWidth spin className="mr-1"/> Starting</> :
-                <><FontAwesomeIcon icon={faPlay} fixedWidth className="mr-1"/> Start Pipeline</>}
-            </Button>
-          </OverlayTrigger>
-        </>}
-
-        {(workflowStatus === "paused" ||
-          (workflowStatus !== "running" &&
-            pipeline.workflow.last_run?.run_count && pipeline.workflow.run_count !== pipeline.workflow.last_run.run_count &&
-            pipeline.workflow.last_step?.step_id !== "")) &&
-        <OverlayTrigger
-          placement="top"
-          delay={{ show: 250, hide: 400 }}
-          overlay={renderTooltip({ message: "Attempts to resume the pipeline from where it left off" })}>
-          <Button variant="success"
-                  className="btn-default"
-                  size="sm"
-                  onClick={() => {
-                    handleResumeWorkflowClick(pipeline._id);
-                  }}
-                  disabled={!authorizedAction("start_pipeline_btn", pipeline.owner) || disabledActionState || startPipeline}>
-            {startPipeline ? <FontAwesomeIcon icon={faSpinner} fixedWidth spin className="mr-1"/> :
-              <FontAwesomeIcon icon={faRedo} fixedWidth className="mr-1"/>}
-            <span className="d-none d-md-inline">Resume</span></Button>
-        </OverlayTrigger>}
-
-        {workflowStatus !== "running" &&
-        <OverlayTrigger
-          placement="top"
-          delay={{ show: 250, hide: 400 }}
-          overlay={renderTooltip({ message: "Reset current pipeline run state." })}>
-          <Button variant="danger"
-                  className="btn-default"
-                  size="sm"
-                  onClick={() => {
-                    handleResetWorkflowClick(pipeline._id);
-                  }}
-                  disabled={!authorizedAction("reset_pipeline_btn", pipeline.owner) || disabledActionState || startPipeline}>
-            {resetPipeline ? <FontAwesomeIcon icon={faSpinner} fixedWidth spin className="mr-1"/> :
-              <FontAwesomeIcon icon={faHistory} fixedWidth className="mr-1"/>}
-            <span className="d-none d-md-inline">Reset</span></Button>
-        </OverlayTrigger>}
-
-        <OverlayTrigger
-          placement="top"
-          delay={{ show: 250, hide: 400 }}
-          overlay={renderTooltip({ message: "Refresh pipeline status" })}>
-          <Button variant="secondary"
-                  size="sm"
-                  onClick={() => {
-                    handleRefreshClick();
-                  }}>
-            <FontAwesomeIcon icon={faSync} fixedWidth/></Button>
-        </OverlayTrigger>
-
-      </div>
-
-      {showApprovalModal &&
-      <ApprovalModal pipelineId={pipeline._id}
-                     visible={showApprovalModal}
-                     setVisible={setShowApprovalModal}
-                     refreshActivity={handleApprovalActivity}/>}
-
-      {infoModal.show &&
-      <Modal header={infoModal.header}
-             message={infoModal.message}
-             button={infoModal.button}
-             handleCancelModal={() => setInfoModal({ ...infoModal, show: false })}/>}
     </>);
 }
 
@@ -515,7 +535,6 @@ function renderTooltip(props) {
   );
 }
 
-
 PipelineActionControls.propTypes = {
   pipeline: PropTypes.object,
   customerAccessRules: PropTypes.object,
@@ -523,5 +542,4 @@ PipelineActionControls.propTypes = {
   fetchData: PropTypes.func,
   fetchActivityLogs: PropTypes.func,
 };
-
 export default PipelineActionControls;
