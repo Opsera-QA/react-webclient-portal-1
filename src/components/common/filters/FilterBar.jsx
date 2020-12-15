@@ -11,7 +11,7 @@ import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import ActiveFilterDisplayer from "./ActiveFilterDisplayer";
 import {faSync} from "@fortawesome/pro-solid-svg-icons/faSync";
 
-function FilterBar({ filterDto, setFilterDto, filters, children, loadData, addRecordFunction}) {
+function FilterBar({ filterDto, setFilterDto, filters, children, loadData, addRecordFunction, customButtons}) {
   const resetFilters = async () => {
     let newFilterDto = new Model({...filterDto.getNewObjectFields()}, filterDto.getMetaData(), false);
     let pageSize = filterDto.getData("pageSize");
@@ -112,12 +112,21 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, addRe
     )
   };
 
+  const getCustomButtons = () => {
+    if (children === undefined) {
+      return null;
+    }
+
+    return (<div className="mr-2">{customButtons}</div>);
+  };
+
   return (
     <div className="d-flex justify-content-between filter-bar">
       <div className="d-flex">
         <ActiveFilterDisplayer filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} filters={filters} />
       </div>
       <div className="d-flex">
+        {getCustomButtons()}
         <div>{getNewRecordButton()}</div>
         <div>{getRefreshButton()}</div>
         <div>{getFilterButtons()}</div>
@@ -131,6 +140,7 @@ FilterBar.propTypes = {
   filterDto: PropTypes.object,
   activeFilterDto: PropTypes.object,
   setFilterDto: PropTypes.func,
+  customButtons: PropTypes.any,
   children: PropTypes.any,
   loadData: PropTypes.func,
   addRecordFunction: PropTypes.func,
