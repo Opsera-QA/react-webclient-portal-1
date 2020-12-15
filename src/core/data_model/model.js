@@ -95,6 +95,12 @@ export class Model {
     return validateField(this, this.getFieldById(fieldName));
   }
 
+  // Returns first error if exists
+  getFieldError = (fieldName) => {
+    let errors = validateField(this, this.getFieldById(fieldName));
+    return errors != null ? errors[0] : "";
+  }
+
   propertyChange = (id, newValue, oldValue) => {
     if (!this.changeMap.has(id)) {
       // console.log("Field added to change map: " + id);

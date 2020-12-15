@@ -1,4 +1,4 @@
-import {isAlphaNumeric, isDomain, isOpseraPassword, matchesRegex, validateEmail} from "../../utils/helpers";
+import {isAlphaNumeric, isDomain, isOpseraPassword, isWebsite, matchesRegex, validateEmail} from "../../utils/helpers";
 
 export const validateData = (data) => {
   let errors = [];
@@ -59,6 +59,11 @@ export const fieldValidation = (value, data, field) => {
   if (field.isDomain === true && !isDomain(value))
   {
     errorMessages.push("Domains must begin and end with an alphanumeric character.");
+  }
+
+  if (field.isWebsite === true && !isWebsite(value))
+  {
+    errorMessages.push("This must be a full website path.");
   }
 
   if (field.isOpseraPassword === true && !isOpseraPassword(value))

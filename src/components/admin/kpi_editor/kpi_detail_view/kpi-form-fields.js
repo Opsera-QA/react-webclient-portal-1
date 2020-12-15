@@ -37,7 +37,7 @@ const kpiMetaData = {
     },
     {
       label: "Supported Filters",
-      id: "filters",
+      id: "supported_filters",
     },
     {
       label: "Settings Template",
@@ -46,6 +46,7 @@ const kpiMetaData = {
     {
       label: "Thumbnail Path",
       id: "thumbnailPath",
+      isWebsite: true
     },
     {
       label: "Status",
@@ -63,15 +64,16 @@ const kpiMetaData = {
   newObjectFields: {
     "name": "",
     "description": "",
-    "identifier": [],
+    "identifier": "",
     "type": "",
     "componentName": "",
     "settings": {},
     "category": [],
-    "filters": [],
+    "supported_filters": [],
     "tools": [],
     "active": true,
-    "persona": ["manager","developer", "executive"]
+    "thumbnailPath": "",
+    // "persona": ["manager","developer", "executive"]
   }
 };
 
