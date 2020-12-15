@@ -100,6 +100,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
         filterDto={pipelineFilterDto}
         setFilterDto={setPipelineFilterDto}
         filters={["status", "type", "search"]}
+        customButtons={getViewToggle()}
       >
         <TagFilter filterDto={pipelineFilterDto} setFilterDto={setPipelineFilterDto}/>
         <PipelineOwnerFilter filterDto={pipelineFilterDto} setFilterDto={setPipelineFilterDto}/>
@@ -123,7 +124,14 @@ function PipelinesView({ currentTab, setActiveTab }) {
   const getViewToggle = () => {
     const view = pipelineFilterDto.getData("viewType");
     return (
-      <>
+      <div className="d-flex">
+        <Button
+          variant={"primary"}
+          className="mr-2"
+          size="sm"
+          onClick={() => setActiveTab("catalog")}>
+          <span><FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1"/>Add New Pipeline</span>
+        </Button>
         <Button
           variant={view === "list" ? "primary" : "outline-secondary"}
           className="mr-2"
@@ -137,7 +145,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
           onClick={() => switchView()}>
           <FontAwesomeIcon icon={faThLarge} fixedWidth/>
         </Button>
-      </>
+      </div>
     );
   };
 
@@ -220,21 +228,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
   return (
     <div className="max-content-width" style={{minWidth: "505px"}}>
       <div className="mb-4">
-        <div className="px-2 mb-1 d-flex justify-content-end">
-          <div>
-            <Button
-              variant={"primary"}
-              className="mr-2"
-              size="sm"
-              onClick={() => setActiveTab("catalog")}>
-              <span><FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1"/>Add New Pipeline</span>
-            </Button>
-          </div>
-          <div>
-            {getViewToggle()}
-          </div>
-        </div>
-        <div className="mr-2">
+        <div className="px-2 mb-1">
           {getFilterBar()}
         </div>
         <div className="px-3">
