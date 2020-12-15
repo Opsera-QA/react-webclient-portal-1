@@ -9,6 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
 import { AuthContext } from "../../../contexts/AuthContext";
+import { useLocation } from 'react-router-dom';
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
 import Model from "../../../core/data_model/model";
@@ -19,24 +20,36 @@ import MarketplaceCard from './MarketplaceCard';
 import KpiActions from 'components/admin/kpi_editor/kpi-editor-actions';
 import {DialogToastContext} from "../../../contexts/DialogToastContext";
 import KPIInfoModal from "./KPIInfoModal";
+import dashboardMetadata from "../dashboard-metadata";
 import KpiCategoryFilter from "../../common/filters/insights/kpi_marketplace/KpiCategoryFilter";
 import ToolIdentifierFilter from "../../common/filters/tools/ToolIdentifierFilter";
 import InlineInformation from "../../common/status_notifications/inline/InlineInformation";
+import dashboardsActions from "../../insights/dashboards-actions";
 
-export default function Marketplace ({dashboardData}) {  
+export default function Marketplace () {  
   const contextType = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = contextType;
+  const location = useLocation();
 
   const [error, setErrors] = useState(false);
   const [selectedItem, setSelectedItem] = useState({});
+  const [dashboardId, setDashboardId] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [dashboardData, setDashboardData] = useState(undefined);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [dashboardLoading, setDashboardLoading] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [marketplaceFilterDto, setMarketplaceFilterDto] = useState(new Model({ ...kpiMarketplaceFilterMetadata.newObjectFields }, kpiMarketplaceFilterMetadata, false));
   
   useEffect(() => {
+    const dashboardId  =  location?.state?.dashboardId;
+    if(dashboardId) {
+      setDashboardData(undefined);
+      setDashboardId(dashboardId);
+      getDashboard(dashboardId);
+    }
     loadData();
   }, []);
 
@@ -51,6 +64,24 @@ export default function Marketplace ({dashboardData}) {
     }
     finally {
       setLoading(false);
+    }
+  };
+
+  const getDashboard = async (dashboardId) => {
+    try {
+      setDashboardLoading(true);
+      const response = await dashboardsActions.get(dashboardId, getAccessToken);
+      // console.log(response);
+      if (response != null && response.data) {
+        setDashboardData(new Model(response.data, dashboardMetadata, false));
+      }
+    } catch (error) {
+      if (!error?.error?.message?.includes(404)) {
+        toastContext.showLoadingErrorDialog(error);
+      }
+    }
+    finally {
+      setDashboardLoading(false);
     }
   };
 
@@ -143,8 +174,15 @@ export default function Marketplace ({dashboardData}) {
   return (
     <Container>
       <Row>
+        <h4>Marketplace</h4>
+        {/* TODO: change this text */}
+        <p>
+          OpsERA provides users with access to a vast repository of KPI. Access all available
+          KPI's and configure them on your OpsERA Analytics Dashboards.
+        </p>
+      </Row>
+      <Row>
         <Col>
-          {/* TODO: Add filtering via Tools same list as tool registry */}
           <ToolIdentifierFilter
             setDataFunction={setFilterData}
             setFilterDto={setMarketplaceFilterDto}
@@ -156,7 +194,6 @@ export default function Marketplace ({dashboardData}) {
           <KpiCategoryFilter filterDto={marketplaceFilterDto} setFilterDto={setMarketplaceFilterDto} setDataFunction={setFilterData} />
         </Col>
         <Col>
-          {/* TODO: Add filtering via SearchBox */}
           <InputGroup className="mb-3">
             <Form.Control
               placeholder="Search"
@@ -176,10 +213,7 @@ export default function Marketplace ({dashboardData}) {
         </Col>
       </Row>
       <Row>
-        {/* TODO: Add badge pills to show selected filters */}
-        {/* <div className="custom-item-input justify-content-between"> */}
         {marketplaceFilterDto.getData("activeFilters").map((filter, key) => getFilterActiveButton(filter, key))}
-        {/* </div> */}
       </Row>
       <Row>
         {getMainBody()}
@@ -195,6 +229,3 @@ export default function Marketplace ({dashboardData}) {
   )
 }
 
-Marketplace.propTypes = {
-  dashboardData: PropTypes.object
-};

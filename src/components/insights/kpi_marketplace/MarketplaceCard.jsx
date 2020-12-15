@@ -9,8 +9,8 @@ export default function MarketplaceCard({ data, openModal }) {
     <Card className="card"  onClick={()=> openModal(data)}>
       {/* TODO: card image needs to be changed once done, for now using a placeholder */}
       <Card.Img variant="top"
-        // src={data.img} 
-        src="https://via.placeholder.com/800x500.png" 
+        src={data.thumbnailPath} 
+        // src="https://via.placeholder.com/800x500.png" 
       />
       <Card.Body>
       <Card.Title>{data.name}</Card.Title>
