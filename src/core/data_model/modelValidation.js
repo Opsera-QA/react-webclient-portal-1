@@ -63,7 +63,11 @@ export const fieldValidation = (value, data, field) => {
 
   if (field.isWebsite === true && !isWebsite(value))
   {
-    errorMessages.push("This must be a full website path.");
+    // TODO: Wire up all errors this way to prevent empty, non-required fields from throwing errors on commit
+    // Only show error if it's filled out. If it's required the is required check will throw that error, so this is unnecessary for now.
+    if (value !== "") {
+      errorMessages.push("This must be a full website path.");
+    }
   }
 
   if (field.isOpseraPassword === true && !isOpseraPassword(value))

@@ -161,6 +161,11 @@ export class Model {
     return this.dataState === DataState.DELETED;
   };
 
+  isRequired = (fieldName) => {
+    const field = this.getFieldById(fieldName);
+    return field != null ? field.isRequired === true : false;
+  };
+
   getDetailViewLink = () => {
     return this.metaData?.detailView != null ? this.metaData.detailView(this) : null;
   };
