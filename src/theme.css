@@ -1241,4 +1241,8 @@ a.nav-link {
 .pipeline-summary-card .card-footer {
   padding: 5px;
 }
+
+.pipeline-task-message {
+    background-color: #f2f4f8;
+}
 /* End Pipeline Summary Card styling */

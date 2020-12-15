@@ -10,6 +10,10 @@ import ParallelProcessorPipelineTaskSummaryPanel
 import pipelineActions from "../../../pipeline-actions";
 import {AuthContext} from "../../../../../contexts/AuthContext";
 import LoadingDialog from "../../../../common/status_notifications/loading";
+import ChildPipelineTaskSummaryPanel
+  from "../workflow/step_configuration/step_tool_configuration_forms/child/ChildPipelineTaskSummaryPanel";
+import childPipelineTaskMetadata
+  from "../workflow/step_configuration/step_tool_configuration_forms/child/child-pipeline-task-metadata";
 
 function PipelineTaskSummaryPanel({ pipelineTaskData }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -19,13 +23,14 @@ function PipelineTaskSummaryPanel({ pipelineTaskData }) {
     getPipelineState();
   }, []);
 
-  const getPipelineState = () => {
+  const getPipelineState = async () => {
     try {
       setIsLoading(true);
       let pipelineIds = [];
       pipelineIds.push(pipelineTaskData["pipeline_id"]);
-      let pipelineStateResponse = pipelineActions.getPipelineStates(pipelineIds, getAccessToken);
+      let pipelineStateResponse = await pipelineActions.getPipelineStates(pipelineIds, getAccessToken);
 
+      console.log("JSON.stringify: " + JSON.stringify(pipelineStateResponse))
       if (pipelineStateResponse?.data) {
         pipelineTaskData["state"] = pipelineStateResponse.data[0].state;
       }
@@ -38,20 +43,26 @@ function PipelineTaskSummaryPanel({ pipelineTaskData }) {
     }
   };
 
+  const wrapObject = (metaData) => {
+    return new Model(pipelineTaskData, metaData, false);
+  };
+
+  const getSummaryPanel = () => {
+    switch (pipelineTaskData.tool_identifier) {
+      case "parallel-processor":
+        return (<ParallelProcessorPipelineTaskSummaryPanel pipelineTaskData={wrapObject(parallelProcessorPipelineTaskMetadata)}/>);
+      case "child-pipeline":
+        return (<ChildPipelineTaskSummaryPanel pipelineTaskData={wrapObject(childPipelineTaskMetadata)} />);
+      default:
+        return (<PipelineTaskSummaryPanelBase pipelineTaskData={wrapObject(pipelineTaskMetadata)}/>);
+    }
+  };
+
   if (isLoading) {
     return <LoadingDialog message={"Loading Pipeline"} size={'sm'} />
   }
 
-  // TODO: When adding more, make switch-based function
-  if (pipelineTaskData.tool_identifier === "parallel-processor") {
-    return (
-      <ParallelProcessorPipelineTaskSummaryPanel
-        pipelineTaskData={new Model(pipelineTaskData, parallelProcessorPipelineTaskMetadata, false)}
-      />
-    );
-  }
-
-  return (<PipelineTaskSummaryPanelBase pipelineTaskData={new Model(pipelineTaskData, pipelineTaskMetadata, false)}/>);
+  return (getSummaryPanel());
 }
 
 
