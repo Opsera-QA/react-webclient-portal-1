@@ -14,8 +14,7 @@ import KpiToolsInput from "../../../common/list_of_values_input/admin/kpi_config
 import KpiFiltersInput from "../../../common/list_of_values_input/admin/kpi_configurations/KpiFiltersInput";
 import KpiCategoriesInput from "../../../common/list_of_values_input/admin/kpi_configurations/KpiCategoriesInput";
 import CreateAndSaveButtonContainer from "../../../common/buttons/saving/containers/CreateAndSaveButtonContainer";
-import DtoSelectInput from "../../../common/input/dto_input/dto-select-input";
-import KpiIdentifierInput from "../../../common/list_of_values_input/admin/kpi_configurations/KpiIdentifierInput";
+import WebsitePathInput from "../../../common/input/WebsitePathInput";
 
 function KpiEditorPanel({ kpiData, setKpiData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -54,12 +53,12 @@ function KpiEditorPanel({ kpiData, setKpiData, handleClose }) {
           <DtoToggleInput setDataObject={setKpiDataDto} fieldName={"active"} dataObject={kpiData}/>
         </Col>
         <Col lg={6}>
-          <KpiIdentifierInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
+          <DtoTextInput dataObject={kpiDataDto} fieldName={"identifier"} setDataObject={setKpiDataDto}/>
           <KpiChartTypeInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
           <KpiToolsInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
           <KpiFiltersInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
           <KpiCategoriesInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
-          <DtoTextInput dataObject={kpiDataDto} fieldName={"thumbnailPath"} setDataObject={setKpiDataDto}/>
+          <WebsitePathInput dataObject={kpiDataDto} fieldName={"thumbnailPath"} setDataObject={setKpiDataDto}/>
         </Col>
         <Col lg={6}>
           <DtoJsonInput dataObject={kpiDataDto} fieldName={"settings"} setDataObject={setKpiDataDto}/>
