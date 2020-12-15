@@ -162,7 +162,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
         return;
       });
 
-    refreshActivity();
+    refreshActivity(true);
     setIsSaving(false);
     setVisible(false);
   };
@@ -179,7 +179,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
         toastContext.showLoadingErrorDialog(err);
       });
 
-    refreshActivity();
+    refreshActivity(true);
     setIsSavingDeny(false);
     setVisible(false);
   };

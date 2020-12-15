@@ -111,18 +111,22 @@ function PipelineActionControls({
     setShowApprovalModal(true);
   };
 
-  const handleApprovalActivity = async () => {
+  const handleApprovalActivity = async (blnDelayRefresh) => {
     setApproval(true);
     setInfoModal({
       show: true,
       header: "Approval Status",
-      message: "Your approval action has been recorded in the Pipeline Activity Logs for the given step.  Pipeline operations will resume shortly.",
+      message: "Your response has been recorded in the Pipeline Activity Logs for the given step.  Pipeline operations will resume shortly.",
       button: "OK",
     });
     setWorkflowStatus("running");
-    await fetchData();
+
+    if (!blnDelayRefresh) {
+      await fetchData();
+    }
+
     delayRefresh();
-    setApproval(false);
+    //setApproval(false);
   };
 
   const launchPipelineStartWizard = (pipelineOrientation, pipelineType, pipelineId) => {
