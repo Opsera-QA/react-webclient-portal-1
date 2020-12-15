@@ -45,6 +45,9 @@ import ParallelProcessPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/parallel_processor/ParallelProcessPipelineStepConfigurationSummaryPanel";
 import parallelProcessorPipelineStepConfigurationMetadata
   from "./step_tool_configuration_forms/parallel_processor/parallel-processor-pipeline-step-configuration-metadata";
+import NpmPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/npm/NpmPipelineStepConfigurationSummaryPanel";
+import npmPipelineStepConfigurationMetadata from "./step_tool_configuration_forms/npm/npm-step-configuration-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -104,6 +107,13 @@ function PipelineStepConfigurationSummary({
             nexusPipelineDataObject={getModelWrappedObject(nexusStepFormMetadata)}
           />
         );
+      case "npm":
+        return (
+          <NpmPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            npmPipelineDataObject={getModelWrappedObject(npmPipelineStepConfigurationMetadata)}
+          />
+        );
       case "octopus":
         return (
           <OctopusPipelineStepConfigurationSummaryPanel
@@ -144,7 +154,6 @@ function PipelineStepConfigurationSummary({
       case "xunit":
       case "sonar":
       case "command-line":
-      case "npm":
       case "jmeter":
       case "selenium":
       case "twistlock":
