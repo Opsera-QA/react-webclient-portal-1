@@ -47,7 +47,7 @@ const AuthContextProvider = (props) => {
         }
 
       } else {
-        console.log("returning a false result from getAccessToken")
+        console.log("returning a false result from getAccessToken");
         return false;
       }
     };
@@ -64,7 +64,6 @@ const AuthContextProvider = (props) => {
     };
 
     const getIsPreviewRole = async (restrictProd) => {
-      console.log("Environment: ", process.env.REACT_APP_ENVIRONMENT);
       if (restrictProd && process.env.REACT_APP_ENVIRONMENT === "production") {
         return false;
       } else {
@@ -73,11 +72,11 @@ const AuthContextProvider = (props) => {
     };
 
     const featureFlagHideItemInProd = () => {
-      if (process.env.REACT_APP_ENVIRONMENT === "production") {
-        return true;
-      } else {
-        return false;
-      }
+      return process.env.REACT_APP_ENVIRONMENT === "production";
+    };
+
+    const featureFlagHideItemInTest = () => {
+      return process.env.REACT_APP_ENVIRONMENT === "test";
     };
 
     const setAccessRoles = async (user) => {
@@ -133,6 +132,7 @@ const AuthContextProvider = (props) => {
         getAccessToken: getAccessToken,
         getIsPreviewRole: getIsPreviewRole,
         featureFlagHideItemInProd: featureFlagHideItemInProd,
+        featureFlagHideItemInTest: featureFlagHideItemInTest,
         getUserRecord: getUserRecord,
         setAccessRoles: setAccessRoles,
         getIsAuthenticated: getIsAuthenticated,
