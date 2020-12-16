@@ -5,7 +5,6 @@ import "components/inventory/tools/tools.css";
 import GitHubConfiguration from "../forms/github";
 import GitlabToolConfiguration from "../forms/gitlab";
 import BitbucketToolConfiguration from "../forms/bitbucket";
-import SpinnakerToolConfiguration from "../forms/spinnaker";
 import CypressToolConfiguration from "../forms/cypress";
 import ArgoToolConfiguration from "./tool_jobs/argo/ArgoToolConfiguration";
 import AnchoreToolConfiguration from "../forms/anchore";
@@ -23,6 +22,7 @@ import TeamsToolConfiguration from "./tool_jobs/teams/TeamsToolConfiguration";
 import OctopusToolConfiguration from "./tool_jobs/octopus/OctopusToolConfiguration";
 import SlackToolConfiguration from "./tool_jobs/slack/SlackToolConfiguration";
 import SonarToolConfiguration from "./tool_jobs/sonar/SonarToolConfiguration";
+import SpinnakerToolConfiguration from "./tool_jobs/spinnaker/SpinnakerToolConfiguration";
 
 
 function ToolConfigurationPanel({ toolData }) {
@@ -59,7 +59,7 @@ function ToolConfigurationPanel({ toolData }) {
       case "bitbucket":
         return <BitbucketToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
       case "spinnaker":
-        return <SpinnakerToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
+        return <SpinnakerToolConfiguration toolData={toolData.data} saveToolConfiguration={saveToolConfiguration} />;
       case "cypress":
         return <CypressToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
       case "argo":
