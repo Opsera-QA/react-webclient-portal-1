@@ -30,7 +30,6 @@ function PipelineTaskSummaryPanel({ pipelineTaskData }) {
       pipelineIds.push(pipelineTaskData["pipeline_id"]);
       let pipelineStateResponse = await pipelineActions.getPipelineStates(pipelineIds, getAccessToken);
 
-      console.log("JSON.stringify: " + JSON.stringify(pipelineStateResponse))
       if (pipelineStateResponse?.data) {
         pipelineTaskData["state"] = pipelineStateResponse.data[0].state;
       }
