@@ -96,6 +96,7 @@ const toolMetadata = {
       label: "Cost Center",
       id: "costCenter",
       inputMaskRegex: regexHelpers.regexTypes["generalText"],
+      maxLength: 25
     },
     {
       label: "Created",
