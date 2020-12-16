@@ -2,7 +2,8 @@ import paths from "./paths";
 import {
   faAnalytics,
   faBuilding, faChartBar, faClipboardList, faCogs, faDraftingCompass, faEdit, faFileInvoice, faHeartbeat, faLink,
-  faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork
+  faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork,
+  faFlag
 } from "@fortawesome/pro-light-svg-icons";
 import {faTools} from "@fortawesome/pro-solid-svg-icons";
 import {faUsers} from "@fortawesome/free-solid-svg-icons";
@@ -20,6 +21,9 @@ const breadcrumbs = {
   deprecatedReports: {name: "deprecatedReports", path: paths.deprecatedReports, label: "Reports", icon: faLink},
   reportsRegistration: {name: "reportsRegistration", path: paths.reportsRegistration, label: "Reports Registration", icon: faChartBar},
   systemManagement: {name: "systemManagement", path: paths.systemManagement, label: "System Management", icon: faEdit},
+
+  siteNotificationManagement: {name: "siteNotificationManagement", path: paths.siteNotificationManagement, label: "Site Notification Management", icon: faFlag},
+  siteNotificationDetailView: {name: "siteNotificationDetailView", path: paths.siteNotificationDetailView, label: "Site Notification Detail View", icon: faFlag},
 
   templateManagement: {name: "templateManagement", path: paths.templateManagement, label: "Template Management", icon: faStream},
   templateDetailView: {name: "templateDetailView", path: paths.templateDetailView, label: "Template Details", icon: faStream},
@@ -106,6 +110,8 @@ const trails = {
   registeredUsersManagement: {parent: "admin", breadcrumb: breadcrumbs.registeredUsersManagement},
   registeredUsersDetailView: {parent: "registeredUsersManagement", breadcrumb: breadcrumbs.registeredUsersDetailView},
   apiManagement: {parent: "admin", breadcrumb: breadcrumbs.apiManagement},
+  siteNotificationManagement: {parent: "admin", breadcrumb: breadcrumbs.siteNotificationManagement},
+  siteNotificationDetailView: {parent: "admin", breadcrumb: breadcrumbs.siteNotificationDetailView},
 
   // Account settings
   accountSettings: {parent: undefined, breadcrumb: breadcrumbs.accountSettings},

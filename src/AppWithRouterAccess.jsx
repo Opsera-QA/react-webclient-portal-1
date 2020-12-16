@@ -78,6 +78,9 @@ import TagReports from "./components/reports/tags/TagReports";
 import Reports_Old from "./components/reports/Reports_Old";
 import Marketplace from "components/insights/kpi_marketplace/Marketplace";
 import AnalyticsProfileSettings from "./components/settings/analytics/analyticsProfileSettings";
+import SiteNotificationManagement from "./components/admin/site_notifications/SiteNotificationManagement";
+import SiteNotificationDetailView
+  from "./components/admin/site_notifications/site_notification_detail_view/SiteNotificationDetailView";
 
 const OktaAuth = require("@okta/okta-auth-js");
 const config = require("./config");
@@ -264,6 +267,8 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/admin/templates" exact component={TemplateManagement}/>
                   <SecureRoute path="/admin/templates/details/:templateId" exact component={TemplateDetailView}/>
                   <SecureRoute path="/admin/reports" exact component={Reports_Old}/>
+                  <SecureRoute path="/admin/site-notifications" exact component={SiteNotificationManagement}/>
+                  <SecureRoute path="/admin/site-notifications/details/:id" exact component={SiteNotificationDetailView}/>
 
                   {/* Ldap Account Pages */}
                   <SecureRoute path="/admin/organizations" exact component={LdapOrganizationsView}/>

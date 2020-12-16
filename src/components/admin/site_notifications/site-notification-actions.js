@@ -2,35 +2,35 @@ import baseActions from "../../../utils/actionsBase";
 
 const siteNotificationActions = {};
 
-siteNotificationActions.deleteSiteNotification = async (bannerId, getAccessToken) => {
-  const apiUrl = `/banners/${bannerId}`;
+siteNotificationActions.deleteSiteNotification = async (siteNotificationDataDto, getAccessToken) => {
+  const apiUrl = `landing/message/${siteNotificationDataDto.getData("_id")}/delete`;
   return await baseActions.apiDeleteCall(getAccessToken, apiUrl);
 };
 
-siteNotificationActions.updateSiteNotification = async (bannerDataDto, getAccessToken) => {
+siteNotificationActions.updateSiteNotification = async (siteNotificationDataDto, getAccessToken) => {
   let postBody = {
-    ...bannerDataDto.getPersistData(),
+    ...siteNotificationDataDto.getPersistData(),
   };
-  const apiUrl = `/site-notifications/${bannerDataDto.getData("_id")}/update/`;
+  const apiUrl = `landing/message/${siteNotificationDataDto.getData("_id")}/update/`;
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
 siteNotificationActions.getSiteNotifications = async (getAccessToken) => {
-  const apiUrl = "/site-notifications";
+  const apiUrl = "landing/message";
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
-siteNotificationActions.getSiteNotification = async (bannerId, getAccessToken) => {
-  const apiUrl = `/site-notifications/${bannerId}`;
+siteNotificationActions.getSiteNotification = async (siteNotificationId, getAccessToken) => {
+  const apiUrl = `landing/message/${siteNotificationId}`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
-siteNotificationActions.createSiteNotification = async (bannerDataDto, getAccessToken) => {
+siteNotificationActions.createSiteNotification = async (siteNotificationDataDto, getAccessToken) => {
   let postBody = {
-    ...bannerDataDto.getPersistData(),
+    ...siteNotificationDataDto.getPersistData(),
   };
-  const apiUrl = "/site-notifications/create";
-  return await baseActions.apiGetCall(getAccessToken, apiUrl, postBody);
+  const apiUrl = "landing/message/create";
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
 export default siteNotificationActions;

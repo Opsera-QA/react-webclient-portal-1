@@ -4,12 +4,13 @@ import { useParams } from "react-router-dom";
 import siteNotificationActions from "../site-notification-actions";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import Model from "../../../../core/data_model/model";
-import {faTags} from "@fortawesome/pro-light-svg-icons";
+import {faFlag} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import DetailScreenContainer from "../../../common/panels/detail_view_container/DetailScreenContainer";
 import ActionBarContainer from "../../../common/actions/ActionBarContainer";
 import ActionBarBackButton from "../../../common/actions/buttons/ActionBarBackButton";
 import siteNotificationMetadata from "../siteNotificationMetadata";
+import ActionBarDeleteButton2 from "../../../common/actions/buttons/ActionBarDeleteButton2";
 
 function SiteNotificationDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -61,22 +62,29 @@ function SiteNotificationDetailView() {
       return (
         <ActionBarContainer>
           <div>
-            <ActionBarBackButton path={"/admin/banners"} />
+            <ActionBarBackButton path={"/admin/site-notifications"}/>
+          </div>
+          <div>
+            <ActionBarDeleteButton2 dataObject={siteNotificationData} relocationPath={"/admin/site-notifications"} handleDelete={handleDelete}/>
           </div>
         </ActionBarContainer>
       );
     }
   };
 
+    const handleDelete = async () => {
+      return await siteNotificationActions.deleteSiteNotification(siteNotificationData, getAccessToken);
+    }
+
   return (
     <DetailScreenContainer
       breadcrumbDestination={"siteNotificationDetailView"}
-      title={siteNotificationData != null ? `Site Notification Details [${siteNotificationData["name"]}]` : undefined}
+      title={siteNotificationData != null ? `Site Notification Details [${siteNotificationData["header"]}]` : undefined}
       managementViewLink={"/admin/site-notifications"}
       managementTitle={"Site Notification Management"}
-      managementViewIcon={faTags}
+      managementViewIcon={faFlag}
       type={"Site Notification"}
-      titleIcon={faTags}
+      titleIcon={faFlag}
       dataObject={siteNotificationData}
       isLoading={isLoading}
       actionBar={getActionBar()}
