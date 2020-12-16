@@ -140,9 +140,9 @@ function LdapGroupManagePanel({ldapGroupData, ldapOrganizationData, loadData, au
               <UserPanel users={members} setSelectedUsers={setSelectedMembers} selectedUsers={selectedMembers}
                          usersTitle="Members"/>
             </Col>
-            <Col xs={2} className="my-auto">
+            <Col xs={2} className="">
               <div className="w-100">
-                <div className="mb-2">
+                <div className="mt-5 mb-2">
                   <Button size="sm" className="w-100" variant="outline-primary"
                           onClick={() => addSelectedToNonMembers()}>
                     <FontAwesomeIcon icon={faArrowRight} fixedWidth/><span
@@ -153,6 +153,15 @@ function LdapGroupManagePanel({ldapGroupData, ldapOrganizationData, loadData, au
                   <Button size="sm" className="w-100" variant="outline-primary" onClick={() => addSelectedToMembers()}>
                     <FontAwesomeIcon icon={faArrowLeft} fixedWidth/>Add Selected
                   </Button>
+                </div>
+
+
+                <div className="text-right mt-5">
+                  <div className="mt-3">
+                    <Button size="sm" variant="primary" onClick={updateMembers}>
+                      <FontAwesomeIcon icon={faSave} fixedWidth/>Save
+                    </Button>
+                  </div>
                 </div>
               </div>
             </Col>
@@ -166,7 +175,7 @@ function LdapGroupManagePanel({ldapGroupData, ldapOrganizationData, loadData, au
                          usersTitle="Not Members"/>
             </Col>
           </Row>
-          <Row>
+          {/*<Row>
             <Col lg={12}>
               <div className="text-center mt-3">
                 <div className="mt-3">
@@ -176,7 +185,7 @@ function LdapGroupManagePanel({ldapGroupData, ldapOrganizationData, loadData, au
                 </div>
               </div>
             </Col>
-          </Row>
+          </Row>*/}
         </div>
       </DetailPanelContainer>
     );

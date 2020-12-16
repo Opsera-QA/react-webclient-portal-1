@@ -28,7 +28,6 @@ workflowAuthorizedActions.workflowItems = (customerAccessRules, action, owner) =
     case "view_step_configuration":
     case "view_pipeline_configuration":
     case "edit_step_details":
-    case "edit_workflow_structure":
       return true;
     default:
       return false; //all other options are disabled
@@ -57,7 +56,6 @@ workflowAuthorizedActions.pipelineSummaryPanel = (customerAccessRules, action, o
 
   if (customerAccessRules.PowerUser) {
     switch (action) {
-    case "edit_pipeline_attribute":
     case "duplicate_pipeline_btn":
     case "view_template_pipeline_btn":
       return true;

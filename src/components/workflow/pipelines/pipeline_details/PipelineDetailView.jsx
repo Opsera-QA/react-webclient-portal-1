@@ -242,7 +242,7 @@ function PipelineDetailView() {
     return (
       <div className="ml-3 mt-1 text-block w-100 max-charting-width info-text">
         <OverlayTrigger
-          placement="top"
+          placement="bottom"
           delay={{ show: 250, hide: 400 }}
           overlay={renderTooltip({ message: permissionsMessage })}>
           <FontAwesomeIcon icon={faUserCircle} fixedWidth className="mr-1" style={{cursor: "help"}}/>
