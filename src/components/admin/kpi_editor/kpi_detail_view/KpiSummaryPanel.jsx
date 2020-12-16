@@ -41,7 +41,7 @@ function KpiSummaryPanel({kpiData, setActiveTab}) {
           <DtoTextField dataObject={kpiData} fieldName={"description"}/>
         </Col>
         <Col lg={3}>
-          <DtoItemField dataObject={kpiData} fieldName={"identifier"}/>
+          <DtoTextField dataObject={kpiData} fieldName={"identifier"}/>
         </Col>
         <Col lg={3}>
           <DtoItemField dataObject={kpiData} fieldName={"tools"}/>
