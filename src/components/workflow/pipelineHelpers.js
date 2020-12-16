@@ -36,7 +36,6 @@ pipelineHelpers.getChildPipelinesFromParent = (pipeline) => {
         }
       }
     }
-    console.log(childPipelines);
     return childPipelines;
   }
   return false;
