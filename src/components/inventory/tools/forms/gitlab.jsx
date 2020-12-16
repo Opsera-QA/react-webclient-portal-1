@@ -26,12 +26,15 @@ function GitlabToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVaul
   const [isSaving, setIsSaving] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toast, setToast] = useState({});
+  // TODO: Remove when wiring up DTO fields
+  const [isNew, setIsNew] = useState(true);
 
   useEffect(() => {
     if (typeof(toolData) !== "undefined") {
       let { configuration } = toolData;
       if (typeof(configuration) !== "undefined") {
         setFormData(configuration);
+        setIsNew(false);
       }      
     } else {
       setFormData(INITIAL_DATA);
@@ -119,71 +122,73 @@ function GitlabToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVaul
   console.log(formData);
 
   return (
-    <Form>
-      {showToast && toast}
-
-      <Form.Group controlId="userName">
-        <Form.Label>Url*</Form.Label>
-        <Form.Control maxLength="100" type="text" placeholder="" value={formData.url || ""} onChange={e => setFormData({ ...formData, url: e.target.value.trim() })} />
-      </Form.Group>
-
-      <Form.Group controlId="userName">
-        <Form.Label>Username*</Form.Label>
-        <Form.Control maxLength="100" type="text" placeholder="" value={formData.accountUsername || ""} onChange={e => setFormData({ ...formData, accountUsername: e.target.value.trim() })} />
-      </Form.Group>
-
-      {!formData.twoFactorAuthentication && 
-        <Form.Group controlId="password">
-          <Form.Label>Password*</Form.Label>
-          <Form.Control maxLength="256" type="password" placeholder="" value={formData.accountPassword || ""} onChange={e => setFormData({ ...formData, accountPassword: e.target.value.trim() })} />            
-          <Form.Text className="text-muted">These credentials will be securely stored in vault.</Form.Text> 
-        </Form.Group>
-      }
-
-      <Form.Group controlId="formBasicCheckbox" className="mt-4 ml-1">
-        <Form.Check type="checkbox" label="Is two-factor enabled?"
-          checked={formData.twoFactorAuthentication } onChange={() => setFormData({
-            ...formData,
-            twoFactorAuthentication: !formData.twoFactorAuthentication,
-            secretPrivateKey: "",
-            secretAccessTokenKey: ""
-          })}/>
-        {/* <Form.Text className="text-muted"></Form.Text>       */}
-
-      </Form.Group>
-      {formData.twoFactorAuthentication && 
-      <>
-        <Form.Group controlId="password">
-          <Form.Label>Private Key*</Form.Label>
-          <Form.Control as="textarea" type="password" style={{WebkitTextSecurity: 'disc'}} placeholder="" value={formData.secretPrivateKey || ""} onChange={e => setFormData({ ...formData, secretPrivateKey: e.target.value.trim() })} />            
-          <Form.Text className="text-muted">These credentials will be securely stored in vault.</Form.Text> 
-        </Form.Group>
-
-        <Form.Group controlId="password">
-          <Form.Label>Access Token*</Form.Label>
-          <Form.Control maxLength="256" type="password" placeholder="" value={formData.secretAccessTokenKey || ""} onChange={e => setFormData({ ...formData, secretAccessTokenKey: e.target.value.trim() })} />            
-          <Form.Text className="text-muted">These credentials will be securely stored in vault.</Form.Text> 
-        </Form.Group>
-      </>
-      }
-
-      {/*TODO: Replace with SaveButton once converted to using data model*/}
+    <div>
       <Row>
-        <div className="ml-auto mt-3 px-3 d-flex">
-          <div>
-            {/*<TestToolConnectionButton recordData={toolData} toolName={"Gitlab"}/>*/}
-          </div>
-          <div className="d-flex">
-            {isSaving &&
-            <div className="text-center mr-3 mt-1"><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>Saving is in progress</div>}
-            <Button size="sm" variant="primary" disabled={isSaving} onClick={() => callbackFunction()}><FontAwesomeIcon
-              icon={faSave} fixedWidth className="mr-2"/>Save</Button>
-          </div>
-        </div>
+        <div className="ml-auto"><TestToolConnectionButton recordData={toolData} toolName={"Gitlab"} disable={isNew}/></div>
       </Row>
-      
-      <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
-    </Form>
+      <Form>
+        {showToast && toast}
+
+        <Form.Group controlId="userName">
+          <Form.Label>Url*</Form.Label>
+          <Form.Control maxLength="100" type="text" placeholder="" value={formData.url || ""} onChange={e => setFormData({ ...formData, url: e.target.value.trim() })} />
+        </Form.Group>
+
+        <Form.Group controlId="userName">
+          <Form.Label>Username*</Form.Label>
+          <Form.Control maxLength="100" type="text" placeholder="" value={formData.accountUsername || ""} onChange={e => setFormData({ ...formData, accountUsername: e.target.value.trim() })} />
+        </Form.Group>
+
+        {!formData.twoFactorAuthentication &&
+          <Form.Group controlId="password">
+            <Form.Label>Password*</Form.Label>
+            <Form.Control maxLength="256" type="password" placeholder="" value={formData.accountPassword || ""} onChange={e => setFormData({ ...formData, accountPassword: e.target.value.trim() })} />
+            <Form.Text className="text-muted">These credentials will be securely stored in vault.</Form.Text>
+          </Form.Group>
+        }
+
+        <Form.Group controlId="formBasicCheckbox" className="mt-4 ml-1">
+          <Form.Check type="checkbox" label="Is two-factor enabled?"
+            checked={formData.twoFactorAuthentication } onChange={() => setFormData({
+              ...formData,
+              twoFactorAuthentication: !formData.twoFactorAuthentication,
+              secretPrivateKey: "",
+              secretAccessTokenKey: ""
+            })}/>
+          {/* <Form.Text className="text-muted"></Form.Text>       */}
+
+        </Form.Group>
+        {formData.twoFactorAuthentication &&
+        <>
+          <Form.Group controlId="password">
+            <Form.Label>Private Key*</Form.Label>
+            <Form.Control as="textarea" type="password" style={{WebkitTextSecurity: 'disc'}} placeholder="" value={formData.secretPrivateKey || ""} onChange={e => setFormData({ ...formData, secretPrivateKey: e.target.value.trim() })} />
+            <Form.Text className="text-muted">These credentials will be securely stored in vault.</Form.Text>
+          </Form.Group>
+
+          <Form.Group controlId="password">
+            <Form.Label>Access Token*</Form.Label>
+            <Form.Control maxLength="256" type="password" placeholder="" value={formData.secretAccessTokenKey || ""} onChange={e => setFormData({ ...formData, secretAccessTokenKey: e.target.value.trim() })} />
+            <Form.Text className="text-muted">These credentials will be securely stored in vault.</Form.Text>
+          </Form.Group>
+        </>
+        }
+
+        {/*TODO: Replace with SaveButton once converted to using data model*/}
+        <Row>
+          <div className="ml-auto mt-3 px-3 d-flex">
+            <div className="d-flex">
+              {isSaving &&
+              <div className="text-center mr-3 mt-1"><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>Saving is in progress</div>}
+              <Button size="sm" variant="primary" disabled={isSaving} onClick={() => callbackFunction()}><FontAwesomeIcon
+                icon={faSave} fixedWidth className="mr-2"/>Save</Button>
+            </div>
+          </div>
+        </Row>
+
+        <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
+      </Form>
+    </div>
   );
 }
 
