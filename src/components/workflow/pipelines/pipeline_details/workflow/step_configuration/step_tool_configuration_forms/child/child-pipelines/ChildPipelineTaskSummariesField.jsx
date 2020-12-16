@@ -55,7 +55,7 @@ function ChildPipelineTaskSummariesField({ fieldName, dataObject }) {
         let pipelineStateObject = pipelineStates.find((item) => {return item.pipelineId === pipelineModel.getData("_id")});
         pipelineModel.setData("state", pipelineStateObject?.state);
       }
-      pipelineModel.setData("runNumber", pipelineData.api_response?.body?.runCount || "No Run Status Associated With This Task");
+      pipelineModel.setData("runNumber", pipelineData.api_response?.body?.runCount || "No Pipeline Run Associated With This Task");
       initializedPipelines.push({...pipelineModel});
     });
 
