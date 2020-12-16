@@ -75,14 +75,12 @@ function PipelineActionControls({
     if (pipeline.workflow === undefined) {
       return;
     }
-
     if (pipeline.workflow.last_step === undefined) {
       setWorkflowStatus("stopped");
       return;
     }
 
     let status = pipeline.workflow.last_step.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;
-
     if (status === "stopped" && pipeline.workflow.last_step.running && pipeline.workflow.last_step.running.paused) {
       setWorkflowStatus("paused");
       return;
@@ -116,7 +114,7 @@ function PipelineActionControls({
     setShowApprovalModal(true);
   };
 
-  const handleApprovalActivity = async (blnDelayRefresh) => {
+  const handleApprovalActivity = async (blnDelayRefresh, blnDelayedResume) => {
     setApproval(true);
     setInfoModal({
       show: true,
@@ -130,9 +128,88 @@ function PipelineActionControls({
       await fetchData();
     }
 
+    if (blnDelayedResume) {
+      delayResume(pipeline._id);
+      return;
+    }
     delayRefresh();
-    //setApproval(false);
   };
+
+  const handleRefreshClick = async () => {
+    await fetchData();
+    await fetchActivityLogs();
+  };
+
+  //action functions
+  async function stopPipelineRun(pipelineId) {
+    setStopPipeline(true);
+    await PipelineActions.stop(pipelineId, getAccessToken)
+      .catch(err => {
+        console.log(err);
+        toastContext.showLoadingErrorDialog(err);
+      });
+    setStopPipeline(false);
+    setStartPipeline(false);
+  }
+
+  async function resetPipelineState(pipelineId) {
+    setStopPipeline(true);
+    await PipelineActions.reset(pipelineId, getAccessToken)
+      .catch(err => {
+        console.log(err);
+        toastContext.showLoadingErrorDialog(err.error);
+      });
+    setStopPipeline(false);
+    setStartPipeline(false);
+  }
+
+  async function runPipeline(pipelineId) {
+    setStartPipeline(true);
+    toastContext.showInformationToast("A request to start this pipeline has been submitted.  It will begin shortly.", 20);
+
+    await PipelineActions.run(pipelineId, {}, getAccessToken)
+      .catch(err => {
+        setStartPipeline(false);
+        console.log(err);
+        toastContext.showLoadingErrorDialog(err.error);
+      });
+
+    setTimeout(async function() {
+      await fetchData();
+      setStartPipeline(false);
+    }, delayCheckInterval);
+  }
+
+  const handleResumeWorkflowClick = async (pipelineId) => {
+    setStartPipeline(true);
+    setWorkflowStatus("running");
+    toastContext.showInformationToast("A request to resume this pipeline has been submitted.  It will begin shortly.", 20);
+
+    await PipelineActions.resume(pipelineId, {}, getAccessToken)
+      .catch(err => {
+        setStartPipeline(false);
+        console.log(err);
+        toastContext.showLoadingErrorDialog(err.error);
+      });
+
+    setTimeout(async function() {
+      await fetchData();
+      setStartPipeline(false);
+    }, delayCheckInterval);
+  };
+
+  const delayRefresh = () => {
+    setTimeout(async function() {
+      await fetchData();
+    }, delayCheckInterval);
+  };
+
+  const delayResume = (pipelineId) => {
+    setTimeout(async function() {
+      await handleResumeWorkflowClick(pipelineId);
+    }, 5000);
+  };
+
 
   const launchPipelineStartWizard = (pipelineOrientation, pipelineType, pipelineId) => {
     console.log("launching wizard");
@@ -222,149 +299,6 @@ function PipelineActionControls({
       }
     }
   };
-
-  const handleRefreshClick = async () => {
-    await fetchData();
-    await fetchActivityLogs();
-    //subscribeToTimer(socket);
-  };
-
-  //action functions
-  async function stopPipelineRun(pipelineId) {
-    setStopPipeline(true);
-    await PipelineActions.stop(pipelineId, getAccessToken)
-      .catch(err => {
-        console.log(err);
-        toastContext.showLoadingErrorDialog(err);
-      });
-    setStopPipeline(false);
-    setStartPipeline(false);
-  }
-
-  async function resetPipelineState(pipelineId) {
-    setStopPipeline(true);
-    await PipelineActions.reset(pipelineId, getAccessToken)
-      .catch(err => {
-        console.log(err);
-        toastContext.showLoadingErrorDialog(err.error);
-      });
-    setStopPipeline(false);
-    setStartPipeline(false);
-  }
-
-  async function runPipeline(pipelineId) {
-    setStartPipeline(true);
-    toastContext.showInformationToast("A request to start this pipeline has been submitted.  It will begin shortly.", 20);
-
-    await PipelineActions.run(pipelineId, {}, getAccessToken)
-      .catch(err => {
-        setStartPipeline(false);
-        console.log(err);
-        toastContext.showLoadingErrorDialog(err.error);
-      });
-
-    setTimeout(async function() {
-      await fetchData();
-      setStartPipeline(false);
-    }, delayCheckInterval);
-  }
-
-
-  const handleResumeWorkflowClick = async (pipelineId) => {
-    setStartPipeline(true);
-    setWorkflowStatus("running");
-    toastContext.showInformationToast("A request to resume this pipeline has been submitted.  It will begin shortly.", 20);
-
-    await PipelineActions.resume(pipelineId, {}, getAccessToken)
-      .catch(err => {
-        setStartPipeline(false);
-        console.log(err);
-        toastContext.showLoadingErrorDialog(err.error);
-      });
-
-    setTimeout(async function() {
-      await fetchData();
-      setStartPipeline(false);
-    }, delayCheckInterval);
-
-
-  };
-
-  const delayRefresh = () => {
-    setTimeout(async function() {
-      await fetchData();
-    }, delayCheckInterval);
-  };
-
-
-  /*const subscribeToTimer = (socket) => {
-    console.log("initializingSocket");
-    socket = socketIOClient(endPointUrl, { query: "pipelineId=" + pipeline._id + "&user=" + pipeline.owner });
-    console.log("Connected status before onConnect", socket.socket ? socket.socket.connected : socket.socket === undefined);
-
-    if (socket.socket === undefined) {
-      socket.emit("subscribeToPipelineActivity", 1000);
-      socket.on("subscribeToPipelineActivity", dataObj => {
-        console.log("Update from Websocket (staleRefreshCount: " + staleRefreshCount + "): ", dataObj);
-        if (isEqual(dataObj, tmpDataObject)) {
-          staleRefreshCount++;
-        } else {
-          staleRefreshCount = 0;
-        }
-        tmpDataObject = dataObj;
-        let status = pipeline.workflow.last_step !== undefined && pipeline.workflow.last_step.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;
-        if (staleRefreshCount % 2 === 0) {
-          //console.log("divisible by 2 refresh");
-          fetchActivityLogs();
-        }
-
-        if (staleRefreshCount >= 10) {
-          console.log("closing connection due to stale data");
-          setWorkflowStatus("stopped");
-          setSocketRunning(false);
-          socket.close();
-          fetchActivityLogs();
-        } else {
-          if (status === "stopped" && pipeline.workflow.last_step.running && pipeline.workflow.last_step.running.paused) {
-            setWorkflowStatus("paused");
-          } else {
-            setWorkflowStatus(status);
-          }
-        }
-
-        if (typeof (dataObj) !== "undefined" && Object.keys(dataObj).length > 0) {
-          pipeline.workflow.last_step = dataObj;
-          let updatedPipeline = pipeline;
-          updatedPipeline.workflow = { ...pipeline.workflow, last_step: dataObj };
-          setPipeline(updatedPipeline);
-          setRefreshCount(refreshCount => refreshCount + 1);
-        }
-
-        if (staleRefreshCount > 1 && status === "stopped") {
-          console.log("closing connection due to stopped status");
-          setWorkflowStatus("stopped");
-          setSocketRunning(false);
-          socket.close();
-          fetchActivityLogs();
-        }
-      });
-    }
-
-    socket.on("disconnect", () => {
-      setWorkflowStatus("stopped");
-      setSocketRunning(false);
-    });
-
-    socket.on("connect_error", function(err) {
-      console.log("Connection Error on Socket:", err);
-      setWorkflowStatus("stopped");
-      setSocketRunning(false);
-      socket.close();
-    });
-
-
-  };*/
-
 
   return (
     <>
@@ -498,7 +432,7 @@ function PipelineActionControls({
       <ApprovalModal pipelineId={pipeline._id}
                      visible={showApprovalModal}
                      setVisible={setShowApprovalModal}
-                     refreshActivity={handleApprovalActivity}/>}
+                     handleApprovalActivity={handleApprovalActivity}/>}
 
       {infoModal.show &&
       <Modal header={infoModal.header}

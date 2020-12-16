@@ -16,7 +16,7 @@ const INITIAL_FORM = {
   denied: false,
 };
 
-function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity }) {
+function StepApprovalModal({ pipelineId, visible, setVisible, handleApprovalActivity }) {
   const contextType = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = contextType;
@@ -30,12 +30,14 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
   const [priorToApprovalStep, setPriorToApprovalStep] = useState({});
   const [nextToApprovalStep, setNextToApprovalStep] = useState({});
   const [formData, setFormData] = useState(INITIAL_FORM);
+  const [isChildProcess, setIsChildProcess] = useState(false);
 
   useEffect(() => {
     setApprovalStep({});
     setApprovalPipeline({});
     setFormData(INITIAL_FORM);
     setChildPipelineMessage("");
+    setIsChildProcess(false)
 
     loadFormData(pipelineId)
       .then(res => {
@@ -72,6 +74,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
       //see if there's a step in a child pipeline
       const {childPipeline, childApprovalStep} = await checkChildPipelines(pipeline);
       setApprovalState(childPipeline, childApprovalStep);
+      setIsChildProcess(true);
       return;
     }
 
@@ -162,7 +165,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
         return;
       });
 
-    refreshActivity(true);
+    handleApprovalActivity(isChildProcess, isChildProcess);
     setIsSaving(false);
     setVisible(false);
   };
@@ -179,7 +182,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, refreshActivity })
         toastContext.showLoadingErrorDialog(err);
       });
 
-    refreshActivity(true);
+    handleApprovalActivity(isChildProcess, isChildProcess);
     setIsSavingDeny(false);
     setVisible(false);
   };
@@ -370,7 +373,7 @@ StepApprovalModal.propTypes = {
   pipelineId: PropTypes.string,
   visible: PropTypes.bool,
   setVisible: PropTypes.func,
-  refreshActivity: PropTypes.func,
+  handleApprovalActivity: PropTypes.func,
 };
 
 export default StepApprovalModal;
