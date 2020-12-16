@@ -5,6 +5,7 @@ import DtoTextField from "../../../common/form_fields/dto_form_fields/dto-text-f
 import DtoToggleField from "../../../common/form_fields/dto_form_fields/dto-toggle-field";
 import TextField from "../../../common/form_fields/text-field";
 import SummaryPanelContainer from "../../../common/panels/detail_view/SummaryPanelContainer";
+import LdapGroupPermissionsField from "./LdapGroupPermissionsField";
 
 function LdapGroupSummaryPanel({ ldapGroupData, domain, setActiveTab }) {
 
@@ -33,6 +34,9 @@ function LdapGroupSummaryPanel({ ldapGroupData, domain, setActiveTab }) {
         </Col>
         <Col lg={6}>
           <DtoTextField dataObject={ldapGroupData} fieldName={"ownerEmail"}/>
+        </Col>
+        <Col lg={12}>
+          <LdapGroupPermissionsField dataObject={ldapGroupData} />
         </Col>
       </Row>
     </SummaryPanelContainer>

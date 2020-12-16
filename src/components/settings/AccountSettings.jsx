@@ -46,6 +46,32 @@ function AccountSettings() {
     }
   };
 
+  const getRolePageLinks = () => {
+    if (accessRoleData.Administrator || accessRoleData.OpseraAdministrator) {
+      return (
+        <>
+          <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"}/>
+          <BreadcrumbPageLink breadcrumbDestination={"ldapUserManagement"}/>
+          <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
+          <BreadcrumbPageLink breadcrumbDestination={"analyticsProfile"}/>
+          {!envIsProd && <BreadcrumbPageLink breadcrumbDestination={"customerSystemStatus"}/>}
+          {/*<BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
+        </>
+      );
+    }
+
+    if (accessRoleData.PowerUser) {
+      return (
+        <>
+          <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
+          <BreadcrumbPageLink breadcrumbDestination={"analyticsProfile"}/>
+          {!envIsProd && <BreadcrumbPageLink breadcrumbDestination={"customerSystemStatus"}/>}
+          {/*<BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
+        </>
+      );
+    }
+  };
+
   if (!accessRoleData || isLoading) {
     return (<LoadingDialog size="sm"/>);
   }
@@ -61,16 +87,7 @@ function AccountSettings() {
       <Row className="ml-3">
         {/*TODO: Make User Details Link Component*/}
         {userDetailsLink && <PageLink link={userDetailsLink} icon={faUser} linkText={"My User Record"}/>}
-        {(accessRoleData.PowerUser || accessRoleData.Administrator || accessRoleData.OpseraAdministrator) &&
-        <>
-          <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"}/>
-          <BreadcrumbPageLink breadcrumbDestination={"ldapUserManagement"}/>
-          <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
-          <BreadcrumbPageLink breadcrumbDestination={"analyticsProfile"}/>
-          {!envIsProd && <BreadcrumbPageLink breadcrumbDestination={"customerSystemStatus"}/>}
-          {/*<BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
-        </>
-        }
+        {getRolePageLinks()}
       </Row>
     </ScreenContainer>
   );
