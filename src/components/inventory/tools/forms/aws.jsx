@@ -6,6 +6,7 @@ import {Form, Button, Row} from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import {getFormValidationErrorDialog} from "../../../common/toasts/toasts";
+import TestToolConnectionButton from "../../../common/buttons/connection/TestToolConnectionButton";
 
 
 //This must match the form below and the data object expected.  Each tools' data object is different
@@ -24,12 +25,15 @@ function AWSToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVault 
   const [isSaving, setIsSaving] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toast, setToast] = useState({});
+  // TODO: Remove when wiring up DTO fields
+  const [isNew, setIsNew] = useState(true);
 
   useEffect(() => {
     if (typeof(toolData) !== "undefined") {
       let { configuration } = toolData;
       if (typeof(configuration) !== "undefined") {
         setFormData(configuration);
+        setIsNew(false);
       }      
     } else {
       setFormData(INITIAL_DATA);
@@ -95,45 +99,50 @@ function AWSToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVault 
   };
 
   return (
-    <Form>
-      {showToast && toast}
-
-      
-      <Form.Group controlId="accessKey">
-        <Form.Label>AWS Access Key ID*</Form.Label>
-        <Form.Control maxLength="256" type="password" placeholder="" value={formData.accessKey || ""} onChange={e => setFormData({ ...formData, accessKey: e.target.value.trim() })} />
-      </Form.Group>
-     
-      <Form.Group controlId="accessKey">
-        <Form.Label>AWS Secret Access Key*</Form.Label>
-        <Form.Control maxLength="256" type="password" placeholder="" value={formData.secretKey || ""} onChange={e => setFormData({ ...formData, secretKey: e.target.value.trim() })} />            
-        <Form.Text className="text-muted">AWS access keys consist of two parts: an access key ID and a secret access key. Both are required for automated deployments.</Form.Text> 
-      </Form.Group>
-
-      <Form.Group controlId="awsRegion">
-        <Form.Label>AWS Region*</Form.Label>
-        <Form.Control maxLength="150" type="text" placeholder="" value={formData.regions || ""} onChange={e => setFormData({ ...formData, regions: e.target.value.trim() })} />
-      </Form.Group>
-
-      <Form.Group controlId="awsAccountId">
-        <Form.Label>AWS Account ID*</Form.Label>
-        <Form.Control maxLength="150" type="password" placeholder="" value={formData.awsAccountId || ""} onChange={e => setFormData({ ...formData, awsAccountId: e.target.value.trim() })} />
-      </Form.Group>
-
-      {/*TODO: Replace with SaveButton once converted to using data model*/}
+    <div>
       <Row>
-        <div className="ml-auto mt-3 px-3">
-          <div className="d-flex">
-            {isSaving &&
-            <div className="text-center mr-3 mt-1"><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>Saving is in progress</div>}
-            <Button size="sm" variant="primary" disabled={isSaving} onClick={() => callbackFunction()}><FontAwesomeIcon
-              icon={faSave} fixedWidth className="mr-2"/>Save</Button>
-          </div>
-        </div>
+        <div className="ml-auto"><TestToolConnectionButton recordData={toolData} toolName={"aws"} disable={isNew}/></div>
       </Row>
-      
-      <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
-    </Form>
+      <Form>
+        {showToast && toast}
+
+
+        <Form.Group controlId="accessKey">
+          <Form.Label>AWS Access Key ID*</Form.Label>
+          <Form.Control maxLength="256" type="password" placeholder="" value={formData.accessKey || ""} onChange={e => setFormData({ ...formData, accessKey: e.target.value.trim() })} />
+        </Form.Group>
+
+        <Form.Group controlId="accessKey">
+          <Form.Label>AWS Secret Access Key*</Form.Label>
+          <Form.Control maxLength="256" type="password" placeholder="" value={formData.secretKey || ""} onChange={e => setFormData({ ...formData, secretKey: e.target.value.trim() })} />
+          <Form.Text className="text-muted">AWS access keys consist of two parts: an access key ID and a secret access key. Both are required for automated deployments.</Form.Text>
+        </Form.Group>
+
+        <Form.Group controlId="awsRegion">
+          <Form.Label>AWS Region*</Form.Label>
+          <Form.Control maxLength="150" type="text" placeholder="" value={formData.regions || ""} onChange={e => setFormData({ ...formData, regions: e.target.value.trim() })} />
+        </Form.Group>
+
+        <Form.Group controlId="awsAccountId">
+          <Form.Label>AWS Account ID*</Form.Label>
+          <Form.Control maxLength="150" type="password" placeholder="" value={formData.awsAccountId || ""} onChange={e => setFormData({ ...formData, awsAccountId: e.target.value.trim() })} />
+        </Form.Group>
+
+        {/*TODO: Replace with SaveButton once converted to using data model*/}
+        <Row>
+          <div className="ml-auto mt-3 px-3">
+            <div className="d-flex">
+              {isSaving &&
+              <div className="text-center mr-3 mt-1"><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>Saving is in progress</div>}
+              <Button size="sm" variant="primary" disabled={isSaving} onClick={() => callbackFunction()}><FontAwesomeIcon
+                icon={faSave} fixedWidth className="mr-2"/>Save</Button>
+            </div>
+          </div>
+        </Row>
+
+        <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
+      </Form>
+    </div>
   );
 }
 
