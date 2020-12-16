@@ -46,7 +46,7 @@ const kpiMetaData = {
     {
       label: "Thumbnail Path",
       id: "thumbnailPath",
-      isWebsite: true
+      // isWebsite: true
     },
     {
       label: "Status",
