@@ -24,9 +24,7 @@ function PipelineTaskDetailViewer({ pipelineTaskData, pipelineData, showModal, s
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => handleClose()}>
-            Close
-          </Button>
+          <Button size="sm" variant="secondary" onClick={handleClose}>Close</Button>
         </Modal.Footer>
       </Modal>
   );
