@@ -6,6 +6,8 @@ import JsonTab from "../../../../common/tabs/detail_view/JsonTab";
 import PipelineTaskJsonPanel from "./PipelineTaskJsonPanel";
 import PipelineTaskSummaryPanel from "./PipelineTaskSummaryPanel";
 import ModalTabPanelContainer from "../../../../common/panels/detail_view/ModalTabPanelContainer";
+import PipelineTaskConsoleLogPanel from "./PipelineTaskConsoleLogPanel";
+import ConsoleLogTab from "../../../../common/tabs/detail_view/ConsoleLogTab";
 
 
 function PipelineTaskTabPanel({ pipelineTaskData }) {
@@ -16,10 +18,18 @@ function PipelineTaskTabPanel({ pipelineTaskData }) {
     setActiveTab(activeTab);
   };
 
+  const getActionSpecificTab = () => {
+    // TODO: Make switch statement if a handful are added
+    if (pipelineTaskData.action === "console output") {
+      return (<ConsoleLogTab activeTab={activeTab} handleTabClick={handleTabClick} />);
+    }
+  };
+
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
         <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        {getActionSpecificTab()}
         <JsonTab handleTabClick={handleTabClick} activeTab={activeTab} />
       </CustomTabContainer>
     );
@@ -29,6 +39,8 @@ function PipelineTaskTabPanel({ pipelineTaskData }) {
     switch (activeTab) {
       case "summary":
         return <PipelineTaskSummaryPanel pipelineTaskData={pipelineTaskData} />;
+      case "log":
+        return <PipelineTaskConsoleLogPanel pipelineTaskData={pipelineTaskData} />;
       case "json":
         return <PipelineTaskJsonPanel pipelineTaskData={pipelineTaskData} />;
       default:
