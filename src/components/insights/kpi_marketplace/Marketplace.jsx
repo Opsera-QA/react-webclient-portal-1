@@ -173,14 +173,14 @@ export default function Marketplace () {
 
   return (
     <Container>
-      <Row>
-        <h4>Marketplace</h4>
-        {/* TODO: change this text */}
-        <p>
-          OpsERA provides users with access to a vast repository of KPI. Access all available
-          KPI's and configure them on your OpsERA Analytics Dashboards.
-        </p>
-      </Row>
+    <div className="max-content-width">
+      <h4>Marketplace</h4>
+      {/* TODO: change this text */}
+      <p>
+        OpsERA provides users with access to a vast repository of KPI. Access all available
+        KPI's and configure them on your OpsERA Analytics Dashboards.
+      </p>
+      </div>
       <Row>
         <Col>
           <ToolIdentifierFilter
