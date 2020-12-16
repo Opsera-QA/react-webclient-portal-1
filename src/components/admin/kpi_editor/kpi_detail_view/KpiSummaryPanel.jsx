@@ -11,49 +11,49 @@ import LoadingDialog from "../../../common/status_notifications/loading";
 import SummaryPanelContainer from "../../../common/panels/detail_view/SummaryPanelContainer";
 import DtoJsonField from "../../../common/form_fields/dto_form_fields/dto-json-field";
 
-function KpiSummaryPanel({kpiData, setActiveTab}) {
+function KpiSummaryPanel({ kpiData, setActiveTab }) {
   if (kpiData == null) {
-    return <LoadingDialog size="sm"/>
+    return <LoadingDialog size="sm" />;
   }
 
   return (
     <SummaryPanelContainer setActiveTab={setActiveTab}>
       <Row>
         <Col lg={6}>
-          <DtoTextField dataObject={kpiData} fieldName={"name"}/>
+          <DtoTextField dataObject={kpiData} fieldName={"name"} />
         </Col>
         <Col lg={6}>
-          <DtoToggleField dataObject={kpiData} fieldName={"active"}/>
+          <DtoToggleField dataObject={kpiData} fieldName={"active"} />
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={kpiData} fieldName={"_id"}/>
+          <DtoTextField dataObject={kpiData} fieldName={"_id"} />
         </Col>
         <Col lg={6}>
-          <DtoDateField dataObject={kpiData} fieldName={"createdAt"}/>
+          <DtoDateField dataObject={kpiData} fieldName={"createdAt"} />
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={kpiData} fieldName={"thumbnailPath"}/>
+          <DtoTextField dataObject={kpiData} fieldName={"thumbnailPath"} />
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={kpiData} fieldName={"type"}/>
+          <DtoTextField dataObject={kpiData} fieldName={"type"} />
         </Col>
         <Col lg={12}>
-          <DtoTextField dataObject={kpiData} fieldName={"description"}/>
+          <DtoTextField dataObject={kpiData} fieldName={"description"} />
         </Col>
         <Col lg={3}>
-          <DtoTextField dataObject={kpiData} fieldName={"identifier"}/>
+          <DtoTextField dataObject={kpiData} fieldName={"identifier"} />
         </Col>
         <Col lg={3}>
-          <DtoItemField dataObject={kpiData} fieldName={"tools"}/>
+          <DtoItemField dataObject={kpiData} fieldName={"tools"} />
         </Col>
         <Col lg={3}>
-          <DtoItemField dataObject={kpiData} fieldName={"category"}/>
+          <DtoItemField dataObject={kpiData} fieldName={"category"} />
         </Col>
         <Col lg={3}>
-          <DtoItemField dataObject={kpiData} fieldName={"supported_filters"}/>
+          <DtoItemField dataObject={kpiData} fieldName={"supported_filters"} />
         </Col>
         <Col lg={12}>
-          <DtoJsonField dataObject={kpiData} fieldName={"settings"}/>
+          <DtoJsonField dataObject={kpiData} fieldName={"settings"} />
         </Col>
       </Row>
     </SummaryPanelContainer>
@@ -62,8 +62,7 @@ function KpiSummaryPanel({kpiData, setActiveTab}) {
 
 KpiSummaryPanel.propTypes = {
   kpiData: PropTypes.object,
-  setActiveTab: PropTypes.func
+  setActiveTab: PropTypes.func,
 };
-
 
 export default KpiSummaryPanel;
