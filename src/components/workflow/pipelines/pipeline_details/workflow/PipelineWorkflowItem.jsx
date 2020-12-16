@@ -124,7 +124,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
       setInfoModal({
         show: true,
         header: "Permission Denied",
-        message: "Editing step details allows users to change the behavior of a pipeline step.  This action requires administrator or owner access to this Pipeline.",
+        message: "Editing step details allows users to change the behavior of a pipeline step.  This action requires elevated privileges.",
         button: "OK",
       });
       return;

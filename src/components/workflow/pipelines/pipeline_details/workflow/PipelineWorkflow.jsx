@@ -98,6 +98,18 @@ function PipelineWorkflow({
   };
 
   const handleViewPipelineClick = (param) => {
+
+    if (!authorizedAction("view_pipeline_configuration", pipeline.owner)) {
+      setInfoModal({
+        show: true,
+        header: "Permission Denied",
+        message: "Viewing the pipeline configuration requires elevated privileges.",
+        button: "OK",
+      });
+      return;
+    }
+
+
     setModalHeader("Pipeline Configuration");
     setModalMessage(param);
     setShowModal(true);
@@ -156,7 +168,7 @@ function PipelineWorkflow({
       setInfoModal({
         show: true,
         header: "Permission Denied",
-        message: "Editing pipeline workflow settings allows users to change the behavior of a pipeline step.  This action requires administrator or owner access to this Pipeline.",
+        message: "Editing pipeline workflow settings allows users to change the behavior of a pipeline step.  This action requires elevated privileges.",
         button: "OK",
       });
       return;
@@ -193,25 +205,8 @@ function PipelineWorkflow({
     <>
       <div>
         <div className="pb-1">
-          {/*<Button variant="secondary"
-                  className="mr-1"
-                  size="sm"
-                  disabled={zoomValue >= 3}
-                  onClick={() => {
-                    handleZoomClick(zoomValue, "in");
-                  }}>
-            <FontAwesomeIcon icon={faSearchPlus} fixedWidth/></Button>
 
-          <Button variant="secondary"
-                  className="mr-1"
-                  size="sm"
-                  disabled={zoomValue <= 1}
-                  onClick={() => {
-                    handleZoomClick(zoomValue, "out");
-                  }}>
-            <FontAwesomeIcon icon={faSearchMinus} fixedWidth/></Button>*/}
-
-          {authorizedAction("view_pipeline_configuration", pipeline.owner) && <OverlayTrigger
+          <OverlayTrigger
             placement="top"
             delay={{ show: 250, hide: 400 }}
             overlay={renderTooltip({ message: "View pipeline configuration" })}>
@@ -220,7 +215,6 @@ function PipelineWorkflow({
             }}>
               <FontAwesomeIcon icon={faFileAlt} fixedWidth/> View Configuration</Button>
           </OverlayTrigger>
-          }
 
           {editWorkflow &&
           <Button
