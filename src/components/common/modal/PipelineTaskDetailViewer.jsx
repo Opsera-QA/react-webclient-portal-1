@@ -10,7 +10,7 @@ function PipelineTaskDetailViewer({ pipelineTaskData, pipelineData, showModal, s
   };
 
   const getPipelineTaskTitle = () => {
-    return <span>Pipeline [{pipelineData.name}] Run [{pipelineTaskData.run_count}] Task [{pipelineTaskData.step_name}] Details</span>
+    return <span>[{pipelineData.name}] Pipeline Task Details</span>
   };
 
   return (
