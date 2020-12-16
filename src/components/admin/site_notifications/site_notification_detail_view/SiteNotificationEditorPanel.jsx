@@ -8,6 +8,11 @@ import DtoToggleInput from "../../../common/input/dto_input/dto-toggle-input";
 import Col from "react-bootstrap/Col";
 import EditorPanelContainer from "../../../common/panels/detail_panel_container/EditorPanelContainer";
 import CreateAndSaveButtonContainer from "../../../common/buttons/saving/containers/CreateAndSaveButtonContainer";
+import SiteNotificationTypeInput
+  from "../../../common/list_of_values_input/admin/site_notifications/SiteNotificationTypeInput";
+import SiteNotificationViewInput
+  from "../../../common/list_of_values_input/admin/site_notifications/SiteNotificationViewInput";
+import DateTimeInput from "../../../common/input/DateTimeInput";
 
 function SiteNotificationEditorPanel({ siteNotificationData, setSiteNotificationData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -24,11 +29,11 @@ function SiteNotificationEditorPanel({ siteNotificationData, setSiteNotification
     setIsLoading(false);
   };
 
-  const createTag = async () => {
+  const createSiteNotification = async () => {
     return await siteNotificationActions.createSiteNotification(siteNotificationDto, getAccessToken);
   };
 
-  const updateTag = async () => {
+  const updateSiteNotification = async () => {
     return await siteNotificationActions.updateSiteNotification(siteNotificationDto, getAccessToken);
   };
 
@@ -37,7 +42,23 @@ function SiteNotificationEditorPanel({ siteNotificationData, setSiteNotification
       <div className="mx-2">
         <Row>
           <Col md={6}>
+            <SiteNotificationTypeInput setDataObject={setSiteNotificationDto} dataObject={siteNotificationDto}/>
+          </Col>
+          <Col md={6}>
+            <DtoTextInput fieldName={"header"} setDataObject={setSiteNotificationDto} dataObject={siteNotificationDto}/>
+          </Col>
+          <Col md={12}>
             <DtoTextInput fieldName={"message"} setDataObject={setSiteNotificationDto} dataObject={siteNotificationDto}/>
+          </Col>
+          <Col md={6}>
+            <SiteNotificationViewInput disabled={true} setDataObject={setSiteNotificationDto} dataObject={siteNotificationDto}/>
+          </Col>
+          {/*TODO: Make FQDN component after KPI website one is checked in*/}
+          <Col md={6}>
+            <DtoTextInput fieldName={"link"} setDataObject={setSiteNotificationDto} dataObject={siteNotificationDto}/>
+          </Col>
+          <Col md={6}>
+            {/*<DateTimeInput fieldName={"expiration"} disabled={true} setDataObject={setSiteNotificationDto} dataObject={siteNotificationDto}/>*/}
           </Col>
           <Col md={6}>
             <DtoToggleInput fieldName={"active"} setDataObject={setSiteNotificationDto} dataObject={siteNotificationDto}/>
@@ -47,8 +68,8 @@ function SiteNotificationEditorPanel({ siteNotificationData, setSiteNotification
           recordDto={siteNotificationDto}
           handleClose={handleClose}
           setRecordDto={setSiteNotificationDto}
-          createRecord={createTag}
-          updateRecord={updateTag}
+          createRecord={createSiteNotification}
+          updateRecord={updateSiteNotification}
         />
       </div>
     </EditorPanelContainer>

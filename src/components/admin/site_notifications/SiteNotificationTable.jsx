@@ -14,30 +14,29 @@ import siteNotificationMetadata from "./siteNotificationMetadata";
 function SiteNotificationTable({ data, loadData, isLoading }) {
   const history = useHistory();
   let fields = siteNotificationMetadata.fields;
-  const [showBannerModal, setShowBannerModal] = useState(false);
+  const [showCreateModal, setShowCreateModal] = useState(false);
   const columns = useMemo(
     () => [
-      // getTableTextColumn(getField(fields, "type")),
-      // getTableBooleanIconColumn(getField(fields, "active")),
-      // getTableDateColumn(getField(fields, "createdAt")),
+      getTableTextColumn(getField(fields, "type")),
+      getTableTextColumn(getField(fields, "header")),
+      getTableTextColumn(getField(fields, "view")),
+      getTableTextColumn(getField(fields, "message")),
+      getTableDateColumn(getField(fields, "expiration")),
+      getTableBooleanIconColumn(getField(fields, "active")),
     ],
     []
   );
 
   const onRowSelect = (rowData, type) => {
-    history.push("/admin/banners/" + rowData.original._id);
-  };
-
-  const rowStyling = (row) => {
-    return !row["values"].active ? " inactive-row" : "";
+    history.push("/admin/site-notifications/details/" + rowData.original._id);
   };
 
   const initialState = {
     pageIndex: 0
   };
 
-  const createBanner = () => {
-    setShowBannerModal(true);
+  const createSiteNotification = () => {
+    setShowCreateModal(true);
   };
 
   return (
@@ -45,15 +44,15 @@ function SiteNotificationTable({ data, loadData, isLoading }) {
       <CustomTable
         onRowSelect={onRowSelect}
         data={data}
-        rowStyling={rowStyling}
         columns={columns}
         initialState={initialState}
         isLoading={isLoading}
-        tableTitle={"Banners"}
-        createNewRecord={createBanner}
+        type={"Site Notification"}
+        tableTitle={"Site Notifications"}
+        createNewRecord={createSiteNotification}
         loadData={loadData}
       />
-      <NewSiteNotificationModal showModal={showBannerModal} loadData={loadData} setShowModal={setShowBannerModal}/>
+      <NewSiteNotificationModal showModal={showCreateModal} loadData={loadData} setShowModal={setShowCreateModal}/>
     </div>
   );
 }

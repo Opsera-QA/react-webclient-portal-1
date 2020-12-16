@@ -57,7 +57,7 @@ function SiteNotificationManagement() {
 
   return (
     <TableScreenContainer
-      // breadcrumbDestination={"bannerManagement"}
+      breadcrumbDestination={"siteNotificationManagement"}
       title={"Site Notification Management"}
       tableComponent={<SiteNotificationTable loadData={loadData} isLoading={isLoading} data={siteNotifications} />}
     />

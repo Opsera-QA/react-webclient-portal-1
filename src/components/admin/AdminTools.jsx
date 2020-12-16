@@ -61,6 +61,7 @@ function AdminTools() {
         <PageLink link={!featureFlagHideItemInProd() ? "/admin/kpis" : "#"} icon={faFileInvoice}
                   linkText={"KPI Management"}/>
         <BreadcrumbPageLink breadcrumbDestination={"templateManagement"} />
+        <BreadcrumbPageLink breadcrumbDestination={"siteNotificationManagement"} />
         <BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationManagement"} />
         <BreadcrumbPageLink breadcrumbDestination={"ldapDepartmentManagement"} />
         <BreadcrumbPageLink breadcrumbDestination={"customerOnboarding"} />
