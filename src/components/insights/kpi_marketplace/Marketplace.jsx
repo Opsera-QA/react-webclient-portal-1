@@ -172,7 +172,7 @@ export default function Marketplace () {
   }
 
   return (
-    <Container>
+    <div className="marketplace">
     <div className="max-content-width">
       <h4>Marketplace</h4>
       {/* TODO: change this text */}
@@ -225,7 +225,7 @@ export default function Marketplace () {
 
       {/* modal for displaying complete info */}
       <KPIInfoModal setShowModal={setShowModal} showModal={showModal} kpiItem={selectedItem} dashboardData={dashboardData} />
-    </Container>
+    </div>
   )
 }
 
