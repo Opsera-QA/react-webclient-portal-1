@@ -502,8 +502,11 @@ a.text-primary:hover, a.text-primary:focus {
 }
 
 /* End Table Styling */
-
 /* End custom table styling */
+
+.message-field {
+    background-color: #f2f4f8;
+}
 
 /* Custom modal styling */
 /* TODO: apply class to modal */

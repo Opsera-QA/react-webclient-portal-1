@@ -7,8 +7,7 @@ import {
   faArrowRight,
   faMinusCircle,
   faPlusCircle,
-  faSave,
-} from "@fortawesome/free-solid-svg-icons";
+} from "@fortawesome/pro-light-svg-icons";
 import {Link, useParams} from "react-router-dom";
 import accountsActions from "components/admin/accounts/accounts-actions.js";
 
@@ -19,8 +18,11 @@ import LoadingDialog from "../../../common/status_notifications/loading";
 import WarningDialog from "../../../common/status_notifications/WarningDialog";
 import DetailPanelContainer from "../../../common/panels/detail_panel_container/DetailPanelContainer";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
+import StandaloneSaveButton from "../../../common/buttons/saving/StandaloneSaveButton";
+import CancelButton from "../../../common/buttons/CancelButton";
+import MessageField from "../../../common/form_fields/MessageField";
 
-function LdapGroupManagePanel({ldapGroupData, ldapOrganizationData, loadData, authorizedActions}) {
+function LdapGroupMembershipManagementPanel({ldapGroupData, ldapOrganizationData, setActiveTab, loadData, authorizedActions}) {
   const {name} = useParams();
   const toastContext = useContext(DialogToastContext);
   const {getUserRecord, getAccessToken} = useContext(AuthContext);
@@ -48,7 +50,6 @@ function LdapGroupManagePanel({ldapGroupData, ldapOrganizationData, loadData, au
   }
 
   const changeMemberStatus = async () => {
-    //If the group have members already, pre-select checkbox
     ldapOrganizationData.users.map((user, index) => {
       let member = ldapGroupData.members.find((member) => member.emailAddress === user.emailAddress);
 
@@ -119,6 +120,77 @@ function LdapGroupManagePanel({ldapGroupData, ldapOrganizationData, loadData, au
     }
   };
 
+  const getTopRow = () => {
+    return (
+      <Row>
+        <Col xs={5}>
+          <div className="mb-2 text-right">
+            <Button size="sm" variant="danger" onClick={removeAllMembers}>
+              <FontAwesomeIcon icon={faMinusCircle} className="mr-2" fixedWidth/>Remove All
+            </Button>
+          </div>
+        </Col>
+        <Col xs={2}/>
+        <Col xs={5}>
+          <div className="mb-2">
+            <Button size="sm" variant="success" onClick={addAllToMembers}>
+              <span><FontAwesomeIcon className="mr-2" icon={faPlusCircle} fixedWidth/> Add All</span>
+            </Button>
+          </div>
+        </Col>
+      </Row>
+    )
+  }
+
+  const getMembersSide = () => {
+    return (
+      <Col xs={5}>
+        <UserPanel users={members} setSelectedUsers={setSelectedMembers} selectedUsers={selectedMembers} usersTitle="Members"/>
+      </Col>
+    )
+  };
+
+  const goToSummaryPanel = () => {
+    setActiveTab("summary");
+  }
+
+  const getMiddleColumn = () => {
+    return (
+      <Col xs={2}>
+        <div className="w-100">
+          <div className="d-flex justify-content-between py-1">
+            <CancelButton isLoading={isLoading} cancelFunction={goToSummaryPanel} />
+            <StandaloneSaveButton saveFunction={updateMembers} type={"Members"} />
+          </div>
+          <div className="mt-5 mb-2">
+            <Button disabled={selectedMembers.length === 0} size="sm" className="w-100" variant="outline-primary" onClick={() => addSelectedToNonMembers()}>
+              <div className="justify-content-between">
+                <FontAwesomeIcon className="mr-2" icon={faArrowRight} fixedWidth/>
+                <span>Remove Selected</span>
+              </div>
+            </Button>
+          </div>
+          <div>
+            <Button disabled={selectedNonMembers.length === 0} size="sm" className="w-100" variant="outline-primary" onClick={() => addSelectedToMembers()}>
+              <div className="justify-content-between">
+                <FontAwesomeIcon className="mr-2" icon={faArrowLeft} fixedWidth/>
+                <span>Add Selected</span>
+              </div>
+            </Button>
+          </div>
+        </div>
+      </Col>
+    );
+  };
+
+  const getNonmembersSide = () => {
+    return (
+      <Col xs={5}>
+        <UserPanel users={nonMembers} setSelectedUsers={setSelectedNonMembers} selectedUsers={selectedNonMembers} usersTitle="Not Members"/>
+      </Col>
+    );
+  };
+
   if (isLoading) {
     return (<LoadingDialog/>);
   }
@@ -127,76 +199,32 @@ function LdapGroupManagePanel({ldapGroupData, ldapOrganizationData, loadData, au
     return <WarningDialog warningMessage={"You do not have the required permissions to update group membership."} />;
   }
 
-    return (
-      <DetailPanelContainer showRequiredFieldsMessage={false}>
-        <div className="mb-3">
-          <Row>
-            <Col xs={5}>
-              <div className="mb-2 text-right">
-                <Button size="sm" variant="danger" onClick={removeAllMembers}>
-                  <FontAwesomeIcon icon={faMinusCircle} fixedWidth/>Remove All
-                </Button>
-              </div>
-              <UserPanel users={members} setSelectedUsers={setSelectedMembers} selectedUsers={selectedMembers}
-                         usersTitle="Members"/>
-            </Col>
-            <Col xs={2} className="">
-              <div className="w-100">
-                <div className="mt-5 mb-2">
-                  <Button size="sm" className="w-100" variant="outline-primary"
-                          onClick={() => addSelectedToNonMembers()}>
-                    <FontAwesomeIcon icon={faArrowRight} fixedWidth/><span
-                    className="mr-2 text-right">Remove Selected</span>
-                  </Button>
-                </div>
-                <div className="mb-2">
-                  <Button size="sm" className="w-100" variant="outline-primary" onClick={() => addSelectedToMembers()}>
-                    <FontAwesomeIcon icon={faArrowLeft} fixedWidth/>Add Selected
-                  </Button>
-                </div>
-
-
-                <div className="text-right mt-5">
-                  <div className="mt-3">
-                    <Button size="sm" variant="primary" onClick={updateMembers}>
-                      <FontAwesomeIcon icon={faSave} fixedWidth/>Save
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </Col>
-            <Col xs={5}>
-              <div className="mb-2">
-                <Button size="sm" variant="success" onClick={addAllToMembers}>
-                  <FontAwesomeIcon icon={faPlusCircle} fixedWidth/>Add All
-                </Button>
-              </div>
-              <UserPanel users={nonMembers} setSelectedUsers={setSelectedNonMembers} selectedUsers={selectedNonMembers}
-                         usersTitle="Not Members"/>
-            </Col>
-          </Row>
-          {/*<Row>
-            <Col lg={12}>
-              <div className="text-center mt-3">
-                <div className="mt-3">
-                  <Button size="sm" variant="primary" onClick={updateMembers}>
-                    <FontAwesomeIcon icon={faSave} fixedWidth/>Save
-                  </Button>
-                </div>
-              </div>
-            </Col>
-          </Row>*/}
-        </div>
-      </DetailPanelContainer>
-    );
+  return (
+    <DetailPanelContainer showRequiredFieldsMessage={false}>
+      <Row>
+        <MessageField
+          message={` 
+            Manage group membership below by adding items from the right column into the left or removing members from the left column.  
+            Changes must be saved before being complete.  Group membership changes take effect after the user logs back in.
+          `} />
+      </Row>
+      {getTopRow()}
+      <Row>
+        {getMembersSide()}
+        {getMiddleColumn()}
+        {getNonmembersSide()}
+      </Row>
+    </DetailPanelContainer>
+  );
 }
 
-LdapGroupManagePanel.propTypes = {
+LdapGroupMembershipManagementPanel.propTypes = {
   ldapGroupData: PropTypes.object,
   ldapOrganizationData: PropTypes.object,
   getGroup: PropTypes.func,
+  setActiveTab: PropTypes.func,
   loadData: PropTypes.func,
   authorizedActions: PropTypes.array
 };
 
-export default LdapGroupManagePanel;
+export default LdapGroupMembershipManagementPanel;
