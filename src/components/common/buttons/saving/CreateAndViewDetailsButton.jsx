@@ -7,6 +7,7 @@ import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import {persistNewRecordAndViewDetails} from "./saving-helpers";
 import {useHistory} from "react-router-dom";
 
+// TODO: Remove when everything is using CreateButton
 function CreateAndViewDetailsButton({recordDto, createRecord, disable, showSuccessToasts, lenient, isSaving, setIsSaving}) {
   let toastContext = useContext(DialogToastContext);
   const history = useHistory();

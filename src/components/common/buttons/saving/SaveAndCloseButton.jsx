@@ -26,7 +26,7 @@ function SaveAndCloseButton({recordDto, updateRecord, disable, handleClose, show
   };
 
   return (
-    <div className="d-flex mx-1 px-2">
+    <div className="mx-1">
       <Button size="sm" variant="primary" disabled={isSaving || disable || recordDto.dataState === DataState.LOADED} onClick={() => persistRecord()}>
         {getLabel("Save")}
       </Button>

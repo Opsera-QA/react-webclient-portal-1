@@ -7,7 +7,7 @@ import  {faTimes} from "@fortawesome/free-solid-svg-icons";
 function CancelButton({isLoading, cancelFunction}) {
 
   return (
-    <div className="d-flex">
+    <div>
       <Button size="sm" variant="secondary" disabled={isLoading} onClick={() => cancelFunction()}>
         <span><FontAwesomeIcon icon={faTimes} className="mr-2" fixedWidth/>Cancel</span>
       </Button>
