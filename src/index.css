@@ -147,6 +147,13 @@ a:hover, .active {
     padding-bottom: .25rem
 }
 
+.title-text-7 {
+    font-weight: bold;
+    line-height: 1;
+    font-size: .9rem;
+    padding-bottom: .25rem
+}
+
 .title-text-divider {
     border-bottom: 1px solid #c9cdd0;
 }

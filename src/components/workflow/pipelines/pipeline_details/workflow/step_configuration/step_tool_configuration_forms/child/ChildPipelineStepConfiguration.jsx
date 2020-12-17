@@ -62,14 +62,15 @@ function ChildPipelineStepConfiguration({ stepTool, pipelineId, parentCallback, 
       persistRecord={callbackFunction}
       isLoading={isLoading}
     >
-      <div className="mx-2">
+      <div className="mx-1">
         Opsera supports orchestrating a &quot;child pipeline&quot; within a step.
-        This allows users to include another pipeline as a step in this pipeline.
+        This allows users to run another pipeline as a step within this pipeline.
         As such the overall success or failure of that pipeline will impact this one.
-        In order to use this feature,
-        please ensure that the child pipeline is already configured and runs successfully,
-        then add it to this step.
+        In order to use this feature, please ensure that the child pipeline is already configured
+        and runs successfully, then add it to this step.
       </div>
+
+      <div className="mt-4 ml-2 title-text-7" style={{paddingBottom: "0"}}>Settings</div>
       <PipelineInput
         dataObject={childPipelineStepConfigurationDto}
         setDataObject={setChildPipelineStepConfigurationDataDto}
@@ -77,8 +78,8 @@ function ChildPipelineStepConfiguration({ stepTool, pipelineId, parentCallback, 
         fieldName={"pipelineId"}
       />
       {/*TODO: Make threshold editor panel component*/}
-      <div className="mt-3">
-        <div className="mx-2"><label>Threshold</label></div>
+      <div className="mt-5">
+        <div className="ml-2 title-text-7">Threshold</div>
         <BooleanToggleInput disabled={true} dataObject={thresholdDto} setDataObject={setThresholdDto} fieldName={"ensureSuccess"}/>
         <BooleanToggleInput disabled={true} dataObject={thresholdDto} setDataObject={setThresholdDto} fieldName={"completeFirst"}/>
       </div>

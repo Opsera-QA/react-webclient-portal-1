@@ -569,10 +569,10 @@ function StepToolConfiguration({
 
   return (
     <div>
-      <h6 className="upper-case-first mb-3">
+      <div className="title-text-5 upper-case-first mb-3">
         {typeof stepName !== "undefined" ? stepName + ": " : null}
         {typeof stepTool !== "undefined" ? stepTool.tool_identifier : null}
-      </h6>
+      </div>
 
       {typeof stepTool !== "undefined" ? (
         getConfigurationTool(editItem.tool_name.toLowerCase())

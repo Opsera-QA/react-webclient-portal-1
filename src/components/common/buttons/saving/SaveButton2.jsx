@@ -20,14 +20,14 @@ function SaveButton2({recordDto, updateRecord, disable, showSuccessToasts, lenie
 
   const getLabel = () => {
     if (isSaving) {
-      return (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>Saving</span>);
+      return (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>Saving</span>);
     }
 
-    return (<span><FontAwesomeIcon icon={faSave} fixedWidth className="mr-2"/>{`Save`}</span>);
+    return (<span><FontAwesomeIcon icon={faSave} fixedWidth className="mr-1"/>{`Save`}</span>);
   };
 
   return (
-    <div className="d-flex mx-1 px-1">
+    <div className="mx-1">
       <Button size="sm" variant="primary" disabled={isSaving || disable || (!lenient && !recordDto.isChanged())} onClick={() => persistRecord()}>
         {getLabel("Save")}
       </Button>

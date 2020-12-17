@@ -64,14 +64,17 @@ function ParallelProcessPipelineStepConfiguration({ stepTool, pipelineId, parent
       persistRecord={callbackFunction}
       isLoading={isLoading}
     >
-      <div className="mx-2">
-        Opsera supports orchestrating a &quot;child pipeline&quot; within a step.
-        This allows users to include another pipeline as a step in this pipeline.
-        As such the overall success or failure of that pipeline will impact this one.
+      <div className="mx-1">
+        Opsera supports orchestrating multiple &quot;child pipelines&quot; within a
+        &quot;Parallel Processor&quot; step.
+        This allows users to include one or more pipeline executions inside this a single
+        step in this pipeline.
+        As such the overall success or failure of those pipelines will impact this one.
         In order to use this feature,
-        please ensure that the child pipeline is already configured and runs successfully,
-        then add it to this step.
+        please ensure that all children pipeline are configured and ready to run.
       </div>
+
+      <div className="mt-4 ml-2 title-text-7" style={{paddingBottom: "0"}}>Settings</div>
       <PipelineMultiSelectInput
         dataObject={parallelPipelineStepConfigurationDto}
         setDataObject={setParallelPipelineStepConfigurationDataDto}
@@ -79,8 +82,8 @@ function ParallelProcessPipelineStepConfiguration({ stepTool, pipelineId, parent
         fieldName={"pipelines"}
       />
       {/*TODO: Make threshold editor panel component*/}
-      <div className="mt-3">
-        <div className="mx-2"><label>Threshold</label></div>
+      <div className="mt-5">
+        <div className="ml-2 title-text-7">Threshold</div>
         <BooleanToggleInput disabled={true} dataObject={thresholdDto} setDataObject={setThresholdDto} fieldName={"ensureSuccess"}/>
         <BooleanToggleInput disabled={true} dataObject={thresholdDto} setDataObject={setThresholdDto} fieldName={"completeFirst"}/>
       </div>
