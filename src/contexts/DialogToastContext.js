@@ -215,6 +215,19 @@ function ToastContextProvider ({ children }) {
     addToast(successToast, id, notificationTypes.FORM);
   }
 
+  const showSaveSuccessToast = (type, autoCloseLengthInSeconds = 10) => {
+    let id = generateUUID();
+    let successToast = getSuccessToast(`${type} saved successfully!`, id, autoCloseLengthInSeconds);
+    removeFormToasts();
+    addToast(successToast, id, notificationTypes.FORM);
+  }
+
+  const showSaveFailureToast = (type, error) => {
+    let id = generateUUID();
+    let errorToast = getErrorToast(error, id, `WARNING! An error has occurred saving this ${type}:`);
+    addToast(errorToast, id, notificationTypes.FORM);
+  }
+
   const showCreateSuccessResultDialog = (type, autoCloseLengthInSeconds = 10) => {
     let id = generateUUID();
     let successToast = getSuccessToast(`${type} created successfully!`, id, autoCloseLengthInSeconds);
@@ -342,6 +355,8 @@ function ToastContextProvider ({ children }) {
           // Success Toasts
           showFormSuccessToast: showFormSuccessToast,
           showSystemSuccessToast: showSystemSuccessToast,
+          showSaveSuccessToast: showSaveSuccessToast,
+          showSaveFailureToast: showSaveFailureToast,
 
           // Information Banners
           showSystemInformationBanner: showSystemInformationBanner,

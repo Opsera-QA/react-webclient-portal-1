@@ -2,7 +2,7 @@ import React, {useState} from "react";
 
 import PropTypes from "prop-types";
 import LdapGroupEditorPanel from "./LdapGroupEditorPanel";
-import LdapGroupManagePanel from "./LdapGroupManagePanel";
+import LdapGroupMembershipManagementPanel from "./LdapGroupMembershipManagementPanel";
 import LdapUsersTable from "../../ldap_users/LdapUsersTable";
 import CustomTabContainer from "../../../common/tabs/CustomTabContainer";
 import CustomTab from "../../../common/tabs/CustomTab";
@@ -49,7 +49,7 @@ function LdapGroupDetailPanel(
       case "membership":
         return (<div className="px-3 pt-2 pb-3"><LdapUsersTable orgDomain={orgDomain} userData={ldapGroupData.members} /></div>);
       case "manage":
-        return (<LdapGroupManagePanel ldapGroupData={ldapGroupData.data} authorizedActions={authorizedActions} ldapOrganizationData={ldapOrganizationData} loadData={loadData}/>);
+        return (<LdapGroupMembershipManagementPanel setActiveTab={setActiveTab} ldapGroupData={ldapGroupData.data} authorizedActions={authorizedActions} ldapOrganizationData={ldapOrganizationData} loadData={loadData}/>);
       case "settings":
         return <LdapGroupEditorPanel currentUserEmail={currentUserEmail} authorizedActions={authorizedActions} setLdapGroupData={setLdapGroupData} ldapGroupData={ldapGroupData} ldapOrganizationData={ldapOrganizationData} />;
       default:

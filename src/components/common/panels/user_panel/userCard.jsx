@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 
 function UserCard({user, selectedUsers, setSelectedUsers}) {
@@ -10,28 +10,25 @@ function UserCard({user, selectedUsers, setSelectedUsers}) {
 
     if (selectUser) {
       if (!selectedUsers.includes(user)) {
-       console.log("adding user to list " + JSON.stringify(user));
-       selectedUsers.push(user);
-       setSelectedUsers(selectedUsers);
+        selectedUsers.push(user);
+        setSelectedUsers([...selectedUsers]);
       }
     } else {
       if (selectedUsers.includes(user)) {
         let removeEmail = user.emailAddress;
         let newSelectedUsers = selectedUsers.filter(user => user.emailAddress !== removeEmail)
-        setSelectedUsers(newSelectedUsers);
+        setSelectedUsers([...newSelectedUsers]);
       }
     }
   };
 
   return (
-    <>
-      <li key={user.emailAddress} className={selectedUsers.includes(user) ? "p-2 member-list selected" : "p-2 member-list"} onClick={selectUser}>
-        <div className="ml-2">
-          <div>{user.name}</div>
-          <div className={selectedUsers.includes(user) ? "" : "text-muted"}>{user.emailAddress}</div>
-        </div>
-      </li>
-    </>
+    <li key={user.emailAddress} className={selectedUsers.includes(user) ? "p-2 member-list selected" : "p-2 member-list"} onClick={selectUser}>
+      <div className="mx-2 justify-content-between d-flex w-100">
+        <div>{user.name}</div>
+        <div className={selectedUsers.includes(user) ? "" : "text-muted"}>{user.emailAddress}</div>
+      </div>
+    </li>
   );
 }
 
