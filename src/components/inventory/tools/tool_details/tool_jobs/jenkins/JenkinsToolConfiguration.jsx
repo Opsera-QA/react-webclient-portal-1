@@ -10,6 +10,7 @@ import DtoTextInput from "../../../../../common/input/dto_input/dto-text-input";
 import DtoToggleInput from "../../../../../common/input/dto_input/dto-toggle-input";
 import Col from "react-bootstrap/Col";
 import TestToolConnectionButton from "../../../../../common/buttons/connection/TestToolConnectionButton";
+import modelHelpers from "../../../../../common/model/modelHelpers";
 
 function JenkinsToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVault }) {
   const [configurationData, setConfigurationData] = useState(undefined);
@@ -21,11 +22,7 @@ function JenkinsToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVau
   }, [toolData]);
 
   const loadData = async () => {
-    if (toolData["configuration"] != null) {
-        setConfigurationData(new Model(toolData["configuration"], jenkinsConnectionMetadata, false))
-    } else {
-      setConfigurationData(new Model({...jenkinsConnectionMetadata.newModelBase}, jenkinsConnectionMetadata, true));
-    }
+    setConfigurationData(modelHelpers.getToolConfigurationModel(toolData["configuration"], jenkinsConnectionMetadata));
   };
 
   const validateFields = () => {

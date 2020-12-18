@@ -1,15 +1,14 @@
 import React, {useState, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
-import {Form, Button, Row} from "react-bootstrap";
+import {Row} from "react-bootstrap";
 import SaveButton from "../../../../../common/buttons/SaveButton";
-import Model from "../../../../../../core/data_model/model";
 import LoadingDialog from "../../../../../common/status_notifications/loading";
 import DtoTextInput from "../../../../../common/input/dto_input/dto-text-input";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import DetailPanelContainer from "../../../../../common/panels/detail_panel_container/DetailPanelContainer";
 import Col from "react-bootstrap/Col";
 import teamsConnectionMetadata from "./teams-connection-metadata";
-
+import modelHelpers from "../../../../../common/model/modelHelpers";
 
 function TeamsToolConfiguration({ toolData, fnSaveChanges, fnSaveToVault }) {
   const toastContext = useContext(DialogToastContext);
@@ -21,19 +20,7 @@ function TeamsToolConfiguration({ toolData, fnSaveChanges, fnSaveToVault }) {
   }, [toolData]);
 
   const loadData = async () => {
-    try {
-      if (toolData["configuration"] != null) {
-        setTeamsConfigurationDto(new Model(toolData["configuration"], teamsConnectionMetadata, false))
-      } else {
-        setTeamsConfigurationDto(new Model({...teamsConnectionMetadata.newModelBase}, teamsConnectionMetadata, true));
-      }
-    }
-    catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-    }
-    finally {
-      setIsLoading(false);
-    }
+    setTeamsConfigurationDto(modelHelpers.getToolConfigurationModel(toolData["configuration"], teamsConnectionMetadata));
   };
 
   const saveTeamsConfiguration = async () => {
