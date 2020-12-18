@@ -174,9 +174,9 @@ const funcSassNav = () => {
           <NavLink className="nav-link" activeClassName="chosen" to="/update">
             <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span
             className="menu-text">Updates</span></NavLink>
-          {/*<NavLink className="nav-link" activeClassName="chosen" to="/settings">
+          <NavLink className="nav-link" activeClassName="chosen" to="/settings">
             <FontAwesomeIcon size="lg" icon={faCogs} fixedWidth/> <span
-            className="menu-text">Settings</span></NavLink>*/}
+            className="menu-text">Settings</span></NavLink>
         </div>
       </div>
     </div>
