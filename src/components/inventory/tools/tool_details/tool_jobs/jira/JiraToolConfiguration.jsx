@@ -12,6 +12,7 @@ import Col from "react-bootstrap/Col";
 import {getFormValidationErrorDialog} from "components/common/toasts/toasts";
 import TestToolConnectionButton from "../../../../../common/buttons/connection/TestToolConnectionButton";
 import InstallJiraAppButton from "./InstallJiraAppButton";
+import modelHelpers from "../../../../../common/model/modelHelpers";
 
 
 function JiraToolConfiguration({ toolData, fnSaveChanges, fnSaveToVault }) {
@@ -26,20 +27,7 @@ function JiraToolConfiguration({ toolData, fnSaveChanges, fnSaveToVault }) {
   }, [toolData]);
 
   const loadData = async () => {
-    try {
-      console.log("tool data config: " + JSON.stringify(toolData));
-      if (toolData["configuration"] != null) {
-        setJiraConfigurationDto(new Model(toolData["configuration"], jiraConnectionMetadata, false))
-      } else {
-        setJiraConfigurationDto(new Model({...jiraConnectionMetadata.newModelBase}, jiraConnectionMetadata, true));
-      }
-    }
-    catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-    }
-    finally {
-      setIsLoading(false);
-    }
+    setJiraConfigurationDto(modelHelpers.getToolConfigurationModel(toolData["configuration"], jiraConnectionMetadata));
   };
 
   const saveJiraConfig = async () => {

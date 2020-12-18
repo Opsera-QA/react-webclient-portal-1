@@ -2,7 +2,6 @@ import React, {useState, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
 import {Form, Button, Row} from "react-bootstrap";
 import SaveButton from "../../../../../common/buttons/SaveButton";
-import Model from "../../../../../../core/data_model/model";
 import LoadingDialog from "../../../../../common/status_notifications/loading";
 import DtoTextInput from "../../../../../common/input/dto_input/dto-text-input";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
@@ -10,6 +9,7 @@ import octopusConnectionMetadata from "./octopus-connection-metadata";
 import DetailPanelContainer from "../../../../../common/panels/detail_panel_container/DetailPanelContainer";
 import Col from "react-bootstrap/Col";
 import {getFormValidationErrorDialog} from "components/common/toasts/toasts";
+import modelHelpers from "../../../../../common/model/modelHelpers";
 
 
 function OctopusToolConfiguration({ toolData, fnSaveChanges, fnSaveToVault }) {
@@ -24,19 +24,7 @@ function OctopusToolConfiguration({ toolData, fnSaveChanges, fnSaveToVault }) {
   }, [toolData]);
 
   const loadData = async () => {
-    try {
-      if (toolData["configuration"] != null) {
-        setOctopusConfigurationDto(new Model(toolData["configuration"], octopusConnectionMetadata, false))
-      } else {
-        setOctopusConfigurationDto(new Model({...octopusConnectionMetadata.newModelBase}, octopusConnectionMetadata, true));
-      }
-    }
-    catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-    }
-    finally {
-      setIsLoading(false);
-    }
+    setOctopusConfigurationDto(modelHelpers.getToolConfigurationModel(toolData["configuration"], octopusConnectionMetadata));
   };
 
   const saveOctopusConfig = async () => {

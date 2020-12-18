@@ -29,10 +29,13 @@ function AnchoreToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVau
   useEffect(() => {
     if (typeof(toolData) !== "undefined") {
       let { configuration } = toolData;
-      if (typeof(configuration) !== "undefined") {
+      if (typeof(configuration) !== "undefined" && Object.entries(configuration).length !== 0) {
         setIsNew(false);
         setFormData(configuration);
-      }      
+      }
+      else {
+        setFormData(INITIAL_DATA);
+      }
     } else {
       setFormData(INITIAL_DATA);
     }    

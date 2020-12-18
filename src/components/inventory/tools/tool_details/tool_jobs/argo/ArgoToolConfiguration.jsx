@@ -4,10 +4,10 @@ import {Form, Row} from "react-bootstrap";
 import SaveButton from "components/common/buttons/SaveButton";
 import argoConnectionMetadata from "./argo-connection-metadata";
 import LoadingDialog from "components/common/status_notifications/loading";
-import Model from "core/data_model/model";
 import Col from "react-bootstrap/Col";
 import DtoTextInput from "components/common/input/dto_input/dto-text-input";
 import TestToolConnectionButton from "../../../../../common/buttons/connection/TestToolConnectionButton";
+import modelHelpers from "../../../../../common/model/modelHelpers";
 
 function ArgoToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVault }) {
   const [configurationData, setConfigurationData] = useState(undefined);
@@ -17,11 +17,7 @@ function ArgoToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVault 
   }, [toolData]);
 
   const loadData = async () => {
-    if (toolData["configuration"] != null) {
-      setConfigurationData(new Model(toolData["configuration"], argoConnectionMetadata, false))
-    } else {
-      setConfigurationData(new Model({...argoConnectionMetadata.newModelBase}, argoConnectionMetadata, true));
-    }
+    setConfigurationData(modelHelpers.getToolConfigurationModel(toolData["configuration"], argoConnectionMetadata));
   };
 
   const callbackFunction = async () => {
