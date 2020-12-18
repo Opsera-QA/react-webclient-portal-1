@@ -500,14 +500,14 @@ function PipelineSummaryPanel({
               </Col>
             </>
           }
-          {_configuredToolsCount(pipeline.workflow.plan) === 0 &&
+          {/*{_configuredToolsCount(pipeline.workflow.plan) === 0 &&
           <Col className="mt-3 mb-1">
             <Button variant="success" className="mr-2 mt-2" size="sm" onClick={() => setActiveTab("model")}>
               <FontAwesomeIcon icon={faCogs} className="mr-1" fixedWidth/>
               Build Workflow
             </Button>
           </Col>
-          }
+          }*/}
 
           {pipeline.workflow?.last_run?.completed &&
           <Col sm={12} className="py-2">

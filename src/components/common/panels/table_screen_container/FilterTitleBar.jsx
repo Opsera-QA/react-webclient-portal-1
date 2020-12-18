@@ -4,14 +4,20 @@ import PropTypes from "prop-types";
 import {faSpinner} from "@fortawesome/pro-solid-svg-icons";
 
 function FilterTitleBar({ title, tableFilters, titleIcon, isLoading }) {
-  if (isLoading) {
+  /*if (isLoading) {
     return (<div className="pt-2"><h5><span><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Data</span></h5></div>);
-  }
+  }*/
 
   return (
     <div className="d-flex justify-content-between w-100">
-      <div className="pt-2"><h5><span><FontAwesomeIcon icon={titleIcon} fixedWidth className="mr-1"/>{title}</span></h5></div>
-      <div className="d-flex">{tableFilters}</div>
+      <div className="title-text-header-1 pt-1">
+        {isLoading ?
+          <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>
+          :
+          <FontAwesomeIcon icon={titleIcon} fixedWidth className="mr-1"/>
+        }
+        {title}</div>
+      <div className="d-flex small">{tableFilters}</div>
     </div>
   );
 }
