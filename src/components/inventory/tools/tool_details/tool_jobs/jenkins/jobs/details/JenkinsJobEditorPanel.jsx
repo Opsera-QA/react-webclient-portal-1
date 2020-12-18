@@ -21,7 +21,7 @@ import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import Modal from "../../../../../../../common/modal/modal";
 import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
 
-function JenkinsJobEditorPanel({ toolData, jobData, loadData }) {
+function JenkinsJobEditorPanel({ toolData, jobData, loadData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext  = useContext(DialogToastContext);
   let toolDataSet = toolData;
@@ -156,6 +156,11 @@ function JenkinsJobEditorPanel({ toolData, jobData, loadData }) {
     }
   };
 
+  const handleModalClose = () => {
+    loadData();
+    handleClose();
+  };
+
   const updateJob = async () => {
     //Only extract the value filed before sending to the API
     let formData = Object.keys(jenkinsFormList).reduce((obj, item) => Object.assign(obj, { [item]: jenkinsFormList[item].value }), {});
@@ -175,6 +180,13 @@ function JenkinsJobEditorPanel({ toolData, jobData, loadData }) {
       toolDataSet.jobs[index] = payload;
     } else {
       action = "create";
+      // TODO: check if name is already there and throw err
+      const found = toolDataSet.jobs.some(el => el.name === jobName);
+      if( found ) {
+        toastContext.showUpdateFailureResultDialog("Jenkins Job", "Name already exists");
+        return;
+      }
+
       (toolDataSet.jobs || (toolDataSet.jobs = [])).push(payload);
     }
 
@@ -188,6 +200,9 @@ function JenkinsJobEditorPanel({ toolData, jobData, loadData }) {
         loadData();
       } else {
         toastContext.showCreateSuccessResultDialog("Jenkins Job");
+        // close modal after creating
+        handleModalClose();
+        // handleClose();
       }
     } catch (error) {
       console.error(error.message);
@@ -348,6 +363,7 @@ JenkinsJobEditorPanel.propTypes = {
   accessToken: PropTypes.string,
   setJobAction: PropTypes.func,
   loadData: PropTypes.func,
+  handleClose: PropTypes.func,
 };
 
 
