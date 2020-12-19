@@ -60,7 +60,8 @@ function Sidebar({ userData, hideSideBar }) {
 
     if (accessRole.OpseraAdministrator) {
       //return funcOpseraAdminNav;
-      return (<OpseraAdminUserNav accessRole={accessRole} featureFlagHideItemInProd={featureFlagHideItemInProd()} featureFlagHideItemInTest={featureFlagHideItemInTest()}/>);
+      return (<OpseraAdminUserNav accessRole={accessRole} featureFlagHideItemInProd={featureFlagHideItemInProd()}
+                                  featureFlagHideItemInTest={featureFlagHideItemInTest()}/>);
     } else if (accessRole.Type === "sass-user") {
       return funcSassNav;
     } else { //drop into LDAP Org roles
@@ -506,13 +507,10 @@ function OpseraAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFlag
             <FontAwesomeIcon size="lg" icon={faHome} fixedWidth/> <span
             className="menu-text">Overview</span></NavLink>
 
-          {featureFlagHideItemInProd || featureFlagHideItemInTest &&
           <NavLink className="nav-link" activeClassName="chosen" exact to="/dashboard">
             <FontAwesomeIcon size="lg" icon={faColumns} fixedWidth/> <span className="menu-text">Dashboards</span>
             <div className="caret"></div>
           </NavLink>
-          }
-
 
           <div className="mt-4 mb-2 sub-header">Products</div>
           <NavLink className="nav-link" activeClassName="chosen" to="/platform">
@@ -522,7 +520,7 @@ function OpseraAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFlag
             <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
             className="menu-text">Pipelines</span></NavLink>
 
-          {featureFlagHideItemInProd || featureFlagHideItemInTest ?
+          {featureFlagHideItemInProd ?
             <NavLink className="nav-link" activeClassName="chosen" to="/analytics">
               <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
               className="menu-text">Insights</span></NavLink>
@@ -569,10 +567,12 @@ function OpseraAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFlag
             <FontAwesomeIcon size="lg" icon={faLayerGroup} fixedWidth/> <span
             className="menu-text">Blueprints</span></NavLink>
 
-          {!featureFlagHideItemInProd && !featureFlagHideItemInTest &&
-          <NavLink className="nav-link" activeClassName="chosen" to="/reports">
-            <FontAwesomeIcon size="lg" icon={faAnalytics} fixedWidth/> <span
-            className="menu-text">Reports</span></NavLink>
+          {featureFlagHideItemInProd ?
+            <></>
+            :
+            <NavLink className="nav-link" activeClassName="chosen" to="/reports">
+              <FontAwesomeIcon size="lg" icon={faAnalytics} fixedWidth/> <span
+              className="menu-text">Reports</span></NavLink>
           }
 
           <NavLink className="nav-link" activeClassName="chosen" to="/update">
