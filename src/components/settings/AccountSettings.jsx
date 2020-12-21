@@ -3,7 +3,6 @@ import { AuthContext } from "../../contexts/AuthContext";
 import LoadingDialog from "../common/status_notifications/loading";
 import { Row } from "react-bootstrap";
 import {faUser} from "@fortawesome/pro-light-svg-icons";
-import BreadcrumbTrail from "../common/navigation/breadcrumbTrail";
 import AccessDeniedDialog from "../common/status_notifications/accessDeniedInfo";
 import accountsActions from "../admin/accounts/accounts-actions";
 import {DialogToastContext} from "../../contexts/DialogToastContext";
@@ -86,7 +85,7 @@ function AccountSettings() {
       pageDescription={"Manage account settings from this dashboard."}>
       <Row className="ml-3">
         {/*TODO: Make User Details Link Component*/}
-        {userDetailsLink && <PageLink link={userDetailsLink} icon={faUser} linkText={"My User Record"}/>}
+        {userDetailsLink && accessRoleData?.Type !== "sass-user" && <PageLink link={userDetailsLink} icon={faUser} linkText={"My User Record"}/>}
         {getRolePageLinks()}
       </Row>
     </ScreenContainer>
