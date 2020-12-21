@@ -29,7 +29,7 @@ const breadcrumbs = {
   templateDetailView: {name: "templateDetailView", path: paths.templateDetailView, label: "Template Details", icon: faStream},
   toolManagement: {name: "toolManagement", path: paths.toolManagement, label: "Tool Management", icon: faWrench},
   deleteTools: {name: "deleteTools", path: paths.deleteTools, label: "Delete Tools", icon: faTimes},
-  toolTypeDetailView: {name: "toolTypeDetailView", path: paths.toolTypeDetailView, label: "Tool Type Details", icon: faWrench},
+  toolTypeDetailView: {name: "toolTypeDetailView", path: paths.toolTypeDetailView, label: "Tool Category Details", icon: faWrench},
   toolIdentifierDetailView: {name: "toolIdentifierDetailView", path: paths.toolIdentifierDetailView, label: "Tool Identifier Details", icon: faWrench},
   kpiManagement: {name: "kpiManagement", path: paths.kpiManagement, label: "Kpi Management", icon: faFileInvoice},
   kpiDetailView: {name: "kpiDetailView", path: paths.kpiManagement, label: "Kpi Details", icon: faFileInvoice},

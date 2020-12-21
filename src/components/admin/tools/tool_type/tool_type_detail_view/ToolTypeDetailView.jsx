@@ -93,7 +93,7 @@ function ToolTypeDetailView() {
   return (
     <DetailScreenContainer
       breadcrumbDestination={"toolTypeDetailView"}
-      title={toolTypeData != null ? `Tool Type Details [${toolTypeData.getData("name")}]` : undefined}
+      title={toolTypeData != null ? `Tool Category Details [${toolTypeData.getData("name")}]` : undefined}
       managementViewLink={"/admin/tools"}
       managementTitle={"Tool Management"}
       managementViewIcon={faWrench}
