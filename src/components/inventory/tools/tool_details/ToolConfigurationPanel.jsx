@@ -7,7 +7,6 @@ import GitlabToolConfiguration from "../forms/gitlab";
 import BitbucketToolConfiguration from "../forms/bitbucket";
 import CypressToolConfiguration from "../forms/cypress";
 import ArgoToolConfiguration from "./tool_jobs/argo/ArgoToolConfiguration";
-import AnchoreToolConfiguration from "../forms/anchore";
 import AnchoreIntegratorToolConfiguration from "../forms/anchore-integrator";
 import AWSToolConfiguration from "../forms/aws";
 import SFDCToolConfiguration from "../forms/sfdc";
@@ -23,7 +22,7 @@ import OctopusToolConfiguration from "./tool_jobs/octopus/OctopusToolConfigurati
 import SlackToolConfiguration from "./tool_jobs/slack/SlackToolConfiguration";
 import SonarToolConfiguration from "./tool_jobs/sonar/SonarToolConfiguration";
 import SpinnakerToolConfiguration from "./tool_jobs/spinnaker/SpinnakerToolConfiguration";
-
+import AnchoreScanToolConfiguration from "./tool_jobs/anchore_scan/AnchoreScanToolConfiguration";
 
 function ToolConfigurationPanel({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -45,7 +44,6 @@ function ToolConfigurationPanel({ toolData }) {
     return await PipelineActions.saveToVault(postBody, getAccessToken);
   };
 
-  // TODO: Rewrite so just tooldata is sent instead of id and tooldata
   const getConfiguration = (toolIdentifier) => {
     switch (toolIdentifier) {
       case "jenkins":
@@ -65,7 +63,7 @@ function ToolConfigurationPanel({ toolData }) {
       case "argo":
         return <ArgoToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
       case "anchore-scan":
-        return <AnchoreToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
+        return <AnchoreScanToolConfiguration toolId={toolData._id} toolData={toolData.data} saveToolConfiguration={saveToolConfiguration} saveToVault={saveToVault} />;
       case "anchore-integrator":
         return <AnchoreIntegratorToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
       case "sonar":
