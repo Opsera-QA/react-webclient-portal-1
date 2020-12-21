@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faSpinner, faLink, faEnvelope } from "@fortawesome/pro-light-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
@@ -21,7 +22,7 @@ const INITIAL_THRESHOLD_VALUE = {
 };
 
 
-function ApprovalStepConfiguration({ stepTool, parentCallback }) {
+function ApprovalStepConfiguration({ stepTool, parentCallback, closeEditorPanel }) {
   const contextType = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [thresholdData, setThresholdData] = useState(INITIAL_THRESHOLD_VALUE);
@@ -110,12 +111,28 @@ function ApprovalStepConfiguration({ stepTool, parentCallback }) {
       <small className="form-text text-muted">Point of contact if approver has questions.</small>
       <small className="form-text text-muted text-right">* Required Fields</small>
 
-      <Button variant="primary"
-              disabled={isSaving}
-              onClick={() => callbackFunction()}>
+      <Button
+        variant="primary"
+        className="mt-2"
+        disabled={isSaving}
+        onClick={() => callbackFunction()}>
         {isSaving ?
-          <><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>Saving</> :
-          <><FontAwesomeIcon icon={faSave} fixedWidth className="mr-2"/>Save</>}
+          <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> :
+          <FontAwesomeIcon icon={faSave} fixedWidth className="mr-1"/>
+        }
+        Save
+      </Button>
+
+      <Button
+        variant="secondary"
+        type="button"
+        className="mt-2 ml-2"
+        disabled={isSaving}
+        onClick={() => {
+          closeEditorPanel();
+        }}
+      >
+        <FontAwesomeIcon icon={faTimes} className="mr-1" /> Close
       </Button>
 
 
@@ -126,6 +143,7 @@ function ApprovalStepConfiguration({ stepTool, parentCallback }) {
 ApprovalStepConfiguration.propTypes = {
   stepTool: PropTypes.object,
   parentCallback: PropTypes.func,
+  closeEditorPanel: PropTypes.func
 };
 
 export default ApprovalStepConfiguration;

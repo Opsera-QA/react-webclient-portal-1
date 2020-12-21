@@ -28,7 +28,7 @@ function SaveButton2({recordDto, updateRecord, disable, showSuccessToasts, lenie
 
   return (
     <div className="mx-1">
-      <Button size="sm" variant="primary" disabled={isSaving || disable || (!lenient && !recordDto.isChanged())} onClick={() => persistRecord()}>
+      <Button size="md" variant="primary" disabled={isSaving || disable || (!lenient && !recordDto.isChanged())} onClick={() => persistRecord()}>
         {getLabel("Save")}
       </Button>
     </div>

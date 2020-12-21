@@ -8,7 +8,7 @@ function CloseButton({ isLoading, closeEditorCallback }) {
 
   return (
     <div className="mx-1">
-      <Button size="sm" variant="secondary" disabled={isLoading} onClick={() => closeEditorCallback()}>
+      <Button size="md" variant="secondary" disabled={isLoading} onClick={() => closeEditorCallback()}>
         <span><FontAwesomeIcon icon={faTimes} className="mr-1" fixedWidth/>Close</span>
       </Button>
     </div>

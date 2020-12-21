@@ -392,6 +392,7 @@ function StepToolConfiguration({
           <ApprovalStepConfiguration
             stepTool={stepTool}
             parentCallback={callbackFunction}
+            closeEditorPanel={closeEditorPanel}
           />
         );
       case "cypress":

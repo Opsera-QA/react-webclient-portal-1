@@ -190,18 +190,16 @@ function StepConfiguration({ data, stepId, parentCallback, handleCloseClick }) {
         </Form.Group>
       </div>
 
-      <Button variant="primary" className="mt-2" disabled={isLoading || isSaving} onClick={() => callbackFunction()}>
-        {isSaving ? (
-          <>
-            <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth />
-            Saving
-          </>
-        ) : (
-          <>
-            <FontAwesomeIcon icon={faSave} fixedWidth className="mr-1" />
-            Save
-          </>
-        )}
+      <Button
+        variant="primary"
+        className="mt-2"
+        disabled={isLoading || isSaving}
+        onClick={() => callbackFunction()}>
+        {isSaving ?
+          <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> :
+          <FontAwesomeIcon icon={faSave} fixedWidth className="mr-1"/>
+        }
+        Save
       </Button>
 
       <Button
