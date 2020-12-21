@@ -7,22 +7,21 @@ import ToolEditorPanel from "./ToolEditorPanel";
 import ToolConfigurationPanel from "./ToolConfigurationPanel";
 import ToolAccountsPanel from "./ToolAccountsPanel";
 import ToolAttributesPanel from "./ToolAttributesPanel";
-import CustomTabContainer from "../../../common/tabs/CustomTabContainer";
-import CustomTab from "../../../common/tabs/CustomTab";
+import CustomTabContainer from "components/common/tabs/CustomTabContainer";
+import CustomTab from "components/common/tabs/CustomTab";
 import {
   faAbacus,
   faClipboardList,
   faList,
   faTable,
   faUsers,
-  faCogs,
-  faBrowser,
+  faBrowser, faTags,
 } from "@fortawesome/pro-light-svg-icons";
 import ToolApplicationsPanel from "./ToolAppliationsPanel";
-import DetailTabPanelContainer from "../../../common/panels/detail_view/DetailTabPanelContainer";
+import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import ToolSummaryPanel from "./ToolSummaryPanel";
-import SummaryTab from "../../../common/tabs/detail_view/SummaryTab";
-import SettingsTab from "../../../common/tabs/detail_view/SettingsTab";
+import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
+import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 
 function ToolDetailPanel({ toolData, setToolData, loadData, isLoading }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -52,6 +51,8 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading }) {
         return <ToolAccountsPanel isLoading={isLoading} toolData={toolData} loadData={loadData}/>;
       case "logs":
         return <ToolLogsPanel toolData={toolData}/>;
+      case "tagging":
+        return <div className="text-center p-5 text-muted mt-5">Tagging is not currently available for this tool.</div>;
       case "settings":
         return <ToolEditorPanel toolData={toolData} setToolData={setToolData} loadData={loadData}/>;
       default:
@@ -115,7 +116,20 @@ function ToolTabOptions({ activeTab, tool_identifier, handleTabClick }) {
           <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
         </CustomTabContainer>
       );
-
+    case "gitlab":
+    case "github":
+    case "bitbucket":
+      return (
+        <CustomTabContainer>
+          <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
+          <CustomTab icon={faTags} tabName={"tagging"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Tagging"}/>
+          <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab}
+                     tabText={"Attributes"}/>
+          <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick}
+                     activeTab={activeTab} tabText={"Connection"}/>
+          <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        </CustomTabContainer>
+      );
   default:
     return (
       <CustomTabContainer>
