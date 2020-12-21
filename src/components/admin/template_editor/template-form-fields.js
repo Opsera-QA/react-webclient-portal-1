@@ -38,7 +38,7 @@ const templateEditorMetadata = {
       label: "LDAP Account",
       id: "account",
       isRequired: false, //optional value
-      formText: "Optional Account (LDAP) to limit visibility of this template to a specific customer.  Only one custoemr can be selected, so if the template is required for multiple customers, create multiple templates."
+      formText: "Optional Account (LDAP) to limit visibility of this template to a specific customer.  Only one customer can be selected, so if the template is required for multiple customers, create multiple templates."
     },
     {
       label: "Tags",
