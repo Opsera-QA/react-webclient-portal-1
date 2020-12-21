@@ -69,7 +69,7 @@ function OverviewLanding() {
     if (id) {
       history.push(`/workflow/details/${id}/summary`);
     } else {
-      history.push("/workflow");
+      history.push("/workflow/owner");
     }
   };
 
