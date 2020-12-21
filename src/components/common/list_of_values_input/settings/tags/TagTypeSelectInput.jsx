@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {defaultTags} from "../../../../settings/tags/tags-form-fields";
-import SelectInputBase from "../../../input/SelectInputBase";
+import SelectInputBase from "../../../inputs/SelectInputBase";
 
 function TagTypeSelectInput({ fieldName, dataObject, setDataObject, disabled}) {
   return (

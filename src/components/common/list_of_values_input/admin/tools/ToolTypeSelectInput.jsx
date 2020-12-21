@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import {AuthContext} from "../../../../../contexts/AuthContext";
 import toolTypeActions from "../../../../admin/tools/tool-management-actions";
-import SelectInputBase from "../../../input/SelectInputBase";
+import SelectInputBase from "../../../inputs/SelectInputBase";
 
 function ToolTypeSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField}) {
   const toastContext = useContext(DialogToastContext);
