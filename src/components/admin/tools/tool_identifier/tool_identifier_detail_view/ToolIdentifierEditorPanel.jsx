@@ -5,19 +5,16 @@ import { AuthContext } from "contexts/AuthContext";
 import DtoTextInput from "../../../../common/input/dto_input/dto-text-input";
 import DtoToggleInput from "../../../../common/input/dto_input/dto-toggle-input";
 import toolTypeActions from "../../tool-management-actions";
-import DtoSelectInput from "../../../../common/input/dto_input/dto-select-input";
 import DtoPropertiesInput from "../../../../common/input/dto_input/dto-properties-input";
 import SaveButton from "../../../../common/buttons/SaveButton";
 import LoadingDialog from "../../../../common/status_notifications/loading";
 import DtoTagManagerInput from "../../../../common/input/dto_input/dto-tag-manager-input";
-import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import ToolUsageTypeInput from "../ToolUsageTypeInput";
 import EditorPanelContainer from "../../../../common/panels/detail_panel_container/EditorPanelContainer";
+import ToolTypeSelectInput from "../../../../common/list_of_values_input/admin/tools/ToolTypeSelectInput";
 
 function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData, handleClose} ) {
   const {getAccessToken} = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
-  const [toolList, setToolList] = useState([]);
   const [toolIdentifierDataDto, setToolIdentifierDataDto] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
@@ -26,22 +23,9 @@ function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData, 
   }, []);
 
   const loadData = async () => {
-    try {
-      setIsLoading(true);
-      setToolIdentifierDataDto(toolIdentifierData);
-      const toolList = await getToolList();
-      setToolList(toolList.data);
-    }
-    catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-    }
-    finally {
-      setIsLoading(false);
-    }
-  };
-
-  const getToolList = async () => {
-    return await toolTypeActions.getToolTypes(getAccessToken, false);
+    setIsLoading(true);
+    setToolIdentifierDataDto(toolIdentifierData);
+    setIsLoading(false);
   };
 
   const createToolIdentifier = async () => {
@@ -71,7 +55,7 @@ function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData, 
               <DtoTextInput fieldName={"identifier"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto}/>
             </Col>
             <Col lg={6}>
-              <DtoSelectInput textField={"name"} valueField={"identifier"} fieldName={"tool_type_identifier"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto} selectOptions={toolList}/>
+              <ToolTypeSelectInput dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto} fieldName={"tool_type_identifier"} />
             </Col>
             <Col lg={6}>
               <ToolUsageTypeInput fieldName={"usageType"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto}/>
