@@ -11,6 +11,7 @@ import {defaultTags} from "../tags-form-fields";
 import EditorPanelContainer from "../../../common/panels/detail_panel_container/EditorPanelContainer";
 import CreateAndSaveButtonContainer from "../../../common/buttons/saving/containers/CreateAndSaveButtonContainer";
 import TagConfigurationInput from "../../../common/list_of_values_input/settings/tags/TagConfigurationInput";
+import TagTypeSelectInput from "../../../common/list_of_values_input/settings/tags/TagTypeSelectInput";
 
 function TagEditorPanel({ tagData, setTagData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -40,13 +41,7 @@ function TagEditorPanel({ tagData, setTagData, handleClose }) {
       <div className="mx-2">
         <Row>
           <Col md={6}>
-            <DtoSelectInput
-              textField={"value"}
-              valueField={"type"}
-              fieldName={"type"}
-              dataObject={tagDataDto}
-              setDataObject={setTagDataDto}
-              selectOptions={defaultTags}/>
+            <TagTypeSelectInput dataObject={tagDataDto} setDataObject={setTagDataDto} />
             <DtoTextInput fieldName={"value"} setDataObject={setTagDataDto} dataObject={tagDataDto}/>
             <DtoToggleInput fieldName={"active"} setDataObject={setTagDataDto} dataObject={tagDataDto}/>
           </Col>
