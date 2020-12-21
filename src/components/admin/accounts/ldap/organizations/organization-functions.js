@@ -7,7 +7,6 @@ export const getOrganizationList = async (getAccessToken) => {
 export const getOrganizationAccountDropdownList = async (valueField, getAccessToken) => {
   const response = await accountsActions.getOrganizations(getAccessToken);
   if (response.data) {
-    console.log("JSON: " + JSON.stringify(response));
     let parsedOrganizationNames = [];
     response.data.map(organization => {
       organization["orgAccounts"].map(orgAccount => {
