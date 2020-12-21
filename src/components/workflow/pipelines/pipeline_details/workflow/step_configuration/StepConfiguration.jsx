@@ -93,6 +93,8 @@ function StepConfiguration({ data, stepId, parentCallback, handleCloseClick }) {
     if (validateRequiredFields() && plan[stepArrayIndex] !== undefined) {
       plan[stepArrayIndex].name = formData.name;
       plan[stepArrayIndex].type[0] = formData.type;
+      plan[stepArrayIndex].tool_classification = formData.type;
+      plan[stepArrayIndex].step_classification = "primary";
       plan[stepArrayIndex].tool = { ...plan[stepArrayIndex].tool, tool_identifier: formData.tool_identifier };
       plan[stepArrayIndex].active = formData.active;
       await parentCallback(plan);
