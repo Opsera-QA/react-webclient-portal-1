@@ -6,7 +6,7 @@ import {AuthContext} from "../../../../../contexts/AuthContext";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle, faTools} from "@fortawesome/free-solid-svg-icons";
 import {Link} from "react-router-dom";
-import SelectInputBase from "../../../input/SelectInputBase";
+import SelectInputBase from "../../../inputs/SelectInputBase";
 
 function PipelineToolInput({ toolType, toolFriendlyName, placeholderText, visible, fieldName, dataObject, setDataObject, setDataFunction, disabled}) {
   const toastContext = useContext(DialogToastContext);

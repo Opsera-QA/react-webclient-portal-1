@@ -14,8 +14,8 @@ import KpiToolsInput from "../../../common/list_of_values_input/admin/kpi_config
 import KpiFiltersInput from "../../../common/list_of_values_input/admin/kpi_configurations/KpiFiltersInput";
 import KpiCategoriesInput from "../../../common/list_of_values_input/admin/kpi_configurations/KpiCategoriesInput";
 import CreateAndSaveButtonContainer from "../../../common/buttons/saving/containers/CreateAndSaveButtonContainer";
-import WebsitePathInput from "../../../common/input/WebsitePathInput";
-import TextAreaInput from "../../../common/input/TextAreaInput";
+import WebsitePathInput from "../../../common/inputs/WebsitePathInput";
+import TextAreaInput from "../../../common/inputs/text/TextAreaInput";
 
 function KpiEditorPanel({ kpiData, setKpiData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);

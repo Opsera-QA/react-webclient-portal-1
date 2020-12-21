@@ -81,6 +81,33 @@ export class Model {
       this.data[fieldName] = newValue;
   }
 
+  setTextData = (fieldName, newValue) => {
+    const field = this.getFieldById(fieldName);
+    if (field) {
+      if (field.lowercase === true) {
+        newValue = newValue.toLowerCase();
+      }
+      else if (field.uppercase === true) {
+        newValue = newValue.toUpperCase();
+      }
+
+      // The input mask will limit text entry,
+      // but complex validation can be done by using
+      // "regexValidator" in metadata to not prevent text entry
+      if (field.inputMaskRegex != null) {
+        let format = field.inputMaskRegex;
+        let meetsRegex = format.test(newValue);
+
+        if (newValue !== '' && !meetsRegex) {
+          return;
+        }
+      }
+
+      this.propertyChange(fieldName, newValue, this.getData(fieldName));
+      this.data[fieldName] = newValue;
+    }
+  };
+
   isModelValid = () => {
     return validateData(this);
   }
@@ -166,6 +193,26 @@ export class Model {
     return field != null ? field.isRequired === true : false;
   };
 
+  isLowercase = (fieldName) => {
+    const field = this.getFieldById(fieldName);
+    return field != null ? field.isLowercase === true : false;
+  };
+
+  isUppercase = (fieldName) => {
+    const field = this.getFieldById(fieldName);
+    return field != null ? field.isUppercase === true : false;
+  };
+
+  isWebsite = (fieldName) => {
+    const field = this.getFieldById(fieldName);
+    return field != null ? field.isWebsite === true : false;
+  };
+
+  getInputMaskRegex = (fieldName) => {
+    const field = this.getFieldById(fieldName);
+    return field != null ? field.inputMaskRegex : undefined;
+  };
+
   getDetailViewLink = () => {
     return this.metaData?.detailView != null ? this.metaData.detailView(this) : null;
   };
@@ -211,8 +258,7 @@ export class Model {
   }
 
   getFieldById = (id) => {
-    return this.metaData.fields.find(field => {
-      return field.id === id });
+    return this.metaData.fields.find(field => {return field.id === id });
   };
 
   // TODO: Should we make view definitions?

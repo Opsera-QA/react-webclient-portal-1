@@ -11,7 +11,7 @@ import CreateAndSaveButtonContainer from "../../common/buttons/saving/containers
 import DashboardTypeSelectInput from "../../common/list_of_values_input/insights/dashboards/DashboardTypeSelectInput";
 import DashboardAccessSelectInput
   from "../../common/list_of_values_input/insights/dashboards/DashboardAccessSelectInput";
-import FavoriteInput from "../../common/input/FavoriteInput";
+import FavoriteInput from "../../common/inputs/FavoriteInput";
 
 function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);

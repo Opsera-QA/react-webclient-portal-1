@@ -1,39 +1,40 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import InputLabel from "../form_fields/input/InputLabel";
-import InfoText from "../form_fields/input/InfoText";
+import InputLabel from "../../form_fields/input/InputLabel";
+import InfoText from "../../form_fields/input/InfoText";
 
-function TextAreaInput({ fieldName, dataObject, setDataObject, disabled }) {
+function TextInputBase({ fieldName, dataObject, setDataObject, disabled, type }) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
 
   const validateAndSetData = (value) => {
     let newDataObject = dataObject;
-    value = value.toLowerCase();
-    newDataObject.setData(fieldName, value);
+    newDataObject.setTextData(fieldName, value);
     setErrorMessage(newDataObject.getFieldError(fieldName));
     setDataObject({...newDataObject});
   };
 
   return (
-    <div className="form-group m-2">
+    <div className="form-group">
       <InputLabel field={field}/>
-      <textarea
+      <input
+        type={type}
         disabled={disabled}
-        value={dataObject.getData(fieldName)} onChange={(event) => validateAndSetData(event.target.value)}
+        value={dataObject.getData(fieldName)}
+        onChange={(event) => validateAndSetData(event.target.value)}
         className="form-control"
-        rows={5}
       />
       <InfoText field={field} errorMessage={errorMessage}/>
     </div>
   );
 }
 
-TextAreaInput.propTypes = {
+TextInputBase.propTypes = {
+  type: PropTypes.string,
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool
 };
 
-export default TextAreaInput;
+export default TextInputBase;
