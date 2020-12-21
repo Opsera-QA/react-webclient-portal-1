@@ -597,7 +597,7 @@ FreeTrialNav.propTypes = {
 
 OpseraAdminUserNav.propTypes = {
   accessRole: PropTypes.object,
-  featureFlagHideItemInProd: PropTypes.func,
+  featureFlagHideItemInProd: PropTypes.bool,
 };
 
 Sidebar.propTypes = {
