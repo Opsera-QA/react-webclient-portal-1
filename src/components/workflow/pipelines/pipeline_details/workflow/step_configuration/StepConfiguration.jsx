@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faSpinner, faCog } from "@fortawesome/pro-light-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
 import { capitalizeFirstLetter } from "components/common/helpers/string-helpers";
-//import { getMissingRequiredFieldsErrorDialog } from "components/common/toasts/toasts";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
@@ -27,11 +26,8 @@ function StepConfiguration({ data, stepId, parentCallback, handleCloseClick }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [lockTool, setLockTool] = useState(false);
-  //const [toolTypeList, setToolTypeList] = useState([]);
   const [toolList, setToolList] = useState([]);
-  //const [masterToolList, setMasterToolList] = useState([]);
   const [isToolListSearching, setIsToolListSearching] = useState(false);
-  //const [isToolTypeSearching, setIsToolTypeSearching] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -59,26 +55,6 @@ function StepConfiguration({ data, stepId, parentCallback, handleCloseClick }) {
     };
   }, [stepId, plan]);
 
-  /*useEffect(
-    () => {
-      async function fetchToolTypes() {
-        try {
-          setIsToolTypeSearching(true);
-          const accessToken = await getAccessToken();
-          const toolResponse = await axiosApiService(accessToken).get("/registry/types", {});
-          setToolTypeList(formatOptions(toolResponse.data));
-          setIsToolTypeSearching(false);
-        } catch (err) {
-          toastContext.showLoadingErrorDialog(err);
-        }
-      }
-    }
-
-      // Fire off our API call
-      fetchToolTypes();
-    },
-    [],
-  );*/
 
   const fetchToolDetails = async () => {
     try {
@@ -87,32 +63,15 @@ function StepConfiguration({ data, stepId, parentCallback, handleCloseClick }) {
       const accessToken = await getAccessToken();
       const toolResponse = await axiosApiService(accessToken).get("/registry/tools", { params });
       setToolList(toolResponse.data);
-      //setMasterToolList(toolResponse.data);
       setIsToolListSearching(false);
     } catch (err) {
       toastContext.showLoadingErrorDialog(err);
     }
   };
 
-  /*const formatOptions = (options) => {
-    options.unshift({ value: "", name: "Select One", isDisabled: "yes" });
-    return options;
-  };*/
-
-  /*const getToolDetails = async (tool_identifier) => {
-    const accessToken = await getAccessToken();
-    try {
-      const toolResponse = await axiosApiService(accessToken).get("/registry/tool/properties/" + tool_identifier, {});
-      return toolResponse.data;
-    } catch (err) {
-      toastContext.showLoadingErrorDialog(err);
-    }
-  };*/
 
   const loadFormData = async (step) => {
     setFormData(INITIAL_DATA);
-    //let stepType = await getStepType(step.tool);
-    //console.log(step)
 
     setFormData({
       name: step.name,
@@ -125,15 +84,6 @@ function StepConfiguration({ data, stepId, parentCallback, handleCloseClick }) {
       setLockTool(true);
     }
   };
-
-  /*const getStepType = async (tool) => {
-    if (tool && tool.tool_identifier) {
-      const toolData = await getToolDetails(tool.tool_identifier);
-      return toolData.tool_type_identifier; //toolList[toolList.findIndex(x => x.identifier === tool.tool_identifier)].tool_type_identifier;
-    } else {
-      return null;
-    }
-  };*/
 
   const callbackFunction = async () => {
     setIsSaving(true);
