@@ -89,7 +89,7 @@ function ToolManagement() {
         {showToast && toast}
         <h5>Tool Management</h5>
         <CustomTabContainer styling="alternate-tabs">
-          <CustomTab icon={faToolbox} tabName={"types"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Classification"} />
+          <CustomTab icon={faToolbox} tabName={"types"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Category"} />
           <CustomTab icon={faTools} tabName={"identifiers"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Tools"} />
         </CustomTabContainer>
         <div className="content-block-collapse p-3">

@@ -25,7 +25,7 @@ const toolIdentifierMetadata = {
     isRequired: true
   },
   {
-    label: "Tool Type Identifier",
+    label: "Category Type",
     id: "tool_type_identifier",
     isRequired: true
   },
