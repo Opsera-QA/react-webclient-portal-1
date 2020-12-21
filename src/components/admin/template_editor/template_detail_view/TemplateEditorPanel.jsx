@@ -17,7 +17,7 @@ import SaveButton from "../../../common/buttons/SaveButton";
 import pipelineHelpers from "../../../workflow/pipelineHelpers";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import DetailPanelContainer from "../../../common/panels/detail_panel_container/DetailPanelContainer";
-import BooleanToggleInput from "../../../common/input/dto_input/BooleanToggleInput";
+import BooleanToggleInput from "../../../common/inputs/BooleanToggleInput";
 import EditorPanelContainer from "../../../common/panels/detail_panel_container/EditorPanelContainer";
 
 function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {

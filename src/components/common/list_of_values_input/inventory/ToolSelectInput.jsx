@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 import toolsActions from "../../../inventory/tools/tools-actions";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import {AuthContext} from "../../../../contexts/AuthContext";
-import SelectInputBase from "../../input/SelectInputBase";
+import SelectInputBase from "../../inputs/SelectInputBase";
 
 function ToolSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField}) {
   const toastContext = useContext(DialogToastContext);

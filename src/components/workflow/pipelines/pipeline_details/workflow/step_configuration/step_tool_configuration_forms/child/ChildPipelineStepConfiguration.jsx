@@ -4,7 +4,7 @@ import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import childPipelineStepConfigurationMetadata from "./child-pipeline-step-configuration-metadata";
 import PipelineInput from "../../../../../../../common/list_of_values_input/workflow/pipelines/PipelineInput";
-import BooleanToggleInput from "../../../../../../../common/input/dto_input/BooleanToggleInput";
+import BooleanToggleInput from "../../../../../../../common/inputs/BooleanToggleInput";
 import thresholdMetadata from "../../../../../../../common/metadata/pipelines/thresholdMetadata";
 import PipelineStepEditorPanelContainer
   from "../../../../../../../common/panels/detail_panel_container/PipelineStepEditorPanelContainer";

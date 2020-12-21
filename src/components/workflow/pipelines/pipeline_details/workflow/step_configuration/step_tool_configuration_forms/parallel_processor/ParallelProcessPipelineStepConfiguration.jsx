@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
-import BooleanToggleInput from "../../../../../../../common/input/dto_input/BooleanToggleInput";
+import BooleanToggleInput from "../../../../../../../common/inputs/BooleanToggleInput";
 import thresholdMetadata from "../../../../../../../common/metadata/pipelines/thresholdMetadata";
 import PipelineStepEditorPanelContainer
   from "../../../../../../../common/panels/detail_panel_container/PipelineStepEditorPanelContainer";

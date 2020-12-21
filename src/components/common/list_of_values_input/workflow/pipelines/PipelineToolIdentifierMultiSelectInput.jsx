@@ -5,7 +5,7 @@ import pipelineActions from "../../../../workflow/pipeline-actions";
 import {AuthContext} from "../../../../../contexts/AuthContext";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle} from "@fortawesome/free-solid-svg-icons";
-import MultiSelectInputBase from "../../../input/MultiSelectInputBase";
+import MultiSelectInputBase from "../../../inputs/MultiSelectInputBase";
 
 function PipelineToolIdentifierMultiSelectInput({ placeholderText, valueField, textField, fieldName, dataObject, setDataObject, setDataFunction, disabled}) {
   const toastContext = useContext(DialogToastContext);

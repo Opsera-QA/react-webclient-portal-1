@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SelectInputBase from "../../../input/SelectInputBase";
+import SelectInputBase from "../../../inputs/SelectInputBase";
 import kpiLovHelpers from "./kpi-lov-helpers";
 
 function KpiChartTypeInput({ fieldName, dataObject, setDataObject, disabled }) {
