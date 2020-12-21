@@ -21,7 +21,7 @@ import {
   faCogs,
   faChartNetwork,
   faCaretSquareDown,
-  faCaretSquareUp, faAnalytics,
+  faCaretSquareUp, faAnalytics, faEnvelope,
 } from "@fortawesome/pro-light-svg-icons";
 
 import "./sidebar.css";
@@ -545,15 +545,18 @@ function OpseraAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFlag
           }
 
           {insights && <>
+
+            <NavLink className="nav-link no-wrap" activeClassName="chosen" exact to="/insights/dashboards">
+              <span className="menu-text-sub">My Dashboards</span>
+            </NavLink>
+
             <NavLink className="nav-link" activeClassName="chosen" exact to="/insights/marketplace">
               <span className="menu-text-sub">Marketplace</span>
             </NavLink>
 
             <NavLink className="nav-link" activeClassName="chosen" to="/analytics">
               <span className="menu-text-sub">Analytics</span></NavLink>
-            <NavLink className="nav-link no-wrap" activeClassName="chosen" exact to="/dashboard">
-              <span className="menu-text-sub">Opsera Dashboard</span>
-            </NavLink>
+
           </>}
 
 
@@ -573,6 +576,14 @@ function OpseraAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFlag
             <NavLink className="nav-link" activeClassName="chosen" to="/reports">
               <FontAwesomeIcon size="lg" icon={faAnalytics} fixedWidth/> <span
               className="menu-text">Reports</span></NavLink>
+          }
+
+          {featureFlagHideItemInProd ?
+            <></>
+            :
+            <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
+              <FontAwesomeIcon size="lg" icon={faEnvelope} fixedWidth/> <span
+              className="menu-text">Notifications</span></NavLink>
           }
 
           <NavLink className="nav-link" activeClassName="chosen" to="/update">
