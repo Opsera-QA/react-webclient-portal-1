@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import childPipelineStepConfigurationMetadata from "./child-pipeline-step-configuration-metadata";
-import PipelineInput from "../../../../../../../common/list_of_values_input/workflow/pipelines/PipelineInput";
-import BooleanToggleInput from "../../../../../../../common/inputs/BooleanToggleInput";
-import thresholdMetadata from "../../../../../../../common/metadata/pipelines/thresholdMetadata";
+import PipelineInput from "components/common/list_of_values_input/workflow/pipelines/PipelineInput";
+import BooleanToggleInput from "components/common/inputs/BooleanToggleInput";
+import thresholdMetadata from "components/common/metadata/pipelines/thresholdMetadata";
 import PipelineStepEditorPanelContainer
-  from "../../../../../../../common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 
 function ChildPipelineStepConfiguration({ stepTool, pipelineId, parentCallback, closeEditorPanel }) {
   const [isLoading, setIsLoading] = useState(false);
