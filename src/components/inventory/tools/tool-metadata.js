@@ -73,7 +73,7 @@ const toolMetadata = {
       // fields: ["name", "description", "identifier"],
     },
     {
-      label: "Status",
+      label: "Active",
       id: "active",
     },
     {
