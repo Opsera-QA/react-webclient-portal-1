@@ -6,6 +6,7 @@ import {faSave, faSpinner} from "@fortawesome/free-solid-svg-icons";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import {persistNewRecordAndClose} from "./saving-helpers";
 
+// TODO: Remove when everything is using CreateButton
 function CreateAndCloseButton({recordDto, createRecord, disable, handleClose, showSuccessToasts, lenient, isSaving, setIsSaving}) {
   let toastContext = useContext(DialogToastContext);
 
@@ -28,7 +29,7 @@ function CreateAndCloseButton({recordDto, createRecord, disable, handleClose, sh
   }
 
   return (
-    <div className="d-flex mx-1 px-2">
+    <div className="mx-1">
       <Button size="sm" variant="primary" disabled={isSaving || disable} onClick={() => persistRecord()}>
         {getLabel()}
       </Button>

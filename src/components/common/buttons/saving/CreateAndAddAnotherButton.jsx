@@ -28,7 +28,7 @@ function CreateAndAddAnotherButton({recordDto, setRecordDto, createRecord, disab
   }
 
   return (
-    <div className="d-flex mx-1 px-2">
+    <div className="mx-1">
       <Button size="sm" variant="primary" disabled={isSaving || disable} onClick={() => persistRecord()}>
         {getLabel()}
       </Button>

@@ -33,11 +33,9 @@ function StandaloneSaveButton({saveFunction, disable, type}) {
   };
 
   return (
-    <div className="d-flex">
-      <Button size="sm" disabled={isSaving || disable} onClick={() => persistRecord()}>
-        {getLabel()}
-      </Button>
-    </div>
+    <Button size="sm" disabled={isSaving || disable} onClick={() => persistRecord()}>
+      {getLabel()}
+    </Button>
   );
 }
 
