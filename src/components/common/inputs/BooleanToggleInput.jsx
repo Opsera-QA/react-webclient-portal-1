@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Form } from "react-bootstrap";
+import InfoText from "../form_fields/input/InfoText";
+import InputLabel from "../form_fields/input/InputLabel";
 
 function BooleanToggleInput({ fieldName, dataObject, setDataObject, disabled }) {
     const [field] = useState(dataObject.getFieldById(fieldName));
@@ -14,21 +16,18 @@ function BooleanToggleInput({ fieldName, dataObject, setDataObject, disabled }) 
   return (
     <div className="m-2">
       <div className="d-flex justify-content-between">
-        <label>{field.label}{field.isRequired ? <span className="danger-red">*</span> : null}</label>
+        <InputLabel field={field} />
         <Form.Check
           type="switch"
           id={field.id}
           checked={!!dataObject.getData(fieldName)}
           disabled={disabled}
           label={dataObject.getData(fieldName) ? "True" : "False"}
-          onChange={() => {
-            validateAndSetData(field.id, !dataObject.getData(fieldName));
+          onChange={() => {validateAndSetData(!dataObject.getData(fieldName));
           }}
         />
       </div>
-      <small className="text-muted form-text">
-        <div>{field.formText}</div>
-      </small>
+      <InfoText field={field} errorMessage={null} />
     </div>
   );
 }

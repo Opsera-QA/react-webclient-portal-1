@@ -6,11 +6,6 @@ import PropTypes from "prop-types";
 import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
 import DtoToggleInput from "../../../common/input/dto_input/dto-toggle-input";
 import DtoJsonInput from "../../../common/input/dto_input/dto-json-input";
-import {
-  getOrganizationAccountDropdownList,
-} from "../../accounts/ldap/organizations/organization-functions";
-import DtoSelectInput from "../../../common/input/dto_input/dto-select-input";
-import DtoMultiselectInput from "../../../common/input/dto_input/dto-multiselect-input";
 import DtoTagManagerInput from "../../../common/input/dto_input/dto-tag-manager-input";
 import LoadingDialog from "../../../common/status_notifications/loading";
 import SaveButton from "../../../common/buttons/SaveButton";
@@ -19,37 +14,25 @@ import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import DetailPanelContainer from "../../../common/panels/detail_panel_container/DetailPanelContainer";
 import BooleanToggleInput from "../../../common/inputs/BooleanToggleInput";
 import EditorPanelContainer from "../../../common/panels/detail_panel_container/EditorPanelContainer";
+import PipelineTypeMultiselectInput
+  from "../../../common/list_of_values_input/admin/pipeline_templates/PipelineTypeMultiselectInput";
+import LdapOrganizationAccountSelectInput
+  from "../../../common/list_of_values_input/admin/accounts/ldap_accounts/LdapOrganizationAccountSelectInput";
+import AccountRoleMultiSelectInput from "../../../common/list_of_values_input/roles/AccountRoleMultiSelectInput";
 
 function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [templateDataDto, setTemplateDataDto] = useState({});
-  const [ldapOrganizationAccountList, setLdapOrganizationAccountList] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  // TODO: Pull roles from node
-  const [roleOptions, setRoleOptions] = useState(["everyone", "Free Trial", "Administrators", "PowerUsers"]);
 
   useEffect(() => {
     loadData();
   }, []);
 
   const loadData = async () => {
-    try {
-      setIsLoading(true);
-      await getLdapOrganizationAccounts();
-      setTemplateDataDto(templateData);
-    }
-    catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-    }
-    finally {
-      setIsLoading(false);
-    }
-  };
-
-  const getLdapOrganizationAccounts = async () => {
-    let ldapOrganizationAccountList = await getOrganizationAccountDropdownList("name", getAccessToken);
-    setLdapOrganizationAccountList(ldapOrganizationAccountList);
+    setIsLoading(true);
+    setTemplateDataDto(templateData);
+    setIsLoading(false);
   };
 
   const createTemplate = async () => {
@@ -76,24 +59,17 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
             <Col lg={12}>
               <DtoTextInput fieldName={"description"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
             </Col>
-
             <Col lg={6}>
-              <DtoMultiselectInput textField={"name"}
-                              valueField={"id"}
-                              fieldName={"type"}
-                              dataObject={templateDataDto}
-                              setDataObject={setTemplateDataDto}
-                              selectOptions={pipelineHelpers.PIPELINE_TYPES}/>
+              <PipelineTypeMultiselectInput dataObject={templateDataDto} setDataObject={setTemplateDataDto} />
             </Col>
             <Col lg={6}>
               <DtoTagManagerInput type={"template"} fieldName={"tags"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
             </Col>
-
             <Col lg={6}>
-              <DtoMultiselectInput fieldName={"roles"} dataObject={templateDataDto} setDataObject={setTemplateDataDto} selectOptions={roleOptions} setSelectOptions={setRoleOptions} />
+              <AccountRoleMultiSelectInput dataObject={templateDataDto} setDataObject={setTemplateDataDto} />
             </Col>
             <Col lg={6}>
-              <DtoSelectInput valueField={"id"} fieldName={"account"} dataObject={templateDataDto} setDataObject={setTemplateDataDto} selectOptions={ldapOrganizationAccountList}/>
+              <LdapOrganizationAccountSelectInput fieldName={"account"} dataObject={templateDataDto} setDataObject={setTemplateDataDto} />
             </Col>
             <Col lg={6}>
               <BooleanToggleInput fieldName={"readOnly"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
@@ -101,7 +77,6 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
             <Col lg={6}>
               <BooleanToggleInput fieldName={"singleUse"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
             </Col>
-
             <Col lg={12}>
               <DtoJsonInput fieldName={"plan"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
             </Col>
