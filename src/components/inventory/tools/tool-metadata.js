@@ -52,8 +52,8 @@ const toolMetadata = {
       type: "multi",
     },
     {
-      label: "Project",
-      id: "projects",
+      label: "Classification",
+      id: "classification",
     },
     {
       label: "Contacts",
@@ -111,7 +111,7 @@ const toolMetadata = {
     compliance: [],
     licensing: [],
     location: [],
-    projects: [],
+    classification: "",
     contacts: [],
     applications: [],
     organization: [],

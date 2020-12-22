@@ -1,11 +1,10 @@
-import React, {useContext, useMemo} from "react";
-import { Row, Col, Table } from "react-bootstrap";
+import React, {useMemo} from "react";
+import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
 import CustomTable from "components/common/table/CustomTable";
-import NameValueTable from "../../../common/table/nameValueTable";
-import DtoTagField from "../../../common/form_fields/dto_form_fields/dto-tag-field";
-import DtoTextField from "../../../common/form_fields/dto_form_fields/dto-text-field";
+import NameValueTable from "components/common/table/nameValueTable";
+import DtoTagField from "components/common/form_fields/dto_form_fields/dto-tag-field";
+import DtoTextField from "components/common/form_fields/dto_form_fields/dto-text-field";
 
 function ToolAttributesPanel({ toolData }) {
   const contactsColumns = useMemo(
@@ -76,9 +75,6 @@ function ToolAttributesPanel({ toolData }) {
           </Col>
           <Col lg={6}>
             <NameValueTable data={toolData["location"]} label={toolData.getFieldById("location").label}/>
-          </Col>
-          <Col lg={6}>
-            <NameValueTable data={toolData["projects"]} label={toolData.getFieldById("projects").label}/>
           </Col>
           <Col lg={6}>
             <NameValueTable data={toolData["applications"]} label={toolData.getFieldById("applications").label}/>
