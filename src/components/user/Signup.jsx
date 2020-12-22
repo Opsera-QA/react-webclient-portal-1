@@ -18,13 +18,14 @@ function Signup() {
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [registrationDataDto, setRegistrationDataDto] = useState(undefined);
+  const [cloudProviderRegions, setCloudProviderRegions] = useState(undefined);
 
   // TODO: when pulling actual data with react-dropdown, change text to label
   const cloudProviders = [
     { value: "EKS", text: "AWS" },
     // { value: "GKE", text: "GCP" }
   ];
-  const cloudProviderRegions = [{ value: "us-east-2", text: "us-east-2" }];
+  // const cloudProviderRegions = [{ value: "us-east-2", text: "us-east-2" }];
 
   useEffect(() => {
     loadData();
@@ -32,10 +33,29 @@ function Signup() {
 
   const loadData = async () => {
     setIsLoading(true);
+    await searchAWSRegions();
     await setRegistrationDataDto(new Model(defaultSignupFormFields.newObjectFields, defaultSignupFormFields, true));
     setIsLoading(false);
   };
 
+  const searchAWSRegions = async () => {
+    try {
+      const res = await userActions.getAWSRegions();
+      if (typeof(res) != "object") {
+        setCloudProviderRegions([{ value: "", text: "Select One", isDisabled: "yes" }]);
+        let errorMessage =
+          "AWS Regions information is missing or unavailable!";
+        toastContext.showErrorDialog(errorMessage);
+        return;
+      }
+      setCloudProviderRegions(res);
+    } catch (error) {
+      setCloudProviderRegions([{ value: "", text: "Select One", isDisabled: "yes" }]);
+      console.error(error);
+      toastContext.showServiceUnavailableDialog();
+    }
+  };
+  
   const loadRegistrationResponse = () => {
     history.push("/registration");
   };

@@ -129,5 +129,26 @@ userActions.syncUser = async (getAccessToken) => {
   return response;
 };
 
+userActions.getAWSRegions = async () => {
+  const apiUrl = `/users/aws/regions`;
+  const response = await axiosApiService().get(apiUrl)
+    .then((result) =>  {
+      if (result.data) {
+        let arrOfObj = result?.data?.data;
+        let response = arrOfObj.map(function(el) {
+          let o = Object.assign({});
+          o.value = el;
+          o.text = el;
+          return o;
+        });
+        return response;
+      }
+      else {
+        throw "AWS regions information is missing or unavailable!";
+      }
+    })
+    .catch(error => {throw { error };});
+  return response;
+};
 
 export default userActions;
