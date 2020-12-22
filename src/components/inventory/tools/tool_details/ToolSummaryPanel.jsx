@@ -1,10 +1,9 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
-import DtoTextField from "../../../common/form_fields/dto_form_fields/dto-text-field";
-import DtoDateField from "../../../common/form_fields/dto_form_fields/dto-date-field";
-import SummaryPanelContainer from "../../../common/panels/detail_view/SummaryPanelContainer";
+import DtoTextField from "components/common/form_fields/dto_form_fields/dto-text-field";
+import DtoDateField from "components/common/form_fields/dto_form_fields/dto-date-field";
+import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 
 function ToolSummaryPanel({ toolData, setActiveTab }) {
   return (
@@ -15,6 +14,9 @@ function ToolSummaryPanel({ toolData, setActiveTab }) {
         </Col>
         <Col lg={6}>
           <DtoTextField dataObject={toolData} fieldName={"tool_identifier"} />
+        </Col>
+        <Col lg={12}>
+          <DtoTextField dataObject={toolData} fieldName={"description"} />
         </Col>
         <Col lg={6}>
           <DtoTextField dataObject={toolData} fieldName={"tool_type_identifier"} />
@@ -29,7 +31,7 @@ function ToolSummaryPanel({ toolData, setActiveTab }) {
           <DtoDateField dataObject={toolData} fieldName={"createdAt"} />
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={toolData} fieldName={"description"} />
+          <DtoTextField dataObject={toolData} fieldName={"classification"} />
         </Col>
       </Row>
     </SummaryPanelContainer>

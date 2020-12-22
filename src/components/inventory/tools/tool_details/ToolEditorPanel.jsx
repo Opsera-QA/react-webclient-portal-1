@@ -14,6 +14,8 @@ import DtoTagManagerInput from "../../../common/input/dto_input/dto-tag-manager-
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import EditorPanelContainer from "../../../common/panels/detail_panel_container/EditorPanelContainer";
 import PersistButtonContainer from "../../../common/buttons/saving/containers/PersistButtonContainer";
+import ToolClassificationSelectInput
+  from "../../../common/list_of_values_input/inventory/ToolClassificationSelectInput";
 
 function ToolEditorPanel({ toolData, setToolData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -82,10 +84,10 @@ function ToolEditorPanel({ toolData, setToolData, handleClose }) {
               <DtoTagManagerInput type={"tool"} setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"tags"} />
             </Col>
             <Col lg={6}>
-              <DtoMultipleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fields={["name", "value"]} fieldName={"location"} />
+              <ToolClassificationSelectInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
             </Col>
             <Col lg={6}>
-              <DtoMultipleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fields={["name", "value"]} fieldName={"projects"} />
+              <DtoMultipleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fields={["name", "value"]} fieldName={"location"} />
             </Col>
             <Col lg={6}>
               <DtoMultipleInput disabledFields={["user_id"]} setDataObject={setToolDataDto} dataObject={toolDataDto} fields={["name", "email", "user_id"]} fieldName={"contacts"} />
