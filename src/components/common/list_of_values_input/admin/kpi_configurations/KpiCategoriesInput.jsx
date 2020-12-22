@@ -25,7 +25,7 @@ KpiCategoriesInput.propTypes = {
 };
 
 KpiCategoriesInput.defaultProps = {
-  fieldName: "categories"
+  fieldName: "category"
 };
 
 export default KpiCategoriesInput;
