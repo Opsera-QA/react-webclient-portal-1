@@ -22,6 +22,7 @@ import DetailTabPanelContainer from "components/common/panels/detail_view/Detail
 import ToolSummaryPanel from "./ToolSummaryPanel";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
+import ToolTaggingPanel from "./ToolTaggingPanel";
 
 function ToolDetailPanel({ toolData, setToolData, loadData, isLoading }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -52,7 +53,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading }) {
       case "logs":
         return <ToolLogsPanel toolData={toolData}/>;
       case "tagging":
-        return <div className="text-center p-5 text-muted mt-5">Tagging is not currently available for this tool.</div>;
+        return <ToolTaggingPanel toolData={toolData} />;
       case "settings":
         return <ToolEditorPanel toolData={toolData} setToolData={setToolData} loadData={loadData}/>;
       default:
