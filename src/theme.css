@@ -796,6 +796,11 @@ a.nav-link {
   height: calc(1.5em + .75rem + 5px);
 }
 
+/* Ensure dropdown does not get cut off. */
+.rw-popup-container {
+    z-index: 1200;
+}
+
 /* End Select input styling */
 
 /* Content Block Styling */

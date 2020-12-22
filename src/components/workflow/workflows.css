@@ -146,10 +146,6 @@
   overflow: visible !important;
 }
 
-.pipeline-tag-modal-body .rw-state-focus .rw-popup-container {
-  z-index: 1200;
-}
-
 .settings-sidebar {
   height: 100vh; /* 100% Full-height */
   width: 100%; /* 0 width - change this with JavaScript */
