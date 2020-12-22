@@ -4,15 +4,15 @@
 
 import PropTypes from "prop-types";
 import { ResponsiveLine } from "@nivo/line";
-import ErrorDialog from "../../common/status_notifications/error";
+import ErrorDialog from "../../../common/status_notifications/error";
 import config from "./opseraDeploymentFrequencyLineChartConfigs";
-import "./charts.css";
+import "../../../analytics/charts/charts.css";
 import React, { useState, useEffect, useContext, useCallback } from "react";
-import { AuthContext } from "../../../contexts/AuthContext";
-import { axiosApiService } from "../../../api/apiService";
-import LoadingDialog from "../../common/status_notifications/loading";
-import InfoDialog from "../../common/status_notifications/info";
-import ModalLogs from "../../common/modal/modalLogs";
+import { AuthContext } from "../../../../contexts/AuthContext";
+import { axiosApiService } from "../../../../api/apiService";
+import LoadingDialog from "../../../common/status_notifications/loading";
+import InfoDialog from "../../../common/status_notifications/info";
+import ModalLogs from "../../../common/modal/modalLogs";
 
 function OpseraDeploymentFrequencyLineChart({ persona, date }) {
   const contextType = useContext(AuthContext);
@@ -82,8 +82,7 @@ function OpseraDeploymentFrequencyLineChart({ persona, date }) {
           setParentVisibility={setShowModal}
         />
 
-        <div className="chart mb-3" style={{ height: "300px" }}>
-          <div className="chart-label-text">Opsera: Deployment Frequency</div>
+        <div className="new-chart mb-3" style={{ height: "300px" }}>
           {typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200 ? (
             <div
               className="max-content-width p-5 mt-5"

@@ -73,6 +73,10 @@ const breadcrumbs = {
   pipelines: {name: "pipelines", path: paths.pipelines, label: "Pipelines", icon: faDraftingCompass},
   pipelineDetailView: {name: "pipelineDetailView", path: paths.pipelineDetailView, label: "Pipeline Details", icon: faDraftingCompass},
 
+  //Insights
+  insights: {name: "insights", path: paths.insights, label: "Insights"},
+  dashboardViewer: {name: "dashboardViewer", path: paths.dashboardViewer, label: "Dashboard Details"},
+
   //Reports
   reports: {name: "reports", path: paths.reports, label: "Reports", icon: faAnalytics},
   toolReports: {name: "toolReports", path: paths.toolReports, label: "Tool Reports", icon: faTools},
@@ -152,7 +156,8 @@ const trails = {
   pipelineDetailView: {parent: "pipelines", destination: {name: "pipelineDetailView", path: paths.pipelineDetailView, label: "Pipeline Details"}},
 
   //Insights
-  dashboardViewer: {parent: undefined, destination: {name: "dashboardViewer", path: paths.dashboardViewer, label: "Dashboard Details"}},
+  insights: {parent: undefined, breadcrumb: breadcrumbs.insights},
+  dashboardViewer: {parent: "insights", breadcrumb: breadcrumbs.dashboardViewer},
 
   //Reports
   reports: {parent: undefined, breadcrumb: breadcrumbs.reports},

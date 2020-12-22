@@ -178,7 +178,7 @@ export default function Marketplace () {
       {/* TODO: change this text */}
       <p>
         OpsERA provides users with access to a vast repository of KPI. Access all available
-        KPI's and configure them on your OpsERA Analytics Dashboards.
+        KPIs and configure them on your OpsERA Analytics Dashboards.
       </p>
       </div>
       <Row>

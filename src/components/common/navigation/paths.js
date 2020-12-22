@@ -44,7 +44,8 @@ paths.pipelines = "workflow"
 paths.pipelineDetailView = paths.pipelines + "/details"
 
 // Insights Paths
-paths.dashboardViewer = "/insights/dashboards"
+paths.insights = "insights/dashboards";
+paths.dashboardViewer = paths.insights;
 
 // Settings Paths
 paths.accountSettings = "settings";

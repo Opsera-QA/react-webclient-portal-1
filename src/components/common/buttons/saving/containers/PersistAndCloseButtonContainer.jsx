@@ -1,13 +1,16 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import SaveButtonContainer from "./SaveButtonContainer";
 import StrictSaveButton from "../StrictSaveButton";
-import CreateButton from "../CreateButton";
+import CreateAndCloseButton from "../CreateAndCloseButton";
 
 function PersistButtonContainer({ recordDto, setRecordDto, updateRecord, createRecord, handleClose, addAnotherOption }) {
+  const [isSaving, setIsSaving] = useState(false);
+
   const getSaveButton = () => {
     if (recordDto.isNew()){
-      return (<CreateButton createRecord={createRecord} handleClose={handleClose} recordDto={recordDto} setRecordDto={setRecordDto} addAnotherOption={addAnotherOption} />);
+      return (<CreateAndCloseButton createRecord={createRecord} handleClose={handleClose} recordDto={recordDto} setRecordDto={setRecordDto} 
+        addAnotherOption={addAnotherOption} isSaving={isSaving} setIsSaving={setIsSaving}/>);
     }
 
     return (<StrictSaveButton recordDto={recordDto} updateRecord={updateRecord} />);

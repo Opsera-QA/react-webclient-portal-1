@@ -50,7 +50,7 @@ function KpiSummaryPanel({ kpiData, setActiveTab }) {
           <DtoItemField dataObject={kpiData} fieldName={"category"} />
         </Col>
         <Col lg={3}>
-          <DtoItemField dataObject={kpiData} fieldName={"supported_filters"} />
+          <DtoJsonField dataObject={kpiData} fieldName={"supported_filters"} />
         </Col>
         <Col lg={12}>
           <DtoJsonField dataObject={kpiData} fieldName={"settings"} />

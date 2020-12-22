@@ -7,6 +7,8 @@ import DashboardsTable from "./DashboardsTable";
 import dashboardsActions from "./dashboards-actions";
 import Model from "../../core/data_model/model";
 import dashboardFilterMetadata from "./dashboard-filter-metadata";
+import analyticsProfileActions from "../settings/analytics/analytics-profile-settings-actions";
+import AnalyticsProfileSettings from "../settings/analytics/activateAnalyticsCard";
 
 function Insights() {
   const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
@@ -15,6 +17,7 @@ function Insights() {
   const [dashboardsList, setDashboardsList] = useState(undefined);
   const [dashboardFilterDto, setDashboardFilterDto] = useState(new Model({...dashboardFilterMetadata.newObjectFields}, dashboardFilterMetadata, false));
   const toastContext = useContext(DialogToastContext);
+  const [profile, setProfile] = useState({});
 
   useEffect(() => {
     loadData();
@@ -23,6 +26,7 @@ function Insights() {
   const loadData = async (filterDto = dashboardFilterDto) => {
     try {
       setIsLoading(true);
+      await getProfile();
       await getRoles(filterDto);
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -30,6 +34,11 @@ function Insights() {
       setIsLoading(false);
     }
   };
+
+  const getProfile = async() => {
+    let settings = await analyticsProfileActions.fetchProfile(getAccessToken);
+    setProfile(settings.data);
+  }
 
   const getDashboards = async (filterDto = dashboardFilterDto) => {
     const response = await dashboardsActions.getAll(filterDto, getAccessToken);
@@ -46,7 +55,6 @@ function Insights() {
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
     }
-
     await getDashboards(filterDto);
   };
 
@@ -66,6 +74,11 @@ function Insights() {
         logging, reports and configurations around the OpsERA Analytics Platform or search your currently
         configured logs repositories below.
       </p>
+      {profile && !profile.enabledToolsOn ? (
+  <div className="mt-1 max-content-width mb-1">
+    <AnalyticsProfileSettings />
+  </div>
+) :
       <DashboardsTable
         data={dashboardsList}
         loadData={loadData}
@@ -73,7 +86,7 @@ function Insights() {
         dashboardFilterDto={dashboardFilterDto}
         setDashboardFilterDto={setDashboardFilterDto}
         dashboardsActions={dashboardsActions}
-      />
+      />}
     </div>
   );
 

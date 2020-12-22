@@ -7,7 +7,7 @@ import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import { persistNewRecordAndAddAnother, persistNewRecordAndViewDetails } from "./saving-helpers";
 import {useHistory} from "react-router-dom";
 
-function CreateButton({recordDto, createRecord, disable, showSuccessToasts, lenient, setRecordDto}) {
+function CreateButton({recordDto, createRecord, disable, showSuccessToasts, lenient, setRecordDto, addAnotherOption}) {
   const [isSaving, setIsSaving] = useState(false);
   const [addAnother, setAddAnother] = useState(false);
   const history = useHistory();
@@ -35,10 +35,10 @@ function CreateButton({recordDto, createRecord, disable, showSuccessToasts, leni
 
   return (
     <div className="px-2">
-      <div className="d-flex mr-2 mb-2">
+      {addAnotherOption && <div className="d-flex mr-2 mb-2">
         <div><span className="text-muted mr-2">Add Another</span></div>
         <div><input className="mt-1" type="checkbox" checked={addAnother} onClick={() => setAddAnother(!addAnother)} /></div>
-      </div>
+      </div>}
       <Button size="sm" variant="primary" disabled={isSaving || disable} onClick={() => persistRecord()}>
         {getLabel()}
       </Button>
@@ -52,7 +52,8 @@ CreateButton.propTypes = {
   setRecordDto: PropTypes.func,
   disable: PropTypes.bool,
   showSuccessToasts: PropTypes.bool,
-  lenient: PropTypes.bool
+  lenient: PropTypes.bool,
+  addAnotherOption: PropTypes.bool
 };
 
 CreateButton.defaultProps = {
