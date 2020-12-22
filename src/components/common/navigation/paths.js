@@ -67,4 +67,7 @@ paths.pipelineReports = paths.reports + "/pipelines";
 paths.toolRegistry = "inventory/tools";
 paths.toolDetailView = paths.toolRegistry + "/details";
 
+//Notifications
+paths.notifications = "notifications"
+
 export default paths;

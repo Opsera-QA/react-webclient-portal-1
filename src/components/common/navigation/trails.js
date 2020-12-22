@@ -3,7 +3,7 @@ import {
   faAnalytics,
   faBuilding, faChartBar, faClipboardList, faCogs, faDraftingCompass, faEdit, faFileInvoice, faHeartbeat, faLink,
   faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork,
-  faFlag
+  faFlag, faEnvelope,
 } from "@fortawesome/pro-light-svg-icons";
 import {faTools} from "@fortawesome/pro-solid-svg-icons";
 import {faUsers} from "@fortawesome/free-solid-svg-icons";
@@ -81,6 +81,9 @@ const breadcrumbs = {
 
   //Analytics
   analyticsProfile: {name: "analyticsProfile", path: paths.analyticsProfile, label: "Analytics Profile", icon: faChartNetwork},
+
+  //Notifications
+  notifications : { name: "notifications", path: paths.notifications, label: "Notifications", icon: faEnvelope}
 };
 
 const trails = {
@@ -159,6 +162,9 @@ const trails = {
 
   // Analytics
   analyticsProfile: {parent: "accountSettings", breadcrumb: breadcrumbs.analyticsProfile},
+
+  //Notifications
+  notifications : {parent: undefined, breadcrumb: breadcrumbs.notifications}
 
 };
 
