@@ -123,7 +123,7 @@ function ToolTabOptions({ activeTab, tool_identifier, handleTabClick }) {
       return (
         <CustomTabContainer>
           <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
-          <CustomTab icon={faTags} tabName={"tagging"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Tagging"}/>
+          {/*<CustomTab icon={faTags} tabName={"tagging"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Tagging"}/>*/}
           <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab}
                      tabText={"Attributes"}/>
           <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick}
