@@ -7,6 +7,12 @@ import { formatDistanceToNowStrict } from "date-fns";
 import PropTypes from 'prop-types'
 import { DialogToastContext } from "contexts/DialogToastContext";
 import dashboardsActions from "../../insights/dashboards-actions";
+import { Row, Col } from "react-bootstrap";
+import DropdownList from "react-widgets/lib/DropdownList";
+import Model from "../../../core/data_model/model";
+import dashboardMetadata from "../dashboard-metadata";
+import dashboardFilterMetadata from "../dashboard-filter-metadata";
+import SelectInputBase from "../../common/inputs/SelectInputBase";
 
 function KPIInfoView({data, dashboardData, setShowModal}) {
   
@@ -15,19 +21,35 @@ function KPIInfoView({data, dashboardData, setShowModal}) {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
+  const [dashboard, setDashboard] = useState(dashboardData);
+  const [dashboardsList, setDashboardsList] = useState(undefined);
+  const [dashboardFilterDto, setDashboardFilterDto] = useState(new Model({...dashboardFilterMetadata.newObjectFields}, dashboardFilterMetadata, false));
   
   useEffect(() => {
-    if(dashboardData) {
+    getDashboards();
+    if(dashboard) {
       setIsDisabled(false);
     }
     setIsLoading(false);
   }, []);
 
+  const getDashboards = async () => {
+    try {
+      let dashboards = await dashboardsActions.getAll(dashboardFilterDto, getAccessToken);
+      let dashboardOptions = dashboards.data.data.filter(function (d) {return d.configuration.length < 10});
+      setDashboardsList(dashboardOptions);
+    } catch (err) {
+      toastContext.showServiceUnavailableDialog();
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   const addKPIToDashboard = async () => {
     try {
       setIsLoading(true);
-      let newDataObj = dashboardData;
-      let newConfigObj = dashboardData.getData("configuration") ? dashboardData.getData("configuration") : [];
+      let newDataObj = dashboard;
+      let newConfigObj = dashboard.getData("configuration") ? dashboard.getData("configuration") : [];
       // create a custom obj and push to config
       const configObj = {
         kpi_identifier: data.identifier,
@@ -78,41 +100,55 @@ function KPIInfoView({data, dashboardData, setShowModal}) {
               </div>
 
               <div className="mx-3">
+                {data.description.length > 1 && <div>
                 <div className="text-muted py-2">Description:</div>
                 <div className="d-flex flex-wrap">
                  {data.description}
                 </div>
+                </div>}
 
-                  <div className="text-muted py-2">Tools:</div>
+                  {data.tools.length > 1 && <div> <div className="text-muted py-2">Tools:</div>
                     <ul className="tags">
                       {data.tools.map((tool,idx)=>{
                         return ( <li key={idx}><span className="tag">{tool}</span></li> )
                       })}
                     </ul>
+                    </div>}
 
-                  <div className="text-muted py-2">Categories:</div>
+                  {data.category.length > 1 && <div> <div className="text-muted py-2">Categories:</div>
                     <ul className="tags">
                       {data.category.map((category,idx)=>{
                         return ( <li key={idx}><span className="tag">{category}</span></li> )
                       })}
-                    </ul>
+                    </ul></div>}
 
               </div>
             </>
         </div>
 
-        <div className="flex-container-bottom pr-2 mt-4 mb-2 text-right">
-         {/* TODO : add/remove from dashboard buttons goes here */}
-          <Button disabled={isLoading || isDisabled} onClick={()=> addKPIToDashboard()}>
-            {isLoading && (
-                <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>
-            )}
-           Add to dashboard
-          </Button>
+        <div className="flex-container-bottom pr-2 mt-4 mb-2" >
+         <Row>
+           <Col md={9} className="py-1">
+            <div className="custom-select-input m-2">
+              <DropdownList
+              data={dashboardsList}
+              textField="name"
+              defaultValue={dashboardData ? dashboardData : null}
+              onChange={(e) => {setIsDisabled(false); setDashboard(new Model(e, dashboardMetadata, false))}}
+              />
+                </div>
+              </Col>
+            <Col md={3} className="py-1">
+              <Button disabled={isLoading || isDisabled} onClick={()=> addKPIToDashboard()}>
+              {isLoading && (<FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>)}
+              Add to dashboard
+              </Button>
+              </Col>
+          </Row>
+          </div>
         </div>
       </div>
-    </div>
-  )
+    )
 }
 
 KPIInfoView.propTypes = {

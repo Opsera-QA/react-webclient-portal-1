@@ -16,17 +16,15 @@ function FavoriteInput({fieldName, dataObject, setDataObject, disabled}) {
   };
 
   return (
-    <div className="m-2">
-      <div className="d-flex">
-        <InputLabel field={field} />
-        <span className="ml-3">
+    <div className="mr-2">
+        <span className="action-bar-icon">
           <FontAwesomeIcon
-            className={"opsera-gold"}
+            size="lg"
+            className={"opsera-gold pointer"}
             icon={dataObject.getData(field.id) ? faStarSolid : faStar}
             onClick={() => {validateAndSetData(!dataObject.getData(field.id))}}
           />
         </span>
-      </div>
       <InfoText field={field} errorMessage={null} />
     </div>
   );
