@@ -57,7 +57,7 @@ function KpiEditorPanel({ kpiData, setKpiData, handleClose }) {
           <DtoTextInput dataObject={kpiDataDto} fieldName={"identifier"} setDataObject={setKpiDataDto}/>
           <KpiChartTypeInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
           <KpiToolsInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
-          <KpiFiltersInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
+          <KpiFiltersInput dataObject={kpiDataDto} fieldName={"supported_filters"} setDataObject={setKpiDataDto} />
           <KpiCategoriesInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
           <WebsitePathInput dataObject={kpiDataDto} fieldName={"thumbnailPath"} setDataObject={setKpiDataDto}/>
         </Col>

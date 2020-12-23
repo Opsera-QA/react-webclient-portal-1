@@ -67,7 +67,7 @@ function ChartView({kpiConfiguration, dashboardData, index}) {
         return (<OpseraBuildsByUserBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
       case "opseradeploymentfrequency":
         return (<OpseraDeploymentFrequencyLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
-      case "opseradrecentpipelinestatus":
+      case "opserarecentpipelinestatus":
         return (<OpseraRecentPipelineStatus persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
     }
   }

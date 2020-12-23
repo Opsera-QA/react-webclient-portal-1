@@ -72,7 +72,7 @@ function DashboardsTable({data, dashboardFilterDto, setDashboardFilterDto, loadD
         columns={columns}
         onRowSelect={onRowSelect}
         isLoading={isLoading}
-        tableTitle={"Dashboards"}
+        tableTitle={"My Dashboards"}
         tableFilterBar={getFilterBar()}
         paginationDto={dashboardFilterDto}
         setPaginationDto={setDashboardFilterDto}
