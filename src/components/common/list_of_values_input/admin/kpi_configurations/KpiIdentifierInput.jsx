@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import ToolMultiSelectInput from "../../inventory/ToolMultiSelectInput";
 
+// TODO: Delete, this was unused and unnecessary
 function KpiIdentifierInput({ fieldName, dataObject, setDataObject, disabled }) {
   return (
     <ToolMultiSelectInput

@@ -61,6 +61,7 @@ paths.analyticsProfile = paths.accountSettings + "/analytics-profile";
 //Reports
 paths.reports = "reports";
 paths.toolReports = paths.reports + "/registry";
+paths.toolsUsedInPipelineReport = paths.toolReports + "/tools-used-in-pipeline";
 paths.tagReports = paths.reports + "/tags";
 paths.pipelineReports = paths.reports + "/pipelines";
 

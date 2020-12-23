@@ -7,6 +7,7 @@ import {AuthContext} from "../../../../../contexts/AuthContext";
 import ActionBarButton from "../ActionBarButton";
 import DestructiveDeleteModal from "../../../modal/DestructiveDeleteModal";
 import toolsActions from "../../../../inventory/tools/tools-actions";
+import ToolPipelinesTable from "../../../../inventory/tools/tool_details/ToolPipelinesTable";
 
 function ActionBarDeleteToolButton({ toolDataObject }) {
   const toastContext = useContext(DialogToastContext);
@@ -15,6 +16,7 @@ function ActionBarDeleteToolButton({ toolDataObject }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [canDelete, setCanDelete] = useState(false);
+  const [relevantPipelines, setRelevantPipelines] = useState([]);
 
   useEffect(() => {
     checkPermissions();
@@ -31,6 +33,15 @@ function ActionBarDeleteToolButton({ toolDataObject }) {
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
       setCanDelete(userRoleAccess.OpseraAdministrator || userRoleAccess.Administrator || toolDataObject.getData("owner") === user._id);
+      await loadRelevantPipelines();
+    }
+  };
+
+  const loadRelevantPipelines = async () => {
+    const response = await toolsActions.getRelevantPipelines(toolDataObject, getAccessToken);
+
+    if (response?.data != null) {
+      setRelevantPipelines(response?.data?.data);
     }
   };
 
@@ -58,12 +69,17 @@ function ActionBarDeleteToolButton({ toolDataObject }) {
   const getDeleteDetails = () => {
     return (
       <div className="mt-2">
-        <span>If you proceed with deleting this tool, the data will be permanently lost and any pipelines using this tool will break.</span>
+        <div>
+          <span>If you proceed with deleting this tool, the data will be permanently lost and these pipelines using this tool will break:</span>
+        </div>
+        <div>
+          <ToolPipelinesTable isLoading={isLoading} data={relevantPipelines} />
+        </div>
       </div>
     );
   };
 
-  if (isLoading || !canDelete) {
+  if (!canDelete) {
     return <></>;
   }
 
@@ -76,7 +92,9 @@ function ActionBarDeleteToolButton({ toolDataObject }) {
         showModal={showDeleteModal}
         setShowModal={setShowDeleteModal}
         dataObject={toolDataObject}
-        handleDelete={deleteObject} />
+        handleDelete={deleteObject}
+        modalSize={"lg"}
+      />
     </>
   );
 }

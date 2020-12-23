@@ -798,7 +798,7 @@ a.nav-link {
 
 /* Ensure dropdown does not get cut off. */
 .rw-popup-container {
-    z-index: 1200;
+  z-index: 1200;
 }
 
 /* End Select input styling */

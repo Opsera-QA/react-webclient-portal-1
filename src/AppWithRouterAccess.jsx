@@ -82,6 +82,7 @@ import SiteNotificationManagement from "./components/admin/site_notifications/Si
 import SiteNotificationDetailView
   from "./components/admin/site_notifications/site_notification_detail_view/SiteNotificationDetailView";
 import Notifications from "./components/notifications/Notifications";
+import ToolsUsedInPipelineReport from "./components/reports/tools/pipelines/ToolsUsedInPipelineReport";
 
 const OktaAuth = require("@okta/okta-auth-js");
 const config = require("./config");
@@ -245,6 +246,7 @@ const AppWithRouterAccess = () => {
                   {/* Reports */}
                   <SecureRoute path="/reports" exact component={Reports}/>
                   <SecureRoute path="/reports/registry" exact component={ToolReports}/>
+                  <SecureRoute path="/reports/registry/tools-used-in-pipeline" exact component={ToolsUsedInPipelineReport}/>
                   <SecureRoute path="/reports/pipelines" exact component={PipelineReports}/>
                   <SecureRoute path="/reports/tags" exact component={TagReports}/>
 

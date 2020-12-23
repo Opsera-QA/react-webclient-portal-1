@@ -32,11 +32,8 @@ function ToolSelectInput({ fieldName, dataObject, setDataObject, disabled, textF
   };
 
   const loadTools = async () => {
-    const response = await toolsActions.getTools(getAccessToken);
-
-    if (response?.data != null) {
-      setTools(response.data);
-    }
+    const response = await toolsActions.getFullToolRegistryList(getAccessToken);
+    setTools(response?.data?.data);
   };
 
   const getInfoText = () => {
@@ -93,7 +90,7 @@ ToolSelectInput.propTypes = {
 };
 
 ToolSelectInput.defaultProps = {
-  valueField: "id",
+  valueField: "_id",
   textField: "name"
 };
 

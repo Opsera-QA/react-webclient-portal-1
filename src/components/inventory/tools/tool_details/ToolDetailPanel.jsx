@@ -15,13 +15,16 @@ import {
   faList,
   faTable,
   faUsers,
-  faBrowser, faTags,
+  faBrowser, 
+  faTags,
+  faDiceD20
 } from "@fortawesome/pro-light-svg-icons";
 import ToolApplicationsPanel from "./ToolAppliationsPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import ToolSummaryPanel from "./ToolSummaryPanel";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
+import ToolPipelinesPanel from "./ToolPipelinesPanel";
 import ToolTaggingPanel from "./ToolTaggingPanel";
 
 function ToolDetailPanel({ toolData, setToolData, loadData, isLoading }) {
@@ -56,6 +59,8 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading }) {
         return <ToolTaggingPanel toolData={toolData} />;
       case "settings":
         return <ToolEditorPanel toolData={toolData} setToolData={setToolData} loadData={loadData}/>;
+      case "pipelines":
+        return <ToolPipelinesPanel toolData={toolData} />;
       default:
         return null;
     }
@@ -75,6 +80,8 @@ function ToolTabOptions({ activeTab, tool_identifier, handleTabClick }) {
         <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
         <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab}
                    tabText={"Attributes"}/>
+        <CustomTab icon={faDiceD20} tabName={"pipelines"} handleTabClick={handleTabClick} activeTab={activeTab}
+                   tabText={"Pipelines"}/>
         <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick}
                    activeTab={activeTab} tabText={"Connection"}/>
         <CustomTab icon={faAbacus} tabName={"jobs"} handleTabClick={handleTabClick} activeTab={activeTab}
@@ -93,6 +100,8 @@ function ToolTabOptions({ activeTab, tool_identifier, handleTabClick }) {
         <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
         <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab}
                    tabText={"Attributes"}/>
+        <CustomTab icon={faDiceD20} tabName={"pipelines"} handleTabClick={handleTabClick} activeTab={activeTab}
+                   tabText={"Pipelines"}/>
         <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick}
                    activeTab={activeTab} tabText={"Connection"}/>
         <CustomTab icon={faBrowser} tabName={"applications"} handleTabClick={handleTabClick} activeTab={activeTab}
@@ -108,6 +117,8 @@ function ToolTabOptions({ activeTab, tool_identifier, handleTabClick }) {
           <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
           <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab}
                      tabText={"Attributes"}/>
+          <CustomTab icon={faDiceD20} tabName={"pipelines"} handleTabClick={handleTabClick} activeTab={activeTab}
+                     tabText={"Pipelines"}/>
           <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick}
                      activeTab={activeTab} tabText={"Connection"}/>
           <CustomTab icon={faBrowser} tabName={"applications"} handleTabClick={handleTabClick} activeTab={activeTab}
@@ -126,6 +137,8 @@ function ToolTabOptions({ activeTab, tool_identifier, handleTabClick }) {
           {/*<CustomTab icon={faTags} tabName={"tagging"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Tagging"}/>*/}
           <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab}
                      tabText={"Attributes"}/>
+          <CustomTab icon={faDiceD20} tabName={"pipelines"} handleTabClick={handleTabClick} activeTab={activeTab}
+                     tabText={"Pipelines"}/>
           <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick}
                      activeTab={activeTab} tabText={"Connection"}/>
           <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
@@ -137,6 +150,8 @@ function ToolTabOptions({ activeTab, tool_identifier, handleTabClick }) {
         <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
         <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab}
                    tabText={"Attributes"}/>
+        <CustomTab icon={faDiceD20} tabName={"pipelines"} handleTabClick={handleTabClick} activeTab={activeTab}
+                   tabText={"Pipelines"}/>
         <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick}
                    activeTab={activeTab} tabText={"Connection"}/>
         <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />

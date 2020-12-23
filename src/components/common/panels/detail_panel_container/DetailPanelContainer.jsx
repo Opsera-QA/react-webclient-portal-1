@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import LoadingDialog from "../../status_notifications/loading";
 import Form from "react-bootstrap/Form";
 
-// TODO: Remove show required fields message when all editor panels use EditorPanelContainer
 function DetailPanelContainer({ children, isLoading, showRequiredFieldsMessage }) {
 
   if (isLoading) {
@@ -26,9 +25,5 @@ DetailPanelContainer.propTypes = {
   isLoading: PropTypes.bool,
   showRequiredFieldsMessage: PropTypes.bool
 };
-
-DetailPanelContainer.defaultProps = {
-  showRequiredFieldsMessage: true
-}
 
 export default DetailPanelContainer;

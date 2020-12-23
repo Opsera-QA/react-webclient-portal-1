@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
-import DateFieldBase from "../../../../common/form_fields/DateFieldBase";
-import TextFieldBase from "../../../../common/form_fields/TextFieldBase";
+import DateFieldBase from "components/common/form_fields/DateFieldBase";
+import TextFieldBase from "components/common/form_fields/TextFieldBase";
 import PipelineSummaryCardContainer from "./PipelineSummaryCardContainer";
-import PipelineLinkButton from "../../../../common/buttons/pipeline/PipelineLinkButton";
+import PipelineLinkButton from "components/common/buttons/pipeline/PipelineLinkButton";
 
-function PipelineSummaryCard({ pipelineData, isLoading }) {
+function PipelineSummaryCard({ pipelineData, isLoading, loadPipelineInNewWindow }) {
   if (isLoading) {
     return <PipelineSummaryCardContainer isLoading={isLoading} />;
   }
@@ -19,7 +19,7 @@ function PipelineSummaryCard({ pipelineData, isLoading }) {
       <div className="d-flex justify-content-between">
         <DateFieldBase dataObject={pipelineData} fieldName={"createdAt"}/>
         <DateFieldBase dataObject={pipelineData} fieldName={"updatedAt"}/>
-        <PipelineLinkButton pipelineId={pipelineData.getData("_id")}/>
+        <PipelineLinkButton pipelineId={pipelineData.getData("_id")} loadPipelineInNewWindow={loadPipelineInNewWindow}/>
       </div>
     </PipelineSummaryCardContainer>
   );
@@ -27,7 +27,12 @@ function PipelineSummaryCard({ pipelineData, isLoading }) {
 
 PipelineSummaryCard.propTypes = {
   pipelineData: PropTypes.object,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  loadPipelineInNewWindow: PropTypes.bool
 };
+
+PipelineSummaryCard.defaultProps = {
+  loadPipelineInNewWindow: true
+}
 
 export default PipelineSummaryCard;
