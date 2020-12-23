@@ -50,22 +50,22 @@ function SFDCToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVault
     if (validateRequiredFields()) {
       setIsSaving(true);
       let newConfiguration = formData;
-      if (typeof(newConfiguration.sfdc_client_id) === "string") {
+      if (typeof(newConfiguration.sfdc_client_id) === "string" && newConfiguration.sfdc_client_secret.length > 0) {
         // toolId, toolIdentifier, key, name, value
         newConfiguration.sfdc_client_id = await saveToVault(toolId, "sfdc", "client_id", "Vault SFDC client Id", newConfiguration.sfdc_client_id);
       }
       
-      if (typeof(newConfiguration.sfdc_client_secret) === "string") {
+      if (typeof(newConfiguration.sfdc_client_secret) === "string" && newConfiguration.sfdc_client_secret.length > 0) {
         // toolId, toolIdentifier, key, name, value
         newConfiguration.sfdc_client_secret = await saveToVault(toolId,  "sfdc", "client_secret", "Vault Client Secret", newConfiguration.sfdc_client_secret);
       }
       
-      if (typeof(newConfiguration.sfdc_password) === "string") {
+      if (typeof(newConfiguration.sfdc_password) === "string" && newConfiguration.sfdc_password.length > 0) {
         // toolId, toolIdentifier, key, name, value
         newConfiguration.sfdc_password = await saveToVault(toolId, "sfdc", "password", "Vault SFDC password", newConfiguration.sfdc_password);
       }
 
-      if (typeof(newConfiguration.sfdc_token) === "string") {
+      if (typeof(newConfiguration.sfdc_token) === "string" && newConfiguration.sfdc_token.length > 0 ) {
         // toolId, toolIdentifier, key, name, value
         newConfiguration.sfdc_token = await saveToVault(toolId, "sfdc", "token", "Vault SFDC token", newConfiguration.sfdc_token);
       }
@@ -122,7 +122,7 @@ function SFDCToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVault
     if ( toolURL.length === 0 || accountUsername.length === 0 ||
       sfdc_client_id.length === 0 ||
       sfdc_client_secret.length === 0 ||
-      sfdc_token.length === 0 ||
+      // sfdc_token.length === 0 ||
       sfdc_password.length === 0 ) {
       let toast = getFormValidationErrorDialog(setShowToast);
       setToast(toast);
@@ -162,7 +162,7 @@ function SFDCToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVault
         </Form.Group>
 
         <Form.Group controlId="awsRegion">
-          <Form.Label>SFDC Token*</Form.Label>
+          <Form.Label>SFDC Token</Form.Label>
           <Form.Control maxLength="256" type="password" placeholder="" value={formData.sfdc_token || ""} onChange={e => setFormData({ ...formData, sfdc_token: e.target.value.trim() })} />
         </Form.Group>
 

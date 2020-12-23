@@ -128,6 +128,7 @@ const SfdcPipelineComponents = ({
 
   const handleComponentCheck = (e) => {
     const newValue = e.target.name;
+    // console.log("selected value: " ,newValue)
     if (e.target.checked) {
       setSelectedComponentTypes((selectedComponentTypes) => [...selectedComponentTypes, newValue]);
     } else {
@@ -158,7 +159,7 @@ const SfdcPipelineComponents = ({
     try {
       const result = await sfdcPipelineActions.getModifiedFiles(data, getAccessToken);
       // setModifiedFiles(result.data); 
-      console.log(result.data)
+      // console.log(result.data)
       if (result.data.status === 500) {
         console.error("Error getting API Data: ", result.data.message);
         setError(result.data.message);
@@ -325,16 +326,22 @@ const SfdcPipelineComponents = ({
                     <>
                       {typeof componentTypes === "object" &&
                         componentTypes.map((item, idx) => (
-                          <div key={item} className="p-2 w-25">
+                          <div key={idx} className="p-2 w-25">
+                            <OverlayTrigger
+                              placement="right"
+                              delay={{ show: 250, hide: 400 }}
+                              overlay={renderTooltip(item.value)}
+                              >
                             <Form.Check
                               inline
                               type={"checkbox"}
-                              label={item}
-                              name={item}
-                              id={item}
-                              checked={selectedComponentTypes.includes(item)}
+                              label={item.name}
+                              name={item.name}
+                              id={item.name}
+                              checked={selectedComponentTypes.includes(item.name)}
                               onChange={handleComponentCheck}
                             />
+                            </OverlayTrigger>
                           </div>
                           
                         ))}
