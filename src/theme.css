@@ -1194,7 +1194,7 @@ a.nav-link {
 }
 
 .toast-wrapper {
-  z-index: 100;
+  z-index: 1500;
   position: fixed;
   bottom: 2em;
   left: 1em;
