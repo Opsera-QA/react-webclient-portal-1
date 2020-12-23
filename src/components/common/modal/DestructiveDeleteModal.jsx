@@ -6,7 +6,7 @@ import {cannotBeUndone} from "../tooltip/popover-text";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 
-function DestructiveDeleteModal({ deleteTopic, deleteDetails, showModal, setShowModal, handleDelete }) {
+function DestructiveDeleteModal({ deleteTopic, deleteDetails, showModal, setShowModal, handleDelete, modalSize }) {
   const [confirmText, setConfirmText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -33,7 +33,7 @@ function DestructiveDeleteModal({ deleteTopic, deleteDetails, showModal, setShow
   };
 
   return (
-    <Modal size="md" show={showModal} onHide={handleClose} backdrop="static">
+    <Modal size={modalSize} show={showModal} onHide={handleClose} backdrop="static">
       <Modal.Header closeButton>
         <Modal.Title>Confirm Destructive Delete</Modal.Title>
       </Modal.Header>
@@ -68,6 +68,11 @@ DestructiveDeleteModal.propTypes = {
   showModal: PropTypes.bool,
   setShowModal: PropTypes.func,
   handleDelete: PropTypes.func,
+  modalSize: PropTypes.string
+};
+
+DestructiveDeleteModal.defaultProps = {
+  modalSize: "md"
 };
 
 export default DestructiveDeleteModal;

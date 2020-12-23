@@ -1,9 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
 import {AuthContext} from "../../../contexts/AuthContext";
 import {DialogToastContext} from "../../../contexts/DialogToastContext";
-import LoadingDialog from "../../common/status_notifications/loading";
-import ScreenContainer from "../../common/panels/general/ScreenContainer";
-import AccessDeniedDialog from "../../common/status_notifications/accessDeniedInfo";
+import LoadingDialog from "components/common/status_notifications/loading";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
+import BreadcrumbPageLink from "components/common/links/BreadcrumbPageLink";
 
 function ToolReports() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -36,7 +37,7 @@ function ToolReports() {
     }
   };
 
-  if (!accessRoleData || isLoading) {
+  if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   }
 
@@ -48,8 +49,9 @@ function ToolReports() {
     <ScreenContainer
       breadcrumbDestination={"toolReports"}
       pageDescription={"You will be able to view Tool Reports here."}
+      isLoading={isLoading}
     >
-      {/*{TODO: Add reports links here}*/}
+      <BreadcrumbPageLink breadcrumbDestination={"toolsUsedInPipelineReport"} />
     </ScreenContainer>
   );
 }

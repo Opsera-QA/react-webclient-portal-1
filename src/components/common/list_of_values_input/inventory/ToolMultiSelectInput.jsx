@@ -32,11 +32,8 @@ function ToolMultiSelectInput({ fieldName, dataObject, setDataObject, disabled, 
   };
 
   const loadTools = async () => {
-    const response = await toolsActions.getTools(getAccessToken);
-
-    if (response?.data != null) {
-      setTools(response.data);
-    }
+    const response = await toolsActions.getFullToolRegistryList(getAccessToken);
+    setTools(response?.data?.data);
   };
 
   const getInfoText = () => {
@@ -93,7 +90,7 @@ ToolMultiSelectInput.propTypes = {
 };
 
 ToolMultiSelectInput.defaultProps = {
-  valueField: "id",
+  valueField: "_id",
   textField: "name"
 };
 

@@ -87,6 +87,19 @@ toolsActions.getToolRegistryList = async (toolFilterDto, getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
+toolsActions.getFullToolRegistryList = async (getAccessToken) => {
+  let urlParams = {
+    params: {
+      sort: "name",
+      size: 1000,
+    }
+  }
+
+  const apiUrl = `/registry`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
+};
+
+
 toolsActions.getToolTypes = async (getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = "/registry/types";
@@ -94,6 +107,11 @@ toolsActions.getToolTypes = async (getAccessToken) => {
     .then((result) =>  {return result;})
     .catch(error => {throw error;});
   return response;
+};
+
+toolsActions.getRelevantPipelines = async (toolDto, getAccessToken) => {
+  const apiUrl = `/registry/${toolDto.getData("_id")}/pipelines`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
 toolsActions.updateToolConfiguration = async (toolData, getAccessToken) => {
