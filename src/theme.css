@@ -1043,7 +1043,7 @@ a.nav-link {
 
 .page-description {
   background-color: #E7E5ED;
-  height: 2em;
+  min-height: 2em;
 }
 
 .detail-view-body .detail-view-summary {

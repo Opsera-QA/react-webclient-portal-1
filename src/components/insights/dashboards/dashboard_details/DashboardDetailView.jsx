@@ -1,20 +1,20 @@
 import React, { useContext, useState, useEffect } from "react";
-import { AuthContext } from "../../../contexts/AuthContext";
-import Model from "../../../core/data_model/model";
+import { AuthContext } from "../../../../contexts/AuthContext";
+import Model from "../../../../core/data_model/model";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import {DialogToastContext} from "../../../contexts/DialogToastContext";
+import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faAnalytics, faCogs } from "@fortawesome/pro-light-svg-icons";
 import DashboardViewer from "./DashboardViewer";
 import DashboardEditorPanel from "./DashboardEditorPanel";
-import DetailScreenContainer from "../../common/panels/detail_view_container/DetailScreenContainer";
+import DetailScreenContainer from "../../../common/panels/detail_view_container/DetailScreenContainer";
 import dashboardsActions from "../dashboards-actions";
 import dashboardMetadata from "../dashboard-metadata";
-import ActionBarContainer from "../../common/actions/ActionBarContainer";
-import ActionBarDeleteButton2 from "../../common/actions/buttons/ActionBarDeleteButton2";
-import FavoriteInput from "../../common/inputs/FavoriteInput";
+import ActionBarContainer from "../../../common/actions/ActionBarContainer";
+import ActionBarDeleteButton2 from "../../../common/actions/buttons/ActionBarDeleteButton2";
+import FavoriteInput from "../../../common/inputs/FavoriteInput";
 
 function DashboardDetailView() {
     const { tab, id } = useParams();

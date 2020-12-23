@@ -1,16 +1,16 @@
 import React, { useState, useContext }  from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
-import EditorPanelContainer from "../common/panels/detail_panel_container/EditorPanelContainer";
-import DtoTextInput from "../common/input/dto_input/dto-text-input";
-import DateRangeInput from "../common/input/DateRangeInput";
-import DtoTagManagerFilterInput from "../common/input/dto_input/dto-tag-manager-filter-input";
-import LenientSaveButton from "../common/buttons/saving/LenientSaveButton";
-import CancelButton from "../common/buttons/CancelButton";
-import kpiConfigurationMetadata from "./kpi-configuration-metadata";
-import {kpiDateFilterMetadata, kpiTagsFilterMetadata} from "./kpi-configuration-metadata";
-import Model from "../../core/data_model/model";
-import dashboardsActions from "./dashboards-actions";
+import EditorPanelContainer from "../../../common/panels/detail_panel_container/EditorPanelContainer";
+import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
+import DateRangeInput from "../../../common/input/DateRangeInput";
+import DtoTagManagerFilterInput from "../../../common/input/dto_input/dto-tag-manager-filter-input";
+import LenientSaveButton from "../../../common/buttons/saving/LenientSaveButton";
+import CancelButton from "../../../common/buttons/CancelButton";
+import kpiConfigurationMetadata from "../kpi-configuration-metadata";
+import {kpiDateFilterMetadata, kpiTagsFilterMetadata} from "../kpi-configuration-metadata";
+import Model from "../../../../core/data_model/model";
+import dashboardsActions from "../../dashboards/dashboards-actions";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 
 function KpiSettingsForm({kpiConfiguration, dashboardData, index, setView}) {

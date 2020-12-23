@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
-import Model from "../../core/data_model/model";
+import Model from "../../../core/data_model/model";
 import dashboardMetadata from "./dashboard-metadata";
-import CreateModal from "../common/modal/CreateModal";
+import CreateModal from "../../common/modal/CreateModal";
 import DashboardEditorPanel from "./dashboard_details/DashboardEditorPanel";
 
 function NewDashboardModal({ setShowModal, loadData, showModal } ) {

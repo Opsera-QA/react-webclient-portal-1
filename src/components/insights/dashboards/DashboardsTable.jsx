@@ -4,17 +4,17 @@ import CustomTable from "components/common/table/CustomTable";
 import {
   getTableDateColumn, getTableFavoriteColumn,
   getTableTextColumn
-} from "../common/table/table-column-helpers";
+} from "../../common/table/table-column-helpers";
 import dashboardMetadata from "./dashboard-metadata";
 import {useHistory} from "react-router-dom";
-import {getField} from "../common/metadata/metadata-helpers";
-import SearchFilter from "../common/filters/search/SearchFilter";
-import FilterBar from "../common/filters/FilterBar";
-import StatusFilter from "../common/filters/status/StatusFilter";
-import DashboardTypeFilter from "../common/filters/dashboards/DashboardTypeFilter";
-import FavoritesFilter from "../common/filters/dashboards/FavoritesFilter";
+import {getField} from "../../common/metadata/metadata-helpers";
+import SearchFilter from "../../common/filters/search/SearchFilter";
+import FilterBar from "../../common/filters/FilterBar";
+import StatusFilter from "../../common/filters/status/StatusFilter";
+import DashboardTypeFilter from "../../common/filters/dashboards/DashboardTypeFilter";
+import FavoritesFilter from "../../common/filters/dashboards/FavoritesFilter";
 import NewDashboardModal from "./NewDashboardModal";
-import {AuthContext} from "../../contexts/AuthContext";
+import {AuthContext} from "../../../contexts/AuthContext";
 
 function DashboardsTable({data, dashboardFilterDto, setDashboardFilterDto, loadData, isLoading}) {
   const {getAccessToken} = useContext(AuthContext);

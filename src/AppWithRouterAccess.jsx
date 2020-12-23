@@ -20,8 +20,6 @@ import ApiConnector from "./components/api_connector/ApiConnector";
 import Pipeline from "./components/pipeline/index";
 import Platform from "./components/platform/Platform";
 import Analytics from "./components/analytics/Analytics";
-import Insights from "./components/insights/Insights";
-import DashboardDetailView from "./components/insights/dashboard_details/DashboardDetailView"
 import Logs from "./components/logs/Logs";
 import Update from "./components/update/Update";
 import AdminTools from "./components/admin/AdminTools";
@@ -76,13 +74,15 @@ import ToolReports from "./components/reports/tools/ToolReports";
 import PipelineReports from "./components/reports/pipelines/PipelineReports";
 import TagReports from "./components/reports/tags/TagReports";
 import Reports_Old from "./components/reports/Reports_Old";
-import Marketplace from "components/insights/kpi_marketplace/Marketplace";
+import Marketplace from "components/insights/marketplace/Marketplace";
 import AnalyticsProfileSettings from "./components/settings/analytics/analyticsProfileSettings";
 import SiteNotificationManagement from "./components/admin/site_notifications/SiteNotificationManagement";
 import SiteNotificationDetailView
   from "./components/admin/site_notifications/site_notification_detail_view/SiteNotificationDetailView";
 import Notifications from "./components/notifications/Notifications";
 import ToolsUsedInPipelineReport from "./components/reports/tools/pipelines/ToolsUsedInPipelineReport";
+import Insights from "./components/insights/dashboards/Insights";
+import DashboardDetailView from "./components/insights/dashboards/dashboard_details/DashboardDetailView";
 
 const OktaAuth = require("@okta/okta-auth-js");
 const config = require("./config");

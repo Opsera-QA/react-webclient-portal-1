@@ -74,8 +74,8 @@ const breadcrumbs = {
   pipelineDetailView: {name: "pipelineDetailView", path: paths.pipelineDetailView, label: "Pipeline Details", icon: faDraftingCompass},
 
   //Insights
-  insights: {name: "insights", path: paths.insights, label: "Insights"},
-  dashboardViewer: {name: "dashboardViewer", path: paths.dashboardViewer, label: "Dashboard Details"},
+  insights: {name: "insights", path: paths.insights, label: "Insights", icon: faChartNetwork},
+  dashboardViewer: {name: "dashboardViewer", path: paths.dashboardViewer, label: "Dashboard Details", icon: faChartNetwork},
 
   //Reports
   reports: {name: "reports", path: paths.reports, label: "Reports", icon: faAnalytics},
