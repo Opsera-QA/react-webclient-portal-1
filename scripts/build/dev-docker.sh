@@ -1,5 +1,6 @@
 #!/bin/bash
 set -xe
+aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 440953937617.dkr.ecr.us-east-2.amazonaws.com
 docker build -t opsera-reactapp:kube-dev --build-arg build_env=kube-dev  ../../
 docker run --rm \
         440953937617.dkr.ecr.us-east-2.amazonaws.com/kubectl \
