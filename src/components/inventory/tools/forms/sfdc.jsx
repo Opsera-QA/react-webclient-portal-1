@@ -53,21 +53,29 @@ function SFDCToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVault
       if (typeof(newConfiguration.sfdc_client_id) === "string" && newConfiguration.sfdc_client_secret.length > 0) {
         // toolId, toolIdentifier, key, name, value
         newConfiguration.sfdc_client_id = await saveToVault(toolId, "sfdc", "client_id", "Vault SFDC client Id", newConfiguration.sfdc_client_id);
+      } else {
+        newConfiguration.sfdc_client_id = typeof(newConfiguration.sfdc_client_id) === "object" ? newConfiguration.sfdc_client_id : null;
       }
       
       if (typeof(newConfiguration.sfdc_client_secret) === "string" && newConfiguration.sfdc_client_secret.length > 0) {
         // toolId, toolIdentifier, key, name, value
         newConfiguration.sfdc_client_secret = await saveToVault(toolId,  "sfdc", "client_secret", "Vault Client Secret", newConfiguration.sfdc_client_secret);
+      } else {
+        newConfiguration.sfdc_client_secret = typeof(newConfiguration.sfdc_client_secret) === "object" ? newConfiguration.sfdc_client_secret : null;
       }
       
       if (typeof(newConfiguration.sfdc_password) === "string" && newConfiguration.sfdc_password.length > 0) {
         // toolId, toolIdentifier, key, name, value
         newConfiguration.sfdc_password = await saveToVault(toolId, "sfdc", "password", "Vault SFDC password", newConfiguration.sfdc_password);
+      } else {
+        newConfiguration.sfdc_password = typeof(newConfiguration.sfdc_password) === "object" ? newConfiguration.sfdc_password : null;
       }
 
       if (typeof(newConfiguration.sfdc_token) === "string" && newConfiguration.sfdc_token.length > 0 ) {
         // toolId, toolIdentifier, key, name, value
         newConfiguration.sfdc_token = await saveToVault(toolId, "sfdc", "token", "Vault SFDC token", newConfiguration.sfdc_token);
+      } else {
+        newConfiguration.sfdc_token = typeof(newConfiguration.sfdc_token) === "object" ? newConfiguration.sfdc_token : null;
       }
 
       const item = {
@@ -109,7 +117,7 @@ function SFDCToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVault
 
       if(key === "token") {
         setFormData(formData => {
-          return { ...formData,  sfdc_token: {} };
+          return { ...formData,  sfdc_token: null };
         });  
       }
 
