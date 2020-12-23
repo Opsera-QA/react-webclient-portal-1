@@ -4,11 +4,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCogs} from "@fortawesome/pro-light-svg-icons";
 import KpiSettingsForm from "../KpiSettingsForm";
 
-import OpseraPipelineByStatusBarChart from "./opsera/bar_chart/pipeline_by_status/opseraPipelineByStatusBarChart";
-import OpseraBuildDurationBarChart from "./opsera/bar_chart/build_duration/opseraBuildDurationBarChart";
-import OpseraBuildsByUserBarChart from "./opsera/bar_chart/builds_by_user/opseraBuildsByUserBarChart";
-import OpseraDeploymentFrequencyLineChart from "./opsera/line_chart/deployment_frequency/opseraDeploymentFrequencyLineChart";
-import OpseraRecentPipelineStatus from "./opsera/opseraRecentPipelineStatus";
+import OpseraPipelineByStatusBarChart from "./opsera/bar_chart/pipeline_by_status/OpseraPipelineByStatusBarChart";
+import OpseraBuildDurationBarChart from "./opsera/bar_chart/build_duration/OpseraBuildDurationBarChart";
+import OpseraBuildsByUserBarChart from "./opsera/bar_chart/builds_by_user/OpseraBuildsByUserBarChart";
+import OpseraDeploymentFrequencyLineChart from "./opsera/line_chart/deployment_frequency/OpseraDeploymentFrequencyLineChart";
+import OpseraRecentPipelineStatus from "./opsera/OpseraRecentPipelineStatus";
 
 function ChartView({kpiConfiguration, dashboardData, index}) {
     const [view, setView] = useState("chart");
