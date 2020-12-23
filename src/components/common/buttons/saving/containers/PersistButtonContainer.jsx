@@ -7,7 +7,15 @@ import CreateButton from "../CreateButton";
 function PersistButtonContainer({ recordDto, setRecordDto, updateRecord, createRecord, handleClose, addAnotherOption }) {
   const getSaveButton = () => {
     if (recordDto.isNew()){
-      return (<CreateButton createRecord={createRecord} handleClose={handleClose} recordDto={recordDto} setRecordDto={setRecordDto} addAnotherOption={addAnotherOption} />);
+      return (
+        <CreateButton
+          createRecord={createRecord}
+          handleClose={handleClose}
+          recordDto={recordDto}
+          setRecordDto={setRecordDto}
+          addAnotherOption={addAnotherOption}
+        />
+      );
     }
 
     return (<StrictSaveButton recordDto={recordDto} updateRecord={updateRecord} />);
@@ -27,6 +35,10 @@ PersistButtonContainer.propTypes = {
   setRecordDto: PropTypes.func,
   handleClose: PropTypes.func,
   addAnotherOption: PropTypes.bool
+};
+
+PersistButtonContainer.defaultProps = {
+  addAnotherOption: true
 };
 
 export default PersistButtonContainer;

@@ -33,12 +33,20 @@ function CreateButton({recordDto, createRecord, disable, showSuccessToasts, leni
     return (<span><FontAwesomeIcon icon={faSave} fixedWidth className="mr-2"/>{`Create ${recordDto.getType()}`}</span>);
   };
 
+  const getAddAnotherCheckbox = () => {
+    if (addAnotherOption) {
+      return (
+        <div className="d-flex mr-2 mb-2">
+          <div><span className="text-muted mr-2">Add Another</span></div>
+          <div><input className="mt-1" type="checkbox" checked={addAnother} onClick={() => setAddAnother(!addAnother)} /></div>
+        </div>
+      );
+    }
+  };
+
   return (
     <div className="px-2">
-      {addAnotherOption && <div className="d-flex mr-2 mb-2">
-        <div><span className="text-muted mr-2">Add Another</span></div>
-        <div><input className="mt-1" type="checkbox" checked={addAnother} onClick={() => setAddAnother(!addAnother)} /></div>
-      </div>}
+      {getAddAnotherCheckbox()}
       <Button size="sm" variant="primary" disabled={isSaving || disable} onClick={() => persistRecord()}>
         {getLabel()}
       </Button>
@@ -57,7 +65,8 @@ CreateButton.propTypes = {
 };
 
 CreateButton.defaultProps = {
-  showSuccessToasts: true
+  showSuccessToasts: true,
+  addAnotherOption: true
 }
 
 export default CreateButton;
