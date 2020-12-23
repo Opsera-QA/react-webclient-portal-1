@@ -1,14 +1,14 @@
 import React, { useEffect, useContext, useState, useMemo } from "react";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import { axiosApiService } from "../../../../api/apiService";
-import LoadingDialog from "../../../common/status_notifications/loading";
-import InfoDialog from "../../../common/status_notifications/info";
-import ErrorDialog from "../../../common/status_notifications/error";
+import LoadingDialog from "components/common/status_notifications/loading";
+import InfoDialog from "components/common/status_notifications/info";
+import ErrorDialog from "components/common/status_notifications/error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
-import CustomTable from "../../../common/table/CustomTable";
+import CustomTable from "components/common/table/CustomTable";
 import { format } from "date-fns";
-import "../../../analytics/charts/charts.css";
+import "components/analytics/charts/charts.css";
 
 function OpseraRecentPipelineStatus({ date }) {
   const contextType = useContext(AuthContext);

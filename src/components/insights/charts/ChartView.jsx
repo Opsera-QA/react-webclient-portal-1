@@ -1,15 +1,14 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Button, Card, Col, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCogs} from "@fortawesome/pro-light-svg-icons";
-import KpiSettingsForm from "./KpiSettingsForm";
+import KpiSettingsForm from "../KpiSettingsForm";
 
-import OpseraPipelineByStatusBarChart from "./charts/opsera/opseraPipelineByStatusBarChart";
-import OpseraBuildDurationBarChart from "./charts/opsera/opseraBuildDurationBarChart";
-import OpseraBuildsByUserBarChart from "./charts/opsera/opseraBuildsByUserBarChart";
-import OpseraDeploymentFrequencyLineChart from "./charts/opsera/opseraDeploymentFrequencyLineChart";
-import OpseraRecentPipelineStatus from "./charts/opsera/opseraRecentPipelineStatus";
+import OpseraPipelineByStatusBarChart from "./opsera/bar_chart/pipeline_by_status/opseraPipelineByStatusBarChart";
+import OpseraBuildDurationBarChart from "./opsera/bar_chart/build_duration/opseraBuildDurationBarChart";
+import OpseraBuildsByUserBarChart from "./opsera/bar_chart/builds_by_user/opseraBuildsByUserBarChart";
+import OpseraDeploymentFrequencyLineChart from "./opsera/line_chart/deployment_frequency/opseraDeploymentFrequencyLineChart";
+import OpseraRecentPipelineStatus from "./opsera/opseraRecentPipelineStatus";
 
 function ChartView({kpiConfiguration, dashboardData, index}) {
     const [view, setView] = useState("chart");

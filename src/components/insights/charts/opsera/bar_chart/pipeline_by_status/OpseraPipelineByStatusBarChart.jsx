@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
-import { AuthContext } from "../../../../contexts/AuthContext";
-import { axiosApiService } from "../../../../api/apiService";
-import InfoDialog from "../../../common/status_notifications/info";
+import { AuthContext } from "../../../../../../contexts/AuthContext";
+import { axiosApiService } from "../../../../../../api/apiService";
+import InfoDialog from "components/common/status_notifications/info";
 import config from "./opseraPipelineByStatusBarChartConfigs";
-import "../../../analytics/charts/charts.css";
-import ModalLogs from "../../../common/modal/modalLogs";
-import LoadingDialog from "../../../common/status_notifications/loading";
-import ErrorDialog from "../../../common/status_notifications/error";
+import "components/analytics/charts/charts.css";
+import ModalLogs from "components/common/modal/modalLogs";
+import LoadingDialog from "components/common/status_notifications/loading";
+import ErrorDialog from "components/common/status_notifications/error";
 
 
 function OpseraPipelineByStatusBarChar( { persona, date  } ) {
