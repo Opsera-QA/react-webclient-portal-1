@@ -13,7 +13,7 @@ function ScreenContainer({ breadcrumbDestination, pageDescription, children, isL
     }
 
     return (
-      <div className="page-description pl-3 pt-1">
+      <div className="page-description px-3 py-1">
         {pageDescription}
       </div>
     );

@@ -18,11 +18,11 @@ import MarketplaceCard from './MarketplaceCard';
 import KpiActions from 'components/admin/kpi_editor/kpi-editor-actions';
 import {DialogToastContext} from "../../../contexts/DialogToastContext";
 import KPIInfoModal from "./KPIInfoModal";
-import dashboardMetadata from "../dashboard-metadata";
+import dashboardMetadata from "../dashboards/dashboard-metadata";
 import KpiCategoryFilter from "components/common/filters/insights/kpi_marketplace/KpiCategoryFilter";
 import ToolIdentifierFilter from "components/common/filters/tools/ToolIdentifierFilter";
 import InlineInformation from "components/common/status_notifications/inline/InlineInformation";
-import dashboardsActions from "components/insights/dashboards-actions";
+import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 
 export default function Marketplace () {  
   const contextType = useContext(AuthContext);

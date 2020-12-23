@@ -6,12 +6,12 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { formatDistanceToNowStrict } from "date-fns";
 import PropTypes from 'prop-types'
 import { DialogToastContext } from "contexts/DialogToastContext";
-import dashboardsActions from "components/insights/dashboards-actions";
+import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import { Row, Col } from "react-bootstrap";
 import DropdownList from "react-widgets/lib/DropdownList";
 import Model from "../../../core/data_model/model";
-import dashboardMetadata from "../dashboard-metadata";
-import dashboardFilterMetadata from "../dashboard-filter-metadata";
+import dashboardMetadata from "../dashboards/dashboard-metadata";
+import dashboardFilterMetadata from "../dashboards/dashboard-filter-metadata";
 
 function KPIInfoView({data, dashboardData, setShowModal}) {
   const { getAccessToken } = useContext(AuthContext);

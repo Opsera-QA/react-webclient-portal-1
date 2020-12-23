@@ -1,14 +1,15 @@
 import React, {useEffect, useState, useContext} from "react";
 import { AuthContext } from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
-import AccessDeniedDialog from "../common/status_notifications/accessDeniedInfo";
-import {DialogToastContext} from "../../contexts/DialogToastContext";
+import AccessDeniedDialog from "../../common/status_notifications/accessDeniedInfo";
+import {DialogToastContext} from "../../../contexts/DialogToastContext";
 import DashboardsTable from "./DashboardsTable";
 import dashboardsActions from "./dashboards-actions";
-import Model from "../../core/data_model/model";
+import Model from "../../../core/data_model/model";
 import dashboardFilterMetadata from "./dashboard-filter-metadata";
-import analyticsProfileActions from "../settings/analytics/analytics-profile-settings-actions";
-import AnalyticsProfileSettings from "../settings/analytics/activateAnalyticsCard";
+import analyticsProfileActions from "../../settings/analytics/analytics-profile-settings-actions";
+import AnalyticsProfileSettings from "../../settings/analytics/activateAnalyticsCard";
+import ScreenContainer from "../../common/panels/general/ScreenContainer";
 
 function Insights() {
   const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
@@ -34,9 +35,13 @@ function Insights() {
     }
   };
 
-  const getProfile = async() => {
+  const getProfile = async(filterDto = dashboardFilterDto) => {
     let settings = await analyticsProfileActions.fetchProfile(getAccessToken);
     setProfile(settings.data);
+
+    if (settings?.data?.enabledToolsOn) {
+      await getDashboards(filterDto);
+    }
   }
 
   const getDashboards = async (filterDto = dashboardFilterDto) => {
@@ -55,8 +60,7 @@ function Insights() {
       setAccessRoleData(userRoleAccess);
 
       if (userRoleAccess.OpseraAdministrator) {
-        await getProfile();
-        await getDashboards(filterDto);
+        await getProfile(filterDto);
       }
     }
   };
@@ -95,15 +99,16 @@ function Insights() {
   }
 
   return (
-    <div className="max-content-width">
-      <h4>Insights</h4>
-      <p>
+    <ScreenContainer
+      pageDescription={`
         OpsERA provides users with access to a vast repository of logging and analytics. Access all available
         logging, reports and configurations around the OpsERA Analytics Platform or search your currently
         configured logs repositories below.
-      </p>
+      `}
+      breadcrumbDestination={"insights"}
+    >
       {getInsightsView()}
-    </div>
+    </ScreenContainer>
   );
 
 }
