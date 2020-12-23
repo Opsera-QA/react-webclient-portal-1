@@ -1,17 +1,15 @@
 import React,  { useState, useEffect, useContext } from 'react';
-import PropTypes from "prop-types";
-import { InputGroup, Form, CardColumns, Container, Row, Col, Modal, Button } from "react-bootstrap";
+import { InputGroup, Form, CardColumns, Row, Col, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSpinner,
   faSearch,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
-import DropdownList from "react-widgets/lib/DropdownList";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { useLocation } from 'react-router-dom';
-import LoadingDialog from "../../common/status_notifications/loading";
-import ErrorDialog from "../../common/status_notifications/error";
+import LoadingDialog from "components/common/status_notifications/loading";
+import ErrorDialog from "components/common/status_notifications/error";
 import Model from "../../../core/data_model/model";
 import kpiMarketplaceFilterMetadata from "./kpi-marketplace-filter-metadata";
 import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
@@ -21,10 +19,10 @@ import KpiActions from 'components/admin/kpi_editor/kpi-editor-actions';
 import {DialogToastContext} from "../../../contexts/DialogToastContext";
 import KPIInfoModal from "./KPIInfoModal";
 import dashboardMetadata from "../dashboard-metadata";
-import KpiCategoryFilter from "../../common/filters/insights/kpi_marketplace/KpiCategoryFilter";
-import ToolIdentifierFilter from "../../common/filters/tools/ToolIdentifierFilter";
-import InlineInformation from "../../common/status_notifications/inline/InlineInformation";
-import dashboardsActions from "../../insights/dashboards-actions";
+import KpiCategoryFilter from "components/common/filters/insights/kpi_marketplace/KpiCategoryFilter";
+import ToolIdentifierFilter from "components/common/filters/tools/ToolIdentifierFilter";
+import InlineInformation from "components/common/status_notifications/inline/InlineInformation";
+import dashboardsActions from "components/insights/dashboards-actions";
 
 export default function Marketplace () {  
   const contextType = useContext(AuthContext);

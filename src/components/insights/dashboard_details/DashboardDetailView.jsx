@@ -75,7 +75,7 @@ function DashboardDetailView() {
     const getActionBar = () => {
       return (
         <ActionBarContainer>
-          <div></div>
+          <div/>
           <div className="d-inline-flex float-right">
           <FavoriteInput dataObject={dashboardData} setDataObject={setDashboardData} fieldName={"isFavorite"} /> 
             <ActionBarDeleteButton2

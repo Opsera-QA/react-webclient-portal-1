@@ -17,7 +17,7 @@ function Insights() {
   const [dashboardsList, setDashboardsList] = useState(undefined);
   const [dashboardFilterDto, setDashboardFilterDto] = useState(new Model({...dashboardFilterMetadata.newObjectFields}, dashboardFilterMetadata, false));
   const toastContext = useContext(DialogToastContext);
-  const [profile, setProfile] = useState({});
+  const [profile, setProfile] = useState(undefined);
 
   useEffect(() => {
     loadData();
@@ -26,7 +26,6 @@ function Insights() {
   const loadData = async (filterDto = dashboardFilterDto) => {
     try {
       setIsLoading(true);
-      await getProfile();
       await getRoles(filterDto);
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -54,12 +53,41 @@ function Insights() {
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
+
+      if (userRoleAccess.OpseraAdministrator) {
+        await getProfile();
+        await getDashboards(filterDto);
+      }
     }
-    await getDashboards(filterDto);
+  };
+
+  const getInsightsView = () => {
+    if (!profile) {
+      return (<LoadingDialog size="sm" message="Loading Insights"/>);
+    }
+
+    if (profile?.enabledToolsOn) {
+      return (
+        <DashboardsTable
+          data={dashboardsList}
+          loadData={loadData}
+          isLoading={isLoading}
+          dashboardFilterDto={dashboardFilterDto}
+          setDashboardFilterDto={setDashboardFilterDto}
+          dashboardsActions={dashboardsActions}
+        />
+      );
+    }
+
+    return (
+      <div className="mt-1 max-content-width mb-1">
+        <AnalyticsProfileSettings />
+      </div>
+    );
   };
 
   if (!accessRoleData) {
-    return (<LoadingDialog size="sm"/>);
+    return (<LoadingDialog size="sm" message="Loading Insights"/>);
   }
 
   if (!accessRoleData.OpseraAdministrator) {
@@ -74,19 +102,7 @@ function Insights() {
         logging, reports and configurations around the OpsERA Analytics Platform or search your currently
         configured logs repositories below.
       </p>
-      {profile && !profile.enabledToolsOn ? (
-  <div className="mt-1 max-content-width mb-1">
-    <AnalyticsProfileSettings />
-  </div>
-) :
-      <DashboardsTable
-        data={dashboardsList}
-        loadData={loadData}
-        isLoading={isLoading}
-        dashboardFilterDto={dashboardFilterDto}
-        setDashboardFilterDto={setDashboardFilterDto}
-        dashboardsActions={dashboardsActions}
-      />}
+      {getInsightsView()}
     </div>
   );
 
