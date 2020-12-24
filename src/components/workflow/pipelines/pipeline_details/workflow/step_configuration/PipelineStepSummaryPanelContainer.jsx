@@ -22,7 +22,7 @@ function PipelineStepSummaryPanelContainer({ pipelineData, setActiveTab, childre
       {/*  <DtoJsonField dataObject={childPipelineDataObject} fieldName={"threshold"}/>*/}
       {/*</Col>*/}
       {children}
-      <Row>
+      <Row className={"mt-2"}>
         <Col>
           <ReactJson src={pipelineData?.tool} enableClipboard={false} displayDataTypes={false} collapsed={false}/>
         </Col>

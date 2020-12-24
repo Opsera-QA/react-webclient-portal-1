@@ -48,6 +48,10 @@ import parallelProcessorPipelineStepConfigurationMetadata
 import NpmPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/npm/NpmPipelineStepConfigurationSummaryPanel";
 import npmPipelineStepConfigurationMetadata from "./step_tool_configuration_forms/npm/npm-step-configuration-metadata";
+import ConditionalOperationPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/conditional_operation/ConditionalOperationPipelineStepConfigurationSummaryPanel";
+import conditionalOperationStepConfigurationMetadata
+  from "./step_tool_configuration_forms/conditional_operation/conditional-operation-step-configuration-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -91,6 +95,13 @@ function PipelineStepConfigurationSummary({
           <ChildPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
             childPipelineDataObject={getModelWrappedObject(childPipelineStepConfigurationMetadata)}
+          />
+        );
+      case "conditional-operator":
+        return (
+          <ConditionalOperationPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            conditionalOperationDataObject={getModelWrappedObject(conditionalOperationStepConfigurationMetadata)}
           />
         );
       case "mock-step":
