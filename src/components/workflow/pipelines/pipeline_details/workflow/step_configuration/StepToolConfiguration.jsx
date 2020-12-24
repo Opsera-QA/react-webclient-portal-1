@@ -39,6 +39,8 @@ import ChildPipelineStepConfiguration from "./step_tool_configuration_forms/chil
 import MockPipelineStepConfiguration from "./step_tool_configuration_forms/mock/MockPipelineStepConfiguration";
 import ParallelProcessPipelineStepConfiguration
   from "./step_tool_configuration_forms/parallel_processor/ParallelProcessPipelineStepConfiguration";
+import ConditionalOperationPipelineStepConfiguration
+  from "./step_tool_configuration_forms/conditional_operation/ConditionalOperationPipelineStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -559,6 +561,15 @@ function StepToolConfiguration({
       case "parallel-processor":
         return (
           <ParallelProcessPipelineStepConfiguration
+            pipelineId={pipeline._id}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case "conditional-operator":
+        return (
+          <ConditionalOperationPipelineStepConfiguration
             pipelineId={pipeline._id}
             stepTool={stepTool}
             parentCallback={callbackFunction}

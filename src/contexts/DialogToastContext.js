@@ -58,6 +58,8 @@ function ToastContextProvider ({ children }) {
   );
 
   const addToast = useCallback((toast, id, notificationType) => {
+      // TODO: For now, only show one toast. But, revisit in the future
+      removeAllToasts();
       let newToast = {id: id, toast: toast, type: notificationType};
       setToasts(toasts => [...toasts, newToast]);
     }, [setToasts]
