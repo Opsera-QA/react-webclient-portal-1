@@ -4,11 +4,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCogs} from "@fortawesome/pro-light-svg-icons";
 import KpiSettingsForm from "../marketplace/kpi_marketplace_detail_view/KpiSettingsForm";
 
+// Opsera KPIs
 import OpseraPipelineByStatusBarChart from "./opsera/bar_chart/pipeline_by_status/OpseraPipelineByStatusBarChart";
 import OpseraBuildDurationBarChart from "./opsera/bar_chart/build_duration/OpseraBuildDurationBarChart";
 import OpseraBuildsByUserBarChart from "./opsera/bar_chart/builds_by_user/OpseraBuildsByUserBarChart";
 import OpseraDeploymentFrequencyLineChart from "./opsera/line_chart/deployment_frequency/OpseraDeploymentFrequencyLineChart";
 import OpseraRecentPipelineStatus from "./opsera/OpseraRecentPipelineStatus";
+
+// Jenkins KPIs
+import JenkinsBuildsByUserBarChart from "./jenkins/bar_chart/builds_by_user/JenkinsBuildsByUserBarChart";
+import JenkinsBuildDurationBarChart from "./jenkins/bar_chart/build_duration/JenkinsBuildDurationBarChart";
+import JenkinsStatusByJobNameBarChart from "./jenkins/bar_chart/status_by_job_name/JenkinsStatusByJobNameBarChart"
+
+// Jira KPIs
+import JiraIssuesByPriorityBarChart from "./jira/bar_chart/issues_by_priority/JiraIssuesByPriorityBarChart";
+import JiraTicketsAssignedByUserBarChart from "./jira/bar_chart/tickets_assigned_by_user/JiraTicketsAssignedByUserBarChart";
 
 function ChartView({kpiConfiguration, dashboardData, index}) {
     const [view, setView] = useState("chart");
@@ -59,16 +69,26 @@ function ChartView({kpiConfiguration, dashboardData, index}) {
 
   const getChart = (kpiConfiguration) => {
     switch (kpiConfiguration.kpi_identifier) {
-      case "opserstatusbypipeline":
+      case "opsera-status-by-pipeline":
         return (<OpseraPipelineByStatusBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
-      case "opserabuildduration":
+      case "opsera-pipeline-duration":
         return (<OpseraBuildDurationBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
-      case "opserabuildbyuser":
+      case "opsera-pipelines-by-user":
         return (<OpseraBuildsByUserBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
-      case "opseradeploymentfrequency":
+      case "opsera-deployment-frequency":
         return (<OpseraDeploymentFrequencyLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
-      case "opserarecentpipelinestatus":
+      case "opsera-recent-pipeline-status":
         return (<OpseraRecentPipelineStatus persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+      case "jenkins-builds-by-user":
+        return (<JenkinsBuildsByUserBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+      case "jenkins-build-duration":
+        return (<JenkinsBuildDurationBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+      case "jenkins-status-by-job-name":
+        return (<JenkinsStatusByJobNameBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+      case "jira-tickets-assigned-by-user":
+        return (<JiraTicketsAssignedByUserBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+      case "jira-issues-by-priority":
+        return (<JiraIssuesByPriorityBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
     }
   }
 
