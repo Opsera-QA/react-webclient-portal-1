@@ -126,14 +126,12 @@ function KPIInfoView({data, dashboardData, setShowModal}) {
         <div className="flex-container-bottom pr-2 mt-4 mb-2" >
          <Row>
            <Col md={9} className="py-1">
-            <div className="custom-select-input m-2">
               <DropdownList
               data={dashboardsList}
               textField="name"
               defaultValue={dashboardData ? dashboardData : null}
               onChange={(e) => {setIsDisabled(false); setDashboard(new Model(e, dashboardMetadata, false))}}
               />
-                </div>
               </Col>
             <Col md={3} className="py-1">
               <Button disabled={isLoading || isDisabled} onClick={()=> addKPIToDashboard()}>

@@ -13,8 +13,8 @@ kpiLovHelpers.getChartTypeById = (id) => {
 };
 
 kpiLovHelpers.filters = [
-  {id: "date", label: "Date"},
-  {id: "tag", label: "Tag"},
+  {id: {"type": "tags", "value": null}, label: "Date"},
+  {id: {"type": "date", "value": null}, label: "Tag"},
 ];
 
 kpiLovHelpers.getFilterById = (id) => {

@@ -38,8 +38,12 @@ function KpiSettingsForm({kpiConfiguration, dashboardData, index, setView}) {
       
     const saveKpiSettings = async () => {
         let newKpiSettings = kpiSettings;
-        newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "date")].value = kpiDateFilter.getData("value");
-        newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "tags")].value = kpiTagsFilter.getData("value");
+        if (newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "date")]) {
+            newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "date")].value = kpiDateFilter.getData("value");
+        }
+        if (newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "tags")]) {
+            newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "tags")].value = kpiTagsFilter.getData("value");
+        }
         setKpiSettings({ ...newKpiSettings });
         dashboardData.getData("configuration")[index] = kpiSettings.data;
         setView("chart");
@@ -65,6 +69,7 @@ function KpiSettingsForm({kpiConfiguration, dashboardData, index, setView}) {
             updateRecord={saveKpiSettings}
         />
         <CancelButton
+            size="md"
             cancelFunction={cancelKpiSettings}/>
         </SaveButtonContainer>
         </EditorPanelContainer>
