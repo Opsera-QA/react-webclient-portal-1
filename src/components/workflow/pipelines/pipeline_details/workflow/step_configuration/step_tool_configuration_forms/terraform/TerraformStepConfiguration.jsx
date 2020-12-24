@@ -16,6 +16,7 @@ import GitActionsHelper from "../../helpers/git-actions-helper.js";
 import JSONInput from "react-json-editor-ajrm";
 import locale    from "react-json-editor-ajrm/locale/en";
 import CloseButton from "../../../../../../../common/buttons/CloseButton";
+import pipelineActions from "../../../../../../pipeline-actions";
 
 
 const SCM_TOOL_LIST = [
@@ -23,14 +24,14 @@ const SCM_TOOL_LIST = [
     name: "Gitlab",
     value: "gitlab",
   },
-  // {
-  //   name: "Github",
-  //   value: "github",
-  // },
-  // {
-  //   name: "Bitbucket",
-  //   value: "bitbucket",
-  // },
+  {
+    name: "Github",
+    value: "github",
+  },
+  {
+    name: "Bitbucket",
+    value: "bitbucket",
+  },
 ];
 
 function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, closeEditorPanel }) {
@@ -49,6 +50,8 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
   const [isBranchSearching, setIsBranchSearching] = useState(false);
   const [jsonEditorInvalid, setJsonEditorInvalid] = useState(false);
   const [jsonEditor, setJsonEditor] = useState({});
+  const [workspacesList, setWorkspacesList] = useState([]);
+  const [isWorkspacesSearching, setIsWorkspacesSearching] = useState(false);
 
 
   useEffect(() => {
@@ -61,8 +64,8 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
     if (typeof configuration !== "undefined") {
       setTerraformStepConfigurationDataDto(new Model(configuration, TerraformStepFormMetadata, false));
       await fetchSCMDetails(configuration);
-      await searchRepositories(configuration.type, configuration.gitToolId);
-      await searchBranches(configuration.type, configuration.gitToolId, configuration.gitRepositoryID);
+      await searchRepositories(configuration.type, configuration.gitToolId, configuration.bitbucketWorkspace);
+      await searchBranches(configuration.type, configuration.gitToolId, configuration.gitRepositoryID, configuration.bitbucketWorkspace);
       if (typeof threshold !== "undefined") {
         setThresholdType(threshold.type);
         setThresholdValue(threshold.value);
@@ -98,10 +101,10 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
   };
 
 
-  const searchRepositories = async (service, gitAccountId) => {
+  const searchRepositories = async (service, gitAccountId, workspaces) => {
     setIsRepoSearching(true);
     try {
-      const res = await GitActionsHelper.searchRepositories(service, gitAccountId, getAccessToken);
+      const res = await GitActionsHelper.searchRepositories(service, gitAccountId, workspaces, getAccessToken);
       if (res.data && res.data.data) {
         let arrOfObj = res.data.data;
         if (arrOfObj) {
@@ -136,10 +139,10 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
     }
   };
 
-  const searchBranches = async (service, gitAccountId, repoId) => {
+  const searchBranches = async (service, gitAccountId, repoId, workspaces) => {
     setIsBranchSearching(true);
     try {
-      const res = await GitActionsHelper.searchBranches(service, gitAccountId, repoId, getAccessToken);
+      const res = await GitActionsHelper.searchBranches(service, gitAccountId, repoId,workspaces,  getAccessToken);
       if (res.data && res.data.data) {
         let arrOfObj = res.data.data;
         if (typeof arrOfObj !== "object") {
@@ -178,6 +181,26 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
     }
   };
 
+  const getWorkspaces = async (service, tool, getAccessToken) => {
+    setIsWorkspacesSearching(true);
+    try {
+      let results = await pipelineActions.searchWorkSpaces(service, tool, getAccessToken);
+      if (typeof results != "object") {
+        setWorkspacesList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+        let errorMessage = "Workspace information is missing or unavailable!";
+        toastContext.showErrorDialog(errorMessage);
+      }
+      setWorkspacesList(results);
+    } catch (error) {
+      console.log(error)
+      setWorkspacesList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+      let errorMessage = "Workspace information is missing or unavailable!";
+      toastContext.showErrorDialog(errorMessage);
+    } finally {
+      setIsWorkspacesSearching(false);
+    }
+  }
+
   const callbackFunction = async () => {
     const item = {
       configuration: terraformStepConfigurationDto.getPersistData(),
@@ -197,15 +220,20 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
       newDataObject.setData("gitRepository", "");
       newDataObject.setData("defaultBranch", "");
       newDataObject.setData("gitFilePath", "");
+      newDataObject.setData("bitbucketWorkspace", "");
       setTerraformStepConfigurationDataDto({ ...newDataObject });
-      fetchSCMDetails(terraformStepConfigurationDto.data);
+      await fetchSCMDetails(terraformStepConfigurationDto.data);
       return;
     }
     if (fieldName === "gitToolId") {
       let newDataObject = terraformStepConfigurationDto;
       newDataObject.setData("gitToolId", value.id);
       setTerraformStepConfigurationDataDto({ ...newDataObject });
-      searchRepositories(terraformStepConfigurationDto.getData("type"), terraformStepConfigurationDto.getData("gitToolId"));
+      if (terraformStepConfigurationDto.getData("type") !== "bitbucket") {
+        await searchRepositories(terraformStepConfigurationDto.getData("type"), terraformStepConfigurationDto.getData("gitToolId"));
+        return
+      }
+      await getWorkspaces("bitbucket", terraformStepConfigurationDto.getData("gitToolId"), getAccessToken)
       return;
     }
     if (fieldName === "gitRepository") {
@@ -226,13 +254,25 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
       newDataObject.setData("sshUrl", value.sshUrl);
       newDataObject.setData("gitUrl", value.httpUrl);
       setTerraformStepConfigurationDataDto({ ...newDataObject });
-      searchBranches(
+      await searchBranches(
         terraformStepConfigurationDto.getData("type"),
         terraformStepConfigurationDto.getData("gitToolId"),
         terraformStepConfigurationDto.getData("gitRepositoryID"),
+        terraformStepConfigurationDto.getData("bitbucketWorkspace"),
       );
       return;
       }
+    if (fieldName === "bitbucketWorkspace") {
+      let newDataObject = terraformStepConfigurationDto;
+      newDataObject.setData("bitbucketWorkspace", value);
+      setTerraformStepConfigurationDataDto({ ...newDataObject });
+      await searchRepositories(
+        terraformStepConfigurationDto.getData("type"),
+        terraformStepConfigurationDto.getData("gitToolId"),
+        value
+      );
+      return;
+    }
   };
 
   const handleJsonInputUpdate = (e) => {
@@ -248,6 +288,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
       return
     }
   };
+
 
   if (isLoading || terraformStepConfigurationDto === undefined) {
     return <LoadingDialog size="sm" />;
@@ -294,6 +335,21 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
             busy={isGitSearching}
             disabled={terraformStepConfigurationDto.getData("type").length === 0 || isGitSearching}
           />
+
+          {terraformStepConfigurationDto.getData("type") === "bitbucket" && (
+            <DtoSelectInput
+              setDataFunction={handleDTOChange}
+              setDataObject={setTerraformStepConfigurationDataDto}
+              textField={"name"}
+              valueField={"value"}
+              dataObject={terraformStepConfigurationDto}
+              filter={"contains"}
+              selectOptions={workspacesList ? workspacesList : []}
+              fieldName={"bitbucketWorkspace"}
+              busy={isWorkspacesSearching}
+              disabled={terraformStepConfigurationDto.getData("gitToolId").length === 0 || isWorkspacesSearching}
+            />
+          )}
 
           <DtoSelectInput
             setDataFunction={handleDTOChange}
@@ -355,7 +411,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
             <div style={{ border: "1px solid #ced4da", borderRadius: ".25rem" }}>
               <JSONInput
                 placeholder={
-                  Object.keys(terraformStepConfigurationDto.getData("keyValueMap")).length > 0
+                  typeof terraformStepConfigurationDto.getData("keyValueMap") === "object" && Object.keys(terraformStepConfigurationDto.getData("keyValueMap")).length > 0
                     ? terraformStepConfigurationDto.getData("keyValueMap")
                     : undefined
                 }

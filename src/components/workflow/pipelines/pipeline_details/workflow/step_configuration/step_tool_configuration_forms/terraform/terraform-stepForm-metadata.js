@@ -33,6 +33,10 @@ const TerraformStepFormMetadata = {
     {
       label: "Git Repository ID",
       id: "gitRepositoryID",
+    },
+    {
+      label: "BitBucket Workspace",
+      id: "bitbucketWorkspace",
     }
   ],
   newModelBase: {
@@ -44,6 +48,7 @@ const TerraformStepFormMetadata = {
     gitRepositoryID: "",
     sshUrl:"",
     gitUrl:"",
+    bitbucketWorkspace : "",
     keyValueMap: {}
   }
 };
