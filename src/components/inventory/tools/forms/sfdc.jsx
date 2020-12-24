@@ -101,17 +101,17 @@ function SFDCToolConfiguration( { toolData, toolId, fnSaveChanges, fnSaveToVault
     } else {
       if(key === "client_id") {
         setFormData(formData => {
-          return { ...formData, sfdc_client_id: {} };
+          return { ...formData, sfdc_client_id: null };
         });  
       }
       if(key === "client_secret") {
         setFormData(formData => {
-          return { ...formData, sfdc_client_secret: {} };
+          return { ...formData, sfdc_client_secret: null };
         });  
       }
       if(key === "password") {
         setFormData(formData => {
-          return { ...formData,  sfdc_password: {} };
+          return { ...formData,  sfdc_password: null };
         });  
       } 
 
