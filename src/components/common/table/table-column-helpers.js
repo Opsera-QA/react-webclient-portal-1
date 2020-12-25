@@ -88,6 +88,29 @@ export const getPipelineStatusIcon = (props) => {
   }
 };
 
+// TODO: merge with above method
+export const getPipelineStatusIcon2 = (pipelineStatus) => {
+  switch (pipelineStatus) {
+    case "failure":
+    case "failed":
+      return (<FontAwesomeIcon icon={faTimesCircle} className="cell-icon red vertical-align-item" fixedWidth />);
+    case "unknown":
+      return (<FontAwesomeIcon icon={faCircle} className="cell-icon yellow vertical-align-item" fixedWidth/>);
+    case "rejected":
+      return (<FontAwesomeIcon icon={faStopCircle} className="cell-icon red vertical-align-item" fixedWidth/>);
+    case "running":
+    case "processing event":
+      return (<FontAwesomeIcon icon={faPlayCircle} className="cell-icon green vertical-align-item" fixedWidth/>);
+    case "queued":
+      return (<FontAwesomeIcon icon={faPauseCircle} className="cell-icon green vertical-align-item" fixedWidth/>);
+    case "stopped":
+    case "halted":
+      return (<FontAwesomeIcon icon={faOctagon} className="cell-icon red vertical-align-item" fixedWidth/>);
+    default:
+      return (<FontAwesomeIcon icon={faCheckCircle} className="cell-icon green vertical-align-item" fixedWidth/>);
+  }
+}
+
 export const getPipelineTypeColumn = (field) => {
   return {
     Header: "",
