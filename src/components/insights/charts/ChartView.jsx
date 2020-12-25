@@ -16,12 +16,15 @@ import JenkinsBuildsByUserBarChart from "./jenkins/bar_chart/builds_by_user/Jenk
 import JenkinsBuildDurationBarChart from "./jenkins/bar_chart/build_duration/JenkinsBuildDurationBarChart";
 import JenkinsStatusByJobNameBarChart from "./jenkins/bar_chart/status_by_job_name/JenkinsStatusByJobNameBarChart"
 import JenkinsDeploymentFrequencyLineChart from "./jenkins/line_chart/deployment_frequency/JenkinsDeploymentFrequencyLineChart";
+import JenkinsChangeFailureRate from "./jenkins/JenkinsChangeFailureRate";
+import JenkinsDeploymentsCountsBarChart from "./jenkins/bar_chart/deployments_counts/JenkinsDeploymentsCountsBarChart";
 
 // Jira KPIs
 import JiraIssuesByPriorityBarChart from "./jira/bar_chart/issues_by_priority/JiraIssuesByPriorityBarChart";
 import JiraTicketsAssignedByUserBarChart from "./jira/bar_chart/tickets_assigned_by_user/JiraTicketsAssignedByUserBarChart";
 import JiraHealthBySprintBarChart from "./jira/bar_chart/health_by_sprint/JiraHealthBySprintBarChart";
-import JiraVelocityReportBarChart from "./jira/bar_chart/velocity_report/JiraVelocityReportBarChart"
+import JiraVelocityReportBarChart from "./jira/bar_chart/velocity_report/JiraVelocityReportBarChart";
+import JiraIssuesCreatedVsResolvedLineChart from "./jira/line_chart/issues_created_vs_resolved/JiraIssuesCreatedVsResolvedLineChart";
 
 // Anchore KPIs
 import AnchoreVulnerabilitySeverityByPackageBarChart from "./anchore/bar_chart/vulnerability_severity_by_package/AnchoreVulnerabilitySeverityByPackageBarChart";
@@ -29,6 +32,25 @@ import AnchoreVulnerabilitySeverityByPackageBarChart from "./anchore/bar_chart/v
 // Sonar KPIs
 import SonarCodeSmellsLineChart from "./sonar/line_chart/code_smells/SonarCodeSmellsLineChart";
 import SonarMaintainabilityRatingLineChart from "./sonar/line_chart/maintainability_rating/SonarMaintainabilityRatingLineChart";
+import SonarBugsCountLineChart from "./sonar/line_chart/bugs/SonarBugsCountLineChart";
+import SonarNewBugsCountLineChart from "./sonar/line_chart/new_bugs/SonarNewBugsCountLineChart";
+import SonarReliabilityRatingLineChart from "./sonar/line_chart/reliability_rating/SonarReliabilityRatingLineChart";
+import SonarReliabilityRemediationEffortLineChart from "./sonar/line_chart/reliability_remediation_effort/SonarReliabilityRemediationEffortLineChart";
+
+// Jmeter KPIs
+import JmeterHitsLineChart from "./jmeter/line_chart/hits/JmeterHitsLineChart";
+import JmeterErrorsLineChart from "./jmeter/line_chart/errors/JmeterErrorsLineChart";
+import JmeterThroughputLineChart from "./jmeter/line_chart/throughput/JmeterThroughputLineChart";
+import JmeterResponseTimeLineChart from "./jmeter/line_chart/response_time/JmeterResponseTimeLineChart";
+
+// Gitlab KPIs
+import GitlabMostActiveContributors from "./gitlab/GitlabMostActiveContributors";
+import GitlabMergeRequestByMaximumTimeChart from "./gitlab/bar_chart/merge_request_by_maximum_time/GitlabMergeRequestByMaximumTimeChart";
+import GitlabMergeRequestsByUserChart from "./gitlab/bar_chart/merge_requests_by_user/GitlabMergeRequestsByUserChart";
+import GitlabTimeTakenToCompleteMergeRequestReview from "./gitlab/bar_chart/time_taken_to_complete_merge_request_review/GitlabTimeTakenToCompleteMergeRequestReview";
+import GitlabCommitsByAuthor from "./gitlab/calendar_chart/commits_by_author/GitlabCommitsByAuthor";
+import GitlabMergeRequestsPushesAndComments from "./gitlab/calendar_chart/merge_requests_pushes_and_comments/GitlabMergeRequestsPushesAndComments";
+import GitlabTotalCommitsByProjectChart from "./gitlab/pie_chart/total_commits_by_project/GitlabTotalCommitsByProjectChart";
 
 function ChartView({kpiConfiguration, dashboardData, index}) {
     const [view, setView] = useState("chart");
@@ -101,6 +123,10 @@ function ChartView({kpiConfiguration, dashboardData, index}) {
         return (<JenkinsStatusByJobNameBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
       case "jenkins-deployment-frequency":
         return (<JenkinsDeploymentFrequencyLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+      case "jenkins-change-failure-rate":
+        return (<JenkinsChangeFailureRate persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+      case "jenkins-deployments-counts":
+        return (<JenkinsDeploymentsCountsBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
 
       // Jira KPIs
       case "jira-tickets-assigned-by-user":
@@ -111,6 +137,8 @@ function ChartView({kpiConfiguration, dashboardData, index}) {
         return (<JiraHealthBySprintBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
       case "jira-velocity-report":
         return (<JiraVelocityReportBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+      case "jira-issues-created-vs-resolved":
+        return (<JiraIssuesCreatedVsResolvedLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
       
       // Anchore KPIs
       case "anchore-vulnerability-severity-by-package":
@@ -121,6 +149,40 @@ function ChartView({kpiConfiguration, dashboardData, index}) {
         return (<SonarCodeSmellsLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
       case "sonar-maintainability-rating":
         return (<SonarMaintainabilityRatingLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+      case "sonar-bugs":
+        return (<SonarBugsCountLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+      case "sonar-new-bugs":
+        return (<SonarNewBugsCountLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+      case "sonar-reliability-rating":
+        return (<SonarReliabilityRatingLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+      case "sonar-reliability-remediation-effort":
+        return (<SonarReliabilityRemediationEffortLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+      
+      // Jmeter KPIs
+      case "jmeter-hits":
+        return (<JmeterHitsLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+      case "jmeter-errors":
+        return (<JmeterErrorsLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+      case "jmeter-throughput":
+        return (<JmeterThroughputLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+      case "jmeter-response-time":
+        return (<JmeterResponseTimeLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+
+      // Gitlab KPIs
+      case "gitlab-most-active-contributors":
+        return (<GitlabMostActiveContributors persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+      case "gitlab-merge-request-by-maximum-time":
+        return (<GitlabMergeRequestByMaximumTimeChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+      case "gitlab-merge-requests-by-user":
+        return (<GitlabMergeRequestsByUserChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+      case "gitlab-time-taken-to-complete-merge-request-review":
+        return (<GitlabTimeTakenToCompleteMergeRequestReview persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+      case "gitlab-commits-by-author":
+        return (<GitlabCommitsByAuthor persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+      case "gitlab-merge-requests-pushes-and-comments":
+        return (<GitlabMergeRequestsPushesAndComments persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+      case "gitlab-total-commits-by-project":
+        return (<GitlabTotalCommitsByProjectChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
 
     }
   }
