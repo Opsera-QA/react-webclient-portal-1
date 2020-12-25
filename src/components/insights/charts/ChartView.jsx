@@ -15,10 +15,20 @@ import OpseraRecentPipelineStatus from "./opsera/OpseraRecentPipelineStatus";
 import JenkinsBuildsByUserBarChart from "./jenkins/bar_chart/builds_by_user/JenkinsBuildsByUserBarChart";
 import JenkinsBuildDurationBarChart from "./jenkins/bar_chart/build_duration/JenkinsBuildDurationBarChart";
 import JenkinsStatusByJobNameBarChart from "./jenkins/bar_chart/status_by_job_name/JenkinsStatusByJobNameBarChart"
+import JenkinsDeploymentFrequencyLineChart from "./jenkins/line_chart/deployment_frequency/JenkinsDeploymentFrequencyLineChart";
 
 // Jira KPIs
 import JiraIssuesByPriorityBarChart from "./jira/bar_chart/issues_by_priority/JiraIssuesByPriorityBarChart";
 import JiraTicketsAssignedByUserBarChart from "./jira/bar_chart/tickets_assigned_by_user/JiraTicketsAssignedByUserBarChart";
+import JiraHealthBySprintBarChart from "./jira/bar_chart/health_by_sprint/JiraHealthBySprintBarChart";
+import JiraVelocityReportBarChart from "./jira/bar_chart/velocity_report/JiraVelocityReportBarChart"
+
+// Anchore KPIs
+import AnchoreVulnerabilitySeverityByPackageBarChart from "./anchore/bar_chart/vulnerability_severity_by_package/AnchoreVulnerabilitySeverityByPackageBarChart";
+
+// Sonar KPIs
+import SonarCodeSmellsLineChart from "./sonar/line_chart/code_smells/SonarCodeSmellsLineChart";
+import SonarMaintainabilityRatingLineChart from "./sonar/line_chart/maintainability_rating/SonarMaintainabilityRatingLineChart";
 
 function ChartView({kpiConfiguration, dashboardData, index}) {
     const [view, setView] = useState("chart");
@@ -69,6 +79,8 @@ function ChartView({kpiConfiguration, dashboardData, index}) {
 
   const getChart = (kpiConfiguration) => {
     switch (kpiConfiguration.kpi_identifier) {
+
+      // Opsera KPIs
       case "opsera-status-by-pipeline":
         return (<OpseraPipelineByStatusBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
       case "opsera-pipeline-duration":
@@ -79,16 +91,37 @@ function ChartView({kpiConfiguration, dashboardData, index}) {
         return (<OpseraDeploymentFrequencyLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
       case "opsera-recent-pipeline-status":
         return (<OpseraRecentPipelineStatus persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+
+      // Jenkins KPIs
       case "jenkins-builds-by-user":
         return (<JenkinsBuildsByUserBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
       case "jenkins-build-duration":
         return (<JenkinsBuildDurationBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
       case "jenkins-status-by-job-name":
         return (<JenkinsStatusByJobNameBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+      case "jenkins-deployment-frequency":
+        return (<JenkinsDeploymentFrequencyLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+
+      // Jira KPIs
       case "jira-tickets-assigned-by-user":
         return (<JiraTicketsAssignedByUserBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
       case "jira-issues-by-priority":
         return (<JiraIssuesByPriorityBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+      case "jira-health-by-sprint":
+        return (<JiraHealthBySprintBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+      case "jira-velocity-report":
+        return (<JiraVelocityReportBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+      
+      // Anchore KPIs
+      case "anchore-vulnerability-severity-by-package":
+        return (<AnchoreVulnerabilitySeverityByPackageBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+
+      // Sonar KPIs
+      case "sonar-code-smells":
+        return (<SonarCodeSmellsLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+      case "sonar-maintainability-rating":
+        return (<SonarMaintainabilityRatingLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+
     }
   }
 

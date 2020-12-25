@@ -1,0 +1,146 @@
+import React, { useState, useEffect, useContext } from "react";
+import PropTypes from "prop-types";
+import { ResponsiveLine } from "@nivo/line";
+import { AuthContext } from "../../../../../../contexts/AuthContext";
+import { axiosApiService } from "../../../../../../api/apiService";
+import LoadingDialog from "components/common/status_notifications/loading";
+import ErrorDialog from "components/common/status_notifications/error";
+import config from "./sonarMaintainabilityRatingLineChartConfigs";
+import "components/analytics/charts/charts.css";
+import ModalLogs from "components/common/modal/modalLogs";
+import InfoDialog from "components/common/status_notifications/info";
+
+function SonarMaintainabilityRatingLineChart({ persona, date }) {
+  const contextType = useContext(AuthContext);
+  const [error, setErrors] = useState(false);
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const runEffect = async () => {
+      try {
+        await fetchData();
+      } catch (err) {
+        if (err.name === "AbortError")
+          // console.log("Request was canceled via controller.abort");
+          return;
+      }
+    };
+    runEffect();
+
+    return () => {
+      controller.abort();
+    };
+  }, []);
+
+  const fetchData = async () => {
+    setLoading(true);
+    const { getAccessToken } = contextType;
+    const accessToken = await getAccessToken();
+    const apiUrl = "/analytics/data";
+    const postBody = {
+      data: [
+        {
+          request: "sonarMaintainability",
+          metric: "line",
+        },
+      ],
+      startDate: date.start,
+      endDate: date.end,
+    };
+
+    try {
+      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
+      let dataObject = res && res.data ? res.data.data[0].sonarMaintainabilityRating : [];
+      setData(dataObject);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      setErrors(err.message);
+    }
+  };
+
+  if (loading) return <LoadingDialog size="sm" />;
+  else if (error) return <ErrorDialog error={error} />;
+  else 
+  return (
+    <>
+      <ModalLogs
+        header="Maintainability Rating"
+        size="lg"
+        jsonMessage={data ? data.data : []}
+        dataType="line"
+        show={showModal}
+        setParentVisibility={setShowModal}
+      />
+
+      <div className="new-chart mb-3" style={{ height: "300px" }}>
+        {typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200 ? (
+          <div
+            className="max-content-width p-5 mt-5"
+            style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+          >
+            <InfoDialog message="No Data is available for this chart at this time." />
+          </div>
+        ) : (
+          <ResponsiveLine
+            data={data ? data.data : []}
+            onClick={() => setShowModal(true)}
+            margin={{ top: 50, right: 110, bottom: 65, left: 100 }}
+            xScale={{ type: "point" }}
+            yScale={{ type: "linear", min: "auto", max: "auto", stacked: true, reverse: false }}
+            axisTop={null}
+            axisRight={null}
+            axisBottom={config.axisBottom}
+            colors={{ scheme: "spectral" }}
+            axisLeft={config.axisLeft}
+            pointSize={10}
+            pointBorderWidth={8}
+            pointLabel="y"
+            pointLabelYOffset={-12}
+            useMesh={true}
+            lineWidth={3.5}
+            legends={config.legends}
+            tooltip={({ point, color }) => (
+              <div
+                style={{
+                  background: "white",
+                  padding: "9px 12px",
+                  border: "1px solid #ccc",
+                }}
+              >
+                <strong style={{ color }}>Timestamp: </strong> {point.data.x}
+                <br></br>
+                <strong style={{ color }}> Maintainability Rating: </strong> {point.data.y}<br></br>
+                <strong style={{ color }}> Key: </strong> {point.data.key}
+              </div>
+            )}
+            theme={{
+              axis: {
+                ticks: {
+                  text: {
+                    fontSize: "10px",
+                  },
+                },
+              },
+              tooltip: {
+                container: {
+                  fontSize: "16px",
+                },
+              },
+            }}
+          />
+        )}
+      </div>
+    </>
+  );
+}
+
+SonarMaintainabilityRatingLineChart.propTypes = {
+  data: PropTypes.array,
+  persona: PropTypes.string,
+};
+
+export default SonarMaintainabilityRatingLineChart;
