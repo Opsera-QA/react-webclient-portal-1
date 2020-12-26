@@ -161,15 +161,6 @@ function OperationsViewAnalytics_developer({ persona, date }) {
           <div className="align-self-stretch p-2 w-100">
             <CpuUsageByTimeLineChart persona={persona} date={date} />
           </div>
-        </div>
-
-        <div className="d-flex">
-          <div className="align-self-stretch p-2 w-100">
-            <MemoryUsageByTimeLineChart persona={persona} date={date} />
-          </div>
-        </div>
-
-        <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
             <InNetworkTrafficByTimeLineChart persona={persona} date={date} />
           </div>
@@ -177,8 +168,19 @@ function OperationsViewAnalytics_developer({ persona, date }) {
 
         <div className="d-flex">
           <div className="align-self-stretch p-2 w-100">
+            <MemoryUsageByTimeLineChart persona={persona} date={date} />
+          </div>
+          <div className="align-self-stretch p-2 w-100">
             <OutNetworkTrafficByTimeLineChart persona={persona} date={date} />
           </div>
+        </div>
+
+        <div className="d-flex">
+          
+        </div>
+
+        <div className="d-flex">
+          
         </div>
       </>
     );
