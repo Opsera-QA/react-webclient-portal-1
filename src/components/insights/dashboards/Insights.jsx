@@ -94,10 +94,6 @@ function Insights() {
     return (<LoadingDialog size="sm" message="Loading Insights"/>);
   }
 
-  if (!accessRoleData.OpseraAdministrator) {
-    return (<AccessDeniedDialog roleData={accessRoleData}/>);
-  }
-
   return (
     <ScreenContainer
       pageDescription={`

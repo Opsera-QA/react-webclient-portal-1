@@ -25,6 +25,7 @@ kpiLovHelpers.getFilterById = (id) => {
 kpiLovHelpers.categories = [
   {id: "pipeline", label: "Pipeline"},
   {id: "security", label: "Security"},
+  {id: "quality", label: "Quality"},
   {id: "software-development", label: "Software Development"},
   {id: "software-testing", label: "Software Testing"},
   {id: "source-code", label: "Source Code"},
