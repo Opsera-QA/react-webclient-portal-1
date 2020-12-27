@@ -9,6 +9,7 @@ import SfdcPipelineXMLView from "./sfdcPipelineXMLView";
 import { faGalacticSenate } from "@fortawesome/free-brands-svg-icons";
 import sfdcPipelineActions from "./sfdc-pipeline-actions";
 import SfdcPipelineProfileComponents from "./sfdcPipelineProfileComponents";
+import SfdcUnitTestSelectionView from "./sfdcUnitTestSelectionView";
 
 const INITIAL_OBJECT_TYPES = {
   managed: false,
@@ -46,6 +47,7 @@ const SfdcPipelineWizard = ({
   const [sfdcSelectedComponent, setSFDCSelectedComponent] = useState([]);
   const [destSFDCSelectedComponent, setDestSFDCSelectedComponent] = useState([]);
   const [selectedProfileComponent, setSelectedProfileComponent] = useState([]);
+  const [unitTestSteps, setUnitTestSteps] = useState([]);
   const [recordId, setRecordId] = useState("");
 
   const [formData, setFormData] = useState(INITIAL_OBJECT_TYPES);
@@ -70,6 +72,8 @@ const SfdcPipelineWizard = ({
       );
     } else {
       console.log("step ID: ", steps[stepArrayIndex]._id);
+      console.log("uniTest indexes: ", getCustomUnitTestSteps(steps));
+      setUnitTestSteps(getCustomUnitTestSteps(steps));
       setStepId(steps[stepArrayIndex]._id);
       setStepToolConfig(steps[stepArrayIndex].tool.configuration);
       setIsOrgToOrg(steps[stepArrayIndex].tool.configuration.isOrgToOrg);
@@ -78,6 +82,10 @@ const SfdcPipelineWizard = ({
       setStepIndex(stepArrayIndex);
     }
   };
+
+  const getCustomUnitTestSteps = (steps) => {
+    return steps.map((step, idx) => (step.tool.configuration.jobType === "SFDC VALIDATE PACKAGE XML" || step.tool.configuration.jobType === "SFDC UNIT TESTING" || step.tool.configuration.jobType === "SFDC DEPLOY") && step.tool.configuration.sfdcUnitTestType === "RunSpecifiedTests" ? step : '').filter(String);
+  }
 
   const createJenkinsJob = async () => {
 
@@ -145,7 +153,8 @@ const SfdcPipelineWizard = ({
             formData={formData}
             setFormData={setFormData}
             asOfDate={asOfDate}
-           setAsOfDate={setAsOfDate}
+            setAsOfDate={setAsOfDate}
+            unitTestSteps={unitTestSteps}
           />
         )}
 
@@ -176,6 +185,7 @@ const SfdcPipelineWizard = ({
             setDestSFDCSelectedComponent={setDestSFDCSelectedComponent}
             recordId={recordId}
             setRecordId={setRecordId}
+            unitTestSteps={unitTestSteps}
           />
         )}
 
@@ -200,6 +210,7 @@ const SfdcPipelineWizard = ({
             selectedProfileComponent={selectedProfileComponent}
             recordId={recordId}
             setRecordId={setRecordId}
+            unitTestSteps={unitTestSteps}
           />
         )}
 
@@ -219,7 +230,24 @@ const SfdcPipelineWizard = ({
             destructiveXml={destructiveXml}
             createJenkinsJob={createJenkinsJob}
             recordId={recordId}
+            unitTestSteps={unitTestSteps}
           />
+        )}
+        
+        {view === 5 && (
+         <SfdcUnitTestSelectionView
+          pipelineId={pipelineId}
+          stepId={stepId}
+          handleClose={handleClose}
+          setView={setView}
+          isOrgToOrg={isOrgToOrg}
+          isProfiles={isProfiles}
+          fromSFDC={fromSFDC}
+          setFromSFDC={setFromSFDC}
+          fromGit={fromGit}
+          fromDestinationSFDC={fromDestinationSFDC}
+          unitTestSteps={unitTestSteps}
+         />
         )}
       </>
     );
