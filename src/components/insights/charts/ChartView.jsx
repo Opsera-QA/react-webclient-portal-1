@@ -50,6 +50,7 @@ import JmeterHitsLineChart from "./jmeter/line_chart/hits/JmeterHitsLineChart";
 import JmeterErrorsLineChart from "./jmeter/line_chart/errors/JmeterErrorsLineChart";
 import JmeterThroughputLineChart from "./jmeter/line_chart/throughput/JmeterThroughputLineChart";
 import JmeterResponseTimeLineChart from "./jmeter/line_chart/response_time/JmeterResponseTimeLineChart";
+import JmeterConnectTimeTable from "./jmeter/JmeterConnectTimeTable";
 
 // Gitlab KPIs
 import GitlabMostActiveContributors from "./gitlab/GitlabMostActiveContributors";
@@ -59,10 +60,16 @@ import GitlabTimeTakenToCompleteMergeRequestReview from "./gitlab/bar_chart/time
 import GitlabCommitsByAuthor from "./gitlab/calendar_chart/commits_by_author/GitlabCommitsByAuthor";
 import GitlabMergeRequestsPushesAndComments from "./gitlab/calendar_chart/merge_requests_pushes_and_comments/GitlabMergeRequestsPushesAndComments";
 import GitlabTotalCommitsByProjectChart from "./gitlab/pie_chart/total_commits_by_project/GitlabTotalCommitsByProjectChart";
+import GitlabRecentMergeRequests from "./gitlab/GitlabRecentMergeRequests";
 
 // Cypress KPIs
 import CypressTestResultsTable from "./cypress/CypressTestResultsTable";
+
+// Junit KPIs
 import JunitTestResultsTable from "./junit/JunitTestResultsTable";
+
+// Xunit KPIs
+import XunitTestResultsTable from "./xunit/XunitTestResultsTable";
 
 // Metricbeat KPIs
 import MetricbeatCpuUsageByTimeLineChart from "./metricbeat/line_chart/cpu_usage/MetricbeatCpuUsageByTimeLineChart";
@@ -207,6 +214,8 @@ function ChartView({kpiConfiguration, dashboardData, index}) {
         return (<JmeterThroughputLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
       case "jmeter-response-time":
         return (<JmeterResponseTimeLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+      case "jmeter-connect-time":
+        return (<JmeterConnectTimeTable persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
 
       // Gitlab KPIs
       case "gitlab-most-active-contributors":
@@ -223,6 +232,8 @@ function ChartView({kpiConfiguration, dashboardData, index}) {
         return (<GitlabMergeRequestsPushesAndComments persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
       case "gitlab-total-commits-by-project":
         return (<GitlabTotalCommitsByProjectChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+      case "gitlab-recent-merge-requests":
+        return (<GitlabRecentMergeRequests persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
       
       // Cypress KPIs
       case "cypress-test-results":
@@ -231,6 +242,10 @@ function ChartView({kpiConfiguration, dashboardData, index}) {
       // Junit KPIs
       case "junit-test-results":
         return (<JunitTestResultsTable persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+      
+      // Xunit KPIs
+      case "xunit-test-results":
+        return (<XunitTestResultsTable persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
       
       // Metricbeat KPIs
       case "metricbeat-kubernetes-cpu-usage":

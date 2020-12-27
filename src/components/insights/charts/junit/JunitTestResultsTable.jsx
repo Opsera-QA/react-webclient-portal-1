@@ -9,8 +9,7 @@ import { format } from "date-fns";
 import CustomTable from "components/common/table/CustomTable";
 import { faTimesCircle, faCheckCircle, faSearchPlus, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-
+import "components/analytics/charts/charts.css";
 
 
 function JunitResultsTable({ date }) {
