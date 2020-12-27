@@ -63,6 +63,7 @@ const SfdcPipelineModifiedFiles = ({
   setDestSFDCSelectedComponent,
   recordId,
   setRecordId,
+  unitTestSteps,
 }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -418,7 +419,13 @@ const SfdcPipelineModifiedFiles = ({
         toastContext.showLoadingErrorDialog(error);
       } else {
         // setXML(result.data.message); // not saving anything from response here
-        setView(4); //move to next view
+        // setView(4); //move to next view
+         if(unitTestSteps.length > 0) {
+            setView(5);
+            return;
+          }
+          setView(4);
+          return;
       }
     } catch (err) {
       console.error(err.message);
@@ -862,6 +869,7 @@ SfdcPipelineModifiedFiles.propTypes = {
   setDestSFDCSelectedComponent: PropTypes.func,
   recordId: PropTypes.string,
   setRecordId: PropTypes.func,
+  unitTestSteps: PropTypes.array,
 };
 
 export default SfdcPipelineModifiedFiles;

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
-import { Button, Modal, Form, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Button, Modal, Form, OverlayTrigger, Tooltip, Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faCheck, faIdBadge, faSpinner, faTimes, faToolbox } from "@fortawesome/pro-light-svg-icons";
+import { faArrowRight, faCheck, faIdBadge, faSpinner, faTimes, faToolbox, faCheckCircle } from "@fortawesome/pro-light-svg-icons";
 import PipelineHelpers from "./pipelineHelpers";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import PipelineActions from "./pipeline-actions";
@@ -335,12 +335,25 @@ function StepApprovalModal({ pipelineId, visible, setVisible, handleApprovalActi
 }
 
 
-function RenderWorkflowItem({ item, stateColorClass }) {
+export function RenderWorkflowItem({ item, stateColorClass, isSelected }) {
   return (
     <>
-      <div className={"p-1 workflow-module-container workflow-module-container-width mx-auto " + stateColorClass}>
-        <div className="workflow-module-container-height" style={{ width: "275px" }}>
-          <div className="text-muted mr-1">{item.name}</div>
+      <div className={"p-1 workflow-module-container workflow-module-container-width mx-auto " + (isSelected ? "workflow-step-running" : stateColorClass) }>
+        <div className="workflow-module-container-height flex-row" style={{ width: "275px" }}>
+          <Row>
+            <Col sm={9}>
+               <div className="text-muted mr-1">{item.name}</div>
+            </Col>
+             <Col sm={1}>
+              <span className="flex-grow-1 text-right">
+                {isSelected &&
+                      <FontAwesomeIcon icon={faCheckCircle} className="mr-2 green"/>
+                }
+              </span>
+            </Col>
+          </Row>
+
+         
           <div className="p-1 text-muted small">
             <FontAwesomeIcon icon={faToolbox} size="sm" fixedWidth
                              className="mr-1"/> Tool: {item.tool?.tool_identifier || ""}
@@ -367,6 +380,7 @@ function renderTooltip(props) {
 RenderWorkflowItem.propTypes = {
   item: PropTypes.object,
   stateColorClass: PropTypes.string,
+  isSelected: PropTypes.bool,
 };
 
 StepApprovalModal.propTypes = {
