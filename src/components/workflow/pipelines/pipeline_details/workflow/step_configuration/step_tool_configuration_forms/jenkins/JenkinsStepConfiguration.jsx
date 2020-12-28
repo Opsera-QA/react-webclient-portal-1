@@ -117,6 +117,13 @@ function JenkinsStepConfiguration({
   const [workspacesList, setWorkspacesList] = useState([]);
   const [isWorkspacesSearching, setIsWorkspacesSearching] = useState(false);
 
+  let step = {};
+
+  let stepArrayIndex = plan.findIndex(x => x._id === stepId);
+  if (stepArrayIndex > 0) {
+    step = plan[stepArrayIndex];
+  }
+
   useEffect(() => {
     if (plan && stepId) {
       setListOfSteps(formatStepOptions(plan, stepId));
@@ -344,10 +351,10 @@ function JenkinsStepConfiguration({
     if (validateRequiredFields() && toolId) {
       setLoading(true);
 
-      if(formData.sfdcUnitTestType === "RunSpecifiedTests") {
-        await getTestClasses(pipelineId, stepId, toolId);
-        return;
-      }
+      // if(formData.sfdcUnitTestType === "RunSpecifiedTests") {
+      //   await getTestClasses(pipelineId, stepId, toolId);
+      //   return;
+      // }
 
       const createJobPostBody = {
         jobId: "",
@@ -639,30 +646,30 @@ function JenkinsStepConfiguration({
   
   const handleShow = () => setShow(true);
 
-  const getTestClasses = async(pipelineId, stepId, toolId) => {
+  // const getTestClasses = async(pipelineId, stepId, toolId) => {
     
-    setSave(true);
-    // call api to get test classes
-    try {
-      // const accessToken = await getAccessToken();
-      const res = await sfdcPipelineActions.setTestClassesList({"sfdcToolId": formData.sfdcToolId, "pipelineId": pipelineId, "stepId": stepId }, getAccessToken);
-      if (res.data.status != 200 ) {
-        let toast = getErrorDialog(
-          res.data.message,
-          setShowToast,
-          "detailPanelTop"
-        );
-        setToast(toast);
-        setShowToast(true);
-        setSave(false);
-        return;
-      }
-      handleShow();
-    } catch (error) {
-      console.error("Error getting API Data: ", error);
-      toastContext.showLoadingErrorDialog(error);
-    }
-  }
+  //   setSave(true);
+  //   // call api to get test classes
+  //   try {
+  //     // const accessToken = await getAccessToken();
+  //     const res = await sfdcPipelineActions.setTestClassesList({"sfdcToolId": formData.sfdcToolId, "pipelineId": pipelineId, "stepId": stepId }, getAccessToken);
+  //     if (res.data.status != 200 ) {
+  //       let toast = getErrorDialog(
+  //         res.data.message,
+  //         setShowToast,
+  //         "detailPanelTop"
+  //       );
+  //       setToast(toast);
+  //       setShowToast(true);
+  //       setSave(false);
+  //       return;
+  //     }
+  //     handleShow();
+  //   } catch (error) {
+  //     console.error("Error getting API Data: ", error);
+  //     toastContext.showLoadingErrorDialog(error);
+  //   }
+  // }
 
   const saveConfig = async() => {
     const createJobPostBody = {
@@ -877,6 +884,7 @@ function JenkinsStepConfiguration({
               plan={plan}
               pipelineId={pipelineId}
               stepId={stepId}
+              step={step}
               show={show}
               setShow={setShow}
               save={save}

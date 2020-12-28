@@ -23,7 +23,7 @@ import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 SyntaxHighlighter.registerLanguage("xml", xml);
 
-const SfdcPipelineXMLView = ({ pipelineId, stepId, handleClose, setXML, setDestructiveXml, isProfiles, setView, modifiedFiles, xml, destructiveXml, createJenkinsJob, recordId }) => {
+const SfdcPipelineXMLView = ({ pipelineId, stepId, handleClose, setXML, setDestructiveXml, isProfiles, setView, modifiedFiles, xml, destructiveXml, createJenkinsJob, recordId, unitTestSteps }) => {
   const { getAccessToken } = useContext(AuthContext);
   const [save, setSave] = useState(false);
   const toastContext = useContext(DialogToastContext);
@@ -115,8 +115,13 @@ const SfdcPipelineXMLView = ({ pipelineId, stepId, handleClose, setXML, setDestr
               if(isProfiles){
                 setView(3);
                 return;
-              }  
+              }
+              if(unitTestSteps.length > 0) {
+                setView(5);
+                return;
+              } 
               setView(2);
+              return;
             }}
           >
             <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-1" />
@@ -170,6 +175,7 @@ SfdcPipelineXMLView.propTypes = {
   destructiveXml: PropTypes.string,
   recordId: PropTypes.string,
   createJenkinsJob: PropTypes.func,
+  unitTestSteps: PropTypes.array,
 };
 
 export default SfdcPipelineXMLView;

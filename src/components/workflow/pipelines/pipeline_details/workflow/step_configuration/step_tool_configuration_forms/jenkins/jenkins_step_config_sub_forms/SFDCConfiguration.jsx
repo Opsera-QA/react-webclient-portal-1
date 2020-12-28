@@ -40,6 +40,7 @@ function SFDCConfiguration({
   plan,
   pipelineId,
   stepId,
+  step,
   show,
   setShow,
   save,
@@ -408,6 +409,7 @@ function SFDCConfiguration({
         show={show}
         pipelineId={pipelineId}
         stepId={stepId}
+        step={step}
         saveConfig={saveConfig}
         sfdcToolId={formData.sfdcToolId}
         handleClose={handleClose}
@@ -421,6 +423,7 @@ SFDCConfiguration.propTypes = {
   plan: PropTypes.array,
   pipelineId: PropTypes.string,
   stepId: PropTypes.string,
+  step: PropTypes.object,
   show: PropTypes.bool,
   setShow: PropTypes.func,
   save: PropTypes.bool,

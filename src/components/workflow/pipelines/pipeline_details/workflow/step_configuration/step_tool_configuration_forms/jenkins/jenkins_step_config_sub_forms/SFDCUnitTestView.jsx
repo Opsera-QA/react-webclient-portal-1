@@ -16,10 +16,12 @@ import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizar
 import DtoBottomPagination from "components/common/pagination/DtoBottomPagination"
 import filterMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/filter-metadata";
 import Model from "../../../../../../../../../core/data_model/model";
+import { RenderWorkflowItem } from "components/workflow/approvalModal";
 
 const SFDCUnitTestView = ({
   pipelineId,
   stepId,
+  step,
   sfdcToolId,
   handleClose,
   saveConfig,
@@ -143,6 +145,7 @@ const SFDCUnitTestView = ({
 
             <>
               <div className="mt-3 mr-3">
+              <RenderWorkflowItem item={step} stateColorClass={"workflow-step-warning"}/>
                 <div className="d-flex justify-content-between">
                    <div className="px-2">
                    <InputGroup className="mb-3">
@@ -243,6 +246,7 @@ const SFDCUnitTestView = ({
 SFDCUnitTestView.propTypes = {
   pipelineId: PropTypes.string,
   stepId: PropTypes.string,
+  step: PropTypes.object,
   sfdcToolId: PropTypes.string,
   handleClose: PropTypes.func,
   saveConfig: PropTypes.func,
