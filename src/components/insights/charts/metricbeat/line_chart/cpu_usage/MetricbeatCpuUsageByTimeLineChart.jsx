@@ -78,8 +78,7 @@ function MetricbeatCpuUsageByTimeLineChart({ persona, date }) {
         setParentVisibility={setShowModal}
       />
 
-      <div className="chart mb-3" style={{ height: "300px" }}>
-        <div className="chart-label-text">CPU Usage</div>
+      <div className="new-chart mb-3" style={{ height: "300px" }}>
         {typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200 ? (
           <div
             className="max-content-width p-5 mt-5"
