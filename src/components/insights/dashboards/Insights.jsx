@@ -58,10 +58,7 @@ function Insights() {
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
-
-      if (userRoleAccess.OpseraAdministrator) {
-        await getProfile(filterDto);
-      }
+      await getProfile(filterDto);
     }
   };
 
