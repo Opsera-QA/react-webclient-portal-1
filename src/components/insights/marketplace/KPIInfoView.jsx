@@ -23,12 +23,16 @@ function KPIInfoView({data, dashboardData, setShowModal}) {
   const [dashboardFilterDto, setDashboardFilterDto] = useState(new Model({...dashboardFilterMetadata.newObjectFields}, dashboardFilterMetadata, false));
   
   useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = () => {
     getDashboards();
-    if(dashboard) {
+    if(dashboard && dashboard.getData("configuration").length < 10) {
       setIsDisabled(false);
     }
     setIsLoading(false);
-  }, []);
+  }
 
   const getDashboards = async () => {
     try {

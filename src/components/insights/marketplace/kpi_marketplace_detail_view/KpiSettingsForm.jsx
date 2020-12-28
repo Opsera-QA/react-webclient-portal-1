@@ -72,19 +72,20 @@ function KpiSettingsForm({kpiConfiguration, dashboardData, index, setView}) {
             </div>
         )}
         <SaveButtonContainer>
-        <ActionBarDeleteButton2
-              relocationPath={`/insights/dashboards/${dashboardData.getData("_id")}`}
-              dataObject={dashboardData}
-              handleDelete={deleteKpi}
-            />
         <LenientSaveButton
             recordDto={kpiSettings}
             updateRecord={saveKpiSettings}
+            showSuccessToasts={false}
         />
         <CancelButton
             size="md"
             cancelFunction={cancelKpiSettings}/>
         </SaveButtonContainer>
+        <ActionBarDeleteButton2
+            relocationPath={`/insights/dashboards/${dashboardData.getData("_id")}`}
+            dataObject={dashboardData}
+            handleDelete={deleteKpi}
+            />
         </EditorPanelContainer>
         )
 }
