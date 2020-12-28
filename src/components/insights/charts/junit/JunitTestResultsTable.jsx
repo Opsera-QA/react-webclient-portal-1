@@ -93,10 +93,6 @@ function JunitResultsTable({ date }) {
         accessor: "timestamp"
       },
       {
-        Header: "Tests Run",
-        accessor: "total",
-      },
-      {
         Header: "Tests Passed",
         accessor: "passed",
       },
@@ -107,10 +103,6 @@ function JunitResultsTable({ date }) {
       {
         Header: "Duration (seconds)",
         accessor: "duration"
-      },
-      {
-        Header: "Pass Rate",
-        accessor: "pass_percentage"
       }
     ],
     []

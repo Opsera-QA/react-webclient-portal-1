@@ -92,10 +92,6 @@ function XunitResultsTable({ date }) {
         accessor: "timestamp"
       },
       {
-        Header: "Tests Run",
-        accessor: "Executed Tests",
-      },
-      {
         Header: "Tests Passed",
         accessor: "Passed",
       },
@@ -106,10 +102,6 @@ function XunitResultsTable({ date }) {
       {
         Header: "Duration (seconds)",
         accessor: "Total Duration"
-      },
-      {
-        Header: "Pass Rate",
-        accessor: "pass_rate"
       }
     ],
     []
