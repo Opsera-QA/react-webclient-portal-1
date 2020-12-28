@@ -11,8 +11,7 @@ import { faTimesCircle, faCheckCircle, faSearchPlus, faSpinner } from "@fortawes
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "components/analytics/charts/charts.css";
 
-
-function CypressResultsTable({ date }) {
+function XunitResultsTable({ date }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -27,7 +26,6 @@ function CypressResultsTable({ date }) {
       }
     ]
   };
-  
 
   useEffect(() => {
     const controller = new AbortController();
@@ -51,7 +49,6 @@ function CypressResultsTable({ date }) {
 
 
   async function fetchData() {
-
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
@@ -59,7 +56,7 @@ function CypressResultsTable({ date }) {
     const postBody = {
       data: [
         {
-          request: "cypressTestResults",
+          request: "xunitTable",
           metric: "bar"
         }
       ]
@@ -69,9 +66,8 @@ function CypressResultsTable({ date }) {
     };
 
     try {
-      
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res.data.data[0].cypressTestResults : [];
+      let dataObject = res && res.data ? res.data.data[0].xunitTable : [];
       setData(dataObject);
       setLoading(false);
     }
@@ -85,7 +81,7 @@ function CypressResultsTable({ date }) {
     () => [
       {
         Header: "Job Id",
-        accessor: "jenkinsId",
+        accessor: "buildId"
       },
       {
         Header: "Run Count",
@@ -97,16 +93,16 @@ function CypressResultsTable({ date }) {
       },
       {
         Header: "Tests Passed",
-        accessor: "passed",
+        accessor: "Passed",
       },
       {
         Header: "Tests Failed",
-        accessor: "failed",
+        accessor: "Failed",
       },
       {
         Header: "Duration (seconds)",
-        accessor: "duration"
-      },
+        accessor: "Total Duration"
+      }
     ],
     []
   );
@@ -128,7 +124,8 @@ function CypressResultsTable({ date }) {
           </>
           :
           <>
-
+            <div className="mt-3 d-flex justify-content-between">
+            </div>
             <CustomTable
               columns={columns}
               data={data.data}
@@ -144,4 +141,4 @@ function CypressResultsTable({ date }) {
     );}
 }
 
-export default CypressResultsTable;
+export default XunitResultsTable;
